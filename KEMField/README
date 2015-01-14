@@ -1,0 +1,86 @@
+T.J. Corona
+tjcorona@mit.edu
+July 13, 2009
+-----------------------------
+Last Update: January 16, 2012
+-----------------------------
+KEMField is the next iteration of KatrinField.  I have decided to
+decouple the active elements (electrodes, magnets) from their storage
+containers, allowing for painless modification in the future.  Also,
+each individual element now computes its own field, eliminating the
+need for an Elliptic class (and further decouping the elements from
+the rest of the code).  The implementation of the BEM has been moved
+into its own class, and has been augmented to include MPI routines.  
+
+To build, simply type:
+
+#: make
+
+In addition, auto-documentation can be generated using ROOT's THtml
+documentation generator.  To build the documentation, type
+
+#: make documentation
+
+The primary html page for the documentation is located at
+./doc/html/index.html .
+
+Done:
+Storage classes for elements
+Wires, rectangles, rings, conic sections, triangles
+Discretization for wires, rectangles and conic sections
+Grouping of all elements of the same type (similar to elcd3.3)
+BEM implementation
+Saving/Retrieving algorithms for ZH
+nontrivial collections for ZH
+Electrode/Magnet groups in ZH
+better collection of static parameters for electrodes
+Parallel BEM (MPI)
+Parallel ZH coefficent computation (MPI)
+Parallel Direct, ZH field solving (OpenMP)
+
+To Do:
+Discretization for triangles
+Symmetric/Asymmetric approximations
+
+-----------------------------
+-----------------------------
+
+Notes on building KEMField
+Noah Oblath
+April 27, 2012
+-----------------------------
+
+KEMField currently has three build systems: CMake, a native Makefile, and Autotools.
+CMake is present because it is the build system of choice for Kasper.  In the future it will be the primary build system for KEMField.
+The native Makefile is the original build system of KEMField.
+The Autotools build was used previously by Kassiopeia, and it is still present because of KEMField's integration with Kassiopeia 1.5.
+
+Building with CMake
+-----------------------------
+KEMField's CMake build is integrated with Kasper.  If building KEMField from Kasper, there are no special instructions beyond the general Kasper build instructions.
+However, you should be aware that only some of the build options are fully implemented:
+  Working: FFTW
+  Not working: MPI, OpenCL, and GMSH
+  
+KEMField can also be built independently with CMake:
+  1. Using cmake/ccmake/cmake-gui, set CMAKE_MODULE_PATH to ${PROJECT_SOURCE_DIR}/build/cmake
+  2. Use cmake/ccmake/cmake-gui to generate the Makefiles
+  3. make
+  4. make install
+  
+Building with the native Makefile
+-----------------------------
+Following T.J.'s instructions, simply type 'make' at the command line.
+
+Building with Autotools
+-----------------------------
+KEMField's Autotools build is integrated with Kassiopeia 1.5.  It cannot be built independently with this system.
+
+Notes for Developers
+-----------------------------
+If you add classes: You MUST update both the CMake build and the Autotools build!
+                    To update the CMake build, add the new classes to the appropriate CMakeLists.txt (i.e. the CMakeLists.txt in the directory where you added the classes).
+If you add new external dependencies: You must update all three build systems!
+                                      For CMake there are often FindX routines to help you find external package X and set the relevant variables.
+                                      For the native Makefile you must help it find the necessary libraries and include files.
+                                      For autotools there are often autoconf macros that can help you find the libraries and includes.  These can be added to the ac_macros directory in Kassiopeia 1.5.

@@ -1,0 +1,20 @@
+<!-- in this way you can print values from the xml file to the terminal -->
+<print name="test" value="12345"/>
+
+<!-- define some variables -->
+<define name="some_value_a" value="43"/>
+<define name="some_value_b" value="13.5"/>
+<define name="some_value_c" value="0.07"/>
+
+<!--  do some math -->
+<define name="result" value="{([some_value_a]+[some_value_b])/[some_value_c]}"/>
+
+<!-- print out -->
+<print name="result" value="[result]"/>
+
+<!-- round value -->
+<define name="round_precision" value="0.001"/>
+<define name="result_rounded" value="{TMath::Nint([result]/[round_precision])*[round_precision]}"/>
+
+<!-- print out again-->
+<print name="result_rounded" value="[result_rounded]"/>

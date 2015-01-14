@@ -1,0 +1,292 @@
+<!-- this file contains an annotated list of all the trajectories available in kassiopeia 3.0 -->
+<!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
+
+<messages>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+
+</messages>
+
+<kassiopeia>
+
+	<!-- integrators -->
+
+    <kstraj_integrator_rk54 name="integrator_rk54"/>
+    <!--
+    	description:
+    		an 5th/4th order embedded runge-kutta integrator.
+    		this is the fastest and least accurate integrator in kassiopeia.
+
+		parameters:
+			name:
+				the name of this integrator.
+	-->
+
+    <kstraj_integrator_rk65 name="integrator_rk65"/>
+    <!--
+    	description:
+    		an 6th/5th order embedded runge-kutta integrator.
+
+		parameters:
+			name:
+				the name of this integrator.
+	-->
+
+    <kstraj_integrator_rk65 name="integrator_rk86"/>
+    <!--
+    	description:
+    		an 8th/6th order embedded runge-kutta integrator.
+
+		parameters:
+			name:
+				the name of this integrator.
+	-->
+
+    <kstraj_integrator_rk87 name="integrator_rk87"/>
+    <!--
+    	description:
+    		an 8th/7th order embedded runge-kutta integrator.
+    		this is the most accurate and second slowest integrator in kassiopeia.
+
+		parameters:
+			name:
+				the name of this integrator.
+	-->
+
+    <kstraj_integrator_rk8 name="integrator_rk8"/>
+    <!--
+    	description:
+    		an 8th order runge-kutta integrator.
+    		this is the second most accurate and slowes integrator in kassiopeia.
+    		this is also most common choice.
+
+		parameters:
+			name:
+				the name of this integrator.
+	-->
+
+	<!-- interpolators -->
+
+	<kstraj_interpolator_fast name="interpolator_fast"/>
+	<!--
+		description:
+			this interpolator uses a linear interpolation internally.
+			it is fast but can be innaccurate, especially when particles are changing direction in magnetic mirrors.
+
+		parameters:
+			name:
+				the name of this interpolator.
+	-->
+
+	<!-- terms -->
+
+	<kstraj_term_propagation name="term_propagation" direction="forward"/>
+	<!--
+		description:
+			this term in the equation of motion moves the particle in external electromagnetic fields.
+
+		parameters:
+			name:
+				the name of this term.
+
+			direction:
+				if forward, the term moves the particle forwards in time.
+				if backward, the term moves the particle backwards in time.
+	-->
+
+	<kstraj_term_synchrotron name="term_synchrotron" enhancement="1.e3"/>
+	<!--
+		description:
+			this term in the equation of motion bleeds off energy from the particle due to radiative effects.
+
+		parameters:
+			name:
+				the name of this term.
+
+			enhancement:
+				a factor by which the radiated power is multiplied.
+	-->
+
+	<kstraj_term_drift name="term_drift"/>
+	<!--
+		description:
+			this term in the equation of motion adds e-cross-b and grad-b drifts to adiabatic simulations.
+
+		parameters:
+			name:
+				the name of this term.
+	-->
+
+	<kstraj_term_gyration name="term_gyration"/>
+	<!--
+		description:
+			this term in the equation of motion adds cyclotron gyrations to adiabatic simulations.
+
+		parameters:
+			name:
+				the name of this term.
+	-->
+
+	<!-- controls -->
+
+	<kstraj_control_time name="control_time" time="1.e-10"/>
+	<!--
+		description:
+			this control suggests a constant temporal step.
+			it never rejects steps.
+
+		parameters:
+			name:
+				the name of this control.
+
+			time:
+				the temporal step to use in seconds.
+	-->
+
+	<kstraj_control_length name="control_length" length="1.e-10"/>
+	<!--
+		description:
+			this control suggests a temporal step which would result in a step with the given length were the particle to remain at constant speed.
+			it never rejects steps.
+
+		parameters:
+			name:
+				the name of this control.
+
+			length:
+				the length in meters from which to calculate the temporal step.
+	-->
+
+	<kstraj_control_cyclotron name="control_cyclotron" fraction="{1. / 16.}"/>
+	<!--
+		description:
+			this control suggests a temporal step which is a fraction of the instantaneous cyclotron period.
+			it never rejects steps.
+
+		parameters:
+			name:
+				the name of this control.
+
+			fraction:
+				the fraction by which to multiply the cyclotron period to obtain the suggested temporal step.
+	-->
+
+	<kstraj_control_energy name="control_energy" upper_limit="1.e-8" lower_limit="1.e-12"/>
+	<!--
+		description:
+			this control suggests a temporal step based on conservation of total energy over a step.
+			if the fractional energy conservation violation is above the upper limit, the step is rejected and a smaller stepsize is suggested.
+			if the fractional energy conservation violation is below the lower limit, the step is accepted and a larger stepsize is suggested.
+
+		parameters:
+			name:
+				the name of this control.
+
+			upper_limit:
+				the maximum tolerable energy conservation violation per step.
+
+			lower_limit:
+				the energy conservation violation threshold below which larger temporal steps are suggested.
+	-->
+
+	<!-- trajectories -->
+
+	<kstraj_trajectory_linear name="trajectory_linear" length="1.e-8"/>
+	<!--
+		description:
+			this trajectory moves the particle forward at constant speed along the direction of its momentum.
+
+		parameters:
+			name:
+				the name of this trajectory.
+
+			length:
+				the length of the resulting trajectory segment in meters.
+	-->
+
+	<kstraj_trajectory_exact name="trajectory_exact">
+		<integrator_rk8/>
+		<control_time time="1.e-10"/>
+		<term_propagation/>
+	</kstraj_trajectory_exact>
+	<!--
+		description:
+			this trajectory internally uses the exact representation of the particle.
+			in normal fields good results can be obtained only if the control suggests step sizes much smaller than the cyclotron period.
+
+		parameters:
+			name:
+				the name of this trajectory.
+
+		elements:
+			integrators:
+				any integrator listed above may be used.
+
+			interpolators:
+				any interpolator listed above may be used.
+
+			controls:
+				any control listed above may be used.
+
+			terms:
+				only the propagation and synchrotron terms may be used with this trajectory.
+	-->
+
+	<kstraj_trajectory_adiabatic name="trajectory_adiabatic">
+		<integrator_rk8/>
+		<control_time time="1.e-10"/>
+		<term_propagation/>
+	</kstraj_trajectory_adiabatic>
+	<!--
+		description:
+			this trajectory internally uses an adiabatic representation of the particle.
+			this is a good trajectory anywhere the adiabatic approximation is valid.
+
+		parameters:
+			name:
+				the name of this trajectory.
+
+		elements:
+			integrators:
+				any integrator listed above may be used.
+
+			interpolators:
+				any interpolator listed above may be used.
+
+			controls:
+				any control listed above may be used.
+
+			terms:
+				only the propagation, synchrotron, drift and gyration terms may be used with this trajectory.
+	-->
+
+	<kstraj_trajectory_magnetic name="trajectory_magnetic">
+		<integrator_rk8/>
+		<control_time time="1.e-10"/>
+		<term_propagation/>
+	</kstraj_trajectory_magnetic>
+	<!--
+		description:
+			this trajectory internally uses a magnetic representation of the particle.
+			this trajectory is used to compute magnetic field lines.
+
+		parameters:
+			name:
+				the name of this trajectory.
+
+		elements:
+			integrators:
+				any integrator listed above may be used.
+
+			interpolators:
+				any interpolator listed above may be used.
+
+			controls:
+				any control listed above may be used.
+
+			terms:
+				only the propagation term may be used with this trajectory.
+	-->
+
+
+</kassiopeia>

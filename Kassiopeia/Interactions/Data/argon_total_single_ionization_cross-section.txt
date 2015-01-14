@@ -1,0 +1,72 @@
+# Single Ionization Cross-Section for Electron-Argon Scattering
+# =============================================================
+# Extrapolation for Data for High Energies (Done by ROOT)
+# Function: sigma(E) = a*E^b for E>1000 eV
+# First line: a
+# Second Line: b
+
+1823.24e-21
+-0.793224
+
+# Ionization energy:
+# National Institut of Standards and Technology, Physical Meas. Laboratory,
+# http://physics.nist.gov/PhysRefData/Handbook/Tables/argontable1.htm, Nov. 22, 2013
+
+15.759610
+
+# Now the Data for Interpolation (these Data are also Used for Extrapolation)
+# 
+# First Row (Threshold):
+# National Institut of Standards and Technology, Physical Meas. Laboratory,
+# http://physics.nist.gov/PhysRefData/Handbook/Tables/argontable1.htm, Nov. 22, 2013
+#
+# Other Data:
+# L.K. Jha, S. Kumar, B.N. Roy, Electron impact single 
+# and double ionization of argon, Eur. Phys. J. D 40, 101-106 (2006)
+#
+# First column: electron energy in eV
+# Second column: Total ionization cross-section in m^2
+15.76	0
+18      2.9E-21
+20      5.8E-21
+23      1.02E-20
+25      1.2E-20
+26.5    1.3E-20
+28      1.49E-20
+34.5    2.05E-20
+49.5    2.4E-20
+54.5    2.4E-20
+60      2.46E-20
+70      2.49E-20
+80      2.39E-20
+90      2.55E-20
+108     2.57E-20
+120     2.48E-20
+130     2.47E-20
+140     2.44E-20
+160     2.3E-20
+180     2.23E-20
+200     2.1E-20
+220     2.05E-20
+250     1.94E-20
+280     1.83E-20
+375     1.56E-20
+430     1.45E-20
+500     1.31E-20
+570     1.19E-20
+650     1.07E-20
+750     9.8E-21
+870     8.4E-21
+1000    7.6E-21
+1150    6.9E-21
+1320    6.1E-21
+1520    5.3E-21
+1750    4.8E-21
+2000    4.4E-21
+2300    4E-21
+2650    3.6E-21
+3000    3.3E-21
+3500    2.8E-21
+4000    2.5E-21
+4600    2.2E-21
+5300    2E-21

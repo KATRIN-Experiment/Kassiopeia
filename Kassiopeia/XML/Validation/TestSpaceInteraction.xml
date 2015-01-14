@@ -1,0 +1,18 @@
+<kassiopeia>
+
+    <ksint_scattering name="scattering_constant">
+	    <density_constant name="density_constant" temperature="300." pressure_mbar="1.e-2"/>
+	    <calculator_constant name="calculator_constant" cross_section="1.e-20"/>
+    </ksint_scattering>
+	
+    <ksint_scattering name="scattering_hydrogen">
+   		<density_constant name="density_constant" temperature="300." pressure_mbar="1.e-2"/>
+	    <calculator_hydrogen name="calculator_hydrogen" elastic="true" excitation="true" ionisation="true"/>
+    </ksint_scattering>
+    
+<!--     <ksint_scattering name="scattering_argon">
+    	<density_constant name="density_constant" temperature="300." pressure_mbar="1.e-2"/>
+    	<calculator_argon name="calculator_argon" elastic="true" excitation="true" single_ionisation="true" double_ionisation="true" />
+    </ksint_scattering> -->
+
+</kassiopeia>

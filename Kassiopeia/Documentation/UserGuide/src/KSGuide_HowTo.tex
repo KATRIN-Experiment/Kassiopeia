@@ -1,0 +1,447 @@
+% How to use Kassiopeia
+\chapter{How-To Guide}\label{ch:howto}
+
+In this section the basic information about how to get, configure and run \textsc{Kassiopeia} are explained.
+Usful information about \textsc{Kassiopeia} can also be found on the KATRIN wiki: \url{https://wiki.fzk.de/katrin/index.php/Kassiopeia}. Once \textsc{Kassiopeia} is installed, you also have access to the Doxygen-based reference manual.
+
+Please note that throughout this guide the top-level directory of the \textsc{Kassiopeia} distribution will be referred to as \texttt{<maindir>}.
+
+
+\section{Latest Version: 1.20.00}
+
+
+\section{System Requirements}
+\textsc{Kassiopeia} has been tested on Linux and MacOS systems.  Windows is currently not supported.  Several versions of gcc 4.x have been tested; gcc 3.2 does not work.
+
+Be sure that you have the following packages and minimum versions installed on your computer:
+\begin{itemize}
+	\item \cernroot{} 5.24 or higher
+	\item GSL 1.0 or higher
+	\item boost 1.34 or higher
+\end{itemize}
+
+
+\section{Getting \textsc{Kassiopeia}}
+You have two options for downloading any distribution of \textsc{Kassiopeia}:
+\begin{description}
+\item[Distribution Tarball]
+
+For every \textsc{Kassiopeia} release there will be a tarball of the full distribution.  This can currently be downloaded from the M\"unster SVN repository (a better location will be found in the future).  The suggested method for doing this is via the web interface: \url{https://nuserv.uni-muenster.de/viewvc/Kassiopeia/tar}.  From there you can download the file \texttt{kassiopeia-X.YY.ZZ.tar.gz}, and place it in the directory in which you want to unpack it.
+\begin{DoxyCode}
+>  tar -xzvf kassiopeia-X.YY.ZZ
+>  cd kassiopeia-X.YY.ZZ
+\end{DoxyCode}
+This is the simplest method for obtaining a copy of \textsc{Kassiopeia}.  It is also independent of the Autotools suite, so it is recommended for installing on older operating systems or systems which do not have the required versions of autoconf, automake, or libtool (see below).
+
+\item[SVN Check-Out]
+
+\textsc{Kassiopeia} source can be found on the KATRIN SVN repository at the University of M\"unster (\url{https://nuserv.uni-muenster.de/svn/katrin/}).  You must have an account to install \textsc{Kassiopeia} in this way, you must have the following versions of the Autotools applications:
+\begin{itemize}
+\item autoconf v2.65 or higher, earlier versions may work, but we make no promises
+\item automake v.1.10, recommended 1.11 or higher. 
+\item libtool v. 2.2, earlier versions may work, but again, no promises 
+\end{itemize}
+
+The distribution can be obtained from the SVN repository in the standard way:
+\begin{DoxyCode}
+>  svn co https://nuserv.uni-muenster.de/svn/katrin/Kassiopeia/tags/kassiopeia-X.YY.ZZ
+>  cd kassiopeia-X.YY.ZZ
+\end{DoxyCode}
+
+\end{description}
+
+
+\section{Installing \textsc{Kassiopeia}}
+
+\subsection{Configuring the Installation}
+These commands are run from \texttt{<maindir>}.
+
+If you used the \textbf{SVN Check-Out} method (not using the tarball) to obtain \textsc{Kassiopeia}, then the \texttt{configure} script and Makefiles still need to be created via the Autotools suite.  The \texttt{autogen.sh} script will take care of this, as well as running the \texttt{configure} script.  From the command line, run:
+\begin{DoxyCode}
+>  ./autogen.sh
+\end{DoxyCode}
+
+For those who used the \textbf{Distribution Tarball} method to obtain \textsc{Kassiopeia}, the \texttt{configure} script already exists.  Simply run it from the command line:
+\begin{DoxyCode}
+>  ./configure
+\end{DoxyCode}
+
+The rest of these instructions apply to \textbf{both} methods of obtaining \textsc{Kassiopeia}, except as noted.
+
+If you would like to see the available installation options, type
+\begin{DoxyCode}
+>  ./configure --help
+\end{DoxyCode}
+If necessary, run the configure script again with any desired customized options.
+
+For example, to install \textsc{Kassiopeia} in another directory than the current one, use 
+\begin{DoxyCode}
+ > ./configure --prefix=/path/to/some/directory
+\end{DoxyCode}
+
+\subsection{Compiling and Installing}
+
+From \texttt{<maindir>}, type the following two commands to, respectively, compile and install \textsc{Kassiopeia}:
+\begin{DoxyCode}
+>  make
+>  make install
+\end{DoxyCode}
+If everything compiles and installs correctly, \textsc{Kassiopeia} is ready to use.
+
+
+\section{Running \textsc{Kassiopeia}}
+The primary \textsc{Kassiopeia} executable, which performs tracking simulations, is called \texttt{Kassiopeia}.  It is installed in \texttt{<maindir>/bin} in a standard installation.
+
+Before you really configure your own simulation you can do a little test run with \textsc{Kassiopeia}. Run the following:
+\begin{DoxyCode}
+>  <maindir>/bin/Kassiopeia
+\end{DoxyCode}
+The default run is a single event, where an electron is emitted from an electron gun.  You will see a warning printed because you did not provide a UserConfiguration file.  This file is the primary user interface.  One way to avoid this warning is to supply the name of the UserConfiguration file you want to use:
+\begin{DoxyCode}
+>  <maindir>/bin/Kassiopeia <maindir>/etc/UserConfiguration.txt
+\end{DoxyCode}
+Either way you run \textsc{Kassiopeia}, three files will be created in your current directory: the output, named \texttt{KassiopeiaOutput.root} by default, and the log and error files.  
+You can open \texttt{KassiopeiaOutput.root} with \cernroot. With the help of the TreeViewer of \cernroot{} you can have a look at the particle's trajectory.
+
+
+\section{Configuring \textsc{Kassiopeia}}
+\textsc{Kassiopeia} is controlled with a set of configuration files.  This is true for both the Kassiopeia executable as well as other applications.  This section describes how to configure the tracking simulation (the Kassiopeia executable), but much of the information is relevant to configuring other applications that use the \textsc{Kassiopeia} management structure, as well.
+
+The primary user interface for \textsc{Kassiopeia} is via the UserConfiguration file and the command line.  The setup of the simulation is done in the KassiopeiaConfiguration file.  The tools that are used in the simulation are composed with the toolbox configuration files.
+
+Examples of all of the configuration files are found in \texttt{<maindir>/etc}.  For your own simulations your should make local copies of any configuration files you need to modify in a local directory; with every update of \textsc{Kassiopeia} the default files in \texttt{<maindir>/etc} are overwritten and any changes to them will be lost.  The locations for the local copies of the configuration files can be specified as described in section~\ref{sec:howto-userconfig}.
+
+The syntax of all configuration files is XML-like: First you define \textbf{what} you want to configure in a block known as a configuration ``element.''  The syntax uses single angle brackets: \texttt{$<$THING TO CONFIGURE$>$}. \texttt{$<$/THING TO CONFIGURE$>$} denotes the end of the element. Parameter settings are written with double angle-brackets: \texttt{$<<$PARAMETER=VALUE$>>$}.
+
+Here is an example of the configuration file syntax:
+\begin{DoxyCode}
+#this is a comment
+
+/*
+and this is
+a block comment
+*/
+
+<Element1>                      #The beginning of an element for the Kassiopeia class being configured
+    <<Name=name1>>              #Every element with parameters must be named first
+    <<Parameter1Name=Value1>>   #A basic parameter being set to Value1
+    <<Parameter2Name=Value2>>   #Another parameter being set to Value2
+</Element1>                     #The end of the element for the class
+
+<Element2>
+    <<Name=name2>>
+    <SubElement>                #A nested element
+        <<Name=subname>>
+        <<Parameter3Name=Value3>>
+    </SubElement>
+</Element2>
+\end{DoxyCode}
+As can be seen in the example, there are two ways to denote a comment, either in a line or a block.  Every element (with only a few exceptions) must have a \texttt{Name} as the first parameter.  These names must be unique in the global Kassiopeia parameter space.  Elements can also be nested (and those sub-elements also must have \texttt{Name}s.  Please browse through the configuration files that come with \textsc{Kassiopeia} to see what this looks like in practice.
+
+In addition to the above syntax, the user can communicate directly with the system that reads the configuration files (the Tokenizer).  This is done via keyword commands.  The syntax is:
+\begin{DoxyCode}
+@keyword(comma,separated,arguments)
+\end{DoxyCode}
+
+Available keywords:
+\begin{description}
+	\item[include] Configurations can be split up among multiple files, and the files can be included from one another.  This keyword takes only one argument, the file name. This allows for more flexibility and reusability in making configuration files.  So, for example, perhaps you want to split the GeometryConfiguration into multiple files, each of which describes one region of the system being simulated.  GeometryMaster.txt brings all of the files used together:
+\begin{DoxyCode}
+@include(GeometryRegion1.txt)
+@include(GeometryRegion2.txt)
+\end{DoxyCode}
+This keyword can only be used outside of any configuration element blocks.
+\end{description}
+ 
+
+
+\subsection{UserConfiguration and KassiopeiaConfiguration}\label{sec:howto-userconfig}
+\subsubsection{UserConfiguration}
+The default filename for the UserConfiguration file is \texttt{UserConfiguration.txt}.  When you run \textsc{Kassiopeia}, the UserConfiguration file will be found with one of the following ways (in order of priority, from highest to lowest):
+\begin{enumerate}
+	\item You can specify the UserConfiguration file with the first argument on the command line.
+	\item \textsc{Kassiopeia} will look for \texttt{<maindir>/etc/UserConfiguration.txt}.
+	\item If no UserConfiguration file is specified or found, the application will exit.
+\end{enumerate}
+
+The UserConfiguration file includes the following settings: 
+\begin{itemize}
+	\item The verbosity level
+	\item Direct settings
+	\item Variable replacement
+	\item Default configuration file and data file directories
+	\item Local configuration files
+\end{itemize}
+This particular order of the settings is highly recommended, though not fundamentally required.
+
+\subsubsection{Verbosity}
+The verbosity level defines what is printed to screen and written into a log file. Seven verbosity levels are available:
+\begin{itemize}
+	\item Error: Only error messages are printed  
+	\item Warning: in addition warning are printed  
+	\item GlobalMessage: in addition global messages, like which configuration files are used, are printed
+	\item RunMessage: in addition all messages occurring on run level are printed  
+	\item EventMessage: in addition all messages occurring on event level are printed 
+	\item TrackMessage: in addition all messages occurring on track level are printed 
+	\item Debug: in addition debug messages are printed. In this case you have to enable the debug of the part you are interested in before compiling. \texttt{<maindir>/configure --help} shows you the options. If your program was already compiled you have to run \texttt{make clean} before recompiling.
+\end{itemize}
+
+\subsubsection{Direct Parameter Settings}
+These settings allow you to change the values of parameters in the toolbox configuration files and the KassiopeiaConfiguration file without modifying the files themselves.  You only need to know the configuration element name and the name of the parameter that is being set.  This is particularly convenient if you want to change a parameter's value often.  The notation is:
+\begin{DoxyCode}
+<DirectSetting>
+    <<ParameterLocation1=Value1>>
+    <<ParameterLocation2=Value2>>
+    ...
+</DirectSetting>
+\end{DoxyCode}
+The location of a parameter is the combination of the configuration element name, and the parameter name: \texttt{ElementName:ParameterName}.
+
+So, for instance, if you want to change the run number, and the name of the RunConfiguration element is RunConfig, then you would place the following in UserConfiguration:
+\begin{DoxyCode}
+<DirectSetting>
+    <<RunConfig:RunId=12345>>
+</DirectSetting>
+\end{DoxyCode}
+This value for the run number will then overwrite whatever is actually in the KassiopeiaConfiguration file (where the RunConfiguration element lives).
+
+\subsubsection{Variable Replacement}
+These settings allow you to change the values of parameters in the toolbox configuration files and the KassiopeiaConfiguration file (or even the portion of the UserConfiguration file after the variable is defined) while only modifying the UserConfiguration file.  You define a variable in the UserConfiguration file, and then use that variable instead of a parameter value in the other configuration file.  This is particularly convenient if you want to change a parameter's value often.
+
+For instance, you might define a variable for the run number in the UserConfiguration file:
+\begin{DoxyCode}
+<ParameterReplacement>
+    <<RunNumber=12345>>
+    /* <<VARIABLE=VALUE>> <-- General syntax */
+</ParameterReplacement>
+\end{DoxyCode}
+Then, in the KassiopeiaConfiguration file (under \texttt{$<$RunConfiguration$>$}) you would replace the run number value with \texttt{\$\{RunNumber\}}:
+\begin{DoxyCode}
+<<RunId=${RunNumber}>>
+\end{DoxyCode}
+When the KassiopeiaConfiguration file is loaded, the variable will be replaced by the value defined in the UserConfiguration file.
+
+\subsubsection{Default Configuration File and Data File Directories}
+The default directories for configuration files and data files can be set from the UserConfiguration file.  These settings are stored in the KSCoreManager.
+
+For the configuration files, they are not required to be located in this directory.  Please see section~\ref{sec:howto-specifyingconfigfiles} for details on how each configuration file is found by \textsc{Kassiopeia}.
+
+You can define the local directories in this way:
+\begin{DoxyCode}
+<PreliminaryConfiguration>
+    <<OptionHome=[path]/MyConfigFiles>>
+    <<DataHome=[otherpath]/DataFiles>>
+</PreliminaryConfiguration>
+\end{DoxyCode}
+
+Configuration files and data files in these directories (respectively) must have the default file names.
+
+\subsubsection{Local Configuration Files}
+You can also specify individual configuration files (except for UserConfiguration, obviously) in the UserConfiguration file. This setting has highest priority when \textsc{Kassiopeia} locates configuration files.  Note that the filenames, when individually specified, do not have to be the same as the default file names (e.g. you could rename your copy of \texttt{GeometryConfiguration.txt} to be \texttt{GeometryConfiguration\_revision8.txt}).
+
+You specify a configuration file in this way:
+\begin{DoxyCode}
+<ConfigFile>
+    <<Generator=[path]/MyConfigFiles/MySpecialGeneratorConfiguration.txt>>
+    /* <<KEY=FILENAME>>  <-- General syntax */
+</ConfigFile>
+\end{DoxyCode}
+The available keys are: \texttt{Global, Kassiopeia, DAQ, Field, Generator, Geometry, SSC,} and \texttt{StepStrategy}.
+
+
+\subsubsection{Command Line}
+Anything that can be set in the UserConfiguration.txt file can be set from the command line.  The command-line settings will take precedence over the UserConfiguration file if something is specified in both places.
+The command-line syntax is:
+\begin{DoxyCode}
+>  Kassiopeia  [UserConfiguration file]  [-d [Direct parameter settings]] 
+[-r [Parameter variable replacements]]  [-c [Local Configuration files]] 
+[-t [Other tokens]]
+\end{DoxyCode}
+
+\begin{description}
+	\item[\texttt{[UserConfiguration file]}] Setting the UserConfiguration file is optional, but if it's specified it must be the first argument in the command line.  Simply give the file location (either relative to the run location or the absolute path) and name.
+	\item[\texttt{[-d [Direct parameter settings]]}] The -d flag can be used to easily specify direct parameter settings without using the full syntax (see -t below).  The syntax for this is:
+	\begin{DoxyCode}
+	-d LOCATION1=VALUE1 LOCATION2=VALUE2
+	\end{DoxyCode}
+	where a location is the combination of the configuration element name and the parameter name: \texttt{ElementName:ParameterName}.
+	\item[\texttt{[-r [Parameter replacements]]}] The -r flag can be used to easily specify parameter replacement variables without using the full syntax (see -t below).  The syntax for this is:
+	\begin{DoxyCode}
+	-r VARIABLE1=VALUE1 VARIABLE2=VALUE2
+	\end{DoxyCode}
+	\item[\texttt{[-c [Local Configuration files]]}] The -c flag can be used to easily specify local configuration files without using the full syntax (see -t below).  The syntax for this is:
+	\begin{DoxyCode}
+	-c KEY1=FILENAME1 KEY2=FILENAME2
+	\end{DoxyCode}
+	The available keys can be found in the UserConfiguration.txt file that is included with \textsc{Kassiopeia}.
+	\item[\texttt{[-t [Other tokens]]}] Any tokens usually in the UserConfiguration file can be given under the -t flag in the command line. As an example to demonstrate the syntax, you would set the verbosity and configuration file directory as:
+	\begin{DoxyCode}
+	>  Kassiopeia -t --PreliminaryConfiguration VerbosityLevel=Run 
+	OptionHome=[some directory path] ++
+	\end{DoxyCode}
+	Note that the `\texttt{++}' at the end indicates the end of the PreliminaryConfiguration block, and is necessary.  This syntax does support the nesting of tokens, but right now that's not applicable to the UserConfiguration settings.  Both the parameter replacement variables and the local configuration files could be specified using this notation, but the \texttt{-r} and \texttt{-c} options are available so you can use their simpler syntax.
+\end{description}
+
+\subsubsection{KassiopeiaConfiguration}
+This configuration file is used to specify exactly what you want to simulate.  It is divided into several parts: global (currently in a separate file), run, event and track settings.  These set up \textsc{Kassiopeia} to use the tools that are described below.
+\begin{itemize}
+	\item Global: Definition of random seed, output file, output file format, output level (currently in the GlobalConfiguration file)
+	\item Run: Definition of the number of particles you want to simulate and the time of run
+	\item Event: Definition of generators used for this run
+	\item Track: Definition of regions and their corresponding step strategies
+\end{itemize}
+The corresponding configuration file, by default called \texttt{KassiopeiaConfiguration.txt}, is quite short, since for both event and track configuration you simply refer to the tools you configured earlier by name.
+
+Here is an example of how the event configuration is set:
+\begin{DoxyCode}
+<EventConfiguration>
+    <<use=MyEgun>> 
+</EventConfiguration>
+\end{DoxyCode}
+In this configuration the generator chosen for the run is called ``MyEgun.''  That generator, assuming it is provided in the GeneratorConfiguration file, will be used for all events.  Multiple generators can be specified for more complicated run setups.  Each is assigned a ``weight''; the generator that initiates a particular event is chosen randomly based on those weights.
+
+The \texttt{TrackConfiguration} section is used to define the regions and their corresponding computation strategies.  \textsc{Kassiopeia} offers the possibility to change computation method depending on the position of the particle. For instance, close to electrodes a smaller step size can be chosen. As another example, \textsc{Kassiopeia} can switch from the simulation of particles in vacuum to a simulation of particles in silicon once the particle hits the detector.
+
+
+\subsection{Toolbox Configurations}
+The other configuration files are used to configure the tools that are needed throughout the simulation. For this purpose four configuration files can be adjusted. The configuration files, with their default file names and the topics they address, are:
+\begin{description}
+	\item[GeneratorConfiguration] (\texttt{GeneratorConfiguration.txt}): How are the particles generated?
+	\item[SSCConfiguration] (\texttt{SSCConfiguration.txt}): How is the tritium source configured?
+	\item[StepStrategyConfiguration] (\texttt{StepStrategyConfiguration.txt}): How is the trajectory computed and which exit conditions should be used?
+	\item[FieldConfiguration] (\texttt{FieldConfiguration.txt}): Which magnetic and electric fields are present and with which method should they be computed?
+	\item[GeometryConfiguration] (\texttt{GeometryConfiguration.txt}): Which geometrical shapes are needed for particle generation, navigation and exit conditions?
+	\item[DAQConfiguration] (\texttt{DAQConfiguration.txt}): Not currently in use.
+\end{description}
+
+Each tool is given a ``Name'' so that it can be referred to in the KassiopeiaConfiguration file, and so that different instances of the same type of tool can be identified within the simulation.
+
+Here is an example of how you would configure the angular-defined e-gun generator:
+\begin{DoxyCode}
+<PAGEGeneratorADEgun>
+    <<Name=MyEgun>> 
+    <<Weight=1>>
+    <<StartPositionX=0.>>
+    <<StartPositionY=0.>>
+    <<StartPositionZ=-2.24.>>
+    <<MeanEnergy=18000.>>
+    <<SigmaEnergy=100.>>
+    <<MeanTheta=0.0>>
+    <<SigmaTheta=0.01>>
+    <<MeanPhi=0.0>>
+    <<SigmaPhi=0.01>>
+</PAGEGeneratorADEgun>
+\end{DoxyCode}
+
+\subsubsection{Specifying Configuration Files}\label{sec:howto-specifyingconfigfiles}
+\textsc{Kassiopeia} searches for the correct configuration files in a particular way.  The hierarchy used is as follows, for any particular configuration file (besides UserConfiguration):
+\begin{enumerate}
+	\item It checks if you defined a local configuration file in \texttt{UserConfiguration.txt}. This setting has the highest priority.
+ 	\item If you did not specify the configuration file, \textsc{Kassiopeia} will check in the current directory (from which the simulation is being run) for a file with the default name.
+	\item If it does not find the default filename in the current directory it will look in the directory specified as the configuration file directory.  That setting can be made in one of three ways (also in order of priority, from high to low):
+	\begin{enumerate}
+		\item You can specify the directory from the \texttt{PreliminaryConfiguration} section of the UserConfiguration file (see the default file for an example).
+		\item If the directory is not specified in the UserConfiguration file, then it can come from the \texttt{KSCONFIG} environment variable.  The script \texttt{<maindir>/Applications/Scripts/setenv.(c)sh} can be sourced from your shell login script to make this convenient if you usually use the same \textsc{Kassiopeia} installation.  The environment variable \texttt{KSDATA} can also be used to define the data file directory.
+		\item If \texttt{KSCONFIG} is not set and the directory is not specified from the \texttt{UserConfiguration} file, then the default value in KSCoreManager will be used.  This will be set to the value of the variable \texttt{sysconfdir} while \textsc{Kassiopeia} is being built (Use \texttt{<maindir>/configure --help} from the command line to see how to set this).
+	\end{enumerate}
+	\item If the configuration file can not be found there the program will quit with a fatal error. 
+\end{enumerate}
+
+
+\subsubsection{Available Tools}
+The following lists are the complete set of tools currently available in \textsc{Kassiopeia}, along with the default file names for the configuration files in which they are located.
+\begin{description}
+	\item[Generator Toolbox] (\texttt{GeneratorConfiguration.txt}):
+	\begin{itemize}
+		\item Particles start at fixed position, energy and angles (\texttt{PAGEGeneratorFix})
+		\item Angular defined egun (\texttt{PAGEGeneratorADEgun})
+		\item Approximation of WGTS (\texttt{PAGEGeneratorFastWGTS})
+		\item Real WGTS (\texttt{PAGEGeneratorWGTS})
+		\item Radon 219 and 220 decay (\texttt{PAGEGeneratorRadon})
+		\item Tritium decay (\texttt{PAGEGeneratorTritim})
+		\item Krypton decay (\texttt{PAGEGeneratorKrypton})
+		\item Particle starting from a user defined surface (\texttt{PAGEGeneratorSurface})
+		\item Particle starting in a user give volume (\texttt{PAGEGeneratorVolume})
+	\end{itemize}
+	\item[Step Strategy Toolbox] (\texttt{StepStrategyConfiguration.txt}):
+	\begin{itemize}
+		\item Three different stepping modes are available:
+		\begin{itemize}
+			\item Exact stepping method (\texttt{KTrackExactStepComputer})
+			\item Adiabatic approximation method (\texttt{KTrackAdiabaticStepComputer})
+			\item Stepping method valid in silicon (\texttt{KESSStepComputer})
+		\end{itemize}
+		\item One can think of the KTrack stepping modes as empty boxes that can be filled with different processes:
+		\begin{itemize}
+			\item Propagation (Runge Kutta 8, Predictor Corrector or Embedded Runge Kutta)
+			\item Gyration (only possible for adiabatic stepping method)
+			\item Drift (only possible for adiabatic stepping method)
+			\item Synchrotron
+			\item Scattering
+		\end{itemize}
+		\item The KTrack stepping modes can have different step-size-controlling methods. Multiple selection is possible.
+		\begin{itemize}
+			\item Fixed time step
+			\item Maximal step length
+			\item Fraction of cyclotron period
+			\item Limit on energy conservation violation
+			\item Maximal scattering probability
+			\item Maximal synchrotron energy lost
+			\item Limit on numerical error (only available for embedded Runge Kutta methods)
+		\end{itemize}
+		\item A variety of exit conditions are available:
+		\begin{itemize}
+			\item Maximal number of steps
+			\item Maximal path length
+			\item Maximal z position
+			\item Detector hit
+			\item Geometry hit
+			\item After a certain number of turns
+			\item After a certain number of full magnetron turns
+			\item ... more problem-specific exit conditions are available
+		\end{itemize}
+	\end{itemize}
+	\item[Field Calculation Toolbox] (\texttt{FieldConfiguration.txt}):
+	\begin{itemize}
+		\item Electric field calculation methods:
+		\begin{itemize}
+			\item ELCD2 (Legendre polynomial expansion and elliptic integral method (automatic switch), valid for axially symmetric geometries, wire electrode is approximated as full cones) (\texttt{KAFCAElfield2Ferenc} or \texttt{KAFCAELCD2})
+			\item ELCD32 (Legendre polynomial expansion and elliptic integral method (no automatic switch), valid for axially symmetric geometries) (\texttt{KAFCAElfield32Ferenc})
+			\item ELCD33 (valid for non axially symmetric geometries, not fully tested) (\texttt{KAFCAELCD33})
+			\item ELCD34 (not in this version)
+			\item KEMField
+			\item Constant (\texttt{ElfieldConstant})
+			\item Hermite interpolation (\texttt{ElfieldInterpolate})
+		\end{itemize}
+	\item Magnetic field calculation methods:
+		\begin{itemize}
+			\item Magfield3 (Legendre polynomial expansion and elliptic integral method (automatic switch), valid for tilted cold) (\texttt{KAFCAMagfield3Ferenc})
+			\item Constant (\texttt{KAFCAMagfieldConstant})
+			\item Dipole (\texttt{KNAXSMagneticDiopoles})
+			\item Bio Savart (\texttt{KNAXSBiotSavart})
+			\item Hermite interpolation (\texttt{KNAXSMagfieldInterpolate})
+		\end{itemize}    
+	\end{itemize}
+	\item[Geometries] (\texttt{GeometryConfiguration.txt}):\\
+	In this first version of \textsc{Kassiopeia}, geometries can only be built from cones. Therefore you can define two types of objects:
+	\begin{itemize}
+		\item Cones
+		\item Polycones
+	\end{itemize}
+\end{description}
+
+
+
+\section{Looking at the Results}
+Two output formats are available. The \textit{three tree} output and a \textit{TClonesArray} output. You choose the format in the \texttt{GlobalConfiguration.txt}. Also there, you can choose the output level: (event, track, step). In the output you correspondingly find information about events, tracks and steps. In the \textit{three tree} output these are just three trees, whereas in the TClonesArray format it is more complicated. In this version of \textsc{Kassiopeia} you configure the output via the output level and the modules, you are using in your simulation, themselves. For instance the Scattering module has a parameter ``output'' that can be set to 1 or 0 within the configuration of the Scattering module.
+
+Furthermore a \texttt{TrackPlotter.cxx} will be available in \texttt{<maindir>/Applications/Other/src}, that plots the trajectory of the particles in a user defined geometry.
+
+Additionally, a macro called FileReader is provided, which reads in the output file and allows the user to quickly insert his own analysis code there. In the future, this functionality will become part of KALI and will be expanded to full dynamically linked system for user defined analysis functions. 
+It can be used as follows: First of all, start root. Then in root do: 
+\begin{DoxyCode}
+      root [0] .L /path/to/kassiopeia/bin/FileReader.C
+      root [0] FileReader("/path/to/filename.root", "/path/to/kassiopeia/lib);
+\end{DoxyCode}
+
+The default behavior is just to print some not very interesting  information on the screen, but you can adapt it to fit your purposes.

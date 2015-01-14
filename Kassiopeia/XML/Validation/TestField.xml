@@ -1,0 +1,187 @@
+<global_define name="log_path" value="@Kassiopeia_LOG_INSTALL_DIR@"/>
+
+<messages>
+
+	<file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
+
+	<message key="k_file" terminal="normal" log="warning"/>
+	<message key="k_initialization" terminal="normal" log="warning"/>
+
+    <message key="kg_core" terminal="normal" log="warning"/>
+	<message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_mesh" terminal="normal" log="warning"/>
+    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+    <message key="ks_operator" terminal="debug" log="normal"/>
+	<message key="ks_field" terminal="debug" log="normal"/>
+	<message key="ks_generator" terminal="debug" log="normal"/>
+	<message key="ks_trajectory" terminal="debug" log="normal"/>
+	<message key="ks_interaction" terminal="debug" log="normal"/>
+	<message key="ks_terminator" terminal="debug" log="normal"/>
+	<message key="ks_writer" terminal="debug" log="normal"/>
+	<message key="ks_navigation" terminal="debug" log="normal"/>
+	<message key="ks_main" terminal="debug" log="normal"/>
+	<message key="ks_run" terminal="debug" log="normal"/>
+	<message key="ks_event" terminal="debug" log="normal"/>
+	<message key="ks_track" terminal="debug" log="normal"/>
+	<message key="ks_step" terminal="debug" log="normal"/>
+
+</messages>
+
+<geometry>
+
+    <define name="trap_length" value="3.35e-3"/>
+    <define name="z_length" value="{[trap_length]}"/>
+    <define name="r_length" value="{[trap_length] / sqrt(2.)}"/>
+    
+    <!-- electrodes -->
+    
+    <tag name="electrode_tag" name="endcap_electrode_tag">
+        <rotated_poly_line_surface name="endcap_electrode_surface" rotated_mesh_count="128">
+            <poly_line>
+                <start_line x1="3.350e-3" y1="0.0" x2="3.636e-3" y2="2.000e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="4.384e-3" y="4.000e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="5.406e-3" y="6.000e-3" line_mesh_count="200" line_mesh_power="1."/>
+            </poly_line>
+        </rotated_poly_line_surface>
+    </tag>
+    
+    <tag name="electrode_tag" name="ring_electrode_tag">
+        <rotated_poly_line_surface name="ring_electrode_surface" rotated_mesh_count="128">
+            <poly_line>
+                <start_line x1="4.000e-3" y1="7.379e-3" x2="3.000e-3" y2="6.360e-3" line_mesh_count="200" line_mesh_power="1."/>
+                <next_line x="2.000e-3" y="5.518e-3" line_mesh_count="100" line_mesh_power="1."/>
+                <next_line x="1.000e-3" y="4.944e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="0.000e-3" y="4.738e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="-1.000e-3" y="4.944e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="-2.000e-3" y="5.518e-3" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="-3.000e-3" y="6.360e-3" line_mesh_count="100" line_mesh_power="1."/>
+                <next_line x="-4.000e-3" y="7.379e-3" line_mesh_count="200" line_mesh_power="1."/>
+            </poly_line>
+        </rotated_poly_line_surface>
+    </tag>
+    
+    <!-- solenoid -->
+
+    <tag name="magnet_tag" name="solenoid_tag">
+        <cylinder_tube_space name="solenoid_space" z1="-50.e-3" z2="50.e-3" r1="8.000e-3" r2="9.000e-3" radial_mesh_count="30"/>
+    </tag>
+    
+    <!-- cell -->
+
+    <tag name="cell_tag">
+        <cylinder_space name="cell_space" z1="-1.0e-3" z2="1.0e-3" r="4.5e-3"/>
+    </tag>
+    
+    <!-- main assembly -->
+    
+    <cylinder_space name="world_space" z1="-200.0e-3" z2="200.0e-3" r="200.0e-3"/>
+    <space name="world" node="world_space">  
+        <surface name="top_endcap_electrode" node="endcap_electrode_surface"/>
+        <surface name="bottom_endcap_electrode" node="endcap_electrode_surface">
+                <transformation rotation_euler="0. 180. 0."/>
+        </surface>
+        <surface name="ring_electrode" node="ring_electrode_surface"/>
+        <space name="solenoid" node="solenoid_space"/>
+        <space name="cell" node="cell_space"/>
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_magnet" color="0 255 96 96" arc="72" spaces="world/@magnet_tag"/>
+    <appearance name="app_electrode" color="255 128 0 96" arc="72" surfaces="world/@electrode_tag"/>
+    <appearance name="app_cell" color="96 96 255 96" arc="72" spaces="world/@cell_tag"/>
+
+    <!-- mesh -->
+
+    <axial_mesh name="mesh_electrode" surfaces="world/@electrode_tag"/>
+
+    <!-- bem -->
+
+    <electrostatic_dirichlet name="bem_endcap" surfaces="world/@endcap_electrode_tag" value="0."/>
+    <electrostatic_dirichlet name="bem_ring" surfaces="world/@ring_electrode_tag" value="10."/>
+
+    <!-- electromagnets -->
+
+    <electromagnet name="electromagnet_solenoid" spaces="world/@solenoid_tag" current="{9.5 * 50000}"/>
+
+</geometry>
+
+<kassiopeia>
+    <electrostatic_field_solver
+        name="kemfield_e"
+        surfaces="world/@electrode_tag"
+        symmetry="axial"
+    >
+
+	<!--
+	<precomputed_geometry
+	    hash="58380375a2948d7f46f6e80d59ab5da6"
+	    />
+	-->
+
+	<!--
+	    <gaussian_elimination_bem_solver/>
+	-->
+
+        <robin_hood_bem_solver
+            tolerance="1.e-8"
+            check_sub_interval="100"
+            display_interval="1"
+            write_interval="0"
+	    plot_interval="0"
+	    use_opencl="false"
+        />
+
+	<!--
+	    <integrating_field_solver
+	    use_opencl="false"
+        />
+	-->
+
+        <zonal_harmonic_field_solver
+            number_of_bifurcations="3"
+            convergence_ratio=".99"
+            convergence_parameter="1.e-15"
+            proximity_to_sourcepoint="1.e-12"
+            number_of_central_coefficients="500"
+            use_fractional_central_sourcepoint_spacing="true"
+            central_sourcepoint_spacing="1.e-4"
+            central_sourcepoint_start="-50.e-3"
+            central_sourcepoint_end="50.e-3"
+            number_of_remote_coefficients="200"
+            remote_sourcepoint_start="-1.e-1"
+            remote_sourcepoint_end="1.e-1"
+        />
+    </electrostatic_field_solver>
+
+    <electromagnet_field_solver
+        name="kemfield_b"
+        spaces="world/@magnet_tag"
+	>
+
+	<!--
+	    <integrating_field_solver
+	    use_opencl="false"
+        />
+	-->
+
+      <zonal_harmonic_field_solver
+	  number_of_bifurcations="3"
+	  convergence_ratio=".99"
+	  convergence_parameter="1.e-15"
+	  proximity_to_sourcepoint="1.e-12"
+	  number_of_central_coefficients="500"
+	  use_fractional_central_sourcepoint_spacing="true"
+	  central_sourcepoint_spacing="1.e-4"
+	  central_sourcepoint_start="-50.e-3"
+	  central_sourcepoint_end="50.e-3"
+	  number_of_remote_coefficients="200"
+	  remote_sourcepoint_start="-1.e-1"
+	  remote_sourcepoint_end="1.e-1"
+	  />
+    </electromagnet_field_solver>
+
+    <magnetic_field_constant name="constant_b" field="0. 0. 5.872"/>
+</kassiopeia>

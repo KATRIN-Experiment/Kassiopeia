@@ -1,0 +1,42 @@
+if(@PROJECT_NAME@_FOUND)
+    return()
+endif()
+
+set(@PROJECT_NAME@_FOUND TRUE)
+
+# Update this section
+
+set(DEPENDS_LIBRARIES @ROOT_LIBRARIES@ @Boost_LIBRARIES@ @GSL_LIBRARIES@)
+# The CMake names of the libraries in your module
+
+# End
+
+set(@PROJECT_NAME@_VERSION_MAJOR @MODULE_VERSION_MAJOR@)
+set(@PROJECT_NAME@_VERSION_MINOR @MODULE_VERSION_MINOR@)
+set(@PROJECT_NAME@_VERSION_PATCH @MODULE_VERSION_PATCH@)
+set(@PROJECT_NAME@_VERSION @MODULE_VERSION@)
+
+get_filename_component(MODULE_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+if(EXISTS "${MODULE_CMAKE_DIR}/ModuleTargets.cmake")
+    include("${MODULE_CMAKE_DIR}/ModuleTargets.cmake")
+elseif(NOT KASPER_TARGETS_INCLUDED)
+    include("${MODULE_CMAKE_DIR}/../Kasper/KasperTargets.cmake")
+    set(KASPER_TARGETS_INCLUDED TRUE)
+endif()
+
+set(@PROJECT_NAME@_INCLUDE_DIRS @INSTALLED_INCLUDE_DIRS@)
+
+set(@PROJECT_NAME@_LIBRARIES @MODULE_TARGETS@)
+set(@PROJECT_NAME@_Core_LIBRARIES KommonCore)
+if( Kommon_USE_BOOST )
+    set(@PROJECT_NAME@_Boost_LIBRARIES KommonBoost)
+endif( Kommon_USE_BOOST )
+if( Kommon_USE_ROOT )
+    set(@PROJECT_NAME@_Root_LIBRARIES KommonRoot)
+endif( Kommon_USE_ROOT )
+if( Kommon_USE_GSL )
+    set(@PROJECT_NAME@_Gsl_LIBRARIES KommonGsl)
+endif( Kommon_USE_GSL )
+if( Kommon_USE_VTK )
+    set(@PROJECT_NAME@_Vtk_LIBRARIES KommonVtk)
+endif( Kommon_USE_VTK )

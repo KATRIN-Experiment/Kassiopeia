@@ -1,0 +1,397 @@
+<!-- this file contains an annotated list of all the generators available in kassiopeia 3.0 -->
+<!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
+
+<messages>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+
+</messages>
+
+<geometry>
+
+	<cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
+	<space name="world" node="world_space"/>
+
+</geometry>
+
+<kassiopeia>
+
+	<!-- values -->
+
+	<ksgen_value_fix name="value_fix" value="1.3"/>
+	<!--
+		description:
+			generates a single fixed value.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value:
+				the value to be returned.
+	-->
+
+	<ksgen_value_set name="value_set" value_start="1." value_stop="2." value_count="11"/>
+	<!--
+		description:
+			generates a set of constant values evenly spaced along an interval inclusive of the beginning and end points.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_start:
+				the beginning of the interval.
+
+			value_stop:
+				the end of the interval.
+
+			value_count:
+				the number of values to return.  must be at least two.
+	-->
+
+	<ksgen_value_uniform name="value_uniform" value_min="-10." value_max="10."/>
+	<!--
+		description:
+			generates a single random value drawn from a portion of a uniform distribution.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_min:
+				the minimum value to return.
+
+			value_max:
+				the maximum value to return.
+	-->
+
+	<ksgen_value_gauss name="value_gauss" value_min="-10." value_max="10." value_mean="0." value_sigma="1."/>
+	<!--
+		description:
+			generates a single random value drawn from a portion of a gaussian distribution.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_min:
+				the minimum value to return.
+
+			value_max:
+				the maximum value to return.
+
+			value_mean:
+				the mean of the underlying gaussian distribution.
+
+			value_sigma:
+				the square root of the second cumulant of the underlying gaussian distribution.
+	-->
+
+	<ksgen_value_formula name="value_formula" value_min="0." value_max="1." value_formula="x * x / 2."/>
+	<!--
+		description:
+			generates a single random value drawn from a portion of a user-defined distribution.
+			implemented using a root tf1.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_min:
+				the minimum value to return.
+
+			value_max:
+				the maximum value to return.
+
+			value_formula:
+				the underlying distribution from which to draw.
+	-->
+
+	<ksgen_value_radius_cylindrical name="value_radius_cylindrical" radius_min="5." radius_max="10."/>
+	<!--
+		description:
+			generates a single random value drawn from a distribution suitable for randomly distributing radii in cylindrical coordinates.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_min:
+				the minimum radius in meters to return. must be positive and less than radius_max.
+
+			value_max:
+				the maximum radius in meters to return. must be positive and greater than radius_min.
+	-->
+
+	<ksgen_value_radius_spherical name="value_radius_spherical" radius_min="5." radius_max="10."/>
+	<!--
+		description:
+			generates a single random value drawn from a distribution suitable for randomly distributing radii in cylindrical coordinates.
+
+		parameters:
+			name:
+				the name of this value.
+
+			value_min:
+				the minimum radius in meters to return. must be positive and less than radius_max.
+
+			value_max:
+				the maximum radius in meters to return. must be positive and greater than radius_min.
+	-->
+
+	<ksgen_value_angle_spherical name="value_angle_spherical" angle_min="10." angle_max="70."/>
+	<!--
+		description:
+			generates a single random value drawn from a distribution suitable for randomly distributing polar angles in cylindrical coordinates.
+
+		parameters:
+			name:
+				the name of this value.
+
+			angle_min:
+				the minimum angle in degrees to return. must be greater than zero and less than angle_max and less than 90.
+
+			angle_max:
+				the maximum angle in degrees to return. must be greater than zero and greater than angle_max and less than 90.
+	-->
+
+	<!-- position creators -->
+
+	<ksgen_position_rectangular_composite name="position_rectangular_composite" space="world">
+		<x_fix value="0."/>
+		<y_gauss value_min="0." value_max="5." value_mean="2." value_sigma=".5"/>
+		<z_formula value_min="2." value_max="4." value_formula="x * x / 2. + 1."/>
+	</ksgen_position_rectangular_composite>
+
+	<!--
+		description:
+			creates the position of a generated particle according to the value objects supplied, interpreting them in rectangular coordinates.
+			x, y, and z values are in meters.
+
+		parameters:
+			name:
+				the name of this position creator.
+
+			space:
+				the name of a space in kgeobag to use as the origin of coordinates.
+
+			surface:
+				the name of a surface in kgeobag to use as the origin of coordinates.
+
+		elements:
+			(x|y|z)_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the (x|y|z) coordinate.
+	-->
+
+	<ksgen_position_cylindrical_composite name="position_cylindrical_composite" surface="world/top">
+		<r_cylindrical radius_min="1." radius_max="2."/>
+		<phi_set value_start="45." value_stop="90." value_count="10"/>
+		<z_formula value_min="2." value_max="4." value_formula="x * x / 2. + 1."/>
+	</ksgen_position_cylindrical_composite>
+	<!--
+		description:
+			creates the position of a generated particle according to the value objects supplied, interpreting them to be cylindrical coordinates.
+			r values are in meters, phi values are in degrees, and z values are in meters.
+
+		parameters:
+			name:
+				the name of this position creator.
+
+			space:
+				the name of a space in kgeobag to use as the origin of coordinates.
+
+			surface:
+				the name of a surface in kgeobag to use as the origin of coordinates.
+
+		elements:
+			(r|phi|z)_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the (r|phi|z) coordinate.
+
+			r_cylindrical:
+				creates a radius cylindrical value to set the r coordinate.
+	-->
+
+	<ksgen_position_spherical_composite name="position_spherical_composite" surface="world/bottom">
+		<r_spherical radius_min="1." radius_max="2."/>
+		<theta_spherical angle_min="20." angle_max="160."/>
+		<phi_uniform value_min="2." value_max="4."/>
+	</ksgen_position_spherical_composite>
+	<!--
+		description:
+			creates the position of a generated particle according to the value objects supplied, interpreting them to be spherical coordinates.
+			r values are in meters, theta and phi values are in degrees.
+
+		parameters:
+			name:
+				the name of this position creator.
+
+			space:
+				the name of a space in kgeobag to use as the origin of coordinates.
+
+			surface:
+				the name of a surface in kgeobag to use as the origin of coordinates.
+
+		elements:
+			(r|theta|phi)_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the (r|theta|phi) coordinate.
+
+			r_spherical:
+				creates a radius spherical value to set the r coordinate.
+
+			theta_spherical:
+				creates an angle spherical value to set the theta coordinate.
+	-->
+
+	<!-- direction creators -->
+
+	<ksgen_direction_spherical_composite name="direction_spherical_composite" space="world">
+		<theta_fix value="38."/>
+		<phi_gauss value_min="0." value_max="180." value_mean="90." value_sigma="10."/>
+	</ksgen_direction_spherical_composite>
+	<!--
+		description:
+			creates the direction of a generated particle according to the value objects supplied, interpreting them to be spherical coordinates.
+			theta and phi values are in degrees.
+
+		parameters:
+			name:
+				the name of this direction creator.
+
+			space:
+				the name of a space in kgeobag to use as the origin of coordinates.
+
+			surface:
+				the name of a surface in kgeobag to use as the origin of coordinates.
+
+		elements:
+			(theta|phi)_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the (theta|phi) coordinate.
+
+			theta_spherical:
+				creates an angle spherical value to set the theta coordinate.
+	-->	
+
+	<!-- energy creators -->
+
+	<ksgen_energy_composite name="energy_composite">
+		<energy_gauss value_min="18500." value_max="18700." value_mean="18600." value_sigma="50."/>
+	</ksgen_energy_composite>
+	<!--
+		description:
+			creates the kinetic energy of a generated particle according to the value objects supplied.
+			energy is in electron volts.
+
+		parameters:
+			name:
+				the name of this energy creator.
+
+		elements:
+			energy_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the kinetic energy.
+	-->	
+
+	<ksgen_energy_krypton_event name="energy_krypton_event" force_conversion="false" do_conversion="true" do_auger="true"/>
+	<!--
+		description:
+			creates the kinetic energies of a set of particles originating from the beta decay of 83Kr.
+
+		parameters:
+			name:
+				the name of this energy creator.
+
+			force_conversion:
+				if true, conversion electrons will always be generated.
+
+			do_conversion:
+				if true, generation of conversion electrons is enabled.
+
+			do_auger:
+				if true, generation of an auger cascade is enabled.
+	-->	
+
+	<ksgen_energy_radon_event name="energy_radon_event" force_shake_off="false" force_conversion="false" do_shake_off="true" do_conversion="true" do_auger="true" isotope_number="220"/>
+	<!--
+		description:
+			creates the kinetic energies of a set of particles originating from the alpha decay of Rn followed by the beta decay of Po.
+
+		parameters:
+			name:
+				the name of this energy creator.
+
+			force_shake_off:
+				if true, shake off electrons will always be generated.
+
+			force_conversion:
+				if true, conversion electrons will always be generated.
+
+			do_shake_off:
+				if true, generation of shake off electrons is enabled.
+
+			do_conversion:
+				if true, generation of conversion electrons is enabled.
+
+			do_auger:
+				if true, generation of an auger cascade is enabled.
+
+			isotope_number:
+				may be 219 or 220.
+	-->
+
+	<!-- time creators -->
+
+	<ksgen_time_composite name="time_composite">
+		<time_fix value="0."/>
+	</ksgen_time_composite>
+	<!--
+		description:
+			creates the time of a generated particle according to the value objects supplied.
+			time is in seconds.
+
+		parameters:
+			name:
+				the name of this time creator.
+
+		elements:
+			time_(fix|set|uniform|gauss|formula):
+				creates a (fix|set|uniform|gauss|formula) value to set the time.
+	-->	
+
+	<!-- generators -->
+
+    <ksgen_generator_composite name="generator_composite" pid="11">
+        <energy_composite>
+            <energy_fix value="1000."/>
+        </energy_composite>
+        <position_cylindrical_composite>
+            <r_fix value="3.e-4"/>
+            <phi_fix value="0."/>
+            <z_fix value="-1.e-3"/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite>
+            <theta_fix value="90."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+	<!--
+		description:
+			creates initial particle states according to the policies supplied for generating their positions, directions, energies, and times.
+
+		parameters:
+			name:
+				the name of this generator.
+
+			pid:
+				the id of the particle species to generate.
+				11 is electron.
+
+		elements:
+			any of the creators listed above may be used as elements.
+			only one instance from each of the categories position creator, direction creator, energy creator and time creator may be supplied.
+	-->	
+
+
+</kassiopeia>

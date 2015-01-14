@@ -1,0 +1,97 @@
+<!-- this file contains an annotated list of all the geometries available in kassiopeia 3.0 -->
+<!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
+
+<messages>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+
+</messages>
+
+<geometry>
+
+	<cylinder_space
+		name="outer_space"
+		z1="-2."
+		z2="2."
+		r="2."
+		radial_mesh_count="1500"
+		radial_mesh_power="1.5"
+		longitudinal_mesh_count="1000"
+		longitudinal_mesh_power="2."
+		axial_mesh_count="128"
+	/>
+	<cylinder_surface
+		name="inner_surface"
+		z1="-1."
+		z2="1."
+		r="1."
+		longitudinal_mesh_count="500"
+		longitudinal_mesh_power="2."
+		axial_mesh_count="128"
+	/>
+
+	<space name="assembly">
+		<space name="outer" node="outer_space">
+			<surface name="inner" node="inner_surface"/>
+		</space>
+	</space>
+
+</geometry>
+
+<kassiopeia>
+
+	<ksgeo_surface name="geo_surface" surfaces="assembly/outer/inner"/>
+	<!--
+		description:
+			a very lightweight wrapper around a kgeobag surface.
+			can be equipped with commands that change the simulation configuration on this surface.
+
+		parameters:
+			name:
+				the name of the surface.
+
+			surfaces:
+				paths to a set of kgeobag surfaces on which to apply the enclosed commands.
+	-->
+
+	<ksgeo_side name="geo_side" surfaces="assembly/outer/top"/>
+	<!--
+		description:
+			a very lightweight wrapper around a kgeobag surface which bounds a space.
+			sides are distinguished from surfaces in that they form a portion of the boundary of a navigationally active space.
+			can be equipped with commands that change the simulation configuration on this surface.
+
+		parameters:
+			name:
+				the name of the side.
+
+			surfaces:
+				paths to a set of kgeobag surfaces on which to apply the enclosed commands.
+	-->
+
+	<ksgeo_space name="geo_surface" spaces="assembly/outer">
+		<geo_side name="geo_side_nested" surfaces="assembly/outer/top"/>
+		<geo_surface name="geo_surface_nested" surfaces="assembly/outer/inner"/>
+	</ksgeo_space>
+	<!--
+		description:
+			a very lightweight wrapper around a kgeobag space.
+			can be equipped with commands that change the simulation configuration in this space.
+			the nesting relationships here MUST coincide with the nesting relationships enjoyed by the original kgeobag objects in order for navigation to work correctly.
+
+		parameters:
+			name:
+				the name of the space.
+
+			spaces:
+				paths to a set of kgeobag spaces in which to apply the enclosed commands.
+
+		elements:
+			geo_side:
+				must be a side which bounds this space.
+
+			geo_surface:
+				must be a free surface which bounds this space.
+	-->
+
+</kassiopeia>

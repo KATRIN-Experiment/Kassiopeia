@@ -1,0 +1,26 @@
+<!-- git, this is different -->
+
+<wg type="apartment" rooms="3">
+
+    <!-- anne paula lives on the northeast corner of the house -->
+    <roommate name="anne-paula" gender="female"/>
+    
+    <!-- laura lives on the southeast corner of the house -->
+    <roommate name="laura" gender="female"/>
+    
+    <!-- dan lives on the west side of the house -->
+    <roommate name="dan" gender="male"/>
+    
+    <!-- test if comments survive end tokens of other comments as expected
+    <wg type="office" rooms"1">
+        <!-- this end token should be ignored -->
+        <!-- the following should still be interpreted as a comment -->
+        <roommate name="stefan" gender="male"/>
+        <roommate name="marco" gender="male"/>
+        <!-- open and close more comments -->
+        <!-- <!-- <!-- --> <!--  --> --> <!--  --> -->
+        <roommate name="christian" gender="male"/>
+    </wg>
+    --> <!-- here the nested comments end, the </wg> tag should be recognized! -->
+    
+</wg>

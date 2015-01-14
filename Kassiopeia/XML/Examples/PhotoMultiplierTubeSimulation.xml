@@ -1,0 +1,376 @@
+<messages>
+
+	<file base="PhotoMultiplierTubeLog.txt"/>
+
+	<message key="k_file" terminal="normal" log="warning"/>
+	<message key="k_initialization" terminal="normal" log="warning"/>
+
+    <message key="kg_core" terminal="normal" log="warning"/>
+	<message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_mesh" terminal="normal" log="warning"/>
+    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+
+	<message key="ks_object" terminal="normal" log="normal"/>
+    <message key="ks_operator" terminal="normal" log="normal"/>
+	<message key="ks_field" terminal="normal" log="normal"/>
+	<message key="ks_generator" terminal="normal" log="normal"/>
+	<message key="ks_trajectory" terminal="normal" log="normal"/>
+	<message key="ks_interaction" terminal="normal" log="debug"/>
+	<message key="ks_terminator" terminal="normal" log="normal"/>
+	<message key="ks_writer" terminal="normal" log="normal"/>
+	<message key="ks_navigator" terminal="normal" log="normal"/>
+	<message key="ks_main" terminal="normal" log="normal"/>
+	<message key="ks_run" terminal="normal" log="normal"/>
+	<message key="ks_event" terminal="normal" log="normal"/>
+	<message key="ks_track" terminal="normal" log="normal"/>
+	<message key="ks_step" terminal="normal" log="normal"/>
+
+</messages>
+
+<geometry>
+
+    <define name="tube_length" value="8.0e-2"/>
+    <define name="tube_diameter" value="4e-2"/>
+    <define name="radius" value="{[tube_diameter]/2.}"/>
+    <define name="dynode_offset" value="2.25e-2"/>
+    <define name="dynode_radial_offset" value="0.5e-2"/>
+    <define name="dynode_radius" value="1.e-2"/>
+    <define name="dynode_gap" value="0.1e-2"/>
+
+    <!-- electrodes -->
+
+    <tag name="electrode_tag" name="photocathode_tag">
+        <rotated_arc_segment_surface name="photocathode_surface" rotated_mesh_count="128">
+            <arc_segment x1="{0.0}" y1="{-0.9*[radius]}" x2="{0.0}" y2="{0.9*[radius]}" radius="{2*[radius]}" right="false" short="true" arc_mesh_count="64"/>
+        </rotated_arc_segment_surface>
+    </tag>
+
+    <tag name="electrode_tag" name="cylindrical_housing_tag">
+        <cylinder_surface name="cylindrical_housing_surface" z1="0.0" z2="{[tube_length]}" r="{[radius]}" longitudinal_mesh_count="80" longitudinal_mesh_power="1." axial_mesh_count="80"/>
+    </tag>
+
+    <tag name="electrode_tag" name="backplate_housing_tag">
+        <disk_surface name="backplate_housing_surface" z="{[tube_length]}" r="{[radius]}" radial_mesh_count="64" radial_mesh_power="1." axial_mesh_count="64"/>
+    </tag>
+
+    <tag name="electrode_tag" name="focusing_electrode1_tag">
+        <cylinder_surface name="focusing_electrode1_surface" z1="0.1e-2" z2="{2.5e-2}" r="{0.9*[radius]}" longitudinal_mesh_count="20" longitudinal_mesh_power="1." axial_mesh_count="80"/>
+    </tag>
+
+    <tag name="electrode_tag" name="focusing_electrode2_tag">
+        <rotated_poly_line_surface name="focusing_electrode2_surface" rotated_mesh_count="128">
+            <poly_line>
+                <start_point x="0.25e-2" y="1.5e-2"/>
+                <next_line x="1.0e-2" y="1.5e-2" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="1.0e-2" y="0.5e-2" line_mesh_count="50" line_mesh_power="1."/>
+                <next_line x="0.5e-2" y="0.5e-2" line_mesh_count="50" line_mesh_power="1."/>
+            </poly_line>
+        </rotated_poly_line_surface>
+    </tag>
+
+    <tag name="electrode_tag" name="dynode_tag">
+        <tag name="dynode_tag">
+        <extruded_arc_segment_surface name="dynode_surface" zmin="-0.75e-2" zmax="0.75e-2" extruded_mesh_count="32" extruded_mesh_power="2.7">
+            <arc_segment x1="[dynode_radius]" y1="0.0" x2="0.0" y2="[dynode_radius]" radius="[dynode_radius]" right="true" short="true" arc_mesh_count="64"/>
+        </extruded_arc_segment_surface>
+        </tag>
+    </tag>
+
+    <tag name="electrode_tag">
+        <tag name="anode_tag">
+        <rotated_arc_segment_surface name="anode_surface" rotated_mesh_count="128">
+            <arc_segment x1="1.0e-2" y1="0.0" x2="0.0" y2="-1.0e-2" radius="1.0e-2" right="false" short="true" arc_mesh_count="64"/>
+        </rotated_arc_segment_surface>
+        </tag>
+    </tag>
+
+    <space name="photomultiplier_tube_assembly">
+        <surface name="photocathode_electrode" node="photocathode_surface"/>
+        <surface name="cylindrical_housing_electrode" node="cylindrical_housing_surface"/>
+        <surface name="backplate_housing_electrode" node="backplate_housing_surface"/>
+        <surface name="focusing_electrode1" node="focusing_electrode1_surface"/>
+        <surface name="focusing_electrode2" node="focusing_electrode2_surface">
+            <transformation displacement="0. 0. 1e-2"/>
+        </surface>
+        <surface name="dynode1" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 0." displacement="0. 0. 0."/>
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. [dynode_offset]"/>
+        </surface>
+        <surface name="dynode2" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 180." displacement="0. 0. 0."/>
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + [dynode_radius]}"/>
+        </surface>
+        <surface name="dynode3" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 90." />
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + [dynode_radius] + [dynode_gap]}"/>
+        </surface>
+        <surface name="dynode4" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 270." />
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + 2*[dynode_radius] + [dynode_gap]}"/>
+        </surface>
+        <surface name="dynode5" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 0." displacement="0. 0. 0."/>
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + 2*[dynode_radius] + 2*[dynode_gap]}"/>
+        </surface>
+        <surface name="dynode6" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 180." displacement="0. 0. 0."/>
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + 3*[dynode_radius] + 2*[dynode_gap]}"/>
+        </surface>
+        <surface name="dynode7" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 90." />
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + 3*[dynode_radius] + 3*[dynode_gap]}"/>
+        </surface>
+        <surface name="dynode8" node="dynode_surface">
+            <transformation rotation_euler="0. 90. 270." />
+            <transformation displacement="{-1.0*[dynode_radial_offset]} 0. {[dynode_offset] + 4*[dynode_radius] + 3*[dynode_gap]}"/>
+        </surface>
+        <surface name="anode_electrode" node="anode_surface">
+            <transformation displacement="0. 0. {[dynode_offset] + 4*[dynode_radius] + 4*[dynode_gap]}"/>
+        </surface>
+        <surface name="start" node="photocathode_surface"/>
+        <surface name="stop" node="anode_surface"/>
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_electrode" color="255 128 0 96" arc="72" surfaces="photomultiplier_tube_assembly/@electrode_tag"/>
+<!--    <appearance name="app_start" color="0 255 0 96" arc="72" surfaces="photomultiplier_tube_assembly/@start_tag"/>  -->
+<!--    <appearance name="app_stop" color="255 0 0 96" arc="72" surfaces="photomultiplier_tube_assembly/@stop_tag"/>  -->
+
+    <!-- mesh -->
+
+    <mesh name="mesh_electrode" surfaces="photomultiplier_tube_assembly/@electrode_tag"/>
+
+    <!-- bem -->
+
+    <electrostatic_dirichlet name="electrode_photocathode" surfaces="photomultiplier_tube_assembly/photocathode_electrode" value="0."/>
+    <electrostatic_dirichlet name="electrode_cylindrical_housing" surfaces="photomultiplier_tube_assembly/cylindrical_housing_electrode" value="0."/>
+    <electrostatic_dirichlet name="electrode_backplate_housing" surfaces="photomultiplier_tube_assembly/backplate_housing_electrode" value="0."/>
+    <electrostatic_dirichlet name="electrode1_focusing" surfaces="photomultiplier_tube_assembly/focusing_electrode1" value="0."/>
+    <electrostatic_dirichlet name="electrode2_focusing" surfaces="photomultiplier_tube_assembly/focusing_electrode2" value="250."/>
+    <electrostatic_dirichlet name="electrode_dynode1" surfaces="photomultiplier_tube_assembly/dynode1" value="500."/>
+    <electrostatic_dirichlet name="electrode_dynode2" surfaces="photomultiplier_tube_assembly/dynode2" value="600."/>
+    <electrostatic_dirichlet name="electrode_dynode3" surfaces="photomultiplier_tube_assembly/dynode3" value="700."/>
+    <electrostatic_dirichlet name="electrode_dynode4" surfaces="photomultiplier_tube_assembly/dynode4" value="800."/>
+    <electrostatic_dirichlet name="electrode_dynode5" surfaces="photomultiplier_tube_assembly/dynode5" value="900."/>
+    <electrostatic_dirichlet name="electrode_dynode6" surfaces="photomultiplier_tube_assembly/dynode6" value="1000."/>
+    <electrostatic_dirichlet name="electrode_dynode7" surfaces="photomultiplier_tube_assembly/dynode7" value="1100."/>
+    <electrostatic_dirichlet name="electrode_dynode8" surfaces="photomultiplier_tube_assembly/dynode8" value="1200."/>
+    <electrostatic_dirichlet name="electrode_anode" surfaces="photomultiplier_tube_assembly/anode_electrode" value="1300."/>
+
+</geometry>
+
+<geometry>
+
+    <cylinder_space name="world_space" z1="-2e-2" z2="10.1e-2" r="5e-2"/>
+
+    <space name="world" node="world_space">
+        <space name="photomultiplier_tube" tree="photomultiplier_tube_assembly"/>
+    </space>
+
+</geometry>
+
+<kassiopeia>
+
+	<!-- fields -->
+
+    <ksfield_electrostatic
+        name="kemfield_e"
+        file="PhotoMultiplierTubeElectodes.kbd"
+        system="world/photomultiplier_tube"
+        surfaces="world/photomultiplier_tube/@electrode_tag"
+        symmetry="none"
+    >
+        <viewer
+            file="PhotomultiplierTube.vtp"
+            view="false"
+            save="true"
+            preprocessing="true"
+            postprocessing="true"
+        />
+        <fast_multipole_bem_solver
+            tolerance="1.e-4"
+            krylov_solver_type="gmres"
+            restart_cycle_size="300"
+            spatial_division="3"
+            expansion_degree="6"
+            neighbor_order="1"
+            maximum_tree_depth="5"
+            region_expansion_factor="2"
+            use_region_size_estimation="true"
+            use_caching="true"
+            verbosity="3"
+            use_opencl="true"
+            use_vtk="true"
+        />
+        <fast_multipole_field_solver
+            spatial_division="3"
+            expansion_degree="8"
+            neighbor_order="1"
+            maximum_tree_depth="5"
+            region_expansion_factor="2"
+            use_region_size_estimation="true"
+            use_caching="true"
+            verbosity="true"
+            use_opencl="true"
+        />
+    </ksfield_electrostatic>
+
+
+    <!--	 generators -->
+
+    <ksgen_generator_composite name="photoelectron_single">
+        <energy_composite>
+            <energy_fix value="0.001"/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/photomultiplier_tube/photocathode_electrode">
+            <r_set value_start="0.0" value_stop="1.e-2" value_count="1"/>
+            <phi_set value_start="30." value_stop="360." value_count="1"/>
+            <z_fix value="-0.1e-2"/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/photomultiplier_tube/photocathode_electrode">
+            <theta_fix value="90."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+
+	<!-- trajectories-->
+
+    <kstraj_trajectory_exact name="trajectory_exact"/>
+    <kstraj_interpolator_fast name="interpolator_fast"/>
+    <kstraj_integrator_rk8 name="integrator_rk86"/>
+    <kstraj_term_propagation name="term_propagation"/>
+    <kstraj_energy name="stepsizenergy" lower_limit="1.e-10" upper_limit="1.e-6" />
+    <kstraj_control_length name="stepsizelength" length="0.5e-5" />
+    <kstraj_control_time name="stepsizetime" time="1e-9" />
+
+
+	<!-- space interactions -->
+
+
+    <!-- space navigators -->
+
+    <ksnav_space name="nav_space" tolerance="1.e-6"/>
+    <ksnav_surface name="nav_surface"/>
+
+    <!-- surface interactions -->
+
+<!--    <ksint_surface_specular name="int_surface_specular" probability=".01" reflection_loss="0." transmission_loss="0."/>-->
+<!--    <ksint_surface_diffuse name="int_surface_diffuse" probability="0.01" reflection_loss="0.999" transmission_loss="0."/>-->
+
+    <!-- terminators -->
+
+    <ksterm_death name="term_death"/>
+    <ksterm_max_steps name="term_max_steps" steps="100000"/>
+    <ksterm_max_z name="term_max_z" z="10e-2"/>
+    <ksterm_min_z name="term_min_z" z="-2.0e-2"/>
+    <ksterm_min_energy name="term_min_energy" energy="0.0"/>
+    <ksterm_max_r name="term_max_radius" r="2.3e-2" />
+
+    <!-- writers -->
+
+    <kswrite_root
+        name="write_root"
+        base="PhotoMultiplierTubeSimulation.root"
+    />
+
+
+    <kswrite_vtk
+        name="write_vtk"
+        base="PhotoMultiplierTubeSimulation.vtp"
+    />
+
+
+    <!-- output -->
+
+    <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
+    <ks_component_member name="component_step_position" field="position" parent="component_step_final_particle"/>
+    <ks_component_member name="component_step_length" field="length" parent="component_step_final_particle"/>
+
+    <ks_component_group name="component_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_time" field="continuous_time" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="time" field="time" parent="component_step_final_particle"/>
+        <component_member name="position" field="position" parent="component_step_final_particle"/>
+        <component_member name="momentum" field="momentum" parent="component_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="component_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="component_step_final_particle"/>
+        <component_member name="kinetic_energy" field="kinetic_energy_ev" parent="component_step_final_particle"/>
+    </ks_component_group>
+
+    <ks_component_member name="component_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="component_track_final_particle" field="final_particle" parent="track"/>
+    <ks_component_member name="component_track_position" field="position" parent="component_track_final_particle"/>
+    <ks_component_member name="component_track_length" field="length" parent="component_track_final_particle"/>
+
+    <ks_component_member name="z_length" field="continuous_length" parent="step"/>
+
+    <ks_component_group name="component_track_world">
+        <component_member name="creator_name" field="creator_name" parent="track"/>
+        <component_member name="terminator_name" field="terminator_name" parent="track"/>
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+        <component_member name="initial_time" field="time" parent="component_track_initial_particle"/>
+        <component_member name="initial_position" field="position" parent="component_track_initial_particle"/>
+        <component_member name="initial_momentum" field="momentum" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
+        <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
+        <component_member name="initial_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_initial_particle"/>
+        <component_member name="final_time" field="time" parent="component_track_final_particle"/>
+        <component_member name="final_position" field="position" parent="component_track_final_particle"/>
+        <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
+        <component_member name="final_electric_field" field="electric_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_potential" field="electric_potential" parent="component_track_final_particle"/>
+        <component_member name="final_kinetic_energy" field="kinetic_energy_ev" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_final_particle"/>
+        <component_member name="final_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_final_particle"/>
+        <component_member name="z_length_internal" field="continuous_length" parent="track"/>
+        <component_integral name="z_length_integral" component="z_length"/>
+    </ks_component_group>
+
+    <!-- structure -->
+
+    <ksgeo_space name="space_world" spaces="world">
+        <command parent="root_electric_field" field="add_electric_field" child="kemfield_e"/>
+        <command parent="trajectory_exact" field="set_integrator" child="integrator_rk86"/>
+        <command parent="trajectory_exact" field="set_interpolator" child="interpolator_fast"/>
+        <command parent="trajectory_exact" field="add_term" child="term_propagation"/>
+        <command parent="trajectory_exact" field="add_control" child="stepsizelength"/>
+        <command parent="trajectory_exact" field="add_control" child="stepsizetime"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_z"/>
+        <command parent="root_terminator" field="add_terminator" child="term_min_z"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_radius"/>
+        <command parent="root_terminator" field="add_terminator" child="term_min_energy"/>
+        <command parent="write_root" field="add_track_output" child="component_track_world"/>
+        <command parent="write_root" field="add_step_output" child="component_step_world"/>
+        <command parent="write_vtk" field="set_track_point" child="component_track_position"/>
+        <command parent="write_vtk" field="set_track_data" child="component_track_length"/>
+        <command parent="write_vtk" field="set_step_point" child="component_step_position"/>
+        <command parent="write_vtk" field="set_step_data" child="component_step_length"/>
+    </ksgeo_space>
+
+    <!-- simulation -->
+
+    <ks_simulation
+        name="pmt_simulation"
+        run="1"
+        seed="51385"
+        events="3"
+        electric_field="kemfield_e"
+        space="space_world"
+        generator="photoelectron_single"
+        trajectory="trajectory_exact"
+        space_navigator="nav_space"
+        surface_navigator="nav_surface"
+        writer="write_root"
+        writer="write_vtk"
+    />
+
+</kassiopeia>

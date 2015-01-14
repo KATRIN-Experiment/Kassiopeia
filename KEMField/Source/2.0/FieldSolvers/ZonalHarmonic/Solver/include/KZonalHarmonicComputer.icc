@@ -1,0 +1,24 @@
+#ifndef KZONALHARMONICCOMPUTER_IMP
+#define KZONALHARMONICCOMPUTER_IMP
+
+#include "KElectrostaticIntegratingFieldSolver.hh"
+#include "KElectromagnetIntegratingFieldSolver.hh"
+
+namespace KEMField
+{
+
+  template <class Basis>
+  void KZonalHarmonicComputer<Basis>::Initialize()
+  {
+    typedef typename KZonalHarmonicContainer<Basis>::ZonalHarmonicContainerVector ContainerVector;
+
+    for (typename ContainerVector::iterator it=fContainer.GetSubContainers().begin();it!=fContainer.GetSubContainers().end();++it)
+    {
+      fSubsetFieldSolvers.push_back(new KZonalHarmonicFieldSolver<Basis>(*(*it),fIntegrator));
+      fSubsetFieldSolvers.back()->Initialize();
+    }
+  }
+
+} // end namespace kemfield
+
+#endif /* KZONALHARMONICCOMPUTER_IMP */

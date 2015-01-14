@@ -1,0 +1,430 @@
+<!-- this file contains an annotated list of all the fields available in kassiopeia 3.0 -->
+<!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
+
+<messages>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+
+</messages>
+
+<geometry>
+
+	<tag name="magnet_tag">
+		<tag name="hoop_tag">
+			<cylinder_surface
+				name="hoop_surface"
+				z1="-1."
+				z2="1."
+				r="4."
+			/>
+		</tag>
+		<tag name="coil_tag">
+			<cylinder_tube_space 
+				name="coil_space"
+				z1="-5."
+				z2="5."
+				r1="3.2"
+				r2="3.5"
+				radial_mesh_count="30"
+			/>
+		</tag>
+	</tag>
+	<tag name="electrode_tag">
+		<tag name="outer_tag">
+			<cylinder_space
+				name="outer_space"
+				z1="-2."
+				z2="2."
+				r="2."
+				radial_mesh_count="1500"
+				radial_mesh_power="1.5"
+				longitudinal_mesh_count="1000"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="128"
+			/>
+		</tag>
+		<tag name="inner_tag">
+			<cylinder_surface
+				name="inner_surface"
+				z1="-1."
+				z2="1."
+				r="1."
+				longitudinal_mesh_count="500"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="128"
+			/>
+		</tag>
+	</tag>
+
+	<space name="assembly">
+		<surface name="hoop" node="hoop_surface"/>
+		<space name="coil" node="coil_space"/>
+		<space name="outer" node="outer_space">
+			<surface name="inner" node="inner_surface"/>
+		</space>
+	</space>
+
+    <axial_mesh name="mesh" surfaces="assembly/@electrode_tag"/> 
+    <electrostatic_dirichlet name="electrode_outer" surfaces="assembly/@outer_tag" value="0."/>
+    <electrostatic_dirichlet name="electrode_inner" surfaces="assembly/@inner_tag" value="-1000."/>
+    <electromagnet name="electromagnet_hoop" surfaces="assembly/@hoop_tag" current="10000"/>
+    <electromagnet name="electromagnet_coil" spaces="assembly/@coil_tag" current="500000"/>
+
+</geometry>
+
+<kassiopeia>
+
+	<!-- electric fields -->
+
+	<ksfield_electric_constant name="electric_constant" field="1. 1. 1000."/>
+	<!--
+		description:
+			provides a constant, uniform electric field.
+
+		parameters:
+			name:
+				the name of the electric field.
+
+			field:
+				the cartesian components of the electric field vector in volts per meter.
+	-->
+
+	<ksfield_electric_quadrupole name="electric_quadrupole" location="0. 0. 0." strength="-10000." length="1.e-2" radius="1.e-2"/>
+	<!--
+		description:
+			provides a perfect quadrupole electric field.
+			equipotential surfaces are hyperboloids of revolution about the z axis, with asymptotic cones at zero potential.
+			the potential in cylindrical coordinates obeys:
+			
+				V(z,r,phi) = V0 * (z^2 - r^2 / 2) / (z0^2 + r0^2 / 2)
+
+		parameters:
+			name:
+				the name of the electric field.
+
+			location:
+				the vertex of the asymptotic cones.
+
+			strength:
+				V0 in the equation above, in volts.
+
+			length:
+				z0 in the equation above, in meters.
+
+			radius:
+				r0 in the equation above, in meters.
+	-->
+
+	<ksfield_electrostatic
+        name="field_electrostatic"
+        directory="."
+        file="Electrodes.kbd"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+        symmetry="axial"
+    >
+    </ksfield_electrostatic>
+    <!--
+    	description:
+    		provides an electric field arising from disctretized elements computed with kemfield as initialized with kgeobag.
+    		to use this field a valid geometry must have been constructed, as is given above.
+    		this field must be equipped with exactly one boundary element method charge density solver and at least one field solver to operate.
+    		see below for examples of bem and field solvers.
+
+		parameters:
+			name:
+				the name of the electric field.
+
+			directory:
+				name of directory in which to cache computation.
+
+			file:
+				name of file in which to cache computation.
+
+			system:
+				path to exactly one kgeobag space whose coordinate system the computation will use.
+
+			surfaces:
+				paths to kgeobag surfaces which are equipped with both a discretization and electromagnetic properties.
+
+			symmetry:
+				may be none, axial or discrete_axial, which constrains methods that may be used in computation.
+	-->
+
+	<!-- bem solvers -->
+
+	<ksfield_electrostatic
+        name="field_electrostatic_robin_hood_bem"
+    >
+        <robin_hood_bem_solver
+            tolerance="1.e-10"
+            check_sub_interval="100"
+            display_interval="1"
+            write_interval="1"
+            plot_interval="0"
+            cache_matrix_elements="true"
+            use_opencl="false"
+            use_vtk="false"
+        />
+    </ksfield_electrostatic>
+    <!--
+    	description:
+    		the robin hood bem solver uses an iterative variational method to find the charge densities on discretized surface elements.
+
+		parameters:
+			tolerance:
+				the maximum allowable infinity norm permitted on a solution.
+
+			check_sub_interval:
+				the number of subiterations to perform before checking convergence.
+
+			display_interval:
+				the number of iterations to perfom before updating a text report in the terminal.
+
+			write_interval:
+				the number of iterations to perform before caching the current state.
+
+			plot_interval:
+				the number of iterations to perform before updating a plot of the convergence.
+
+			cache_matrix_elements:
+				if true, some elements of the capacitance matrix will be stored in memory rather than being recomputed, which can greatly increase speed for smaller simulations.
+			
+			use_opencl:
+				if true and kemfield has been compiled with opencl support, opencl will be used in the computation.
+
+			use_vtk:
+				if true and kemfield has been compiled with vtk support, vtk will be used to plot the convergence.
+	-->
+
+	<ksfield_electrostatic
+        name="field_electrostatic_gaussian_elimination_bem"
+    >
+        <gaussian_elimination_bem_solver/>
+    </ksfield_electrostatic>
+    <!--
+		description:
+			uses the gaussian elimination technique to compute charge densities.
+	-->
+
+	<!-- field solvers -->
+
+	<ksfield_electrostatic
+        name="field_electrostatic_zonal_harmonic_field"
+        symmetry="axial"
+    >
+        <zonal_harmonic_field_solver
+            number_of_bifurcations="-1"
+            convergence_ratio=".99"
+            convergence_parameter="1.e-15"
+            proximity_to_sourcepoint="1.e-12"
+            number_of_central_coefficients="500"
+            use_fractional_central_sourcepoint_spacing="false"
+            central_sourcepoint_spacing="2.e-6"
+            central_sourcepoint_start="-3.3e-3"
+            central_sourcepoint_end="3.3e-3"
+            number_of_remote_coefficients="200"
+            remote_sourcepoint_start="-1.e-1"
+            remote_sourcepoint_end="1.e-1"
+        />
+    </ksfield_electrostatic>
+    <!--
+    	description:
+    		uses the zonal harmonic expansion about an axis to compute fields.
+    		only valid if the symmetry parameter is set to axial.
+
+		parameters:
+			number_of_bifurcations:
+				controls the number of times the surface container is recursively split.
+				each split at each level results in an independent zonal harmonic expansion.
+
+			convergence_ratio:
+				an expansion will not be attempted when the distance from the field point to the nearest source point divided by that source point's convergence radius exceeds this ratio.
+
+			convergence_parameter:
+				the series is declared converged when the sum of latest five terms divided by the entire sum is less than this ratio.
+
+			proximity_to_sourcepoint:
+				an expansion will include a single term with no convergence check when the distance from the field point to the nearest source point divided by that source point's convergence radius is less than this ratio.
+
+			number_of_central_coefficients:
+				the number of central coefficients to store per source point.
+
+			use_fractional_central_sourcepoint_spacing:
+				if true, the distance from one source point to the next will be computed using a fraction of the previous source point's convergence radius.
+
+			central_sourcepoint_spacing:
+				in all cases the spacing in meters between central source points will be at least this.
+
+			central_sourcepoint_start:
+				starting z value for the central set of source points.
+
+			central_sourcepoint_end:
+				ending z value for the central set of source points.
+
+			number_of_remote_coefficients:
+				the number of remote coefficients to store per source point.
+
+			remote_source_point_start:
+				starting z value for the remote set of source points.
+
+			remote_source_point_end:
+				ending z value for the remote set of source points.
+	-->
+
+	<ksfield_electrostatic
+        name="field_electrostatic_integrating_field"
+        symmetry="axial"
+    >
+        <integrating_field_solver
+        	use_opencl="false"
+        />
+    </ksfield_electrostatic>
+    <!--
+		description:
+			performs a sum over all discretized components to obtain the final field.
+
+		parameters:
+			use_opencl:
+				if true and kemfield has been compiled with opencl support, opencl will be used in the computation.
+	-->
+
+	<!-- magnetic fields -->
+
+	<ksfield_magnetic_constant name="magnetic_constant" field="0. 0. 10."/>
+	<!--
+		description:
+			provides a constant, uniform magnetic field.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			field:
+				the cartesian components of the magnetic field vector in tesla.
+	-->
+
+	<ksfield_magnetic_dipole name="magnetic_dipole" location="0. 0. 0." moment="0. 0. 10."/>
+	<!--
+		description:
+			provides a perfect dipole magnetic field.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			location:
+				cartesian components of the location of the dipole.
+
+			moment:
+				the components of the dipole moment vector in ampere * meter^2.
+	-->
+
+	<ksfield_electromagnet
+        name="field_electromagnet"
+        directory="."
+        file="Magnets.kbd"
+        system="assembly"
+        surfaces="assembly/@hoop_tag"
+        spaces="assembly/@coil_tag"
+    >
+    </ksfield_electromagnet>
+    <!--
+    	description:
+    		provides a magnetic field arising from current-bearing elements computed with kemfield as initialized with kgeobag.
+    		to use this field a valid geometry must have been constructed, as is given above.
+    		this field must be equipped with at least one field solver to operate.
+    		see below for examples of field solvers.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			directory:
+				name of directory in which to cache computation.
+
+			file:
+				name of file in which to cache computation.
+
+			system:
+				path to exactly one kgeobag space whose coordinate system the computation will use.
+
+			surfaces:
+				paths to kgeobag surfaces which are equipped with both a discretization and electromagnetic properties.
+	-->
+
+	<!-- field solvers -->
+
+	<ksfield_electromagnet
+        name="field_electromagnet_zonal_harmonic_field"
+    >
+        <zonal_harmonic_field_solver
+            number_of_bifurcations="-1"
+            convergence_ratio=".99"
+            convergence_parameter="1.e-15"
+            proximity_to_sourcepoint="1.e-12"
+            number_of_central_coefficients="500"
+            use_fractional_central_sourcepoint_spacing="false"
+            central_sourcepoint_spacing="2.e-6"
+            central_sourcepoint_start="-3.3e-3"
+            central_sourcepoint_end="3.3e-3"
+            number_of_remote_coefficients="200"
+            remote_sourcepoint_start="-1.e-1"
+            remote_sourcepoint_end="1.e-1"
+        />
+    </ksfield_electromagnet>
+    <!--
+    	description:
+    		uses the zonal harmonic expansion about an axis to compute fields.
+    		only valid if the symmetry parameter is set to axial.
+
+		parameters:
+			number_of_bifurcations:
+				controls the number of times the surface container is recursively split.
+				each split at each level results in an independent zonal harmonic expansion.
+
+			convergence_ratio:
+				an expansion will not be attempted when the distance from the field point to the nearest source point divided by that source point's convergence radius exceeds this ratio.
+
+			convergence_parameter:
+				the series is declared converged when the sum of latest five terms divided by the entire sum is less than this ratio.
+
+			proximity_to_sourcepoint:
+				an expansion will include a single term with no convergence check when the distance from the field point to the nearest source point divided by that source point's convergence radius is less than this ratio.
+
+			number_of_central_coefficients:
+				the number of central coefficients to store per source point.
+
+			use_fractional_central_sourcepoint_spacing:
+				if true, the distance from one source point to the next will be computed using a fraction of the previous source point's convergence radius.
+
+			central_sourcepoint_spacing:
+				in all cases the spacing in meters between central source points will be at least this.
+
+			central_sourcepoint_start:
+				starting z value for the central set of source points.
+
+			central_sourcepoint_end:
+				ending z value for the central set of source points.
+
+			number_of_remote_coefficients:
+				the number of remote coefficients to store per source point.
+
+			remote_source_point_start:
+				starting z value for the remote set of source points.
+
+			remote_source_point_end:
+				ending z value for the remote set of source points.
+	-->
+
+	<ksfield_electromagnet
+        name="field_electromagnet_integrating_field"
+    >
+        <integrating_field_solver/>
+    </ksfield_electromagnet>
+    <!--
+		description:
+			performs a sum over all components to obtain the final field.
+	-->
+
+</kassiopeia>

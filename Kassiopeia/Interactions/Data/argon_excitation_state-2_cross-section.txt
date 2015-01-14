@@ -1,0 +1,73 @@
+# Excitation State 2 Cross-Section for Electron-Argon Scattering
+# =============================================================
+# Data for Interpolation:
+1.29365389e-20
+-6.57452394e-01
+# M. Hayashi, Gaseous Electronics Institute, 503 Sakae High Home, 
+# 15-14 Sakae 4-chome, Nakaku, Nagoya 460, Japan.
+# See also, K. Kosaki and M. Hayashi, Denkigakkai Zenkokutaikai Yokoshu (Prepr. 
+# Natl. Meet. Inst. Electr. Eng. Jpn.), (1992) (in Japanese).
+# First column: electron energy in eV
+# Second column: Excitation cross-section in m^2
+11.62	0
+11.68	1.04E-22
+11.7	7.36E-23
+11.74	5.68E-23
+11.76	5.41E-23
+11.8	4.99E-23
+11.81	4.94E-23
+11.85	4.9E-23
+11.9	4.95E-23
+11.94	5E-23
+12	5.2E-23
+12.04	5.3E-23
+12.1	5.5E-23
+12.2	5.7E-23
+12.4	7.3E-23
+12.5	7.9E-23
+12.6	8.5E-23
+12.65	8.6E-23
+12.7	8.8E-23
+12.74	9E-23
+12.8	9.2E-23
+12.9	9.7E-23
+13	1.03E-22
+13.05	1.47E-22
+13.08	1.01E-22
+13.1	9.4E-23
+13.13	8.4E-23
+13.16	1.03E-22
+13.2	1.48E-22
+13.23	1.39E-22
+13.25	1.22E-22
+13.29	1.12E-22
+13.3	1.15E-22
+13.4	1.38E-22
+13.5	1.58E-22
+13.82	2.19E-22
+14	2.55E-22
+14.25	2.92E-22
+14.5	3.22E-22
+15	3.73E-22
+16	4.49E-22
+17	5.2E-22
+18	5.65E-22
+19	6.08E-22
+20	6.58E-22
+22	7E-22
+25	7.4E-22
+30	7.6E-22
+35	7.7E-22
+40	7.65E-22
+50	7.43E-22
+60	7.15E-22
+70	6.85E-22
+80	6.5E-22
+100	5.85E-22
+150	4.8E-22
+200	4.1E-22
+300	3.2E-22
+400	2.62E-22
+500	2.22E-22
+800	1.56E-22
+1000	1.31E-22

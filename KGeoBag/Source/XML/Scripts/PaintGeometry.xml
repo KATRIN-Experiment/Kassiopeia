@@ -1,0 +1,46 @@
+<external_define name="file" value=""/>
+
+<external_define name="surfaces" value=""/>
+<external_define name="spaces" value=""/>
+
+<external_define name="frame_red" value=".2"/>
+<external_define name="frame_green" value=".2"/>
+<external_define name="frame_blue" value=".2"/>
+
+<external_define name="frame_x" value="1024"/>
+<external_define name="frame_y" value="768"/>
+
+<messages>
+    <message key="k_file" terminal="normal" log="warning"/>
+    <message key="k_initialization" terminal="normal" log="warning"/>
+    <message key="kg_core" terminal="debug" log="warning"/>
+    <message key="kg_shape" terminal="debug" log="warning"/>
+    <message key="kg_mesh" terminal="debug" log="warning"/>
+    <message key="kg_axial_mesh" terminal="debug" log="warning"/>
+</messages>
+
+<include name="[file]"/>
+
+<vtk_window 
+    name="vtk_window"
+    enable_display="true"
+    enable_write="true"
+    frame_title="KGeoBag Visualization"
+    frame_color_red="[frame_red]"
+    frame_color_green="[frame_green]"
+    frame_color_blue="[frame_blue]"
+    frame_size_x="[frame_x]"
+    frame_size_y="[frame_y]"
+    view_angle="45"
+    eye_angle="0.5"
+    multi_samples="4"
+    depth_peeling="10"
+>
+    <vtk_geometry_painter 
+        name="geometry_painter" 
+        surfaces="[surfaces]"
+        spaces="[spaces]"
+    />
+</vtk_window>
+
+<geometry reset="true"/>

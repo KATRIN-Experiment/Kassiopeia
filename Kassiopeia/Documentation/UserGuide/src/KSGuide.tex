@@ -1,0 +1,81 @@
+\documentclass[11pt]{report}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\geometry{a4paper}
+\geometry{letterpaper}
+\usepackage{amssymb, epstopdf, subfig, graphicx, hyperref, authblk, doxygen, url}
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=C++} 
+
+\setcounter{tocdepth}{2}
+
+\bibliographystyle{IEEEtran}
+
+% Define new commands here
+\newcommand{\nue}{$\nu_e$}
+\newcommand{\cernroot}{ROOT{}}
+
+\title{The Comprehensive Guide to \textsc{Kassiopeia}\\{\small Version 1.20.00}}
+
+% Author List
+% Authors are listed alphabetically by last name
+% Affiliations are listed alphabetically by institution (e.g. 'M' for "Massachusetts", not 'L' for "Laboratory")
+
+% Authors
+\author[1]{M.~Babutzka}
+\author[2]{J.~Barrett}
+\author[3]{T.\,J.~Corona}
+\author[2]{J.~Formaggio}
+\author[2]{D.~Furse}
+\author[1]{F.~Gl\"uck}
+\author[1]{M.~H\"otzel}
+\author[1]{W.~K\"afer}
+\author[1]{B.~Leiber}
+\author[1]{S.~Mertens}
+\author[2]{N.\,S.~Oblath}
+\author[1]{P.~Renschler}
+\author[4]{S.~V\"ocking}
+\author[1]{N.~Wandkowsky}
+\author[4]{M.~Zacher}
+
+% Affiliations
+\affil[1]{Institut f\"ur Experimentelle Kernphysik, Karlsruhe Institut f\"ur Technologie, 76021 Karlsruhe, Germany}
+\affil[2]{Laboratory for Nuclear Science, Massachusetts Institute of Technology, Cambridge, MA 02139, USA}
+\affil[3]{Department of Physics and Astronomy, University of North Carolina at Chapel Hill, Chapel Hill, NC 27599, USA}
+\affil[4]{Institut f\"ur Physik, Westf\"alische Wilhelms-Universit\"at M\"unster, 48149 M\"unster, Germany}
+
+\date{}
+
+\begin{document}
+\maketitle
+\newpage
+
+\include{KSGuide_CoverPage}
+
+\tableofcontents{}
+
+\include{KSGuide_Introduction}
+
+\include{KSGuide_HowTo}
+
+\include{KSGuide_SimArchitecture}
+
+\include{KSGuide_Modules}
+\include{KSGuide_KAFCA}
+\include{KSGuide_KNAXS}
+\include{KSGuide_KEMField}
+\include{KSGuide_KPAGE}
+\include{KSGuide_KTrack}
+\include{KSGuide_KESS}
+\include{KSGuide_SSC}
+\include{KSGuide_DAQ.tex}
+
+%\include{KSGuide_Programming}
+
+\bibliography{KSGuide}
+
+\end{document}  

@@ -1,0 +1,39 @@
+****KESS*****KESS*****KESS*****KESS*****KESS*****KESS*****KESS***
+File contents:
+-----------------------------------------------------------------
+Collision Cross Sections (inelastic)
+
+CCS_BetheFano.dat:
+Derived by Bethe-Fano theory (Bichsel, Chaoui). 106-408998eV
+CCS_BetheFano_MFP.dat:
+according Mean Free Path
+
+CCS_Penn.dat:
+Derived by Penn model (Chaoui). 1-50000eV
+CCS_Penn_MFP.dat:
+according Mean Free Path
+-----------------------------------------------------------------
+Elastic Collision Cross Sections 
+
+ECS_Elsepa.dat:
+Calculated with ELSEPA code (Salvat) 1-400000eV
+ECS_ELSEPA_MFP.dat:
+according Mean Free Path
+-----------------------------------------------------------------
+Ionization Cross Sections (ICS)
+
+ICS_PhotoAbsorption.dat:
+Photo Absorption Ionization (PAI) or
+Fermi Virtual Photon (FVP) Model
+****KESS*****KESS*****KESS*****KESS*****KESS*****KESS*****KESS***
+
+****KTrack*****KTRACK*****KTRACK*****KTRACK*****KTRACK*****KTRACK*****KTRACK***
+
+ionization cross section parameters for Argon, Hydrogen, Nitrogen, Water
+Argon.txt
+Hydrogen.txt
+Nitrogen.txt
+Water.txt
+data taken from: http://physics.nist.gov/PhysRefData/Ionization/molTable.html
+
+****KTRACK*****KTRACK*****KTRACK*****KTRACK*****KTRACK*****KTRACK*****KTRACK***

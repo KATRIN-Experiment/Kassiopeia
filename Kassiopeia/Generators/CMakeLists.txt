@@ -1,0 +1,142 @@
+# header files
+set( GENERATORS_HEADER_BASENAMES
+    KSGeneratorsMessage.h
+    KSGenCreator.h
+    
+    KSGenValue.h
+    KSGenValueFix.h
+    KSGenValueSet.h
+    KSGenValueList.h
+    KSGenValueUniform.h
+    KSGenValueGauss.h
+    KSGenValueRadiusCylindrical.h
+    KSGenValueRadiusSpherical.h
+    KSGenValueAngleSpherical.h
+
+    KSGenEnergyComposite.h
+    KSGenEnergyKryptonEvent.h
+    KSGenEnergyRadonEvent.h    
+
+    KSGenPositionRectangularComposite.h
+    KSGenPositionCylindricalComposite.h
+    KSGenPositionSphericalComposite.h
+    KSGenPositionSpaceRandom.h
+    KSGenPositionSurfaceRandom.h
+
+    KSGenDirectionSphericalComposite.h
+    KSGenDirectionSurfaceComposite.h
+
+    KSGenMomentumRectangularComposite.h
+
+    KSGenTimeComposite.h
+
+    KSGenSpecial.h
+    KSGenShakeOff.h
+    KSGenConversion.h
+    KSGenRelaxation.h
+
+    KSGenGeneratorComposite.h
+)
+
+if( Kassiopeia_USE_ROOT )
+	list( APPEND GENERATORS_HEADER_BASENAMES
+	    KSGenValueFormula.h
+        KSGenEnergyLeadEvent.h
+    )
+endif( Kassiopeia_USE_ROOT )
+
+set( GENERATORS_HEADER_PATH 
+	${CMAKE_CURRENT_SOURCE_DIR}/Include
+)
+foreach( BASENAME ${GENERATORS_HEADER_BASENAMES} )
+	list( APPEND GENERATORS_HEADER_FILENAMES ${GENERATORS_HEADER_PATH}/${BASENAME} )
+endforeach( BASENAME )
+
+# source files
+set( GENERATORS_SOURCE_BASENAMES
+    KSGeneratorsMessage.cxx
+    KSGenCreator.cxx
+
+    KSGenValue.cxx
+    KSGenValueFix.cxx
+    KSGenValueSet.cxx
+    KSGenValueList.cxx
+    KSGenValueUniform.cxx
+    KSGenValueGauss.cxx
+    KSGenValueRadiusCylindrical.cxx
+    KSGenValueRadiusSpherical.cxx
+    KSGenValueAngleSpherical.cxx
+
+    KSGenEnergyComposite.cxx
+    KSGenEnergyKryptonEvent.cxx
+    KSGenEnergyRadonEvent.cxx    
+
+    KSGenPositionRectangularComposite.cxx
+    KSGenPositionCylindricalComposite.cxx
+    KSGenPositionSphericalComposite.cxx
+    KSGenPositionSpaceRandom.cxx
+    KSGenPositionSurfaceRandom.cxx
+
+    KSGenDirectionSphericalComposite.cxx
+    KSGenDirectionSurfaceComposite.cxx
+
+    KSGenMomentumRectangularComposite.cxx
+
+    KSGenTimeComposite.cxx
+
+    KSGenSpecial.cxx
+    KSGenShakeOff.cxx
+    KSGenConversion.cxx
+    KSGenRelaxation.cxx
+    
+    KSGenGeneratorComposite.cxx
+)
+
+if( Kassiopeia_USE_ROOT )
+	list( APPEND GENERATORS_SOURCE_BASENAMES
+        KSGenValueFormula.cxx
+        KSGenEnergyLeadEvent.cxx
+    )
+endif( Kassiopeia_USE_ROOT )
+
+set( GENERATORS_SOURCE_PATH 
+	${CMAKE_CURRENT_SOURCE_DIR}/Source
+)
+foreach( BASENAME ${GENERATORS_SOURCE_BASENAMES} )
+	list( APPEND GENERATORS_SOURCE_FILENAMES ${GENERATORS_SOURCE_PATH}/${BASENAME} )
+endforeach( BASENAME )
+
+# data files
+set( GENERATORS_DATA_BASENAMES
+    ConversionRn219.dat
+    ConversionRn220.dat
+    ConversionPb210.dat
+    ConversionKr83.dat
+    RelaxationKr.dat
+    RelaxationPo.dat
+    RelaxationBi.dat
+    ShakeOffRn.dat
+)
+set( GENERATORS_DATA_PATH 
+	${CMAKE_CURRENT_SOURCE_DIR}/Data
+)
+foreach( BASENAME ${GENERATORS_DATA_BASENAMES} )
+	list( APPEND GENERATORS_DATA_FILENAMES ${GENERATORS_DATA_PATH}/${BASENAME} )
+endforeach( BASENAME )
+
+# library
+kasper_internal_include_directories( ${GENERATORS_HEADER_PATH} )
+add_library( KassiopeiaGenerators SHARED ${GENERATORS_SOURCE_FILENAMES} )
+set_target_properties( KassiopeiaGenerators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+target_link_libraries( KassiopeiaGenerators
+    ${Kommon_LIBRARIES}
+    ${KGeoBag_LIBRARIES}
+    KassiopeiaUtility
+    KassiopeiaObjects
+    KassiopeiaOperators
+)
+
+# install
+kasper_install_headers( ${GENERATORS_HEADER_FILENAMES} )
+kasper_install_data( ${GENERATORS_DATA_FILENAMES} )
+kasper_install_libraries( KassiopeiaGenerators )

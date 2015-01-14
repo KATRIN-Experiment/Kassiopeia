@@ -1,0 +1,8 @@
+//- binding energy (B im Programm)
+//- orbital kinetic energy (U im Programm)
+//- electron occupation number N (das ist die 2 in Ferenc's Formel: S=4.*KaConst::Pi()*a02*2.*r*r)
+//data taken from: http://physics.nist.gov/PhysRefData/Ionization/molTable.htm
+//
+//Binding Energy orbital | kinetic energy | electron occupation numper
+
+15.43 15.98 2

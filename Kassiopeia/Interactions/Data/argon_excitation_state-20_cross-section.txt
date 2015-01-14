@@ -1,0 +1,32 @@
+# Excitation State 20 Cross-Section for Electron-Argon Scattering
+# =============================================================
+# Data for Interpolation:
+7.43900400e-21
+-6.03443316e-01
+# M. Hayashi, Gaseous Electronics Institute, 503 Sakae High Home, 
+# 15-14 Sakae 4-chome, Nakaku, Nagoya 460, Japan.
+# See also, K. Kosaki and M. Hayashi, Denkigakkai Zenkokutaikai Yokoshu (Prepr. 
+# Natl. Meet. Inst. Electr. Eng. Jpn.), (1992) (in Japanese).
+#
+# First column: electron energy in eV
+# Second column: Excitation cross-section in m^2
+14.15	0
+15	4E-23
+16	9E-23
+18	1.75E-22
+20	2.3E-22
+22	2.7E-22
+25	3.15E-22
+30	3.62E-22
+35	4E-22
+40	4.25E-22
+50	4.55E-22
+60	4.6E-22
+80	4.5E-22
+100	4.3E-22
+150	3.67E-22
+200	3.16E-22
+300	2.5E-22
+500	1.8E-22
+800	1.3E-22
+1000	1.1E-22

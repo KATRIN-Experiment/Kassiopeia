@@ -1,0 +1,103 @@
+<!-- this file contains an annotated list of all the interactions available in kassiopeia 3.0 -->
+<!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
+
+<messages>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+
+</messages>
+
+<kassiopeia>
+
+	<!-- densities -->
+
+	<ksint_density_constant name="density_constant" temperature="300." pressure="3.e0"/> 
+	<!--
+		description:
+			this density returns a constant value computed from the ideal gas law.
+
+		parameters:
+			name:
+				the name of the density.
+
+			temperature:
+				the ambient temperature in kelvin.
+
+			pressure:
+				the ambient pressure in millibar.
+	-->
+
+	<!-- calculators -->
+
+	<ksint_calculator_constant name="calculator_constant" cross_section="1.e-18"/>
+	<!--
+		description:
+			this calculator returns a constant cross section and scatters isotropically.
+
+		parameters:
+			name:
+				the name of the calculator.
+
+			cross_section:
+				the elastic scattering cross section in meter^2.
+	-->
+
+	<!-- scattering -->
+
+	<ksint_scattering name="int_scattering_inline" split="false" density="density_constant" calculator="calculator_constant"/>
+	<!--
+		description:
+			this is the inline form of the main scattering interaction for kassiopeia.
+			it requires a density object and at least one calculator object to operate.
+
+		parameters:
+			name:
+				the name of the interaction.
+
+			split:
+				if true, the interaction will split tracks whenever a scattering occurs.
+
+			density:
+				the name of a density which has been added to the toolbox above.
+
+			calculator:
+				the name of a calculator which has been added to the toolbox above.
+
+			calculators:
+				the name of a tag containing calculators which has been added to the toolbox above.
+	-->
+
+	<ksint_scattering name="int_scattering" split="false">
+		<density_constant temperature="300." pressure="1.e-7"/>
+		<calculator_constant cross_section="1.e-15"/>
+		<calculator_hydrogen elastic="true" excitation="true" ionisation="true"/>
+	</ksint_scattering>
+	<!--
+		description:
+			this is the condensed form of the main scattering interaction for kassiopeia.
+
+		elements:
+			density_constant:
+				builds a constant density.
+
+			calculator_constant:
+				builds a constant calculator.
+
+			calculator_hydrogen:
+				builds a set of hydrogen calculators.
+
+				parameters:
+					elastic:
+						if true, all elastic processes are enabled.
+
+					excitation:
+						if true, all excitation processes are enabled.
+
+					ionisation:
+						if true, all ionisation processes are enabled. note british spelling!
+						
+					molecule:
+						if set to tritium, the rot20 calculator is also added
+	-->
+
+</kassiopeia>
