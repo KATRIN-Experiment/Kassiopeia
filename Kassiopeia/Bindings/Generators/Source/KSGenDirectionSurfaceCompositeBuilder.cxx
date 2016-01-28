@@ -7,8 +7,9 @@
 #include "KSGenValueAngleSphericalBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -20,12 +21,12 @@ namespace katrin
     {
     }
 
-    static int sKSGenDirectionSurfaceCompositeStructure =
+    STATICINT sKSGenDirectionSurfaceCompositeStructure =
             KSGenDirectionSurfaceCompositeBuilder::Attribute< string >( "name" ) +
             KSGenDirectionSurfaceCompositeBuilder::Attribute< string >( "theta" ) +
             KSGenDirectionSurfaceCompositeBuilder::Attribute< string >( "phi" ) +
             KSGenDirectionSurfaceCompositeBuilder::Attribute< string >( "surfaces" ) +
-            KSGenDirectionSurfaceCompositeBuilder::Attribute< bool >( "side" ) +
+            KSGenDirectionSurfaceCompositeBuilder::Attribute< bool >( "outside" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueFix >( "theta_fix" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueSet >( "theta_set" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueList >( "theta_list" ) +
@@ -38,13 +39,16 @@ namespace katrin
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueUniform >( "phi_uniform" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGauss >( "phi_gauss" );
 
-    static int sKSGenDirectionSurfaceComposite =
+    STATICINT sKSGenDirectionSurfaceComposite =
             KSRootBuilder::ComplexElement< KSGenDirectionSurfaceComposite >( "ksgen_direction_surface_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenDirectionSurfaceCompositeStructureROOT =
+
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenDirectionSurfaceCompositeStructureROOT =
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueFormula >( "theta_formula" ) +
-            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" );
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueHistogram >( "theta_histogram" ) +
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" ) +
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueHistogram >( "phi_histogram" );
 #endif
 
 }

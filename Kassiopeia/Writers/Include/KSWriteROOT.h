@@ -8,7 +8,6 @@ using katrin::KFile;
 
 #include "KRootFile.h"
 using katrin::KRootFile;
-using katrin::CreateOutputRootFile;
 
 #include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
@@ -102,6 +101,7 @@ namespace Kassiopeia
         protected:
             virtual void InitializeComponent();
             virtual void DeinitializeComponent();
+            virtual void StoreConfig(string ConfigDirName = "config");
 
         private:
             KRootFile* fFile;

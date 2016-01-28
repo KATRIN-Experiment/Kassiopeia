@@ -27,7 +27,8 @@ namespace Kassiopeia
             bool fReflectionSplit;
 
         public:
-            void ExecuteNavigation( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void ExecuteNavigation( const KSParticle& anInitialParticle, const KSParticle& aNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
     };
 
 }

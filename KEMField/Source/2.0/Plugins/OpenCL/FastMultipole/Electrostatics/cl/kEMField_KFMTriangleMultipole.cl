@@ -7,6 +7,8 @@
 #include "kEMField_KFMRotationMatrix.cl"
 #include "kEMField_KFMMultipoleRotation.cl"
 
+#include "kEMField_GaussianCubature.cl"
+
 CL_TYPE8
 ConstructTriangleBasis(CL_TYPE4 p0, CL_TYPE4 p1, CL_TYPE4 p2)
 {
@@ -137,6 +139,5 @@ TriangleMultipoleMoments(int max_degree,
     //return origin of the expansion
     return p0;
 }
-
 
 #endif

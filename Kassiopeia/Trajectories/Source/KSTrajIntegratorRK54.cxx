@@ -6,7 +6,8 @@ namespace Kassiopeia
     KSTrajIntegratorRK54::KSTrajIntegratorRK54()
     {
     }
-    KSTrajIntegratorRK54::KSTrajIntegratorRK54( const KSTrajIntegratorRK54& )
+    KSTrajIntegratorRK54::KSTrajIntegratorRK54( const KSTrajIntegratorRK54& ):
+        KSComponent()
     {
     }
     KSTrajIntegratorRK54* KSTrajIntegratorRK54::Clone() const

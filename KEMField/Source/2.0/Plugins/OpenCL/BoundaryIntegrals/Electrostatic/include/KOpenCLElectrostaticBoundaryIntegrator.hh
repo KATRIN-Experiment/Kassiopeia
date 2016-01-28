@@ -44,7 +44,7 @@ namespace KEMField
     KEMThreeVector ElectricField(const SourceShape*, const KPosition&) const;
 
     std::string OpenCLFile() const { return "kEMField_ElectrostaticBoundaryIntegrals.cl"; }
- 
+
   private:
     class BoundaryVisitor :
       public KSelectiveVisitor<KBoundaryVisitor,
@@ -116,7 +116,7 @@ namespace KEMField
 
     CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
 
-    KOpenCLInterface::GetInstance()->GetQueue().    
+    KOpenCLInterface::GetInstance()->GetQueue().
       enqueueWriteBuffer(*fBufferP,
 			 CL_TRUE,
 			 0,
@@ -126,12 +126,12 @@ namespace KEMField
     cl::NDRange global(1);
     cl::NDRange local(1);
 
-    KOpenCLInterface::GetInstance()->GetQueue().    
+    KOpenCLInterface::GetInstance()->GetQueue().
       enqueueNDRangeKernel(*fPhiKernel,
 			   cl::NullRange,
 			   global,
 			   local);
- 
+
     CL_TYPE phi = 0.;
 
     KOpenCLInterface::GetInstance()->GetQueue().
@@ -176,7 +176,7 @@ namespace KEMField
 			sizeof(CL_TYPE4),
 			&eField);
 
-    return KEMThreeVector(eField.x,eField.y,eField.z);
+    return KEMThreeVector(eField.s[0],eField.s[1],eField.s[2]);
   }
 
   template <class SourceShape>

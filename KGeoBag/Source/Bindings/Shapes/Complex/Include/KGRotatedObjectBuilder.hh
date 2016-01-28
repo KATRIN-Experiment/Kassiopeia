@@ -6,6 +6,7 @@
 #include "KGWrappedSurface.hh"
 #include "KGWrappedSpace.hh"
 #include "KGRotatedObject.hh"
+#include<memory>
 
 using namespace KGeoBag;
 
@@ -18,7 +19,7 @@ namespace katrin
   {
     if (anAttribute->GetName() == "z1")
     {
-      double p1[2];
+      double p1[2] = {0.,0.};
       anAttribute->CopyTo(p1[0]);
       p1[1] = fObject->GetP1(1);
       fObject->SetP1(p1);
@@ -26,7 +27,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "r1")
     {
-      double p1[2];
+      double p1[2] = {0.,0.};
       p1[0] = fObject->GetP1(0);
       anAttribute->CopyTo(p1[1]);
       fObject->SetP1(p1);
@@ -34,7 +35,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "z2")
     {
-      double p2[2];
+      double p2[2] = {0.,0.};
       anAttribute->CopyTo(p2[0]);
       p2[1] = fObject->GetP2(1);
       fObject->SetP2(p2);
@@ -42,7 +43,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "r2")
     {
-      double p2[2];
+      double p2[2] = {0.,0.};
       p2[0] = fObject->GetP2(0);
       anAttribute->CopyTo(p2[1]);
       fObject->SetP2(p2);
@@ -58,7 +59,7 @@ namespace katrin
   {
     if (anAttribute->GetName() == "z1")
     {
-      double p1[2];
+      double p1[2] = {0.,0.};
       anAttribute->CopyTo(p1[0]);
       p1[1] = fObject->GetP1(1);
       fObject->SetP1(p1);
@@ -66,7 +67,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "r1")
     {
-      double p1[2];
+      double p1[2] = {0.,0.};
       p1[0] = fObject->GetP1(0);
       anAttribute->CopyTo(p1[1]);
       fObject->SetP1(p1);
@@ -74,7 +75,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "z2")
     {
-      double p2[2];
+      double p2[2] = {0.,0.};
       anAttribute->CopyTo(p2[0]);
       p2[1] = fObject->GetP2(1);
       fObject->SetP2(p2);
@@ -82,7 +83,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "r2")
     {
-      double p2[2];
+      double p2[2] = {0.,0.};
       p2[0] = fObject->GetP2(0);
       anAttribute->CopyTo(p2[1]);
       fObject->SetP2(p2);
@@ -90,16 +91,12 @@ namespace katrin
     }
     if (anAttribute->GetName() == "radius")
     {
-      double radius;
-      anAttribute->CopyTo(radius);
-      fObject->SetRadius(radius);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::Arc::SetRadius);
       return true;
     }
     if (anAttribute->GetName() == "positive_orientation")
     {
-      bool positiveOrientation;
-      anAttribute->CopyTo(positiveOrientation);
-      fObject->SetOrientation(positiveOrientation);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::Arc::SetOrientation);
       return true;
     }
     return false;
@@ -112,31 +109,23 @@ namespace katrin
   {
     if (anAttribute->GetName() == "longitudinal_mesh_count_start")
     {
-      int nPolyBegin;
-      anAttribute->CopyTo(nPolyBegin);
-      fObject->SetNPolyBegin(nPolyBegin);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::SetNPolyBegin);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count_end")
     {
-      int nPolyEnd;
-      anAttribute->CopyTo(nPolyEnd);
-      fObject->SetNPolyEnd(nPolyEnd);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::SetNPolyEnd);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int nPoly;
-      anAttribute->CopyTo(nPoly);
-      fObject->SetNPolyBegin(nPoly);
-      fObject->SetNPolyEnd(nPoly);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::SetNPolyBegin);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::SetNPolyEnd);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_power")
     {
-      double discretizationPower;
-      anAttribute->CopyTo(discretizationPower);
-      fObject->SetDiscretizationPower(discretizationPower);
+      anAttribute->CopyTo(fObject, &KGRotatedObject::SetDiscretizationPower);
       return true;
     }
     return false;
@@ -147,18 +136,14 @@ namespace katrin
   {
     if (anElement->GetName() == "line")
     {
-      KGRotatedObject::Line* line;
-      anElement->ReleaseTo(line);
-      line->Initialize();
-      fObject->AddSegment(line);
+      anElement->AsPointer<KGRotatedObject::Line>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGRotatedObject::AddSegment );
       return true;
     }
     if (anElement->GetName() == "arc")
     {
-      KGRotatedObject::Arc* arc;
-      anElement->ReleaseTo(arc);
-      arc->Initialize();
-      fObject->AddSegment(arc);
+      anElement->AsPointer<KGRotatedObject::Arc>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGRotatedObject::AddSegment );
       return true;
     }
     return false;
@@ -182,11 +167,11 @@ namespace katrin
   {
     if (anElement->GetName() == "rotated_object")
     {
-      KGRotatedObject* object;
-      anElement->ReleaseTo(object);
-      object->Initialize();
-      KSmartPointer<KGRotatedObject> smartPtr(object);
-      fObject->SetObject(smartPtr);
+        KGRotatedObject* object = NULL;
+        anElement->ReleaseTo(object);
+        object->Initialize();
+        KSmartPointer<KGRotatedObject> smartPtr(object);
+        fObject->SetObject(smartPtr);
       return true;
     }
     return false;
@@ -211,12 +196,12 @@ namespace katrin
   {
     if (anElement->GetName() == "rotated_object")
     {
-      KGRotatedObject* object;
-      anElement->ReleaseTo(object);
-      object->Initialize();
-      KSmartPointer<KGRotatedObject> smartPtr(object);
-      fObject->SetObject(smartPtr);
-      return true;
+        KGRotatedObject* object = NULL;
+        anElement->ReleaseTo(object);
+        object->Initialize();
+        KSmartPointer<KGRotatedObject> smartPtr(object);
+        fObject->SetObject(smartPtr);
+        return true;
     }
     return false;
   }

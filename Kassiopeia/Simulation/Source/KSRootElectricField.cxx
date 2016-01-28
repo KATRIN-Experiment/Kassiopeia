@@ -11,6 +11,7 @@ namespace Kassiopeia
     {
     }
     KSRootElectricField::KSRootElectricField( const KSRootElectricField& aCopy ) :
+            KSComponent(),
             fCurrentPotential( aCopy.fCurrentPotential ),
             fCurrentField( aCopy.fCurrentField ),
             fElectricFields( aCopy.fElectricFields )
@@ -44,9 +45,31 @@ namespace Kassiopeia
         }
         return;
     }
+    void KSRootElectricField::CalculateFieldAndPotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, double& aPotential )
+    {
+        aField = KThreeVector::sZero;
+        aPotential = 0.;
+        for( int tIndex = 0; tIndex < fElectricFields.End(); tIndex++ )
+        {
+            fElectricFields.ElementAt( tIndex )->CalculateFieldAndPotential( aSamplePoint, aSampleTime, fCurrentField, fCurrentPotential );
+            aField += fCurrentField;
+            aPotential += fCurrentPotential;
+        }
+        return;
+    }
 
     void KSRootElectricField::AddElectricField( KSElectricField* anElectricField )
     {
+        //check that field is not already present
+        for( int tIndex = 0; tIndex < fElectricFields.End(); tIndex++ )
+        {
+            if(anElectricField == fElectricFields.ElementAt( tIndex ) )
+            {
+                fieldmsg_debug( "<" << GetName() << "> attempted to add electric field <" << anElectricField->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
         if( fElectricFields.AddElement( anElectricField ) == -1 )
         {
             fieldmsg( eError ) << "<" << GetName() << "> could not add electric field <" << anElectricField->GetName() << ">" << eom;
@@ -66,7 +89,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootElectricFieldDict =
+    STATICINT sKSRootElectricFieldDict =
         KSDictionary< KSRootElectricField >::AddCommand( &KSRootElectricField::AddElectricField, &KSRootElectricField::RemoveElectricField, "add_electric_field", "remove_electric_field" );
 
 }

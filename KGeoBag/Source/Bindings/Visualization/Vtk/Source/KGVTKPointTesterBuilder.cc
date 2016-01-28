@@ -5,7 +5,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKPointTesterStructure =
+    STATICINT sKGVTKPointTesterStructure =
         KGVTKPointTesterBuilder::Attribute< string >( "name" ) +
         KGVTKPointTesterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKPointTesterBuilder::Attribute< string >( "spaces" ) +
@@ -18,7 +18,7 @@ namespace katrin
         KGVTKPointTesterBuilder::Attribute< double >( "vertex_size" ) +
         KGVTKPointTesterBuilder::Attribute< double >( "line_size" );
 
-    static const int sKGVTKPointTesterWindow =
+    STATICINT sKGVTKPointTesterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKPointTester >( "vtk_point_tester" );
 
 }

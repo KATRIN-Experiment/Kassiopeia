@@ -8,6 +8,7 @@ namespace KGeoBag
     {
     }
     KGArea::KGArea( const KGArea& aCopy ) :
+            KTagged(),
             fInitialized( aCopy.fInitialized )
     {
     }

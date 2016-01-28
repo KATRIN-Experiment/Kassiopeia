@@ -4,8 +4,6 @@
 #include "KSElectricField.h"
 #include "KSFieldsMessage.h"
 
-#include <iostream>
-
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
 
@@ -50,8 +48,10 @@ using KEMField::KOpenCLElectrostaticBoundaryIntegrator;
 using KEMField::KGaussianElimination;
 
 #include "KSuperpositionSolver.hh"
+#include "KProjectionSolver.hh"
 #include "KSVDSolver.hh"
 using KEMField::KSuperpositionSolver;
+using KEMField::KProjectionSolver;
 using KEMField::KSVDSolver;
 #ifdef KEMFIELD_USE_ROOT
 #include "KEMRootSVDSolver.hh"
@@ -101,53 +101,44 @@ using KEMField::KZonalHarmonicFieldSolver;
 using KEMField::KZonalHarmonicContainer;
 using KEMField::KZonalHarmonicParameters;
 
-#include "KFMBoundaryIntegralMatrix.hh"
-#include "KFMElectrostaticBoundaryIntegrator.hh"
-#include "KFMElectrostaticBoundaryIntegratorEngine_SingleThread.hh"
-#include "KFMElectrostaticFieldMapper_SingleThread.hh"
-using KEMField::KFMBoundaryIntegralMatrix;
-using KEMField::KFMElectrostaticBoundaryIntegrator;
-using KEMField::KFMElectrostaticBoundaryIntegratorEngine_SingleThread;
-using KEMField::KFMElectrostaticFieldMapper_SingleThread;
-
-#include "KIterativeKrylovSolver.hh"
-#include "KIterativeKrylovRestartCondition.hh"
-#include "KGeneralizedMinimalResidual.hh"
-#include "KBiconjugateGradientStabilized.hh"
-using KEMField::KIterativeKrylovSolver;
-using KEMField::KIterativeKrylovRestartCondition;
-using KEMField::KGeneralizedMinimalResidual;
-using KEMField::KBiconjugateGradientStabilized;
-
-#include "KFMElectrostaticFastMultipoleFieldSolver.hh"
 #include "KFMElectrostaticTree.hh"
+#include "KFMElectrostaticParameters.hh"
 #include "KFMElectrostaticTreeData.hh"
 #include "KFMElectrostaticTreeConstructor.hh"
-
-using KEMField::KFMElectrostaticFastMultipoleFieldSolver;
+#include "KFMElectrostaticFastMultipoleFieldSolver.hh"
+#include "KFMElectrostaticFieldMapper_SingleThread.hh"
+#include "KFMElectrostaticParametersConfiguration.hh"
+#include "KFMElectrostaticFastMultipoleBoundaryValueSolver.hh"
+#include "KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration.hh"
 using KEMField::KFMElectrostaticTree;
+using KEMField::KFMElectrostaticParameters;
 using KEMField::KFMElectrostaticTreeData;
 using KEMField::KFMElectrostaticTreeConstructor;
+using KEMField::KFMElectrostaticFastMultipoleFieldSolver;
+using KEMField::KFMElectrostaticFieldMapper_SingleThread;
+using KEMField::KFMElectrostaticParametersConfiguration;
+using KEMField::KFMElectrostaticFastMultipoleBoundaryValueSolver;
+using KEMField::KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration;
+
+#ifdef KEMFIELD_USE_OPENCL
+#include "KFMElectrostaticFieldMapper_OpenCL.hh"
+#include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
+using KEMField::KFMElectrostaticFieldMapper_OpenCL;
+using KEMField::KFMElectrostaticFastMultipoleFieldSolver_OpenCL;
+#endif
 
 #include "KSAStructuredASCIIHeaders.hh"
 using KEMField::KSAObjectInputNode;
 using KEMField::KSAObjectOutputNode;
 
-
-#ifdef KEMFIELD_USE_OPENCL
-#include "KFMElectrostaticFieldMapper_OpenCL.hh"
-#include "KFMElectrostaticBoundaryIntegratorEngine_OpenCL.hh"
-#include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
-using KEMField::KFMElectrostaticFieldMapper_OpenCL;
-using KEMField::KFMElectrostaticBoundaryIntegratorEngine_OpenCL;
-using KEMField::KFMElectrostaticFastMultipoleFieldSolver_OpenCL;
-#endif
-
-
 #ifdef KEMFIELD_USE_MPI
-#define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
+    #endif
 #else
-#define MPI_SINGLE_PROCESS if( true )
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if( true )
+    #endif
 #endif
 
 using namespace KGeoBag;
@@ -167,6 +158,7 @@ namespace Kassiopeia
         public:
             void CalculatePotential( const KThreeVector& aSamplePoint, const double& aSampleTime, double& aPotential );
             void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
+            void CalculateFieldAndPotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, double& aPotential );
 
         public:
             static const unsigned int sNoSymmetry;
@@ -179,6 +171,9 @@ namespace Kassiopeia
             void SetHashMaskedBits( const unsigned int& aMaskedBits );
             void SetHashThreshold( const double& aThreshold );
 
+            void SetMinimumElementArea( const double& aArea);
+            void SetMaximumElementAspectRatio(const double& aAspect);
+
             void SetSystem( KGSpace* aSpace );
             void AddSurface( KGSurface* aSurface );
             void AddSpace( KGSpace* aSpace );
@@ -188,6 +183,8 @@ namespace Kassiopeia
             string fDirectory;
             unsigned int fHashMaskedBits;
             double fHashThreshold;
+            double fMinimumElementArea;
+            double fMaximumElementAspectRatio;
             string fFile;
             KGSpace* fSystem;
             vector< KGSurface* > fSurfaces;
@@ -277,7 +274,7 @@ namespace Kassiopeia
                     void SetHashProperties( unsigned int maskedBits, double hashThreshold );
 
                 protected:
-                    bool FindSolution( double threshold, KSurfaceContainer& container );
+                    virtual bool FindSolution( double threshold, KSurfaceContainer& container );
                     void SaveSolution( double threshold, KSurfaceContainer& container );
 
                     unsigned int fHashMaskedBits;
@@ -305,6 +302,47 @@ namespace Kassiopeia
                 private:
                     std::string fName;
                     std::string fHash;
+            };
+
+
+            class ExplicitSuperpositionSolutionComponent
+            {
+                public:
+                    ExplicitSuperpositionSolutionComponent(){};
+                    virtual ~ExplicitSuperpositionSolutionComponent(){};
+
+                    std::string name;
+                    double scale;
+                    std::string hash;
+            };
+
+            class ExplicitSuperpositionCachedBEMSolver :
+                public BEMSolver
+            {
+                public:
+                    ExplicitSuperpositionCachedBEMSolver();
+                    virtual ~ExplicitSuperpositionCachedBEMSolver();
+
+                    void SetName( std::string s )
+                    {
+                        fName = s;
+                    }
+
+                    void Initialize( KSurfaceContainer& container );
+
+                    void AddSolutionComponent(ExplicitSuperpositionSolutionComponent* component)
+                    {
+                        fNames.push_back(component->name);
+                        fScaleFactors.push_back(component->scale);
+                        fHashLabels.push_back(component->hash);
+                    }
+
+                private:
+
+                    std::string fName;
+                    std::vector< std::string > fNames;
+                    std::vector< double > fScaleFactors;
+                    std::vector< std::string> fHashLabels;
             };
 
             class GaussianEliminationBEMSolver :
@@ -391,73 +429,6 @@ namespace Kassiopeia
                     bool fUseVTK;
             };
 
-            class FastMultipoleBEMSolver :
-                public BEMSolver
-            {
-                public:
-                    FastMultipoleBEMSolver();
-                    virtual ~FastMultipoleBEMSolver();
-
-                    void Initialize( KSurfaceContainer& container );
-
-                    void SetTolerance( double d )
-                    {
-                        fTolerance = d;
-                    }
-
-                    void SetKrylovSolverType( std::string krylov )
-                    {
-                        fKrylov = krylov;
-                    }
-
-                    void SetRestartCycleSize( unsigned int i )
-                    {
-                        fRestartCycle = i;
-                    }
-
-                    void UseOpenCL( bool choice )
-                    {
-                        if( choice == true )
-                        {
-#ifdef KEMFIELD_USE_OPENCL
-                            fUseOpenCL = choice;
-                            return;
-#endif
-                            fieldmsg( eWarning ) << "cannot use opencl in fast multipole without kemfield being built with opencl, using defaults." << eom;
-                        }
-                        fUseOpenCL = false;
-                        return;
-                    }
-                    void UseVTK( bool choice )
-                    {
-                        if( choice == true )
-                        {
-#ifdef KEMFIELD_USE_VTK
-                            fUseVTK = choice;
-                            return;
-#endif
-                            fieldmsg( eWarning ) << "cannot use vtk in fast multipole without kemfield being built with vtk, using defaults." << eom;
-                        }
-                        fUseVTK = false;
-                        return;
-                    }
-
-                    KFMElectrostaticParameters* GetParameters()
-                    {
-                        return &fParameters;
-                    }
-                    ;
-
-                private:
-
-                    double fTolerance;
-                    KFMElectrostaticParameters fParameters;
-                    std::string fKrylov;
-                    unsigned int fRestartCycle;
-                    bool fUseOpenCL;
-                    bool fUseVTK;
-            };
-
             class FieldSolver
             {
                 public:
@@ -468,6 +439,7 @@ namespace Kassiopeia
 
                     virtual double Potential( const KPosition& P ) const = 0;
                     virtual KEMThreeVector ElectricField( const KPosition& P ) const = 0;
+                    virtual std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KPosition& P ) const = 0;
 
             };
 
@@ -482,6 +454,7 @@ namespace Kassiopeia
 
                     double Potential( const KPosition& P ) const;
                     KEMThreeVector ElectricField( const KPosition& P ) const;
+                    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KPosition& P ) const;
 
                     void UseOpenCL( bool choice )
                     {
@@ -490,7 +463,7 @@ namespace Kassiopeia
 
                 private:
                     KElectrostaticBoundaryIntegrator* fIntegrator;
-                    KIntegratingFieldSolver< KElectrostaticBoundaryIntegrator >* fIntegratingFieldSolver;
+KIntegratingFieldSolver< KElectrostaticBoundaryIntegrator >* fIntegratingFieldSolver;
 
 #ifdef KEMFIELD_USE_OPENCL
                     KOpenCLElectrostaticBoundaryIntegrator* fOCLIntegrator;
@@ -511,6 +484,7 @@ namespace Kassiopeia
 
                     double Potential( const KPosition& P ) const;
                     KEMThreeVector ElectricField( const KPosition& P ) const;
+                    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KPosition& P ) const;
 
                     bool UseCentralExpansion( const KPosition& P );
                     bool UseRemoteExpansion( const KPosition& P );
@@ -538,6 +512,7 @@ namespace Kassiopeia
 
                     double Potential( const KPosition& P ) const;
                     KEMThreeVector ElectricField( const KPosition& P ) const;
+                    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KPosition& P ) const;
 
                     KFMElectrostaticParameters* GetParameters()
                     {

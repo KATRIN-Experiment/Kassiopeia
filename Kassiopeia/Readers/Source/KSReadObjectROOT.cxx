@@ -134,9 +134,9 @@ namespace Kassiopeia
         }
 
         //rearrange presence data to avoid exponential grow of analysis time
-        unsigned int tFirstIndex;
-        unsigned int tLastIndex;
-        unsigned int tFirstEntry;
+        unsigned int tFirstIndex = 0;
+        unsigned int tLastIndex = 0;
+        unsigned int tFirstEntry = 0;
         unsigned int tTotalLength = 0;
         for( vector< Presence >::iterator tIt = tPresences.begin(); tIt != tPresences.end(); tIt++ )
         {

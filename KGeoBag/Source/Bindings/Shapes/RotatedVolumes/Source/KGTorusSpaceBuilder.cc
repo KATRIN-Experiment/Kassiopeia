@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGTorusSpaceBuilder =
+    STATICINT sKGTorusSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGTorusSpace >( "torus_space" );
 
-    static const int sKGTorusSpaceBuilderStructure =
+    STATICINT sKGTorusSpaceBuilderStructure =
         KGTorusSpaceBuilder::Attribute< string >( "name" ) +
         KGTorusSpaceBuilder::Attribute< double >( "z" ) +
         KGTorusSpaceBuilder::Attribute< double >( "r" ) +

@@ -133,8 +133,8 @@ namespace KEMField
   }
   inline void KEMThreeVector::SetMagnitude( const double& aMagnitude )
   {
-    register double tMagnitude = Magnitude();
-    register double tRatio = aMagnitude / tMagnitude;
+    const double tMagnitude = Magnitude();
+    const double tRatio = aMagnitude / tMagnitude;
     fData[ 0 ] *= tRatio;
     fData[ 1 ] *= tRatio;
     fData[ 2 ] *= tRatio;
@@ -241,14 +241,14 @@ namespace KEMField
 
   inline KEMThreeVector KEMThreeVector::Unit() const
   {
-    double tMagnitude = Magnitude();
+    const double tMagnitude = Magnitude();
     return tMagnitude >0.0 ? KEMThreeVector( fData[ 0 ] / tMagnitude, fData[ 1 ] / tMagnitude, fData[ 2 ] / tMagnitude ) : KEMThreeVector( fData[ 0 ], fData[ 1 ], fData[ 2 ] );
   }
   inline KEMThreeVector KEMThreeVector::Orthogonal() const
   {
-    register double tX = fData[ 0 ] < 0.0 ? -fData[ 0 ] : fData[ 0 ];
-    register double tY = fData[ 1 ] < 0.0 ? -fData[ 1 ] : fData[ 1 ];
-    register double tZ = fData[ 2 ] < 0.0 ? -fData[ 2 ] : fData[ 2 ];
+    const double tX = fData[ 0 ] < 0.0 ? -fData[ 0 ] : fData[ 0 ];
+    const double tY = fData[ 1 ] < 0.0 ? -fData[ 1 ] : fData[ 1 ];
+    const double tZ = fData[ 2 ] < 0.0 ? -fData[ 2 ] : fData[ 2 ];
     if( tX < tY )
     {
       return tX < tZ ? KEMThreeVector( 0., fData[ 2 ], -fData[ 1 ] ) : KEMThreeVector( fData[ 1 ], -fData[ 0 ], 0. );
@@ -309,7 +309,7 @@ namespace KEMField
     return aLeft[ 0 ] * aRight[ 0 ] + aLeft[ 1 ] * aRight[ 1 ] + aLeft[ 2 ] * aRight[ 2 ];
   }
 
-  inline KEMThreeVector operator*( register double aScalar, const KEMThreeVector& aVector )
+  inline KEMThreeVector operator*( double aScalar, const KEMThreeVector& aVector )
   {
     KEMThreeVector aResult( aVector );
     aResult[ 0 ] *= aScalar;
@@ -317,7 +317,7 @@ namespace KEMField
     aResult[ 2 ] *= aScalar;
     return aResult;
   }
-  inline KEMThreeVector operator*( const KEMThreeVector& aVector, register double aScalar )
+  inline KEMThreeVector operator*( const KEMThreeVector& aVector, double aScalar )
   {
     KEMThreeVector aResult( aVector );
     aResult[ 0 ] *= aScalar;
@@ -325,14 +325,14 @@ namespace KEMField
     aResult[ 2 ] *= aScalar;
     return aResult;
   }
-  inline KEMThreeVector& operator*=( KEMThreeVector& aVector, register double aScalar )
+  inline KEMThreeVector& operator*=( KEMThreeVector& aVector, double aScalar )
   {
     aVector[ 0 ] *= aScalar;
     aVector[ 1 ] *= aScalar;
     aVector[ 2 ] *= aScalar;
     return aVector;
   }
-  inline KEMThreeVector operator/( const KEMThreeVector& aVector, register double aScalar )
+  inline KEMThreeVector operator/( const KEMThreeVector& aVector, double aScalar )
   {
     KEMThreeVector aResult( aVector );
     aResult[ 0 ] /= aScalar;
@@ -340,7 +340,7 @@ namespace KEMField
     aResult[ 2 ] /= aScalar;
     return aResult;
   }
-  inline KEMThreeVector& operator/=( KEMThreeVector& aVector, register double aScalar )
+  inline KEMThreeVector& operator/=( KEMThreeVector& aVector, double aScalar )
   {
     aVector[ 0 ] /= aScalar;
     aVector[ 1 ] /= aScalar;

@@ -3,7 +3,7 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( Kassiopeia, objctmsg );
+KMESSAGE_DECLARE( Kassiopeia, objctmsg )
 
 #ifdef Kassiopeia_ENABLE_DEBUG
 

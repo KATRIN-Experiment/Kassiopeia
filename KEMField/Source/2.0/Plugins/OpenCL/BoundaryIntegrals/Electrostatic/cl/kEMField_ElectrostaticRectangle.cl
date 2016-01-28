@@ -96,7 +96,7 @@ CL_TYPE ER_EFieldLocalZ(CL_TYPE x1,
 			CL_TYPE z)
 {
   // Computes the z component of the electric field in local coordinates (where
-  // the rectangle lies in the x-y plane, and the field point lies on the 
+  // the rectangle lies in the x-y plane, and the field point lies on the
   // z-axis).
 
   CL_TYPE t1 = (fabs(y1)>1.e-15 ? z/y1:1.e15);
@@ -200,15 +200,24 @@ CL_TYPE4 ER_EField(const CL_TYPE* P,
   if (fabs(w)<1.e-13)
   {
     if (xmin<0. && xmax>0. && ymin<0. && ymax>0.)
-      field_local[2] = sign_z/(2.*M_EPS0);
+    {
+            //changed 12/8/14 JB
+            //We are probably on the surface of the element
+            //so ignore any z displacement (which may be a round off error)
+            //and always pick a consistent direction (aligned with normal vector)
+            field_local[2] = 1.0/(2.*M_EPS0);
+            //field_local[2] = sign_z/(2.*M_EPS0);
+    }
     else
+    {
       field_local[2] = 0.;
+    }
   }
   else
   {
     if (((tmin>0) - (tmin<0)) != ((tmax>0) - (tmax<0)))
       field_local[2] = prefac*sign_z*
-	fabs(ER_EFieldLocalZ(xmin,xmax,0,fabs(ymin),w) + 
+	fabs(ER_EFieldLocalZ(xmin,xmax,0,fabs(ymin),w) +
 	     ER_EFieldLocalZ(xmin,xmax,0,fabs(ymax),w));
     else
       field_local[2] =prefac*sign_z*fabs(ER_EFieldLocalZ(xmin,xmax,ymax,ymin,w));

@@ -66,12 +66,6 @@ namespace katrin
             }
             return true;
         }
-        if( aContainer->GetName() == "command" )
-        {
-            KSCommand* tCommand = KSToolbox::GetInstance()->GetObjectAs< KSCommand >( aContainer->AsReference< string >() );
-            fObject->AddCommand( tCommand->Clone() );
-            return true;
-        }
         return false;
     }
 

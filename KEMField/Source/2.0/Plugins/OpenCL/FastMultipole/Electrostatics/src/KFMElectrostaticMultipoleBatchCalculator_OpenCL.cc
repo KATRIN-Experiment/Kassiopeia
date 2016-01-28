@@ -5,8 +5,8 @@
 
 #include "KFMPointCloud.hh"
 #include "KFMBasisData.hh"
+#include "KOpenCLKernelBuilder.hh"
 
-#include <fstream>
 
 
 namespace KEMField
@@ -16,6 +16,10 @@ namespace KEMField
 KFMElectrostaticMultipoleBatchCalculator_OpenCL::KFMElectrostaticMultipoleBatchCalculator_OpenCL():
 KFMElectrostaticMultipoleBatchCalculatorBase(),
 fJSize(0),
+fAbscissa(NULL),
+fWeights(NULL),
+fAbscissaBufferCL(NULL),
+fWeightsBufferCL(NULL),
 fOpenCLFlags(""),
 fJMatrix(NULL),
 fAxialPlm(NULL),
@@ -34,6 +38,7 @@ fAxialPlmBufferCL(NULL),
 fJMatrixBufferCL(NULL)
 {
     fAnalyticCalc = new KFMElectrostaticMultipoleCalculatorAnalytic();
+    fInitialized = false;
 };
 
 
@@ -46,6 +51,8 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::~KFMElectrostaticMultipoleBatch
     delete[] fIntermediateOriginData;
     delete[] fVertexData;
     delete[] fIntermediateMomentData;
+    delete[] fAbscissa;
+    delete[] fWeights;
 
     delete fOriginBufferCL;
     delete fVertexDataBufferCL;
@@ -55,7 +62,8 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::~KFMElectrostaticMultipoleBatch
     delete fEquatorialPlmBufferCL;
     delete fAxialPlmBufferCL;
     delete fJMatrixBufferCL;
-
+    delete fAbscissaBufferCL;
+    delete fWeightsBufferCL;
     delete fAnalyticCalc;
 }
 
@@ -84,6 +92,13 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::Initialize()
 
     if(!fInitialized)
     {
+        //compute gaussian quadrature rules
+        fQuadratureTableCalc.SetNTerms(fDegree+1);
+        fQuadratureTableCalc.Initialize();
+        fQuadratureTableCalc.GetAbscissa(&fAbscissaVector);
+        fQuadratureTableCalc.GetWeights(&fWeightsVector);
+
+
         //construct the kernel and determine the number of work group size
         ConstructOpenCLKernels();
 
@@ -91,6 +106,8 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::Initialize()
         unsigned int bytes_per_element = fStride*sizeof(CL_TYPE2);
         unsigned int buff_size = fMaxBufferSizeInBytes;
         unsigned int max_items = buff_size/bytes_per_element;
+        unsigned int alt_max_items = buff_size/(sizeof(CL_TYPE16));
+        if(max_items > alt_max_items){max_items = alt_max_items;};
 
         if(max_items > fNLocal)
         {
@@ -139,57 +156,27 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::Initialize()
 void
 KFMElectrostaticMultipoleBatchCalculator_OpenCL::ConstructOpenCLKernels()
 {
+
     //Get name of kernel source file
     std::stringstream clFile;
     clFile << KOpenCLInterface::GetInstance()->GetKernelPath() << "/kEMField_KFMElectrostaticMultipole_kernel.cl";
-
-    //read in the source code
-    std::string sourceCode;
-    std::ifstream sourceFile(clFile.str().c_str());
-    sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
-
-    //Make program of the source code in the context
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length()+1));
-    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source);
 
     //set the build options
     std::stringstream options;
     options << GetOpenCLFlags();
 
-    // Build program for these specific devices
-    try
-    {
-        // use only target device!
-        cl::vector<cl::Device> devices;
-        devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
-        program.build(devices,options.str().c_str());
-    }
-    catch (cl::Error error)
-    {
-        std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
-        std::stringstream s;
-        s<<"There was an error compiling the kernels.  Here is the information from the OpenCL C++ API:"<<std::endl;
-        s<<error.what()<<"("<<error.err()<<")"<<std::endl;
-        s<<"Build Status: "<<program.getBuildInfo<CL_PROGRAM_BUILD_STATUS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-        s<<"Build Options:\t"<<program.getBuildInfo<CL_PROGRAM_BUILD_OPTIONS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-        s<<"Build Log:\t "<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-        std::cout<<s.str()<<std::endl;
-        std::exit(1);
-    }
-
-    // Make kernel
-	cl_int err_code = -1;
-    try
-    {
-        fMultipoleKernel = new cl::Kernel(program, "ElectrostaticMultipole", &err_code);
-    }
-    catch(cl::Error error)
-    {
-        std::cout<<"Kernel construction failed with error code: "<<err_code<<std::endl;
-        std::exit(1);
-    }
+    //build the kernel
+    KOpenCLKernelBuilder k_builder;
+    fMultipoleKernel = k_builder.BuildKernel(clFile.str(), std::string("ElectrostaticMultipole"), options.str());
 
     fNLocal = fMultipoleKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+    unsigned int preferredWorkgroupMultiple = fMultipoleKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+    if(preferredWorkgroupMultiple < fNLocal)
+    {
+        fNLocal = preferredWorkgroupMultiple;
+    }
 }
 
 void
@@ -225,6 +212,16 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::BuildBuffers()
             si =  KFMScalarMultipoleExpansion::RealBasisIndex(n,m);
             fACoefficient[si] = KFMMath::A_Coefficient(m, n);
         }
+    }
+
+    //numerical integrator data
+    fAbscissa = new CL_TYPE[fDegree+1];
+    fWeights = new CL_TYPE[fDegree+1];
+
+    for(int i=0; i<=fDegree; i++)
+    {
+        fAbscissa[i] = fAbscissaVector[i];
+        fWeights[i] = fWeightsVector[i];
     }
 
     //compute the pinchon j-matrices
@@ -265,31 +262,77 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::BuildBuffers()
 
 
     //create buffers for the constant objects
-    fACoefficientBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    CL_ERROR_TRY
+    {
+        fACoefficientBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
 
-    fEquatorialPlmBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    CL_ERROR_TRY
+    {
+        fEquatorialPlmBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
 
-    fAxialPlmBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    CL_ERROR_TRY
+    {
+        fAxialPlmBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fStride*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
 
-    fJMatrixBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fJSize*sizeof(CL_TYPE));
-
+    CL_ERROR_TRY
+    {
+        fJMatrixBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fJSize*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
 
     //create buffers for the non-constant objects (must be enqueued writen/read on each call)
-    fOriginBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE4));
+    CL_ERROR_TRY
+    {
+        fOriginBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE4));
+    }
+    CL_ERROR_CATCH
 
-    fVertexDataBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE16));
+    CL_ERROR_TRY
+    {
+        fVertexDataBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE16));
+    }
+    CL_ERROR_CATCH
 
-    fBasisDataBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE));
+    CL_ERROR_TRY
+    {
+        fBasisDataBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fNMaxItems*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
 
-    fMomentBufferCL =
-    new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_WRITE_ONLY, fStride*fNMaxItems*sizeof(CL_TYPE2));
+    CL_ERROR_TRY
+    {
+        fMomentBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_WRITE_ONLY, fStride*fNMaxItems*sizeof(CL_TYPE2));
+    }
+    CL_ERROR_CATCH
+
+    CL_ERROR_TRY
+    {
+        fAbscissaBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (fDegree+1)*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
+
+    CL_ERROR_TRY
+    {
+        fWeightsBufferCL =
+        new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (fDegree+1)*sizeof(CL_TYPE));
+    }
+    CL_ERROR_CATCH
+
 }
 
 
@@ -304,19 +347,41 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::AssignBuffers()
     fMultipoleKernel->setArg(2, *fEquatorialPlmBufferCL);
     fMultipoleKernel->setArg(3, *fAxialPlmBufferCL);
     fMultipoleKernel->setArg(4, *fJMatrixBufferCL);
+    fMultipoleKernel->setArg(5, *fAbscissaBufferCL);
+    fMultipoleKernel->setArg(6, *fWeightsBufferCL);
 
     //set non-const arguments/buffers
-    fMultipoleKernel->setArg(5, *fOriginBufferCL);
-    fMultipoleKernel->setArg(6, *fVertexDataBufferCL);
-    fMultipoleKernel->setArg(7, *fBasisDataBufferCL);
-    fMultipoleKernel->setArg(8, *fMomentBufferCL);
+    fMultipoleKernel->setArg(7, *fOriginBufferCL);
+    fMultipoleKernel->setArg(8, *fVertexDataBufferCL);
+    fMultipoleKernel->setArg(9, *fBasisDataBufferCL);
+    fMultipoleKernel->setArg(10, *fMomentBufferCL);
 
     //copy const data to the GPU
     cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
     Q.enqueueWriteBuffer(*fACoefficientBufferCL, CL_TRUE, 0, fStride*sizeof(CL_TYPE), fACoefficient);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
     Q.enqueueWriteBuffer(*fEquatorialPlmBufferCL, CL_TRUE, 0, fStride*sizeof(CL_TYPE), fEquatorialPlm);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
     Q.enqueueWriteBuffer(*fAxialPlmBufferCL, CL_TRUE, 0, fStride*sizeof(CL_TYPE), fAxialPlm);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
     Q.enqueueWriteBuffer(*fJMatrixBufferCL, CL_TRUE, 0, fJSize*sizeof(CL_TYPE), fJMatrix);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
+    Q.enqueueWriteBuffer(*fAbscissaBufferCL, CL_TRUE, 0, (fDegree+1)*sizeof(CL_TYPE), fAbscissa);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
+    Q.enqueueWriteBuffer(*fWeightsBufferCL, CL_TRUE, 0, (fDegree+1)*sizeof(CL_TYPE), fWeights);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
 }
 
 
@@ -325,9 +390,9 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::FillTemporaryBuffers()
 {
     for(size_t i=0; i<fValidSize; i++)
     {
-        fIntermediateOriginData[i].s0 = fOriginBuffer[3*i];
-        fIntermediateOriginData[i].s1 = fOriginBuffer[3*i + 1];
-        fIntermediateOriginData[i].s2 = fOriginBuffer[3*i + 2];
+        fIntermediateOriginData[i].s[0] = fOriginBuffer[3*i];
+        fIntermediateOriginData[i].s[1] = fOriginBuffer[3*i + 1];
+        fIntermediateOriginData[i].s[2] = fOriginBuffer[3*i + 2];
 
         const KFMBasisData<1>* basis = fContainer->GetBasisData(fIDBuffer[i]);
         fBasisData[i] = (*basis)[0];
@@ -337,50 +402,62 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::FillTemporaryBuffers()
         KFMPoint<3> vertex;
 
         //pattern indicates the number of valid vertices
-        int msb, lsb;
-        if(cloud_size == 1){msb = -1, lsb = -1;}; //single point
-        if(cloud_size == 2){msb = -1, lsb = 1;}; //line element
-        if(cloud_size == 3){msb = 1, lsb = -1;}; //triangle element
-        if(cloud_size == 4){msb = 1, lsb = 1;}; //rectangle element
+        int msb = -1;
+        int lsb = -1;
+        if(cloud_size == 1){msb = -1; lsb = -1;}; //single point
+        if(cloud_size == 2){msb = -1; lsb = 1;}; //line element
+        if(cloud_size == 3){msb = 1; lsb = -1;}; //triangle element
+        if(cloud_size == 4){msb = 1; lsb = 1;}; //rectangle element
 
-        size_t zero = 0;
-        size_t one = 1;
-        size_t two = 2;
 
+        //this value if the element has an acceptable aspect ratio
+        //only relevant for triangles and rectangles
+
+        int aspect_indicator = -1;
+        if(cloud_size == 3 || cloud_size == 4)
+        {
+            double ar = fContainer->GetAspectRatio(fIDBuffer[i]);
+            if(ar > 30.0)
+            {
+                //a large aspect ratio triggers a slower but
+                //more accurate method of computing the multipole moments
+                aspect_indicator = 1;
+            };
+        }
 
         if(cloud_size > 0)
         {
             vertex = vertex_cloud->GetPoint(0);
-            fVertexData[i].s0 = vertex[zero];
-            fVertexData[i].s1 = vertex[one];
-            fVertexData[i].s2 = vertex[two];
-            fVertexData[i].s3 = msb;
+            fVertexData[i].s[0] = vertex[0];
+            fVertexData[i].s[1] = vertex[1];
+            fVertexData[i].s[2] = vertex[2];
+            fVertexData[i].s[3] = msb;
         }
 
         if(cloud_size > 1)
         {
             vertex = vertex_cloud->GetPoint(1);
-            fVertexData[i].s4 = vertex[zero];
-            fVertexData[i].s5 = vertex[one];
-            fVertexData[i].s6 = vertex[two];
-            fVertexData[i].s7 = lsb;
+            fVertexData[i].s[4] = vertex[0];
+            fVertexData[i].s[5] = vertex[1];
+            fVertexData[i].s[6] = vertex[2];
+            fVertexData[i].s[7] = lsb;
         }
 
         if(cloud_size > 2)
         {
             vertex = vertex_cloud->GetPoint(2);
-            fVertexData[i].s8 = vertex[zero];
-            fVertexData[i].s9 = vertex[one];
-            fVertexData[i].sA = vertex[two];
-            //fVertexData[i].sB is irrelevant
+            fVertexData[i].s[8] = vertex[0];
+            fVertexData[i].s[9] = vertex[1];
+            fVertexData[i].s[10] = vertex[2];
+            fVertexData[i].s[11] = aspect_indicator; //validity of aspect ratio indicator
         }
 
         if(cloud_size > 3)
         {
             vertex = vertex_cloud->GetPoint(3);
-            fVertexData[i].sC = vertex[zero];
-            fVertexData[i].sD = vertex[one];
-            fVertexData[i].sE = vertex[two];
+            fVertexData[i].s[12] = vertex[0];
+            fVertexData[i].s[13] = vertex[1];
+            fVertexData[i].s[14] = vertex[2];
             //fVertexData[i].sF is irrelevant
         }
     }
@@ -389,6 +466,7 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::FillTemporaryBuffers()
 
 void KFMElectrostaticMultipoleBatchCalculator_OpenCL::ComputeMoments()
 {
+
     fMultipoleKernel->setArg(0, fValidSize); //must set to (fValidSize) on each call
 
     //access the element container and fill the vertex buffer and basis data buffer
@@ -396,9 +474,21 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::ComputeMoments()
 
     //copy data to GPU
     cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
+
     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fOriginBufferCL, CL_TRUE, 0, fValidSize*sizeof(CL_TYPE4), fIntermediateOriginData);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
+
     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fVertexDataBufferCL, CL_TRUE, 0, fValidSize*sizeof(CL_TYPE16), fVertexData);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
+
     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBasisDataBufferCL, CL_TRUE, 0, fValidSize*sizeof(CL_TYPE), fBasisData);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
 
     unsigned int nDummy = fNLocal - (fValidSize%fNLocal);
     if(nDummy == fNLocal)
@@ -409,8 +499,14 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::ComputeMoments()
     cl::NDRange local(fNLocal);
 
     Q.enqueueNDRangeKernel(*fMultipoleKernel, cl::NullRange, global, local);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
 
     Q.enqueueReadBuffer(*fMomentBufferCL, CL_TRUE, 0, fStride*fValidSize*sizeof(CL_TYPE2), fIntermediateMomentData);
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
 
 
     //fill the moment buffer from the computed moments
@@ -422,8 +518,8 @@ void KFMElectrostaticMultipoleBatchCalculator_OpenCL::ComputeMoments()
             for(int k=0; k<=l; k++)
             {
                 si = KFMScalarMultipoleExpansion::RealBasisIndex(l,k);
-                fMomentBuffer[i*2*fStride + 2*si] = fIntermediateMomentData[i*fStride + si].s0;
-                fMomentBuffer[i*2*fStride + 2*si + 1] = fIntermediateMomentData[i*fStride + si].s1;
+                fMomentBuffer[i*2*fStride + 2*si] = fIntermediateMomentData[i*fStride + si].s[0];
+                fMomentBuffer[i*2*fStride + 2*si + 1] = fIntermediateMomentData[i*fStride + si].s[1];
             }
         }
     }

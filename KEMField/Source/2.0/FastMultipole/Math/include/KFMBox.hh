@@ -42,7 +42,15 @@ class KFMBox
         };
 
 
-        KFMBox(const double* center, const double* length){SetParameters(center, length); };
+        KFMBox(const double* center, const double* length)
+        {
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                fCenter[i] = 0.0;
+                fLength[i] = 0.0;
+            }
+            SetParameters(center, length);
+        };
 
         virtual ~KFMBox(){};
 
@@ -108,7 +116,7 @@ class KFMBox
             double distance;
             for(unsigned int i=0; i<NDIM; i++)
             {
-                distance = (*box)[i] - fCenter[i]; //distance from center in  i-th dimension
+                distance = std::fabs( (*box)[i] - fCenter[i] ); //distance from center in  i-th dimension
                 if( ( (fLength[NDIM]/2.0 - distance) - (box->GetLength(i)/2.0) ) < 0 )
                 {
                     return false;

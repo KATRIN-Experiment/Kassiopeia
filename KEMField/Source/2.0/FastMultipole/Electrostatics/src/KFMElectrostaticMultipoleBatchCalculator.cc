@@ -1,6 +1,7 @@
 #include "KFMElectrostaticMultipoleBatchCalculator.hh"
 
 #include "KFMMessaging.hh"
+#include <cstdlib>
 
 namespace KEMField
 {
@@ -28,11 +29,11 @@ void KFMElectrostaticMultipoleBatchCalculator::SetDegree(int l_max)
 {
     if(!fInitialized) //one time deal
     {
-        fDegree = std::fabs(l_max);
+        fDegree = std::abs(l_max);
         fStride = (fDegree+1)*(fDegree+2)/2;
         fAnalyticCalc->SetDegree(fDegree);
         fNumericCalc->SetDegree(fDegree);
-        fNumericCalc->SetNumberOfQuadratureTerms(fDegree);
+        fNumericCalc->SetNumberOfQuadratureTerms(fDegree/2 + 1);
 
         fMoments.resize((fDegree+1)*(fDegree+1));
         fConvertedMoments.resize((fDegree+1)*(fDegree+1));
@@ -105,7 +106,6 @@ void KFMElectrostaticMultipoleBatchCalculator::ComputeMoments()
             for(int k=0; k<=l; k++)
             {
                 si = KFMScalarMultipoleExpansion::RealBasisIndex(l,k);
-
                 fMomentBuffer[i*2*fStride + 2*si] = cd*(fTempExpansion.GetRealMoments()->at(si) );
                 fMomentBuffer[i*2*fStride + 2*si + 1] =  cd*(fTempExpansion.GetImaginaryMoments()->at(si) );
             }

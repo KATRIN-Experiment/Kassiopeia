@@ -7,8 +7,9 @@
 #include "KSGenValueRadiusCylindricalBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -20,7 +21,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenPositionCylindricalCompositeStructure =
+    STATICINT sKSGenPositionCylindricalCompositeStructure =
         KSGenPositionCylindricalCompositeBuilder::Attribute< string >( "name" ) +
         KSGenPositionCylindricalCompositeBuilder::Attribute< string >( "surface" ) +
         KSGenPositionCylindricalCompositeBuilder::Attribute< string >( "space" ) +
@@ -44,14 +45,14 @@ namespace katrin
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueUniform >( "z_uniform" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueGauss >( "z_gauss" );
 
-    static int sKSGenPositionCylindricalComposite =
+    STATICINT sKSGenPositionCylindricalComposite =
         KSRootBuilder::ComplexElement< KSGenPositionCylindricalComposite >( "ksgen_position_cylindrical_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenPositionCylindricalCompositeStructureROOT =
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenPositionCylindricalCompositeStructureROOT =
             KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFormula >( "r_formula" ) +
-            KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" ) +
-            KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" );
+            KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "r_histogram" ) +KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" ) +KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "phi_histogram" ) +
+            KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" ) +KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "z_histogram" );
 #endif
 
 }

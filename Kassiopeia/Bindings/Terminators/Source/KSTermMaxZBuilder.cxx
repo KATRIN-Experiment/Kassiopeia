@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMaxZStructure =
+    STATICINT sKSTermMaxZStructure =
         KSTermMaxZBuilder::Attribute< string >( "name" ) +
         KSTermMaxZBuilder::Attribute< double >( "z" );
 
-    static int sToolboxKSTermMaxZ =
+    STATICINT sToolboxKSTermMaxZ =
         KSRootBuilder::ComplexElement< KSTermMaxZ >( "ksterm_max_z" );
 
 

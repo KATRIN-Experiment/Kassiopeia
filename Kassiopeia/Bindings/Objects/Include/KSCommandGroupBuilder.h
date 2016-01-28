@@ -34,9 +34,10 @@ namespace katrin
     {
         if( aContainer->Is< KSCommand >() == true )
         {
-            KSCommand* tCommand;
+            /*KSCommand* tCommand;
             aContainer->ReleaseTo( tCommand );
-            fObject->AddCommand( tCommand );
+            fObject->AddCommand( tCommand );*/
+            aContainer->ReleaseTo( fObject, &KSCommandGroup::AddCommand );
             return true;
         }
         return false;

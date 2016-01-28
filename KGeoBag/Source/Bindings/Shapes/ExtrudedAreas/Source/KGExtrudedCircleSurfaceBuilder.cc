@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGExtrudedCircleSurfaceBuilder =
+    STATICINT sKGExtrudedCircleSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGExtrudedCircleSurface >( "extruded_circle_surface" );
 
-    static const int sKGExtrudedCircleSurfaceBuilderStructure =
+    STATICINT sKGExtrudedCircleSurfaceBuilderStructure =
         KGExtrudedCircleSurfaceBuilder::Attribute< string >( "name" ) +
         KGExtrudedCircleSurfaceBuilder::Attribute< double >( "zmin" ) +
         KGExtrudedCircleSurfaceBuilder::Attribute< double >( "zmax" ) +

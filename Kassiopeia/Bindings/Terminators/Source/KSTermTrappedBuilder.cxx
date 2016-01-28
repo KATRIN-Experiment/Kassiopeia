@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermTrappedStructure =
+    STATICINT sKSTermTrappedStructure =
             KSTermTrappedBuilder::Attribute< string >( "name" ) +
             KSTermTrappedBuilder::Attribute< unsigned int >( "max_turns" );
 
-    static int sKSTermTrapped =
+    STATICINT sKSTermTrapped =
             KSRootBuilder::ComplexElement< KSTermTrapped >( "ksterm_trapped" );
 
 }

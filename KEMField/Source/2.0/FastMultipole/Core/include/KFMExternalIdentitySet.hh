@@ -27,15 +27,13 @@ class KFMExternalIdentitySet: public KFMIdentitySet
         KFMExternalIdentitySet():KFMIdentitySet(){};
         virtual ~KFMExternalIdentitySet(){};
 
-        const std::vector<unsigned int>* GetRawIDList(){return &(this->fIDSet);};
-
-        //IO
+         //IO
         virtual std::string ClassName() {return std::string("KFMExternalIdentitySet");};
 
     private:
 };
 
-DefineKSAClassName(KFMExternalIdentitySet);
+DefineKSAClassName(KFMExternalIdentitySet)
 
 }
 

@@ -4,8 +4,6 @@
 
 #include <vector>
 #include <complex>
-#include <fstream>
-
 
 //core
 #include "KFMNodeActor.hh"
@@ -38,7 +36,6 @@
 #include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticParameters.hh"
 #include "KFMElectrostaticElementContainer.hh"
-#include "KFMElectrostaticMultipoleCalculatorAnalytic.hh"
 
 namespace KEMField{
 
@@ -63,6 +60,7 @@ class KFMElectrostaticRemoteToRemoteConverter_OpenCL: public KFMNodeActor< KFMEl
         KFMElectrostaticRemoteToRemoteConverter_OpenCL();
         virtual ~KFMElectrostaticRemoteToRemoteConverter_OpenCL();
 
+        void SetParameters(KFMElectrostaticParameters params);
         void SetTree(KFMElectrostaticTree* tree);
 
         void SetNodeMomentBuffer(cl::Buffer* node_moments){fNodeMomentBufferCL = node_moments;};
@@ -73,6 +71,10 @@ class KFMElectrostaticRemoteToRemoteConverter_OpenCL: public KFMNodeActor< KFMEl
 
         ////////////////////////////////////////////////////////////////////////
         virtual void ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node);
+
+        //functions for debugging, copies data from tree to device and back
+        void Prepare();
+        void Finalize();
 
     protected:
 
@@ -92,6 +94,11 @@ class KFMElectrostaticRemoteToRemoteConverter_OpenCL: public KFMNodeActor< KFMEl
         unsigned int fNTerms;
         unsigned int fStride;
         unsigned int fDivisions;
+
+        //needed when computing scale factors
+        unsigned int fTopLevelDivisions;
+        unsigned int fLowerLevelDivisions;
+
         unsigned int fZeroMaskSize;
         unsigned int fMaxTreeDepth;
 
@@ -161,4 +168,4 @@ class KFMElectrostaticRemoteToRemoteConverter_OpenCL: public KFMNodeActor< KFMEl
 
 
 
-#endif /* __KFMElectrostaticRemoteToRemoteConverter_OpenCL_H__ */ 
+#endif /* __KFMElectrostaticRemoteToRemoteConverter_OpenCL_H__ */

@@ -59,6 +59,7 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
             fParentCoeffBufferCL = NULL;
             fScaleFactorBufferCL = NULL;
             fScaleFactorArray = NULL;
+            this->fInitialized = false;
         };
 
 
@@ -93,7 +94,7 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
         ////////////////////////////////////////////////////////////////////////
         virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
         {
-            if( node != NULL && node->HasChildren() )
+            if( node != NULL && node->HasChildren() && node->GetLevel() != 0)
             {
                 ScalarMomentType* mom = KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node);
                 if(mom != NULL)
@@ -116,7 +117,6 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
                         }
                     }
 
-
                     //also need to compute the scale factors for the child moment contributions
                     if(this->fIsScaleInvariant)
                     {
@@ -131,9 +131,16 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
                     //enqueue write out the parent's coefficients to the gpu
                     size_t moment_size = (this->fNTerms);
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fParentCoeffBufferCL, CL_TRUE, 0, moment_size*sizeof(CL_TYPE2), this->fPtrLocalCoeffSource);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
+
 
                     //enqueue write out the scale factors for the contributions
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fScaleFactorBufferCL, CL_TRUE, 0, moment_size*sizeof(CL_TYPE), this->fScaleFactorArray);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     //collect the original local coefficients of the children of this node
                     this->fCollector->ApplyAction(node);
@@ -141,6 +148,9 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
                     //enqueue write the existing local coeff to gpu
                     size_t local_coeff_size = (this->fNTerms)*(this->fTotalSpatialSize);
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fLocalCoeffBufferCL, CL_TRUE, 0, local_coeff_size*sizeof(CL_TYPE2), this->fPtrLocalCoeffOrig);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     //compute the down conversion of this node's local coefficients to it's children
                     //by pointwise multiply and sum, run Kernel
@@ -149,6 +159,9 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
 
                     //read out the updated child local coeff
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fLocalCoeffBufferCL, CL_TRUE, 0, local_coeff_size*sizeof(CL_TYPE2), this->fPtrLocalCoeffOrig);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     this->DistributeParentsCoefficients(node);
 
@@ -174,23 +187,39 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
 
 
             //create the l2l buffer
-            this->fL2LCoeffBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, l2l_size*sizeof(CL_TYPE2));
+            CL_ERROR_TRY
+            {
+                this->fL2LCoeffBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, l2l_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //size of the parent node's coefficients is fNTerms, create parent moment buffer
-            this->fParentCoeffBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE2));
+            CL_ERROR_TRY
+            {
+                this->fParentCoeffBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //size of the scale factor buffer is fNTerms, create scale factor buffer
-            this->fScaleFactorBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE));
+            CL_ERROR_TRY
+            {
+                this->fScaleFactorBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE));
+            }
+            CL_ERROR_CATCH
 
             //size of the local coefficient buffer on the gpu
             size_t local_coeff_buffer_size = (this->fNTerms)*(this->fTotalSpatialSize);
 
             //create the children's local coefficient buffer
-            this->fLocalCoeffBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, local_coeff_buffer_size*sizeof(CL_TYPE2));
+            CL_ERROR_TRY
+            {
+                this->fLocalCoeffBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, local_coeff_buffer_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -210,6 +239,9 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
 
             //now enqueue the kernel
             KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fKernel, cl::NullRange, global, local);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
         }
 
 
@@ -232,6 +264,9 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
             //write the L2L coefficients to the GPU
             size_t l2l_size = (this->fNTerms)*(this->fNTerms)*(this->fTotalSpatialSize);
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fL2LCoeffBufferCL, CL_TRUE, 0, l2l_size*sizeof(CL_TYPE2), this->fPtrL2LCoeff);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //no longer need a host side copy of the L2L coeff
             delete[] this->fPtrL2LCoeff;
@@ -251,6 +286,14 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
 
             //get n-local
             fNLocal = fKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNLocal)
+            {
+                fNLocal = preferredWorkgroupMultiple;
+            }
+
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -280,4 +323,4 @@ public KFMScalarMomentLocalToLocalConverter<ObjectTypeList, ScalarMomentType, Ke
 
 
 
-#endif /* __KFMScalarMomentLocalToLocalConverter_OpenCL_H__ */ 
+#endif /* __KFMScalarMomentLocalToLocalConverter_OpenCL_H__ */

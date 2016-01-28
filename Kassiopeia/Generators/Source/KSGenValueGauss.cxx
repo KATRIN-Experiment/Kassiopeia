@@ -17,6 +17,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueGauss::KSGenValueGauss( const KSGenValueGauss& aCopy ) :
+            KSComponent(),
             fValueMin( aCopy.fValueMin ),
             fValueMax( aCopy.fValueMax ),
             fValueMean( aCopy.fValueMean ),

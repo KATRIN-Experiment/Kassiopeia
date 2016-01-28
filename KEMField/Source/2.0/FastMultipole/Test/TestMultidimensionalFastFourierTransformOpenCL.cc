@@ -13,9 +13,16 @@ using namespace KEMField;
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    const unsigned int batch_size = 11;
+    const unsigned int p = 8;
+    const unsigned int stride = ((p+1)*(p+2))/2;
+    const unsigned int d = 3;
+    const unsigned int z = 1;
+    const unsigned int div_size = 2*d*(z+1);
+
+
+    const unsigned int batch_size = stride;
     const unsigned int ndim = 4;
-    const unsigned int dim_size[ndim] = {batch_size,43,13,19};
+    const unsigned int dim_size[ndim] = {batch_size,div_size,div_size,div_size};
 
     const unsigned int total_size = dim_size[0]*dim_size[1]*dim_size[2]*dim_size[3];
 
@@ -38,7 +45,7 @@ int main(int /*argc*/, char** /*argv*/)
     {
         index[0] = a;
         count = 0;
-        kfmout<<"original data = "<<kfmendl;
+        //kfmout<<"original data = "<<kfmendl;
         for(unsigned int i=0; i<dim_size[1]; i++)
         {
             index[1] = i;
@@ -50,17 +57,17 @@ int main(int /*argc*/, char** /*argv*/)
                 {
                     index[3] = k;
                     input[index] = std::complex<double>(count%13,count%3);
-                    kfmout<<input[index]<<", ";
+                    //kfmout<<input[index]<<", ";
                     count++;
                 }
-                kfmout<<kfmendl;
+                //kfmout<<kfmendl;
             }
-            kfmout<<kfmendl;
+            //kfmout<<kfmendl;
 
         }
     }
 
-    kfmout<<"--------------------------------------------------------------"<<kfmendl;
+    //kfmout<<"--------------------------------------------------------------"<<kfmendl;
 
     KFMBatchedMultidimensionalFastFourierTransform_OpenCL<3>* fft_eng = new KFMBatchedMultidimensionalFastFourierTransform_OpenCL<3>();
 
@@ -91,12 +98,12 @@ int main(int /*argc*/, char** /*argv*/)
 //        kfmout<<kfmendl;
 //    }
 
-    kfmout<<"--------------------------------------------------------------"<<kfmendl;
+//    kfmout<<"--------------------------------------------------------------"<<kfmendl;
 
     fft_eng->SetBackward();
     fft_eng->ExecuteOperation();
 
-    kfmout<<"IDFT of DFT of data = "<<kfmendl;
+    //kfmout<<"IDFT of DFT of data = "<<kfmendl;
     count =0;
     double l2_norm = 0;
     double norm = spatial_size;

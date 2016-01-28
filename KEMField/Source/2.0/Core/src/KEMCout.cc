@@ -22,7 +22,7 @@ namespace
     // katrin::KMessageTable::GetInstance()->SetTerminalVerbosity(katrin::eDebug);
 #endif
     return true;
-  };
+  }
 
-  bool fEnableDebugOutput = EnableDebugOutput();
+  bool __attribute__((__unused__)) fEnableDebugOutput = EnableDebugOutput();
 }

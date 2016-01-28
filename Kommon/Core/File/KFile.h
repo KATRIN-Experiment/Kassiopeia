@@ -7,43 +7,41 @@ using std::vector;
 #include <string>
 using std::string;
 
-#include "KAssert.h"
-
 #include <cstdlib>
 
 #define STRING(anArgument) #anArgument
 #define AS_STRING(anArgument) STRING(anArgument)
 
 #ifndef CONFIG_INSTALL_DIR
-//KSTATICASSERT( false, CONFIG_INSTALL_DIR_was_not_defined )
+static_assert( false, "CONFIG_INSTALL_DIR was not defined." );
 #define CONFIG_DEFAULT_DIR "."
 #else
 #define CONFIG_DEFAULT_DIR AS_STRING( CONFIG_INSTALL_DIR )
 #endif
 
 #ifndef DATA_INSTALL_DIR
-//KSTATICASSERT( false, DATA_INSTALL_DIR_was_not_defined )
+static_assert( false, "DATA_INSTALL_DIR was not defined.");
 #define DATA_DEFAULT_DIR "."
 #else
 #define DATA_DEFAULT_DIR AS_STRING( DATA_INSTALL_DIR )
 #endif
 
 #ifndef SCRATCH_INSTALL_DIR
-//KSTATICASSERT( false, SCRATCH_INSTALL_DIR_was_not_defined )
+static_assert(false, "SCRATCH_INSTALL_DIR was not defined.");
 #define SCRATCH_DEFAULT_DIR "."
 #else
 #define SCRATCH_DEFAULT_DIR AS_STRING( SCRATCH_INSTALL_DIR )
 #endif
 
 #ifndef OUTPUT_INSTALL_DIR
-//KSTATICASSERT( false, OUTPUT_INSTALL_DIR_was_not_defined )
+static_assert(false, "OUTPUT_INSTALL_DIR was not defined.");
 #define OUTPUT_DEFAULT_DIR "."
 #else
 #define OUTPUT_DEFAULT_DIR AS_STRING( OUTPUT_INSTALL_DIR )
 #endif
 
 #ifndef LOG_INSTALL_DIR
-//KSTATICASSERT( false, LOG_INSTALL_DIR_was_not_defined )
+static_assert(false, "LOG_INSTALL_DIR was not defined.");
 #define LOG_DEFAULT_DIR "."
 #else
 #define LOG_DEFAULT_DIR AS_STRING(LOG_INSTALL_DIR)
@@ -99,6 +97,9 @@ namespace katrin
             virtual bool OpenFileSubclass( const string& aName, const Mode& aMode ) = 0;
             virtual bool CloseFileSubclass() = 0;
             State fState;
+
+        private:
+            void SetResolvedAttributes(const std::string& resolvedName);
 
         protected:
             static const string fDirectoryMark;

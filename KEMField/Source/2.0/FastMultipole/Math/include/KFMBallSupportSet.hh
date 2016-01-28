@@ -239,7 +239,10 @@ class KFMBallSupportSet
             fCurrentMinimalBoundingBall = KFMBall<NDIM>();
         }
 
-        KFMBall<NDIM> GetMinimalBoundingBall() const {return fCurrentMinimalBoundingBall;};
+        KFMBall<NDIM> GetMinimalBoundingBall() const
+        {
+            return fCurrentMinimalBoundingBall;
+        };
 
 
         bool ComputeBoundingBall(const KFMPoint<NDIM>* new_point,

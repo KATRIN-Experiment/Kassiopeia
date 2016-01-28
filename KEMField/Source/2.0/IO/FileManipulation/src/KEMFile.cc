@@ -18,7 +18,7 @@ namespace KEMField
     struct tm * now = localtime(&t);
     std::stringstream s;
     s << DEFAULT_SAVED_FILE_DIR << "/KEM_"
-      << (now->tm_year + 1900) << '-' 
+      << (now->tm_year + 1900) << '-'
       << std::setfill('0') << std::setw(2) << (now->tm_mon + 1) << '-'
       << std::setfill('0') << std::setw(2) << now->tm_mday << "_"
       << std::setfill('0') << std::setw(2) << now->tm_hour << "-"

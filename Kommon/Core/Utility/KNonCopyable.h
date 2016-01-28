@@ -19,15 +19,11 @@ namespace noncopyable_  // protection from unintended ADL
 class KNonCopyable
 {
 protected:
-    KNonCopyable()
-    { }
-    ~KNonCopyable()
-    { }
+    constexpr KNonCopyable() { }
+    ~KNonCopyable() { }
 
-private:
-    // emphasize the following members are private
-    KNonCopyable(const KNonCopyable&);
-    const KNonCopyable& operator=(const KNonCopyable&);
+    KNonCopyable(const KNonCopyable&) = delete;
+    const KNonCopyable& operator=(const KNonCopyable&) = delete;
 };
 }
 

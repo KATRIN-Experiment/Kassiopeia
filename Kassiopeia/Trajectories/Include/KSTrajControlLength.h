@@ -5,6 +5,8 @@
 
 #include "KSTrajExactTypes.h"
 #include "KSTrajAdiabaticTypes.h"
+#include "KSTrajMagneticTypes.h"
+#include "KSTrajElectricTypes.h"
 
 namespace Kassiopeia
 {
@@ -12,7 +14,9 @@ namespace Kassiopeia
     class KSTrajControlLength :
         public KSComponentTemplate< KSTrajControlLength >,
         public KSTrajExactControl,
-        public KSTrajAdiabaticControl
+        public KSTrajAdiabaticControl,
+        public KSTrajMagneticControl,
+        public KSTrajElectricControl
     {
         public:
             KSTrajControlLength();KSTrajControlLength( const KSTrajControlLength& aCopy );
@@ -24,6 +28,12 @@ namespace Kassiopeia
 
             void Calculate( const KSTrajAdiabaticParticle& aParticle, double& aValue );
             void Check( const KSTrajAdiabaticParticle& anInitialParticle, const KSTrajAdiabaticParticle& aFinalParticle, const KSTrajAdiabaticError& anError, bool& aFlag );
+
+            void Calculate( const KSTrajMagneticParticle& aParticle, double& aValue );
+            void Check( const KSTrajMagneticParticle& anInitialParticle, const KSTrajMagneticParticle& aFinalParticle, const KSTrajMagneticError& anError, bool& aFlag );
+
+            void Calculate( const KSTrajElectricParticle& aParticle, double& aValue );
+            void Check( const KSTrajElectricParticle& anInitialParticle, const KSTrajElectricParticle& aFinalParticle, const KSTrajElectricError& anError, bool& aFlag );
 
         public:
             void SetLength( const double& aLength );

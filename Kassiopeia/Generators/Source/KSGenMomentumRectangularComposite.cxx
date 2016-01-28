@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
     }
     KSGenMomentumRectangularComposite::KSGenMomentumRectangularComposite( const KSGenMomentumRectangularComposite& aCopy ) :
+            KSComponent(),
             fXValue( aCopy.fXValue ),
             fYValue( aCopy.fYValue ),
             fZValue( aCopy.fZValue ),
@@ -201,7 +202,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenMomentumRectangularCompositeDict =
+    STATICINT sKSGenMomentumRectangularCompositeDict =
         KSDictionary< KSGenMomentumRectangularComposite >::AddCommand( &KSGenMomentumRectangularComposite::SetXValue, &KSGenMomentumRectangularComposite::ClearXValue, "set_x", "clear_x" ) +
         KSDictionary< KSGenMomentumRectangularComposite >::AddCommand( &KSGenMomentumRectangularComposite::SetYValue, &KSGenMomentumRectangularComposite::ClearYValue, "set_y", "clear_y" ) +
         KSDictionary< KSGenMomentumRectangularComposite >::AddCommand( &KSGenMomentumRectangularComposite::SetYValue, &KSGenMomentumRectangularComposite::ClearYValue, "set_z", "clear_z" );

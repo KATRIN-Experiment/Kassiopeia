@@ -20,22 +20,22 @@ namespace KGeoBag
 {
 
     //allocation/deallocation
-    kg_matrix* kg_matrix_alloc(size_t nrows, size_t ncolumns);
-    kg_matrix* kg_matrix_calloc(size_t nrows, size_t ncolumns);
-    kg_sparse_matrix* kg_sparse_matrix_alloc(size_t nrows, size_t ncolumns, size_t n_elements);
+    kg_matrix* kg_matrix_alloc(unsigned int nrows, unsigned int ncolumns);
+    kg_matrix* kg_matrix_calloc(unsigned int nrows, unsigned int ncolumns);
+    kg_sparse_matrix* kg_sparse_matrix_alloc(unsigned int nrows, unsigned int ncolumns, unsigned int n_elements);
 
     void kg_matrix_free(kg_matrix* m);
     void kg_sparse_matrix_free(kg_sparse_matrix* m);
 
     //access
-    double kg_matrix_get(const kg_matrix* m, size_t i, size_t j);
-    void kg_matrix_set(kg_matrix* m, size_t i, size_t j, double x);
+    double kg_matrix_get(const kg_matrix* m, unsigned int i, unsigned int j);
+    void kg_matrix_set(kg_matrix* m, unsigned int i, unsigned int j, double x);
     void kg_matrix_set_zero(kg_matrix* m);
     void kg_matrix_set_identity(kg_matrix* m);
     void kg_matrix_set(const kg_matrix* src, kg_matrix* dest);
 
-    double kg_sparse_matrix_get(const kg_sparse_matrix* m, size_t i, size_t j);
-    void kg_sparse_matrix_set(kg_sparse_matrix* m, size_t i, size_t j, size_t element_index, double x);
+    double kg_sparse_matrix_get(const kg_sparse_matrix* m, unsigned int i, unsigned int j);
+    void kg_sparse_matrix_set(kg_sparse_matrix* m, unsigned int i, unsigned int j, unsigned int element_index, double x);
 
 
     //operations

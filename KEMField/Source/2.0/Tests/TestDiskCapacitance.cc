@@ -84,6 +84,7 @@ int main(int argc, char* argv[])
   int scale = 1;
   int power = 1;
   double accuracy = 1.e-8;
+  (void) accuracy;
   int increment = 100;
 #ifdef KEMFIELD_USE_VTK
   bool usePlot = false;
@@ -96,7 +97,7 @@ int main(int argc, char* argv[])
     {"scale", required_argument, 0, 's'},
     {"power", required_argument, 0, 'p'},
     {"accuracy", required_argument, 0, 'a'},
-    {"increment", required_argument, 0, 'i'},    
+    {"increment", required_argument, 0, 'i'},
 #ifdef KEMFIELD_USE_VTK
     {"with-plot", no_argument, 0, 'e'},
 #endif
@@ -330,4 +331,3 @@ void DiscretizeInterval( double interval, int nSegments, double power, std::vect
   }
   return;
 }
-

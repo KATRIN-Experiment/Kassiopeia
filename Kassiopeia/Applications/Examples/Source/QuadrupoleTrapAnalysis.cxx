@@ -10,7 +10,7 @@ int main()
     katrin::KMessageTable::GetInstance()->SetTerminalVerbosity( eDebug );
     katrin::KMessageTable::GetInstance()->SetLogVerbosity( eDebug );
 
-    KRootFile* tRootFile = CreateOutputRootFile( "QuadrupoleTrapSimulation.root" );
+    KRootFile* tRootFile = KRootFile::CreateOutputRootFile( "QuadrupoleTrapSimulation.root" );
 
     KSReadFileROOT tReader;
     tReader.OpenFile( tRootFile );
@@ -20,7 +20,7 @@ int main()
     KSReadTrackROOT& tTrackReader = tReader.GetTrack();
     KSReadStepROOT& tStepReader= tReader.GetStep();
 
-    KSReadObjectROOT& tWorld = tStepReader.GetObject( "component_step_world" );
+//    KSReadObjectROOT& tWorld = tStepReader.GetObject( "component_step_world" );
 //    KSDouble& tLength = tWorld.Get< KSDouble >( "time" );
 
     KSReadObjectROOT& tCell = tStepReader.GetObject( "component_step_cell" );

@@ -33,6 +33,7 @@ namespace Kassiopeia
         public:
             void AddContent( KGSurface* aSurface );
             void RemoveContent( KGSurface* aSurface );
+            vector< KGSurface* > GetContent();
 
             void AddCommand( KSCommand* anCommand );
             void RemoveCommand( KSCommand* anCommand );

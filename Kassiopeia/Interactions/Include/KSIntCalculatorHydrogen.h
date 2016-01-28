@@ -35,8 +35,8 @@ namespace Kassiopeia
             virtual void CalculateEloss( const double anEnergy, const double aTheta, double& anEloss ) = 0;
 
         protected:
-            void CalculateTheta( const double anEnergy, double& aTheta );
-            void CalculateDifferentialCrossSection( const double anEnergy, const double cosTheta, double& aCrossSection );
+            virtual void CalculateTheta( const double anEnergy, double& aTheta );
+            virtual void CalculateDifferentialCrossSection( const double anEnergy, const double cosTheta, double& aCrossSection );
 
     };
 

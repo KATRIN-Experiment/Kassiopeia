@@ -30,7 +30,7 @@ using std::stringstream;
 using namespace Kassiopeia;
 using namespace katrin;
 
-int main( int anArgc, char** anArgv )
+int main( int /*anArgc*/, char** /*anArgv*/ )
 {
     double tLowEnergy = 1;
     double tHighEnergy = 18601;

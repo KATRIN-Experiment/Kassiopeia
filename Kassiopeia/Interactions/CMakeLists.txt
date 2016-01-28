@@ -3,17 +3,26 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSInteractionsMessage.h
 
     KSIntScattering.h
-    
+
+    KSIntDecay.h
+    KSIntDecayCalculator.h
+    KSIntDecayCalculatorDeathConstRate.h
+    KSIntDecayCalculatorGlukhovSpontaneous.h
+    KSIntDecayCalculatorGlukhovDeExcitation.h
+    KSIntDecayCalculatorGlukhovExcitation.h
+    KSIntDecayCalculatorGlukhovIonisation.h
     KSIntDensity.h
     KSIntDensityConstant.h
-    
+
     KSIntCalculator.h
     KSIntCalculatorConstant.h
     KSIntCalculatorHydrogen.h
+    KSIntCalculatorTritium.h
     KSIntCalculatorArgon.h
-    
+
     KSIntSurfaceSpecular.h
     KSIntSurfaceDiffuse.h
+    KSIntSurfaceMultiplication.h
 
     KESSElasticElsepa.h
     KESSInelasticBetheFano.h
@@ -22,8 +31,13 @@ set( INTERACTIONS_HEADER_BASENAMES
     KESSRelaxation.h
     KESSScatteringCalculator.h
     KESSSurfaceInteraction.h
+    RydbergFerenc.h
+    QuadGaussLegendre.h
+    KSIntDecayCalculatorFerencIonisation.h
+    KSIntDecayCalculatorFerencSpontaneous.h
+    KSIntDecayCalculatorFerencBBRTransition.h
 )
-set( INTERACTIONS_HEADER_PATH 
+set( INTERACTIONS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${INTERACTIONS_HEADER_BASENAMES} )
@@ -36,16 +50,25 @@ set( INTERACTIONS_SOURCE_BASENAMES
 
     KSIntScattering.cxx
 
+    KSIntDecay.cxx
+    KSIntDecayCalculator.cxx
+    KSIntDecayCalculatorDeathConstRate.cxx
+    KSIntDecayCalculatorGlukhovSpontaneous.cxx
+    KSIntDecayCalculatorGlukhovDeExcitation.cxx
+    KSIntDecayCalculatorGlukhovExcitation.cxx
+    KSIntDecayCalculatorGlukhovIonisation.cxx
     KSIntDensity.cxx
     KSIntDensityConstant.cxx
-    
+
     KSIntCalculator.cxx
     KSIntCalculatorConstant.cxx
     KSIntCalculatorHydrogen.cxx
+    KSIntCalculatorTritium.cxx
     KSIntCalculatorArgon.cxx
-    
+
     KSIntSurfaceSpecular.cxx
     KSIntSurfaceDiffuse.cxx
+    KSIntSurfaceMultiplication.cxx
 
     KESSElasticElsepa.cxx
     KESSInelasticBetheFano.cxx
@@ -54,8 +77,12 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KESSRelaxation.cxx
     KESSScatteringCalculator.cxx
     KESSSurfaceInteraction.cxx
+    RydbergFerenc.cxx
+    KSIntDecayCalculatorFerencIonisation.cxx
+    KSIntDecayCalculatorFerencSpontaneous.cxx
+    KSIntDecayCalculatorFerencBBRTransition.cxx
 )
-set( INTERACTIONS_SOURCE_PATH 
+set( INTERACTIONS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${INTERACTIONS_SOURCE_BASENAMES} )
@@ -136,7 +163,7 @@ set( INTERACTIONS_DATA_BASENAMES
     Elsepa_MFP.txt
     PhotoAbsorbtion.txt
 )
-set( INTERACTIONS_DATA_PATH 
+set( INTERACTIONS_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${INTERACTIONS_DATA_BASENAMES} )

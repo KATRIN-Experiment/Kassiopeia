@@ -4,6 +4,7 @@
 #include "KSComponentTemplate.h"
 #include "KSTrajExactTypes.h"
 #include "KSTrajAdiabaticTypes.h"
+#include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
 
 namespace Kassiopeia
@@ -13,6 +14,7 @@ namespace Kassiopeia
         public KSComponentTemplate< KSTrajTermPropagation >,
         public KSTrajExactDifferentiator,
         public KSTrajAdiabaticDifferentiator,
+        public KSTrajElectricDifferentiator,
         public KSTrajMagneticDifferentiator
     {
         public:
@@ -22,9 +24,10 @@ namespace Kassiopeia
             virtual ~KSTrajTermPropagation();
 
         public:
-            virtual void Differentiate( const KSTrajExactParticle& aValue, KSTrajExactDerivative& aDerivative ) const;
-            virtual void Differentiate( const KSTrajAdiabaticParticle& aValue, KSTrajAdiabaticDerivative& aDerivative ) const;
-            virtual void Differentiate( const KSTrajMagneticParticle& aValue, KSTrajMagneticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajExactParticle& aValue, KSTrajExactDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aValue, KSTrajAdiabaticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajMagneticParticle& aValue, KSTrajMagneticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajElectricParticle& aValue, KSTrajElectricDerivative& aDerivative ) const;
 
         public:
             typedef enum

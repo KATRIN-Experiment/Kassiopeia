@@ -70,17 +70,14 @@
 using namespace KEMField;
 
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-
     (void) argc;
     (void) argv;
 
     #ifdef KEMFIELD_USE_GSL
 
-
     int NTriangles = 4000;
-
 
     //generate sets of three points in bounding sphere for triangles
     std::vector< std::vector< std::vector<double> > > TrianglePoints;
@@ -111,14 +108,15 @@ int main(int argc, char* argv[])
     double p0[3];
     double p1[3];
     double p2[3];
-    bool isAcute;
+    // bool isAcute;
     double a,b,c;
     double delx, dely, delz;
-    double min, mid, max;
+    double min, max;
+    // double mid;
 
     for(int i=0; i<NTriangles; i++)
     {
-        isAcute = false;
+        // isAcute = false;
         do
         {
 
@@ -191,19 +189,19 @@ int main(int argc, char* argv[])
             if(a < b)
             {
                 max = b;
-                mid = b;
+                // mid = b;
                 min = a;
             }
             else
             {
                 max = a;
-                mid = a;
+                // mid = a;
                 min = b;
             }
 
             if(c < min)
             {
-                mid = min;
+                // mid = min;
                 min = c;
             }
             else
@@ -214,7 +212,7 @@ int main(int argc, char* argv[])
                 }
                 else
                 {
-                    mid = c;
+                    // mid = c;
                 }
             }
 

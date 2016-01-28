@@ -38,6 +38,10 @@ class KFMElectrostaticFastMultipoleFieldSolver_OpenCL
         double Potential(const KPosition& P) const;
         KEMThreeVector ElectricField(const KPosition& P) const;
 
+        //for debugging and information purposes
+        int GetSubsetSize(const KPosition& P) const {SetPoint(P); return fSubsetSize;};
+        int GetTreeLevel(const KPosition& P) const {SetPoint(P); return fNodeList->size() - 1;};
+
     protected:
 
         void SetPoint(const double* p) const;
@@ -54,7 +58,7 @@ class KFMElectrostaticFastMultipoleFieldSolver_OpenCL
 
         //direct field evaluation
         mutable KOpenCLElectrostaticBoundaryIntegrator fDirectIntegrator;
-        KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator> fDirectFieldSolver;
+        KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* fDirectFieldSolver;
 
         //needed for field evaluation
         mutable KFMElectrostaticLocalCoefficientFieldCalculator fFastFieldSolver;
@@ -65,7 +69,13 @@ class KFMElectrostaticFastMultipoleFieldSolver_OpenCL
         mutable KFMCube<3>* fCube;
         mutable KFMPoint<3> fExpansionOrigin;
         mutable KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
-        mutable KFMExternalIdentitySet* fDirectCallIDSet;
+
+        mutable std::vector< KFMElectrostaticNode* >* fNodeList;
+        mutable unsigned int fSubsetSize;
+        mutable unsigned int* fDirectCallIDs;
+
+        mutable std::vector< KFMIdentitySetList* > fListOfDirectCallSetLists;
+
         mutable bool fFallback;
 
 

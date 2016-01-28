@@ -20,14 +20,14 @@ namespace Kassiopeia
             virtual ~KSModDynamicEnhancement();
 
         public:
-            void ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
-            void ExecutePostStepModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
+            bool ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
+            bool ExecutePostStepModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
 
         public:
-            K_GET(double, Enhancement );
-            K_SET_GET(double, StaticEnhancement );
-            K_SET_GET(bool, Dynamic);
-            K_SET_GET(double, ReferenceCrossSectionEnergy);
+            K_GET(double, Enhancement )
+            K_SET_GET(double, StaticEnhancement )
+            K_SET_GET(bool, Dynamic)
+            K_SET_GET(double, ReferenceCrossSectionEnergy)
 
         public:
             void SetScattering( KSIntScattering* aScattering );

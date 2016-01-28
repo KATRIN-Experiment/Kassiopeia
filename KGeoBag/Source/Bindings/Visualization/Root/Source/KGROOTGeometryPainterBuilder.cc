@@ -6,18 +6,20 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGROOTGeometryPainterStructure =
+    STATICINT sKGROOTGeometryPainterStructure =
         KGROOTGeometryPainterBuilder::Attribute< string >( "name" ) +
         KGROOTGeometryPainterBuilder::Attribute< string >( "surfaces" ) +
         KGROOTGeometryPainterBuilder::Attribute< string >( "spaces" ) +
         KGROOTGeometryPainterBuilder::Attribute< KThreeVector >( "plane_normal" ) +
         KGROOTGeometryPainterBuilder::Attribute< KThreeVector >( "plane_point" ) +
-        KGROOTGeometryPainterBuilder::Attribute< bool >( "swap_axis" );
+        KGROOTGeometryPainterBuilder::Attribute< bool >( "swap_axis" ) +
+        KGROOTGeometryPainterBuilder::Attribute< double >( "epsilon" );
 
-    static const int sKGROOTGeometryPainterWindow =
+
+    STATICINT sKGROOTGeometryPainterWindow =
         KROOTWindowBuilder::ComplexElement< KGROOTGeometryPainter >( "root_geometry_painter" );
 
-    static const int sKGROOTGeometryPainterPad =
+    STATICINT sKGROOTGeometryPainterPad =
 		KROOTPadBuilder::ComplexElement< KGROOTGeometryPainter >( "root_geometry_painter" );
 
 }

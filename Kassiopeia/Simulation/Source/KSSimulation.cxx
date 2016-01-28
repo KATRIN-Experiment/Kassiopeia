@@ -6,13 +6,18 @@ namespace Kassiopeia
     KSSimulation::KSSimulation() :
             fSeed( 0 ),
             fRun( 0 ),
-            fEvents( 0 )
+            fEvents( 0 ),
+            fStepReportIteration( 1000 ),
+            fCommands()
     {
     }
     KSSimulation::KSSimulation( const KSSimulation& aCopy ) :
+            KSComponent(),
             fSeed( aCopy.fSeed ),
             fRun( aCopy.fRun ),
-            fEvents( aCopy.fEvents )
+            fEvents( aCopy.fEvents ),
+            fStepReportIteration( aCopy.fStepReportIteration ),
+            fCommands()
     {
     }
     KSSimulation* KSSimulation::Clone() const
@@ -51,6 +56,16 @@ namespace Kassiopeia
     const unsigned int& KSSimulation::GetEvents() const
     {
         return fEvents;
+    }
+
+    void KSSimulation::SetStepReportIteration( const unsigned int& anIteration )
+    {
+        fStepReportIteration = anIteration;
+        return;
+    }
+    const unsigned int& KSSimulation::GetStepReportIteration() const
+    {
+        return fStepReportIteration;
     }
 
     void KSSimulation::AddCommand( KSCommand* aCommand )

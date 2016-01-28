@@ -2,7 +2,6 @@
 #define KROOTFILE_H_
 
 #include "KFile.h"
-
 #include "TFile.h"
 
 #include <cstdlib>
@@ -13,6 +12,11 @@ namespace katrin
     class KRootFile :
         public KFile
     {
+        public:
+            static KRootFile* CreateScratchRootFile( const string& aBase );
+            static KRootFile* CreateDataRootFile( const string& aBase );
+            static KRootFile* CreateOutputRootFile( const string& aBase );
+
         public:
             KRootFile();
             virtual ~KRootFile();
@@ -28,7 +32,7 @@ namespace katrin
             TFile* fFile;
     };
 
-    inline KRootFile* CreateScratchRootFile( const string& aBase )
+    inline KRootFile* KRootFile::CreateScratchRootFile( const string& aBase )
     {
         KRootFile* tFile = new KRootFile();
         tFile->SetDefaultPath( SCRATCH_DEFAULT_DIR );
@@ -36,7 +40,7 @@ namespace katrin
         return tFile;
     }
 
-	inline KRootFile* CreateDataRootFile( const string& aBase )
+	inline KRootFile* KRootFile::CreateDataRootFile( const string& aBase )
 	{
 		KRootFile* tFile = new KRootFile();
 		tFile->SetDefaultPath( DATA_DEFAULT_DIR );
@@ -44,7 +48,7 @@ namespace katrin
 		return tFile;
 	}
 
-	inline KRootFile* CreateOutputRootFile( const string& aBase )
+	inline KRootFile* KRootFile::CreateOutputRootFile( const string& aBase )
 	{
 		KRootFile* tFile = new KRootFile();
 		tFile->SetDefaultPath( OUTPUT_DEFAULT_DIR );

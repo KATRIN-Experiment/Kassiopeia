@@ -6,7 +6,8 @@ namespace Kassiopeia
     KSTermSecondaries::KSTermSecondaries()
     {
     }
-    KSTermSecondaries::KSTermSecondaries( const KSTermSecondaries& /*aCopy*/ )
+    KSTermSecondaries::KSTermSecondaries( const KSTermSecondaries& /*aCopy*/ ):
+        KSComponent()
     {
     }
     KSTermSecondaries* KSTermSecondaries::Clone() const

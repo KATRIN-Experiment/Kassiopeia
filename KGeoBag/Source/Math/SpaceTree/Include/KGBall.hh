@@ -60,19 +60,32 @@ class KGBall
         //navigation
         bool PointIsInside(const double* p) const
         {
-
-            KGPoint<NDIM> del = KGPoint<NDIM>(p) - KGPoint<NDIM>(fData);
-            double distance2 = del*del;
-            double distance = std::sqrt(distance2); //have to perform the sqrt b/c floating point math is picky
-
-            if(distance - fData[NDIM] > 0.0)
+            double del;
+            double dist2 = 0.0;
+            for(unsigned int i=0; i<NDIM; i++)
             {
-                return false;
+                del = p[i] - fData[i];
+                dist2 += del*del;
             }
-            else
+            if(dist2 < fData[NDIM]*fData[NDIM])
             {
                 return true;
             }
+            return false;
+
+            // KGPoint<NDIM> del = KGPoint<NDIM>(p) - KGPoint<NDIM>(fData);
+            // double distance2 = del*del;
+            //
+            // double distance = std::sqrt(distance2); //have to perform the sqrt b/c floating point math is picky
+            //
+            // if(distance - fData[NDIM] > 0.0)
+            // {
+            //     return false;
+            // }
+            // else
+            // {
+            //     return true;
+            // }
         }
 
         bool BallIsInside(const KGBall<NDIM>* ball) const

@@ -18,6 +18,21 @@ namespace katrin
             aContainer->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
+        if( aContainer->GetName() == "piecewise_tolerance" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryExact::SetPiecewiseTolerance );
+            return true;
+        }
+        if( aContainer->GetName() == "max_segments" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryExact::SetMaxNumberOfSegments );
+            return true;
+        }
+        if( aContainer->GetName() == "attempt_limit" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryExact::SetAttemptLimit );
+            return true;
+        }
         return false;
     }
 

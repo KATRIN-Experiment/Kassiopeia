@@ -11,6 +11,7 @@ set( RANDOM_HEADER_FILES
     Include/KGCylinderSurfaceRandom.hh
     Include/KGCutConeSpaceRandom.hh
     Include/KGCutConeSurfaceRandom.hh
+    Include/KGCutConeTubeSpaceRandom.hh
     Include/KGConeSpaceRandom.hh
     Include/KGConeSurfaceRandom.hh
     Include/KGGenericSpaceRandom.hh
@@ -29,6 +30,7 @@ set( RANDOM_SOURCE_FILES
     Source/KGCylinderSurfaceRandom.cc
     Source/KGCutConeSpaceRandom.cc
     Source/KGCutConeSurfaceRandom.cc
+    Source/KGCutConeTubeSpaceRandom.cc
     Source/KGConeSpaceRandom.cc
     Source/KGConeSurfaceRandom.cc
     Source/KGGenericSpaceRandom.cc

@@ -8,7 +8,8 @@ namespace Kassiopeia
     KSRootSpace::KSRootSpace()
     {
     }
-    KSRootSpace::KSRootSpace( const KSRootSpace& )
+    KSRootSpace::KSRootSpace( const KSRootSpace& ):
+        KSComponent()
     {
     }
     KSRootSpace* KSRootSpace::Clone() const
@@ -104,7 +105,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootSpaceDict =
+    STATICINT sKSRootSpaceDict =
         KSDictionary< KSRootSpace >::AddCommand( &KSRootSpace::AddSpace, &KSRootSpace::RemoveSpace, "add_space", "remove_space" ) +
         KSDictionary< KSRootSpace >::AddCommand( &KSRootSpace::AddSurface, &KSRootSpace::RemoveSurface, "add_surface", "remove_surface" );
 

@@ -8,6 +8,7 @@ namespace KGeoBag
     {
     }
     KGVolume::KGVolume( const KGVolume& aCopy ) :
+            KTagged(),
             fInitialized( aCopy.fInitialized ),
             fBoundaries( aCopy.fBoundaries )
     {

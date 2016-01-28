@@ -4,6 +4,7 @@
 #include "KFMNodeActor.hh"
 #include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticTree.hh"
+#include "KFMNodeFlagValueInspector.hh"
 
 
 namespace KEMField
@@ -32,20 +33,26 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
             fInitialized = false;
             fMaxDepth = 0;
             fMaxDirectCalls = 0;
-            fDivisions = 0;
             fDegree = 0;
             fZeroMaskSize = 0;
+
+            fMultipoleFlagCondition.SetFlagIndex(1);
+            fMultipoleFlagCondition.SetFlagValue(1);
+
+            fLocalCoeffFlagCondition.SetFlagIndex(0);
+            fLocalCoeffFlagCondition.SetFlagValue(1);
         };
+
         virtual ~KFMElectrostaticTreeInformationExtractor(){};
 
-
+        void SetDegree(unsigned int degree){fDegree = degree;};
 
         virtual void ApplyAction(KFMElectrostaticNode* node)
         {
             if(!fInitialized)
             {
                 KFMCubicSpaceTreeProperties< 3 >* prop = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMCubicSpaceTreeProperties< 3 > >::GetNodeObject(node);
-                fDivisions = (prop->GetDimensions())[0];
+
                 fZeroMaskSize = prop->GetCubicNeighborOrder();
                 fMaxDepth = prop->GetMaxTreeDepth();
                 fNLevelNodes.resize(fMaxDepth+1);
@@ -59,8 +66,8 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
                 fLocalCoeffMem = 0;
                 fMultipoleCoeffMem = 0;
                 fIDSetMem = 0;
+                fNodeMem = 0;
                 fExternalIDSetMem = 0;
-                fMatrixElementMem = 0;
 
                 for(unsigned int i=0; i<fMaxDepth; i++)
                 {
@@ -82,6 +89,8 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
             {
                 fNNodes++;
 
+                fNodeMem += sizeof(KFMElectrostaticNode) + sizeof(electrostatic_node_flags) + sizeof(three_dimensional_cube);
+
                 int level = node->GetLevel();
 
                 fNLevelNodes[level] += 1;
@@ -98,17 +107,17 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
                     fWorldLength = world_cube->GetLength();
                 }
 
-
-
-                if( KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>::GetNodeObject(node) != NULL )
+                if( fMultipoleFlagCondition.ConditionIsSatisfied( node ) )
                 {
                     fNLevelNodesWithNonZeroMultipole[level] += 1;
+                    fMultipoleCoeffMem += 2*( ((fDegree+1)*(fDegree+2))/2 )*sizeof(double);
                 }
 
-//                if(fPrimInspector.ConditionIsSatisfied(node))
-//                {
-//                    fNLevelPrimaryNodes[level] += 1;
-//                }
+                if( fLocalCoeffFlagCondition.ConditionIsSatisfied( node ) )
+                {
+                    fNLevelPrimaryNodes[level] += 1;
+                    fLocalCoeffMem += 2*( ((fDegree+1)*(fDegree+2))/2 )*sizeof(double);
+                }
 
                 KFMIdentitySet* id_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(node);
                 if( id_set != NULL )
@@ -118,39 +127,24 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
                     fLevelElementSet[level].Merge(id_set);
                 }
 
+                KFMCollocationPointIdentitySet* coll_id_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMCollocationPointIdentitySet>::GetNodeObject(node);
+                if( coll_id_set != NULL )
+                {
+                    fIDSetMem += (coll_id_set->GetSize())*sizeof(unsigned int);
+                }
 
-                KFMExternalIdentitySet* eid_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMExternalIdentitySet>::GetNodeObject(node);
-                if( eid_set != NULL )
+                KFMIdentitySetList* id_set_list = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMIdentitySetList>::GetNodeObject(node);
+                if( id_set_list != NULL )
                 {
                     if(node->GetParent() != NULL)
                     {
-                        KFMExternalIdentitySet* parent_eid_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMExternalIdentitySet>::GetNodeObject(node->GetParent() );
-                        if(eid_set != parent_eid_set)
+                        KFMIdentitySetList* parent_id_set_list = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMIdentitySetList>::GetNodeObject(node->GetParent() );
+                        if(id_set_list != parent_id_set_list)
                         {
-                            fExternalIDSetMem += (eid_set->GetSize())*sizeof(unsigned int);
+                            //std::cout<<"n sets = "<<id_set_list->GetNumberOfSets()<<std::endl;
+                            fExternalIDSetMem += (id_set_list->GetNumberOfSets())*sizeof(const std::vector<unsigned int>*);
                         }
                     }
-                }
-
-                if( eid_set != NULL && id_set != NULL)
-                {
-                    fMatrixElementMem += (id_set->GetSize())*(eid_set->GetSize())*sizeof(double);
-                }
-
-                KFMElectrostaticMultipoleSet* m_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>::GetNodeObject(node);
-                if( m_set != NULL )
-                {
-                    fDegree = m_set->GetDegree();
-                    unsigned int m_size = m_set->GetRealMoments()->size();
-                    fMultipoleCoeffMem  += 2*m_size*sizeof(double);
-                    fMSetSize = m_size;
-                }
-
-                KFMElectrostaticLocalCoefficientSet* l_set = KFMObjectRetriever< KFMElectrostaticNodeObjects,  KFMElectrostaticLocalCoefficientSet>::GetNodeObject(node);
-                if( l_set != NULL )
-                {
-                    unsigned int l_size = l_set->GetRealMoments()->size();
-                    fLocalCoeffMem += 2*l_size*sizeof(double);
                 }
 
                 unsigned int direct_calls = CountDirectCalls(node);
@@ -161,37 +155,47 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
 
         void PrintStatistics()
         {
+            kfmout<<"Tree summary is as follows: "<<kfmendl;
+            kfmout<<"Tree has "<<fNNodes<<" nodes. Center at ("<<fWorldCenter[0]<<", "<<fWorldCenter[1]<<", "<<fWorldCenter[2]<<") and side length: "<<fWorldLength<<kfmendl;
+            kfmout<<"Level / Total Nodes / Source Nodes / Target Nodes / Elements Owned / Direct Calls "<<kfmendl;
+            for(unsigned int i=0; i<fNLevelNodes.size(); i++)
+            {
+                std::stringstream ss;
+                ss<<i<<" / "<<fNLevelNodes[i]<<" / "<<fNLevelNodesWithNonZeroMultipole[i]<<" / "<<fNLevelPrimaryNodes[i]<<" / ";
+                ss<<fNLevelElements[i]<<" / "<<fNLevelDirectCalls[i];
+                kfmout<<ss.str()<<kfmendl;
+            }
 
-            kfmout<<"Tree has "<<fNNodes<<" nodes."<<kfmendl;
-            kfmout<<"Root node is cube with center at ("<<fWorldCenter[0]<<", "<<fWorldCenter[1]<<", "<<fWorldCenter[2]<<") and side length: "<<fWorldLength<<kfmendl;
-            for(unsigned int i=0; i<fNLevelNodes.size(); i++)
-            {
-                kfmout<<"Level @ "<<i<<" has: "<<fNLevelNodes[i]<<" nodes of size: "<<fLevelNodeSize[i]<<kfmendl;
-                kfmout<<"Level @ "<<i<<" has: "<<fNLevelNodesWithNonZeroMultipole[i]<<" nodes with non-zero multipole moments "<<kfmendl;
-                kfmout<<"Level @ "<<i<<" owns: "<<fNLevelElements[i]<<" boundary elements."<<kfmendl;
-                kfmout<<"Level @ "<<i<<" has: "<<fNLevelPrimaryNodes[i]<<" primary nodes."<<kfmendl;
-            }
-            kfmout<<"Max number of direct calls from any node is: "<<fMaxDirectCalls<<kfmendl;
-            for(unsigned int i=0; i<fNLevelNodes.size(); i++)
-            {
-                kfmout<<"Boundary elements in Level @ "<<i<<" are responsible for : "<<fNLevelDirectCalls[i]<<" direct calls. "<<kfmendl;
-            }
+            kfmout<<"Max number of direct calls from any one node is: "<<fMaxDirectCalls<<kfmendl;
             kfmout<<"Total memory required by id-sets (MB) = "<<fIDSetMem/(1024.*1024.)<<kfmendl;
             kfmout<<"Total memory required by external id-sets (MB) = "<<fExternalIDSetMem/(1024.*1024.)<<kfmendl;
             kfmout<<"Total memory required by multipole expansions (MB) = "<<fMultipoleCoeffMem/(1024.*1024.)<<kfmendl;
+            kfmout<<"Total memory required by local coefficient expansions (MB) = "<<fLocalCoeffMem/(1024.*1024.)<<kfmendl;
+            kfmout<<"Total memory required by nodes (MB) = "<<fNodeMem/(1024.*1024.)<<kfmendl;
+        }
 
-            kfmout<<"Estimated total memory required by local coefficient expansions (MB) = "<<fLocalCoeffMem/(1024.*1024.)<<kfmendl;
-            kfmout<<"Estimated total memory required to cache sparse matrix elements (MB) = "<<fMatrixElementMem/(1024.*1024.)<<kfmendl;
+        std::string GetStatistics()
+        {
+            std::stringstream ss;
+            ss<<"Tree summary is as follows: "<<std::endl;
+            ss<<"Tree has "<<fNNodes<<" nodes. Center at ("<<fWorldCenter[0]<<", "<<fWorldCenter[1]<<", "<<fWorldCenter[2]<<") and side length: "<<fWorldLength<<std::endl;
+            ss<<"Level / Total Nodes / Source Nodes / Target Nodes / Elements Owned / Direct Calls "<<std::endl;
 
-            double n_terms = (fDegree + 1)*(fDegree + 1);
-            double dim = 2*fDivisions*(fZeroMaskSize + 1);
-            double m2l_size = dim*dim*dim*n_terms*n_terms*sizeof(std::complex<double>);
-            double m2m_size = fDivisions*fDivisions*fDivisions*n_terms*sizeof(std::complex<double>);
-            double l2l_size = fDivisions*fDivisions*fDivisions*n_terms*sizeof(std::complex<double>);
+            for(unsigned int i=0; i<fNLevelNodes.size(); i++)
+            {
+                ss<<i<<" / "<<fNLevelNodes[i]<<" / "<<fNLevelNodesWithNonZeroMultipole[i]<<" / "<<fNLevelPrimaryNodes[i]<<" / ";
+                ss<<fNLevelElements[i]<<" / "<<fNLevelDirectCalls[i];
+                ss<<std::endl;
+            }
 
-            kfmout<<"Estimated total memory required remote to remote (M2M) response functions (MB) = "<<m2m_size/(1024.*1024.)<<kfmendl;
-            kfmout<<"Estimated total memory required remote to local (M2L) response functions (MB) = "<<m2l_size/(1024.*1024.)<<kfmendl;
-            kfmout<<"Estimated total memory required local to local (L2L) response functions (MB) = "<<l2l_size/(1024.*1024.)<<kfmendl;
+            ss<<"Max number of direct calls from any one node is: "<<fMaxDirectCalls<<std::endl;
+            ss<<"Total memory required by id-sets (MB) = "<<fIDSetMem/(1024.*1024.)<<std::endl;
+            ss<<"Total memory required by external id-sets (MB) = "<<fExternalIDSetMem/(1024.*1024.)<<std::endl;
+            ss<<"Total memory required by multipole expansions (MB) = "<<fMultipoleCoeffMem/(1024.*1024.)<<std::endl;
+            ss<<"Total memory required by local coefficient expansions (MB) = "<<fLocalCoeffMem/(1024.*1024.)<<std::endl;
+            ss<<"Total memory required by nodes (MB) = "<<fNodeMem/(1024.*1024.)<<std::endl;
+
+            return ss.str();
         }
 
         std::vector<KFMIdentitySet>* GetLevelIDSets(){return &fLevelElementSet;};
@@ -203,14 +207,12 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
         bool fInitialized;
         unsigned int fMaxDepth;
         unsigned int fMaxDirectCalls;
-        unsigned int fDivisions;
         unsigned int fDegree;
         unsigned int fZeroMaskSize;
 
         KFMPoint<3> fWorldCenter;
         double fWorldLength;
 
-        unsigned int fMSetSize;
         unsigned int fNNodes;
         std::vector<double> fNLevelNodes;
         std::vector<double> fLevelNodeSize;
@@ -223,13 +225,15 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
         double fLocalCoeffMem;
         double fMultipoleCoeffMem;
         double fIDSetMem;
+        double fNodeMem;
         double fExternalIDSetMem;
-        double fMatrixElementMem;
 
         std::vector< KFMElectrostaticNode* > fNodeList;
         std::vector< KFMElectrostaticNode* > fNodeNeighborList;
 
-//        KFMElectrostaticNodePrimacyInspector fPrimInspector;
+        //condition for a node to have a multipole/local coeff expansion
+        KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fMultipoleFlagCondition;
+        KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fLocalCoeffFlagCondition;
 
         //count number of direct calls in this node
         unsigned int CountDirectCalls(KFMElectrostaticNode* node)
@@ -256,7 +260,7 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
                 for(unsigned int i=0; i<fNodeList.size(); i++)
                 {
                     level_count = 0;
-                    KFMCubicSpaceNodeNeighborFinder<3, KFMElectrostaticNodeObjects>::GetAllNeighbors(fNodeList[i], 1, &fNodeNeighborList);
+                    KFMCubicSpaceNodeNeighborFinder<3, KFMElectrostaticNodeObjects>::GetAllNeighbors(fNodeList[i], fZeroMaskSize, &fNodeNeighborList);
                     for(unsigned int j=0; j<fNodeNeighborList.size(); j++)
                     {
                         if(fNodeNeighborList[j] != NULL)
@@ -279,6 +283,10 @@ class KFMElectrostaticTreeInformationExtractor: public KFMNodeActor<KFMElectrost
             return count;
 
         }
+
+
+
+
 
 
 

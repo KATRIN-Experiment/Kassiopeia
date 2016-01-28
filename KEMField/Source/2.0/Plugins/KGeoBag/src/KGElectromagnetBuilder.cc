@@ -56,7 +56,7 @@ namespace katrin
     {
     }
 
-    static int sKGElectromagnetStructure =
+    STATICINT sKGElectromagnetStructure =
         KGElectromagnetBuilder::Attribute< string >( "name" ) +
         KGElectromagnetBuilder::Attribute< double >( "current" ) +
         KGElectromagnetBuilder::Attribute< double >( "scaling_factor" ) +
@@ -65,7 +65,7 @@ namespace katrin
         KGElectromagnetBuilder::Attribute< string >( "spaces" );
 
 
-    static int sKGElectromagnet =
+    STATICINT sKGElectromagnet =
         KGInterfaceBuilder::ComplexElement< KGElectromagnetAttributor >( "electromagnet" );
 
 }

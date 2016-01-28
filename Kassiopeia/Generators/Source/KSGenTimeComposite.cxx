@@ -9,6 +9,7 @@ namespace Kassiopeia
     {
     }
     KSGenTimeComposite::KSGenTimeComposite( const KSGenTimeComposite& aCopy ) :
+            KSComponent(),
             fTimeValue( aCopy.fTimeValue )
     {
     }
@@ -92,7 +93,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenTimeCompositeDict =
+    STATICINT sKSGenTimeCompositeDict =
         KSDictionary< KSGenTimeComposite >::AddCommand( &KSGenTimeComposite::SetTimeValue, &KSGenTimeComposite::ClearTimeValue, "set_time", "clear_time" );
 
 }

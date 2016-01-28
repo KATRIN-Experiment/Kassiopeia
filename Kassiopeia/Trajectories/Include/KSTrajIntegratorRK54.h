@@ -2,10 +2,11 @@
 #define Kassiopeia_KSTrajIntegratorRK54_h_
 
 #include "KSComponentTemplate.h"
-#include "KSMathRK54.h"
+#include "KSMathRKF54.h"
 
 #include "KSTrajExactTypes.h"
 #include "KSTrajAdiabaticTypes.h"
+#include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
 
 namespace Kassiopeia
@@ -13,9 +14,10 @@ namespace Kassiopeia
 
     class KSTrajIntegratorRK54 :
         public KSComponentTemplate< KSTrajIntegratorRK54 >,
-        public KSMathRK54< KSTrajExactSystem >,
-        public KSMathRK54< KSTrajAdiabaticSystem >,
-        public KSMathRK54< KSTrajMagneticSystem >
+        public KSMathRKF54< KSTrajExactSystem >,
+        public KSMathRKF54< KSTrajAdiabaticSystem >,
+        public KSMathRKF54< KSTrajElectricSystem >,
+        public KSMathRKF54< KSTrajMagneticSystem >
     {
         public:
             KSTrajIntegratorRK54();

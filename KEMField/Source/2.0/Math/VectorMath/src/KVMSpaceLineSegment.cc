@@ -34,12 +34,12 @@ void KVMSpaceLineSegment::InitializeParameters()
 void KVMSpaceLineSegment::SetPoint1(const double* point)
 {
     fP1.SetComponents(point[0], point[1], point[2]);
-};
+}
 
 void KVMSpaceLineSegment::SetPoint2(const double* point)
 {
     fP2.SetComponents(point[0], point[1], point[2]);
-};
+}
 
 
 void

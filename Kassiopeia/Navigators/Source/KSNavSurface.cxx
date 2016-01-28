@@ -11,6 +11,7 @@ namespace Kassiopeia
     {
     }
     KSNavSurface::KSNavSurface( const KSNavSurface& aCopy ) :
+            KSComponent(),
             fTransmissionSplit( aCopy.fTransmissionSplit ),
             fReflectionSplit( aCopy.fReflectionSplit )
     {
@@ -43,66 +44,36 @@ namespace Kassiopeia
         return fReflectionSplit;
     }
 
-    void KSNavSurface::ExecuteNavigation( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const
+    void KSNavSurface::ExecuteNavigation( const KSParticle& anInitialParticle, const KSParticle& aNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const
     {
         navmsg_debug( "navigation surface <" << this->GetName() << "> executing navigation:" << eom );
 
-        KSSide* tCurrentSide = anInitialParticle.GetCurrentSide();
-        KSSurface* tCurrentSurface = anInitialParticle.GetCurrentSurface();
-        KSSpace* tCurrentSpace = anInitialParticle.GetCurrentSpace();
+        KSSide* tCurrentSide = aNavigationParticle.GetCurrentSide();
+        KSSurface* tCurrentSurface = aNavigationParticle.GetCurrentSurface();
+        KSSpace* tCurrentSpace = aNavigationParticle.GetCurrentSpace();
 
         if( tCurrentSurface != NULL )
         {
+            KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+            KThreeVector tFinalMomentum = aNavigationParticle.GetMomentum();
+            KThreeVector tNormal = tCurrentSurface->Normal( aNavigationParticle.GetPosition() );
 
-            navmsg_debug( "  child surface was crossed" << eom );
-
-            aFinalParticle = anInitialParticle;
-            aFinalParticle.SetCurrentSide( NULL );
-            aFinalParticle.SetCurrentSurface( NULL );
-            aFinalParticle.SetCurrentSpace( tCurrentSpace );
-            aFinalParticle.SetLabel( GetName() );
-            aFinalParticle.AddLabel( tCurrentSurface->GetName() );
-            tCurrentSurface->Off();
-
-            if( (fTransmissionSplit == true) || (fReflectionSplit == true) )
+            //check if momentum changed its sign relative to the normal of the surface (by the surface interaction)
+            if( ( tInitialMomentum.Dot( tNormal ) > 0. ) == ( tFinalMomentum.Dot( tNormal ) > 0. ) )
             {
-                KSParticle* tTransmissionSplitParticle = new KSParticle( aFinalParticle );
-                tTransmissionSplitParticle->SetLabel( GetName() );
-                tTransmissionSplitParticle->AddLabel( tCurrentSurface->GetName() );
-                aParticleQueue.push_back( tTransmissionSplitParticle );
-                aFinalParticle.SetActive( false );
-            }
+                navmsg( eNormal ) << "  transmission occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
 
-            return;
-        }
-
-        KThreeVector tMomentum = anInitialParticle.GetMomentum();
-        KThreeVector tNormal = anInitialParticle.GetCurrentSide()->Normal( anInitialParticle.GetPosition() );
-
-        if( tCurrentSpace == tCurrentSide->GetInsideParent() )
-        {
-            if( tMomentum.Dot( tNormal ) > 0. )
-            {
-                navmsg_debug( "  transmission occurred on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
-
-                aFinalParticle = anInitialParticle;
-                aFinalParticle.SetCurrentSide( NULL );
-                aFinalParticle.SetCurrentSurface( NULL );
-                aFinalParticle.SetCurrentSpace( tCurrentSide->GetOutsideParent() );
-                aFinalParticle.SetLabel( GetName() );
-                aFinalParticle.AddLabel( tCurrentSide->GetName() );
+                aFinalParticle = aNavigationParticle;
+				aFinalParticle.SetLabel( GetName() );
+				aFinalParticle.AddLabel( tCurrentSurface->GetName() );
                 aFinalParticle.AddLabel( "transmission" );
-                aFinalParticle.AddLabel( "outbound" );
-                tCurrentSide->Off();
-                tCurrentSide->GetInsideParent()->Exit();
 
                 if( fTransmissionSplit == true )
                 {
                     KSParticle* tTransmissionSplitParticle = new KSParticle( aFinalParticle );
-                    tTransmissionSplitParticle->SetLabel( GetName() );
-                    tTransmissionSplitParticle->AddLabel( tCurrentSide->GetName() );
-                    tTransmissionSplitParticle->AddLabel( "transmission" );
-                    tTransmissionSplitParticle->AddLabel( "outbound" );
+                    tTransmissionSplitParticle->SetCurrentSurface( NULL );
+                    tTransmissionSplitParticle->SetLastStepSurface( tCurrentSurface );
+                    tTransmissionSplitParticle->ResetFieldCaching();
                     aParticleQueue.push_back( tTransmissionSplitParticle );
                     aFinalParticle.SetActive( false );
                 }
@@ -111,25 +82,69 @@ namespace Kassiopeia
             }
             else
             {
-                navmsg_debug( "  reflection occurred on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+                navmsg( eNormal ) << "  reflection occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
 
-                aFinalParticle = anInitialParticle;
-                aFinalParticle.SetCurrentSide( NULL );
-                aFinalParticle.SetCurrentSurface( NULL );
-                aFinalParticle.SetCurrentSpace( tCurrentSide->GetInsideParent() );
+                aFinalParticle = aNavigationParticle;
+				aFinalParticle.SetLabel( GetName() );
+				aFinalParticle.AddLabel( tCurrentSurface->GetName() );
+                aFinalParticle.AddLabel( "reflection" );
+
+                if( fReflectionSplit == true )
+                {
+                    KSParticle* tTransmissionSplitParticle = new KSParticle( aFinalParticle );
+                    tTransmissionSplitParticle->SetCurrentSurface( NULL );
+                    tTransmissionSplitParticle->SetLastStepSurface( tCurrentSurface );
+                    tTransmissionSplitParticle->ResetFieldCaching();
+                    aParticleQueue.push_back( tTransmissionSplitParticle );
+                    aFinalParticle.SetActive( false );
+
+                }
+                return;
+            }
+        }
+
+        KThreeVector tMomentum = aNavigationParticle.GetMomentum();
+        KThreeVector tNormal = tCurrentSide->Normal( aNavigationParticle.GetPosition() );
+
+        if( tCurrentSpace == tCurrentSide->GetInsideParent() )
+        {
+            if( tMomentum.Dot( tNormal ) > 0. )
+            {
+                navmsg( eNormal ) << "  transmission occurred on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom;
+
+                aFinalParticle = aNavigationParticle;
+                aFinalParticle.SetLabel( GetName() );
+                aFinalParticle.AddLabel( tCurrentSide->GetName() );
+                aFinalParticle.AddLabel( "transmission" );
+                aFinalParticle.AddLabel( "outbound" );
+
+                if( fTransmissionSplit == true )
+                {
+                    KSParticle* tTransmissionSplitParticle = new KSParticle( aFinalParticle );
+                    tTransmissionSplitParticle->SetCurrentSide( NULL );
+                    tTransmissionSplitParticle->SetCurrentSpace( tCurrentSide->GetOutsideParent() );
+                    tTransmissionSplitParticle->ResetFieldCaching();
+                    aParticleQueue.push_back( tTransmissionSplitParticle );
+                    aFinalParticle.SetActive( false );
+                }
+
+                return;
+            }
+            else
+            {
+                navmsg( eNormal ) << "  reflection occurred on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom;
+
+                aFinalParticle = aNavigationParticle;
                 aFinalParticle.SetLabel( GetName() );
                 aFinalParticle.AddLabel( tCurrentSide->GetName() );
                 aFinalParticle.AddLabel( "reflection" );
                 aFinalParticle.AddLabel( "outbound" );
-                tCurrentSide->Off();
 
                 if( fReflectionSplit == true )
                 {
                     KSParticle* tReflectionSplitParticle = new KSParticle( aFinalParticle );
-                    tReflectionSplitParticle->SetLabel( GetName() );
-                    tReflectionSplitParticle->AddLabel( tCurrentSide->GetName() );
-                    tReflectionSplitParticle->AddLabel( "reflection" );
-                    tReflectionSplitParticle->AddLabel( "outbound" );
+                    tReflectionSplitParticle->SetCurrentSide( NULL );
+                    tReflectionSplitParticle->ResetFieldCaching();
                     aParticleQueue.push_back( tReflectionSplitParticle );
                     aFinalParticle.SetActive( false );
                 }
@@ -142,26 +157,20 @@ namespace Kassiopeia
         {
             if( tMomentum.Dot( tNormal ) < 0. )
             {
-                navmsg_debug( "  transmission occurred on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+                navmsg( eNormal ) << "  transmission occurred on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom;
 
-                aFinalParticle = anInitialParticle;
-                aFinalParticle.SetCurrentSide( NULL );
-                aFinalParticle.SetCurrentSurface( NULL );
-                aFinalParticle.SetCurrentSpace( tCurrentSide->GetInsideParent() );
+                aFinalParticle = aNavigationParticle;
                 aFinalParticle.SetLabel( GetName() );
                 aFinalParticle.AddLabel( tCurrentSide->GetName() );
                 aFinalParticle.AddLabel( "transmission" );
                 aFinalParticle.AddLabel( "inbound" );
-                tCurrentSide->Off();
-                tCurrentSide->GetInsideParent()->Enter();
 
                 if( fTransmissionSplit == true )
                 {
                     KSParticle* tTransmissionSplitParticle = new KSParticle( aFinalParticle );
-                    tTransmissionSplitParticle->SetLabel( GetName() );
-                    tTransmissionSplitParticle->AddLabel( tCurrentSide->GetName() );
-                    tTransmissionSplitParticle->AddLabel( "transmission" );
-                    tTransmissionSplitParticle->AddLabel( "inbound" );
+                    tTransmissionSplitParticle->SetCurrentSide( NULL );
+                    tTransmissionSplitParticle->SetCurrentSpace( tCurrentSide->GetInsideParent() );
+                    tTransmissionSplitParticle->ResetFieldCaching();
                     aParticleQueue.push_back( tTransmissionSplitParticle );
                     aFinalParticle.SetActive( false );
                 }
@@ -170,29 +179,96 @@ namespace Kassiopeia
             }
             else
             {
-                navmsg_debug( "  reflection occurred on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+                navmsg( eNormal ) << "  reflection occurred on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom;
 
-                aFinalParticle = anInitialParticle;
-                aFinalParticle.SetCurrentSide( NULL );
-                aFinalParticle.SetCurrentSurface( NULL );
-                aFinalParticle.SetCurrentSpace( tCurrentSide->GetOutsideParent() );
+                aFinalParticle = aNavigationParticle;
                 aFinalParticle.SetLabel( GetName() );
                 aFinalParticle.AddLabel( tCurrentSide->GetName() );
                 aFinalParticle.AddLabel( "reflection" );
                 aFinalParticle.AddLabel( "inbound" );
-                tCurrentSide->Off();
 
                 if( fReflectionSplit == true )
                 {
                     KSParticle* tReflectionSplitParticle = new KSParticle( aFinalParticle );
-                    tReflectionSplitParticle->SetLabel( GetName() );
-                    tReflectionSplitParticle->AddLabel( tCurrentSide->GetName() );
-                    tReflectionSplitParticle->AddLabel( "transmission" );
-                    tReflectionSplitParticle->AddLabel( "inbound" );
+                    tReflectionSplitParticle->SetCurrentSide( NULL );
+                    tReflectionSplitParticle->ResetFieldCaching();
                     aParticleQueue.push_back( tReflectionSplitParticle );
                     aFinalParticle.SetActive( false );
                 }
 
+                return;
+            }
+        }
+
+        navmsg( eError ) << "could not determine surface navigation" << eom;
+        return;
+    }
+
+
+    void KSNavSurface::FinalizeNavigation( KSParticle& aFinalParticle ) const
+    {
+        navmsg_debug( "navigation surface <" << this->GetName() << "> finalizing navigation:" << eom );
+
+        KSSide* tCurrentSide = aFinalParticle.GetCurrentSide();
+        KSSurface* tCurrentSurface = aFinalParticle.GetCurrentSurface();
+        KSSpace* tCurrentSpace = aFinalParticle.GetCurrentSpace();
+
+        if( tCurrentSurface != NULL )
+        {
+            navmsg_debug( "  finalizing child surface <" << tCurrentSurface->GetName() << ">" << eom );
+            aFinalParticle.SetCurrentSurface( NULL );
+            aFinalParticle.ResetFieldCaching();
+            tCurrentSurface->Off();
+            return;
+        }
+
+        KThreeVector tMomentum = aFinalParticle.GetMomentum();
+        KThreeVector tNormal = tCurrentSide->Normal( aFinalParticle.GetPosition() );
+
+        if( tCurrentSpace == tCurrentSide->GetInsideParent() )
+        {
+            if( tMomentum.Dot( tNormal ) > 0. )
+            {
+                navmsg_debug( "  finalizing transmission on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+
+                aFinalParticle.SetCurrentSide( NULL );
+                aFinalParticle.SetCurrentSpace( tCurrentSide->GetOutsideParent() );
+                aFinalParticle.ResetFieldCaching();
+                tCurrentSide->Off();
+                tCurrentSide->GetInsideParent()->Exit();
+                return;
+            }
+            else
+            {
+                navmsg_debug( "  finalizing reflection on boundary <" << tCurrentSide->GetName() << "> of parent space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+
+                aFinalParticle.SetCurrentSide( NULL );
+                aFinalParticle.ResetFieldCaching();
+                tCurrentSide->Off();
+                return;
+            }
+        }
+
+        if( tCurrentSpace == tCurrentSide->GetOutsideParent() )
+        {
+            if( tMomentum.Dot( tNormal ) < 0. )
+            {
+                navmsg_debug( "  finalizing transmission on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+
+                aFinalParticle.SetCurrentSide( NULL );
+                aFinalParticle.SetCurrentSpace( tCurrentSide->GetInsideParent() );
+                aFinalParticle.ResetFieldCaching();
+                tCurrentSide->Off();
+                tCurrentSide->GetInsideParent()->Enter();
+                return;
+            }
+            else
+            {
+                navmsg_debug( "  finalizing reflection on boundary <" << tCurrentSide->GetName() << "> of child space <" << tCurrentSide->GetInsideParent()->GetName() << ">" << eom );
+
+                aFinalParticle.SetCurrentSide( NULL );
+                aFinalParticle.ResetFieldCaching();
+                tCurrentSide->Off();
                 return;
             }
         }

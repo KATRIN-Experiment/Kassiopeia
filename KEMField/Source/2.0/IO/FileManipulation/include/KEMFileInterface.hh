@@ -8,6 +8,7 @@
 #include "KSAInputNode.hh"
 #include "KSAOutputNode.hh"
 
+
 using std::string;
 using std::vector;
 using std::set;
@@ -42,18 +43,24 @@ namespace KEMField
     template <class Readable>
     void FindByLabels(Readable& readable,vector<string> labels,unsigned int index=0,bool& result=KEMFileInterface::fNullResult);
 
+    void ReadKSAFileFromActiveDirectory(KSAInputNode* node, string file_name, bool& result=KEMFileInterface::fNullResult);
+    void SaveKSAFileToActiveDirectory(KSAOutputNode* node, string file_name, bool& result=KEMFileInterface::fNullResult, bool forceOverwrite = false);
+
     void ReadKSAFile(KSAInputNode* node, string file_name, bool& result=KEMFileInterface::fNullResult);
-    void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result=KEMFileInterface::fNullResult, bool forceOverwrite = false);
+    void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result=KEMFileInterface::fNullResult);
 
     unsigned int NumberWithLabel(string label) const;
     unsigned int NumberWithLabels(vector<string> labels) const;
 
+    set<string> FileNamesWithLabels(vector<string> labels) const;
     set<string> FileList(string directory="") const;
     set<string> CompleteFileList(string directory="") const;
 
     bool DirectoryExists(string directory);
     bool CreateDirectory(string directory);
     bool RemoveDirectory(string directory);
+    bool RemoveFileFromActiveDirectory(string file_name);
+    bool DoesFileExist(std::string file_name);
 
     void ActiveDirectory(string directory);
     string ActiveDirectory() const { return fActiveDirectory; }

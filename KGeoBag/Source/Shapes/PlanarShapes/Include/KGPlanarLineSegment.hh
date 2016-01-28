@@ -13,8 +13,8 @@ namespace KGeoBag
         public:
             KGPlanarLineSegment();
             KGPlanarLineSegment( const KGPlanarLineSegment& aCopy );
-            KGPlanarLineSegment( const KTwoVector& aStart, const KTwoVector& anEnd, const unsigned int aCount = 1, const double aPower = 1. );
-            KGPlanarLineSegment( const double& anX1, const double& aY1, const double& anX2, const double& aY2, const unsigned int aCount = 1, const double aPower = 1. );
+            KGPlanarLineSegment( const KTwoVector& aStart, const KTwoVector& anEnd, const unsigned int aCount = 2, const double aPower = 1. );
+            KGPlanarLineSegment( const double& anX1, const double& aY1, const double& anX2, const double& aY2, const unsigned int aCount = 2, const double aPower = 1. );
             virtual ~KGPlanarLineSegment();
 
             KGPlanarLineSegment* Clone() const;

@@ -23,20 +23,30 @@ namespace KEMField
     KZonalHarmonicFieldSolver(Container& container,
 			      Integrator& integrator) :
       KZonalHarmonicComputer<KElectrostaticBasis>(container,integrator),
-      fIntegratingFieldSolver(container.GetElementContainer(),integrator) {}
+      fIntegratingFieldSolver(container.GetElementContainer(),integrator)
+      {
+        fZHCoeffSingleton = KZHLegendreCoefficients::GetInstance();
+      }
 
     virtual ~KZonalHarmonicFieldSolver() {}
 
     double Potential(const KPosition& P) const;
     KEMThreeVector ElectricField(const KPosition& P) const;
+    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const;
+
 
   private:
-    bool CentralExpansion(const KPosition& P,
-			    double& potential,
-			    KEMThreeVector& electricField) const;
-    bool RemoteExpansion(const KPosition& P,
-			   double& potential,
-			   KEMThreeVector& electricField) const;
+
+    KZHLegendreCoefficients* fZHCoeffSingleton;
+
+    bool CentralExpansionPotential(const KPosition& P, double& potential) const;
+    bool RemoteExpansionPotential(const KPosition& P, double& potential) const;
+
+    bool CentralExpansionField(const KPosition& P, KEMThreeVector& electricField) const;
+    bool RemoteExpansionField(const KPosition& P, KEMThreeVector& electricField) const;
+
+    bool CentralExpansionFieldAndPotential(const KPosition& P, KEMThreeVector& electricField, double& potential) const;
+    bool RemoteExpansionFieldAndPotential(const KPosition& P, KEMThreeVector& electricField, double& potential) const;
 
     KIntegratingFieldSolver<Integrator> fIntegratingFieldSolver;
 
@@ -62,6 +72,21 @@ namespace KEMField
 			  KZonalHarmonicFieldSolver<KElectrostaticBasis>* c)
       {
 	return electricField + c->ElectricField(fP);
+      }
+
+    private:
+      const KPosition& fP;
+    };
+
+    class ElectricFieldAndPotentialAccumulator
+    {
+    public:
+      ElectricFieldAndPotentialAccumulator(const KPosition& P) : fP(P) {}
+      std::pair<KEMThreeVector,double> operator()(std::pair<KEMThreeVector,double> FieldandPotential,
+              KZonalHarmonicFieldSolver<KElectrostaticBasis>* c)
+      {
+          std::pair<KEMThreeVector, double> pair = c->ElectricFieldAndPotential(fP);
+          return std::make_pair(FieldandPotential.first + pair.first, FieldandPotential.second + pair.second );
       }
 
     private:

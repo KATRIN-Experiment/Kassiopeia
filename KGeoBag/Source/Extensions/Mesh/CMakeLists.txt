@@ -1,21 +1,22 @@
 # headers
 set( MESH_HEADER_FILES
 	Include/KGMeshMessage.hh
-	
+
     Include/KGMeshElement.hh
     Include/KGMeshRectangle.hh
     Include/KGMeshTriangle.hh
     Include/KGMeshWire.hh
-    
+
     Include/KGMesh.hh
     Include/KGMesherBase.hh
     Include/KGMesher.hh
-    
+
     Complex/Include/KGComplexMesher.hh
     Complex/Include/KGBoxMesher.hh
     Complex/Include/KGCylinderMesher.hh
     Complex/Include/KGRotatedSurfaceMesher.hh
     Complex/Include/KGExtrudedSurfaceMesher.hh
+    Complex/Include/KGConicalWireArrayMesher.hh
     Complex/Include/KGPortHousingSurfaceMesher.hh
     Complex/Include/KGConicSectPortHousingSurfaceMesher.hh
     Complex/Include/KGRodSurfaceMesher.hh
@@ -47,27 +48,42 @@ set( MESH_HEADER_FILES
     Simple/Include/KGRotatedPolyLoopSpaceMesher.hh
     Simple/Include/KGExtrudedCircleSpaceMesher.hh
     Simple/Include/KGExtrudedPolyLoopSpaceMesher.hh
+
+	Navigation/Include/KGNavigableMeshElement.hh
+	Navigation/Include/KGMeshNavigationNode.hh
+	Navigation/Include/KGMeshElementCollector.hh
+	Navigation/Include/KGNavigableMeshElementContainer.hh
+	Navigation/Include/KGInsertionCondition.hh
+	Navigation/Include/KGNavigableMeshElementSorter.hh
+	Navigation/Include/KGSubdivisionCondition.hh
+	Navigation/Include/KGNavigableMeshTree.hh
+	Navigation/Include/KGNavigableMeshTreeBuilder.hh
+	Navigation/Include/KGNavigableMeshTreeInformationExtractor.hh
+	Navigation/Include/KGNavigableMeshFirstIntersectionFinder.hh
+	Navigation/Include/KGNavigableMeshIntersectionFinder.hh
+	Navigation/Include/KGNavigableMeshProximityCheck.hh
 )
 
 # sources
 set( MESH_SOURCE_FILES
 	Source/KGMeshMessage.cc
-    
+
     Source/KGMeshElement.cc
     Source/KGMeshRectangle.cc
     Source/KGMeshTriangle.cc
     Source/KGMeshWire.cc
-    
+
     Source/KGMesh.cc
     Source/KGMesherBase.cc
     Source/KGMesher.cc
-    
+
     Complex/Source/KGComplexMesher.cc
     Complex/Source/KGBoxMesher.cc
     Complex/Source/KGCylinderMesher.cc
     Complex/Source/KGRotatedSurfaceMesher.cc
     Complex/Source/KGExtrudedSurfaceMesher.cc
     Complex/Source/KGPortHousingSurfaceMesher.cc
+    Complex/Source/KGConicalWireArrayMesher.cc
     Complex/Source/KGConicSectPortHousingSurfaceMesher.cc
     Complex/Source/KGRodSurfaceMesher.cc
     Complex/Source/KGBeamSurfaceMesher.cc
@@ -98,6 +114,17 @@ set( MESH_SOURCE_FILES
     Simple/Source/KGRotatedPolyLoopSpaceMesher.cc
     Simple/Source/KGExtrudedCircleSpaceMesher.cc
     Simple/Source/KGExtrudedPolyLoopSpaceMesher.cc
+
+	Navigation/Source/KGNavigableMeshElement.cc
+	Navigation/Source/KGMeshElementCollector.cc
+	Navigation/Source/KGNavigableMeshElementContainer.cc
+	Navigation/Source/KGInsertionCondition.cc
+	Navigation/Source/KGNavigableMeshElementSorter.cc
+	Navigation/Source/KGSubdivisionCondition.cc
+	Navigation/Source/KGNavigableMeshTreeBuilder.cc
+	Navigation/Source/KGNavigableMeshFirstIntersectionFinder.cc
+	Navigation/Source/KGNavigableMeshIntersectionFinder.cc
+	Navigation/Source/KGNavigableMeshProximityCheck.cc
 )
 
 # internal
@@ -105,6 +132,7 @@ kasper_internal_include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 	${CMAKE_CURRENT_SOURCE_DIR}/Complex/Include
 	${CMAKE_CURRENT_SOURCE_DIR}/Simple/Include
+	${CMAKE_CURRENT_SOURCE_DIR}/Navigation/Include
 )
 
 
@@ -113,11 +141,13 @@ add_library( KGeoBagMesh SHARED ${MESH_SOURCE_FILES} ${MESH_HEADER_FILES} )
 target_link_libraries( KGeoBagMesh
 	KGeoBagCore
 	KGeoBagShapes
+    KGeoBag2DUtility
+	KGeoBagMath
+	KGeoBagMathLinearAlgebra
+ 	KGeoBagMathSpaceTree
 	${Kommon_LIBRARIES}
 )
 
 # install
 kasper_install_headers( ${MESH_HEADER_FILES} )
 kasper_install_libraries( KGeoBagMesh )
-
-

@@ -2,7 +2,7 @@
 #define KGObjectCollection_HH__
 
 
-#include "KTypelist.hh"
+#include "KGTypelist.hh"
 #include "KGObjectHolder.hh"
 
 namespace KGeoBag{
@@ -21,7 +21,7 @@ namespace KGeoBag{
 */
 
 template< typename TypeList >
-class KGObjectCollection: public KGenScatterHierarchy<TypeList, KGObjectHolder >
+class KGObjectCollection: public KGGenScatterHierarchy<TypeList, KGObjectHolder >
 {
     public:
         KGObjectCollection(){};

@@ -10,13 +10,24 @@ set( OBJECTS_HEADER_BASENAMES
 	KSDictionary.h
 	KSCommandMember.h
 	KSComponentMember.h
+	KSComponentValue.h
+	KSComponentDelta.h
 	KSComponentIntegral.h
 	KSComponentMaximum.h
 	KSComponentMinimum.h
+	KSComponentMaximumAt.h
+	KSComponentMinimumAt.h
 	KSComponentTemplate.h
 )
 
-set( OBJECTS_HEADER_PATH 
+if( Kassiopeia_USE_ROOT )
+    list( APPEND OBJECTS_HEADER_BASENAMES
+	    KSComponentMath.h
+    )
+endif( Kassiopeia_USE_ROOT )
+
+
+set( OBJECTS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 
@@ -36,7 +47,7 @@ set( OBJECTS_SOURCE_BASENAMES
 	KSDictionary.cxx
 )
 
-set( OBJECTS_SOURCE_PATH 
+set( OBJECTS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 
@@ -59,4 +70,3 @@ kasper_install_headers( ${OBJECTS_HEADER_FILENAMES} )
 kasper_install_libraries( KassiopeiaObjects )
 
 
-	

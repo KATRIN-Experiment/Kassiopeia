@@ -28,6 +28,7 @@ if( KGeoBag_USE_VTK )
 		DistanceTester
 		OutsideTester
 		RandomPointTester
+		MeshIntersectionTester
 	)
 	list( APPEND APPLICATION_LIBRARIES
 		KGeoBagVtkVisualization
@@ -54,7 +55,7 @@ if(APPLE)
 else(APPLE)
 	foreach( NAME ${APPLICATION_NAMES} )
 		add_executable( ${NAME} Source/${NAME}.cc )
-	endforeach()	
+	endforeach()
 endif(APPLE)
 
 # install

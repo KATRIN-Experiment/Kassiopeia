@@ -10,14 +10,14 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueGaussStructure =
+    STATICINT sKSGenValueGaussStructure =
         KSGenValueGaussBuilder::Attribute< string >( "name" ) +
         KSGenValueGaussBuilder::Attribute< double >( "value_min" ) +
         KSGenValueGaussBuilder::Attribute< double >( "value_max" ) +
         KSGenValueGaussBuilder::Attribute< double >( "value_mean" ) +
         KSGenValueGaussBuilder::Attribute< double >( "value_sigma" );
 
-    static int sKSGenValueGauss =
+    STATICINT sKSGenValueGauss =
         KSRootBuilder::ComplexElement< KSGenValueGauss >( "ksgen_value_gauss" );
 
 }

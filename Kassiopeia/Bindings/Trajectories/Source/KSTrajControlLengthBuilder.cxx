@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajControlLengthStructure =
+    STATICINT sKSTrajControlLengthStructure =
         KSTrajControlLengthBuilder::Attribute< string >( "name" ) +
         KSTrajControlLengthBuilder::Attribute< double >( "length" );
 
-    static int sToolboxKSTrajControlLength =
+    STATICINT sToolboxKSTrajControlLength =
         KSRootBuilder::ComplexElement< KSTrajControlLength >( "kstraj_control_length" );
 
 }

@@ -136,7 +136,7 @@ int main( int anArgc, char** anArgv )
     tElCentralExpansionGraph.SetMarkerColor( kRed );
     tElCentralExpansionGraph.SetMarkerStyle( 20 );
     tElCentralExpansionGraph.SetMarkerSize( 0.5 );
-    tElCentralExpansionGraph.SetLineWidth( 0.1 );
+    tElCentralExpansionGraph.SetLineWidth( 1 );
     tElCentralExpansionGraph.SetTitle( "Convergence Graph" );
     tElCentralExpansionGraph.GetXaxis()->SetTitle(  "Z Position" );
     tElCentralExpansionGraph.GetYaxis()->SetTitle( "Convergence Radius" );

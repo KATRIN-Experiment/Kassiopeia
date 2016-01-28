@@ -2,6 +2,9 @@
     <Verbosity>
         3
     </Verbosity>
+    <TopLevelDivisions>
+        3
+    </TopLevelDivisions>
     <Divisions>
         3
     </Divisions>
@@ -9,10 +12,10 @@
         8
     </Degree>
     <ZeroMaskSize>
-        2
+        1
     </ZeroMaskSize>
     <MaxTreeLevel>
-        3
+        7
     </MaxTreeLevel>
     <UseRegionEstimation>
         1
@@ -33,11 +36,14 @@
         1.0
     </WorldLength>
     <NEvaluations>
-        15
+        500
     </NEvaluations>
     <Mode>
         3
     </Mode>
+    <AllowedElementMode>
+        0
+    </AllowedElementMode>
     <GeometryInputFileName>
         ../cache/KEMField/KEM_2014-05-22_16-28-48.kbd
     </GeometryInputFileName>

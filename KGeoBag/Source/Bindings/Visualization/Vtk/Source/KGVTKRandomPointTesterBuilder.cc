@@ -5,14 +5,14 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKRandomPointTesterStructure =
+    STATICINT sKGVTKRandomPointTesterStructure =
 		KGVTKRandomPointTesterBuilder::Attribute< string >( "name" ) +
 		KGVTKRandomPointTesterBuilder::Attribute< string >( "surfaces" ) +
 		KGVTKRandomPointTesterBuilder::Attribute< string >( "spaces" ) +
 		KGVTKRandomPointTesterBuilder::Attribute< KGRGBColor >( "sample_color" ) +
 		KGVTKRandomPointTesterBuilder::Attribute< double >( "vertex_size" );
 
-    static const int sKGVTKRandomPointTesterWindow =
+    STATICINT sKGVTKRandomPointTesterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKRandomPointTester >( "vtk_random_point_tester" );
 
 }

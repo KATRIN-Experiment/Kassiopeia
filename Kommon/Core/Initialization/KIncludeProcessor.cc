@@ -10,6 +10,9 @@ using katrin::KTextFile;
 #include "KXMLTokenizer.hh"
 
 #include <cstdlib>
+#include <algorithm>
+
+using namespace std;
 
 namespace katrin
 {
@@ -28,6 +31,12 @@ namespace katrin
     {
     }
 
+
+    void KIncludeProcessor::AddDefaultPath(const string& path)
+    {
+        if ( find(fDefaultPaths.begin(), fDefaultPaths.end(), path) == fDefaultPaths.end() )
+            fDefaultPaths.push_back( path );
+    }
 
     void KIncludeProcessor::ProcessToken( KBeginElementToken* aToken )
     {
@@ -190,23 +199,23 @@ namespace katrin
             KTextFile* aFile = new KTextFile();
             aFile->SetDefaultPath( CONFIG_DEFAULT_DIR );
 
-            vector< string >::iterator It;
-            for( It = fNames.begin(); It != fNames.end(); It++ )
-            {
-                aFile->AddToNames( *It );
-            }
-            for( It = fPaths.begin(); It != fPaths.end(); It++ )
-            {
-                aFile->AddToPaths( *It );
-            }
-            for( It = fBases.begin(); It != fBases.end(); It++ )
-            {
-                aFile->AddToBases( *It );
-            }
+            for( const string& name : fNames )
+                aFile->AddToNames( name );
+
+            for( const string& path : fPaths )
+                aFile->AddToPaths( path );
+
+            for( const string& defaultPath : fDefaultPaths )
+                aFile->AddToPaths( defaultPath );
+
+            for( const string& base : fBases )
+                aFile->AddToBases( base );
 
             if( aFile->Open( KFile::eRead ) == false )
             {
                 delete aFile;
+
+                vector<string>::const_iterator It;
 
                 initmsg << "unable to open file with names <";
                 It = fNames.begin();

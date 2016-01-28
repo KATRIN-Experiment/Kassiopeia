@@ -24,25 +24,40 @@ namespace KEMField
     KZonalHarmonicFieldSolver(Container& container,
 			      Integrator& integrator) :
       KZonalHarmonicComputer<KMagnetostaticBasis>(container,integrator),
-      fIntegratingFieldSolver(container.GetElementContainer(),integrator) {}
+      fIntegratingFieldSolver(container.GetElementContainer(),integrator)
+      {
+        fZHCoeffSingleton = KZHLegendreCoefficients::GetInstance();
+      }
 
     virtual ~KZonalHarmonicFieldSolver() {}
 
     KEMThreeVector VectorPotential(const KPosition& P) const;
     KEMThreeVector MagneticField(const KPosition& P) const;
     KGradient MagneticFieldGradient(const KPosition& P) const;
+    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const;
 
   private:
-    bool CentralExpansion(const KPosition& P,
-			    KEMThreeVector& A,
+
+    KZHLegendreCoefficients* fZHCoeffSingleton;
+
+    bool CentralExpansionMagneticField(const KPosition& P,
 			    KEMThreeVector& B) const;
-    bool RemoteExpansion(const KPosition& P,
-			   KEMThreeVector& A,
+    bool CentralExpansionVectorPotential(const KPosition& P,
+                KEMThreeVector& A) const;
+    bool RemoteExpansionMagneticField(const KPosition& P,
 			   KEMThreeVector& B) const;
+    bool RemoteExpansionVectorPotential(const KPosition& P,
+               KEMThreeVector& A) const;
     bool CentralGradientExpansion(const KPosition& P,
 				  KGradient& g) const;
     bool RemoteGradientExpansion(const KPosition& P,
 				 KGradient& g) const;
+    bool CentralMagneticFieldAndGradientExpansion(const KPosition& P,
+                  KGradient& g,
+                  KEMThreeVector& B) const;
+    bool RemoteMagneticFieldAndGradientExpansion(const KPosition& P,
+                  KGradient& g,
+                  KEMThreeVector& B) const;
 
     KIntegratingFieldSolver<Integrator> fIntegratingFieldSolver;
 
@@ -82,6 +97,21 @@ namespace KEMField
 			   KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
       {
 	return magneticFieldGradient + c->MagneticFieldGradient(fP);
+      }
+
+    private:
+      const KPosition& fP;
+    };
+
+    class MagneticFieldAndGradientAccumulator
+    {
+    public:
+      MagneticFieldAndGradientAccumulator(const KPosition& P) : fP(P) {}
+      std::pair<KEMThreeVector,KEMThreeMatrix> operator()(std::pair<KEMThreeVector,KEMThreeMatrix> fieldandgradient,
+               KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
+      {
+          std::pair<KEMThreeVector, KEMThreeMatrix> pair = c->MagneticFieldAndGradient(fP);
+          return std::make_pair(fieldandgradient.first + pair.first, fieldandgradient.second + pair.second );
       }
 
     private:

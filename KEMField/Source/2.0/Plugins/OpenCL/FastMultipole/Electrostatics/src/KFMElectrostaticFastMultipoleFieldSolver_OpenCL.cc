@@ -1,6 +1,7 @@
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 
 #include <cmath>
+#include "KFMDirectCallCounter.hh"
 
 #define KFM_MIN_DIRECT_CALLS 16
 
@@ -11,17 +12,21 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::KFMElectrostaticFastMultipoleFi
 fSurfaceContainer(container),
 fTree(tree),
 fDirectIntegrator(fSurfaceContainer),
-fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator, fTree.GetMaxDirectCalls(), KFM_MIN_DIRECT_CALLS),
 fFastFieldSolver(),
 fNavigator()
 {
-    fDirectFieldSolver.Initialize();
-
     fRootNode = fTree.GetRootNode();
     fParameters = fTree.GetParameters();
     fUseCaching = fParameters.use_caching;
 
-    fNavigator.SetDivisions(fParameters.divisions);
+    fSubsetSize = 0;
+    //compute the maximum number of direct calls that occurs in this tree
+    KFMDirectCallCounter<KFMElectrostaticNodeObjects> direct_call_counter;
+    fTree.ApplyRecursiveAction(&direct_call_counter);
+    unsigned int max_direct_calls = direct_call_counter.GetMaxDirectCalls();
+    fDirectCallIDs = new unsigned int[max_direct_calls];
+
+
     fFastFieldSolver.SetDegree(fParameters.degree);
 
     fLeafNode = NULL;
@@ -29,9 +34,19 @@ fNavigator()
     fLocalCoeff = NULL;
 
     fFallback = false;
+
+    fDirectFieldSolver =
+    new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(container, fDirectIntegrator, max_direct_calls, KFM_MIN_DIRECT_CALLS);
+
+    fDirectFieldSolver->Initialize();
+
 };
 
-KFMElectrostaticFastMultipoleFieldSolver_OpenCL::~KFMElectrostaticFastMultipoleFieldSolver_OpenCL(){};
+KFMElectrostaticFastMultipoleFieldSolver_OpenCL::~KFMElectrostaticFastMultipoleFieldSolver_OpenCL()
+{
+    delete[] fDirectCallIDs;
+    delete fDirectFieldSolver;
+};
 
 double
 KFMElectrostaticFastMultipoleFieldSolver_OpenCL::Potential(const KPosition& P) const
@@ -40,30 +55,16 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::Potential(const KPosition& P) c
 
     if(!fFallback)
     {
-        double fast_potential = fFastFieldSolver.Potential(P);
-
-        if(fDirectCallIDSet != NULL)
-        {
-            if(fDirectCallIDSet->GetSize() != 0)
-            {
-                double direct_potential = fDirectFieldSolver.Potential(fDirectCallIDSet->GetRawIDList(), P);
-                fast_potential += direct_potential;
-                return fast_potential;
-            }
-            else
-            {
-                return fast_potential;
-            }
-        }
-        else
-        {
-            return fast_potential;
-        }
+        double potential = 0;
+        if(fSubsetSize != 0){fDirectFieldSolver->DispatchPotential(fDirectCallIDs, fSubsetSize, P);}
+        potential = fFastFieldSolver.Potential(P);
+        if(fSubsetSize != 0){potential += fDirectFieldSolver->RetrievePotential();}
+        return potential;
     }
     else
     {
         //fallback mode
-        return fDirectFieldSolver.Potential(P);
+        return fDirectFieldSolver->Potential(P);
     }
 }
 
@@ -74,34 +75,20 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::ElectricField(const KPosition& 
 
     if(!fFallback)
     {
-        double fast_f[3];
         KEMThreeVector f;
+        double fast_f[3];
+        if(fSubsetSize != 0){fDirectFieldSolver->DispatchElectricField(fDirectCallIDs, fSubsetSize, P); }
         fFastFieldSolver.ElectricField(P, fast_f);
         f[0] = fast_f[0];
         f[1] = fast_f[1];
         f[2] = fast_f[2];
-
-        KEMThreeVector direct_f;
-
-        if(fDirectCallIDSet != NULL)
-        {
-            if(fDirectCallIDSet->GetSize() != 0)
-            {
-                direct_f = fDirectFieldSolver.ElectricField(fDirectCallIDSet->GetRawIDList(), P);
-                f += direct_f;
-            }
-            return f;
-        }
-        else
-        {
-            return f;
-        }
-
+        if(fSubsetSize != 0){f += fDirectFieldSolver->RetrieveElectricField();}
+        return f;
     }
     else
     {
         //fallback mode, use direct solver
-        return fDirectFieldSolver.ElectricField( P );
+        return fDirectFieldSolver->ElectricField( P );
     }
 
 }
@@ -131,10 +118,37 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::SetPoint(const double* p) const
     {
         fFallback = false;
 
+        fNodeList = fNavigator.GetNodeList();
         fLeafNode = fNavigator.GetLeafNode();
         fCube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<3> >::GetNodeObject(fLeafNode);
         fLocalCoeff = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet >::GetNodeObject(fLeafNode);
-        fDirectCallIDSet = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet >::GetNodeObject(fLeafNode);
+
+
+        //loop over the node list and collect the direct call elements from their id set lists
+        fSubsetSize = 0;
+        unsigned int n_nodes = fNodeList->size();
+        for(unsigned int i=0; i<n_nodes; i++)
+        {
+            KFMElectrostaticNode* node = (*fNodeList)[i];
+            if(node != NULL)
+            {
+                KFMIdentitySetList* id_set_list = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySetList >::GetNodeObject(node);
+                if(id_set_list != NULL)
+                {
+                    unsigned int n_sets = id_set_list->GetNumberOfSets();
+                    for(unsigned int j=0; j<n_sets; j++)
+                    {
+                        const std::vector< unsigned int >* set = id_set_list->GetSet(j);
+                        unsigned int set_size = set->size();
+                        for(unsigned int k=0; k<set_size; k++)
+                        {
+                            fDirectCallIDs[fSubsetSize] = (*set)[k];
+                            fSubsetSize++;
+                        }
+                    }
+                }
+            }
+        }
 
         if(fLocalCoeff == NULL || fCube == NULL)
         {

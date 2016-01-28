@@ -224,7 +224,7 @@ namespace KGeoBag
                 {
                     if( tBottomDistanceSquared < tTopDistanceSquared )
                     {
-                        if( tBottomZ < 0. )
+                        if( tBottomZ > 0. )
                         {
                             return true;
                         }

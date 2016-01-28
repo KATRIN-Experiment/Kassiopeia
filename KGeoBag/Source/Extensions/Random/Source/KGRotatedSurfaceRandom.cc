@@ -34,10 +34,10 @@ namespace KGeoBag
 
     KThreeVector random;
 
-    register double x;
-    register double y;
-    register double theta;
-    register double r2;
+    double x;
+    double y;
+    double theta;
+    double r2;
 
     if (line->GetAlpha()<1.e-6) // cylinder
     {
@@ -76,12 +76,12 @@ namespace KGeoBag
       random[2] = line->GetZIntercept() + (line->OpensUp() ? 1.:-1.)*sqrt(r2)*cos(line->GetAlpha());
 
       theta *= M_PI/line->GetAlpha();
-      register double r;
+      double r;
       if (fabs(line->GetP1(0)-line->GetP2(0))>1.e-14)
       {
-	register double m = ((line->GetP1(1)-line->GetP2(1))/
+    double m = ((line->GetP1(1)-line->GetP2(1))/
 			     (line->GetP1(0)-line->GetP2(0)));
-	register double b = line->GetP1(0) - m*line->GetP1(1);
+    double b = line->GetP1(0) - m*line->GetP1(1);
 	r = m*random[2] + b;
       }
       else

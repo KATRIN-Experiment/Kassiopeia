@@ -38,6 +38,10 @@ void KFMElectrostaticMultipoleDistributor_OpenCL::DistributeMoments()
     //read the data off of the gpu
     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fNodeMomentBufferCL, CL_TRUE, 0, fStride*fNMultipoleNodes*sizeof(CL_TYPE2), fNodeMomentData);
 
+    #ifdef ENFORCE_CL_FINISH
+    KOpenCLInterface::GetInstance()->GetQueue().finish();
+    #endif
+
     //loop over the appropriate nodes and write out their multipole moments
 
     for(unsigned int i=0; i<fNMultipoleNodes; i++)
@@ -52,8 +56,8 @@ void KFMElectrostaticMultipoleDistributor_OpenCL::DistributeMoments()
         {
             moment = fNodeMomentData[i*fStride + j];
 
-            (*real_mom)[j] = moment.s0;
-            (*imag_mom)[j] = moment.s1;
+            (*real_mom)[j] = moment.s[0];
+            (*imag_mom)[j] = moment.s[1];
         }
 
         fDistributor.SetExpansionToSet(&fTempMoments);

@@ -6,7 +6,6 @@
 
 #include "KIterativeSolver.hh"
 #include "KIterativeKrylovRestartCondition.hh"
-#include <iostream>
 
 namespace KEMField
 {
@@ -36,7 +35,7 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
         KIterativeKrylovSolver();
         virtual ~KIterativeKrylovSolver();
 
-        void Solve(const Matrix& A,Vector& x,const Vector& b);
+        virtual void Solve(const Matrix& A,Vector& x,const Vector& b);
 
         //set tolerancing (default is relative tolerance on l2 residual norm)
         virtual void SetTolerance(double d) { SetRelativeTolerance(d); };
@@ -64,6 +63,8 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
 
         void CoalesceData() { if (fTrait) fTrait->CoalesceData(); }
 
+        ParallelTrait<ValueType>* GetTrait() {return fTrait;};
+
     private:
         unsigned int Dimension() const { return (fTrait ? fTrait->Dimension() : 0); }
         void SetResidualVector(const Vector& v) { if (fTrait) fTrait->SetResidualVector(v); }
@@ -84,7 +85,7 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
             }
         }
 
-        double InnerProduct(const Vector& a, const Vector& b)
+        double InnerProduct(const Vector& a, const Vector& b) const
         {
             double result = 0.;
 
@@ -108,7 +109,7 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
 
     template <typename ValueType,template <typename> class ParallelTrait>
     KIterativeKrylovSolver<ValueType,ParallelTrait>::KIterativeKrylovSolver():
-        fMaxIterations(10000),
+        fMaxIterations(UINT_MAX),
         fRestartCondition(NULL),
         fTrait(NULL)
         {
@@ -117,7 +118,7 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
             fExternalRestartCondition = false;
             fUseRelativeTolerance = false;
             fInitialResidual = 1.0;
-        };
+        }
 
     template <typename ValueType,template <typename> class ParallelTrait>
     KIterativeKrylovSolver<ValueType,ParallelTrait>::~KIterativeKrylovSolver()
@@ -126,7 +127,7 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
         {
             delete fRestartCondition;
         }
-    };
+    }
 
     template <typename ValueType,template <typename> class ParallelTrait>
     void KIterativeKrylovSolver<ValueType,ParallelTrait>::Solve(const Matrix& A, Vector& x, const Vector& b)
@@ -137,40 +138,44 @@ class KIterativeKrylovSolver: public KIterativeSolver<ValueType>
         this->InitializeVisitors();
         this->fIteration = 0;
 
+        trait.Initialize();
+
+        //needed if we are using relative tolerance as convergence condition
+        fInitialResidual = std::sqrt(InnerProduct(b,b));
+
+        bool solutionUpdated = false;
+
         do
         {
-            if(this->fIteration == 0 || fRestartCondition->PerformRestart() )
-            {
-                trait.Initialize();
-            }
-            else
-            {
-                trait.AugmentKrylovSubspace();
-            }
-
+            solutionUpdated = false;
+            trait.AugmentKrylovSubspace();
             trait.GetResidualNorm(this->fResidualNorm);
-
-            //needed if we are using relative tolerance as convergence condition
-            if(this->fIteration == 0)
-            {
-                fInitialResidual = std::sqrt(InnerProduct(b,b));
-            }
-
             fRestartCondition->UpdateProgress(this->fResidualNorm);
-
             this->fIteration++;
 
-            if( fRestartCondition->PerformRestart() || HasConverged() || (this->fIteration >= this->fMaxIterations) )
+            if( fRestartCondition->PerformRestart() )
             {
                 trait.UpdateSolution();
+                trait.ResetAndInitialize(); //clears krylov subspace vectors, restarts from current solution
+            }
+            else if( HasConverged() || (this->fIteration >= this->fMaxIterations) )
+            {
+                trait.UpdateSolution();
+                solutionUpdated = true;
+                break;
+            }
+            else if( this->Terminate() )
+            {
+                trait.UpdateSolution();
+                solutionUpdated = true;
+                break;
             }
 
             this->AcceptVisitors();
         }
         while( !( HasConverged() ) && (this->fIteration < this->fMaxIterations) && !(this->Terminate()) );
 
-        //print number of iterations
-
+        if(!solutionUpdated){trait.UpdateSolution();};
         trait.Finalize();
 
         this->FinalizeVisitors();

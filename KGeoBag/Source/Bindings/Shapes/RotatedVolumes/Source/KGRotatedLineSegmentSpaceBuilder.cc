@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGRotatedLineSegmentSpaceBuilder =
+    STATICINT sKGRotatedLineSegmentSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGRotatedLineSegmentSpace >( "rotated_line_segment_space" );
 
-    static const int sKGRotatedLineSegmentSpaceBuilderStructure =
+    STATICINT sKGRotatedLineSegmentSpaceBuilderStructure =
         KGRotatedLineSegmentSpaceBuilder::Attribute< string >( "name" ) +
         KGRotatedLineSegmentSpaceBuilder::Attribute< unsigned int >( "rotated_mesh_count" ) +
         KGRotatedLineSegmentSpaceBuilder::Attribute< unsigned int >( "flattened_mesh_count" ) +

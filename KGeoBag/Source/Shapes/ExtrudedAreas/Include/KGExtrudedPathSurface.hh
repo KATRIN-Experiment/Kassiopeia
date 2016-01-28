@@ -29,7 +29,7 @@ namespace KGeoBag
                     fSign( 1. ),
                     fZMin( 0. ),
                     fZMax( 0. ),
-                    fExtrudedMeshCount( 1 ),
+                    fExtrudedMeshCount( 8 ),
                     fExtrudedMeshPower( 1. )
             {
                 CompilerCheck();
@@ -50,7 +50,7 @@ namespace KGeoBag
                     fSign( 1. ),
                     fZMin( 0. ),
                     fZMax( 0. ),
-                    fExtrudedMeshCount( 1 ),
+                    fExtrudedMeshCount( 8 ),
                     fExtrudedMeshPower( 1. )
             {
             }

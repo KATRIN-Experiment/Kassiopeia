@@ -1,9 +1,7 @@
 #include <cmath>
+#include <cstdlib>
 
 #include "KFMElementMomentBatchCalculator.hh"
-
-#include <iostream>
-
 #include "KFMMessaging.hh"
 
 
@@ -37,7 +35,7 @@ KFMElementMomentBatchCalculator::~KFMElementMomentBatchCalculator()
 
 void KFMElementMomentBatchCalculator::SetDegree(int l_max)
 {
-    fDegree = std::fabs(l_max);
+    fDegree = std::abs(l_max);
     fStride = (fDegree+1)*(fDegree+2)/2;
 
     ReleaseMemory();
@@ -47,7 +45,7 @@ void KFMElementMomentBatchCalculator::SetDegree(int l_max)
 void
 KFMElementMomentBatchCalculator::SetDimensions(int dim)
 {
-    fDim = std::fabs(dim);
+    fDim = std::abs(dim);
     ReleaseMemory();
     fInitialized = false;
 }

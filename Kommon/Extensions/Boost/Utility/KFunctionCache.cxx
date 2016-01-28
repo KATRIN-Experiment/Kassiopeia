@@ -18,7 +18,7 @@ using namespace boost::math;
 namespace katrin {
 
 template<size_t D, typename IndexT>
-KFunctionCache<D, IndexT>::KFunctionCache(KEInterpolationMethod method, uint32_t maxCacheSize, double maxLoadFactor) :
+KFunctionCache<D, IndexT>::KFunctionCache(EInterpolationMethod method, uint32_t maxCacheSize, double maxLoadFactor) :
     fMethod(method),
     fCache(maxCacheSize, maxLoadFactor)
 {
@@ -27,7 +27,7 @@ KFunctionCache<D, IndexT>::KFunctionCache(KEInterpolationMethod method, uint32_t
 }
 
 template<size_t D, typename IndexT>
-void KFunctionCache<D, IndexT>::ConfigureParameter(uint32_t iParam, double gridConstant, double centerValue,
+void KFunctionCache<D, IndexT>::ConfigureParameter(size_t iParam, double gridConstant, double centerValue,
     optional<double> lowerBound, optional<double> upperBound)
 {
     assert(iParam < D);
@@ -38,14 +38,14 @@ void KFunctionCache<D, IndexT>::ConfigureParameter(uint32_t iParam, double gridC
 }
 
 template<size_t D, typename IndexT>
-double KFunctionCache<D, IndexT>::CachedFunctionValue(const boost::array<IndexT, D>& gridIndices)
+double KFunctionCache<D, IndexT>::CachedFunctionValue(const std::array<IndexT, D>& gridIndices)
 {
     double result;
     if (fCache.Get(gridIndices, result)) {
         return result;
     }
     else {
-        boost::array<double, D> parameterValues;
+        std::array<double, D> parameterValues;
         ParameterValues(gridIndices, parameterValues);
         if (fFunctionA) {
             return fCache.Store(gridIndices, fFunctionA( parameterValues ) );
@@ -55,7 +55,7 @@ double KFunctionCache<D, IndexT>::CachedFunctionValue(const boost::array<IndexT,
             return fCache.Store(gridIndices, fFunctionV( parameterValuesVector ) );
         }
         else if (fFunctionP) {
-            return fCache.Store(gridIndices, fFunctionP( parameterValues.c_array() ) );
+            return fCache.Store(gridIndices, fFunctionP( parameterValues.begin() ) );
         }
         else if (fFunctionS) {
             return fCache.Store(gridIndices, fFunctionS( parameterValues[0] ) );
@@ -75,15 +75,15 @@ double KFunctionCache<D, IndexT>::CachedFunctionValue(const boost::array<IndexT,
  * @return
  */
 template<size_t D, typename IndexT>
-double KFunctionCache<D, IndexT>::Get(const boost::array<double, D>& paramValues)
+double KFunctionCache<D, IndexT>::Get(const std::array<double, D>& paramValues)
 {
 
-    boost::array< IndexT, D> centerGridIndices;
-    boost::array< double, D> gridDistances;
+    std::array< IndexT, D> centerGridIndices;
+    std::array< double, D> gridDistances;
     GridIndices(paramValues, centerGridIndices, gridDistances);
 
-    if (fMethod == KEInterpolationMethod::Nearest) {
-        boost::array< IndexT, D> nearestGridIndices = centerGridIndices;
+    if (fMethod == EInterpolationMethod::Nearest) {
+        std::array< IndexT, D> nearestGridIndices = centerGridIndices;
         for (size_t d = 0; d < D; ++d) {
             if (gridDistances[d] >= 0.5)
                 ++nearestGridIndices[d];
@@ -91,18 +91,18 @@ double KFunctionCache<D, IndexT>::Get(const boost::array<double, D>& paramValues
         return CachedFunctionValue(nearestGridIndices);
     }
 
-    boost::array< IndexT, D> startGridIndices;
-    boost::array< IndexT, D> endGridIndices;
-    boost::array< IndexT, D> currentGridIndices;
+    std::array< IndexT, D> startGridIndices;
+    std::array< IndexT, D> endGridIndices;
+    std::array< IndexT, D> currentGridIndices;
 
     double splineSum = 0.0;
 
     // set the combinations of grid coordinates to sum over
     int32_t g;
-    if (fMethod == KEInterpolationMethod::Spline) {
+    if (fMethod == EInterpolationMethod::Spline) {
         g = 1;
     }
-    else if (fMethod == KEInterpolationMethod::Linear) {
+    else if (fMethod == EInterpolationMethod::Linear) {
         g = 0;
     }
     else
@@ -128,7 +128,7 @@ double KFunctionCache<D, IndexT>::Get(const boost::array<double, D>& paramValues
             i = currentGridIndices[j] - centerGridIndices[j];
             x = gridDistances[j];
 
-            if (fMethod == KEInterpolationMethod::Spline) {
+            if (fMethod == EInterpolationMethod::Spline) {
 
                 switch(i) {
                 case -1 :
@@ -143,7 +143,7 @@ double KFunctionCache<D, IndexT>::Get(const boost::array<double, D>& paramValues
                     throw KFunctionCacheException() << "Invalid spline polynom requested.";
                 }
             }
-            else if (fMethod == KEInterpolationMethod::Linear) {
+            else if (fMethod == EInterpolationMethod::Linear) {
 
                 switch(i) {
                 case 0 :

@@ -104,7 +104,7 @@ kfm_matrix_multiply_with_transpose(bool transposeA, bool transposeB, const kfm_m
 void
 kfm_matrix_svd(const kfm_matrix* A, kfm_matrix* U, kfm_vector* S, kfm_matrix* V)
 {
-    kfm_vector* work = kfm_vector_alloc(A->size1);
+    kfm_vector* work = kfm_vector_alloc(A->size2);
     kfm_matrix_set(A, U); //copy A into U
     gsl_linalg_SV_decomp(U, V, S, work);
     kfm_vector_free(work);
@@ -680,11 +680,23 @@ kfm_sparse_matrix_set(kfm_sparse_matrix* m, unsigned int i, unsigned int j, unsi
 
 void kfm_matrix_transpose(const kfm_matrix* in, kfm_matrix* out)
 {
-    for(unsigned int row=0; row<in->size1; row++)
+
+    if( (in->size1 != out->size2) || (in->size2 != out->size1) )
     {
-        for(unsigned int col=0; col<in->size2; col++)
+        kfmout << "kfm_matrix_transpose: error, dimension mismatch."<<kfmendl;
+        kfmexit(1);
+    }
+
+    unsigned int nrows = in->size1;
+    unsigned int ncols = in->size2;
+    double temp;
+
+    for(unsigned int row=0; row < nrows; row++)
+    {
+        for(unsigned int col=0; col < ncols; col++)
         {
-            kfm_matrix_set(out, col, row, kfm_matrix_get(in, row, col) );
+            temp = kfm_matrix_get(in, row, col);
+            kfm_matrix_set(out, col, row, temp);
         }
     }
 }

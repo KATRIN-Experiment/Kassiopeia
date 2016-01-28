@@ -45,7 +45,7 @@ namespace katrin
     {
     }
 
-    static int sKSIntCalculatorHydrogenStructure =
+    STATICINT sKSIntCalculatorHydrogenStructure =
         KSIntCalculatorHydrogenSetBuilder::Attribute< string >( "name" ) +
         KSIntCalculatorHydrogenSetBuilder::Attribute< bool >( "elastic" ) +
         KSIntCalculatorHydrogenSetBuilder::Attribute< bool >( "excitation" ) +

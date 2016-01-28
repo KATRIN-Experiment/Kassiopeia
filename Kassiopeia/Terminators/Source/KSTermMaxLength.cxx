@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
     }
     KSTermMaxLength::KSTermMaxLength( const KSTermMaxLength& aCopy ) :
+            KSComponent(),
             fLength( aCopy.fLength )
     {
     }

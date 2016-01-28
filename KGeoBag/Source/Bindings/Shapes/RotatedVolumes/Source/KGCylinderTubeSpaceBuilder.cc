@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGCylinderTubeSpaceBuilder =
+    STATICINT sKGCylinderTubeSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGCylinderTubeSpace >( "cylinder_tube_space" );
 
-    static const int sKGCylinderTubeSpaceBuilderStructure =
+    STATICINT sKGCylinderTubeSpaceBuilderStructure =
         KGCylinderTubeSpaceBuilder::Attribute< string >( "name" ) +
         KGCylinderTubeSpaceBuilder::Attribute< double >( "z1" ) +
         KGCylinderTubeSpaceBuilder::Attribute< double >( "z2" ) +

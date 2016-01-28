@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
     }
 	KSTermTrapped::KSTermTrapped( const KSTermTrapped& aCopy ) :
+            KSComponent(),
 			fMaxTurns( aCopy.fMaxTurns ),
 			fCurrentTurns( aCopy.fCurrentTurns ),
 			fCurrentDotProduct( aCopy.fCurrentDotProduct )

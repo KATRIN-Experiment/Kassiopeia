@@ -109,7 +109,7 @@ int main( int anArgc, char** anArgv )
 		tFinalParticle->SetKineticEnergy_eV( tEnergy );
 
         double tCrossSection;
-//        tScattering->CalculateAverageCrossSection( *tInitialParticle, *tFinalParticle, tCrossSection);
+        tScattering->CalculateAverageCrossSection( *tInitialParticle, *tFinalParticle, tCrossSection);
 //		double tCrossSection = log ( 1.0 - tProbability ) / ( -1.0 * tLength * tDensity );
         tCrossSectionGraph.SetPoint ( tIndex, tEnergy, tCrossSection );
 

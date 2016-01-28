@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTrajectoryLinearStructure =
+    STATICINT sKSTrajTrajectoryLinearStructure =
         KSTrajTrajectoryLinearBuilder::Attribute< string >( "name" )+
         KSTrajTrajectoryLinearBuilder::Attribute< double >( "length" );
 
-    static int sKSTrajTrajectoryLinear =
+    STATICINT sKSTrajTrajectoryLinear =
         KSRootBuilder::ComplexElement < KSTrajTrajectoryLinear >( "kstraj_trajectory_linear" );
 
 }

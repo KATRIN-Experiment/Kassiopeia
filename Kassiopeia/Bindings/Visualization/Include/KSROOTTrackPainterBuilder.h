@@ -4,6 +4,9 @@
 #include "KComplexElement.hh"
 #include "KSROOTTrackPainter.h"
 #include <stdlib.h>
+#include "TColor.h"
+#include "TROOT.h"
+#include "KSVisualizationMessage.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -61,11 +64,6 @@ namespace katrin
         }
         if( aContainer->GetName() == "color_mode" )
         {
-            if( aContainer->AsReference< string >() == string( "fix" ) )
-            {
-                fObject->SetColorMode( KSROOTTrackPainter::eColorFix );
-                return true;
-            }
             if( aContainer->AsReference< string >() == string( "step" ) )
             {
                 fObject->SetColorMode( KSROOTTrackPainter::eColorStep );
@@ -76,93 +74,168 @@ namespace katrin
                 fObject->SetColorMode( KSROOTTrackPainter::eColorTrack );
                 return true;
             }
+            if( aContainer->AsReference< string >() == string( "fix" ) )
+            {
+                fObject->SetColorMode( KSROOTTrackPainter::eColorFix );
+                return true;
+            }
             if( aContainer->AsReference< string >() == string( "fpd_rings" ) )
             {
-                fObject->SetColorMode( KSROOTTrackPainter::eColorFPDRings );
+            	vismsg( eWarning ) <<"Backward compatibility warning: "<<ret;
+            	vismsg( eWarning ) <<"To use the fpd color option please use the attribute color_palette instead of color_mode from now on"<<ret;
+            	vismsg( eWarning ) <<"This warning will be be removed in the next version"<<eom;
+                fObject->SetColorPalette( KSROOTTrackPainter::eColorFPDRings );
                 return true;
             }
             return false;
         }
-        if( aContainer->GetName() == "color" )
+        if( aContainer->GetName() == "color_palette" )
         {
-			if( aContainer->AsReference< string >() == string( "kWhite" ) )
+            if( aContainer->AsReference< string >() == string( "default" ) )
+            {
+                fObject->SetColorPalette( KSROOTTrackPainter::eColorDefault );
+                return true;
+            }
+            if( aContainer->AsReference< string >() == string( "fpd_rings" ) )
+            {
+                fObject->SetColorPalette( KSROOTTrackPainter::eColorFPDRings );
+                return true;
+            }
+            if( aContainer->AsReference< string >() == string( "custom" ) )
+            {
+                fObject->SetColorPalette( KSROOTTrackPainter::eColorCustom );
+                return true;
+            }
+            return false;
+        }
+        if( aContainer->GetName() == "add_color" || aContainer->GetName() == "color" ) //color is still used for backward compatibility
+        {
+        	//first find the fraction number, is there is any
+        	size_t tPos = aContainer->AsReference< string >().find(",");
+        	string tColor = aContainer->AsReference< string >().substr(0, tPos);
+        	double tFraction = -1.0;
+
+        	if ( tPos == string::npos )
+        	{
+        		tFraction = -1.0;
+        	}
+        	else
+        	{
+        		string tFractionString = aContainer->AsReference< string >().substr(tPos + 1, string::npos);
+        		tFraction = std::strtod( tFractionString.c_str(), 0 );
+        	}
+
+			if( tColor == string( "kWhite" ) )
 			{
-				fObject->SetColor( kWhite );
+				TColor tColor = *(gROOT->GetColor( kWhite ));
+				fObject->AddBaseColor( tColor, tFraction );
 				return true;
 			}
-			if( aContainer->AsReference< string >() == string( "kGray" ) )
+			if( tColor == string( "kGray" ) )
 			{
-				fObject->SetColor( kGray );
+				TColor tColor = *(gROOT->GetColor( kGray ));
+				fObject->AddBaseColor( tColor, tFraction );
 				return true;
 			}
-            if( aContainer->AsReference< string >() == string( "kBlack" ) )
+            if( tColor == string( "kBlack" ) )
             {
-                fObject->SetColor( kBlack );
+				TColor tColor = *(gROOT->GetColor( kBlack ));
+				fObject->AddBaseColor( tColor, tFraction );
                 return true;
             }
-            if( aContainer->AsReference< string >() == string( "kRed" ) )
+            if( tColor == string( "kRed" ) )
             {
-                fObject->SetColor( kRed );
+				TColor tColor = *(gROOT->GetColor( kRed ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kGreen" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kGreen ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kBlue" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kBlue ));
+				fObject->AddBaseColor( tColor, tFraction );
                 return true;
             }
-            if( aContainer->AsReference< string >() == string( "kGreen" ) )
+            if( tColor == string( "kYellow" ) )
             {
-                fObject->SetColor( kGreen );
+				TColor tColor = *(gROOT->GetColor( kYellow ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kMagenta" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kMagenta ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kCyan" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kCyan ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kOrange" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kOrange ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kSpring" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kSpring ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kTeal" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kTeal ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kAzure" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kAzure ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kViolet" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kViolet ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+            if( tColor == string( "kPink" ) )
+            {
+				TColor tColor = *(gROOT->GetColor( kPink ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
+            }
+
+            //if color is in hex format
+            if( tColor.substr(0, 1) == string( "#" ) )
+            {
+				TColor tColor;
+				int tColorNumber = tColor.GetColor( aContainer->AsReference< string >().c_str() );
+				tColor = *(gROOT->GetColor( tColorNumber ));
+				fObject->AddBaseColor( tColor, tFraction );
                 return true;
             }
-            if( aContainer->AsReference< string >() == string( "kBlue" ) )
+
+            //if color is a digit
+            if( isdigit(tColor[0]) )
             {
-                fObject->SetColor( kBlue );
-                return true;
+				int tColorNumber = std::strtol( aContainer->AsReference< string >().c_str(), 0 , 0 );
+				TColor tColor = *(gROOT->GetColor( tColorNumber ));
+				fObject->AddBaseColor( tColor, tFraction );
+				return true;
             }
-            if( aContainer->AsReference< string >() == string( "kYellow" ) )
-            {
-                fObject->SetColor( kYellow );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kMagenta" ) )
-            {
-                fObject->SetColor( kMagenta );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kCyan" ) )
-            {
-                fObject->SetColor( kCyan );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kOrange" ) )
-            {
-                fObject->SetColor( kOrange );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kSpring" ) )
-            {
-                fObject->SetColor( kSpring );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kTeal" ) )
-            {
-                fObject->SetColor( kTeal );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kAzure" ) )
-            {
-                fObject->SetColor( kAzure );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kViolet" ) )
-            {
-                fObject->SetColor( kViolet );
-                return true;
-            }
-            if( aContainer->AsReference< string >() == string( "kPink" ) )
-            {
-                fObject->SetColor( kPink );
-                return true;
-            }
-            int tColor = std::strtol( aContainer->AsReference< string >().c_str(), 0 , 0 );
-            fObject->SetColor ( tColor );
-            return true;
+            vismsg( eWarning ) <<"invalid color value: "<<aContainer->AsReference< string >()<<eom;
+            return false;
         }
         if( aContainer->GetName() == "draw_options" )
         {

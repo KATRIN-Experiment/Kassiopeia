@@ -6,7 +6,8 @@ namespace Kassiopeia
     KSTermDeath::KSTermDeath()
 	{
 	}
-    KSTermDeath::KSTermDeath( const KSTermDeath& )
+    KSTermDeath::KSTermDeath( const KSTermDeath& ):
+        KSComponent()
     {
     }
     KSTermDeath* KSTermDeath::Clone() const

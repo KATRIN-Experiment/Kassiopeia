@@ -99,11 +99,11 @@ namespace KEMField
 
     cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(),
 						  sourceCode.length()+1));
- 
+
     // Make program of the source code in the context
     cl::Program program(KOpenCLInterface::GetInstance()->GetContext(),
 			source);
- 
+
     std::stringstream options;
     options << GetOpenCLFlags() << fData.GetOpenCLFlags();
 
@@ -111,14 +111,14 @@ namespace KEMField
     try
     {
       // use only target device!
-      cl::vector<cl::Device> devices;
+      CL_VECTOR_TYPE<cl::Device> devices;
       devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
       program.build(devices,options.str().c_str());
     }
     catch (cl::Error error)
     {
       // int msgPart = 0;
-      // if (fVerbose>1) 
+      // if (fVerbose>1)
       // 	msgPart = 3;
 
       std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
@@ -136,6 +136,20 @@ namespace KEMField
       // 		2,
       // 		msgPart);
     }
+
+    #ifdef DEBUG_OPENCL_COMPILER_OUTPUT
+    std::stringstream s;
+    s << "Build Log for OpenCL "<<clFile.str()<<" :\t ";
+    std::stringstream build_log_stream;
+    build_log_stream<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
+    std::string build_log;
+    build_log = build_log_stream.str();
+    if(build_log.size() != 0)
+    {
+        s << build_log;
+        std::cout<<s.str()<<std::endl;
+    }
+    #endif
 
     // Make kernel
     fPhiKernel = new cl::Kernel(program, "Potential");

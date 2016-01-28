@@ -3,6 +3,11 @@
 
 #include <typeinfo>
 
+// this fixes compile-time errors on GCC when using the C++11 standard
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+#define __typeof__(x) decltype(x)
+#endif
+
 namespace KEMField
 {
   template<bool Cond, class T = void>
@@ -30,7 +35,7 @@ namespace KEMField
   class IsDerivedFrom
   {
     class No {};
-    class Yes { No no[2]; }; 
+    class Yes { No no[2]; };
 
     static Yes Test(B*);
     static No Test(...);
@@ -43,10 +48,10 @@ namespace KEMField
   class IsNamed
   {
     class No {};
-    class Yes { No no[2]; }; 
+    class Yes { No no[2]; };
 
     template <typename C>
-    static Yes Test(typeof(&C::Name));
+    static Yes Test(__typeof__(&C::Name));
     template <typename C>
     static No Test(...);
 

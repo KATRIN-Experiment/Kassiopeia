@@ -300,7 +300,7 @@ namespace KGeoBag
     double u = ((r-fP1[1])*(fP2[1]-fP1[1]) +
 		(P[2]-fP1[0])*(fP2[0]-fP1[0]))/(fLength*fLength);
 
-    double cos,sin;
+    double cos = 0.,sin = 0.;
     if (P_in)
     {
       cos = P[0]/sqrt(P[0]*P[0]+P[1]*P[1]);
@@ -515,18 +515,18 @@ namespace KGeoBag
   bool KGRotatedObject::Arc::ContainsPoint(const double* P) const
   {
     double zmax = fP2[0];
-    double rmax = fP2[1];
+//    double rmax = fP2[1]; //TODO: WHAT IS THIS VARIABLE FOR?
     double zmin = fP1[0];
-    double rmin = fP1[1];
+//    double rmin = fP1[1]; //TODO: WHAT IS THIS VARIABLE FOR?
 
     bool arcOpensUp = (fPhiBoundary>0 && fPhiBoundary < M_PI);
 
     if (zmax<zmin)
     {
       zmax = zmin;
-      rmax = rmin;
+//      rmax = rmin; /TODO: WHAT IS THIS VARIABLE FOR?
       zmin = fP2[0];
-      rmin = fP2[1];
+//      rmin = fP2[1]; /TODO: WHAT IS THIS VARIABLE FOR?
     }
 
     if (P[2] < zmin || P[2] > zmax)

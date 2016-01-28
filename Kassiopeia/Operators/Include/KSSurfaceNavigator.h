@@ -16,9 +16,14 @@ namespace Kassiopeia
 
         public:
             virtual void ExecuteNavigation(
-                const KSParticle& anInitialParticle,
+            	const KSParticle& anInitialParticle,
+                const KSParticle& aNavigationParticle,
                 KSParticle& aFinalParticle,
                 KSParticleQueue& aSecondaries
+            ) const = 0;
+
+            virtual void FinalizeNavigation(
+                KSParticle& aFinalParticle
             ) const = 0;
     };
 

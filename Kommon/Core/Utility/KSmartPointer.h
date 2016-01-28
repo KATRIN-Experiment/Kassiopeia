@@ -6,116 +6,139 @@
 namespace katrin
 {
 
-    template< typename T >
-    class KSmartPointer
+class Counter
+{
+    template < typename T>
+    friend class KSmartPointer;
+
+    Counter() :fCount(0){}
+
+    int Increment()
     {
-        private:
-            class Counter
-            {
-                public:
-                    int Increment()
-                    {
-                        return ++fCount;
-                    }
-                    int Decrement()
-                    {
-                        return --fCount;
-                    }
-                private:
-                    int fCount;
-            };
+        return ++fCount;
+    }
+    int Decrement()
+    {
+        return --fCount;
+    }
 
-        public:
-            KSmartPointer() :
-                    fPointer( 0 ),
-                    fCounter( 0 )
-            {
-                fCounter = new Counter();
-                fCounter->Increment();
-            }
-            KSmartPointer( T* pValue ) :
-                    fPointer( pValue ),
-                    fCounter( 0 )
-            {
-                fCounter = new Counter();
-                fCounter->Increment();
-            }
+    int fCount;
+};
 
-            KSmartPointer( const KSmartPointer< T >& sp ) :
-                    fPointer( sp.fPointer ),
-                    fCounter( sp.fCounter )
-            {
-                fCounter->Increment();
-            }
+template< typename T >
+class KSmartPointer
+{
+public:
+    template <typename U>
+    friend class KSmartPointer; // for copy constructor from derived or non const class
 
-            ~KSmartPointer()
-            {
-                if( fCounter->Decrement() == 0 )
-                {
-                    delete fPointer;
-                    delete fCounter;
-                }
-            }
 
-            T& operator*()
-            {
-                return *fPointer;
-            }
+    KSmartPointer() :
+        fPointer( 0 ),
+        fCounter( 0 )
+    {
+        fCounter = new Counter();
+        fCounter->Increment();
+    }
 
-            const T& operator*() const
-            {
-                return *fPointer;
-            }
+    KSmartPointer( T* pValue ) :
+        fPointer( pValue ),
+        fCounter( 0 )
+    {
+        fCounter = new Counter();
+        fCounter->Increment();
+    }
 
-            T* operator->()
-            {
-                return fPointer;
-            }
+    /** The non template copy constructor is necessary to avoid the use
+     * of the default copy constructor that would not increment the counter.
+     * Sadly, the template copy constructor below comes after the default copy
+     * constructor in the overloading hierachy.
+     */
+    KSmartPointer( const KSmartPointer< T >& sp ) :
+        fPointer( sp.fPointer ),
+        fCounter( sp.fCounter )
+    {
+        fCounter->Increment();
+    }
 
-            const T* operator->() const
-            {
-                return fPointer;
-            }
+    template< typename U>
+    KSmartPointer( const KSmartPointer< U >& sp ) :
+    fPointer( sp.fPointer ),
+    fCounter( sp.fCounter )
+    {
+        fCounter->Increment();
+    }
 
-            bool Null() const
-            {
-                return fPointer == NULL;
-            }
+    ~KSmartPointer()
+    {
+        if( fCounter->Decrement() == 0 )
+        {
+            delete fPointer;
+            delete fCounter;
+        }
+    }
 
-            KSmartPointer< T >& operator=( const KSmartPointer< T >& sp )
-            {
-                if( this != &sp )
-                {
-                    if( fCounter->Decrement() == 0 )
-                    {
-                        delete fPointer;
-                        delete fCounter;
-                    }
+    T& operator*()
+    {
+        return *fPointer;
+    }
 
-                    fPointer = sp.fPointer;
-                    fCounter = sp.fCounter;
-                    fCounter->Increment();
-                }
-                return *this;
-            }
+    const T& operator*() const
+    {
+        return *fPointer;
+    }
 
-            bool operator==( const KSmartPointer< T >& sp ) const
+    T* operator->()
+    {
+        return fPointer;
+    }
+
+    const T* operator->() const
+    {
+        return fPointer;
+    }
+
+    bool Null() const
+    {
+        return fPointer == NULL;
+    }
+
+    KSmartPointer< T >& operator=( const KSmartPointer< T >& sp )
+    {
+        if( this != &sp )
+        {
+            if( fCounter->Decrement() == 0 )
             {
-                return fPointer == sp.fPointer;
-            }
-            bool operator<( const KSmartPointer< T >& sp ) const
-            {
-                return fPointer < sp.fPointer;
-            }
-            bool operator>( const KSmartPointer< T >& sp ) const
-            {
-                return fPointer > sp.fPointer;
+                delete fPointer;
+                delete fCounter;
             }
 
-        private:
-            T* fPointer;
-            Counter* fCounter;
-    };
+            fPointer = sp.fPointer;
+            fCounter = sp.fCounter;
+            fCounter->Increment();
+        }
+        return *this;
+    }
+
+    bool operator==( const KSmartPointer< T >& sp ) const
+    {
+        return fPointer == sp.fPointer;
+    }
+
+    bool operator<( const KSmartPointer< T >& sp ) const
+    {
+        return fPointer < sp.fPointer;
+    }
+
+    bool operator>( const KSmartPointer< T >& sp ) const
+    {
+        return fPointer > sp.fPointer;
+    }
+
+private:
+    T* fPointer;
+    Counter* fCounter;
+};
 }
 
 #endif /* KSMARTPOINTER_DEF */

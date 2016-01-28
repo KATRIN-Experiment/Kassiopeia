@@ -28,19 +28,19 @@ KVMSpaceTriangle::KVMSpaceTriangle()
 void KVMSpaceTriangle::SetCornerPoint(const double* point)
 {
     fP.SetComponents( point[0], point[1], point[2] );
-};
+}
 
 void KVMSpaceTriangle::SetBasisVectorN1(const double* vec)
 {
     fN1.SetComponents(vec[0], vec[1], vec[2]);
     fN1 = fN1.Unit();
-};
+}
 
 void KVMSpaceTriangle::SetBasisVectorN2(const double* vec)
 {
     fN2.SetComponents(vec[0], vec[1], vec[2]);
     fN2 = fN2.Unit();
-};
+}
 
 void
 KVMSpaceTriangle::SetAll(const double* point, const double* vec1, const double* vec2, double len1, double len2)
@@ -51,7 +51,7 @@ KVMSpaceTriangle::SetAll(const double* point, const double* vec1, const double* 
     SetLengthSide1(len1);
     SetLengthSide2(len2);
     InitializeParameters();
-};
+}
 
 void
 KVMSpaceTriangle::SetVertices(const double* point0, const double* point1, const double* point2)
@@ -93,6 +93,6 @@ KVMSpaceTriangle::InitializeParameters()
         fN3 = fN1.Cross(fN2);
         fSinTheta = fN3.Magnitude();
         fN3 = fN3.Unit();
-};
+}
 
 }

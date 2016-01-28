@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTermMinR::KSTermMinR( const KSTermMinR& aCopy ) :
+        KSComponent(),
         fMinR( aCopy.fMinR )
     {
     }

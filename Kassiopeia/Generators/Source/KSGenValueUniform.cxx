@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueUniform::KSGenValueUniform( const KSGenValueUniform& aCopy ) :
+            KSComponent(),
             fValueMin( aCopy.fValueMin ),
             fValueMax( aCopy.fValueMax )
     {

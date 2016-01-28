@@ -73,7 +73,7 @@ CL_TYPE ET_Potential_noZ(CL_TYPE a2,
     if (fabs(y)>5.e-14)
       ans1 = y*ArcSinh((a1+b1*y)/fabs(y)) + a1/SQRT(1+b1*b1)*LOG(logArg1);
     else
-      ans1 = a1/SQRT(1+b1*b1)*LOG(logArg1);      
+      ans1 = a1/SQRT(1+b1*b1)*LOG(logArg1);
   }
   else
   {
@@ -99,14 +99,13 @@ CL_TYPE ET_I3_(CL_TYPE a,CL_TYPE b,CL_TYPE u1,CL_TYPE u2)
   CL_TYPE g1;
   CL_TYPE g2;
 
-  if (fabs(a/u1)>1.e-8)
-    g1 = SQRT(b*b+1.)*SQRT(a*a+2.*a*b*u1+(b*b+1.)*u1*u1+1.)+b*(a+b*u1)+u1;
-  else
-    g1 = a*b + u1*(1. + b*b + SQRT(b*b + 1.)*SQRT(1. + b*b + 2.*a*b/u1));
-  if (fabs(a/u2)>1.e-8)
-    g2 = SQRT(b*b+1.)*SQRT(a*a+2.*a*b*u2+(b*b+1.)*u2*u2+1.)+b*(a+b*u2)+u2;
-  else
-    g2 = a*b + u2*(1. + b*b + SQRT(b*b + 1.)*SQRT(1. + b*b + 2.*a*b/u2));
+  g1 = (SQRT(b*b+1.)*SQRT(a*a+2*a*b*u1+(b*b+1.)*u1*u1+1.)+b*(a+b*u1)+u1);
+  g2 = (SQRT(b*b+1.)*SQRT(a*a+2*a*b*u2+(b*b+1.)*u2*u2+1.)+b*(a+b*u2)+u2);
+
+  //the following two lines are a patch to fix an error due floating point
+  //rounding which results in a negative value of g2/g1, by R. Combe 2/2/15
+  if(g1 <= 0){g1 = -(1+a*a+b*b)/(2*(b*b+1)*u1);};
+  if(g2 <= 0){g2 = -(1+a*a+b*b)/(2*(b*b+1)*u2);};
 
   if (fabs(g1)<1.e-12)
   {
@@ -119,7 +118,9 @@ CL_TYPE ET_I3_(CL_TYPE a,CL_TYPE b,CL_TYPE u1,CL_TYPE u2)
       g2 = 1.e-12;
   }
 
-  return a/SQRT(b*b+1.)*LOG(g2/g1);
+  //adding fabs to the log argument to catch small negative arguments
+  //that still might slip through due to floating point math errors 2/2/15
+  return a/SQRT(b*b+1.)*LOG(fabs(g2/g1));
 }
 
 //______________________________________________________________________________
@@ -129,7 +130,14 @@ CL_TYPE ET_I3p_(CL_TYPE a,CL_TYPE b,CL_TYPE u1,CL_TYPE u2)
   CL_TYPE g1 = (SQRT(b*b+1)*SQRT(a*a+2*a*b*u1+(b*b+1)*u1*u1+1)+b*(a+b*u1)+u1);
   CL_TYPE g2 = (SQRT(b*b+1)*SQRT(a*a+2*a*b*u2+(b*b+1)*u2*u2+1)+b*(a+b*u2)+u2);
 
-  return 1./SQRT(b*b+1.)*LOG(g2/g1);
+  //the following two lines are a patch to fix an error due floating point
+  //rounding which results in a negative value of g2/g1, by R. Combe 2/2/15
+  if(g1<=0){g1 = -(1+a*a+b*b)/(2*(b*b+1)*u1);};
+  if(g2<=0){g2 = -(1+a*a+b*b)/(2*(b*b+1)*u2);};
+
+  //adding fabs to the log argument to catch small negative arguments
+  //that still might slip through due to floating point math errors 2/2/15
+  return 1./SQRT(b*b+1.)*LOG(fabs(g2/g1));
 }
 
 //______________________________________________________________________________
@@ -486,14 +494,20 @@ CL_TYPE ET_Potential(const CL_TYPE* P,
   if (z_loc[0]>1.e-14)
   {
     if (fabs(b_loc[0])<1.e-13)
-      I = z_loc[0]*(ET_I1_(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) - 
+    {
+      I = z_loc[0]*(ET_I1_(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) -
 		    ET_I2_(a_loc[0],u_loc[0],u_loc[1]));
+    }
     else if (fabs(b_loc[1])<1.e-13)
-      I = z_loc[0]*(ET_I2_(a_loc[1],u_loc[0],u_loc[1]) - 
+    {
+      I = z_loc[0]*(ET_I2_(a_loc[1],u_loc[0],u_loc[1]) -
 		    ET_I1_(a_loc[0],b_loc[0],u_loc[0],u_loc[1]));
+    }
     else
-      I = z_loc[0]*(ET_I1_(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) - 
+    {
+      I = z_loc[0]*(ET_I1_(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) -
 		    ET_I1_(a_loc[0],b_loc[0],u_loc[0],u_loc[1]));
+    }
   }
   else
   {
@@ -633,7 +647,7 @@ CL_TYPE4 ET_EField(const CL_TYPE* P,
   for (int j=0;j<3;j++)
   {
     field_[j] = (data[5 + j]*local_field[0] +
-		 N2prime[j]*local_field[1] + 
+		 N2prime[j]*local_field[1] +
 		 norm[j]*local_field[2]);
   }
 

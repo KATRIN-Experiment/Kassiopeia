@@ -5,12 +5,15 @@
 #include <sstream>
 #include <fstream>
 #include <cstdlib>
+#include <complex>
 
 //core (opencl)
 #include "KOpenCLInterface.hh"
 
 #include "KFMArrayWrapper.hh"
+#include "KFMUnaryArrayOperator.hh"
 #include "KFMFastFourierTransformUtilities.hh"
+#include "KOpenCLKernelBuilder.hh"
 
 namespace KEMField
 {
@@ -51,6 +54,7 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
         fCirculantBufferCL(NULL),
         fDataBufferCL(NULL),
         fPermuationArrayCL(NULL),
+        fWorkspaceBufferCL(NULL),
         fNLocal(0){;};
 
         virtual ~KFMBatchedMultidimensionalFastFourierTransform_OpenCL()
@@ -63,6 +67,7 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
             delete fCirculantBufferCL;
             delete fDataBufferCL;
             delete fPermuationArrayCL;
+            delete fWorkspaceBufferCL;
         };
 
         //control direction of FFT
@@ -86,6 +91,12 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
 
         //raw access to the OpenCL data buffer...use carefully
         cl::Buffer* GetDataBuffer(){return fDataBufferCL;};
+
+////////////////////////////////////////////////////////////////////////////////
+
+        //overides automatic determination of local workgroup size if set
+        //do NOT provide any sanity checks
+        void ForceLocalSize(unsigned int local){fNLocal = local;};
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -172,18 +183,39 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
                         //no need to write the constants, as they are already on the gpu
                         //just fire up the kernel
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fFFTKernel, cl::NullRange, global, local);
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                     }
                     else
                     {
                         //we enqueue write the needed constants for this dimension
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fTwiddleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fTwiddle[D][0]) );
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fConjugateTwiddleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fConjugateTwiddle[D][0]) );
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fScaleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fScale[D][0]) );
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fCirculantBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fCirculant[D][0]) );
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fPermuationArrayCL, CL_TRUE, 0, fMaxBufferSize*sizeof(unsigned int), &(fPermuationArray[D][0]) );
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
 
                         //now enqueue the kernel
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fFFTKernel, cl::NullRange, global, local);
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                     }
                 }
 
@@ -231,6 +263,17 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
             std::stringstream ss;
             ss << " -D FFT_NDIM=" << NDIM;
             ss << " -D FFT_BUFFERSIZE=" << fMaxBufferSize;
+
+            //determine the size of the device's constant memory buffer, if it is too small we do not
+            //use it, and use global memory instead
+            size_t const_mem_size =  KOpenCLInterface::GetInstance()->GetDevice().getInfo<CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE>();
+            if( fMaxBufferSize*sizeof(CL_TYPE2) < const_mem_size)
+            {
+                #ifdef KEMFIELD_OPENCL_FFT_CONST_MEM
+                ss << " -D FFT_USE_CONST_MEM";
+                #endif
+            }
+
             ss << " -I " <<KOpenCLInterface::GetInstance()->GetKernelPath();
             fOpenCLFlags = ss.str();
 
@@ -273,58 +316,30 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
 
         void ConstructOpenCLKernels()
         {
+
             //Get name of kernel source file
             std::stringstream clFile;
-            clFile << KOpenCLInterface::GetInstance()->GetKernelPath() << "/kEMField_KFMMultidimensionalFastFourierTransform_kernel.cl";
-
-            //read in the source code
-            std::string sourceCode;
-            std::ifstream sourceFile(clFile.str().c_str());
-            sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
-
-            //Make program of the source code in the context
-            cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length()+1));
-            cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source);
+            clFile << KOpenCLInterface::GetInstance()->GetKernelPath() << "/kEMField_KFMMultidimensionalFastFourierTransformPrivate_kernel.cl";
 
             //set the build options
             std::stringstream options;
             options << GetOpenCLFlags();
 
-            // Build program for these specific devices
-            try
-            {
-                // use only target device!
-                cl::vector<cl::Device> devices;
-                devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
-                program.build(devices,options.str().c_str());
-            }
-            catch (cl::Error error)
-            {
-                std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
-                std::stringstream s;
-                s<<"There was an error compiling the kernels.  Here is the information from the OpenCL C++ API:"<<std::endl;
-                s<<error.what()<<"("<<error.err()<<")"<<std::endl;
-                s<<"Build Status: "<<program.getBuildInfo<CL_PROGRAM_BUILD_STATUS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-                s<<"Build Options:\t"<<program.getBuildInfo<CL_PROGRAM_BUILD_OPTIONS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-                s<<"Build Log:\t "<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
-                std::cout<<s.str()<<std::endl;
-                std::exit(1);
-            }
-
-            // Make kernel
-	        cl_int err_code = -1;
-            try
-            {
-                fFFTKernel = new cl::Kernel(program, "MultidimensionalFastFourierTransform_Stage", &err_code);
-            }
-            catch(cl::Error error)
-            {
-                std::cout<<"Kernel construction failed with error code: "<<err_code<<std::endl;
-                std::exit(1);
-            }
+            KOpenCLKernelBuilder k_builder;
+            fFFTKernel = k_builder.BuildKernel(clFile.str(), std::string("MultidimensionalFastFourierTransform_Stage"), options.str() );
 
             //get n-local
-            fNLocal = fFFTKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+            if(fNLocal == 0) //if fNLocal has already been set externally, do nothing
+            {
+                fNLocal = fFFTKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+                fPreferredWorkgroupMultiple = fFFTKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+                if(fPreferredWorkgroupMultiple < fNLocal)
+                {
+                    fNLocal = fPreferredWorkgroupMultiple;
+                }
+            }
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -359,6 +374,29 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
             fPermuationArrayCL =
             new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, fMaxBufferSize*sizeof(unsigned int));
 
+            //determine the largest global worksize
+            fMaxNWorkItems = 0;
+            for(unsigned int D=0; D<NDIM; D++)
+            {
+                //compute number of 1d fft's needed (n-global)
+                unsigned int n_global = fDimensionSize[0];
+                unsigned int n_local_1d_transforms = 1;
+                for(unsigned int i = 0; i < NDIM; i++)
+                {
+                     if(i != D)
+                     {
+                        n_global *= fSpatialDim[i];
+                        n_local_1d_transforms *= fSpatialDim[i];
+                     };
+                };
+
+                //pad out n-global to be a multiple of the n-local
+                unsigned int nDummy = fNLocal - (n_global%fNLocal);
+                if(nDummy == fNLocal){nDummy = 0;};
+                n_global += nDummy;
+
+                if(fMaxNWorkItems < n_global){fMaxNWorkItems = n_global;};
+            }
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -382,6 +420,9 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
             //array dimensionality written once
             fFFTKernel->setArg(3, *fSpatialDimensionBufferCL);
             Q.enqueueWriteBuffer(*fSpatialDimensionBufferCL, CL_TRUE, 0, NDIM*sizeof(unsigned int), fSpatialDim);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
 
             //following are updated at each stage when necessary
@@ -398,11 +439,25 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
             {
                 //write the constant buffers
                 Q.enqueueWriteBuffer(*fTwiddleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fTwiddle[0][0]) );
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
                 Q.enqueueWriteBuffer(*fConjugateTwiddleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fConjugateTwiddle[0][0]) );
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
                 Q.enqueueWriteBuffer(*fScaleBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fScale[0][0]) );
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
                 Q.enqueueWriteBuffer(*fCirculantBufferCL, CL_TRUE, 0, fMaxBufferSize*sizeof(CL_TYPE2), &(fCirculant[0][0]) );
-
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
                 Q.enqueueWriteBuffer(*fPermuationArrayCL, CL_TRUE, 0, fMaxBufferSize*sizeof(unsigned int), &(fPermuationArray[0][0]) );
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
             }
 
             //the data is updated once per execution
@@ -419,6 +474,9 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
                 cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
                 CL_TYPE2* ptr = (CL_TYPE2*) ( &( (this->fInput->GetData())[0] ) );
                 Q.enqueueWriteBuffer(*fDataBufferCL, CL_TRUE, 0, fTotalDataSize*sizeof(CL_TYPE2), ptr );
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
             }
 
             //otherwise assume data is already on GPU from previous result
@@ -434,6 +492,9 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
                 cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
                 CL_TYPE2* ptr = (CL_TYPE2*) ( &( (this->fInput->GetData())[0] ) );
                 Q.enqueueReadBuffer(*fDataBufferCL, CL_TRUE, 0, fTotalDataSize*sizeof(CL_TYPE2), ptr);
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
             }
             //otherwise assume we want to leave the data on the GPU for further processing
         }
@@ -468,6 +529,7 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
         bool fReadOutDataToHost;
         unsigned int fDimensionSize[NDIM+1];
         unsigned int fSpatialDim[NDIM];
+        unsigned int fMaxNWorkItems;
 
         unsigned int fMaxBufferSize;
         unsigned int fTotalDataSize;
@@ -507,8 +569,12 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL: public KFMUnaryArra
         //buffer for the permutation array
         cl::Buffer* fPermuationArrayCL;
 
+        //buffer to global workspace
+        cl::Buffer* fWorkspaceBufferCL;
+
         unsigned int fNLocal;
         unsigned int fNGlobal;
+        unsigned int fPreferredWorkgroupMultiple;
 
         ////////////////////////////////////////////////////////////////////////
 };

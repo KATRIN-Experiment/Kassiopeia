@@ -55,9 +55,9 @@ namespace Kassiopeia
 	}
 
 	KSWriteASCII::Data::Data( KSComponent* aComponent ) :
-	fWriter(),
 	fLabel( "" ),
 	fType( "" ),
+    fWriter(),
 	fIndex( 0 ),
 	fLength( 0 ),
 	fComponents()
@@ -425,6 +425,7 @@ namespace Kassiopeia
 	}
 
 	KSWriteASCII::KSWriteASCII( const KSWriteASCII& aCopy ) :
+        KSComponent(),
 	fBase( aCopy.fBase ),
 	fPath( aCopy.fPath ),
 	fStepIteration( aCopy.fStepIteration ),
@@ -755,7 +756,7 @@ namespace Kassiopeia
 		return;
 	}
 
-	static int sKSWriteASCIIDict =
+    STATICINT sKSWriteASCIIDict =
 	KSDictionary< KSWriteASCII >::AddCommand( &KSWriteASCII::AddRunComponent, &KSWriteASCII::RemoveRunComponent, "add_run_output", "remove_run_output" ) +
 	KSDictionary< KSWriteASCII >::AddCommand( &KSWriteASCII::AddEventComponent, &KSWriteASCII::RemoveEventComponent, "add_event_output", "remove_event_output" ) +
 	KSDictionary< KSWriteASCII >::AddCommand( &KSWriteASCII::AddTrackComponent, &KSWriteASCII::RemoveTrackComponent, "add_track_output", "remove_track_output" ) +

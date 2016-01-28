@@ -105,7 +105,9 @@ class KFMScalarMultipoleExpansion: public KFMScalarMomentExpansion, public KSAFi
 
 };
 
-inline KFMScalarMultipoleExpansion::KFMScalarMultipoleExpansion(const KFMScalarMultipoleExpansion &copyObject)
+inline KFMScalarMultipoleExpansion::KFMScalarMultipoleExpansion(const KFMScalarMultipoleExpansion &copyObject):
+KFMScalarMomentExpansion(),
+KSAFixedSizeInputOutputObject()
 {
     SetDegree(copyObject.GetDegree());
 
@@ -283,7 +285,7 @@ Stream& operator<<(Stream& s, const KFMScalarMultipoleExpansion& aData)
 
 
 
-DefineKSAClassName(KFMScalarMultipoleExpansion);
+DefineKSAClassName(KFMScalarMultipoleExpansion)
 
 
 

@@ -1,7 +1,7 @@
 # header files
 set( READERS_HEADER_BASENAMES
 	KSReadersMessage.h
-	
+
 	KSReadValue.h
 	KSReadSet.h
 	KSReadIterator.h
@@ -10,17 +10,17 @@ set( READERS_HEADER_BASENAMES
 
 if( Kassiopeia_USE_ROOT )
 	list( APPEND READERS_HEADER_BASENAMES
-    	KSReadIteratorROOT.h
+		KSReadIteratorROOT.h
 		KSReadRunROOT.h
 		KSReadEventROOT.h
 		KSReadTrackROOT.h
 		KSReadStepROOT.h
 		KSReadObjectROOT.h
 		KSReadFileROOT.h
-    )
+	)
 endif( Kassiopeia_USE_ROOT )
 
-set( READERS_HEADER_PATH 
+set( READERS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${READERS_HEADER_BASENAMES} )
@@ -30,7 +30,7 @@ endforeach( BASENAME )
 # source files
 set( READERS_SOURCE_BASENAMES
 	KSReadersMessage.cxx
-	
+
 	KSReadIterator.cxx
 	KSReadFile.cxx
 )
@@ -47,7 +47,7 @@ if( Kassiopeia_USE_ROOT )
     )
 endif( Kassiopeia_USE_ROOT )
 
-set( READERS_SOURCE_PATH 
+set( READERS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${READERS_SOURCE_BASENAMES} )
@@ -57,7 +57,7 @@ endforeach( BASENAME )
 # data files
 set( READERS_DATA_BASENAMES
 )
-set( READERS_DATA_PATH 
+set( READERS_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${READERS_DATA_BASENAMES} )
@@ -74,6 +74,7 @@ target_link_libraries( KassiopeiaReaders
     KassiopeiaUtility
     KassiopeiaObjects
     KassiopeiaOperators
+    ${ROOT_LIBRARIES}
 )
 
 # install

@@ -5,6 +5,7 @@
 #include "KFMNodeActor.hh"
 #include "KFMIdentitySet.hh"
 #include "KFMExternalIdentitySet.hh"
+#include "KFMIdentitySetMerger.hh"
 
 namespace KEMField
 {
@@ -44,7 +45,25 @@ class KFMExternalIdentitySetCreator: public KFMNodeActor< KFMNode<ObjectTypeList
             {
                 if(node->GetParent() == NULL )
                 {
-                    //do nothing to the root node, its eid_set is empty and should be set to NULL
+                    //this is the root node, its external id set should only contain elements that it itself owns
+                    KFMIdentitySet* root_id_set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
+
+                    if(root_id_set != NULL)
+                    {
+                        if(root_id_set->GetSize() != 0)
+                        {
+                            root_id_set->GetIDs(&ids);
+
+                            KFMExternalIdentitySet* root_eid_set = new KFMExternalIdentitySet();
+                            root_eid_set->SetIDs(&ids);
+                            KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::SetNodeObject(root_eid_set, node);
+
+                            if(fMaxSize < root_eid_set->GetSize())
+                            {
+                                fMaxSize = root_eid_set->GetSize();
+                            }
+                        }
+                    }
                     return;
                 }
 
@@ -56,7 +75,7 @@ class KFMExternalIdentitySetCreator: public KFMNodeActor< KFMNode<ObjectTypeList
                 //them and add them to this node's external id list
                 fIDCollector.Clear();
                 fNodeNeighborList.clear();
-                KFMCubicSpaceNodeNeighborFinder<3, KFMElectrostaticNodeObjects>::GetAllNeighbors(node, fZeroMaskSize, &fNodeNeighborList);
+                KFMCubicSpaceNodeNeighborFinder<3, ObjectTypeList>::GetAllNeighbors(node, fZeroMaskSize, &fNodeNeighborList);
 
                 for(unsigned int j=0; j<fNodeNeighborList.size(); j++)
                 {
@@ -100,7 +119,7 @@ class KFMExternalIdentitySetCreator: public KFMNodeActor< KFMNode<ObjectTypeList
         unsigned int fZeroMaskSize;
         std::vector< KFMNode<ObjectTypeList>* > fNodeNeighborList;
 
-        KFMIdentitySetCollector< ObjectTypeList > fIDCollector;
+        KFMIdentitySetMerger< ObjectTypeList > fIDCollector;
         std::vector<unsigned int> ids;
         std::vector<unsigned int> parent_ids;
 

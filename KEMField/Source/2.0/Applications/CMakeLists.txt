@@ -23,18 +23,21 @@ set (APPLICATIONS_LIBS
   )
 
 if (@PROJECT_NAME@_USE_VTK)
+  kasper_find_vtk()
   list (APPEND APPLICATIONS_LIBS
     KEMVTKPlugin
     )
 endif (@PROJECT_NAME@_USE_VTK)
 
 if (@PROJECT_NAME@_USE_ROOT)
+  kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
   list (APPEND APPLICATIONS_LIBS
     KEMRootPlugin
     )
 endif (@PROJECT_NAME@_USE_ROOT)
 
 if (@PROJECT_NAME@_USE_OPENCL)
+  kasper_external_include_directories( ${OPENCL_INCLUDE_DIRS} )
   list (APPEND APPLICATIONS_LIBS
     KEMOpenCLPlugin
     )
@@ -54,11 +57,8 @@ if (@PROJECT_NAME@_USE_PETSc)
 endif (@PROJECT_NAME@_USE_PETSc)
 
 if (@PROJECT_NAME@_USE_VTK)
-  find_package(VTK REQUIRED)
-  include(${VTK_USE_FILE})
-  list (APPEND APPLICATIONS_LIBS
-    ${VTK_LIBRARIES}
-    )
+  kasper_find_vtk()
+  list (APPEND APPLICATIONS_LIBS ${VTK_LIBRARIES} )
 endif (@PROJECT_NAME@_USE_VTK)
 
 set_property(
@@ -110,5 +110,10 @@ if (@PROJECT_NAME@_USE_VTK)
   kasper_install_executables (
     VisualizeEMGeometry
     )
+
+install (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFiles
+  DESTINATION ${@PROJECT_NAME@_CONFIG_INSTALL_DIR}
+  PATTERN "*.gitignore" EXCLUDE
+  )
 
 endif (@PROJECT_NAME@_USE_VTK)

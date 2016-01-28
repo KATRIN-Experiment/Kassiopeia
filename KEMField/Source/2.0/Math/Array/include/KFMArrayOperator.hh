@@ -5,7 +5,7 @@
 
 #include <cstring>
 
-#include <iostream>
+//#include <iostream>
 
 namespace KEMField{
 
@@ -90,6 +90,8 @@ class KFMArrayOperator
             int bases[NDIM];
             arr->GetArrayDimensions(shape);
             arr->GetArrayBases(bases);
+
+            //std::cout<<"____________"<<std::endl;
 
             //check that the output array's 'base values' are
             //less than or equal to the lower limits over which we will scan

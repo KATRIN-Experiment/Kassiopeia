@@ -4,6 +4,7 @@
 #include "KGMeshRectangle.hh"
 #include "KGMeshTriangle.hh"
 #include "KGMeshWire.hh"
+#include "KFile.h"
 
 #include "vtkCellData.h"
 #include "vtkTriangle.h"
@@ -12,6 +13,8 @@
 
 #include "KConst.h"
 #include <cmath>
+
+#include <iostream>
 
 namespace KGeoBag
 {
@@ -208,8 +211,11 @@ namespace KGeoBag
         unsigned int tMod = 0;
         const unsigned int tModBase = 13;
 
+        unsigned int count = 0;
         for( KGMeshElementCIt elementIt = fCurrentElements->begin(); elementIt != fCurrentElements->end(); ++elementIt )
         {
+            count++;
+
             if( KGMeshRectangle* tMeshRectangle = dynamic_cast< KGMeshRectangle* >( *elementIt ) )
             {
                 KThreeVector tPoint0 = fCurrentOrigin + tMeshRectangle->GetP0().X() * fCurrentXAxis + tMeshRectangle->GetP0().Y() * fCurrentYAxis + tMeshRectangle->GetP0().Z() * fCurrentZAxis;
@@ -259,8 +265,8 @@ namespace KGeoBag
 
             if( KGMeshWire* tMeshWire = dynamic_cast< KGMeshWire* >( *elementIt ) )
             {
-                KThreeVector tStart = tMeshWire->GetP1();
-                KThreeVector tEnd = tMeshWire->GetP0();
+                KThreeVector tStart = fCurrentOrigin + tMeshWire->GetP1().X() * fCurrentXAxis + tMeshWire->GetP1().Y() * fCurrentYAxis + tMeshWire->GetP1().Z() * fCurrentZAxis;
+                KThreeVector tEnd = fCurrentOrigin + tMeshWire->GetP0().X() * fCurrentXAxis + tMeshWire->GetP0().Y() * fCurrentYAxis + tMeshWire->GetP0().Z() * fCurrentZAxis;
                 KThreeVector tConnection = tEnd - tStart;
                 KThreeVector tOrthogonal = tConnection.Orthogonal();
                 KThreeVector tU = tOrthogonal.Unit();

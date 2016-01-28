@@ -9,6 +9,7 @@ namespace Kassiopeia
     {
     }
     KSFieldMagneticDipole::KSFieldMagneticDipole( const KSFieldMagneticDipole& aCopy ) :
+            KSComponent(),
             fLocation( aCopy.fLocation ),
             fMoment( aCopy.fMoment )
     {

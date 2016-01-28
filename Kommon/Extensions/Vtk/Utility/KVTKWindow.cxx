@@ -1,6 +1,7 @@
 #include "KVTKWindow.h"
 #include "KVTKPainter.h"
 #include "KUtilityMessage.h"
+#include "KFile.h"
 
 #include "vtkSmartPointer.h"
 #include "vtkAxesActor.h"
@@ -517,10 +518,10 @@ namespace katrin
 namespace katrin
 {
 
-    static int sKVTKWindow =
+    STATICINT sKVTKWindow =
         KElementProcessor::ComplexElement< KVTKWindow >( "vtk_window" );
 
-    static int sKVTKWindowStructure =
+    STATICINT sKVTKWindowStructure =
         KVTKWindowBuilder::Attribute< string >( "name" ) +
         KVTKWindowBuilder::Attribute< bool >( "enable_display" ) +
         KVTKWindowBuilder::Attribute< bool >( "enable_write" ) +

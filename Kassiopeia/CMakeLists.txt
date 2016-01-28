@@ -4,9 +4,14 @@
 # please be considerate and make additions as neatly as you can.
 # thank you! -dan.
 
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8.6 )
+
 project( Kassiopeia )
 include( KasperDefaults )
+
+if(POLICY CMP0053)
+    cmake_policy(SET CMP0053 OLD)
+endif()
 
 # module version
 set( MODULE_VERSION_MAJOR 3 )
@@ -16,8 +21,7 @@ set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VE
 
 # module options
 option( Kassiopeia_USE_ROOT "build in root functionality [writers, visualization]" ON )
-option( Kassiopeia_USE_VTK "build in vtk functionality [visualization]" ON )
-option( Kassiopeia_EXECUTABLES "build kassiopeia executable" ON )
+option( Kassiopeia_USE_VTK "build in vtk functionality [visualization]" OFF )
 
 # module paths
 kasper_module_paths( Kassiopeia )
@@ -31,6 +35,7 @@ endif()
 
 # external dependencies: root
 if( Kassiopeia_USE_ROOT )
+	set( Kommon_USE_ROOT ON CACHE BOOL "(Required)" FORCE )
 	find_package( ROOT 5.24.0 REQUIRED )
 	kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
 	add_cflag( Kassiopeia_USE_ROOT )
@@ -38,9 +43,7 @@ endif( Kassiopeia_USE_ROOT )
 
 # external dependencies: vtk
 if( Kassiopeia_USE_VTK )
-	find_package( VTK REQUIRED )
-	include( ${VTK_USE_FILE} )
-    kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
+	kasper_find_vtk()
 	add_cflag( Kassiopeia_USE_VTK )
 endif( Kassiopeia_USE_VTK )
 
@@ -57,17 +60,43 @@ foreach( FLAG ${KGeoBag_CFLAGS} )
 	add_definitions( -D${FLAG} )
 endforeach( FLAG )
 
-# internal dependencies: kemfield
+# # internal dependencies: kemfield
 kasper_find_module( KEMField )
-if( KEMField_USE_MPI )
-  message( FATAL_ERROR "In order to compile Kassiopeia please rebuild KEMField with MPI disabled." )
-endif()
-
 foreach( FLAG ${KEMField_CFLAGS} )
-	add_definitions( -D${FLAG} )
-endforeach( FLAG )
+   add_definitions( -D${FLAG} )
+   if( ${FLAG} STREQUAL KEMFIELD_USE_MPI )
+        find_package(MPI)
+        if (MPI_FOUND)
+            include_directories(${MPI_INCLUDE_PATH})
+        endif (MPI_FOUND)
+    endif( ${FLAG} STREQUAL KEMFIELD_USE_MPI )
+ endforeach( FLAG )
+
+if (KEMField_USE_MPI)
+  find_package(MPI)
+  if (MPI_FOUND)
+    if (MPI_COMPILER)  # MPICH2 style
+      set (CMAKE_C_COMPILER ${MPI_COMPILER})
+      set (CMAKE_CXX_COMPILER ${MPI_COMPILER})
+    else (MPI_COMPILER)  # OpenMPI style
+      set (CMAKE_C_COMPILER ${MPI_C_COMPILER})
+      set (CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
+    endif (MPI_COMPILER)
+  else (MPI_FOUND)
+    set (CMAKE_C_COMPILER mpicc)
+    set (CMAKE_CXX_COMPILER mpicxx)
+  endif (MPI_FOUND)
+  set (STATIC_LIBRARY_SUFFIX _mpi)
+  set (SHARED_LIBRARY_SUFFIX _mpi)
+  set (CMAKE_STATIC_LIBRARY_SUFFIX ${STATIC_LIBRARY_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX})
+  set (CMAKE_SHARED_LIBRARY_SUFFIX ${SHARED_LIBRARY_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX})
+  set (CMAKE_EXECUTABLE_SUFFIX ${SHARED_LIBRARY_SUFFIX}${CMAKE_EXECUTABLE_SUFFIX})
+  set (CMAKE_EXECUTABLE_SUFFIX ${CMAKE_EXECUTABLE_SUFFIX} PARENT_SCOPE)
+endif (KEMField_USE_MPI)
+
 
 # subdirectories
+add_subdirectory( Documentation )
 add_subdirectory( Utility )
 add_subdirectory( Math )
 add_subdirectory( Objects )
@@ -81,15 +110,13 @@ add_subdirectory( Interactions )
 add_subdirectory( Terminators )
 add_subdirectory( Modifiers )
 add_subdirectory( Writers )
+add_subdirectory( Simulation )
 add_subdirectory( Readers )
 add_subdirectory( XML )
 add_subdirectory( Visualization )
-add_subdirectory( Simulation )
 add_subdirectory( Bindings )
+add_subdirectory( Applications/Simulation )
 
-if( Kassiopeia_EXECUTABLES )
-	add_subdirectory( Applications/Simulation )
-endif( Kassiopeia_EXECUTABLES )
 
 add_subdirectory( Applications/Validation )
 if( Kassiopeia_USE_ROOT )

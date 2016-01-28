@@ -1,4 +1,5 @@
 #include "KFMRealSphericalHarmonicExpansionRotator.hh"
+#include <cstdlib>
 
 namespace KEMField{
 
@@ -22,7 +23,7 @@ KFMRealSphericalHarmonicExpansionRotator::~KFMRealSphericalHarmonicExpansionRota
 void
 KFMRealSphericalHarmonicExpansionRotator::SetDegree(int l_max)
 {
-    fDegree = std::fabs(l_max);
+    fDegree = std::abs(l_max);
     fSize = (fDegree+1)*(fDegree + 1);
 
     //now allocate space for the moments
@@ -253,7 +254,6 @@ KFMRealSphericalHarmonicExpansionRotator::Rotate()
     }
 
 }
-
 
 void
 KFMRealSphericalHarmonicExpansionRotator::ApplyXMatrixA(int l, kfm_vector* in, kfm_vector* out)

@@ -28,6 +28,7 @@ namespace Kassiopeia
         public:
             using KSReadIterator::Add;
             using KSReadIterator::Get;
+            using KSReadIterator::Exists;
 
         public:
             KSReadObjectROOT( TTree* aStructureTree, TTree* aPresenceTree, TTree* aDataTree );

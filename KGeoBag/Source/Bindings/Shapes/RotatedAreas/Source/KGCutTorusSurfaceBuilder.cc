@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGCutTorusSurfaceBuilder =
+    STATICINT sKGCutTorusSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGCutTorusSurface >( "cut_torus_surface" );
 
-    static const int sKGCutTorusSurfaceBuilderStructure =
+    STATICINT sKGCutTorusSurfaceBuilderStructure =
         KGCutTorusSurfaceBuilder::Attribute< string >( "name" ) +
         KGCutTorusSurfaceBuilder::Attribute< double >( "z1" ) +
         KGCutTorusSurfaceBuilder::Attribute< double >( "r1" ) +

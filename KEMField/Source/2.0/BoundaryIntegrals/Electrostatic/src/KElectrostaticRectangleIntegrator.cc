@@ -4,7 +4,7 @@ namespace KEMField
 {
   /**
    * \image html potentialFromRectangle.gif
-   * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the 
+   * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the
    * collection of rectangles by computing the following integral for each copy:
    * \f{eqnarray*}{
    * V(\vec{P}) &= \left( \frac{\sigma}{4 \pi \epsilon_0} \right) & \int_{-u_p}^{-u_p+a} \int_{-v_p}^{-v_p+b} \frac{1}{r}\cdot dy \cdot dx = \\
@@ -72,15 +72,24 @@ namespace KEMField
     if (fabs(w)<1.e-13)
     {
       if (xmin<0. && xmax>0. && ymin<0. && ymax>0.)
-	field_local[2] = sign_z/(2.*KEMConstants::Eps0);
+      {
+        //changed 12/8/14 JB
+        //We are probably on the surface of the element
+        //so ignore any z displacement (which may be a round off error)
+        //and always pick a consistent direction (aligned with normal vector)
+	    field_local[2] = 1.0/(2.*KEMConstants::Eps0);
+	    //field_local[2] = sign_z/(2.*KEMConstants::Eps0);
+      }
       else
-	field_local[2] = 0.;
+      {
+	    field_local[2] = 0.;
+      }
     }
     else
     {
       if (((tmin>0) - (tmin<0)) != ((tmax>0) - (tmax<0)))
 	field_local[2] = prefac*sign_z*
-	  fabs(EFieldLocalZ(xmin,xmax,0,fabs(ymin),w) + 
+	  fabs(EFieldLocalZ(xmin,xmax,0,fabs(ymin),w) +
 	       EFieldLocalZ(xmin,xmax,0,fabs(ymax),w));
       else
 	field_local[2] =prefac*sign_z*fabs(EFieldLocalZ(xmin,xmax,ymax,ymin,w));
@@ -166,7 +175,7 @@ namespace KEMField
   EFieldLocalZ(double x1,double x2,double y1,double y2,double z) const
   {
     // Computes the z component of the electric field in local coordinates (where
-    // the rectangle lies in the x-y plane, and the field point lies on the 
+    // the rectangle lies in the x-y plane, and the field point lies on the
     // z-axis).
 
     double t1 = (fabs(y1)>1.e-15 ? z/y1:1.e15);

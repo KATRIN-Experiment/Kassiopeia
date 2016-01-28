@@ -1,8 +1,6 @@
 #ifndef Kassiopeia_KSMathSystem_h_
 #define Kassiopeia_KSMathSystem_h_
 
-#include "KAssert.h"
-
 #include <cstddef>
 
 namespace Kassiopeia
@@ -24,8 +22,9 @@ namespace Kassiopeia
     template< class XValueType, class XDerivativeType, class XErrorType >
     KSMathSystem< XValueType, XDerivativeType, XErrorType >::KSMathSystem()
     {
-        KSTATICASSERT( ValueType::eDimension == DerivativeType::eDimension, dimension_mismatch_between_value_and_derivative_types_in_KMathSystem )
-        KSTATICASSERT( ValueType::eDimension == ErrorType::eDimension, dimension_mismatch_between_value_and_error_types_in_KMathSystem )
+        // TODO: These assertions are not in Effect, and they werent with the old KAssertion
+        static_assert( ValueType::eDimension != DerivativeType::eDimension, "Dimension mismatch between value and derivative types in KMathSystem." );
+        static_assert( ValueType::eDimension != ErrorType::eDimension, "Dimension mismatch between value and error types in KMathSystem." );
     }
 
     template< class XValueType, class XDerivativeType, class XErrorType >

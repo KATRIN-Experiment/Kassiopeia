@@ -3,8 +3,7 @@
 namespace Kassiopeia
 {
 
-    KSTrajMagneticDerivative::KSTrajMagneticDerivative() :
-        fDirectionSign( 1 )
+    KSTrajMagneticDerivative::KSTrajMagneticDerivative()
     {
     }
     KSTrajMagneticDerivative::~KSTrajMagneticDerivative()
@@ -13,25 +12,21 @@ namespace Kassiopeia
 
     void KSTrajMagneticDerivative::AddToTime( const double& aTime )
     {
-        fData[ 0 ] = fDirectionSign * aTime;
+        fData[ 0 ] = aTime;
         return;
     }
     void KSTrajMagneticDerivative::AddToSpeed( const double& aSpeed )
     {
-        fData[ 1 ] = fDirectionSign * aSpeed;
+        fData[ 1 ] = aSpeed;
         return;
     }
     void KSTrajMagneticDerivative::AddToVelocity( const KThreeVector& aVelocity )
     {
-        fData[ 2 ] = fDirectionSign * aVelocity.X();
-        fData[ 3 ] = fDirectionSign * aVelocity.Y();
-        fData[ 4 ] = fDirectionSign * aVelocity.Z();
+        fData[ 2 ] = aVelocity.X();
+        fData[ 3 ] = aVelocity.Y();
+        fData[ 4 ] = aVelocity.Z();
         return;
     }
 
-    void KSTrajMagneticDerivative::SetDirectionSign(const int& aSign)
-    {
-        fDirectionSign = ( aSign < 0 ? -1 : 1 );  // make sure it's either set to -1 or +1
-    }
 
 }

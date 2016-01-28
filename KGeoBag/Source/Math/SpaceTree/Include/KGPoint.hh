@@ -3,7 +3,8 @@
 
 #include <cmath>
 #include <cstddef>
-
+#include <array>
+#include <algorithm>
 
 namespace KGeoBag
 {
@@ -21,128 +22,74 @@ namespace KGeoBag
 *
 */
 
-template<size_t NDIM>
+template<size_t NDIM = 3>
 class KGPoint
 {
     public:
 
         KGPoint()
         {
-            for(size_t i=0; i<NDIM; i++)
-            {
-                fData[i] = 0; //init to zero
-            }
-        };
+            fData.fill(0.0);
+        }
 
         KGPoint(const double* p)
         {
-            for(size_t i=0; i<NDIM; i++)
-            {
-                fData[i] = p[i];
-            }
+            std::copy(p, p+NDIM, fData.begin());
         }
 
         KGPoint( const KGPoint<NDIM>& p )
         {
-            for(size_t i=0; i<NDIM; i++)
-            {
-                fData[i] = p[i];
-            }
+            fData = p.fData;
         }
 
-        virtual ~KGPoint(){};
+        virtual ~KGPoint() { }
 
-        size_t GetDimension() const {return NDIM;};
+        size_t GetDimension() const { return NDIM; }
 
-        //cast to double array
-        operator double* ();
-        operator const double* () const;
+        // cast to double array
+        operator double* () { return fData.data(); }
+        operator const double* () const { return fData.data(); }
 
-        //access elements
-        double& operator[](size_t i);
-        const double& operator[](size_t i) const;
+//        // access - commented out, since these are ambiguous with the above type cast
+//        double& operator[] (size_t index) { return fData[index]; }
+//        const double& operator[] (size_t index) const { return fData[index]; }
 
-        //assignment
-        inline KGPoint<NDIM>& operator=(const KGPoint<NDIM>& p)
+        // assignment
+        KGPoint<NDIM>& operator=(const KGPoint<NDIM>& p)
         {
-            for(size_t i=0; i<NDIM; i++)
-            {
-                fData[ i ] = p.fData[ i ];
-            }
+            fData = p.fData;
             return *this;
         }
 
-
         double MagnitudeSquared() const
         {
-            double val = 0;
-            for(size_t i=0; i<NDIM; i++)
-            {
-                val += fData[i]*fData[i];
-            }
-            return val;
+            double result = 0.0;
+            for (size_t i=0; i<NDIM; i++)
+                result += fData[i]*fData[i];
+            return result;
         }
 
-        double Magnitude() const
-        {
-            double val = 0;
-            for(size_t i=0; i<NDIM; i++)
-            {
-                val += fData[i]*fData[i];
-            }
-            return std::sqrt(val);
-        }
-
+        double Magnitude() const { return std::sqrt( MagnitudeSquared() ); }
 
     private:
-
-        double fData[NDIM];
-
+        std::array<double, NDIM> fData;
 };
 
-
-template<size_t NDIM>
-inline KGPoint<NDIM>::operator double* ()
-{
-    return fData;
-}
-
-template<size_t NDIM>
-inline KGPoint<NDIM>::operator const double* () const
-{
-    return fData;
-}
-
-template<size_t NDIM>
-inline double& KGPoint<NDIM>::operator[](size_t i)
-{
-    return fData[i];
-}
-
-template<size_t NDIM>
-inline const double& KGPoint<NDIM>::operator[](size_t i) const
-{
-    return fData[i];
-}
 
 template<size_t NDIM>
 inline KGPoint<NDIM> operator+( const KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight )
 {
     KGPoint<NDIM> aResult( aLeft );
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aResult[i] += aRight[i];
-    }
     return aResult;
 }
 
 template<size_t NDIM>
 inline KGPoint<NDIM>& operator+=( KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight )
 {
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aLeft[i] += aRight[i];
-    }
     return aLeft;
 }
 
@@ -150,20 +97,16 @@ template<size_t NDIM>
 inline KGPoint<NDIM>  operator-( const KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight )
 {
     KGPoint<NDIM> aResult( aLeft );
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aResult[i] -= aRight[i];
-    }
     return aResult;
 }
 
 template<size_t NDIM>
 inline KGPoint<NDIM>& operator-=( KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight )
 {
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aLeft[i] -= aRight[i];
-    }
     return aLeft;
 }
 
@@ -171,10 +114,8 @@ template<size_t NDIM>
 inline double operator*( const KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight )
 {
     double val = 0;
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         val += aLeft[i] * aRight[i];
-    }
     return val;
 }
 
@@ -182,10 +123,8 @@ template<size_t NDIM>
 inline KGPoint<NDIM>  operator*( register double aScalar, const KGPoint<NDIM>& aVector )
 {
     KGPoint<NDIM>  aResult( aVector );
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aResult[i] *= aScalar;
-    }
     return aResult;
 }
 
@@ -193,20 +132,16 @@ template<size_t NDIM>
 inline KGPoint<NDIM> operator*( const KGPoint<NDIM>& aVector, register double aScalar )
 {
     KGPoint<NDIM>  aResult( aVector );
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aResult[i] *= aScalar;
-    }
     return aResult;
 }
 
 template<size_t NDIM>
 inline KGPoint<NDIM>& operator*=( KGPoint<NDIM>& aVector, register double aScalar )
 {
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aVector[i] *= aScalar;
-    }
     return aVector;
 }
 
@@ -214,20 +149,16 @@ template<size_t NDIM>
 inline KGPoint<NDIM> operator/( const KGPoint<NDIM>& aVector, register double aScalar )
 {
     KGPoint<NDIM>  aResult( aVector );
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aResult[i] /= aScalar;
-    }
     return aResult;
 }
 
 template<size_t NDIM>
 inline KGPoint<NDIM>& operator/=( KGPoint<NDIM>& aVector, register double aScalar )
 {
-    for(size_t i=0; i<NDIM; i++)
-    {
+    for (size_t i=0; i<NDIM; i++)
         aVector[i] /= aScalar;
-    }
     return aVector;
 }
 

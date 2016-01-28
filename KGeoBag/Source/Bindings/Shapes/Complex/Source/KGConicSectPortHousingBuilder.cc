@@ -4,7 +4,7 @@
 namespace katrin
 {
 
-  static const int sKGConicSectPortHousingOrthogonalPortBuilderStructure =
+  STATICINT sKGConicSectPortHousingOrthogonalPortBuilderStructure =
     KGConicSectPortHousingOrthogonalPortBuilder::Attribute<int>("box_radial_mesh_count") +
     KGConicSectPortHousingOrthogonalPortBuilder::Attribute<int>("box_curve_mesh_count") +
     KGConicSectPortHousingOrthogonalPortBuilder::Attribute<int>("cylinder_longitudinal_mesh_count") +
@@ -14,7 +14,7 @@ namespace katrin
     KGConicSectPortHousingOrthogonalPortBuilder::Attribute<double>("y") +
     KGConicSectPortHousingOrthogonalPortBuilder::Attribute<double>("z");
 
-  static const int sKGConicSectPortHousingParaxialPortBuilderStructure =
+  STATICINT sKGConicSectPortHousingParaxialPortBuilderStructure =
     KGConicSectPortHousingParaxialPortBuilder::Attribute<int>("box_radial_mesh_count") +
     KGConicSectPortHousingParaxialPortBuilder::Attribute<int>("box_curve_mesh_count") +
     KGConicSectPortHousingParaxialPortBuilder::Attribute<int>("cylinder_longitudinal_mesh_count") +
@@ -24,7 +24,7 @@ namespace katrin
     KGConicSectPortHousingParaxialPortBuilder::Attribute<double>("y") +
     KGConicSectPortHousingParaxialPortBuilder::Attribute<double>("z");
 
-  static const int sKGConicSectPortHousingBuilderStructure =
+  STATICINT sKGConicSectPortHousingBuilderStructure =
     KGConicSectPortHousingBuilder::Attribute<double>("r1") +
     KGConicSectPortHousingBuilder::Attribute<double>("z1") +
     KGConicSectPortHousingBuilder::Attribute<double>("r2") +
@@ -34,18 +34,18 @@ namespace katrin
     KGConicSectPortHousingBuilder::ComplexElement< KGConicSectPortHousing::OrthogonalPort >("orthogonal_port") +
     KGConicSectPortHousingBuilder::ComplexElement< KGConicSectPortHousing::ParaxialPort >("paraxial_port");
 
-  static const int sKGConicSectPortHousingSurfaceBuilderStructure =
+  STATICINT sKGConicSectPortHousingSurfaceBuilderStructure =
     KGConicSectPortHousingSurfaceBuilder::Attribute<string>("name") +
     KGConicSectPortHousingSurfaceBuilder::ComplexElement<KGConicSectPortHousing>("conic_section_port_housing");
 
-  static const int sKGConicSectPortHousingSurfaceBuilder =
+  STATICINT sKGConicSectPortHousingSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGConicSectPortHousing> >("conic_section_port_housing_surface");
 
-  static const int sKGConicSectPortHousingSpaceBuilderStructure =
+  STATICINT sKGConicSectPortHousingSpaceBuilderStructure =
     KGConicSectPortHousingSpaceBuilder::Attribute<string>("name") +
     KGConicSectPortHousingSpaceBuilder::ComplexElement<KGConicSectPortHousing>("conic_section_port_housing");
 
-  static const int sKGConicSectPortHousingSpaceBuilder =
+  STATICINT sKGConicSectPortHousingSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGConicSectPortHousing> >("conic_section_port_housing_space");
 
 }

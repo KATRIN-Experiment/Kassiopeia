@@ -253,7 +253,8 @@ namespace Kassiopeia
         fDataFileDifferentialCrossSection = std::string( "No file selected" );
     }
 
-    KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation( const KSIntCalculatorArgonExcitation& aCopy )
+    KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation( const KSIntCalculatorArgonExcitation& aCopy ):
+        KSComponent()
     {
         delete fSupportingPointsTotalCrossSection;
         delete fParametersTotalCrossSection;
@@ -428,7 +429,8 @@ namespace Kassiopeia
         fDataFileDifferentialCrossSection = std::string( "argon_differential_elastic_cross-section.txt" );
     }
 
-    KSIntCalculatorArgonElastic::KSIntCalculatorArgonElastic( const KSIntCalculatorArgonElastic& aCopy )
+    KSIntCalculatorArgonElastic::KSIntCalculatorArgonElastic( const KSIntCalculatorArgonElastic& aCopy ):
+        KSComponent()
     {
         delete fSupportingPointsTotalCrossSection;
         delete fParametersTotalCrossSection;
@@ -550,7 +552,8 @@ namespace Kassiopeia
         DiffCrossCalculator = new KSIntCalculatorHydrogenIonisation();
     }
 
-    KSIntCalculatorArgonSingleIonisation::KSIntCalculatorArgonSingleIonisation( const KSIntCalculatorArgonSingleIonisation& aCopy )
+    KSIntCalculatorArgonSingleIonisation::KSIntCalculatorArgonSingleIonisation( const KSIntCalculatorArgonSingleIonisation& aCopy ):
+        KSComponent()
     {
         delete fSupportingPointsTotalCrossSection;
         delete fParametersTotalCrossSection;
@@ -715,7 +718,8 @@ namespace Kassiopeia
         DiffCrossCalculator = new KSIntCalculatorHydrogenIonisation();
     }
 
-    KSIntCalculatorArgonDoubleIonisation::KSIntCalculatorArgonDoubleIonisation( const KSIntCalculatorArgonDoubleIonisation& aCopy )
+    KSIntCalculatorArgonDoubleIonisation::KSIntCalculatorArgonDoubleIonisation( const KSIntCalculatorArgonDoubleIonisation& aCopy ):
+        KSComponent()
     {
         delete fSupportingPointsTotalCrossSection;
         delete fParametersTotalCrossSection;

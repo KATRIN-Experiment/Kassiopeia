@@ -11,11 +11,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTermConstantForcePropagationStructure =
+    STATICINT sKSTrajTermConstantForcePropagationStructure =
         KSTrajTermConstantForcePropagationBuilder::Attribute< string >( "name" ) +
         KSTrajTermConstantForcePropagationBuilder::Attribute< KThreeVector >( "force" );
 
-    static int sToolboxKSTrajTermConstantForcePropagation =
+    STATICINT sToolboxKSTrajTermConstantForcePropagation =
         KSRootBuilder::ComplexElement< KSTrajTermConstantForcePropagation >( "kstraj_term_constant_force_propagation" );
 
 }

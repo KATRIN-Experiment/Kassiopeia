@@ -9,8 +9,7 @@
 #include <sstream>
 
 #include "KFMPoint.hh"
-
-
+#include "KFMArrayMath.hh"
 #include "KSAStructuredASCIIHeaders.hh"
 
 
@@ -45,7 +44,11 @@ class KFMCube: public KSAFixedSizeInputOutputObject
 
         unsigned int GetDimension() const {return NDIM;};
 
-        inline KFMCube(const KFMCube &copyObject){ for(unsigned int i=0; i<NDIM+1; i++){fData[i] = copyObject.fData[i];} }
+        inline KFMCube(const KFMCube &copyObject):
+        KSAFixedSizeInputOutputObject()
+        {
+            for(unsigned int i=0; i<NDIM+1; i++){fData[i] = copyObject.fData[i];}
+        }
 
         //geometric property assignment
         void SetParameters(const double* center, const double& length)
@@ -64,11 +67,25 @@ class KFMCube: public KSAFixedSizeInputOutputObject
         KFMPoint<NDIM> GetCorner(unsigned int i) const
         {
             KFMPoint<NDIM> corner;
+            double length_over_two = fData[NDIM]/2.0;
+
+            //lower corner
+            if(i==0)
+            {
+                for(unsigned int j=0; j<NDIM; j++){corner[j] = fData[j] - length_over_two;}
+                return corner;
+            }
+
+            //upper corner
+            if(i == KFMArrayMath::PowerOfTwo<NDIM>::value - 1 )
+            {
+                for(unsigned int j=0; j<NDIM; j++){ corner[j] = fData[j] + length_over_two;}
+                return corner;
+            }
+
             //convert the count number into a set of bools which we can use
             //to tell us which direction the corner is in for each dimension
             std::bitset< sizeof(unsigned int)*CHAR_BIT > twiddle_index = std::bitset< sizeof(unsigned int)*CHAR_BIT >(i);
-
-            double length_over_two = fData[NDIM]/2.0;
 
             for(unsigned int j=0; j<NDIM; j++)
             {
@@ -102,10 +119,10 @@ class KFMCube: public KSAFixedSizeInputOutputObject
         {
             double distance;
             double cube_len_over_two = cube->GetLength()/2.0;
-            for(unsigned int i=0; i<NDIM; i++)
+            for(size_t i=0; i<NDIM; i++)
             {
-                distance = (*cube)[i] - fData[i]; //distance from center in  i-th dimension
-                if( ( (fData[NDIM]/2.0 - distance) - cube_len_over_two ) < 0 )
+                distance = std::fabs( (*cube)[i] - fData[i] ); //distance from center in  i-th dimension
+                if( distance + cube_len_over_two > fData[NDIM]/2.0 )
                 {
                     return false;
                 }
@@ -218,10 +235,10 @@ Stream& operator<<(Stream& s,const KFMCube<3>& aData)
 
 
 //this should cover all useful cases
-DefineKSAClassName( KFMCube<1> );
-DefineKSAClassName( KFMCube<2> );
-DefineKSAClassName( KFMCube<3> );
-DefineKSAClassName( KFMCube<4> );
+DefineKSAClassName( KFMCube<1> )
+DefineKSAClassName( KFMCube<2> )
+DefineKSAClassName( KFMCube<3> )
+DefineKSAClassName( KFMCube<4> )
 
 }//end of KEMField
 

@@ -9,10 +9,10 @@ namespace katrin
     {
     }
 
-    static const int sKGInterfaceStructure =
+    STATICINT sKGInterfaceStructure =
         KGInterfaceBuilder::Attribute< bool >( "reset" );
 
-    static const int sKGInterface =
+    STATICINT sKGInterface =
         KElementProcessor::ComplexElement< KGInterface >( "geometry" );
 
 }

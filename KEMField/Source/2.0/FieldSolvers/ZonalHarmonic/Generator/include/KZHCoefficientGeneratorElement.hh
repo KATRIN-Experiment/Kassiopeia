@@ -16,7 +16,7 @@ namespace KEMField
     KZHCoefficientGeneratorElement() {}
     virtual ~KZHCoefficientGeneratorElement() {}
 
-    bool IsCoaxial(const KEMCoordinateSystem& coordinateSystem) const;
+    bool IsCoaxial(const KEMCoordinateSystem& coordinateSystem, double coaxialityTolerance ) const;
 
     double AxialOffset(const KEMCoordinateSystem& coordinateSystem) const;
 

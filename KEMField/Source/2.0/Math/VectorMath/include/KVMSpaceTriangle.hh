@@ -76,7 +76,7 @@ inline KVMSpaceTriangle::KVMSpaceTriangle(const KVMSpaceTriangle &copyObject)
     fL1 = copyObject.fL1;
     fL2 = copyObject.fL2;
     InitializeParameters();
-};
+}
 
 inline KVMSpaceTriangle& KVMSpaceTriangle::operator=(const KVMSpaceTriangle &rhs)
 {

@@ -303,21 +303,21 @@ int main(int argc, char* argv[])
     labels.push_back("residual_threshold");
 
     unsigned int nElements = KEMFileInterface::GetInstance()->NumberWithLabels( labels );
-	
+
     if (nElements>0)
     {
       KResidualThreshold residualThreshold;
       KResidualThreshold minResidualThreshold;
-      
+
       for (unsigned int i=0;i<nElements;i++)
       {
 	KEMFileInterface::GetInstance()->FindByLabels(residualThreshold,labels,i);
 	if (residualThreshold<minResidualThreshold)
 	  minResidualThreshold = residualThreshold;
       }
-      
+
       KEMFileInterface::GetInstance()->FindByHash(surfaceContainer,minResidualThreshold.fGeometryHash);
-      
+
       if (minResidualThreshold.fResidualThreshold<=rh_accuracy)
 	skipBEM = true;
     }
@@ -446,8 +446,8 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
   int lineNum = 0;
 
-  bool dir_ = false;
-  bool dir = false;
+//  bool dir_ = false; // TODO: WHAT ARE THESE VARIABLES FOR?
+//  bool dir = false;
   int counter = 0;
 
   while (!file.eof())
@@ -483,7 +483,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	if (fabs(d[13]/d[12])<1.e-10)
 	{
-	  dir = true;
+//	  dir = true;   // TODO: WHAT ARE THESE VARIABLES FOR?
 	  // if (dir_ == false)
 	  //   std::cout<<"switch to dirichlet at "<<counter<<std::endl;
 
@@ -500,7 +500,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 	}
 	else
 	{
-	  dir = false;
+//	  dir = false;  // TODO: WHAT ARE THESE VARIABLES FOR?
 	  // if (dir_ == true)
 	  //   std::cout<<"switch to neumann at "<<counter<<std::endl;
 
@@ -515,7 +515,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	  surfaceContainer.push_back(t);
 	}
-	dir_ = dir;
+//	dir_ = dir;
 	counter++;
       }
     }
@@ -541,8 +541,8 @@ void ReadInRectangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
   int lineNum = 0;
 
-  bool dir_ = false;
-  bool dir = false;
+//  bool dir_ = false; // TODO: WHAT ARE THESE VARIABLES FOR?
+//  bool dir = false;
   int counter = 0;
 
   while (!file.eof())
@@ -574,7 +574,7 @@ void ReadInRectangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	if (fabs(d[13]/d[12])<1.e-10)
 	{
-	  dir = true;
+//	  dir = true; // TODO: WHAT ARE THESE VARIABLES FOR?
 	  // if (dir_ == false)
 	  //   std::cout<<"switch to dirichlet at "<<counter<<std::endl;
 
@@ -591,7 +591,7 @@ void ReadInRectangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 	}
 	else
 	{
-	  dir = false;
+//	  dir = false; // TODO: WHAT ARE THESE VARIABLES FOR?
 	  // if (dir_ == true)
 	  //   std::cout<<"switch to neumann at "<<counter<<std::endl;
 
@@ -606,7 +606,7 @@ void ReadInRectangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	  surfaceContainer.push_back(t);
 	}
-	dir_ = dir;
+//	dir_ = dir; // TODO: WHAT ARE THESE VARIABLES FOR?
 	counter++;
       }
     }
@@ -631,8 +631,8 @@ void ReadInWires(std::string fileName,KSurfaceContainer& surfaceContainer)
 
   int lineNum = 0;
 
-  bool dir_ = false;
-  bool dir = false;
+//  bool dir_ = false;
+//  bool dir = false;
   int counter = 0;
 
   while (!file.eof())
@@ -664,7 +664,7 @@ void ReadInWires(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	if (fabs(d[13]/d[12])<1.e-10)
 	{
-	  dir = true;
+//	  dir = true; // TODO: WHAT ARE THESE VARIABLES FOR?
 	  // if (dir_ == false)
 	  //   std::cout<<"switch to dirichlet at "<<counter<<std::endl;
 
@@ -677,7 +677,7 @@ void ReadInWires(std::string fileName,KSurfaceContainer& surfaceContainer)
 
 	  surfaceContainer.push_back(t);
 	}
-	dir_ = dir;
+//	dir_ = dir; // TODO: WHAT ARE THESE VARIABLES FOR?
 	counter++;
       }
     }
@@ -693,7 +693,7 @@ std::vector<std::string> Tokenize(std::string separators,std::string input)
   std::vector<std::string> tokens;       // Vector to keep the tokens
   unsigned int commentPos = input.size()+1;
 
-  if( separators.size() > 0 && input.size() > 0 ) 
+  if( separators.size() > 0 && input.size() > 0 )
   {
     // Check for comment
     for (unsigned int i=0;i<input.size();i++)

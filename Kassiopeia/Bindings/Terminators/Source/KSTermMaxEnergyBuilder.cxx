@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMaxEnergyStructure =
+    STATICINT sKSTermMaxEnergyStructure =
         KSTermMaxEnergyBuilder::Attribute< string >( "name" ) +
         KSTermMaxEnergyBuilder::Attribute< double >( "energy" );
 
-    static int sKSTermMaxEnergy =
+    STATICINT sKSTermMaxEnergy =
         KSRootBuilder::ComplexElement< KSTermMaxEnergy >( "ksterm_max_energy" );
 
 }

@@ -3,6 +3,7 @@
 
 #include "KSDictionary.h"
 #include "KSNumerical.h"
+#include "KSComponentValue.h"
 
 namespace Kassiopeia
 {
@@ -14,8 +15,7 @@ namespace Kassiopeia
         public:
             KSComponentMinimum( KSComponent* aParentComponent, XValueType* aParentPointer ) :
                     KSComponent(),
-                    fOperand( aParentPointer ),
-                    fMinimum( KSNumerical< XValueType >::Maximum )
+                    fMinimum( aParentPointer )
             {
                 Set( &fMinimum );
                 this->SetParent( aParentComponent );
@@ -23,7 +23,6 @@ namespace Kassiopeia
             }
             KSComponentMinimum( const KSComponentMinimum< XValueType >& aCopy ) :
                     KSComponent( aCopy ),
-                    fOperand( aCopy.fOperand ),
                     fMinimum( aCopy.fMinimum )
             {
                 Set( &fMinimum );
@@ -63,26 +62,25 @@ namespace Kassiopeia
             }
 
         public:
+            void InitializeComponent()
+            {
+                fMinimum.Reset();
+            }
+
             void PushUpdateComponent()
             {
                 objctmsg_debug( "component minimum <" << this->GetName() << "> pushing update" << eom );
-                if( fMinimum > (*fOperand) )
-                {
-                    fMinimum = (*fOperand);
-                }
-                return;
+                (void) fMinimum.Update();
             }
 
             void PullDeupdateComponent()
             {
                 objctmsg_debug( "component minimum <" << this->GetName() << "> pulling deupdate" << eom );
-                fMinimum = KSNumerical< XValueType >::Maximum;
-                return;
+                fMinimum.Reset();
             }
 
         private:
-            XValueType* fOperand;
-            XValueType fMinimum;
+            KSComponentValueMinimum< XValueType > fMinimum;
     };
 
 }

@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSRootMagneticField =
+    STATICINT sKSRootMagneticField =
         KSRootBuilder::ComplexElement< KSRootMagneticField >( "ks_root_magnetic_field" );
 
-    static int sKSRootMagneticFieldStructure =
+    STATICINT sKSRootMagneticFieldStructure =
         KSRootMagneticFieldBuilder::Attribute< string >( "name" ) +
         KSRootMagneticFieldBuilder::Attribute< string >( "add_magnetic_field" );
 

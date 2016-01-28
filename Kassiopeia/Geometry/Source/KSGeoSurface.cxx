@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
     }
     KSGeoSurface::KSGeoSurface( const KSGeoSurface& aCopy ) :
+            KSComponent(),
             fParent( NULL ),
             fContents( aCopy.fContents )
     {
@@ -53,7 +54,6 @@ namespace Kassiopeia
 
         double tNearestDistance = std::numeric_limits< double >::max();
         KThreeVector tNearestPoint;
-        vector< KGSurface* >::const_iterator tNearestSurface;
 
         for( tSurface = fContents.begin(); tSurface != fContents.end(); tSurface++ )
         {
@@ -63,11 +63,10 @@ namespace Kassiopeia
             {
                 tNearestDistance = tDistance;
                 tNearestPoint = tPoint;
-                tNearestSurface = tSurface;
             }
         }
 
-        return tPoint;
+        return tNearestPoint;
     }
     KThreeVector KSGeoSurface::Normal( const KThreeVector& aPoint ) const
     {
@@ -76,8 +75,7 @@ namespace Kassiopeia
         vector< KGSurface* >::const_iterator tSurface;
 
         double tNearestDistance = std::numeric_limits< double >::max();
-        KThreeVector tNearestPoint;
-        vector< KGSurface* >::const_iterator tNearestSurface;
+        const KGSurface* tNearestSurface = NULL;
 
         for( tSurface = fContents.begin(); tSurface != fContents.end(); tSurface++ )
         {
@@ -86,12 +84,15 @@ namespace Kassiopeia
             if( tDistance < tNearestDistance )
             {
                 tNearestDistance = tDistance;
-                tNearestPoint = tPoint;
-                tNearestSurface = tSurface;
+                tNearestSurface = (*tSurface);
             }
         }
 
-        return (*tNearestSurface)->Normal( aPoint );
+        if (tNearestSurface != NULL)
+            return tNearestSurface->Normal( aPoint );
+
+        geomsg( eWarning ) << "geo surface <" << GetName() << "> could not find a nearest space to position " << aPoint << eom;
+        return KThreeVector::sInvalid;
     }
 
     void KSGeoSurface::AddContent( KGSurface* aSurface )
@@ -101,7 +102,7 @@ namespace Kassiopeia
         {
             if( (*tSurface) == aSurface )
             {
-                //todo: warning here
+                geomsg( eWarning ) <<"surface <"<<aSurface->GetName()<<"> was already added to geo surface <"<< this->GetName() <<">"<<eom;
                 return;
             }
         }
@@ -119,8 +120,13 @@ namespace Kassiopeia
                 return;
             }
         }
-        //todo: warning here
+        geomsg( eWarning ) <<"can not remove surface <"<<aSurface->GetName()<<">, as it was not found in geo surface <" << this->GetName() <<">"<<eom;
         return;
+    }
+
+    vector< KGSurface* > KSGeoSurface::GetContent()
+    {
+    	return fContents;
     }
 
     void KSGeoSurface::AddCommand( KSCommand* anCommand )
@@ -130,7 +136,7 @@ namespace Kassiopeia
         {
             if( (*tCommand) == anCommand )
             {
-                //todo: warning here
+                geomsg( eWarning ) <<"command <"<<anCommand->GetName()<<"> was already added to geo surface <"<< this->GetName() <<">"<<eom;
                 return;
             }
         }
@@ -148,7 +154,7 @@ namespace Kassiopeia
                 return;
             }
         }
-        //todo: warning here
+        geomsg( eWarning ) <<"can not remove command <"<<anCommand->GetName()<<">, as it was not found in geo surface <" << this->GetName() <<">"<<eom;
         return;
     }
 

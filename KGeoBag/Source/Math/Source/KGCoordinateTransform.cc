@@ -62,11 +62,7 @@ namespace KGeoBag
      * Transforms local x,y,z using the coordinates of the group into global
      * x,y,z.  If the conversion is for a vector, no translation occurs.
      */
-//	  std::cout << "here is the problem" << std::endl;
-//	  std::cout << "parameters of the function: " << std::endl;
-//	  std::cout << "local: " << local[0] << "  " << local[1] << " " << local[2] <<  std::endl;
-//	  std::cout << "global:" << global[0] << "  " << global[1] << "  " << global[2] << std::endl;
-//	  std::cout << "isVec: " << isVec << std::endl;
+
     double pp[3] = {0,0,0};
 
     if (!isVec)
@@ -84,7 +80,7 @@ namespace KGeoBag
       global[i] = (fX[i]*(local[0] - pp[0]) +
 		   fY[i]*(local[1] - pp[1]) +
 		   fZ[i]*(local[2] - pp[2]));
-    }//std::cout << "out" << std::endl;
+    }
   }
 
   void KGCoordinateTransform::ConvertToLocalCoords(const KThreeVector global,

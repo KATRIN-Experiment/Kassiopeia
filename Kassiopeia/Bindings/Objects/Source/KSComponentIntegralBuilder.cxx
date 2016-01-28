@@ -11,13 +11,17 @@ namespace katrin
     {
     }
 
-    static int sKSComponentIntegralStructure =
+    STATICINT sKSComponentIntegralStructure =
         KSComponentIntegralBuilder::Attribute< string >( "name" ) +
         KSComponentIntegralBuilder::Attribute< string >( "group" ) +
-        KSComponentIntegralBuilder::Attribute< string >( "component" );
+        KSComponentIntegralBuilder::Attribute< string >( "component" ) +
+        KSComponentIntegralBuilder::Attribute< string >( "parent" );
 
-    static int sKSComponentIntegral =
+    STATICINT sKSComponentIntegral =
         KSComponentGroupBuilder::ComplexElement< KSComponentIntegralData >( "component_integral" ) +
-        KSRootBuilder::ComplexElement< KSComponentIntegralData >( "ks_component_integral" );
+        KSComponentGroupBuilder::ComplexElement< KSComponentIntegralData >( "output_integral" ) +
+        KSRootBuilder::ComplexElement< KSComponentIntegralData >( "ks_component_integral" ) +
+        KSRootBuilder::ComplexElement< KSComponentIntegralData >( "output_integral" );
+
 
 }

@@ -32,27 +32,65 @@ class KFMElectrostaticBoundaryIntegratorEngine_OpenCL
         KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
         virtual ~KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
 
+        //for evaluating work load weights
+        void EvaluateWorkLoads(unsigned int divisions, unsigned int zeromask);
+        double GetDiskWeight() const {return fDiskWeight;};
+        double GetRamWeight() const {return fRamWeight;};
+        double GetFFTWeight() const {return fFFTWeight;};
+
         //extracted electrode data
         void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
 
-        //access to the region tree
+        void SetParameters(KFMElectrostaticParameters params);
+
         void SetTree(KFMElectrostaticTree* tree);
+
+        void InitializeMultipoleMoments();
+
+        void InitializeLocalCoefficientsForPrimaryNodes();
+
+        //dummy functions
+        void RecieveTopLevelLocalCoefficients(){};
+        void SendTopLevelLocalCoefficients(){};
 
         void Initialize();
 
         void MapField();
 
-    protected:
-
-        //operations
-        void SetParameters(KFMElectrostaticParameters params);
-        void AssociateElementsAndNodes();
-        void InitializeMultipoleMoments();
+        //individual operations, only to be used when the tree needs
+        //to be modified in between steps (i.e. MPI)
         void ResetMultipoleMoments();
         void ComputeMultipoleMoments();
         void ResetLocalCoefficients();
-        void InitializeLocalCoefficients();
+        void ComputeMultipoleToLocal();
+        void ComputeLocalToLocal();
         void ComputeLocalCoefficients();
+
+    protected:
+
+        void AssociateElementsAndNodes();
+
+        double ComputeDiskMatrixVectorProductWeight();
+        double ComputeRamMatrixVectorProductWeight();
+        double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
+
+        #ifdef KEMFIELD_USE_REALTIME_CLOCK
+        timespec diff(timespec start, timespec end)
+        {
+            timespec temp;
+            if( (end.tv_nsec-start.tv_nsec) < 0)
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+            }
+            else
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+            }
+            return temp;
+        }
+        #endif
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +102,11 @@ class KFMElectrostaticBoundaryIntegratorEngine_OpenCL
         int fMaximumTreeDepth;
         unsigned int fVerbosity;
         double fWorldLength;
+
+        double fDiskWeight;
+        double fRamWeight;
+        double fFFTWeight;
+        static const std::string fWeightFilePrefix;
 
         //the tree object that the manager is to construct
         KFMElectrostaticTree* fTree;

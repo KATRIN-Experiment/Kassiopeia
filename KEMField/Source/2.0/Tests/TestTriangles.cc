@@ -91,7 +91,7 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout<<"   n1: ("<<n1_tri1[0]<<","<<n1_tri1[1]<<","<<n1_tri1[2]<<")"<<std::endl;
   std::cout<<"   n2: ("<<n2_tri1[0]<<","<<n2_tri1[1]<<","<<n2_tri1[2]<<")"<<std::endl;
   std::cout<<""<<std::endl;
-  
+
   typedef KSurface<KElectrostaticBasis,KDirichletBoundary,KRectangle>
     KEMRectangle;
   typedef KSurface<KElectrostaticBasis,KDirichletBoundary,KTriangle>
@@ -119,7 +119,7 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout<<"   n1: ("<<n1_tri2[0]<<","<<n1_tri2[1]<<","<<n1_tri2[2]<<")"<<std::endl;
   std::cout<<"   n2: ("<<n2_tri2[0]<<","<<n2_tri2[1]<<","<<n2_tri2[2]<<")"<<std::endl;
   std::cout<<""<<std::endl;
-  
+
   KEMTriangle2* t2 = new KEMTriangle2();
   t2->SetA(a_tri2);
   t2->SetB(b_tri2);
@@ -140,7 +140,7 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout<<"   n1: ("<<n1_tri3[0]<<","<<n1_tri3[1]<<","<<n1_tri3[2]<<")"<<std::endl;
   std::cout<<"   n2: ("<<n2_tri3[0]<<","<<n2_tri3[1]<<","<<n2_tri3[2]<<")"<<std::endl;
   std::cout<<""<<std::endl;
-  
+
   KEMTriangle* t3 = new KEMTriangle();
   t3->SetA(a_tri3);
   t3->SetB(b_tri3);
@@ -161,7 +161,7 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout<<"   n1: ("<<n1_tri4[0]<<","<<n1_tri4[1]<<","<<n1_tri4[2]<<")"<<std::endl;
   std::cout<<"   n2: ("<<n2_tri4[0]<<","<<n2_tri4[1]<<","<<n2_tri4[2]<<")"<<std::endl;
   std::cout<<""<<std::endl;
-  
+
   KEMTriangle2* t4 = new KEMTriangle2();
   t4->SetA(a_tri4);
   t4->SetB(b_tri4);
@@ -281,8 +281,8 @@ int main(int /*argc*/, char** /*argv*/)
   std::cout<<std::setprecision(6)<<"Ez:\t "<<average[3]<<" \t "<<max[3]<<" \t "<<min[3]<<std::endl;
   std::cout<<""<<std::endl;
 
-  delete t1;
-  delete t2;
+  //delete t1;
+  //delete t2;
   delete r1;
 
   return 0;

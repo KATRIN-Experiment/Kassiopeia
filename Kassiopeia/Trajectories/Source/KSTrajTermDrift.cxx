@@ -7,7 +7,8 @@ namespace Kassiopeia
     KSTrajTermDrift::KSTrajTermDrift()
     {
     }
-    KSTrajTermDrift::KSTrajTermDrift( const KSTrajTermDrift& )
+    KSTrajTermDrift::KSTrajTermDrift( const KSTrajTermDrift& ):
+        KSComponent()
     {
     }
     KSTrajTermDrift* KSTrajTermDrift::Clone() const
@@ -18,7 +19,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSTrajTermDrift::Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
+    void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
     {
         KThreeVector tMagneticField = aParticle.GetMagneticField();
         KThreeVector tMagneticFieldUnit = tMagneticField.Unit();
@@ -43,6 +44,10 @@ namespace Kassiopeia
         KThreeVector tDriftVelocity = (1. / tMagneticFieldMag2) * tElectricField.Cross( tMagneticField ) + ((2. * tLongMomentum2 + tTransMomentum2) / (tCharge * tMagneticFieldMag3 * tMass * (1. + tLorentzFactor))) * (tMagneticField.Cross( tMagneticGradientUnit ));
         double tLongitudinalForce = ((-1. * tTransMomentum2) / (2. * tMagneticFieldMag * tLongMomentum)) * tMagneticFieldUnit.Dot( tMagneticGradient * tDriftVelocity ) + ((tCharge * tLorentzFactor * tMass) / (tLongMomentum)) * tElectricField.Dot( tDriftVelocity );
         double tTransverseForce = ((tTransMomentum)/(2. * tMagneticFieldMag)) * tMagneticFieldUnit.Dot( tMagneticGradient * tDriftVelocity );
+
+        trajmsg_debug( "adiabatic drift gc velocity: <" << tDriftVelocity << ">" << ret )
+        trajmsg_debug( "adiabatic drift longitudinal force <" << tLongitudinalForce << ">" << ret )
+        trajmsg_debug( "adiabatic drift transverse force <" << tTransverseForce << ">" << ret )
 
         aDerivative.AddToGuidingCenterVelocity( tDriftVelocity );
         aDerivative.AddToLongitudinalForce( tLongitudinalForce );

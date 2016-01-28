@@ -1,4 +1,10 @@
-#define __NO_STD_VECTOR // Use cl::vector instead of STL version
+#ifdef KEMFIELD_USE_CL_VECTOR
+    #define __NO_STD_VECTOR // Use cl::vector instead of STL version
+    #define CL_VECTOR_TYPE cl::vector
+#else
+    #define CL_VECTOR_TYPE std::vector
+#endif
+
 #define __CL_ENABLE_EXCEPTIONS
 #if defined __APPLE__
 #include <OpenCL/cl.hpp>
@@ -75,29 +81,47 @@ int main()
   bool double_precision = false;
 
   // Default GPU to use (if more than one are present)
-  unsigned int defaultGPU = 0;
+  unsigned int defaultDeviceID = 0;
 
   // Get available platforms
-  cl::vector<cl::Platform> platforms;
+  CL_VECTOR_TYPE<cl::Platform> platforms;
   cl::Platform::get(&platforms);
+
+  std::cout<<"/* Generated using platform #"<<KEMFIELD_OPENCL_PLATFORM<<" out of "<<platforms.size()<<" platforms. */"<<std::endl;
+  std::cout<<std::endl;
 
   // Select the default platform and create a context using this platform and the GPU
   cl_context_properties cps[3] = {
     CL_CONTEXT_PLATFORM,
-    (cl_context_properties)(platforms[0])(),
+    (cl_context_properties)(platforms[KEMFIELD_OPENCL_PLATFORM])(),
     0
   };
-#ifdef KEMFIELD_OPENCL_CPU
-  cl::Context context( CL_DEVICE_TYPE_CPU, cps);
-#else
-  cl::Context context( CL_DEVICE_TYPE_GPU, cps);
-#endif
+
+  unsigned int deviceType = KEMFIELD_OPENCL_DEVICE_TYPE;
+
+  cl::Context* context = NULL;
+
+  if(deviceType == 0) //we have a GPU
+  {
+    context = new cl::Context( CL_DEVICE_TYPE_GPU, cps);
+  }
+
+  if(deviceType == 1) //we have a CPU
+  {
+    context = new cl::Context( CL_DEVICE_TYPE_CPU, cps);
+  }
+
+  if(deviceType == 2) //we have an accelerator device
+  {
+    context = new cl::Context( CL_DEVICE_TYPE_ACCELERATOR, cps);
+  }
 
   // Get a list of devices on this platform
-  cl::vector<cl::Device> devices = context.getInfo<CL_CONTEXT_DEVICES>();
+  CL_VECTOR_TYPE<cl::Device> devices = context->getInfo<CL_CONTEXT_DEVICES>();
 
   std::cout<<"/*"<<std::endl;
-  std::cout<<" Available devices on this platform:"<<std::endl;
+  std::cout<<" Number of available platforms on this machine: "<<platforms.size()<<std::endl;
+  std::cout<<" Available devices on platform #"<<KEMFIELD_OPENCL_PLATFORM<<std::endl;
   for (unsigned int i=0;i<devices.size();i++)
   {
     std::cout<<" Device # "<<i<<std::endl;
@@ -110,7 +134,7 @@ int main()
     std::cout<<"   Extensions:     "<<devices[i].getInfo<CL_DEVICE_EXTENSIONS>()<<std::endl;
     std::cout<<""<<std::endl;
   }
-    std::cout<<"                                                                           */"<<std::endl;
+  std::cout<<"                                                                           */"<<std::endl;
 
   std::stringstream options;
 
@@ -139,7 +163,7 @@ int main()
             if (k==1)
               options << "-DAMD";
             double_precision = true;
-            defaultGPU = i;
+            defaultDeviceID = i;
           }
         }
       }
@@ -147,7 +171,7 @@ int main()
   }
 
   // Create a new devices vector with only the default one in it
-  cl::Device defaultDevice = devices[defaultGPU];
+  cl::Device defaultDevice = devices[defaultDeviceID];
   devices.clear();
   devices.push_back(defaultDevice);
 
@@ -197,7 +221,7 @@ int main()
   }
 
   // Create a command queue and use the first device
-  cl::CommandQueue queue = cl::CommandQueue(context, devices[0]);
+  cl::CommandQueue queue = cl::CommandQueue(*context, devices[0]);
 
   // Source file
   std::string sourceCode;
@@ -210,7 +234,7 @@ int main()
 						sourceCode.length()+1));
 
   // Make program of the source code in the context
-  cl::Program program = cl::Program(context, source);
+  cl::Program program = cl::Program(*context, source);
 
   // Build program for these specific devices
   try
@@ -235,16 +259,16 @@ int main()
   cl::Buffer* bufferOut;
   if (double_precision)
   {
-    bufferIn  = new cl::Buffer(context, CL_MEM_READ_ONLY,DATA_SIZE*sizeof(double));
-    bufferOut = new cl::Buffer(context, CL_MEM_WRITE_ONLY,DATA_SIZE*sizeof(double));
+    bufferIn  = new cl::Buffer(*context, CL_MEM_READ_ONLY,DATA_SIZE*sizeof(double));
+    bufferOut = new cl::Buffer(*context, CL_MEM_WRITE_ONLY,DATA_SIZE*sizeof(double));
   }
   else
   {
-    bufferIn  = new cl::Buffer(context, CL_MEM_READ_ONLY,DATA_SIZE*sizeof(cl_mem));
-    bufferOut = new cl::Buffer(context, CL_MEM_WRITE_ONLY,DATA_SIZE*sizeof(cl_mem));
+    bufferIn  = new cl::Buffer(*context, CL_MEM_READ_ONLY,DATA_SIZE*sizeof(cl_mem));
+    bufferOut = new cl::Buffer(*context, CL_MEM_WRITE_ONLY,DATA_SIZE*sizeof(cl_mem));
   }
 
-  cl::Buffer bufferCount  = cl::Buffer(context, CL_MEM_READ_ONLY,sizeof(int));
+  cl::Buffer bufferCount  = cl::Buffer(*context, CL_MEM_READ_ONLY,sizeof(int));
 
   // Copy in buffer to the memory buffer
   if (double_precision)
@@ -295,8 +319,10 @@ int main()
   std::cout<<""<<std::endl;
   std::cout<<"#endif /* KEMFIELD_DEFINES_H */"<<std::endl;
 
+  delete context;
+
   if (double_precision)
-    return defaultGPU;
+    return defaultDeviceID;
   else
     return 255;
 }

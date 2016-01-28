@@ -59,8 +59,8 @@ class KFMElectrostaticLocalCoefficientFieldCalculator
         mutable double fDel[3];
         mutable double fCosTheta;
         mutable double fSinTheta;
-        mutable double fPhi;
-        mutable double fRadius;
+//        mutable double fPhi;
+//        mutable double fRadius;
         mutable double* fPlmArr;
         mutable double* fPlmDervArr;
         mutable double* fRadPowerArr;

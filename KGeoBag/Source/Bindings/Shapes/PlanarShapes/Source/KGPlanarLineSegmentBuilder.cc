@@ -3,7 +3,7 @@
 namespace katrin
 {
 
-    static const int sKGPlanarLineSegmentBuilderStructure =
+    STATICINT sKGPlanarLineSegmentBuilderStructure =
         KGPlanarLineSegmentBuilder::Attribute< double >( "x1" ) +
         KGPlanarLineSegmentBuilder::Attribute< double >( "y1" ) +
         KGPlanarLineSegmentBuilder::Attribute< double >( "x2" ) +

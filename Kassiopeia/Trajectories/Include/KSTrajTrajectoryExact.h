@@ -6,6 +6,9 @@
 
 #include "KSList.h"
 
+#include "KGBall.hh"
+#include "KGBallSupportSet.hh"
+
 namespace Kassiopeia
 {
 
@@ -32,22 +35,38 @@ namespace Kassiopeia
             void AddControl( KSTrajExactControl* aControl );
             void RemoveControl( KSTrajExactControl* aControlSize );
 
+            void SetAttemptLimit(unsigned int n)
+            {
+                if(n > 1 ){fMaxAttempts = n;}
+                else{fMaxAttempts = 1;};
+            }
+
             //**********
             //trajectory
             //**********
 
+            void SetPiecewiseTolerance(double ptol){fPiecewiseTolerance = ptol;};
+            double GetPiecewiseTolerance() const {return fPiecewiseTolerance;};
+
+            void SetMaxNumberOfSegments(double n_max){fNMaxSegments = n_max; if(fNMaxSegments < 1 ){fNMaxSegments = 1;};};
+            unsigned int GetMaxNumberOfSegments() const {return fNMaxSegments;};
+
         public:
+
+            void Reset();
             void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
             void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
+            void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& /*aFinalParticle*/, std::vector< KSParticle >* intermediateParticleStates) const;
 
             //********************
             //exact term interface
             //********************
 
         public:
-            virtual void Differentiate( const KSTrajExactParticle& aValue, KSTrajExactDerivative& aDerivative ) const;
+            virtual void Differentiate(double aTime, const KSTrajExactParticle& aValue, KSTrajExactDerivative& aDerivative ) const;
 
         private:
+
             KSTrajExactParticle fInitialParticle;
             mutable KSTrajExactParticle fIntermediateParticle;
             mutable KSTrajExactParticle fFinalParticle;
@@ -57,6 +76,15 @@ namespace Kassiopeia
             KSTrajExactInterpolator* fInterpolator;
             KSList< KSTrajExactDifferentiator > fTerms;
             KSList< KSTrajExactControl > fControls;
+
+            //piecewise linear approximation
+            double fPiecewiseTolerance;
+            unsigned int fNMaxSegments;
+            mutable KGeoBag::KGBallSupportSet<3> fBallSupport;
+            mutable std::vector<KSTrajExactParticle> fIntermediateParticleStates;
+
+            unsigned int fMaxAttempts;
+
     };
 
 }

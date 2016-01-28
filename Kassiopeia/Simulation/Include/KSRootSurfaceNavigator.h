@@ -27,7 +27,8 @@ namespace Kassiopeia
             //******************
 
         public:
-            void ExecuteNavigation( const KSParticle& anNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void ExecuteNavigation( const KSParticle& anInitialParticle, const KSParticle& anNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
 
             //***********
             //composition
@@ -48,9 +49,11 @@ namespace Kassiopeia
             void SetStep( KSStep* anStep );
 
             void ExecuteNavigation();
+            void FinalizeNavigation();
 
         private:
             KSStep* fStep;
+            const KSParticle* fTerminatorParticle;
             const KSParticle* fInteractionParticle;
             KSParticle* fFinalParticle;
             KSParticleQueue* fParticleQueue;

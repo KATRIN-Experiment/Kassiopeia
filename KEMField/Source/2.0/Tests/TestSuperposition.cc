@@ -145,8 +145,8 @@ int main(int argc, char* argv[])
     {"help", no_argument, 0, 'h'},
     {"verbose", required_argument, 0, 'v'},
     {"accuracy", required_argument, 0, 'a'},
-    {"increment", required_argument, 0, 'i'},    
-    {"save_increment", required_argument, 0, 'j'},    
+    {"increment", required_argument, 0, 'i'},
+    {"save_increment", required_argument, 0, 'j'},
     {"scale", required_argument, 0, 's'},
     {"method", required_argument, 0, 'm'},
   };
@@ -275,8 +275,18 @@ int main(int argc, char* argv[])
   KSuperpositionSolver<double,KSVDSolver> superposition;
 #endif
 
-  superposition.AddSolvedSystem(KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator>(surfaceContainer1,anIntegrator),KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>(surfaceContainer1,anIntegrator));
-  superposition.AddSolvedSystem(KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator>(surfaceContainer2,anIntegrator),KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>(surfaceContainer2,anIntegrator));
+
+KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> s1(surfaceContainer1,anIntegrator);
+KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> v1(surfaceContainer1,anIntegrator);
+
+KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> s2(surfaceContainer2,anIntegrator);
+KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> v2(surfaceContainer2,anIntegrator);
+
+  superposition.AddSolvedSystem(s1, v1);
+  superposition.AddSolvedSystem(s2, v2);
+
+//  superposition.AddSolvedSystem(KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator>(surfaceContainer1,anIntegrator),KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>(surfaceContainer1,anIntegrator));
+//  superposition.AddSolvedSystem(KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator>(surfaceContainer2,anIntegrator),KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>(surfaceContainer2,anIntegrator));
 
   if (superposition.SolutionSpaceIsSpanned(b))
     superposition.ComposeSolution(x);
@@ -350,7 +360,7 @@ int main(int argc, char* argv[])
       Q_1 += ((*it)->GetShape()->Area() *
 	      dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
     else if ((*it)->GetShape()->Centroid().Magnitude()<.5*(radius3+radius2))
-      Q_2 += ((*it)->GetShape()->Area() * 
+      Q_2 += ((*it)->GetShape()->Area() *
 	      dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
     else
       Q_3 += ((*it)->GetShape()->Area() *
@@ -624,7 +634,7 @@ int main(int argc, char* argv[])
 
       int counter = 0;
       int countermax = N_z*N_x;
-    
+
       std::vector<double> x_;
       std::vector<double> y_;
       std::vector<double> V_;
@@ -884,4 +894,3 @@ void Field_Analytic(double Q,double radius1,double radius2,double radius3,double
   }
 
 }
-

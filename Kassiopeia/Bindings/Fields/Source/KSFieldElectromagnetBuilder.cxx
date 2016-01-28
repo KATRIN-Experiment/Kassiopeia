@@ -20,11 +20,12 @@ namespace katrin
     {
     }
 
-    static int sKSElectromagnetZonalHarmonicSolverStructure =
+    STATICINT sKSElectromagnetZonalHarmonicSolverStructure =
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< int >( "number_of_bifurcations" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "convergence_ratio" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "proximity_to_sourcepoint" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "convergence_parameter" ) +
+        KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "coaxiality_tolerance" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< int >( "number_of_central_coefficients" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< bool >( "use_fractional_central_sourcepoint_spacing" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "central_sourcepoint_fractional_distance" ) +
@@ -35,7 +36,7 @@ namespace katrin
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "remote_sourcepoint_start" ) +
         KSElectromagnetZonalHarmonicSolverBuilder::Attribute< double >( "remote_sourcepoint_end" );
 
-    static int sKSFieldElectromagnetStructure =
+    STATICINT sKSFieldElectromagnetStructure =
         KSFieldElectromagnetBuilder::Attribute< string >( "name" ) +
         KSFieldElectromagnetBuilder::Attribute< string >( "file" ) +
         KSFieldElectromagnetBuilder::Attribute< string >( "directory" ) +
@@ -45,7 +46,7 @@ namespace katrin
         KSFieldElectromagnetBuilder::ComplexElement< KSFieldElectromagnet::IntegratingFieldSolver >( "integrating_field_solver" ) +
         KSFieldElectromagnetBuilder::ComplexElement< KSFieldElectromagnet::ZonalHarmonicFieldSolver >( "zonal_harmonic_field_solver" );
 
-    static int sKSFieldElectromagnet =
+    STATICINT sKSFieldElectromagnet =
         KSRootBuilder::ComplexElement< KSFieldElectromagnet >( "ksfield_electromagnet" );
 
 }

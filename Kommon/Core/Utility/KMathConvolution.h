@@ -55,7 +55,7 @@ inline KMathConvolution<XKernelType>::KMathConvolution(const XKernelType& kernel
 {
     fIntegrator.SetPrecision(1E-5);
     fIntegrator.SetMinSteps(16);
-    fIntegrator.SetMethod( KMathIntegrator::eRomberg );
+    fIntegrator.SetMethod( KEMathIntegrationMethod::Romberg );
 }
 
 template<class XKernelType>
@@ -66,7 +66,6 @@ inline double KMathConvolution<XKernelType>::Convolute(XFunctionType& function, 
     const std::pair<double, double> kernelRange = fKernel.GetRange();
     fIntegrator.SetRange( kernelRange.first, kernelRange.second );
     const double result = fIntegrator.Integrate( integrand ); // / (kernelRange.second - kernelRange.first);
-//    std::cout << fIntegrator.NumberOfSteps() << "; " << std::setprecision(16) << result << std::endl;
     return result;
 }
 

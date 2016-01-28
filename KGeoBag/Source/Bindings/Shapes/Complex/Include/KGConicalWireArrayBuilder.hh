@@ -17,59 +17,48 @@ namespace katrin
   inline bool KGConicalWireArrayBuilder::AddAttribute(KContainer* anAttribute)
   {
     if (anAttribute->GetName() == "radius1")
-    {
-      double radius1;
-      anAttribute->CopyTo(radius1);
-      fObject->SetR1(radius1);
+    {      
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetR1);
       return true;
     }
     if (anAttribute->GetName() == "radius2")
     {
-      double radius2;
-      anAttribute->CopyTo(radius2);
-      fObject->SetR2(radius2);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetR2);
       return true;
     }
     if (anAttribute->GetName() == "z1")
     {
-      double z1;
-      anAttribute->CopyTo(z1);
-      fObject->SetZ1(z1);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetZ1);
       return true;
     }
     if (anAttribute->GetName() == "z2")
     {
-      double z2;
-      anAttribute->CopyTo(z2);
-      fObject->SetZ2(z2);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetZ2);
       return true;
     }
     if (anAttribute->GetName() == "wire_count")
     {
-      int i;
-      anAttribute->CopyTo(i);
-      fObject->SetNWires(i);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetNWires);
       return true;
     }
     if (anAttribute->GetName() == "theta_start")
     {
-      double thetaStart;
-      anAttribute->CopyTo(thetaStart);
-      fObject->SetThetaStart(thetaStart);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetThetaStart);
       return true;
     }
     if (anAttribute->GetName() == "diameter")
     {
-      double diameter;
-      anAttribute->CopyTo(diameter);
-      fObject->SetDiameter(diameter);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetDiameter);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int nDiscLong;
-      anAttribute->CopyTo(nDiscLong);
-      fObject->SetNDisc(nDiscLong);
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetNDisc);
+      return true;
+    }
+    if (anAttribute->GetName() == "longitudinal_mesh_power")
+    {
+      anAttribute->CopyTo(fObject, &KGConicalWireArray::SetNDiscPower);
       return true;
     }
     return false;
@@ -93,8 +82,7 @@ namespace katrin
   {
     if (anElement->GetName() == "conical_wire_array")
     {
-      KGConicalWireArray* object;
-      anElement->ReleaseTo(object);
+      KGConicalWireArray* object = anElement->AsPointer<KGConicalWireArray>();
       object->Initialize();
       KSmartPointer< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);
@@ -122,8 +110,7 @@ namespace katrin
   {
     if (anElement->GetName() == "conical_wire_array")
     {
-      KGConicalWireArray* object;
-      anElement->ReleaseTo(object);
+      KGConicalWireArray* object = anElement->AsPointer<KGConicalWireArray>();
       object->Initialize();
       KSmartPointer< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);

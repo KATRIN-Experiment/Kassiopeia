@@ -13,6 +13,7 @@ namespace KEMField
       fConvergenceRatio(0.99),
       fProximityToSourcePoint(1.e-14),
       fConvergenceParameter(1.e-15),
+      fCoaxialityTolerance(1.e-8),
       fNCentralCoefficients(500),
       fCentralFractionalSpacing(true),
       fCentralFractionalDistance(.2),
@@ -32,6 +33,7 @@ namespace KEMField
     void SetConvergenceRatio(double d) { fConvergenceRatio = d; }
     void SetProximityToSourcePoint(double d) { fProximityToSourcePoint = d; }
     void SetConvergenceParameter(double d) { fConvergenceParameter = d; }
+    void SetCoaxialityTolerance(double d) { fCoaxialityTolerance = d; }
     void SetNCentralCoefficients(unsigned int i) { fNCentralCoefficients = i; }
     void SetCentralFractionalSpacing(bool b) { fCentralFractionalSpacing = b; }
     void SetCentralFractionalDistance(double d) { fCentralFractionalDistance = d; }
@@ -47,6 +49,7 @@ namespace KEMField
     double GetConvergenceRatio() const { return fConvergenceRatio; }
     double GetProximityToSourcePoint() const { return fProximityToSourcePoint; }
     double GetConvergenceParameter() const { return fConvergenceParameter; }
+    double GetCoaxialityTolerance() const { return fCoaxialityTolerance; }
     unsigned int GetNCentralCoefficients() const { return fNCentralCoefficients; }
     bool GetCentralFractionalSpacing() const { return fCentralFractionalSpacing; }
     double GetCentralFractionalDistance() const { return fCentralFractionalDistance; }
@@ -63,6 +66,7 @@ namespace KEMField
     double fConvergenceRatio;
     double fProximityToSourcePoint;
     double fConvergenceParameter;
+    double fCoaxialityTolerance;
     unsigned int fNCentralCoefficients;
     bool fCentralFractionalSpacing;
     double fCentralFractionalDistance;
@@ -89,6 +93,7 @@ namespace KEMField
     s >> d; p.SetConvergenceRatio(d);
     s >> d; p.SetProximityToSourcePoint(d);
     s >> d; p.SetConvergenceParameter(d);
+    s >> d; p.SetCoaxialityTolerance( d );
     s >> i; p.SetNCentralCoefficients(i);
     s >> b; p.SetCentralFractionalSpacing(b);
     s >> d; p.SetCentralFractionalDistance(d);
@@ -113,6 +118,7 @@ namespace KEMField
     s << p.GetConvergenceRatio();
     s << p.GetProximityToSourcePoint();
     s << p.GetConvergenceParameter();
+    s << p.GetCoaxialityTolerance();
     s << p.GetNCentralCoefficients();
     s << p.GetCentralFractionalSpacing();
     s << p.GetCentralFractionalDistance();

@@ -3,6 +3,8 @@
 
 #include "KSMathIntegrator.h"
 
+/* This integrator is time independent */
+
 namespace Kassiopeia
 {
 
@@ -22,8 +24,12 @@ namespace Kassiopeia
             virtual ~KSMathRK8();
 
         public:
-            virtual void Integrate( const DifferentiatorType& aTerm, const ValueType& anInitialValue, const double& aStep, ValueType& aFinalValue, ErrorType& anError ) const;
-
+            virtual void Integrate( double /*aTime*/,
+                                    const DifferentiatorType& aTerm,
+                                    const ValueType& anInitialValue,
+                                    const double& aStep,
+                                    ValueType& aFinalValue,
+                                    ErrorType& anError ) const;
         private:
             enum
             {
@@ -47,57 +53,59 @@ namespace Kassiopeia
     }
 
     template< class XSystemType >
-    void KSMathRK8< XSystemType >::Integrate( const DifferentiatorType& aTerm, const ValueType& anInitialValue, const double& aStep, ValueType& aFinalValue, ErrorType& /*anError*/ ) const
+    void KSMathRK8< XSystemType >::Integrate(double /*aTime*/, const DifferentiatorType& aTerm, const ValueType& anInitialValue, const double& aStep, ValueType& aFinalValue, ErrorType& /*anError*/ ) const
     {
-        aTerm.Differentiate( anInitialValue, fDerivatives[0] );
+        double dummyTime = 0;
+
+        aTerm.Differentiate(dummyTime, anInitialValue, fDerivatives[0] );
 
         fValues[0] = anInitialValue + aStep * (fA[0][0] * fDerivatives[0]);
 
-        aTerm.Differentiate( fValues[0], fDerivatives[1] );
+        aTerm.Differentiate(dummyTime, fValues[0], fDerivatives[1] );
 
         fValues[1] = anInitialValue + aStep * (fA[1][0] * fDerivatives[0] + fA[1][1] * fDerivatives[1]);
 
-        aTerm.Differentiate( fValues[1], fDerivatives[2] );
+        aTerm.Differentiate(dummyTime, fValues[1], fDerivatives[2] );
 
         fValues[2] = anInitialValue + aStep * (fA[2][0] * fDerivatives[0] + fA[2][1] * fDerivatives[1] + fA[2][2] * fDerivatives[2]);
 
-        aTerm.Differentiate( fValues[2], fDerivatives[3] );
+        aTerm.Differentiate(dummyTime, fValues[2], fDerivatives[3] );
 
         fValues[3] = anInitialValue + aStep * (fA[3][0] * fDerivatives[0] + fA[3][1] * fDerivatives[1] + fA[3][2] * fDerivatives[2] + fA[3][3] * fDerivatives[3]);
 
-        aTerm.Differentiate( fValues[3], fDerivatives[4] );
+        aTerm.Differentiate(dummyTime, fValues[3], fDerivatives[4] );
 
         fValues[4] = anInitialValue + aStep * (fA[4][0] * fDerivatives[0] + fA[4][1] * fDerivatives[1] + fA[4][2] * fDerivatives[2] + fA[4][3] * fDerivatives[3] + fA[4][4] * fDerivatives[4]);
 
-        aTerm.Differentiate( fValues[4], fDerivatives[5] );
+        aTerm.Differentiate(dummyTime, fValues[4], fDerivatives[5] );
 
         fValues[5] = anInitialValue + aStep * (fA[5][0] * fDerivatives[0] + fA[5][1] * fDerivatives[1] + fA[5][2] * fDerivatives[2] + fA[5][3] * fDerivatives[3] + fA[5][4] * fDerivatives[4] + fA[5][5] * fDerivatives[5]);
 
-        aTerm.Differentiate( fValues[5], fDerivatives[6] );
+        aTerm.Differentiate(dummyTime, fValues[5], fDerivatives[6] );
 
         fValues[6] = anInitialValue + aStep * (fA[6][0] * fDerivatives[0] + fA[6][1] * fDerivatives[1] + fA[6][2] * fDerivatives[2] + fA[6][3] * fDerivatives[3] + fA[6][4] * fDerivatives[4] + fA[6][5] * fDerivatives[5] + fA[6][6] * fDerivatives[6]);
 
-        aTerm.Differentiate( fValues[6], fDerivatives[7] );
+        aTerm.Differentiate(dummyTime, fValues[6], fDerivatives[7] );
 
         fValues[7] = anInitialValue + aStep * (fA[7][0] * fDerivatives[0] + fA[7][1] * fDerivatives[1] + fA[7][2] * fDerivatives[2] + fA[7][3] * fDerivatives[3] + fA[7][4] * fDerivatives[4] + fA[7][5] * fDerivatives[5] + fA[7][6] * fDerivatives[6] + fA[7][7] * fDerivatives[7]);
 
-        aTerm.Differentiate( fValues[7], fDerivatives[8] );
+        aTerm.Differentiate(dummyTime, fValues[7], fDerivatives[8] );
 
         fValues[8] = anInitialValue + aStep * (fA[8][0] * fDerivatives[0] + fA[8][1] * fDerivatives[1] + fA[8][2] * fDerivatives[2] + fA[8][3] * fDerivatives[3] + fA[8][4] * fDerivatives[4] + fA[8][5] * fDerivatives[5] + fA[8][6] * fDerivatives[6] + fA[8][7] * fDerivatives[7] + fA[8][8] * fDerivatives[8]);
 
-        aTerm.Differentiate( fValues[8], fDerivatives[9] );
+        aTerm.Differentiate(dummyTime, fValues[8], fDerivatives[9] );
 
         fValues[9] = anInitialValue + aStep * (fA[9][0] * fDerivatives[0] + fA[9][1] * fDerivatives[1] + fA[9][2] * fDerivatives[2] + fA[9][3] * fDerivatives[3] + fA[9][4] * fDerivatives[4] + fA[9][5] * fDerivatives[5] + fA[9][6] * fDerivatives[6] + fA[9][7] * fDerivatives[7] + fA[9][8] * fDerivatives[8] + fA[9][9] * fDerivatives[9]);
 
-        aTerm.Differentiate( fValues[9], fDerivatives[10] );
+        aTerm.Differentiate(dummyTime, fValues[9], fDerivatives[10] );
 
         fValues[10] = anInitialValue + aStep * (fA[10][0] * fDerivatives[0] + fA[10][1] * fDerivatives[1] + fA[10][2] * fDerivatives[2] + fA[10][3] * fDerivatives[3] + fA[10][4] * fDerivatives[4] + fA[10][5] * fDerivatives[5] + fA[10][6] * fDerivatives[6] + fA[10][7] * fDerivatives[7] + fA[10][8] * fDerivatives[8] + fA[10][9] * fDerivatives[9] + fA[10][10] * fDerivatives[10]);
 
-        aTerm.Differentiate( fValues[10], fDerivatives[11] );
+        aTerm.Differentiate(dummyTime, fValues[10], fDerivatives[11] );
 
         fValues[11] = anInitialValue + aStep * (fA[11][0] * fDerivatives[0] + fA[11][1] * fDerivatives[1] + fA[11][2] * fDerivatives[2] + fA[11][3] * fDerivatives[3] + fA[11][4] * fDerivatives[4] + fA[11][5] * fDerivatives[5] + fA[11][6] * fDerivatives[6] + fA[11][7] * fDerivatives[7] + fA[11][8] * fDerivatives[8] + fA[11][9] * fDerivatives[9] + fA[11][10] * fDerivatives[10] + fA[11][11] * fDerivatives[11]);
 
-        aTerm.Differentiate( fValues[11], fDerivatives[12] );
+        aTerm.Differentiate(dummyTime, fValues[11], fDerivatives[12] );
 
         aFinalValue = anInitialValue + aStep * (fA[12][0] * fDerivatives[0] + fA[12][1] * fDerivatives[1] + fA[12][2] * fDerivatives[2] + fA[12][3] * fDerivatives[3] + fA[12][4] * fDerivatives[4] + fA[12][5] * fDerivatives[5] + fA[12][6] * fDerivatives[6] + fA[12][7] * fDerivatives[7] + fA[12][8] * fDerivatives[8] + fA[12][9] * fDerivatives[9] + fA[12][10] * fDerivatives[10] + fA[12][11] * fDerivatives[11] + fA[12][12] * fDerivatives[12]);
 

@@ -4,29 +4,29 @@
 namespace katrin
 {
 
-  static const int sKGRodVertexBuilderStructure =
+  STATICINT sKGRodVertexBuilderStructure =
     KGRodVertexBuilder::Attribute<double>("x") +
     KGRodVertexBuilder::Attribute<double>("y") +
     KGRodVertexBuilder::Attribute<double>("z");
 
-  static const int sKGRodBuilderStructure =
+  STATICINT sKGRodBuilderStructure =
     KGRodBuilder::Attribute<double>("radius") +
     KGRodBuilder::Attribute<int>("longitudinal_mesh_count") +
     KGRodBuilder::Attribute<int>("axial_mesh_count") +
     KGRodBuilder::ComplexElement<KGRodVertex>("vertex");
 
-  static const int sKGRodSurfaceBuilderStructure =
+  STATICINT sKGRodSurfaceBuilderStructure =
     KGRodSurfaceBuilder::Attribute<string>("name") +
     KGRodSurfaceBuilder::ComplexElement<KGRod>("rod");
 
-  static const int sKGRodSurfaceBuilder =
+  STATICINT sKGRodSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGRod> >("rod_surface");
 
-  static const int sKGRodSpaceBuilderStructure =
+  STATICINT sKGRodSpaceBuilderStructure =
     KGRodSpaceBuilder::Attribute<string>("name") +
     KGRodSpaceBuilder::ComplexElement<KGRod>("rod");
 
-  static const int sKGRodSpaceBuilder =
+  STATICINT sKGRodSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGRod> >("rod_space");
 
 }

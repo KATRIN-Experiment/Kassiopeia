@@ -3,6 +3,7 @@
 
 #include "KSDictionary.h"
 #include "KSNumerical.h"
+#include "KSComponentValue.h"
 
 namespace Kassiopeia
 {
@@ -14,8 +15,7 @@ namespace Kassiopeia
         public:
             KSComponentIntegral( KSComponent* aParentComponent, XValueType* aParentPointer ) :
                     KSComponent(),
-                    fOperand( aParentPointer ),
-                    fIntegral( KSNumerical< XValueType >::Zero )
+                    fIntegral( aParentPointer )
             {
                 Set( &fIntegral );
                 this->SetParent( aParentComponent );
@@ -23,7 +23,6 @@ namespace Kassiopeia
             }
             KSComponentIntegral( const KSComponentIntegral< XValueType >& aCopy ) :
                     KSComponent( aCopy ),
-                    fOperand( aCopy.fOperand ),
                     fIntegral( aCopy.fIntegral )
             {
                 Set( &fIntegral );
@@ -63,23 +62,27 @@ namespace Kassiopeia
             }
 
         public:
+            void InitializeComponent()
+            {
+                fIntegral.Reset();
+            }
+
             void PushUpdateComponent()
             {
                 objctmsg_debug( "component integral <" << this->GetName() << "> pushing update" << eom );
-                fIntegral = fIntegral + (*fOperand);
+                (void) fIntegral.Update();
                 return;
             }
 
             void PullDeupdateComponent()
             {
                 objctmsg_debug( "component integral <" << this->GetName() << "> pulling deupdate" << eom );
-                fIntegral = KSNumerical< XValueType >::Zero;
+                fIntegral.Reset();
                 return;
             }
 
         private:
-            XValueType* fOperand;
-            XValueType fIntegral;
+            KSComponentValueIntegral< XValueType > fIntegral;
     };
 
 }

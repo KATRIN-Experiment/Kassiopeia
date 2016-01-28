@@ -22,10 +22,12 @@ set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentityPair.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMBasisData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentitySet.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentitySetList.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElementLocalInfluenceRange.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeObjectRemover.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeObjectNullifier.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentitySetSorter.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMExternalIdentitySet.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMCollocationPointIdentitySet.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMTreeStructureExtractor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeIdentityListRange.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeIdentityListCreator.hh
@@ -37,10 +39,14 @@ set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNonEmptyIdentitySetActor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeChildToParentFlagValueInitializer.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeParentToChildFlagValueInspector.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMLeafConditionActor.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMLevelConditionActor.hh
 )
 
 set (KFMCORE_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMIdentitySet.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMIdentitySetList.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElementLocalInfluenceRange.cc
 )
 
 ##################################################

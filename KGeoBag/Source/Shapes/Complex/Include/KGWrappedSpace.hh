@@ -13,7 +13,7 @@ namespace KGeoBag
   class KGWrappedSpace : public KGVolume
   {
   public:
-    class Visitor : virtual public KGVisitor
+    class Visitor
     {
     public:
       Visitor() {}

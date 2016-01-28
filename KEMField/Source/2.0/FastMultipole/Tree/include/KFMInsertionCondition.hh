@@ -30,8 +30,22 @@ template<unsigned int NDIM>
 class KFMInsertionCondition
 {
     public:
-        KFMInsertionCondition(){};
+        KFMInsertionCondition()
+        {
+            //the ratio 4/3 is an abitrary choice which seems to work fairly well in practice
+            fEta = 4.0/3.0;
+        };
         virtual ~KFMInsertionCondition(){};
+
+        //user can explicitly set the ratio
+        //if the ratio goes to infinity then if the center of a bounding ball under test is
+        //inside of a cube, then it will be inserted regardless of its radius
+        //if the ratio is 1, then a bounding ball will only be inserted if it fits
+        //within the bounding ball of the cube
+        //a ratio of zero one will cause the bounding ball under test to never be inserted
+        //in the cube
+        void SetInsertionRatio(double eta){fEta = eta;};
+        double GetInsertionRatio() const {return fEta;};
 
         virtual bool CanInsertBallInCube(const KFMBall<NDIM>* ball, const KFMCube<NDIM>* cube) const
         {
@@ -42,28 +56,21 @@ class KFMInsertionCondition
                 double radius_squared = NDIM*length_over_two*length_over_two;
                 KFMPoint<NDIM> cube_bball_center = cube->GetCenter();
 
-                // the ratio 4/3 is an abitrary choice which seems to work fairly well in practice
-                KFMBall<NDIM> cube_bball(cube_bball_center, (4.0/3.0)*std::sqrt(radius_squared) );
+                KFMBall<NDIM> cube_bball(cube_bball_center, fEta*std::sqrt(radius_squared) );
 
                 KFMPoint<NDIM> center = ball->GetCenter();
 
-                if(cube->PointIsInside(center)) //first we require that the center of the bounding ball be inside the cube
+                //first we require that the center of the bounding ball be inside the cube
+                if(cube->PointIsInside(center))
                 {
-                    if(cube_bball.BallIsInside(ball)) //next we require that the bounding ball itself fit inside the bounding ball of the cube
+                    //next we require that the bounding ball entirely fit inside the bounding ball of the cube
+                    //the actual size of the cube's bounding ball is influenced by the parameter fEta
+                    if(cube_bball.BallIsInside(ball))
                     {
                         return true;
                     }
                     else
                     {
-//                        std::cout<<"cube bball radius = "<<(4.0/3.0)*std::sqrt(radius_squared)<<std::endl;
-//                        std::cout<<"element bball radius = "<<ball->GetRadius()<<std::endl;
-
-//                        KFMPoint<NDIM> center = ball->GetCenter();
-
-//                        double dist = (center - cube_bball_center).Magnitude();
-
-//                        std::cout<<"distance between centers = "<<dist<<std::endl;
-
                         return false;
                     }
                 }
@@ -71,7 +78,6 @@ class KFMInsertionCondition
                 {
                     return false;
                 }
-
             }
             else
             {
@@ -80,6 +86,9 @@ class KFMInsertionCondition
         }
 
     private:
+
+        double fEta;
+
 };
 
 

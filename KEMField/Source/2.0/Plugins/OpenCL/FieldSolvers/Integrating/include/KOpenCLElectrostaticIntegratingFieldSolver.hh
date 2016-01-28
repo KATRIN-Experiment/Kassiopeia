@@ -23,7 +23,7 @@ namespace KEMField
     KIntegratingFieldSolver(KOpenCLSurfaceContainer& container,
 			    KOpenCLElectrostaticBoundaryIntegrator& integrator);
 
-    //use this constructo when sub-set solving is to be used
+    //use this constructor when sub-set solving is to be used
     KIntegratingFieldSolver(KOpenCLSurfaceContainer& container,
 			    KOpenCLElectrostaticBoundaryIntegrator& integrator,
                 unsigned int max_subset_size,
@@ -39,13 +39,24 @@ namespace KEMField
 
     ////////////////////////////////////////////////////////////////////////////
     //sub-set potential/field calls
-    double Potential(const std::vector<unsigned int>* SurfaceIndexSet, const KPosition& aPosition) const;
-    KEMThreeVector ElectricField(const std::vector<unsigned int>* SurfaceIndexSet, const KPosition& aPosition) const;
+    double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+    KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+
+    //these methods allow us to dispatch a calculation to the GPU and retrieve the values later
+    //this is useful so that we can do other work while waiting for the results
+    void DispatchPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+    void DispatchElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+    double RetrievePotential() const;
+    KEMThreeVector RetrieveElectricField() const;
+
     ////////////////////////////////////////////////////////////////////////////
 
     std::string GetOpenCLFlags() const { return fOpenCLFlags; }
 
   private:
+
+    void GetReorderedSubsetIndices(const unsigned int* sorted_container_ids, unsigned int* normal_container_ids, unsigned int size) const;
+
     KOpenCLSurfaceContainer& fContainer;
 
     KElectrostaticBoundaryIntegrator fStandardIntegrator;
@@ -78,6 +89,21 @@ namespace KEMField
     mutable cl::Kernel* fSubsetPotentialKernel;
     mutable cl::Kernel* fSubsetElectricFieldKernel;
     mutable cl::Buffer* fBufferElementIdentities;
+    mutable unsigned int* fSubsetIdentities;
+    mutable unsigned int* fReorderedSubsetIdentities;
+
+    //for disptached and later collected subset potential/field
+    mutable unsigned int fCachedNGlobal;
+    mutable unsigned int fCachedNDummy;
+    mutable unsigned int fCachedNWorkgroups;
+    mutable double fCachedSubsetPotential;
+    mutable KEMThreeVector fCachedSubsetField;
+
+    mutable unsigned int fCachedSubsetSize;
+    mutable const unsigned int* fCachedSurfaceIndexSet;
+    mutable KPosition fCachedPosition;
+
+    mutable bool fCallDevice;
 
   };
 }

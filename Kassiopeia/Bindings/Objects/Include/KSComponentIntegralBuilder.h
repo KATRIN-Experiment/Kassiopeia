@@ -137,6 +137,13 @@ namespace katrin
         }
         if( aContainer->GetName() == "component" )
         {
+            objctmsg( eWarning ) <<"deprecated warning in KSComponentIntegralBuilder: Please use the attribute <parent> instead <component>"<<eom;
+            string tParentName = aContainer->AsReference< string >();
+            fObject->fParentName = tParentName;
+            return true;
+        }
+        if( aContainer->GetName() == "parent" )
+        {
             string tParentName = aContainer->AsReference< string >();
             fObject->fParentName = tParentName;
             return true;

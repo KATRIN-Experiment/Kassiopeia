@@ -2,21 +2,21 @@
 
 namespace KEMField
 {
-  bool KZHCoefficientGeneratorElement::IsCoaxial(const KEMCoordinateSystem& coordinateSystem) const
+  bool KZHCoefficientGeneratorElement::IsCoaxial(const KEMCoordinateSystem& coordinateSystem, double coaxialityTolerance ) const
   {
     // first, make sure the z-axes are either parallel or antiparallel
-    if (1.-fabs(GetCoordinateSystem().GetZAxis().Dot(coordinateSystem.GetZAxis())) > 1.e-10)
+    if (1.-fabs(GetCoordinateSystem().GetZAxis().Dot(coordinateSystem.GetZAxis())) > coaxialityTolerance)
       return false;
 
     // then, check that they are coaxial
     KDirection betweenOrigins = (GetCoordinateSystem().GetOrigin()-coordinateSystem.GetOrigin());
-    if (betweenOrigins.MagnitudeSquared() < 1.e-10)
+    if (betweenOrigins.MagnitudeSquared() < coaxialityTolerance)
       return true;
     else
     {
       betweenOrigins = betweenOrigins.Unit();
 
-      if (1.-fabs(GetCoordinateSystem().GetZAxis().Dot(betweenOrigins)) > 1.e-10)
+      if (1.-fabs(GetCoordinateSystem().GetZAxis().Dot(betweenOrigins)) > coaxialityTolerance)
   	return false;
     }
 

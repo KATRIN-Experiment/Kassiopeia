@@ -17,9 +17,13 @@ namespace Kassiopeia
             virtual ~KSStepModifier();
 
         public:
-            virtual void ExecutePreStepModification( KSParticle& anInitialParticle,
+
+            //returns true if any of the state variables of anInitialParticle are changed
+            virtual bool ExecutePreStepModification( KSParticle& anInitialParticle,
                                                      KSParticleQueue& aQueue ) = 0;
-            virtual void ExecutePostStepModifcation( KSParticle& anInitialParticle,
+
+            //returns true if any of the state variables of aFinalParticle are changed
+            virtual bool ExecutePostStepModifcation( KSParticle& anInitialParticle,
                                                      KSParticle& aFinalParticle,
                                                      KSParticleQueue& aQueue ) = 0;
     };

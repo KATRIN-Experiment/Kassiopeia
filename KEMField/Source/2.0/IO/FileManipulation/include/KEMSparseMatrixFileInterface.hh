@@ -2,10 +2,8 @@
 #define KEMSparseMatrixFileInterface_HH__
 
 #ifndef KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB
-    #define KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB 2048 //size of buffer in megabytes
+    #define KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB 128 //size of buffer in megabytes
 #endif
-
-#define KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB*131072 //size of buffer in number of doubles
 
 #include "KEMFileInterface.hh"
 
@@ -38,7 +36,8 @@ class KEMSparseMatrixFileInterface
         {
             fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + std::string("SparseMatrix_");
             fPredicate = std::string(".bin");
-            fBufferSize = KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE;
+            fBufferSize = KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB;
+            fBufferSize *= sizeof(double)*1024*1024;
         };
 
         virtual ~KEMSparseMatrixFileInterface(){};
@@ -102,7 +101,7 @@ class KEMSparseMatrixFileInterface
 
             pFile = fopen(ss.str().c_str(), "rb");
 
-            fread(matrix_elements, sizeof(double), fBufferSize, pFile);
+            (void) fread(matrix_elements, sizeof(double), fBufferSize, pFile);
             fclose(pFile);
         }
 

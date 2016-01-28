@@ -35,7 +35,13 @@ template<unsigned int NDIM>
 class KFMBoundaryCalculator
 {
     public:
-        KFMBoundaryCalculator(){;}
+        KFMBoundaryCalculator():
+        fIsEmpty(true),
+        fBallSupportSet(),
+        fBoxSupportSet(),
+        fCenter()
+        {};
+
         virtual ~KFMBoundaryCalculator(){;};
 
         void AddPoint(const KFMPoint<NDIM>* p)
@@ -65,7 +71,7 @@ class KFMBoundaryCalculator
                 //compute the point on the Ball's surface which is farthest
                 //from the current minimum bounding balls center
                 //add that point to the set and the point opposite it to the set
-                KFMBall<NDIM> min_ball =fBallSupportSet.GetMinimalBoundingBall();
+                KFMBall<NDIM> min_ball = fBallSupportSet.GetMinimalBoundingBall();
                 fCenter = min_ball.GetCenter();
                 fRadius = min_ball.GetRadius();
 
@@ -117,6 +123,7 @@ class KFMBoundaryCalculator
                 fBallSupportSet.AddPoint(point_to_add);
             }
 
+            fBoxSupportSet.AddPoint(sph_cen);
 
             //for the bounding box we add the points on the Ball's surface
             //which are farthest in each dimension
@@ -191,7 +198,7 @@ class KFMBoundaryCalculator
     private:
 
         bool fIsEmpty;
-        KFMBallSupportSet<NDIM>fBallSupportSet;
+        KFMBallSupportSet<NDIM> fBallSupportSet;
         KFMBoxSupportSet<NDIM> fBoxSupportSet;
         KFMPoint<NDIM> fCenter;
         double fRadius;

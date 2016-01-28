@@ -44,13 +44,19 @@ namespace Kassiopeia
 
     void KSVTKTrackPainter::Render()
     {
-        KRootFile* tRootFile = CreateOutputRootFile( fFile );
+        KRootFile* tRootFile = KRootFile::CreateOutputRootFile( fFile );
         if( !fPath.empty() )
         {
             tRootFile->AddToPaths( fPath );
         }
 
         KSReadFileROOT tReader;
+        if (! tReader.TryFile( tRootFile ))
+        {
+            vismsg( eWarning ) << "Could not open file <" << tRootFile->GetName() << ">" << eom;
+            return;
+        }
+
         tReader.OpenFile( tRootFile );
 
         KSReadRunROOT& tRun = tReader.GetRun();

@@ -159,7 +159,6 @@ class KFMSparseBoundaryIntegralMatrix: public KBoundaryIntegralMatrix< FastMulti
             }
         }
 
-
     protected:
 
 

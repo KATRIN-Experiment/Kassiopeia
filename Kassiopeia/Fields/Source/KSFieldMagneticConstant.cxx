@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSFieldMagneticConstant::KSFieldMagneticConstant( const KSFieldMagneticConstant& aCopy ) :
+        KSComponent(),
         fFieldVector( aCopy.fFieldVector )
     {
     }

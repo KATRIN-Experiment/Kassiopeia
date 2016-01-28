@@ -24,6 +24,7 @@ namespace Kassiopeia
     {
     }
     KSGenEnergyRadonEvent::KSGenEnergyRadonEvent( const KSGenEnergyRadonEvent& aCopy ) :
+        KSComponent(),
         fForceConversion( aCopy.fForceConversion ),
         fForceShakeOff( aCopy.fForceShakeOff ),
         fDoConversion( aCopy.fDoConversion ),

@@ -16,14 +16,14 @@ void
 KFMElectrostaticTreeBuilder::SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,KFMELECTROSTATICS_BASIS>* container)
 {
     fContainer = container;
-};
+}
 
 
 KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,KFMELECTROSTATICS_BASIS>*
 KFMElectrostaticTreeBuilder::GetElectrostaticElementContainer()
 {
     return fContainer;
-};
+}
 
 
 void
@@ -34,9 +34,11 @@ KFMElectrostaticTreeBuilder::SetTree(KFMElectrostaticTree* tree)
 
     fDegree = params.degree;
     fNTerms = (fDegree+1)*(fDegree+1);
+    fTopLevelDivisions = params.top_level_divisions;
     fDivisions = params.divisions;
     fZeroMaskSize = params.zeromask;
     fMaximumTreeDepth = params.maximum_tree_depth;
+    fInsertionRatio = params.insertion_ratio;
     fRegionSizeFactor = std::fabs(params.region_expansion_factor);
     fVerbosity = params.verbosity;
 
@@ -55,7 +57,7 @@ KFMElectrostaticTreeBuilder::SetTree(KFMElectrostaticTree* tree)
 
     if(fVerbosity > 1)
     {
-        //print the parameters
+        kfmout<<"KFMElectrostaticTreeBuilder::SetParameters: top level divisions set to "<<params.top_level_divisions<<kfmendl;
         kfmout<<"KFMElectrostaticTreeBuilder::SetParameters: divisions set to "<<params.divisions<<kfmendl;
         kfmout<<"KFMElectrostaticTreeBuilder::SetParameters: degree set to "<<params.degree<<kfmendl;
         kfmout<<"KFMElectrostaticTreeBuilder::SetParameters: zero mask size set to "<<params.zeromask<<kfmendl;
@@ -75,20 +77,19 @@ KFMElectrostaticTreeBuilder::SetTree(KFMElectrostaticTree* tree)
     }
 
 
-};
+}
 
 KFMElectrostaticTree*
 KFMElectrostaticTreeBuilder::GetTree()
 {
     return fTree;
-};
+}
 
 void
 KFMElectrostaticTreeBuilder::ConstructRootNode()
 {
     if(fUseRegionEstimation)
     {
-
         if(fVerbosity > 2)
         {
             kfmout<<"KFMElectrostaticTreeBuilder::Initialize: Region size estimator running. "<<kfmendl;
@@ -127,9 +128,10 @@ KFMElectrostaticTreeBuilder::ConstructRootNode()
 
     tree_prop->SetMaxTreeDepth( fMaximumTreeDepth );
     tree_prop->SetCubicNeighborOrder( fZeroMaskSize );
-    //tree_prop->SetTreeID( fContainer->GetHashFromData() );
     unsigned int dim[3] = {(unsigned int)fDivisions,(unsigned int)fDivisions,(unsigned int)fDivisions};
+    unsigned int top_level_dim[3] = {(unsigned int)fTopLevelDivisions,(unsigned int)fTopLevelDivisions,(unsigned int)fTopLevelDivisions};
     tree_prop->SetDimensions(dim);
+    tree_prop->SetTopLevelDimensions(top_level_dim);
 
     KFMElectrostaticNode* root = fTree->GetRootNode();
 
@@ -163,9 +165,18 @@ KFMElectrostaticTreeBuilder::PerformSpatialSubdivision()
 {
     //conditions for subdivision of a node
     KFMInsertionCondition<3> basic_insertion_condition;
-    KFMSubdivisionCondition<3, KFMElectrostaticNodeObjects> sub_cond;
-    sub_cond.SetInsertionCondition(&basic_insertion_condition);
-    fTree->SetSubdivisionCondition(&sub_cond);
+    basic_insertion_condition.SetInsertionRatio(fInsertionRatio);
+
+    if(fSubdivisionCondition == NULL)
+    {
+        //subdivision condition was unset, so we default to aggressive
+        //since it is the only one which takes no paramters
+        fSubdivisionCondition = new KFMSubdivisionConditionAggressive<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
+        fSubdivisionConditionIsOwned = true;
+    }
+
+    fSubdivisionCondition->SetInsertionCondition(&basic_insertion_condition);
+    fTree->SetSubdivisionCondition(fSubdivisionCondition);
 
     //things to do on a node after it has been visited by the progenitor
     KFMCubicSpaceBallSorter<3, KFMElectrostaticNodeObjects> bball_sorter;
@@ -173,8 +184,13 @@ KFMElectrostaticTreeBuilder::PerformSpatialSubdivision()
     fTree->AddPostSubdivisionAction(&bball_sorter);
 
     KFMObjectContainer< KFMBall<3> >* bballs = fContainer->GetBoundingBallContainer();
-    sub_cond.SetBoundingBallContainer( bballs );
+    fSubdivisionCondition->SetBoundingBallContainer( bballs );
     bball_sorter.SetBoundingBallContainer( bballs );
+
+    if(fVerbosity > 2)
+    {
+        kfmout<<"KFMElectrostaticTreeBuilder::PerformSpatialSubdivision: Subdividing region using the "<<fSubdivisionCondition->Name()<<" strategy "<<kfmendl;
+    }
 
     fTree->ConstructTree();
 
@@ -182,6 +198,7 @@ KFMElectrostaticTreeBuilder::PerformSpatialSubdivision()
     {
         kfmout<<"KFMElectrostaticTreeBuilder::PerformSpatialSubdivision: Done performing spatial subdivision. "<<kfmendl;
     }
+
 }
 
 void
@@ -258,7 +275,6 @@ KFMElectrostaticTreeBuilder::FlagPrimaryNodes()
     //(these get the 'primary' status flag)
 
     KFMElectrostaticTreeNavigator navigator;
-    navigator.SetDivisions(fDivisions);
 
     //the flag value initializer
     KFMNodeChildToParentFlagValueInitializer<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> flag_init;
@@ -280,38 +296,33 @@ KFMElectrostaticTreeBuilder::FlagPrimaryNodes()
         }
         else
         {
-            kfmout<<"KFMElectrostaticBoundaryIntegrator::ConstructElementNodeAssociation: Error, element centroid not found in region."<<kfmendl;
+            kfmout<<"KFMElectrostaticBoundaryIntegrator::FlagPrimaryNodes: Error, element centroid not found in region."<<kfmendl;
             kfmexit(1);
         }
     }
 
     if(fVerbosity > 2)
     {
-        kfmout<<"KFMElectrostaticTreeBuilder::AssociateElementsAndNodes: Done making element to node association. "<<kfmendl;
+        kfmout<<"KFMElectrostaticTreeBuilder::FlagPrimaryNodes: Done flagging primary nodes."<<kfmendl;
     }
 }
 
 void
 KFMElectrostaticTreeBuilder::CollectDirectCallIdentities()
 {
-    //sort id sets
-    fTree->ApplyRecursiveAction(&fIDSorter);
+    //sorter for id sets
+    KFMElectrostaticIdentitySetSorter IDSorter;
+    fTree->ApplyRecursiveAction(&IDSorter);
 
-    //now we are going to construct the direct call lists for each node
-    KFMElectrostaticExternalIdentitySetCreator eIDCreator;
-    eIDCreator.SetZeroMaskSize(fZeroMaskSize);
-
-    fTree->ApplyRecursiveAction(&eIDCreator);
-
-    //tell the tree what the max size of the external id sets is
-    fTree->SetMaxDirectCalls( eIDCreator.GetMaxExternalIDSetSize() );
-
-    //sort external ids
-    fTree->ApplyRecursiveAction(&fExternalIDSorter);
+    //create the lists of the external identity sets
+    //(reduced memory alternative to explicitly creating the external id sets as above)
+    KFMElectrostaticIdentitySetListCreator IDListCreator;
+    IDListCreator.SetZeroMaskSize(fZeroMaskSize);
+    fTree->ApplyCorecursiveAction(&IDListCreator);
 
     if(fVerbosity > 3)
     {
-        kfmout<<"KFMElectrostaticTreeBuilder::CollectDirectCallIdentities: Done collecting element identities of node direct calls."<<kfmendl;
+        kfmout<<"KFMElectrostaticTreeBuilder::CollectDirectCallIdentities: Done collecting element identities of node direct calls. Max number of direct calls from any node is "<<kfmendl;
     }
 }
 
@@ -319,11 +330,9 @@ void
 KFMElectrostaticTreeBuilder::CollectDirectCallIdentitiesForPrimaryNodes()
 {
     //sort id sets
-    fTree->ApplyRecursiveAction(&fIDSorter);
+    KFMElectrostaticIdentitySetSorter IDSorter;
 
-    //external id set creator
-    KFMElectrostaticExternalIdentitySetCreator eIDCreator;
-    eIDCreator.SetZeroMaskSize(fZeroMaskSize);
+    fTree->ApplyRecursiveAction(&IDSorter);
 
     //the primacy flag inspector
     KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> primary_flag_condition;
@@ -335,16 +344,28 @@ KFMElectrostaticTreeBuilder::CollectDirectCallIdentitiesForPrimaryNodes()
     //to construct the direct call lists
     KFMConditionalActor< KFMElectrostaticNode > conditional_actor;
     conditional_actor.SetInspectingActor(&primary_flag_condition);
-    conditional_actor.SetOperationalActor(&eIDCreator);
 
+    //create the lists of the external identity sets
+    //(reduced memory alternative to explicitly creating the external id sets as above)
+    KFMElectrostaticIdentitySetListCreator IDListCreator;
+    IDListCreator.SetZeroMaskSize(fZeroMaskSize);
+    conditional_actor.SetOperationalActor(&IDListCreator);
     //apply action
-    fTree->ApplyRecursiveAction(&conditional_actor);
+    fTree->ApplyCorecursiveAction(&conditional_actor);
 
-    //tell the tree what the max size of the external id sets is
-    fTree->SetMaxDirectCalls( eIDCreator.GetMaxExternalIDSetSize() );
+    //now we create the lists of the collocation points
+    //these are associated with the centroid of each electrostatic element
+    //first we form a list of the centroids
+    std::vector< const KFMPoint<KFMELECTROSTATICS_DIM>* > centroids;
+    unsigned int n_elements = fContainer->GetNElements();
+    for(unsigned int i=0; i<n_elements; i++)
+    {
+        centroids.push_back( fContainer->GetCentroid(i) );
+    }
 
-    //now sort external ids
-    fTree->ApplyRecursiveAction(&fExternalIDSorter);
+    KFMElectrostaticCollocationPointIdentitySetCreator cpid_creator;
+    cpid_creator.SetTree(fTree);
+    cpid_creator.SortCollocationPoints(&centroids);
 
     if(fVerbosity > 3)
     {

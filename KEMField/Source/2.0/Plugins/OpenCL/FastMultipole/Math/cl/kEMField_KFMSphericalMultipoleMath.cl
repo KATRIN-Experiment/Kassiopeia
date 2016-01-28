@@ -54,6 +54,26 @@ CosTheta(CL_TYPE4 O, CL_TYPE4 P)
 };
 
 
+CL_TYPE
+RadiusSingle(CL_TYPE4 P)
+{
+    return sqrt((P.s0)*(P.s0)+(P.s1)*(P.s1)+(P.s2)*(P.s2));
+}
+
+
+CL_TYPE
+PhiSingle(CL_TYPE4 P)
+{
+    return atan2((P.s1),(P.s0));
+};
+
+CL_TYPE
+CosThetaSingle(CL_TYPE4 P)
+{
+    CL_TYPE r = RadiusSingle(P);
+    return (P.s2/r);
+};
+
 
 //______________________________________________________________________________
 
@@ -136,7 +156,7 @@ ALP_nm(int n, int m, CL_TYPE x)
 //computes array of associated legendre polynomials (schmidt semi-normalized)
 
 void
-ALP_nm_array(int n_max, CL_TYPE x, CL_TYPE* val)
+ALP_nm_array(int n_max, CL_TYPE x,  CL_TYPE* val)
 {
     val[0] = 1.0;
     if(n_max == 0){return;};
@@ -214,7 +234,7 @@ ALP_nm_array(int n_max, CL_TYPE x, CL_TYPE* val)
 
 
 void
-ALP_nm_unormalized_array(int n_max, CL_TYPE x, CL_TYPE* val)
+ALP_nm_unormalized_array(int n_max, CL_TYPE x,  CL_TYPE* val)
 {
     val[0] = 1.0;
     if(n_max == 0){return;};
@@ -374,7 +394,7 @@ CL_TYPE ALPDerv_nm(int n, int m, CL_TYPE x)
 
 //______________________________________________________________________________
 
-void ALPAndFirstDerv_array(int n_max, CL_TYPE x, CL_TYPE* PlmVal, CL_TYPE* PlmDervVal)
+void ALPAndFirstDerv_array(int n_max, CL_TYPE x,  CL_TYPE* PlmVal,  CL_TYPE* PlmDervVal)
 {
     ALP_nm_unormalized_array(n_max, x, PlmVal);
 
@@ -519,7 +539,7 @@ I_trig1(int n, CL_TYPE lower_limit, CL_TYPE upper_limit)
 
 //______________________________________________________________________________
 void
-I_cheb1_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit, CL_TYPE2* val)
+I_cheb1_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit,  CL_TYPE2* val)
 {
     val[0].s0 = I_secn( 2, lower_limit, upper_limit); //(0,0)
 
@@ -546,7 +566,7 @@ I_cheb1_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit, CL_TYPE2* val
 //______________________________________________________________________________
 
 void
-I_cheb2_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit, CL_TYPE2* val)
+I_cheb2_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit,  CL_TYPE2* val)
 {
     val[0].s1 = 0.0; //(0,0)
 
@@ -575,7 +595,7 @@ I_cheb2_array(int l_max, CL_TYPE lower_limit, CL_TYPE upper_limit, CL_TYPE2* val
 //normalize an array of I_cheb integrals
 
 void
-K_normalize_array(int l_max, CL_TYPE h, __constant const CL_TYPE* plm, CL_TYPE2* val)
+K_normalize_array(int l_max, CL_TYPE h, __constant const CL_TYPE* plm,  CL_TYPE2* val)
 {
     CL_TYPE hpow = h;
     CL_TYPE fac;

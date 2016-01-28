@@ -134,10 +134,11 @@ namespace Kassiopeia
     {
         //trajmsg_debug( "exact particle pushing to particle:" << eom )
 
-        aParticle.SetTime( GetTime() );
+
         aParticle.SetLength( GetLength() );
         aParticle.SetPosition( GetPosition() );
         aParticle.SetMomentum( GetMomentum() );
+        aParticle.SetTime( GetTime() );
 
         if( fGetMagneticFieldPtr == &KSTrajExactParticle::DoNothing )
         {
@@ -343,4 +344,3 @@ namespace Kassiopeia
     }
 
 }
-

@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueFix::KSGenValueFix( const KSGenValueFix& aCopy ) :
+            KSComponent(),
             fValue( aCopy.fValue )
     {
     }

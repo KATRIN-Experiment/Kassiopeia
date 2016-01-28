@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSRootSurfaceInteraction =
+    STATICINT sKSRootSurfaceInteraction =
         KSRootBuilder::ComplexElement< KSRootSurfaceInteraction >( "ks_root_surface_interaction" );
 
-    static int sKSRootSurfaceInteractionStructure =
+    STATICINT sKSRootSurfaceInteractionStructure =
         KSRootSurfaceInteractionBuilder::Attribute< string >( "name" ) +
         KSRootSurfaceInteractionBuilder::Attribute< string >( "set_surface_interaction" );
 

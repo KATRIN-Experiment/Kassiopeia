@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <complex>
+#include <cstdlib>
 
 #include "KFMCube.hh"
 
@@ -52,6 +53,7 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
             fNTerms = 0;
             fTotalSpatialSize = 0;
             fDiv = 0;
+            fTopLevelDivisions = 0;
             fZeroMaskSize = 0;
             fLength = 1.0;
 
@@ -143,10 +145,15 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
 
         };
 
+        virtual void SetTopLevelDivisions(int div)
+        {
+            fTopLevelDivisions = div;
+        }
+
         ////////////////////////////////////////////////////////////////////////
         void SetDivisions(int div)
         {
-            fDiv = std::fabs(div);
+            fDiv = std::abs(div);
 
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
@@ -183,7 +190,7 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
             int shift[SpatialNDIM];
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
-                shift[i] = -1*(std::ceil( 1.0*(((double)fDiv)/2.0) ) - 1);
+                shift[i] = -1*(  (int)( std::ceil( 1.0*(((double)fDiv)/2.0) ) ) - 1);
             }
 
             fKernelResponse->SetOrigin(source_origin);
@@ -220,7 +227,7 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
         ////////////////////////////////////////////////////////////////////////
         virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
         {
-            if( node != NULL && node->HasChildren() )
+            if( node != NULL && node->HasChildren() && node->GetLevel() != 0 )
             {
 
                 ScalarMomentType* mom = KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node);
@@ -480,6 +487,7 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
         unsigned int fNecessaryTerms;
         unsigned int fTotalSpatialSize;
         int fDiv;
+        int fTopLevelDivisions;
         int fZeroMaskSize; //this is always set to zero!
         double fLength;
         bool fInitialized;
@@ -535,4 +543,4 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
 
 
 
-#endif /* __KFMScalarMomentLocalToLocalConverter_H__ */ 
+#endif /* __KFMScalarMomentLocalToLocalConverter_H__ */

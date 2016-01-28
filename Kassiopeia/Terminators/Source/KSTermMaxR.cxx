@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTermMaxR::KSTermMaxR( const KSTermMaxR& aCopy ) :
+        KSComponent(),
         fMaxR( aCopy.fMaxR )
     {
     }

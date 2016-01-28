@@ -33,12 +33,13 @@ class KFMElectrostaticTreeData: public KSAInputOutputObject
     public:
         KFMElectrostaticTreeData()
         {
+            fTopLevelDivisions = 0;
             fDivisions = 0;
             fDegree = 0;
             fZeroMaskSize = 0;
             fMaxTreeDepth = 0;
+            fInsertionRatio = 0;
             fNNodes = 0;
-            fMaxDirectCalls = 0;
         };
         virtual ~KFMElectrostaticTreeData(){};
 
@@ -89,6 +90,9 @@ class KFMElectrostaticTreeData: public KSAInputOutputObject
         void SetNumberOfTreeNodes(const unsigned int& nnodes){fNNodes = nnodes;};
 
         //Parameters used when building the tree, that we will need when reconstructing it
+        unsigned int GetTopLevelDivisions() const {return fTopLevelDivisions;};
+        void SetTopLevelDivisions(const unsigned int& div){fTopLevelDivisions = div;};
+
         unsigned int GetDivisions() const {return fDivisions;};
         void SetDivisions(const unsigned int& div){fDivisions = div;};
 
@@ -101,8 +105,9 @@ class KFMElectrostaticTreeData: public KSAInputOutputObject
         unsigned int GetMaximumTreeDepth() const {return fMaxTreeDepth;};
         void SetMaximumTreeDepth(const unsigned int& max_depth){fMaxTreeDepth = max_depth;};
 
-        unsigned int GetMaxDirectCalls() const {return fMaxDirectCalls;};
-        void SetMaxDirectCalls(const unsigned int& calls){fMaxDirectCalls = calls;}
+        double GetInsertionRatio() const {return fInsertionRatio;};
+        void SetInsertionRatio(const double& insertion_ratio){fInsertionRatio = insertion_ratio;};
+
 
         //IO
         virtual std::string ClassName() const {return std::string("KFMElectrostaticTreeData");};
@@ -114,11 +119,12 @@ class KFMElectrostaticTreeData: public KSAInputOutputObject
     private:
 
         //parameters
+        unsigned int fTopLevelDivisions;
         unsigned int fDivisions;
         unsigned int fDegree;
         unsigned int fZeroMaskSize;
         unsigned int fMaxTreeDepth;
-        unsigned int fMaxDirectCalls;
+        double fInsertionRatio;
 
         //storage for the tree structure
         std::string fTreeID;
@@ -144,6 +150,10 @@ Stream& operator>>(Stream& s, KFMElectrostaticTreeData& aData)
 {
     s.PreStreamInAction(aData);
 
+    unsigned int tdiv;
+    s >> tdiv;
+    aData.SetTopLevelDivisions(tdiv);
+
     unsigned int div;
     s >> div;
     aData.SetDivisions(div);
@@ -160,9 +170,9 @@ Stream& operator>>(Stream& s, KFMElectrostaticTreeData& aData)
     s >> tree_depth;
     aData.SetMaximumTreeDepth(tree_depth);
 
-    unsigned int max_calls;
-    s >> max_calls;
-    aData.SetMaxDirectCalls(max_calls);
+    double insertion_ratio;
+    s >> insertion_ratio;
+    aData.SetInsertionRatio(insertion_ratio);
 
     std::string tree_id;
     s >> tree_id;
@@ -266,11 +276,12 @@ Stream& operator<<(Stream& s,const KFMElectrostaticTreeData& aData)
 {
     s.PreStreamOutAction(aData);
 
+    s << aData.GetTopLevelDivisions();
     s << aData.GetDivisions();
     s << aData.GetDegree();
     s << aData.GetZeroMaskSize();
     s << aData.GetMaximumTreeDepth();
-    s << aData.GetMaxDirectCalls();
+    s << aData.GetInsertionRatio();
     s << aData.GetTreeID();
 
     unsigned int n_tree_nodes = aData.GetNumberOfTreeNodes();
@@ -340,28 +351,7 @@ Stream& operator<<(Stream& s,const KFMElectrostaticTreeData& aData)
     return s;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-DefineKSAClassName(KFMElectrostaticTreeData);
-
+DefineKSAClassName(KFMElectrostaticTreeData)
 
 }
 

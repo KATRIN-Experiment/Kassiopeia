@@ -16,6 +16,9 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermMaxSteps.h
     KSTermTrapped.h
     KSTermSecondaries.h
+    KSTermOutput.h
+    KSTermMinDistance.h
+    KSTermStepsize.h
 )
 set( TERMINATORS_HEADER_PATH 
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
@@ -42,6 +45,8 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermMaxSteps.cxx
     KSTermTrapped.cxx
     KSTermSecondaries.cxx
+    KSTermMinDistance.cxx
+    KSTermStepsize.cxx
 )
 set( TERMINATORS_SOURCE_PATH 
 	${CMAKE_CURRENT_SOURCE_DIR}/Source

@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGExtrudedArcSegmentSurfaceBuilder =
+    STATICINT sKGExtrudedArcSegmentSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGExtrudedArcSegmentSurface >( "extruded_arc_segment_surface" );
 
-    static const int sKGExtrudedArcSegmentSurfaceBuilderStructure =
+    STATICINT sKGExtrudedArcSegmentSurfaceBuilderStructure =
         KGExtrudedArcSegmentSurfaceBuilder::Attribute< string >( "name" ) +
         KGExtrudedArcSegmentSurfaceBuilder::Attribute< double >( "zmin" ) +
         KGExtrudedArcSegmentSurfaceBuilder::Attribute< double >( "zmax" ) +

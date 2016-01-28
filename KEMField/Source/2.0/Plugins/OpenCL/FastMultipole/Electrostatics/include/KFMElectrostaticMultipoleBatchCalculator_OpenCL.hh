@@ -13,6 +13,7 @@
 //math
 #include "KFMPointCloud.hh"
 #include "KFMMath.hh"
+#include "KFMGaussLegendreQuadratureTableCalculator.hh"
 
 //electrostatics
 #include "KFMElectrostaticElementContainer.hh"
@@ -75,6 +76,18 @@ class KFMElectrostaticMultipoleBatchCalculator_OpenCL: public KFMElectrostaticMu
 
         int fComplexStride;
         int fJSize;
+
+        ////////////////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////////////////
+        KFMGaussLegendreQuadratureTableCalculator fQuadratureTableCalc;
+        std::vector< double > fAbscissaVector;
+        std::vector< double > fWeightsVector;
+
+        CL_TYPE* fAbscissa;
+        CL_TYPE* fWeights;
+        cl::Buffer* fAbscissaBufferCL;
+        cl::Buffer* fWeightsBufferCL;
 
         ////////////////////////////////////////////////////////////////////////
 

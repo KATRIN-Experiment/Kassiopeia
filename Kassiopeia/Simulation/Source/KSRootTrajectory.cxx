@@ -9,15 +9,18 @@ namespace Kassiopeia
             fStep( NULL ),
             fTerminatorParticle( NULL ),
             fTrajectoryParticle( NULL ),
-            fFinalParticle( NULL )
+            fFinalParticle( NULL ),
+            fFailureFlag(false)
     {
     }
     KSRootTrajectory::KSRootTrajectory( const KSRootTrajectory& aCopy ) :
+            KSComponent(),
             fTrajectory( aCopy.fTrajectory ),
             fStep( aCopy.fStep ),
             fTerminatorParticle( aCopy.fTerminatorParticle ),
             fTrajectoryParticle( aCopy.fTrajectoryParticle ),
-            fFinalParticle( aCopy.fFinalParticle )
+            fFinalParticle( aCopy.fFinalParticle ),
+            fFailureFlag( aCopy.fFailureFlag)
     {
     }
     KSRootTrajectory* KSRootTrajectory::Clone() const
@@ -44,6 +47,16 @@ namespace Kassiopeia
             trajmsg( eError ) << "<" << GetName() << "> cannot execute trajectory with no trajectory set" << eom;
         }
         fTrajectory->ExecuteTrajectory( aTimeStep, anIntermediateParticle );
+        return;
+    }
+
+    void KSRootTrajectory::GetPiecewiseLinearApproximation( const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates ) const
+    {
+        if( fTrajectory == NULL )
+        {
+            trajmsg( eError ) << "<" << GetName() << "> cannot compute piecewise linear approximation with no trajectory set" << eom;
+        }
+        fTrajectory->GetPiecewiseLinearApproximation(anInitialParticle, aFinalParticle, intermediateParticleStates );
         return;
     }
 
@@ -81,6 +94,8 @@ namespace Kassiopeia
 
     void KSRootTrajectory::CalculateTrajectory()
     {
+        fFailureFlag = false;
+
         *fTrajectoryParticle = *fTerminatorParticle;
 
         CalculateTrajectory( *fTerminatorParticle, *fTrajectoryParticle, fStep->TrajectoryCenter(), fStep->TrajectoryRadius(), fStep->TrajectoryStep() );
@@ -103,6 +118,27 @@ namespace Kassiopeia
         trajmsg_debug( "  trajectory particle electric field: <" << fTrajectoryParticle->GetElectricField().X() << "," << fTrajectoryParticle->GetElectricField().Y() << "," << fTrajectoryParticle->GetElectricField().Z() << ">" << eom );
         trajmsg_debug( "  trajectory particle magnetic field: <" << fTrajectoryParticle->GetMagneticField().X() << "," << fTrajectoryParticle->GetMagneticField().Y() << "," << fTrajectoryParticle->GetMagneticField().Z() << ">" << eom );
         trajmsg_debug( "  trajectory particle angle to magnetic field: <" << fTrajectoryParticle->GetPolarAngleToB() << ">" << eom );
+
+        if( !( fTrajectoryParticle->GetPosition() == fTrajectoryParticle->GetPosition() ) )
+        {
+            trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the position." << eom;
+            fFailureFlag = true;
+            return;
+        }
+
+        if( !( fTrajectoryParticle->GetMagneticField() == fTrajectoryParticle->GetMagneticField() ) )
+        {
+            trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the magnetic field." << eom;
+            fFailureFlag = true;
+            return;
+        }
+
+        if( !( fTrajectoryParticle->GetElectricField() == fTrajectoryParticle->GetElectricField() ) )
+        {
+            trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the electric field." << eom;
+            fFailureFlag = true;
+            return;
+        }
 
         return;
     }
@@ -143,7 +179,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootTrajectoryDict =
+    STATICINT sKSRootTrajectoryDict =
         KSDictionary< KSRootTrajectory >::AddCommand( &KSRootTrajectory::SetTrajectory, &KSRootTrajectory::ClearTrajectory, "set_trajectory", "clear_trajectory" );
 
 }

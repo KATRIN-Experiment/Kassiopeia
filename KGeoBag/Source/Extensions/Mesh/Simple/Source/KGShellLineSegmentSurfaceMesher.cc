@@ -12,7 +12,7 @@ namespace KGeoBag
     }
 
     void KGShellLineSegmentSurfaceMesher::VisitShellPathSurface( KGShellLineSegmentSurface* aShellLineSegmentSurface )
-    {std::cout << "visiting shell path" << std::endl;
+    {
         //create line segment points
         OpenPoints tLineSegmentPoints;
         LineSegmentToOpenPoints( aShellLineSegmentSurface->Path().operator ->(), tLineSegmentPoints );

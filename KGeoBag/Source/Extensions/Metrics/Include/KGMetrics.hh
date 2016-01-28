@@ -17,6 +17,7 @@
 #include "KGConeSurface.hh"
 #include "KGCutConeSpace.hh"
 #include "KGCutConeSurface.hh"
+#include "KGCutConeTubeSpace.hh"
 #include "KGBoxSpace.hh"
 #include <assert.h>
 
@@ -31,6 +32,7 @@ namespace KGeoBag {
 			public KGCylinderSpace::Visitor,
 			public KGConeSpace::Visitor,
 			public KGCutConeSpace::Visitor,
+			public KGCutConeTubeSpace::Visitor,
 			public KGBoxSpace::Visitor {
     private:
 		/**
@@ -94,6 +96,14 @@ namespace KGeoBag {
 		 * \param aVolume
 		 */
     	void VisitCutConeSpace(KGCutConeSpace* aVolume);
+
+    	/**
+		 * \brief Specialized visitor function for calculation of
+		 * the volume from a KGCutConeSpace.
+		 *
+		 * \param aVolume
+		 */
+    	void VisitCutConeTubeSpace(KGCutConeTubeSpace* aVolume);
 
     	/**
 		 * \brief Specialized visitor function for calculation of

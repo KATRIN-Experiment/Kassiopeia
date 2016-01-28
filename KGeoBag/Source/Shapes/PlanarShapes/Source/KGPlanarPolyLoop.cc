@@ -9,7 +9,8 @@ namespace KGeoBag
             fLength( 0. ),
             fCentroid( 0., 0. ),
             fAnchor( 0., 0. ),
-            fInitialized( false )
+            fInitialized( false ),
+            fIsCounterClockwise(false)
     {
     }
     KGPlanarPolyLoop::KGPlanarPolyLoop( const KGPlanarPolyLoop& aCopy ) :
@@ -17,7 +18,8 @@ namespace KGeoBag
             fLength( aCopy.fLength ),
             fCentroid( aCopy.fCentroid ),
             fAnchor( aCopy.fAnchor ),
-            fInitialized( aCopy.fInitialized )
+            fInitialized( aCopy.fInitialized ),
+            fIsCounterClockwise(aCopy.fIsCounterClockwise)
     {
         const KGPlanarOpenPath* tElement;
         const KGPlanarLineSegment* tLineSegment;
@@ -387,7 +389,14 @@ namespace KGeoBag
             tFirstDistance = tSecondDistance;
         }
 
-        return tNearestNormal;
+        if(fIsCounterClockwise)
+        {
+            return tNearestNormal;
+        }
+        else
+        {
+            return -1*tNearestNormal;
+        }
     }
     bool KGPlanarPolyLoop::Above( const KTwoVector& aQuery ) const
     {
@@ -424,9 +433,59 @@ namespace KGeoBag
         }
         fCentroid /= fLength;
 
+        fIsCounterClockwise = DetermineInteriorSide();
+
         fInitialized = true;
 
         return;
+    }
+
+    bool KGPlanarPolyLoop::DetermineInteriorSide() const
+    {
+        KTwoVector first;
+        KTwoVector second;
+        double costheta;
+        double theta;
+        double total_angle = 0;
+
+        std::vector<CIt> iters;
+        CIt tItpp;
+        for(CIt tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
+        {
+            tItpp = tIt;
+            tItpp++;
+            if(tItpp != fElements.end())
+            {
+                //this should work for arcs too as long
+                //as the ploy loop is not self-intersecting!
+                first = (*tIt)->End() - (*tIt)->Start();
+                second = (*tItpp)->End() - (*tItpp)->Start();
+
+                costheta = first*second;
+                theta = std::fabs( std::acos(costheta) );
+                if( (first^second) > 0)
+                {
+                    //we have a left hand turn
+                    total_angle += theta;
+                }
+                else
+                {
+                    //we have a right hand turn
+                    total_angle -= theta;
+                }
+            }
+        }
+
+        //convention is as view from above xy plane, looking in -z direction
+        if(total_angle > 0)
+        {
+            return true; //loop runs counter-clockwise
+        }
+        else
+        {
+            return false; //loop runs clockwise
+        }
+
     }
 
 }

@@ -235,7 +235,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenPositionRectangularCompositeDict =
+    STATICINT sKSGenPositionRectangularCompositeDict =
         KSDictionary< KSGenPositionRectangularComposite >::AddCommand( &KSGenPositionRectangularComposite::SetXValue,
                                                                        &KSGenPositionRectangularComposite::ClearXValue,
                                                                        "set_x", "clear_x" ) +

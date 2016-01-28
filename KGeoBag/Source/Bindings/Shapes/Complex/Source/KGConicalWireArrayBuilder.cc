@@ -4,7 +4,7 @@
 namespace katrin
 {
 
-  static const int sKGConicalWireArrayBuilderStructure =
+  STATICINT sKGConicalWireArrayBuilderStructure =
     KGConicalWireArrayBuilder::Attribute<double>("radius1") +
     KGConicalWireArrayBuilder::Attribute<double>("radius2") +
     KGConicalWireArrayBuilder::Attribute<double>("z1") +
@@ -12,20 +12,21 @@ namespace katrin
     KGConicalWireArrayBuilder::Attribute<int>("wire_count") +
     KGConicalWireArrayBuilder::Attribute<double>("theta_start") +
     KGConicalWireArrayBuilder::Attribute<double>("diameter") +
-    KGConicalWireArrayBuilder::Attribute<int>("longitudinal_mesh_count");
+    KGConicalWireArrayBuilder::Attribute<int>("longitudinal_mesh_count") +
+  	KGConicalWireArrayBuilder::Attribute<double>("longitudinal_mesh_power");
 
-  static const int sKGConicalWireArraySurfaceBuilderStructure =
+  STATICINT sKGConicalWireArraySurfaceBuilderStructure =
     KGConicalWireArraySurfaceBuilder::Attribute<string>("name") +
     KGConicalWireArraySurfaceBuilder::ComplexElement<KGConicalWireArray>("conical_wire_array");
 
-  static const int sKGConicalWireArraySurfaceBuilder =
+  STATICINT sKGConicalWireArraySurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGConicalWireArray> >("conical_wire_array_surface");
 
-  static const int sKGConicalWireArraySpaceBuilderStructure =
+  STATICINT sKGConicalWireArraySpaceBuilderStructure =
     KGConicalWireArraySpaceBuilder::Attribute<string>("name") +
     KGConicalWireArraySpaceBuilder::ComplexElement<KGConicalWireArray>("conical_wire_array");
 
-  static const int sKGConicalWireArraySpaceBuilder =
+  STATICINT sKGConicalWireArraySpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGConicalWireArray> >("conical_wire_array_space");
 
 }

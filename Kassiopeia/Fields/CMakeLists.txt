@@ -3,11 +3,21 @@ set( FIELDS_HEADER_BASENAMES
 	KSFieldsMessage.h
 	KSFieldElectromagnet.h
 	KSFieldElectrostatic.h
+	KSFieldKrylovBEMSolver.h
 	KSFieldMagneticConstant.h
 	KSFieldMagneticDipole.h
 	KSFieldElectricConstant.h
 	KSFieldElectricQuadrupole.h
+	KSFieldMagneticSuperPosition.h
+	KSFieldMagneticRamped.h
+	KSFieldElectricRamped.h
 )
+if( Kassiopeia_USE_VTK )
+	set( FIELDS_HEADER_BASENAMES
+		${FIELDS_HEADER_BASENAMES}
+		KSFieldElectricPotentialmap.h
+	)
+endif( Kassiopeia_USE_VTK )
 set( FIELDS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
@@ -20,11 +30,21 @@ set( FIELDS_SOURCE_BASENAMES
 	KSFieldsMessage.cxx
 	KSFieldElectromagnet.cxx
 	KSFieldElectrostatic.cxx
+	KSFieldKrylovBEMSolver.cxx
 	KSFieldMagneticConstant.cxx
 	KSFieldMagneticDipole.cxx
 	KSFieldElectricConstant.cxx
 	KSFieldElectricQuadrupole.cxx
+	KSFieldMagneticSuperPosition.cxx
+	KSFieldMagneticRamped.cxx
+	KSFieldElectricRamped.cxx
 )
+if( Kassiopeia_USE_VTK )
+	set( FIELDS_SOURCE_BASENAMES
+		${FIELDS_SOURCE_BASENAMES}
+		KSFieldElectricPotentialmap.cxx
+	)
+endif( Kassiopeia_USE_VTK )
 set( FIELDS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )

@@ -21,6 +21,7 @@ namespace Kassiopeia
     {
     }
     KSRun::KSRun( const KSRun& aCopy ) :
+            KSComponent(),
             fRunId( aCopy.fRunId ),
             fRunCount( aCopy.fRunCount ),
             fTotalEvents( aCopy.fTotalEvents ),
@@ -59,7 +60,7 @@ namespace Kassiopeia
     {
     }
 
-    static const int sKSRunDict =
+    STATICINT sKSRunDict =
         KSDictionary< KSRun >::AddComponent( &KSRun::GetRunId, "run_id" ) +
         KSDictionary< KSRun >::AddComponent( &KSRun::GetRunCount, "run_count" ) +
         KSDictionary< KSRun >::AddComponent( &KSRun::GetTotalEvents, "total_events" ) +

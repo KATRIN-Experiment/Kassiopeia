@@ -9,32 +9,54 @@
 #ifndef KSTRINGUTILS_H_
 #define KSTRINGUTILS_H_
 
-#include "KForeach.h"
+#include <KRandom.h>
 
 #include <vector>
 #include <list>
+#include <deque>
 #include <set>
 #include <string>
 #include <iostream>
 #include <iomanip>
 #include <map>
 #include <iterator>
+#include <type_traits>
+#include <array>
+
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
-#include <boost/array.hpp>
-#include <boost/type_traits.hpp>
 
 namespace katrin {
 
 /**
  * Contains static functions for joining, exploding and serializing string sequences.
  */
-class KStringUtils {
-public :
+class KStringUtils
+{
+public:
+    KStringUtils() = delete;
 
     static bool IsNumeric(const char& character);
     static bool IsNumeric(const std::string& string);
+
+    template<typename Range1T, typename Range2T>
+    static bool Equals(const Range1T &, const Range2T &);
+
+    template<typename Range1T, typename Range2T>
+    static bool IEquals(const Range1T &, const Range2T &);
+
+    template<typename Range1T, typename Range2T>
+    static bool Contains(const Range1T &, const Range2T &);
+
+    template<typename Range1T, typename Range2T>
+    static bool ContainsOneOf(const Range1T &, std::initializer_list<Range2T>);
+
+    template<typename Range1T, typename Range2T>
+    static bool IContains(const Range1T &, const Range2T &);
+
+    template<typename Range1T, typename Range2T>
+    static bool IContainsOneOf(const Range1T &, std::initializer_list<Range2T>);
 
     template <class SequenceT, class SeparatorT>
     static std::ostream& Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator);
@@ -48,21 +70,23 @@ public :
     template <class MapT>
     static std::string Join(const MapT& map);
 
-    template <class OutputT>
+    template <class OutputT = std::string>
     static int Split(const std::string& input, const std::string& delimiters, std::vector<OutputT>& output);
 
-    template <class OutputT>
+    template <class OutputT = std::string>
     static std::vector<OutputT> Split(const std::string& input, const std::string& delimiters);
 
-    template <class OutputT>
+    template <class OutputT = std::string>
     static int SplitBySingleDelim(const std::string& input, const std::string& delimiter, std::vector<OutputT>& output);
 
-    template <class OutputT>
+    template <class OutputT = std::string>
     static std::vector<OutputT> SplitBySingleDelim(const std::string& input, const std::string& delimiter);
 
     template <class NumberT>
     static std::string GroupDigits(NumberT input, const std::string& sep = ",");
     static std::string GroupDigits(std::string input, const std::string& sep = ",");
+
+    static std::string RandomAlphaNum(size_t length);
 };
 
 inline bool KStringUtils::IsNumeric(const char& character)
@@ -85,6 +109,48 @@ inline bool KStringUtils::IsNumeric(const std::string& string)
     catch (boost::bad_lexical_cast&) {
         return false;
     }
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::Equals(const Range1T& r1, const Range2T& r2)
+{
+    return boost::equals(r1, r2);
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::IEquals(const Range1T& r1, const Range2T& r2)
+{
+    return boost::iequals(r1, r2);
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::Contains(const Range1T& r1, const Range2T& r2)
+{
+    return boost::contains(r1, r2);
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::ContainsOneOf(const Range1T& r1, std::initializer_list<Range2T> l)
+{
+    for (const auto& r2 : l)
+        if (boost::contains(r1, r2))
+            return true;
+    return false;
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::IContains(const Range1T& r1, const Range2T& r2)
+{
+    return boost::icontains(r1, r2);
+}
+
+template<typename Range1T, typename Range2T>
+inline bool KStringUtils::IContainsOneOf(const Range1T& r1, std::initializer_list<Range2T> l)
+{
+    for (const auto& r2 : l)
+        if (boost::icontains(r1, r2))
+            return true;
+    return false;
 }
 
 template <class SequenceT, class SeparatorT>
@@ -149,7 +215,7 @@ inline int KStringUtils::Split(const std::string& input, const std::string& deli
     output.clear();
     int returnValue = 0;
 
-    foreach(std::string& token, tokens) {
+    for (std::string& token : tokens) {
         boost::trim(token);
         if (boost::is_floating_point<OutputT>::value)
             boost::replace_all(token, ",", ".");
@@ -194,7 +260,7 @@ inline int KStringUtils::SplitBySingleDelim(const std::string& input, const std:
     output.clear();
     int returnValue = 0;
 
-    foreach(std::string& token, tokens) {
+    for (std::string& token : tokens) {
         boost::trim(token);
         if (boost::is_floating_point<OutputT>::value)
             boost::replace_all(token, ",", ".");
@@ -245,12 +311,39 @@ inline std::string KStringUtils::GroupDigits(std::string str, const std::string&
     return str;
 }
 
+inline std::string KStringUtils::RandomAlphaNum(size_t length)
+{
+    static const std::string alphanums =
+        "0123456789"
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    std::string result;
+    result.reserve(length);
+    while (length--)
+        result += alphanums[ KRandom::GetInstance().Uniform<size_t>(0, alphanums.length()-1) ];
+
+    return result;
+}
+
 }
 
 namespace std {
 
 template <class ValueT>
 inline std::ostream& operator<< (std::ostream& os, const std::vector<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template <class ValueT>
+inline std::ostream& operator<< (std::ostream& os, const std::deque<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -297,10 +390,28 @@ inline std::ostream& operator<< (std::ostream& os, const std::map<KeyT, ValueT>&
     return os;
 }
 
-template <class InputT>
-inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::matrix<InputT>& matrix)
+template <class T>
+inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::matrix<T>& matrix)
 {
-    typedef typename boost::numeric::ublas::matrix<InputT>::size_type size_type;
+    typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
+
+    os << "[" << matrix.size1() << "," << matrix.size2() << "]";
+
+    for (size_type r = 0; r < matrix.size1(); ++r) {
+        os << std::endl << "(";
+        for (size_type c = 0; c < matrix.size2(); ++c) {
+            os.width(os.precision() + 7);
+            os << matrix(r, c);
+        }
+        os << " )";
+    }
+    return os;
+}
+
+template <class T, class U>
+inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::triangular_matrix<T, U>& matrix)
+{
+    typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
 
     os << "[" << matrix.size1() << "," << matrix.size2() << "]";
 
@@ -339,12 +450,8 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<std::vector
     return os;
 }
 
-}
-
-namespace boost {
-
 template <class InputT, std::size_t S>
-inline std::ostream& operator<< (std::ostream& os, const boost::array<InputT, S>& arr)
+inline std::ostream& operator<< (std::ostream& os, const std::array<InputT, S>& arr)
 {
     os << "[" << arr.size() << "]";
     if (!arr.empty()) {
@@ -356,4 +463,5 @@ inline std::ostream& operator<< (std::ostream& os, const boost::array<InputT, S>
 }
 
 }
+
 #endif /* KSTRINGUTILS_H_ */

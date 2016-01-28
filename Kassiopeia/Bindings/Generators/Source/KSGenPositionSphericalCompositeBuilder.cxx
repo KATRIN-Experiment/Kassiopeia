@@ -8,8 +8,9 @@
 #include "KSGenValueAngleSphericalBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -21,7 +22,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenPositionSphericalCompositeStructure =
+    STATICINT sKSGenPositionSphericalCompositeStructure =
         KSGenPositionSphericalCompositeBuilder::Attribute< string >( "name" ) +
         KSGenPositionSphericalCompositeBuilder::Attribute< string >( "surface" ) +
         KSGenPositionSphericalCompositeBuilder::Attribute< string >( "space" ) +
@@ -46,14 +47,17 @@ namespace katrin
         KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueUniform >( "phi_uniform" ) +
         KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueGauss >( "phi_gauss" );
 
-    static int sKSGenPositionSphericalComposite =
+    STATICINT sKSGenPositionSphericalComposite =
         KSRootBuilder::ComplexElement< KSGenPositionSphericalComposite >( "ksgen_position_spherical_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenPositionSphericalCompositeStructureROOT =
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenPositionSphericalCompositeStructureROOT =
             KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "r_formula" ) +
+            KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "r_histogram" ) +
             KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "theta_formula" ) +
-            KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" );
+            KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "theta_histogram" ) +
+            KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" ) +
+            KSGenPositionSphericalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "phi_histogram" );
 #endif
 
 }

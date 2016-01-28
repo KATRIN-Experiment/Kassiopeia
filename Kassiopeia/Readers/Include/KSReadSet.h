@@ -31,6 +31,7 @@ namespace Kassiopeia
         public:
             KSReadValue< XType >& Add( const string& aLabel );
             KSReadValue< XType >& Get( const string& aLabel ) const;
+            bool Exists( const string& aLabel) const;
 
         protected:
             mutable ValueMap fValueMap;
@@ -67,6 +68,16 @@ namespace Kassiopeia
         }
         readermsg( eError ) << "value with label <" << aLabel << "> does not exist" << eom;
         return tIt->second;
+    }
+    template< class XType >
+    bool KSReadSet< KSReadValue< XType > >::Exists( const string& aLabel ) const
+    {
+        ValueIt tIt = fValueMap.find( aLabel );
+        if( tIt != fValueMap.end() )
+        {
+            return true;
+        }
+        return false;
     }
 
     typedef KSReadSet< KSReadValue< bool > > KSBoolSet;

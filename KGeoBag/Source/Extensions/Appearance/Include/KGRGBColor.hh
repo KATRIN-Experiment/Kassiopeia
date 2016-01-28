@@ -7,6 +7,9 @@ using std::istream;
 #include <ostream>
 using std::ostream;
 
+#include <sstream>
+using std::stringstream;
+
 namespace KGeoBag
 {
 
@@ -47,8 +50,7 @@ namespace KGeoBag
 
         return aStream;
     }
-
-    inline ostream& operator<<( ostream& aStream, KGRGBColor& aColor )
+    inline ostream& operator<<( ostream& aStream, const KGRGBColor& aColor )
     {
         unsigned int tRed = aColor.GetRed();
         unsigned int tGreen = aColor.GetGreen();
@@ -58,7 +60,17 @@ namespace KGeoBag
 
         return aStream;
     }
+    inline bool operator!=( KGRGBColor& aColor1, KGRGBColor& aColor2 )
+    {
+        if ( aColor1.GetRed() != aColor2.GetRed() )
+            return true;
+        if ( aColor1.GetGreen() != aColor2.GetGreen() )
+            return true;
+        if ( aColor1.GetBlue() != aColor2.GetBlue() )
+            return true;
 
+        return false;
+    }
 }
 
 #endif

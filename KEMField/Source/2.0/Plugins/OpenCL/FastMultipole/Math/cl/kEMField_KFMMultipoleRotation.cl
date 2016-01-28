@@ -69,28 +69,22 @@ ApplyZRotMatrix(int l, CL_TYPE angle, CL_TYPE* in_mom, CL_TYPE* out_mom)
 void
 ApplyJMatrix(int l, __constant const CL_TYPE* jmat, CL_TYPE* in_mom, CL_TYPE* out_mom)
 {
-    //expects mom to be of size 2*l + 1
+    //expects matrix to be of size 2l + 1 by 2l+1
     int size = 2*l+1;
     CL_TYPE sum;
 
-    int sm, tm, ssi, tsi;
+    int offset = l*l;
     for(int row=0; row < size; row++)
     {
         sum = 0.0;
 
-        tm = row - l;
-        tsi = l*(l+1) + tm;
-
         for(int col=0; col < size; col++)
         {
-            sm = col - l;
-            ssi = l*(l+1) + sm;
-            sum  += (jmat[col + row*size])*in_mom[ssi];
+            sum  += (jmat[col + row*size])*in_mom[offset + col];
         }
 
-        out_mom[tsi] = sum;
+        out_mom[offset + row] = sum;
     }
-
 }
 
 //______________________________________________________________________________

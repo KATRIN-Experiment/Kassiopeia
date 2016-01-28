@@ -18,8 +18,8 @@ set( APPLICATIONS_EXAMPLES_LIBRARIES
     KassiopeiaWriters
     KassiopeiaVisualization
     KassiopeiaSimulation
-)	
-set( APPLICATIONS_EXAMPLES_PATH 
+)
+set( APPLICATIONS_EXAMPLES_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 kasper_internal_include_directories()

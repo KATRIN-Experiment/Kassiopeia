@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueAngleSphericalStructure =
+    STATICINT sKSGenValueAngleSphericalStructure =
         KSGenValueAngleSphericalBuilder::Attribute< string >( "name" ) +
         KSGenValueAngleSphericalBuilder::Attribute< double >( "angle_min" ) +
         KSGenValueAngleSphericalBuilder::Attribute< double >( "angle_max" );
 
-    static int sToolboxKSGenValueAngleSpherical =
+    STATICINT sToolboxKSGenValueAngleSpherical =
         KSRootBuilder::ComplexElement< KSGenValueAngleSpherical >( "ksgen_value_angle_spherical" );
 
 }

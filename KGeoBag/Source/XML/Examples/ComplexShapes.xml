@@ -1,5 +1,9 @@
 <geometry>
 
+    <!-- Important note: for these examples to work correctly Kommon and KGeoBag -->
+    <!-- must be compiled against ROOT in order to make use TFormula in the xml -->
+    <!-- If not these objects will not be built correctly resulting in a crash -->
+
     <!-- complex surfaces -->
 
     <port_housing_surface name="example_port_housing_surface">
@@ -39,6 +43,22 @@
 	</loop>
         </beam>
     </beam_surface>
+
+    <beam_surface name="example_multicut_surface">
+		<beam longitudinal_mesh_count="60" axial_mesh_count="60">
+			<define name="z_start" value="-1."/>
+			<define name="z_end" value="1."/>
+			<define name="radius_start" value="2."/>
+			<define name="radius_end" value="1."/>
+			<define name="theta_start" value="-10."/>
+			<define name="theta_end" value="30."/>
+			<define name="mesh" value="100"/>
+			<loop variable="i" start="0" end="[mesh]" step="1">
+				<start_line x1="{[radius_start]*cos(2.*TMath::Pi()*[i]/[mesh])}" y1="{[radius_start]*cos([theta_start]/180.*TMath::Pi())*sin(2.*TMath::Pi()*[i]/[mesh])}" z1="{[radius_start]*sin([theta_start]/180.*TMath::Pi())*sin(2.*TMath::Pi()*[i]/[mesh])+[z_start]}" x2="{[radius_start]*cos(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])}" y2="{[radius_start]*cos([theta_start]/180.*TMath::Pi())*sin(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])}" z2="{[radius_start]*sin([theta_start]/180.*TMath::Pi())*sin(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])+[z_start]}"/>
+				<end_line x1="{[radius_end]*cos(2.*TMath::Pi()*[i]/[mesh])}" y1="{[radius_end]*cos([theta_end]/180.*TMath::Pi())*sin(2.*TMath::Pi()*[i]/[mesh])}" z1="{[radius_end]*sin([theta_end]/180.*TMath::Pi())*sin(2.*TMath::Pi()*[i]/[mesh])+[z_end]}" x2="{[radius_end]*cos(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])}" y2="{[radius_end]*cos([theta_end]/180.*TMath::Pi())*sin(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])}" z2="{[radius_end]*sin([theta_end]/180.*TMath::Pi())*sin(2.*TMath::Pi()*(([i]+1) mod [mesh])/[mesh])+[z_end]}"/>
+			</loop>
+		</beam>
+	</beam_surface>
 
     <rod_surface name="example_rod_surface">
       <rod radius="0.2" longitudinal_mesh_count="100" axial_mesh_count="12">

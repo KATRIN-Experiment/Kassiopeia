@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKESSSSurfaceInteractionStructure =
+    STATICINT sKESSSSurfaceInteractionStructure =
             KESSSurfaceInteractionBuilder::Attribute< string >( "name" ) +
             KESSSurfaceInteractionBuilder::Attribute< string >( "siliconside" );
 
-    static int sKESSSSurfaceInteractionElement =
+    STATICINT sKESSSSurfaceInteractionElement =
             KSRootBuilder::ComplexElement< KESSSurfaceInteraction >( "kess_surface_interaction" );
 }

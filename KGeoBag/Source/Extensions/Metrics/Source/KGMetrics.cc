@@ -29,6 +29,24 @@ namespace KGeoBag {
 		fVolume = fabs(aVolume->Z1() - aVolume->Z2()) / 3. * KConst::Pi() * (R * R + R * r + r * r);
 	}
 
+	void KGMetricsVolumeData::VisitCutConeTubeSpace(KGCutConeTubeSpace* aVolume)
+	{
+		// inner cut cone space
+		const double Rin1 = aVolume->R11();
+		const double Rin2 = aVolume->R21();
+		// outer cut cone space
+		const double Rout1 = aVolume->R12();
+		const double Rout2 = aVolume->R22();
+
+		const double Z = aVolume->Z2() - aVolume->Z1();
+
+		const double factor = KConst::Pi()*Z/3.;
+		const double volIn = (Rin1*Rin1) + (Rin1*Rin2) + (Rin2*Rin2);
+		const double volOut = (Rout1*Rout1) + (Rout1*Rout2) + (Rout2*Rout2);
+
+		fVolume = fabs(factor * (volOut-volIn) );
+	}
+
 	void KGMetricsVolumeData::VisitBoxSpace(const KGBoxSpace* aVolume) {
 		fVolume = fabs((aVolume->ZA() - aVolume->ZB())
 				* (aVolume->XA() - aVolume->XB()) * (aVolume->YA() - aVolume->YB()));

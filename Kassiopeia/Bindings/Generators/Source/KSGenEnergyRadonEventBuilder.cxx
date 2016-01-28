@@ -11,7 +11,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenEnergyRadonEventStructure =
+    STATICINT sKSGenEnergyRadonEventStructure =
         KSGenEnergyRadonEventBuilder::Attribute< string >( "name" ) +
         KSGenEnergyRadonEventBuilder::Attribute< bool >( "force_shake_off" ) +
         KSGenEnergyRadonEventBuilder::Attribute< bool >( "force_conversion" ) +
@@ -20,7 +20,7 @@ namespace katrin
         KSGenEnergyRadonEventBuilder::Attribute< bool >( "do_auger" ) +
         KSGenEnergyRadonEventBuilder::Attribute< int >( "isotope_number" );
 
-    static int sKSGenEnergyRadonEvent =
+    STATICINT sKSGenEnergyRadonEvent =
         KSRootBuilder::ComplexElement< KSGenEnergyRadonEvent >( "ksgen_energy_radon_event" );
 
 }

@@ -1,10 +1,12 @@
 #ifndef Kassiopeia_KSTrajIntegratorRK86_h_
 #define Kassiopeia_KSTrajIntegratorRK86_h_
 
+#include "KSComponentTemplate.h"
 #include "KSMathRK86.h"
 
 #include "KSTrajExactTypes.h"
 #include "KSTrajAdiabaticTypes.h"
+#include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
 
 namespace Kassiopeia
@@ -14,6 +16,7 @@ namespace Kassiopeia
         public KSComponentTemplate< KSTrajIntegratorRK86 >,
         public KSMathRK86< KSTrajExactSystem >,
         public KSMathRK86< KSTrajAdiabaticSystem >,
+        public KSMathRK86< KSTrajElectricSystem >,
         public KSMathRK86< KSTrajMagneticSystem >
     {
         public:

@@ -17,6 +17,7 @@ namespace KGeoBag
     w->fThetaStart = fThetaStart;
     w->fDiameter = fDiameter;
     w->fNDisc = fNDisc;
+    w->fNDiscPower = fNDiscPower;
 
     return w;
   }
@@ -59,6 +60,7 @@ namespace KGeoBag
     double p_z = P[2];
 
     bool withinZ = true;
+    (void) withinZ; //remove compiler warning
     double w_z = P[2];
     double z_limits[2] = {fZ1,fZ2};
     double d_theta[2] = {2.*M_PI*fR1/fNWires,2.*M_PI*fR2/fNWires};
@@ -101,7 +103,7 @@ namespace KGeoBag
 
       w_theta = fThetaStart + n*dTheta;
       if (w_theta >=2.*M_PI) w_theta -= 2.*M_PI;
-      
+
       if (fabs(w_theta-p_theta)<fDiameter/w_radius*.5)
 	withinTheta = true;
     }

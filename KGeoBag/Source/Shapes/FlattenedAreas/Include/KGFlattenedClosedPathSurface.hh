@@ -28,7 +28,7 @@ namespace KGeoBag
                     fPath( new XPathType() ),
                     fZ( 0. ),
                     fSign( 1. ),
-                    fFlattenedMeshCount( 1 ),
+                    fFlattenedMeshCount( 8 ),
                     fFlattenedMeshPower( 1. )
             {
                 CompilerCheck();
@@ -47,7 +47,7 @@ namespace KGeoBag
                     fPath( aPath ),
                     fZ( 0. ),
                     fSign( 1. ),
-                    fFlattenedMeshCount( 1 ),
+                    fFlattenedMeshCount( 8 ),
                     fFlattenedMeshPower( 1. )
             {
             }

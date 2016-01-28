@@ -10,13 +10,14 @@ namespace katrin
     {
     }
 
-    static int sKSNavSpaceStructure =
+    STATICINT sKSNavSpaceStructure =
         KSNavSpaceBuilder::Attribute< string >( "name" ) +
         KSNavSpaceBuilder::Attribute< bool >( "enter_split" ) +
         KSNavSpaceBuilder::Attribute< bool >( "exit_split" ) +
+        KSNavSpaceBuilder::Attribute< bool >( "fail_check" ) +
         KSNavSpaceBuilder::Attribute< double >( "tolerance" );
 
-    static int sToolboxKSNavSpace =
+    STATICINT sToolboxKSNavSpace =
         KSRootBuilder::ComplexElement< KSNavSpace >( "ksnav_space" );
 
 }

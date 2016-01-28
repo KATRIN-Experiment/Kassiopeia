@@ -73,9 +73,9 @@ namespace KGeoBag
       double Area() const { return fArea; }
       double Volume() const { return fVolume; }
 
-      void  SetP1(double d[3]) { for (int i=0;i<3;i++) fP1[i]=d[i]; }
+      void  SetP1(double d[2]) { for (int i=0;i<2;i++) fP1[i]=d[i]; }
       void  SetP1(unsigned int i,double d) { if (i<2) fP1[i] = d; }
-      void  SetP2(double d[3]) { for (int i=0;i<3;i++) fP2[i]=d[i]; }
+      void  SetP2(double d[2]) { for (int i=0;i<2;i++) fP2[i]=d[i]; }
       void  SetP2(unsigned int i,double d) { if (i<2) fP2[i] = d; }
       void  SetNPolyBegin(unsigned int i)    { fNPolyBegin = i; }
       void  SetNPolyEnd(unsigned int i)      { fNPolyEnd = i; }

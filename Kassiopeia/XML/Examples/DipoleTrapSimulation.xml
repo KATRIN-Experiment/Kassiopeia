@@ -163,7 +163,7 @@
     </ksfield_electromagnet>
 
     <!-- electric fields -->
-    
+
     <ksfield_electrostatic
         name="field_electrostatic"
         file="DipoleTrapElectrodes.kbd"
@@ -230,9 +230,9 @@
     </kstraj_trajectory_exact>
 
 	<!-- space interactions -->
-    
+
     <ksint_scattering name="int_scattering">
-        <density_constant temperature="300." pressure="3.e0"/>    
+        <density_constant temperature="300." pressure="3.e0"/>
         <calculator_constant cross_section="1.e-18"/>
     </ksint_scattering>
 
@@ -247,7 +247,7 @@
     <!-- surface navigators -->
 
     <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
-    
+
     <!-- terminators -->
 
     <ksterm_death name="term_upstream_target"/>
@@ -353,7 +353,7 @@
 
 </kassiopeia>
 
-<vtk_window 
+<vtk_window
     name="vtk_window"
     enable_display="true"
     enable_write="true"
@@ -368,8 +368,8 @@
     multi_samples="4"
     depth_peeling="10"
 >
-    <vtk_geometry_painter 
-        name="geometry_painter" 
+    <vtk_geometry_painter
+        name="geometry_painter"
         file="DipoleTrapGeometry.vtp"
         surfaces="world/dipole_trap/#"
     />
@@ -380,5 +380,19 @@
         point_variable="position"
         color_object="component_step_world"
         color_variable="polar_angle_to_b"
+    />
+    <vtk_track_terminator_painter
+        name="terminator_painter"
+        file="DipoleTrapSimulation.root"
+        point_object="component_track_world"
+        point_variable="final_position"
+        terminator_object="component_track_world"
+        terminator_variable="terminator_name"
+        add_terminator="term_upstream_target"
+        add_color="0 255 0"
+        add_terminator="term_downstream_target"
+        add_color="0 255 0"
+        add_terminator="term_max_steps"
+        add_color="255 0 0"
     />
 </vtk_window>

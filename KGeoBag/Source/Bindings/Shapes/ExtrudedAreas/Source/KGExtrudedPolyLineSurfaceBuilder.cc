@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGExtrudedPolyLineSurfaceBuilder =
+    STATICINT sKGExtrudedPolyLineSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGExtrudedPolyLineSurface >( "extruded_poly_line_surface" );
 
-    static const int sKGExtrudedPolyLineSurfaceBuilderStructure =
+    STATICINT sKGExtrudedPolyLineSurfaceBuilderStructure =
         KGExtrudedPolyLineSurfaceBuilder::Attribute< string >( "name" ) +
         KGExtrudedPolyLineSurfaceBuilder::Attribute< double >( "zmin" ) +
         KGExtrudedPolyLineSurfaceBuilder::Attribute< double >( "zmax" ) +

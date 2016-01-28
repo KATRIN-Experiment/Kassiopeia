@@ -11,7 +11,7 @@ void KGeoBag::KGConeSurfaceRandom::VisitConeSurface(KGeoBag::KGConeSurface* aCon
 	KThreeVector point;
 
 	// Decide, on which area the point have to be
-	double h = abs(aConeSpace->ZA() - aConeSpace->ZB());
+	double h = std::abs(aConeSpace->ZA() - aConeSpace->ZB());
 	double face = KConst::Pi() * aConeSpace->RB() * aConeSpace->RB();
 	double curvedSurfaceArea = KConst::Pi() * aConeSpace->RB() * (aConeSpace->RB()
 			+ sqrt(aConeSpace->RB() * aConeSpace->RB() + h * h));

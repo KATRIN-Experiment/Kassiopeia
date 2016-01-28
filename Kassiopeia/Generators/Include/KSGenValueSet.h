@@ -21,9 +21,9 @@ namespace Kassiopeia
             void DiceValue( vector< double >& aDicedValues );
 
         public:
-            ;K_SET_GET( double, ValueStart );
-            ;K_SET_GET( double, ValueStop );
-            ;K_SET_GET( unsigned int, ValueCount );
+            K_SET_GET( double, ValueStart )
+            K_SET_GET( double, ValueStop )
+            K_SET_GET( unsigned int, ValueCount )
     };
 
 }

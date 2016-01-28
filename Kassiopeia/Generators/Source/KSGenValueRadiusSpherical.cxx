@@ -17,6 +17,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueRadiusSpherical::KSGenValueRadiusSpherical( const KSGenValueRadiusSpherical& aCopy ) :
+            KSComponent(),
             fRadiusMin( aCopy.fRadiusMin ),
             fRadiusMax( aCopy.fRadiusMax )
     {

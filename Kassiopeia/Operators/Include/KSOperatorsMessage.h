@@ -3,14 +3,14 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( Kassiopeia, oprmsg );
+KMESSAGE_DECLARE( Kassiopeia, oprmsg )
 
 #ifdef Kassiopeia_ENABLE_DEBUG
 #define oprmsg_debug( xCONTENT )\
     oprmsg( eDebug ) << xCONTENT;
 
 #define oprmsg_assert( xVARIABLE, xASSERTION )\
-    if (! (xVARIABLE xASSERTION)) fieldmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
+    if (! (xVARIABLE xASSERTION)) oprmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
 
 #endif
 

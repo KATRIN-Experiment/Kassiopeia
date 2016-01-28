@@ -34,7 +34,7 @@ class KFMElectrostaticMultipoleSet: public KFMScalarMultipoleExpansion
     private:
 };
 
-DefineKSAClassName(KFMElectrostaticMultipoleSet);
+DefineKSAClassName(KFMElectrostaticMultipoleSet)
 
 }
 

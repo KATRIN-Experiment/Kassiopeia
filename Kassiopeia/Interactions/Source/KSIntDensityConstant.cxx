@@ -8,10 +8,11 @@ namespace Kassiopeia
     KSIntDensityConstant::KSIntDensityConstant() :
         fTemperature( 0. ),
         fPressure( 0. ),
-        fDensity( 0. )
+        fDensity( -1. )
     {
     }
     KSIntDensityConstant::KSIntDensityConstant( const KSIntDensityConstant& aCopy ) :
+        KSComponent(),
         fTemperature( aCopy.fTemperature ),
         fPressure( aCopy.fPressure ),
         fDensity( aCopy.fDensity )
@@ -27,7 +28,7 @@ namespace Kassiopeia
 
     void KSIntDensityConstant::CalculateDensity( const KSParticle&, double& aDensity )
     {
-        if( fDensity == 0. )
+        if( fDensity == -1. )
         {
             aDensity = fPressure / (KConst::kB() * fTemperature );
             return;

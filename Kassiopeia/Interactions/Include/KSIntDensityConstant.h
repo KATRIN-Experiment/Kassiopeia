@@ -20,9 +20,9 @@ namespace Kassiopeia
             void CalculateDensity( const KSParticle& aParticle, double& aDensity );
 
         public:
-            K_SET_GET( double, Temperature ); // kelvin
-            K_SET_GET( double, Pressure ); // pascal (SI UNITS!)
-            K_SET_GET( double, Density );  // m^-3
+            K_SET_GET( double, Temperature ) // kelvin
+            K_SET_GET( double, Pressure ) // pascal (SI UNITS!)
+            K_SET_GET( double, Density )  // m^-3
     };
 
 }

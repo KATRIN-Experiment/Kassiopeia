@@ -1,7 +1,7 @@
 #ifndef KGObjectRetriever_HH__
 #define KGObjectRetriever_HH__
 
-#include "KTypelist.hh"
+#include "KGTypelist.hh"
 #include "KGNode.hh"
 
 namespace KGeoBag

@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
     }
     KSFieldElectricQuadrupole::KSFieldElectricQuadrupole( const KSFieldElectricQuadrupole& aCopy ) :
+        KSComponent(),
         fLocation( aCopy.fLocation ),
         fStrength( aCopy.fStrength ),
         fLength( aCopy.fLength ),

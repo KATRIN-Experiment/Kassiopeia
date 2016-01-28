@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGExtrudedPolyLoopSpaceBuilder =
+    STATICINT sKGExtrudedPolyLoopSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGExtrudedPolyLoopSpace >( "extruded_poly_loop_space" );
 
-    static const int sKGExtrudedPolyLoopSpaceBuilderStructure =
+    STATICINT sKGExtrudedPolyLoopSpaceBuilderStructure =
         KGExtrudedPolyLoopSpaceBuilder::Attribute< string >( "name" ) +
         KGExtrudedPolyLoopSpaceBuilder::Attribute< double >( "zmin" ) +
         KGExtrudedPolyLoopSpaceBuilder::Attribute< double >( "zmax" ) +

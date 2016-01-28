@@ -25,8 +25,8 @@ template<unsigned int NDIM, typename ObjectTypeList>
 class KFMCubicSpaceNodeNeighborFinder
 {
     public:
-        KFMCubicSpaceNodeNeighborFinder();
-        virtual ~KFMCubicSpaceNodeNeighborFinder();
+        KFMCubicSpaceNodeNeighborFinder(){};
+        virtual ~KFMCubicSpaceNodeNeighborFinder(){};
 
         //get all neighbors that are up to 'order' positions away from the target node
         static void
@@ -86,24 +86,33 @@ class KFMCubicSpaceNodeNeighborFinder
             unsigned int target_coord[NDIM];
             unsigned int dim_size[NDIM];
 
-            //get the dimensionality of the tree
-            KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<NDIM> >::GetNodeObject(target_node)->GetDimensions(dim_size);
-
-            //get the target nodes storage index in its parents list
-            unsigned int target_storage_index = target_node->GetIndex();
-
-            //compute its spatial indices from the storage index
-            KFMArrayMath::RowMajorIndexFromOffset<NDIM>(target_storage_index, dim_size, target_coord);
-
-            //get its parent
+            //get this node's parent
             KFMNode<ObjectTypeList>* parent = target_node->GetParent();
 
             if(parent != NULL)
             {
+                //get the dimensionality of the divisions at this tree level
+                if(parent->GetLevel() == 0)
+                {
+                    //we are at the top level
+                    KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<NDIM> >::GetNodeObject(target_node)->GetTopLevelDimensions(dim_size);
+                }
+                else
+                {
+                    //all other tree levels
+                    KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<NDIM> >::GetNodeObject(target_node)->GetDimensions(dim_size);
+                }
+
+                //get the target nodes storage index in its parents list
+                unsigned int target_storage_index = target_node->GetIndex();
+
+                //compute its spatial indices from the storage index
+                KFMArrayMath::RowMajorIndexFromOffset<NDIM>(target_storage_index, dim_size, target_coord);
+
                 for(unsigned int i=0; i<NDIM; i++)
                 {
                     abs_coord[i] = index[i] + target_coord[i];
-                    div_coord[i] = std::floor( ((double)abs_coord[i]) / ( (double)dim_size[i] )  );
+                    div_coord[i] = (int)(std::floor( ((double)abs_coord[i]) / ( (double)dim_size[i] ) ) );
                     mod_coord[i] = KFMArrayMath::Modulus(abs_coord[i], dim_size[i]);
                 }
 

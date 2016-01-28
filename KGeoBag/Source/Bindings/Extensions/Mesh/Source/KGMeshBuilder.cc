@@ -55,12 +55,12 @@ namespace katrin
     {
     }
 
-    static int sKGMeshStructure =
+    STATICINT sKGMeshStructure =
         KGMeshBuilder::Attribute< string >( "name" ) +
         KGMeshBuilder::Attribute< string >( "surfaces" ) +
         KGMeshBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGMesh =
+    STATICINT sKGMesh =
       KGInterfaceBuilder::ComplexElement< KGMeshAttributor >( "mesh" );
 
 }

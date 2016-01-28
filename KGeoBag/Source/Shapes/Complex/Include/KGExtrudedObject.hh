@@ -97,8 +97,8 @@ namespace KGeoBag
       void SetNDisc(int i)  { fNDisc = i; }
       int  GetNDisc() const { return fNDisc; }
 
-      void SetP1(double d[3]) { for (int i=0;i<3;i++) fP1[i]=d[i]; }
-      void SetP2(double d[3]) { for (int i=0;i<3;i++) fP2[i]=d[i]; }
+      void SetP1(double d[2]) { for (int i=0;i<2;i++) fP1[i]=d[i]; }
+      void SetP2(double d[2]) { for (int i=0;i<2;i++) fP2[i]=d[i]; }
 
       double GetP1(unsigned int i) const { return (i<2 ? fP1[i] : 0.); }
       double GetP2(unsigned int i) const { return (i<2 ? fP2[i] : 0.); }

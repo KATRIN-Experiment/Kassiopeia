@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGShellLineSegmentSurfaceBuilder =
+    STATICINT sKGShellLineSegmentSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGShellLineSegmentSurface >( "shell_line_segment_surface" );
 
-    static const int sKGShellLineSegmentSurfaceBuilderStructure =
+    STATICINT sKGShellLineSegmentSurfaceBuilderStructure =
         KGShellLineSegmentSurfaceBuilder::Attribute< string >( "name" ) +
         KGShellLineSegmentSurfaceBuilder::Attribute< double >( "angle_start" ) +
         KGShellLineSegmentSurfaceBuilder::Attribute< double >( "angle_stop" ) +

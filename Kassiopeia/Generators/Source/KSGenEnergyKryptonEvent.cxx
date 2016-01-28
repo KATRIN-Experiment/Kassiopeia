@@ -17,6 +17,7 @@ namespace Kassiopeia
     {
     }
     KSGenEnergyKryptonEvent::KSGenEnergyKryptonEvent( const KSGenEnergyKryptonEvent& aCopy ) :
+        KSComponent(),
         fForceConversion( aCopy.fForceConversion ),
         fDoConversion( aCopy.fDoConversion ),
         fDoAuger( aCopy.fDoAuger ),

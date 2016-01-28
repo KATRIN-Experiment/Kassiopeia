@@ -10,8 +10,8 @@ namespace katrin
     {
     }
 
-    static int sKSElasticElsepaStructure = KESSElasticElsepaBuilder::Attribute< string >( "name" );
+    STATICINT sKSElasticElsepaStructure = KESSElasticElsepaBuilder::Attribute< string >( "name" );
 
-    static int sKSElasticElsepa = KSRootBuilder::ComplexElement< KESSElasticElsepa >( "kess_elastic_elsepa" );
+    STATICINT sKSElasticElsepa = KSRootBuilder::ComplexElement< KESSElasticElsepa >( "kess_elastic_elsepa" );
 
 }

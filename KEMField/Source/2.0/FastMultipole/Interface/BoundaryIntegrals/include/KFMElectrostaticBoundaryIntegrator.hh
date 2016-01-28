@@ -1,6 +1,8 @@
 #ifndef KFMElectrostaticBoundaryIntegrator_HH__
 #define KFMElectrostaticBoundaryIntegrator_HH__
 
+#include "KSurfaceContainer.hh"
+
 #include "KElectrostaticBoundaryIntegrator.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
 
@@ -16,6 +18,19 @@
 
 #include "KFMElectrostaticParameters.hh"
 #include "KFMElectrostaticTreeInformationExtractor.hh"
+
+#include "KFMInsertionCondition.hh"
+#include "KFMSubdivisionCondition.hh"
+#include "KFMSubdivisionConditionAggressive.hh"
+#include "KFMSubdivisionConditionBalanced.hh"
+#include "KFMSubdivisionConditionGuided.hh"
+
+
+#include "KFMDenseBlockSparseMatrixGenerator.hh"
+
+#include <utility>
+
+#include "KMD5HashGenerator.hh"
 
 namespace KEMField
 {
@@ -38,30 +53,67 @@ template<typename ParallelTrait = KFMElectrostaticBoundaryIntegratorEngine_Singl
 class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrator
 {
     public:
+
         KFMElectrostaticBoundaryIntegrator(KSurfaceContainer& surfaceContainer):
         KElectrostaticBoundaryIntegrator(),
         fInitialized(false),
         fSurfaceContainer(surfaceContainer)
         {
-            fUniqueID = "nonunique";
+            fUniqueID = "INVALID_ID";
+            fTree = NULL;
+            fElementContainer = NULL;
+            fTreeIsOwned = true;
+            fSubdivisionCondition = NULL;
         };
 
         virtual ~KFMElectrostaticBoundaryIntegrator()
         {
-            //reset the node's ptr to the element container to null
-            KFMNodeObjectNullifier<KFMElectrostaticNodeObjects, KFMElectrostaticElementContainerBase<3,1> > elementContainerNullifier;
-            fTree.ApplyCorecursiveAction(&elementContainerNullifier);
-
-            delete fElementContainer;
+            if(fTreeIsOwned)
+            {
+                //reset the node's ptr to the element container to null
+                KFMNodeObjectNullifier<KFMElectrostaticNodeObjects, KFMElectrostaticElementContainerBase<3,1> > elementContainerNullifier;
+                fTree->ApplyCorecursiveAction(&elementContainerNullifier);
+                delete fTree;
+                delete fElementContainer;
+                delete fSubdivisionCondition;
+            }
         };
 
+        unsigned int GetVerbosity() const { return fParameters.verbosity;};
+
+        //for hash identification
+        std::string GetUniqueIDString() const {return fUniqueID;};
+        std::string GetGeometryHash(){return fGeometryHash;};
+        std::string GetBoundaryConditionHash(){return fBoundaryConditionHash;}
+        std::string GetTreeParameterHash(){return fTreeParameterHash;};
+        std::vector< std::string > GetLabels()
+        {
+            std::vector< std::string > labels;
+            labels.push_back(fGeometryHash);
+            labels.push_back(fBoundaryConditionHash);
+            labels.push_back(fTreeParameterHash);
+            return labels;
+        }
+
+        //size of the surface container
+        unsigned int Dimension() const {return fSurfaceContainer.size();};
+
+        //initialize and construct new tree
         void Initialize(const KFMElectrostaticParameters& params)
         {
             if(!fInitialized)
             {
                 fParameters = params;
 
-                fTree.SetParameters(fParameters);
+                InitializeSubdivisionCondition();
+
+                ComputeUniqueHash(params);
+
+                fTree = new KFMElectrostaticTree();
+                fTreeIsOwned = true;
+
+                fTree->SetParameters(fParameters);
+                fTree->SetUniqueID(fUniqueID);
 
                 if(fParameters.verbosity > 0)
                 {
@@ -77,51 +129,52 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
                 //we just want to convert these into point clouds, and then bounding balls
                 //so extract the information we want
                 fElementContainer = new KFMElectrostaticElementContainer<3,1>();
+
                 fSurfaceConverter.SetSurfaceContainer(&fSurfaceContainer);
+
                 fSurfaceConverter.SetElectrostaticElementContainer(fElementContainer);
                 fSurfaceConverter.Extract();
 
-                //create the tree builder
-                KFMElectrostaticTreeBuilder treeBuilder;
-                treeBuilder.SetElectrostaticElementContainer(fElementContainer);
-                treeBuilder.SetTree(&fTree);
+                //set up the tree builder
+                fTreeBuilder.SetSubdivisionCondition(fSubdivisionCondition);
+                fTreeBuilder.SetElectrostaticElementContainer(fElementContainer);
+                fTreeBuilder.SetTree(fTree);
 
                 //now we construct the tree's structure
-                treeBuilder.ConstructRootNode();
-                treeBuilder.PerformSpatialSubdivision();
-                treeBuilder.FlagNonZeroMultipoleNodes();
-                treeBuilder.PerformAdjacencySubdivision();
-                treeBuilder.FlagPrimaryNodes();
-                treeBuilder.CollectDirectCallIdentitiesForPrimaryNodes();
+                fTreeBuilder.ConstructRootNode();
+                fTreeBuilder.PerformSpatialSubdivision();
+                fTreeBuilder.FlagNonZeroMultipoleNodes();
+                fTreeBuilder.PerformAdjacencySubdivision();
+                fTreeBuilder.FlagPrimaryNodes();
+
+                //remove the unneeded bounding balls from the element container
+                fElementContainer->ClearBoundingBalls();
+
+                //determine element ids for direct evaluation
+                fTreeBuilder.CollectDirectCallIdentitiesForPrimaryNodes();
 
                 //the parallel trait is responsible for computing
                 //local coefficient field map everywhere it is needed (primary nodes)
                 fTrait.SetElectrostaticElementContainer(fElementContainer);
-                fTrait.SetTree(&fTree);
+                fTrait.SetParameters(params); //always set the parameters before setting the tree
+                fTrait.SetTree(fTree);
+                fTrait.InitializeMultipoleMoments();
+                fTrait.InitializeLocalCoefficientsForPrimaryNodes();
                 fTrait.Initialize();
-                fTrait.MapField();
 
                 //extract information
                 if(fParameters.verbosity > 1)
                 {
                    KFMElectrostaticTreeInformationExtractor extractor;
-                   fTree.ApplyCorecursiveAction(&extractor);
+                   extractor.SetDegree(fParameters.degree);
+                   fTree->ApplyCorecursiveAction(&extractor);
                    extractor.PrintStatistics();
                 }
 
                 //fast field solver (from local coeff)
                 fFastFieldSolver.SetDegree(params.degree);
 
-                //compute the representation of the sparse matrix
-                //this must be done regardless of whether or not we are caching the matrix elements
-
-                if(fParameters.verbosity > 2)
-                {
-                    kfmout<<"KFMElectrostaticBoundaryIntegrator::Initialize: Constructing sparse matrix representation."<<kfmendl;
-                }
-
                 ConstructElementNodeAssociation();
-                ConstructSparseMatrixRepresentation();
 
                 if(fParameters.verbosity > 0)
                 {
@@ -132,21 +185,95 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             }
         }
 
-        //for hash identification
-        void SetUniqueIDString(std::string unique_id){fUniqueID = unique_id;};
-        std::string GetUniqueIDString() const {return fUniqueID;};
+        //initialize with an externally constructed tree
+        void Initialize(const KFMElectrostaticParameters& params, KFMElectrostaticTree* tree)
+        {
+            if(!fInitialized)
+            {
+                fTree = tree;
+                fTreeIsOwned = false;
 
-        KFMElectrostaticTree* GetTree(){return &fTree;};
+                fParameters = params;
+                //check to make sure parameters are compatible with the pre-constructed tree
+                KFMElectrostaticParameters tree_params = fTree->GetParameters();
+
+                bool isValid = true;
+                if(params.top_level_divisions != tree_params.top_level_divisions){isValid = false;};
+                if(params.divisions != tree_params.divisions){isValid = false;};
+                if(params.degree > tree_params.degree){isValid = false;}; //this is the only meaningful parameter that is allowed to differ
+                if(params.zeromask != tree_params.zeromask){isValid = false;};
+
+                if( !(tree_params.use_region_estimation) )
+                {
+                    if( params.world_center_x != tree_params.world_center_x){isValid = false;};
+                    if( params.world_center_y != tree_params.world_center_y){isValid = false;};
+                    if( params.world_center_z != tree_params.world_center_z){isValid = false;};
+                    if( params.world_length != tree_params.world_length){isValid = false;};
+                }
+
+                if(!isValid)
+                {
+                    kfmout<<"KFMElectrostaticBoundaryIntegrator::Initialize: Error, attempted to reused pre-constructed tree, but there is a parameter mis-match. "<<kfmendl;
+                    kfmexit(1);
+                }
+
+                ComputeUniqueHash(fParameters);
+
+                if(fParameters.verbosity > 0)
+                {
+                    kfmout<<"KFMElectrostaticBoundaryIntegrator::Initialize: Initializing electrostatic fast multipole boundary integrator."<<kfmendl;
+                }
+
+                //get a pointer to the pre-existing element container
+                fElementContainer =
+                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticElementContainerBase<3,1> >::GetNodeObject(fTree->GetRootNode());
+                //set up the surface converter w/ pre-existing element container
+                //no need to extract the data, as this has already been done
+                fSurfaceConverter.SetSurfaceContainer(&fSurfaceContainer);
+                fSurfaceConverter.SetElectrostaticElementContainer(fElementContainer);
+
+                //the parallel trait is responsible for computing
+                //local coefficient field map everywhere it is needed (primary nodes)
+                fTrait.SetElectrostaticElementContainer(fElementContainer);
+                fTrait.SetParameters(params); //always set parameters before setting the tree
+                fTrait.SetTree(fTree);
+                fTrait.Initialize();
+
+                //fast field solver (from local coeff)
+                fFastFieldSolver.SetDegree(params.degree);
+
+                ConstructElementNodeAssociation();
+
+                //compute the representation of the sparse matrix
+                if(fParameters.verbosity > 2)
+                {
+                    kfmout<<"KFMElectrostaticBoundaryIntegrator::Initialize: Constructing sparse matrix representation."<<kfmendl;
+                }
+
+                if(fParameters.verbosity > 0)
+                {
+                    kfmout<<"KFMElectrostaticBoundaryIntegrator::Initialize: Done fast multipole boundary integrator intialization."<<kfmendl;
+                }
+
+                fInitialized = true;
+            }
+        }
+
+        KFMElectrostaticTree* GetTree(){return fTree;};
 
         void Update(const KVector<ValueType>& x)
         {
             fSurfaceConverter.UpdateBasisData(x);
-
             //recompute the multipole moments and the local coefficients to update the field
             fTrait.MapField();
         }
 
         using KElectrostaticBoundaryIntegrator::BoundaryIntegral;
+
+        ValueType BoundaryIntegral(unsigned int sourceIndex, unsigned int targetIndex)
+        {
+            return KElectrostaticBoundaryIntegrator::BoundaryIntegral( fSurfaceContainer[sourceIndex], sourceIndex, fSurfaceContainer[targetIndex], targetIndex );
+        }
 
         ValueType BoundaryIntegral(KSurfacePrimitive* target, unsigned int targetIndex)
         {
@@ -182,28 +309,82 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             return ret_val;
         }
 
-        unsigned int GetNMatrixElementsToCache()
+        ValueType BoundaryIntegral( unsigned int targetIndex)
         {
-            return fNumberNonZeroSparseMatrixElements;
+            KSurfacePrimitive* target = fSurfaceContainer.at(targetIndex);
+
+            //for piecewise constant collocation, we do not use the target index
+            //evaluation is always at a single point, the centroid
+
+            //look up the node corresponding to this target
+            KFMElectrostaticNode* node = fNodes[targetIndex];
+
+            //retrieve the expansion origin
+            KFMCube<3>* cube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<3> >::GetNodeObject(node);
+            KFMPoint<3> origin = cube->GetCenter();
+
+            //retrieve the local coefficients
+            KFMElectrostaticLocalCoefficientSet* set;
+            set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>::GetNodeObject(node);
+            fFastFieldSolver.SetLocalCoefficients(set);
+            fFastFieldSolver.SetExpansionOrigin(origin);
+
+            //figure out the boundary element's type
+            target->Accept(fBoundaryVisitor);
+            double ret_val = 0;
+            if(fBoundaryVisitor.IsDirichlet())
+            {
+                ret_val = fFastFieldSolver.Potential(target->GetShape()->Centroid());
+            }
+            else
+            {
+                KEMThreeVector field;
+                fFastFieldSolver.ElectricField(target->GetShape()->Centroid(),field);
+                ret_val = field.Dot(target->GetShape()->Normal());
+            }
+            return ret_val;
         }
-
-        const std::vector< const std::vector<unsigned int>* >& GetCachedMatrixElementColumnIndexListPointers() const
-        {
-            return fColumnIndexListPointers;
-        };
-
-        const std::vector< unsigned int >& GetCachedMatrixElementRowOffsetList() const
-        {
-            return fMatrixElementRowOffsets;
-        };
-
 
     protected:
 
+        void
+        InitializeSubdivisionCondition()
+        {
+            //construct the subdivision condition
+            if(fParameters.strategy == KFMSubdivisionStrategy::Balanced )
+            {
+                KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* balancedSubdivision = new KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
+
+                //determine how to weight the work load contributions
+                fTrait.EvaluateWorkLoads(fParameters.divisions, fParameters.zeromask);
+
+                //set the work load weights
+                balancedSubdivision->SetDiskWeight(fTrait.GetDiskWeight());
+                balancedSubdivision->SetRamWeight(fTrait.GetRamWeight());
+                balancedSubdivision->SetFFTWeight(fTrait.GetFFTWeight());
+                balancedSubdivision->SetBiasDegree(fParameters.bias_degree);
+                balancedSubdivision->SetDegree(fParameters.degree);
+                fSubdivisionCondition = balancedSubdivision;
+            }
+            else if( fParameters.strategy == KFMSubdivisionStrategy::Guided )
+            {
+                KFMSubdivisionConditionGuided<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* guidedSubdivision = new KFMSubdivisionConditionGuided<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
+                guidedSubdivision->SetFractionForDivision(fParameters.allowed_fraction);
+                guidedSubdivision->SetAllowedNumberOfElements(fParameters.allowed_number);
+                fSubdivisionCondition = guidedSubdivision;
+            }
+            else
+            {
+                fSubdivisionCondition = new KFMSubdivisionConditionAggressive<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
+            }
+        }
+
+////////////////////////////////////////////////////////////////////////////////
+
         void ConstructElementNodeAssociation()
         {
+            //here we associate each element's centroid with the node containing it
             KFMElectrostaticTreeNavigator navigator;
-            navigator.SetDivisions(fParameters.divisions);
 
             unsigned int n_elem = fElementContainer->GetNElements();
             fNodes.resize(n_elem);
@@ -212,7 +393,7 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             {
                 fNodes[i] = NULL;
                 navigator.SetPoint( fElementContainer->GetCentroid(i) );
-                navigator.ApplyAction(fTree.GetRootNode());
+                navigator.ApplyAction(fTree->GetRootNode());
 
                 if(navigator.Found())
                 {
@@ -227,81 +408,47 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             }
         }
 
+////////////////////////////////////////////////////////////////////////////////
 
-
-        void ConstructSparseMatrixRepresentation()
+        void
+        ComputeUniqueHash( const KFMElectrostaticParameters& parameters)
         {
-            //computes a representation of the local sparse matrix
-            //does not compute the matrix elements themselves, just indexes of the non-zero entries
+            int HashMaskedBits = 20;
+            double HashThreshold = 1.e-14;
 
-            //first compute the number of non-zero matrix elements
-            unsigned int n_mx_elements = 0;
-            unsigned int n_elem = fSurfaceContainer.size();
+            // compute hash of the bare geometry
+            KMD5HashGenerator tShapeHashGenerator;
+            tShapeHashGenerator.MaskedBits( HashMaskedBits );
+            tShapeHashGenerator.Threshold( HashThreshold );
+            tShapeHashGenerator.Omit( Type2Type< KElectrostaticBasis >() );
+            tShapeHashGenerator.Omit( Type2Type< KBoundaryType< KElectrostaticBasis, KDirichletBoundary > >() );
+            tShapeHashGenerator.Omit( Type2Type< KBoundaryType< KElectrostaticBasis, KNeumannBoundary > >() );
+            fGeometryHash = tShapeHashGenerator.GenerateHash( fSurfaceContainer );
 
-            //first we determine the non-zero column element indices
-            //loop over all elements of surface container
-            for(unsigned int i=0; i<n_elem; i++)
-            {
-                //look up the node corresponding to this target
-                KFMElectrostaticNode* leaf_node = fNodes[i];
-                KFMExternalIdentitySet* eid_set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet>::GetNodeObject(leaf_node);
+            // compute hash of right hand size of the equation (boundary conditions)
+            KBoundaryIntegralVector< KFMElectrostaticBoundaryIntegrator<ParallelTrait> > b(fSurfaceContainer, *this);
+            KMD5HashGenerator tBCHashGenerator;
+            tBCHashGenerator.MaskedBits( HashMaskedBits );
+            tBCHashGenerator.Threshold( HashThreshold );
+            fBoundaryConditionHash = tShapeHashGenerator.GenerateHash( b );
 
-                if(eid_set != NULL)
-                {
-                    n_mx_elements += eid_set->GetSize();
-                }
+            // compute hash of the parameter values w/o the multipole expansion degree included
+            KFMElectrostaticParameters params = parameters;
+            params.degree = 0; //must always be set to zero when computing the hash
+            KMD5HashGenerator parameterHashGenerator;
+            parameterHashGenerator.MaskedBits( HashMaskedBits );
+            parameterHashGenerator.Threshold( HashThreshold );
+            fTreeParameterHash = parameterHashGenerator.GenerateHash( params );
 
-            }
-
-            fNumberNonZeroSparseMatrixElements = n_mx_elements;
-
-
-            //now we retrieve pointers to lists of the non-zero column entries for each row
-            //this list is redundant for many rows, hence why we only store the pointers to a common list
-            fColumnIndexListPointers.resize(n_elem);
-
-            //first we determine the non-zero column element indices
-            //loop over all elements of surface container
-            for(unsigned int i=0; i<n_elem; i++)
-            {
-                //look up the node corresponding to this target
-                KFMElectrostaticNode* leaf_node = fNodes[i];
-                KFMExternalIdentitySet* eid_set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet>::GetNodeObject(leaf_node);
-
-                if(eid_set != NULL)
-                {
-                    fColumnIndexListPointers[i] = eid_set->GetRawIDList();
-                }
-                else
-                {
-                    std::stringstream ss;
-                    ss <<"KFMElectrostaticBoundaryIntegrator::FillSparseColumnIndexLists: Error, leaf node ";
-                    ss << leaf_node->GetID();
-                    ss <<" does not contain external element id list.";
-                    kfmout<< ss.str() <<kfmendl;
-                    kfmexit(1);
-                }
-            }
-
-
-            //if one were to store all of the non-zero sparse matrix elements compressed into a single block
-            //of memory, we would need to index the start position of the data corresponding to each row
-            //we compute these offsets here
-
-            fMatrixElementRowOffsets.resize(n_elem);
-            //the offset of the first row from the beginning is zero
-            unsigned int offset = 0;
-            for(unsigned int target_id=0; target_id<n_elem; target_id++)
-            {
-                fMatrixElementRowOffsets.at(target_id) = offset;
-                unsigned int n_mx = fColumnIndexListPointers.at(target_id)->size();
-                offset += n_mx;
-            }
-
+            //construct a unique id by stripping the first 6 characters from the shape and parameter hashes
+            std::string unique_id = fGeometryHash.substr(0,6) + fTreeParameterHash.substr(0,6);
+            fUniqueID = unique_id;
         }
 
 
-        //data and state
+////////////////////////////////////////////////////////////////////////////////
+////////data and state
+////////////////////////////////////////////////////////////////////////////////
 
         bool fInitialized;
 
@@ -310,22 +457,23 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
         KFMElectrostaticElementContainerBase<3,1>* fElementContainer;
 
         std::string fUniqueID;
+        std::string fGeometryHash;
+        std::string fBoundaryConditionHash;
+        std::string fTreeParameterHash;
 
-        KFMElectrostaticTree fTree;
+        KFMElectrostaticTree* fTree;
+        bool fTreeIsOwned;
         KFMElectrostaticParameters fParameters;
         ParallelTrait fTrait;
+        KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* fSubdivisionCondition;
+
+        KFMElectrostaticTreeBuilder fTreeBuilder;
 
         //fast look-up for the node which contains the centroid of each element
         std::vector< KFMElectrostaticNode* > fNodes;
 
         //compute the field from the local coefficients
         KFMElectrostaticLocalCoefficientFieldCalculator fFastFieldSolver;
-
-        //matrix element caching
-        unsigned int fNumberNonZeroSparseMatrixElements;
-        std::vector< const std::vector<unsigned int>* > fColumnIndexListPointers;
-        std::vector< unsigned int > fMatrixElementRowOffsets;
-
 };
 
 

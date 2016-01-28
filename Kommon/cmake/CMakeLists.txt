@@ -1,7 +1,3 @@
-install( FILES
-    KasperDefaults.cmake
-    FindROOT.cmake
-    MacroParseArguments.cmake
-    MacroCheckPackageLibs.cmake
-    MacroCheckPackageVersion.cmake
-    DESTINATION ${MODULE_INSTALL_DIR} )
+file(GLOB CMAKE_MODULES *.cmake)
+
+install( FILES ${CMAKE_MODULES} DESTINATION ${MODULE_INSTALL_DIR} )

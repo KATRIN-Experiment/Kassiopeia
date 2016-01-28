@@ -24,13 +24,13 @@ KSAFileReader::KSAFileReader():fIsOpen(false),fUseDecompression(false)
     in_buffer = &(fInputBuffer[0]);
     out_buffer = &(fOutputBuffer[0]);
 
-};
+}
 
 KSAFileReader::~KSAFileReader()
 {
 //    delete[] in_buffer;
 //    delete[] out_buffer;
-};
+}
 
 void KSAFileReader::SetFileName(std::string filename)
 {
@@ -53,7 +53,7 @@ void KSAFileReader::SetFileName(std::string filename)
     }
 
 
-};
+}
 
 
 bool

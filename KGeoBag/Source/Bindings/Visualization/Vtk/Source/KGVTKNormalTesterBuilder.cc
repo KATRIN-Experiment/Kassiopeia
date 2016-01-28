@@ -5,7 +5,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKNormalTesterStructure =
+    STATICINT sKGVTKNormalTesterStructure =
         KGVTKNormalTesterBuilder::Attribute< string >( "name" ) +
         KGVTKNormalTesterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKNormalTesterBuilder::Attribute< string >( "spaces" ) +
@@ -20,7 +20,7 @@ namespace katrin
         KGVTKNormalTesterBuilder::Attribute< double >( "vertex_size" ) +
         KGVTKNormalTesterBuilder::Attribute< double >( "line_size" );
 
-    static const int sKGVTKNormalTesterWindow =
+    STATICINT sKGVTKNormalTesterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKNormalTester >( "vtk_normal_tester" );
 
 }

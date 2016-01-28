@@ -5,6 +5,8 @@
 #include "KSVisualizationMessage.h"
 
 #include "TGraph.h"
+#include "TColor.h"
+#include "TStyle.h"
 
 #include <limits>
 
@@ -20,11 +22,12 @@ namespace Kassiopeia
             fTrackOutputGroupName( "output_track_world" ),
             fColorVariable( "color_variable" ),
             fColorMode( eColorFix ),
-            fColor( kRed ),
+            fColorPalette( eColorDefault ),
             fDrawOptions( "" ),
             fPlotMode( ePlotStep ),
             fAxialMirror( false ),
             fMultigraph(),
+            fBaseColors(),
             fColorVector()
     {
     }
@@ -39,13 +42,19 @@ namespace Kassiopeia
 
         fMultigraph = new TMultiGraph();
 
-        KRootFile* tRootFile = katrin::CreateOutputRootFile( fBase );
+        KRootFile* tRootFile = KRootFile::CreateOutputRootFile( fBase );
         if( !fPath.empty() )
         {
             tRootFile->AddToPaths( fPath );
         }
 
         KSReadFileROOT tReader;
+        if (! tReader.TryFile( tRootFile ))
+        {
+            vismsg( eWarning ) << "Could not open file <" << tRootFile->GetName() << ">" << eom;
+            return;
+        }
+
         tReader.OpenFile( tRootFile );
 
         KSReadRunROOT& tRunReader = tReader.GetRun();
@@ -67,8 +76,8 @@ namespace Kassiopeia
 					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
 					{
 						vismsg( eDebug ) << "Analyzing track <" << tTrackReader.GetTrackIndex() << "> with steps from <" << tTrackReader.GetFirstStepIndex() << "> to <"<<tTrackReader.GetLastStepIndex()<<">"<< eom;
-						TGraph* myGraph;
-						if ( fColorMode == eColorTrack || fColorMode == eColorFix || fColorMode == eColorFPDRings )
+                        TGraph* myGraph = NULL;
+						if ( fColorMode == eColorTrack || fColorMode == eColorFix  )
 						{
 							myGraph = new TGraph();
 							if ( tColorIterator == fColorVector.end() )
@@ -83,7 +92,7 @@ namespace Kassiopeia
 						{
 							if( tStepGroup.Valid() )
 							{
-								double tXValue;
+                                double tXValue = 0.;
 								if( fXAxis == string( "x" ) || fXAxis == string( "X" ) )
 								{
 									tXValue = tPosition.Value().X();
@@ -96,7 +105,7 @@ namespace Kassiopeia
 								{
 									tXValue = tPosition.Value().Z();
 								}
-								double tYValue;
+                                double tYValue = 0.;
 								if( fYAxis == string( "x" ) || fYAxis == string( "X" ) )
 								{
 									tYValue = tPosition.Value().X();
@@ -127,14 +136,14 @@ namespace Kassiopeia
 									fMultigraph->Add( myGraph );
 									tColorIterator++;
 								}
-								if ( fColorMode == eColorTrack || fColorMode == eColorFix || fColorMode == eColorFPDRings )
+								if ( fColorMode == eColorTrack || fColorMode == eColorFix )
 								{
 									myGraph->SetPoint( myGraph->GetN(), tXValue, tYValue );
 								}
 							}
 						}
 
-						if ( fColorMode == eColorTrack || fColorMode == eColorFix || fColorMode == eColorFPDRings )
+						if ( fColorMode == eColorTrack || fColorMode == eColorFix )
 						{
 							fMultigraph->Add( myGraph );
 
@@ -169,9 +178,10 @@ namespace Kassiopeia
 					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
 					{
 						TGraph* myGraph;
-						if ( fColorMode == eColorFix || fColorMode == eColorTrack )
+                        myGraph = new TGraph();
+
+						if ( fColorMode == eColorTrack || fColorMode == eColorFix )
 						{
-							myGraph = new TGraph();
 							if ( tColorIterator == fColorVector.end() )
 							{
 								vismsg( eError ) <<"color vector has to less entries, something is wrong!"<<eom;
@@ -180,7 +190,7 @@ namespace Kassiopeia
 							tColorIterator++;
 						}
 
-						double tXValue;
+                        double tXValue = 0.;
 						if( fXAxis == string( "x" ) || fXAxis == string( "X" ) )
 						{
 							tXValue = tPosition.Value().X();
@@ -193,7 +203,7 @@ namespace Kassiopeia
 						{
 							tXValue = tPosition.Value().Z();
 						}
-						double tYValue;
+                        double tYValue  = 0.;
 						if( fYAxis == string( "x" ) || fYAxis == string( "X" ) )
 						{
 							tYValue = tPosition.Value().X();
@@ -260,7 +270,7 @@ namespace Kassiopeia
 
     void KSROOTTrackPainter::CreateColors()
     {
-        KRootFile* tRootFile = katrin::CreateOutputRootFile( fBase );
+        KRootFile* tRootFile = KRootFile::CreateOutputRootFile( fBase );
         if( !fPath.empty() )
         {
             tRootFile->AddToPaths( fPath );
@@ -274,8 +284,9 @@ namespace Kassiopeia
         KSReadTrackROOT& tTrackReader = tReader.GetTrack();
         KSReadStepROOT& tStepReader = tReader.GetStep();
 
-        //getting number of tracks in file
+        //getting number of tracks/steps in file
         size_t tNumberOfTracks = 0;
+        size_t tNumberOfSteps = 0;
 	    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
 	    {
 			for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
@@ -283,13 +294,19 @@ namespace Kassiopeia
 				for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
 				{
 					tNumberOfTracks++;
+
+					for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
+					{
+						tNumberOfSteps++;
+					}
 				}
 			}
 	    }
 
-    	if ( fColorMode == eColorFPDRings )
+    	if ( fColorPalette == eColorFPDRings )
     	{
-    		while ( fColorVector.size() < tNumberOfTracks )
+    		while ( ( fColorVector.size() < tNumberOfTracks && fColorMode == eColorTrack )
+    				|| ( fColorVector.size() < tNumberOfSteps && fColorMode == eColorStep ) )
     		{
     			//rainbow scheme
     			fColorVector.push_back( kBlack );
@@ -309,118 +326,233 @@ namespace Kassiopeia
     		}
     	}
 
+
     	if ( fColorMode == eColorFix )
     	{
+    		Color_t tFixColor(kRed);
+    		if ( fBaseColors.size() > 0 )
+    		{
+    			TColor tTempColor;
+    			tFixColor = tTempColor.GetColor(fBaseColors.at(0).first.GetRed(),fBaseColors.at(0).first.GetGreen(),fBaseColors.at(0).first.GetBlue());
+    		}
     		while ( fColorVector.size() < tNumberOfTracks )
     		{
-    			fColorVector.push_back( fColor );
+    			fColorVector.push_back( tFixColor );
     		}
     	}
 
 
-        double tColorVariableMax( -1.0 * std::numeric_limits< double >::max());
-        double tColorVariableMin( std::numeric_limits< double >::max());
 
-    	double tMinColor = 51; // =^=Purple
-    	double tMaxColor = 100; // =^=Red
-
-    	if ( fColorMode == eColorTrack )
+    	if ( fColorPalette == eColorCustom || fColorPalette == eColorDefault )
     	{
-    		if ( tNumberOfTracks == 1 )
-    		{
-    			fColorVector.push_back( tMaxColor );
-    			return;
-    		}
-        	//get track group and color variable
-			KSReadObjectROOT& tTrackGroup = tTrackReader.GetObject( fTrackOutputGroupName );
-	        KSDouble& tColorVariable = tTrackGroup.Get< KSDouble >( fColorVariable );
 
-	        //find min and max of color variable
-		    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
-		    {
-				for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+			int tColorBins=100;
+			size_t tNumberBaseColors = fBaseColors.size();
+
+			double tRed[tNumberBaseColors];
+			double tGreen[tNumberBaseColors];
+			double tBlue[tNumberBaseColors];
+			double tFraction[tNumberBaseColors];
+
+			for ( size_t tIndex = 0; tIndex < tNumberBaseColors; tIndex++ )
+			{
+				tRed[tIndex] = fBaseColors.at( tIndex ).first.GetRed();
+				tGreen[tIndex] = fBaseColors.at( tIndex ).first.GetGreen();
+				tBlue[tIndex] = fBaseColors.at( tIndex ).first.GetBlue();
+				tFraction[tIndex] = fBaseColors.at( tIndex ).second;
+				if ( tFraction[tIndex] == -1.0 )
 				{
-					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
-					{
-						if ( tColorVariable.Value() > tColorVariableMax )
-						{
-							tColorVariableMax =  tColorVariable.Value();
-						}
-						if ( tColorVariable.Value() < tColorVariableMin )
-						{
-							tColorVariableMin =  tColorVariable.Value();
-						}
-					}
+					tFraction[tIndex] = tIndex / (double)(tNumberBaseColors - 1);
 				}
-		    }
-            vismsg( eNormal ) << "Range of track color variable is from < "<<tColorVariableMin <<" > to < "<<tColorVariableMax<<" >"<<eom;
+			}
 
-		    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
-		    {
-				for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+			int tMinColor = TColor::CreateGradientColorTable(tNumberBaseColors,tFraction,tRed,tGreen,tBlue,tColorBins);
+			int tMaxColor = tMinColor + tColorBins - 1;
+
+			if ( fColorPalette == eColorDefault )
+			{
+				tMinColor = 51; //purple
+				tMaxColor = 100; //red
+			}
+
+	//        int tPalette[tColorBins];
+	//        for ( int i = 0; i<tColorBins; i++)
+	//        {
+	//        	tPalette[i] = tMinColor + i;
+	//        }
+	//        gStyle->SetPalette( tColorBins, tPalette );
+
+
+			double tColorVariableMax( -1.0 * std::numeric_limits< double >::max());
+			double tColorVariableMin( std::numeric_limits< double >::max());
+
+			if ( fColorMode == eColorTrack )
+			{
+				if ( tNumberOfTracks == 1 )
 				{
-					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
-					{
-						KSReadObjectROOT& tTrackGroup = tTrackReader.GetObject( fTrackOutputGroupName );
-						KSDouble& tColorVariable = tTrackGroup.Get< KSDouble >( fColorVariable );
-						double tCurrentColor = tMinColor+((tMaxColor-tMinColor)*(tColorVariable.Value()-tColorVariableMin)/(tColorVariableMax-tColorVariableMin));
-						fColorVector.push_back( tCurrentColor );
-					}
+					fColorVector.push_back( tMaxColor );
+					return;
 				}
-		    }
-    	}
+				//get track group and color variable
+				KSReadObjectROOT& tTrackGroup = tTrackReader.GetObject( fTrackOutputGroupName );
 
 
-        if ( fColorMode == eColorStep )
-        {
-        	//get step group and color variable
-	        KSReadObjectROOT& tStepGroup = tStepReader.GetObject( fStepOutputGroupName );
-	        KSDouble& tColorVariable = tStepGroup.Get< KSDouble >( fColorVariable );
-
-	        //find min and max of color variable
-		    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
-		    {
-				for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+				//find min and max of color variable
+				for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
 				{
-					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
+					for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
 					{
-						for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
+						for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
 						{
-							if ( tStepGroup.Valid() )
+                            double tColorVariable = 0.;
+							if ( tTrackGroup.Exists< KSDouble >( fColorVariable ) )
 							{
-								if ( tColorVariable.Value() > tColorVariableMax )
-								{
-									tColorVariableMax =  tColorVariable.Value();
-								}
-								if ( tColorVariable.Value() < tColorVariableMin )
-								{
-									tColorVariableMin =  tColorVariable.Value();
-								}
+								tColorVariable = tTrackGroup.Get< KSDouble >( fColorVariable ).Value();
+							}
+							else if ( tTrackGroup.Exists< KSInt >( fColorVariable ) )
+							{
+								tColorVariable = tTrackGroup.Get< KSInt >( fColorVariable ).Value();
+							}
+							else if ( tTrackGroup.Exists< KSUInt >( fColorVariable ) )
+							{
+								tColorVariable = tTrackGroup.Get< KSUInt >( fColorVariable ).Value();
+							}
+							else
+							{
+								vismsg( eError ) <<"Color variable is of unsupported type"<<eom;
+							}
+
+
+							if ( tColorVariable > tColorVariableMax )
+							{
+								tColorVariableMax =  tColorVariable;
+							}
+							if ( tColorVariable < tColorVariableMin )
+							{
+								tColorVariableMin =  tColorVariable;
 							}
 						}
 					}
 				}
-		    }
+				vismsg( eNormal ) << "Range of track color variable is from < "<<tColorVariableMin <<" > to < "<<tColorVariableMax<<" >"<<eom;
 
-            vismsg( eNormal ) << "Range of step color variable is from < "<<tColorVariableMin <<" > to < "<<tColorVariableMax<<" >"<<eom;
-
-		    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
-		    {
-				for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+				for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
 				{
-					for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
+					for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
 					{
-						for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
+						for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
 						{
-							KSDouble& tColorVariable = tStepGroup.Get< KSDouble >( fColorVariable );
-							double tCurrentColor = tMinColor+((tMaxColor-tMinColor)*(tColorVariable.Value()-tColorVariableMin)/(tColorVariableMax-tColorVariableMin));
+                            double tColorVariable = 0.;
+							if ( tTrackGroup.Exists< KSDouble >( fColorVariable ) )
+							{
+								tColorVariable = tTrackGroup.Get< KSDouble >( fColorVariable ).Value();
+							}
+							else if ( tTrackGroup.Exists< KSInt >( fColorVariable ) )
+							{
+								tColorVariable = tTrackGroup.Get< KSInt >( fColorVariable ).Value();
+							}
+							else if ( tTrackGroup.Exists< KSUInt >( fColorVariable ) )
+							{
+								tColorVariable = tTrackGroup.Get< KSUInt >( fColorVariable ).Value();
+							}
+							else
+							{
+								vismsg( eError ) <<"Color variable is of unsupported type"<<eom;
+							}
+							double tCurrentColor = tMinColor+((tMaxColor-tMinColor)*(tColorVariable-tColorVariableMin)/(tColorVariableMax-tColorVariableMin));
 							fColorVector.push_back( tCurrentColor );
 						}
 					}
 				}
 			}
 
-        }
+
+			if ( fColorMode == eColorStep )
+			{
+				//get step group and color variable
+				KSReadObjectROOT& tStepGroup = tStepReader.GetObject( fStepOutputGroupName );
+
+				//find min and max of color variable
+				for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
+				{
+					for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+					{
+						for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
+						{
+							for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
+							{
+								if ( tStepGroup.Valid() )
+								{
+                                    double tColorVariable  = 0.;
+									if ( tStepGroup.Exists< KSDouble >( fColorVariable ) )
+									{
+										tColorVariable = tStepGroup.Get< KSDouble >( fColorVariable ).Value();
+									}
+									else if ( tStepGroup.Exists< KSInt >( fColorVariable ) )
+									{
+										tColorVariable = tStepGroup.Get< KSInt >( fColorVariable ).Value();
+									}
+									else if ( tStepGroup.Exists< KSUInt >( fColorVariable ) )
+									{
+										tColorVariable = tStepGroup.Get< KSUInt >( fColorVariable ).Value();
+									}
+									else
+									{
+										vismsg( eError ) <<"Color variable is of unsupported type"<<eom;
+									}
+
+									if ( tColorVariable > tColorVariableMax )
+									{
+										tColorVariableMax =  tColorVariable;
+									}
+									if ( tColorVariable < tColorVariableMin )
+									{
+										tColorVariableMin =  tColorVariable;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				vismsg( eNormal ) << "Range of step color variable is from < "<<tColorVariableMin <<" > to < "<<tColorVariableMax<<" >"<<eom;
+
+				for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
+				{
+					for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
+					{
+						for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
+						{
+							for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
+							{
+                                if ( tStepGroup.Valid() )
+                                {
+                                    double tColorVariable = 0.;
+                                    if ( tStepGroup.Exists< KSDouble >( fColorVariable ) )
+                                    {
+                                        tColorVariable = tStepGroup.Get< KSDouble >( fColorVariable ).Value();
+                                    }
+                                    else if ( tStepGroup.Exists< KSInt >( fColorVariable ) )
+                                    {
+                                        tColorVariable = tStepGroup.Get< KSInt >( fColorVariable ).Value();
+                                    }
+                                    else if ( tStepGroup.Exists< KSUInt >( fColorVariable ) )
+                                    {
+                                        tColorVariable = tStepGroup.Get< KSUInt >( fColorVariable ).Value();
+                                    }
+                                    else
+                                    {
+                                        vismsg( eError ) <<"Color variable is of unsupported type"<<eom;
+                                    }
+                                    double tCurrentColor = tMinColor+((tMaxColor-tMinColor)*(tColorVariable-tColorVariableMin)/(tColorVariableMax-tColorVariableMin));
+                                    fColorVector.push_back( tCurrentColor );
+                                }
+							}
+						}
+					}
+				}
+			}
+    	}
         tReader.CloseFile();
         delete tRootFile;
 
@@ -491,7 +623,7 @@ namespace Kassiopeia
         	double* tY = tGraph->GetY();
         	for ( int tIndexArray = 0; tIndexArray < tGraph->GetN(); tIndexArray++ )
         	{
-				if ( tY[tIndexArray] < tMax )
+				if ( tY[tIndexArray] > tMax )
 				{
 					tMax = tY[tIndexArray];
 				}

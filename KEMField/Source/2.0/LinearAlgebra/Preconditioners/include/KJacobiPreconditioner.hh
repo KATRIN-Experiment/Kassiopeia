@@ -40,6 +40,8 @@ class KJacobiPreconditioner: public KPreconditioner< ValueType >
 
         virtual ~KJacobiPreconditioner(){};
 
+        virtual std::string Name(){ return std::string("jacobi"); };
+
         virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
         {
             for(unsigned int i=0; i<fDimension; i++)

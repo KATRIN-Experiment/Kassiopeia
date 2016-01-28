@@ -87,68 +87,78 @@ ResponseFunctionM2M(CL_TYPE4 del, int j, int k, int n, int m)
     return result;
 }
 
+//______________________________________________________________________________
 
 
 void
 TranslateMultipoleMoments(int max_degree,
-                          CL_TYPE4 source_origin,
-                          CL_TYPE4 target_origin,
-                          CL_TYPE2* source_moments,
-                          CL_TYPE2* target_moments)
+                              __constant const CL_TYPE* a_coefficient,
+                              CL_TYPE4 source_origin,
+                              CL_TYPE4 target_origin,
+                              CL_TYPE2* source_moments,
+                              CL_TYPE2* target_moments)
 {
+
     //this is the slow O(p^4) method of translation
+    CL_TYPE4 del = source_origin - target_origin;
+    del.s3 = 0;
 
-    CL_TYPE4 del_sph;
-    del_sph.s0 = Radius(target_origin, source_origin);
-    del_sph.s1 = CosTheta(target_origin, source_origin);
-    del_sph.s2 = Phi(target_origin, source_origin);
-    del_sph.s3 = 0.0;
+    CL_TYPE r = RadiusSingle(del);
+    CL_TYPE costheta = CosThetaSingle(del);
+    CL_TYPE phi = PhiSingle(del);
 
-    CL_TYPE2 result;
-    CL_TYPE2 response_func, source_mom;
+    //perform the summation weighted by the response functions
+    CL_TYPE2 source;
+    CL_TYPE2 response;
+    CL_TYPE2 target;
 
-    //size of the multipole moments
-    int size = ((max_degree+1)*(max_degree+2))/2;
-
-    int ssi, tsi, dup, dlow;
     for(int j=0; j <= max_degree; j++)
     {
-        for(int k=0; k <= j; k++)
+        for(int k=0; k<=j; k++)
         {
-            tsi = j*(j+1)/2 + k;
-            target_moments[tsi].s0 = 0.0;
-            target_moments[tsi].s1 = 0.0;
+            int tsi = (j*(j+1))/2 + k;
+            target.s0 = 0.0;
+            target.s1 = 0.0;
 
-            for(int n = 0; n <= max_degree; n++)
+            for(int n=0; n<=j; n++)
             {
-                for(int m=-1*n; m<=n; m++)
+                for(int m=-n; m<=n; m++)
                 {
-                    dlow = j - n;
-                    dup = k - m;
-                    ssi = dlow*(dlow+1)/2 + abs(dup);
+                    int j_minus_n = j-n;
+                    int k_minus_m = k-m;
 
-                    source_mom = source_moments[ssi];
-
-                    if(IsPhysical(j,k,n,m) == 1)
+                    if( abs(k_minus_m) <= j_minus_n)
                     {
-                        if(dup < 0)
+                        int ssi = j_minus_n*(j_minus_n+1)/2 + abs(k_minus_m);
+                        source = source_moments[ssi];
+                        if(k_minus_m > 0){source.s1 *= -1.0;};
+
+                        CL_TYPE norm = a_coefficient[n*(n+1)/2 + abs(m)]*a_coefficient[ssi]/a_coefficient[tsi];
+                        if( (k_minus_m)*m < 0)
                         {
-                            //if the order is negative we need to take the conjugate
-                            source_mom.s1 *= -1.0;
+                            norm *= pow( -1.0, min(abs(k_minus_m), abs(m)));
                         }
 
-                        response_func = ResponseFunctionM2M(del_sph,j,k,n,m);
+                        response.s0 = cos(-1*m*phi);
+                        response.s1 = sin(-1*m*phi);
+                        response *= norm;
+                        response *= pow(r,n);
+                        response *= ALP_nm(n,abs(m),costheta);
 
-                        target_moments[tsi].s0 += source_mom.s0*response_func.s0 - source_mom.s1*response_func.s1;
-                        target_moments[tsi].s1 += source_mom.s0*response_func.s1 + source_mom.s1*response_func.s0;
+                        target.s0 += source.s0*response.s0 - source.s1*response.s1;
+                        target.s1 += source.s0*response.s1 + source.s1*response.s0;
                     }
                 }
             }
+
+            target_moments[tsi] = target;
+
         }
     }
 
 
 }
+
 
 //______________________________________________________________________________
 
@@ -248,32 +258,20 @@ TranslateMultipoleMomentsFast( int max_degree,
         //compute the rotation matrix
         CL_TYPE4 normalized_rot_axis = normalize(rot_axis);
         CL_TYPE16 mx = MatrixFromAxisAngle(cos_angle, sin_angle, normalized_rot_axis);
-        CL_TYPE R[3][3];
-        R[0][0] = mx.s0;
-        R[0][1] = mx.s1;
-        R[0][2] = mx.s2;
-        R[1][0] = mx.s3;
-        R[1][1] = mx.s4;
-        R[1][2] = mx.s5;
-        R[2][0] = mx.s6;
-        R[2][1] = mx.s7;
-        R[2][2] = mx.s8;
+        CL_TYPE R[9];
 
-        //the transpose of the rotation matrix
-        CL_TYPE RT[3][3];
-        RT[0][0] = R[0][0];
-        RT[0][1] = R[1][0];
-        RT[0][2] = R[2][0];
-        RT[1][0] = R[0][1];
-        RT[1][1] = R[1][1];
-        RT[1][2] = R[2][1];
-        RT[2][0] = R[0][2];
-        RT[2][1] = R[1][2];
-        RT[2][2] = R[2][2];
-
+        R[rmsi(0,0)] = mx.s0;
+        R[rmsi(0,1)] = mx.s1;
+        R[rmsi(0,2)] = mx.s2;
+        R[rmsi(1,0)] = mx.s3;
+        R[rmsi(1,1)] = mx.s4;
+        R[rmsi(1,2)] = mx.s5;
+        R[rmsi(2,0)] = mx.s6;
+        R[rmsi(2,1)] = mx.s7;
+        R[rmsi(2,2)] = mx.s8;
 
         //compute the euler angles from the rotation matrix
-        CL_TYPE4 euler_angles = EulerAnglesFromMatrix(RT);
+        CL_TYPE4 euler_angles = EulerAnglesFromMatrixTranspose(R);
         CL_TYPE alpha = euler_angles.s0;
         CL_TYPE beta = euler_angles.s1;
         CL_TYPE gamma = euler_angles.s2;
@@ -303,10 +301,8 @@ TranslateMultipoleMomentsFast( int max_degree,
     else
     {
         //compute the moment translation the slow way
-        TranslateMultipoleMoments(max_degree, source_origin, target_origin, source_moments, target_moments);
+        TranslateMultipoleMoments(max_degree, a_coefficient, source_origin, target_origin, source_moments, target_moments);
     }
-
-
 
 }
 

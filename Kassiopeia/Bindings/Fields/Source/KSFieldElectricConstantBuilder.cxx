@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSFieldElectricConstantStructure =
+    STATICINT sKSFieldElectricConstantStructure =
         KSFieldElectricConstantBuilder::Attribute< string >( "name" ) +
         KSFieldElectricConstantBuilder::Attribute< KThreeVector >( "field" );
 
-    static int sKSFieldElectricConstant =
+    STATICINT sKSFieldElectricConstant =
         KSRootBuilder::ComplexElement< KSFieldElectricConstant >( "ksfield_electric_constant" );
 
 }

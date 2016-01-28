@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGFlattenedCircleSurfaceBuilder =
+    STATICINT sKGFlattenedCircleSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGFlattenedCircleSurface >( "flattened_circle_surface" );
 
-    static const int sKGFlattenedCircleSurfaceBuilderStructure =
+    STATICINT sKGFlattenedCircleSurfaceBuilderStructure =
         KGFlattenedCircleSurfaceBuilder::Attribute< string >( "name" ) +
         KGFlattenedCircleSurfaceBuilder::Attribute< double >( "z" ) +
         KGFlattenedCircleSurfaceBuilder::Attribute< unsigned int >( "flattened_mesh_count" ) +

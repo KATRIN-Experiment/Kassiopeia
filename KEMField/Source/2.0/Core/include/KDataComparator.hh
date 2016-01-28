@@ -28,7 +28,7 @@ namespace KEMField
       else
       {
   	if (c.fLHSData[c.fRHSIndex] != x)
-  	  if (fabs(c.fLHSData[c.fRHSIndex]-x)>c.Tolerance())
+  	  if (KDataComparatorType<Type>::abs(c.fLHSData[c.fRHSIndex]-x)>c.Tolerance())
   	    c.fComparison = false;
   	c.fRHSIndex++;
       }
@@ -38,6 +38,12 @@ namespace KEMField
     virtual ~KDataComparatorType() {}
     bool Comparison() const { return fComparison; }
     void Initialize() { fComparison = true; fLHSIndex = fRHSIndex = 0; }
+
+    // template specializations necessary to avoid compiler warnings for unsigned types
+    static Type abs(Type argument)
+    {
+        return std::abs(argument);
+    }
 
   protected:
     virtual bool IsLHS() const = 0;
@@ -123,6 +129,21 @@ namespace KEMField
   	return false;
     }
   };
+
+  template <>
+  inline unsigned int KDataComparatorType<unsigned int>::abs(unsigned int argument) {
+      return argument;
+  }
+
+  template <>
+  inline unsigned short KDataComparatorType<unsigned short>::abs(unsigned short argument) {
+      return argument;
+  }
+
+  template <>
+  inline bool KDataComparatorType<bool>::abs(bool argument) {
+      return argument;
+  }
 
   template <>
   class KDataComparison<Length<FundamentalTypes>::value>

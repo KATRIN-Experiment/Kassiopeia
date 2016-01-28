@@ -12,7 +12,7 @@ namespace KGeoBag
     }
 
     void KGShellArcSegmentSurfaceMesher::VisitShellPathSurface( KGShellArcSegmentSurface* aShellArcSegmentSurface )
-    {std::cout << "visiting shell path" << std::endl;
+    {
         //create arc segment points
         OpenPoints tArcSegmentPoints;
         ArcSegmentToOpenPoints( aShellArcSegmentSurface->Path().operator ->(), tArcSegmentPoints );

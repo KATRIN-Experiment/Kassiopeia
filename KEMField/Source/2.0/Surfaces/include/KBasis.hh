@@ -28,7 +28,7 @@ namespace KEMField
     virtual ~KBasis() {}
   };
 
-  // Template for bases 
+  // Template for bases
   template <typename Type, unsigned int Dim>
   class KBasisType : public KBasis
   {

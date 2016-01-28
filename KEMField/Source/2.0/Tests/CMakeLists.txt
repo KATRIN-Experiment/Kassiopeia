@@ -8,7 +8,7 @@ endif (@PROJECT_NAME@_ENABLE_TEST)
 
 if (@PROJECT_NAME@_ENABLE_TEST)
 
-  kasper_include_default_dirs()
+    kasper_internal_include_directories(${@PROJECT_NAME@_INCLUDE_DIRS})
 
   set (TESTS_LIBS
     ${ROOT_LIBRARIES}
@@ -17,6 +17,7 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     KEMHashGenerator
     KEMStructuredASCII
     KEMMath
+    KFMMathUtilities
     KEMSurfaces
     KEMIO
     KEMFileManipulation
@@ -29,18 +30,31 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     )
 
   if (@PROJECT_NAME@_USE_VTK)
+    kasper_find_vtk()
     list (APPEND TESTS_LIBS
     KEMVTKPlugin
     )
   endif (@PROJECT_NAME@_USE_VTK)
 
   if (@PROJECT_NAME@_USE_ROOT)
+    find_package(ROOT REQUIRED)
+    kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
     list (APPEND TESTS_LIBS
     KEMRootPlugin
     )
   endif (@PROJECT_NAME@_USE_ROOT)
 
+  if (@PROJECT_NAME@_USE_CUDA)
+    find_package(CUDA REQUIRED)
+    kasper_external_include_directories(${CUDA_INCLUDE_DIRS})
+    list (APPEND TESTS_LIBS
+    KEMCUDAPlugin
+    )
+  endif (@PROJECT_NAME@_USE_CUDA)
+
   if (@PROJECT_NAME@_USE_OPENCL)
+    find_package(OpenCL REQUIRED)
+    kasper_external_include_directories( ${OPENCL_INCLUDE_DIRS} )
     list (APPEND TESTS_LIBS
     KEMOpenCLPlugin
     )
@@ -71,6 +85,10 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     list (APPEND TESTS_LIBS
       ${VTK_LIBRARIES})
   endif (@PROJECT_NAME@_USE_VTK)
+
+  add_executable (TestBoundaryIntegrator
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestBoundaryIntegrator.cc)
+  target_link_libraries (TestBoundaryIntegrator ${TESTS_LIBS} )
 
   add_executable (TestElectromagnets
     ${CMAKE_CURRENT_SOURCE_DIR}/TestElectromagnets.cc)
@@ -125,6 +143,7 @@ if (@PROJECT_NAME@_ENABLE_TEST)
   target_link_libraries (TestZonalHarmonics ${TESTS_LIBS}  )
 
   kasper_install_executables (
+    TestBoundaryIntegrator
     TestDiskCapacitance
     TestElectromagnets
     TestElectromagnetViewer
@@ -140,6 +159,10 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     TestZonalHarmonics
     )
 
+################
+### KMessage ###
+################
+
   if (@PROJECT_NAME@_USE_KMESSAGE)
 
     add_executable (TestKMessageInterface
@@ -152,6 +175,36 @@ if (@PROJECT_NAME@_ENABLE_TEST)
 
   endif (@PROJECT_NAME@_USE_KMESSAGE)
 
+############
+### CUDA ###
+############
+
+  if (@PROJECT_NAME@_USE_CUDA)
+
+  cuda_add_executable(TestCUDASurfaceContainer
+	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDASurfaceContainer.cu)
+  target_link_libraries (TestCUDASurfaceContainer ${TESTS_LIBS} )
+
+  cuda_add_executable(TestCUDABoundaryIntegrator
+	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDABoundaryIntegrator.cu)
+  target_link_libraries (TestCUDABoundaryIntegrator ${TESTS_LIBS} )
+
+  cuda_add_executable(TestCUDARobinHood
+	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDARobinHood.cu)
+  target_link_libraries (TestCUDARobinHood ${TESTS_LIBS} )
+
+  kasper_install_executables(
+  	TestCUDASurfaceContainer
+	TestCUDABoundaryIntegrator
+    TestCUDARobinHood
+  )
+
+  endif (@PROJECT_NAME@_USE_CUDA)
+
+####################
+### OpenCL + MPI ###
+####################
+
   if (@PROJECT_NAME@_USE_OPENCL AND @PROJECT_NAME@_USE_MPI)
 
   add_executable (TestOpenCL
@@ -163,6 +216,31 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     )
 
   endif (@PROJECT_NAME@_USE_OPENCL AND @PROJECT_NAME@_USE_MPI)
+
+##############
+### OpenCL ###
+##############
+
+  if (@PROJECT_NAME@_USE_OPENCL)
+
+  add_executable (TestOpenCLPlugin
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestOpenCLPlugin.cc)
+  target_link_libraries (TestOpenCLPlugin ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+  
+  add_executable (TestOpenCLRobinHood
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestOpenCLRobinHood.cc)
+  target_link_libraries (TestOpenCLRobinHood ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+
+  kasper_install_executables (
+  TestOpenCLPlugin
+  TestOpenCLRobinHood
+    )
+
+  endif (@PROJECT_NAME@_USE_OPENCL)
+
+###############
+### KGeoBag ###
+###############
 
   if (@PROJECT_NAME@_USE_KGEOBAG)
 
@@ -196,6 +274,10 @@ if (@PROJECT_NAME@_ENABLE_TEST)
 
   endif (@PROJECT_NAME@_USE_KGEOBAG)
 
+#############
+### PETSc ###
+#############
+
   if (@PROJECT_NAME@_USE_PETSc)
 
 set_property(
@@ -224,4 +306,4 @@ set_property(
 
   endif (@PROJECT_NAME@_USE_PETSc)
 
-endif (@PROJECT_NAME@_ENABLE_TEST) 
+endif (@PROJECT_NAME@_ENABLE_TEST)

@@ -14,9 +14,9 @@ namespace KGeoBag
             fZ1( 0. ),
             fZ2( 0. ),
             fR( 0. ),
-            fLongitudinalMeshCount( 1 ),
+            fLongitudinalMeshCount( 8 ),
             fLongitudinalMeshPower( 1. ),
-            fRadialMeshCount( 1 ),
+            fRadialMeshCount( 8 ),
             fRadialMeshPower( 1. ),
             fAxialMeshCount( 64 )
     {

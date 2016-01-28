@@ -3,7 +3,7 @@
 namespace katrin
 {
 
-    static const int sKGPlanarCircleBuilderStructure =
+    STATICINT sKGPlanarCircleBuilderStructure =
         KGPlanarCircleBuilder::Attribute< double >( "x" ) +
         KGPlanarCircleBuilder::Attribute< double >( "y" ) +
         KGPlanarCircleBuilder::Attribute< double >( "radius" ) +

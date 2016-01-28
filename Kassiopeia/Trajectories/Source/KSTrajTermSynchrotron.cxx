@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTrajTermSynchrotron::KSTrajTermSynchrotron( const KSTrajTermSynchrotron& aCopy ) :
+            KSComponent(),
             fEnhancement( aCopy.fEnhancement )
     {
     }
@@ -21,7 +22,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSTrajTermSynchrotron::Differentiate( const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
+    void KSTrajTermSynchrotron::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
     {
         double Q = aParticle.GetCharge();
         double M = aParticle.GetMass();
@@ -47,7 +48,7 @@ namespace Kassiopeia
 
         return;
     }
-    void KSTrajTermSynchrotron::Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
+    void KSTrajTermSynchrotron::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
     {
         double Q = aParticle.GetCharge();
         double M = aParticle.GetMass();

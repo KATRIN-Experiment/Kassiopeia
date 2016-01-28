@@ -4,7 +4,7 @@ namespace KEMField
 {
 /**
  * \image html potentialFromLineSegment.gif
- * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the 
+ * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the
  * collection of wires by computing the following formula for each copy:
  * \f{eqnarray*}{
  * V(\vec{P}) &=& \frac{\lambda}{4 \pi \epsilon_0} \int_{x_1}^{x^2} \frac{dx}{\sqrt{x^2+z^2}} =\\
@@ -83,7 +83,7 @@ namespace KEMField
     double denom = (Da*(Da + Db + L)*(Da + Db - L)*Db)*4.*KEMConstants::Eps0;
     denom = -1./denom;
 
-    return (2.*L*(source->GetP1()*Da - source->GetP0()*(Da + Db) + source->GetP0()*Db))*source->GetDiameter()*denom;
+    return (2.*L*(source->GetP1()*Da - P*(Da + Db) + source->GetP0()*Db))*source->GetDiameter()*denom;
   }
 
     double KElectrostaticLineSegmentIntegrator::Potential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const

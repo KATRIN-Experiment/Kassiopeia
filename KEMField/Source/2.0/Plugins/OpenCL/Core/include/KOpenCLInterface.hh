@@ -1,35 +1,45 @@
 #ifndef KOPENCLINTERFACE_DEF
 #define KOPENCLINTERFACE_DEF
 
-#define __NO_STD_VECTOR // Use cl::vector instead of STL version
-#define __CL_ENABLE_EXCEPTIONS
-#if defined __APPLE__
-
-#ifdef __clang__ //shut up the annoying unused variable warnings in cl.hpp
-#pragma clang diagnostic push
-#pragma clang system_header
-#endif
-
-#include <OpenCL/cl.hpp>
-
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
+#ifdef KEMFIELD_USE_CL_VECTOR
+    #define __NO_STD_VECTOR // Use cl::vector instead of STL version
+    #define CL_VECTOR_TYPE cl::vector
 #else
-
-#ifdef __clang__  //shut up the annoying unused variable  warnings in cl.hpp
-#pragma clang diagnostic push
-#pragma clang system_header
+    #define CL_VECTOR_TYPE std::vector
 #endif
 
-#include <CL/cl.hpp>
+#define __CL_ENABLE_EXCEPTIONS
 
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
+//shut up the annoying unused variable warnings in cl.hpp for clang/gcc
+//by using a system-header wrapper for the opencl headers
+#include "KOpenCLHeaderWrapper.hh"
+// #ifdef GCC_VERSION
+// #pragma GCC diagnostic push
+// #pragma GCC diagnostic ignored "-Wall -Wcomment"
+// #endif
+//
+// #ifdef __clang__
+// #pragma clang diagnostic push
+// #pragma clang system_header
+// #endif
+//
+// #if defined __APPLE__
+// #include <OpenCL/cl.hpp>
+// #else
+// #pragma GCC system_header
+// #include <CL/cl.hpp>
+// #endif
+//
+// //turn warnings back on
+// #ifdef __clang__
+// #pragma clang diagnostic pop
+// #endif
+//
+// #ifdef GCC_VERSION
+// #pragma GCC diagnostic pop
+// #endif
 
-#endif
+
 #if defined KEMFIELD_USE_DOUBLE_PRECISION
 #define CL_TYPE cl_double
 #define CL_TYPE2 cl_double2
@@ -46,6 +56,37 @@
 
 #include <vector>
 
+//this is necessary on some intel devices
+#define ENFORCE_CL_FINISH
+
+//the following are optional defines for debugging
+
+//adds verbose output of kernel build logs
+//#define DEBUG_OPENCL_COMPILER_OUTPUT
+
+//add try-catch for opencl exceptions
+//#define USE_CL_ERROR_TRY_CATCH
+
+#ifdef USE_CL_ERROR_TRY_CATCH
+#define CL_ERROR_TRY try
+#else
+#define CL_ERROR_TRY
+#endif
+
+#ifdef USE_CL_ERROR_TRY_CATCH
+#define CL_ERROR_CATCH  catch (cl::Error error) \
+                        { \
+                            std::cout<<"OpenCL Exception caught: "<<std::endl;\
+                            std::cout<<__FILE__<<":"<<__LINE__<<std::endl; \
+                            std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl; \
+                            std::exit(1); \
+                        }
+#else
+#define CL_ERROR_CATCH
+#endif
+
+
+
 namespace KEMField{
 
   class KOpenCLData;
@@ -56,9 +97,15 @@ namespace KEMField{
     static KOpenCLInterface* GetInstance();
 
     cl::Context            GetContext() const { return *fContext; }
-    cl::vector<cl::Device> GetDevices() const { return fDevices; }
+    CL_VECTOR_TYPE<cl::Device> GetDevices() const { return fDevices; }
     cl::Device             GetDevice()  const { return fDevices[fCLDeviceID]; }
     cl::CommandQueue&      GetQueue(int i=-1) const;
+
+    unsigned int GetNumberOfDevices() const
+    {
+        CL_VECTOR_TYPE<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
+        return availableDevices.size();
+    };
 
     void SetGPU(unsigned int i);
 
@@ -78,8 +125,8 @@ namespace KEMField{
 
     std::string fKernelPath;
 
-    cl::vector<cl::Platform> fPlatforms;
-    cl::vector<cl::Device>   fDevices;
+    CL_VECTOR_TYPE<cl::Platform> fPlatforms;
+    CL_VECTOR_TYPE<cl::Device>   fDevices;
     unsigned int                   fCLDeviceID;
     cl::Context              *fContext;
     mutable std::vector<cl::CommandQueue*>  fQueues;

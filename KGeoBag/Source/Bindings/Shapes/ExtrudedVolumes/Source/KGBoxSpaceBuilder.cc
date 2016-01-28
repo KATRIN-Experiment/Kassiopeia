@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGBoxSpaceBuilder =
+    STATICINT sKGBoxSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGBoxSpace >( "box_space" );
 
-    static const int sKGBoxSpaceBuilderStructure =
+    STATICINT sKGBoxSpaceBuilderStructure =
         KGBoxSpaceBuilder::Attribute< string >( "name" ) +
         KGBoxSpaceBuilder::Attribute< double >( "xa" ) +
         KGBoxSpaceBuilder::Attribute< double >( "xb" ) +

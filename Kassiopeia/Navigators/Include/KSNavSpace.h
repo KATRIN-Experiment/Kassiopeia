@@ -25,23 +25,20 @@ namespace Kassiopeia
             void SetExitSplit( const bool& aExitSplit );
             const bool& GetExitSplit() const;
 
-            void SetTolerance( const double& aTolerance );
-            const double& GetTolerance() const;
+            void SetFailCheck( const bool& aValue );
+            const bool& GetFailCheck() const;
 
         private:
             bool fEnterSplit;
             bool fExitSplit;
-            double fTolerance;
+            bool fFailCheck;
 
         public:
             void CalculateNavigation( const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle, const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius, const double& aTrajectoryStep, KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag );
             void ExecuteNavigation( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
             void StartNavigation( KSParticle& aParticle, KSSpace* aRoot );
             void StopNavigation( KSParticle& aParticle, KSSpace* aRoot );
-
-        protected:
-            void ActivateComponent();
-            void DeactivateComponent();
 
         private:
             const KSTrajectory* fCurrentTrajectory;
@@ -68,9 +65,13 @@ namespace Kassiopeia
             bool fChildSideRecalculate;
 
             mutable KSSurface* fChildSurface;
+            mutable KSSurface* fLastStepSurface;
             KThreeVector fChildSurfaceAnchor;
             double fChildSurfaceDistance;
             bool fChildSurfaceRecalculate;
+
+            mutable bool fSpaceInsideCheck;
+            mutable bool fNavigationFail;
 
             double SpaceIntersectionFunction( const double& anIntersection );
             double SurfaceIntersectionFunction( const double& anIntersection );

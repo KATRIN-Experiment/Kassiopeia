@@ -18,6 +18,31 @@ namespace katrin
             aContainer->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
+        if( aContainer->GetName() == "piecewise_tolerance" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryAdiabatic::SetPiecewiseTolerance );
+            return true;
+        }
+        if( aContainer->GetName() == "max_segments" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryAdiabatic::SetMaxNumberOfSegments );
+            return true;
+        }
+        if( aContainer->GetName() == "use_true_position" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryAdiabatic::SetUseTruePosition );
+            return true;
+        }
+        if( aContainer->GetName() == "cyclotron_fraction" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryAdiabatic::SetCyclotronFraction );
+            return true;
+        }
+        if( aContainer->GetName() == "attempt_limit" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryAdiabatic::SetAttemptLimit );
+            return true;
+        }
         return false;
     }
 

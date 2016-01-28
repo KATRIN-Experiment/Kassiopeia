@@ -3,6 +3,7 @@
 
 #include "KGAxialMeshLoop.hh"
 #include "KGAxialMeshRing.hh"
+#include "KFile.h"
 
 #include "vtkCellData.h"
 #include "vtkQuad.h"

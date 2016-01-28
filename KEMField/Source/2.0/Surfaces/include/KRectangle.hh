@@ -63,7 +63,7 @@ namespace KEMField
     void              GetN2(KDirection& n2) const { n2 = fN2; }
     void              GetP0(KPosition& p0)  const { p0 = fP0; }
     void              GetP1(KPosition& p1)  const { p1 = fP0 + fN1*fA; }
-    void              GetP2(KPosition& p2)  const { p2=fP0+fN1*fA+fN2*fA; }
+    void              GetP2(KPosition& p2)  const { p2 = fP0+fN1*fA+fN2*fB; }
     void              GetP3(KPosition& p3)  const { p3 = fP0 + fN2*fB; }
 
   protected:

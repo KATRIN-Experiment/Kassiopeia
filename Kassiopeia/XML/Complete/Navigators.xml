@@ -25,14 +25,9 @@
 			exit_split:
 				if true, the navigator will split tracks when particles exit spaces.
 
-			tolerance:
-				this is a dimensionless quantity used in two places in navigation:
-				1)
-					if the distance between an examined geometric object and a trajectory segment's initial point divided by the size of the trajectory segment is less than the tolerance, the object is ignored.
-					this prevents roundoff and numerical errors from causing the simulation to think an object is being struck repeatedly.
-				2)
-					if the distance between a calculated intersection point and a geometric object divided by the size of the trajectory segment is greater than the tolerance, the object is ignored.
-					this prevents roundoff and numerical errors from faking intersections where they do not occur.
+			fail_check:
+				if true, additional calculations will be performed each step to find failures in the navigation state of the particle
+				is disabled by default, as it increases the computation time of the simulation slightly
 	-->
 
 	<ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>

@@ -37,16 +37,16 @@ namespace KGeoBag
             void AddSurface( const KGSurface* aSurface );
             void AddSpace( const KGSpace* aSpace );
 
-            ;K_SET( KThreeVector, SampleDiskOrigin )
-            ;K_SET( KThreeVector, SampleDiskNormal )
-            ;K_SET( double, SampleDiskRadius )
-            ;K_SET( unsigned int, SampleCount )
-            ;K_SET( KGRGBColor, SampleColor )
-            ;K_SET( KGRGBColor, PointColor )
-            ;K_SET( KGRGBColor, NormalColor )
-            ;K_SET( double, NormalLength )
-            ;K_SET( double, VertexSize )
-            ;K_SET( double, LineSize )
+            K_SET( KThreeVector, SampleDiskOrigin )
+            K_SET( KThreeVector, SampleDiskNormal )
+            K_SET( double, SampleDiskRadius )
+            K_SET( unsigned int, SampleCount )
+            K_SET( KGRGBColor, SampleColor )
+            K_SET( KGRGBColor, PointColor )
+            K_SET( KGRGBColor, NormalColor )
+            K_SET( double, NormalLength )
+            K_SET( double, VertexSize )
+            K_SET( double, LineSize )
 
         private:
             vector< const KGSurface* > fSurfaces;

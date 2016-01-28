@@ -17,6 +17,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueAngleSpherical::KSGenValueAngleSpherical( const KSGenValueAngleSpherical& aCopy ) :
+            KSComponent(),
             fAngleMin( aCopy.fAngleMin ),
             fAngleMax( aCopy.fAngleMax )
     {

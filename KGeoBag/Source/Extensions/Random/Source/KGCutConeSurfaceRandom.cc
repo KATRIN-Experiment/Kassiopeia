@@ -15,18 +15,18 @@ void KGeoBag::KGCutConeSurfaceRandom::VisitCutConeSurface(KGeoBag::KGCutConeSurf
 	double z1 = aCutConeSurface->Z1();
 	double z2 = aCutConeSurface->Z2();
 
-    double SmallRadius, SmallRadiusPosition, LargeRadius, LargeRadiusPosition;
+    double SmallRadius, SmallRadiusPosition, LargeRadius;//, LargeRadiusPosition; // TODO: WHAT IS THIS CODE FOR?
 
     if(r1 < r2){
         SmallRadius = r1;
         SmallRadiusPosition = z1;
         LargeRadius = r2;
-        LargeRadiusPosition = z2;
+//        LargeRadiusPosition = z2; // TODO: WHAT IS THIS CODE FOR?
     } else{
         SmallRadius = r2;
         SmallRadiusPosition = z2;
         LargeRadius = r1;
-        LargeRadiusPosition = z1;
+//        LargeRadiusPosition = z1; // TODO: WHAT IS THIS CODE FOR?
     }
 
     double ConeLength = z2-z1;

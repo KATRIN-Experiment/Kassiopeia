@@ -33,6 +33,9 @@ namespace Kassiopeia
 
             template< class XType >
             XType& Get( const string& aVariable ) const;
+
+            template< class XType >
+            bool Exists( const string& aVariable ) const;
     };
 
     template< class XType >
@@ -47,6 +50,13 @@ namespace Kassiopeia
     {
         const KSReadSet< XType >& tSet = dynamic_cast< const KSReadSet< XType >& >( *this );
         return tSet.Get( aVariable );
+    }
+
+    template< class XType >
+    bool KSReadIterator::Exists( const string& aVariable ) const
+    {
+        const KSReadSet< XType >& tSet = dynamic_cast< const KSReadSet< XType >& >( *this );
+        return tSet.Exists( aVariable );
     }
 
 }

@@ -103,6 +103,7 @@ int main(int argc, char* argv[])
   int verbose = 3;
   int scale = 1;
   double accuracy = 1.e-8;
+  (void) accuracy;
   int increment = 100;
   bool usePlot;
   usePlot = false;

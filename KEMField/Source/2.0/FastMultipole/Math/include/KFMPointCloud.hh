@@ -54,6 +54,30 @@ class KFMPointCloud
 
         KFMPoint<NDIM> GetPoint(unsigned int i) const {return fPoints[i];}; //no check performed
 
+        KFMPoint<NDIM> GetCentroid() const
+        {
+            KFMPoint<NDIM> centroid;
+            for(unsigned int i=0; i<fPoints.size(); i++)
+            {
+                centroid += fPoints[i];
+            }
+            double fac = 1.0/((double)fPoints.size());
+            centroid *= fac;
+            return centroid;
+        };
+
+        double GetRadiusAboutCentroid() const
+        {
+            KFMPoint<NDIM> centroid = GetCentroid();
+            double max_radius = 0.0;
+            for(unsigned int i=0; i<fPoints.size(); i++)
+            {
+                double r = (centroid - fPoints[i]).Magnitude();
+                if(r > max_radius){max_radius = r;};
+            }
+            return max_radius;
+        };
+
         void SetPoints(const std::vector< KFMPoint<NDIM> >* points)
         {
             fPoints = *points;

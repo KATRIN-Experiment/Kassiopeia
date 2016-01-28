@@ -114,6 +114,7 @@ int main(int argc, char* argv[])
   int scale = 1;
   int power = 1;
   double accuracy = 1.e-8;
+  (void) accuracy;
   unsigned int increment = 100;
   unsigned int saveIncrement = UINT_MAX;
   bool usePlot = false;

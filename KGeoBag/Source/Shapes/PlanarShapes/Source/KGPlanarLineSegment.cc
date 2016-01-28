@@ -8,7 +8,7 @@ namespace KGeoBag
             KGPlanarOpenPath(),
             fStart( 0., 0. ),
             fEnd( 0., 0. ),
-            fMeshCount( 1 ),
+            fMeshCount( 2 ),
             fMeshPower( 1. ),
             fLength( 0. ),
             fCentroid( 0., 0. ),

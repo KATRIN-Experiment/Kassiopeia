@@ -42,6 +42,7 @@ namespace Kassiopeia
             void CalculatePotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aPotential );
             void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
             void CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient );
+            void CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient );
 
         public:
             void SetDirectory( const string& aDirectory );
@@ -67,6 +68,7 @@ namespace Kassiopeia
                     virtual KEMThreeVector VectorPotential( const KPosition& P ) const = 0;
                     virtual KEMThreeVector MagneticField( const KPosition& P ) const = 0;
                     virtual KGradient MagneticFieldGradient( const KPosition& P ) const = 0;
+                    virtual std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient( const KPosition& P ) const = 0;
 
                     virtual void Initialize( KElectromagnetContainer& container ) = 0;
                     virtual void Deinitialize() = 0;
@@ -89,6 +91,7 @@ namespace Kassiopeia
                     KEMThreeVector VectorPotential( const KPosition& P ) const;
                     KEMThreeVector MagneticField( const KPosition& P ) const;
                     KGradient MagneticFieldGradient( const KPosition& P ) const;
+                    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient( const KPosition& P ) const;
 
                 private:
                     KElectromagnetIntegrator fIntegrator;
@@ -108,6 +111,7 @@ namespace Kassiopeia
                     KEMThreeVector VectorPotential( const KPosition& P ) const;
                     KEMThreeVector MagneticField( const KPosition& P ) const;
                     KGradient MagneticFieldGradient( const KPosition& P ) const;
+                    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient( const KPosition& P ) const;
 
                     KZonalHarmonicParameters* GetParameters()
                     {

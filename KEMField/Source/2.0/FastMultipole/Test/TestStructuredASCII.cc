@@ -9,10 +9,10 @@
 #include <vector>
 
 
-#include "TestA.hh"
-#include "TestB.hh"
-#include "TestC.hh"
-#include "TestD.hh"
+#include "KSATestA.hh"
+#include "KSATestB.hh"
+#include "KSATestC.hh"
+#include "KSATestD.hh"
 
 //#include "KSAObjectOutputNode.hh"
 #include "KSAFixedSizeInputOutputObject.hh"
@@ -25,23 +25,30 @@
 #include "KSAOutputCollector.hh"
 #include "KSAInputCollector.hh"
 
-#include <gsl/gsl_rng.h>
-
-
 #ifndef DEFAULT_DATA_DIR
-#define DEFAULT_DATA_DIR "~/."
+#define DEFAULT_DATA_DIR "."
 #endif /* !DEFAULT_DATA_DIR */
 
 using namespace KEMField;
 
-int main(int argc, char **argv)
+double
+UniformRandom(double lower_limit, double upper_limit)
 {
+    double r = 0;
+    //we don't need high quality random numbers here, so we use rand()
+    double m = RAND_MAX;
+    m += 1;// do not want the range to be inclusive of the upper limit
+    double r1 = rand();
+    r = r1/m;
+    return lower_limit + (upper_limit - lower_limit)*r;
+}
 
-
+int main()
+{
     //the the specialization:
 
-    std::cout<<"is TestB derived from fixed size obj?  = " << std::endl;
-    unsigned int test = KSAIsDerivedFrom< TestB, KSAFixedSizeInputOutputObject >::Is;
+    std::cout<<"is KSATestB derived from fixed size obj?  = " << std::endl;
+    unsigned int test = KSAIsDerivedFrom< KSATestB, KSAFixedSizeInputOutputObject >::Is;
     std::cout<<"test = "<<test<<std::endl;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,29 +75,21 @@ int main(int argc, char **argv)
 
 
     KSAOutputNode* root = new KSAOutputNode(std::string("root"));
-    KSAObjectOutputNode< std::vector< TestC >  >* test_c_vec_node = new KSAObjectOutputNode< std::vector< TestC >  >("TestCVector");
+    KSAObjectOutputNode< std::vector< KSATestC >  >* test_c_vec_node = new KSAObjectOutputNode< std::vector< KSATestC >  >("TestCVector");
 
     if( writer.Open() )
     {
-	const gsl_rng_type * T;
-	gsl_rng * r;
-	gsl_rng_env_setup();
-
-	T = gsl_rng_default;
-	r = gsl_rng_alloc (T);
-
-
         int n = 10000; //number of objects
         int nv = 1000; //number of doubles in vector
 
-        std::vector<TestC>* C_vec = new std::vector<TestC>();
+        std::vector<KSATestC>* C_vec = new std::vector<KSATestC>();
 
-        TestC C_obj;
-        TestB B_obj;
-        TestD D_obj;
+        KSATestC C_obj;
+        KSATestB B_obj;
+        KSATestD D_obj;
         double temp[3] = {1.,2.,3.};
 
-        std::vector<TestB*> BVec;
+        std::vector<KSATestB*> BVec;
 
         for(int i=0; i<n; i++)
         {
@@ -99,18 +98,18 @@ int main(int argc, char **argv)
 
             for(int j=0; j<nv; j++)
             {
-                C_obj.AddData(gsl_rng_uniform(r)*1e-15);
+                C_obj.AddData(UniformRandom(0,1)*1e-15);
             }
 
 
-            B_obj.SetX(gsl_rng_uniform(r));
-            B_obj.SetY(gsl_rng_uniform(r));
-            D_obj.SetX(gsl_rng_uniform(r));
-            D_obj.SetY(gsl_rng_uniform(r));
-            D_obj.SetD(gsl_rng_uniform(r));
-            temp[0] = gsl_rng_uniform(r);
-            temp[1] = gsl_rng_uniform(r);
-            temp[2] = gsl_rng_uniform(r);
+            B_obj.SetX(UniformRandom(0,1));
+            B_obj.SetY(UniformRandom(0,1));
+            D_obj.SetX(UniformRandom(0,1));
+            D_obj.SetY(UniformRandom(0,1));
+            D_obj.SetD(UniformRandom(0,1));
+            temp[0] = UniformRandom(0,1);
+            temp[1] = UniformRandom(0,1);
+            temp[2] = UniformRandom(0,1);
 
             B_obj.SetArray(temp);
             D_obj.SetArray(temp);
@@ -118,24 +117,24 @@ int main(int argc, char **argv)
             C_obj.SetB(B_obj);
 
             BVec.clear();
-            B_obj.SetX(gsl_rng_uniform(r));
-            BVec.push_back(new TestB(B_obj));
-            D_obj.SetD(gsl_rng_uniform(r));
-            BVec.push_back(new TestD(D_obj));
+            B_obj.SetX(UniformRandom(0,1));
+            BVec.push_back(new KSATestB(B_obj));
+            D_obj.SetD(UniformRandom(0,1));
+            BVec.push_back(new KSATestD(D_obj));
 
             C_obj.AddBVector(&BVec);
 
             BVec.clear();
-            B_obj.SetY(gsl_rng_uniform(r));
-            BVec.push_back(new TestB(B_obj));
-            B_obj.SetY(gsl_rng_uniform(r));
-            BVec.push_back(new TestD(D_obj));
-            B_obj.SetY(gsl_rng_uniform(r));
-            BVec.push_back(new TestB(B_obj));
+            B_obj.SetY(UniformRandom(0,1));
+            BVec.push_back(new KSATestB(B_obj));
+            B_obj.SetY(UniformRandom(0,1));
+            BVec.push_back(new KSATestD(D_obj));
+            B_obj.SetY(UniformRandom(0,1));
+            BVec.push_back(new KSATestB(B_obj));
 
             C_obj.AddBVector(&BVec);
 
-            C_obj.SetCData(gsl_rng_uniform(r));
+            C_obj.SetCData(UniformRandom(0,1));
 
             C_vec->push_back(C_obj);
         }
@@ -171,7 +170,7 @@ int main(int argc, char **argv)
 
 
     KSAInputNode* input_root = new KSAInputNode(std::string("root"));
-    KSAObjectInputNode< std::vector< TestC > >* input_c_vec = new KSAObjectInputNode< std::vector< TestC > >(std::string("TestCVector"));
+    KSAObjectInputNode< std::vector< KSATestC > >* input_c_vec = new KSAObjectInputNode< std::vector< KSATestC > >(std::string("TestCVector"));
     input_root->AddChild(input_c_vec);
 
     std::cout<<"reading file"<<std::endl;
@@ -194,7 +193,7 @@ int main(int argc, char **argv)
 //    writer2.IncludeXMLGuards();
 
     KSAOutputNode* root2 = new KSAOutputNode(std::string("root"));
-    KSAObjectOutputNode< std::vector< TestC >  >* copy_c_vec = new KSAObjectOutputNode< std::vector< TestC >  >("TestCVector");
+    KSAObjectOutputNode< std::vector< KSATestC >  >* copy_c_vec = new KSAObjectOutputNode< std::vector< KSATestC >  >("TestCVector");
     copy_c_vec->AttachObjectToNode(input_c_vec->GetObject());
     root2->AddChild(copy_c_vec);
 
@@ -215,6 +214,8 @@ int main(int argc, char **argv)
     delete root2;
 
     return 0;
+
+
 
 
 }

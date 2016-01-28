@@ -2,7 +2,7 @@
 set( GENERATORS_HEADER_BASENAMES
     KSGeneratorsMessage.h
     KSGenCreator.h
-    
+
     KSGenValue.h
     KSGenValueFix.h
     KSGenValueSet.h
@@ -12,20 +12,31 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenValueRadiusCylindrical.h
     KSGenValueRadiusSpherical.h
     KSGenValueAngleSpherical.h
+    KSGenValuePareto.h
 
     KSGenEnergyComposite.h
     KSGenEnergyKryptonEvent.h
-    KSGenEnergyRadonEvent.h    
+    KSGenEnergyRadonEvent.h
+    KSGenEnergyLeadEvent.h
+    KSGenEnergyBetaDecay.h
+    KSGenNComposite.h
+    KSGenLComposite.h
+    KSGenLUniformMaxN.h
+    KSGenLStatistical.h
 
+    KSGenPositionSurfaceAdjustmentStep.h
     KSGenPositionRectangularComposite.h
     KSGenPositionCylindricalComposite.h
     KSGenPositionSphericalComposite.h
     KSGenPositionSpaceRandom.h
     KSGenPositionSurfaceRandom.h
+    KSGenPositionMeshSurfaceRandom.h
+    KSGenPositionMask.h
+    KSGenPositionFluxTube.h
+    KSGenPositionHomogeneousFluxTube.h
 
     KSGenDirectionSphericalComposite.h
     KSGenDirectionSurfaceComposite.h
-
     KSGenMomentumRectangularComposite.h
 
     KSGenTimeComposite.h
@@ -39,17 +50,18 @@ set( GENERATORS_HEADER_BASENAMES
 )
 
 if( Kassiopeia_USE_ROOT )
-	list( APPEND GENERATORS_HEADER_BASENAMES
-	    KSGenValueFormula.h
-        KSGenEnergyLeadEvent.h
+    list( APPEND GENERATORS_HEADER_BASENAMES
+        KSGenValueFormula.h
+        KSGenValueHistogram.h
+        KSGenGeneratorSimulation.h
     )
 endif( Kassiopeia_USE_ROOT )
 
-set( GENERATORS_HEADER_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
+set( GENERATORS_HEADER_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${GENERATORS_HEADER_BASENAMES} )
-	list( APPEND GENERATORS_HEADER_FILENAMES ${GENERATORS_HEADER_PATH}/${BASENAME} )
+    list( APPEND GENERATORS_HEADER_FILENAMES ${GENERATORS_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
@@ -66,16 +78,28 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenValueRadiusCylindrical.cxx
     KSGenValueRadiusSpherical.cxx
     KSGenValueAngleSpherical.cxx
+    KSGenValuePareto.cxx
 
     KSGenEnergyComposite.cxx
     KSGenEnergyKryptonEvent.cxx
-    KSGenEnergyRadonEvent.cxx    
+    KSGenEnergyRadonEvent.cxx
+    KSGenEnergyLeadEvent.cxx
+    KSGenEnergyBetaDecay.cxx
+    KSGenNComposite.cxx
+    KSGenLComposite.cxx
+    KSGenLUniformMaxN.cxx
+    KSGenLStatistical.cxx
 
+    KSGenPositionSurfaceAdjustmentStep.cxx
     KSGenPositionRectangularComposite.cxx
     KSGenPositionCylindricalComposite.cxx
     KSGenPositionSphericalComposite.cxx
     KSGenPositionSpaceRandom.cxx
     KSGenPositionSurfaceRandom.cxx
+    KSGenPositionMeshSurfaceRandom.cxx
+    KSGenPositionMask.cxx
+    KSGenPositionFluxTube.cxx
+    KSGenPositionHomogeneousFluxTube.cxx
 
     KSGenDirectionSphericalComposite.cxx
     KSGenDirectionSurfaceComposite.cxx
@@ -88,22 +112,23 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenShakeOff.cxx
     KSGenConversion.cxx
     KSGenRelaxation.cxx
-    
+
     KSGenGeneratorComposite.cxx
 )
 
 if( Kassiopeia_USE_ROOT )
-	list( APPEND GENERATORS_SOURCE_BASENAMES
+    list( APPEND GENERATORS_SOURCE_BASENAMES
         KSGenValueFormula.cxx
-        KSGenEnergyLeadEvent.cxx
+        KSGenValueHistogram.cxx
+        KSGenGeneratorSimulation.cxx
     )
 endif( Kassiopeia_USE_ROOT )
 
-set( GENERATORS_SOURCE_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
+set( GENERATORS_SOURCE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${GENERATORS_SOURCE_BASENAMES} )
-	list( APPEND GENERATORS_SOURCE_FILENAMES ${GENERATORS_SOURCE_PATH}/${BASENAME} )
+    list( APPEND GENERATORS_SOURCE_FILENAMES ${GENERATORS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # data files
@@ -117,11 +142,11 @@ set( GENERATORS_DATA_BASENAMES
     RelaxationBi.dat
     ShakeOffRn.dat
 )
-set( GENERATORS_DATA_PATH 
-	${CMAKE_CURRENT_SOURCE_DIR}/Data
+set( GENERATORS_DATA_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${GENERATORS_DATA_BASENAMES} )
-	list( APPEND GENERATORS_DATA_FILENAMES ${GENERATORS_DATA_PATH}/${BASENAME} )
+    list( APPEND GENERATORS_DATA_FILENAMES ${GENERATORS_DATA_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
@@ -134,6 +159,7 @@ target_link_libraries( KassiopeiaGenerators
     KassiopeiaUtility
     KassiopeiaObjects
     KassiopeiaOperators
+    KassiopeiaReaders
 )
 
 # install

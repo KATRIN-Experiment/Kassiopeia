@@ -13,7 +13,11 @@ namespace KGeoBag
 
       std::vector<double> segments(conicalWireArraySurface->GetObject()->GetNDisc(),0.);
 
-      KGComplexMesher::DiscretizeInterval(conicalWireArraySurface->GetObject()->GetLength(),conicalWireArraySurface->GetObject()->GetNDisc(),2.,segments);
+      KGComplexMesher::DiscretizeInterval(
+    		  conicalWireArraySurface->GetObject()->GetLength(),
+    		  conicalWireArraySurface->GetObject()->GetNDisc(),
+    		  conicalWireArraySurface->GetObject()->GetNDiscPower(),
+    		  segments);
 
       KThreeVector start(conicalWireArraySurface->GetObject()->GetR1(),
 			 0.,
@@ -30,15 +34,18 @@ namespace KGeoBag
 
       for (unsigned int i=0;i<conicalWireArraySurface->GetObject()->GetNDisc();i++)
       {
-	start = end;
-	end += segments[i]*unit;
-	KGMeshWire singleWire(start,
-			      start + segments[i]*unit,
-			      conicalWireArraySurface->GetObject()->GetDiameter());
-	singleWire.Transform(transform);
-	KGDiscreteRotationalMeshWire* w = new KGDiscreteRotationalMeshWire(singleWire);
-	w->NumberOfElements(conicalWireArraySurface->GetObject()->GetNWires());
-	fCurrentElements->push_back(w);
+		start = end;
+		end += segments[i]*unit;
+
+		KGMeshWire singleWire(start,
+					  start + segments[i]*unit,
+					  conicalWireArraySurface->GetObject()->GetDiameter());
+
+		singleWire.Transform(transform);
+
+		KGDiscreteRotationalMeshWire* w = new KGDiscreteRotationalMeshWire(singleWire);
+		w->NumberOfElements(conicalWireArraySurface->GetObject()->GetNWires());
+		fCurrentElements->push_back(w);
       }
     }
 }

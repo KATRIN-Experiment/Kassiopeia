@@ -30,6 +30,8 @@ class KIdentityPreconditioner: public KPreconditioner< ValueType >
 
         virtual ~KIdentityPreconditioner(){};
 
+        virtual std::string Name(){ return std::string("identity"); };
+
         virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
         {
             //copy x into y

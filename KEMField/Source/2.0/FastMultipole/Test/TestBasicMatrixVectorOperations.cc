@@ -27,18 +27,18 @@ int main(int /*argc*/, char** /*argv*/)
     kfm_vector* v1 = kfm_vector_alloc(NVectorSize);
     kfm_vector* v2 = kfm_vector_alloc(NVectorSize);
 
-
-    //allocate 4 matrices, to construct an euler rotation
-    kfm_matrix* m1 = kfm_matrix_calloc(NVectorSize, NVectorSize);
-    kfm_matrix* m2 = kfm_matrix_calloc(NVectorSize, NVectorSize);
-    kfm_matrix* m3 = kfm_matrix_calloc(NVectorSize, NVectorSize);
-    kfm_matrix* m4 = kfm_matrix_calloc(NVectorSize, NVectorSize);
-
-
-    //generate three angles
-    double alpha = M_PI/2.2313;
-    double beta = M_PI/4.934857;
-    double gamma = M_PI/3.9487;
+    //
+    // //allocate 4 matrices, to construct an euler rotation
+    // kfm_matrix* m1 = kfm_matrix_calloc(NVectorSize, NVectorSize);
+    // kfm_matrix* m2 = kfm_matrix_calloc(NVectorSize, NVectorSize);
+    // kfm_matrix* m3 = kfm_matrix_calloc(NVectorSize, NVectorSize);
+    // kfm_matrix* m4 = kfm_matrix_calloc(NVectorSize, NVectorSize);
+    //
+    //
+    // //generate three angles
+    // double alpha = M_PI/2.2313;
+    // double beta = M_PI/4.934857;
+    // double gamma = M_PI/3.9487;
 
 
 
@@ -110,9 +110,9 @@ int main(int /*argc*/, char** /*argv*/)
 
 
         //test inner product
-        std::cout<<" v1*v1 = "<<kfm_vector_inner_product(v1,v1)<<kfmendl;
-        std::cout<<" v1*v2 = "<<kfm_vector_inner_product(v1,v2)<<kfmendl;
-        std::cout<<" v2*v2 = "<<kfm_vector_inner_product(v2,v2)<<kfmendl;
+        kfmout<<" v1*v1 = "<<kfm_vector_inner_product(v1,v1)<<kfmendl;
+        kfmout<<" v1*v2 = "<<kfm_vector_inner_product(v1,v2)<<kfmendl;
+        kfmout<<" v2*v2 = "<<kfm_vector_inner_product(v2,v2)<<kfmendl;
 
 
     }

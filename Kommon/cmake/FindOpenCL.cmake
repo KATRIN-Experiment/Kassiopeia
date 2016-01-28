@@ -7,9 +7,10 @@
 # OpenCL_LIBPATH    - Library path (e.h. OpenCL_LIBPATH=/usr/lib64/nvidia)
 #
 # Once done this will define
-#  OPENCL_FOUND        - system has OpenCL
+#  OPENCL_FOUND        - system has an OpenCL library
 #  OPENCL_INCLUDE_DIRS  - the OpenCL include directory
 #  OPENCL_LIBRARIES    - link these to use OpenCL
+#  OPENCL_LIB_FLAG compiler flag naming library
 #
 # WIN32 should work, but is untested
 
@@ -28,47 +29,57 @@ IF (APPLE)
 
 ELSE (APPLE)
 
-	IF (WIN32)
+	#Unix style platforms, no windows support
 
-		FIND_PATH(OPENCL_INCLUDE_DIRS CL/cl.h)
-		FIND_PATH(_OPENCL_CPP_INCLUDE_DIRS CL/cl.hpp)
+    #set the library flag to the compiler to the default value
+    set(OPENCL_LIBRARY_NAME "OpenCL" CACHE STRING "Name of the OpenCL library.")
+    #leave the option to set the name of the library directly
+    #because some systems use a different name, such as 'intelocl'
+    mark_as_advanced(OPENCL_LIBRARY_NAME)
 
-		# The AMD SDK currently installs both x86 and x86_64 libraries
-		# This is only a hack to find out architecture
-		IF( ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" )
-			SET(OPENCL_LIB_DIR "$ENV{ATISTREAMSDKROOT}/lib/x86_64")
-		ELSE (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64")
-			SET(OPENCL_LIB_DIR "$ENV{ATISTREAMSDKROOT}/lib/x86")
-		ENDIF( ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "AMD64" )
-		FIND_LIBRARY(OPENCL_LIBRARIES OpenCL.lib PATHS ${OPENCL_LIB_DIR} ENV OpenCL_LIBPATH)
+    #force cmake to search for the library every time
+    set (OPENCL_LIBRARIES "OPENCL_LIBRARY-NOTFOUND")
 
-		GET_FILENAME_COMPONENT(_OPENCL_INC_CAND ${OPENCL_LIB_DIR}/../../include ABSOLUTE)
+	FIND_LIBRARY(OPENCL_LIBRARIES ${OPENCL_LIBRARY_NAME}
+		PATHS ENV LD_LIBRARY_PATH ENV OpenCL_LIBPATH ENV OPENCL_LIB_PATH
+	)
 
-		# On Win32 search relative to the library
-		FIND_PATH(OPENCL_INCLUDE_DIRS CL/cl.h PATHS "${_OPENCL_INC_CAND}" ENV OpenCL_INCPATH)
-		FIND_PATH(_OPENCL_CPP_INCLUDE_DIRS CL/cl.hpp PATHS "${_OPENCL_INC_CAND}" ENV OpenCL_INCPATH)
+    message(STATUS "Looking for an OpenCL library named: ${OPENCL_LIBRARY_NAME}")
 
-	ELSE (WIN32)
+	GET_FILENAME_COMPONENT(OPENCL_LIB_DIR ${OPENCL_LIBRARIES} PATH)
+	GET_FILENAME_COMPONENT(_OPENCL_INC_CAND ${OPENCL_LIB_DIR}/../../include ABSOLUTE)
 
-		# Unix style platforms
-		FIND_LIBRARY(OPENCL_LIBRARIES OpenCL
-			PATHS ENV LD_LIBRARY_PATH ENV OpenCL_LIBPATH
-		)
+    message(STATUS "Expecting OpenCL library in: ${OPENCL_LIB_DIR}")
+    message(STATUS "OpenCL libary found is: ${OPENCL_LIBRARIES}")
 
-		GET_FILENAME_COMPONENT(OPENCL_LIB_DIR ${OPENCL_LIBRARIES} PATH)
-		GET_FILENAME_COMPONENT(_OPENCL_INC_CAND ${OPENCL_LIB_DIR}/../../include ABSOLUTE)
+    #if the system has an environmental variable called OPENCL_INCLUDE
+    #which is the compiler flag for the include files, we strip the leading -I
+    #to get the include path
+    string(REPLACE "-I" "" OPENCL_INCLUDE_FLAG_DIR "$ENV{OPENCL_INCLUDE}")
+    message(STATUS "Found compiler flag to OpenCL include directory: " ${OPENCL_INCLUDE_FLAG_DIR})
 
-		# The AMD SDK currently does not place its headers
-		# in /usr/include, therefore also search relative
-		# to the library
-		FIND_PATH(OPENCL_INCLUDE_DIRS CL/cl.h PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include" ENV OpenCL_INCPATH)
-		FIND_PATH(_OPENCL_CPP_INCLUDE_DIRS CL/cl.hpp PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include" ENV OpenCL_INCPATH)
+	# The AMD SDK currently does not place its headers
+	# in /usr/include, therefore also search relative
+	# to the library
+	FIND_PATH( OPENCL_INCLUDE_DIRS CL/cl.h
+        PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include"
+        ENV OpenCL_INCPATH ${OPENCL_INCLUDE_FLAG_DIR}
+        )
+	FIND_PATH( _OPENCL_CPP_INCLUDE_DIRS CL/cl.hpp
+        PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include"
+        ENV OpenCL_INCPATH ENV ${OPENCL_INCLUDE_FLAG_DIR}
+        )
 
-	ENDIF (WIN32)
+    message(STATUS "Expecting OpenCL headers in: " ${OPENCL_INCLUDE_DIRS})
+
+    set(OPENCL_LIB_FLAG "-l${OPENCL_LIBRARY_NAME}")
+
+    message(STATUS "opencl library is: ${OPENCL_LIBRARIES}")
+
 
 ENDIF (APPLE)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(OpenCL DEFAULT_MSG OPENCL_LIBRARIES OPENCL_INCLUDE_DIRS)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(${OPENCL_LIBRARY_NAME} DEFAULT_MSG OPENCL_LIBRARIES OPENCL_INCLUDE_DIRS)
 
 IF(_OPENCL_CPP_INCLUDE_DIRS)
 	SET( OPENCL_HAS_CPP_BINDINGS TRUE )
@@ -77,7 +88,7 @@ IF(_OPENCL_CPP_INCLUDE_DIRS)
 	LIST( REMOVE_DUPLICATES OPENCL_INCLUDE_DIRS )
 ENDIF(_OPENCL_CPP_INCLUDE_DIRS)
 
+
 MARK_AS_ADVANCED(
   OPENCL_INCLUDE_DIRS
 )
-

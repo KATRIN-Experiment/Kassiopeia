@@ -25,6 +25,8 @@ namespace KGeoBag
 
         protected:
             KGMeshElementVector* fCurrentElements;
+            KGExtendedSurface< KGMesh >* fCurrentSurface;
+            KGExtendedSpace< KGMesh >* fCurrentSpace;
     };
 }
 

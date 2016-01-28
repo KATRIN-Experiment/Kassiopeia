@@ -57,16 +57,12 @@ namespace katrin
         }
         if( aContainer->GetName() == "angle" )
         {
-            double axialAngle;
-            aContainer->CopyTo( axialAngle );
-            fObject->SetAxialAngle( axialAngle );
+            aContainer->CopyTo( fObject, &KGDiscreteRotationalMeshAttributor::SetAxialAngle );
             return true;
         }
         if( aContainer->GetName() == "count" )
         {
-            int axialCount;
-            aContainer->CopyTo( axialCount );
-            fObject->SetAxialCount( axialCount );
+            aContainer->CopyTo( fObject, &KGDiscreteRotationalMeshAttributor::SetAxialCount );
             return true;
         }
         if( aContainer->GetName() == "surfaces" )

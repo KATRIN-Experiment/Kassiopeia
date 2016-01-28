@@ -229,7 +229,8 @@ namespace Kassiopeia
     {
     }
 
-    KSIntCalculatorHydrogenElastic::KSIntCalculatorHydrogenElastic( const KSIntCalculatorHydrogenElastic& )
+    KSIntCalculatorHydrogenElastic::KSIntCalculatorHydrogenElastic( const KSIntCalculatorHydrogenElastic& ):
+        KSComponent()
     {
     }
 
@@ -307,21 +308,21 @@ namespace Kassiopeia
 
             //thermal velocity of gas molecules
             double T = 300.; //gas temperature
-            double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot()) );
+            double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot_kg()) );
             KThreeVector MolVelocity( sigmaT * Gx, sigmaT * Gy, sigmaT * Gz );
 
             //new electron velocity vector and energy:
 
             //assume electron velocity along z
-            KThreeVector ElVelocity( 0., 0., sqrt( 2. * anEnergie * KConst::Q() / KConst::M_el() ) );
+            KThreeVector ElVelocity( 0., 0., sqrt( 2. * anEnergie * KConst::Q() / KConst::M_el_kg() ) );
             //relative velocity electron-molecule
             KThreeVector RelativeVelocity = ElVelocity - MolVelocity;
             //transformation into CMS
             KThreeVector CMSVelocity = (
-                                        KConst::M_el() / (KConst::M_el()
-                                        + KConst::M_prot()) * ElVelocity
-                                        + 2. * KConst::M_prot() * MolVelocity
-                                             / (KConst::M_el() + KConst::M_prot())
+                                        KConst::M_el_kg() / (KConst::M_el_kg()
+                                        + KConst::M_prot_kg()) * ElVelocity
+                                        + 2. * KConst::M_prot_kg() * MolVelocity
+                                             / (KConst::M_el_kg() + KConst::M_prot_kg())
                                        );
 
             //generation of random direction
@@ -331,11 +332,11 @@ namespace Kassiopeia
                                );
 
             //new electron velocity
-            ElVelocity = KConst::M_prot() / (KConst::M_prot() + KConst::M_el())
+            ElVelocity = KConst::M_prot_kg() / (KConst::M_prot_kg() + KConst::M_el_kg())
                                           * RelativeVelocity.Magnitude() * Random.Unit()
                          + CMSVelocity;
 
-            anEloss = anEnergie - KConst::M_el() / (2. * KConst::Q())
+            anEloss = anEnergie - KConst::M_el_kg() / (2. * KConst::Q())
                                   * ElVelocity.Magnitude() * ElVelocity.Magnitude();
         }
         return;
@@ -350,7 +351,8 @@ namespace Kassiopeia
     {
     }
 
-    KSIntCalculatorHydrogenVib::KSIntCalculatorHydrogenVib( const KSIntCalculatorHydrogenVib& )
+    KSIntCalculatorHydrogenVib::KSIntCalculatorHydrogenVib( const KSIntCalculatorHydrogenVib& ):
+        KSComponent()
     {
     }
 
@@ -433,7 +435,8 @@ namespace Kassiopeia
     {
     }
 
-    KSIntCalculatorHydrogenRot02::KSIntCalculatorHydrogenRot02( const KSIntCalculatorHydrogenRot02& )
+    KSIntCalculatorHydrogenRot02::KSIntCalculatorHydrogenRot02( const KSIntCalculatorHydrogenRot02& ):
+        KSComponent()
     {
     }
 
@@ -535,7 +538,8 @@ namespace Kassiopeia
     {
     }
 
-    KSIntCalculatorHydrogenRot13::KSIntCalculatorHydrogenRot13( const KSIntCalculatorHydrogenRot13& )
+    KSIntCalculatorHydrogenRot13::KSIntCalculatorHydrogenRot13( const KSIntCalculatorHydrogenRot13& ):
+        KSComponent()
     {
     }
 
@@ -636,7 +640,8 @@ namespace Kassiopeia
     {
     }
 
-    KSIntCalculatorHydrogenRot20::KSIntCalculatorHydrogenRot20( const KSIntCalculatorHydrogenRot20& )
+    KSIntCalculatorHydrogenRot20::KSIntCalculatorHydrogenRot20( const KSIntCalculatorHydrogenRot20& ):
+        KSComponent()
     {
     }
 
@@ -1046,6 +1051,7 @@ namespace Kassiopeia
 
     KSIntCalculatorHydrogenExcitationB::
     KSIntCalculatorHydrogenExcitationB( const KSIntCalculatorHydrogenExcitationB& aCopy ) :
+        KSComponent(),
         Emin( aCopy.Emin )
     {
         initialize_sum();
@@ -1195,6 +1201,7 @@ namespace Kassiopeia
 
     KSIntCalculatorHydrogenExcitationC::
     KSIntCalculatorHydrogenExcitationC( const KSIntCalculatorHydrogenExcitationC& aCopy ) :
+        KSComponent(),
         Emin( aCopy.Emin )
     {
         initialize_sum();
@@ -1284,6 +1291,7 @@ namespace Kassiopeia
 
     KSIntCalculatorHydrogenDissoziation10::
     KSIntCalculatorHydrogenDissoziation10(const KSIntCalculatorHydrogenDissoziation10& aCopy) :
+        KSComponent(),
         Emin(aCopy.Emin)
     {        
         initialize_sum();
@@ -1355,6 +1363,7 @@ namespace Kassiopeia
 
     KSIntCalculatorHydrogenDissoziation15::
     KSIntCalculatorHydrogenDissoziation15(const KSIntCalculatorHydrogenDissoziation15& aCopy) :
+        KSComponent(),
         Emin(aCopy.Emin)
     {        
         initialize_sum();
@@ -1431,6 +1440,7 @@ namespace Kassiopeia
 
     KSIntCalculatorHydrogenExcitationElectronic::
     KSIntCalculatorHydrogenExcitationElectronic(const KSIntCalculatorHydrogenExcitationElectronic& aCopy) :
+        KSComponent(),
         Emin(aCopy.Emin),
         FrankCondonSum(aCopy.FrankCondonSum),
         ExcitationSum(aCopy.ExcitationSum),
@@ -1543,7 +1553,8 @@ namespace Kassiopeia
                         / ( BindingEnergy * BindingEnergy );
     }
 
-    KSIntCalculatorHydrogenIonisation::KSIntCalculatorHydrogenIonisation( const KSIntCalculatorHydrogenIonisation& aCopy )
+    KSIntCalculatorHydrogenIonisation::KSIntCalculatorHydrogenIonisation( const KSIntCalculatorHydrogenIonisation& aCopy ):
+        KSComponent()
     {
         CrossParam_A1 = aCopy.CrossParam_A1;
         CrossParam_A2 = aCopy.CrossParam_A2;

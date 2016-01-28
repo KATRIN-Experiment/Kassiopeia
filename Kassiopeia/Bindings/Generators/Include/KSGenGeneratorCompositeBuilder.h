@@ -4,6 +4,7 @@
 #include "KComplexElement.hh"
 #include "KSGenGeneratorComposite.h"
 #include "KSGeneratorsMessage.h"
+#include "KSGenValueFix.h"
 #include "KSToolbox.h"
 
 using namespace Kassiopeia;
@@ -19,12 +20,7 @@ namespace katrin
         {
             aContainer->CopyTo( fObject, &KSGenGeneratorComposite::SetName );
             return true;
-        }
-        if( aContainer->GetName() == "pid" )
-        {
-            aContainer->CopyTo( fObject, &KSGenGeneratorComposite::SetPid );
-            return true;
-        }
+        }        
         if( aContainer->GetName() == "energy" )
         {
             fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
@@ -59,6 +55,13 @@ namespace katrin
             fObject->AddSpecial( KSToolbox::GetInstance()->GetObjectAs< KSGenSpecial >( aContainer->AsReference< string >() ) );
             return true;
         }
+        if( aContainer->GetName() == "pid" )
+        {
+            KSGenValueFix* tPidValue = new KSGenValueFix();
+            tPidValue->SetValue(aContainer->AsReference<double>());
+            fObject->SetPid(tPidValue);
+            return true;
+        }
         return false;
     }
 
@@ -70,7 +73,26 @@ namespace katrin
             aContainer->ReleaseTo( fObject, &KSGenGeneratorComposite::AddCreator );
             return true;
         }
+        if(aContainer->Is<KSGenValue>() )
+        {
+            aContainer->ReleaseTo( fObject, &KSGenGeneratorComposite::SetPid );
+            return true;
+        }
         return false;
+    }
+
+    template< >
+    inline bool KSGenGeneratorCompositeBuilder::End()
+    {
+        if (fObject->GetPid() == NULL)
+        {
+            genmsg(eWarning) << "No Particle id was set. Kassiopeia assumes that electrons (pid=11) should be tracked" << eom;
+            KSGenValueFix* tPidValue = new KSGenValueFix();
+            tPidValue->SetValue(11);
+            fObject->SetPid(tPidValue);
+        }
+
+        return true;
     }
 
 }

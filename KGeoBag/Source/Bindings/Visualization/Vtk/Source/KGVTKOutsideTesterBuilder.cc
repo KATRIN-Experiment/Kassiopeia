@@ -5,7 +5,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKOutsideTesterStructure =
+    STATICINT sKGVTKOutsideTesterStructure =
         KGVTKOutsideTesterBuilder::Attribute< string >( "name" ) +
         KGVTKOutsideTesterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKOutsideTesterBuilder::Attribute< string >( "spaces" ) +
@@ -17,7 +17,7 @@ namespace katrin
         KGVTKOutsideTesterBuilder::Attribute< KGRGBColor >( "outside_color" ) +
         KGVTKOutsideTesterBuilder::Attribute< double >( "vertex_size" );
 
-    static const int sKGVTKOutsideTesterWindow =
+    STATICINT sKGVTKOutsideTesterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKOutsideTester >( "vtk_outside_tester" );
 
 }

@@ -7,9 +7,12 @@
 #include <stdlib.h>
 #include <sstream>
 
-#ifndef KEMFIELD_DEFAULT_GPU_ID
+
+#ifdef KEMFIELD_USE_MPI
+    #include "KMPIInterface.hh"
+#endif
+
 #define KEMFIELD_DEFAULT_GPU_ID 0
-#endif /* KEMFIELD_DEFAULT_GPU_ID */
 
 #ifndef DEFAULT_KERNEL_DIR
 #define DEFAULT_KERNEL_DIR "."
@@ -55,15 +58,28 @@ namespace KEMField
     // Select the default platform and create a context using this platform and
     // the GPU
     cl_context_properties cps[3] = {CL_CONTEXT_PLATFORM,
-				    (cl_context_properties)(fPlatforms[0])(),
+				    (cl_context_properties)(fPlatforms[KEMFIELD_OPENCL_PLATFORM])(),
 				    0};
-#ifdef KEMFIELD_OPENCL_CPU
-    fContext = new cl::Context(CL_DEVICE_TYPE_CPU, cps);
-#else
-    fContext = new cl::Context(CL_DEVICE_TYPE_GPU, cps);
-#endif
 
-    cl::vector<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
+    unsigned int deviceType = KEMFIELD_OPENCL_DEVICE_TYPE;
+
+
+    if(deviceType == 0) //we have a GPU
+    {
+        fContext = new cl::Context( CL_DEVICE_TYPE_GPU, cps);
+    }
+
+    if(deviceType == 1) //we have a CPU
+    {
+        fContext = new cl::Context( CL_DEVICE_TYPE_CPU, cps);
+    }
+
+    if(deviceType == 2) //we have an accelerator device
+    {
+        fContext = new cl::Context( CL_DEVICE_TYPE_ACCELERATOR, cps);
+    }
+
+    CL_VECTOR_TYPE<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
 
     fCLDeviceID = KEMFIELD_DEFAULT_GPU_ID;
     fDevices.clear();
@@ -94,6 +110,25 @@ namespace KEMField
     }
 #endif /* KEMFIELD_USE_DOUBLE_PRECISION */
 
+
+#ifdef KEMFIELD_USE_MPI
+
+    cl::STRING_CLASS name;
+    int process_id = KMPIInterface::GetInstance()->GetProcess();
+    fDevices[i].getInfo(CL_DEVICE_NAME, &name);
+    std::stringstream msg;
+    msg << "Process #"<<process_id<<", Setting GPU device to ID # "<<i<<" ("<<name<<") of "<<fDevices.size()<<" available devices on host: "<< KMPIInterface::GetInstance()->GetHostName();
+#ifdef KEMFIELD_USE_DOUBLE_PRECISION
+    msg << " (double precision enabled)." << std::endl;
+#else
+    msg << "." << std::endl;
+#endif
+
+    KMPIInterface::GetInstance()->PrintMessage(msg.str());
+
+
+#else
+
     cl::STRING_CLASS name;
     fDevices[i].getInfo(CL_DEVICE_NAME, &name);
     KEMField::cout << "Setting GPU device to ID # "<<i<<" ("<<name<<") of "<<fDevices.size()<<" available devices";
@@ -101,6 +136,8 @@ namespace KEMField
     KEMField::cout << " (double precision enabled)." << KEMField::endl;
 #else
     KEMField::cout << "." << KEMField::endl;
+#endif
+
 #endif
 
     fCLDeviceID = i;

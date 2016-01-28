@@ -60,8 +60,6 @@ namespace KEMField
     template <typename Stream>
     friend Stream& operator>>(Stream& s,KZonalHarmonicContainer<Basis>& c)
     {
-      typedef typename ZonalHarmonicType::Container ElementContainer;
-
       s.PreStreamInAction(c);
 
       // Compare the hashes of the element container
@@ -193,7 +191,7 @@ namespace KEMField
       fParameters = 0;
     }
     else
-      fElementContainer.~ElementContainer();      
+      fElementContainer.~ElementContainer();
 
     for (typename std::vector<KZonalHarmonicContainer<Basis>*>::iterator it=fSubContainers.begin();it!=fSubContainers.end();++it)
       delete * it;
@@ -212,7 +210,7 @@ namespace KEMField
     if (level == -1)
     {
       // split according to axial symmetry
-      coefficientGenerator.GroupCoaxialElements(subcontainers);
+      coefficientGenerator.GroupCoaxialElements( subcontainers, fParameters->GetCoaxialityTolerance() );
 
       if (subcontainers.size()>1)
       {

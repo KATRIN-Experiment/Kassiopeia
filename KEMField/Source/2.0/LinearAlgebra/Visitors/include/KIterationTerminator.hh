@@ -56,10 +56,6 @@ class KIterationTerminator: public KIterativeSolver<ValueType>::Visitor
             {
                 this->fTerminate = true;
             }
-            else
-            {
-                std::cout<<"cannot terminate! "<<iter<<" !> "<<fMaxIterations<<" residual = "<<solver.ResidualNorm()<<std::endl;
-            }
         }
 
         virtual void Finalize(KIterativeSolver<ValueType>&){};

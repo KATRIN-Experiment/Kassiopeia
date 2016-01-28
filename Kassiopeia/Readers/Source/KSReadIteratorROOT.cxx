@@ -147,6 +147,16 @@ namespace Kassiopeia
         return (fIndex != aValue);
     }
 
+    bool KSReadIteratorROOT::HasObject( const string& aLabel )
+    {
+        ObjectIt tIt = fObjects.find( aLabel );
+        if( tIt != fObjects.end() )
+        {
+            return true;
+        }
+        return false;
+    }
+
     KSReadObjectROOT& KSReadIteratorROOT::GetObject( const string& aLabel )
     {
         ObjectIt tIt = fObjects.find( aLabel );

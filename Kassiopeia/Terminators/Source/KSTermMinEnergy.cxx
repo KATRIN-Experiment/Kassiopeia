@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTermMinEnergy::KSTermMinEnergy( const KSTermMinEnergy& aCopy ) :
+        KSComponent(),
         fMinEnergy( aCopy.fMinEnergy )
     {
     }

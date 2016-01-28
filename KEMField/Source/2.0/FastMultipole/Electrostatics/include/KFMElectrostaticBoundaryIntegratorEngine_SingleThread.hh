@@ -10,8 +10,6 @@
 #include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
 #include "KFMElectrostaticParameters.hh"
 
-
-
 namespace KEMField
 {
 
@@ -31,41 +29,83 @@ namespace KEMField
 class KFMElectrostaticBoundaryIntegratorEngine_SingleThread
 {
     public:
+
         KFMElectrostaticBoundaryIntegratorEngine_SingleThread();
         virtual ~KFMElectrostaticBoundaryIntegratorEngine_SingleThread();
+
+        //for evaluating work load weights
+        void EvaluateWorkLoads(unsigned int divisions, unsigned int zeromask);
+        double GetDiskWeight() const {return fDiskWeight;};
+        double GetRamWeight() const {return fRamWeight;};
+        double GetFFTWeight() const {return fFFTWeight;};
 
         //extracted electrode data
         void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
 
-        //access to the region tree
+        void SetParameters(KFMElectrostaticParameters params);
         void SetTree(KFMElectrostaticTree* tree);
+        void InitializeMultipoleMoments();
+        void InitializeLocalCoefficientsForPrimaryNodes();
+
+        //dummy functions (used by mpi)
+        void RecieveTopLevelLocalCoefficients(){};
+        void SendTopLevelLocalCoefficients(){};
 
         void Initialize();
 
         void MapField();
 
-    protected:
-
-        //operations
-        void SetParameters(KFMElectrostaticParameters params);
-        void AssociateElementsAndNodes();
-        void InitializeMultipoleMoments();
+        //individual operations, only to be used when the tree needs
+        //to be modified in between steps (i.e. MPI)
         void ResetMultipoleMoments();
         void ComputeMultipoleMoments();
         void ResetLocalCoefficients();
-        void InitializeLocalCoefficients();
+        void ComputeMultipoleToLocal();
+        void ComputeLocalToLocal();
         void ComputeLocalCoefficients();
+
+    protected:
+
+        void AssociateElementsAndNodes();
+
+        double ComputeDiskMatrixVectorProductWeight();
+        double ComputeRamMatrixVectorProductWeight();
+        double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
+
+        #ifdef KEMFIELD_USE_REALTIME_CLOCK
+        timespec diff(timespec start, timespec end)
+        {
+            timespec temp;
+            if( (end.tv_nsec-start.tv_nsec) < 0)
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+            }
+            else
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+            }
+            return temp;
+        }
+        #endif
 
         ////////////////////////////////////////////////////////////////////////
 
         //data
         int fDegree;
         unsigned int fNTerms;
+        int fTopLevelDivisions;
         int fDivisions;
         int fZeroMaskSize;
         int fMaximumTreeDepth;
         unsigned int fVerbosity;
         double fWorldLength;
+
+        double fDiskWeight;
+        double fRamWeight;
+        double fFFTWeight;
+        static const std::string fWeightFilePrefix;
 
         //the tree object that the manager is to construct
         KFMElectrostaticTree* fTree;
@@ -91,8 +131,11 @@ class KFMElectrostaticBoundaryIntegratorEngine_SingleThread
 
         //the multipole up converter
         KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+
         //the local coefficient calculator
-        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+//        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+        KFMElectrostaticRemoteToLocalConverterInterface* fM2LConverterInterface;
+
         //the local coefficient down converter
         KFMElectrostaticLocalToLocalConverter* fL2LConverter;
 

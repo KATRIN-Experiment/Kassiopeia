@@ -22,9 +22,9 @@ namespace KGeoBag
         private:
             vector< KGSurface* > fSurfaces;
             vector< KGSpace* > fSpaces;
-            ;K_SET_GET( double, LineCurrent );
-            ;K_SET_GET( double, ScalingFactor );
-            ;K_SET_GET( double, Direction );
+            K_SET_GET( double, LineCurrent )
+            K_SET_GET( double, ScalingFactor )
+            K_SET_GET( double, Direction )
     };
 
 }

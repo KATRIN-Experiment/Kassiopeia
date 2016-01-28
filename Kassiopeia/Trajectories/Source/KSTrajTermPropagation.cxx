@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTrajTermPropagation::KSTrajTermPropagation( const KSTrajTermPropagation& aCopy ) :
+            KSComponent(),
             fDirection( aCopy.fDirection )
     {
     }
@@ -21,7 +22,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSTrajTermPropagation::Differentiate( const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
+    void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
     {
         KThreeVector tVelocity = fDirection * aParticle.GetVelocity();
         KThreeVector tForce = aParticle.GetCharge() * (aParticle.GetElectricField() + tVelocity.Cross( aParticle.GetMagneticField() ));
@@ -32,7 +33,7 @@ namespace Kassiopeia
         return;
     }
 
-    void KSTrajTermPropagation::Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
+    void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
     {
         double tLongVelocity = fDirection * aParticle.GetLongVelocity();
         double tLongitudinalMomentum = aParticle.GetLongMomentum();
@@ -50,6 +51,10 @@ namespace Kassiopeia
         double tLongitudinalForce = -1. * (tOrbitalMagneticMoment / tLorentzFactor) * tMagneticGradientUnit + aParticle.GetCharge() * tElectricfield.Dot( tMagneticField.Unit() );
         double tTransverseForce = ((tLongitudinalMomentum * tTransverseMomentum) / (2 * aParticle.GetMass() * tLorentzFactor * tMagneticFieldMagnitude)) * tMagneticGradientUnit;
 
+        trajmsg_debug( "adiabatic propagation gc velocity: <" << tLongVelocity * tMagneticFieldUnit << ">" << ret )
+        trajmsg_debug( "adiabatic propagation longitudinal force <" << tLongitudinalForce << ">" << ret )
+        trajmsg_debug( "adiabatic propagation transverse force <" << tTransverseForce << ">" << ret )
+
         aDerivative.AddToGuidingCenterVelocity( tLongVelocity * tMagneticFieldUnit );
         aDerivative.AddToLongitudinalForce( tLongitudinalForce );
         aDerivative.AddToTransverseForce( tTransverseForce );
@@ -57,9 +62,18 @@ namespace Kassiopeia
         return;
     }
 
-    void KSTrajTermPropagation::Differentiate( const KSTrajMagneticParticle& aParticle, KSTrajMagneticDerivative& aDerivative ) const
+    void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajMagneticParticle& aParticle, KSTrajMagneticDerivative& aDerivative ) const
     {
     	KThreeVector tVelocity = fDirection * aParticle.GetMagneticField().Unit();
+
+        aDerivative.AddToVelocity( tVelocity );
+
+        return;
+    }
+
+    void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajElectricParticle& aParticle, KSTrajElectricDerivative& aDerivative ) const
+    {
+    	KThreeVector tVelocity = fDirection * aParticle.GetElectricField().Unit();
 
         aDerivative.AddToVelocity( tVelocity );
 

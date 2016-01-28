@@ -22,6 +22,7 @@ namespace KGeoBag
             fSwapAxis( false ),
             fPlaneVectorA( 0.0, 0.0, 1.0 ),
             fPlaneVectorB( 1.0, 0.0, 0.0 ),
+            fEpsilon( 1.0e-10 ),
             fROOTSpaces(),
             fROOTSurfaces(),
             fCurrentSpace( NULL ),
@@ -207,53 +208,52 @@ namespace KGeoBag
 
     std::string KGROOTGeometryPainter::GetAxisLabel( KThreeVector anAxis )
     {
-    	double tEpsilon = 1e-10;
-    	if ( anAxis.Y() < tEpsilon
-    			&& anAxis.Y() > -tEpsilon
-    			&& anAxis.Z() < tEpsilon
-    			&& anAxis.Z() > -tEpsilon )
+    	if ( anAxis.Y() < fEpsilon
+    			&& anAxis.Y() > -fEpsilon
+    			&& anAxis.Z() < fEpsilon
+    			&& anAxis.Z() > -fEpsilon )
     	{
-    		if ( anAxis.X() < 1.0 + tEpsilon
-    			&& anAxis.X() > 1.0 - tEpsilon)
+    		if ( anAxis.X() < 1.0 + fEpsilon
+    			&& anAxis.X() > 1.0 - fEpsilon)
     		{
 				return string( "x" );
     		}
-    		if ( anAxis.X() < -1.0 + tEpsilon
-    			&& anAxis.X() > -1.0 - tEpsilon)
+    		if ( anAxis.X() < -1.0 + fEpsilon
+    			&& anAxis.X() > -1.0 - fEpsilon)
     		{
 				return string( "-x" );
     		}
     	}
 
-    	if ( anAxis.X() < tEpsilon
-    			&& anAxis.X() > -tEpsilon
-    			&& anAxis.Z() < tEpsilon
-    			&& anAxis.Z() > -tEpsilon )
+    	if ( anAxis.X() < fEpsilon
+    			&& anAxis.X() > -fEpsilon
+    			&& anAxis.Z() < fEpsilon
+    			&& anAxis.Z() > -fEpsilon )
     	{
-    		if ( anAxis.Y() < 1.0 + tEpsilon
-    			&& anAxis.Y() > 1.0 - tEpsilon)
+    		if ( anAxis.Y() < 1.0 + fEpsilon
+    			&& anAxis.Y() > 1.0 - fEpsilon)
     		{
 				return string( "y" );
     		}
-    		if ( anAxis.Y() < -1.0 + tEpsilon
-    			&& anAxis.Y() > -1.0 - tEpsilon)
+    		if ( anAxis.Y() < -1.0 + fEpsilon
+    			&& anAxis.Y() > -1.0 - fEpsilon)
     		{
 				return string( "-y" );
     		}
     	}
 
-    	if ( anAxis.X() < tEpsilon
-    			&& anAxis.X() > -tEpsilon
-    			&& anAxis.Y() < tEpsilon
-    			&& anAxis.Y() > -tEpsilon )
+    	if ( anAxis.X() < fEpsilon
+    			&& anAxis.X() > -fEpsilon
+    			&& anAxis.Y() < fEpsilon
+    			&& anAxis.Y() > -fEpsilon )
     	{
-    		if ( anAxis.Z() < 1.0 + tEpsilon
-    			&& anAxis.Z() > 1.0 - tEpsilon)
+    		if ( anAxis.Z() < 1.0 + fEpsilon
+    			&& anAxis.Z() > 1.0 - fEpsilon)
     		{
 				return string( "z" );
     		}
-    		if ( anAxis.Z() < -1.0 + tEpsilon
-    			&& anAxis.Z() > -1.0 - tEpsilon)
+    		if ( anAxis.Z() < -1.0 + fEpsilon
+    			&& anAxis.Z() > -1.0 - fEpsilon)
     		{
 				return string( "-z" );
     		}
@@ -322,12 +322,11 @@ namespace KGeoBag
     	//plane normal looks in x direction
     	if ( tDirectionMagX >= tDirectionMagY && tDirectionMagX >= tDirectionMagZ )
     	{
-    		double tEpsilon = 1e-10;
 			fPlaneVectorA.SetX( 0.0 );
 			fPlaneVectorA.SetY( 1.0 );
     		fPlaneVectorA.SetZ( 0.0 );
 
-    		if ( fPlaneNormal.X() > tEpsilon || fPlaneNormal.X() < -1.*tEpsilon )
+    		if ( fPlaneNormal.X() > fEpsilon || fPlaneNormal.X() < -1.*fEpsilon )
     		{
     			fPlaneVectorA.SetX( -1.0 * fPlaneNormal.Y() / fPlaneNormal.X() );
     		}
@@ -344,11 +343,11 @@ namespace KGeoBag
     			swap( fPlaneVectorA, fPlaneVectorB);
     		}
     		vismsg( eNormal ) << "Plane vectors are: "<<fPlaneVectorA<<" and "<<fPlaneVectorB<<eom;
-    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*tEpsilon  )
+    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*fEpsilon  )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector A and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
-    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*tEpsilon )
+    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*fEpsilon )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector B and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
@@ -358,12 +357,11 @@ namespace KGeoBag
     	//plane normal looks in y direction
     	if ( tDirectionMagY >= tDirectionMagX && tDirectionMagY >= tDirectionMagZ )
     	{
-    		double tEpsilon = 1e-10;
 			fPlaneVectorA.SetX( 0.0 );
 			fPlaneVectorA.SetY( 0.0 );
     		fPlaneVectorA.SetZ( 1.0 );
 
-    		if ( fPlaneNormal.Y() > tEpsilon || fPlaneNormal.Y() < -1.*tEpsilon )
+    		if ( fPlaneNormal.Y() > fEpsilon || fPlaneNormal.Y() < -1.*fEpsilon )
     		{
     			fPlaneVectorA.SetY( -1.0 * fPlaneNormal.Z() / fPlaneNormal.Y() );
     		}
@@ -380,11 +378,11 @@ namespace KGeoBag
     			swap( fPlaneVectorA, fPlaneVectorB);
     		}
     		vismsg( eNormal ) << "Plane vectors are: "<<fPlaneVectorA<<" and "<<fPlaneVectorB<<eom;
-    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*tEpsilon  )
+    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*fEpsilon  )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector A and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
-    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*tEpsilon )
+    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*fEpsilon )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector B and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
@@ -394,12 +392,11 @@ namespace KGeoBag
     	//plane normal looks in z direction
     	if ( tDirectionMagZ >= tDirectionMagX && tDirectionMagZ >= tDirectionMagY )
     	{
-    		double tEpsilon = 1e-10;
 			fPlaneVectorA.SetX( 1.0 );
 			fPlaneVectorA.SetY( 0.0 );
     		fPlaneVectorA.SetZ( 0.0 );
 
-    		if ( fPlaneNormal.Z() > tEpsilon || fPlaneNormal.Z() < -1.*tEpsilon )
+    		if ( fPlaneNormal.Z() > fEpsilon || fPlaneNormal.Z() < -1.*fEpsilon )
     		{
     			fPlaneVectorA.SetZ( -1.0 * fPlaneNormal.X() / fPlaneNormal.Z() );
     		}
@@ -416,11 +413,11 @@ namespace KGeoBag
     			swap( fPlaneVectorA, fPlaneVectorB);
     		}
     		vismsg( eNormal ) << "Plane vectors are: "<<fPlaneVectorA<<" and "<<fPlaneVectorB<<eom;
-    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*tEpsilon  )
+    		if ( fPlaneVectorA.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorA.Dot( fPlaneNormal ) < -1.*fEpsilon  )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector A and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
-    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > tEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*tEpsilon )
+    		if ( fPlaneVectorB.Dot( fPlaneNormal ) > fEpsilon || fPlaneVectorB.Dot( fPlaneNormal ) < -1.*fEpsilon )
     		{
     			vismsg( eWarning ) <<"Scalar product of PlaneVector B and NormalVector is "<<fPlaneVectorA.Dot( fPlaneNormal )<<eom;
     		}
@@ -1662,8 +1659,7 @@ namespace KGeoBag
     						+ tLineConnection.Z() * fPlaneNormal.Z();
 
 
-    	double tEpsilon = 1e-10;
-    	if ( tDenominator < tEpsilon && tDenominator > -1.0 * tEpsilon )
+    	if ( tDenominator < fEpsilon && tDenominator > -1.0 * fEpsilon )
     	{
     		//plane and line parallel
     		anIntersection = false;
@@ -1678,12 +1674,12 @@ namespace KGeoBag
 //    	vismsg_debug( tNumerator<<"\t"<<tDenominator<<"\t"<<tLambda<<eom );
 
     	//line is parallel but on plane
-//    	if ( tNumerator < tEpsilon && tNumerator > -1.0 * tEpsilon )
+//    	if ( tNumerator < fEpsilon && tNumerator > -1.0 * fEpsilon )
 //    	{
 //    		tLambda = 0.0;
 //    	}
 
-    	if ( tLambda > -tEpsilon && tLambda < 1.0 - tEpsilon )
+    	if ( tLambda > -fEpsilon && tLambda < 1.0 - fEpsilon )
     	{
 //    		vismsg_debug( "found intersection, lamda is "<<tLambda<<eom);
     		anIntersection = true;
@@ -2193,11 +2189,10 @@ namespace KGeoBag
 		}
 
 		OpenPoints::It tHighPointFirstCircleIt;
-		double tEpsilon = 1e-10;
 		for( OpenPoints::It tIt = tOpenPoints.fData.begin(); tIt != tOpenPoints.fData.end(); tIt++ )
 		{
 			KTwoVector tPoint = *tIt;
-			if ( fabs( tPoint.X() - tHighPointFirstCircle.X()) < tEpsilon && fabs( tPoint.Y() - tHighPointFirstCircle.Y()) < tEpsilon  )
+			if ( fabs( tPoint.X() - tHighPointFirstCircle.X()) < fEpsilon && fabs( tPoint.Y() - tHighPointFirstCircle.Y()) < fEpsilon  )
 			{
 				tHighPointFirstCircleIt = tIt;
 				break;

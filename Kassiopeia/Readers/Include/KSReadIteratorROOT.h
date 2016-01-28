@@ -60,6 +60,7 @@ namespace Kassiopeia
             //*******
 
         public:
+            bool HasObject( const string& aLabel );
             KSReadObjectROOT& GetObject( const string& aLabel );
             const KSReadObjectROOT& GetObject( const string& aLabel ) const;
 

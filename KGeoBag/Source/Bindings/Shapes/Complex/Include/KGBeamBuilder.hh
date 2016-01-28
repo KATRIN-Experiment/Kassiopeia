@@ -66,16 +66,12 @@ namespace katrin
   {
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int nDiscLong;
-      anAttribute->CopyTo(nDiscLong);
-      fObject->SetNDiscLong(nDiscLong);
+      anAttribute->CopyTo(fObject, &KGBeam::SetNDiscLong);
       return true;
     }
     if (anAttribute->GetName() == "axial_mesh_count")
-    {
-      int nDiscRad;
-      anAttribute->CopyTo(nDiscRad);
-      fObject->SetNDiscRad(nDiscRad);
+    {      
+      anAttribute->CopyTo(fObject, &KGBeam::SetNDiscRad);
       return true;
     }
     return false;
@@ -121,12 +117,12 @@ namespace katrin
   {
     if (anElement->GetName() == "beam")
     {
-      KGBeam* object;
-      anElement->ReleaseTo(object);
-      object->Initialize();
-      KSmartPointer< KGBeam > smartPtr(object);
-      fObject->SetObject(smartPtr);
-      return true;
+        KGBeam* object = NULL;
+        anElement->ReleaseTo(object);
+        object->Initialize();
+        KSmartPointer< KGBeam > smartPtr(object);
+        fObject->SetObject(smartPtr);
+        return true;
     }
     return false;
   }
@@ -150,12 +146,12 @@ namespace katrin
   {
     if (anElement->GetName() == "beam")
     {
-      KGBeam* object;
-      anElement->ReleaseTo(object);
-      object->Initialize();
-      KSmartPointer< KGBeam > smartPtr(object);
-      fObject->SetObject(smartPtr);
-      return true;
+        KGBeam* object = NULL;
+        anElement->ReleaseTo(object);
+        object->Initialize();
+        KSmartPointer< KGBeam > smartPtr(object);
+        fObject->SetObject(smartPtr);
+        return true;
     }
     return false;
   }

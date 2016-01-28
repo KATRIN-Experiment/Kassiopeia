@@ -2,6 +2,7 @@
 #define Kassiopeia_KSGenGeneratorComposite_h_
 
 #include "KSGenerator.h"
+#include "KSGenValue.h"
 #include "KSGenCreator.h"
 #include "KSList.h"
 
@@ -30,8 +31,9 @@ namespace Kassiopeia
             //composition
             //***********
 
-        public:
-            void SetPid( const long long& aPid );
+        public:            
+            void SetPid( KSGenValue* aPidValue );
+            KSGenValue* GetPid();
 
             void AddCreator( KSGenCreator* aCreator );
             void RemoveCreator( KSGenCreator* aCreator );
@@ -44,7 +46,7 @@ namespace Kassiopeia
             void DeinitializeComponent();
 
         protected:
-            long long fPid;
+            KSGenValue* fPidValue;
             KSList< KSGenSpecial > fSpecials;
             KSList< KSGenCreator > fCreators;
     };

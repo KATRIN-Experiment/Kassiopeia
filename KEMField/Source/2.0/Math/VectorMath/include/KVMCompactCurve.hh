@@ -67,7 +67,7 @@ inline KVMCompactCurve::KVMCompactCurve(const KVMCompactCurve &copyObject):
 KVMMap<KVMCurveDDim,KVMCurveRDim>(copyObject)
 {
 
-};
+}
 
 } //end of KEMField namespace
 

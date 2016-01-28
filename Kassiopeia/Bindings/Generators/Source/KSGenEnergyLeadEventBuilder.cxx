@@ -10,13 +10,13 @@ namespace katrin
     {
     }
 
-    static int sKSGenEnergyLeadEventStructure =
+    STATICINT sKSGenEnergyLeadEventStructure =
         KSGenEnergyLeadEventBuilder::Attribute< string >( "name" ) +
         KSGenEnergyLeadEventBuilder::Attribute< bool >( "force_conversion" ) +
         KSGenEnergyLeadEventBuilder::Attribute< bool >( "do_conversion" ) +
         KSGenEnergyLeadEventBuilder::Attribute< bool >( "do_auger" );
 
-    static int sKSGenEnergyLeadEvent =
+    STATICINT sKSGenEnergyLeadEvent =
         KSRootBuilder::ComplexElement< KSGenEnergyLeadEvent >( "ksgen_energy_lead_event" );
 
 }

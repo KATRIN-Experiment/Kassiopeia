@@ -56,6 +56,9 @@ namespace katrin
             XTargetType* AsPointer();
 
             template< class XTargetType >
+            operator XTargetType();
+
+            template< class XTargetType >
             void CopyTo( XTargetType& aTarget );
 
             template< class XTargetType >
@@ -180,6 +183,11 @@ namespace katrin
         return tTarget;
     }
 
+    template< class XTargetType >
+    inline KContainer::operator XTargetType()
+    {
+        return AsReference< XTargetType >();
+    }
 
     template< class XTargetType >
     inline void KContainer::CopyTo( XTargetType& aTarget )

@@ -2,6 +2,7 @@
 #define KZHLEGENDRECOEFFICIENTS_H
 
 #include <vector>
+#include <cstddef>
 
 
 namespace KEMField
@@ -12,15 +13,17 @@ namespace KEMField
     static KZHLegendreCoefficients* GetInstance();
 
     void InitializeLegendrePolynomialArrays(int coeff_num);
-    double Get(int i, int j) { return c.at(i).at(j); }
+    double Get(int i, int j) {return c[i][j];}
+    const double* GetRawPointerToRow(int i) const { return &(c[i][0]);}
 
   protected:
-    KZHLegendreCoefficients() { c.resize(12); }
+    KZHLegendreCoefficients() { c.resize(12);}
     virtual ~KZHLegendreCoefficients() {}
 
     static KZHLegendreCoefficients* fZHLegendreCoefficients;
 
     std::vector<std::vector<double> > c; ///< c1-c12 are coefficients related to the recursive definitions of Legendre polynomials
+
   };
 }
 

@@ -23,11 +23,11 @@ namespace katrin
             void ReleaseCalculators( KSIntScattering* aScattering );
 
         private:
-            ;K_SET_GET( string, Name );
-            ;K_SET_GET( bool, Elastic );
-            ;K_SET_GET( bool, Excitation );
-            ;K_SET_GET( bool, Ionisation );
-            ;K_SET_GET( string, Molecule );
+            K_SET_GET( string, Name )
+            K_SET_GET( bool, Elastic )
+            K_SET_GET( bool, Excitation )
+            K_SET_GET( bool, Ionisation )
+            K_SET_GET( string, Molecule )
             vector< KSIntCalculator* > fCalculators;
     };
 

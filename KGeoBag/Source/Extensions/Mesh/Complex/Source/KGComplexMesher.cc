@@ -19,6 +19,83 @@ namespace KGeoBag
 
     void KGComplexMesher::AddElement( KGMeshElement* e )
     {
+        //J.B. 4/1/2015
+        //need to check that the normal vector for this mesh triangle points
+        //in (approximately) the same direction as the nearest normal on the
+        //surface that we are meshing, this condition is important for
+        //the boundary element solver when Neumann boundary conditions are encountered
+
+        //figure out if we have a triangle, rectangle, or wire element
+        //TODO figure out a way to get rid of these dynamics casts
+        KGMeshTriangle* t = NULL;
+        t = dynamic_cast<KGMeshTriangle*>(e);
+
+        KGMeshRectangle* r = NULL;
+        r = dynamic_cast<KGMeshRectangle*>(e);
+
+        bool have_triangle = false;
+        if(t != NULL){have_triangle = true;};
+
+        bool have_rectangle = false;
+        if(r != NULL){have_rectangle = true;};
+
+        if(have_triangle)
+        {
+            //get the nearest normal to the centroid
+            if(fCurrentSurface != NULL)
+            {
+                KThreeVector p0 = t->GetP0();
+                KThreeVector p1 = t->GetP1();
+                KThreeVector p2 = t->GetP2();
+
+                //compute the centroid
+                KThreeVector centroid = (p0 + p1 + p2)/3.0;
+                KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+
+                //compute the normal vector of mesh triangle
+                KThreeVector triangle_normal = t->GetN3();
+                //now determine if the triangle normal points in approximately same direction
+                //as the 'above' surface normal
+                if( triangle_normal.Dot(surface_normal) < -1e-9 )
+                {
+                    //they point in opposite directions, so flip the ordering of the
+                    //second and third points for this triangle
+                    *t = KGMeshTriangle(p0, p2, p1);
+                }
+            }
+        }
+
+        if(have_rectangle)
+        {
+            //get the nearest normal to the centroid
+            if(fCurrentSurface != NULL)
+            {
+                KThreeVector p0 = r->GetP0();
+                KThreeVector p1 = r->GetP1();
+                KThreeVector p2 = r->GetP2();
+                KThreeVector p3 = r->GetP3();
+
+                //compute the centroid
+                KThreeVector centroid = (p0 + p1 + p2 + p3)/4.0;
+                KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+
+                //compute the normal vector of mesh triangle
+                KThreeVector rectangle_normal = r->GetN3();
+                //now determine if the rectangle normal points in approximately same direction
+                //as the 'above' surface normal
+                if( rectangle_normal.Dot(surface_normal) < -1e-9 )
+                {
+                    //they point in opposite directions, so flip the ordering of the
+                    //side vectors for this rectangle
+                    double a = r->GetA();
+                    double b = r->GetB();
+                    KThreeVector n1 = r->GetN1();
+                    KThreeVector n2 = r->GetN2();
+                    *r = KGMeshRectangle(b, a, p0, n2, n1);
+                }
+            }
+        }
+
         fCurrentElements->push_back( e );
         return;
     }

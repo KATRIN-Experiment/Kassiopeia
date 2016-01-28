@@ -4,10 +4,10 @@
 
 namespace katrin
 {
-    static int sKGSurfaceBuilder =
+    STATICINT sKGSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGSurface >( "surface" );
 
-    static int sKGSurfaceBuilderStructure =
+    STATICINT sKGSurfaceBuilderStructure =
         KGSurfaceBuilder::Attribute< string >( "name" ) +
         KGSurfaceBuilder::Attribute< string >( "node" ) +
         KGSurfaceBuilder::ComplexElement< KTransformation >( "transformation" );

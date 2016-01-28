@@ -225,7 +225,7 @@ namespace KGeoBag
         double tRadianAngle = (KConst::Pi() / 180.) * anAngle;
 
         fRotation.SetAxisAngle( tAxis, tRadianAngle );
-	fRotationInverse = fRotation.Inverse();
+        fRotationInverse = fRotation.Inverse();
 
         return;
     }
@@ -237,7 +237,7 @@ namespace KGeoBag
         double tRadianGamma = (KConst::Pi() / 180.) * aGamma;
 
         fRotation.SetEulerAngles( tRadianAlpha, tRadianBeta, tRadianGamma );
-	fRotationInverse = fRotation.Inverse();
+        fRotationInverse = fRotation.Inverse();
 
         return;
     }

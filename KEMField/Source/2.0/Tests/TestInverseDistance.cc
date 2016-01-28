@@ -135,11 +135,12 @@ int main(int argc, char** argv)
   double offDiagonal = 1.;
   double power = -1.;
   double accuracy = 1.e-8;
-  bool cache = false;
+//  bool cache = false;
   int method = 2;
   int rh_dimension = 2;
   bool plotMatrix = false;
   bool residualGraph = false;
+  (void) residualGraph;
 
   static struct option longOptions[] = {
     {"help", no_argument, 0, 'h'},
@@ -182,9 +183,9 @@ int main(int argc, char** argv)
     case('m'):
       method = atoi(optarg);
       break;
-    case('c'):
-      cache = true;
-      break;
+//    case('c'):
+//      cache = true;
+//      break;
     case('n'):
       rh_dimension = atoi(optarg);
       break;

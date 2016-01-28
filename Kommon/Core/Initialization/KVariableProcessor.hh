@@ -60,6 +60,7 @@ namespace katrin
 
             static const string fStartBracket;
             static const string fEndBracket;
+            static const string fNameValueSeparator;
     };
 
 }

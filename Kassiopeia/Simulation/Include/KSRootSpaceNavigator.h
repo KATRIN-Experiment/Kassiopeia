@@ -29,6 +29,7 @@ namespace Kassiopeia
         public:
             void CalculateNavigation( const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle, const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius, const double& aTrajectoryStep, KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag );
             void ExecuteNavigation( const KSParticle& anNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
+            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
             void StartNavigation( KSParticle& aParticle, KSSpace* aRoot );
             void StopNavigation( KSParticle& aParticle, KSSpace* aRoot );
 
@@ -53,6 +54,8 @@ namespace Kassiopeia
 
             void CalculateNavigation();
             void ExecuteNavigation();
+            void FinalizeNavigation();
+
 
         private:
             KSStep* fStep;

@@ -11,12 +11,12 @@ void KGeoBag::KGCylinderSurfaceRandom::VisitCylinderSurface(KGeoBag::KGCylinderS
 	KThreeVector point;
 
 	// Decide, on which area the point have to be
-	double face = KConst::Pi() * aCylinderSpace->R() * aCylinderSpace->R();
-	double curvedSurfaceArea = 2 * KConst::Pi() * aCylinderSpace->R()
-			* abs(aCylinderSpace->Z1() - aCylinderSpace->Z2());
+//	double face = KConst::Pi() * aCylinderSpace->R() * aCylinderSpace->R();
+//	double curvedSurfaceArea = 2 * KConst::Pi() * aCylinderSpace->R()
+//			* abs(aCylinderSpace->Z1() - aCylinderSpace->Z2());
 
-	double total = 2 * face + curvedSurfaceArea;
-	double decision = Uniform(0, total);
+//	double total = 2 * face + curvedSurfaceArea;
+//	double decision = Uniform(0, total); TODO: SIDES OR NO SIDES?
 
 	double phi = Uniform(0, 2 * KConst::Pi());
 

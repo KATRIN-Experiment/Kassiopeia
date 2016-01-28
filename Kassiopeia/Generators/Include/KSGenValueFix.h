@@ -21,7 +21,7 @@ namespace Kassiopeia
             virtual void DiceValue( vector< double >& aDicedValues );
 
         public:
-           K_SET_GET( double, Value );
+           K_SET_GET( double, Value )
     };
 
 }

@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSRootTerminator =
+    STATICINT sKSRootTerminator =
         KSRootBuilder::ComplexElement< KSRootTerminator >( "ks_root_terminator" );
 
-    static int sKSRootTerminatorStructure =
+    STATICINT sKSRootTerminatorStructure =
         KSRootTerminatorBuilder::Attribute< string >( "name" ) +
         KSRootTerminatorBuilder::Attribute< string >( "add_terminator" );
 

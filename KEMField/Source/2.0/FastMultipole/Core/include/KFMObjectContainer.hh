@@ -25,8 +25,13 @@ template< typename ObjectType >
 class KFMObjectContainer
 {
     public:
+
         KFMObjectContainer(){;}
-        virtual ~KFMObjectContainer(){;};
+
+        virtual ~KFMObjectContainer()
+        {
+            DeleteAllObjects();
+        };
 
         virtual unsigned int GetNObjects() const {return fObjectVector.size();};
 

@@ -3,6 +3,8 @@
 #include "KGMeshRectangle.hh"
 #include "KGMeshTriangle.hh"
 
+#include <iostream>
+
 namespace KGeoBag
 {
 

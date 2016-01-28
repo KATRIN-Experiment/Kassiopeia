@@ -20,8 +20,8 @@ namespace Kassiopeia
             virtual ~KSTrajTermSynchrotron();
 
         public:
-            virtual void Differentiate( const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const;
-            virtual void Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
 
         public:
             void SetEnhancement( const double& anEnhancement );

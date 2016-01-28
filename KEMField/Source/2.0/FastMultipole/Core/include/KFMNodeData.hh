@@ -128,7 +128,7 @@ Stream& operator<<(Stream& s,const KFMNodeData& aData)
 
 
 
-DefineKSAClassName( KFMNodeData );
+DefineKSAClassName( KFMNodeData )
 
 }
 

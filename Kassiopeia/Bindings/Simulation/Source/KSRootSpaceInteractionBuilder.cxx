@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static const int sKSRootSpaceInteraction =
+    STATICINT sKSRootSpaceInteraction =
         KSRootBuilder::ComplexElement< KSRootSpaceInteraction >( "ks_root_space_interaction" );
 
-    static const int sKSRootSpaceInteractionStructure =
+    STATICINT sKSRootSpaceInteractionStructure =
         KSRootSpaceInteractionBuilder::Attribute< string >( "name" ) +
         KSRootSpaceInteractionBuilder::Attribute< string >( "add_space_interaction" );
 

@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include "KGPoint.hh"
+#include "KGBall.hh"
 
 namespace KGeoBag
 {
@@ -29,7 +30,7 @@ namespace KGeoBag
 
 
 template<size_t NDIM>
-class KGCube: public KSAFixedSizeInputOutputObject
+class KGCube
 {
     public:
 
@@ -57,14 +58,22 @@ class KGCube: public KSAFixedSizeInputOutputObject
         KGPoint<NDIM> GetCenter() const {return KGPoint<NDIM>(fData);};
         void GetCenter(double* center) const { for(size_t i=0; i<NDIM; i++){center[i] = fData[i]; } }
         double GetLength() const {return fData[NDIM];};
+
         KGPoint<NDIM> GetCorner(size_t i) const
         {
             KGPoint<NDIM> corner;
+            double length_over_two = fData[NDIM]/2.0;
+
+            //always lower corner
+            if(i==0)
+            {
+                for(unsigned int j=0; j<NDIM; j++){corner[j] = fData[j] - length_over_two;}
+                return corner;
+            }
+
             //convert the count number into a set of bools which we can use
             //to tell us which direction the corner is in for each dimension
             std::bitset< sizeof(size_t)*CHAR_BIT > twiddle_index = std::bitset< sizeof(size_t)*CHAR_BIT >(i);
-
-            double length_over_two = fData[NDIM]/2.0;
 
             for(size_t j=0; j<NDIM; j++)
             {
@@ -85,7 +94,30 @@ class KGCube: public KSAFixedSizeInputOutputObject
         {
             double length_over_two = fData[NDIM]/2.0;
             double distance;
-            for(size_t i=0; i<NDIM; i++)
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                distance = std::fabs(p[i] - fData[i]); //distance from center in  i-th dimension
+                if(distance > length_over_two){return false;}
+                //if(distance > length_over_two){return false;}
+            }
+            return true;
+
+            // double length_over_two = fData[NDIM]/2.0;
+            // double distance;
+            // for(unsigned int i=0; i<NDIM; i++)
+            // {
+            //     distance = p[i] - fData[i]; //distance from center in  i-th dimension
+            //     if(distance < -1.0*length_over_two){return false;}
+            //     if(distance > length_over_two){return false;}
+            // }
+            // return true;
+        }
+
+        bool PointIsInside(const double* p, double eps) const
+        {
+            double length_over_two = (1.0 + eps)*(fData[NDIM]/2.0);
+            double distance;
+            for(unsigned int i=0; i<NDIM; i++)
             {
                 distance = p[i] - fData[i]; //distance from center in  i-th dimension
                 if(distance < -1.0*length_over_two){return false;}
@@ -94,14 +126,15 @@ class KGCube: public KSAFixedSizeInputOutputObject
             return true;
         }
 
+
         bool CubeIsInside(const KGCube<NDIM>* cube) const
         {
             double distance;
             double cube_len_over_two = cube->GetLength()/2.0;
             for(size_t i=0; i<NDIM; i++)
             {
-                distance = (*cube)[i] - fData[i]; //distance from center in  i-th dimension
-                if( ( (fData[NDIM]/2.0 - distance) - cube_len_over_two ) < 0 )
+                distance = std::fabs( (*cube)[i] - fData[i] ); //distance from center in  i-th dimension
+                if( distance + cube_len_over_two > fData[NDIM]/2.0 )
                 {
                     return false;
                 }
@@ -109,6 +142,20 @@ class KGCube: public KSAFixedSizeInputOutputObject
             return true;
         }
 
+        bool BallIsInside(const KGBall<NDIM>* ball) const
+        {
+            double distance;
+            double r = ball->GetRadius();
+            for(size_t i=0; i<NDIM; i++)
+            {
+                distance = std::fabs( (*ball)[i] - fData[i] ); //distance from center in  i-th dimension
+                if( distance + r > fData[NDIM]/2.0 )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         inline KGCube& operator= (const KGCube& rhs)
         {

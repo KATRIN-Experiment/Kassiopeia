@@ -4,7 +4,9 @@ namespace KGeoBag
 {
 
     KGMesherBase::KGMesherBase() :
-        fCurrentElements( NULL )
+        fCurrentElements( NULL ),
+        fCurrentSurface( NULL),
+        fCurrentSpace( NULL )
     {
     }
     KGMesherBase::~KGMesherBase()
@@ -14,11 +16,15 @@ namespace KGeoBag
     void KGMesherBase::VisitExtendedSurface( KGExtendedSurface< KGMesh >* aSurface )
     {
         fCurrentElements = aSurface->Elements();
+        fCurrentSurface = aSurface;
+        fCurrentSpace = NULL;
         return;
     }
     void KGMesherBase::VisitExtendedSpace( KGExtendedSpace< KGMesh >* aSpace )
     {
         fCurrentElements = aSpace->Elements();
+        fCurrentSurface = NULL;
+        fCurrentSpace = aSpace;
         return;
     }
 

@@ -7,16 +7,18 @@ if( Kassiopeia_USE_ROOT )
     	${VISUALIZATION_HEADER_BASENAMES}
     	KSROOTTrackPainter.h
 	KSROOTPotentialPainter.h
+        KSROOTMagFieldPainter.h
     )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_HEADER_BASENAMES
 	    	${VISUALIZATION_HEADER_BASENAMES}
 	    	KSVTKTrackPainter.h
+	    	KSVTKTrackTerminatorPainter.h
 	    )
 	endif( Kassiopeia_USE_VTK )
 endif( Kassiopeia_USE_ROOT )
 
-set( VISUALIZATION_HEADER_PATH 
+set( VISUALIZATION_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${VISUALIZATION_HEADER_BASENAMES} )
@@ -33,16 +35,18 @@ if( Kassiopeia_USE_ROOT )
     	${VISUALIZATION_SOURCE_BASENAMES}
     	KSROOTTrackPainter.cxx
 	KSROOTPotentialPainter.cxx
+        KSROOTMagFieldPainter.cxx
     )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_SOURCE_BASENAMES
 	    	${VISUALIZATION_SOURCE_BASENAMES}
 	    	KSVTKTrackPainter.cxx
+	    	KSVTKTrackTerminatorPainter.cxx
 	    )
 	endif( Kassiopeia_USE_VTK )
 endif( Kassiopeia_USE_ROOT )
 
-set( VISUALIZATION_SOURCE_PATH 
+set( VISUALIZATION_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${VISUALIZATION_SOURCE_BASENAMES} )
@@ -51,7 +55,7 @@ endforeach( BASENAME )
 
 if( Kassiopeia_USE_VTK )
 	if( VTK_MAJOR_VERSION GREATER 5 )
-		set_property( SOURCE ${VISUALIZATION_SOURCE_FILENAMES} APPEND PROPERTY 
+		set_property( SOURCE ${VISUALIZATION_SOURCE_FILENAMES} APPEND PROPERTY
 	COMPILE_DEFINITIONS VTK6 )
 	endif()
 endif( Kassiopeia_USE_VTK )
@@ -59,7 +63,7 @@ endif( Kassiopeia_USE_VTK )
 # data files
 set( VISUALIZATION_DATA_BASENAMES
 )
-set( VISUALIZATION_DATA_PATH 
+set( VISUALIZATION_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${VISUALIZATION_DATA_BASENAMES} )

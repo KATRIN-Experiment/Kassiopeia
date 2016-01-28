@@ -3,6 +3,8 @@
 
 #include "KComplexElement.hh"
 #include "KSNavSpace.h"
+#include "KSNavigatorsMessage.h"
+
 
 using namespace Kassiopeia;
 namespace katrin
@@ -28,10 +30,15 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSNavSpace::SetExitSplit );
             return true;
         }
+        if( aContainer->GetName() == "fail_check" )
+        {
+            aContainer->CopyTo( fObject, &KSNavSpace::SetFailCheck );
+            return true;
+        }
         if( aContainer->GetName() == "tolerance" )
         {
-            aContainer->CopyTo( fObject, &KSNavSpace::SetTolerance );
-            return true;
+        	navmsg( eWarning ) <<"backward compatibility warning: the tolerance attribute is no longer needed in the space navigator, please remove it from your config file!"<<eom;
+        	return true;
         }
         return false;
     }

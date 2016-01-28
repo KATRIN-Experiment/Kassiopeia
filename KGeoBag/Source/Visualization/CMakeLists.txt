@@ -44,8 +44,9 @@ if( KGeoBag_USE_VTK )
 	    Vtk/Include/KGVTKDistanceTester.hh
 	    Vtk/Include/KGVTKOutsideTester.hh
 	    Vtk/Include/KGVTKRandomPointTester.hh
+	    Vtk/Include/KGVTKMeshIntersectionTester.hh
 	)
-	
+
 	# source
 	set( VTK_VISUALIZATION_SOURCE_FILES
 	    Vtk/Source/KGVTKGeometryPainter.cc
@@ -56,22 +57,20 @@ if( KGeoBag_USE_VTK )
 	    Vtk/Source/KGVTKDistanceTester.cc
 	    Vtk/Source/KGVTKOutsideTester.cc
 	    Vtk/Source/KGVTKRandomPointTester.cc
+	    Vtk/Source/KGVTKMeshIntersectionTester.cc
 	)
-	
+
 	# external
-	find_package( VTK REQUIRED )
-	kasper_external_include_directories(
-		${VTK_INCLUDE_DIRS}
-	)
+	kasper_find_vtk()
 	if( VTK_MAJOR_VERSION GREATER 5 )
 		set_property( SOURCE ${VTK_VISUALIZATION_SOURCE_FILES} APPEND PROPERTY COMPILE_DEFINITIONS VTK6 )
 	endif()
-	
+
 	# internal
 	kasper_internal_include_directories(
 		${CMAKE_CURRENT_SOURCE_DIR}/Vtk/Include
 	)
-	
+
 	# target
 	add_library( KGeoBagVtkVisualization SHARED ${VTK_VISUALIZATION_SOURCE_FILES} ${VTK_VISUALIZATION_HEADER_FILES} )
 	target_link_libraries( KGeoBagVtkVisualization
@@ -84,37 +83,37 @@ if( KGeoBag_USE_VTK )
 		KGeoBagMesh
 		KGeoBagAxialMesh
 	)
-	
+
 	# install
 	kasper_install_headers( ${VTK_VISUALIZATION_HEADER_FILES} )
 	kasper_install_libraries( KGeoBagVtkVisualization )
-	
+
 endif( KGeoBag_USE_VTK )
 
 #ROOT Stuff
 if( KGeoBag_USE_ROOT )
-	
+
 	# headers
 	set( ROOT_VISUALIZATION_HEADER_FILES
 		Root/Include/KGROOTGeometryPainter.hh
 	)
-	
+
 	# source
 	set( ROOT_VISUALIZATION_SOURCE_FILES
 	    Root/Source/KGROOTGeometryPainter.cc
 	)
-	
+
 	# external
 	find_package( ROOT 5.24.0 REQUIRED )
 	kasper_external_include_directories(
 		${ROOT_INCLUDE_DIR}
 	)
-	
+
 	# internal
 	kasper_internal_include_directories(
 		${CMAKE_CURRENT_SOURCE_DIR}/Root/Include
 	)
-	
+
 	# target
 	add_library( KGeoBagROOTVisualization SHARED ${ROOT_VISUALIZATION_SOURCE_FILES} ${ROOT_VISUALIZATION_HEADER_FILES} )
 	target_link_libraries( KGeoBagROOTVisualization
@@ -127,9 +126,9 @@ if( KGeoBag_USE_ROOT )
 		KGeoBagMesh
 		KGeoBagAxialMesh
 	)
-	
+
 	# install
 	kasper_install_headers( ${ROOT_VISUALIZATION_HEADER_FILES} )
 	kasper_install_libraries( KGeoBagROOTVisualization )
-	
+
 endif( KGeoBag_USE_ROOT )

@@ -14,9 +14,9 @@ namespace KGeoBag
             fZA( 0. ),
             fZB( 0. ),
             fRB( 0. ),
-            fLongitudinalMeshCount( 1 ),
+            fLongitudinalMeshCount( 8 ),
             fLongitudinalMeshPower( 1. ),
-            fAxialMeshCount( 1 )
+            fAxialMeshCount( 8 )
     {
     }
     KGConeSurface::~KGConeSurface()

@@ -47,24 +47,18 @@ namespace katrin
   inline bool KGRodBuilder::AddAttribute(KContainer* anAttribute)
   {
     if (anAttribute->GetName() == "radius")
-    {
-      double radius;
-      anAttribute->CopyTo(radius);
-      fObject->SetRadius(radius);
+    {      
+      anAttribute->CopyTo(fObject, &KGRod::SetRadius);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int nDiscLong;
-      anAttribute->CopyTo(nDiscLong);
-      fObject->SetNDiscLong(nDiscLong);
+      anAttribute->CopyTo(fObject, &KGRod::SetNDiscLong);
       return true;
     }
     if (anAttribute->GetName() == "axial_mesh_count")
     {
-      int nDiscRad;
-      anAttribute->CopyTo(nDiscRad);
-      fObject->SetNDiscRad(nDiscRad);
+      anAttribute->CopyTo(fObject, &KGRod::SetNDiscRad);
       return true;
     }
     return false;
@@ -101,7 +95,7 @@ namespace katrin
   {
     if (anElement->GetName() == "rod")
     {
-      KGRod* object;
+      KGRod* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer< KGRod > smartPtr(object);
@@ -130,7 +124,7 @@ namespace katrin
   {
     if (anElement->GetName() == "rod")
     {
-      KGRod* object;
+      KGRod* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer< KGRod > smartPtr(object);

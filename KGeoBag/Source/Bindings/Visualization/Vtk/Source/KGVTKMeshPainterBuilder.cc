@@ -5,7 +5,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKMeshPainterStructure =
+    STATICINT sKGVTKMeshPainterStructure =
         KGVTKMeshPainterBuilder::Attribute< string >( "name" ) +
         KGVTKMeshPainterBuilder::Attribute< string >( "file" ) +
         KGVTKMeshPainterBuilder::Attribute< unsigned int >( "arc_count" ) +
@@ -13,7 +13,7 @@ namespace katrin
         KGVTKMeshPainterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKMeshPainterBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGVTKMeshPainter =
+    STATICINT sKGVTKMeshPainter =
         KVTKWindowBuilder::ComplexElement< KGVTKMeshPainter >( "vtk_mesh_painter" );
 
 }

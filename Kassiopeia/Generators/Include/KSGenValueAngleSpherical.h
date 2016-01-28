@@ -20,8 +20,8 @@ namespace Kassiopeia
             virtual void DiceValue( vector< double >& aDicedValues );
 
         public:
-            ;K_SET_GET( double, AngleMin );
-            ;K_SET_GET( double, AngleMax );
+            K_SET_GET( double, AngleMin )
+            K_SET_GET( double, AngleMax )
 
     };
 

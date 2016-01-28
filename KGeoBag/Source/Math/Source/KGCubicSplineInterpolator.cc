@@ -1,7 +1,7 @@
 #include "KGCubicSplineInterpolator.hh"
 
 #include <cmath>
-
+#include <algorithm>
 #include <iostream>
 
 namespace KGeoBag
@@ -19,6 +19,9 @@ namespace KGeoBag
     // zero second derivative on that boundary.
 
     fData = data;
+    //sort the data in order of coordinate
+    std::sort(fData.begin(), fData.end(), fSortingOp);
+
     fYp.resize(data.size(),0.);
 
     std::vector<double> u(data.size());

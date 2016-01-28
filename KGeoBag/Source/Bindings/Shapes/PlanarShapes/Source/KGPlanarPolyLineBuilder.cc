@@ -3,17 +3,17 @@
 namespace katrin
 {
 
-    static const int sKGPlanarPolyLineStartPointArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLineStartPointArgumentsBuilderStructure =
         KGPlanarPolyLineStartPointArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLineStartPointArgumentsBuilder::Attribute< double >( "y" );
 
-    static const int sKGPlanarPolyLineLineArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLineLineArgumentsBuilderStructure =
         KGPlanarPolyLineLineArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLineLineArgumentsBuilder::Attribute< double >( "y" ) +
         KGPlanarPolyLineLineArgumentsBuilder::Attribute< unsigned int >( "line_mesh_count" ) +
         KGPlanarPolyLineLineArgumentsBuilder::Attribute< double >( "line_mesh_power" );
 
-    static const int sKGPlanarPolyLineArcArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLineArcArgumentsBuilderStructure =
         KGPlanarPolyLineArcArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLineArcArgumentsBuilder::Attribute< double >( "y" ) +
         KGPlanarPolyLineArcArgumentsBuilder::Attribute< double >( "radius" ) +
@@ -21,7 +21,7 @@ namespace katrin
         KGPlanarPolyLineArcArgumentsBuilder::Attribute< bool >( "short" ) +
         KGPlanarPolyLineArcArgumentsBuilder::Attribute< unsigned int >( "arc_mesh_count" );
 
-    static const int sKGPlanarPolyLineBuilderStructure =
+    STATICINT sKGPlanarPolyLineBuilderStructure =
         KGPlanarPolyLineBuilder::ComplexElement< KGPlanarPolyLine::StartPointArguments >( "start_point" ) +
         KGPlanarPolyLineBuilder::ComplexElement< KGPlanarPolyLine::LineArguments >( "next_line" ) +
         KGPlanarPolyLineBuilder::ComplexElement< KGPlanarPolyLine::ArcArguments >( "next_arc" ) +

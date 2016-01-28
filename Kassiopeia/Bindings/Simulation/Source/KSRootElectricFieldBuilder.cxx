@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static const int sKSRootElectricField =
+    STATICINT sKSRootElectricField =
         KSRootBuilder::ComplexElement< KSRootElectricField >( "ks_root_electric_field" );
 
-    static const int sKSRootElectricFieldStructure =
+    STATICINT sKSRootElectricFieldStructure =
         KSRootElectricFieldBuilder::Attribute< string >( "name" ) +
         KSRootElectricFieldBuilder::Attribute< string >( "add_electric_field" );
 

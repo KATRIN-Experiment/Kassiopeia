@@ -33,10 +33,10 @@ namespace katrin
     {
     	utilmsg( eNormal ) <<"KROOTWindow starts to render!"<<eom;
 
-        gStyle->SetPadBottomMargin(0.1);
-      	gStyle->SetPadRightMargin(0.05);
-       	gStyle->SetPadLeftMargin(0.05);
-       	gStyle->SetPadTopMargin(0.05);
+//        gStyle->SetPadBottomMargin(0.1);
+//      	gStyle->SetPadRightMargin(0.1);
+//       	gStyle->SetPadLeftMargin(0.1);
+//       	gStyle->SetPadTopMargin(0.1);
         gStyle->SetTitleX( 0.5 );
         gStyle->SetTitleAlign( 23 );
         gStyle->SetTitleSize( 0.08 , "t" );
@@ -107,11 +107,11 @@ namespace katrin
 				fFrame->GetXaxis()->SetTitle( tLastPainter->GetXAxisLabel().c_str() );
 				fFrame->GetYaxis()->SetTitle( tLastPainter->GetYAxisLabel().c_str() );
 			}
-			fFrame->GetXaxis()->SetTitleSize( 0.04 );
+			fFrame->GetXaxis()->SetTitleSize( 0.05 );
 			fFrame->GetXaxis()->SetTitleOffset( 1.0 );
 			fFrame->GetXaxis()->SetLabelSize( 0.05 );
-			fFrame->GetYaxis()->SetTitleSize( 0.04 );
-			fFrame->GetYaxis()->SetTitleOffset( 0.4 );
+			fFrame->GetYaxis()->SetTitleSize( 0.05 );
+			fFrame->GetYaxis()->SetTitleOffset( 1.0 );
 			fFrame->GetYaxis()->SetLabelSize( 0.05 );
 
         }
@@ -291,7 +291,7 @@ namespace katrin
 namespace katrin
 {
 
-    static int sKROOTWindowStructure =
+    STATICINT sKROOTWindowStructure =
         KROOTWindowBuilder::Attribute< string >( "name" ) +
         KROOTWindowBuilder::Attribute< unsigned int >( "canvas_width" ) +
     	KROOTWindowBuilder::Attribute< unsigned int >( "canvas_height" ) +
@@ -300,7 +300,7 @@ namespace katrin
     	KROOTWindowBuilder::Attribute< string >( "path" ) +
 		KROOTWindowBuilder::ComplexElement< KROOTPad >( "root_pad" );
 
-    static int sKROOTWindow =
+    STATICINT sKROOTWindow =
         KElementProcessor::ComplexElement< KROOTWindow >( "root_window" );
 
 }

@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSTrajControlTime::KSTrajControlTime( const KSTrajControlTime& aCopy ) :
+            KSComponent(),
             fTime( aCopy.fTime )
     {
     }
@@ -36,6 +37,17 @@ namespace Kassiopeia
         return;
     }
     void KSTrajControlTime::Check( const KSTrajAdiabaticParticle&, const KSTrajAdiabaticParticle&, const KSTrajAdiabaticError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlTime::Calculate( const KSTrajElectricParticle&, double& aValue )
+    {
+        aValue = fTime;
+        return;
+    }
+    void KSTrajControlTime::Check( const KSTrajElectricParticle&, const KSTrajElectricParticle&, const KSTrajElectricError&, bool& aFlag )
     {
         aFlag = true;
         return;

@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGAnnulusSurfaceBuilder =
+    STATICINT sKGAnnulusSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGAnnulusSurface >( "annulus_surface" );
 
-    static const int sKGAnnulusSurfaceBuilderStructure =
+    STATICINT sKGAnnulusSurfaceBuilderStructure =
         KGAnnulusSurfaceBuilder::Attribute< string >( "name" ) +
         KGAnnulusSurfaceBuilder::Attribute< double >( "z" ) +
         KGAnnulusSurfaceBuilder::Attribute< double >( "r1" ) +

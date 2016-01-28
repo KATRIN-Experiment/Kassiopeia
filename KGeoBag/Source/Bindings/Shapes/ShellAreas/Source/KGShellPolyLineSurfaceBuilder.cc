@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGShellPolyLineSurfaceBuilder =
+    STATICINT sKGShellPolyLineSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGShellPolyLineSurface >( "shell_poly_line_surface" );
 
-    static const int sKGShellPolyLineSurfaceBuilderStructure =
+    STATICINT sKGShellPolyLineSurfaceBuilderStructure =
         KGShellPolyLineSurfaceBuilder::Attribute< string >( "name" ) +
         KGShellPolyLineSurfaceBuilder::Attribute< double >( "angle_start" ) +
         KGShellPolyLineSurfaceBuilder::Attribute< double >( "angle_stop" ) +

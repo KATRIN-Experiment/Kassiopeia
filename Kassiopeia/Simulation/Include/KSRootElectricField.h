@@ -20,6 +20,7 @@ namespace Kassiopeia
         public:
             virtual void CalculatePotential( const KThreeVector& aSamplePoint, const double& aSampleTime, double& aPotential );
             virtual void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
+            virtual void CalculateFieldAndPotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, double& aPotentia );
 
         public:
             void AddElectricField( KSElectricField* anElectricField );

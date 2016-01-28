@@ -20,13 +20,13 @@ namespace KGeoBag
 {
 
     //allocation/deallocation
-    kg_vector* kg_vector_alloc(size_t n);
-    kg_vector* kg_vector_calloc(size_t n);
+    kg_vector* kg_vector_alloc(unsigned int n);
+    kg_vector* kg_vector_calloc(unsigned int n);
     void kg_vector_free(kg_vector* v);
 
     //access
-    double kg_vector_get(const kg_vector* v, size_t i);
-    void kg_vector_set(kg_vector* v, size_t i, double x);
+    double kg_vector_get(const kg_vector* v, unsigned int i);
+    void kg_vector_set(kg_vector* v, unsigned int i, double x);
     void kg_vector_set_zero(kg_vector* v);
     void kg_vector_set(const kg_vector* src, kg_vector* dest);
 

@@ -44,7 +44,7 @@ namespace katrin
         if( aContainer->GetName() == "calculator" )
         {
             KSIntCalculator* tCalculator = KSToolbox::GetInstance()->GetObjectAs< KSIntCalculator >( aContainer->AsReference< string >() );
-            fObject->AddCalculator( tCalculator->Clone() );
+            fObject->AddCalculator( tCalculator );
             return true;
         }
         if( aContainer->GetName() == "calculators" )
@@ -53,7 +53,7 @@ namespace katrin
             vector< KSIntCalculator* >::iterator tIt;
             for( tIt = aCalculatorVector.begin(); tIt != aCalculatorVector.end(); tIt++ )
             {
-                fObject->AddCalculator( (*tIt)->Clone() );
+                fObject->AddCalculator( (*tIt) );
             }
             return true;
         }
@@ -80,7 +80,7 @@ namespace katrin
         }
         if( aContainer->Is< KSIntCalculatorSet >() == true )
         {
-            KSIntCalculatorSet* tSet;
+            KSIntCalculatorSet* tSet = NULL;
             aContainer->ReleaseTo( tSet );
             tSet->ReleaseCalculators( fObject );
             delete tSet;

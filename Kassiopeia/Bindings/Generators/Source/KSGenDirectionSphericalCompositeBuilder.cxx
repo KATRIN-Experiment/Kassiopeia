@@ -7,8 +7,9 @@
 #include "KSGenValueAngleSphericalBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -20,7 +21,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenDirectionSphericalCompositeStructure =
+    STATICINT sKSGenDirectionSphericalCompositeStructure =
         KSGenDirectionSphericalCompositeBuilder::Attribute< string >( "name" ) +
         KSGenDirectionSphericalCompositeBuilder::Attribute< string >( "theta" ) +
         KSGenDirectionSphericalCompositeBuilder::Attribute< string >( "phi" ) +
@@ -38,13 +39,15 @@ namespace katrin
         KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueUniform >( "phi_uniform" ) +
         KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueGauss >( "phi_gauss" );
 
-    static int sKSGenDirectionSphericalComposite =
+    STATICINT sKSGenDirectionSphericalComposite =
         KSRootBuilder::ComplexElement< KSGenDirectionSphericalComposite >( "ksgen_direction_spherical_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenDirectionSphericalCompositeStructureROOT =
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenDirectionSphericalCompositeStructureROOT =
             KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "theta_formula" ) +
-            KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" );
+            KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "theta_histogram" ) +
+            KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueFormula >( "phi_formula" ) +
+            KSGenDirectionSphericalCompositeBuilder::ComplexElement< KSGenValueHistogram >( "phi_histogram" );
 #endif
 
 }

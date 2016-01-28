@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMinRStructure =
+    STATICINT sKSTermMinRStructure =
         KSTermMinRBuilder::Attribute< string >( "name" ) +
         KSTermMinRBuilder::Attribute< double >( "r" );
 
-    static int sKSTermMinR =
+    STATICINT sKSTermMinR =
         KSRootBuilder::ComplexElement< KSTermMinR >( "ksterm_min_r" );
 
 }

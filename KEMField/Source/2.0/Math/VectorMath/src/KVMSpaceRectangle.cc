@@ -22,24 +22,24 @@ KVMSpaceRectangle::KVMSpaceRectangle()
 
     fL1 = 0.0;
     fL2 = 0.0;
-};
+}
 
 void KVMSpaceRectangle::SetCornerPoint(const double* point)
 {
     fP.SetComponents( point[0], point[1], point[2] );
-};
+}
 
 void KVMSpaceRectangle::SetBasisVectorN1(const double* vec)
 {
     fN1.SetComponents(vec[0], vec[1], vec[2]);
     fN1 = fN1.Unit();
-};
+}
 
 void KVMSpaceRectangle::SetBasisVectorN2(const double* vec)
 {
     fN2.SetComponents(vec[0], vec[1], vec[2]);
     fN2 = fN2.Unit();
-};
+}
 
 void
 KVMSpaceRectangle::SetAll(const double* point, const double* vec1, const double* vec2, double len1, double len2)

@@ -3,6 +3,9 @@
 namespace KGeoBag
 {
 
+    const KTwoVector KTwoVector::sInvalid( NAN, NAN );
+    const KTwoVector KTwoVector::sZero( 0., 0. );
+
     const KTwoVector KTwoVector::sXUnit( 1., 0. );
     const KTwoVector KTwoVector::sYUnit( 0., 1. );
 

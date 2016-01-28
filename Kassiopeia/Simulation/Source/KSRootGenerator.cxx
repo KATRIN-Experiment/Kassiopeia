@@ -11,6 +11,7 @@ namespace Kassiopeia
     {
     }
     KSRootGenerator::KSRootGenerator( const KSRootGenerator& aCopy ) :
+        KSComponent(),
         fGenerator( aCopy.fGenerator ),
         fEvent( aCopy.fEvent )
     {
@@ -137,7 +138,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootGeneratorDict =
+    STATICINT sKSRootGeneratorDict =
         KSDictionary< KSRootGenerator >::AddCommand( &KSRootGenerator::SetGenerator, &KSRootGenerator::ClearGenerator, "set_generator", "clear_generator" );
 
 }

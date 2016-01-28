@@ -15,6 +15,7 @@ namespace Kassiopeia
     {
     }
     KSTrajTrajectoryLinear::KSTrajTrajectoryLinear( const KSTrajTrajectoryLinear& aCopy ) :
+            KSComponent(),
             fLength( aCopy.fLength ),
             fTime( aCopy.fTime ),
             fPosition( aCopy.fPosition ),
@@ -39,6 +40,16 @@ namespace Kassiopeia
         return fLength;
     }
 
+    void KSTrajTrajectoryLinear::Reset()
+    {
+        fFirstParticle.SetTime(0);
+        fFirstParticle.SetPosition(KThreeVector(0,0,0));
+        fFirstParticle.SetVelocity(KThreeVector(0,0,0));
+        fLastParticle.SetTime(0);
+        fLastParticle.SetPosition(KThreeVector(0,0,0));
+        fLastParticle.SetVelocity(KThreeVector(0,0,0));
+    }
+
     void KSTrajTrajectoryLinear::CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep )
     {
         fTime = anInitialParticle.GetTime();
@@ -54,6 +65,10 @@ namespace Kassiopeia
         aFinalParticle.SetPosition( fPosition + aTimeStep * fVelocity );
         aFinalParticle.SetLabel( GetName() );
 
+        //we have no integrator with an internal state so we store the information here
+        fFirstParticle = anInitialParticle;
+        fLastParticle = aFinalParticle;
+
         return;
     }
 
@@ -67,7 +82,11 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajTrajectoryLinear::GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates) const
+    {
+        intermediateParticleStates->clear();
+        intermediateParticleStates->push_back(anInitialParticle);
+        intermediateParticleStates->push_back(aFinalParticle);
+    }
+
 }
-
-
-

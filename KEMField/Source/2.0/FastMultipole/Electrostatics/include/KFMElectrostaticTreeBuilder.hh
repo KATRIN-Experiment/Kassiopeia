@@ -9,7 +9,11 @@
 #include "KFMCubicSpaceTreeProperties.hh"
 #include "KFMCubicSpaceBallSorter.hh"
 #include "KFMInsertionCondition.hh"
+
 #include "KFMSubdivisionCondition.hh"
+#include "KFMSubdivisionConditionAggressive.hh"
+#include "KFMSubdivisionConditionBalanced.hh"
+#include "KFMSubdivisionConditionGuided.hh"
 
 #include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticTree.hh"
@@ -17,7 +21,6 @@
 #include "KFMElectrostaticElementContainerBase.hh"
 #include "KFMElectrostaticElementContainer.hh"
 #include "KFMElectrostaticRegionSizeEstimator.hh"
-
 
 namespace KEMField
 {
@@ -40,8 +43,19 @@ namespace KEMField
 class KFMElectrostaticTreeBuilder
 {
     public:
-        KFMElectrostaticTreeBuilder(){};
-        virtual ~KFMElectrostaticTreeBuilder(){};
+        KFMElectrostaticTreeBuilder()
+        {
+            fSubdivisionCondition = NULL;
+            fSubdivisionConditionIsOwned = false;
+        };
+
+        virtual ~KFMElectrostaticTreeBuilder()
+        {
+            if(fSubdivisionConditionIsOwned)
+            {
+                delete fSubdivisionCondition;
+            }
+        };
 
         //extracted electrode data
         void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,KFMELECTROSTATICS_BASIS>* container);
@@ -50,6 +64,16 @@ class KFMElectrostaticTreeBuilder
         //access to the region tree, tree builder does not own the tree!
         void SetTree(KFMElectrostaticTree* tree);
         KFMElectrostaticTree* GetTree();
+
+        void SetSubdivisionCondition( KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* subdiv)
+        {
+            if(subdiv != NULL)
+            {
+                fSubdivisionCondition = subdiv;
+                fSubdivisionConditionIsOwned = false;
+            }
+        }
+
 
         //build up the tree using these functions
         //typically these are applied in the same order as they are listed here
@@ -66,9 +90,11 @@ class KFMElectrostaticTreeBuilder
         /* data */
         int fDegree;
         unsigned int fNTerms;
+        int fTopLevelDivisions;
         int fDivisions;
         int fZeroMaskSize;
         int fMaximumTreeDepth;
+        double fInsertionRatio;
         unsigned int fVerbosity;
         double fRegionSizeFactor;
 
@@ -79,13 +105,13 @@ class KFMElectrostaticTreeBuilder
         //the tree object that the manager is to construct
         KFMElectrostaticTree* fTree;
 
+        //subdivision condition
+        KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* fSubdivisionCondition;
+        bool fSubdivisionConditionIsOwned;
+
         //manager does not own this object!
         //container to the eletrostatic elements
         KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>* fContainer;
-
-        //id set sorters (for ordering elements properly in their storage containers)
-        KFMElectrostaticIdentitySetSorter fIDSorter;
-        KFMElectrostaticExternalIdentitySetSorter fExternalIDSorter;
 };
 
 

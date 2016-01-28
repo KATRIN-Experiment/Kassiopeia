@@ -18,6 +18,15 @@ namespace KGeoBag
             double Aspect() const;
             void Transform( const KTransformation& transform );
 
+            virtual double NearestDistance(const KThreeVector& aPoint) const;
+            virtual KThreeVector NearestPoint(const KThreeVector& aPoint) const;
+            virtual KThreeVector NearestNormal(const KThreeVector& aPoint) const;
+            virtual bool NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd, KThreeVector& anIntersection) const;
+
+            virtual KGPointCloud<KGMESH_DIM> GetPointCloud() const;
+            virtual unsigned int GetNumberOfEdges() const {return 1;};
+            virtual void GetEdge(KThreeVector& start, KThreeVector& end, unsigned int /*index*/) const;
+
             const KThreeVector& GetP0() const
             {
                 return fP0;
@@ -40,6 +49,9 @@ namespace KGeoBag
             }
 
         protected:
+
+            double ClosestApproach(const KThreeVector& aStart, const KThreeVector& anEnd) const;
+
             KThreeVector fP0;
             KThreeVector fP1;
             double fDiameter;

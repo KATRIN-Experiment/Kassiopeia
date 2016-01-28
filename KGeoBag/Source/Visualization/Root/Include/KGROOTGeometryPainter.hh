@@ -130,6 +130,8 @@ namespace KGeoBag
         public:
             void CalculatePlaneCoordinateSystem();
 
+            K_SET( double, Epsilon );
+
 
             //****************
             //surface visitors

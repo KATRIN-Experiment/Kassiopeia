@@ -13,6 +13,7 @@
 #include "KSimpleVector.hh"
 
 #include "KPreconditioner.hh"
+#include "KBiconjugateGradientStabilizedState.hh"
 
 namespace KEMField
 {
@@ -48,21 +49,20 @@ class KPreconditionedBiconjugateGradientStabilized
         fX(x),
         fB(b)
         {
-            fR.resize(fDim, 0.);
-            fR_hat.resize(fDim, 0.);
-            fP.resize(fDim, 0.);
-            fV.resize(fDim, 0.);
-            fS.resize(fDim, 0.);
-            fT.resize(fDim, 0.);
-            fY.resize(fDim, 0.);
-            fZ.resize(fDim, 0.);
-            fTempA.resize(fDim, 0.);
-            fTempB.resize(fDim, 0.);
+            fExternalStateSet = false;
         };
 
         virtual ~KPreconditionedBiconjugateGradientStabilized(){};
 
+
+        static std::string Name() { return std::string("pbicgstab"); }
+        std::string NameLabel() { return std::string("pbicgstab"); }
+
+        const KBiconjugateGradientStabilizedState<ValueType>& GetState() const;
+        void SetState(const KBiconjugateGradientStabilizedState<ValueType>& state);
+
         void Initialize();
+        void ResetAndInitialize();
         void AugmentKrylovSubspace();
         void UpdateSolution(){}; //performed in the krylov step
         void GetResidualNorm(double& norm);
@@ -77,8 +77,7 @@ class KPreconditionedBiconjugateGradientStabilized
     private:
 
         double InnerProduct(const Vector& a, const Vector& b);
-
-        double PreconditionedInnerProduct(const Vector& a, const Vector& b);
+        void ReconstructState();
 
         unsigned int fDim;
         const Matrix& fA;
@@ -92,7 +91,6 @@ class KPreconditionedBiconjugateGradientStabilized
         double omega;
         double rho_prev;
 
-
         KSimpleVectorType fR;
         KSimpleVectorType fR_hat;
         KSimpleVectorType fP;
@@ -103,10 +101,14 @@ class KPreconditionedBiconjugateGradientStabilized
 
         KSimpleVectorType fY;
         KSimpleVectorType fZ;
+        KSimpleVectorType fPT;
 
 
         KSimpleVectorType fTempA;
         KSimpleVectorType fTempB;
+
+        mutable KBiconjugateGradientStabilizedState<ValueType> fState;
+        bool fExternalStateSet;
 
 };
 
@@ -114,6 +116,33 @@ template< typename ValueType >
 void
 KPreconditionedBiconjugateGradientStabilized<ValueType>::Initialize()
 {
+    if(fExternalStateSet) //we have data from a previous run of the same process
+    {
+        ReconstructState();
+    }
+    else
+    {
+        //no previous state to load, go ahead
+        ResetAndInitialize();
+    }
+}
+
+template< typename ValueType >
+void
+KPreconditionedBiconjugateGradientStabilized<ValueType>::ResetAndInitialize()
+{
+    fR.resize(fDim, 0.);
+    fR_hat.resize(fDim, 0.);
+    fP.resize(fDim, 0.);
+    fV.resize(fDim, 0.);
+    fS.resize(fDim, 0.);
+    fT.resize(fDim, 0.);
+    fY.resize(fDim, 0.);
+    fZ.resize(fDim, 0.);
+    fPT.resize(fDim, 0.);
+    fTempA.resize(fDim, 0.);
+    fTempB.resize(fDim, 0.);
+
     //first we compute the initial residual vector: r = b - Ax
     fA.Multiply(fX, fV);
     for(unsigned int i=0; i<fDim; i++)
@@ -164,12 +193,14 @@ KPreconditionedBiconjugateGradientStabilized<ValueType>::AugmentKrylovSubspace()
     //apply the preconditioner
     fPreconditioner.Multiply(fS, fZ);
 
-
     //apply the system matrix t = Az
     fA.Multiply(fZ, fT);
 
+    //apply the preconditioner to T
+    fPreconditioner.Multiply(fT, fPT);
+
     //omega = < K^{-1}t, K^{-1}s >/< K^{-1}t, K^{-1}t >
-    omega = PreconditionedInnerProduct(fT,fS)/PreconditionedInnerProduct(fT,fT);
+    omega = InnerProduct(fPT, fZ)/InnerProduct(fPT, fPT);
 
     for(unsigned int i=0; i<fDim; i++)
     {
@@ -203,15 +234,6 @@ KPreconditionedBiconjugateGradientStabilized<ValueType>::InnerProduct(const Vect
     return result;
 }
 
-template< typename ValueType >
-double
-KPreconditionedBiconjugateGradientStabilized<ValueType>::PreconditionedInnerProduct(const Vector& a, const Vector& b)
-{
-    fPreconditioner.Multiply(a, fTempA);
-    fPreconditioner.Multiply(b, fTempB);
-    return InnerProduct(fTempA, fTempB);
-}
-
 template <typename ValueType>
 void
 KPreconditionedBiconjugateGradientStabilized<ValueType>::SetResidualVector(const Vector& v)
@@ -229,6 +251,126 @@ KPreconditionedBiconjugateGradientStabilized<ValueType>::GetResidualVector(Vecto
   for (unsigned int i = 0;i<fR.Dimension();i++)
     v[i] = fR(i);
 }
+
+
+template <typename ValueType>
+const KBiconjugateGradientStabilizedState<ValueType>&
+KPreconditionedBiconjugateGradientStabilized<ValueType>::GetState() const
+{
+    fState.SetDimension(fDim);
+
+    //have to handle x and b specially
+    //fill temp vector with x fState
+    KSimpleVectorType temp; temp.resize(fDim);
+    for(unsigned int i=0; i<fDim; i++)
+    {
+        temp[i] = fX(i);
+    }
+    fState.SetSolutionVector(&temp);
+
+    for(unsigned int i=0; i<fDim; i++)
+    {
+        temp[i] = fB(i);
+    }
+    fState.SetRightHandSide(&temp);
+
+    return fState;
+}
+
+template <typename ValueType>
+void
+KPreconditionedBiconjugateGradientStabilized<ValueType>::SetState(const KBiconjugateGradientStabilizedState<ValueType>& state)
+{
+    fState.SetDimension(state.GetDimension());
+    const KSimpleVector<ValueType>* temp;
+
+    temp = state.GetSolutionVector();
+    fState.SetSolutionVector(temp);
+
+    temp = state.GetRightHandSide();
+    fState.SetRightHandSide(temp);
+
+    fExternalStateSet = true;
+}
+
+
+
+template <typename ValueType>
+void
+KPreconditionedBiconjugateGradientStabilized<ValueType>::ReconstructState()
+{
+    if(fExternalStateSet)
+    {
+        fDim = fState.GetDimension();
+
+        fR.resize(fDim, 0.);
+        fR_hat.resize(fDim, 0.);
+        fP.resize(fDim, 0.);
+        fV.resize(fDim, 0.);
+        fS.resize(fDim, 0.);
+        fT.resize(fDim, 0.);
+        fY.resize(fDim, 0.);
+        fZ.resize(fDim, 0.);
+        fPT.resize(fDim, 0.);
+        fTempA.resize(fDim, 0.);
+        fTempB.resize(fDim, 0.);
+
+        const KSimpleVectorType* temp;
+        temp = fState.GetSolutionVector();
+        for(unsigned int i=0; i<temp->size(); i++){fX[i] = (*temp)(i); };
+
+        //first we compute the initial residual vector: r = b - Ax
+        fA.Multiply(fX, fV);
+        for(unsigned int i=0; i<fDim; i++)
+        {
+            fR[i] = fB(i) - fV[i];
+            fR_hat[i] = fR[i];
+        }
+
+        rho = 1.;
+        rho_prev = 1.;
+        alpha = 1.;
+        omega = 1.;
+
+        //we take the first conjugate vector to be the residual
+        for(unsigned int i=0; i<fDim; i++)
+        {
+            fV[i] = 0.;
+            fP[i] = 0.;
+        }
+
+    }
+}
+
+
+template <typename ValueType, typename Stream>
+Stream& operator>>(Stream& s, KPreconditionedBiconjugateGradientStabilized<ValueType>& aData)
+{
+    s.PreStreamInAction(aData);
+
+    KBiconjugateGradientStabilizedState<ValueType> state;
+    s >> state;
+    aData.SetState(state);
+
+    s.PostStreamInAction(aData);
+    return s;
+}
+
+
+template <typename ValueType, typename Stream>
+Stream& operator<<(Stream& s, const KPreconditionedBiconjugateGradientStabilized<ValueType>& aData)
+{
+    s.PreStreamOutAction(aData);
+
+    s << aData.GetState();
+
+    s.PostStreamOutAction(aData);
+
+    return s;
+}
+
+
+
 
 }
 

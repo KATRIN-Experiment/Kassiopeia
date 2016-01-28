@@ -82,6 +82,11 @@ namespace katrin
 			aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetSwapAxis );
 			return true;
         }
+        if( aContainer->GetName() == "epsilon" )
+        {
+            aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetEpsilon );
+            return true;
+        }
 
         return false;
     }

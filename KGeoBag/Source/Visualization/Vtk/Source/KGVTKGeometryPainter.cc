@@ -13,6 +13,10 @@ using katrin::KConst;
 #include "vtkPolyDataMapper.h"
 #include "vtkAppendPolyData.h"
 #include "vtkDepthSortPolyData.h"
+#include "vtkTriangleFilter.h"
+#include "vtkXMLPolyDataWriter.h"
+#include "vtkSTLWriter.h"
+#include "vtkIVWriter.h"
 
 #include <cmath>
 
@@ -22,6 +26,7 @@ namespace KGeoBag
     KGVTKGeometryPainter::KGVTKGeometryPainter() :
             fFile(),
             fPath( "" ),
+            fWriteSTL( true ),
             fSurfaces(),
             fSpaces(),
             fDefaultData(),
@@ -91,36 +96,84 @@ namespace KGeoBag
     {
         if( fWriteEnabled == true )
         {
-            string tFile;
+            WriteVTK();
 
-            if( fFile.length() > 0 )
+            if ( fWriteSTL == true )
+                WriteSTL();
+        }
+    }
+    void KGVTKGeometryPainter::WriteVTK()
+    {
+        string tFile;
+
+        if( fFile.length() > 0 )
+        {
+            if ( fPath.empty() )
             {
-            	if ( fPath.empty() )
-            	{
-					tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fFile;
-            	}
-            	else
-            	{
-            		tFile = fPath + string( "/" ) + fFile;
-            	}
+                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fFile;
             }
             else
             {
-                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+                tFile = fPath + string( "/" ) + fFile;
+            }
+        }
+        else
+        {
+            tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+        }
+
+        vismsg( eNormal ) << "vtk geometry painter <" << GetName() << "> is writing <" << fPolyData->GetNumberOfCells() << "> cells to file <" << tFile << ">" << eom;
+
+        vtkSmartPointer< vtkXMLPolyDataWriter > vWriter = fWindow->GetWriter();
+#ifdef VTK6
+        vWriter->SetInputData( fPolyData );
+#else
+        vWriter->SetInput( fPolyData );
+#endif
+        vWriter->SetFileName( tFile.c_str() );
+        vWriter->SetDataModeToBinary();
+        vWriter->Write();
+        return;
+    }
+    void KGVTKGeometryPainter::WriteSTL()
+    {
+        string tFile;
+
+        if( fFile.length() > 0 )
+        {
+            if ( fPath.empty() )
+            {
+                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fFile;
+            }
+            else
+            {
+                tFile = fPath + string( "/" ) + fFile;
             }
 
-            vismsg( eNormal ) << "vtk geometry painter <" << GetName() << "> is writing <" << fPolyData->GetNumberOfCells() << "> cells to file <" << tFile << ">" << eom;
-
-            vtkSmartPointer< vtkXMLPolyDataWriter > vWriter = fWindow->GetWriter();
-            vWriter->SetFileName( tFile.c_str() );
-            vWriter->SetDataModeToBinary();
-#ifdef VTK6
-            vWriter->SetInputData( fPolyData );
-#else
-            vWriter->SetInput( fPolyData );
-#endif
-            vWriter->Write();
+            // change extension
+            int tIndex =  tFile.find_last_of(".");
+            tFile = tFile.substr(0, tIndex) + string( ".stl" );
         }
+        else
+        {
+            tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".stl" );
+        }
+
+        vismsg( eNormal ) << "vtk geometry painter <" << GetName() << "> is writing <" << fPolyData->GetNumberOfCells() << "> cells to STL file <" << tFile << ">" << eom;
+
+        // use triangle filter because STL can only export 3 vertices per object (see vtkSTLWriter documentation)
+        vtkSmartPointer< vtkTriangleFilter > vTriangleFilter = vtkSmartPointer< vtkTriangleFilter >::New();
+#ifdef VTK6
+        vTriangleFilter->SetInputData( fPolyData );
+#else
+        vTriangleFilter->SetInput( fPolyData );
+#endif
+
+        vtkSmartPointer< vtkSTLWriter > vWriter = vtkSmartPointer< vtkSTLWriter >::New();
+        vWriter->SetInputConnection(vTriangleFilter->GetOutputPort());
+        vWriter->SetFileName( tFile.c_str() );
+        vWriter->SetFileTypeToASCII();  // binary STL might break import in other programs
+        vWriter->Write();
         return;
     }
 
@@ -136,6 +189,11 @@ namespace KGeoBag
     void KGVTKGeometryPainter::SetPath( const string& aPath )
     {
         fPath = aPath;
+        return;
+    }
+    void KGVTKGeometryPainter::SetWriteSTL( bool aFlag )
+    {
+        fWriteSTL = aFlag;
         return;
     }
 
@@ -479,7 +537,7 @@ namespace KGeoBag
         return;
     }
 void KGVTKGeometryPainter::VisitShellPathSurface( KGShellLineSegmentSurface* aShellLineSegmentSurface )
-{ 
+{
     if( fIgnore == true )
     {
         return;
@@ -501,7 +559,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellLineSegmentSurface* aSh
     return;
 }
 void KGVTKGeometryPainter::VisitShellPathSurface( KGShellArcSegmentSurface* aShellArcSegmentSurface )
-{ 
+{
     if( fIgnore == true )
     {
         return;
@@ -515,7 +573,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellArcSegmentSurface* aShe
     ShellMesh tMeshPoints;
     OpenPointsRotatedToShellMesh( tArcSegmentPoints, tMeshPoints, aShellArcSegmentSurface->AngleStart(), aShellArcSegmentSurface->AngleStop() );
 
-    
+
     ShellMeshToVTK( tMeshPoints );
         //clear surface
     fCurrentSurface = NULL;
@@ -523,7 +581,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellArcSegmentSurface* aShe
     return;
 }
 void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLineSurface* aShellPolyLineSurface )
-{ std::cout << "visiting Shel Poly Line Surface" << std::endl;
+{
     if( fIgnore == true )
     {
         return;
@@ -537,11 +595,11 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLineSurface* aShell
     ShellMesh tMeshPoints;
     OpenPointsRotatedToShellMesh( tPolyLinePoints, tMeshPoints, aShellPolyLineSurface->AngleStart(), aShellPolyLineSurface->AngleStop() );
 
-    
+
         //create mesh
-    
+
     ShellMeshToVTK( tMeshPoints );
-    
+
 
         //clear surface
     fCurrentSurface = NULL;
@@ -669,7 +727,6 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
         {
             return;
         }
-
         //create poly line points
         ClosedPoints tCirclePoints;
         CircleToClosedPoints( aExtrudedCircleSurface->Path().operator ->(), tCirclePoints );
@@ -708,6 +765,28 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
         fCurrentSurface = NULL;
 
         return;
+    }
+
+    void KGVTKGeometryPainter::VisitWrappedSurface( KGConicalWireArraySurface* aConicalWireArraySurface )
+    {
+        if( fIgnore == true )
+        {
+            return;
+        }
+
+        // get the wire radius
+        double tWireRadius = (aConicalWireArraySurface->GetObject()->GetDiameter())/2.;
+
+        // create three-dimensional poly line points
+        ThreePoints tWireArrayThreePoints;
+        WireArrayToThreePoints( aConicalWireArraySurface, tWireArrayThreePoints );
+
+        // create rotated points and create mesh
+        TubeMesh tMeshPoints;
+        ThreePointsToTubeMeshToVTK( tWireArrayThreePoints, tMeshPoints, tWireRadius );
+
+        //clear surface
+        fCurrentSurface = NULL;
     }
 
     //**************
@@ -1043,6 +1122,32 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
         return;
     }
 
+    void KGVTKGeometryPainter::VisitWrappedSpace( KGRodSpace* aRodSpace )
+    {
+        if( fIgnore == true )
+        {
+            return;
+        }
+
+        // getting the radius of the rod elements
+        double tRodRadius = aRodSpace->GetObject()->GetRadius();
+
+        // create three-dimensional poly line points
+        ThreePoints tRodThreePoints;
+        RodsToThreePoints( aRodSpace, tRodThreePoints );
+
+        //create rotated points
+        TubeMesh tMeshPoints;
+        ThreePointsToTubeMesh( tRodThreePoints, tMeshPoints, tRodRadius );
+
+        TubeMeshToVTK( tMeshPoints );
+
+        //clear surface
+        fCurrentSurface = NULL;
+
+        return;
+    }
+
     void KGVTKGeometryPainter::LocalToGlobal( const KThreeVector& aLocal, KThreeVector& aGlobal )
     {
         aGlobal = fCurrentOrigin + aLocal.X() * fCurrentXAxis + aLocal.Y() * fCurrentYAxis + aLocal.Z() * fCurrentZAxis;
@@ -1177,6 +1282,86 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
         return;
     }
 
+    void KGVTKGeometryPainter::RodsToThreePoints( const KGRodSpace* aRodSpace, ThreePoints& aThreePoints )
+    {
+        aThreePoints.fData.clear();
+
+    	// determine number of rod vertices
+    	unsigned int tNCoordinates = aRodSpace->GetObject()->GetNCoordinates();
+
+        // 1 SubThreePoint object = 2 Vertices
+        ThreePoints tSubThreePoints;
+        KThreeVector tStartPoint;
+        KThreeVector tEndPoint;
+
+        for( unsigned int tCoordinateIt=0; tCoordinateIt<(tNCoordinates-1); tCoordinateIt++ )
+        {
+        	tSubThreePoints.fData.clear();
+
+            tStartPoint.SetComponents(
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[0],
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[1],
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[2]
+            );
+            tEndPoint.SetComponents(
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 0),
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 1),
+            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 2)
+            );
+
+            tSubThreePoints.fData.push_back( tStartPoint );
+            tSubThreePoints.fData.push_back( tEndPoint );
+
+            aThreePoints.fData.insert( aThreePoints.fData.end(), tSubThreePoints.fData.begin(), tSubThreePoints.fData.end() );
+        }
+
+        return;
+    }
+
+    void KGVTKGeometryPainter::WireArrayToThreePoints( const KGConicalWireArraySurface* aConicalWireArraySurface, ThreePoints& aThreePoints )
+    {
+        aThreePoints.fData.clear();
+
+    	// gathering data from wire array object
+		unsigned int tWiresInArray = aConicalWireArraySurface->GetObject()->GetNWires();
+		double tThetaOffset = aConicalWireArraySurface->GetObject()->GetThetaStart() * (KConst::Pi() / 180.);
+
+		double tZ1 = aConicalWireArraySurface->GetObject()->GetZ1();
+		double tR1 = aConicalWireArraySurface->GetObject()->GetR1();
+		double tZ2 = aConicalWireArraySurface->GetObject()->GetZ2();
+		double tR2 = aConicalWireArraySurface->GetObject()->GetR2();
+
+		double tAngleStep = 2*KConst::Pi()/tWiresInArray;
+
+        // 1 SubThreePoint object = 2 Vertices
+        ThreePoints tSubThreePoints;
+        KThreeVector tStartPoint;
+        KThreeVector tEndPoint;
+
+        for( unsigned int tWireIt=0; tWireIt<tWiresInArray; tWireIt++ )
+        {
+        	tSubThreePoints.fData.clear();
+
+            tStartPoint.SetComponents(
+				tR1*cos( tWireIt*tAngleStep + tThetaOffset ),
+				tR1*sin( tWireIt*tAngleStep + tThetaOffset ),
+				tZ1
+            );
+            tEndPoint.SetComponents(
+				tR2*cos( tWireIt*tAngleStep + tThetaOffset ),
+				tR2*sin( tWireIt*tAngleStep + tThetaOffset ),
+				tZ2
+            );
+
+            tSubThreePoints.fData.push_back( tStartPoint );
+            tSubThreePoints.fData.push_back( tEndPoint );
+
+            aThreePoints.fData.insert( aThreePoints.fData.end(), tSubThreePoints.fData.begin(), tSubThreePoints.fData.end() );
+        }
+
+    return;
+    }
+
     //**************
     //mesh functions
     //**************
@@ -1230,7 +1415,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
         return;
     }
 void KGVTKGeometryPainter::OpenPointsRotatedToShellMesh( const OpenPoints& aPoints, ShellMesh& aMesh , const double& aAngleStart, const double& aAngleStop)
-{   std::cout << "rotating open points to shell mesh" << std::endl;
+{
     unsigned int tArc = fCurrentData->GetArc();
 
     double tFraction;
@@ -1373,6 +1558,202 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
         vismsg_debug( "extruded closed points into <" << aMesh.fData.size() * aMesh.fData.front().size() << "> tube mesh vertices" << eom );
 
         return;
+    }
+    void KGVTKGeometryPainter::ThreePointsToTubeMesh( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius )
+    {
+    	unsigned int tArc = fCurrentData->GetArc();
+
+        double tFraction;
+        unsigned int tCount;
+
+        KThreeVector tEndPoint;
+        KThreeVector tStartPoint;
+        KThreeVector tCenterPoint;
+        KThreeVector tAxisUnit;
+
+        double toDegree = 180./KConst::Pi();
+        double tTheta(0.);
+        double tPhi(0.);
+        double tR(0.);
+
+        KTransformation tEulerZXZ;
+
+        KThreeVector tPoint;
+        TubeMesh::Group tGroup;
+
+        for( ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end(); tThreePointsIt++ )
+        {
+			// define start and end point
+			tStartPoint = *tThreePointsIt;
+			tThreePointsIt++;
+			tEndPoint = *tThreePointsIt;
+
+			// determine center of rod axis
+			tCenterPoint = (tEndPoint + tStartPoint)/2.;
+
+			// rod axis unit vector
+			tAxisUnit = (tEndPoint-tStartPoint).Unit();
+			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
+			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
+
+			// computation of Euler angles
+			tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
+			tTheta = toDegree * acos(tAxisUnit.GetZ());
+
+			if(tR<1.e-10)
+			  tPhi=0.;
+			else
+			{
+				if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
+					tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
+				else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
+					tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
+				else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
+					tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
+				else
+					tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
+			}
+
+			tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
+
+
+			// computing and setting mesh points
+            tGroup.clear();
+            for( tCount = 0; tCount < tArc; tCount++ )
+            {
+        	    tEulerZXZ.SetOrigin( tStartPoint );
+                tFraction = (double) (tCount) / (double) (tArc);
+
+                tPoint.X() = (tStartPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
+                tPoint.Y() = (tStartPoint.Y() + aTubeRadius * sin( 2. * KConst::Pi() * tFraction ));
+                tPoint.Z() = (tStartPoint.Z());
+
+                tEulerZXZ.ApplyRotation( tPoint );
+
+                tGroup.push_back( tPoint );
+            }
+            aMesh.fData.push_back( tGroup );
+
+            tGroup.clear();
+            for( tCount = 0; tCount < tArc; tCount++ )
+            {
+        	    tEulerZXZ.SetOrigin( tEndPoint );
+                tFraction = (double) (tCount) / (double) (tArc);
+
+                tPoint.X() = (tEndPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
+                tPoint.Y() = (tEndPoint.Y() + aTubeRadius * sin( 2. * KConst::Pi() * tFraction ));
+                tPoint.Z() = (tEndPoint.Z());
+
+                tEulerZXZ.ApplyRotation( tPoint );
+
+                tGroup.push_back( tPoint );
+            }
+            aMesh.fData.push_back( tGroup );
+
+        }
+        vismsg_debug( "rotated open points into <" << aMesh.fData.size() * aMesh.fData.front().size() << "> tube mesh vertices" << eom );
+
+    	return;
+    }
+    void KGVTKGeometryPainter::ThreePointsToTubeMeshToVTK( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius )
+    {
+    	unsigned int tArc = fCurrentData->GetArc();
+
+        double tFraction;
+        unsigned int tCount;
+
+        KThreeVector tEndPoint;
+        KThreeVector tStartPoint;
+        KThreeVector tCenterPoint;
+        KThreeVector tAxisUnit;
+
+        double toDegree = 180./KConst::Pi();
+        double tTheta(0.);
+        double tPhi(0.);
+        double tR(0.);
+
+        KTransformation tEulerZXZ;
+
+        KThreeVector tPoint;
+        TubeMesh::Group tGroup;
+
+        for( ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end(); tThreePointsIt++ )
+        {
+			// define start and end point
+			tStartPoint = *tThreePointsIt;
+			tThreePointsIt++;
+			tEndPoint = *tThreePointsIt;
+
+			// determine center of rod axis
+			tCenterPoint = (tEndPoint + tStartPoint)/2.;
+
+			// rod axis unit vector
+			tAxisUnit = (tEndPoint-tStartPoint).Unit();
+			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
+			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
+
+			// computation of Euler angles
+			tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
+			tTheta = toDegree * acos(tAxisUnit.GetZ());
+
+			if(tR<1.e-10)
+			  tPhi=0.;
+			else
+			{
+				if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
+					tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
+				else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
+					tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
+				else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
+					tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
+				else
+					tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
+			}
+
+			tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
+
+			// computing and setting mesh points
+            tGroup.clear();
+            for( tCount = 0; tCount < tArc; tCount++ )
+            {
+        	    tEulerZXZ.SetOrigin( tStartPoint );
+                tFraction = (double) (tCount) / (double) (tArc);
+
+                tPoint.X() = (tStartPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
+                tPoint.Y() = (tStartPoint.Y() + aTubeRadius * sin( 2. * KConst::Pi() * tFraction ));
+                tPoint.Z() = (tStartPoint.Z());
+
+                tEulerZXZ.ApplyRotation( tPoint );
+
+                tGroup.push_back( tPoint );
+            }
+            aMesh.fData.push_back( tGroup );
+
+            tGroup.clear();
+            for( tCount = 0; tCount < tArc; tCount++ )
+            {
+        	    tEulerZXZ.SetOrigin( tEndPoint );
+                tFraction = (double) (tCount) / (double) (tArc);
+
+                tPoint.X() = (tEndPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
+                tPoint.Y() = (tEndPoint.Y() + aTubeRadius * sin( 2. * KConst::Pi() * tFraction ));
+                tPoint.Z() = (tEndPoint.Z());
+
+                tEulerZXZ.ApplyRotation( tPoint );
+
+                tGroup.push_back( tPoint );
+            }
+            aMesh.fData.push_back( tGroup );
+
+            // rendering
+            TubeMeshToVTK( aMesh );
+
+            aMesh.fData.clear();
+
+        }
+        vismsg_debug( "rotated open points into <" << aMesh.fData.size() * aMesh.fData.front().size() << "> tube mesh vertices" << eom );
+
+    	return;
     }
 
     //*******************
@@ -1778,13 +2159,12 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
     }
 void KGVTKGeometryPainter::ClosedShellMeshToVTK( const ShellMesh& aMesh )
 {
-	std::cout << "sending shell mesh to VTK" << std::endl;
-    	if ( aMesh.fData.size() == 0 )
-    	{
-    		vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
-    	}
+    if ( aMesh.fData.size() == 0 )
+    {
+	    vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
+    }
 
-        //object allocation
+    //object allocation
     KThreeVector tPoint;
 
     deque< vtkIdType > vMeshIdGroup;
@@ -1800,7 +2180,7 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK( const ShellMesh& aMesh )
 
     vtkSmartPointer< vtkQuad > vQuad;
 
-        //create mesh point ids
+    //create mesh point ids
     for( TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++ )
     {
         vMeshIdGroup.clear();
@@ -1809,12 +2189,12 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK( const ShellMesh& aMesh )
             LocalToGlobal( *tGroupIt, tPoint );
             vMeshIdGroup.push_back( fPoints->InsertNextPoint( tPoint.X(), tPoint.Y(), tPoint.Z() ) );
         }
-        
+
         vMeshIdSet.push_back( vMeshIdGroup );
     }
     vMeshIdSet.push_back( vMeshIdSet.front() );
 
-        //create hull cells
+    //create hull cells
     vThisGroup = vMeshIdSet.begin();
     vNextGroup = ++(vMeshIdSet.begin());
     while( vNextGroup != vMeshIdSet.end() )
@@ -1844,16 +2224,15 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK( const ShellMesh& aMesh )
     }
 
     return;
-} 
+}
 void KGVTKGeometryPainter::ShellMeshToVTK( const ShellMesh& aMesh )
 {
-    std::cout << "sending shell mesh to VTK" << std::endl;
-        if ( aMesh.fData.size() == 0 )
-        {
-            vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
-        }
+    if ( aMesh.fData.size() == 0 )
+    {
+        vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
+    }
 
-        //object allocation
+    //object allocation
     KThreeVector tPoint;
 
     deque< vtkIdType > vMeshIdGroup;
@@ -1869,7 +2248,7 @@ void KGVTKGeometryPainter::ShellMeshToVTK( const ShellMesh& aMesh )
 
     vtkSmartPointer< vtkQuad > vQuad;
 
-        //create mesh point ids
+    //create mesh point ids
     for( TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++ )
     {
         vMeshIdGroup.clear();
@@ -1878,11 +2257,11 @@ void KGVTKGeometryPainter::ShellMeshToVTK( const ShellMesh& aMesh )
             LocalToGlobal( *tGroupIt, tPoint );
             vMeshIdGroup.push_back( fPoints->InsertNextPoint( tPoint.X(), tPoint.Y(), tPoint.Z() ) );
         }
-        
+
         vMeshIdSet.push_back( vMeshIdGroup );
     }
 
-        //create hull cells
+    //create hull cells
     vThisGroup = vMeshIdSet.begin();
     vNextGroup = ++(vMeshIdSet.begin());
     while( vNextGroup != vMeshIdSet.end() )

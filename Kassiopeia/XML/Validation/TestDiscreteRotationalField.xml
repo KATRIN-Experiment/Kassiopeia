@@ -1,4 +1,4 @@
-<global_define name="log_path" value="@Kassiopeia_LOG_INSTALL_DIR@"/>
+<global_define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
 
 <messages>
 

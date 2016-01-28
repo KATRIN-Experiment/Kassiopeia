@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSTrajIntegratorRK8Structure =
+    STATICINT sKSTrajIntegratorRK8Structure =
         KSTrajIntegratorRK8Builder::Attribute< string >( "name" );
 
-    static int sToolboxKSTrajIntegratorRK8 =
+    STATICINT sToolboxKSTrajIntegratorRK8 =
         KSRootBuilder::ComplexElement< KSTrajIntegratorRK8 >( "kstraj_integrator_rk8" );
 
 }

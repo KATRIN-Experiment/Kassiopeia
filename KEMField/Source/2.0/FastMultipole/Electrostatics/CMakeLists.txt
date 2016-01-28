@@ -24,8 +24,7 @@ set (KFMELECTROSTATICS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticLocalCoefficientFieldCalculator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeInformationExtractor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeData.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNearFieldToLocalCoefficientCalculator.hh
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNodeWorkScoreCalculator.hh
 )
 
 
@@ -42,13 +41,22 @@ set (KFMELECTROSTATICS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticBoundaryIntegratorEngine_SingleThread.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticLocalCoefficientFieldCalculator.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticTreeData.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticNearFieldToLocalCoefficientCalculator.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticNodeWorkScoreCalculator.cc
 )
+
+  if (@PROJECT_NAME@_USE_MPI)
+     list (APPEND KFMELECTROSTATICS_HEADERFILES
+          ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeBuilder_MPI.hh
+	  )
+     list (APPEND KFMELECTROSTATICS_SOURCEFILES
+          ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticTreeBuilder_MPI.cc
+	  )
+  endif (@PROJECT_NAME@_USE_MPI)
 
 ##################################################
 
 add_library (KFMElectrostatics SHARED ${KFMELECTROSTATICS_SOURCEFILES})
-target_link_libraries (KFMElectrostatics KEMCore KFMCore KFMMath KFMMathUtilities KVectorMath KFMKernel KFMTree)
+target_link_libraries (KFMElectrostatics KEMCore KFMCore KFMMath KFMMathUtilities KVectorMath KFMKernel KFMTree KEMFileManipulation)
 
 kasper_install_headers (${KFMELECTROSTATICS_HEADERFILES})
 kasper_install_libraries (KFMElectrostatics)

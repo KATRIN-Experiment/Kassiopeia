@@ -11,10 +11,10 @@ namespace katrin
     {
     }
 
-    static int sKSTermSecondariesStructure =
+    STATICINT sKSTermSecondariesStructure =
 		KSTermSecondariesBuilder::Attribute< string >( "name" );
 
-    static int sToolboxKSTermSecondaries =
+    STATICINT sToolboxKSTermSecondaries =
 		KSRootBuilder::ComplexElement< KSTermSecondaries >( "ksterm_secondaries" );
 
 }

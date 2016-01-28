@@ -20,7 +20,7 @@ namespace KEMField
     KRobinHood();
     ~KRobinHood();
 
-    void Solve(const Matrix& A,Vector& x,const Vector& b);
+    void Solve(const Matrix& A,Vector& x, const Vector& b);
 
     void SetResidualCheckInterval(unsigned int i) { fResidualCheckInterval = i; }
 

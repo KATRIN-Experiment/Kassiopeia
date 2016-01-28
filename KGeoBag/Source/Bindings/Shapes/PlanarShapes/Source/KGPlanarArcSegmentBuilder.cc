@@ -3,7 +3,7 @@
 namespace katrin
 {
 
-    static const int sKGPlanarArcSegmentBuilderStructure =
+    STATICINT sKGPlanarArcSegmentBuilderStructure =
         KGPlanarArcSegmentBuilder::Attribute< double >( "x1" ) +
         KGPlanarArcSegmentBuilder::Attribute< double >( "y1" ) +
         KGPlanarArcSegmentBuilder::Attribute< double >( "x2" ) +

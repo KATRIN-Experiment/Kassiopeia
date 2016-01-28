@@ -33,6 +33,16 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSIntSurfaceDiffuse::SetTransmissionLoss );
             return true;
         }
+        if( aContainer->GetName() == "reflection_loss_fraction" )
+        {
+            aContainer->CopyTo( fObject, &KSIntSurfaceDiffuse::SetReflectionLossFraction );
+            return true;
+        }
+        if( aContainer->GetName() == "transmission_loss_fraction" )
+        {
+            aContainer->CopyTo( fObject, &KSIntSurfaceDiffuse::SetTransmissionLossFraction );
+            return true;
+        }
         return false;
     }
 

@@ -27,7 +27,7 @@ namespace Kassiopeia
                 eIdle = 0,
                 eInitialized = 1,
                 eActivated = 2,
-                eUpdated = 3,
+                eUpdated = 3
             } StateType;
 
             const StateType& State() const;

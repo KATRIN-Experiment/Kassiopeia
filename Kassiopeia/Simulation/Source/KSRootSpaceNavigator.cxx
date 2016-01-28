@@ -20,6 +20,7 @@ namespace Kassiopeia
     {
     }
     KSRootSpaceNavigator::KSRootSpaceNavigator( const KSRootSpaceNavigator& aCopy ) :
+            KSComponent(),
             fSpaceNavigator( aCopy.fSpaceNavigator ),
             fStep( aCopy.fStep ),
             fTerminatorParticle( aCopy.fTerminatorParticle ),
@@ -54,6 +55,15 @@ namespace Kassiopeia
             navmsg( eError ) << "<" << GetName() << "> cannot execute navigation with no space navigator set" << eom;
         }
         fSpaceNavigator->ExecuteNavigation( aNavigationParticle, aFinalParticle, aSecondaries );
+        return;
+    }
+    void KSRootSpaceNavigator::FinalizeNavigation( KSParticle& aFinalParticle ) const
+    {
+        if( fSpaceNavigator == NULL )
+        {
+            navmsg( eError ) << "<" << GetName() << "> cannot finalize navigation with no space navigator set" << eom;
+        }
+        fSpaceNavigator->FinalizeNavigation( aFinalParticle );
         return;
     }
     void KSRootSpaceNavigator::StartNavigation( KSParticle& aParticle, KSSpace* aRoot )
@@ -118,7 +128,15 @@ namespace Kassiopeia
     {
         *fNavigationParticle = *fTrajectoryParticle;
 
-        CalculateNavigation( *fTrajectory, *fTerminatorParticle, *fTrajectoryParticle, fStep->TrajectoryCenter(), fStep->TrajectoryRadius(), fStep->TrajectoryStep(), *fNavigationParticle, fStep->SpaceNavigationStep(), fStep->SpaceNavigationFlag() );
+        CalculateNavigation( *fTrajectory,
+                             *fTerminatorParticle,
+                             *fTrajectoryParticle,
+                             fStep->TrajectoryCenter(),
+                             fStep->TrajectoryRadius(),
+                             fStep->TrajectoryStep(),
+                             *fNavigationParticle,
+                             fStep->SpaceNavigationStep(),
+                             fStep->SpaceNavigationFlag() );
 
         if( fStep->SpaceNavigationFlag() == true )
         {
@@ -131,9 +149,10 @@ namespace Kassiopeia
             navmsg_debug( "  space navigation will not occur" << eom )
         }
 
-        navmsg_debug( "space navigation navigation particle state: " << eom )
+        navmsg_debug( "space navigation calculation particle state: " << eom )
         navmsg_debug( "  final particle space: <" << (fNavigationParticle->GetCurrentSpace() ? fNavigationParticle->GetCurrentSpace()->GetName() : "") << ">" << eom )
         navmsg_debug( "  final particle surface: <" << (fNavigationParticle->GetCurrentSurface() ? fNavigationParticle->GetCurrentSurface()->GetName() : "") << ">" << eom )
+        navmsg_debug( "  final particle side: <" << (fNavigationParticle->GetCurrentSide() ? fNavigationParticle->GetCurrentSide()->GetName() : "") << ">" << eom )
         navmsg_debug( "  final particle time: <" << fNavigationParticle->GetTime() << ">" << eom )
         navmsg_debug( "  final particle length: <" << fNavigationParticle->GetLength() << ">" << eom )
         navmsg_debug( "  final particle position: <" << fNavigationParticle->GetPosition().X() << ", " << fNavigationParticle->GetPosition().Y() << ", " << fNavigationParticle->GetPosition().Z() << ">" << eom )
@@ -172,6 +191,7 @@ namespace Kassiopeia
         navmsg_debug( "space navigation final particle state: " << eom )
         navmsg_debug( "  final particle space: <" << (fFinalParticle->GetCurrentSpace() ? fFinalParticle->GetCurrentSpace()->GetName() : "") << ">" << eom )
         navmsg_debug( "  final particle surface: <" << (fFinalParticle->GetCurrentSurface() ? fFinalParticle->GetCurrentSurface()->GetName() : "") << ">" << eom )
+        navmsg_debug( "  final particle side: <" << (fFinalParticle->GetCurrentSide() ? fFinalParticle->GetCurrentSide()->GetName() : "") << ">" << eom )
         navmsg_debug( "  final particle time: <" << fFinalParticle->GetTime() << ">" << eom )
         navmsg_debug( "  final particle length: <" << fFinalParticle->GetLength() << ">" << eom )
         navmsg_debug( "  final particle position: <" << fFinalParticle->GetPosition().X() << ", " << fFinalParticle->GetPosition().Y() << ", " << fFinalParticle->GetPosition().Z() << ">" << eom )
@@ -184,7 +204,13 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootSpaceNavigatorDict =
+    void KSRootSpaceNavigator::FinalizeNavigation()
+    {
+    	FinalizeNavigation( *fFinalParticle );
+        return;
+    }
+
+    STATICINT sKSRootSpaceNavigatorDict =
         KSDictionary< KSRootSpaceNavigator >::AddCommand( &KSRootSpaceNavigator::SetSpaceNavigator, &KSRootSpaceNavigator::ClearSpaceNavigator, "set_space_navigator", "clear_space_navigator" );
 
 }

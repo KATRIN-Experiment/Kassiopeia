@@ -70,7 +70,8 @@ private:
 
 const double& KDiscreteDirichlet2ndDerivative::operator()(unsigned int i,unsigned int j) const
 {
-  if (abs(((float)i)-((float)j)) > 1.) return fZero;
+  if (std::abs((int)i-(int)j) > 1)
+    return fZero;
 
   if (i == j)
   {
@@ -267,7 +268,7 @@ int main(int argc, char** argv)
   int j = 2;
   int k = 2;
   double accuracy = 1.e-8;
-  bool cache = false;
+//  bool cache = false;
   int method = 2;
   int rh_dimension = 2;
 
@@ -318,9 +319,9 @@ int main(int argc, char** argv)
     case('m'):
       method = atoi(optarg);
       break;
-    case('c'):
-      cache = true;
-      break;
+//    case('c'):
+//      cache = true;
+//      break;
     case('n'):
       rh_dimension = atoi(optarg);
       break;

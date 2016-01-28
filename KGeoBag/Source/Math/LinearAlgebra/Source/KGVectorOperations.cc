@@ -14,14 +14,14 @@ namespace KGeoBag
 //allocation/deallocation
 
 kg_vector*
-kg_vector_alloc(size_t n)
+kg_vector_alloc(unsigned int n)
 {
     return gsl_vector_alloc(n);
 }
 
 
 kg_vector*
-kg_vector_calloc(size_t n)
+kg_vector_calloc(unsigned int n)
 {
     return gsl_vector_calloc(n);
 }
@@ -35,12 +35,12 @@ kg_vector_free(kg_vector* v)
 
 //access
 
-double kg_vector_get(const kg_vector* v, size_t i)
+double kg_vector_get(const kg_vector* v, unsigned int i)
 {
     return gsl_vector_get(v, i);
 }
 
-void kg_vector_set(kg_vector* v, size_t i, double x)
+void kg_vector_set(kg_vector* v, unsigned int i, double x)
 {
     gsl_vector_set(v, i, x);
 }
@@ -98,7 +98,7 @@ kg_vector_norm(const kg_vector* a)
 //allocation/deallocation
 
 kg_vector*
-kg_vector_alloc(size_t n)
+kg_vector_alloc(unsigned int n)
 {
     kg_vector* v = new kg_vector();
     v->size = n;
@@ -108,12 +108,12 @@ kg_vector_alloc(size_t n)
 
 
 kg_vector*
-kg_vector_calloc(size_t n)
+kg_vector_calloc(unsigned int n)
 {
     kg_vector* v = new kg_vector();
     v->size = n;
     double* d = new double[n];
-    for(size_t i=0; i<n; i++)
+    for(unsigned int i=0; i<n; i++)
     {
         d[i] = 0.;
     }
@@ -132,13 +132,13 @@ kg_vector_free(kg_vector* v)
 //access
 
 double
-kg_vector_get(const kg_vector* v, size_t i)
+kg_vector_get(const kg_vector* v, unsigned int i)
 {
     return v->data[i];
 }
 
 void
-kg_vector_set(kg_vector* v, size_t i, double x)
+kg_vector_set(kg_vector* v, unsigned int i, double x)
 {
     v->data[i] = x;
 }
@@ -146,7 +146,7 @@ kg_vector_set(kg_vector* v, size_t i, double x)
 void
 kg_vector_set_zero(kg_vector* v)
 {
-    for(size_t i=0; i<v->size; i++)
+    for(unsigned int i=0; i<v->size; i++)
     {
         v->data[i] = 0.;
     }
@@ -157,7 +157,7 @@ kg_vector_set(const kg_vector* src, kg_vector* dest)
 {
     if(src->size == dest->size)
     {
-        for(size_t i=0; i<src->size; i++)
+        for(unsigned int i=0; i<src->size; i++)
         {
             dest->data[i] = src->data[i];
         }
@@ -175,7 +175,7 @@ kg_vector_set(const kg_vector* src, kg_vector* dest)
 void
 kg_vector_scale(kg_vector* a, double scale_factor)
 {
-    for(size_t i=0; i<a->size; i++)
+    for(unsigned int i=0; i<a->size; i++)
     {
         a->data[i] *= scale_factor;
     }
@@ -186,7 +186,7 @@ kg_vector_sub(kg_vector* a, const kg_vector* b)
 {
     if(a->size == b->size )
     {
-        for(size_t i=0; i<a->size; i++)
+        for(unsigned int i=0; i<a->size; i++)
         {
             a->data[i] -= b->data[i];
         }
@@ -204,7 +204,7 @@ kg_vector_add(kg_vector* a, const kg_vector* b)
 {
     if(a->size == b->size)
     {
-        for(size_t i=0; i<a->size; i++)
+        for(unsigned int i=0; i<a->size; i++)
         {
             a->data[i] += b->data[i];
         }
@@ -226,7 +226,7 @@ kg_vector_inner_product(const kg_vector* a, const kg_vector* b)
     if(a->size == b->size)
     {
 
-        for(size_t i=0; i<a->size; i++)
+        for(unsigned int i=0; i<a->size; i++)
         {
             val += (a->data[i])*(b->data[i]);
         }
@@ -266,7 +266,7 @@ kg_vector_sub(const kg_vector* a, const kg_vector* b, kg_vector* c)
 
     if( (a->size == b->size) && (b->size == c->size) )
     {
-        for(size_t i=0; i<a->size; i++)
+        for(unsigned int i=0; i<a->size; i++)
         {
             c->data[i] = a->data[i] - b->data[i];
         }
@@ -284,7 +284,7 @@ kg_vector_add(const kg_vector* a, const kg_vector* b, kg_vector* c)
 {
     if( (a->size == b->size) && (b->size == c->size) )
     {
-        for(size_t i=0; i<a->size; i++)
+        for(unsigned int i=0; i<a->size; i++)
         {
             c->data[i] = a->data[i] + b->data[i];
         }

@@ -6,8 +6,9 @@
 #include "KSGenValueGaussBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -19,7 +20,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenEnergyCompositeStructure =
+    STATICINT sKSGenEnergyCompositeStructure =
         KSGenEnergyCompositeBuilder::Attribute< string >( "name" ) +
         KSGenEnergyCompositeBuilder::Attribute< string >( "energy" ) +
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueFix >( "energy_fix" ) +
@@ -28,12 +29,13 @@ namespace katrin
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueUniform >( "energy_uniform" ) +
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueGauss >( "energy_gauss" ) ;
 
-    static int sKSGenEnergyComposite =
+    STATICINT sKSGenEnergyComposite =
         KSRootBuilder::ComplexElement< KSGenEnergyComposite >( "ksgen_energy_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenEnergyCompositeStructureROOT =
-            KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueFormula >( "energy_formula" );
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenEnergyCompositeStructureROOT =
+            KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueFormula >( "energy_formula" ) +
+            KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueHistogram >( "energy_histogram" );
 #endif
 
 }

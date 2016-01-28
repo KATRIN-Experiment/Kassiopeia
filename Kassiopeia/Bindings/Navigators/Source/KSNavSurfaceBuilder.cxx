@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSNavSurfaceStructure =
+    STATICINT sKSNavSurfaceStructure =
         KSNavSurfaceBuilder::Attribute< string >( "name" ) +
         KSNavSurfaceBuilder::Attribute< bool >( "transmission_split" ) +
         KSNavSurfaceBuilder::Attribute< bool >( "reflection_split" );
 
-    static int sToolboxKSNavSurface =
+    STATICINT sToolboxKSNavSurface =
         KSRootBuilder::ComplexElement< KSNavSurface >( "ksnav_surface" );
 
 

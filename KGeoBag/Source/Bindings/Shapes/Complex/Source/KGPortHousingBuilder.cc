@@ -4,20 +4,20 @@
 namespace katrin
 {
 
-  static const int sKGPortHousingRectangularPortBuilderStructure =
+  STATICINT sKGPortHousingRectangularPortBuilderStructure =
     KGPortHousingRectangularPortBuilder::Attribute<double>("length") +
     KGPortHousingRectangularPortBuilder::Attribute<double>("width") +
     KGPortHousingRectangularPortBuilder::Attribute<double>("x") +
     KGPortHousingRectangularPortBuilder::Attribute<double>("y") +
     KGPortHousingRectangularPortBuilder::Attribute<double>("z");
 
-  static const int sKGPortHousingCircularPortBuilderStructure =
+  STATICINT sKGPortHousingCircularPortBuilderStructure =
     KGPortHousingCircularPortBuilder::Attribute<double>("radius") +
     KGPortHousingCircularPortBuilder::Attribute<double>("x") +
     KGPortHousingCircularPortBuilder::Attribute<double>("y") +
     KGPortHousingCircularPortBuilder::Attribute<double>("z");
 
-  static const int sKGPortHousingBuilderStructure =
+  STATICINT sKGPortHousingBuilderStructure =
     KGPortHousingBuilder::Attribute<double>("radius") +
     KGPortHousingBuilder::Attribute<double>("x1") +
     KGPortHousingBuilder::Attribute<double>("y1") +
@@ -30,18 +30,18 @@ namespace katrin
     KGPortHousingBuilder::ComplexElement< KGPortHousing::RectangularPort >("rectangular_port") +
     KGPortHousingBuilder::ComplexElement< KGPortHousing::CircularPort >("circular_port");
 
-  static const int sKGPortHousingSurfaceBuilderStructure =
+  STATICINT sKGPortHousingSurfaceBuilderStructure =
     KGPortHousingSurfaceBuilder::Attribute<string>("name") +
     KGPortHousingSurfaceBuilder::ComplexElement<KGPortHousing>("port_housing");
 
-  static const int sKGPortHousingSurfaceBuilder =
+  STATICINT sKGPortHousingSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGPortHousing> >("port_housing_surface");
 
-  static const int sKGPortHousingSpaceBuilderStructure =
+  STATICINT sKGPortHousingSpaceBuilderStructure =
     KGPortHousingSpaceBuilder::Attribute<string>("name") +
     KGPortHousingSpaceBuilder::ComplexElement<KGPortHousing>("port_housing");
 
-  static const int sKGPortHousingSpaceBuilder =
+  STATICINT sKGPortHousingSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGPortHousing> >("port_housing_space");
 
 }

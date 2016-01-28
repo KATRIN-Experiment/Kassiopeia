@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSTermDeathStructure =
+    STATICINT sKSTermDeathStructure =
         KSTermDeathBuilder::Attribute< string >( "name" );
 
-    static int sKSTermDeath =
+    STATICINT sKSTermDeath =
         KSRootBuilder::ComplexElement< KSTermDeath >( "ksterm_death" );
 
 

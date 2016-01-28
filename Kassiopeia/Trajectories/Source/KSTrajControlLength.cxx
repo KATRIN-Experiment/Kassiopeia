@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSTrajControlLength::KSTrajControlLength( const KSTrajControlLength& aCopy ) :
+            KSComponent(),
             fLength( aCopy.fLength )
     {
     }
@@ -42,6 +43,34 @@ namespace Kassiopeia
         return;
     }
     void KSTrajControlLength::Check( const KSTrajAdiabaticParticle&, const KSTrajAdiabaticParticle&, const KSTrajAdiabaticError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlLength::Calculate( const KSTrajMagneticParticle& aParticle, double& aValue )
+    {
+        double tLongVelocity = aParticle.GetLongVelocity();
+        double tTransVelocity = aParticle.GetTransVelocity();
+        double tSpeed = sqrt( tLongVelocity * tLongVelocity + tTransVelocity * tTransVelocity );
+        aValue = fLength / tSpeed;
+        return;
+    }
+    void KSTrajControlLength::Check( const KSTrajMagneticParticle&, const KSTrajMagneticParticle&, const KSTrajMagneticError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlLength::Calculate( const KSTrajElectricParticle& aParticle, double& aValue )
+    {
+        double tLongVelocity = aParticle.GetLongVelocity();
+        double tTransVelocity = aParticle.GetTransVelocity();
+        double tSpeed = sqrt( tLongVelocity * tLongVelocity + tTransVelocity * tTransVelocity );
+        aValue = fLength / tSpeed;
+        return;
+    }
+    void KSTrajControlLength::Check( const KSTrajElectricParticle&, const KSTrajElectricParticle&, const KSTrajElectricError&, bool& aFlag )
     {
         aFlag = true;
         return;

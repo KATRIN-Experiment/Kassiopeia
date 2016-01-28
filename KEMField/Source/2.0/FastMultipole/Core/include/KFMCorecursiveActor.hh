@@ -2,6 +2,7 @@
 #define KFMCorecursiveActor_HH__
 
 #include <queue>
+#include <stack>
 
 #include "KFMNodeActor.hh"
 
@@ -27,8 +28,11 @@ template< typename NodeType>
 class KFMCorecursiveActor: public KFMNodeActor<NodeType>
 {
     public:
-        KFMCorecursiveActor():fOperationalActor(NULL){};
+        KFMCorecursiveActor():fOperationalActor(NULL),fVisitingOrderForward(true){};
         virtual ~KFMCorecursiveActor(){};
+
+        void VisitParentBeforeChildren(){fVisitingOrderForward = true;};
+        void VisitChildrenBeforeParent(){fVisitingOrderForward = false;};
 
         void SetOperationalActor(KFMNodeActor<NodeType>* opActor)
         {
@@ -44,32 +48,74 @@ class KFMCorecursiveActor: public KFMNodeActor<NodeType>
         {
             if(node != NULL)
             {
-                fNodeQueue = std::queue< NodeType* >();
-                fNodeQueue.push(node);
-                do
+                if(fVisitingOrderForward)
                 {
-                    fOperationalActor->ApplyAction(fNodeQueue.front());
+                    std::queue< NodeType* >* nodeQueue = new std::queue< NodeType* >();
+                    nodeQueue->push(node);
 
-                    if(fNodeQueue.front()->HasChildren())
+                    while( !(nodeQueue->empty()))
                     {
-                        fTempNode = fNodeQueue.front();
-                        unsigned int n_children = fTempNode->GetNChildren();
-                        for(unsigned int i=0; i < n_children; i++)
+                        fOperationalActor->ApplyAction(nodeQueue->front());
+
+                        if(nodeQueue->front()->HasChildren())
                         {
-                            fNodeQueue.push( fTempNode->GetChild(i) );
+                            fTempNode = nodeQueue->front();
+                            unsigned int n_children = fTempNode->GetNChildren();
+                            for(unsigned int i=0; i < n_children; i++)
+                            {
+                                nodeQueue->push( fTempNode->GetChild(i) );
+                            }
                         }
-                    }
-                    fNodeQueue.pop();
+                        nodeQueue->pop();
+                    };
+                    delete nodeQueue;
+
                 }
-                while(fNodeQueue.size() != 0 );
+                else
+                {
+                    //visit order is in reverse, we must cache pointers
+                    //to all the nodes in the tree in order to perform
+                    //this type of traversal
+
+                    std::queue< NodeType* >* nodeQueue = new std::queue< NodeType* >();
+                    std::stack< NodeType* >* nodeStack = new std::stack< NodeType* >();
+
+                    nodeQueue->push(node);
+                    while( !(nodeQueue->empty()) )
+                    {
+                        nodeStack->push(nodeQueue->front());
+                        if(nodeQueue->front()->HasChildren())
+                        {
+                            fTempNode = nodeQueue->front();
+                            unsigned int n_children = fTempNode->GetNChildren();
+                            for(unsigned int i=0; i < n_children; i++)
+                            {
+                                nodeQueue->push( fTempNode->GetChild(i) );
+                            }
+                        }
+                        nodeQueue->pop();
+                    };
+
+
+                    while(!(nodeStack->empty()) )
+                    {
+                        fOperationalActor->ApplyAction(nodeStack->top());
+                        nodeStack->pop();
+                    };
+
+                    delete nodeQueue;
+                    delete nodeStack;
+
+                }
+
             }
         }
 
     private:
 
         KFMNodeActor<NodeType>* fOperationalActor;
-        std::queue< NodeType* > fNodeQueue;
         NodeType* fTempNode;
+        bool fVisitingOrderForward;
 
 };
 

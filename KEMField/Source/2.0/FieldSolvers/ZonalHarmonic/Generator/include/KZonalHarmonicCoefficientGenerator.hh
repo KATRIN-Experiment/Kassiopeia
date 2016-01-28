@@ -57,7 +57,7 @@ namespace KEMField
     KZonalHarmonicCoefficientGenerator(ElementContainer& container) : fElementContainer(container) {}
     virtual ~KZonalHarmonicCoefficientGenerator() {}
 
-    void GroupCoaxialElements(std::vector<ElementContainer*>& subcontainers);
+    void GroupCoaxialElements(std::vector<ElementContainer*>& subcontainers, double coaxialityTolerance);
     void BifurcateElements(std::vector<ElementContainer*>& subcontainers);
 
     void GenerateCentralSourcePointsByFixedDistance(std::vector<KZonalHarmonicSourcePoint*>& sps,unsigned int nCoeffs,double deltaZ,double z1=0.,double z2=0.);
@@ -91,7 +91,7 @@ namespace KEMField
   };
 
   template <class Basis>
-  void KZonalHarmonicCoefficientGenerator<Basis>::GroupCoaxialElements(std::vector<typename ZonalHarmonicType::Container*>& subcontainers)
+  void KZonalHarmonicCoefficientGenerator<Basis>::GroupCoaxialElements( std::vector<typename ZonalHarmonicType::Container*>& subcontainers, double coaxialityTolerance )
   {
     typedef typename ZonalHarmonicType::Container ElementContainer;
 
@@ -131,7 +131,7 @@ namespace KEMField
       {
     for (unsigned int j=0;j<coordinateSystems.size();j++)
     {
-      if (fGenerator->IsCoaxial(coordinateSystems.at(j)))
+      if (fGenerator->IsCoaxial( coordinateSystems.at(j), coaxialityTolerance ))
       {
         subcontainers.at(j)->push_back(fElementContainer.at(i));
         newCoordinateSystem = false;
@@ -280,18 +280,23 @@ namespace KEMField
 
     sps.push_back(GenerateCentralSourcePoint(z1,nCoeffs));
 
+    int counter = 0;
     double z = z1;
-    while (z<z2)
+    while (true)
     {
       ticker.Tick(z-z1);
       double dZ = fractionalDistance*ComputeCentralRho(z);
       if (dZ < deltaZ)
-    dZ = deltaZ;
+          dZ = deltaZ;
       z += dZ;
+      if ( z>=z2) break;
+      counter++;
       sps.push_back(GenerateCentralSourcePoint(z,nCoeffs));
     }
 
     sps.push_back(GenerateCentralSourcePoint(z2,nCoeffs));
+
+    KEMField::cout<<counter <<" central source points have been computed"<<KEMField::endl;
 
     ticker.EndTicker();
   }
@@ -320,12 +325,16 @@ namespace KEMField
     if (fabs(z1-z2)<1.e-10)
       SourcePointExtrema(z1,z2);
 
+    double deltaZ = (z2 - z1)/(nSPs-1);
+
     // if the z positions are still the same, the geometry consists of a single
     // ring and needs only one source point.
     if (fabs(z1-z2)<1.e-10)
+    {
       nSPs = 1;
+      deltaZ = 0;
+    }
 
-    double deltaZ = (z2 - z1)/nSPs;
 
     KEMField::cout<<"Computing "<<nSPs<<" remote source points for "<<Basis::Name()<<" along the local z-axis from "<<z1<<" to "<<z2<<"."<<KEMField::endl;
 

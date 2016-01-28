@@ -127,6 +127,7 @@ T katrin::KMathBilinearInterpolator<T>::GetValue(const T &x, const T &y) const {
 	typename std::map<T, T>::const_iterator yLower;
 
     T assert_ymin = xUpper->second.begin()->first;
+    (void)assert_ymin;
 
     assert(assert_ymin <= y);
 	assert(yUpper != xUpper->second.end());
