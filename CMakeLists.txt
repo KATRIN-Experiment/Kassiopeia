@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.8.6 )
 
-project( Kassiopeia )
+project( Kasper )
 
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Kommon/cmake )
 include( KasperDefaults )

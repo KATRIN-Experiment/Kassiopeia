@@ -9,8 +9,9 @@ endmacro(set_path)
 include(CMakeDependentOption)
 include(MacroParseArguments)
 
-if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
-
+if( ${Kasper_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
+    
+>>>>>>> 2f382a5... Minor changes to build system to allow building as a submodule of something else
     set(STANDALONE true)
 
     # use this section to modifiy initial values of builtin CMAKE variables
@@ -175,9 +176,15 @@ macro(kasper_find_module NAME)
     else()
         set( VERSION "0" )
     endif()
+<<<<<<< HEAD
 
     find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE )
     #message("${NAME}_INCLUDE_DIRS: ${${NAME}_INCLUDE_DIRS}")
+=======
+    
+    find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE HINTS ${Kasper_BINARY_DIR}/${NAME} )
+    #include_directories( ${${NAME}_INCLUDE_DIRS} )
+>>>>>>> 2f382a5... Minor changes to build system to allow building as a submodule of something else
     kasper_internal_include_directories( ${${NAME}_INCLUDE_DIRS} )
     #kasper_external_include_directories( ${${NAME}_INCLUDE_DIRS} )
     #set( ${NAME}_INCLUDE_DIRS "${${NAME}_INCLUDE_DIRS}" PARENT_SCOPE )
