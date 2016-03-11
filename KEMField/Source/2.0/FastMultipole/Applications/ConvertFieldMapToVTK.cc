@@ -12,6 +12,7 @@
 #include "KEMFileInterface.hh"
 
 #ifdef KEMFIELD_USE_VTK
+#include <vtkVersion.h>
 #include <vtkSmartPointer.h>
 #include <vtkDataSetMapper.h>
 #include <vtkProperty.h>
@@ -53,7 +54,12 @@ using namespace KEMField;
 int main(int argc, char** argv)
 {
 
-    if(argc != 2){return 1;}
+
+    if(argc != 2)
+    {
+        std::cout<<"please give path to file"<<std::endl;
+        return 1;
+    }
 
     std::string filename(argv[1]);
 
@@ -62,7 +68,11 @@ int main(int argc, char** argv)
     bool result;
     KEMFileInterface::GetInstance()->ReadKSAFile(data_node, filename, result);
 
-    if(!result){return 1;};
+    if(!result)
+    {
+        std::cout<<"failed to read file"<<std::endl;
+        return 1;
+    };
 
     KFMNamedScalarDataCollection* data  = data_node->GetObject();
 
@@ -98,26 +108,38 @@ int main(int argc, char** argv)
         std::string name = data->GetDataSetWithIndex(i)->GetName();
         if( (name != (std::string("x_coordinate") ) ) && (name != (std::string("y_coordinate") ) ) && (name != (std::string("z_coordinate") ) ) )
         {
-
-            vtkSmartPointer<vtkDoubleArray> array;
-            array = vtkSmartPointer<vtkDoubleArray>::New();
-            array->SetName( (data->GetDataSetWithIndex(i)->GetName()).c_str() );
-            array->Initialize();
-
-            unsigned int size = data->GetDataSetWithIndex(i)->GetSize();
-            for(unsigned int j=0; j<size; j++)
+            if( (name != (std::string("fmm_time_per_potential_call") ) ) &&
+                (name != (std::string("fmm_time_per_field_call") ) ) &&
+                (name != (std::string("direct_time_per_potential_call") ) ) &&
+                (name != (std::string("direct_time_per_field_call") ) )   )
             {
-                array->InsertNextValue( data->GetDataSetWithIndex(i)->GetValue(j) );
-            }
 
-            polyData->GetPointData()->AddArray(array);
+                vtkSmartPointer<vtkDoubleArray> array;
+                array = vtkSmartPointer<vtkDoubleArray>::New();
+                array->SetName( (data->GetDataSetWithIndex(i)->GetName()).c_str() );
+                array->Initialize();
+
+                unsigned int size = data->GetDataSetWithIndex(i)->GetSize();
+                for(unsigned int j=0; j<size; j++)
+                {
+                    array->InsertNextValue( data->GetDataSetWithIndex(i)->GetValue(j) );
+                }
+
+                polyData->GetPointData()->AddArray(array);
+            }
         }
     }
 
 
     vtkSmartPointer<vtkXMLPolyDataWriter> writer = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
     writer->SetFileName("./test_vtk.vtk");
-    writer->SetInput(polyData);
+
+    #if VTK_MAJOR_VERSION > 5
+        writer->SetInputData( polyData );
+    #else
+        writer->SetInput( polyData );
+    #endif
+
     writer->Write();
 
 

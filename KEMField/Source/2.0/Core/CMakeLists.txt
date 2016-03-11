@@ -14,7 +14,9 @@ if (NOT BUILD_KOMMON)
   set (@PROJECT_NAME@_USE_KMESSAGE OFF)
   set (@PROJECT_NAME@_USE_KMESSAGE ${@PROJECT_NAME@_USE_KMESSAGE} PARENT_SCOPE)
   set (Kommon_LIBRARIES "")
-endif(NOT BUILD_KOMMON)
+else()
+  kasper_require_cpp11()
+endif()
 
 cmake_dependent_option (@PROJECT_NAME@_USE_KMESSAGE "Use KMessage" ON
   "@PROJECT_NAME@_USE_KOMMON;NOT @PROJECT_NAME@_SILENT" OFF)
@@ -31,19 +33,19 @@ endif (@PROJECT_NAME@_USE_KMESSAGE)
 option (@PROJECT_NAME@_USE_MPI "Use MPI to accelerate calculations using multiple processors" OFF)
 if (@PROJECT_NAME@_USE_MPI)
   find_package(MPI)
-  if (MPI_FOUND)
-    if (MPI_COMPILER)  # MPICH2 style
+  if (MPI_CXX_FOUND)
+    if (MPI_CXX_COMPILER)  # MPICH2 style
       set (CMAKE_C_COMPILER ${MPI_COMPILER})
       set (CMAKE_CXX_COMPILER ${MPI_COMPILER})
-    else (MPI_COMPILER)  # OpenMPI style
+    else (MPI_CXX_COMPILER)  # OpenMPI style
       set (CMAKE_C_COMPILER ${MPI_C_COMPILER})
       set (CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
-    endif (MPI_COMPILER)
-  else (MPI_FOUND)
+    endif (MPI_CXX_COMPILER)
+  else (MPI_CXX_FOUND)
     message( "Warning: MPI not found on your system, using default compiler" )
     set (CMAKE_C_COMPILER mpicc)
     set (CMAKE_CXX_COMPILER mpicxx)
-  endif (MPI_FOUND)
+  endif (MPI_CXX_FOUND)
   add_cflag (KEMFIELD_USE_MPI)
   set (STATIC_LIBRARY_SUFFIX _mpi)
   set (SHARED_LIBRARY_SUFFIX _mpi)
@@ -59,6 +61,7 @@ if (@PROJECT_NAME@_USE_MPI)
   set (CMAKE_SHARED_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_EXECUTABLE_SUFFIX ${CMAKE_EXECUTABLE_SUFFIX} PARENT_SCOPE)
 
+  set( @PROJECT_NAME@_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
 
 endif (@PROJECT_NAME@_USE_MPI)
 
@@ -109,4 +112,3 @@ target_link_libraries (KEMCore ${Kommon_LIBRARIES})
 
 kasper_install_headers (${KEMCORE_HEADERFILES})
 kasper_install_libraries (KEMCore)
-

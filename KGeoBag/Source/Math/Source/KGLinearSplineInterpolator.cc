@@ -8,6 +8,7 @@ namespace KGeoBag
   void KGLinearSplineInterpolator::Initialize(DataSet& data)
   {
     fData = data;
+    std::sort(fData.begin(), fData.end(), fSortingOp);
   }
 
   int KGLinearSplineInterpolator::OutOfRange(double x) const
@@ -26,6 +27,10 @@ namespace KGeoBag
   {
     unsigned int klo=0;
     unsigned int khi=fData.size()-1;
+
+    //if the value of x is outside of the domain, return the end point values
+    if(x < fData[klo][0] ){return fData[0][1];};
+    if(x > fData[khi][0]){return fData[khi][1];};
 
     unsigned int k;
 

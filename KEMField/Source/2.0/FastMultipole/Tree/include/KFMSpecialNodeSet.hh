@@ -2,6 +2,7 @@
 #define __KFMSpecialNodeSet_H__
 
 #include "KFMNode.hh"
+#include "KFMMessaging.hh"
 #include <vector>
 
 
@@ -79,7 +80,16 @@ class KFMSpecialNodeSet
         //returns -1 if node not present in special set
         int GetSpecializedIDFromOrdinaryID(unsigned int ordinary_id)
         {
-            return fOrdinaryToSpecial[ordinary_id];
+            if(ordinary_id < fNTotalNodes)
+            {
+                return fOrdinaryToSpecial[ordinary_id];
+            }
+            else
+            {
+                kfmout<<"KFMSpecialNodeSet::GetSpecializedIDFromOrdinaryID: Error, node id exceeds the total number of nodes."<<kfmendl;
+                kfmexit(1);
+                return -1;
+            }
         }
 
         //returns NULL if node not present in special set

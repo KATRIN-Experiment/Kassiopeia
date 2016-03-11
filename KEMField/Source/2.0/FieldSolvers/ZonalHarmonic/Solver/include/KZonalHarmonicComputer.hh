@@ -26,7 +26,8 @@ namespace KEMField
       fContainer(container),
       fIntegrator(integrator),
       fmCentralSPIndex(-1),
-      fmRemoteSPIndex(-1) {}
+      fmRemoteSPIndex(-1),
+      fCentralFirst( true ){}
 
     virtual ~KZonalHarmonicComputer() {}
   public:
@@ -39,6 +40,7 @@ namespace KEMField
 
     mutable int fmCentralSPIndex;
     mutable int fmRemoteSPIndex;
+    mutable bool fCentralFirst;
   };
 
   template <class Basis>
@@ -46,64 +48,117 @@ namespace KEMField
   {
     if (fContainer.GetCentralSourcePoints().empty()) return false;
 
-    double rcmin = 1.e20;
+    float p0 = (float)P[0];
+    float p1 = (float)P[1];
+    float z = (float)P[2];
 
-    double r = sqrt(P[0]*P[0]+P[1]*P[1]);
-    double z = P[2];
+    float r2 = p0*p0+p1*p1;
 
-    double delz;
-    double rho;
-    double rc = 0;
+
+    float delz;
+    float rc2 = 0;
+    float rc2min = 1.e20;
+
+    float convratiosquared = (float)fContainer.GetParameters().GetConvergenceRatio()*(float)fContainer.GetParameters().GetConvergenceRatio();
 
     // Check neighboring SP's if this is not the function's first call...
     if (fmCentralSPIndex != -1)
     {
-      for (int i=fmCentralSPIndex-2;i<=fmCentralSPIndex+2;i++)
-      {
-	if (i<0 || i>=(int)fContainer.GetCentralSourcePoints().size())
-	  continue;
+        int lastSP = fmCentralSPIndex;
 
-	const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
+        for (int i=lastSP-2;i<=lastSP+2;i++)
+        {
+            if (i<0 || i>=(int)fContainer.GetCentralSourcePoints().size())
+                continue;
 
-	delz = z-sP.GetZ0();
-	rho  = sqrt(r*r+delz*delz);
-	rc=rho/sP.GetRho();
+            const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
 
-	if (rc<rcmin)
-	{
-	  rcmin=rc;
-	  fmCentralSPIndex = i;
-	}
-      }
+            delz = z-sP.GetFloatZ0();
+            rc2 = (r2+delz*delz)*sP.Get1overRhosquared();
+
+            if (rc2<rc2min)
+            {
+                rc2min=rc2;
+                fmCentralSPIndex = i;
+            }
+        }
+
+
+        if(rc2min > convratiosquared)
+        {
+            for (int k = 3; k<20; k++)
+            {
+                int i = lastSP - k;
+
+                if (i > 0 && i < (int)fContainer.GetCentralSourcePoints().size())
+                {
+
+                    const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
+
+                    delz = z-sP.GetFloatZ0();
+                    rc2 = (r2+delz*delz)*sP.Get1overRhosquared();
+
+                    if (rc2<rc2min)
+                    {
+                        rc2min=rc2;
+                        fmCentralSPIndex = i;
+                    }
+                }
+
+                i = lastSP + k;
+
+                if (i > 0 && i < (int)fContainer.GetCentralSourcePoints().size())
+                {
+
+                    const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
+
+                    delz = z-sP.GetFloatZ0();
+                    rc2 = (r2+delz*delz)*sP.Get1overRhosquared();
+
+                    if (rc2<rc2min)
+                    {
+                        rc2min=rc2;
+                        fmCentralSPIndex = i;
+                    }
+                }
+            }
+        }
+
     }
+
 
     // ...if this is the function's first call, OR if Legendre
     // polynomial expansion does not converge, check the whole list
 
-    if (fmCentralSPIndex == -1 || rc>fContainer.GetParameters().GetConvergenceRatio())
+    if ( rc2min > convratiosquared || fmCentralSPIndex == -1)
     {
-      rcmin = 1.e20;
+        rc2min = 1.e20;
 
-      for (unsigned int i=0;i<fContainer.GetCentralSourcePoints().size();i++)
-      {
-	const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
+        for (unsigned int i=0;i<fContainer.GetCentralSourcePoints().size();i++)
+        {
+            const KZonalHarmonicSourcePoint& sP = *(fContainer.GetCentralSourcePoints().at(i));
 
-	delz = z-sP.GetZ0();
-	rho  = sqrt(r*r+delz*delz);
-	rc=rho/sP.GetRho();
+            delz = z-sP.GetFloatZ0();
+            rc2 = (r2+delz*delz)*sP.Get1overRhosquared();
 
-	if (rc<rcmin)
-	{
-	  rcmin=rc;
-	  fmCentralSPIndex = i;
-	}
-      }
+            if (rc2<rc2min)
+            {
+                rc2min=rc2;
+                fmCentralSPIndex = i;
+            }
+        }
     }
 
-    if (rcmin>fContainer.GetParameters().GetConvergenceRatio())
-      return false;
+    if (rc2min>convratiosquared)
+    {
+        fCentralFirst = false;
+        return false;
+    }
     else
-      return true;
+    {
+        fCentralFirst = true;
+        return true;
+    }
   }
 
   template <class Basis>
@@ -111,65 +166,65 @@ namespace KEMField
   {
     if (fContainer.GetRemoteSourcePoints().empty()) return false;
 
-    double rrmin = 1.e20;
+    float p0 = (float)P[0];
+    float p1 = (float)P[1];
+    float z = (float)P[2];
 
-    double r = sqrt(P[0]*P[0]+P[1]*P[1]);
-    double z = P[2];
+    float r2 = p0*p0+p1*p1;    
+    float delz;
 
-    double delz;
-    double rho;
-    double rr = 0;
+    float rr2 = 0;
+    float rr2min = 1.e20;
+
+    float convratiosquared = (float)fContainer.GetParameters().GetConvergenceRatio()*(float)fContainer.GetParameters().GetConvergenceRatio();
 
     // Check neighboring SP's if this is not the function's first call...
-    if (fmRemoteSPIndex!=-1)
+    if (fmRemoteSPIndex > 0 && fmRemoteSPIndex < (int)fContainer.GetRemoteSourcePoints().size() )
     {
-      for (int i=fmRemoteSPIndex-1;i<=fmRemoteSPIndex+1;i++)
-      {
-	if (i<0 || i>=(int)fContainer.GetRemoteSourcePoints().size())
-	  continue;
+        const KZonalHarmonicSourcePoint& sP = *(fContainer.GetRemoteSourcePoints().at(fmRemoteSPIndex));
 
-	const KZonalHarmonicSourcePoint& sP = *(fContainer.GetRemoteSourcePoints().at(i));
+        delz = z - sP.GetFloatZ0();
+        rr2= sP.GetRhosquared()/(r2+delz*delz);
 
-	delz = z-sP.GetZ0();
-	rho  = sqrt(r*r+delz*delz);
-	rr=sP.GetRho()/rho;
-
-	if (rr<rrmin)
-	{
-	  rrmin=rr;
-	  fmRemoteSPIndex = i;
-	}
-      }
+        if (rr2<rr2min)
+        {
+            rr2min=rr2;
+        }
     }
 
 
     // ...if this is the function's first call, OR if Legendre
     // polynomial expansion does not converge, check the whole list
 
-    if (fmRemoteSPIndex == -1 || rr>fContainer.GetParameters().GetConvergenceRatio())
+    if (fmRemoteSPIndex == -1 || rr2min > convratiosquared)
     {
-      rrmin = 1.e20;
+        rr2min = 1.e20;
 
-      for (unsigned int i=0;i<fContainer.GetRemoteSourcePoints().size();i++)
-      {
-	const KZonalHarmonicSourcePoint& sP = *(fContainer.GetRemoteSourcePoints().at(i));
+        for (unsigned int i=0;i<fContainer.GetRemoteSourcePoints().size();i++)
+        {
+            const KZonalHarmonicSourcePoint& sP = *(fContainer.GetRemoteSourcePoints().at(i));
 
-	delz = z-sP.GetZ0();
-	rho  = sqrt(r*r+delz*delz);
-	rr=sP.GetRho()/rho;
+            delz = z - sP.GetFloatZ0();
+            rr2= sP.GetRhosquared()/(r2+delz*delz);
 
-	if (rr<rrmin)
-	{
-	  rrmin=rr;
-	  fmRemoteSPIndex = i;
-	}
-      }
+            if (rr2<rr2min)
+            {
+                rr2min=rr2;
+                fmRemoteSPIndex = i;
+            }
+        }
     }
 
-    if (rrmin>fContainer.GetParameters().GetConvergenceRatio())
-      return false;
+    if (rr2min > convratiosquared)
+    {
+        fCentralFirst = true;
+        return false;
+    }
     else
-      return true;
+    {
+        fCentralFirst = false;
+        return true;
+    }
   }
 } // end namespace KEMField
 

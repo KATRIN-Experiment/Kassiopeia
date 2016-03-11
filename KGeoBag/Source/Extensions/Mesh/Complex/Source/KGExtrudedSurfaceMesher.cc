@@ -258,7 +258,7 @@ namespace KGeoBag
         double n2[ 3 ] =
         { 0., 0., 1. };
 
-        double n1[ 3 ];
+        double n1[ 3 ] = {};
         n1[ 2 ] = 0;
 
         double p0[ 3 ];

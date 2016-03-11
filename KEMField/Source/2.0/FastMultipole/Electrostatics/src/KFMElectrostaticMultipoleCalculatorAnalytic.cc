@@ -2,6 +2,8 @@
 
 #include "KFMMessaging.hh"
 
+#include <cstdlib>
+
 namespace KEMField{
 
 const double KFMElectrostaticMultipoleCalculatorAnalytic::fMinSinPolarAngle = 1e-3;
@@ -106,7 +108,7 @@ KFMElectrostaticMultipoleCalculatorAnalytic::~KFMElectrostaticMultipoleCalculato
 void
 KFMElectrostaticMultipoleCalculatorAnalytic::SetDegree(int l_max)
 {
-    fDegree = std::fabs(l_max);
+    fDegree = std::abs(l_max);
     fSize = (fDegree + 1)*(fDegree + 1);
 
     fTempMomentsA.SetDegree(fDegree);
@@ -151,7 +153,6 @@ KFMElectrostaticMultipoleCalculatorAnalytic::SetDegree(int l_max)
     fPlmArr = new double[fSize];
     fCosMPhiArr = new double[fDegree + 1];
     fSinMPhiArr = new double[fDegree + 1];
-    fSinMPhiArr = new double[fDegree + 1];
     fScratch = new double[fDegree + 3];
 
     fSolidHarmonics = new std::complex<double>[fSize];
@@ -170,7 +171,7 @@ KFMElectrostaticMultipoleCalculatorAnalytic::SetDegree(int l_max)
         }
     }
 
-};
+}
 
 
 bool
@@ -183,7 +184,7 @@ KFMElectrostaticMultipoleCalculatorAnalytic::ConstructExpansion(double* target_o
 
         if(n_vertices == 1) //we have a point
         {
-            //compute the difference between the triangle vertex and the target origin
+            //compute the difference between the point and the target origin
             for(unsigned int i=0; i<3; i++)
             {
                 fDel[i] = (vertices->GetPoint(0))[i] - target_origin[i];
@@ -289,6 +290,7 @@ KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMomentsSlow(double* 
 
     //return (unscaled by charge density) moments
     moments->SetMoments(&fMomentsA);
+
 }
 
 
@@ -621,7 +623,7 @@ KFMElectrostaticMultipoleCalculatorAnalytic::TranslateMoments(const double* del,
                             pre_real = 1.0;
                             if( (m)*(k-m) < 0)
                             {
-                                pre_pow = std::min(std::fabs(m), std::fabs(k-m));
+                                pre_pow = std::min(std::abs(m), std::abs(k-m));
                                 if(pre_pow % 2 != 0){pre_real = -1.0;};
                             }
 
@@ -642,6 +644,9 @@ KFMElectrostaticMultipoleCalculatorAnalytic::TranslateMoments(const double* del,
     }
 
 }
+
+
+//////////////////////////////////////////////////////////////////////////////
 
 
 void KFMElectrostaticMultipoleCalculatorAnalytic::TranslateMomentsFast(const double* del, std::vector< std::complex<double> >& source_moments, std::vector< std::complex<double> >& target_moments) const

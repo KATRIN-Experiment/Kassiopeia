@@ -72,9 +72,22 @@ namespace KGeoBag
                 return;
             }
 
+            void SetMaximumAspectRatio( double aMaximumRatio )
+            {
+                fMaximumAspectRatio = aMaximumRatio;
+                return;
+            }
+
+            void SetVerbosity(int verbosity)
+            {
+                fVerbosity = verbosity;
+            }
+
         protected:
             KSurfaceContainer* fSurfaceContainer;
             double fMinimumArea;
+            double fMaximumAspectRatio;
+            int fVerbosity;
 
             class Triangle :
                 public KEMField::KTriangle

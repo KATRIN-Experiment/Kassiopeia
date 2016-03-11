@@ -23,15 +23,13 @@ class KFMCubicSpaceTreeProperties
 {
     public:
 
-        KFMCubicSpaceTreeProperties():fTreeID(""),fCubicNeighborOrder(0),fCurrentMaxUniqueID(0)
+        KFMCubicSpaceTreeProperties():fCubicNeighborOrder(0),fMaxTreeDepth(0),fCurrentMaxUniqueID(0),fTreeID("")
         {
             for(unsigned int i=0; i<NDIM; i++)
             {
                 fDimSize[i] = 0;
+                fTopLevelDimSize[i] = 0;
             };
-
-            fCubicNeighborOrder = 0;
-            fMaxTreeDepth = 0;
         };
 
         virtual ~KFMCubicSpaceTreeProperties(){};
@@ -54,6 +52,11 @@ class KFMCubicSpaceTreeProperties
         unsigned int GetNDimensions() const {return NDIM;};
 
         //get/set the size of each dimension
+        unsigned int GetDimension(unsigned int dim_index) const
+        {
+            return fDimSize[dim_index];
+        }
+
         const unsigned int* GetDimensions() const {return fDimSize;};
         void GetDimensions(unsigned int* dim_size) const
         {
@@ -62,11 +65,35 @@ class KFMCubicSpaceTreeProperties
                 dim_size[i] = fDimSize[i];
             }
         }
+
         void SetDimensions(const unsigned int* dim_size)
         {
             for(unsigned int i=0; i<NDIM; i++)
             {
                 fDimSize[i] = dim_size[i];
+            }
+        }
+
+        //get/set the size of each dimension for the top level of the tree
+        unsigned int GetTopLevelDimension(unsigned int dim_index) const
+        {
+            return fTopLevelDimSize[dim_index];
+        }
+
+        const unsigned int* GetTopLevelDimensions() const {return fTopLevelDimSize;};
+        void GetTopLevelDimensions(unsigned int* dim_size) const
+        {
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                dim_size[i] = fTopLevelDimSize[i];
+            }
+        }
+
+        void SetTopLevelDimensions(const unsigned int* dim_size)
+        {
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                fTopLevelDimSize[i] = dim_size[i];
             }
         }
 
@@ -77,54 +104,17 @@ class KFMCubicSpaceTreeProperties
             return id;
         }
 
-
-        //the condition for 'primacy' of any particular node is determined by the
-        //actor which changes this condition, it does not need to remain a constant
-        //property throughout useage of the tree
-
-//        //set the status of a particular node
-//        void SetNodePrimaryStatus(unsigned int node_id, bool status)
-//        {
-//            if(node_id >= fPrimaryNodeStatus.size())
-//            {
-//                fPrimaryNodeStatus.resize(node_id + 1);
-//            }
-
-//            fPrimaryNodeStatus[node_id] = status;
-//        }
-
-//        //get the status of a particular node
-//        bool GetNodePrimaryStatus(unsigned int node_id)
-//        {
-//            if(node_id >= fPrimaryNodeStatus.size())
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return fPrimaryNodeStatus[node_id];
-//            }
-//        }
-
         unsigned int GetNNodes() const {return fCurrentMaxUniqueID;};
 
     private:
 
         unsigned int fDimSize[NDIM]; //the number divisions in each dimension of the sub-division
-
-        std::string fTreeID; //the id pertaining to the entire tree
-
+        unsigned int fTopLevelDimSize[NDIM];
         unsigned int fCubicNeighborOrder;
-
         unsigned int fMaxTreeDepth;
-
         unsigned int fCurrentMaxUniqueID;
 
-//        //indicates whether a specific node is 'primary'
-//        //the node id is the index in this list
-//        std::vector< bool > fPrimaryNodeStatus;
-
-
+        std::string fTreeID; //the id pertaining to the entire tree
 };
 
 

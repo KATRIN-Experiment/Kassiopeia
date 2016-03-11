@@ -11,7 +11,10 @@ namespace KEMField{
 					    std::vector<double>& coeffs)
   {
     fZ0  = z0;
+    fFloatZ0 = (float)z0;
     fRho = rho;
+    fRhosquared = rho*rho;
+    f1overRhosquared = 1./ fRhosquared;
 
     fCoeffVec = coeffs;
   }

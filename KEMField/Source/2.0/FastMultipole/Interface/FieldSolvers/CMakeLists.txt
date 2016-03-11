@@ -5,13 +5,11 @@ kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (INTERFACE_FIELDSOLVER_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticFastMultipoleFieldSolver.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticFastMultipoleMultipleTreeFieldSolver.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeConstructor.hh
 )
 
 set (INTERFACE_FIELDSOLVER_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticFastMultipoleFieldSolver.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticFastMultipoleMultipleTreeFieldSolver.cc
 )
 
 ##################################################

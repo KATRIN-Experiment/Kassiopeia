@@ -23,7 +23,13 @@
 #include "KFMArrayScalarMultiplier.hh"
 #include "KFMPointwiseArrayAdder.hh"
 #include "KFMPointwiseArrayMultiplier.hh"
+
 #include "KFMMultidimensionalFastFourierTransform.hh"
+#ifdef KEMFIELD_USE_FFTW
+#include "KFMMultidimensionalFastFourierTransformFFTW.hh"
+#endif
+
+
 
 #include "KFMCubicSpaceNodeNeighborFinder.hh"
 
@@ -68,8 +74,10 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
             fDegree = 0;
             fTotalSpatialSize = 0;
             fDiv = 0;
+            fTopLevelDivisions = 0;
             fDim = 0;
             fZeroMaskSize = 0;
+            fNeighborOrder = 0;
             fNeighborStride = 1;
             fMaxTreeDepth = 0;
             fLength = 1.0;
@@ -87,7 +95,12 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
             fScalarMultCalc = new KFMArrayScalarMultiplier<std::complex<double>, SpatialNDIM >();
             fMultCalc = new KFMPointwiseArrayMultiplier<std::complex<double>, SpatialNDIM >();
             fAddCalc = new KFMPointwiseArrayAdder<std::complex<double>, SpatialNDIM >();
+
+            #ifdef KEMFIELD_USE_FFTW
+            fDFTCalc = new KFMMultidimensionalFastFourierTransformFFTW<SpatialNDIM>();
+            #else
             fDFTCalc = new KFMMultidimensionalFastFourierTransform<SpatialNDIM>();
+            #endif
 
             fCollector = new KFMScalarMomentCollector<ObjectTypeList, SourceScalarMomentType, SpatialNDIM>();
             fOrigLocalCoeffCollector = new KFMScalarMomentCollector<ObjectTypeList, TargetScalarMomentType, SpatialNDIM>();
@@ -95,7 +108,6 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
 
             fInitialized = false;
             fAllocated = false;
-
 
             fPtrM2LCoeff = NULL;
             fPtrMultipoles = NULL;
@@ -140,10 +152,10 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
 
         //this function is called before visiting the tree, in order to alert
         //the actor to reset it's 'IsFinished' status, default is to do nothing
-        virtual void Prepare(KFMCubicSpaceTree<SpatialNDIM, ObjectTypeList>*) {;};
+        virtual void Prepare(){;};
 
         //this function is called after visiting the tree to finalize the tree state if needed
-        virtual void Finalize(KFMCubicSpaceTree<SpatialNDIM, ObjectTypeList>*) {;};
+        virtual void Finalize(){;};
 
         ////////////////////////////////////////////////////////////////////////
         void SetNumberOfTermsInSeries(unsigned int n_terms)
@@ -187,30 +199,37 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
             }
 
             fNecessaryTerms = count;
-
-
-
         };
 
         void SetZeroMaskSize(int zeromasksize)
         {
             fZeroMaskSize = std::fabs(zeromasksize);
             fKernelResponse->SetZeroMaskSize(fZeroMaskSize);
-            fNeighborStride = 2*fZeroMaskSize + 1;
+        }
+
+        void SetNeighborOrder(int neighbor_order)
+        {
+            fNeighborOrder = std::fabs(neighbor_order);
+            fNeighborStride = 2*fNeighborOrder + 1;
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
                 fNeighborDimensionSize[i] = fNeighborStride;
             }
         }
 
+        virtual void SetTopLevelDivisions(int div)
+        {
+            fTopLevelDivisions = div;
+        }
+
         void SetDivisions(int div)
         {
             fDiv = std::fabs(div);
-            fDim = 2*fDiv*(fZeroMaskSize + 1);
+            fDim = 2*fDiv*(fNeighborOrder + 1);
 
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
-                fLowerLimits[i+2] = -1*(fZeroMaskSize+1)*fDiv;
+                fLowerLimits[i+2] = -1*(fNeighborOrder+1)*fDiv;
                 fUpperLimits[i+2] = fLowerLimits[i] + fDim;
                 fDimensionSize[i+2] =  fDim;
                 fChildDimensionSize[i] = fDiv;
@@ -218,8 +237,8 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
 
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
-                fLowerResponseLimits[i+2] = -1*(fZeroMaskSize+1)*fDiv;
-                fUpperResponseLimits[i+2] = (fZeroMaskSize+1)*fDiv;
+                fLowerResponseLimits[i+2] = -1*(fNeighborOrder+1)*fDiv;
+                fUpperResponseLimits[i+2] = (fNeighborOrder+1)*fDiv;
             }
 
             fKernelResponse->SetLowerSpatialLimits(&(fLowerResponseLimits[2]));
@@ -565,7 +584,7 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
             unsigned int offset; //offset due to spatial indices from beginning of local coefficient array of this child
 
             //get all neighbors of this node
-            KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>::GetAllNeighbors(node, fZeroMaskSize, &fNeighbors);
+            KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>::GetAllNeighbors(node, fNeighborOrder, &fNeighbors);
 
             for(unsigned int n=0; n<fNeighbors.size(); n++)
             {
@@ -576,7 +595,7 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
                     KFMArrayMath::RowMajorIndexFromOffset<SpatialNDIM>(n, fNeighborDimensionSize, szpn);
                     for(unsigned int i=0; i<SpatialNDIM; i++)
                     {
-                        pn[i] = (int)szpn[i] - fZeroMaskSize;
+                        pn[i] = (int)szpn[i] - fNeighborOrder;
                     }
 
                     //loop over neighbors children
@@ -636,7 +655,7 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
             unsigned int offset; //offset due to spatial indices from beginning of local coefficient array of this child
 
             //get all neighbors of this node
-            KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>::GetAllNeighbors(node, fZeroMaskSize, &fNeighbors);
+            KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>::GetAllNeighbors(node, fNeighborOrder, &fNeighbors);
 
             for(unsigned int n=0; n<fNeighbors.size(); n++)
             {
@@ -646,7 +665,7 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
                     KFMArrayMath::RowMajorIndexFromOffset<SpatialNDIM>(n, fNeighborDimensionSize, szpn);
                     for(unsigned int i=0; i<SpatialNDIM; i++)
                     {
-                        pn[i] = (int)szpn[i] - fZeroMaskSize;
+                        pn[i] = (int)szpn[i] - fNeighborOrder;
                     }
 
                     //loop over neighbors children
@@ -730,11 +749,13 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
         int fDegree;
         unsigned int fNTerms; //(fDegree+1)^2
         unsigned int fNecessaryTerms;
+        unsigned int fTopLevelDivisions;
         unsigned int fDiv; //number of divisions along each side of a region
-        unsigned int fDim; //fDiv*(2n+1) where n=1 is the number of neighbors (fZeroMaskSize)
+        unsigned int fDim; //fDiv*(2n+1) where n=1 is the number of neighbors (fNeighborOrder)
         unsigned int fZeroMaskSize;
+        unsigned int fNeighborOrder;
         unsigned int fTotalSpatialSize;
-        unsigned int fNeighborStride; //2*fZeroMaskSize + 1
+        unsigned int fNeighborStride; //2*fNeighborOrder + 1
         double fLength;
         unsigned int fMaxTreeDepth;
         std::complex<double> fNorm;
@@ -778,7 +799,12 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
         KFMScaleInvariantKernelExpansion<SpatialNDIM>* fScaleInvariantKernel;
 
         //array manipulation
+        #ifdef KEMFIELD_USE_FFTW
+        KFMMultidimensionalFastFourierTransformFFTW<SpatialNDIM>* fDFTCalc;
+        #else
         KFMMultidimensionalFastFourierTransform<SpatialNDIM>* fDFTCalc;
+        #endif
+
         KFMPointwiseArrayAdder<std::complex<double>, SpatialNDIM>* fAddCalc;
         KFMPointwiseArrayMultiplier<std::complex<double>, SpatialNDIM>* fMultCalc;
         KFMArrayScalarMultiplier<std::complex<double>, SpatialNDIM>* fScalarMultCalc;

@@ -10,13 +10,13 @@ namespace katrin
     {
     }
 
-    static int sKSWriteASCIIStructure =
+    STATICINT sKSWriteASCIIStructure =
         KSWriteASCIIBuilder::Attribute< string >( "name" ) +
         KSWriteASCIIBuilder::Attribute< string >( "base" ) +
         KSWriteASCIIBuilder::Attribute< string >( "path" )+
         KSWriteASCIIBuilder::Attribute< unsigned int >( "precision" );
 
-    static int sKSWriteASCII =
+    STATICINT sKSWriteASCII =
         KSRootBuilder::ComplexElement< KSWriteASCII >( "kswrite_ascii" );
 
 }

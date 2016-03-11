@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGExtrudedCircleSpaceBuilder =
+    STATICINT sKGExtrudedCircleSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGExtrudedCircleSpace >( "extruded_circle_space" );
 
-    static const int sKGExtrudedCircleSpaceBuilderStructure =
+    STATICINT sKGExtrudedCircleSpaceBuilderStructure =
         KGExtrudedCircleSpaceBuilder::Attribute< string >( "name" ) +
         KGExtrudedCircleSpaceBuilder::Attribute< double >( "zmin" ) +
         KGExtrudedCircleSpaceBuilder::Attribute< double >( "zmax" ) +

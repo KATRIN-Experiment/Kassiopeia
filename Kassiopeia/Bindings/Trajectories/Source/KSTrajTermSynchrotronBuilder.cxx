@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTermSynchrotronStructure =
+    STATICINT sKSTrajTermSynchrotronStructure =
         KSTrajTermSynchrotronBuilder::Attribute< string >( "name" ) +
         KSTrajTermSynchrotronBuilder::Attribute< double >( "enhancement" );
 
-    static int sToolboxKSTrajTermSynchrotron =
+    STATICINT sToolboxKSTrajTermSynchrotron =
         KSRootBuilder::ComplexElement< KSTrajTermSynchrotron >( "kstraj_term_synchrotron" );
 
 }

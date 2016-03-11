@@ -96,11 +96,11 @@ KFMElectrostaticTreeData::DefineOutputNode(KSAOutputNode* node) const
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, std::string, &KFMElectrostaticTreeData::GetTreeID >( std::string("tree_id"), this) );
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetNumberOfTreeNodes >( std::string("n_tree_nodes"), this) );
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetDivisions >( std::string("divisions"), this) );
+        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetTopLevelDivisions >( std::string("top_level_divisions"), this) );
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetDegree >( std::string("degree"), this) );
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetZeroMaskSize >( std::string("zero_mask_size"), this) );
         node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetMaximumTreeDepth >( std::string("maximum_tree_depth"), this) );
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::GetMaxDirectCalls >( std::string("max_direct_calls"), this) );
-
+        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMElectrostaticTreeData, double, &KFMElectrostaticTreeData::GetInsertionRatio >( std::string("insertion_ratio"), this) );
 
         node->AddChild( new KSAAssociatedPassedPointerPODOutputNode< KFMElectrostaticTreeData, std::vector< int >, &KFMElectrostaticTreeData::GetLocalCoefficientNodeIDs >(std::string("LocalCoefficientNodeIDVector"), this) );
         node->AddChild( new KSAAssociatedPassedPointerPODOutputNode< KFMElectrostaticTreeData, std::vector< int >, &KFMElectrostaticTreeData::GetIdentitySetNodeIDs >(std::string("IdentitySetNodeIDVector"), this) );
@@ -122,10 +122,11 @@ KFMElectrostaticTreeData::DefineInputNode(KSAInputNode* node)
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, std::string, &KFMElectrostaticTreeData::SetTreeID >( std::string("tree_id"), this) );
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetNumberOfTreeNodes >( std::string("n_tree_nodes"), this) );
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetDivisions >( std::string("divisions"), this) );
+        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetTopLevelDivisions >( std::string("top_level_divisions"), this) );
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetDegree >( std::string("degree"), this) );
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetZeroMaskSize >( std::string("zero_mask_size"), this) );
         node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetMaximumTreeDepth >( std::string("maximum_tree_depth"), this) );
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, unsigned int, &KFMElectrostaticTreeData::SetMaxDirectCalls >( std::string("max_direct_calls"), this) );
+        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMElectrostaticTreeData, double, &KFMElectrostaticTreeData::SetInsertionRatio >( std::string("insertion_ratio"), this) );
 
         node->AddChild( new KSAAssociatedPointerPODInputNode<KFMElectrostaticTreeData, std::vector< int >, &KFMElectrostaticTreeData::SetLocalCoefficientNodeIDs >(std::string("LocalCoefficientNodeIDVector"), this) );
         node->AddChild( new KSAAssociatedPointerPODInputNode<KFMElectrostaticTreeData, std::vector< int >, &KFMElectrostaticTreeData::SetIdentitySetNodeIDs >(std::string("IdentitySetNodeIDVector"), this) );

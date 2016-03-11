@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSGroupStructure =
-        KSComponentGroupBuilder::Attribute< string >( "name" ) +
-        KSComponentGroupBuilder::Attribute< string >( "output" );
+    STATICINT sKSGroupStructure =
+        KSComponentGroupBuilder::Attribute< string >( "name" );
 
-    static int sKSGroup =
-        KSRootBuilder::ComplexElement< KSComponentGroup >( "ks_component_group" );
+    STATICINT sKSGroup =
+        KSRootBuilder::ComplexElement< KSComponentGroup >( "ks_component_group" ) +
+        KSRootBuilder::ComplexElement< KSComponentGroup >( "output_group" );
 
 }

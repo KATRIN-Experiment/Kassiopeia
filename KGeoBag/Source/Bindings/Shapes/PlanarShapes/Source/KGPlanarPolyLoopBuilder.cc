@@ -3,17 +3,17 @@
 namespace katrin
 {
 
-    static const int sKGPlanarPolyLoopStartPointArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLoopStartPointArgumentsBuilderStructure =
         KGPlanarPolyLoopStartPointArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLoopStartPointArgumentsBuilder::Attribute< double >( "y" );
 
-    static const int sKGPlanarPolyLoopLineArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLoopLineArgumentsBuilderStructure =
         KGPlanarPolyLoopLineArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLoopLineArgumentsBuilder::Attribute< double >( "y" ) +
         KGPlanarPolyLoopLineArgumentsBuilder::Attribute< unsigned int >( "line_mesh_count" ) +
         KGPlanarPolyLoopLineArgumentsBuilder::Attribute< double >( "line_mesh_power" );
 
-    static const int sKGPlanarPolyLoopArcArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLoopArcArgumentsBuilderStructure =
         KGPlanarPolyLoopArcArgumentsBuilder::Attribute< double >( "x" ) +
         KGPlanarPolyLoopArcArgumentsBuilder::Attribute< double >( "y" ) +
         KGPlanarPolyLoopArcArgumentsBuilder::Attribute< double >( "radius" ) +
@@ -21,17 +21,17 @@ namespace katrin
         KGPlanarPolyLoopArcArgumentsBuilder::Attribute< bool >( "short" ) +
         KGPlanarPolyLoopArcArgumentsBuilder::Attribute< unsigned int >( "arc_mesh_count" );
 
-    static const int sKGPlanarPolyLoopLastLineArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLoopLastLineArgumentsBuilderStructure =
         KGPlanarPolyLoopLastLineArgumentsBuilder::Attribute< unsigned int >( "line_mesh_count" ) +
         KGPlanarPolyLoopLastLineArgumentsBuilder::Attribute< double >( "line_mesh_power" );
 
-    static const int sKGPlanarPolyLoopLastArcArgumentsBuilderStructure =
+    STATICINT sKGPlanarPolyLoopLastArcArgumentsBuilderStructure =
         KGPlanarPolyLoopLastArcArgumentsBuilder::Attribute< double >( "radius" ) +
         KGPlanarPolyLoopLastArcArgumentsBuilder::Attribute< bool >( "right" ) +
         KGPlanarPolyLoopLastArcArgumentsBuilder::Attribute< bool >( "short" ) +
         KGPlanarPolyLoopLastArcArgumentsBuilder::Attribute< unsigned int >( "arc_mesh_count" );
 
-    static const int sKGPlanarPolyLoopBuilderStructure =
+    STATICINT sKGPlanarPolyLoopBuilderStructure =
         KGPlanarPolyLoopBuilder::ComplexElement< KGPlanarPolyLoop::StartPointArguments >( "start_point" ) +
         KGPlanarPolyLoopBuilder::ComplexElement< KGPlanarPolyLoop::LineArguments >( "next_line" ) +
         KGPlanarPolyLoopBuilder::ComplexElement< KGPlanarPolyLoop::ArcArguments >( "next_arc" ) +

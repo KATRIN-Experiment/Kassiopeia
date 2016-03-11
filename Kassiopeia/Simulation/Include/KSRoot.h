@@ -5,6 +5,8 @@
 
 #include "KSMainMessage.h"
 
+#include "gsl/gsl_errno.h"
+
 namespace Kassiopeia
 {
 
@@ -53,6 +55,10 @@ namespace Kassiopeia
             void DeinitializeComponent();
 
         private:
+            static void SignalHandler(int aSignal);
+            static void GSLErrorHandler(const char* aReason, const char* aFile, int aLine, int aErrNo);
+
+        private:
             KSSimulation* fSimulation;
             KSRun* fRun;
             KSEvent* fEvent;
@@ -77,6 +83,15 @@ namespace Kassiopeia
             unsigned int fEventIndex;
             unsigned int fTrackIndex;
             unsigned int fStepIndex;
+
+            static bool fStopRunSignal;
+            static bool fStopEventSignal;
+            static bool fStopTrackSignal;
+            static string fStopSignalName;
+
+            gsl_error_handler_t* fDefaultGSLErrorHandler;
+            static bool fGSLErrorSignal;
+            static std::string fGSLErrorString;
     };
 
 }

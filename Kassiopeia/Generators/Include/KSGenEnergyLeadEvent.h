@@ -2,7 +2,6 @@
 #define KSGENENERGYLEADEVENT_H
 
 #include "KSGenCreator.h"
-#include "TF1.h"
 
 namespace Kassiopeia
 {
@@ -40,7 +39,7 @@ namespace Kassiopeia
         private:
             bool fForceConversion;
             bool fDoConversion;
-            bool fDoShakeOff;
+//            bool fDoShakeOff;
             bool fDoAuger;
             int fIsotope;
             int fZDaughter;

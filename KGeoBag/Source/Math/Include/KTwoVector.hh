@@ -18,6 +18,9 @@ namespace KGeoBag
     class KTwoVector
     {
         public:
+            static const KTwoVector sInvalid;
+            static const KTwoVector sZero;
+
             static const KTwoVector sXUnit;
             static const KTwoVector sYUnit;
 
@@ -109,8 +112,8 @@ namespace KGeoBag
     }
     inline void KTwoVector::SetMagnitude( const double& aMagnitude )
     {
-        register double tMagnitude = Magnitude();
-        register double tRatio = aMagnitude / tMagnitude;
+        const double tMagnitude = Magnitude();
+        const double tRatio = aMagnitude / tMagnitude;
         fData[0] *= tRatio;
         fData[1] *= tRatio;
         return;

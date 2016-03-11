@@ -54,12 +54,18 @@ class KFMNodeIdentityListCreator: public KFMNodeActor< KFMNode<ObjectTypeList> >
                     id_range = new KFMNodeIdentityListRange();
                     KFMObjectRetriever<ObjectTypeList, KFMNodeIdentityListRange>::SetNodeObject(id_range, node);
                 }
+                else
+                {
+                    delete id_range; id_range = NULL;
+                    id_range = new KFMNodeIdentityListRange();
+                    KFMObjectRetriever<ObjectTypeList, KFMNodeIdentityListRange>::SetNodeObject(id_range, node);
+                }
+
+                unsigned int start_index = fIdentityList.size();
+                unsigned int size = 0;
 
                 if(node->HasChildren())
                 {
-                    unsigned int start_index = fIdentityList.size();
-                    unsigned int size = 0;
-
                     //loop over children looking for the earliest start index
                     for(unsigned int i=0; i<node->GetNChildren(); i++)
                     {
@@ -77,46 +83,29 @@ class KFMNodeIdentityListCreator: public KFMNodeActor< KFMNode<ObjectTypeList> >
                     }
 
                     size = fIdentityList.size() - start_index;
-
-                    if(id_set != NULL)
-                    {
-                        size += id_set->GetSize();
-                        //push the ids onto the list
-                        std::vector<unsigned int> ids;
-                        id_set->GetIDs(&ids);
-                        for(unsigned int i=0; i<ids.size(); i++)
-                        {
-                            fIdentityList.push_back(ids[i]);
-                        }
-                    }
-
-                    //set up this nodes list range
-                    id_range->SetStartIndex(start_index);
-                    id_range->SetLength(size);
                 }
-                else
+
+                //whether or not node has children, we need to add elements that
+                //it might own itself
+                if(id_set != NULL)
                 {
-                    unsigned int start_index = fIdentityList.size();
-                    unsigned int size = 0;
-
-                    if(id_set != NULL)
+                    size += id_set->GetSize();
+                    //push the ids onto the list
+                    std::vector<unsigned int> ids;
+                    id_set->GetIDs(&ids);
+                    for(unsigned int i=0; i<ids.size(); i++)
                     {
-                        size = id_set->GetSize();
-                        //push the ids onto the list
-                        std::vector<unsigned int> ids;
-                        id_set->GetIDs(&ids);
-                        for(unsigned int i=0; i<ids.size(); i++)
-                        {
-                            fIdentityList.push_back(ids[i]);
-                        }
+                        fIdentityList.push_back(ids[i]);
                     }
-
-                    //set up this nodes list range
-                    id_range->SetStartIndex(start_index);
-                    id_range->SetLength(size);
                 }
 
+                //set up this nodes list range
+                id_range->SetStartIndex(start_index);
+                id_range->SetLength(size);
             }
+
+
+
         }
 
     private:

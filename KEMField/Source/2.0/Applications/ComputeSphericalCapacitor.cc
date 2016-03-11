@@ -189,6 +189,7 @@ int main(int argc, char* argv[])
   int method = 2;
   bool plotMatrix = false;
   bool residualGraph = false;
+  (void) residualGraph;
 
   bool useGmshFiles = true;
   bool cache = false;
@@ -328,8 +329,7 @@ int main(int argc, char* argv[])
   double radius3 = 3.;
 
   double potential1 = 1.;
-  double potential2;
-  potential2 = 0.;
+
   double permittivity1 = 2.;
   double permittivity2 = 3.;
 
@@ -344,6 +344,8 @@ int main(int argc, char* argv[])
 #ifdef KEMFIELD_USE_KGEOBAG
   else
   {
+    double potential2 = 0.;
+
     // Construct the shapes
     double p1[2],p2[2];
     double radius = radius1;
@@ -487,10 +489,10 @@ int main(int argc, char* argv[])
   if (cache)
   {
     A = new KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator,true>(surfaceContainer,integrator);
-    double tmp;
-    for (unsigned int i=0;i<A->Dimension();i++)
-      for (unsigned int j=0;j<A->Dimension();j++)
-    tmp = (*A)(i,j);
+//    double tmp; // TODO: WHAT IS THIS VARIABLE FOR?
+//    for (unsigned int i=0;i<A->Dimension();i++)
+//      for (unsigned int j=0;j<A->Dimension();j++) // TODO: WHAT IS THIS CODE FOR?
+//        tmp = (*A)(i,j);
   }
   else
     A = new KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator>(surfaceContainer,integrator);
@@ -964,7 +966,7 @@ int main(int argc, char* argv[])
 
     srand((unsigned)time(0));
 
-    int nTest = 1.e2;
+    int nTest = 100;
 
     // we reject sample points that are sufficiently close to one of the
     // boundaries that polygonization of the spheres becomes an issue
@@ -1274,8 +1276,8 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
   int lineNum = 0;
 
-  bool dir_ = false;
-  bool dir = false;
+//  bool dir = false;
+
   int counter = 0;
 
   while (!file.eof())
@@ -1311,7 +1313,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
     if (fabs(d[13]/d[12])<1.e-10)
     {
-      dir = true;
+//      dir = true;
       // if (dir_ == false)
       //   std::cout<<"switch to dirichlet at "<<counter<<std::endl;
 
@@ -1328,7 +1330,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
     }
     else
     {
-      dir = false;
+//      dir = false;
       // if (dir_ == true)
       //   std::cout<<"switch to neumann at "<<counter<<std::endl;
 
@@ -1343,7 +1345,7 @@ void ReadInTriangles(std::string fileName,KSurfaceContainer& surfaceContainer)
 
       surfaceContainer.push_back(t);
     }
-    dir_ = dir;
+//    dir_ = dir;
     counter++;
       }
     }

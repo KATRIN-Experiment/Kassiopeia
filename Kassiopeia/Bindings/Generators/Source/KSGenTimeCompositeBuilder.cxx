@@ -8,6 +8,7 @@
 
 #ifdef KASSIOPEIA_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -19,7 +20,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenTimeCompositeStructure =
+    STATICINT sKSGenTimeCompositeStructure =
         KSGenTimeCompositeBuilder::Attribute< string >( "name" ) +
         KSGenTimeCompositeBuilder::Attribute< string >( "time_value" ) +
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueFix >( "time_fix" ) +
@@ -28,12 +29,13 @@ namespace katrin
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueUniform >( "time_uniform" ) +
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueGauss >( "time_gauss" );
 
-    static int sKSGenTimeComposite =
+    STATICINT sKSGenTimeComposite =
         KSRootBuilder::ComplexElement< KSGenTimeComposite >( "ksgen_time_composite" );
 
 #ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenTimeCompositeStructureROOT =
-            KSGenTimeCompositeBuilder::ComplexElement< KSGenValueFormula >( "time_formula" );
+    STATICINT sKSGenTimeCompositeStructureROOT =
+            KSGenTimeCompositeBuilder::ComplexElement< KSGenValueFormula >( "time_formula" ) +
+            KSGenTimeCompositeBuilder::ComplexElement< KSGenValueHistogram >( "time_histogram" );
 #endif
 
 }

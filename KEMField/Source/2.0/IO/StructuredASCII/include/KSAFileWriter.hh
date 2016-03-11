@@ -6,7 +6,12 @@
 
 #include "KSADefinitions.hh"
 
-#include "miniz.hh"
+#ifndef KEMFIELD_USE_ZLIB
+    #include "miniz.hh"
+#else
+    #include "zlib.h"
+#endif
+
 
 namespace KEMField{
 

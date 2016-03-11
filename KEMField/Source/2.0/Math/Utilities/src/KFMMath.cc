@@ -1,5 +1,6 @@
 #include "KFMMath.hh"
-#include <iostream>
+
+#include <cstdlib>
 
 namespace KEMField{
 
@@ -194,7 +195,6 @@ KFMMath::Factorial(int arg)
     }
     else
     {
-        std::cout<<"Warning, overflow in KFMMath::Factorial calculation with argument = "<<arg<<std::endl;
         return std::numeric_limits<double>::quiet_NaN();
     }
 }
@@ -214,8 +214,7 @@ KFMMath::A_Coefficient(int upper, int lower)
 {
     //the following implementation, which doesn't use the factorial function directly
     //allows us to avoid overflow for integers greater than 170
-    return (std::pow(-1., lower))/( KFMMath::SqrtFactorial( std::fabs(lower-upper) )*KFMMath::SqrtFactorial(std::fabs(lower+upper) ) );
-//    return (std::pow(-1., lower))/( std::sqrt( ( KFMMath::Factorial( std::fabs(lower-upper)) )*( KFMMath::Factorial(std::fabs(lower+upper) ) ) ) );
+    return (std::pow(-1.0, lower))/( KFMMath::SqrtFactorial( std::abs(lower-upper) )*KFMMath::SqrtFactorial( std::abs(lower+upper) ) );
 }
 
 
@@ -228,7 +227,7 @@ KFMMath::ALP_nm(int n, int m, const double& x)
         return std::numeric_limits<double>::quiet_NaN();
     }
 
-    double norm;
+    double norm = 0;
 
     if(m == 0)
     {
@@ -256,6 +255,7 @@ KFMMath::ALP_nm(int n, int m, const double& x)
         double p_b = ALP_mm(m,x);
         double p_a =  x*KFMSquareRootUtilities::SqrtInteger(2*m + 3)*p_b;
         double plm, alm, blm;
+        plm = 0;
 
         for(int l = m+2; l <= n; l++)
         {
@@ -531,6 +531,7 @@ double KFMMath::ALP_nm_unormalized(int n, int m, const double& x)
         double p_b = ALP_mm(m,x);
         double p_a =  x*KFMSquareRootUtilities::SqrtInteger(2*m + 3)*p_b;
         double plm, alm, blm;
+        plm = 0;
 
         for(int l = m+2; l <= n; l++)
         {
@@ -1029,7 +1030,7 @@ void KFMMath::I_cheb2_array(int l_max, double lower_limit, double upper_limit, d
 double
 KFMMath::K_norm(int l, int m, double h)
 {
-    double plm = ALP_nm(l, std::fabs(m), 0.);
+    double plm = ALP_nm(l, std::abs(m), 0.);
     return (1.0/( (double)l + 2.0) )*std::pow(h, l+2)*plm;
 }
 
@@ -1085,7 +1086,7 @@ KFMMath::SphericalHarmonic_Cart(int l, int m, const double* cartesian_coords, do
 {
     double cosTheta = KFMMath::CosTheta(cartesian_coords);
     double phi = KFMMath::Phi(cartesian_coords);
-    double plm = KFMMath::ALP_nm(l, std::fabs(m), cosTheta);
+    double plm = KFMMath::ALP_nm(l, std::abs(m), cosTheta);
     result[0] = std::cos(m*phi)*plm;
     result[1] = std::sin(m*phi)*plm;
 }
@@ -1113,7 +1114,7 @@ KFMMath::SphericalHarmonic_Sph(int l, int m, const double* spherical_coords)
 {
     double cosTheta = std::cos(spherical_coords[1]);
     double phi = spherical_coords[2];
-    double plm = KFMMath::ALP_nm(l, std::fabs(m), cosTheta);
+    double plm = KFMMath::ALP_nm(l, std::abs(m), cosTheta);
     return std::complex<double>(std::cos(m*phi)*plm, std::sin(m*phi)*plm);
 }
 
@@ -1122,7 +1123,7 @@ KFMMath::SphericalHarmonic_Cart(int l, int m, const double* cartesian_coords)
 {
     double cosTheta = KFMMath::CosTheta(cartesian_coords);
     double phi = KFMMath::Phi(cartesian_coords);
-    double plm = KFMMath::ALP_nm(l, std::fabs(m), cosTheta);
+    double plm = KFMMath::ALP_nm(l, std::abs(m), cosTheta);
     return std::complex<double>(std::cos(m*phi)*plm, std::sin(m*phi)*plm);
 }
 
@@ -1163,7 +1164,7 @@ KFMMath::RegularSolidHarmonic_Cart_Array(int n_max, const double* cartesian_coor
     }
 
     //compute alp array
-    double plm[max_size];
+            double plm[max_size];
     KFMMath::ALP_nm_array(n_max, cosTheta, plm);
 
     //compute the array of cos(m*x) and sin(m*x)

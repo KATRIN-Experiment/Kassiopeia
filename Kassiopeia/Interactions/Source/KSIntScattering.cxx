@@ -22,7 +22,8 @@ namespace Kassiopeia
     {
     }
     KSIntScattering::KSIntScattering( const KSIntScattering& aCopy ) :
-            KSComponentTemplate( aCopy ),
+            KSComponent(),
+            KSComponentTemplate< KSIntScattering, KSSpaceInteraction >( aCopy ),
             fSplit( aCopy.fSplit ),
             fDensity( aCopy.fDensity ),
             fCalculator( aCopy.fCalculator ),
@@ -111,6 +112,14 @@ namespace Kassiopeia
         double tAverageDensity = .5 * (tInitialDensity + tFinalDensity);
 
         intmsg_debug( "  average density: <" << tAverageDensity << ">" << eom );
+
+
+        if ( tAverageDensity <= 0.0 )
+        {
+            aTimeStep = aTrajectoryTimeStep;
+            aFlag = false;
+            return;
+        }
 
         double tAverageTotalCrossSection = 0.;
         CalculateAverageCrossSection( aTrajectoryInitialParticle, aTrajectoryFinalParticle, tAverageTotalCrossSection );
@@ -371,6 +380,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSIntScatteringDict = KSDictionary< KSIntScattering >::AddCommand( &KSIntScattering::AddCalculator, &KSIntScattering::RemoveCalculator, "add_calculator", "remove_calculator" ) + KSDictionary< KSIntScattering >::AddCommand( &KSIntScattering::SetDensity, &KSIntScattering::ClearDensity, "set_density", "clear_density" );
+    STATICINT sKSIntScatteringDict = KSDictionary< KSIntScattering >::AddCommand( &KSIntScattering::AddCalculator, &KSIntScattering::RemoveCalculator, "add_calculator", "remove_calculator" )
+											+ KSDictionary< KSIntScattering >::AddCommand( &KSIntScattering::SetDensity, &KSIntScattering::ClearDensity, "set_density", "clear_density" );
 
 }

@@ -2,10 +2,28 @@
 #define KFMBoundaryIntegralMatrix_HH__
 
 #include "KSimpleVector.hh"
+#include "KSquareMatrix.hh"
 
-#include "KBoundaryIntegralMatrix.hh"
-#include "KFMSparseBoundaryIntegralMatrix.hh"
-#include "KFMDenseBoundaryIntegralMatrix.hh"
+//#define DEBUG_TIME_BALANCE
+
+#ifdef DEBUG_TIME_BALANCE
+    #include "KFMMessaging.hh"
+#endif
+
+#ifdef KEMFIELD_USE_MPI
+    #include "KMPIInterface.hh"
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
+    #endif
+    #define DENSE_PRODUCT_TAG 700
+    #define SPARSE_PRODUCT_TAG 701
+    #define MPI_SECOND_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==1 )
+#else
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if( true )
+    #endif
+    #define MPI_SECOND_PROCESS if ( true )
+#endif
 
 namespace KEMField
 {
@@ -23,58 +41,142 @@ namespace KEMField
 *
 */
 
-template< typename FastMultipoleIntegrator>
-class KFMBoundaryIntegralMatrix: public KBoundaryIntegralMatrix< FastMultipoleIntegrator, false >
+template< typename DenseMatrixType, typename SparseMatrixType>
+class KFMBoundaryIntegralMatrix: public KSquareMatrix< typename DenseMatrixType::ValueType>
 {
     public:
-        typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
+        typedef typename DenseMatrixType::ValueType ValueType;
 
-        KFMBoundaryIntegralMatrix(KSurfaceContainer& c, FastMultipoleIntegrator& integrator):
-                                  KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, integrator),
-                                  fSparseMatrix(c,integrator),
-                                  fDenseMatrix(c,integrator)
+        KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm):
+                                  fDenseMatrix(dm),
+                                  fSparseMatrix(sm)
         {
-            fTemp.resize(c.size());
-            fDimension = c.size();
+            fDimension = fDenseMatrix.Dimension();
+            fX.resize(fDimension);
+            fTempDense.resize(fDimension);
+            fTempSparse.resize(fDimension);
         };
 
         virtual ~KFMBoundaryIntegralMatrix(){};
 
+        virtual unsigned int Dimension() const {return  fDimension;};
+
         virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
         {
-            //compute contribution from sparse component
-            fSparseMatrix.Multiply(x,y);
 
-            //compute the contribution from the dense component
-            fDenseMatrix.Multiply(x,fTemp);
+            for(unsigned int i=0; i<fDimension; i++)
+            {
+                fX[i] = x(i);
+            }
+
+
+            #ifdef DEBUG_TIME_BALANCE
+            clock_t cstart, cend;
+            clock_t cstart_total;
+            double ctime;
+            cstart = clock();
+            cstart_total = cstart;
+            #endif
+
+            EvaluateDense();
+
+            #ifdef DEBUG_TIME_BALANCE
+            cend = clock();
+            ctime = ((double)(cend - cstart))/CLOCKS_PER_SEC; // time in seconds
+            MPI_SINGLE_PROCESS
+            {
+                kfmout << "Time for dense multiply: " << ctime  << kfmendl;
+            }
+            #endif
+
+            #ifdef DEBUG_TIME_BALANCE
+            cstart = clock();
+            #endif
+
+            EvaluateSparse();
+
+            #ifdef DEBUG_TIME_BALANCE
+            cend = clock();
+            ctime = ((double)(cend - cstart))/CLOCKS_PER_SEC; // time in seconds
+            MPI_SECOND_PROCESS
+            {
+                kfmout << "Time for sparse multiply: " << ctime << kfmendl;
+            }
+            #endif
+
+            #ifdef KEMFIELD_USE_MPI
+            if(KMPIInterface::GetInstance()->SplitMode())
+            {
+                //using split mode so sync the dense matrix-vector product result with the partner process
+                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
+                {
+                    //send dense matrix vector product result
+                    MPI_Send(&(fTempDense[0]), fDimension, MPI_DOUBLE, KMPIInterface::GetInstance()->GetPartnerProcessID(), DENSE_PRODUCT_TAG, MPI_COMM_WORLD);
+                }
+                else
+                {
+                    //recieve the dense matrix vector produt result
+                    MPI_Status stat;
+                    MPI_Recv(&(fTempDense[0]), fDimension, MPI_DOUBLE, KMPIInterface::GetInstance()->GetPartnerProcessID(), DENSE_PRODUCT_TAG, MPI_COMM_WORLD, &stat);
+                }
+
+                //now sync the sparse matrix-vector product result with the partner process
+                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
+                {
+                    //recieve the sparse matrix-vector product result
+                    MPI_Status stat;
+                    MPI_Recv(&(fTempSparse[0]), fDimension, MPI_DOUBLE, KMPIInterface::GetInstance()->GetPartnerProcessID(), SPARSE_PRODUCT_TAG, MPI_COMM_WORLD, &stat);
+                }
+                else
+                {
+                    //send sparse matrix vector product result
+                    MPI_Send(&(fTempSparse[0]), fDimension, MPI_DOUBLE, KMPIInterface::GetInstance()->GetPartnerProcessID(), SPARSE_PRODUCT_TAG, MPI_COMM_WORLD);
+                }
+            }
+            #endif
+
+            #ifdef DEBUG_TIME_BALANCE
+            cend = clock();
+            ctime = ((double)(cend - cstart_total))/CLOCKS_PER_SEC; // time in seconds
+            MPI_SINGLE_PROCESS
+            {
+                kfmout << "Total time for matrix-vector product: " << ctime  << kfmendl;
+            }
+            #endif
 
             for(unsigned int i=0; i<fDimension; i++)
             {
                 //note we do not use the source index here, only the target index
-                y[i] += fTemp[i];
+                y[i] = fTempDense[i] + fTempSparse[i];
             }
-
         }
 
-
-        const KFMSparseBoundaryIntegralMatrix<FastMultipoleIntegrator>* GetSparseMatrix(){return &fSparseMatrix;};
+        virtual const ValueType& operator()(unsigned int i, unsigned int j) const
+        {
+            return fDenseMatrix(i,j);
+        }
 
     protected:
 
+        void EvaluateDense() const
+        {
+            //compute the contribution from the dense component
+            fDenseMatrix.Multiply(fX,fTempDense);
+        }
+
+        void EvaluateSparse() const
+        {
+            //compute contribution from sparse component
+            fSparseMatrix.Multiply(fX,fTempSparse);
+        }
+
         unsigned int fDimension;
-
-        //the sparse component of the matrix not handled through the fast multipole boundary integrator
-        KFMSparseBoundaryIntegralMatrix<FastMultipoleIntegrator> fSparseMatrix;
-        KFMDenseBoundaryIntegralMatrix<FastMultipoleIntegrator> fDenseMatrix;
-
-        mutable KSimpleVector<ValueType> fTemp;
-
+        const DenseMatrixType& fDenseMatrix;
+        const SparseMatrixType& fSparseMatrix;
+        mutable KSimpleVector<ValueType> fTempDense;
+        mutable KSimpleVector<ValueType> fTempSparse;
+        mutable KSimpleVector<ValueType> fX;
 };
-
-
-
-
-
 
 
 

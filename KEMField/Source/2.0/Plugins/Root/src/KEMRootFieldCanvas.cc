@@ -5,17 +5,17 @@
 namespace KEMField
 {
   KEMRootFieldCanvas::KEMRootFieldCanvas(double x_1,
-					 double x_2,
-					 double y_1,
-					 double y_2,
-					 double zmir,
-					 bool   isfull)
+                                         double x_2,
+                                         double y_1,
+                                         double y_2,
+                                         double zmir,
+                                         bool   isfull)
  : KEMFieldCanvas(x_1,
-		  x_2,
-		  y_1,
-		  y_2,
-		  zmir,
-		  isfull)
+                  x_2,
+                  y_1,
+                  y_2,
+                  zmir,
+                  isfull)
   {
     InitializeCanvas();
   }
@@ -38,8 +38,8 @@ namespace KEMField
     // Draw x,y axis
 
     hist = new TH2F("empty_hist","",
-		    10,x1,x2,
-		    10,y1,y2);
+                    10,x1,x2,
+                    10,y1,y2);
 
     hist->SetStats(false);
     hist->Draw();
@@ -56,8 +56,8 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawGeomRZ(std::string conicSectfile,
-				      std::string wirefile,
-				      std::string coilfile)
+                                      std::string wirefile,
+                                      std::string coilfile)
   {
     // Read in the conicSects
 
@@ -67,7 +67,7 @@ namespace KEMField
 
       int NconicSect;
 
-      fscanf(inputfull,"%i",&NconicSect);
+      (void) fscanf(inputfull,"%i",&NconicSect);
   
       TLine *eline[NconicSect];
 
@@ -80,8 +80,8 @@ namespace KEMField
 
       for (int s=0;s<NconicSect;s++)
       {
-	fscanf(inputfull,"%le %le %le %le %le %i",&ex_0[s],&ey_0[s],&ex_1[s],&ey_1[s],&temp1,&temp2);
-	eline[s] = new TLine(ex_0[s],ey_0[s],ex_1[s],ey_1[s]);
+          (void) fscanf(inputfull,"%le %le %le %le %le %i",&ex_0[s],&ey_0[s],&ex_1[s],&ey_1[s],&temp1,&temp2);
+          eline[s] = new TLine(ex_0[s],ey_0[s],ex_1[s],ey_1[s]);
       }
 
       fclose(inputfull);
@@ -90,39 +90,39 @@ namespace KEMField
 
       for (int i=0;i<NconicSect;i++)
       {
-	eline[i]->SetLineWidth(1);
-	//     eline[i]->SetLineColor(i+1);
-	eline[i]->Draw();
+        eline[i]->SetLineWidth(1);
+        //     eline[i]->SetLineColor(i+1);
+        eline[i]->Draw();
       }
 
       if (full)
       {
-	for (int i=0;i<NconicSect;i++)
-	{
-	  eline[i] = new TLine(ex_0[i],-ey_0[i],ex_1[i],-ey_1[i]);
-	  eline[i]->SetLineWidth(1);
-	  eline[i]->Draw();      
-	}
+        for (int i=0;i<NconicSect;i++)
+        {
+          eline[i] = new TLine(ex_0[i],-ey_0[i],ex_1[i],-ey_1[i]);
+          eline[i]->SetLineWidth(1);
+          eline[i]->Draw();
+        }
       }
 
       if (zmirror!=1.e10)
       {
-	for (int i=0;i<NconicSect;i++)
-	{
-	  eline[i] = new TLine(2*zmirror-ex_0[i],ey_0[i],2*zmirror-ex_1[i],ey_1[i]);
-	  eline[i]->SetLineWidth(1);
-	  eline[i]->Draw();
-	}
+        for (int i=0;i<NconicSect;i++)
+        {
+          eline[i] = new TLine(2*zmirror-ex_0[i],ey_0[i],2*zmirror-ex_1[i],ey_1[i]);
+          eline[i]->SetLineWidth(1);
+          eline[i]->Draw();
+        }
 
-	if (full)
-	{
-	  for (int i=0;i<NconicSect;i++)
-	  {
-	    eline[i] = new TLine(2*zmirror-ex_0[i],-ey_0[i],2*zmirror-ex_1[i],-ey_1[i]);
-	    eline[i]->SetLineWidth(1);
-	    eline[i]->Draw();      
-	  }
-	}
+        if (full)
+        {
+          for (int i=0;i<NconicSect;i++)
+          {
+            eline[i] = new TLine(2*zmirror-ex_0[i],-ey_0[i],2*zmirror-ex_1[i],-ey_1[i]);
+            eline[i]->SetLineWidth(1);
+            eline[i]->Draw();
+          }
+        }
       }
     }
 
@@ -134,7 +134,7 @@ namespace KEMField
 
       int Nwire;
 
-      fscanf(inputwire,"%i",&Nwire);
+      (void) fscanf(inputwire,"%i",&Nwire);
   
       TLine *wline[Nwire];
 
@@ -150,8 +150,8 @@ namespace KEMField
 
       for (int s=0;s<Nwire;s++)
       {
-	fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wx_0[s],&wy_0[s],&wx_1[s],&wy_1[s],&wd[s],&temp3,&temp4,&temp5,&temp6);
-	wline[s] = new TLine(wx_0[s],wy_0[s],wx_1[s],wy_1[s]);
+        (void) fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wx_0[s],&wy_0[s],&wx_1[s],&wy_1[s],&wd[s],&temp3,&temp4,&temp5,&temp6);
+        wline[s] = new TLine(wx_0[s],wy_0[s],wx_1[s],wy_1[s]);
       }
 
       fclose(inputwire);
@@ -162,39 +162,39 @@ namespace KEMField
 
       for (int i=0;i<Nwire;i++)
       {
-	wline[i]->SetLineWidth(wd[i]*thickScale);
-	//     wline[i]->SetLineColor(i+1);
-	wline[i]->Draw();
+        wline[i]->SetLineWidth(wd[i]*thickScale);
+        //     wline[i]->SetLineColor(i+1);
+        wline[i]->Draw();
       }
 
       if (full)
       {
-	for (int i=0;i<Nwire;i++)
-	{
-	  wline[i] = new TLine(wx_0[i],-wy_0[i],wx_1[i],-wy_1[i]);
-	  wline[i]->SetLineWidth(wd[i]*thickScale);
-	  wline[i]->Draw();      
-	}
+        for (int i=0;i<Nwire;i++)
+        {
+          wline[i] = new TLine(wx_0[i],-wy_0[i],wx_1[i],-wy_1[i]);
+          wline[i]->SetLineWidth(wd[i]*thickScale);
+          wline[i]->Draw();
+        }
       }
 
       if (zmirror!=1.e10)
       {
-	for (int i=0;i<Nwire;i++)
-	{
-	  wline[i] = new TLine(2*zmirror-wx_0[i],wy_0[i],2*zmirror-wx_1[i],wy_1[i]);
-	  wline[i]->SetLineWidth(wd[i]*thickScale);
-	  wline[i]->Draw();
-	}
+        for (int i=0;i<Nwire;i++)
+        {
+          wline[i] = new TLine(2*zmirror-wx_0[i],wy_0[i],2*zmirror-wx_1[i],wy_1[i]);
+          wline[i]->SetLineWidth(wd[i]*thickScale);
+          wline[i]->Draw();
+        }
 
-	if (full)
-	{
-	  for (int i=0;i<Nwire;i++)
-	  {
-	    wline[i] = new TLine(2*zmirror-wx_0[i],-wy_0[i],2*zmirror-wx_1[i],-wy_1[i]);
-	    wline[i]->SetLineWidth(wd[i]*thickScale);
-	    wline[i]->Draw();      
-	  }
-	}
+        if (full)
+        {
+          for (int i=0;i<Nwire;i++)
+          {
+            wline[i] = new TLine(2*zmirror-wx_0[i],-wy_0[i],2*zmirror-wx_1[i],-wy_1[i]);
+            wline[i]->SetLineWidth(wd[i]*thickScale);
+            wline[i]->Draw();
+          }
+        }
       }
 
       fclose(inputwire);
@@ -208,7 +208,7 @@ namespace KEMField
 
       int Ncoil;
 
-      fscanf(inputcoil,"%i",&Ncoil);
+      (void) fscanf(inputcoil,"%i",&Ncoil);
   
       TBox *box[Ncoil];
 
@@ -220,36 +220,36 @@ namespace KEMField
 
       for (int j=0;j<Ncoil;j++)
       {
-	fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
-	box[j] = new TBox((z_mid[j]-z_len[j]/2),
-			  r_min[j],
-			  (z_mid[j]+z_len[j]/2),
-			  (r_min[j]+r_thk[j]));
+        (void) fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
+        box[j] = new TBox((z_mid[j]-z_len[j]/2),
+                          r_min[j],
+                          (z_mid[j]+z_len[j]/2),
+                          (r_min[j]+r_thk[j]));
       }
 
       // Draw magnet coils
 
       for (int k=0;k<Ncoil;k++)
       {
-	box[k]->SetLineWidth(0);
-	box[k]->SetFillStyle(3004);
-	box[k]->SetFillColor(kBlue);
-	box[k]->Draw();
+        box[k]->SetLineWidth(0);
+        box[k]->SetFillStyle(3004);
+        box[k]->SetFillColor(kBlue);
+        box[k]->Draw();
       }
 
       if (full)
       {
-	for (int k=0;k<Ncoil;k++)
-	{
-	  box[k] = new TBox((z_mid[k]-z_len[k]/2),
-			    -r_min[k],
-			    (z_mid[k]+z_len[k]/2),
-			    -(r_min[k]+r_thk[k]));
-	  box[k]->SetLineWidth(0);
-	  box[k]->SetFillStyle(3004);
-	  box[k]->SetFillColor(kBlue);
-	  box[k]->Draw();
-	}
+        for (int k=0;k<Ncoil;k++)
+        {
+          box[k] = new TBox((z_mid[k]-z_len[k]/2),
+                            -r_min[k],
+                            (z_mid[k]+z_len[k]/2),
+                            -(r_min[k]+r_thk[k]));
+          box[k]->SetLineWidth(0);
+          box[k]->SetFillStyle(3004);
+          box[k]->SetFillColor(kBlue);
+          box[k]->Draw();
+        }
       }
     }
   }
@@ -257,9 +257,9 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawGeomXY(double    z,
-				      std::string conicSectfile,
-				      std::string wirefile,
-				      std::string coilfile)
+                                      std::string conicSectfile,
+                                      std::string wirefile,
+                                      std::string coilfile)
   {
     // Read in the conicSects
     if (conicSectfile!="NULL")
@@ -268,7 +268,7 @@ namespace KEMField
 
       int NconicSect;
 
-      fscanf(inputfull,"%i",&NconicSect);
+      (void) fscanf(inputfull,"%i",&NconicSect);
   
       TEllipse *e[NconicSect];
 
@@ -281,20 +281,20 @@ namespace KEMField
 
       for (int s=0;s<NconicSect;s++)
       {
-	fscanf(inputfull,"%le %le %le %le %le %i",&ez_0[s],&er_0[s],&ez_1[s],&er_1[s],&temp1,&temp2);
+        (void) fscanf(inputfull,"%le %le %le %le %le %i",&ez_0[s],&er_0[s],&ez_1[s],&er_1[s],&temp1,&temp2);
 
-	if (ez_0[s]<z && ez_1[s]>z)
-	{
-	  double z_tot = fabs(ez_1[s]-ez_0[s]);
+        if (ez_0[s]<z && ez_1[s]>z)
+        {
+          double z_tot = fabs(ez_1[s]-ez_0[s]);
 
-	  double r = er_0[s]*fabs(z-ez_0[s])/z_tot +
-	    er_1[s]*fabs(z-ez_1[s])/z_tot;
+          double r = er_0[s]*fabs(z-ez_0[s])/z_tot +
+            er_1[s]*fabs(z-ez_1[s])/z_tot;
 
-	  e[s] = new TEllipse(0,0,r);
-	  e[s]->SetLineWidth(1);
-	  //     e[s]->SetLineColor(i+1);
-	  e[s]->Draw();
-	}
+          e[s] = new TEllipse(0,0,r);
+          e[s]->SetLineWidth(1);
+          //     e[s]->SetLineColor(i+1);
+          e[s]->Draw();
+        }
       }
 
       fclose(inputfull);
@@ -308,7 +308,7 @@ namespace KEMField
 
       int Nwire;
 
-      fscanf(inputwire,"%i",&Nwire);
+      (void) fscanf(inputwire,"%i",&Nwire);
   
       TEllipse *w[Nwire];
 
@@ -324,38 +324,38 @@ namespace KEMField
 
       for (int s=0;s<Nwire;s++)
       {
-	fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wz_0[s],&wr_0[s],&wz_1[s],&wr_1[s],&wd[s],&phi[s],&numwire[s],&temp5,&temp6);
+        (void) fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wz_0[s],&wr_0[s],&wz_1[s],&wr_1[s],&wd[s],&phi[s],&numwire[s],&temp5,&temp6);
 
-	double z_tot = fabs(wz_1[s]-wz_0[s]);
+        double z_tot = fabs(wz_1[s]-wz_0[s]);
 
-	double r = wr_0[s]*fabs(z-wz_0[s])/z_tot +
-	  wr_1[s]*fabs(z-wz_1[s])/z_tot;
+        double r = wr_0[s]*fabs(z-wz_0[s])/z_tot +
+          wr_1[s]*fabs(z-wz_1[s])/z_tot;
 
-	double x = r*cos(phi[s]/180*3.1415);
-	double y = r*sin(phi[s]/180*3.1415);
+        double x = r*cos(phi[s]/180*3.1415);
+        double y = r*sin(phi[s]/180*3.1415);
 
-	w[s] = new TEllipse(x,y,wd[s]/2);
-	w[s]->SetLineWidth(1);
-	//     w[i]->SetLineColor(i+1);
-	w[s]->Draw();
+        w[s] = new TEllipse(x,y,wd[s]/2);
+        w[s]->SetLineWidth(1);
+        //     w[i]->SetLineColor(i+1);
+        w[s]->Draw();
 
-	double phin = 2.*3.1415/numwire[s];
-	double cosphin = cos(phin);
-	double sinphin = sin(phin);
-	double tmp;
+        double phin = 2.*3.1415/numwire[s];
+        double cosphin = cos(phin);
+        double sinphin = sin(phin);
+        double tmp;
 
-	for (int i=0;i<numwire[s]-1;i++)
-	{
-	  tmp = x;
-	  x = x*cosphin  - y*sinphin;
-	  y = tmp*sinphin + y*cosphin;
+        for (int i=0;i<numwire[s]-1;i++)
+        {
+          tmp = x;
+          x = x*cosphin  - y*sinphin;
+          y = tmp*sinphin + y*cosphin;
 
-	  w[s] = new TEllipse(x,y,wd[s]/2);
+          w[s] = new TEllipse(x,y,wd[s]/2);
 
-	  w[s]->SetLineWidth(1);
-	  //     w[i]->SetLineColor(i+1);
-	  w[s]->Draw();
-	}
+          w[s]->SetLineWidth(1);
+          //     w[i]->SetLineColor(i+1);
+          w[s]->Draw();
+        }
       }
 
       fclose(inputwire);
@@ -369,7 +369,7 @@ namespace KEMField
 
       int Ncoil;
 
-      fscanf(inputcoil,"%i",&Ncoil);
+      (void) fscanf(inputcoil,"%i",&Ncoil);
   
       TEllipse *coil[Ncoil];
 
@@ -381,16 +381,16 @@ namespace KEMField
 
       for (int j=0;j<Ncoil;j++)
       {
-	fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
-	if (z_mid[j]+z_len[j]/2>z &&
-	    z_mid[j]-z_len[j]/2<z)
-	{
-	  coil[j] = new TEllipse(0,0,r_min[j]+r_thk[j],r_min[j]);
-	  coil[j]->SetLineWidth(0);
-	  coil[j]->SetFillStyle(3004);
-	  coil[j]->SetFillColor(kBlue);
-	  coil[j]->Draw();
-	}
+        (void) fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
+        if (z_mid[j]+z_len[j]/2>z &&
+            z_mid[j]-z_len[j]/2<z)
+        {
+          coil[j] = new TEllipse(0,0,r_min[j]+r_thk[j],r_min[j]);
+          coil[j]->SetLineWidth(0);
+          coil[j]->SetFillStyle(3004);
+          coil[j]->SetFillColor(kBlue);
+          coil[j]->Draw();
+        }
       }
     }
   }
@@ -398,9 +398,9 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawFieldMapCube(double x_1,
-					    double x_2,
-					    double y_1,
-					    double y_2)
+                                            double x_2,
+                                            double y_1,
+                                            double y_2)
   {
     if (x_1>=x1 && x_2<=x2 && y_1>=y1 && y_2<=y2)
     {
@@ -415,18 +415,18 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawFieldMap(std::vector<double> x,
-					std::vector<double> y,
-					std::vector<double> V,
-					bool xy,
-					double z)
+                                        std::vector<double> y,
+                                        std::vector<double> V,
+                                        bool xy,
+                                        double z)
   {
     (void)z;
     if (hist) delete hist;
     int ysize = y.size();
     if (full && !xy) ysize*=2;
     hist = new TH2F("contour_hist","",
-		    x.size(),x1,x2,
-		    ysize,y1,y2);
+                    x.size(),x1,x2,
+                    ysize,y1,y2);
 
     int V_val = 0;
 
@@ -434,10 +434,10 @@ namespace KEMField
     {
       for (int j=0;j<(int)y.size();j++)
       {
-	hist->Fill(x[i],y[j],V[V_val]);
-	if (full && !xy)
-	  hist->Fill(x[i],-y[j],V[V_val]);
-	V_val++;
+        hist->Fill(x[i],y[j],V[V_val]);
+        if (full && !xy)
+          hist->Fill(x[i],-y[j],V[V_val]);
+        V_val++;
       }
     }
 
@@ -454,23 +454,23 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawComparisonMap(int nPoints,
-					     std::vector<double> x,
-					     std::vector<double> y,
-					     std::vector<double> V1,
-					     std::vector<double> V2)
+                                             std::vector<double> x,
+                                             std::vector<double> y,
+                                             std::vector<double> V1,
+                                             std::vector<double> V2)
   {
     if (hist) delete hist;
     int ysize = y.size();
     if (full) ysize*=2;
     hist = new TH2F("contour_hist","",
-		    x.size(),x1,x2,
-		    ysize,y1,y2);
+                    x.size(),x1,x2,
+                    ysize,y1,y2);
 
     for (int i=0;i<nPoints;i++)
     {
       hist->Fill(x[i],y[i],(V2[i]-V1[i]));
       if (full)
-	hist->Fill(x[i],-y[i],(V2[i]-V1[i]));
+        hist->Fill(x[i],-y[i],(V2[i]-V1[i]));
     }
 
     gStyle->SetPalette(1,0);
@@ -489,7 +489,7 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::DrawFieldLines(std::vector<double> x,
-					  std::vector<double> y)
+                                          std::vector<double> y)
   {
     int nLineSegs = x.size()-1;
 
@@ -507,10 +507,10 @@ namespace KEMField
     {
       for (int n=0;n<nLineSegs;n++)
       {
-	fl[n] = new TLine(x[n],-y[n],x[n+1],-y[n+1]);
-	// fl[n]->SetLineWidth(.2);
-	fl[n]->SetLineColor(kGreen);
-	fl[n]->Draw();
+        fl[n] = new TLine(x[n],-y[n],x[n+1],-y[n+1]);
+        // fl[n]->SetLineWidth(.2);
+        fl[n]->SetLineColor(kGreen);
+        fl[n]->Draw();
       }
     }
     //   DrawGeomRZ();
@@ -519,8 +519,8 @@ namespace KEMField
   //______________________________________________________________________________
 
   void KEMRootFieldCanvas::LabelAxes(std::string xname,
-				     std::string yname,
-				     std::string zname)
+                                     std::string yname,
+                                     std::string zname)
   {
     canvas->SetRightMargin(.15);
     hist->GetXaxis()->SetTitle(xname.c_str());

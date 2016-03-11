@@ -4,6 +4,7 @@
 
 #include <complex>
 #include <cmath>
+#include <cstdlib>
 
 #include "KFMArrayFillingOperator.hh"
 
@@ -114,7 +115,7 @@ class KFMReducedKernelResponseArray: public KFMArrayFillingOperator< std::comple
         //distance between array points
         virtual void SetDistance(double dist){fLength = std::fabs(dist); }
 
-        virtual void SetZeroMaskSize(int zmask){fZeroMaskSize = std::fabs(zmask);}
+        virtual void SetZeroMaskSize(int zmask){fZeroMaskSize = std::abs(zmask);}
 
         virtual void SetShift(const int* shift)
         {

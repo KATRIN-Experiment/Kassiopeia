@@ -13,6 +13,7 @@ namespace Kassiopeia
     {
     }
     KSGenDirectionSphericalComposite::KSGenDirectionSphericalComposite( const KSGenDirectionSphericalComposite& aCopy ) :
+            KSComponent(),
             fThetaValue( aCopy.fThetaValue ),
             fPhiValue( aCopy.fPhiValue ),
             fXAxis( aCopy.fXAxis ),
@@ -160,7 +161,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenDirectionSphericalCompositeDict =
+    STATICINT sKSGenDirectionSphericalCompositeDict =
         KSDictionary< KSGenDirectionSphericalComposite >::AddCommand( &KSGenDirectionSphericalComposite::SetThetaValue, &KSGenDirectionSphericalComposite::ClearThetaValue, "set_theta", "clear_theta" ) +
         KSDictionary< KSGenDirectionSphericalComposite >::AddCommand( &KSGenDirectionSphericalComposite::SetPhiValue, &KSGenDirectionSphericalComposite::ClearPhiValue, "set_phi", "clear_phi" );
 

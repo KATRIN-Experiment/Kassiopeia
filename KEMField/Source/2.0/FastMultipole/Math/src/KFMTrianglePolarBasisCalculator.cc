@@ -4,10 +4,10 @@
 namespace KEMField{
 
 
-KFMTrianglePolarBasisCalculator::KFMTrianglePolarBasisCalculator(){;};
+KFMTrianglePolarBasisCalculator::KFMTrianglePolarBasisCalculator(){;}
 
 
-KFMTrianglePolarBasisCalculator::~KFMTrianglePolarBasisCalculator(){;};
+KFMTrianglePolarBasisCalculator::~KFMTrianglePolarBasisCalculator(){;}
 
 
 void

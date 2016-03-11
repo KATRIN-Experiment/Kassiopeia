@@ -21,7 +21,7 @@ namespace Kassiopeia
             void ExecuteInteraction( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries );
 
         public:
-            K_SET_GET( double, CrossSection ); // m^2
+            K_SET_GET( double, CrossSection ) // m^2
     };
 
 }

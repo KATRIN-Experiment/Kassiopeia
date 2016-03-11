@@ -105,9 +105,8 @@ class KFMArrayWrapper
             unsigned int index_proxy[NDIM];
             for(unsigned int i=0; i<NDIM; i++)
             {
-                index_proxy[i] = index[i] - fBases[i] ;
+                index_proxy[i] = (index[i] - fBases[i]);
             }
-
             return KFMArrayMath::OffsetFromRowMajorIndex<NDIM>(fDimensions, index_proxy);
         }
 

@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueSet::KSGenValueSet( const KSGenValueSet& aCopy ) :
+            KSComponent(),
             fValueStart( aCopy.fValueStart ),
             fValueStop( aCopy.fValueStop ),
             fValueCount( aCopy.fValueCount )

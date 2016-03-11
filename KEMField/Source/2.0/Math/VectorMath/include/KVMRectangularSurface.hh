@@ -59,7 +59,7 @@ KVMCompactSurface(copyObject),
 KVMSpaceRectangle(copyObject)
 {
     Initialize();
-};
+}
 
 inline KVMRectangularSurface& KVMRectangularSurface::operator=(const KVMSpaceRectangle& rhs)
 {

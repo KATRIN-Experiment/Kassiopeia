@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMaxStepsStructure =
+    STATICINT sKSTermMaxStepsStructure =
         KSTermMaxStepsBuilder::Attribute< string >( "name" ) +
         KSTermMaxStepsBuilder::Attribute< unsigned int >( "steps" );
 
-    static int sKSTermMaxSteps =
+    STATICINT sKSTermMaxSteps =
         KSRootBuilder::ComplexElement< KSTermMaxSteps >( "ksterm_max_steps" );
 
 }

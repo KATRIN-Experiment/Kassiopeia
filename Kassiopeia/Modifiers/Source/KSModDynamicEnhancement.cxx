@@ -36,7 +36,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSModDynamicEnhancement::ExecutePreStepModification(KSParticle& anInitialParticle, KSParticleQueue& /*aQueue*/)
+    bool KSModDynamicEnhancement::ExecutePreStepModification(KSParticle& anInitialParticle, KSParticleQueue& /*aQueue*/)
     {
         double tDynamicEnhancement = 1.;
         if( fDynamic )
@@ -57,16 +57,17 @@ namespace Kassiopeia
         if( fSynchrotron != NULL )
             fSynchrotron->SetEnhancement( fEnhancement );
 
-        return;
+        return false; //intial particle state not changed
     }
 
-    void KSModDynamicEnhancement::ExecutePostStepModifcation(KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& /*aQueue*/)
+    bool KSModDynamicEnhancement::ExecutePostStepModifcation(KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& /*aQueue*/)
     {
         double tInitialTime = anInitialParticle.GetTime();
         double tFinalTime = aFinalParticle.GetTime();
         double tDuration = tFinalTime - tInitialTime;
         double tEnhancedTime = tInitialTime + tDuration*fStaticEnhancement*fStaticEnhancement;
         aFinalParticle.SetTime(tEnhancedTime);
+        return true; //final particle state has changed
     }
 
     void KSModDynamicEnhancement::SetScattering(KSIntScattering *aScattering)
@@ -105,6 +106,6 @@ namespace Kassiopeia
     {
     }
 
-    static const int sKSModDynamicEnhancementDict =
+    STATICINT sKSModDynamicEnhancementDict =
             KSDictionary< KSModDynamicEnhancement >::AddComponent( &KSModDynamicEnhancement::GetEnhancement, "enhancement_factor" );
 }

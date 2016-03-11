@@ -6,10 +6,6 @@
 #include "KFile.h"
 using katrin::KFile;
 
-#include "KRootFile.h"
-using katrin::KRootFile;
-using katrin::CreateOutputRootFile;
-
 #include "KTextFile.h"
 using katrin::KTextFile;
 using katrin::CreateOutputTextFile;
@@ -150,8 +146,8 @@ namespace Kassiopeia
 		KSComponentMap fActiveStepComponents;
 		unsigned int fStepIndex;
 
-		static const Int_t fBufferSize;
-		static const Int_t fSplitLevel;
+		static const int fBufferSize;
+		static const int fSplitLevel;
 		static const string fLabel;
 
 	};
@@ -180,7 +176,7 @@ namespace Kassiopeia
 
 	inline KTextFile* KSWriteASCII::TextFile( )
 	{
-		
+
 		return fTextFile;
 	}
 

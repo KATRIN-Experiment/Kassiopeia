@@ -37,32 +37,21 @@
 			child:
 				the name of the child object to bind with the member.
 	-->
+	
+	<!-- command members can also be written in a simpler form -->
+	<add_control parent="trajectory_exact" child="control_cyclotron"/>
+	<remove_control parent="trajectory_exact" child="control_cyclotron"/>
+	
+	<!-- if no parent is specified, the corresponding root object is used as parent -->
+	<add_trajectory child="trajcetory_exact"/>
+	
+	
 
-	<ks_command_group name="command_group">
-		<command_member name="command_add_cyclotron_nested" parent="trajectory_exact" field="add_control" child="control_cyclotron"/>
-		<command_member name="command_remove_cyclotron_nestes" parent="trajectory_exact" field="remove_control" child="control_cyclotron"/>
-	</ks_command_group>
-	<!--
-		description:
-			a set of commands treated a single composite.
+	<!-- output objects -->
 
-		parameters:
-			name:
-				the name of this group.
-
-		elements:
-			command_member:
-				adds a command member to the group.
-
-			command_group:
-				composes groups.
-	-->
-
-	<!-- test objects to modify using components -->
-
-	<ks_component_member name="step_final_particle" parent="step" field="final_particle"/>
-	<ks_component_member name="step_final_particle_position" parent="step_final_particle" field="position"/>
-	<ks_component_member name="step_final_particle_position_z" parent="step_final_particle_position" field="z"/>
+	<output name="step_final_particle" parent="step" field="final_particle"/>
+	<output name="step_final_particle_position" parent="step_final_particle" field="position"/>
+	<output name="step_final_particle_position_z" parent="step_final_particle_position" field="z"/>
 	<!--
 		description:
 			component object encapsulating the extraction of a component from within a composite.
@@ -82,11 +71,11 @@
 				available members depend completely on the parent's final type.
 	-->
 
-	<ks_component_group name="component_group">
-		<component_member name="step_final_particle_nested" parent="step" field="final_particle"/>
-		<component_member name="step_final_particle_position_nested" parent="step_final_particle" field="position"/>
-		<component_member name="step_final_particle_position_z_nested" parent="step_final_particle_position" field="z"/>
-	</ks_component_group>
+	<output_group name="component_group">
+		<output name="step_final_particle_nested" parent="step" field="final_particle"/>
+		<output name="step_final_particle_position_nested" parent="step_final_particle" field="position"/>
+		<output name="step_final_particle_position_z_nested" parent="step_final_particle_position" field="z"/>
+	</output_group>
 	<!--
 		description:
 			a set of components treated a single composite.
@@ -95,14 +84,12 @@
 			the name of this group.
 
 		elements:
-			component_member:
+			output:
 				adds a component member to the group.
 
-			component_group:
-				composes groups.
 	-->
 
-	<ks_component_integral name="step_final_particle_position_z_integral" component="step_final_particle_position_z"/>
+	<output_integral name="step_final_particle_position_z_integral" parent="step_final_particle_position_z"/>
 	<!--
 		description:
 			an integral of a component over some set of simulation events.
@@ -111,12 +98,12 @@
 			name:
 				the name of this component.
 
-			component:
+			parent:
 				the name of the integrand.
 				must have appeared in the file above its point of reference.
 	-->
 
-	<ks_component_maximum name="step_final_particle_position_z_maximum" component="step_final_particle_position_z"/>
+	<output_maximum name="step_final_particle_position_z_maximum" parent="step_final_particle_position_z"/>
 	<!--
 		description:
 			the maximum value attained by a component over some set of simulation events.
@@ -125,12 +112,12 @@
 			name:
 				the name of this component.
 
-			component:
+			parent:
 				the name of the analyzed component.
 				must have appeared in the file above its point of reference.
 	-->
 
-	<ks_component_minimum name="step_final_particle_position_z_minimum" component="step_final_particle_position_z"/>
+	<output_minimum name="step_final_particle_position_z_minimum" parent="step_final_particle_position_z"/>
 	<!--
 		description:
 			the minimum value attained by a component over some set of simulation events.
@@ -139,12 +126,46 @@
 			name:
 				the name of this component.
 
-			component:
+			parent:
 				the name of the analyzed component.
 				must have appeared in the file above its point of reference.
 	-->
 
+	<output_maximum_at name="step_final_particle_position_z_maximum_position" parent="step_final_particle_position" source="step_final_particle_position_z"/>
+	<!--
+		description:
+			the value of a component where a source component attains a maximum value over some set of simulation events.
 
+		parameters:
+			name:
+				the name of this component.
+
+			parent:
+				the name of the output component.
+				must have appeared in the file above its point of reference.
+
+			source:
+				the name of the analyzed source component.
+				must have appeared in the file above its point of reference.
+	-->
+
+	<output_minimum_at name="step_final_particle_position_z_minimum_position" parent="step_final_particle_position" source="step_final_particle_position_z"/>
+	<!--
+		description:
+			the value of a component where a source component attains a minimum value over some set of simulation events.
+
+		parameters:
+			name:
+				the name of this component.
+
+			parent:
+				the name of the output component.
+				must have appeared in the file above its point of reference.
+
+			source:
+				the name of the analyzed source component.
+				must have appeared in the file above its point of reference.
+	-->
 
 
 

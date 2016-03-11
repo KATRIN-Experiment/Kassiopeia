@@ -8,8 +8,6 @@
 #include "KPreconditioner.hh"
 #include "KIterativeKrylovRestartCondition.hh"
 
-#include <iostream>
-
 namespace KEMField
 {
 
@@ -63,6 +61,8 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
             fRestartCondition = restart;
         };
 
+        ParallelTrait<ValueType>* GetTrait() {return fTrait;};
+
     private:
         unsigned int Dimension() const { return (fTrait ? fTrait->Dimension() : 0); }
         void SetResidualVector(const Vector& v) { if (fTrait) fTrait->SetResidualVector(v); }
@@ -72,8 +72,6 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
         {
             if(fUseRelativeTolerance)
             {
-                std::cout<<"Abs tolerance = "<<(this->fResidualNorm)<<std::endl;
-                std::cout<<"Relative tolerance = "<<(this->fResidualNorm)/(fInitialResidual)<<std::endl;
                 double relative_residual_norm = (this->fResidualNorm)/(fInitialResidual);
                 if( relative_residual_norm > this->fTolerance ){return false;}
                 else{return true;}
@@ -108,7 +106,7 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
 
     template <typename ValueType,template <typename> class ParallelTrait>
     KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::KPreconditionedIterativeKrylovSolver():
-        fMaxIterations(10000),
+        fMaxIterations(UINT_MAX),
         fRestartCondition(NULL),
         fTrait(NULL)
         {
@@ -137,43 +135,45 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
         this->InitializeVisitors();
         this->fIteration = 0;
 
+        trait.Initialize();
+
+        //needed if we are using relative tolerance as convergence condition
+        fInitialResidual = std::sqrt( InnerProduct(b,b) );
+        bool solutionUpdated = false;
+
         do
         {
-            if(this->fIteration == 0 || fRestartCondition->PerformRestart() )
-            {
-                trait.Initialize();
-            }
-            else
-            {
-                trait.AugmentKrylovSubspace();
-            }
-
+            solutionUpdated = false;
+            trait.AugmentKrylovSubspace();
             trait.GetResidualNorm(this->fResidualNorm);
-
-            //needed if we are using relative tolerance as convergence condition
-            if(this->fIteration == 0)
-            {
-                fInitialResidual = std::sqrt( InnerProduct(b,b) );
-            }
-
             fRestartCondition->UpdateProgress(this->fResidualNorm);
-
             this->fIteration++;
 
-            if( fRestartCondition->PerformRestart() || HasConverged() || (this->fIteration >= this->fMaxIterations) )
+            if( fRestartCondition->PerformRestart() )
             {
                 trait.UpdateSolution();
+                trait.ResetAndInitialize(); //clears krylov subspace vectors, restarts from current solution
+            }
+            else if( HasConverged() || (this->fIteration >= this->fMaxIterations) )
+            {
+                trait.UpdateSolution();
+                solutionUpdated = true;
+                break;
+            }
+            else if( this->Terminate() )
+            {
+                trait.UpdateSolution();
+                solutionUpdated = true;
+                break;
             }
 
             this->AcceptVisitors();
         }
         while( !( HasConverged() ) && (this->fIteration < this->fMaxIterations) && !(this->Terminate()) );
 
-
-        //print number of iterations
+        if(!solutionUpdated){trait.UpdateSolution();};
 
         trait.Finalize();
-
         this->FinalizeVisitors();
 
         fTrait = NULL;

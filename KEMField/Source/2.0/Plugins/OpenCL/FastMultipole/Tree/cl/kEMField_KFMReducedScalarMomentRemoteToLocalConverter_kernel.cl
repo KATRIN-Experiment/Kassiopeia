@@ -11,7 +11,7 @@ ComplexDegreeReverseLookUp(int storage_index)
         if(storage_index < 0){return degree;}
         ++degree;
     }
-
+    return degree;
 }
 
 int ComplexOrderReverseLookUp(int degree, int storage_index)
@@ -29,7 +29,7 @@ ReducedStorageComplexDegreeReverseLookUp(int storage_index)
         if(storage_index < 0){return degree;}
         ++degree;
     }
-
+    return degree;
 }
 
 int ReducedStorageComplexOrderReverseLookUp(int degree, int storage_index)
@@ -46,8 +46,7 @@ ReducedScalarMomentRemoteToLocalConverter(const unsigned int total_array_size, /
                                           __global CL_TYPE2* response_functions,
                                           __global CL_TYPE2* local_moments,
                                           __global CL_TYPE2* normalization,
-                                          __global unsigned int* reversed_index
-                                         )
+                                          __global unsigned int* reversed_index)
 {
     int i_global = get_global_id(0);
 

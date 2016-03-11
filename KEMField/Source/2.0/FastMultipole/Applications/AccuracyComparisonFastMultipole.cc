@@ -54,6 +54,7 @@
 #include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticTreeConstructor.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver.hh"
+#include "KFMElementAspectRatioExtractor.hh"
 
 #include "KFMNamedScalarData.hh"
 #include "KFMNamedScalarDataCollection.hh"
@@ -97,6 +98,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
         Configure_AccuracyComparisonFastMultipole()
         {
             fVerbosity = 5;
+            fTopLevelDivisions = 3;
             fDivisions = 3;
             fDegree = 3;
             fZeroMaskSize = 1;
@@ -109,6 +111,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
             fWorldLength = 0.0;
             fNEvaluations = 0;
             fMode=6;
+            fAllowedElementMode = 0;
             fGeometryInputFileName = "";
             fSurfaceContainerName = "";
             fDataOutputFileName = "";
@@ -118,6 +121,9 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
 
         int GetVerbosity() const {return fVerbosity;};
         void SetVerbosity(const int& n){fVerbosity = n;};
+
+        int GetTopLevelDivisions() const {return fTopLevelDivisions;};
+        void SetTopLevelDivisions(const int& d){fTopLevelDivisions = d;};
 
         int GetDivisions() const {return fDivisions;};
         void SetDivisions(const int& d){fDivisions = d;};
@@ -155,6 +161,9 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
         int GetMode() const {return fMode;};
         void SetMode(const int& t){fMode = t;};
 
+        int GetAllowedElementMode() const {return fAllowedElementMode;};
+        void SetAllowedElementMode(const int& t){fAllowedElementMode = t;};
+
         std::string GetGeometryInputFileName() const {return fGeometryInputFileName;};
         void SetGeometryInputFileName(const std::string& geo){fGeometryInputFileName = geo;};
 
@@ -167,6 +176,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
         void DefineOutputNode(KSAOutputNode* node) const
         {
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,Verbosity,int);
+            AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,TopLevelDivisions,int);
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,Divisions,int);
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,Degree,int);
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,ZeroMaskSize,int);
@@ -181,6 +191,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
 
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,NEvaluations,int);
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,Mode,int);
+            AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,AllowedElementMode,int);
 
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,GeometryInputFileName,std::string);
             AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole,SurfaceContainerName,std::string);
@@ -190,6 +201,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
         void DefineInputNode(KSAInputNode* node)
         {
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,Verbosity,int);
+            AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,TopLevelDivisions,int);
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,Divisions,int);
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,Degree,int);
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,ZeroMaskSize,int);
@@ -204,6 +216,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
 
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,NEvaluations,int);
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,Mode,int);
+            AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,AllowedElementMode,int);
 
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,GeometryInputFileName,std::string);
             AddKSAInputFor(Configure_AccuracyComparisonFastMultipole,SurfaceContainerName,std::string);
@@ -215,6 +228,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
     protected:
 
         int fVerbosity;
+        int fTopLevelDivisions;
         int fDivisions;
         int fDegree;
         int fZeroMaskSize;
@@ -227,6 +241,7 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
         double fWorldLength;
         int fNEvaluations;
         int fMode;
+        int fAllowedElementMode; //0=all, 1=triangles only, 2=rectangles only, 3=wires only
         std::string fGeometryInputFileName;
         std::string fSurfaceContainerName;
         std::string fDataOutputFileName;
@@ -235,8 +250,78 @@ class Configure_AccuracyComparisonFastMultipole: public KSAInputOutputObject
 
 DefineKSAClassName( Configure_AccuracyComparisonFastMultipole );
 
-}
+class SelectBoundaryElements:
+public KSelectiveVisitor<KShapeVisitor,KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
+{
+    public:
 
+        SelectBoundaryElements():fAllowedElementMode(0),fMaxAspectRatio(100),fTarget(NULL),fSource(NULL){};
+        ~SelectBoundaryElements(){;};
+
+        void SetAllowedElementMode(int mode){fAllowedElementMode = mode;};
+        void SetMaximumAspectRatio(double ar){fMaxAspectRatio = ar;};
+        void SetID(unsigned int i){fID = i;};
+
+        void SetTargetSurfaceContainer(KSurfaceContainer* c)
+        {
+            fTarget = c;
+        }
+
+        void SetSourceSurfaceContainer(KSurfaceContainer* c)
+        {
+            fSource = c;
+        }
+
+        void Visit(KTriangle& /*t*/)
+        {
+            if(fAllowedElementMode == 0 || fAllowedElementMode == 1)
+            {
+                fSource->at(fID)->Accept(fAspectRatioExtractor);
+                double ar = fAspectRatioExtractor.GetAspectRatio();
+
+                if(ar < fMaxAspectRatio)
+                {
+                    fTarget->push_back( fSource->at(fID) );
+                }
+            }
+        };
+
+        void Visit(KRectangle& /*r*/)
+        {
+            if(fAllowedElementMode == 0 || fAllowedElementMode == 2)
+            {
+                fSource->at(fID)->Accept(fAspectRatioExtractor);
+                double ar = fAspectRatioExtractor.GetAspectRatio();
+
+                if(ar < fMaxAspectRatio)
+                {
+                    fTarget->push_back( fSource->at(fID) );
+                }
+            }
+        };
+
+        void Visit(KLineSegment& /*l*/)
+        {
+            if(fAllowedElementMode == 0 || fAllowedElementMode == 3)
+            {
+                //no aspect ratio test for wires currently
+                fTarget->push_back( fSource->at(fID) );
+            }
+        };
+
+    private:
+
+        int fAllowedElementMode;
+        unsigned int fID;
+        double fMaxAspectRatio;
+        KSurfaceContainer* fTarget;
+        KSurfaceContainer* fSource;
+
+        KFMElementAspectRatioExtractor fAspectRatioExtractor;
+
+};
+
+} //end of kemfield namespace
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -272,6 +357,7 @@ int main(int argc, char* argv[])
     }
 
     int verbose = config_input->GetObject()->GetVerbosity();
+    int top_level_divisions  = config_input->GetObject()->GetTopLevelDivisions();
     int divisions  = config_input->GetObject()->GetDivisions();
     int degree = config_input->GetObject()->GetDegree();
     int zeromask = config_input->GetObject()->GetZeroMaskSize();
@@ -286,6 +372,7 @@ int main(int argc, char* argv[])
 
     //now we want to construct the tree
     KFMElectrostaticParameters params;
+    params.top_level_divisions = top_level_divisions;
     params.divisions = divisions;
     params.degree = degree;
     params.zeromask = zeromask;
@@ -311,6 +398,8 @@ int main(int argc, char* argv[])
     //mode = 7 (three dimensional volume)
     int mode = config_input->GetObject()->GetMode();
 
+    int allowed_element_mode = config_input->GetObject()->GetAllowedElementMode();
+
     std::cout<<"mode = "<<mode<<std::endl;
 
     std::string geometry_file_name = config_input->GetObject()->GetGeometryInputFileName();
@@ -329,7 +418,6 @@ int main(int argc, char* argv[])
 
     //Read in the geometry file
     std::string suffix = geometry_file_name.substr(geometry_file_name.find_last_of("."),std::string::npos);
-    KSurfaceContainer surfaceContainer;
 
     struct stat fileInfo;
     bool exists;
@@ -356,7 +444,23 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    KEMFileInterface::GetInstance()->Read(geometry_file_name,surfaceContainer,container_name);
+    KSurfaceContainer surfaceContainer;
+    KSurfaceContainer* proxy_surfaceContainer = new KSurfaceContainer();
+
+    KEMFileInterface::GetInstance()->Read(geometry_file_name, *proxy_surfaceContainer,container_name);
+
+    //strip out certain geometric elements based on shape
+    //TODO...allow ability to strip out elements based on area/aspect ratio
+    SelectBoundaryElements bem_selector;
+    bem_selector.SetAllowedElementMode( allowed_element_mode );
+    bem_selector.SetSourceSurfaceContainer( proxy_surfaceContainer );
+    bem_selector.SetTargetSurfaceContainer( &surfaceContainer );
+    for(unsigned int i=0; i<proxy_surfaceContainer->size(); i++)
+    {
+        bem_selector.SetID(i);
+        proxy_surfaceContainer->at(i)->Accept(bem_selector);
+    }
+
 
     //now create the direct solver
     #ifdef KEMFIELD_USE_OPENCL
@@ -469,6 +573,9 @@ int main(int argc, char* argv[])
     KFMNamedScalarData l2_field_error; l2_field_error.SetName("l2_field_error");
     KFMNamedScalarData logl2_field_error; logl2_field_error.SetName("logl2_field_error");
 
+    KFMNamedScalarData tree_level; tree_level.SetName("tree_level");
+    KFMNamedScalarData n_direct_calls; n_direct_calls.SetName("n_direct_calls");
+
     KFMNamedScalarData fmm_time_per_potential_call; fmm_time_per_potential_call.SetName("fmm_time_per_potential_call");
     KFMNamedScalarData fmm_time_per_field_call; fmm_time_per_field_call.SetName("fmm_time_per_field_call");
     KFMNamedScalarData direct_time_per_potential_call; direct_time_per_potential_call.SetName("direct_time_per_potential_call");
@@ -490,7 +597,7 @@ int main(int argc, char* argv[])
     KEMThreeVector point;
 
     unsigned int n_points = 0;
-    KEMThreeVector* points;
+    KEMThreeVector* points = NULL;
 
     switch( mode )
     {
@@ -651,6 +758,7 @@ int main(int argc, char* argv[])
 
     std::cout<<std::setprecision(7);
 
+    std::cout<<"starting potential/field evaluation"<<std::endl;
 
     //timer
     clock_t start, end;
@@ -750,6 +858,13 @@ int main(int argc, char* argv[])
     std::cout<<"done computing errors"<<std::endl;
 
 
+    //get tree/call data
+    for(unsigned int i=0; i<n_points; i++)
+    {
+        tree_level.AddNextValue(fast_solver->GetTreeLevel(points[i]));
+        n_direct_calls.AddNextValue(fast_solver->GetSubsetSize(points[i]));
+    }
+
     KFMNamedScalarDataCollection data_collection;
     data_collection.AddData(x_coord);
     data_collection.AddData(y_coord);
@@ -769,6 +884,8 @@ int main(int argc, char* argv[])
     data_collection.AddData(field_error_z);
     data_collection.AddData(l2_field_error);
     data_collection.AddData(logl2_field_error);
+    data_collection.AddData(tree_level);
+    data_collection.AddData(n_direct_calls);
 
     //timing data
     data_collection.AddData(fmm_time_per_potential_call);
@@ -782,8 +899,10 @@ int main(int argc, char* argv[])
     data->AttachObjectToNode(&data_collection);
 
     bool result;
-    KEMFileInterface::GetInstance()->SaveKSAFile(data, data_outfile, result, true);
+    KEMFileInterface::GetInstance()->SaveKSAFileToActiveDirectory(data, data_outfile, result, true);
 
+
+    delete proxy_surfaceContainer;
 
     return 0;
 

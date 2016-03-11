@@ -15,6 +15,8 @@ namespace KGeoBag
     KGBEMConverter::KGBEMConverter() :
             fSurfaceContainer( NULL ),
             fMinimumArea( 0. ),
+            fMaximumAspectRatio(1e100),
+            fVerbosity(0),
             fOrigin( KThreeVector::sZero ),
             fXAxis( KThreeVector::sXUnit ),
             fYAxis( KThreeVector::sYUnit ),
@@ -237,7 +239,7 @@ namespace KGeoBag
                 tMeshElement = *tElementIt;
 
                 tMeshTriangle = dynamic_cast< KGMeshTriangle* >( tMeshElement );
-                if( (tMeshTriangle != NULL) && (tMeshTriangle->Area() > fMinimumArea) )
+                if( (tMeshTriangle != NULL) && (tMeshTriangle->Area() > fMinimumArea) &&  (tMeshTriangle->Aspect() < fMaximumAspectRatio) )
                 {
                     tTriangle = new Triangle();
                     tTriangle->SetValues( LocalToInternal( tMeshTriangle->GetP0() ), LocalToInternal( tMeshTriangle->GetP1() ), LocalToInternal( tMeshTriangle->GetP2() ) );
@@ -246,7 +248,7 @@ namespace KGeoBag
                 }
 
                 tMeshRectangle = dynamic_cast< KGMeshRectangle* >( tMeshElement );
-                if( (tMeshRectangle != NULL) && (tMeshRectangle->Area() > fMinimumArea) )
+                if( (tMeshRectangle != NULL) && (tMeshRectangle->Area() > fMinimumArea) && (tMeshRectangle->Aspect() < fMaximumAspectRatio) )
                 {
                     tRectangle = new Rectangle();
                     tRectangle->SetValues( LocalToInternal( tMeshRectangle->GetP0() ), LocalToInternal( tMeshRectangle->GetP1() ), LocalToInternal( tMeshRectangle->GetP2() ), LocalToInternal( tMeshRectangle->GetP3() ) );
@@ -255,7 +257,7 @@ namespace KGeoBag
                 }
 
                 tMeshWire = dynamic_cast< KGMeshWire* >( tMeshElement );
-                if( (tMeshWire != NULL) && (tMeshWire->Area() > fMinimumArea) )
+                if( (tMeshWire != NULL) && (tMeshWire->Area() > fMinimumArea) && (tMeshWire->Aspect() < fMaximumAspectRatio))
                 {
                     tLineSegment = new LineSegment();
                     tLineSegment->SetValues( LocalToInternal( tMeshWire->GetP0() ), LocalToInternal( tMeshWire->GetP1() ), tMeshWire->GetDiameter() );
@@ -397,7 +399,7 @@ namespace KGeoBag
                 tMeshElement = *tElementIt;
 
                 tMeshTriangle = dynamic_cast< KGDiscreteRotationalMeshTriangle* >( tMeshElement );
-                if( (tMeshTriangle != NULL) && (tMeshTriangle->Area() > fMinimumArea) )
+                if( (tMeshTriangle != NULL) && (tMeshTriangle->Area() > fMinimumArea) && (tMeshTriangle->Aspect() < fMaximumAspectRatio) )
                 {
                     tTriangles = new SymmetricTriangle();
                     tTriangles->NewElement()->SetValues( LocalToInternal( tMeshTriangle->Element().GetP0() ), LocalToInternal( tMeshTriangle->Element().GetP1() ), LocalToInternal( tMeshTriangle->Element().GetP2() ) );
@@ -407,7 +409,7 @@ namespace KGeoBag
                 }
 
                 tMeshRectangle = dynamic_cast< KGDiscreteRotationalMeshRectangle* >( tMeshElement );
-                if( (tMeshRectangle != NULL) && (tMeshRectangle->Area() > fMinimumArea) )
+                if( (tMeshRectangle != NULL) && (tMeshRectangle->Area() > fMinimumArea) &&  (tMeshRectangle->Aspect() < fMaximumAspectRatio) )
                 {
                     tRectangles = new SymmetricRectangle();
                     tRectangles->NewElement()->SetValues( LocalToInternal( tMeshRectangle->Element().GetP0() ), LocalToInternal( tMeshRectangle->Element().GetP1() ), LocalToInternal( tMeshRectangle->Element().GetP2() ), LocalToInternal( tMeshRectangle->Element().GetP3() ) );
@@ -417,7 +419,7 @@ namespace KGeoBag
                 }
 
                 tMeshWire = dynamic_cast< KGDiscreteRotationalMeshWire* >( tMeshElement );
-                if( (tMeshWire != NULL) && (tMeshWire->Area() > fMinimumArea) )
+                if( (tMeshWire != NULL) && (tMeshWire->Area() > fMinimumArea) &&  (tMeshWire->Aspect() < fMaximumAspectRatio) )
                 {
                     tLineSegments = new SymmetricLineSegment();
                     tLineSegments->NewElement()->SetValues( LocalToInternal( tMeshWire->Element().GetP0() ), LocalToInternal( tMeshWire->Element().GetP1() ), tMeshWire->Element().GetDiameter() );

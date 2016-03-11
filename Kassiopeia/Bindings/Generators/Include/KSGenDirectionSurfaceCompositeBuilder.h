@@ -27,7 +27,6 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSGenDirectionSurfaceComposite::SetSide );
             return true;
         }
-
         if(aContainer->GetName() == "surfaces")
         {
             vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );

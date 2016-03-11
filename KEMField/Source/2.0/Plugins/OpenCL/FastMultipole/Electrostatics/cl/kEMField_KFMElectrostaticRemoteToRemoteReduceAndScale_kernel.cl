@@ -28,4 +28,6 @@ ElectrostaticRemoteToRemoteReduceAndScale(const unsigned int n_moment_sets,
         //now add it to the parent node's moments
         node_moments[parent_node_id*term_stride + term_index] += sum;
     }
+
+    barrier(CLK_LOCAL_MEM_FENCE);
 }

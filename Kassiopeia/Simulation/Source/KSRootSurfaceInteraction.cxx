@@ -17,6 +17,7 @@ namespace Kassiopeia
     {
     }
     KSRootSurfaceInteraction::KSRootSurfaceInteraction( const KSRootSurfaceInteraction& aCopy ) :
+            KSComponent(),
             fSurfaceInteraction( aCopy.fSurfaceInteraction ),
             fStep( aCopy.fStep ),
             fTerminatorParticle( aCopy.fTerminatorParticle ),
@@ -152,7 +153,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootSurfaceInteractionDict =
+    STATICINT sKSRootSurfaceInteractionDict =
         KSDictionary< KSRootSurfaceInteraction >::AddCommand( &KSRootSurfaceInteraction::SetSurfaceInteraction, &KSRootSurfaceInteraction::ClearSurfaceInteraction, "set_surface_interaction", "clear_surface_interaction" );
 
 }

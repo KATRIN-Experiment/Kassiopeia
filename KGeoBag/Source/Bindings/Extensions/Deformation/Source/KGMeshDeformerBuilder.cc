@@ -9,11 +9,11 @@ namespace katrin
     {
     }
 
-    static int sKGMeshDeformerStructure =
+    STATICINT sKGMeshDeformerStructure =
       KGMeshDeformerBuilder::Attribute< string >( "surfaces" ) +
       KGMeshDeformerBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGMeshDeformer =
+    STATICINT sKGMeshDeformer =
       KGInterfaceBuilder::ComplexElement< KGMeshDeformer >( "mesh_deformer" );
 
 }

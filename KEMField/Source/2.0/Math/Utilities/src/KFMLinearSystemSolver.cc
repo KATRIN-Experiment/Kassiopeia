@@ -18,7 +18,7 @@ KFMLinearSystemSolver::KFMLinearSystemSolver(unsigned int dim):fDim(dim)
 
     fDimSize[0] = fDim;
     fDimSize[1] = fDim;
-};
+}
 
 KFMLinearSystemSolver::~KFMLinearSystemSolver()
 {
@@ -30,7 +30,7 @@ KFMLinearSystemSolver::~KFMLinearSystemSolver()
     kfm_matrix_free(fV);
     kfm_vector_free(fS);
     kfm_vector_free(fWork);
-};
+}
 
 
 void

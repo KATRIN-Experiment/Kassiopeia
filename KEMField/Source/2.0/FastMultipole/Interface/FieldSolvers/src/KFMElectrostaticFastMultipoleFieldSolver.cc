@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "KFMDirectCallCounter.hh"
+
 namespace KEMField
 {
 
@@ -17,16 +19,26 @@ fNavigator()
     fParameters = fTree.GetParameters();
     fUseCaching = fParameters.use_caching;
 
-    fNavigator.SetDivisions(fParameters.divisions);
     fFastFieldSolver.SetDegree(fParameters.degree);
+
+    fSubsetSize = 0;
+
+    //compute the maximum number of direct calls that occurs in this tree
+    KFMDirectCallCounter<KFMElectrostaticNodeObjects> direct_call_counter;
+    fTree.ApplyRecursiveAction(&direct_call_counter);
+    unsigned int max_direct_calls = direct_call_counter.GetMaxDirectCalls();
+    fDirectCallIDs = new unsigned int[max_direct_calls];
 
     fLeafNode = NULL;
     fCube = NULL;
     fLocalCoeff = NULL;
     fFallback = false;
-};
+}
 
-KFMElectrostaticFastMultipoleFieldSolver::~KFMElectrostaticFastMultipoleFieldSolver(){};
+KFMElectrostaticFastMultipoleFieldSolver::~KFMElectrostaticFastMultipoleFieldSolver()
+{
+    delete[] fDirectCallIDs;
+}
 
 double
 KFMElectrostaticFastMultipoleFieldSolver::Potential(const KPosition& P) const
@@ -37,17 +49,10 @@ KFMElectrostaticFastMultipoleFieldSolver::Potential(const KPosition& P) const
     {
         double fast_potential = fFastFieldSolver.Potential(P);
 
-        if(fDirectCallIDSet != NULL)
+        if(fSubsetSize != 0)
         {
-            if(fDirectCallIDSet->GetSize() != 0)
-            {
-                double direct_potential = fDirectFieldSolver.Potential(fDirectCallIDSet->GetRawIDList(), P);
-                return fast_potential + direct_potential;
-            }
-            else
-            {
-                return fast_potential;
-            }
+            double direct_potential = fDirectFieldSolver.Potential(fDirectCallIDs, fSubsetSize, P);
+            return fast_potential + direct_potential;
         }
         else
         {
@@ -77,19 +82,12 @@ KFMElectrostaticFastMultipoleFieldSolver::ElectricField(const KPosition& P) cons
 
         KEMThreeVector direct_f;
 
-        if(fDirectCallIDSet != NULL)
+        if(fSubsetSize != 0)
         {
-            if(fDirectCallIDSet->GetSize() != 0)
-            {
-                direct_f = fDirectFieldSolver.ElectricField(fDirectCallIDSet->GetRawIDList(), P);
-                f += direct_f;
-            }
-            return f;
+            direct_f = fDirectFieldSolver.ElectricField(fDirectCallIDs, fSubsetSize, P);
+            f += direct_f;
         }
-        else
-        {
-            return f;
-        }
+        return f;
     }
     else
     {
@@ -126,9 +124,36 @@ KFMElectrostaticFastMultipoleFieldSolver::SetPoint(const double* p) const
         fFallback = false;
 
         fLeafNode = fNavigator.GetLeafNode();
+        fNodeList = fNavigator.GetNodeList();
+
         fCube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<3> >::GetNodeObject(fLeafNode);
         fLocalCoeff = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet >::GetNodeObject(fLeafNode);
-        fDirectCallIDSet = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet >::GetNodeObject(fLeafNode);
+
+        //loop over the node list and collect the direct call elements from their id set lists
+        fSubsetSize = 0;
+        unsigned int n_nodes = fNodeList->size();
+        for(unsigned int i=0; i<n_nodes; i++)
+        {
+            KFMElectrostaticNode* node = (*fNodeList)[i];
+            if(node != NULL)
+            {
+                KFMIdentitySetList* id_set_list = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySetList >::GetNodeObject(node);
+                if(id_set_list != NULL)
+                {
+                    unsigned int n_sets = id_set_list->GetNumberOfSets();
+                    for(unsigned int j=0; j<n_sets; j++)
+                    {
+                        const std::vector< unsigned int >* set = id_set_list->GetSet(j);
+                        unsigned int set_size = set->size();
+                        for(unsigned int k=0; k<set_size; k++)
+                        {
+                            fDirectCallIDs[fSubsetSize] = (*set)[k];
+                            fSubsetSize++;
+                        }
+                    }
+                }
+            }
+        }
 
         if(fLocalCoeff == NULL || fCube == NULL)
         {

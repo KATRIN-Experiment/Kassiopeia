@@ -63,6 +63,7 @@ class KFMElectrostaticFieldMapper_SingleThread
         //data
         int fDegree;
         unsigned int fNTerms;
+        int fTopLevelDivisions;
         int fDivisions;
         int fZeroMaskSize;
         int fMaximumTreeDepth;
@@ -87,8 +88,11 @@ class KFMElectrostaticFieldMapper_SingleThread
 
         //the multipole up converter
         KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+
         //the local coefficient calculator
-        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+//        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+        KFMElectrostaticRemoteToLocalConverterInterface* fM2LConverterInterface;
+
         //the local coefficient down converter
         KFMElectrostaticLocalToLocalConverter* fL2LConverter;
 

@@ -30,7 +30,7 @@ using std::stringstream;
 using namespace Kassiopeia;
 using namespace katrin;
 
-int main( int anArgc, char** anArgv )
+int main( int /*anArgc*/, char** /*anArgv*/ )
 {
     // read in xml file
     KXMLTokenizer tXMLTokenizer;
@@ -109,7 +109,7 @@ int main( int anArgc, char** anArgv )
     tScattering->SetDensity( tDensityCalc );
     tScattering->SetSplit( false );
 
-//    tScattering->AddCalculator(elasticCalculator);
+    tScattering->AddCalculator(elasticCalculator);
     tScattering->AddCalculator(vibCalculator);
     tScattering->AddCalculator(rot02Calculator);
     tScattering->AddCalculator(rot13Calculator);
@@ -144,6 +144,7 @@ int main( int anArgc, char** anArgv )
     TCanvas tEnergyLossCanvas( "energyloss_canvas", "energy loss" );
     TH1D tEnergyLossHisto("energy loss","energy loss",1000,-0.2,100);
 
+
     TCanvas tScatteringAngleCanvas( "scatteringangle_canvas", "scattering_angle" );
     TH1D tScatteringAngleHisto("scattering angle","scattering angle",100,0.,180.);
 
@@ -157,6 +158,7 @@ int main( int anArgc, char** anArgv )
     tInitialParticle->SetLength( 0.00 );
     tFinalParticle->SetLength( tLength );
 
+
     KThreeVector tDirection = KThreeVector(0.,0.,1.);
 
     double tEnergy = tLowEnergy;
@@ -166,6 +168,7 @@ int main( int anArgc, char** anArgv )
         tInitialParticle->SetMomentum(tDirection);
         tInteractionParticle->SetMomentum(tDirection);
         tFinalParticle->SetMomentum(tDirection);
+
 		tInitialParticle->SetKineticEnergy_eV( tEnergy );
         tInteractionParticle->SetKineticEnergy_eV( tEnergy );
 		tFinalParticle->SetKineticEnergy_eV( tEnergy );
@@ -178,8 +181,10 @@ int main( int anArgc, char** anArgv )
         IonIntCalculator->CalculateCrossSection(*tInitialParticle, tCrossSection);
         tIonCrossSectionGraph.SetPoint( tIndex, tEnergy, tCrossSection);
 //        std::cout << "ion cross section " << tCrossSection << std::endl;
-//        elasticCalculator->CalculateCrossSection(*tInitialParticle, tCrossSection);
-//        tElCrossSectionGraph.SetPoint( tIndex, tEnergy, tCrossSection);
+
+        elasticCalculator->CalculateCrossSection(*tInitialParticle, tCrossSection);
+        tElCrossSectionGraph.SetPoint( tIndex, tEnergy, tCrossSection);
+
         vibCalculator->CalculateCrossSection(*tInitialParticle, tCrossSection);
         tVibCrossSectionGraph.SetPoint( tIndex, tEnergy, tCrossSection);
         rot02Calculator->CalculateCrossSection(*tInitialParticle, tCrossSection);
@@ -235,11 +240,13 @@ int main( int anArgc, char** anArgv )
     tIonCrossSectionGraph.SetLineWidth( 1 );
     tIonCrossSectionGraph.Draw("same");
 
-//    tElCrossSectionGraph.SetMarkerColor( kBlue );
-//    tElCrossSectionGraph.SetMarkerStyle( 20 );
-//    tElCrossSectionGraph.SetMarkerSize( 0.5 );
-//    tElCrossSectionGraph.SetLineWidth( 1 );
-//    tElCrossSectionGraph.Draw("same");
+
+    tElCrossSectionGraph.SetMarkerColor( kBlue );
+    tElCrossSectionGraph.SetMarkerStyle( 20 );
+    tElCrossSectionGraph.SetMarkerSize( 0.5 );
+    tElCrossSectionGraph.SetLineWidth( 1 );
+    tElCrossSectionGraph.Draw("same");
+
 
     tVibCrossSectionGraph.SetMarkerColor( kYellow );
     tVibCrossSectionGraph.SetMarkerStyle( 20 );

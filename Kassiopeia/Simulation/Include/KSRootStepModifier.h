@@ -25,8 +25,8 @@ namespace Kassiopeia
         //**********
 
     public:
-        void ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
-        void ExecutePostStepModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
+        bool ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
+        bool ExecutePostStepModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
 
         //***********
         //composition
@@ -47,8 +47,8 @@ namespace Kassiopeia
     public:
         void SetStep( KSStep* aStep );
 
-        void ExecutePreStepModification();
-        void ExecutePostStepModifcation();
+        bool ExecutePreStepModification();
+        bool ExecutePostStepModifcation();
 
         virtual void PushUpdateComponent();
         virtual void PushDeupdateComponent();

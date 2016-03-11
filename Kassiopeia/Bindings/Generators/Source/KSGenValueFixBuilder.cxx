@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueFixStructure =
+    STATICINT sKSGenValueFixStructure =
         KSGenValueFixBuilder::Attribute< string >( "name" ) +
         KSGenValueFixBuilder::Attribute< double >( "value" );
 
-    static int sKSGenValueFix =
+    STATICINT sKSGenValueFix =
         KSRootBuilder::ComplexElement< KSGenValueFix >( "ksgen_value_fix" );
 
 }

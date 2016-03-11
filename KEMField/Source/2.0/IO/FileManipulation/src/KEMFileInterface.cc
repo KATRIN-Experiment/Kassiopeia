@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <cstdio>
 
 #include "KSAStructuredASCIIHeaders.hh"
 
@@ -53,6 +54,23 @@ namespace KEMField
       value += NumberOfLabeled(*it,labels);
     return value;
   }
+
+  set<string> KEMFileInterface::FileNamesWithLabels(vector<string> labels) const
+  {
+    set<string> fileList = FileList();
+    set<string> labeledFileList;
+
+    for (set<string>::iterator it=fileList.begin();it!=fileList.end();++it)
+    {
+        if(NumberOfLabeled(*it,labels))
+        {
+            labeledFileList.insert(*it);
+        }
+    }
+    return labeledFileList;
+  }
+
+
 
   set<string> KEMFileInterface::FileList(string directory) const
   {
@@ -133,38 +151,91 @@ namespace KEMField
     return rmdir(directory.c_str());
   }
 
+  bool KEMFileInterface::RemoveFileFromActiveDirectory(string file_name)
+  {
+    string full_file_name = fActiveDirectory + "/" + file_name;
+    return std::remove(full_file_name.c_str());
+  }
+
+    bool KEMFileInterface::DoesFileExist(std::string file_name)
+    {
+        std::string full_file_name = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_name;
+        std::set< std::string > file_list = KEMFileInterface::GetInstance()->CompleteFileList();
+        for(std::set<std::string>::iterator it=file_list.begin(); it!=file_list.end(); ++it)
+        {
+            if(full_file_name == *it){return true;};
+        }
+        return false;
+    }
+
     void
     KEMFileInterface::ReadKSAFile(KSAInputNode* node, string file_name, bool& result)
     {
         result = false;
-        set<string> fileList = CompleteFileList();
+        KSAFileReader reader;
 
-        std::string full_file_name = ActiveDirectory() + "/" + file_name;
-        for(set<string>::iterator it=fileList.begin(); it!=fileList.end(); ++it)
+        reader.SetFileName(file_name);
+        if( reader.Open() )
         {
-            if( *it == full_file_name )
+            KSAInputCollector collector;
+            collector.SetFileReader(&reader);
+            collector.ForwardInput(node);
+            if(node->HasData())
             {
-                KSAFileReader reader;
-
-                reader.SetFileName(full_file_name);
-                if( reader.Open() )
-                {
-                    KSAInputCollector collector;
-                    collector.SetFileReader(&reader);
-                    collector.ForwardInput(node);
-
-                    if(node->HasData())
-                    {
-                        result = true;
-                    }
-                }
-                return;
+                result = true;
             }
+            reader.Close();
         }
+        return;
     }
 
     void
-    KEMFileInterface::SaveKSAFile(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite)
+    KEMFileInterface::ReadKSAFileFromActiveDirectory(KSAInputNode* node, string file_name, bool& result)
+    {
+        std::string full_file_name = ActiveDirectory() + "/";
+        full_file_name += file_name;
+        result = false;
+        KSAFileReader reader;
+
+        reader.SetFileName(full_file_name);
+        if( reader.Open() )
+        {
+            KSAInputCollector collector;
+            collector.SetFileReader(&reader);
+            collector.ForwardInput(node);
+            if(node->HasData())
+            {
+                result = true;
+            }
+            reader.Close();
+        }
+        return;
+    }
+
+    void
+    KEMFileInterface::SaveKSAFile(KSAOutputNode* node, string file_name, bool& result)
+    {
+        //now stream the data out to file
+        KSAFileWriter writer;
+        KSAOutputCollector collector;
+        collector.SetUseTabbingFalse();
+        writer.SetFileName(file_name);
+
+        if( writer.Open() )
+        {
+            collector.SetFileWriter(&writer);
+            collector.CollectOutput(node);
+            writer.Close();
+            result = true;
+            return;
+        }
+
+        result = false;
+        //failure to open file for writing
+    }
+
+    void
+    KEMFileInterface::SaveKSAFileToActiveDirectory(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite)
     {
         result = false;
         set<string> fileList = CompleteFileList();
@@ -201,8 +272,8 @@ namespace KEMField
 
         result = false;
         //failure to open file for writing
-
     }
+
 
 
 

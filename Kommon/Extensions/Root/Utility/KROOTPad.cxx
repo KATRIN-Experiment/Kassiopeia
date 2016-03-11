@@ -224,7 +224,7 @@ namespace katrin
 namespace katrin
 {
 
-    static int sKROOTPadStructure =
+    STATICINT sKROOTPadStructure =
         KROOTPadBuilder::Attribute< string >( "name" ) +
         KROOTPadBuilder::Attribute< double >( "xlow" ) +
         KROOTPadBuilder::Attribute< double >( "ylow" ) +

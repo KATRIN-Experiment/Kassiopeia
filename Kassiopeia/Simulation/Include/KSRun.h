@@ -21,23 +21,23 @@ namespace Kassiopeia
             //IDs
             //***
 
-            K_REFS( int, RunId );
-            K_REFS( int, RunCount );
+            K_REFS( int, RunId )
+            K_REFS( int, RunCount )
 
             //***
             //run
             //***
 
-            K_REFS( unsigned int, TotalEvents );
-            K_REFS( unsigned int, TotalTracks );
-            K_REFS( unsigned int, TotalSteps );
-            K_REFS( double, ContinuousTime );
-            K_REFS( double, ContinuousLength );
-            K_REFS( double, ContinuousEnergyChange );
-            K_REFS( double, ContinuousMomentumChange );
-            K_REFS( unsigned int, DiscreteSecondaries );
-            K_REFS( double, DiscreteEnergyChange );
-            K_REFS( double, DiscreteMomentumChange );
+            K_REFS( unsigned int, TotalEvents )
+            K_REFS( unsigned int, TotalTracks )
+            K_REFS( unsigned int, TotalSteps )
+            K_REFS( double, ContinuousTime )
+            K_REFS( double, ContinuousLength )
+            K_REFS( double, ContinuousEnergyChange )
+            K_REFS( double, ContinuousMomentumChange )
+            K_REFS( unsigned int, DiscreteSecondaries )
+            K_REFS( double, DiscreteEnergyChange )
+            K_REFS( double, DiscreteMomentumChange )
     };
 
 }

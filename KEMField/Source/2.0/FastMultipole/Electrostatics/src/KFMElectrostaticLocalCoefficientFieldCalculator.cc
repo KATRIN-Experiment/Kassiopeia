@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include "KFMElectrostaticLocalCoefficientFieldCalculator.hh"
 
 #include "KEMConstants.hh"
@@ -48,7 +50,7 @@ fDegree(-1)
     fRealMomentsB = NULL;
     fImagMomentsB = NULL;
 
-};
+}
 
 KFMElectrostaticLocalCoefficientFieldCalculator::~KFMElectrostaticLocalCoefficientFieldCalculator()
 {
@@ -73,7 +75,7 @@ KFMElectrostaticLocalCoefficientFieldCalculator::~KFMElectrostaticLocalCoefficie
 
     delete[] fRealMomentsB;
     delete[] fImagMomentsB;
-};
+}
 
 
 void
@@ -83,7 +85,7 @@ KFMElectrostaticLocalCoefficientFieldCalculator::SetDegree(int degree)
     {
         if(degree > fDegree)
         {
-            fDegree = std::fabs(degree);
+            fDegree = std::abs(degree);
             fNTerms = KFMScalarMultipoleExpansion::TriangleNumber(fDegree+1);
             fSize = (fDegree+1)*(fDegree+1);
             delete[] fPlmArr; fPlmArr = new double[fNTerms];
@@ -112,7 +114,7 @@ KFMElectrostaticLocalCoefficientFieldCalculator::SetDegree(int degree)
         }
         else
         {
-            fDegree = std::fabs(degree);
+            fDegree = std::abs(degree);
             fNTerms = KFMScalarMultipoleExpansion::TriangleNumber(fDegree+1);
             fSize = (fDegree+1)*(fDegree+1);
 

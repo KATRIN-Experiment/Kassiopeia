@@ -27,7 +27,8 @@ class KFMIdentitySet: public KSAFixedSizeInputOutputObject
 {
     public:
         KFMIdentitySet(){};
-        KFMIdentitySet(const KFMIdentitySet& copyObject)
+        KFMIdentitySet(const KFMIdentitySet& copyObject):
+        KSAFixedSizeInputOutputObject()
         {
             fIDSet = copyObject.fIDSet;
         }
@@ -68,6 +69,8 @@ class KFMIdentitySet: public KSAFixedSizeInputOutputObject
                 RemoveID(*IT);
             }
         }
+
+       virtual const std::vector<unsigned int>* GetRawIDList() const {return &(this->fIDSet);};
 
         //IO
         virtual std::string ClassName() {return std::string("KFMIdentitySet");};
@@ -121,7 +124,7 @@ Stream& operator<<(Stream& s,const KFMIdentitySet& aData)
 
 
 
-DefineKSAClassName(KFMIdentitySet);
+DefineKSAClassName(KFMIdentitySet)
 
 
 }

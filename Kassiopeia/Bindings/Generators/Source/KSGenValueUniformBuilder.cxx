@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueUniformStructure =
+    STATICINT sKSGenValueUniformStructure =
         KSGenValueUniformBuilder::Attribute< string >( "name" ) +
         KSGenValueUniformBuilder::Attribute< double >( "value_min" ) +
         KSGenValueUniformBuilder::Attribute< double >( "value_max" );
 
-    static int sToolboxKSGenValueUniform =
+    STATICINT sToolboxKSGenValueUniform =
         KSRootBuilder::ComplexElement< KSGenValueUniform >( "ksgen_value_uniform" );
 
 }

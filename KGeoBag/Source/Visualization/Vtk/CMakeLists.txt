@@ -9,6 +9,7 @@ set( VTK_VISUALIZATION_HEADER_FILES
     Include/KGVTKDistanceTester.hh
     Include/KGVTKOutsideTester.hh
     Include/KGVTKRandomPointTester.hh
+    Include/KGVTKMeshIntersectionTester.hh
 )
 
 # source
@@ -21,6 +22,7 @@ set( VTK_VISUALIZATION_SOURCE_FILES
     Source/KGVTKDistanceTester.cc
     Source/KGVTKOutsideTester.cc
     Source/KGVTKRandomPointTester.cc
+    Source/KGVTKMeshIntersectionTester.cc
 )
 
 if( VTK_MAJOR_VERSION GREATER 5 )
@@ -48,5 +50,3 @@ target_link_libraries( KGeoBagVtkVisualization
 # install
 kasper_install_headers( ${VTK_VISUALIZATION_HEADER_FILES} )
 kasper_install_libraries( KGeoBagVtkVisualization )
-    
-

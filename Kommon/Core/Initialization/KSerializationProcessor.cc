@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <typeinfo>
+#include <fstream>
 
 namespace katrin
 {

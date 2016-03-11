@@ -11,13 +11,16 @@ namespace katrin
     {
     }
 
-    static int sKSComponentMaximumStructure =
+    STATICINT sKSComponentMaximumStructure =
         KSComponentMaximumBuilder::Attribute< string >( "name" ) +
         KSComponentMaximumBuilder::Attribute< string >( "group" ) +
-        KSComponentMaximumBuilder::Attribute< string >( "component" );
+        KSComponentMaximumBuilder::Attribute< string >( "component" ) +
+        KSComponentMaximumBuilder::Attribute< string >( "parent" );
 
-    static int sKSComponentMaximum =
+    STATICINT sKSComponentMaximum =
         KSComponentGroupBuilder::ComplexElement< KSComponentMaximumData >( "component_maximum" ) +
-        KSRootBuilder::ComplexElement< KSComponentMaximumData >( "ks_component_maximum" );
+        KSComponentGroupBuilder::ComplexElement< KSComponentMaximumData >( "output_maximum" ) +
+        KSRootBuilder::ComplexElement< KSComponentMaximumData >( "ks_component_maximum" ) +
+        KSRootBuilder::ComplexElement< KSComponentMaximumData >( "output_maximum" );
 
 }

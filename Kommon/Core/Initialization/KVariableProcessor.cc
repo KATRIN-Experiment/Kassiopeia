@@ -8,6 +8,7 @@ namespace katrin
 {
     const string KVariableProcessor::fStartBracket = "[";
     const string KVariableProcessor::fEndBracket = "]";
+    const string KVariableProcessor::fNameValueSeparator = ":";
 
     KVariableProcessor::KVariableProcessor() :
             KProcessor(),
@@ -542,24 +543,38 @@ namespace katrin
                     return;
                 }
 
-                VariableIt ExternalVariable = fExternalMap->find( tBuffer );
+                string tVarName = tBuffer;
+                string tDefaultValue = "";
+
+                size_t tNameValueSepPos = tBuffer.find( fNameValueSeparator[ 0 ] );
+                if ( tNameValueSepPos != string::npos )
+                {
+                    tVarName = tBuffer.substr(0, tNameValueSepPos);
+                    tDefaultValue = tBuffer.substr(tNameValueSepPos + 1);
+                }
+
+                VariableIt ExternalVariable = fExternalMap->find( tVarName );
                 if( ExternalVariable != fExternalMap->end() )
                 {
                     tBuffer = ExternalVariable->second;
                 }
                 else
                 {
-                    VariableIt GlobalVariable = fGlobalMap->find( tBuffer );
+                    VariableIt GlobalVariable = fGlobalMap->find( tVarName );
                     if( GlobalVariable != fGlobalMap->end() )
                     {
                         tBuffer = GlobalVariable->second;
                     }
                     else
                     {
-                        VariableIt FileVariable = fLocalMap->find( tBuffer );
+                        VariableIt FileVariable = fLocalMap->find( tVarName );
                         if( FileVariable != fLocalMap->end() )
                         {
                             tBuffer = FileVariable->second;
+                        }
+                        else if ( tNameValueSepPos != string::npos )
+                        {
+                            tBuffer = tDefaultValue;
                         }
                         else
                         {

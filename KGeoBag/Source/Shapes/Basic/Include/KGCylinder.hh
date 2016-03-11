@@ -17,8 +17,8 @@ namespace KGeoBag
       virtual void VisitCylinder(KGCylinder*) = 0;
     };
 
-    KGCylinder() : fAxialMeshCount(0),
-		   fLongitudinalMeshCount(0),
+    KGCylinder() : fAxialMeshCount(8),
+		   fLongitudinalMeshCount(8),
 		   fLongitudinalMeshPower(1.) {}
     KGCylinder(const KThreeVector& p0,
 	       const KThreeVector& p1,

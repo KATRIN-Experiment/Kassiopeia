@@ -10,7 +10,7 @@ namespace Kassiopeia
     KSNavSpace::KSNavSpace() :
             fEnterSplit( false ),
             fExitSplit( false ),
-            fTolerance( 1.e-10 ),
+            fFailCheck( false ),
             fCurrentTrajectory( NULL ),
             fCurrentSpace( NULL ),
             fParentSpace( NULL ),
@@ -30,17 +30,21 @@ namespace Kassiopeia
             fChildSideDistance( 0. ),
             fChildSideRecalculate( true ),
             fChildSurface( NULL ),
+            fLastStepSurface( NULL ),
             fChildSurfaceAnchor( 0., 0., 0. ),
             fChildSurfaceDistance( 0. ),
             fChildSurfaceRecalculate( true ),
+            fSpaceInsideCheck( true ),
+            fNavigationFail( false ),
             fSolver(),
             fIntermediateParticle()
     {
     }
     KSNavSpace::KSNavSpace( const KSNavSpace& aCopy ) :
+            KSComponent(),
             fEnterSplit( aCopy.fEnterSplit ),
             fExitSplit( aCopy.fExitSplit ),
-            fTolerance( aCopy.fTolerance ),
+            fFailCheck( aCopy.fFailCheck ),
             fCurrentTrajectory( aCopy.fCurrentTrajectory ),
             fCurrentSpace( aCopy.fCurrentSpace ),
             fParentSpace( aCopy.fParentSpace ),
@@ -60,9 +64,12 @@ namespace Kassiopeia
             fChildSideDistance( aCopy.fChildSideDistance ),
             fChildSideRecalculate( aCopy.fChildSideRecalculate ),
             fChildSurface( aCopy.fChildSurface ),
+            fLastStepSurface( aCopy.fLastStepSurface ),
             fChildSurfaceAnchor( aCopy.fChildSurfaceAnchor ),
             fChildSurfaceDistance( aCopy.fChildSurfaceDistance ),
             fChildSurfaceRecalculate( aCopy.fChildSurfaceRecalculate ),
+            fSpaceInsideCheck( aCopy.fSpaceInsideCheck ),
+            fNavigationFail( aCopy.fNavigationFail ),
             fSolver(),
             fIntermediateParticle()
     {
@@ -95,14 +102,14 @@ namespace Kassiopeia
         return fExitSplit;
     }
 
-    void KSNavSpace::SetTolerance( const double& aTolerance )
+    void KSNavSpace::SetFailCheck( const bool& aValue )
     {
-        fTolerance = aTolerance;
+        fFailCheck = aValue;
         return;
     }
-    const double& KSNavSpace::GetTolerance() const
+    const bool& KSNavSpace::GetFailCheck() const
     {
-        return fTolerance;
+        return fFailCheck;
     }
 
     void KSNavSpace::CalculateNavigation( const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle, const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius, const double& aTrajectoryStep, KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag )
@@ -114,26 +121,26 @@ namespace Kassiopeia
         KThreeVector tFinalPoint = aTrajectoryFinalParticle.GetPosition();
 
         bool tSpaceFlag = false;
-        double tSpaceTime = aTrajectoryStep;
+        double tSpaceTime = numeric_limits< double >::max();
         fParentSpace = NULL;
         fChildSpace = NULL;
 
         bool tSideFlag = false;
-        double tSideTime = aTrajectoryStep;
+        double tSideTime = numeric_limits< double >::max();
         fParentSide = NULL;
         fChildSide = NULL;
 
         bool tSurfaceFlag = false;
-        double tSurfaceTime = aTrajectoryStep;
+        double tSurfaceTime = numeric_limits< double >::max();
         fChildSurface = NULL;
 
-        double tTime;
-        double tDistance;
-        double tInitialIntersection;
-        double tFinalIntersection;
-        KSSpace* tSpace;
-        KSSurface* tSurface;
-        KSSide* tSide;
+        double tTime = 0.0;
+        double tDistance = 0.0;
+        double tInitialIntersection = 0.0;
+        double tFinalIntersection = 0.0;
+        KSSpace* tSpace = NULL;
+        KSSurface* tSurface = NULL;
+        KSSide* tSide = NULL;
 
         navmsg_debug( "  in space <" << tCurrentSpace->GetName() << "> at <" << aTrajectoryCenter.X() << ", " << aTrajectoryCenter.Y() << ", " << aTrajectoryCenter.Z() << "> with radius <" << aTrajectoryRadius << ">" << eom );
 
@@ -149,6 +156,32 @@ namespace Kassiopeia
 
         fCurrentTrajectory = &aTrajectory;
 
+        //check if particle is inside the space it should be (only if fail check is activated)
+        if ( fFailCheck && fSpaceInsideCheck )
+        {
+        	if (tCurrentSpace->Outside( tInitialPoint ) )
+        	{
+        		navmsg( eWarning ) <<"initial point "<<tInitialPoint<<" of trajectory is not inside current space <"<<tCurrentSpace->GetName()<<">"<<eom;
+        		fNavigationFail = true;
+        		aNavigationStep = 0.0;
+        		aNavigationFlag = true;
+        		return;
+        	}
+
+            for( int tSpaceIndex = 0; tSpaceIndex < tCurrentSpace->GetSpaceCount(); tSpaceIndex++ )
+            {
+                tSpace = tCurrentSpace->GetSpace( tSpaceIndex );
+                if ( tSpace->Outside( tInitialPoint ) == false )
+                {
+            		navmsg( eWarning ) <<"initial point "<<tInitialPoint<<" of trajectory should be in child space <"<<tSpace->GetName()<<">, but is not"<<eom;
+            		fNavigationFail = true;
+            		aNavigationStep = 0.0;
+            		aNavigationFlag = true;
+            		return;
+                }
+            }
+        }
+
         //**********
         //space exit
         //**********
@@ -156,7 +189,7 @@ namespace Kassiopeia
         if( fParentSpaceRecalculate == false )
         {
             double tExcursion = (aTrajectoryCenter - fParentSpaceAnchor).Magnitude() + aTrajectoryRadius;
-            if( tExcursion > fParentSpaceDistance )
+            if( tExcursion >= fParentSpaceDistance )
             {
                 navmsg_debug( "  excursion from parent space anchor exceeds cached distance <" << fParentSpaceDistance << ">" << eom );
                 fParentSpaceRecalculate = true;
@@ -172,7 +205,7 @@ namespace Kassiopeia
             {
                 tSpace = tCurrentSpace;
 
-                // calculate the distance between the anchor and the enter space
+                // calculate the distance between the anchor and the exit space
                 tDistance = (fParentSpaceAnchor - tSpace->Point( fParentSpaceAnchor )).Magnitude();
                 navmsg_debug( "    distance to parent space <" << tSpace->GetName() << "> is <" << tDistance << ">" << eom );
 
@@ -189,9 +222,6 @@ namespace Kassiopeia
                     break;
                 }
 
-                // examine intersection function
-                fIntermediateParticle.SetCurrentSpace( tSpace );
-
                 // calculate initial intersection
                 tInitialIntersection = ( tInitialPoint - tSpace->Point( tInitialPoint )).Dot( tSpace->Normal( tInitialPoint ) );
                 navmsg_debug( "    initial intersection to parent space <" << tSpace->GetName() << "> is <" << tInitialIntersection << ">" << eom );
@@ -200,43 +230,44 @@ namespace Kassiopeia
                 tFinalIntersection = ( tFinalPoint - tSpace->Point( tFinalPoint )).Dot( tSpace->Normal( tFinalPoint ) );
                 navmsg_debug( "    final intersection to parent space <" << tSpace->GetName() << "> is <" << tFinalIntersection << ">" << eom );
 
-                // if the initial intersection function is within tolerance, skip the parent space
-                if( fabs( tInitialIntersection / aTrajectoryRadius ) < fTolerance )
+                if( tFinalIntersection < 0  )
                 {
-                    navmsg_debug( "    skipping parent space <" << tSpace->GetName() << "> because intersection function is within tolerance" << eom );
+                	//final state is inside current space, no exit, skipping
+                    navmsg_debug( "    skipping parent space <" << tSpace->GetName() << "> because final intersection function sign is negative" << eom );
                     break;
                 }
-
-                // if the intersection function signs are the same, skip the parent space
-                if( (tInitialIntersection < 0.) == (tFinalIntersection < 0.) )
+                else if( tFinalIntersection > 0  )
                 {
-                    navmsg_debug( "    skipping parent space <" << tSpace->GetName() << "> because intersection function signs are the same" << eom );
-                    break;
+                	//initial state inside, final state outside, default case for exiting
+
+                    double tLowerBoundary = 0.0;
+                    if( tInitialIntersection > 0 )
+                    {
+                    	// rare case that only happens if the space was just entered but the initial intersection is not zero but positive due to numerics
+                    	// and the space is smaller than the step size
+                    	// as two intersections exist for this case, the lower boundary is increased a little bit to get the second intersection,
+                    	// which is where the particle leaves the space
+                        tLowerBoundary = aTrajectoryStep / 100.0;
+                    }
+                	// calculate intersection time
+                    fIntermediateParticle.SetCurrentSpace( tSpace );
+                    fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SpaceIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                    navmsg_debug( "    time to parent space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
+                }
+                else if( tFinalIntersection == 0  )
+                {
+                	//final state exactly on border of parent space, very rare case for exiting
+                	tTime = aTrajectoryStep;
+                    navmsg_debug( "    time to parent space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
                 }
 
-                // calculate intersection time
-                fIntermediateParticle.SetCurrentSpace( tSpace );
-                fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SpaceIntersectionFunction, 0., 0., aTrajectoryStep, tTime );
-                navmsg_debug( "    time to parent space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
 
-                // if the intersection time is not the smallest, skip the parent space
-                if( tTime > tSpaceTime )
-                {
-                    navmsg_debug( "    skipping parent space <" << tSpace->GetName() << "> because intersection time is not smallest" << eom );
-                    break;
-                }
-
+#ifdef Kassiopeia_ENABLE_DEBUG
                 // calculate intersection distance
                 aTrajectory.ExecuteTrajectory( tTime, fIntermediateParticle );
                 tDistance = (fIntermediateParticle.GetPosition() - tSpace->Point( fIntermediateParticle.GetPosition() )).Magnitude();
-                navmsg_debug( "    distance to parent space <" << tSpace->GetName() << "> is <" << tDistance << ">" << eom );
-
-                // if the intersection distance is outside of tolerance, skip the parent space
-                if( (tDistance / aTrajectoryRadius) > fTolerance )
-                {
-                    navmsg_debug( "    skipping parent space <" << tSpace->GetName() << "> because intersection distance is outside of tolerance" << eom );
-                    break;
-                }
+                navmsg_debug( "    distance of calculated crossing position to parent space <" << tSpace->GetName() << "> is <" << tDistance << ">" << eom );
+#endif
 
                 tSpaceFlag = true;
                 tSpaceTime = tTime;
@@ -257,7 +288,7 @@ namespace Kassiopeia
         if( fChildSpaceRecalculate == false )
         {
             double tExcursion = (aTrajectoryCenter - fChildSpaceAnchor).Magnitude() + aTrajectoryRadius;
-            if( tExcursion > fChildSpaceDistance )
+            if( tExcursion >= fChildSpaceDistance )
             {
                 navmsg_debug( "  excursion from enter anchor exceeds cached distance <" << fChildSpaceDistance << ">" << eom );
                 fChildSpaceRecalculate = true;
@@ -290,9 +321,6 @@ namespace Kassiopeia
                     continue;
                 }
 
-                // examine intersection function
-                fIntermediateParticle.SetCurrentSpace( tSpace );
-
                 // calculate initial intersection
                 tInitialIntersection = ( tInitialPoint - tSpace->Point( tInitialPoint )).Dot( tSpace->Normal( tInitialPoint ) );
                 navmsg_debug( "    initial intersection to child space <" << tSpace->GetName() << "> is <" << tInitialIntersection << ">" << eom );
@@ -301,24 +329,31 @@ namespace Kassiopeia
                 tFinalIntersection = ( tFinalPoint - tSpace->Point( tFinalPoint )).Dot( tSpace->Normal( tFinalPoint ) );
                 navmsg_debug( "    final intersection to child space <" << tSpace->GetName() << "> is <" << tFinalIntersection << ">" << eom );
 
-                // if the initial intersection function is within tolerance, skip the child space
-                if( fabs( tInitialIntersection / aTrajectoryRadius ) < fTolerance )
+
+                if( tFinalIntersection <= 0  )
                 {
-                    navmsg_debug( "    skipping child space <" << tSpace->GetName() << "> because intersection function is within tolerance" << eom );
+                	//final state inside, default case for enter
+                	//including zero intersection function, if final state hits exactly the border of the space to enter (very rare case)
+
+                	double tLowerBoundary = 0.0;
+                	if( tInitialIntersection <= 0  )
+                	{
+                		//very rare case where the space was just left and the initial state of the next step is still inside due to numerics
+                		//increase the lower boundary to make sure not to get two intersections (which would results in gsl error for brent solver)
+                		tLowerBoundary = aTrajectoryStep / 100.0;
+                	}
+
+                	// calculate intersection time
+                    fIntermediateParticle.SetCurrentSpace( tSpace );
+                    fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SpaceIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                    navmsg_debug( "    time to child space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
+                }
+                else
+                {
+                	//final state outside, particle did not enter space (or step size is to large!)
+                    navmsg_debug( "    skipping child space <" << tSpace->GetName() << "> because final intersection function is positive" << eom );
                     continue;
                 }
-
-                // if the intersection function signs are the same, skip the child space
-                if( (tInitialIntersection < 0.) == (tFinalIntersection < 0.) )
-                {
-                    navmsg_debug( "    skipping child space <" << tSpace->GetName() << "> because intersection function signs are the same" << eom );
-                    continue;
-                }
-
-                // calculate intersection time
-                fIntermediateParticle.SetCurrentSpace( tSpace );
-                fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SpaceIntersectionFunction, 0., 0., aTrajectoryStep, tTime );
-                navmsg_debug( "    time to child space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
 
                 // if the intersection time is not the smallest, skip the child space
                 if( tTime > tSpaceTime )
@@ -327,17 +362,12 @@ namespace Kassiopeia
                     continue;
                 }
 
+#ifdef Kassiopeia_ENABLE_DEBUG
                 // calculate intersection distance
                 aTrajectory.ExecuteTrajectory( tTime, fIntermediateParticle );
                 tDistance = (fIntermediateParticle.GetPosition() - tSpace->Point( fIntermediateParticle.GetPosition() )).Magnitude();
-                navmsg_debug( "    distance to child space <" << tSpace->GetName() << "> is <" << tDistance << ">" << eom );
-
-                // if the intersection distance is outside of tolerance, skip the child space
-                if( (tDistance / aTrajectoryRadius) > fTolerance )
-                {
-                    navmsg_debug( "    skipping child space <" << tSpace->GetName() << "> because intersection distance is outside of tolerance" << eom );
-                    continue;
-                }
+                navmsg_debug( "    distance of calculated crossing position to child space <" << tSpace->GetName() << "> is <" << tDistance << ">" << eom );
+#endif
 
                 tSpaceFlag = true;
                 tSpaceTime = tTime;
@@ -356,7 +386,7 @@ namespace Kassiopeia
         if( fParentSideRecalculate == false )
         {
             double tExcursion = (aTrajectoryCenter - fParentSideAnchor).Magnitude() + aTrajectoryRadius;
-            if( tExcursion > fParentSideDistance )
+            if( tExcursion >= fParentSideDistance )
             {
                 navmsg_debug( "  excursion from parent side anchor exceeds cached distance <" << fParentSideDistance << ">" << eom );
 
@@ -390,9 +420,6 @@ namespace Kassiopeia
                     continue;
                 }
 
-                // examine intersection function
-                fIntermediateParticle.SetCurrentSide( tSide );
-
                 // calculate initial intersection
                 tInitialIntersection = ( tInitialPoint - tSide->Point( tInitialPoint )).Dot( tSide->Normal( tInitialPoint ) );
                 navmsg_debug( "    initial intersection to parent side <" << tSide->GetName() << "> is <" << tInitialIntersection << ">" << eom );
@@ -401,19 +428,37 @@ namespace Kassiopeia
                 tFinalIntersection = ( tFinalPoint - tSide->Point( tFinalPoint )).Dot( tSide->Normal( tFinalPoint ) );
                 navmsg_debug( "    final intersection to parent side <" << tSide->GetName() << "> is <" << tFinalIntersection << ">" << eom );
 
-                // if the initial intersection function is within tolerance, skip the parent side
-                if( fabs( tInitialIntersection / aTrajectoryRadius ) < fTolerance )
+                if( tFinalIntersection < 0  )
                 {
-                    navmsg_debug( "    skipping parent side <" << tSide->GetName() << "> because intersection function is within tolerance" << eom );
+                	//final state is inside current space, no exit, skipping
+                    navmsg_debug( "    skipping parent side <" << tSide->GetName() << "> because final intersection function sign is negative" << eom );
                     continue;
+                }
+                else if( tFinalIntersection > 0  )
+                {
+                	//initial state inside, final state outside, default case for exiting
+
+                    double tLowerBoundary = 0.0;
+                    if( tInitialIntersection > 0 )
+                    {
+                    	// rare case that only happens if the space was just entered but the initial intersection is not zero but positive due to numerics
+                    	// and the space is smaller than the step size
+                    	// as two intersections exist for this case, the lower boundary is increased a little bit to get the second intersection,
+                    	// which is where the particle leaves the space
+                        tLowerBoundary = aTrajectoryStep / 100.0;
+                    }
+                	// calculate intersection time
+                    fIntermediateParticle.SetCurrentSide( tSide );
+                    fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SideIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                    navmsg_debug( "    time to parent side <" << tSide->GetName() << "> is <" << tTime << ">" << eom );
+                }
+                else if( tFinalIntersection == 0  )
+                {
+                	//final state exactly on border of parent space, very rare case for exiting
+                	tTime = aTrajectoryStep;
+                    navmsg_debug( "    time to parent space <" << tSpace->GetName() << "> is <" << tTime << ">" << eom );
                 }
 
-                // if the intersection function signs are the same, skip the parent side
-                if( (tInitialIntersection < 0.) == (tFinalIntersection < 0.) )
-                {
-                    navmsg_debug( "    skipping parent side <" << tSide->GetName() << "> because intersection function signs are the same" << eom );
-                    continue;
-                }
 
                 // calculate intersection time
                 fIntermediateParticle.SetCurrentSide( tSide );
@@ -427,17 +472,12 @@ namespace Kassiopeia
                     continue;
                 }
 
+#ifdef Kassiopeia_ENABLE_DEBUG
                 // calculate intersection distance
                 aTrajectory.ExecuteTrajectory( tTime, fIntermediateParticle );
                 tDistance = (fIntermediateParticle.GetPosition() - tSide->Point( fIntermediateParticle.GetPosition() )).Magnitude();
-                navmsg_debug( "    distance to parent side <" << tSide->GetName() << "> is <" << tDistance << ">" << eom );
-
-                // if the intersection distance is outside of tolerance, skip the parent side
-                if( (tDistance / aTrajectoryRadius) > fTolerance )
-                {
-                    navmsg_debug( "    skipping parent side <" << tSide->GetName() << "> because intersection distance is outside of tolerance" << eom );
-                    continue;
-                }
+                navmsg_debug( "    distance of calculated crossing position to parent side <" << tSide->GetName() << "> is <" << tDistance << ">" << eom );
+#endif
 
                 tSideFlag = true;
                 tSideTime = tTime;
@@ -456,7 +496,7 @@ namespace Kassiopeia
         if( fChildSideRecalculate == false )
         {
             double tExcursion = (aTrajectoryCenter - fChildSideAnchor).Magnitude() + aTrajectoryRadius;
-            if( tExcursion > fChildSideDistance )
+            if( tExcursion >= fChildSideDistance )
             {
                 navmsg_debug( "  excursion from child side anchor exceeds cached distance <" << fChildSideDistance << ">" << eom );
 
@@ -493,9 +533,6 @@ namespace Kassiopeia
                         continue;
                     }
 
-                    // examine intersection function
-                    fIntermediateParticle.SetCurrentSide( tSide );
-
                     // calculate initial intersection
                     tInitialIntersection = ( tInitialPoint - tSide->Point( tInitialPoint )).Dot( tSide->Normal( tInitialPoint ) );
                     navmsg_debug( "    initial intersection to child side <" << tSide->GetName() << "> is <" << tInitialIntersection << ">" << eom );
@@ -504,43 +541,45 @@ namespace Kassiopeia
                     tFinalIntersection = ( tFinalPoint - tSide->Point( tFinalPoint )).Dot( tSide->Normal( tFinalPoint ) );
                     navmsg_debug( "    final intersection to child side <" << tSide->GetName() << "> is <" << tFinalIntersection << ">" << eom );
 
-                    // if the initial intersection function is within tolerance, skip the child side
-                    if( fabs( tInitialIntersection / aTrajectoryRadius ) < fTolerance )
+
+                    if( tFinalIntersection <= 0  )
                     {
-                        navmsg_debug( "    skipping child side <" << tSide->GetName() << "> because intersection function is within tolerance" << eom );
+                    	//final state inside, default case for enter
+                    	//including zero intersection function, if final state hits exactly the side of the space to enter (very rare case)
+
+                    	double tLowerBoundary = 0.0;
+                    	if( tInitialIntersection <= 0  )
+                    	{
+                    		//very rare case where the space was just left and the initial state of the next step is still inside due to numerics
+                    		//increase the lower boundary to make sure not to get two intersections (which would results in gsl error for brent solver)
+                    		tLowerBoundary = aTrajectoryStep / 100.0;
+                    	}
+
+                    	// calculate intersection time
+                        fIntermediateParticle.SetCurrentSide( tSide );
+                        fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SideIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                        navmsg_debug( "    time to child side <" << tSide->GetName() << "> is <" << tTime << ">" << eom );
+                    }
+                    else
+                    {
+                    	//final state outside, particle did not enter space/side
+                        navmsg_debug( "    skipping child side <" << tSide->GetName() << "> because final intersection function is positive" << eom );
                         continue;
                     }
-
-                    // if the intersection function signs are the same, skip the child side
-                    if( (tInitialIntersection < 0.) == (tFinalIntersection < 0.) )
-                    {
-                        navmsg_debug( "    skipping child side <" << tSide->GetName() << "> because intersection function signs are the same" << eom );
-                        continue;
-                    }
-
-                    // calculate intersection time
-                    fIntermediateParticle.SetCurrentSide( tSide );
-                    fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SideIntersectionFunction, 0., 0., aTrajectoryStep, tTime );
-                    navmsg_debug( "    time to child side <" << tSide->GetName() << "> is <" << tTime << ">" << eom );
 
                     // if the intersection time is not the smallest, skip the child side
                     if( tTime > tSideTime )
                     {
                         navmsg_debug( "    skipping child side <" << tSide->GetName() << "> because intersection time is not smallest" << eom );
-                        continue;
+						continue;
                     }
 
+#ifdef Kassiopeia_ENABLE_DEBUG
                     // calculate intersection distance
                     aTrajectory.ExecuteTrajectory( tTime, fIntermediateParticle );
                     tDistance = (fIntermediateParticle.GetPosition() - tSide->Point( fIntermediateParticle.GetPosition() )).Magnitude();
-                    navmsg_debug( "    distance to child side <" << tSide->GetName() << "> is <" << tDistance << ">" << eom );
-
-                    // if the intersection distance is outside of tolerance, skip the child side
-                    if( (tDistance / aTrajectoryRadius) > fTolerance )
-                    {
-                        navmsg_debug( "    skipping child side <" << tSide->GetName() << "> because intersection distance is outside of tolerance" << eom );
-                        continue;
-                    }
+                    navmsg_debug( "    distance of calculated crossing position to child side <" << tSide->GetName() << "> is <" << tDistance << ">" << eom );
+#endif
 
                     tSideFlag = true;
                     tSideTime = tTime;
@@ -560,7 +599,7 @@ namespace Kassiopeia
         if( fChildSurfaceRecalculate == false )
         {
             double tExcursion = (aTrajectoryCenter - fChildSurfaceAnchor).Magnitude() + aTrajectoryRadius;
-            if( tExcursion > fChildSurfaceDistance )
+            if( tExcursion >= fChildSurfaceDistance )
             {
                 fChildSurfaceRecalculate = true;
 
@@ -594,9 +633,6 @@ namespace Kassiopeia
                     continue;
                 }
 
-                // examine intersection function
-                fIntermediateParticle.SetCurrentSurface( tSurface );
-
                 // calculate initial intersection
                 tInitialIntersection = ( tInitialPoint - tSurface->Point( tInitialPoint )).Dot( tSurface->Normal( tInitialPoint ) );
                 navmsg_debug( "    initial intersection to child surface <" << tSurface->GetName() << "> is <" << tInitialIntersection << ">" << eom );
@@ -605,24 +641,78 @@ namespace Kassiopeia
                 tFinalIntersection = ( tFinalPoint - tSurface->Point( tFinalPoint )).Dot( tSurface->Normal( tFinalPoint ) );
                 navmsg_debug( "    final intersection to child surface <" << tSurface->GetName() << "> is <" << tFinalIntersection << ">" << eom );
 
-                // if the initial intersection function is within tolerance, skip the child surface
-                if( fabs( tInitialIntersection / aTrajectoryRadius ) < fTolerance )
+
+                if ( tFinalIntersection == 0. )
                 {
-                    navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because intersection function is within tolerance" << eom );
+                	//step hitting surface exactly, time is trajectory step
+                	tTime = aTrajectoryStep;
+                    navmsg_debug( "    time to child surface <" << tSurface->GetName() << "> is <" << tTime << ">" << eom );
+                }
+                else if ( tSurface == fLastStepSurface )
+                {
+                	//we are starting on the surface, but if the trajectory is curved, we may cross the surface again with the same step
+                    KThreeVector tMomentum = aTrajectoryInitialParticle.GetMomentum();
+                    KThreeVector tNormal = tSurface->Normal( aTrajectoryInitialParticle.GetPosition() );
+
+                    if ( tMomentum.Dot( tNormal ) > 0. )
+                    {
+                    	if ( tFinalIntersection <= 0. )
+                    	{
+                    		//particle turned around and crossed surface again
+                    		//find second crossing point (first one is at the start, increase lower boundary artificially
+                    		double tLowerBoundary = aTrajectoryStep / 100.0;
+                            fIntermediateParticle.SetCurrentSurface( tSurface );
+                            fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SurfaceIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                            navmsg_debug( "    time to cross child surface <" << tSurface->GetName() << "> again is <" << tTime << ">" << eom );
+                    	}
+                    	else
+                    	{
+        					navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because it was crossed on last step" <<eom );
+        					continue;
+                    	}
+                    }
+                    else
+                    // tMommentum.Dot( tNormal ) < 0
+                    {
+                    	if ( tFinalIntersection >= 0. )
+                    	{
+                    		//particle turned around and crossed surface again
+                    		//find second crossing point (first one is at the start, increase lower boundary artificially
+                    		double tLowerBoundary = aTrajectoryStep / 100.0;
+                            fIntermediateParticle.SetCurrentSurface( tSurface );
+                            fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SurfaceIntersectionFunction, 0., tLowerBoundary, aTrajectoryStep, tTime );
+                            navmsg_debug( "    time to cross child surface <" << tSurface->GetName() << "> again is <" << tTime << ">" << eom );
+                    	}
+                    	else
+                    	{
+        					navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because it was crossed on last step" <<eom );
+        					continue;
+                    	}
+                    }
+
+                }
+                else if ( tInitialIntersection == 0.0 )
+                {
+                    //starting exactly on surface, but it was not crossed before. The space was just entered or the simulation just started
+                    navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because initial particle state is exactly on surface (no crossing)" << eom );
                     continue;
                 }
-
-                // if the intersection function signs are the same, skip the child surface
-                if( (tInitialIntersection < 0.) == (tFinalIntersection < 0.) )
+                else if ( (tInitialIntersection > 0. && tFinalIntersection < 0.)
+                		|| (tInitialIntersection < 0. && tFinalIntersection > 0.) )
                 {
+                	//sign change in intersection function indicates crossing of surface (default case)
+
+                    // calculate intersection time
+                    fIntermediateParticle.SetCurrentSurface( tSurface );
+                    fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SurfaceIntersectionFunction, 0., 0., aTrajectoryStep, tTime );
+                    navmsg_debug( "    time to cross child surface <" << tSurface->GetName() << "> is <" << tTime << ">" << eom );
+                }
+                else
+                {
+                	//signs are the same, no crossing
                     navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because intersection function signs are the same" << eom );
                     continue;
                 }
-
-                // calculate intersection time
-                fIntermediateParticle.SetCurrentSurface( tSurface );
-                fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSNavSpace::SurfaceIntersectionFunction, 0., 0., aTrajectoryStep, tTime );
-                navmsg_debug( "    time to child surface <" << tSurface->GetName() << "> is <" << tTime << ">" << eom );
 
                 // if the intersection time is not the smallest, skip the child surface
                 if( tTime > tSurfaceTime )
@@ -631,17 +721,12 @@ namespace Kassiopeia
                     continue;
                 }
 
+#ifdef Kassiopeia_ENABLE_DEBUG
                 // calculate intersection distance
                 aTrajectory.ExecuteTrajectory( tTime, fIntermediateParticle );
                 tDistance = (fIntermediateParticle.GetPosition() - tSurface->Point( fIntermediateParticle.GetPosition() )).Magnitude();
-                navmsg_debug( "    distance to child surface <" << tSurface->GetName() << "> is <" << tDistance << ">" << eom );
-
-                // if the intersection distance is outside of tolerance, skip the child surface
-                if( (tDistance / aTrajectoryRadius) > fTolerance )
-                {
-                    navmsg_debug( "    skipping child surface <" << tSurface->GetName() << "> because intersection distance is outside of tolerance" << eom );
-                    continue;
-                }
+                navmsg_debug( "    distance of calculated crossing position to child surface <" << tSurface->GetName() << "> is <" << tDistance << ">" << eom );
+#endif
 
                 tSurfaceFlag = true;
                 tSurfaceTime = tTime;
@@ -651,6 +736,9 @@ namespace Kassiopeia
             fChildSurfaceRecalculate = false;
             navmsg_debug( "  minimum distance to child surfaces is <" << fChildSurfaceDistance << ">" << eom );
         }
+
+        //reset last step surface
+        fLastStepSurface = NULL;
 
         //******************
         //case determination
@@ -709,110 +797,172 @@ namespace Kassiopeia
 
         navmsg_debug( "  no navigation occurred" << eom );
 
+        //check if the navigator is in the correct state next step
+        fSpaceInsideCheck = true;
+
         return;
     }
     void KSNavSpace::ExecuteNavigation( const KSParticle& aNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const
     {
         navmsg_debug( "navigation space <" << this->GetName() << "> executing navigation:" << eom );
 
+        //kill the particle if the navigation was wrong
+        if ( fNavigationFail )
+        {
+        	fNavigationFail = false;
+            aFinalParticle = aNavigationParticle;
+            aFinalParticle.SetLabel( GetName() );
+        	aFinalParticle.AddLabel( "navigator_fail" );
+        	aFinalParticle.SetActive( false );
+        	return;
+        }
+        //do not perform a space check next step, as it may lead to wrong results in the step directly after a space change, when the particle is on a boundary (due to numerical errors)
+        fSpaceInsideCheck = false;
+
         if( fParentSpace != NULL )
         {
-            navmsg_debug( "  parent space <" << fParentSpace->GetName() << "> was exited" << eom );
+            navmsg( eNormal ) << "  parent space <" << fParentSpace->GetName() << "> was exited" << eom;
 
             aFinalParticle = aNavigationParticle;
-            aFinalParticle.SetCurrentSpace( fParentSpace->GetParent() );
-            aFinalParticle.SetCurrentSurface( NULL );
             aFinalParticle.SetLabel( GetName() );
             aFinalParticle.AddLabel( fParentSpace->GetName() );
             aFinalParticle.AddLabel( "exit" );
-            fParentSpace->Exit();
 
             if( fExitSplit == true )
             {
                 KSParticle* tExitSplitParticle = new KSParticle( aFinalParticle );
-                tExitSplitParticle->SetLabel( GetName() );
-                tExitSplitParticle->AddLabel( fParentSpace->GetName() );
-                tExitSplitParticle->AddLabel( "exit" );
+                tExitSplitParticle->SetCurrentSpace( fParentSpace->GetParent() );
+                tExitSplitParticle->SetCurrentSurface( NULL );
+                tExitSplitParticle->SetCurrentSide( NULL );
+                tExitSplitParticle->ResetFieldCaching();
                 aParticleQueue.push_back( tExitSplitParticle );
                 aFinalParticle.SetActive( false );
             }
 
+            return;
+        }
+
+        if( fChildSpace != NULL )
+        {
+            navmsg( eNormal ) << "  child space <" << fChildSpace->GetName() << "> was entered" << eom;
+
+            aFinalParticle = aNavigationParticle;
+            aFinalParticle.SetLabel( GetName() );
+            aFinalParticle.AddLabel( fChildSpace->GetName() );
+            aFinalParticle.AddLabel( "enter" );
+
+            if( fEnterSplit == true )
+            {
+                KSParticle* tEnterSplitParticle = new KSParticle( aFinalParticle );
+                tEnterSplitParticle->SetCurrentSpace( fChildSpace );
+                tEnterSplitParticle->SetCurrentSurface( NULL );
+                tEnterSplitParticle->SetCurrentSide( NULL );
+                tEnterSplitParticle->ResetFieldCaching();
+                aParticleQueue.push_back( tEnterSplitParticle );
+                aFinalParticle.SetActive( false );
+            }
+
+            return;
+        }
+
+        if( fParentSide != NULL )
+        {
+            navmsg( eNormal )<< "  parent side <" << fParentSide->GetName() << "> was crossed" << eom;
+
+            aFinalParticle = aNavigationParticle;
+            aFinalParticle.SetLabel( GetName() );
+            aFinalParticle.AddLabel( fParentSide->GetName() );
+            aFinalParticle.AddLabel( "crossed" );
+            return;
+        }
+
+        if( fChildSide != NULL )
+        {
+            navmsg( eNormal ) << "  child side <" << fChildSide->GetName() << "> was crossed" << eom;
+
+            aFinalParticle = aNavigationParticle;
+            aFinalParticle.SetLabel( GetName() );
+            aFinalParticle.AddLabel( fChildSide->GetName() );
+            aFinalParticle.AddLabel( "crossed" );
+            return;
+        }
+
+        if( fChildSurface != NULL )
+        {
+            navmsg( eNormal ) << "  child surface <" << fChildSurface->GetName() << "> was crossed" << eom;
+
+            aFinalParticle = aNavigationParticle;
+            aFinalParticle.SetLabel( GetName() );
+            aFinalParticle.AddLabel( fChildSurface->GetName() );
+            aFinalParticle.AddLabel( "crossed" );
+            return;
+        }
+
+        navmsg( eError ) << "could not determine space navigation" << eom;
+        return;
+    }
+
+    void KSNavSpace::FinalizeNavigation( KSParticle& aFinalParticle ) const
+    {
+        navmsg_debug( "navigation space <" << this->GetName() << "> finalizing navigation:" << eom );
+
+        if( fParentSpace != NULL )
+        {
+            navmsg_debug( "  finalizing navigation for exiting of parent space <" << fParentSpace->GetName() << "> " << eom );
+
+            aFinalParticle.SetCurrentSpace( fParentSpace->GetParent() );
+            aFinalParticle.ResetFieldCaching();
+            fParentSpace->Exit();
             fParentSpace = NULL;
             return;
         }
 
         if( fChildSpace != NULL )
         {
-            navmsg_debug( "  child space <" << fChildSpace->GetName() << "> was entered" << eom );
+            navmsg_debug( "  finalizing navigation for entering of child space <" << fChildSpace->GetName() << "> " << eom );
 
-            aFinalParticle = aNavigationParticle;
             aFinalParticle.SetCurrentSpace( fChildSpace );
-            aFinalParticle.SetCurrentSurface( NULL );
-            aFinalParticle.SetLabel( GetName() );
-            aFinalParticle.AddLabel( fChildSpace->GetName() );
-            aFinalParticle.AddLabel( "enter" );
+            aFinalParticle.ResetFieldCaching();
             fChildSpace->Enter();
-
-            if( fEnterSplit == true )
-            {
-                KSParticle* tEnterSplitParticle = new KSParticle( aFinalParticle );
-                tEnterSplitParticle->SetLabel( GetName() );
-                tEnterSplitParticle->AddLabel( fChildSpace->GetName() );
-                tEnterSplitParticle->AddLabel( "enter" );
-                aParticleQueue.push_back( tEnterSplitParticle );
-                aFinalParticle.SetActive( false );
-            }
-
             fChildSpace = NULL;
             return;
         }
 
         if( fParentSide != NULL )
         {
-            navmsg_debug( "  parent side <" << fParentSide->GetName() << "> was crossed" << eom );
+            navmsg_debug( "  finalizing navigation for crossing of parent side <" << fParentSide->GetName() << "> " << eom );
 
-            aFinalParticle = aNavigationParticle;
             aFinalParticle.SetCurrentSide( fParentSide );
-            aFinalParticle.SetLabel( GetName() );
-            aFinalParticle.AddLabel( fParentSide->GetName() );
-            aFinalParticle.AddLabel( "crossed" );
+            aFinalParticle.ResetFieldCaching();
             fParentSide->On();
-
             fParentSide = NULL;
             return;
         }
 
         if( fChildSide != NULL )
         {
-            navmsg_debug( "  child side <" << fChildSide->GetName() << "> was crossed" << eom );
+            navmsg_debug( "  finalizing navigation for crossing of child side <" << fChildSide->GetName() << "> " << eom );
 
-            aFinalParticle = aNavigationParticle;
             aFinalParticle.SetCurrentSide( fChildSide );
-            aFinalParticle.SetLabel( GetName() );
-            aFinalParticle.AddLabel( fChildSide->GetName() );
-            aFinalParticle.AddLabel( "crossed" );
+            aFinalParticle.ResetFieldCaching();
             fChildSide->On();
-
             fChildSide = NULL;
             return;
         }
 
         if( fChildSurface != NULL )
         {
-            navmsg_debug( "  child surface <" << fChildSurface->GetName() << "> was crossed" << eom );
+            navmsg_debug( "  finalizing navigation for crossing of child surface <" << fChildSurface->GetName() << "> " << eom );
 
-            aFinalParticle = aNavigationParticle;
+            fLastStepSurface = fChildSurface;
             aFinalParticle.SetCurrentSurface( fChildSurface );
-            aFinalParticle.SetLabel( GetName() );
-            aFinalParticle.AddLabel( fChildSurface->GetName() );
-            aFinalParticle.AddLabel( "crossed" );
+            aFinalParticle.ResetFieldCaching();
             fChildSurface->On();
-
             fChildSurface = NULL;
             return;
         }
 
-        navmsg( eError ) << "could not determine space navigation" << eom;
+        navmsg( eError ) << "could not finalize space navigation" << eom;
         return;
     }
 
@@ -821,6 +971,7 @@ namespace Kassiopeia
         navmsg_debug( "navigation space <" << this->GetName() << "> starting navigation:" << eom );
 
         // reset navigation
+        fCurrentSpace = NULL;
         fParentSideRecalculate = true;
         fChildSideRecalculate = true;
         fChildSurfaceRecalculate = true;
@@ -879,74 +1030,20 @@ namespace Kassiopeia
                 tSpace->Enter();
             }
 
-            // get into the correct surface state
-            if( tSurface != NULL )
+            fLastStepSurface = aParticle.GetLastStepSurface();
+
+            if ( tSurface != NULL )
             {
-                navmsg_debug( "  child surface was crossed" << eom );
+                navmsg_debug( "  activating surface <" << tSurface->GetName() << ">" << eom );
 
-                aParticle.SetCurrentSide( NULL );
-                aParticle.SetCurrentSurface( NULL );
-                aParticle.SetCurrentSpace( tSpace );
-
-                return;
+            	tSurface->On();
             }
 
-            // get into the correct side state
-            if( tSide != NULL )
+            if ( tSide != NULL )
             {
-                KThreeVector tMomentum = aParticle.GetMomentum();
-                KThreeVector tNormal = aParticle.GetCurrentSide()->Normal( aParticle.GetPosition() );
+                navmsg_debug( "  activating side <" << tSide->GetName() << ">" << eom );
 
-                if( tSpace == tSide->GetInsideParent() )
-                {
-                    if( tMomentum.Dot( tNormal ) > 0. )
-                    {
-                        navmsg_debug( "  transmission occurred on boundary <" << tSide->GetName() << "> of parent space <" << tSide->GetInsideParent()->GetName() << ">" << eom );
-
-                        aParticle.SetCurrentSide( NULL );
-                        aParticle.SetCurrentSurface( NULL );
-                        aParticle.SetCurrentSpace( tSide->GetOutsideParent() );
-                        tSide->GetInsideParent()->Exit();
-
-                        return;
-                    }
-                    else
-                    {
-                        navmsg_debug( "  reflection occurred on boundary <" << tSide->GetName() << "> of parent space <" << tSide->GetInsideParent()->GetName() << ">" << eom );
-
-                        aParticle.SetCurrentSide( NULL );
-                        aParticle.SetCurrentSurface( NULL );
-                        aParticle.SetCurrentSpace( tSide->GetInsideParent() );
-
-                        return;
-                    }
-                }
-
-                if( tSpace == tSide->GetOutsideParent() )
-                {
-                    if( tMomentum.Dot( tNormal ) < 0. )
-                    {
-                        navmsg_debug( "  transmission occurred on boundary <" << tSide->GetName() << "> of child space <" << tSide->GetInsideParent()->GetName() << ">" << eom );
-
-                        aParticle.SetCurrentSide( NULL );
-                        aParticle.SetCurrentSurface( NULL );
-                        aParticle.SetCurrentSpace( tSide->GetInsideParent() );
-                        tSide->GetInsideParent()->Enter();
-
-                        return;
-                    }
-                    else
-                    {
-                        navmsg_debug( "  reflection occurred on boundary <" << tSide->GetName() << "> of child space <" << tSide->GetInsideParent()->GetName() << ">" << eom );
-
-                        aParticle.SetCurrentSide( NULL );
-                        aParticle.SetCurrentSurface( NULL );
-                        aParticle.SetCurrentSpace( tSide->GetOutsideParent() );
-
-                        return;
-                    }
-                }
-
+            	tSide->On();
             }
         }
 
@@ -955,11 +1052,19 @@ namespace Kassiopeia
     void KSNavSpace::StopNavigation( KSParticle& aParticle, KSSpace* aRoot )
     {
         // reset navigation
+        fCurrentSpace = NULL;
         fParentSideRecalculate = true;
         fChildSideRecalculate = true;
         fChildSurfaceRecalculate = true;
         fParentSpaceRecalculate = true;
         fChildSpaceRecalculate = true;
+
+        fParentSpace = NULL;
+		fChildSpace = NULL;
+		fParentSide = NULL;
+		fChildSide = NULL;
+		fChildSurface = NULL;
+		fLastStepSurface = NULL;
 
         deque< KSSpace* > tSpaces;
         KSSpace* tSpace = aParticle.GetCurrentSpace();
@@ -1000,26 +1105,6 @@ namespace Kassiopeia
         return;
     }
 
-    void KSNavSpace::ActivateComponent()
-    {
-        fCurrentSpace = NULL;
-        fParentSideRecalculate = true;
-        fChildSideRecalculate = true;
-        fChildSurfaceRecalculate = true;
-        fParentSpaceRecalculate = true;
-        fChildSpaceRecalculate = true;
-        return;
-    }
-    void KSNavSpace::DeactivateComponent()
-    {
-        fCurrentSpace = NULL;
-        fParentSideRecalculate = true;
-        fChildSideRecalculate = true;
-        fChildSurfaceRecalculate = true;
-        fParentSpaceRecalculate = true;
-        fChildSpaceRecalculate = true;
-        return;
-    }
 
     double KSNavSpace::SpaceIntersectionFunction( const double& aTime )
     {

@@ -5,7 +5,7 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    static int sKSVTKTrackPainterStructure =
+    STATICINT sKSVTKTrackPainterStructure =
         KSVTKTrackPainterBuilder::Attribute< string >( "name" ) +
         KSVTKTrackPainterBuilder::Attribute< string >( "file" ) +
         KSVTKTrackPainterBuilder::Attribute< string >( "path" ) +
@@ -15,7 +15,7 @@ namespace katrin
         KSVTKTrackPainterBuilder::Attribute< string >( "color_object" ) +
         KSVTKTrackPainterBuilder::Attribute< string >( "color_variable" );
 
-    static int sKSVTKTrackPainterWindow =
+    STATICINT sKSVTKTrackPainterWindow =
         KVTKWindowBuilder::ComplexElement< KSVTKTrackPainter >( "vtk_track_painter" );
 
 }

@@ -28,9 +28,15 @@ namespace KEMField
       static ValueType infinityNorm;
       infinityNorm = 0.;
       for (unsigned int i=0;i<Dimension();i++)
-	if (fabs(this->operator()(i))>infinityNorm)
-	  infinityNorm = fabs(this->operator()(i));
+	if (KVector::abs(this->operator()(i))>infinityNorm)
+	  infinityNorm = KVector::abs(this->operator()(i));
       return infinityNorm;
+    }
+
+    // template specializations necessary to avoid compiler warnings for unsigned types
+    static ValueType abs(ValueType argument)
+    {
+        return std::abs(argument);
     }
   };
 
@@ -63,6 +69,13 @@ namespace KEMField
     for (unsigned int i=0;i<Dimension();i++)
       this->operator[](i)-=aVector(i);
   }
+
+  template <>
+  inline unsigned int KVector<unsigned int>::abs(unsigned int argument)
+  {
+      return argument;
+  }
+
 }
 
 #endif /* KVECTOR_DEF */

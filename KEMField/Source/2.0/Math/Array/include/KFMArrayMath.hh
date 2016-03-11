@@ -3,6 +3,11 @@
 
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
+#include <bitset>
+#include <limits.h>
+
+#include "KFMMessaging.hh"
 
 namespace KEMField{
 
@@ -21,6 +26,11 @@ namespace KEMField{
 *
 */
 
+#if defined(__SIZEOF_INT__) && defined(CHAR_BIT)
+#define MAX_MORTON_BITS __SIZEOF_INT__*CHAR_BIT
+#else
+#define MAX_MORTON_BITS 32
+#endif
 
 class KFMArrayMath
 {
@@ -126,14 +136,89 @@ class KFMArrayMath
             enum { value = 2 * PowerOfTwo<N - 1>::value };
         };
 
+        //compute integer division at compile time
+        template <int numerator, int denominator>
+        struct Divide
+        {
+            enum { value = Divide<numerator, 1>::value / Divide<denominator, 1>::value };
+        };
+
+        template<unsigned int NDIM> static void
+        OffsetsForReversedIndices(const unsigned int* DimSize, unsigned int* ReversedIndex)
+        {
+            unsigned int total_array_size = KFMArrayMath::TotalArraySize<NDIM>(DimSize);
+            unsigned int index[NDIM];
+            for(unsigned int i=0; i<total_array_size; i++)
+            {
+                KFMArrayMath::RowMajorIndexFromOffset<NDIM>(i, DimSize, index);
+                for(unsigned int j=0; j<NDIM; j++){ index[j] = (DimSize[j] - index[j])%DimSize[j];};
+                ReversedIndex[i] = KFMArrayMath::OffsetFromRowMajorIndex<NDIM>(DimSize, index);
+            }
+        }
+
+        template<unsigned int NDIM> inline static unsigned int
+        MortonZOrderFromRowMajorIndex(const unsigned int* DimSize, const unsigned int* Index)
+        {
+            unsigned int max_size = PowerOfTwo< Divide<MAX_MORTON_BITS,NDIM>::value >::value;
+            //Since the output is limited by MAX_MORTON_BITS
+            //indices with values larger than can be stored by
+            //MAX_MORTON_BITS/NDIM will be truncated by the bitset constructor,
+            //the largest index/dimension size value allowed is
+            //2^{MAX_MORTON_BITS/NDIM}, for example with MAX_MORTON_BITS
+            //set to 32, and NDIM=4, the max index allowed is 256
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                if(DimSize[i] >= max_size )
+                {
+                    kfmout<<"MortonZOrderFromRowMajorIndex: Error, ";
+                    kfmout<<"dimension size "<<DimSize[i]<<" exceeds max ";
+                    kfmout<<"allowable value of "<<max_size<<".";
+                    kfmout<<kfmendl;
+                    kfmexit(1);
+                }
+            }
+
+            //interleaved bits from all the coordinates
+            std::bitset<MAX_MORTON_BITS> interleaved_bits;
+            //now compute the bits of each coordinate and insert them into the interleaved bits
+            for(unsigned int i=0; i<NDIM; i++)
+            {
+                std::bitset<  Divide<MAX_MORTON_BITS,NDIM>::value  > coord_bits(Index[i]);
+                for(unsigned int j=0; j < Divide<MAX_MORTON_BITS,NDIM>::value ; j++)
+                {
+                    interleaved_bits[j*NDIM + i] = coord_bits[j];
+                }
+            }
+
+            //now convert the value of the interleaved bits to int
+            //this cast should be safe since MAX_MORTON_BITS is limited to the size of int
+            return static_cast<unsigned int>(interleaved_bits.to_ulong());
+        }
+
+        template<unsigned int NDIM> inline static unsigned int
+        MortonZOrderFromOffset(unsigned int offset, const unsigned int* DimSize)
+        {
+            unsigned int index[NDIM];
+            RowMajorIndexFromOffset<NDIM>(offset, DimSize, index);
+            return MortonZOrderFromRowMajorIndex<NDIM>(DimSize, index);
+        }
+
+
 };
 
 
-//specialization for base case
+//specialization for base case of power of two
 template <>
 struct KFMArrayMath::PowerOfTwo<0>
 {
     enum { value = 1 };
+};
+
+//specialization for base case of divide
+template <int numerator>
+struct KFMArrayMath::Divide<numerator, 1>
+{
+    enum { value = numerator };
 };
 
 

@@ -44,7 +44,7 @@ namespace katrin
     {
     }
 
-    static int sKSIntCalculatorArgonStructure =
+    STATICINT sKSIntCalculatorArgonStructure =
         KSIntCalculatorArgonSetBuilder::Attribute< string >( "name" ) +
         KSIntCalculatorArgonSetBuilder::Attribute< bool >( "elastic" ) +
         KSIntCalculatorArgonSetBuilder::Attribute< bool >( "excitation" ) +

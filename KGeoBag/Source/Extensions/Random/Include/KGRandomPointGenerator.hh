@@ -13,6 +13,7 @@
 #include "KGConeSurfaceRandom.hh"
 #include "KGCutConeSpaceRandom.hh"
 #include "KGCutConeSurfaceRandom.hh"
+#include "KGCutConeTubeSpaceRandom.hh"
 
 namespace KGeoBag
 {
@@ -43,7 +44,9 @@ namespace KGeoBag
     public KGConeSurfaceRandom,
     // -------------------------------
     public KGCutConeSpaceRandom,
-    public KGCutConeSurfaceRandom
+    public KGCutConeSurfaceRandom,
+    // -------------------------------
+	public KGCutConeTubeSpaceRandom
   {
   public:
     KGRandomPointGenerator() {}

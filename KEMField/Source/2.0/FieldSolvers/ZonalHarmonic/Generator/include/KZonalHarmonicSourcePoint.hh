@@ -30,18 +30,26 @@ namespace KEMField
 
     virtual ~KZonalHarmonicSourcePoint() { fCoeffVec.clear(); }
 
-    void SetZ0(const double& d)  { fZ0 = d; }
-    void SetRho(const double& d) { fRho = d; }
+    void SetZ0(const double& d)  { fZ0 = d; fFloatZ0 = (float)d; }
+    void SetRho(const double& d) { fRho = d; fRhosquared = (float)fRho*(float)fRho; f1overRhosquared=1./fRhosquared; }
 
     int    GetNCoeffs()      const { return (int)fCoeffVec.size(); }
     double GetZ0()           const { return fZ0; }
+    float GetFloatZ0()       const { return fZ0; }
     double GetRho()          const { return fRho; }
-    double GetCoeff(int i) const { return fCoeffVec.at(i); }
+    float GetRhosquared()      const { return fRhosquared; }
+    float Get1overRhosquared() const { return f1overRhosquared; }
+    double GetCoeff(int i) const { return fCoeffVec[i]; }
+
+    const double* GetRawPointerToCoeff() const {return &(fCoeffVec[0]);};
 
   private:
 
     double fZ0;                    ///< Z-coordinate for source point.
+    float fFloatZ0;
     double fRho;                   ///< Rho values for source point.
+    float fRhosquared;
+    float f1overRhosquared;
     std::vector<double> fCoeffVec; ///< Vector of coefficients.
 
   public:
@@ -50,6 +58,8 @@ namespace KEMField
     {
       s.PreStreamInAction(sp);
       s >> sp.fZ0 >> sp.fRho;
+      sp.SetZ0( sp.fZ0 );
+      sp.SetRho( sp.fRho );
       unsigned int nCoeffs;
       s >> nCoeffs;
       sp.fCoeffVec.clear();

@@ -8,6 +8,9 @@ using katrin::KRandom;
 #include "KConst.h"
 using katrin::KConst;
 
+#include <iostream>
+#include <cmath>
+
 namespace Kassiopeia
 {
 
@@ -18,6 +21,7 @@ namespace Kassiopeia
     {
     }
     KSIntSurfaceDiffuse::KSIntSurfaceDiffuse( const KSIntSurfaceDiffuse& aCopy ) :
+            KSComponent(),
             fProbability( aCopy.fProbability ),
             fReflectionLoss( aCopy.fReflectionLoss ),
             fTransmissionLoss( aCopy.fTransmissionLoss )
@@ -46,8 +50,29 @@ namespace Kassiopeia
     }
     void KSIntSurfaceDiffuse::ExecuteReflection( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
     {
-        const double tKineticEnergy = anInitialParticle.GetKineticEnergy() - KConst::Q() * fReflectionLoss;
-        const double tAngle = KRandom::GetInstance().Uniform( 0., 2. * KConst::Pi() );
+        double tKineticEnergy = anInitialParticle.GetKineticEnergy();
+
+        if(fUseRelativeLoss)
+        {
+            tKineticEnergy *= (1.0 - fReflectionLossFraction);
+        }
+        else
+        {
+            tKineticEnergy -= std::fabs(KConst::Q() * fReflectionLoss);
+        }
+
+        //prevent kinetic energy from going negative
+        if(tKineticEnergy < 0.0)
+        {
+            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> tried to give a particle a negative kinetic energy." << eom;
+            return;
+        }
+
+        //generate angles for diffuse 'Lambertian' reflection direction
+        double tAzimuthalAngle = KRandom::GetInstance().Uniform( 0., 2. * KConst::Pi() );
+        double tSinTheta = KRandom::GetInstance().Uniform( 0., 1. );
+        double tCosTheta = std::sqrt( (1.0 - tSinTheta)*(1.0 + tSinTheta) );
+
         KThreeVector tNormal;
         if( anInitialParticle.GetCurrentSurface() != NULL )
         {
@@ -62,19 +87,46 @@ namespace Kassiopeia
             intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> was given a particle with neither a surface nor a side set" << eom;
             return;
         }
+
         KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+        double tMomentumMagnitude = tInitialMomentum.Magnitude();
+
         KThreeVector tInitialNormalMomentum = tInitialMomentum.Dot( tNormal ) * tNormal;
         KThreeVector tInitialTangentMomentum = tInitialMomentum - tInitialNormalMomentum;
         KThreeVector tInitialOrthogonalMomentum = tInitialTangentMomentum.Cross( tInitialNormalMomentum.Unit() );
+
+        //define reflected direction
+        KThreeVector tReflectedDirection = -1.0*tCosTheta*tInitialNormalMomentum.Unit();
+        tReflectedDirection += tSinTheta*std::cos(tAzimuthalAngle)*tInitialTangentMomentum.Unit();
+        tReflectedDirection += tSinTheta*std::sin(tAzimuthalAngle)*tInitialOrthogonalMomentum.Unit();
+
+        KThreeVector tReflectedMomentum = tMomentumMagnitude*tReflectedDirection;
+
         aFinalParticle = anInitialParticle;
-        aFinalParticle.SetMomentum( cos( tAngle ) * tInitialTangentMomentum + sin( tAngle ) * tInitialOrthogonalMomentum - tInitialNormalMomentum );
+        aFinalParticle.SetMomentum( tReflectedMomentum );
         aFinalParticle.SetKineticEnergy( tKineticEnergy );
 
         return;
     }
     void KSIntSurfaceDiffuse::ExecuteTransmission( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
     {
-        const double tKineticEnergy = anInitialParticle.GetKineticEnergy() - KConst::Q() * fTransmissionLoss;
+        double tKineticEnergy = anInitialParticle.GetKineticEnergy();
+
+        if(fUseRelativeLoss)
+        {
+            tKineticEnergy *= (1.0 - fTransmissionLossFraction);
+        }
+        else
+        {
+            tKineticEnergy -= std::fabs(KConst::Q() * fTransmissionLoss);
+        }
+
+        //prevent kinetic energy from going negative
+        if(tKineticEnergy < 0.0)
+        {
+            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> tried to give a particle a negative kinetic energy." << eom;
+            return;
+        }
 
         aFinalParticle = anInitialParticle;
         aFinalParticle.SetKineticEnergy( tKineticEnergy );
@@ -83,5 +135,3 @@ namespace Kassiopeia
     }
 
 }
-
-

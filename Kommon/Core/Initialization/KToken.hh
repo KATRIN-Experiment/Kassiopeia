@@ -1,6 +1,8 @@
 #ifndef Kommon_KToken_hh_
 #define Kommon_KToken_hh_
 
+#include "KInitializationMessage.hh"
+
 #include <string>
 using std::string;
 
@@ -55,6 +57,12 @@ namespace katrin
         istringstream Converter( fValue );
         XDataType Data;
         Converter >> Data;
+        if (Converter.fail() || (Data != Data) )  // also check for NaN
+        {
+            string TypeName = KMessage::TypeName< XDataType >();
+            initmsg( eWarning ) << "error processing token <" << fValue << "> with type <" << TypeName << ">, replaced with <" << Data << ">" << ret;
+            initmsg( eWarning ) << "in path <" << fPath << "> in file <" << fFile << "> at line <" << fLine << "> at column <" << fColumn << ">" << eom;
+        }
         return Data;
     }
 

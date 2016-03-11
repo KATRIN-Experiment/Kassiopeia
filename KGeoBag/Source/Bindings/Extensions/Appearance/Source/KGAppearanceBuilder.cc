@@ -54,14 +54,14 @@ namespace katrin
     {
     }
 
-    static const int sKGAppearanceStructure =
+    STATICINT sKGAppearanceStructure =
         KGAppearanceBuilder::Attribute< string >( "name" ) +
         KGAppearanceBuilder::Attribute< KGRGBAColor >( "color" ) +
         KGAppearanceBuilder::Attribute< unsigned int >( "arc" ) +
         KGAppearanceBuilder::Attribute< string >( "surfaces" ) +
         KGAppearanceBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGAppearance =
+    STATICINT sKGAppearance =
         KGInterfaceBuilder::ComplexElement< KGAppearanceAttributor >( "appearance" );
 
 }

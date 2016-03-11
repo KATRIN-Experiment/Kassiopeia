@@ -43,7 +43,7 @@ namespace katrin
         }
         if( aContainer->Is< KGArea >() )
         {
-            KGArea* tArea;
+            KGArea* tArea = NULL;
             aContainer->ReleaseTo( tArea );
             KGSurface* tSurface = new KGSurface();
             tSurface->SetName( tArea->GetName() );
@@ -59,7 +59,7 @@ namespace katrin
         }
         if( aContainer->Is< KGVolume >() )
         {
-            KGVolume* tVolume;
+            KGVolume* tVolume = NULL;
             aContainer->ReleaseTo( tVolume );
             KGSpace* tSpace = new KGSpace();
             tSpace->SetName( tVolume->GetName() );

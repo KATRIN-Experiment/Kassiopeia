@@ -8,7 +8,7 @@ namespace katrin
     {
     }
 
-    static int sTransformationBuilderStructure =
+    STATICINT sTransformationBuilderStructure =
         KGTransformationBuilder::Attribute< KThreeVector >( "displacement" ) +
         KGTransformationBuilder::Attribute< KThreeVector >( "d" ) +
         KGTransformationBuilder::Attribute< KThreeVector >( "rotation_euler" ) +

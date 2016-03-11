@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGRotatedLineSegmentSurfaceBuilder =
+    STATICINT sKGRotatedLineSegmentSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGRotatedLineSegmentSurface >( "rotated_line_segment_surface" );
 
-    static const int sKGRotatedLineSegmentSurfaceBuilderStructure =
+    STATICINT sKGRotatedLineSegmentSurfaceBuilderStructure =
         KGRotatedLineSegmentSurfaceBuilder::Attribute< string >( "name" ) +
         KGRotatedLineSegmentSurfaceBuilder::Attribute< unsigned int >( "rotated_mesh_count" ) +
         KGRotatedLineSegmentSurfaceBuilder::ComplexElement< KGPlanarLineSegment >( "line_segment" );

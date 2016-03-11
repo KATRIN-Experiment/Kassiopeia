@@ -11,7 +11,6 @@
 #include "KRootFile.h"
 using katrin::KFile;
 using katrin::KRootFile;
-using katrin::CreateOutputRootFile;
 
 namespace Kassiopeia
 {
@@ -29,6 +28,7 @@ namespace Kassiopeia
             KSReadFileROOT();
             ~KSReadFileROOT();
 
+            bool TryFile( KRootFile* aFile );
             void OpenFile( KRootFile* aFile );
             void CloseFile();
 

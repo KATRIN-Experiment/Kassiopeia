@@ -1,4 +1,5 @@
 #include "KSWriteROOT.h"
+#include "KSaveSettingsProcessor.hh"
 #include "KSWritersMessage.h"
 #include "KSComponentGroup.h"
 
@@ -240,6 +241,17 @@ namespace Kassiopeia
             fComponents.push_back( aComponent );
             return;
         }
+        long long* tLongLong = aComponent->As< long long >();
+        if( tLongLong != NULL )
+        {
+            wtrmsg_debug( "  object <" << aComponent->GetName() << "> is a long long" << eom )
+            fLabel = aComponent->GetName();
+            fType = string( "long long" );
+            fStructure->Fill();
+            fData->Branch( aComponent->GetName().c_str(), tLongLong, fBufferSize, fSplitLevel );
+            fComponents.push_back( aComponent );
+            return;
+        }
 
         float* tFloat = aComponent->As< float >();
         if( tFloat != NULL )
@@ -310,6 +322,7 @@ namespace Kassiopeia
     {
     }
     KSWriteROOT::KSWriteROOT( const KSWriteROOT& aCopy ) :
+            KSComponent(),
             fBase( aCopy.fBase ),
             fPath( aCopy.fPath ),
             fStepIteration( aCopy.fStepIteration ),
@@ -627,7 +640,7 @@ namespace Kassiopeia
     {
         wtrmsg_debug( "starting ROOT writer" << eom );
 
-        fFile = CreateOutputRootFile( fBase );
+        fFile = KRootFile::CreateOutputRootFile( fBase );
         if( !fPath.empty() )
         {
             fFile->AddToPaths( fPath );
@@ -727,6 +740,8 @@ namespace Kassiopeia
                 tIt->second->Stop();
             }
 
+            StoreConfig();
+
             fFile->File()->Write( "", TObject::kOverwrite );
 
             for( tIt = fRunComponents.begin(); tIt != fRunComponents.end(); tIt++ )
@@ -757,7 +772,51 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSWriteROOTDict =
+    void KSWriteROOT::StoreConfig(string ConfigDirName)
+    {
+    	std::vector<string> commands = katrin::KSaveSettingsProcessor::getCommands();
+		std::vector<string> values = katrin::KSaveSettingsProcessor::getValues();
+
+		for(size_t treeconfindex=0;treeconfindex<commands.size();treeconfindex++)
+		{
+			wtrmsg_debug( commands.at(treeconfindex) << ": " << values.at(treeconfindex) << eom);
+		}
+		if( (fFile != NULL) && (fFile->IsOpen() == true) )
+		{
+		    fFile->File()->cd();
+			gDirectory->mkdir(ConfigDirName.c_str());
+			gDirectory->cd(ConfigDirName.c_str());
+
+			for(size_t treeconfindex=0;treeconfindex<commands.size();treeconfindex++)
+			{
+				if(commands.at(treeconfindex) == "cd")
+					gDirectory->cd(values.at(treeconfindex).c_str());
+				else if(commands.at(treeconfindex) == "mkdir")
+				{
+					if(gDirectory->GetDirectory(values.at(treeconfindex).c_str()) == 0)
+						gDirectory->mkdir(values.at(treeconfindex).c_str());
+				}
+				else if(commands.at(treeconfindex) == "tobjstring")
+				{
+					TObjString XML_element = TObjString(values.at(treeconfindex).c_str());
+					XML_element.Write();
+				}
+				else
+				{
+					//Unknown format
+					wtrmsg (eWarning) << "Unknown stored config tree tag: "  << commands.at(treeconfindex) << eom;
+				}
+			}
+			gDirectory->cd("/");
+			fFile->File()->Write();
+		}
+		else
+		{
+			wtrmsg (eWarning) << "Can not write config tree to ROOT file - no ROOT file opened." << eom;
+		}
+    }
+
+    STATICINT sKSWriteROOTDict =
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddRunComponent, &KSWriteROOT::RemoveRunComponent, "add_run_output", "remove_run_output" ) +
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddEventComponent, &KSWriteROOT::RemoveEventComponent, "add_event_output", "remove_event_output" ) +
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddTrackComponent, &KSWriteROOT::RemoveTrackComponent, "add_track_output", "remove_track_output" ) +

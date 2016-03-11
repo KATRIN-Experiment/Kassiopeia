@@ -56,7 +56,7 @@ KVMCompactSurface(copyObject),
 KVMSpaceTriangle(copyObject)
 {
     Initialize();
-};
+}
 
 inline KVMTriangularSurface& KVMTriangularSurface::operator=(const KVMSpaceTriangle& rhs)
 {

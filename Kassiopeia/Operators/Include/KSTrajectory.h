@@ -1,6 +1,8 @@
 #ifndef Kassiopeia_KSTrajectory_h_
 #define Kassiopeia_KSTrajectory_h_
 
+#include <vector>
+
 #include "KSComponentTemplate.h"
 #include "KSParticle.h"
 
@@ -15,6 +17,10 @@ namespace Kassiopeia
             virtual ~KSTrajectory();
 
         public:
+
+            //clear any internal state data (caching)
+            virtual void Reset(){;};
+
             virtual void CalculateTrajectory(
                 const KSParticle& anInitialParticle,
                 KSParticle& aFinalParticle,
@@ -27,6 +33,24 @@ namespace Kassiopeia
                 const double& aTimeStep,
                 KSParticle& anIntermediateParticle
             ) const = 0;
+
+            virtual void GetPiecewiseLinearApproximation(
+                const KSParticle& anInitialParticle,
+                const KSParticle& aFinalParticle,
+                std::vector< KSParticle >* intermediateParticleStates
+            ) const = 0;
+
+            //we are forced to use a static function because this is accessed
+            //as a callback from a c-function  (gsl error handler)
+            //this callback is not thread safe. However, that being said,
+            //what situation would require running more than one instance of kassiopeia/trajectory??
+            //we could get around this ugly hack if we could use C++11 std::bind
+            static void ClearAbort(){fAbortSignal = false;};
+            static void SetAbort(){fAbortSignal = true;};
+
+        protected:
+
+            static bool fAbortSignal;
     };
 
 }

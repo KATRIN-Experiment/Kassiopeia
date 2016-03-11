@@ -83,7 +83,7 @@ Stream& operator<<(Stream& s, const KFMElectrostaticLocalCoefficientSet& aData)
 
 
 
-DefineKSAClassName(KFMElectrostaticLocalCoefficientSet);
+DefineKSAClassName(KFMElectrostaticLocalCoefficientSet)
 
 }
 

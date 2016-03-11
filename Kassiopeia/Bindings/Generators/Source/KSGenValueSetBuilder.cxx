@@ -10,13 +10,13 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueSetStructure =
+    STATICINT sKSGenValueSetStructure =
         KSGenValueSetBuilder::Attribute< string >( "name" ) +
         KSGenValueSetBuilder::Attribute< double >( "value_start" ) +
         KSGenValueSetBuilder::Attribute< double >( "value_stop" ) +
         KSGenValueSetBuilder::Attribute< unsigned int >( "value_count" );
 
-    static int sKSGenValueSet =
+    STATICINT sKSGenValueSet =
         KSRootBuilder::ComplexElement< KSGenValueSet >( "ksgen_value_set" );
 
 }

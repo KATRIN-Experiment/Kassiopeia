@@ -20,12 +20,6 @@ namespace katrin
             fObject->SetName( tName );
             return true;
         }
-        if( aContainer->GetName() == "component" )
-        {
-            KSComponent* tComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( aContainer->AsReference< string >() );
-            fObject->AddComponent( tComponent->Clone() );
-            return true;
-        }
         return false;
     }
 
@@ -34,9 +28,7 @@ namespace katrin
     {
         if( aContainer->Is< KSComponent >() == true )
         {
-            KSComponent* tComponent;
-            aContainer->ReleaseTo( tComponent );
-            fObject->AddComponent( tComponent );
+            aContainer->ReleaseTo( fObject, &KSComponentGroup::AddComponent);
             return true;
         }
         return false;

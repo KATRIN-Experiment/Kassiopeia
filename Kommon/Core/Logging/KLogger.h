@@ -150,7 +150,7 @@ public:
      * Set a loggers minimum logging level
      * @param level enum item identifying the log level
      */
-    void SetLevel(ELevel level) const;
+    void SetLevel(ELevel level);
 
     /**
      * Log a message with the specified level.

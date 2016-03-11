@@ -51,7 +51,7 @@ KVMCompactCurve(copyObject),
 KVMSpaceLineSegment(copyObject)
 {
     Initialize();
-};
+}
 
 inline KVMLineSegment& KVMLineSegment::operator=(const KVMSpaceLineSegment& rhs)
 {

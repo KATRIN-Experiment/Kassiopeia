@@ -12,7 +12,7 @@ namespace KGeoBag
     }
 
     void KGShellPolyLineSurfaceMesher::VisitShellPathSurface( KGShellPolyLineSurface* aShellPolyLineSurface )
-    { std::cout << "visiting Shell Poly Line Mesher" << std::endl;
+    {
         //create poly line points
         OpenPoints tPolyLinePoints;
         PolyLineToOpenPoints( aShellPolyLineSurface->Path().operator ->(), tPolyLinePoints );

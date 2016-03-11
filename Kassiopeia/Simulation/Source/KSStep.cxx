@@ -42,6 +42,7 @@ namespace Kassiopeia
     {
     }
     KSStep::KSStep( const KSStep& aCopy ) :
+            KSComponent(),
             fStepId( aCopy.fStepId ),
             fStepCount( aCopy.fStepCount ),
             fParentTrackId( aCopy.fParentTrackId ),
@@ -122,7 +123,7 @@ namespace Kassiopeia
     {
     }
 
-    static const int sKSStepDict =
+    STATICINT sKSStepDict =
         KSDictionary< KSStep >::AddComponent( &KSStep::GetStepId, "step_id" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetStepCount, "step_count" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetParentTrackId, "parent_track_id" ) +

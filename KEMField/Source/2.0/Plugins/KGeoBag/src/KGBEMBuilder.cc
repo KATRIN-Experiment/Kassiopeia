@@ -5,28 +5,28 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sElectrostaticDirichlet =
+    STATICINT sElectrostaticDirichlet =
         KGInterfaceBuilder::ComplexElement< KGBEMAttributor< KEMField::KElectrostaticBasis, KEMField::KDirichletBoundary > >( "electrostatic_dirichlet" );
 
-    static const int sElectrostaticDirichletStructure =
+    STATICINT sElectrostaticDirichletStructure =
         KGElectrostaticDirichletBuilder::Attribute< string >( "name" ) +
         KGElectrostaticDirichletBuilder::Attribute< double >( "value" ) +
         KGElectrostaticDirichletBuilder::Attribute< string >( "surfaces" ) +
         KGElectrostaticDirichletBuilder::Attribute< string >( "spaces" );
 
-    static const int sElectrostaticNeumann =
+    STATICINT sElectrostaticNeumann =
         KGInterfaceBuilder::ComplexElement< KGBEMAttributor< KEMField::KElectrostaticBasis, KEMField::KNeumannBoundary > >( "electrostatic_neumann" );
 
-    static const int sElectrostaticNeumannStructure =
+    STATICINT sElectrostaticNeumannStructure =
         KGElectrostaticNeumannBuilder::Attribute< string >( "name" ) +
         KGElectrostaticNeumannBuilder::Attribute< double >( "flux" ) +
         KGElectrostaticNeumannBuilder::Attribute< string >( "surfaces" ) +
         KGElectrostaticNeumannBuilder::Attribute< string >( "spaces" );
 
-    //static const int sMagnetostaticDirichlet =
+    //STATICINT sMagnetostaticDirichlet =
     //    KGInterfaceBuilder::ComplexElement< KGBEMAttributor< KEMField::KMagnetostaticBasis, KEMField::KDirichletBoundary > >( "magnetostatic_dirichlet" );
 
-    //static const int sMagnetostaticNeumann =
+    //STATICINT sMagnetostaticNeumann =
     //    KGInterfaceBuilder::ComplexElement< KGBEMAttributor< KEMField::KMagnetostaticBasis, KEMField::KNeumannBoundary > >( "magnetostatic_neumann" );
 
 }

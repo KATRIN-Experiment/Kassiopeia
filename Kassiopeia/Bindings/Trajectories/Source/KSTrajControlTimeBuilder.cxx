@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajControlTimeStructure =
+    STATICINT sKSTrajControlTimeStructure =
         KSTrajControlTimeBuilder::Attribute< string >( "name" ) +
         KSTrajControlTimeBuilder::Attribute< double >( "time" );
 
-    static int sToolboxKSTrajControlTime =
+    STATICINT sToolboxKSTrajControlTime =
         KSRootBuilder::ComplexElement< KSTrajControlTime >( "kstraj_control_time" );
 
 }

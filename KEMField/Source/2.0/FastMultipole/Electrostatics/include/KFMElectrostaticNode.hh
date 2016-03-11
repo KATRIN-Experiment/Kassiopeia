@@ -7,18 +7,17 @@
 #include "KFMCube.hh"
 #include "KFMBall.hh"
 #include "KFMIdentitySet.hh"
+#include "KFMIdentitySetList.hh"
 #include "KFMExternalIdentitySet.hh"
+#include "KFMCollocationPointIdentitySet.hh"
 #include "KFMNodeIdentityListRange.hh"
+#include "KFMElementLocalInfluenceRange.hh"
 #include "KFMCubicSpaceTreeProperties.hh"
 #include "KFMNodeFlags.hh"
-
 
 #include "KFMElectrostaticElementContainerBase.hh"
 #include "KFMElectrostaticMultipoleSet.hh"
 #include "KFMElectrostaticLocalCoefficientSet.hh"
-
-
-//#include "KSAStructuredASCIIHeaders.hh"
 
 #define KFMELECTROSTATICS_DIM 3
 #define KFMELECTROSTATICS_BASIS 1
@@ -47,15 +46,15 @@ typedef KFMCubicSpaceTreeProperties< KFMELECTROSTATICS_DIM > three_dimensional_t
 
 typedef KFMElectrostaticElementContainerBase< KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS > three_dimensional_constant_charge_density_element_container;
 
-
 typedef KFMCube< KFMELECTROSTATICS_DIM > three_dimensional_cube;
+
 typedef KFMNodeFlags< KFMELECTROSTATICS_FLAGS > electrostatic_node_flags;
 
 typedef KTYPELIST_9(three_dimensional_tree_properties,
                     three_dimensional_constant_charge_density_element_container,
                     KFMIdentitySet,
-                    KFMExternalIdentitySet,
-                    KFMNodeIdentityListRange,
+                    KFMIdentitySetList,
+                    KFMCollocationPointIdentitySet,
                     three_dimensional_cube,
                     electrostatic_node_flags,
                     KFMElectrostaticMultipoleSet,

@@ -5,10 +5,10 @@
 
 namespace katrin
 {
-    static int sKGSpaceBuilder =
+    STATICINT sKGSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGSpace >( "space" );
 
-    static int sKGSpaceBuilderStructure =
+    STATICINT sKGSpaceBuilderStructure =
         KGSpaceBuilder::Attribute< string >( "name" ) +
         KGSpaceBuilder::Attribute< string >( "node" ) +
         KGSpaceBuilder::Attribute< string >( "tree" ) +

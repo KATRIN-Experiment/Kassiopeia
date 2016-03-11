@@ -25,14 +25,17 @@ template< typename ObjectTypeList >
 class KFMIdentitySetCollector: public KFMNodeActor< KFMNode<ObjectTypeList> >
 {
     public:
+
         KFMIdentitySetCollector()
         {
-            fIDSet.Clear();
+            fRawIDSets.clear();
         };
+
         virtual ~KFMIdentitySetCollector(){};
 
-        void Clear(){fIDSet.Clear();};
-        const KFMIdentitySet* GetIDSet(){return &fIDSet;};
+        void Clear(){fRawIDSets.clear();};
+
+        const std::vector< const std::vector<unsigned int>* >* GetRawIDSetList() const {return &fRawIDSets;};
 
         virtual void ApplyAction( KFMNode< ObjectTypeList >* node)
         {
@@ -41,14 +44,14 @@ class KFMIdentitySetCollector: public KFMNodeActor< KFMNode<ObjectTypeList> >
                 KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
                 if(set != NULL)
                 {
-                    fIDSet.Merge(set);
+                    fRawIDSets.push_back(set->GetRawIDList() );
                 }
             }
         }
 
     private:
 
-        KFMIdentitySet fIDSet;
+        std::vector< const std::vector<unsigned int>* > fRawIDSets;
 
 };
 

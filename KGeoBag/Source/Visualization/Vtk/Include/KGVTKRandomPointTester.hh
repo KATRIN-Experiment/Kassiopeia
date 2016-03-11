@@ -37,9 +37,9 @@ namespace KGeoBag
             void AddSurface( const KGSurface* aSurface );
             void AddSpace( const KGSpace* aSpace );
 
-            ;K_SET( KGRGBColor, SampleColor )
-            ;K_SET( double, VertexSize )
-            ;K_SET( std::vector<KThreeVector*>, SamplePoints );
+            K_SET( KGRGBColor, SampleColor )
+            K_SET( double, VertexSize )
+            K_SET( std::vector<KThreeVector*>, SamplePoints )
 
         private:
             vector< const KGSurface* > fSurfaces;

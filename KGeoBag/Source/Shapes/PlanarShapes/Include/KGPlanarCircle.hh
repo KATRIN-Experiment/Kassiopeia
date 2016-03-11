@@ -42,7 +42,7 @@ namespace KGeoBag
             bool Above( const KTwoVector& aQuery ) const;
 
         private:
-            KTwoVector fCentroid;;
+            KTwoVector fCentroid;
             double fRadius;
             unsigned int fMeshCount;
 

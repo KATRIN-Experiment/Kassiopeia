@@ -1,13 +1,14 @@
 #include "KFormulaProcessor.hh"
 #include "KInitializationMessage.hh"
 
-#include "TF1.h"
-
 #include <sstream>
-using std::stringstream;
-
 #include <cstdlib>
 #include <iomanip>
+#include <memory>
+
+#include <TFormula.h>
+
+using namespace std;
 
 namespace katrin
 {
@@ -50,8 +51,8 @@ namespace katrin
         string tValue;
         string tBuffer;
         stack< string > tBufferStack;
-        TF1* tFormulaConverter;
-        stringstream* tResultConverter;
+
+        stringstream tResultConverter;
 
         tValue = aToken->GetValue();
 
@@ -109,14 +110,10 @@ namespace katrin
                 	tBuffer.replace( tBuffer.find( fModulo ), fModulo.length(), string("%") );
                 }
 
-                tFormulaConverter = new TF1( "(anonymous)", tBuffer.c_str(), -1., 1. );
-                tResultConverter = new stringstream();
-
-                (*tResultConverter) << std::setprecision( 15 )<<tFormulaConverter->Eval( 0. );
-                tBuffer = tResultConverter->str();
-
-                delete tResultConverter;
-                delete tFormulaConverter;
+                TFormula formulaParser("(anonymous)", tBuffer.c_str());
+                tResultConverter.str("");
+                tResultConverter << std::setprecision( 15 ) << formulaParser.Eval( 0.0 );
+                tBuffer = tResultConverter.str();
 
                 tBufferStack.top() += tBuffer;
                 tBuffer.clear();

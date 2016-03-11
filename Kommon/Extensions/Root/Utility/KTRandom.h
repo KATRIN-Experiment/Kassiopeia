@@ -7,13 +7,11 @@
 #ifndef KTRANDOM_H_
 #define KTRANDOM_H_
 
+#include "KRandom.h"
 #include <TRandom.h>
-#include <KSingleton.h>
 
 namespace katrin
 {
-
-class KRandom;
 
 class KTRandom : public TRandom, public KSingleton<KTRandom>
 {

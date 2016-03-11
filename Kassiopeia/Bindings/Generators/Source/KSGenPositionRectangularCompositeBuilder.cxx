@@ -6,8 +6,9 @@
 #include "KSGenValueGaussBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -19,7 +20,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenPositionRectangularCompositeStructure =
+    STATICINT sKSGenPositionRectangularCompositeStructure =
         KSGenPositionRectangularCompositeBuilder::Attribute< string >( "name" ) +
         KSGenPositionRectangularCompositeBuilder::Attribute< string >( "surface" ) +
         KSGenPositionRectangularCompositeBuilder::Attribute< string >( "space" ) +
@@ -42,14 +43,17 @@ namespace katrin
         KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueUniform >( "z_uniform" ) +
         KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueGauss >( "z_gauss" );
 
-    static int sToolboxKSGenPositionRectangularComposite =
+    STATICINT sToolboxKSGenPositionRectangularComposite =
         KSRootBuilder::ComplexElement< KSGenPositionRectangularComposite >( "ksgen_position_rectangular_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenPositionRectangularCompositeStructureROOT =
+#ifdef Kassiopeia_USE_ROOT
+    STATICINT sKSGenPositionRectangularCompositeStructureROOT =
             KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "x_formula" ) +
+            KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "x_histogram" ) +
             KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "y_formula" ) +
-            KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" );
+            KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "y_histogram" ) +
+            KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" ) +
+            KSGenPositionRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "z_histogram" );
 #endif
 
 }

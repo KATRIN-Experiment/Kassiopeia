@@ -147,21 +147,25 @@ class KFMElectrostaticTreeConstructor
         {
             //now we have to re-build the tree from the objects now in memory
             //first retrieve the parameters
+            unsigned int top_level_divisions = data.GetTopLevelDivisions();
             unsigned int divisions = data.GetDivisions();
+            unsigned int top_div[3]; top_div[0] = top_level_divisions; top_div[1] = top_level_divisions; top_div[2] = top_level_divisions;
             unsigned int div[3]; div[0] = divisions; div[1] = divisions; div[2] = divisions;
             unsigned int degree = data.GetDegree();
             unsigned int zeromask = data.GetZeroMaskSize();
             unsigned int max_tree_depth = data.GetMaximumTreeDepth();
+            double insertion_ratio = data.GetInsertionRatio();
             unsigned int n_nodes = data.GetNumberOfTreeNodes();
 
             KFMElectrostaticParameters params;
+            params.top_level_divisions = top_level_divisions;
             params.divisions = divisions;
             params.degree = degree;
             params.zeromask = zeromask;
             params.maximum_tree_depth = max_tree_depth;
+            params.insertion_ratio = insertion_ratio;
 
             tree.SetParameters(params);
-            tree.SetMaxDirectCalls(data.GetMaxDirectCalls());
 
             //access and modify the tree's properties
             KFMCubicSpaceTreeProperties<3>* tree_prop = tree.GetTreeProperties();
@@ -170,6 +174,7 @@ class KFMElectrostaticTreeConstructor
             tree_prop->SetMaxTreeDepth(max_tree_depth);
             tree_prop->SetCubicNeighborOrder(zeromask);
             tree_prop->SetDimensions(div);
+            tree_prop->SetTopLevelDimensions(top_div);
 
             //now we need to create a vector of N empty nodes, and enumerate them
             std::vector< KFMElectrostaticNode* > tree_nodes;
@@ -239,15 +244,10 @@ class KFMElectrostaticTreeConstructor
             //now replace the tree's root node with the new one
             tree.ReplaceRootNode(tree_nodes[0]);
 
-            //now we need to reconstruct the external id sets
-            KFMElectrostaticExternalIdentitySetCreator eIDCreator;
-            eIDCreator.SetZeroMaskSize(zeromask);
-            tree.ApplyRecursiveAction(&eIDCreator);
-
-            //sort external ids
-            KFMExternalIdentitySetSorter<KFMElectrostaticNodeObjects> eidSorter;
-            tree.ApplyRecursiveAction(&eidSorter);
-
+            //now we reconstruct the direct call lists
+            KFMElectrostaticIdentitySetListCreator IDListCreator;
+            IDListCreator.SetZeroMaskSize(params.zeromask);
+            tree.ApplyCorecursiveAction(&IDListCreator);
         }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -261,11 +261,12 @@ class KFMElectrostaticTreeConstructor
             //get the tree parameters to store them
             KFMElectrostaticParameters params = tree.GetParameters();
 
+            data.SetTopLevelDivisions(params.top_level_divisions);
             data.SetDivisions(params.divisions);
             data.SetDegree(params.degree);
             data.SetZeroMaskSize(params.zeromask);
             data.SetMaximumTreeDepth(params.maximum_tree_depth);
-            data.SetMaxDirectCalls(tree.GetMaxDirectCalls());
+            data.SetInsertionRatio(params.insertion_ratio);
 
             //first we need to flatten the tree structure before we can stream it
             KFMTreeStructureExtractor<KFMElectrostaticNodeObjects> flattener;

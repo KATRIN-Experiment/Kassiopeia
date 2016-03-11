@@ -72,8 +72,10 @@ namespace Kassiopeia
             void SetMagneticField( const KThreeVector& aField ) const;
             const KThreeVector& GetElectricField() const;
             const KThreeMatrix& GetMagneticGradient() const;
+            const pair<const KThreeVector&, const KThreeMatrix&> GetMagneticFieldAndGradient() const;
             const double& GetElectricPotential() const;
             const double& GetElectricPotentialRP() const;
+            const pair<const KThreeVector&, const double&> GetElectricFieldAndPotential() const;
 
             const KThreeVector& GetGuidingCenter() const; //basic
             const double& GetLongMomentum() const; //basic
@@ -138,14 +140,18 @@ namespace Kassiopeia
             void RecalculateMagneticField() const;
             void RecalculateElectricField() const;
             void RecalculateMagneticGradient() const;
+            void RecalculateMagneticFieldAndGradient() const;
             void RecalculateElectricPotential() const;
             void RecalculateElectricPotentialRP() const;
+            void RecalculateElectricFieldAndPotential() const;
 
             mutable void (KSTrajAdiabaticParticle::*fGetMagneticFieldPtr)() const;
             mutable void (KSTrajAdiabaticParticle::*fGetElectricFieldPtr)() const;
             mutable void (KSTrajAdiabaticParticle::*fGetMagneticGradientPtr)() const;
+            mutable void (KSTrajAdiabaticParticle::*fGetMagneticFieldAndGradientPtr)() const;
             mutable void (KSTrajAdiabaticParticle::*fGetElectricPotentialPtr)() const;
             mutable void (KSTrajAdiabaticParticle::*fGetElectricPotentialRPPtr)() const;
+            mutable void (KSTrajAdiabaticParticle::*fGetElectricFieldAndPotentialPtr)() const;
     };
 
     inline KSTrajAdiabaticParticle& KSTrajAdiabaticParticle::operator=( const double& anOperand )
@@ -154,8 +160,10 @@ namespace Kassiopeia
         fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::RecalculateMagneticField;
         fGetElectricFieldPtr = &KSTrajAdiabaticParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticGradient;
+        fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient;
         fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotential;
         fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
+        fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
         return *this;
     }
 
@@ -165,8 +173,10 @@ namespace Kassiopeia
         fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::RecalculateMagneticField;
         fGetElectricFieldPtr = &KSTrajAdiabaticParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticGradient;
+        fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient;
         fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotential;
         fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
+        fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
         return *this;
     }
 
@@ -177,8 +187,10 @@ namespace Kassiopeia
         fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::RecalculateMagneticField;
         fGetElectricFieldPtr = &KSTrajAdiabaticParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticGradient;
+        fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient;
         fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotential;
         fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
+        fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
         return *this;
     }
 
@@ -217,8 +229,10 @@ namespace Kassiopeia
         fGetMagneticFieldPtr = aParticle.fGetMagneticFieldPtr;
         fGetElectricFieldPtr = aParticle.fGetElectricFieldPtr;
         fGetMagneticGradientPtr = aParticle.fGetMagneticGradientPtr;
+        fGetMagneticFieldAndGradientPtr = aParticle.fGetMagneticFieldAndGradientPtr;
         fGetElectricPotentialPtr = aParticle.fGetElectricPotentialPtr;
         fGetElectricPotentialRPPtr = aParticle.fGetElectricPotentialRPPtr;
+        fGetElectricFieldAndPotentialPtr = aParticle.fGetElectricFieldAndPotentialPtr;
 
         return *this;
     }

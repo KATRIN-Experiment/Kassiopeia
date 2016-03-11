@@ -15,10 +15,18 @@
 #include "KFMSpecialNodeSet.hh"
 #include "KFMSpecialNodeSetCreator.hh"
 
+#include "KFMRemoteToLocalConverterInterface.hh"
+
 #include "KFMElectrostaticMultipoleCalculator_OpenCL.hh"
 #include "KFMElectrostaticMultipoleDistributor_OpenCL.hh"
 
 #include "KFMElectrostaticRemoteToRemoteConverter_OpenCL.hh"
+#include "KFMElectrostaticRemoteToLocalConverter_OpenCL.hh"
+#include "KFMElectrostaticLocalToLocalConverter_OpenCL.hh"
+#include "KFMElectrostaticBatchedRemoteToLocalConverter_OpenCL.hh"
+#include "KFMElectrostaticBatchedLocalToLocalConverter_OpenCL.hh"
+#include "KFMElectrostaticBatchedRemoteToRemoteConverter_OpenCL.hh"
+
 
 
 namespace KEMField
@@ -42,15 +50,40 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
         KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL();
         virtual ~KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL();
 
+        //for evaluating work load weights
+        void EvaluateWorkLoads(unsigned int divisions, unsigned int zeromask);
+        double GetDiskWeight() const {return fDiskWeight;};
+        double GetRamWeight() const {return fRamWeight;};
+        double GetFFTWeight() const {return fFFTWeight;};
+
         //extracted electrode data
         void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
 
-        //access to the region tree
+        void SetParameters(KFMElectrostaticParameters params);
+
         void SetTree(KFMElectrostaticTree* tree);
+
+        void InitializeMultipoleMoments();
+
+        void InitializeLocalCoefficientsForPrimaryNodes();
+
+        //needed when MPI is in used and all processes must communicate thier
+        //influence with the GPU
+        void RecieveTopLevelLocalCoefficients();
+        void SendTopLevelLocalCoefficients();
 
         void Initialize();
 
         void MapField();
+
+        //individual operations, only to be used when the tree needs
+        //to be modified in between steps (i.e. MPI)
+        void ResetMultipoleMoments();
+        void ComputeMultipoleMoments();
+        void ResetLocalCoefficients();
+        void ComputeMultipoleToLocal();
+        void ComputeLocalToLocal();
+        void ComputeLocalCoefficients();
 
     protected:
 
@@ -58,14 +91,27 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
         void AllocateBuffers();
         void CheckDeviceProperites();
 
-        //operations
-        void SetParameters(KFMElectrostaticParameters params);
-        void InitializeMultipoleMoments();
-        void ResetMultipoleMoments();
-        void ComputeMultipoleMoments();
-        void ResetLocalCoefficients();
-        void InitializeLocalCoefficients();
-        void ComputeLocalCoefficients();
+        double ComputeDiskMatrixVectorProductWeight();
+        double ComputeRamMatrixVectorProductWeight();
+        double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
+
+        #ifdef KEMFIELD_USE_REALTIME_CLOCK
+        timespec diff(timespec start, timespec end)
+        {
+            timespec temp;
+            if( (end.tv_nsec-start.tv_nsec) < 0)
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec-1;
+                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+            }
+            else
+            {
+                temp.tv_sec = end.tv_sec-start.tv_sec;
+                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+            }
+            return temp;
+        }
+        #endif
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -73,10 +119,20 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
         int fDegree;
         unsigned int fNTerms;
         int fDivisions;
+        int fTopLevelDivisions;
         int fZeroMaskSize;
         int fMaximumTreeDepth;
         unsigned int fVerbosity;
         double fWorldLength;
+
+        double fDiskWeight;
+        double fRamWeight;
+        double fFFTWeight;
+        static const std::string fWeightFilePrefix;
+
+        //if device type is an accelerator (e.g. intel xeon phi)
+        //we need to use the batched kernels in order to obtain decent performance
+        bool fUseBatchedKernels;
 
         //the tree object that the manager is to construct
         KFMElectrostaticTree* fTree;
@@ -95,19 +151,22 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
         //special sets of nodes
         KFMSpecialNodeSet<KFMElectrostaticNodeObjects> fNonZeroMultipoleMomentNodes;
         KFMSpecialNodeSet<KFMElectrostaticNodeObjects> fPrimaryNodes;
+        KFMSpecialNodeSet<KFMElectrostaticNodeObjects> fTopLevelPrimaryNodes;
 
         //the multipole moment calculator
         KFMElectrostaticMultipoleCalculator_OpenCL* fMultipoleCalculator;
-        KFMElectrostaticMultipoleDistributor_OpenCL* fMultipoleDistributor;
-
 
         //the multipole up converter
-        //KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+        KFMElectrostaticBatchedRemoteToRemoteConverter_OpenCL* fM2MConverter_Batched;
         KFMElectrostaticRemoteToRemoteConverter_OpenCL* fM2MConverter;
+
         //the local coefficient calculator
-        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+        KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticBatchedRemoteToLocalConverter_OpenCL>* fM2LConverterInterface_Batched;
+        KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter_OpenCL>* fM2LConverterInterface;
+
         //the local coefficient down converter
-        KFMElectrostaticLocalToLocalConverter* fL2LConverter;
+        KFMElectrostaticBatchedLocalToLocalConverter_OpenCL* fL2LConverter_Batched;
+        KFMElectrostaticLocalToLocalConverter_OpenCL* fL2LConverter;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,6 +177,7 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
 
         unsigned int fNMultipoleNodes;
         unsigned int fNPrimaryNodes;
+        unsigned int fNTopLevelPrimaryNodes;
         unsigned int fNReducedTerms;
         cl::Buffer* fMultipoleBufferCL;
         cl::Buffer* fLocalCoeffBufferCL;

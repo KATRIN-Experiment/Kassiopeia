@@ -9,6 +9,7 @@ namespace Kassiopeia
     {
     }
     KSGenEnergyComposite::KSGenEnergyComposite( const KSGenEnergyComposite& aCopy ) :
+            KSComponent(),
             fEnergyValue( aCopy.fEnergyValue )
     {
     }
@@ -41,6 +42,13 @@ namespace Kassiopeia
                                    << tEnergyValue << "> in energy creator <"
                                    << this->GetName() << "> with zero" << eom;
                 tEnergyValue = 0.;
+            }
+            if ( tEnergyValue == 0.0 )
+            {
+                genmsg( eWarning ) << "replacing zero energy value "
+                                   << "in energy creator <"
+                                   << this->GetName() << "> with 1e-10" << eom;
+                tEnergyValue = 1.e-10;
             }
             for( tParticleIt = aPrimaries->begin(); tParticleIt != aPrimaries->end(); tParticleIt++ )
             {
@@ -103,7 +111,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenEnergyCompositeDict =
+    STATICINT sKSGenEnergyCompositeDict =
         KSDictionary< KSGenEnergyComposite >::AddCommand( &KSGenEnergyComposite::SetEnergyValue,
                                                           &KSGenEnergyComposite::ClearEnergyValue,
                                                           "set_energy", "clear_energy" );

@@ -24,10 +24,10 @@ namespace katrin
     {
     }
 
-    static int sKSIntScattering =
+    STATICINT sKSIntScattering =
         KSRootBuilder::ComplexElement< KSIntScattering >( "ksint_scattering" );
 
-    static int sKSIntScatteringStructure =
+    STATICINT sKSIntScatteringStructure =
         KSIntScatteringBuilder::Attribute< string >( "name" ) +
         KSIntScatteringBuilder::Attribute< bool >( "split" ) +
         KSIntScatteringBuilder::Attribute< string >( "density" ) +

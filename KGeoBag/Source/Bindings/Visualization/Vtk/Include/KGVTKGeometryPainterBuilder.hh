@@ -29,6 +29,11 @@ namespace katrin
             aContainer->CopyTo( fObject, &KGVTKGeometryPainter::SetPath );
             return true;
         }
+        if( aContainer->GetName() == "write_stl" )
+        {
+            aContainer->CopyTo( fObject, &KGVTKGeometryPainter::SetWriteSTL );
+            return true;
+        }
         if( aContainer->GetName() == "surfaces" )
         {
             if( aContainer->AsReference< string >().size() == 0 )

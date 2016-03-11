@@ -25,6 +25,8 @@ namespace Kassiopeia
             fDirectory( KEMFileInterface::GetInstance()->ActiveDirectory() ),
             fHashMaskedBits( 20 ),
             fHashThreshold( 1.e-14 ),
+            fMinimumElementArea(0.0),
+            fMaximumElementAspectRatio(1e100),
             fFile(),
             fSystem( NULL ),
             fSurfaces(),
@@ -39,9 +41,12 @@ namespace Kassiopeia
         fFile = fFile.substr( fFile.find_last_of( "/" ) + 1, std::string::npos );
     }
     KSFieldElectrostatic::KSFieldElectrostatic( const KSFieldElectrostatic& /*aCopy*/) :
+            KSComponent(),
             fDirectory( KEMFileInterface::GetInstance()->ActiveDirectory() ),
             fHashMaskedBits( 20 ),
             fHashThreshold( 1.e-14 ),
+            fMinimumElementArea(0.0),
+            fMaximumElementAspectRatio(1e100),
             fFile(),
             fSystem( NULL ),
             fSurfaces(),
@@ -82,6 +87,17 @@ namespace Kassiopeia
         fieldmsg_debug( "electric field at " <<aSamplePoint<< " is " << aField <<eom);
         return;
     }
+
+    void KSFieldElectrostatic::CalculateFieldAndPotential( const KThreeVector& aSamplePoint, const double& /*aSampleTime*/, KThreeVector& aField, double& aPotential )
+    {
+        std::pair<KEMThreeVector, double> tFieldAndPotential = fFieldSolver->ElectricFieldAndPotential( fConverter->GlobalToInternalPosition( aSamplePoint ) );
+        aField = fConverter->InternalToGlobalVector( tFieldAndPotential.first );
+        aPotential = tFieldAndPotential.second;
+        fieldmsg_debug( "potential at " <<aSamplePoint<< " is " << aPotential <<eom);
+        fieldmsg_debug( "electric field at " <<aSamplePoint<< " is " << aField <<eom);
+        return;
+    }
+
     void KSFieldElectrostatic::SetDirectory( const string& aDirectory )
     {
         fDirectory = aDirectory;
@@ -122,6 +138,16 @@ namespace Kassiopeia
         fHashThreshold = aThreshold;
         return;
     }
+    void KSFieldElectrostatic::SetMinimumElementArea( const double& aArea )
+    {
+        fMinimumElementArea = aArea;
+        return;
+    }
+    void KSFieldElectrostatic::SetMaximumElementAspectRatio( const double& aAspect )
+    {
+        fMaximumElementAspectRatio = aAspect;
+        return;
+    }
 
     //**********
     //visitor
@@ -148,21 +174,24 @@ namespace Kassiopeia
     }
     void KSFieldElectrostatic::VTKViewer::Visit(KSFieldElectrostatic& electrostaticFieldSolver)
     {
-#ifdef KEMFIELD_USE_VTK
-      if (fViewGeometry || fSaveGeometry)
-      {
-        KEMVTKViewer viewer(*(electrostaticFieldSolver.GetContainer()));
-        if (fViewGeometry)
-          viewer.ViewGeometry();
-        if (fSaveGeometry)
+        MPI_SINGLE_PROCESS
         {
-          KEMField::cout<<"Saving electrode geometry to "<<fFile<<"."<<KEMField::endl;
-          viewer.GenerateGeometryFile(fFile);
+            #ifdef KEMFIELD_USE_VTK
+                  if (fViewGeometry || fSaveGeometry)
+                  {
+                    KEMVTKViewer viewer(*(electrostaticFieldSolver.GetContainer()));
+                    if (fViewGeometry)
+                      viewer.ViewGeometry();
+                    if (fSaveGeometry)
+                    {
+                      KEMField::cout<<"Saving electrode geometry to "<<fFile<<"."<<KEMField::endl;
+                      viewer.GenerateGeometryFile(fFile);
+                    }
+                  }
+            #else
+                    (void)electrostaticFieldSolver;
+            #endif
         }
-      }
-#else
-        (void)electrostaticFieldSolver;
-#endif
     }
 
     //**********
@@ -271,7 +300,7 @@ namespace Kassiopeia
 #ifdef KEMFIELD_USE_ROOT
             KSuperpositionSolver< double, KEMRootSVDSolver > tSuperpositionSolver;
 #else
-            KSuperpositionSolver< double, KSVDSolver > tSuperpositionSolver; // this doesn't seem to work even if gsl is enabled
+            KSuperpositionSolver< double, KSVDSolver > tSuperpositionSolver;
 #endif
 
             KElectrostaticBoundaryIntegrator tIntegrator;
@@ -374,8 +403,10 @@ namespace Kassiopeia
         KResidualThreshold tResidualThreshold;
         tResidualThreshold.fResidualThreshold = aThreshold;
         tResidualThreshold.fGeometryHash = tShapeBoundarySolutionHash;
-        KEMFileInterface::GetInstance()->Write( tResidualThreshold, tThresholdName, tThresholdLabels );
-
+        MPI_SINGLE_PROCESS
+        {
+            KEMFileInterface::GetInstance()->Write( tResidualThreshold, tThresholdName, tThresholdLabels );
+        }
         // create label set for container object
         string tContainerBase( KSurfaceContainer::Name() );
         string tContainerName = tContainerBase + string( "_" ) + tShapeBoundarySolutionHash;
@@ -384,7 +415,10 @@ namespace Kassiopeia
         tContainerLabels.push_back( tShapeBoundarySolutionHash );
 
         // write container object
-        KEMFileInterface::GetInstance()->Write( aContainer, tContainerName, tContainerLabels );
+        MPI_SINGLE_PROCESS
+        {
+            KEMFileInterface::GetInstance()->Write( aContainer, tContainerName, tContainerLabels );
+        }
 
         return;
     }
@@ -426,6 +460,128 @@ namespace Kassiopeia
             fieldmsg( eError ) << eom;
         }
     }
+
+    //*********************************
+    //explicit superposition cached bem solver
+    //*********************************
+
+    KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver::ExplicitSuperpositionCachedBEMSolver()
+    {
+        fName="";
+        fNames.clear();
+        fScaleFactors.clear();
+        fHashLabels.clear();
+    }
+
+    KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver::~ExplicitSuperpositionCachedBEMSolver()
+    {
+    }
+
+    void KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver::Initialize( KSurfaceContainer& container )
+    {
+        bool tSolution = false;
+        bool tCompleteSolution = false;
+
+        if( (fScaleFactors.size() == 0) && (fHashLabels.size() == 0) )
+        {
+            fieldmsg( eError ) << "must provide a set of scale factors and hash labels for explicit cached bem solution" << eom;
+        }
+
+        //create a solution vector
+        KElectrostaticBoundaryIntegrator integrator;
+        KBoundaryIntegralSolutionVector< KElectrostaticBoundaryIntegrator > x( container, integrator );
+
+        //zero out the solution vector
+        for(unsigned int i=0; i < x.Dimension(); i++)
+        {
+            x[i] = 0;
+        }
+
+        // compute hash of the bare geometry
+        KMD5HashGenerator tShapeHashGenerator;
+        tShapeHashGenerator.MaskedBits( fHashMaskedBits );
+        tShapeHashGenerator.Threshold( fHashThreshold );
+        tShapeHashGenerator.Omit( Type2Type< KElectrostaticBasis >() );
+        tShapeHashGenerator.Omit( Type2Type< KBoundaryType< KElectrostaticBasis, KDirichletBoundary > >() );
+        string tShapeHash = tShapeHashGenerator.GenerateHash( container );
+
+        fieldmsg_debug( "<shape> hash is <" << tShapeHash << ">" << eom )
+
+        unsigned int found_count = 0;
+        KResidualThreshold tMaxResidualThreshold;
+        tMaxResidualThreshold.fResidualThreshold = 0;
+        for(unsigned int n=0; n<fScaleFactors.size(); n++)
+        {
+            tSolution = false;
+
+            KSurfaceContainer* tempContainer = new KSurfaceContainer();
+            KEMFileInterface::GetInstance()->FindByHash( *tempContainer, fHashLabels[n], tSolution);
+
+            KResidualThreshold tResidualThreshold;
+            std::vector<std::string> labels; labels.push_back(fHashLabels[n]);
+            KEMFileInterface::GetInstance()->FindByLabels( tResidualThreshold, labels);
+
+            if(tMaxResidualThreshold.fResidualThreshold < tResidualThreshold.fResidualThreshold)
+            {
+                tMaxResidualThreshold.fResidualThreshold = tResidualThreshold.fResidualThreshold;
+            }
+
+            if(tSolution)
+            {
+                //compute geometry hash to compare to our actual geometry
+                //we cannot use the geometry hash on disk, because they can be machine dependent
+                //and the files may have been generated on a different machine
+                KMD5HashGenerator tTempShapeHashGenerator;
+                tTempShapeHashGenerator.MaskedBits( fHashMaskedBits );
+                tTempShapeHashGenerator.Threshold( fHashThreshold );
+                tTempShapeHashGenerator.Omit( Type2Type< KElectrostaticBasis >() );
+                tTempShapeHashGenerator.Omit( Type2Type< KBoundaryType< KElectrostaticBasis, KDirichletBoundary > >() );
+                string tTempShapeHash = tShapeHashGenerator.GenerateHash( *tempContainer );
+
+                //if geometry hashes match, add this solution
+                if(tTempShapeHash != tShapeHash)
+                {
+                    KBoundaryIntegralSolutionVector< KElectrostaticBoundaryIntegrator > temp_x( *tempContainer, integrator );
+                    //zero out the solution vector
+                    double scale = fScaleFactors[n];
+                    for(unsigned int i=0; i < x.Dimension(); i++)
+                    {
+                        x[i] += scale*temp_x[i];
+                    }
+                    found_count++;
+                }
+                else
+                {
+                    std::cout<< "no matching solution with hash: "<<fHashLabels[n]<<" for "<<fNames[n]<<"."<< std::endl;
+                    std::cout<<"shape hash mismatch: "<<tTempShapeHash<<" != "<<tTempShapeHash<<std::endl;
+                    fieldmsg_debug( "no matching solution with hash: "<<fHashLabels[n]<<" for "<<fNames[n]<<"."<< eom )
+                    break;
+                }
+
+                delete tempContainer;
+            }
+            else
+            {
+                std::cout<<"could not find file"<<std::endl;
+                std::cout<< "no matching solution with hash: "<<fHashLabels[n]<<" for "<<fNames[n]<<"."<< std::endl;
+                fieldmsg_debug( "no matching solution with hash: "<<fHashLabels[n]<<" for "<<fNames[n]<<"."<< eom )
+                break;
+            }
+        }
+
+        if(found_count == fScaleFactors.size())
+        {
+            tCompleteSolution = true;
+            SaveSolution(tMaxResidualThreshold.fResidualThreshold, container);
+        }
+
+        if( tCompleteSolution == false )
+        {
+            fieldmsg << "could not find needed set of cached bem solutions in directory <" << KEMFileInterface::GetInstance()->ActiveDirectory() << ">" << ret;
+            fieldmsg( eError ) << eom;
+        }
+    }
+
 
     //*******************************
     //gaussian elimination bem solver
@@ -490,6 +646,8 @@ namespace Kassiopeia
             {
 #if defined(KEMFIELD_USE_MPI) && defined(KEMFIELD_USE_OPENCL)
                 KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess());
+#elif defined(KEMFIELD_USE_OPENCL)
+                KOpenCLInterface::GetInstance()->SetGPU(0);
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -613,149 +771,6 @@ namespace Kassiopeia
     //fast multipole bem solver
     //*************************
 
-KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
-            fTolerance( 1.e-8 ),
-            fParameters(),
-            fKrylov("gmres"),
-            fRestartCycle(30),
-            fUseOpenCL(false),
-            fUseVTK(false){};
-
-    KSFieldElectrostatic::FastMultipoleBEMSolver::~FastMultipoleBEMSolver(){};
-
-    void KSFieldElectrostatic::FastMultipoleBEMSolver::Initialize( KSurfaceContainer& surfaceContainer )
-    {
-        if( FindSolution( fTolerance, surfaceContainer ) == false )
-        {
-
-            //now we want to construct the tree
-            KFMElectrostaticParameters params = fParameters;
-            params.degree = 0; //mask the expansion degree, as this does not affect disk-cached matrix elements
-
-            // compute hash of the bare geometry
-            KMD5HashGenerator tShapeHashGenerator;
-            tShapeHashGenerator.MaskedBits( fHashMaskedBits );
-            tShapeHashGenerator.Threshold( fHashThreshold );
-            tShapeHashGenerator.Omit( Type2Type< KElectrostaticBasis >() );
-            tShapeHashGenerator.Omit( Type2Type< KBoundaryType< KElectrostaticBasis, KDirichletBoundary > >() );
-            string tShapeHash = tShapeHashGenerator.GenerateHash( surfaceContainer );
-
-            // compute hash of the parameter values
-            KMD5HashGenerator parameterHashGenerator;
-            parameterHashGenerator.MaskedBits( fHashMaskedBits );
-            parameterHashGenerator.Threshold( fHashThreshold );
-            string parameterHash = parameterHashGenerator.GenerateHash( params );
-
-            //construct a unique id by stripping the first 6 characters from the shape and parameter hashes
-            //this id is only used to append to the names of cached sparse matrix element files
-            std::string unique_id = tShapeHash.substr(0,6) + parameterHash.substr(0,6);
-
-            if( fUseOpenCL )
-            {
-                #ifndef KEMFIELD_USE_OPENCL
-                    typedef KFMElectrostaticBoundaryIntegrator<KFMElectrostaticBoundaryIntegratorEngine_SingleThread> FastMultipoleEBI;
-                #else
-                    typedef KFMElectrostaticBoundaryIntegrator<KFMElectrostaticBoundaryIntegratorEngine_OpenCL> FastMultipoleEBI;
-                #endif
-
-                FastMultipoleEBI integrator(surfaceContainer);
-                integrator.SetUniqueIDString(unique_id);
-                integrator.Initialize(fParameters);
-                KFMBoundaryIntegralMatrix< FastMultipoleEBI > A(surfaceContainer,integrator);
-                KBoundaryIntegralSolutionVector< FastMultipoleEBI > x(surfaceContainer,integrator);
-                KBoundaryIntegralVector< FastMultipoleEBI > b(surfaceContainer,integrator);
-
-                if( fKrylov == std::string("gmres") )
-                {
-                    KIterativeKrylovSolver< FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual> gmres;
-                    gmres.SetTolerance(fTolerance);
-                    KIterativeKrylovRestartCondition* restart_condition = new KIterativeKrylovRestartCondition();
-                    restart_condition->SetNumberOfIterationsBetweenRestart(fRestartCycle);
-                    gmres.SetRestartCondition(restart_condition);
-
-
-                    gmres.AddVisitor(new KIterationDisplay<double>());
-
-                    #ifdef KEMFIELD_USE_VTK
-                    if( fUseVTK )
-                    {
-                        gmres.AddVisitor(new KVTKIterationPlotter<double>());
-                    }
-                    #endif
-
-                    gmres.Solve(A,x,b);
-                    delete restart_condition;
-                }
-                else if( fKrylov == std::string("bicgstab") )
-                {
-                    KIterativeKrylovSolver< FastMultipoleEBI::ValueType, KBiconjugateGradientStabilized> bicgstab;
-                    bicgstab.SetTolerance(fTolerance);
-
-                    bicgstab.AddVisitor(new KIterationDisplay<double>());
-
-                    #ifdef KEMFIELD_USE_VTK
-                    if( fUseVTK )
-                    {
-                        bicgstab.AddVisitor(new KVTKIterationPlotter<double>());
-                    }
-                    #endif
-
-                    bicgstab.Solve(A,x,b);
-                }
-            }
-            else
-            {
-                typedef KFMElectrostaticBoundaryIntegrator<KFMElectrostaticBoundaryIntegratorEngine_SingleThread> SingleThread_FastMultipoleEBI;
-
-                SingleThread_FastMultipoleEBI integrator(surfaceContainer);
-                integrator.SetUniqueIDString(unique_id);
-                integrator.Initialize(fParameters);
-                KFMBoundaryIntegralMatrix< SingleThread_FastMultipoleEBI > A(surfaceContainer,integrator);
-                KBoundaryIntegralSolutionVector< SingleThread_FastMultipoleEBI > x(surfaceContainer,integrator);
-                KBoundaryIntegralVector< SingleThread_FastMultipoleEBI > b(surfaceContainer,integrator);
-
-                if( fKrylov == std::string("gmres") )
-                {
-                    KIterativeKrylovSolver< SingleThread_FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual> gmres;
-                    gmres.SetTolerance(fTolerance);
-
-                    KIterativeKrylovRestartCondition* restart_condition = new KIterativeKrylovRestartCondition();
-                    restart_condition->SetNumberOfIterationsBetweenRestart(fRestartCycle);
-                    gmres.SetRestartCondition(restart_condition);
-
-                    gmres.AddVisitor(new KIterationDisplay<double>());
-
-                    #ifdef KEMFIELD_USE_VTK
-                    if( fUseVTK )
-                    {
-                        gmres.AddVisitor(new KVTKIterationPlotter<double>());
-                    }
-                    #endif
-
-                    gmres.Solve(A,x,b);
-                    delete restart_condition;
-                }
-                else if( fKrylov == std::string("bicgstab") )
-                {
-                    KIterativeKrylovSolver< SingleThread_FastMultipoleEBI::ValueType, KBiconjugateGradientStabilized> bicgstab;
-                    bicgstab.SetTolerance(fTolerance);
-
-                    bicgstab.AddVisitor(new KIterationDisplay<double>());
-
-                    #ifdef KEMFIELD_USE_VTK
-                    if( fUseVTK )
-                    {
-                        bicgstab.AddVisitor(new KVTKIterationPlotter<double>());
-                    }
-                    #endif
-
-                    bicgstab.Solve(A,x,b);
-                }
-            }
-
-            SaveSolution( fTolerance, surfaceContainer );
-        }
-    }
 
     //************
     //field solver
@@ -843,6 +858,10 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
         }
         return fIntegratingFieldSolver->ElectricField( P );
     }
+    std::pair<KEMThreeVector, double> KSFieldElectrostatic::IntegratingFieldSolver::ElectricFieldAndPotential( const KPosition& P ) const
+    {
+        return std::make_pair(ElectricField(P),Potential(P));
+    }
 
     KSFieldElectrostatic::ZonalHarmonicFieldSolver::ZonalHarmonicFieldSolver() :
             fZHContainer( NULL ),
@@ -895,7 +914,10 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
 
             fZHContainer->ComputeCoefficients();
 
-            KEMFileInterface::GetInstance()->Write( *fZHContainer, zhContainerName, zhContainerLabels );
+            MPI_SINGLE_PROCESS
+            {
+                KEMFileInterface::GetInstance()->Write( *fZHContainer, zhContainerName, zhContainerLabels );
+            }
         }
 
         fZonalHarmonicFieldSolver = new KZonalHarmonicFieldSolver< KElectrostaticBasis >( *fZHContainer, fIntegrator );
@@ -912,6 +934,10 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
     KEMThreeVector KSFieldElectrostatic::ZonalHarmonicFieldSolver::ElectricField( const KPosition& P ) const
     {
         return fZonalHarmonicFieldSolver->ElectricField( P );
+    }
+    std::pair<KEMThreeVector, double> KSFieldElectrostatic::ZonalHarmonicFieldSolver::ElectricFieldAndPotential( const KPosition& P ) const
+    {
+        return fZonalHarmonicFieldSolver->ElectricFieldAndPotential(P);
     }
 
     bool KSFieldElectrostatic::ZonalHarmonicFieldSolver::UseCentralExpansion(const KPosition &P)
@@ -994,8 +1020,6 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
         fieldmsg_debug( "<parameter> hash is <" << parameterHash << ">" << eom );
 
         // create label set for multipole tree container object
-
-
         string fmContainerBase( KFMElectrostaticTreeData::Name() );
         string fmContainerName = fmContainerBase + string( "_" ) + solutionHash + string( "_" ) + parameterHash;
 
@@ -1046,7 +1070,10 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
             TreeConstructor_SingleThread constructor;
             constructor.SaveTree(*fTree, *tree_data);
 
-            KEMFileInterface::GetInstance()->Write( *tree_data, fmContainerName);
+            MPI_SINGLE_PROCESS
+            {
+                KEMFileInterface::GetInstance()->Write( *tree_data, fmContainerName);
+            }
         }
 
         //now build the field solver
@@ -1084,6 +1111,11 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
         return fFastMultipoleFieldSolver->ElectricField( P );
     }
 
+    std::pair<KEMThreeVector, double> KSFieldElectrostatic::FastMultipoleFieldSolver::ElectricFieldAndPotential( const KPosition& P ) const
+    {
+        return std::make_pair(ElectricField(P),Potential(P));
+    }
+
 ////////////////////////////////////////////////////////////////////////////////
 
     void KSFieldElectrostatic::InitializeComponent()
@@ -1111,14 +1143,20 @@ KSFieldElectrostatic::FastMultipoleBEMSolver::FastMultipoleBEMSolver() :
         {
             case sNoSymmetry :
                 fConverter = new KGBEMMeshConverter();
+                fConverter->SetMinimumArea(fMinimumElementArea);
+                fConverter->SetMaximumAspectRatio(fMaximumElementAspectRatio);
                 break;
 
             case sAxialSymmetry :
                 fConverter = new KGBEMAxialMeshConverter();
+                fConverter->SetMinimumArea(fMinimumElementArea);
+                fConverter->SetMaximumAspectRatio(fMaximumElementAspectRatio);
                 break;
 
             case sDiscreteAxialSymmetry :
                 fConverter = new KGBEMDiscreteRotationalMeshConverter();
+                fConverter->SetMinimumArea(fMinimumElementArea);
+                fConverter->SetMaximumAspectRatio(fMaximumElementAspectRatio);
                 break;
 
             default :

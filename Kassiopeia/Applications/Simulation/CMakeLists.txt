@@ -20,10 +20,6 @@ set( MAIN_LIBRARIES
 kasper_internal_include_directories()
 
 # target
-if(APPLE)
-	add_executable( Kassiopeia MACOSX_BUNDLE ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kassiopeia.cxx )
-else(APPLE)
-	add_executable( Kassiopeia ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kassiopeia.cxx )
-endif(APPLE)
+add_executable( Kassiopeia MACOSX_BUNDLE ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kassiopeia.cxx )
 target_link_libraries (Kassiopeia ${MAIN_LIBRARIES})
 kasper_install_executables( Kassiopeia )

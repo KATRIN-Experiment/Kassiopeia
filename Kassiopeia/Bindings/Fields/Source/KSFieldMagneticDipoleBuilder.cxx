@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSFieldMagneticDipoleStructure =
+    STATICINT sKSFieldMagneticDipoleStructure =
         KSFieldMagneticDipoleBuilder::Attribute< string >( "name" ) +
         KSFieldMagneticDipoleBuilder::Attribute< KThreeVector >( "location" ) +
         KSFieldMagneticDipoleBuilder::Attribute< KThreeVector >( "moment" );
 
-    static int sKSFieldMagneticDipole =
+    STATICINT sKSFieldMagneticDipole =
         KSRootBuilder::ComplexElement< KSFieldMagneticDipole >( "ksfield_magnetic_dipole" );
 
 }

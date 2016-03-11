@@ -41,11 +41,16 @@ namespace KEMField
     bool BoundaryType(unsigned int i) const;
     unsigned int IndexOfFirstSurface(unsigned int i) const;
 
+    unsigned int GetNormalIndexFromSortedIndex(unsigned int i) const {return fSortedToNormalIndexMap[i];};
+    unsigned int GetSortedIndexFromNormalIndex(unsigned int i) const {return fNormalToSortedIndexMap[i];};
+
   protected:
     const KSurfaceContainer& fSurfaceContainer;
 
     KSurfaceContainer::KSurfaceData fSortedSurfaces;
 
+    std::vector<unsigned int> fNormalToSortedIndexMap;
+    std::vector<unsigned int> fSortedToNormalIndexMap;
 
   };
 

@@ -12,7 +12,7 @@ namespace KEMField
     typedef KSquareMatrix<ValueType> Matrix;
     typedef KVector<ValueType> Vector;
 
-    KRobinHood_SingleThread(const Matrix& A,Vector& x,const Vector& b);
+    KRobinHood_SingleThread(const Matrix& A,Vector& x, const Vector& b);
     ~KRobinHood_SingleThread() {}
 
     void Initialize();
@@ -46,7 +46,7 @@ namespace KEMField
   };
 
   template <typename ValueType>
-  KRobinHood_SingleThread<ValueType>::KRobinHood_SingleThread(const Matrix& A,Vector& x,const Vector& b) : fA(A), fX(x), fB(b)
+  KRobinHood_SingleThread<ValueType>::KRobinHood_SingleThread(const Matrix& A,Vector& x, const Vector& b) : fA(A), fX(x), fB(b)
   {
   }
 
@@ -131,6 +131,7 @@ namespace KEMField
     for (unsigned int i = 0;i<fResidual.Dimension();i++)
       v[i] = fResidual(i);
   }
+
 }
 
 #endif /* KROBINHOOD_SINGLETHREAD_DEF */

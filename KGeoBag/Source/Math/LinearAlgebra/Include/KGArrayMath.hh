@@ -29,21 +29,21 @@ class KGArrayMath
         virtual ~KGArrayMath(){};
 
         //modulus of two integers
-        static size_t Modulus(int arg, int n)
+        static unsigned int Modulus(int arg, int n)
         {
             //returns arg mod n;
             double div = ( (double)arg )/( (double) n);
-            return (size_t)(std::fabs( (double)arg - std::floor(div)*((double)n) ) );
+            return (unsigned int)(std::fabs( (double)arg - std::floor(div)*((double)n) ) );
         }
 
         //for a multidimensional array (using row major indexing) which has the
         //dimensions specified in DimSize, this function computes the offset from
         //the first element given the indices in the array Index
-        template<size_t NDIM> inline static size_t
-        OffsetFromRowMajorIndex(const size_t* DimSize, const size_t* Index)
+        template<unsigned int NDIM> inline static unsigned int
+        OffsetFromRowMajorIndex(const unsigned int* DimSize, const unsigned int* Index)
         {
-            size_t val = Index[0];
-            for(size_t i=1; i<NDIM; i++)
+            unsigned int val = Index[0];
+            for(unsigned int i=1; i<NDIM; i++)
             {
                 val *= DimSize[i];
                 val += Index[i];
@@ -55,11 +55,11 @@ class KGArrayMath
         //dimensions specified in DimSize, this function computes the stride between
         //consecutive elements in the selected dimension given that the other indices are fixed
         //the first element given the indices in the array Index
-        template<size_t NDIM> inline static size_t
-        StrideFromRowMajorIndex(size_t selected_dim, const size_t* DimSize)
+        template<unsigned int NDIM> inline static unsigned int
+        StrideFromRowMajorIndex(unsigned int selected_dim, const unsigned int* DimSize)
         {
-            size_t val = 1;
-            for(size_t i=0; i<NDIM; i++)
+            unsigned int val = 1;
+            for(unsigned int i=0; i<NDIM; i++)
             {
                 if(i > selected_dim){val *= DimSize[i];};
             }
@@ -71,14 +71,14 @@ class KGArrayMath
         //for a multidimensional array (using row major indexing) which has the
         //dimensions specified in DimSize, this function computes the indices of
         //the elements which has the given offset from the first element
-        template<size_t NDIM> inline static void
-        RowMajorIndexFromOffset(size_t offset, const size_t* DimSize, size_t* Index)
+        template<unsigned int NDIM> inline static void
+        RowMajorIndexFromOffset(unsigned int offset, const unsigned int* DimSize, unsigned int* Index)
         {
-            size_t div[NDIM];
+            unsigned int div[NDIM];
 
             //in row major format the last index varies the fastest
-            size_t i;
-            for(size_t d=0; d < NDIM; d++)
+            unsigned int i;
+            for(unsigned int d=0; d < NDIM; d++)
             {
                 i = NDIM - d -1;
 
@@ -96,10 +96,10 @@ class KGArrayMath
         }
 
         //checks if all the indices in Index are in the valid range
-        template<size_t NDIM> inline static bool
-        CheckIndexValidity(const size_t* DimSize, const size_t* Index)
+        template<unsigned int NDIM> inline static bool
+        CheckIndexValidity(const unsigned int* DimSize, const unsigned int* Index)
         {
-            for(size_t i=0; i<NDIM; i++)
+            for(unsigned int i=0; i<NDIM; i++)
             {
                 if(Index[i] >= DimSize[i]){return false;};
             }
@@ -108,11 +108,11 @@ class KGArrayMath
 
 
         //given the dimensions of an array, computes its total size, assuming all dimensions are non-zero
-        template<size_t NDIM> inline static size_t
-        TotalArraySize(const size_t* DimSize)
+        template<unsigned int NDIM> inline static unsigned int
+        TotalArraySize(const unsigned int* DimSize)
         {
-            size_t val = 1;
-            for(size_t i=0; i<NDIM; i++)
+            unsigned int val = 1;
+            for(unsigned int i=0; i<NDIM; i++)
             {
                 val *= DimSize[i];
             }
@@ -120,7 +120,7 @@ class KGArrayMath
         }
 
         //compute 2^N at compile time
-        template <size_t N>
+        template <unsigned int N>
         struct PowerOfTwo
         {
             enum { value = 2 * PowerOfTwo<N - 1>::value };

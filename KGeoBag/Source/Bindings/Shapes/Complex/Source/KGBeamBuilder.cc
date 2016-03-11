@@ -4,7 +4,7 @@
 namespace katrin
 {
 
-  static const int sKGBeamLineBuilderStructure =
+  STATICINT sKGBeamLineBuilderStructure =
     KGBeamLineBuilder::Attribute<double>("x1") +
     KGBeamLineBuilder::Attribute<double>("y1") +
     KGBeamLineBuilder::Attribute<double>("z1") +
@@ -12,24 +12,24 @@ namespace katrin
     KGBeamLineBuilder::Attribute<double>("y2") +
     KGBeamLineBuilder::Attribute<double>("z2");
 
-  static const int sKGBeamBuilderStructure =
+  STATICINT sKGBeamBuilderStructure =
     KGBeamBuilder::Attribute<int>("longitudinal_mesh_count") +
     KGBeamBuilder::Attribute<int>("axial_mesh_count") +
     KGBeamBuilder::ComplexElement<KGBeamLine>("start_line") +
     KGBeamBuilder::ComplexElement<KGBeamLine>("end_line");
 
-  static const int sKGBeamSurfaceBuilderStructure =
+  STATICINT sKGBeamSurfaceBuilderStructure =
     KGBeamSurfaceBuilder::Attribute<string>("name") +
     KGBeamSurfaceBuilder::ComplexElement<KGBeam>("beam");
 
-  static const int sKGBeamSurfaceBuilder =
+  STATICINT sKGBeamSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGBeam> >("beam_surface");
 
-  static const int sKGBeamSpaceBuilderStructure =
+  STATICINT sKGBeamSpaceBuilderStructure =
     KGBeamSpaceBuilder::Attribute<string>("name") +
     KGBeamSpaceBuilder::ComplexElement<KGBeam>("beam");
 
-  static const int sKGBeamSpaceBuilder =
+  STATICINT sKGBeamSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGBeam> >("beam_space");
 
 }

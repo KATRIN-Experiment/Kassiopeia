@@ -243,7 +243,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenPositionCylindricalCompositeDict =
+    STATICINT sKSGenPositionCylindricalCompositeDict =
         KSDictionary< KSGenPositionCylindricalComposite >::AddCommand( &KSGenPositionCylindricalComposite::SetRValue,
                                                                        &KSGenPositionCylindricalComposite::ClearRValue,
                                                                        "set_r", "clear_r" ) +

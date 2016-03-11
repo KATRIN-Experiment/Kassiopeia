@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMinLongEnergyStructure =
+    STATICINT sKSTermMinLongEnergyStructure =
             KSTermMinLongEnergyBuilder::Attribute< string >( "name" ) +
             KSTermMinLongEnergyBuilder::Attribute< double >( "long_energy" );
 
-    static int sKSTermMinLongEnergy =
+    STATICINT sKSTermMinLongEnergy =
             KSRootBuilder::ComplexElement< KSTermMinLongEnergy >( "ksterm_min_long_energy" );
 
 }

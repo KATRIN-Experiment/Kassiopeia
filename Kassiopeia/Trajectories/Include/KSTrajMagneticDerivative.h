@@ -39,10 +39,6 @@ namespace Kassiopeia
             void AddToSpeed( const double& aSpeed );
             void AddToVelocity( const KThreeVector& aVelocity );
 
-            void SetDirectionSign( const int& aSign );
-
-        private:
-            int fDirectionSign;
     };
 
     inline KSTrajMagneticDerivative& KSTrajMagneticDerivative::operator=( const double& anOperand )

@@ -14,9 +14,9 @@ namespace KGeoBag
             KGRotatedPathSurface< KGPlanarLineSegment >(),
             fZ( 0. ),
             fR( 0. ),
-            fRadialMeshCount( 1 ),
+            fRadialMeshCount( 8 ),
             fRadialMeshPower( 1. ),
-            fAxialMeshCount( 1 )
+            fAxialMeshCount( 8 )
     {
     }
     KGDiskSurface::~KGDiskSurface()

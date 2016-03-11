@@ -6,6 +6,7 @@
 #include "KFMNodeFlags.hh"
 
 #include <cmath>
+#include <cstdlib>
 
 namespace KEMField
 {
@@ -38,7 +39,7 @@ class KFMCubicSpaceNodeAdjacencyProgenitor: public KFMNodeActor< KFMNode< Object
             delete fProgenitor;
         };
 
-        virtual void SetZeroMaskSize(int zmask){fZeroMaskSize = std::fabs(zmask);};
+        virtual void SetZeroMaskSize(int zmask){fZeroMaskSize = std::abs(zmask);};
 
         virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
         {

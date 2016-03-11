@@ -9,6 +9,7 @@ namespace Kassiopeia
     {
     }
     KSRootWriter::KSRootWriter( const KSRootWriter& aCopy ) :
+        KSComponent(),
         fWriters( aCopy.fWriters )
     {
     }
@@ -74,7 +75,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSWriterDict =
+    STATICINT sKSWriterDict =
         KSDictionary< KSRootWriter >::AddCommand( &KSRootWriter::AddWriter, &KSRootWriter::RemoveWriter, "add_writer", "remove_writer" );
 
 }

@@ -4,7 +4,7 @@ namespace KGeoBag
 {
 
 
-KGLinearSystemSolver::KGLinearSystemSolver(size_t dim):fDim(dim)
+KGLinearSystemSolver::KGLinearSystemSolver(unsigned int dim):fDim(dim)
 {
     fA = kg_matrix_alloc(fDim, fDim);
     fU = kg_matrix_alloc(fDim, fDim);
@@ -18,7 +18,7 @@ KGLinearSystemSolver::KGLinearSystemSolver(size_t dim):fDim(dim)
 
     fDimSize[0] = fDim;
     fDimSize[1] = fDim;
-};
+}
 
 KGLinearSystemSolver::~KGLinearSystemSolver()
 {
@@ -30,18 +30,18 @@ KGLinearSystemSolver::~KGLinearSystemSolver()
     kg_matrix_free(fV);
     kg_vector_free(fS);
     kg_vector_free(fWork);
-};
+}
 
 
 void
 KGLinearSystemSolver::SetMatrix(const double* mx) //expects row major ordering, and an array of size fDim*fDim
 {
-    size_t index[2];
-    size_t offset;
-    for(size_t row=0; row<fDim; row++)
+    unsigned int index[2];
+    unsigned int offset;
+    for(unsigned int row=0; row<fDim; row++)
     {
         index[0] = row;
-        for(size_t col=0; col<fDim; col++)
+        for(unsigned int col=0; col<fDim; col++)
         {
             index[1] = col;
             offset = KGArrayMath::OffsetFromRowMajorIndex<2>(fDimSize, index);
@@ -51,7 +51,7 @@ KGLinearSystemSolver::SetMatrix(const double* mx) //expects row major ordering, 
 }
 
 void
-KGLinearSystemSolver::SetMatrixElement(size_t row, size_t col, const double& val)
+KGLinearSystemSolver::SetMatrixElement(unsigned int row, unsigned int col, const double& val)
 {
     kg_matrix_set(fA, row, col, val);
 }
@@ -59,14 +59,14 @@ KGLinearSystemSolver::SetMatrixElement(size_t row, size_t col, const double& val
 void
 KGLinearSystemSolver::SetBVector(const double* vec)
 {
-    for(size_t i=0; i<fDim; i++)
+    for(unsigned int i=0; i<fDim; i++)
     {
         kg_vector_set(fB, i, vec[i]);
     }
 }
 
 void
-KGLinearSystemSolver::SetBVectorElement(size_t index, const double& val)
+KGLinearSystemSolver::SetBVectorElement(unsigned int index, const double& val)
 {
     kg_vector_set(fB, index, val);
 }
@@ -74,11 +74,11 @@ KGLinearSystemSolver::SetBVectorElement(size_t index, const double& val)
 void
 KGLinearSystemSolver::Reset()
 {
-    for(size_t row=0; row<fDim; row++)
+    for(unsigned int row=0; row<fDim; row++)
     {
         kg_vector_set(fB, row, 0.);
         kg_vector_set(fX, row, 0.);
-        for(size_t col=0; col<fDim; col++)
+        for(unsigned int col=0; col<fDim; col++)
         {
             kg_matrix_set(fA, row, col, 0.);
         }
@@ -98,14 +98,14 @@ KGLinearSystemSolver::Solve()
 void
 KGLinearSystemSolver::GetXVector(double* vec) const
 {
-    for(size_t i=0; i<fDim; i++)
+    for(unsigned int i=0; i<fDim; i++)
     {
        vec[i] = kg_vector_get(fX, i);
     }
 }
 
 double
-KGLinearSystemSolver::GetXVectorElement(size_t i) const
+KGLinearSystemSolver::GetXVectorElement(unsigned int i) const
 {
     return kg_vector_get(fX, i);
 }

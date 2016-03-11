@@ -15,12 +15,12 @@ fLocalCoeffCalc(NULL),
 fElementContainer(NULL)
 {
     fConversionFactor = std::sqrt(3.0)/2.0; // 2.0/std::sqrt(3.0);
-};
+}
 
 KFMElectrostaticNearFieldToLocalCoefficientCalculator::~KFMElectrostaticNearFieldToLocalCoefficientCalculator()
 {
     delete fLocalCoeffCalc;
-};
+}
 
 void
 KFMElectrostaticNearFieldToLocalCoefficientCalculator::SetDegree(int l_max)

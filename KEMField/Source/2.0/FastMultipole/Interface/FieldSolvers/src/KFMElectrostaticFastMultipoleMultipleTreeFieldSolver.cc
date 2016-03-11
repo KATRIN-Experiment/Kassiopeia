@@ -12,7 +12,7 @@ fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
 fFastFieldSolver()
 {
     fNTrees = 0;
-};
+}
 
 KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::~KFMElectrostaticFastMultipoleMultipleTreeFieldSolver()
 {
@@ -20,7 +20,7 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::~KFMElectrostaticFastMulti
     {
         delete fNavigatorVector[i];
     }
-};
+}
 
 void
 KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTree* tree)

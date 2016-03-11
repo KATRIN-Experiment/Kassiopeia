@@ -34,6 +34,10 @@ namespace Kassiopeia
                 KSParticleQueue& aSecondaries
             ) const = 0;
 
+            virtual void FinalizeNavigation(
+            	KSParticle& aFinalParticle
+            ) const = 0;
+
             virtual void StartNavigation(
                 KSParticle& aParticle,
                 KSSpace* aRoot

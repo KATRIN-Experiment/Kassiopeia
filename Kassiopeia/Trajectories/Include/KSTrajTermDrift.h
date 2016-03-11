@@ -18,7 +18,7 @@ namespace Kassiopeia
             virtual ~KSTrajTermDrift();
 
         public:
-            virtual void Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
     };
 
 }

@@ -74,6 +74,43 @@ class KGIdentitySet
 };
 
 
+template <typename Stream>
+Stream& operator>>(Stream& s, KGIdentitySet& aData)
+{
+    s.PreStreamInAction(aData);
+
+    unsigned int size;
+    s >> size;
+
+    unsigned int id;
+    for(unsigned int i=0;i<size;i++)
+    {
+        s >> id;
+        aData.AddID(id);
+    }
+
+    s.PostStreamInAction(aData);
+    return s;
+}
+
+template <typename Stream>
+Stream& operator<<(Stream& s,const KGIdentitySet& aData)
+{
+    s.PreStreamOutAction(aData);
+
+    unsigned int size = aData.GetSize();
+    s << size;
+
+    for(unsigned int i=0; i<size; i++)
+    {
+        s << aData.GetID(i);
+    }
+
+    s.PostStreamOutAction(aData);
+
+    return s;
+}
+
 }
 
 #endif /* KGIdentitySet_H__ */

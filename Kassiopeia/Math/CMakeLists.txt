@@ -10,10 +10,12 @@ set( MATH_HEADER_BASENAMES
     KSMathRK87.h
     KSMathRK86.h
     KSMathRK65.h
-    KSMathRK54.h
+    KSMathRKF54.h
+    KSMathRKDP54.h
+    KSMathRKDP853.h
     KSMathInterpolator.h
 )
-set( MATH_HEADER_PATH 
+set( MATH_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${MATH_HEADER_BASENAMES} )
@@ -24,7 +26,7 @@ endforeach( BASENAME )
 set( MATH_SOURCE_BASENAMES
 	KSMathMessage.cxx
 )
-set( MATH_SOURCE_PATH 
+set( MATH_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${MATH_SOURCE_BASENAMES} )
@@ -41,4 +43,3 @@ target_link_libraries( KassiopeiaMath
 # install
 kasper_install_headers( ${MATH_HEADER_FILENAMES} )
 kasper_install_libraries( KassiopeiaMath )
-         

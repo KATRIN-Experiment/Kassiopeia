@@ -5,6 +5,13 @@
 #include "KFMFastFourierTransform.hh"
 #include "KFMMultidimensionalFastFourierTransform.hh"
 
+#ifdef KEMFIELD_USE_FFTW
+    #include "KFMMultidimensionalFastFourierTransformFFTW.hh"
+    #define FFT_TYPE KFMMultidimensionalFastFourierTransformFFTW<3>
+#else
+    #define FFT_TYPE KFMMultidimensionalFastFourierTransform<3>
+#endif
+
 #include "KEMCout.hh"
 #include "KFMMessaging.hh"
 
@@ -51,7 +58,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     kfmout<<"--------------------------------------------------------------"<<kfmendl;
 
-    KFMMultidimensionalFastFourierTransform<3>* fft2d = new KFMMultidimensionalFastFourierTransform<3>();
+    FFT_TYPE* fft2d = new FFT_TYPE();
 
     fft2d->SetForward();
     fft2d->SetInput(&input);

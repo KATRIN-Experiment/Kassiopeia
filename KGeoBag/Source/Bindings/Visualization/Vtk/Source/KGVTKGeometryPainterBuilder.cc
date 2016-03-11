@@ -5,14 +5,15 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKGeometryPainterStructure =
+    STATICINT sKGVTKGeometryPainterStructure =
         KGVTKGeometryPainterBuilder::Attribute< string >( "name" ) +
         KGVTKGeometryPainterBuilder::Attribute< string >( "file" ) +
         KGVTKGeometryPainterBuilder::Attribute< string >( "path" ) +
+        KGVTKGeometryPainterBuilder::Attribute< string >( "write_stl" ) +
         KGVTKGeometryPainterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKGeometryPainterBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGVTKGeometryPainterWindow =
+    STATICINT sKGVTKGeometryPainterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKGeometryPainter >( "vtk_geometry_painter" );
 
 }

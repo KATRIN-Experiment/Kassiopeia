@@ -26,6 +26,7 @@ set( MATH_SPACETREE_HEADER_FILES
     Include/KGNodeObjectRemover.hh
     Include/KGNodeObjectNullifier.hh
     Include/KGIdentitySetSorter.hh
+    Include/KGTreeStructureExtractor.hh
 )
 
 # source

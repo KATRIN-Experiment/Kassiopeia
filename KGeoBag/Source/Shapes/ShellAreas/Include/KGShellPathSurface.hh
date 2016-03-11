@@ -154,20 +154,50 @@ namespace KGeoBag
         }
         virtual KThreeVector AreaPoint( const KThreeVector& aPoint ) const
         {
-            KTwoVector tZRPoint = aPoint.ProjectZR();
-            KTwoVector tZRNearest = fPath->Point( tZRPoint );
-            double tAngle = aPoint.AzimuthalAngle();
-            return KThreeVector( cos( tAngle ) * tZRNearest.R(), sin( tAngle ) * tZRNearest.R(), tZRNearest.Z() );
+        	NearestPointInfo info = CalculateNearestPointInfo( aPoint );
+            KTwoVector tZRNearest = fPath->Point( info.tZRPoint );
+            return KThreeVector( cos( info.tAngleNearest ) * tZRNearest.R(), sin( info.tAngleNearest ) * tZRNearest.R(), tZRNearest.Z() );
         }
         virtual KThreeVector AreaNormal( const KThreeVector& aPoint ) const
         {
-            KTwoVector tZRPoint = aPoint.ProjectZR();
-            KTwoVector tZRNormal = fPath->Normal( tZRPoint );
-            double tAngle = aPoint.AzimuthalAngle();
-            return fSign * KThreeVector( cos( tAngle ) * tZRNormal.R(), sin( tAngle ) * tZRNormal.R(), tZRNormal.Z() );
+        	NearestPointInfo info = CalculateNearestPointInfo( aPoint );
+            KTwoVector tZRNormal = fPath->Normal( info.tZRPoint );
+            return fSign * KThreeVector( cos( info.tAngleNearest ) * tZRNormal.R(), sin( info.tAngleNearest ) * tZRNormal.R(), tZRNormal.Z() );
         }
 
     private:
+        struct NearestPointInfo {
+        	double tAngleNearest;
+        	KTwoVector tZRPoint;
+        };
+
+        NearestPointInfo CalculateNearestPointInfo(const KThreeVector& aPoint) const {
+        	NearestPointInfo info;
+        	double tAnglePoint;
+        	double tAngleStart = fAngleStart / 180. * M_PI;											//angle of start edge of shell
+        	double tAngleClosed = ( fAngleStop - fAngleStart ) / 180. * M_PI;						//angle width of shell closed
+        	double tAngleStop = tAngleStart + tAngleClosed;											//angle of stop edge of shell
+        	tAnglePoint = tAngleStart + fmod( aPoint.AzimuthalAngle() - tAngleStart , 2 * M_PI );	//angle of query point must be within 2Pi of start edge of shell
+        	if ( tAnglePoint - tAngleStart < 0. ) tAnglePoint += 2 * M_PI;							//angle of query point must be greater angle of start edge of shell
+
+        	if( tAngleStart <= tAnglePoint && tAnglePoint <= tAngleStop )		//if query point lies in angle of closed shell
+            	info.tAngleNearest = tAnglePoint;								//choose angle of the query point
+            else																//if query point lies in angle of shell gap
+            {
+            	double tAngleDistanceToStop = tAnglePoint - tAngleStop;			//calculate angle distance from stop edge of shell to query point
+            	double tAngleOpen = 2 * M_PI - tAngleClosed;					//calculate width of shell gap
+				if ( tAngleDistanceToStop < tAngleOpen / 2. )					//choose angle of closer shell edge
+            		info.tAngleNearest = tAngleStop;
+            	else
+            		info.tAngleNearest = tAngleStart;
+            }
+
+            info.tZRPoint = aPoint.ProjectZR();										//find (z,r) for query point using r^2=x^2+y^2
+            info.tZRPoint.R() *= cos( info.tAngleNearest - tAnglePoint ); 		//project query point on zr-plane at phi of nearest point
+            return info;
+        }
+
+
         static KGPlanarPath* CompilerCheck()
         {
             XPathType* tPath = NULL;

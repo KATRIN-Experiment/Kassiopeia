@@ -28,12 +28,11 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
     options << BuildFlags;
     options << " -I " <<KOpenCLInterface::GetInstance()->GetKernelPath();
 
-
     // Build program for these specific devices
     try
     {
         // use only target device!
-        cl::vector<cl::Device> devices;
+        CL_VECTOR_TYPE<cl::Device> devices;
         devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
         program.build(devices,options.str().c_str());
     }
@@ -41,8 +40,9 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
     {
         std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
         std::stringstream s;
-        s<<"There was an error compiling the kernel: "<<KernelName;
-        s<<".  Here is the information from the OpenCL C++ API:"<<std::endl;
+        s<<"There was an error compiling the kernel: "<<KernelName<<std::endl;
+        s<<"In source file: "<<SourceFileName<<std::endl;
+        s<<"Here is the information from the OpenCL C++ API:"<<std::endl;
         s<<error.what()<<"("<<error.err()<<")"<<std::endl;
         s<<"Build Status: "<<program.getBuildInfo<CL_PROGRAM_BUILD_STATUS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
         s<<"Build Options:\t"<<program.getBuildInfo<CL_PROGRAM_BUILD_OPTIONS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
@@ -50,6 +50,23 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
         std::cout<<s.str()<<std::endl;
         std::exit(1);
     }
+
+    #ifdef DEBUG_OPENCL_COMPILER_OUTPUT
+    std::stringstream s;
+    s << "Build flags for Kernel "<<KernelName<<" : ";
+    s << BuildFlags;
+    s << std::endl;
+    s << "Build Log for Kernel "<<KernelName<<" :\t ";
+    std::stringstream build_log_stream;
+    build_log_stream<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
+    std::string build_log;
+    build_log = build_log_stream.str();
+    if(build_log.size() != 0)
+    {
+        s << build_log;
+        std::cout<<s.str()<<std::endl;
+    }
+    #endif
 
     // Make kernel
     cl_int err_code = -1;

@@ -58,10 +58,6 @@ class KFMPoint
         operator double* ();
         operator const double* () const;
 
-        //access elements
-//        double& operator[](unsigned int i);
-//        //const double& operator[](unsigned int i) const;
-
         //assignment
         inline KFMPoint<NDIM>& operator=(const KFMPoint<NDIM>& p)
         {

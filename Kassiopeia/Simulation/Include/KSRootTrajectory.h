@@ -23,9 +23,18 @@ namespace Kassiopeia
             //**********
 
         public:
-            void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
-            void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
 
+            virtual void Reset()
+            {
+                if(fTrajectory != NULL){ fTrajectory->Reset(); }
+                fFailureFlag = false;
+            };
+            void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
+
+            bool Check() const {return fFailureFlag;};
+
+            void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
+            void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates ) const;
             //***********
             //composition
             //***********
@@ -52,6 +61,7 @@ namespace Kassiopeia
             const KSParticle* fTerminatorParticle;
             KSParticle* fTrajectoryParticle;
             KSParticle* fFinalParticle;
+            bool fFailureFlag;
     };
 
 }

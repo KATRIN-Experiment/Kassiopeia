@@ -10,13 +10,13 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueFormulaStructure =
+    STATICINT sKSGenValueFormulaStructure =
         KSGenValueFormulaBuilder::Attribute< string >( "name" ) +
         KSGenValueFormulaBuilder::Attribute< double >( "value_min" ) +
         KSGenValueFormulaBuilder::Attribute< double >( "value_max" ) +
         KSGenValueFormulaBuilder::Attribute< string >( "value_formula" );
 
-    static int sKSGenValueFormula =
+    STATICINT sKSGenValueFormula =
         KSRootBuilder::ComplexElement< KSGenValueFormula >( "ksgen_value_formula" );
 
 }

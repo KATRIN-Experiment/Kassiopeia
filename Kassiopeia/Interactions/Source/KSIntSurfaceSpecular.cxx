@@ -15,6 +15,7 @@ namespace Kassiopeia
     {
     }
     KSIntSurfaceSpecular::KSIntSurfaceSpecular( const KSIntSurfaceSpecular& aCopy ) :
+            KSComponent(),
             fProbability( aCopy.fProbability ),
             fReflectionLoss( aCopy.fReflectionLoss ),
             fTransmissionLoss( aCopy.fTransmissionLoss )
@@ -43,7 +44,24 @@ namespace Kassiopeia
     }
     void KSIntSurfaceSpecular::ExecuteReflection( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
     {
-        const double tKineticEnergy = anInitialParticle.GetKineticEnergy() - KConst::Q() * fReflectionLoss;
+        double tKineticEnergy = anInitialParticle.GetKineticEnergy();
+
+        if(fUseRelativeLoss)
+        {
+            tKineticEnergy *= (1.0 - fReflectionLossFraction);
+        }
+        else
+        {
+            tKineticEnergy -= std::fabs(KConst::Q() * fReflectionLoss);
+        }
+
+        //prevent kinetic energy from going negative
+        if(tKineticEnergy < 0.0)
+        {
+            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> tried to give a particle a negative kinetic energy." << eom;
+            return;
+        }
+
         KThreeVector tNormal;
         if( anInitialParticle.GetCurrentSurface() != NULL )
         {
@@ -70,7 +88,23 @@ namespace Kassiopeia
     }
     void KSIntSurfaceSpecular::ExecuteTransmission( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
     {
-        const double tKineticEnergy = anInitialParticle.GetKineticEnergy() - KConst::Q() * fTransmissionLoss;
+        double tKineticEnergy = anInitialParticle.GetKineticEnergy();
+
+        if(fUseRelativeLoss)
+        {
+            tKineticEnergy *= (1.0 - fTransmissionLossFraction);
+        }
+        else
+        {
+            tKineticEnergy -= std::fabs(KConst::Q() * fTransmissionLoss);
+        }
+
+        //prevent kinetic energy from going negative
+        if(tKineticEnergy < 0.0)
+        {
+            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> tried to give a particle a negative kinetic energy." << eom;
+            return;
+        }
 
         aFinalParticle = anInitialParticle;
         aFinalParticle.SetKineticEnergy( tKineticEnergy );

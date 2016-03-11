@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSRootWriter =
+    STATICINT sKSRootWriter =
         KSRootBuilder::ComplexElement< KSRootWriter >( "ks_root_writer" );
 
-    static int sKSRootWriterStructure =
+    STATICINT sKSRootWriterStructure =
         KSRootWriterBuilder::Attribute< string >( "name" ) +
         KSRootWriterBuilder::Attribute< string >( "add_writer" );
 

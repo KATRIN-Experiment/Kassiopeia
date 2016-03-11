@@ -72,19 +72,6 @@ class KFMBall
             {
                 return false;
             }
-
-
-//            double distance2 = del*del;
-//            double distance = std::sqrt(distance2); //have to perform the sqrt b/c floating point math is picky
-
-//            if(distance - fData[NDIM] > 0.0)
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
         }
 
         bool BallIsInside(const KFMBall<NDIM>* ball) const
@@ -101,20 +88,6 @@ class KFMBall
             {
                 return false;
             }
-
-
-//            double distance2 = (del_mag + br)*(del_mag + br);
-
-//            double distance = std::sqrt(distance2); //have to perform the sqrt b/c floating point math is picky
-
-//            if(distance - fData[NDIM] > 0.0)
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
         }
 
         bool BallIsOutside(const KFMBall<NDIM>* ball) const

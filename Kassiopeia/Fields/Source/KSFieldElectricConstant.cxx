@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSFieldElectricConstant::KSFieldElectricConstant( const KSFieldElectricConstant& aCopy ) :
+        KSComponent(),
         fFieldVector( aCopy.fFieldVector )
     {
     }

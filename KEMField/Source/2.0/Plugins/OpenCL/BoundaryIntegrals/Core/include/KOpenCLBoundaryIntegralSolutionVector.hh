@@ -221,7 +221,7 @@ namespace KEMField
     try
     {
       // use only target device!
-      cl::vector<cl::Device> devices;
+      CL_VECTOR_TYPE<cl::Device> devices;
       devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
       program.build(devices,
 		    options.str().c_str());
@@ -252,6 +252,20 @@ namespace KEMField
       // 		2,
       // 		msgPart);
     }
+
+    #ifdef DEBUG_OPENCL_COMPILER_OUTPUT
+    std::stringstream s;
+    s << "Build Log for OpenCL "<<clFile.str()<<" :\t ";
+    std::stringstream build_log_stream;
+    build_log_stream<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
+    std::string build_log;
+    build_log = build_log_stream.str();
+    if(build_log.size() != 0)
+    {
+        s << build_log;
+        std::cout<<s.str()<<std::endl;
+    }
+    #endif
 
     // Make kernel
     fGetSolutionVectorElementKernel =

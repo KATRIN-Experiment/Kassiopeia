@@ -26,6 +26,7 @@ using katrin::KVTKPainter;
 #include "KGExtrudedPolyLineSurface.hh"
 #include "KGExtrudedCircleSurface.hh"
 #include "KGExtrudedPolyLoopSurface.hh"
+#include "KGConicalWireArraySurface.hh"
 #include "KGRotatedLineSegmentSpace.hh"
 #include "KGRotatedArcSegmentSpace.hh"
 #include "KGRotatedPolyLineSpace.hh"
@@ -33,6 +34,7 @@ using katrin::KVTKPainter;
 #include "KGRotatedPolyLoopSpace.hh"
 #include "KGExtrudedCircleSpace.hh"
 #include "KGExtrudedPolyLoopSpace.hh"
+#include "KGRodSpace.hh"
 
 #include "vtkSmartPointer.h"
 #include "vtkPoints.h"
@@ -41,7 +43,6 @@ using katrin::KVTKPainter;
 #include "vtkPolyData.h"
 #include "vtkPolyDataMapper.h"
 #include "vtkActor.h"
-#include "vtkXMLPolyDataWriter.h"
 
 #include <vector>
 using std::vector;
@@ -73,6 +74,7 @@ namespace KGeoBag
     public KGExtrudedPolyLineSurface::Visitor,
     public KGExtrudedCircleSurface::Visitor,
     public KGExtrudedPolyLoopSurface::Visitor,
+    public KGConicalWireArraySurface::Visitor,
     public KGSpace::Visitor,
     public KGRotatedLineSegmentSpace::Visitor,
     public KGRotatedArcSegmentSpace::Visitor,
@@ -80,7 +82,8 @@ namespace KGeoBag
     public KGRotatedCircleSpace::Visitor,
     public KGRotatedPolyLoopSpace::Visitor,
     public KGExtrudedCircleSpace::Visitor,
-    public KGExtrudedPolyLoopSpace::Visitor
+    public KGExtrudedPolyLoopSpace::Visitor,
+    public KGRodSpace::Visitor
     {
     public:
         KGVTKGeometryPainter();
@@ -91,9 +94,16 @@ namespace KGeoBag
         void Display();
         void Write();
 
+    protected:
+        void WriteVTK();
+        void WriteSTL();
+
+    public:
         void SetFile( const string& aName );
         const string& GetFile() const;
         void SetPath( const string& aPath );
+
+        void SetWriteSTL( bool aFlag );
 
         void AddSurface( KGSurface* aSurface );
         void AddSpace( KGSpace* aSpace );
@@ -101,6 +111,7 @@ namespace KGeoBag
     private:
         string fFile;
         string fPath;
+        bool fWriteSTL;
 
         vector< KGSurface* > fSurfaces;
         vector< KGSpace* > fSpaces;
@@ -130,6 +141,7 @@ namespace KGeoBag
         virtual void VisitExtrudedPathSurface( KGExtrudedPolyLineSurface* aExtrudedPolyLineSurface );
         virtual void VisitExtrudedPathSurface( KGExtrudedCircleSurface* aExtrudedCircleSurface );
         virtual void VisitExtrudedPathSurface( KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface );
+        virtual void VisitWrappedSurface( KGConicalWireArraySurface* aConicalWireArraySurface );
 
             //**************
             //space visitors
@@ -144,6 +156,7 @@ namespace KGeoBag
         virtual void VisitRotatedClosedPathSpace( KGRotatedPolyLoopSpace* aRotatedPolyLoopSpace );
         virtual void VisitExtrudedClosedPathSpace( KGExtrudedCircleSpace* aExtrudedCircleSpace );
         virtual void VisitExtrudedClosedPathSpace( KGExtrudedPolyLoopSpace* aExtrudedPolyLoopSpace );
+        virtual void VisitWrappedSpace( KGRodSpace* aRodSpace );
 
     private:
         void LocalToGlobal( const KThreeVector& aLocal, KThreeVector& aGlobal );
@@ -184,6 +197,18 @@ namespace KGeoBag
         class ClosedPoints :
         public Points
         {
+        };
+
+        class ThreePoints
+        {
+        public:
+            typedef KThreeVector Element;
+            typedef deque< Element > Set;
+            typedef Set::iterator It;
+            typedef Set::const_iterator CIt;
+
+        public:
+            Set fData;
         };
 
         class Mesh
@@ -229,6 +254,8 @@ namespace KGeoBag
         void PolyLineToOpenPoints( const KGPlanarPolyLine* aPolyLine, OpenPoints& aPoints );
         void CircleToClosedPoints( const KGPlanarCircle* aCircle, ClosedPoints& aPoints );
         void PolyLoopToClosedPoints( const KGPlanarPolyLoop* aPolyLoop, ClosedPoints& aPoints );
+        void RodsToThreePoints( const KGRodSpace* aRodSpace, ThreePoints& aThreePoints );
+        void WireArrayToThreePoints( const KGConicalWireArraySurface* aConicalWireArraySurface, ThreePoints& aThreePoints );
 
             //**************
             //mesh functions
@@ -241,6 +268,13 @@ namespace KGeoBag
         void ClosedPointsRotatedToTorusMesh( const ClosedPoints& aPoints, TorusMesh& aMesh );
         void OpenPointsExtrudedToFlatMesh( const OpenPoints& aPoints, const double& aZMin, const double& aZMax, FlatMesh& aMesh );
         void ClosedPointsExtrudedToTubeMesh( const ClosedPoints& aPoints, const double& aZMin, const double& aZMax, TubeMesh& aMesh );
+        void ThreePointsToTubeMesh( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius );
+
+			//****************************
+			//mesh and rendering functions
+			//****************************
+
+        void ThreePointsToTubeMeshToVTK( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius );
 
             //*******************
             //rendering functions

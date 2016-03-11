@@ -23,6 +23,7 @@ namespace Kassiopeia
             virtual void CalculatePotential( const KThreeVector& /*aSamplePoint*/, const double& /*aSampleTime*/, KThreeVector& /*aPotential*/ ) {}
             virtual void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField ) = 0;
             virtual void CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient ) = 0;
+            virtual void CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient ) {CalculateField(aSamplePoint,aSampleTime, aField); CalculateGradient(aSamplePoint,aSampleTime,aGradient);};
     };
 
 }

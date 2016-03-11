@@ -316,19 +316,18 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
       endif()
     endif()
   endforeach()
-  #---
-  STRING(REGEX REPLACE "^(.*)\\.(.*)$" "\\1.h" dictionary_header "${dictionary}")
+
   #---call rootcint------------------------------------------
   
     if (CMAKE_SYSTEM_NAME MATCHES Darwin)
-        add_custom_command(OUTPUT ${dictionary} ${dictionary_header}
+        add_custom_command(OUTPUT ${dictionary}
             COMMAND DYLD_LIBRARY_PATH=${ROOT_LIBRARY_DIR} ROOTSYS=${ROOTSYS}
-            ${ROOT_CINT_EXECUTABLE} -f ${dictionary} -c -p -DHAVE_CONFIG_H ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
+            ${ROOT_CINT_EXECUTABLE} -cint -f ${dictionary} -c -p -DHAVE_CONFIG_H ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
             DEPENDS ${headerfiles} ${linkdefs} )
     else()
-        add_custom_command(OUTPUT ${dictionary} ${dictionary_header}
+        add_custom_command(OUTPUT ${dictionary}
             COMMAND LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR} ROOTSYS=${ROOTSYS}
-            ${ROOT_CINT_EXECUTABLE} -f ${dictionary} -c -p -DHAVE_CONFIG_H ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
+            ${ROOT_CINT_EXECUTABLE} -cint -f ${dictionary} -c -p -DHAVE_CONFIG_H ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
             DEPENDS ${headerfiles} ${linkdefs} )
     endif()  
 

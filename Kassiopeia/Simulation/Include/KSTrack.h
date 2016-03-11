@@ -24,40 +24,40 @@ namespace Kassiopeia
             //***
 
         public:
-            K_REFS( int, TrackId );
-            K_REFS( int, TrackCount );
-            K_REFS( int, ParentEventId );
+            K_REFS( int, TrackId )
+            K_REFS( int, TrackCount )
+            K_REFS( int, ParentEventId )
 
             //*****
             //track
             //*****
 
         public:
-            K_REFS( unsigned int, TotalSteps );
-            K_REFS( double, ContinuousTime );
-            K_REFS( double, ContinuousLength );
-            K_REFS( double, ContinuousEnergyChange );
-            K_REFS( double, ContinuousMomentumChange );
-            K_REFS( unsigned int, DiscreteSecondaries );
-            K_REFS( double, DiscreteEnergyChange );
-            K_REFS( double, DiscreteMomentumChange );
-            K_REFS( string, CreatorName );
-            K_REFS( string, TerminatorName );
+            K_REFS( unsigned int, TotalSteps )
+            K_REFS( double, ContinuousTime )
+            K_REFS( double, ContinuousLength )
+            K_REFS( double, ContinuousEnergyChange )
+            K_REFS( double, ContinuousMomentumChange )
+            K_REFS( unsigned int, DiscreteSecondaries )
+            K_REFS( double, DiscreteEnergyChange )
+            K_REFS( double, DiscreteMomentumChange )
+            K_REFS( string, CreatorName )
+            K_REFS( string, TerminatorName )
 
             //*********
             //particles
             //*********
 
         public:
-            K_REFS( KSParticle, InitialParticle );
-            K_REFS( KSParticle, FinalParticle );
+            K_REFS( KSParticle, InitialParticle )
+            K_REFS( KSParticle, FinalParticle )
 
             //*****
             //queue
             //*****
 
         public:
-            K_REFS( KSParticleQueue, ParticleQueue );
+            K_REFS( KSParticleQueue, ParticleQueue )
 
     };
 

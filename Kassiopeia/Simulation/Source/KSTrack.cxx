@@ -25,6 +25,7 @@ namespace Kassiopeia
     {
     }
     KSTrack::KSTrack( const KSTrack& aCopy ) :
+            KSComponent(),
             fTrackId( aCopy.fTrackId ),
             fTrackCount( aCopy.fTrackCount ),
             fParentEventId( aCopy.fParentEventId ),
@@ -71,7 +72,7 @@ namespace Kassiopeia
     {
     }
 
-    static const int sKSTrackDict =
+    STATICINT sKSTrackDict =
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetTrackId, "track_id" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetTrackCount, "track_count" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetParentEventId, "parent_event_id" ) +

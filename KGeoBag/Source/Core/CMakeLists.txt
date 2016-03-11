@@ -12,6 +12,7 @@ set( CORE_HEADER_FILES
     Include/KGExtensibleSpace.hh
     Include/KGExtendedSpace.hh
     Include/KGInterface.hh
+    Include/KGTypelist.hh
 )
 
 # source
@@ -36,7 +37,7 @@ kasper_internal_include_directories(
 add_library( KGeoBagCore SHARED
 	${CORE_SOURCE_FILES}
 )
-target_link_libraries( KGeoBagCore 
+target_link_libraries( KGeoBagCore
     KGeoBagMath
 )
 

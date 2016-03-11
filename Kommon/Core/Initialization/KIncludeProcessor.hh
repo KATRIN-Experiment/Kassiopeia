@@ -26,6 +26,8 @@ namespace katrin
             virtual void ProcessToken( KElementDataToken* aToken );
             virtual void ProcessToken( KEndElementToken* aToken );
 
+            void AddDefaultPath(const std::string& path);
+
         private:
             void Reset();
 
@@ -44,6 +46,8 @@ namespace katrin
             vector< string > fNames;
             vector< string > fPaths;
             vector< string > fBases;
+
+            vector< string > fDefaultPaths;
     };
 
 }

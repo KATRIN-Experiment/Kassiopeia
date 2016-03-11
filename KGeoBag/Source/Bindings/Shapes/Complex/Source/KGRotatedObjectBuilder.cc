@@ -4,13 +4,13 @@
 namespace katrin
 {
 
-  static const int sKGRotatedObjectLineBuilderStructure =
+  STATICINT sKGRotatedObjectLineBuilderStructure =
     KGRotatedObjectLineBuilder::Attribute<double>("z1") +
     KGRotatedObjectLineBuilder::Attribute<double>("r1") +
     KGRotatedObjectLineBuilder::Attribute<double>("z2") +
     KGRotatedObjectLineBuilder::Attribute<double>("r2");
 
-  static const int sKGRotatedObjectArcBuilderStructure =
+  STATICINT sKGRotatedObjectArcBuilderStructure =
     KGRotatedObjectArcBuilder::Attribute<double>("z1") +
     KGRotatedObjectArcBuilder::Attribute<double>("r1") +
     KGRotatedObjectArcBuilder::Attribute<double>("z2") +
@@ -18,7 +18,7 @@ namespace katrin
     KGRotatedObjectArcBuilder::Attribute<double>("radius") +
     KGRotatedObjectArcBuilder::Attribute<bool>("positive_orientation");
 
-  static const int sKGRotatedObjectBuilderStructure =
+  STATICINT sKGRotatedObjectBuilderStructure =
     KGRotatedObjectBuilder::Attribute<int>("longitudinal_mesh_count_start") +
     KGRotatedObjectBuilder::Attribute<int>("longitudinal_mesh_count_end") +
     KGRotatedObjectBuilder::Attribute<int>("longitudinal_mesh_count") +
@@ -26,18 +26,18 @@ namespace katrin
     KGRotatedObjectBuilder::ComplexElement<KGRotatedObject::Line>("line") +
     KGRotatedObjectBuilder::ComplexElement<KGRotatedObject::Arc>("arc");
 
-  static const int sKGRotatedSurfaceBuilderStructure =
+  STATICINT sKGRotatedSurfaceBuilderStructure =
     KGRotatedSurfaceBuilder::Attribute<string>("name") +
     KGRotatedSurfaceBuilder::ComplexElement<KGRotatedObject>("rotated_object");
 
-  static const int sKGRotatedSurfaceBuilder =
+  STATICINT sKGRotatedSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGRotatedObject> >("rotated_surface");
 
-  static const int sKGRotatedSpaceBuilderStructure =
+  STATICINT sKGRotatedSpaceBuilderStructure =
     KGRotatedSpaceBuilder::Attribute<string>("name") +
     KGRotatedSpaceBuilder::ComplexElement<KGRotatedObject>("rotated_object");
 
-  static const int sKGRotatedSpaceBuilder =
+  STATICINT sKGRotatedSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGRotatedObject> >("rotated_space");
 
 }

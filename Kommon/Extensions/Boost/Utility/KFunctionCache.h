@@ -8,28 +8,21 @@
 #ifndef KVALUEINTERPOLATOR_H_
 #define KVALUEINTERPOLATOR_H_
 
-#include "KValueCache.h"
-#include "KNumeric.h"
 #include "KException.h"
+#include "KHashMap.h"
 
 #include <vector>
+#include <array>
+#include <functional>
 
-#include <boost/enum.hpp>
-#include <boost/array.hpp>
-#include <boost/function.hpp>
-#include <boost/optional.hpp>
 #include <boost/math/special_functions/modf.hpp>
-#include <boost/static_assert.hpp>
+#include <boost/optional.hpp>
 
 namespace katrin
 {
 
 class KFunctionCacheException : public KExceptionPrototype<KFunctionCacheException, KException>
 { };
-
-BOOST_ENUM(KEInterpolationMethod,
-    (Nearest)(Linear)(Spline)
-);
 
 /**
  * A multi-variate mathematical value / function interpolator.
@@ -41,26 +34,30 @@ BOOST_ENUM(KEInterpolationMethod,
  * @tparam D The number of dimensions.
  *
  */
-template<std::size_t D = 1, typename IndexT = int32_t>
+template<size_t D = 1, typename IndexT = int32_t>
 class KFunctionCache
 {
 public:
-    typedef KValueCache<boost::array<IndexT, D>, double> ValueCache_t;
-    typedef boost::function<double(const boost::array<double, D>&)> FunctionArray_t;
-    typedef boost::function<double(const std::vector<double>&)> FunctionVector_t;
-    typedef boost::function<double(const double*)> FunctionPointer_t;
-    typedef boost::function<double(double)> FunctionScalar_t;
+    enum class EInterpolationMethod {
+        Nearest, Linear, Spline
+    };
+
+    typedef KHashMap<std::array<IndexT, D>, double, katrin::hash_container<std::array<IndexT, D>> > ValueCache_t;
+    typedef std::function<double(const std::array<double, D>&)> FunctionArray_t;
+    typedef std::function<double(const std::vector<double>&)> FunctionVector_t;
+    typedef std::function<double(const double*)> FunctionPointer_t;
+    typedef std::function<double(double)> FunctionScalar_t;
 
 public:
-    KFunctionCache(KEInterpolationMethod method = KEInterpolationMethod::Spline, uint32_t maxCacheSize = 1048576,
+    KFunctionCache(EInterpolationMethod method = EInterpolationMethod::Spline, uint32_t maxCacheSize = 1048576,
             double maxLoadFactor = 2.0);
     ~KFunctionCache() { }
 
-    void SetMaxCacheSize(uint32_t maxCacheSize) { fCache.SetMaxSize(maxCacheSize); }
+    void SetMaxCacheSize(size_t maxCacheSize) { fCache.SetMaxSize(maxCacheSize); }
 
-    void SetMethod(KEInterpolationMethod method) { fMethod = method; }
+    void SetMethod(EInterpolationMethod method) { fMethod = method; }
 
-    void ConfigureParameter(uint32_t iParam, double gridConstant, double centerValue = 0.0,
+    void ConfigureParameter(size_t iParam, double gridConstant, double centerValue = 0.0,
             boost::optional<double> lowerBound = boost::none, boost::optional<double> upperBound = boost::none);
 
     template<class FunctionT>
@@ -72,47 +69,47 @@ public:
     template<class FunctionT>
     void SetFunctionWithScalar(FunctionT& function);
 
-    static std::size_t NumberOfDimensions() { return D; }
+    static size_t NumberOfDimensions() { return D; }
 
-    double Get(const boost::array<double, D>& params);
+    double Get(const std::array<double, D>& params);
     double Get(const double* params);
     double Get(const std::vector<double>& params);
     double Get(const double& param);
 
-    uint32_t CacheSize() const { return fCache.Size(); }
+    size_t CacheSize() const { return fCache.Size(); }
     void ClearCache() { fCache.Clear(); }
     void EnableReporting(uint32_t reportFreq = 1000, const std::string& cacheName = "");
 
 protected:
     void GridIndex(uint32_t iParam, double paramValue, IndexT& resultIndex, double& resultDistance) const;
-    void GridIndices(const boost::array<double, D>& paramValues, boost::array<IndexT, D>& resultIndices,
-            boost::array<double, D>& resultDistances) const;
+    void GridIndices(const std::array<double, D>& paramValues, std::array<IndexT, D>& resultIndices,
+            std::array<double, D>& resultDistances) const;
 
-    bool FirstCombination(const boost::array<IndexT, D>& start, double lower,
-            boost::array<IndexT, D>& result) const;
-    bool LastCombination(const boost::array<IndexT, D>& start, double upper,
-            boost::array<IndexT, D>& result) const;
-    bool NextCombination(const boost::array<IndexT, D>& first, const boost::array<IndexT, D>& last,
-            boost::array<IndexT, D>& current) const;
+    bool FirstCombination(const std::array<IndexT, D>& start, double lower,
+            std::array<IndexT, D>& result) const;
+    bool LastCombination(const std::array<IndexT, D>& start, double upper,
+            std::array<IndexT, D>& result) const;
+    bool NextCombination(const std::array<IndexT, D>& first, const std::array<IndexT, D>& last,
+            std::array<IndexT, D>& current) const;
 
     double ParameterValue(uint32_t iParam, IndexT gridIndex, double gridDist = 0.0) const;
-    void ParameterValues(const boost::array<IndexT, D>& gridIndices,
-            boost::array<double, D>& resultValues) const;
+    void ParameterValues(const std::array<IndexT, D>& gridIndices,
+            std::array<double, D>& resultValues) const;
 
-    double CachedFunctionValue(const boost::array<IndexT, D>& gridIndices);
+    double CachedFunctionValue(const std::array<IndexT, D>& gridIndices);
 
-    KEInterpolationMethod fMethod;
+    EInterpolationMethod fMethod;
 
     ValueCache_t fCache;
 
-    struct ParameterConfig
-    {
+    struct ParameterConfig {
+        void Limit(double& input) const;
         double fGridConstant;
         double fCenterValue;
         boost::optional<double> fLowerBound;
         boost::optional<double> fUpperBound;
     };
-    boost::array<ParameterConfig, D> fParamConfigs;
+    std::array<ParameterConfig, D> fParamConfigs;
 
     FunctionPointer_t fFunctionP;
     FunctionArray_t fFunctionA;
@@ -125,9 +122,9 @@ template<std::size_t D, typename IndexT>
 template<class FunctionT>
 inline void KFunctionCache<D, IndexT>::SetFunctionWithCArray(FunctionT& function)
 {
-    fFunctionV.clear();
-    fFunctionA.clear();
-    fFunctionS.clear();
+    fFunctionV = nullptr;
+    fFunctionA = nullptr;
+    fFunctionS = nullptr;
     fFunctionP = function;
     fCache.Clear();
 }
@@ -136,9 +133,9 @@ template<std::size_t D, typename IndexT>
 template<class FunctionT>
 inline void KFunctionCache<D, IndexT>::SetFunctionWithBoostArray(FunctionT& function)
 {
-    fFunctionV.clear();
-    fFunctionP.clear();
-    fFunctionS.clear();
+    fFunctionV = nullptr;
+    fFunctionP = nullptr;
+    fFunctionS = nullptr;
     fFunctionA = function;
     fCache.Clear();
 }
@@ -147,9 +144,9 @@ template<std::size_t D, typename IndexT>
 template<class FunctionT>
 inline void KFunctionCache<D, IndexT>::SetFunctionWithVector(FunctionT& function)
 {
-    fFunctionA.clear();
-    fFunctionP.clear();
-    fFunctionS.clear();
+    fFunctionA = nullptr;
+    fFunctionP = nullptr;
+    fFunctionS = nullptr;
     fFunctionV = function;
     fCache.Clear();
 }
@@ -160,9 +157,9 @@ inline void KFunctionCache<D, IndexT>::SetFunctionWithScalar(FunctionT& function
 {
     BOOST_STATIC_ASSERT(D == 1);
 
-    fFunctionA.clear();
-    fFunctionP.clear();
-    fFunctionV.clear();
+    fFunctionA = nullptr;
+    fFunctionP = nullptr;
+    fFunctionV = nullptr;
     fFunctionS = function;
     fCache.Clear();
 }
@@ -171,7 +168,7 @@ template<std::size_t D, typename IndexT>
 inline double KFunctionCache<D, IndexT>::Get(const std::vector<double>& params)
 {
     assert(params.size() == D);
-    boost::array<double, D> barray;
+    std::array<double, D> barray;
     std::copy(params.begin(), params.end(), barray.begin());
     return Get(barray);
 }
@@ -179,7 +176,7 @@ inline double KFunctionCache<D, IndexT>::Get(const std::vector<double>& params)
 template<std::size_t D, typename IndexT>
 inline double KFunctionCache<D, IndexT>::Get(const double* params)
 {
-    boost::array<double, D> barray;
+    std::array<double, D> barray;
     std::copy(params, params + D, barray.begin());
     return Get(barray);
 }
@@ -187,9 +184,18 @@ inline double KFunctionCache<D, IndexT>::Get(const double* params)
 template<std::size_t D, typename IndexT>
 inline double KFunctionCache<D, IndexT>::Get(const double& param)
 {
-    boost::array<double, D> barray;
+    std::array<double, D> barray;
     barray[0] = param;
     return Get(barray);
+}
+
+template<std::size_t D, typename IndexT>
+inline void KFunctionCache<D, IndexT>::ParameterConfig::Limit(double& input) const
+{
+    if (fLowerBound && input < fLowerBound.get())
+        input = fLowerBound.get();
+    else if (fUpperBound && input > fUpperBound.get())
+        input = fUpperBound.get();
 }
 
 template<std::size_t D, typename IndexT>
@@ -197,12 +203,9 @@ inline void KFunctionCache<D, IndexT>::GridIndex(uint32_t iParam, double paramVa
         double& resultDistance) const
 {
     assert(iParam < D);
-    paramValue = KNumeric::Limit(paramValue, fParamConfigs[iParam].fLowerBound,
-            fParamConfigs[iParam].fUpperBound);
+    fParamConfigs[iParam].Limit(paramValue);
     const double floatGridIndex = (paramValue - fParamConfigs[iParam].fCenterValue)
             / fParamConfigs[iParam].fGridConstant;
-
-//    std::cout << iParam << ": " << paramValue << " = " << fParamConfigs[iParam].fGridConstant << " * " << floatGridIndex << " + " << fParamConfigs[iParam].fCenterValue << std::endl;
 
     resultDistance = boost::math::modf(floatGridIndex, &resultIndex);
     if (resultDistance < 0.0) {
@@ -212,8 +215,8 @@ inline void KFunctionCache<D, IndexT>::GridIndex(uint32_t iParam, double paramVa
 }
 
 template<std::size_t D, typename IndexT>
-inline void KFunctionCache<D, IndexT>::GridIndices(const boost::array<double, D>& paramValues,
-        boost::array<IndexT, D>& resultIndices, boost::array<double, D>& resultDistances) const
+inline void KFunctionCache<D, IndexT>::GridIndices(const std::array<double, D>& paramValues,
+        std::array<IndexT, D>& resultIndices, std::array<double, D>& resultDistances) const
 {
     for (std::size_t i = 0; i < D; ++i)
         GridIndex(i, paramValues[i], resultIndices[i], resultDistances[i]);
@@ -226,23 +229,24 @@ inline double KFunctionCache<D, IndexT>::ParameterValue(uint32_t iParam, IndexT 
     assert(iParam < D);
     double result = fParamConfigs[iParam].fCenterValue
             + fParamConfigs[iParam].fGridConstant * ((double) gridIndex + gridDist);
-    return KNumeric::Limit(result, fParamConfigs[iParam].fLowerBound, fParamConfigs[iParam].fUpperBound);
+    fParamConfigs[iParam].Limit(result);
+    return result;
 }
 
 template<std::size_t D, typename IndexT>
-inline void KFunctionCache<D, IndexT>::ParameterValues(const boost::array<IndexT, D>& gridIndices,
-        boost::array<double, D>& resultValues) const
+inline void KFunctionCache<D, IndexT>::ParameterValues(const std::array<IndexT, D>& gridIndices,
+        std::array<double, D>& resultValues) const
 {
     for (std::size_t i = 0; i < D; ++i)
         resultValues[i] = ParameterValue(i, gridIndices[i]);
 }
 
 template<std::size_t D, typename IndexT>
-inline bool KFunctionCache<D, IndexT>::FirstCombination(const boost::array<IndexT, D>& start,
-        double lower, boost::array<IndexT, D>& result) const
+inline bool KFunctionCache<D, IndexT>::FirstCombination(const std::array<IndexT, D>& start,
+        double lower, std::array<IndexT, D>& result) const
 {
     for (std::size_t i = 0; i < D; ++i) {
-        if (start[i] < KNumeric::Min<IndexT>() - lower)
+        if (start[i] < std::numeric_limits<IndexT>::min() - lower)
             return false;
         result[i] = start[i] + lower;
     }
@@ -250,11 +254,11 @@ inline bool KFunctionCache<D, IndexT>::FirstCombination(const boost::array<Index
 }
 
 template<std::size_t D, typename IndexT>
-inline bool KFunctionCache<D, IndexT>::LastCombination(const boost::array<IndexT, D>& start,
-        double upper, boost::array<IndexT, D>& result) const
+inline bool KFunctionCache<D, IndexT>::LastCombination(const std::array<IndexT, D>& start,
+        double upper, std::array<IndexT, D>& result) const
 {
     for (std::size_t i = 0; i < D; ++i) {
-        if (start[i] > KNumeric::Max<IndexT>() - upper)
+        if (start[i] > std::numeric_limits<IndexT>::max() - upper)
             return false;
         result[i] = start[i] + upper;
     }
@@ -262,8 +266,8 @@ inline bool KFunctionCache<D, IndexT>::LastCombination(const boost::array<IndexT
 }
 
 template< std::size_t D, typename IndexT >
-inline bool KFunctionCache<D, IndexT>::NextCombination(const boost::array<IndexT, D>& first,
-        const boost::array<IndexT, D>& last, boost::array<IndexT, D>& current) const
+inline bool KFunctionCache<D, IndexT>::NextCombination(const std::array<IndexT, D>& first,
+        const std::array<IndexT, D>& last, std::array<IndexT, D>& current) const
 {
     for (std::size_t i = 0; i < D; ++i) {
         if (current[i] < first[i]) {

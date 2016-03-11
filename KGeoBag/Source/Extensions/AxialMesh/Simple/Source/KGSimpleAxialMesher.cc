@@ -22,12 +22,12 @@ namespace KGeoBag
 
     void KGSimpleAxialMesher::SymmetricPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tMid = .5 * (tStop - tStart);
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tMid = .5 * (tStop - tStart);
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )
@@ -48,12 +48,12 @@ namespace KGeoBag
     }
     void KGSimpleAxialMesher::ForwardPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tLength = tStop - tStart;
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tLength = tStop - tStart;
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )
@@ -67,12 +67,12 @@ namespace KGeoBag
     }
     void KGSimpleAxialMesher::BackwardPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tLength = tStop - tStart;
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tLength = tStop - tStart;
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )

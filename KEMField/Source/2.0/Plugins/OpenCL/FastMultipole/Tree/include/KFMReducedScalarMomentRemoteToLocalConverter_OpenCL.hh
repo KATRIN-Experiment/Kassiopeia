@@ -8,7 +8,6 @@
 #include "KFMBatchedMultidimensionalFastFourierTransform_OpenCL.hh"
 
 
-
 namespace KEMField{
 
 /**
@@ -50,6 +49,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fReversedIndexArray(NULL)
         {
             this->fDFTCalcOpenCL = new KFMBatchedMultidimensionalFastFourierTransform_OpenCL<SpatialNDIM>();
+            this->fInitialized = false;
         }
 
         virtual ~KFMReducedScalarMomentRemoteToLocalConverter_OpenCL()
@@ -146,6 +146,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                         cl::Event scale_event;
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fScaleKernel, cl::NullRange, global, local, NULL, &scale_event);
                         scale_event.wait();
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                     }
 
                     //convolve the multipoles with the response functions to get local coeff
@@ -168,6 +171,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                         cl::Event scale_event;
                         KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fScaleKernel, cl::NullRange, global, local, NULL, &scale_event);
                         scale_event.wait();
+                        #ifdef ENFORCE_CL_FINISH
+                        KOpenCLInterface::GetInstance()->GetQueue().finish();
+                        #endif
                     }
 
                     //collect the original local coeff
@@ -187,6 +193,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                     cl::Event add_event;
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fAddKernel, cl::NullRange, global, local, NULL, &add_event);
                     add_event.wait();
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     //read back the updated local coefficients
                     EnqueueReadUpdatedLocalCoefficients();
@@ -241,22 +250,36 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             size_t elements_in_buffer = (this->fNResponseTerms)*(this->fTotalSpatialSize);
             std::complex<double>* m2lptr = this->fPtrM2LCoeff;
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fM2LCoeffBufferCL, CL_TRUE, 0, elements_in_buffer*sizeof(CL_TYPE2), m2lptr);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //create the buffer for the normalization coefficients
             size_t norm_size = (this->fNTerms)*(this->fNTerms);
-            this->fNormalizationCoeffBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, norm_size*sizeof(CL_TYPE2));
+            CL_ERROR_TRY
+            {
+                this->fNormalizationCoeffBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, norm_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //write the buffer containing the normalization coefficients
             std::complex<double>* ptr = this->fPtrNormalization;
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fNormalizationCoeffBufferCL, CL_TRUE, 0, norm_size*sizeof(CL_TYPE2), ptr);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //size of the workspace on the gpu
             size_t workspace_size = (this->fNReducedTerms)*(this->fTotalSpatialSize);
 
             //create the workspace buffer
-            this->fWorkspaceBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, workspace_size*sizeof(CL_TYPE2));
+            CL_ERROR_TRY
+            {
+                this->fWorkspaceBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, workspace_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //get the pointer to the DFT calculators GPU data buffer
             //we will use this to directly fill the buffer with the multipoles, and local coefficients
@@ -265,11 +288,18 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
 
 
             //create the reversed index look-up buffer
-            fReversedIndexArrayBufferCL
-            = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (this->fTotalSpatialSize)*sizeof(unsigned int));
+            CL_ERROR_TRY
+            {
+                fReversedIndexArrayBufferCL
+                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (this->fTotalSpatialSize)*sizeof(unsigned int));
+            }
+            CL_ERROR_CATCH
 
             //fill the reversed index buffer
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fReversedIndexArrayBufferCL, CL_TRUE, 0, (this->fTotalSpatialSize)*sizeof(unsigned int), fReversedIndexArray);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             if(this->fIsScaleInvariant)
             {
@@ -279,12 +309,16 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                 fTargetScaleFactorArray = new CL_TYPE[sf_size];
 
                 //fill them with the scale factors
-                double level_side_length;
+                double level_side_length = this->fLength;
                 double div_power;
+
                 for(size_t level = 0; level <= this->fMaxTreeDepth; level++)
                 {
-                    div_power = std::pow( (double)(this->fDiv), level);
-                    level_side_length = this->fLength/div_power;
+                    div_power = this->fDiv;
+                    if(level == 0){div_power = 1.0;};
+                    if(level == 1){div_power = this->fTopLevelDivisions;};
+
+                    level_side_length /= div_power;
 
                     //recompute the scale factors
                     std::complex<double> factor(level_side_length, 0.0);
@@ -307,17 +341,31 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                 }
 
                 //create the scale factor buffers
-                fSourceScaleFactorBufferCL
-                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
+                CL_ERROR_TRY
+                {
+                    fSourceScaleFactorBufferCL
+                    = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
+                }
+                CL_ERROR_CATCH
 
-                fTargetScaleFactorBufferCL
-                = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
+                CL_ERROR_TRY
+                {
+                    fTargetScaleFactorBufferCL
+                    = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
+                }
+                CL_ERROR_CATCH
 
                 //write the scale factors to the gpu
                 KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fSourceScaleFactorBufferCL, CL_TRUE, 0, sf_size*sizeof(CL_TYPE), fSourceScaleFactorArray);
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
 
                 //write the scale factors to the gpu
                 KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fTargetScaleFactorBufferCL, CL_TRUE, 0, sf_size*sizeof(CL_TYPE), fTargetScaleFactorArray);
+                #ifdef ENFORCE_CL_FINISH
+                KOpenCLInterface::GetInstance()->GetQueue().finish();
+                #endif
 
             }
         }
@@ -341,9 +389,15 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             cl::Event event;
             KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fConvolveKernel, cl::NullRange, global, local, NULL, &event);
             event.wait();
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //now copy the workspace data (pre-x-formed local) into the FFT buffer to perform inverse DFT
             KOpenCLInterface::GetInstance()->GetQueue().enqueueCopyBuffer(*fWorkspaceBufferCL, *fFFTDataBufferCL, size_t(0), size_t(0), array_size*sizeof(CL_TYPE2) );
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
         }
 
@@ -402,6 +456,13 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
 
             //get n-local
             fNConvolveLocal = fConvolveKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fConvolveKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNConvolveLocal)
+            {
+                fNConvolveLocal = preferredWorkgroupMultiple;
+            }
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -417,6 +478,14 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
 
             //get n-local
             fNScaleLocal = fScaleKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fScaleKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNScaleLocal)
+            {
+                fNScaleLocal = preferredWorkgroupMultiple;
+            }
+
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -432,6 +501,14 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
 
             //get n-local
             fNAddLocal = fAddKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fAddKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNAddLocal)
+            {
+                fNAddLocal = preferredWorkgroupMultiple;
+            }
+
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -440,6 +517,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
         {
             size_t moment_size = (this->fNReducedTerms)*(this->fTotalSpatialSize);
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fFFTDataBufferCL, CL_TRUE, 0, moment_size*sizeof(CL_TYPE2), this->fPtrMultipoles);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -449,6 +529,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             size_t moment_size = (this->fNReducedTerms)*(this->fTotalSpatialSize);
             //enqueue write the original local coeff to the GPU
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fWorkspaceBufferCL, CL_TRUE, 0, moment_size*sizeof(CL_TYPE2), this->fPtrOrigLocalCoeff);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -458,6 +541,9 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             //enqueue read the local coeff from the GPU
             size_t moment_size = (this->fNReducedTerms)*(this->fTotalSpatialSize);
             KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fFFTDataBufferCL, CL_TRUE, 0, moment_size*sizeof(CL_TYPE2), this->fPtrLocalCoeff);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
         }
 
 
@@ -478,7 +564,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                 size_t max_size_mb = max_buffer_size/(1024*1024);
                 size_t total_size_mb = total_mem_size/(1024*1024);
 
-                kfmout<<"KFMReducedScalarMomentRemoteToLocalConverter::BuildBuffers: Error. Cannot allocate buffer of size: "<<size_to_alloc_mb<<" MB on a device with max allowable buffer size of: "<<max_size_mb<<" MB and total device memory of: "<<total_size_mb<<" MB."<<kfmendl;
+                kfmout<<"KFMReducedScalarMomentRemoteToLocalConverter_OpenCL::BuildBuffers: Error. Cannot allocate buffer of size: "<<size_to_alloc_mb<<" MB on a device with max allowable buffer size of: "<<max_size_mb<<" MB and total device memory of: "<<total_size_mb<<" MB."<<kfmendl;
                 kfmexit(1);
             }
         }

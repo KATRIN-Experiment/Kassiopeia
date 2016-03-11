@@ -41,14 +41,14 @@ namespace KGeoBag
 
     struct kg_matrix
     {
-        size_t size1;
-        size_t size2;
+        unsigned int size1;
+        unsigned int size2;
         double* data;
     };
 
     struct kg_vector
     {
-        size_t size;
+        unsigned int size;
         double* data;
     };
 
@@ -59,12 +59,12 @@ namespace KGeoBag
     //element look up is VERY slow!!
     struct kg_sparse_matrix
     {
-        size_t n_elements;
-        size_t size1;
-        size_t size2;
+        unsigned int n_elements;
+        unsigned int size1;
+        unsigned int size2;
         double* data;
-        size_t* row;
-        size_t* column;
+        unsigned int* row;
+        unsigned int* column;
     };
 
 

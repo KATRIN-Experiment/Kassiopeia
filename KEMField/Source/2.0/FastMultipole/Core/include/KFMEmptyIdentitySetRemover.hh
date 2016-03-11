@@ -3,7 +3,6 @@
 
 #include "KFMNode.hh"
 #include "KFMIdentitySet.hh"
-#include "KFMExternalIdentitySet.hh"
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
 
@@ -45,18 +44,6 @@ class KFMEmptyIdentitySetRemover: public KFMNodeActor< KFMNode<ObjectTypeList> >
                         KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::SetNodeObject(NULL, node);
                     }
                 }
-
-                KFMExternalIdentitySet* eset = KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(node);
-
-                if(eset != NULL)
-                {
-                    if(eset->GetSize() == 0)
-                    {
-                        delete eset;
-                        KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::SetNodeObject(NULL, node);
-                    }
-                }
-
             }
         }
 

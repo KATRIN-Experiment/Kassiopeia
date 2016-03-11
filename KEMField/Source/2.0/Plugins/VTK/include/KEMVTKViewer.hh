@@ -152,7 +152,7 @@ namespace KEMField
 
 
     double TriangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2);
-    double RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2);
+    double RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2, KEMThreeVector P3);
 
     vtkSmartPointer<vtkPoints>    fPoints;
     vtkSmartPointer<vtkCellArray> fCells;
@@ -250,7 +250,7 @@ namespace KEMField
 
       fCells->InsertNextCell(fQuad);
 
-      double aspect_ratio = RectangleAspectRatio(s->at(i)->GetP0(), s->at(i)->GetP1(), s->at(i)->GetP2() );
+      double aspect_ratio = RectangleAspectRatio(s->at(i)->GetP0(), s->at(i)->GetP1(), s->at(i)->GetP2(), s->at(i)->GetP3()  );
       fAspectRatio->InsertNextValue(aspect_ratio);
     }
   }
@@ -422,7 +422,7 @@ namespace KEMField
 
     fCells->InsertNextCell(fQuad);
 
-    double aspect_ratio = RectangleAspectRatio(s->GetP0(), s->GetP1(), s->GetP2() );
+    double aspect_ratio = RectangleAspectRatio(s->GetP0(), s->GetP1(), s->GetP2(), s->GetP3() );
     fAspectRatio->InsertNextValue(aspect_ratio);
 
   }
@@ -664,22 +664,26 @@ namespace KEMField
     }
 
 
-    double KEMVTKViewer::RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2)
+    double KEMVTKViewer::RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2,  KEMThreeVector P3)
     {
-        double a, b;
-        double delx, dely, delz;
+        //figure out which vertices make the sides
+        KEMThreeVector p[4];
+        p[0] = P0;
+        p[1] = P1;
+        p[2] = P2;
+        p[3] = P3;
 
-        delx = P1[ 0 ] - P0[ 0 ];
-        dely = P1[ 1 ] - P0[ 1 ];
-        delz = P1[ 2 ] - P0[ 2 ];
+        double d01 = (p[0]-p[1]).Magnitude();
+        double d02 = (p[0]-p[2]).Magnitude();
+        double d03 = (p[0]-p[3]).Magnitude();
 
-        a = std::sqrt( delx * delx + dely * dely + delz * delz );
+        int a_mid, b_mid;
+        double max_dist = d01; a_mid = 2; b_mid = 3;
+        if(d02 > max_dist){max_dist = d02; a_mid = 3; b_mid = 1;}
+        if(d03 > max_dist){max_dist = d03; a_mid = 1; b_mid = 2;}
 
-        delx = P2[ 0 ] - P0[ 0 ];
-        dely = P2[ 1 ] - P0[ 1 ];
-        delz = P2[ 2 ] - P0[ 2 ];
-
-        b = std::sqrt( delx * delx + dely * dely + delz * delz );
+        double a = (p[a_mid] - p[0]).Magnitude();
+        double b = (p[b_mid] - p[0]).Magnitude();
 
         double val = a/b;
         if(val < 1.0){return 1.0/val;};

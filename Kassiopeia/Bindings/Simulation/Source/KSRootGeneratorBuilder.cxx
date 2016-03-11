@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static const int sKSRootGenerator =
+    STATICINT sKSRootGenerator =
         KSRootBuilder::ComplexElement< KSRootGenerator >( "ks_root_generator" );
 
-    static const int sKSRootGeneratorStructure =
+    STATICINT sKSRootGeneratorStructure =
         KSRootGeneratorBuilder::Attribute< string >( "name" ) +
         KSRootGeneratorBuilder::Attribute< string >( "set_generator" );
 

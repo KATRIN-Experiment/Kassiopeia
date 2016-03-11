@@ -25,6 +25,7 @@ namespace Kassiopeia
     {
     }
     KSWriteVTK::KSWriteVTK( const KSWriteVTK& aCopy ) :
+        KSComponent(),
         fBase( aCopy.fBase ),
         fPath( aCopy.fPath ),
         fTrackPointFlag( false ),
@@ -805,7 +806,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSWriteVTKDict =
+    STATICINT sKSWriteVTKDict =
         KSDictionary< KSWriteVTK >::AddCommand( &KSWriteVTK::SetStepPoint, &KSWriteVTK::ClearStepPoint, "set_step_point", "clear_step_point" ) +
         KSDictionary< KSWriteVTK >::AddCommand( &KSWriteVTK::SetStepData, &KSWriteVTK::ClearStepData, "set_step_data", "clear_step_data" ) +
         KSDictionary< KSWriteVTK >::AddCommand( &KSWriteVTK::SetTrackPoint, &KSWriteVTK::ClearTrackPoint, "set_track_point", "clear_track_point" ) +

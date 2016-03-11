@@ -28,15 +28,18 @@ int main( int argc, char** argv )
 {
     if( argc < 3 )
     {
-        cout << "usage: ./MeshViewer <config_file_name.xml> <geometry_path>" << endl;
+        cout << "usage: ./AxialMeshViewer <config_file_name.xml> <geometry_path>" << endl;
         return -1;
     }
 
     string tFileName( argv[ 1 ] );
     string tPath( argv[ 2 ] );
 
+    KCommandLineTokenizer tCommandLine;
+    tCommandLine.ProcessCommandLine( argc, argv );
+
     KXMLTokenizer tTokenizer;
-    KVariableProcessor tVariableProcessor;
+    KVariableProcessor tVariableProcessor( tCommandLine.GetVariables() );
     KIncludeProcessor tIncludeProcessor;
     KLoopProcessor tLoopProcessor;
     KConditionProcessor tConditionProcessor;
@@ -69,7 +72,7 @@ int main( int argc, char** argv )
     coremsg( eNormal ) << "...initialization finished" << eom;
 
     KVTKWindow tWindow;
-    tWindow.SetName( "KGeoBag Mesh Viewer" );
+    tWindow.SetName( "KGeoBag Axial Mesh Viewer" );
     tWindow.SetFrameColorRed( 0. );
     tWindow.SetFrameColorGreen( 0. );
     tWindow.SetFrameColorBlue( 0. );
@@ -79,7 +82,7 @@ int main( int argc, char** argv )
     KGAxialMesher tMesher;
 
     KGVTKAxialMeshPainter tPainter;
-    tPainter.SetName( "MeshPainter" );
+    tPainter.SetName( "AxialMeshPainter" );
     tPainter.SetDisplayMode( true );
     tPainter.SetWriteMode( true );
     tPainter.SetColorMode( KGVTKAxialMeshPainter::sArea );

@@ -24,8 +24,8 @@ namespace KEMField
     double Potential(const KPosition& P) const;
     KEMThreeVector ElectricField(const KPosition& P) const;
 
-    double Potential(const std::vector<unsigned int>* SurfaceIndexSet, const KPosition& P) const;
-    KEMThreeVector ElectricField(const std::vector<unsigned int>* SurfaceIndexSet, const KPosition& P) const;
+    double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+    KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
 
   protected:
     const KSurfaceContainer& fContainer;

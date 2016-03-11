@@ -22,6 +22,8 @@ namespace katrin
                 fInitialState( &KXMLTokenizer::ParseBegin ),
                 fFinalState( &KXMLTokenizer::ParseEnd ),
 
+                fNestedCommentCounter( 0 ),
+
                 fBuffer( "" ),
                 fNames(),
                 fBeginParsing( new KBeginParsingToken() ),
@@ -587,6 +589,19 @@ namespace katrin
             Increment();
         }
 
+        //if at end of file, then ParseEndFile
+        if( AtEnd() )
+        {
+            fComment->SetValue( fCommentBuffer );
+            ProcessToken( fComment );
+
+            initmsg( eWarning ) << "found <"<<fNestedCommentCounter <<"> unclosed comment(s) at end of file <"<< fFile->GetName()<<">" << eom;
+            fNestedCommentCounter = 0;
+
+            fState = &KXMLTokenizer::ParseEndFile;
+            return;
+        }
+
         //if at anything else, then append character to value, recurse
 
         fCommentBuffer.append( 1, fChar );
@@ -841,5 +856,5 @@ namespace katrin
     const string KXMLTokenizer::fWhiteSpaceChars = KXMLTokenizer::fSpace + KXMLTokenizer::fTab + KXMLTokenizer::fNewLine + KXMLTokenizer::fCarriageReturn;
     const string KXMLTokenizer::fNameStartChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + string( ":_" );
     const string KXMLTokenizer::fNameChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + string( ":_-." );
-    const string KXMLTokenizer::fValueChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + KXMLTokenizer::fLeftBraces + KXMLTokenizer::fOperators + KXMLTokenizer::fRightBraces + KXMLTokenizer::fParameterLeftBrace + KXMLTokenizer::fParameterRightBrace + string( "@:_.,#" );
+    const string KXMLTokenizer::fValueChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + KXMLTokenizer::fLeftBraces + KXMLTokenizer::fOperators + KXMLTokenizer::fRightBraces + KXMLTokenizer::fParameterLeftBrace + KXMLTokenizer::fParameterRightBrace + string( "@:_.,#;" );
 }

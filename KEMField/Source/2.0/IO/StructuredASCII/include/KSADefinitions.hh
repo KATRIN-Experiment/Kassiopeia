@@ -16,7 +16,7 @@ namespace KEMField{
 *
 */
 
-#define CHUNK 65536
+#define CHUNK 4194304
 #define WRITE_CHUNK CHUNK
 #define READ_CHUNK CHUNK
 

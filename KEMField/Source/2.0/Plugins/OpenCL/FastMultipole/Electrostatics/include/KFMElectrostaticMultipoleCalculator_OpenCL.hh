@@ -14,9 +14,11 @@
 //math
 #include "KFMPointCloud.hh"
 #include "KFMMath.hh"
+#include "KFMGaussLegendreQuadratureTableCalculator.hh"
 
 //tree
 #include "KFMSpecialNodeSet.hh"
+#include "KFMElementMomentBatchCalculator.hh"
 
 //electrostatics
 #include "KFMElectrostaticNode.hh"
@@ -43,10 +45,11 @@ namespace KEMField{
 class KFMElectrostaticMultipoleCalculator_OpenCL
 {
     public:
-        KFMElectrostaticMultipoleCalculator_OpenCL();
+        KFMElectrostaticMultipoleCalculator_OpenCL(bool standalone = false);
         virtual ~KFMElectrostaticMultipoleCalculator_OpenCL();
 
         void SetElectrostaticElementContainer(const KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
+        void SetParameters(KFMElectrostaticParameters params);
         void SetTree(KFMElectrostaticTree* tree){fTree = tree;};
 
         void SetNodeMomentBuffer(cl::Buffer* node_moments){fNodeMomentBufferCL = node_moments;};
@@ -54,6 +57,18 @@ class KFMElectrostaticMultipoleCalculator_OpenCL
 
         void Initialize();
         void ComputeMoments();
+
+        //use gpu to compute the moments of an individual boundary element
+        //this is for testing/debugging purposes (can only use with fStandAlone flag turned on/true)
+        virtual bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertex_cloud, KFMScalarMultipoleExpansion* moments) const;
+
+        //selects whether to use analytic vs numerical integration
+        //defaults uses analytic when possible, but reverts to numerical integration for bad aspect ratios
+        void UseDefault(){fPrimaryIntegrationMode = -1; fSecondaryIntegrationMode = 1;};
+        //force use of numerical integrator for all shapes
+        void ForceNumerical(){fPrimaryIntegrationMode = 1; fSecondaryIntegrationMode = 1;};
+        //force use of analytic integrator for all shapes
+        void ForceAnalytic(){fPrimaryIntegrationMode = -1; fSecondaryIntegrationMode = -1;};
 
     protected:
 
@@ -84,6 +99,9 @@ class KFMElectrostaticMultipoleCalculator_OpenCL
         std::vector<unsigned int > fMultipoleNodeIDList;
 
         ////////////////////////////////////////////////////////////////////////
+        bool fStandAlone; //turns on debugging mode if true
+        int fPrimaryIntegrationMode;
+        int fSecondaryIntegrationMode;
 
         long fMaxBufferSizeInBytes;
         bool fInitialized;
@@ -104,6 +122,16 @@ class KFMElectrostaticMultipoleCalculator_OpenCL
         unsigned int fNumberOfElementsToProcessOnThisPass;
 
         ////////////////////////////////////////////////////////////////////////
+        KFMGaussLegendreQuadratureTableCalculator fQuadratureTableCalc;
+        std::vector< double > fAbscissaVector;
+        std::vector< double > fWeightsVector;
+
+        CL_TYPE* fAbscissa;
+        CL_TYPE* fWeights;
+        cl::Buffer* fAbscissaBufferCL;
+        cl::Buffer* fWeightsBufferCL;
+
+        ////////////////////////////////////////////////////////////////////////
 
         std::string fOpenCLFlags;
 
@@ -116,8 +144,6 @@ class KFMElectrostaticMultipoleCalculator_OpenCL
 
         CL_TYPE4* fIntermediateOriginData;
         CL_TYPE16* fVertexData;
-        CL_TYPE2* fIntermediateMomentData;
-        CL_TYPE2* fZeroData;
         unsigned int* fNodeIDData;
         unsigned int fNGroupUniqueNodes;
         unsigned int* fNodeIndexData;
@@ -158,6 +184,14 @@ class KFMElectrostaticMultipoleCalculator_OpenCL
 
         cl::Buffer* fNodeMomentBufferCL;
         unsigned fNDistributeLocal;
+
+        //array zero-ing kernel ////////////////////////////////////////////////
+        //we need a kernel to zero out the multipole buffer
+        //because the OpenCL 1.1 specification lacks the clEnqueueFillBuffer command
+        mutable cl::Kernel* fZeroKernel;
+        unsigned int fNZeroLocal;
+        unsigned int fMultipoleBufferSize;
+
 
 };
 

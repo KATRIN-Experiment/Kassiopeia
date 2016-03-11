@@ -8,6 +8,7 @@
 
 #ifdef KASSIOPEIA_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
+#include "KSGenValueHistogramBuilder.h"
 #endif
 
 using namespace Kassiopeia;
@@ -19,7 +20,7 @@ namespace katrin
     {
     }
 
-    static int sKSGenMomentumRectangularCompositeStructure =
+    STATICINT sKSGenMomentumRectangularCompositeStructure =
         KSGenMomentumRectangularCompositeBuilder::Attribute< string >( "name" ) +
         KSGenMomentumRectangularCompositeBuilder::Attribute< string >( "surface" ) +
         KSGenMomentumRectangularCompositeBuilder::Attribute< string >( "space" ) +
@@ -42,14 +43,17 @@ namespace katrin
         KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueUniform >( "z_uniform" ) +
         KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueGauss >( "z_gauss" );
 
-    static int sToolboxKSGenMomentumRectangularComposite =
+    STATICINT sToolboxKSGenMomentumRectangularComposite =
         KSRootBuilder::ComplexElement< KSGenMomentumRectangularComposite >( "ksgen_momentum_rectangular_composite" );
 
 #ifdef KASSIOPEIA_USE_ROOT
-    static int sKSGenPositionRectangularCompositeStructureROOT =
+    STATICINT sKSGenPositionRectangularCompositeStructureROOT =
             KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "x_formula" ) +
+            KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "x_histogram" ) +
             KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "y_formula" ) +
-            KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" );
+            KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "y_histogram" ) +
+            KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" ) +
+            KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "z_histogram" );
 #endif
 
 }

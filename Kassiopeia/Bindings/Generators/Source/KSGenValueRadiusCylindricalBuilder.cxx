@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSGenValueRadiusCylindricalStructure =
+    STATICINT sKSGenValueRadiusCylindricalStructure =
         KSGenValueRadiusCylindricalBuilder::Attribute< string >( "name" ) +
         KSGenValueRadiusCylindricalBuilder::Attribute< double >( "radius_min" ) +
         KSGenValueRadiusCylindricalBuilder::Attribute< double >( "radius_max" );
 
-    static int sToolboxKSGenValueRadiusCylindrical =
+    STATICINT sToolboxKSGenValueRadiusCylindrical =
         KSRootBuilder::ComplexElement< KSGenValueRadiusCylindrical >( "ksgen_value_radius_cylindrical" );
 
 }

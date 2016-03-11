@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static const int sKSRootSurfaceNavigator =
+    STATICINT sKSRootSurfaceNavigator =
         KSRootBuilder::ComplexElement< KSRootSurfaceNavigator >( "ks_root_surface_navigator" );
 
-    static const int sKSRootSurfaceNavigatorStructure =
+    STATICINT sKSRootSurfaceNavigatorStructure =
         KSRootSurfaceNavigatorBuilder::Attribute< string >( "name" ) +
         KSRootSurfaceNavigatorBuilder::Attribute< string >( "set_surface_navigator" );
 

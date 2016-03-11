@@ -19,6 +19,9 @@ set (MATH_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMBoundaryCalculator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMPinchonGMatrixCalculator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMPinchonJMatrixCalculator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrixStructure.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrix.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMCubicVolumeCollection.hh
 )
 
 set (MATH_SOURCEFILES
@@ -27,6 +30,7 @@ set (MATH_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMTrianglePolarBasisCalculator.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMPinchonGMatrixCalculator.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMPinchonJMatrixCalculator.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMDenseBlockSparseMatrixStructure.cc
 )
 
 add_library (KFMMath SHARED ${MATH_SOURCEFILES})

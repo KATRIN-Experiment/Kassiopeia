@@ -110,6 +110,8 @@ namespace KEMField
     fBoundaryInfo.resize(3*NUniqueBoundaries()+2);
     fBoundaryInfo[0] = size();
     fBoundaryInfo[1] = NUniqueBoundaries();
+
+
     for (unsigned int i=0;i<NUniqueBoundaries();i++)
     {
       fBoundaryInfo[2 + i*3] = size(i);
@@ -143,23 +145,30 @@ namespace KEMField
       KBasisAction<KOpenCLBufferPolicyStreamer<KBasis> >::ActOnBasisType(at(i)->GetID(),basisStreamer);
     }
 
+
     // Now that the data is in array form, we can construct the buffers
     fBufferShapeInfo =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_ONLY,
 		     fShapeInfo.size()*sizeof(cl_short));
+
     fBufferShapeData =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_ONLY,
 		     fShapeData.size()*sizeof(CL_TYPE));
+
+
+
     fBufferBoundaryInfo =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_ONLY,
 		     fBoundaryInfo.size()*sizeof(cl_int));
+
     fBufferBoundaryData =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_ONLY,
 		     fBasisData.size()*sizeof(CL_TYPE));
+
     fBufferBasisData =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_WRITE_ONLY,
@@ -192,6 +201,7 @@ namespace KEMField
 			 0,
 			 fBoundaryData.size()*sizeof(CL_TYPE),
 			 &fBoundaryData[0]);
+
 
     KOpenCLInterface::GetInstance()->GetQueue().
       enqueueWriteBuffer(*fBufferBasisData,

@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTermPropagationStructure =
+    STATICINT sKSTrajTermPropagationStructure =
         KSTrajTermPropagationBuilder::Attribute< string >( "name" ) +
         KSTrajTermPropagationBuilder::Attribute< string >( "direction" );
 
-    static int sToolboxKSTrajTermPropagation =
+    STATICINT sToolboxKSTrajTermPropagation =
         KSRootBuilder::ComplexElement< KSTrajTermPropagation >( "kstraj_term_propagation" );
 
 }

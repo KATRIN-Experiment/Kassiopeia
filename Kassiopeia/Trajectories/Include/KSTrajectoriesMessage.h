@@ -11,7 +11,7 @@ KMESSAGE_DECLARE( Kassiopeia, trajmsg )
     trajmsg( eDebug ) << xCONTENT;
 
 #define trajmsg_assert( xVARIABLE, xASSERTION )\
-    if (! (xVARIABLE xASSERTION)) fieldmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
+    if (! (xVARIABLE xASSERTION)) trajmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
 
 #endif
 

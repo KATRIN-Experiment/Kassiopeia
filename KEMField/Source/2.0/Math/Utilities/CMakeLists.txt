@@ -8,6 +8,13 @@ if (KEMField_USE_GSL)
   add_cflag(KEMFIELD_USE_GSL)
 endif (KEMField_USE_GSL)
 
+option (KEMField_USE_FFTW "Use FFTW" OFF)
+if (KEMField_USE_FFTW)
+  find_package(FFTW 3.3.4 REQUIRED)
+  kasper_external_include_directories (${FFTW_INCLUDE_DIRS})
+  add_cflag(KEMFIELD_USE_FFTW)
+endif (KEMField_USE_FFTW)
+
 kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (MATH_UTILITIES_HEADERFILES
@@ -26,6 +33,10 @@ set (MATH_UTILITIES_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSquareRootUtilities.hh
 )
 
+if(KEMField_USE_FFTW)
+    set( MATH_UTILITIES_HEADERFILES ${MATH_UTILITIES_HEADERFILES}     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMultidimensionalFastFourierTransformFFTW.hh )
+endif(KEMField_USE_FFTW)
+
 set (MATH_UTILITIES_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMMath.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMBitReversalPermutation.cc
@@ -42,9 +53,17 @@ set (MATH_UTILITIES_SOURCEFILES
 add_library (KFMMathUtilities SHARED ${MATH_UTILITIES_SOURCEFILES})
 
 if(KEMField_USE_GSL)
-    target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES})
+    if(KEMField_USE_FFTW)
+        target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES} ${FFTW_LIBRARIES})
+    else(KEMField_USE_FFTW)
+        target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES})
+    endif(KEMField_USE_FFTW)
 else(KEMField_USE_GSL)
-    target_link_libraries (KFMMathUtilities KEMCore)
+    if(KEMField_USE_FFTW)
+        target_link_libraries (KFMMathUtilities KEMCore ${FFTW_LIBRARIES})
+    else(KEMField_USE_FFTW)
+        target_link_libraries (KFMMathUtilities KEMCore )
+    endif(KEMField_USE_FFTW)
 endif (KEMField_USE_GSL)
 
 kasper_install_headers (${MATH_UTILITIES_HEADERFILES})

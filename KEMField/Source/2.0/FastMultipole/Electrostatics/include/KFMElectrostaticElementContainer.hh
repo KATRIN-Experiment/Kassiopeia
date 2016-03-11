@@ -83,6 +83,11 @@ class KFMElectrostaticElementContainer: public KFMElectrostaticElementContainerB
         const KFMPoint<SpatialDimension>* GetCentroid(unsigned int id) const {return fCentroidContainer->GetObjectWithID(id);};
         double GetAspectRatio(unsigned int id) const {return fAspectRatio[id];};
 
+        //after the tree is constructed the bounding balls are no longer needed
+        void ClearBoundingBalls()
+        {
+            fBoundingBallContainer->DeleteAllObjects();
+        }
 
         void Clear()
         {

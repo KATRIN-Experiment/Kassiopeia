@@ -10,14 +10,14 @@ namespace katrin
     {
     }
 
-    static int sKSGenEnergyKryptonEventStructure =
+    STATICINT sKSGenEnergyKryptonEventStructure =
         KSGenEnergyKryptonEventBuilder::Attribute< string >( "name" ) +
         KSGenEnergyKryptonEventBuilder::Attribute< bool >( "force_conversion" ) +
         KSGenEnergyKryptonEventBuilder::Attribute< bool >( "do_conversion" ) +
         KSGenEnergyKryptonEventBuilder::Attribute< bool >( "do_auger" );
 
 
-    static int sKSGenEnergyKryptonEvent =
+    STATICINT sKSGenEnergyKryptonEvent =
         KSRootBuilder::ComplexElement< KSGenEnergyKryptonEvent >( "ksgen_energy_krypton_event" );
 
 }

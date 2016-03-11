@@ -30,7 +30,7 @@ public:
 
 protected:
     std::ostringstream fMessage;
-    const std::exception* fNestedException;
+    std::string fNestedMessage;
 
     mutable std::string fWhat;
 };
@@ -50,7 +50,7 @@ public:
 
     XDerivedType& Nest(const std::exception& toNest)
     {
-        XBaseType::fNestedException = &toNest;
+        XBaseType::fNestedMessage = toNest.what();
         return static_cast<XDerivedType&>(*this);
     }
 };
@@ -61,30 +61,27 @@ class KException : public KExceptionPrototype<KException, KExceptionBase>
 };
 
 
-inline KExceptionBase::KExceptionBase() :
-    fNestedException( 0 )
+inline KExceptionBase::KExceptionBase()
 { }
 
 inline KExceptionBase::KExceptionBase( const KExceptionBase& toCopy ) :
     std::exception( toCopy ),
     fMessage( toCopy.fMessage.str() ),
-    fNestedException( toCopy.fNestedException )
+    fNestedMessage( toCopy.fNestedMessage )
 { }
 
 inline void KExceptionBase::operator=( const KExceptionBase& toCopy )
 {
     std::exception::operator=( toCopy );
     fMessage.str( toCopy.fMessage.str() );
-    fNestedException = toCopy.fNestedException;
+    fNestedMessage = toCopy.fNestedMessage;
 }
 
 inline const char* KExceptionBase::what() const throw ()
 {
     fWhat = fMessage.str();
-    if( fNestedException != 0 ) {
-        fWhat.append( " [" );
-        fWhat.append( fNestedException->what() );
-        fWhat.append( "]" );
+    if( !fNestedMessage.empty() ) {
+        fWhat.append( " [" + fNestedMessage + "]" );
     }
     return fWhat.c_str();
 }

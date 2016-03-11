@@ -6,7 +6,7 @@
 
 #include "KSParticleFactory.h"
 #include "KRandom.h"
-#include "TF1.h"
+
 using katrin::KRandom;
 
 namespace Kassiopeia
@@ -26,6 +26,7 @@ namespace Kassiopeia
     {
     }
     KSGenEnergyLeadEvent::KSGenEnergyLeadEvent( const KSGenEnergyLeadEvent& aCopy ) :
+        KSComponent(),
         fForceConversion( aCopy.fForceConversion ),
         fDoConversion( aCopy.fDoConversion ),
         fDoAuger( aCopy.fDoAuger ),
@@ -203,7 +204,7 @@ namespace Kassiopeia
     void KSGenEnergyLeadEvent::SetDoAuger( bool aSetting )
     {
         fDoAuger = aSetting;
-    }    
+    }
 
 
     void KSGenEnergyLeadEvent::InitializeComponent()
@@ -231,4 +232,3 @@ namespace Kassiopeia
     }
 
 }
-

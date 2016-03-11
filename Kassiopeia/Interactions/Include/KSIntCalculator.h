@@ -27,8 +27,8 @@ namespace Kassiopeia
             virtual void PushDeupdateComponent();
 
             //variables for output
-            K_REFS( int, StepNInteractions );
-            K_REFS( double, StepEnergyLoss );
+            K_REFS( int, StepNInteractions )
+            K_REFS( double, StepEnergyLoss )
     };
 
 }

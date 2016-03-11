@@ -74,6 +74,7 @@ namespace extract {
     extractor< tag::variance_unbiased > const variance_unbiased = {};
 }
 
+// Unbiased std. deviation
 namespace impl {
     template<typename Sample>
     struct error_unbiased_accumulator : accumulator_base
@@ -104,6 +105,7 @@ namespace extract {
     extractor< tag::error_unbiased > const error_unbiased = {};
 }
 
+// Error of mean
 namespace impl {
     template<typename Sample>
     struct error_of_mean_accumulator : accumulator_base

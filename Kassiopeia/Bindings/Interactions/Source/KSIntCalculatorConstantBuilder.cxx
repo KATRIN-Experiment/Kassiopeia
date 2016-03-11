@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSIntCalculatorConstantStructure =
+    STATICINT sKSIntCalculatorConstantStructure =
         KSIntCalculatorConstantBuilder::Attribute< string >( "name" ) +
         KSIntCalculatorConstantBuilder::Attribute< double >( "cross_section" );
 
-    static int sToolboxKSIntCalculatorConstant =
+    STATICINT sToolboxKSIntCalculatorConstant =
         KSRootBuilder::ComplexElement< KSIntCalculatorConstant >( "ksint_calculator_constant" );
 }

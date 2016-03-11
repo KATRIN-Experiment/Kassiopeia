@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
 	KSGenValueList::KSGenValueList( const KSGenValueList& aCopy ) :
+            KSComponent(),
 			fValues( aCopy.fValues )
     {
     }

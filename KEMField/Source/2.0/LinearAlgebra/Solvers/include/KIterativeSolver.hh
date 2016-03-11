@@ -110,30 +110,41 @@ namespace KEMField
   class KIterationDisplay : public KIterativeSolver<ValueType>::Visitor
   {
   public:
-    KIterationDisplay() { KIterativeSolver<ValueType>::Visitor::Interval(1); }
+    KIterationDisplay():fPrefix(""),fCarriageReturn(true){ KIterativeSolver<ValueType>::Visitor::Interval(1); }
+    KIterationDisplay(std::string prefix):fPrefix(prefix),fCarriageReturn(false){ KIterativeSolver<ValueType>::Visitor::Interval(1); }
     virtual ~KIterationDisplay() {}
     void Initialize(KIterativeSolver<ValueType>& solver);
     void Visit(KIterativeSolver<ValueType>& solver);
     void Finalize(KIterativeSolver<ValueType>& solver);
+  private:
+    std::string fPrefix;
+    bool fCarriageReturn;
   };
 
   template <typename ValueType>
   void KIterationDisplay<ValueType>::Initialize(KIterativeSolver<ValueType>& solver)
   {
-    KEMField::cout<<"Beginning iterative solve with target residual norm "<<solver.Tolerance()<<KEMField::endl;
+    KEMField::cout<<fPrefix<<"Beginning iterative solve with target residual norm "<<solver.Tolerance()<<" and dimension "<<solver.Dimension()<<KEMField::endl;
   }
 
   template <typename ValueType>
   void KIterationDisplay<ValueType>::Visit(KIterativeSolver<ValueType>& solver)
   {
-    KEMField::cout<<"Iteration, |Residual|: "<<solver.Iteration()<<" "<<solver.ResidualNorm()<<"  \r";
+    if(fCarriageReturn)
+    {
+        KEMField::cout<<"Iteration, |Residual|: "<<solver.Iteration()<<", "<<solver.ResidualNorm()<<"  \r";
+    }
+    else
+    {
+        KEMField::cout<<fPrefix<<"Iteration, |Residual|: "<<solver.Iteration()<<", "<<solver.ResidualNorm()<<KEMField::endl;
+    }
     KEMField::cout.flush();
   }
 
   template <typename ValueType>
   void KIterationDisplay<ValueType>::Finalize(KIterativeSolver<ValueType>& solver)
   {
-    KEMField::cout<<"Convergence complete after "<<solver.Iteration()<<" iterations, with |Residual|: "<<solver.ResidualNorm()<<KEMField::endl;
+    KEMField::cout<<fPrefix<<"Convergence complete after "<<solver.Iteration()<<" iterations, with |Residual|: "<<solver.ResidualNorm()<<KEMField::endl;
   }
 
 }

@@ -35,8 +35,16 @@ using katrin::KRandom;
 #include <limits>
 using std::numeric_limits;
 
+#include <signal.h>
+
 namespace Kassiopeia
 {
+    bool KSRoot::fStopRunSignal   = false;
+    bool KSRoot::fStopEventSignal = false;
+    bool KSRoot::fStopTrackSignal = false;
+    bool KSRoot::fGSLErrorSignal = false;
+    std::string KSRoot::fGSLErrorString = "";
+    string KSRoot::fStopSignalName = "";
 
     KSRoot::KSRoot() :
             fSimulation( NULL ),
@@ -127,6 +135,7 @@ namespace Kassiopeia
         fToolbox->AddObject( fRootStepModifier );
     }
     KSRoot::KSRoot( const KSRoot& /*aCopy*/) :
+            KSComponent(),
             fSimulation( NULL ),
             fRun( new KSRun() ),
             fEvent( new KSEvent() ),
@@ -280,11 +289,31 @@ namespace Kassiopeia
         Activate();
         fSimulation->Activate();
 
-        mainmsg( eNormal ) << "\u263B  welcome to Kassiopeia 3.0 \u263B" << eom;
+        //signal handling
+        signal(SIGINT, &(KSRoot::SignalHandler) );
+        signal(SIGTERM, &(KSRoot::SignalHandler) );
+        signal(SIGQUIT, &(KSRoot::SignalHandler) );
+
+        //GSL error handling
+        fDefaultGSLErrorHandler = gsl_set_error_handler( &Kassiopeia::KSRoot::GSLErrorHandler );
+
+        mainmsg( eNormal ) << "\u263B  welcome to Kassiopeia 3.3 \u263B" << eom;
 
         ExecuteRun();
 
         mainmsg( eNormal ) << "finished!" << eom;
+
+        //reset GSL error handling
+        if (fDefaultGSLErrorHandler != NULL)
+        {
+            gsl_set_error_handler( fDefaultGSLErrorHandler );
+            fDefaultGSLErrorHandler = NULL;
+        }
+
+        //reset signal handling
+        signal(SIGINT, SIG_DFL );
+        signal(SIGTERM, SIG_DFL );
+        signal(SIGQUIT, SIG_DFL );
 
         fSimulation->Deactivate();
         Deactivate();
@@ -332,6 +361,12 @@ namespace Kassiopeia
                 break;
             }
 
+            //signal handler break
+            if ( fStopRunSignal )
+            {
+                break;
+            }
+
             // initialize event
             fEvent->ParentRunId() = fRun->GetRunId();
 
@@ -362,6 +397,7 @@ namespace Kassiopeia
         // send report
         runmsg( eNormal ) << "...run " << fRun->GetRunId() << " complete" << eom;
 
+        fStopRunSignal = false;
         return;
     }
 
@@ -389,6 +425,19 @@ namespace Kassiopeia
         KSParticle* tParticle;
         while( fEvent->ParticleQueue().empty() == false )
         {
+            //signal handler break
+            if ( fStopRunSignal || fStopEventSignal )
+            {
+                //signal handler clears event queue
+                while( fEvent->ParticleQueue().empty() == false )
+                {
+                    tParticle = fEvent->ParticleQueue().front();
+                    delete tParticle;
+                    fEvent->ParticleQueue().pop_front();
+                }
+                break;
+            }
+
             // move the particle state to the track object
             tParticle = fEvent->ParticleQueue().front();
             tParticle->ReleaseLabel( fTrack->CreatorName() );
@@ -428,9 +477,11 @@ namespace Kassiopeia
         fRootWriter->ExecuteEvent();
 
         fEvent->PushDeupdate();
+
         // send report
         eventmsg( eNormal ) << "...completed event " << fEvent->GetEventId() << " <" << fEvent->GetGeneratorName() << ">" << eom;
 
+        fStopEventSignal = false;
         return;
     }
 
@@ -446,6 +497,8 @@ namespace Kassiopeia
         fTrack->DiscreteEnergyChange() = 0.;
         fTrack->DiscreteMomentumChange() = 0.;
         fTrack->DiscreteSecondaries() = 0;
+        fStopTrackSignal = false;
+        fGSLErrorSignal = false;
 
         // send report
         trackmsg( eNormal ) << "processing track " << fTrack->GetTrackId() << " <" << fTrack->GetCreatorName() << ">..." << eom;
@@ -457,8 +510,26 @@ namespace Kassiopeia
         fStep->InitialParticle() = fTrack->InitialParticle();
         fStep->FinalParticle() = fTrack->InitialParticle();
 
+        //clear any internal trajectory state
+        fRootTrajectory->Reset();
+
         while( fStep->FinalParticle().IsActive() == true )
         {
+            //signal handler break
+            if ( fStopRunSignal || fStopEventSignal || fStopTrackSignal )
+            {
+                std::cout<<"breaking!"<<std::endl;
+                //signal handler clears event queue
+                KSParticle* tParticle;
+                while( fTrack->ParticleQueue().empty() == false )
+                {
+                    tParticle = fTrack->ParticleQueue().front();
+                    delete tParticle;
+                    fTrack->ParticleQueue().pop_front();
+                }
+                break;
+            }
+
             // execute a step
             ExecuteStep();
 
@@ -506,13 +577,16 @@ namespace Kassiopeia
         // send report
         trackmsg( eNormal ) << "...completed track " << fTrack->GetTrackId() << " <" << fTrack->GetTerminatorName() << "> after " << fTrack->GetTotalSteps() << " steps at " << fTrack->GetFinalParticle().GetPosition() << eom;
 
+        fStopTrackSignal = false;
+        fGSLErrorSignal = false;
         return;
     }
 
     void KSRoot::ExecuteStep()
     {
         // run pre-step modification
-        fRootStepModifier->ExecutePreStepModification();
+        bool hasPreModified = fRootStepModifier->ExecutePreStepModification();
+        if(hasPreModified){fRootTrajectory->Reset();};
 
         // reset step
         fStep->StepId() = fStepIndex;
@@ -548,7 +622,7 @@ namespace Kassiopeia
         fStep->SurfaceNavigationFlag() = false;
 
         // send report
-        if( fStep->GetStepId() % 1000 == 0 )
+        if( fStep->GetStepId() % fSimulation->GetStepReportIteration() == 0 )
         {
             stepmsg( eNormal ) << "processing step " << fStep->GetStepId() << "... (";
             stepmsg << "z = " << fStep->InitialParticle().GetPosition().Z() << ", ";
@@ -559,9 +633,11 @@ namespace Kassiopeia
         }
 
         // debug spritz
+        stepmsg_debug( "processing step " << fStep->GetStepId() << eom )
         stepmsg_debug( "step initial particle state: " << eom )
         stepmsg_debug( "  initial particle space: <" << (fStep->InitialParticle().GetCurrentSpace() ? fStep->InitialParticle().GetCurrentSpace()->GetName() : "" ) << ">" << eom )
         stepmsg_debug( "  initial particle surface: <" << (fStep->InitialParticle().GetCurrentSurface() ? fStep->InitialParticle().GetCurrentSurface()->GetName() : "" ) << ">" << eom )
+        stepmsg_debug( "  initial particle side: <" << (fStep->InitialParticle().GetCurrentSide() ? fStep->InitialParticle().GetCurrentSide()->GetName() : "" ) << ">" << eom )
         stepmsg_debug( "  initial particle time: <" << fStep->InitialParticle().GetTime() << ">" << eom )
         stepmsg_debug( "  initial particle length: <" << fStep->InitialParticle().GetLength() << ">" << eom )
         stepmsg_debug( "  initial particle position: <" << fStep->InitialParticle().GetPosition().X() << ", " << fStep->InitialParticle().GetPosition().Y() << ", " << fStep->InitialParticle().GetPosition().Z() << ">" << eom )
@@ -570,6 +646,9 @@ namespace Kassiopeia
         stepmsg_debug( "  initial particle electric field: <" << fStep->InitialParticle().GetElectricField().X() << "," << fStep->InitialParticle().GetElectricField().Y() << "," << fStep->InitialParticle().GetElectricField().Z() << ">" << eom )
         stepmsg_debug( "  initial particle magnetic field: <" << fStep->InitialParticle().GetMagneticField().X() << "," << fStep->InitialParticle().GetMagneticField().Y() << "," << fStep->InitialParticle().GetMagneticField().Z() << ">" << eom )
         stepmsg_debug( "  initial particle angle to magnetic field: <" << fStep->InitialParticle().GetPolarAngleToB() << ">" << eom )
+
+        //clear any abort signals in root trajectory
+        KSTrajectory::ClearAbort();
 
         // run terminators
         fRootTerminator->CalculateTermination();
@@ -583,23 +662,67 @@ namespace Kassiopeia
                 // integrate the trajectory
                 fRootTrajectory->CalculateTrajectory();
 
-                // calculate if a space interaction occurred
-                fRootSpaceInteraction->CalculateInteraction();
+                //need to check if an error handler event or stop signal
+                //was triggered during the trajectory calculation
 
-                // calculate if a space navigation occurred
-                fRootSpaceNavigator->CalculateNavigation();
-
-                // if both a space interaction and space navigation occurred, differentiate between them based on which occurred first
-                if( (fStep->GetSpaceInteractionFlag() == true) && (fStep->GetSpaceNavigationFlag() == true) )
+                if( fGSLErrorSignal || fStopTrackSignal || fRootTrajectory->Check() )
                 {
+                    fStep->FinalParticle().SetActive(false);
+                    if( fRootTrajectory->Check() )
+                    {
+                        fStep->TerminatorName() = "trajectory_fail";
+                    }
+                    else
+                    {
+                        fStep->TerminatorName() = fStopSignalName;
+                        if (fGSLErrorSignal) { mainmsg( eWarning ) << fGSLErrorString << eom; }
+                    }
+                }
+                else
+                {
+                    // calculate if a space interaction occurred
+                    fRootSpaceInteraction->CalculateInteraction();
 
-                    // if space interaction was first, execute it and clear space navigation data
-                    if( fStep->GetSpaceInteractionStep() < fStep->GetSpaceNavigationStep() )
+                    // calculate if a space navigation occurred
+                    fRootSpaceNavigator->CalculateNavigation();
+
+                    // if both a space interaction and space navigation occurred, differentiate between them based on which occurred first
+                    if( (fStep->GetSpaceInteractionFlag() == true) && (fStep->GetSpaceNavigationFlag() == true) )
+                    {
+
+                        // if space interaction was first, execute it and clear space navigation data
+                        if( fStep->GetSpaceInteractionStep() < fStep->GetSpaceNavigationStep() )
+                        {
+                            fRootSpaceInteraction->ExecuteInteraction();
+                            fStep->SpaceNavigationName().clear();
+                            fStep->SpaceNavigationStep() = numeric_limits< double >::max();
+                            fStep->SpaceNavigationFlag() = false;
+
+                            // if space interaction killed a particle, the terminator name is the space interaction name
+                            if( fStep->FinalParticle().IsActive() == false )
+                            {
+                                fStep->TerminatorName() = fStep->SpaceInteractionName();
+                            }
+                        }
+                        // if space navigation was first, execute it and clear space interaction data
+                        else
+                        {
+                            fRootSpaceNavigator->ExecuteNavigation();
+                            fStep->SpaceInteractionName().clear();
+                            fStep->SpaceInteractionStep() = numeric_limits< double >::max();
+                            fStep->SpaceInteractionFlag() = false;
+
+                            // if space navigation killed a particle, the terminator name is the space navigation name
+                            if( fStep->FinalParticle().IsActive() == false )
+                            {
+                                fStep->TerminatorName() = fStep->SpaceNavigationName();
+                            }
+                        }
+                    }
+                    // if only a space interaction occurred, execute it
+                    else if( fStep->GetSpaceInteractionFlag() == true )
                     {
                         fRootSpaceInteraction->ExecuteInteraction();
-                        fStep->SpaceNavigationName().clear();
-                        fStep->SpaceNavigationStep() = numeric_limits< double >::max();
-                        fStep->SpaceNavigationFlag() = false;
 
                         // if space interaction killed a particle, the terminator name is the space interaction name
                         if( fStep->FinalParticle().IsActive() == false )
@@ -607,13 +730,10 @@ namespace Kassiopeia
                             fStep->TerminatorName() = fStep->SpaceInteractionName();
                         }
                     }
-                    // if space navigation was first, execute it and clear space interaction data
-                    else
+                    // if only a space navigation occurred, execute it
+                    else if( fStep->GetSpaceNavigationFlag() == true )
                     {
                         fRootSpaceNavigator->ExecuteNavigation();
-                        fStep->SpaceInteractionName().clear();
-                        fStep->SpaceInteractionStep() = numeric_limits< double >::max();
-                        fStep->SpaceInteractionFlag() = false;
 
                         // if space navigation killed a particle, the terminator name is the space navigation name
                         if( fStep->FinalParticle().IsActive() == false )
@@ -621,56 +741,34 @@ namespace Kassiopeia
                             fStep->TerminatorName() = fStep->SpaceNavigationName();
                         }
                     }
-                }
-                // if only a space interaction occurred, execute it
-                else if( fStep->GetSpaceInteractionFlag() == true )
-                {
-                    fRootSpaceInteraction->ExecuteInteraction();
-
-                    // if space interaction killed a particle, the terminator name is the space interaction name
-                    if( fStep->FinalParticle().IsActive() == false )
+                    // if neither occurred, execute the trajectory
+                    else
                     {
-                        fStep->TerminatorName() = fStep->SpaceInteractionName();
+                        fRootTrajectory->ExecuteTrajectory();
                     }
+
+                    // execute post-step modification
+                    fRootStepModifier->ExecutePostStepModifcation();
+
+                    // push update
+                    fStep->PushUpdate();
+                    fRootTrajectory->PushUpdate();
+                    fRootSpaceInteraction->PushUpdate();
+                    fRootSpaceNavigator->PushUpdate();
+                    fRootTerminator->PushUpdate();
+                    fRootStepModifier->PushUpdate();
+
+                    // write the step
+                    fRootWriter->ExecuteStep();
+
+                    // push deupdate
+                    fStep->PushDeupdate();
+                    fRootTrajectory->PushDeupdate();
+                    fRootSpaceInteraction->PushDeupdate();
+                    fRootSpaceNavigator->PushDeupdate();
+                    fRootTerminator->PushDeupdate();
+                    fRootStepModifier->PushDeupdate();
                 }
-                // if only a space navigation occurred, execute it
-                else if( fStep->GetSpaceNavigationFlag() == true )
-                {
-                    fRootSpaceNavigator->ExecuteNavigation();
-
-                    // if space navigation killed a particle, the terminator name is the space navigation name
-                    if( fStep->FinalParticle().IsActive() == false )
-                    {
-                        fStep->TerminatorName() = fStep->SpaceNavigationName();
-                    }
-                }
-                // if neither occurred, execute the trajectory
-                else
-                {
-                    fRootTrajectory->ExecuteTrajectory();
-                }
-
-                // execute post-step modification
-                fRootStepModifier->ExecutePostStepModifcation();
-
-                // push update
-                fStep->PushUpdate();
-                fRootTrajectory->PushUpdate();
-                fRootSpaceInteraction->PushUpdate();
-                fRootSpaceNavigator->PushUpdate();
-                fRootTerminator->PushUpdate();
-                fRootStepModifier->PushUpdate();
-
-                // write the step
-                fRootWriter->ExecuteStep();
-
-                // push deupdate
-                fStep->PushDeupdate();
-                fRootTrajectory->PushDeupdate();
-                fRootSpaceInteraction->PushDeupdate();
-                fRootSpaceNavigator->PushDeupdate();
-                fRootTerminator->PushDeupdate();
-                fRootStepModifier->PushDeupdate();
             }
             // if the particle is on a surface or side, continue with surface calculations
             else
@@ -692,7 +790,8 @@ namespace Kassiopeia
                 }
 
                 // execute post-step modification
-                fRootStepModifier->ExecutePostStepModifcation();
+                bool hasPostModified = fRootStepModifier->ExecutePostStepModifcation();
+                if(hasPostModified){fRootTrajectory->Reset();};
 
                 // push update
                 fStep->PushUpdate();
@@ -729,9 +828,11 @@ namespace Kassiopeia
             (*tParticleIt)->SetParentStepId( fStep->StepId() );
         }
 
+        stepmsg_debug( "finished step " << fStep->GetStepId() << eom )
         stepmsg_debug( "step final particle state: " << eom )
         stepmsg_debug( "  final particle space: <" << (fStep->FinalParticle().GetCurrentSpace() ? fStep->FinalParticle().GetCurrentSpace()->GetName() : "" ) << ">" << eom )
         stepmsg_debug( "  final particle surface: <" << (fStep->FinalParticle().GetCurrentSurface() ? fStep->FinalParticle().GetCurrentSurface()->GetName() : "" ) << ">" << eom )
+        stepmsg_debug( "  final particle side: <" << (fStep->FinalParticle().GetCurrentSide() ? fStep->FinalParticle().GetCurrentSide()->GetName() : "" ) << ">" << eom )
         stepmsg_debug( "  final particle time: <" << fStep->FinalParticle().GetTime() << ">" << eom )
         stepmsg_debug( "  final particle length: <" << fStep->FinalParticle().GetLength() << ">" << eom )
         stepmsg_debug( "  final particle position: <" << fStep->FinalParticle().GetPosition().X() << ", " << fStep->FinalParticle().GetPosition().Y() << ", " << fStep->FinalParticle().GetPosition().Z() << ">" << eom )
@@ -740,6 +841,26 @@ namespace Kassiopeia
         stepmsg_debug( "  final particle electric field: <" << fStep->FinalParticle().GetElectricField().X() << "," << fStep->FinalParticle().GetElectricField().Y() << "," << fStep->FinalParticle().GetElectricField().Z() << ">" << eom )
         stepmsg_debug( "  final particle magnetic field: <" << fStep->FinalParticle().GetMagneticField().X() << "," << fStep->FinalParticle().GetMagneticField().Y() << "," << fStep->FinalParticle().GetMagneticField().Z() << ">" << eom )
         stepmsg_debug( "  final particle angle to magnetic field: <" << fStep->FinalParticle().GetPolarAngleToB() << ">" << eom )
+
+        //signal handler terminate particle
+        if ( fStopRunSignal || fStopEventSignal || fStopTrackSignal )
+        {
+            fStep->FinalParticle().SetActive( false );
+            fStep->TerminatorName() = fStopSignalName;
+        }
+
+        //now that the step is completely done, finalize either the space or the surface navigation for the next step
+        if ( fStep->FinalParticle().IsActive() == true )
+        {
+            if ( fStep->GetSpaceNavigationFlag() == true )
+            {
+                fRootSpaceNavigator->FinalizeNavigation();
+            }
+            else if ( fStep->GetSurfaceNavigationFlag() == true )
+            {
+                fRootSurfaceNavigator->FinalizeNavigation();
+            }
+        }
 
         return;
     }
@@ -813,7 +934,7 @@ namespace Kassiopeia
         return;
     }
 
-     void KSRoot::DeactivateComponent()
+    void KSRoot::DeactivateComponent()
     {
         fRun->Deactivate();
         fEvent->Deactivate();
@@ -836,5 +957,39 @@ namespace Kassiopeia
         return;
     }
 
-}
+    void KSRoot::SignalHandler(int aSignal)
+    {
+        mainmsg( eWarning ) << "stop requested by signal <" << aSignal << ">. stopping simulation..." << eom;
 
+        //set flag to stop run
+        fStopRunSignal = true;
+        fStopSignalName = "user_interrupt";
+
+        // first signal stops tracking
+        // second signal terminates the program immediately.
+        signal(SIGINT, SIG_DFL);
+        signal(SIGTERM, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+    }
+
+    void KSRoot::GSLErrorHandler(const char* aReason, const char* aFile, int aLine, int aErrNo)
+    {
+        //cache the string for later since we may end up with many
+        //gsl errors before the signal is caught and we dont want to clog up the terminal
+        //only cache this message for the first error we encounter
+        if(!fGSLErrorSignal)
+        {
+            std::stringstream ss;
+            ss << "GSL error " << aErrNo << " <" << aReason << "> at <"  << aFile << ":" << aLine << ">. stopping track...";
+            fGSLErrorString = ss.str();
+        }
+
+        //set flag to stop track
+        fStopTrackSignal = true;
+        fGSLErrorSignal = true;
+        fStopSignalName = "gsl_error";
+
+        KSTrajectory::SetAbort();
+    }
+
+}

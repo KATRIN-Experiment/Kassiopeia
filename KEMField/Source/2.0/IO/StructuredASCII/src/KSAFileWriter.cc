@@ -4,7 +4,9 @@
 
 #include <assert.h>
 
+#ifndef KEMFIELD_USE_ZLIB
 #include "miniz.c"
+#endif
 
 namespace KEMField{
 
@@ -16,14 +18,14 @@ fCompressionLevel(9)
     fUsedSpace = 0;
     in_buffer = new unsigned char[WRITE_CHUNK];
     out_buffer = new unsigned char[WRITE_CHUNK];
-};
+}
 
 
 KSAFileWriter::~KSAFileWriter()
 {
     delete[] in_buffer;
     delete[] out_buffer;
-};
+}
 
 void KSAFileWriter::SetFileName(std::string filename)
 {
@@ -42,7 +44,7 @@ void KSAFileWriter::SetFileName(std::string filename)
         //default
         fUseCompression = false; //plain text
     }
-};
+}
 
 
 bool
@@ -107,7 +109,10 @@ KSAFileWriter::AddToFile(const std::string& data)
             {
                 fZStream.avail_out = WRITE_CHUNK;
                 fZStream.next_out = out_buffer;
+
                 ret = deflate(&fZStream, flush);    /* no bad return value */
+                (void)ret;
+
                 assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
                 have = WRITE_CHUNK - fZStream.avail_out;
 
@@ -185,7 +190,10 @@ KSAFileWriter::AddToFile(const std::string& data)
             {
                 fZStream.avail_out = WRITE_CHUNK;
                 fZStream.next_out = out_buffer;
+
                 ret = deflate(&fZStream, flush);    /* no bad return value */
+                (void)ret;
+
                 assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
                 have = WRITE_CHUNK - fZStream.avail_out;
                 fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
@@ -239,8 +247,11 @@ KSAFileWriter::Close()
         {
             fZStream.avail_out = WRITE_CHUNK;
             fZStream.next_out = out_buffer;
+
             ret = deflate(&fZStream, flush);    /* no bad return value */
             assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
+            (void)ret;
+
             have = WRITE_CHUNK - fZStream.avail_out;
             fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
         }

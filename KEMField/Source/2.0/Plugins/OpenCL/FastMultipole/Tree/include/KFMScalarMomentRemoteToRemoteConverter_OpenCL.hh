@@ -4,7 +4,6 @@
 
 #include <vector>
 #include <complex>
-#include <fstream>
 
 #include "KFMCube.hh"
 
@@ -60,11 +59,9 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
             fTransformedChildMomentBufferCL = NULL;
             fParentMomentBufferCL = NULL;
             fScaleFactorBufferCL = NULL;
-
             fScaleFactorArray = NULL;
-            //fPtrParentMomentContribution = NULL;
+            this->fInitialized = false;
         };
-
 
         virtual ~KFMScalarMomentRemoteToRemoteConverter_OpenCL()
         {
@@ -102,12 +99,11 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
         ////////////////////////////////////////////////////////////////////////
         virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
         {
-            if( node != NULL && node->HasChildren() )
+            if( node != NULL && node->HasChildren() && node->GetLevel() != 0 )
             {
                 //first check if this node has children with non-zero multipole moments
                 if(this->ChildrenHaveNonZeroMoments(node))
                 {
-
                     this->fCollector->ApplyAction(node);
 
                     //if we have a scale invariant kernel, so upon having computed the kernel reponse array once
@@ -130,9 +126,16 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
                     //enqueue write out the children's coefficients to the gpu
                     size_t child_moment_size = (this->fNTerms)*(this->fTotalSpatialSize);
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fChildMomentBufferCL, CL_TRUE, 0, child_moment_size*sizeof(CL_TYPE2), this->fPtrChildMoments);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     //enqueue write out the scale factors for the contributions
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fScaleFactorBufferCL, CL_TRUE, 0, (this->fNTerms)*sizeof(CL_TYPE), fScaleFactorArray);
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
+
 
                     //compute the down conversion of this node's local coefficients to it's children
                     //by pointwise multiply and sum, run Kernel
@@ -141,6 +144,9 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
 
                     //read out the contribution to the parents moments
                     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fParentMomentBufferCL, CL_TRUE, 0, (this->fNTerms)*sizeof(CL_TYPE2), &(fParentMomentContribution[0]) );
+                    #ifdef ENFORCE_CL_FINISH
+                    KOpenCLInterface::GetInstance()->GetQueue().finish();
+                    #endif
 
                     //scale the parent moments contribution and add to any prexisiting moments
                     //also need to compute the scale factors for the child moment contributions
@@ -186,28 +192,49 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
             }
 
 
-            //create the l2l buffer
+            //create the m2m buffer
+            CL_ERROR_TRY
+            {
             this->fM2MCoeffBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, m2m_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
+
 
             //size of the parent node's moments is fNTerms, create parent moment buffer
+            CL_ERROR_TRY
+            {
             this->fParentMomentBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //size of the scale factor buffer is fNTerms, create scale factor buffer
+            CL_ERROR_TRY
+            {
             this->fScaleFactorBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, (this->fNTerms)*sizeof(CL_TYPE));
+            }
+            CL_ERROR_CATCH
 
             //size of the local coefficient buffer on the gpu
             size_t moment_buffer_size = (this->fNTerms)*(this->fTotalSpatialSize);
 
             //create the children's moment buffer
+            CL_ERROR_TRY
+            {
             this->fChildMomentBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, moment_buffer_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
             //create the transfromed children's moment buffer
+            CL_ERROR_TRY
+            {
             this->fTransformedChildMomentBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, moment_buffer_size*sizeof(CL_TYPE2));
+            }
+            CL_ERROR_CATCH
 
         }
 
@@ -228,6 +255,9 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
 
             //now enqueue the kernel
             KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fKernel, cl::NullRange, global, local);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //now run the reduction kernel
             n_global = this->fNTerms;
@@ -241,7 +271,9 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
             local = cl::NDRange(fNReductionLocal);
 
             KOpenCLInterface::GetInstance()->GetQueue().enqueueNDRangeKernel(*fReductionKernel, cl::NullRange, global, local);
-
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
         }
 
 
@@ -275,6 +307,9 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
             //write the M2M coefficients to the GPU
             size_t m2m_size = (this->fNTerms)*(this->fNTerms)*(this->fTotalSpatialSize);
             KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fM2MCoeffBufferCL, CL_TRUE, 0, m2m_size*sizeof(CL_TYPE2), this->fPtrM2MCoeff);
+            #ifdef ENFORCE_CL_FINISH
+            KOpenCLInterface::GetInstance()->GetQueue().finish();
+            #endif
 
             //no longer need a host side copy of the M2M coeff
             delete[] this->fPtrM2MCoeff;
@@ -296,6 +331,14 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
 
             //get n-local
             fNLocal = fKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNLocal)
+            {
+                fNLocal = preferredWorkgroupMultiple;
+            }
+
         }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +354,13 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
 
             //get n-local
             fNReductionLocal = fReductionKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(KOpenCLInterface::GetInstance()->GetDevice());
+
+            unsigned int preferredWorkgroupMultiple = fReductionKernel->getWorkGroupInfo<CL_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE>(KOpenCLInterface::GetInstance()->GetDevice() );
+
+            if(preferredWorkgroupMultiple < fNReductionLocal)
+            {
+                fNReductionLocal = preferredWorkgroupMultiple;
+            }
         }
 
 
@@ -351,4 +401,4 @@ public KFMScalarMomentRemoteToRemoteConverter<ObjectTypeList, ScalarMomentType, 
 
 
 
-#endif /* __KFMScalarMomentRemoteToRemoteConverter_OpenCL_H__ */ 
+#endif /* __KFMScalarMomentRemoteToRemoteConverter_OpenCL_H__ */

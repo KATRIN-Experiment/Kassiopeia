@@ -185,5 +185,27 @@
 			name:
 				the name of the terminator.
 	-->
+	
+	<ksterm_output name="term_max_scattering" group="output_track_h2" component="track_n_h2_inelastic" max_value="1"/>
+	<!-- 
+		descrition:
+			this terminator kills particles depending on a specific output value.
+			
+			parameters:
+				name:
+					the name of the terminator
+					
+				group:
+					the output group with the specific output component
+					
+				component:
+					the output component (must be of int or double like typ)
+					
+				min_value:
+					the minimal value
+					
+				max_value
+					the maximal value
+	 -->
 
 </kassiopeia>

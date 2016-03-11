@@ -43,6 +43,7 @@ void KFMNamedScalarDataCollection::DefineOutputNode(KSAOutputNode* node) const
 {
     if(node != NULL)
     {
+        AddKSAOutputFor(KFMNamedScalarDataCollection,CollectionName,std::string);
         node->AddChild(new KSAObjectOutputNode< std::vector< KFMNamedScalarData > >( KSAClassName< std::vector< KFMNamedScalarData > >::name() , &fData) );
     }
 }
@@ -51,6 +52,7 @@ void KFMNamedScalarDataCollection::DefineInputNode(KSAInputNode* node)
 {
     if(node != NULL)
     {
+        AddKSAInputFor(KFMNamedScalarDataCollection,CollectionName,std::string);
         node->AddChild(new KSAObjectInputNode< std::vector< KFMNamedScalarData > >( KSAClassName< std::vector< KFMNamedScalarData > >::name() , &fData) );
     }
 }

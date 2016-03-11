@@ -1,10 +1,10 @@
 #include "KFMElectrostaticFieldMapper_OpenCL.hh"
 
-#include "KFMElectrostaticMultipoleBatchCalculator_OpenCL.hh"
-#include "KFMScalarMomentRemoteToRemoteConverter_OpenCL.hh"
-#include "KFMScalarMomentRemoteToLocalConverter_OpenCL.hh"
-#include "KFMReducedScalarMomentRemoteToLocalConverter_OpenCL.hh"
-#include "KFMScalarMomentLocalToLocalConverter_OpenCL.hh"
+// #include "KFMElectrostaticMultipoleBatchCalculator_OpenCL.hh"
+// #include "KFMScalarMomentRemoteToRemoteConverter_OpenCL.hh"
+// #include "KFMScalarMomentRemoteToLocalConverter_OpenCL.hh"
+// #include "KFMReducedScalarMomentRemoteToLocalConverter_OpenCL.hh"
+// #include "KFMScalarMomentLocalToLocalConverter_OpenCL.hh"
 
 #include "KFMNodeFlagValueInspector.hh"
 #include "KFMEmptyIdentitySetRemover.hh"
@@ -13,20 +13,20 @@
 namespace KEMField
 {
 
-#ifdef USE_REDUCED_M2L
-typedef KFMReducedScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
-KFMElectrostaticRemoteToLocalConverter_OpenCL;
-#else
-typedef KFMScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
-KFMElectrostaticRemoteToLocalConverter_OpenCL;
-#endif
-
-typedef KFMScalarMomentLocalToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceL2L, 3>
-KFMElectrostaticLocalToLocalConverter_OpenCL;
-
-typedef KFMScalarMomentRemoteToRemoteConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMResponseKernel_3DLaplaceM2M, 3>
-KFMElectrostaticRemoteToRemoteConverter_OpenCL;
-
+// #ifdef USE_REDUCED_M2L
+// typedef KFMReducedScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
+// KFMElectrostaticRemoteToLocalConverter_OpenCL;
+// #else
+// typedef KFMScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
+// KFMElectrostaticRemoteToLocalConverter_OpenCL;
+// #endif
+//
+// typedef KFMScalarMomentLocalToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceL2L, 3>
+// KFMElectrostaticLocalToLocalConverter_OpenCL;
+//
+// typedef KFMScalarMomentRemoteToRemoteConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMResponseKernel_3DLaplaceM2M, 3>
+// KFMElectrostaticRemoteToRemoteConverter_OpenCL;
+//
 
 KFMElectrostaticFieldMapper_OpenCL::KFMElectrostaticFieldMapper_OpenCL()
 {
@@ -34,6 +34,7 @@ KFMElectrostaticFieldMapper_OpenCL::KFMElectrostaticFieldMapper_OpenCL()
     fContainer = NULL;
 
     fDegree = 0;
+    fTopLevelDivisions = 0;
     fDivisions = 0;
     fZeroMaskSize = 0;
     fMaximumTreeDepth = 0;
@@ -48,7 +49,8 @@ KFMElectrostaticFieldMapper_OpenCL::KFMElectrostaticFieldMapper_OpenCL()
     fMultipoleInitializer = new KFMElectrostaticMultipoleInitializer();
 
     fM2MConverter = new KFMElectrostaticRemoteToRemoteConverter_OpenCL();
-    fM2LConverter = new KFMElectrostaticRemoteToLocalConverter_OpenCL();
+    // fM2LConverter = new KFMElectrostaticRemoteToLocalConverter_OpenCL();
+    fM2LConverterInterface = new KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter_OpenCL>();
     fL2LConverter = new KFMElectrostaticLocalToLocalConverter_OpenCL();
 };
 
@@ -60,7 +62,8 @@ KFMElectrostaticFieldMapper_OpenCL::~KFMElectrostaticFieldMapper_OpenCL()
     delete fLocalCoeffInitializer;
     delete fMultipoleInitializer;
     delete fM2MConverter;
-    delete fM2LConverter;
+    // delete fM2LConverter;
+    delete fM2LConverterInterface;
     delete fL2LConverter;
 }
 
@@ -80,6 +83,7 @@ KFMElectrostaticFieldMapper_OpenCL::SetParameters(KFMElectrostaticParameters par
 {
     fDegree = params.degree;
     fNTerms = (fDegree + 1)*(fDegree + 1);
+    fTopLevelDivisions = params.top_level_divisions;
     fDivisions = params.divisions;
     fZeroMaskSize = params.zeromask;
     fMaximumTreeDepth = params.maximum_tree_depth;
@@ -88,6 +92,7 @@ KFMElectrostaticFieldMapper_OpenCL::SetParameters(KFMElectrostaticParameters par
     if(fVerbosity > 2)
     {
         //print the parameters
+        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: top level divisions set to "<<params.top_level_divisions<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: divisions set to "<<params.divisions<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: degree set to "<<params.degree<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: zero mask size set to "<<params.zeromask<<kfmendl;
@@ -136,12 +141,22 @@ KFMElectrostaticFieldMapper_OpenCL::Initialize()
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the multipole to local translator. ";
     }
 
-    fM2LConverter->SetLength(fWorldLength);
-    fM2LConverter->SetMaxTreeDepth(fMaximumTreeDepth);
-    fM2LConverter->SetNumberOfTermsInSeries(fNTerms);
-    fM2LConverter->SetZeroMaskSize(fZeroMaskSize);
-    fM2LConverter->SetDivisions(fDivisions);
-    fM2LConverter->Initialize();
+    // fM2LConverter->SetLength(fWorldLength);
+    // fM2LConverter->SetMaxTreeDepth(fMaximumTreeDepth);
+    // fM2LConverter->SetNumberOfTermsInSeries(fNTerms);
+    // fM2LConverter->SetZeroMaskSize(fZeroMaskSize);
+    // fM2LConverter->SetDivisions(fDivisions);
+    // fM2LConverter->Initialize();
+
+    fM2LConverterInterface->SetLength(fWorldLength);
+    fM2LConverterInterface->SetMaxTreeDepth(fMaximumTreeDepth);
+    fM2LConverterInterface->SetNumberOfTermsInSeries(fNTerms);
+    fM2LConverterInterface->SetZeroMaskSize(fZeroMaskSize);
+    fM2LConverterInterface->SetDivisions(fDivisions);
+    fM2LConverterInterface->SetTopLevelDivisions(fTopLevelDivisions);
+    fM2LConverterInterface->GetTopLevelM2LConverter()->SetTopLevelDivisions(fTopLevelDivisions);
+    fM2LConverterInterface->GetTreeM2LConverter()->SetTopLevelDivisions(fTopLevelDivisions);
+    fM2LConverterInterface->Initialize();
 
     if(fVerbosity > 2)
     {
@@ -219,7 +234,7 @@ KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments()
     //compute the individual multipole moments of each node due to owned electrodes
     fMultipoleDistributor->ProcessAndDistributeMoments();
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done processing and distributing boundary element moments."<<kfmendl;
     }
@@ -227,7 +242,7 @@ KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments()
     //now we perform the upward pass to collect child nodes' moments into their parents' moments
     fTree->ApplyRecursiveAction(fM2MConverter, false); //false indicates this visitation proceeds from child to parent
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done performing the multipole to multipole (M2M) translations."<<kfmendl;
     }
@@ -244,7 +259,7 @@ KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients() //full initial
     //initialize all of local coefficient expansions for every node
     fTree->ApplyCorecursiveAction(fLocalCoeffInitializer);
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients: Done initializing local coefficient expansions."<<kfmendl;
     }
@@ -253,17 +268,25 @@ KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients() //full initial
 void
 KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients()
 {
+    // //compute the local coefficients due to neighbors at the same tree level
+    // fM2LConverter->Prepare();
+    // do
+    // {
+    //     fTree->ApplyCorecursiveAction(fM2LConverter);
+    // }
+    // while( !(fM2LConverter->IsFinished()) );
+    // fM2LConverter->Finalize();
+
     //compute the local coefficients due to neighbors at the same tree level
-    fM2LConverter->Prepare(fTree);
+    fM2LConverterInterface->Prepare();
     do
     {
-        fTree->ApplyCorecursiveAction(fM2LConverter);
+        fTree->ApplyCorecursiveAction(fM2LConverterInterface);
     }
-    while( !(fM2LConverter->IsFinished()) );
-    fM2LConverter->Finalize(fTree);
+    while( !(fM2LConverterInterface->IsFinished()) );
+    fM2LConverterInterface->Finalize();
 
-
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the multipole to local (M2L) translations."<<kfmendl;
     }
@@ -271,7 +294,7 @@ KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients()
     //now form the downward distributions of the local coefficients
     fTree->ApplyRecursiveAction(fL2LConverter);
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the local to local (L2L) translations."<<kfmendl;
     }

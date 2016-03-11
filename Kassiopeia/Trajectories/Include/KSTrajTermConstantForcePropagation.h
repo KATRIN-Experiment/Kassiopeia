@@ -19,7 +19,7 @@ namespace Kassiopeia
             virtual ~KSTrajTermConstantForcePropagation();
 
         public:
-            virtual void Differentiate( const KSTrajExactParticle& aValue,
+            virtual void Differentiate(double /*aTime*/, const KSTrajExactParticle& aValue,
                                         KSTrajExactDerivative& aDerivative ) const;
             void SetForce( const KThreeVector& aForce );
 

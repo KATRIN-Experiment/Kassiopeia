@@ -8,7 +8,8 @@ namespace Kassiopeia
     KSTrajInterpolatorFast::KSTrajInterpolatorFast()
     {
     }
-    KSTrajInterpolatorFast::KSTrajInterpolatorFast( const KSTrajInterpolatorFast& )
+    KSTrajInterpolatorFast::KSTrajInterpolatorFast( const KSTrajInterpolatorFast& ):
+        KSComponent()
     {
     }
     KSTrajInterpolatorFast* KSTrajInterpolatorFast::Clone() const
@@ -19,7 +20,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSTrajInterpolatorFast::Interpolate( const KSTrajExactDifferentiator& /*aDifferentiator*/, const KSTrajExactParticle& anInitialParticle, const KSTrajExactParticle& aFinalParticle, const double& aTimeStep, KSTrajExactParticle& anIntermediateParticle ) const
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajExactIntegrator& /*anIntegrator*/, const KSTrajExactDifferentiator& /*aDifferentiator*/, const KSTrajExactParticle& anInitialParticle, const KSTrajExactParticle& aFinalParticle, const double& aTimeStep, KSTrajExactParticle& anIntermediateParticle ) const
     {
         double tInitialTime = anInitialParticle.GetTime();
         double tFinalTime = aFinalParticle.GetTime();
@@ -64,7 +65,7 @@ namespace Kassiopeia
         return;
     }
 
-    void KSTrajInterpolatorFast::Interpolate( const KSTrajAdiabaticDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticParticle& anInitialParticle, const KSTrajAdiabaticParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticParticle& anIntermediateParticle ) const
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajAdiabaticIntegrator& /*anIntegrator*/, const KSTrajAdiabaticDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticParticle& anInitialParticle, const KSTrajAdiabaticParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticParticle& anIntermediateParticle ) const
     {
         double tInitialTime = anInitialParticle.GetTime();
         double tFinalTime = aFinalParticle.GetTime();
@@ -132,7 +133,7 @@ namespace Kassiopeia
 
     }
 
-    void KSTrajInterpolatorFast::Interpolate( const KSTrajMagneticDifferentiator& /*aDifferentiator*/, const KSTrajMagneticParticle& anInitialParticle, const KSTrajMagneticParticle& aFinalParticle, const double& aTimeStep, KSTrajMagneticParticle& anIntermediateParticle ) const
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajMagneticIntegrator& /*anIntegrator*/, const KSTrajMagneticDifferentiator& /*aDifferentiator*/, const KSTrajMagneticParticle& anInitialParticle, const KSTrajMagneticParticle& aFinalParticle, const double& aTimeStep, KSTrajMagneticParticle& anIntermediateParticle ) const
     {
         double tInitialTime = anInitialParticle.GetTime();
         double tFinalTime = aFinalParticle.GetTime();
@@ -156,4 +157,108 @@ namespace Kassiopeia
         anIntermediateParticle[ 3 ] = tInterpolatedPosition.Y();
         anIntermediateParticle[ 4 ] = tInterpolatedPosition.Z();
     }
+
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajElectricIntegrator& /*anIntegrator*/, const KSTrajElectricDifferentiator& /*aDifferentiator*/, const KSTrajElectricParticle& anInitialParticle, const KSTrajElectricParticle& aFinalParticle, const double& aTimeStep, KSTrajElectricParticle& anIntermediateParticle ) const
+    {
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tFraction = aTimeStep / (tFinalTime - tInitialTime);
+        double tInterpolatedTime = tInitialTime + aTimeStep;
+
+        // interpolate the length
+        double tInitialLength = anInitialParticle.GetLength();
+        double tFinalLength = aFinalParticle.GetLength();
+        double tInterpolatedLength = tInitialLength + tFraction * (tFinalLength - tInitialLength);
+
+        // interpolate the position
+        KThreeVector tInitialPosition = anInitialParticle.GetPosition();
+        KThreeVector tFinalPosition = aFinalParticle.GetPosition();
+        KThreeVector tInterpolatedPosition = tInitialPosition + tFraction * (tFinalPosition - tInitialPosition);
+
+        anIntermediateParticle = 0.;
+        anIntermediateParticle[ 0 ] = tInterpolatedTime;
+        anIntermediateParticle[ 1 ] = tInterpolatedLength;
+        anIntermediateParticle[ 2 ] = tInterpolatedPosition.X();
+        anIntermediateParticle[ 3 ] = tInterpolatedPosition.Y();
+        anIntermediateParticle[ 4 ] = tInterpolatedPosition.Z();
+    }
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajExactIntegrator& /*anIntegrator*/,
+        const KSTrajExactDifferentiator& /*aDifferentiator*/,
+        const KSTrajExactParticle& anInitialParticle,
+        const KSTrajExactParticle& aFinalParticle,
+        std::vector<KSTrajExactParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajAdiabaticIntegrator& /*anIntegrator*/,
+        const KSTrajAdiabaticDifferentiator& /*aDifferentiator*/,
+        const KSTrajAdiabaticParticle& anInitialParticle,
+        const KSTrajAdiabaticParticle& aFinalParticle,
+        std::vector<KSTrajAdiabaticParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajMagneticIntegrator& /*anIntegrator*/,
+        const KSTrajMagneticDifferentiator& /*aDifferentiator*/,
+        const KSTrajMagneticParticle& anInitialParticle,
+        const KSTrajMagneticParticle& aFinalParticle,
+        std::vector<KSTrajMagneticParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajElectricIntegrator& /*anIntegrator*/,
+        const KSTrajElectricDifferentiator& /*aDifferentiator*/,
+        const KSTrajElectricParticle& anInitialParticle,
+        const KSTrajElectricParticle& aFinalParticle,
+        std::vector<KSTrajElectricParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+
 }

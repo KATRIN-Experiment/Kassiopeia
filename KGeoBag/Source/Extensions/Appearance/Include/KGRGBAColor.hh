@@ -38,8 +38,7 @@ namespace KGeoBag
 
         return aStream;
     }
-
-    inline ostream& operator<<( ostream& aStream, KGRGBAColor& aColor )
+    inline ostream& operator<<( ostream& aStream, const KGRGBAColor& aColor )
     {
         unsigned int tRed = aColor.GetRed();
         unsigned int tGreen = aColor.GetGreen();
@@ -50,7 +49,19 @@ namespace KGeoBag
 
         return aStream;
     }
+    inline bool operator!=( KGRGBAColor& aColor1, KGRGBAColor& aColor2 )
+    {
+        if ( aColor1.GetRed() != aColor2.GetRed() )
+            return true;
+        if ( aColor1.GetGreen() != aColor2.GetGreen() )
+            return true;
+        if ( aColor1.GetBlue() != aColor2.GetBlue() )
+            return true;
+        if ( aColor1.GetOpacity() != aColor2.GetOpacity() )
+            return true;
 
+        return false;
+    }
 }
 
 #endif

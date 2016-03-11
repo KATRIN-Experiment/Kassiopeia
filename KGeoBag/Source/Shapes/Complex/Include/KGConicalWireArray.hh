@@ -22,14 +22,16 @@ namespace KGeoBag
 		       unsigned int nWires,
 		       double thetaStart,
 		       double diameter,
-		       unsigned int nDisc) : fR1(r1),
+		       unsigned int nDisc,
+		       double nDiscPower) : fR1(r1),
 					     fZ1(z1),
 					     fR2(r2),
 					     fZ2(z2),
 					     fNWires(nWires),
 					     fThetaStart(thetaStart),
 					     fDiameter(diameter),
-					     fNDisc(nDisc) {}
+					     fNDisc(nDisc),
+					     fNDiscPower(nDiscPower){}
 
     virtual ~KGConicalWireArray() {}
 
@@ -55,6 +57,7 @@ namespace KGeoBag
     void SetThetaStart(double d) { fThetaStart = d; }
     void SetDiameter(double d) { fDiameter = d; }
     void SetNDisc(unsigned int d) { fNDisc = d; }
+    void SetNDiscPower(unsigned int d) { fNDiscPower = d; }
 
     double GetR1() const { return fR1; }
     double GetZ1() const { return fZ1; }
@@ -64,6 +67,7 @@ namespace KGeoBag
     double GetThetaStart() const { return fThetaStart; }
     double GetDiameter() const { return fDiameter; }
     unsigned int GetNDisc() const { return fNDisc; }
+    double GetNDiscPower() const { return fNDiscPower; }
 
   private:
 
@@ -75,6 +79,7 @@ namespace KGeoBag
     double fThetaStart;
     double fDiameter;
     unsigned int fNDisc;
+    double fNDiscPower;
   };
 }
 

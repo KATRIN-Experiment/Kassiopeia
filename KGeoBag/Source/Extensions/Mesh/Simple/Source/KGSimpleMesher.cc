@@ -23,12 +23,12 @@ namespace KGeoBag
 
     void KGSimpleMesher::SymmetricPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tMid = .5 * (tStop - tStart);
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tMid = .5 * (tStop - tStart);
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )
@@ -49,12 +49,12 @@ namespace KGeoBag
     }
     void KGSimpleMesher::ForwardPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tLength = tStop - tStart;
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tLength = tStop - tStart;
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )
@@ -68,12 +68,12 @@ namespace KGeoBag
     }
     void KGSimpleMesher::BackwardPartition( const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition )
     {
-        register double tPower = aPower;
-        register double tStart = aStart;
-        register double tStop = aStop;
-        register double tLength = tStop - tStart;
-        register double tY;
-        register double tX;
+        double tPower = aPower;
+        double tStart = aStart;
+        double tStop = aStop;
+        double tLength = tStop - tStart;
+        double tY;
+        double tX;
 
         aPartition.fData.clear();
         for( unsigned int tIndex = 0; tIndex <= aCount; tIndex++ )
@@ -253,7 +253,7 @@ namespace KGeoBag
         return;
     }
     void KGSimpleMesher::OpenPointsRotatedToTubeMesh( const OpenPoints& aPoints, const unsigned int& aCount, TubeMesh& aMesh )
-    { 
+    {
         aMesh.fData.clear();
 
         Partition tPartition;
@@ -279,9 +279,9 @@ namespace KGeoBag
         return;
     }
     void KGSimpleMesher::OpenPointsRotatedToShellMesh( const OpenPoints& aPoints, const unsigned int& aCount, const double& aPower, ShellMesh& aMesh, const double& aAngleStart, const double& aAngleStop )
-    { std::cout << "building a shell mesh" << std::endl;
+    {
     aMesh.fData.clear();
-    
+
     double tAngle = (aAngleStop - aAngleStart)/360;
     Partition tPartition;
     SymmetricPartition( 0., 1., aCount, aPower, tPartition );
@@ -297,7 +297,7 @@ namespace KGeoBag
             tPoint.Y() = (*tPointsIt).Y() * sin( 2. * KConst::Pi() * (*tPartitionIt) * tAngle + aAngleStart* KConst::Pi()/180. );
             tPoint.Z() = (*tPointsIt).X();
             tGroup.push_back( tPoint );
-            
+
         }
         aMesh.fData.push_back( tGroup );
     }
@@ -367,7 +367,7 @@ void KGSimpleMesher::OpenPointsExtrudedToFlatMesh( const OpenPoints& aPoints, co
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for( Partition::It tPartitionIt = tPartition.fData.begin(); tPartitionIt != --(tPartition.fData.end()); tPartitionIt++ )
+    for( Partition::It tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++ )
     {
         tGroup.clear();
         for( ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++ )
@@ -393,7 +393,7 @@ void KGSimpleMesher::ClosedPointsExtrudedToTubeMesh( const ClosedPoints& aPoints
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for( Partition::It tPartitionIt = tPartition.fData.begin(); tPartitionIt != --(tPartition.fData.end()); tPartitionIt++ )
+    for( Partition::It tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++ )
     {
         tGroup.clear();
         for( ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++ )
@@ -454,7 +454,7 @@ void KGSimpleMesher::FlatMeshToTriangles( const FlatMesh& aMesh )
     return;
 }
 void KGSimpleMesher::ShellMeshToTriangles( const ShellMesh& aMesh )
-{   std::cout << "converting shel mesh to triangles" << std::endl;
+{
 ShellMesh::SetCIt tThisGroup;
 ShellMesh::SetCIt tNextGroup;
 
@@ -492,7 +492,7 @@ meshmsg_debug( "tesselated flat mesh into <" << fCurrentElements->size() << "> t
 return;
 }
 void KGSimpleMesher::ClosedShellMeshToTriangles( const ShellMesh& aMesh )
-{   std::cout << "converting shel mesh to triangles" << std::endl;
+{
 ShellMesh::SetCIt tThisGroup;
 ShellMesh::SetCIt tNextGroup;
 
@@ -542,7 +542,7 @@ tThisGroup = --(aMesh.fData.end());
         ++tNextNextPoint;
     }
 
-    
+
 
 meshmsg_debug( "tesselated flat mesh into <" << fCurrentElements->size() << "> triangles" << eom );
 
@@ -863,7 +863,48 @@ void KGSimpleMesher::TorusMeshToTriangles( const TorusMesh& aMesh )
 
 void KGSimpleMesher::Triangle( const KThreeVector& aFirst, const KThreeVector& aSecond, const KThreeVector& aThird )
 {
-    fCurrentElements->push_back( new KGMeshTriangle( aFirst, aSecond, aThird ) );
+    //J.B. 3/31/2015
+    //need to check that the normal vector for this mesh triangle points
+    //in (approximately) the same direction as the nearest normal on the
+    //surface that we are meshing, this condition is important for
+    //the boundary element solver when Neumann boundary conditions are encountered
+
+    bool swap_points = false;
+
+    //get the nearest normal to the centroid
+    if(fCurrentSurface != NULL)
+    {
+        //compute the centroid
+        KThreeVector centroid = (aFirst + aSecond + aThird)/3.0;
+
+        KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+
+        //create the standard mesh triangle
+        KGMeshTriangle t1( aFirst, aSecond, aThird );
+
+        //compute its normal vector
+        KThreeVector triangle_normal = t1.GetN3();
+
+        //now determine if the triangle normal points in approximately same direction
+        //as the 'above' surface normal
+
+        if( triangle_normal.Dot(surface_normal) < -1e-9 )
+        {
+            //they point in opposite directions, so flip the ordering of the
+            //second and third points
+            swap_points = true;
+        }
+    }
+
+    if(swap_points)
+    {
+        fCurrentElements->push_back( new KGMeshTriangle( aFirst, aThird, aSecond ) );
+    }
+    else
+    {
+        fCurrentElements->push_back( new KGMeshTriangle( aFirst, aSecond, aThird ) );
+    }
+
     return;
 }
 

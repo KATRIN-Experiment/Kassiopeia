@@ -9,6 +9,14 @@
 #include "KFMElectrostaticElementContainer.hh"
 #include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KFMRemoteToLocalConverterInterface.hh"
+
+#include "KFMElectrostaticMultipoleBatchCalculator_OpenCL.hh"
+#include "KFMScalarMomentRemoteToRemoteConverter_OpenCL.hh"
+#include "KFMScalarMomentRemoteToLocalConverter_OpenCL.hh"
+#include "KFMReducedScalarMomentRemoteToLocalConverter_OpenCL.hh"
+#include "KFMScalarMomentLocalToLocalConverter_OpenCL.hh"
+
 
 
 namespace KEMField
@@ -45,6 +53,20 @@ class KFMElectrostaticFieldMapper_OpenCL
 
     protected:
 
+        #ifdef USE_REDUCED_M2L
+        typedef KFMReducedScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
+        KFMElectrostaticRemoteToLocalConverter_OpenCL;
+        #else
+        typedef KFMScalarMomentRemoteToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, 3>
+        KFMElectrostaticRemoteToLocalConverter_OpenCL;
+        #endif
+
+        typedef KFMScalarMomentLocalToLocalConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceL2L, 3>
+        KFMElectrostaticLocalToLocalConverter_OpenCL;
+
+        typedef KFMScalarMomentRemoteToRemoteConverter_OpenCL<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMResponseKernel_3DLaplaceM2M, 3>
+        KFMElectrostaticRemoteToRemoteConverter_OpenCL;
+
         //operations
         void SetParameters(KFMElectrostaticParameters params);
         void AssociateElementsAndNodes();
@@ -59,6 +81,7 @@ class KFMElectrostaticFieldMapper_OpenCL
         //data
         int fDegree;
         unsigned int fNTerms;
+        int fTopLevelDivisions;
         int fDivisions;
         int fZeroMaskSize;
         int fMaximumTreeDepth;
@@ -82,11 +105,14 @@ class KFMElectrostaticFieldMapper_OpenCL
         KFMElectrostaticMultipoleInitializer* fMultipoleInitializer;
 
         //the multipole up converter
-        KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+        KFMElectrostaticRemoteToRemoteConverter_OpenCL* fM2MConverter;
+
         //the local coefficient calculator
-        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+        KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter_OpenCL>* fM2LConverterInterface;
+        // KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+
         //the local coefficient down converter
-        KFMElectrostaticLocalToLocalConverter* fL2LConverter;
+        KFMElectrostaticLocalToLocalConverter_OpenCL* fL2LConverter;
 
         //container to the eletrostatic elements
         KFMElectrostaticElementContainerBase<3,1>* fContainer;

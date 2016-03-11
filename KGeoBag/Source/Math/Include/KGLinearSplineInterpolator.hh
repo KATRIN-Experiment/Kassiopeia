@@ -22,6 +22,18 @@ namespace KGeoBag
     virtual double operator()(double x) const;
 
   private:
+
+    //for sorting based on domain coordinate (1d)
+    struct CoordinateSortingStruct
+    {
+        bool operator()(DataPoint a, DataPoint b)
+        {
+            return (a[0]<b[0]);
+        };
+    };
+
+    CoordinateSortingStruct fSortingOp;
+
     DataSet fData;
   };
 }

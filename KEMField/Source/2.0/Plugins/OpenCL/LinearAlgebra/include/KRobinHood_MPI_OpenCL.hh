@@ -186,7 +186,7 @@ namespace KEMField
     try
     {
       // use only target device!
-      cl::vector<cl::Device> devices;
+      CL_VECTOR_TYPE<cl::Device> devices;
       devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
       program.build(devices,dynamic_cast<const KOpenCLAction&>(fA).GetOpenCLFlags().c_str());
     }
@@ -215,6 +215,20 @@ namespace KEMField
       // 		2,
       // 		msgPart);
     }
+
+    #ifdef DEBUG_OPENCL_COMPILER_OUTPUT
+    std::stringstream s;
+    s << "Build Log for OpenCL "<<clFile.str()<<" :\t ";
+    std::stringstream build_log_stream;
+    build_log_stream<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
+    std::string build_log;
+    build_log = build_log_stream.str();
+    if(build_log.size() != 0)
+    {
+        s << build_log;
+        std::cout<<s.str()<<std::endl;
+    }
+    #endif
 
     // Make kernels
     fInitializeVectorApproximationKernel = new cl::Kernel(program, "InitializeVectorApproximation");
@@ -791,20 +805,20 @@ namespace KEMField
   void KRobinHood_MPI_OpenCL<ValueType>::MPIRealMax(Res_Real* in,
 						    Res_Real* inout,
 						    int* len,
-						    MPI_Datatype*) 
-  { 
-    int i; 
- 
+						    MPI_Datatype*)
+  {
+    int i;
+
     for (i=0; i< *len; ++i)
-    { 
+    {
       if (in->fRes > inout->fRes ||
 	  (in->fRes == inout->fRes && in->fIndex < inout->fIndex))
       {
-	inout->fIndex = in->fIndex; 
+	inout->fIndex = in->fIndex;
 	inout->fRes  = in->fRes;
 	inout->fCorrection  = in->fCorrection;
       }
-      in++; inout++; 
+      in++; inout++;
     }
   }
 
@@ -812,42 +826,42 @@ namespace KEMField
   void KRobinHood_MPI_OpenCL<ValueType>::MPIRealMin(Res_Real* in,
 						    Res_Real* inout,
 						    int* len,
-						    MPI_Datatype*) 
-  { 
-    int i; 
- 
+						    MPI_Datatype*)
+  {
+    int i;
+
     for (i=0; i< *len; ++i)
-    { 
+    {
       if (in->fRes < inout->fRes ||
 	  (in->fRes == inout->fRes && in->fIndex < inout->fIndex))
       {
-	inout->fIndex = in->fIndex; 
+	inout->fIndex = in->fIndex;
 	inout->fRes  = in->fRes;
 	inout->fCorrection  = in->fCorrection;
       }
-      in++; inout++; 
+      in++; inout++;
     }
-  } 
+  }
 
   template <typename ValueType>
   void KRobinHood_MPI_OpenCL<ValueType>::MPIComplexMax(Res_Complex* in,
 						       Res_Complex* inout,
 						       int* len,
-						       MPI_Datatype*) 
-  { 
-    int i; 
- 
+						       MPI_Datatype*)
+  {
+    int i;
+
     for (i=0; i< *len; ++i)
-    { 
+    {
       if (in->fRes > inout->fRes ||
 	  (in->fRes == inout->fRes && in->fIndex < inout->fIndex))
       {
-	inout->fIndex  = in->fIndex; 
+	inout->fIndex  = in->fIndex;
 	inout->fRes = in->fRes;
 	inout->fCorrection_real = in->fCorrection_real;
 	inout->fCorrection_imag = in->fCorrection_imag;
       }
-      in++; inout++; 
+      in++; inout++;
     }
   }
 
@@ -855,23 +869,23 @@ namespace KEMField
   void KRobinHood_MPI_OpenCL<ValueType>::MPIComplexMin(Res_Complex* in,
 						       Res_Complex* inout,
 						       int* len,
-						       MPI_Datatype*) 
-  { 
-    int i; 
- 
+						       MPI_Datatype*)
+  {
+    int i;
+
     for (i=0; i< *len; ++i)
-    { 
+    {
       if (in->fRes < inout->fRes ||
 	  (in->fRes == inout->fRes && in->fIndex < inout->fIndex))
       {
-	inout->fIndex  = in->fIndex; 
+	inout->fIndex  = in->fIndex;
 	inout->fRes = in->fRes;
 	inout->fCorrection_real = in->fCorrection_real;
 	inout->fCorrection_imag = in->fCorrection_imag;
       }
-      in++; inout++; 
+      in++; inout++;
     }
-  } 
+  }
 
   template <typename ValueType>
   void KRobinHood_MPI_OpenCL<ValueType>::InitializeMPIStructs(Type2Type<double>)
@@ -880,7 +894,7 @@ namespace KEMField
     MPI_Aint displacements[3];
     MPI_Aint addresses[4];
     MPI_Datatype typelist[3] = {MPI_INT,MPI_DOUBLE,MPI_DOUBLE};
-    
+
     MPI_Address(&fRes_real,&addresses[0]);
     MPI_Address(&(fRes_real.fIndex),&addresses[1]);
     MPI_Address(&(fRes_real.fRes),&addresses[2]);
@@ -909,7 +923,7 @@ namespace KEMField
     MPI_Aint displacements[4];
     MPI_Aint addresses[5];
     MPI_Datatype typelist[4] = {MPI_INT,MPI_DOUBLE,MPI_DOUBLE,MPI_DOUBLE};
-    
+
     MPI_Address(&fRes_complex,&addresses[0]);
     MPI_Address(&(fRes_complex.fIndex),&addresses[1]);
     MPI_Address(&(fRes_complex.fRes),&addresses[2]);

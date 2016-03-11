@@ -14,8 +14,8 @@ namespace Kassiopeia
     KSROOTPotentialPainter::KSROOTPotentialPainter() :
             fXAxis( "z" ),
             fYAxis( "y" ),
-            fMap(),
-            fCalcPot(1)
+            fCalcPot(1),
+            fMap()
     {
     }
     KSROOTPotentialPainter::~KSROOTPotentialPainter()

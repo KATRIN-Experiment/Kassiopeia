@@ -17,93 +17,72 @@ namespace katrin
     {
         if( aContainer->GetName() == "number_of_bifurcations" )
         {
-            int nBifurcations;
-            aContainer->CopyTo( nBifurcations );
-            fObject->GetParameters()->SetNBifurcations( nBifurcations );
+            fObject->GetParameters()->SetNBifurcations( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "convergence_ratio" )
         {
-            double convergenceRatio;
-            aContainer->CopyTo( convergenceRatio );
-            fObject->GetParameters()->SetConvergenceRatio( convergenceRatio );
+            fObject->GetParameters()->SetConvergenceRatio( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "proximity_to_sourcepoint" )
         {
-            double proximityToSourcePoint;
-            aContainer->CopyTo( proximityToSourcePoint );
-            fObject->GetParameters()->SetProximityToSourcePoint( proximityToSourcePoint );
+            fObject->GetParameters()->SetProximityToSourcePoint( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "convergence_parameter" )
         {
-            double convergenceParameter;
-            aContainer->CopyTo( convergenceParameter );
-            fObject->GetParameters()->SetConvergenceParameter( convergenceParameter );
+            fObject->GetParameters()->SetConvergenceParameter( aContainer->AsReference<double>() );
+            return true;
+        }
+        if( aContainer->GetName() == "coaxiality_tolerance" )
+        {
+            fObject->GetParameters()->SetCoaxialityTolerance( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "number_of_central_coefficients" )
         {
-            int nCentralCoefficients;
-            aContainer->CopyTo( nCentralCoefficients );
-            fObject->GetParameters()->SetNCentralCoefficients( nCentralCoefficients );
+            fObject->GetParameters()->SetNCentralCoefficients( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "use_fractional_central_sourcepoint_spacing" )
         {
-            bool centralFractionalSpacing;
-            aContainer->CopyTo( centralFractionalSpacing );
-            fObject->GetParameters()->SetCentralFractionalSpacing( centralFractionalSpacing );
+            fObject->GetParameters()->SetCentralFractionalSpacing( aContainer->AsReference<bool>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_fractional_distance" )
         {
-            double centralFractionalDistance;
-            aContainer->CopyTo( centralFractionalDistance );
-            fObject->GetParameters()->SetCentralFractionalDistance( centralFractionalDistance );
+            fObject->GetParameters()->SetCentralFractionalDistance( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_spacing" )
         {
-            double centralDeltaZ;
-            aContainer->CopyTo( centralDeltaZ );
-            fObject->GetParameters()->SetCentralDeltaZ( centralDeltaZ );
+            fObject->GetParameters()->SetCentralDeltaZ( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_start" )
         {
-            double centralZ1;
-            aContainer->CopyTo( centralZ1 );
-            fObject->GetParameters()->SetCentralZ1( centralZ1 );
+            fObject->GetParameters()->SetCentralZ1( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_end" )
         {
-            double centralZ2;
-            aContainer->CopyTo( centralZ2 );
-            fObject->GetParameters()->SetCentralZ2( centralZ2 );
+            fObject->GetParameters()->SetCentralZ2( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "number_of_remote_coefficients" )
         {
-            int nRemoteCoefficients;
-            aContainer->CopyTo( nRemoteCoefficients );
-            fObject->GetParameters()->SetNRemoteCoefficients( nRemoteCoefficients );
+            fObject->GetParameters()->SetNRemoteCoefficients( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "remote_sourcepoint_start" )
         {
-            double remoteZ1;
-            aContainer->CopyTo( remoteZ1 );
-            fObject->GetParameters()->SetRemoteZ1( remoteZ1 );
+            fObject->GetParameters()->SetRemoteZ1( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "remote_sourcepoint_end" )
         {
-            double remoteZ2;
-            aContainer->CopyTo( remoteZ2 );
-            fObject->GetParameters()->SetRemoteZ2( remoteZ2 );
+            fObject->GetParameters()->SetRemoteZ2( aContainer->AsReference<double>() );
             return true;
         }
         return false;

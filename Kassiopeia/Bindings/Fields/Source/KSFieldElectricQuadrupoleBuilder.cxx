@@ -10,14 +10,14 @@ namespace katrin
     {
     }
 
-    static int sKSFieldElectricQuadrupoleStructure =
+    STATICINT sKSFieldElectricQuadrupoleStructure =
         KSFieldElectricQuadrupoleBuilder::Attribute< string >( "name" ) +
         KSFieldElectricQuadrupoleBuilder::Attribute< KThreeVector >( "location" ) +
         KSFieldElectricQuadrupoleBuilder::Attribute< double >( "strength" ) +
         KSFieldElectricQuadrupoleBuilder::Attribute< double >( "length" ) +
         KSFieldElectricQuadrupoleBuilder::Attribute< double >( "radius" );
 
-    static int sKSFieldElectricQuadrupole =
+    STATICINT sKSFieldElectricQuadrupole =
         KSRootBuilder::ComplexElement< KSFieldElectricQuadrupole >( "ksfield_electric_quadrupole" );
 
 }

@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTrajControlCyclotron::KSTrajControlCyclotron( const KSTrajControlCyclotron& aCopy ) :
+            KSComponent(),
             fFraction( aCopy.fFraction )
     {
     }

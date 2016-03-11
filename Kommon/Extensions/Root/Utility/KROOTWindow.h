@@ -3,6 +3,7 @@
 
 #include "KWindow.h"
 #include "KField.h"
+#include "KFile.h"
 
 #include <vector>
 using std::vector;

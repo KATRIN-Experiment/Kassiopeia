@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
     }
     KSIntCalculatorConstant::KSIntCalculatorConstant( const KSIntCalculatorConstant& aCopy ) :
+            KSComponent(),
             fCrossSection( aCopy.fCrossSection )
     {
     }

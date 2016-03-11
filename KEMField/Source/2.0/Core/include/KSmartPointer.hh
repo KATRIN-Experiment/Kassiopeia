@@ -1,6 +1,8 @@
 #ifndef KEMSMARTPOINTER_DEF
 #define KEMSMARTPOINTER_DEF
 
+#include <stddef.h>
+
 namespace KEMField
 {
 
@@ -24,6 +26,9 @@ namespace KEMField
   template <typename T> class KSmartPointer
   {
   public:
+	template<typename U>
+	friend class KSmartPointer;  // for copy constructor from derived class
+
     KSmartPointer() : fpData(0), fRef(0) 
     {
       fRef = new KReferenceCounter();
@@ -37,9 +42,20 @@ namespace KEMField
 	fRef->AddRef();
     }
 
+    /** The non template copy constructor is necessary to avoid the use
+     * of the default copy constructor that would not increment the counter.
+     * Sadly, the template copy constructor, see below, comes after the default copy
+     * constructor in the overloading hierachy.
+     */
     KSmartPointer(const KSmartPointer<T>& sp) : fpData(sp.fpData), fRef(sp.fRef)
     {
       fRef->AddRef();
+    }
+
+    template< typename U >
+    KSmartPointer(const KSmartPointer<U>& sp) : fpData(sp.fpData), fRef(sp.fRef)
+    {
+    	fRef->AddRef();
     }
 
     ~KSmartPointer()
@@ -51,16 +67,18 @@ namespace KEMField
       }
     }
 
-    T& operator* ()
+    T& operator* () const
     {
       return *fpData;
     }
 
-    T* operator-> ()
+    T* operator-> () const
     {
       return fpData;
     }
-    
+
+    bool Is() const {return fpData!= NULL; }
+
     bool Null() const { return fpData == NULL; }
 
     KSmartPointer<T>& operator= (const KSmartPointer<T>& sp)
@@ -83,6 +101,11 @@ namespace KEMField
     T* fpData;
     KReferenceCounter* fRef;
   };
+
+  template< typename T>
+  bool operator!(const KSmartPointer<T>& pointer) {
+    return pointer.Null();
+  }
 }
 
 #endif /* KEMSMARTPOINTER_DEF */

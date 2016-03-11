@@ -10,12 +10,14 @@ namespace katrin
     {
     }
 
-    static int sKSIntSurfaceSpecularStructure =
+    STATICINT sKSIntSurfaceSpecularStructure =
             KSIntSurfaceSpecularBuilder::Attribute< string >( "name" ) +
             KSIntSurfaceSpecularBuilder::Attribute< double >( "reflection_loss" ) +
             KSIntSurfaceSpecularBuilder::Attribute< double >( "transmission_loss" ) +
+            KSIntSurfaceSpecularBuilder::Attribute< double >( "reflection_loss_fraction" ) +
+            KSIntSurfaceSpecularBuilder::Attribute< double >( "transmission_loss_fraction" ) +
             KSIntSurfaceSpecularBuilder::Attribute< double >( "probability" );
 
-    static int sKSIntSurfaceSpecularElement =
+    STATICINT sKSIntSurfaceSpecularElement =
             KSRootBuilder::ComplexElement< KSIntSurfaceSpecular >( "ksint_surface_specular" );
 }

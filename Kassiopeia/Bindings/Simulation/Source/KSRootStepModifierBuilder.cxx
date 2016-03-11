@@ -9,10 +9,10 @@ namespace katrin
     {
     }
 
-    static int sKSRootStepModifier =
+    STATICINT sKSRootStepModifier =
             KSRootBuilder::ComplexElement< KSRootStepModifier >( "ks_root_stepmodifier" );
 
-    static int sKSRootStepModifierStructure =
+    STATICINT sKSRootStepModifierStructure =
             KSRootStepModifierBuilder::Attribute< string >( "name" ) +
             KSRootStepModifierBuilder::Attribute< string >( "add_modifier" );
 }

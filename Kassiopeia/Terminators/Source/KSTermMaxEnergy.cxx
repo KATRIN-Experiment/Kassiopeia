@@ -10,6 +10,7 @@ namespace Kassiopeia
     {
     }
     KSTermMaxEnergy::KSTermMaxEnergy( const KSTermMaxEnergy& aCopy ) :
+        KSComponent(),
         fMaxEnergy( aCopy.fMaxEnergy )
     {
     }

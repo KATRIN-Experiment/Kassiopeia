@@ -13,11 +13,11 @@ namespace katrin
     template<>
     KSGenPositionSurfaceRandomBuilder::~KComplexElement() {}
 
-    static int sKSGenPositionSurfaceRandomStructure =
+    STATICINT sKSGenPositionSurfaceRandomStructure =
             KSGenPositionSurfaceRandomBuilder::Attribute<string>("name") +
                     KSGenPositionSurfaceRandomBuilder::Attribute<string>("surfaces");
 
-    static int sKSGenPositionSurfaceRandom =
+    STATICINT sKSGenPositionSurfaceRandom =
             KSRootBuilder::ComplexElement<KSGenPositionSurfaceRandom>("ksgen_position_surface_random");
 
 }

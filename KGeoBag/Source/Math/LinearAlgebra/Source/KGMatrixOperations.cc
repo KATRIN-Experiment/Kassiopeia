@@ -14,12 +14,12 @@ namespace KGeoBag
 //we have GSL so use the fast BLAS based implementation
 
 kg_matrix*
-kg_matrix_alloc(size_t nrows, size_t ncolumns)
+kg_matrix_alloc(unsigned int nrows, unsigned int ncolumns)
 {
     return gsl_matrix_alloc(nrows, ncolumns);
 }
 
-kg_matrix* kg_matrix_calloc(size_t nrows, size_t ncolumns)
+kg_matrix* kg_matrix_calloc(unsigned int nrows, unsigned int ncolumns)
 {
     return gsl_matrix_calloc(nrows, ncolumns);
 }
@@ -29,12 +29,12 @@ void kg_matrix_free(kg_matrix* m)
     gsl_matrix_free(m);
 }
 
-double kg_matrix_get(const kg_matrix* m, size_t i, size_t j)
+double kg_matrix_get(const kg_matrix* m, unsigned int i, unsigned int j)
 {
     return gsl_matrix_get(m, i, j);
 }
 
-void kg_matrix_set(kg_matrix* m, size_t i, size_t j, double x)
+void kg_matrix_set(kg_matrix* m, unsigned int i, unsigned int j, double x)
 {
     gsl_matrix_set(m, i, j,x);
 }
@@ -124,7 +124,7 @@ kg_matrix_svd_solve(const kg_matrix* U, const kg_vector* S, const kg_matrix* V, 
 //no GSL available
 
 kg_matrix*
-kg_matrix_alloc(size_t nrows, size_t ncolumns)
+kg_matrix_alloc(unsigned int nrows, unsigned int ncolumns)
 {
     kg_matrix* m = new kg_matrix();
     m->size1 = nrows;
@@ -133,14 +133,14 @@ kg_matrix_alloc(size_t nrows, size_t ncolumns)
     return m;
 }
 
-kg_matrix* kg_matrix_calloc(size_t nrows, size_t ncolumns)
+kg_matrix* kg_matrix_calloc(unsigned int nrows, unsigned int ncolumns)
 {
     kg_matrix* m = new kg_matrix();
     m->size1 = nrows;
     m->size2 = ncolumns;
-    size_t total_size = nrows*ncolumns;
+    unsigned int total_size = nrows*ncolumns;
     double* d = new double[total_size];
-    for(size_t i=0; i<total_size; i++)
+    for(unsigned int i=0; i<total_size; i++)
     {
         d[i] = 0.;
     }
@@ -154,23 +154,23 @@ void kg_matrix_free(kg_matrix* m)
     delete m;
 }
 
-double kg_matrix_get(const kg_matrix* m, size_t i, size_t j)
+double kg_matrix_get(const kg_matrix* m, unsigned int i, unsigned int j)
 {
-    size_t index = i*(m->size2) + j;
+    unsigned int index = i*(m->size2) + j;
     return m->data[index];
 }
 
-void kg_matrix_set(kg_matrix* m, size_t i, size_t j, double x)
+void kg_matrix_set(kg_matrix* m, unsigned int i, unsigned int j, double x)
 {
-    size_t index = i*(m->size2) + j;
+    unsigned int index = i*(m->size2) + j;
     m->data[index] = x;
 }
 
 void kg_matrix_set_zero(kg_matrix* m)
 {
-    size_t total_size = (m->size1)*(m->size2);
+    unsigned int total_size = (m->size1)*(m->size2);
     double* d = m->data;
-    for(size_t i=0; i<total_size; i++)
+    for(unsigned int i=0; i<total_size; i++)
     {
         d[i] = 0.;
     }
@@ -180,7 +180,7 @@ void
 kg_matrix_set_identity(kg_matrix* m)
 {
     kg_matrix_set_zero(m);
-    size_t min;
+    unsigned int min;
     if(m->size1 < m->size2)
     {
         min = m->size1;
@@ -189,7 +189,7 @@ kg_matrix_set_identity(kg_matrix* m)
     {
         min = m->size2;
     }
-    for(size_t i=0; i<min; i++)
+    for(unsigned int i=0; i<min; i++)
     {
         kg_matrix_set(m,i,i,1.0);
     }
@@ -200,8 +200,8 @@ kg_matrix_set(const kg_matrix* src, kg_matrix* dest)
 {
     if( (src->size1 == dest->size1) && (src->size2 == dest->size2) )
     {
-        size_t total_size = (src->size1)*(src->size2);
-        for(size_t i=0; i<total_size; i++)
+        unsigned int total_size = (src->size1)*(src->size2);
+        for(unsigned int i=0; i<total_size; i++)
         {
             dest->data[i] = src->data[i];
         }
@@ -220,8 +220,8 @@ void kg_matrix_sub(kg_matrix* a, const kg_matrix* b)
 {
     if(a->size1 == b->size1 && a->size2 == b->size2)
     {
-        size_t total_size = (a->size1)*(a->size2);
-        for(size_t i=0; i<total_size; i++)
+        unsigned int total_size = (a->size1)*(a->size2);
+        for(unsigned int i=0; i<total_size; i++)
         {
             a->data[i] -= b->data[i];
         }
@@ -240,8 +240,8 @@ void kg_matrix_add(kg_matrix* a, const kg_matrix* b)
 {
     if(a->size1 == b->size1 && a->size2 == b->size2)
     {
-        size_t total_size = (a->size1)*(a->size2);
-        for(size_t i=0; i<total_size; i++)
+        unsigned int total_size = (a->size1)*(a->size2);
+        for(unsigned int i=0; i<total_size; i++)
         {
             a->data[i] += b->data[i];
         }
@@ -258,8 +258,8 @@ void kg_matrix_add(kg_matrix* a, const kg_matrix* b)
 
 void kg_matrix_scale(kg_matrix* a, double scale_factor)
 {
-    size_t total_size = (a->size1)*(a->size2);
-    for(size_t i=0; i<total_size; i++)
+    unsigned int total_size = (a->size1)*(a->size2);
+    for(unsigned int i=0; i<total_size; i++)
     {
         a->data[i] *= scale_factor;
     }
@@ -268,26 +268,26 @@ void kg_matrix_scale(kg_matrix* a, double scale_factor)
 void kg_matrix_multiply(const kg_matrix* A, const kg_matrix* B, kg_matrix* C)
 {
     //check that sizes are valid
-    size_t a_row = A->size1;
-    size_t a_col = A->size2;
+    unsigned int a_row = A->size1;
+    unsigned int a_col = A->size2;
 
-    size_t b_row = B->size1;
-    size_t b_col = B->size2;
+    unsigned int b_row = B->size1;
+    unsigned int b_col = B->size2;
 
-    size_t c_row = C->size1;
-    size_t c_col = C->size2;
+    unsigned int c_row = C->size1;
+    unsigned int c_col = C->size2;
 
     if( (a_col == b_row) && (c_row == a_row) && (c_col == b_col) )
     {
         //perform super slow naive direct O(N^3) matrix multiplication
         //this will likely be much slower than the GSL/BLAS implemention
-        for(size_t i=0; i<c_row; i++)
+        for(unsigned int i=0; i<c_row; i++)
         {
-            for(size_t j=0; j<c_col; j++)
+            for(unsigned int j=0; j<c_col; j++)
             {
                 double elem = 0.0;
 
-                for(size_t offset=0; offset<b_row; offset++)
+                for(unsigned int offset=0; offset<b_row; offset++)
                 {
                     elem += ( kg_matrix_get(A, i, offset) )*( kg_matrix_get(B, offset, j) );
                 }
@@ -312,43 +312,43 @@ void
 kg_matrix_multiply_with_transpose(bool transposeA, bool transposeB, const kg_matrix* A, const kg_matrix* B, kg_matrix* C)
 {
     //check that sizes are valid
-    size_t a_row = A->size1;
-    size_t a_col = A->size2;
+    unsigned int a_row = A->size1;
+    unsigned int a_col = A->size2;
 
     if(transposeA)
     {
-        size_t swap = a_col;
+        unsigned int swap = a_col;
         a_col = a_row;
         a_row = swap;
     }
 
-    size_t b_row = B->size1;
-    size_t b_col = B->size2;
+    unsigned int b_row = B->size1;
+    unsigned int b_col = B->size2;
 
     if(transposeB)
     {
-        size_t swap = b_col;
+        unsigned int swap = b_col;
         b_col = b_row;
         b_row = swap;
     }
 
-    size_t c_row = C->size1;
-    size_t c_col = C->size2;
+    unsigned int c_row = C->size1;
+    unsigned int c_col = C->size2;
 
 
-    size_t ai, aj, bi, bj;
+    unsigned int ai, aj, bi, bj;
 
     if( (a_col == b_row) && (c_row == a_row) && (c_col == b_col) )
     {
         //perform super slow naive direct O(N^3) matrix multiplication
         //this will likely be at least 100x slower than the GSL/BLAS implemention
-        for(size_t i=0; i<c_row; i++)
+        for(unsigned int i=0; i<c_row; i++)
         {
-            for(size_t j=0; j<c_col; j++)
+            for(unsigned int j=0; j<c_col; j++)
             {
                 double elem = 0.0;
 
-                for(size_t offset=0; offset<b_row; offset++)
+                for(unsigned int offset=0; offset<b_row; offset++)
                 {
                     if(transposeA)
                     {
@@ -403,8 +403,8 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
     //S is length n
 
 
-    size_t n = A->size1;
-    size_t m = A->size2;
+    unsigned int n = A->size1;
+    unsigned int m = A->size2;
 
     if( U->size1 != n || U->size2 != m )
     {
@@ -447,9 +447,9 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
 
     //make a very rough empirical estimate of the appropriate tolerance
     double tol = 0;
-    for(size_t i=0; i<n; i++)
+    for(unsigned int i=0; i<n; i++)
     {
-        for(size_t j=0; j<n; j++)
+        for(unsigned int j=0; j<n; j++)
         {
             g1 = kg_matrix_get(U,i,j);
             tol += g1*g1;
@@ -464,9 +464,9 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
         count = 0;
 
         //for all column pairs i < j < n
-        for(size_t i=0; i<n-1; i++)
+        for(unsigned int i=0; i<n-1; i++)
         {
-            for(size_t j=i+1; j<n; j++)
+            for(unsigned int j=i+1; j<n; j++)
             {
                 //add to the convergence count
                 count++;
@@ -476,7 +476,7 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
                 b = 0;
                 c = 0;
 
-                for(size_t k=0; k<m; k++)
+                for(unsigned int k=0; k<m; k++)
                 {
                     g1 = kg_matrix_get(U, k, i);
                     g2 = kg_matrix_get(U, k, j);
@@ -505,7 +505,7 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
                     sn = cs*t;
 
                     //apply the rotation to U and V
-                    for(size_t k=0; k<m; k++)
+                    for(unsigned int k=0; k<m; k++)
                     {
                         //apply to U
                         g1 = kg_matrix_get(U, k, i);
@@ -545,10 +545,10 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
     //now we compute the singluar values, they are the norms of the columns of U
     //we also compute the norm of all the singular values
     double norm_s = 0.0;
-    for(size_t i=0; i<n; i++)
+    for(unsigned int i=0; i<n; i++)
     {
         a = 0;
-        for(size_t j=0; j<m; j++)
+        for(unsigned int j=0; j<m; j++)
         {
             g1 = kg_matrix_get(U,j,i);
             a += g1*g1;
@@ -563,7 +563,7 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
     tol = KG_EPSILON*norm_s;
 
     //eliminate all those singular values which are below the tolerance
-    for(size_t i=0; i<n; i++)
+    for(unsigned int i=0; i<n; i++)
     {
         if(kg_vector_get(S,i) < tol)
         {
@@ -572,9 +572,9 @@ kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
     }
 
     //now we fix U by post multiplying with the inverse of diag(S)
-    for(size_t i=0; i<m; i++) //rows
+    for(unsigned int i=0; i<m; i++) //rows
     {
-        for(size_t j=0; j<n; j++) //col
+        for(unsigned int j=0; j<n; j++) //col
         {
             g1 = kg_matrix_get(U,i,j);
             g2 = kg_vector_get(S,j);
@@ -611,7 +611,7 @@ kg_matrix_svd_solve(const kg_matrix* U, const kg_vector* S, const kg_matrix* V, 
     //we assume anything less than KG_EPSILON*norm(S) to be essentially zero (singular values should all be positive)
     double s, elem;
     double norm_s = kg_vector_norm(S);
-    for(size_t i=0; i<S->size; i++)
+    for(unsigned int i=0; i<S->size; i++)
     {
         s = kg_vector_get(S,i);
         if(s > KG_EPSILON*norm_s)
@@ -643,14 +643,14 @@ kg_matrix_svd_solve(const kg_matrix* U, const kg_vector* S, const kg_matrix* V, 
 //functions defined for convenience whether we have GSL or not
 
 kg_sparse_matrix*
-kg_sparse_matrix_alloc(size_t nrows, size_t ncolumns, size_t n_elements)
+kg_sparse_matrix_alloc(unsigned int nrows, unsigned int ncolumns, unsigned int n_elements)
 {
     kg_sparse_matrix* m = new kg_sparse_matrix();
     m->size1 = nrows;
     m->size2 = ncolumns;
     m->data = new double[n_elements];
-    m->row = new size_t[n_elements];
-    m->column = new size_t[n_elements];
+    m->row = new unsigned int[n_elements];
+    m->column = new unsigned int[n_elements];
     return m;
 
 }
@@ -665,9 +665,9 @@ kg_sparse_matrix_free(kg_sparse_matrix* m)
 
 
 double
-kg_sparse_matrix_get(const kg_sparse_matrix* m, size_t i, size_t j)
+kg_sparse_matrix_get(const kg_sparse_matrix* m, unsigned int i, unsigned int j)
 {
-    for(size_t n=0; n<m->n_elements; n++)
+    for(unsigned int n=0; n<m->n_elements; n++)
     {
         if( (i == (m->row)[n]) && (j == (m->column)[n]) )
         {
@@ -680,7 +680,7 @@ kg_sparse_matrix_get(const kg_sparse_matrix* m, size_t i, size_t j)
 }
 
 void
-kg_sparse_matrix_set(kg_sparse_matrix* m, size_t i, size_t j, size_t element_index, double x)
+kg_sparse_matrix_set(kg_sparse_matrix* m, unsigned int i, unsigned int j, unsigned int element_index, double x)
 {
     (m->data)[element_index] = x;
     (m->row)[element_index] = i;
@@ -690,9 +690,9 @@ kg_sparse_matrix_set(kg_sparse_matrix* m, size_t i, size_t j, size_t element_ind
 
 void kg_matrix_transpose(const kg_matrix* in, kg_matrix* out)
 {
-    for(size_t row=0; row<in->size1; row++)
+    for(unsigned int row=0; row<in->size1; row++)
     {
-        for(size_t col=0; col<in->size2; col++)
+        for(unsigned int col=0; col<in->size2; col++)
         {
             kg_matrix_set(out, col, row, kg_matrix_get(in, row, col) );
         }
@@ -716,9 +716,9 @@ void kg_matrix_euler_angles_ZYZ(const kg_matrix* R, double& alpha, double& beta,
         //and return in tol
         tol = 0.0;
         double temp;
-        for(size_t i=0; i<3; i++)
+        for(unsigned int i=0; i<3; i++)
         {
-            for(size_t j=0; j<3; j++)
+            for(unsigned int j=0; j<3; j++)
             {
                 if(i != j)
                 {
@@ -835,15 +835,15 @@ void kg_matrix_from_axis_angle(kg_matrix* R, double cos_angle, double sin_angle,
     double s = sin_angle;
     double t = 1.0 - c;
 
-    for(size_t i=0; i<3; i++)
+    for(unsigned int i=0; i<3; i++)
     {
-        for(size_t j=0; j<3; j++)
+        for(unsigned int j=0; j<3; j++)
         {
             kg_matrix_set( R, i, j, t*kg_matrix_get(R, i, j) );
         }
     }
 
-    for(size_t i=0; i<3; i++)
+    for(unsigned int i=0; i<3; i++)
     {
         kg_matrix_set( R, i, i, kg_matrix_get(R, i, i) + c);
     }
@@ -867,15 +867,15 @@ void kg_matrix_from_axis_angle(kg_matrix* R, double angle, const kg_vector* axis
     double s = std::sin(angle);
     double t = 1.0 - c;
 
-    for(size_t i=0; i<3; i++)
+    for(unsigned int i=0; i<3; i++)
     {
-        for(size_t j=0; j<3; j++)
+        for(unsigned int j=0; j<3; j++)
         {
             kg_matrix_set( R, i, j, t*kg_matrix_get(R, i, j) );
         }
     }
 
-    for(size_t i=0; i<3; i++)
+    for(unsigned int i=0; i<3; i++)
     {
         kg_matrix_set( R, i, i, kg_matrix_get(R, i, i) + c);
     }
@@ -898,7 +898,7 @@ kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_matrix*
     //uses householder transformations as stated by Golub-Kahan in
     //Calculating the singular values and pseudo-inverse of a matrix. J. SIAM Numer. Anal. Ser. B, Vol 2, No. 2 1965
 
-    size_t n = A->size1;
+    unsigned int n = A->size1;
 
     if(A->size1 == A->size2)
     {
@@ -925,11 +925,11 @@ kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_matrix*
         kg_matrix* W = kg_matrix_alloc(n,n);
         double sk, tk, ck, dk, ak, signk;
 
-        for(size_t k=0; k < n; k++)
+        for(unsigned int k=0; k < n; k++)
         {
             //take care of the column first/////////////////////////////////////
             //copy the k-th column into x while zero-ing out all components where j<k
-            for(size_t j=0; j<n; j++)
+            for(unsigned int j=0; j<n; j++)
             {
                 if(j < k)
                 {
@@ -951,7 +951,7 @@ kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_matrix*
             ck = 1.0/(2.0*sk*signk*std::sqrt( 0.5*(1.0 + std::fabs(ak)/sk) ) );
 
             //now we compute the values of x
-            for(size_t j=k; j<n; j++)
+            for(unsigned int j=k; j<n; j++)
             {
                 if(j == k)
                 {
@@ -978,7 +978,7 @@ kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_matrix*
             if(k < n-1) //only need to do this if it is not the last column
             {
 
-                for(size_t j=0; j<n; j++)
+                for(unsigned int j=0; j<n; j++)
                 {
                     if(j <= k)
                     {
@@ -1000,7 +1000,7 @@ kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_matrix*
                 dk = 1.0/(2.0*tk*signk*std::sqrt( 0.5*(1.0 + std::fabs(ak)/tk) ) );
 
                 //now we compute the values of x
-                for(size_t j=k+1; j<n; j++)
+                for(unsigned int j=k+1; j<n; j++)
                 {
                     if(j == k+1)
                     {
@@ -1050,7 +1050,7 @@ kg_matrix_householder(kg_matrix* H, const kg_vector* w)
         kg_matrix_scale(H, -2.0);
 
         //add the identity to H
-        for(size_t i=0; i<H->size1; i++)
+        for(unsigned int i=0; i<H->size1; i++)
         {
             kg_matrix_set( H, i, i, kg_matrix_get(H,i,i) + 1.0);
         }
@@ -1068,9 +1068,9 @@ kg_matrix_householder(kg_matrix* H, const kg_vector* w)
 //void
 //kg_matrix_print(const kg_matrix* m)
 //{
-//    for(size_t i=0; i<m->size1; i++) //rows
+//    for(unsigned int i=0; i<m->size1; i++) //rows
 //    {
-//        for(size_t j=0; j < (m->size2-1); j++) //col
+//        for(unsigned int j=0; j < (m->size2-1); j++) //col
 //        {
 //            ss<<kg_matrix_get(m,i,j)<<", ";
 //        }

@@ -5,7 +5,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-    static const int sKGVTKDistanceTesterStructure =
+    STATICINT sKGVTKDistanceTesterStructure =
         KGVTKDistanceTesterBuilder::Attribute< string >( "name" ) +
         KGVTKDistanceTesterBuilder::Attribute< string >( "surfaces" ) +
         KGVTKDistanceTesterBuilder::Attribute< string >( "spaces" ) +
@@ -15,7 +15,7 @@ namespace katrin
         KGVTKDistanceTesterBuilder::Attribute< unsigned int >( "sample_count" ) +
         KGVTKDistanceTesterBuilder::Attribute< double >( "vertex_size" );
 
-    static const int sKGVTKDistanceTesterWindow =
+    STATICINT sKGVTKDistanceTesterWindow =
         KVTKWindowBuilder::ComplexElement< KGVTKDistanceTester >( "vtk_distance_tester" );
 
 }

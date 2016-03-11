@@ -15,6 +15,7 @@ namespace Kassiopeia
     {
     }
     KSRootTerminator::KSRootTerminator( const KSRootTerminator& aCopy ) :
+            KSComponent(),
             fTerminators( aCopy.fTerminators ),
             fTerminator( aCopy.fTerminator ),
             fStep( aCopy.fStep ),
@@ -194,7 +195,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootTerminatorDict =
+    STATICINT sKSRootTerminatorDict =
         KSDictionary< KSRootTerminator >::AddCommand( &KSRootTerminator::AddTerminator, &KSRootTerminator::RemoveTerminator, "add_terminator", "remove_terminator" );
 
 }

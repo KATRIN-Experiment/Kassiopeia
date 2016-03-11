@@ -1,7 +1,7 @@
 #ifndef KGBallSupportSet_HH__
 #define KGBallSupportSet_HH__
 
-
+#include <limits.h>
 #include <vector>
 #include <bitset>
 #include <utility>

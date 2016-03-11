@@ -13,14 +13,43 @@
 using namespace std;
 using namespace katrin;
 
-static const string skEndColor =   COLOR_PREFIX COLOR_NORMAL COLOR_SUFFIX;
-static const string skFatalColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED    COLOR_SUFFIX;
-static const string skErrorColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED    COLOR_SUFFIX;
-static const string skWarnColor =  COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_YELLOW COLOR_SUFFIX;
-static const string skInfoColor =  COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_GREEN  COLOR_SUFFIX;
-static const string skDebugColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_CYAN   COLOR_SUFFIX;
-static const string skOtherColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_WHITE  COLOR_SUFFIX;
+static const char* skEndColor =   COLOR_PREFIX COLOR_NORMAL COLOR_SUFFIX;
+static const char* skFatalColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED    COLOR_SUFFIX;
+static const char* skErrorColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED    COLOR_SUFFIX;
+static const char* skWarnColor =  COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_YELLOW COLOR_SUFFIX;
+static const char* skInfoColor =  COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_GREEN  COLOR_SUFFIX;
+static const char* skDebugColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_CYAN   COLOR_SUFFIX;
+static const char* skOtherColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_WHITE  COLOR_SUFFIX;
 
+namespace {
+
+inline const char* level2Color(KLogger::ELevel level)
+{
+    switch(level) {
+        case KLogger::eFatal:
+            return skFatalColor;
+            break;
+        case KLogger::eError:
+            return skErrorColor;
+            break;
+        case KLogger::eWarn:
+            return skWarnColor;
+            break;
+        case KLogger::eInfo:
+            return skInfoColor;
+            break;
+        case KLogger::eDebug:
+            return skDebugColor;
+            break;
+        case KLogger::eTrace:
+            return skDebugColor;
+            break;
+        default:
+            return skOtherColor;
+    }
+}
+
+}
 
 #if defined(LOG4CXX)
 
@@ -38,6 +67,38 @@ static const string skOtherColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COL
 #include <log4cxx/logger.h>
 
 using namespace log4cxx;
+
+namespace {
+
+inline LevelPtr level2Ptr(KLogger::ELevel level)
+{
+    switch(level) {
+        case KLogger::eTrace : return Level::getTrace();
+        case KLogger::eDebug : return Level::getDebug();
+        case KLogger::eInfo  : return Level::getInfo();
+        case KLogger::eWarn  : return Level::getWarn();
+        case KLogger::eError : return Level::getError();
+        case KLogger::eFatal : return Level::getFatal();
+        default     : return Level::getOff();
+    }
+}
+
+inline KLogger::ELevel ptr2Level(LevelPtr ptr)
+{
+    if (!ptr)
+        return KLogger::eUndefined;
+    switch(ptr->toInt()) {
+        case Level::TRACE_INT : return KLogger::eTrace;
+        case Level::DEBUG_INT : return KLogger::eDebug;
+        case Level::INFO_INT  : return KLogger::eInfo;
+        case Level::WARN_INT  : return KLogger::eWarn;
+        case Level::ERROR_INT : return KLogger::eError;
+        case Level::FATAL_INT : return KLogger::eFatal;
+        default               : return KLogger::eUndefined;
+    }
+}
+
+}
 
 #ifndef _LOG4CXX_COLORED_PATTERN_LAYOUT_H
 #define _LOG4CXX_COLORED_PATTERN_LAYOUT_H
@@ -59,8 +120,6 @@ public:
 
 protected:
     virtual void format(LogString& output, const spi::LoggingEventPtr& event, helpers::Pool& pool) const;
-    virtual std::string getColor(const LevelPtr& level) const;
-
 };
 
 LOG4CXX_PTR_DEF(ColoredPatternLayout);
@@ -74,40 +133,10 @@ IMPLEMENT_LOG4CXX_OBJECT(ColoredPatternLayout)
 void ColoredPatternLayout::format(LogString& output, const spi::LoggingEventPtr& event, helpers::Pool& pool) const
 {
     PatternLayout::format(output, event, pool);
-    output = getColor(event->getLevel()) + output + skEndColor;
+    output = level2Color( ptr2Level(event->getLevel()) ) + output + skEndColor;
     return;
 }
 
-string ColoredPatternLayout::getColor(const LevelPtr& level) const
-{
-    if (!level)
-        return skOtherColor;
-    switch(level->toInt())
-    {
-        case Level::FATAL_INT:
-            return skFatalColor;
-            break;
-        case Level::ERROR_INT:
-            return skErrorColor;
-            break;
-        case Level::WARN_INT:
-            return skWarnColor;
-            break;
-        case Level::INFO_INT:
-            return skInfoColor;
-            break;
-        case Level::DEBUG_INT:
-            return skDebugColor;
-            break;
-        case Level::TRACE_INT:
-            return skDebugColor;
-            break;
-        default:
-            return skOtherColor;
-    }
-}
-
-namespace {
 
 struct StaticInitializer {
     StaticInitializer() {
@@ -132,9 +161,8 @@ struct StaticInitializer {
                 #ifdef NDEBUG
                     Logger::getRootLogger()->setLevel(Level::getInfo());
                 #endif
-                static const LogString TTCC_CONVERSION_PATTERN(LOG4CXX_STR("%r [%-5p] %16c: %m%n"));
+                const LogString TTCC_CONVERSION_PATTERN(LOG4CXX_STR("%r [%-5p] %16c: %m%n"));
                 LayoutPtr layout(new PatternLayout(TTCC_CONVERSION_PATTERN));
-//                LayoutPtr layout(new ColoredPatternLayout(TTCC_CONVERSION_PATTERN));
                 AppenderPtr appender(new ConsoleAppender(layout));
                 root->addAppender(appender);
             #endif
@@ -143,41 +171,12 @@ struct StaticInitializer {
     }
 } static sLoggerInitializer;
 
-}
 
 struct KLogger::Private
 {
     void log(const LevelPtr& level, const string& message, const Location& loc)
     {
         fLogger->forcedLog(level, message, ::log4cxx::spi::LocationInfo(loc.fFileName, loc.fFunctionName, loc.fLineNumber));
-    }
-
-    static LevelPtr level2Ptr(ELevel level)
-    {
-        switch(level) {
-            case eTrace : return Level::getTrace();
-            case eDebug : return Level::getDebug();
-            case eInfo  : return Level::getInfo();
-            case eWarn  : return Level::getWarn();
-            case eError : return Level::getError();
-            case eFatal : return Level::getFatal();
-            default     : return Level::getOff();
-        }
-    }
-
-    static ELevel ptr2Level(LevelPtr ptr)
-    {
-        if (!ptr)
-            return eUndefined;
-        switch(ptr->toInt()) {
-            case Level::TRACE_INT : return eTrace;
-            case Level::DEBUG_INT : return eDebug;
-            case Level::INFO_INT  : return eInfo;
-            case Level::WARN_INT  : return eWarn;
-            case Level::ERROR_INT : return eError;
-            case Level::FATAL_INT : return eFatal;
-            default               : return eUndefined;
-        }
     }
 
     LoggerPtr fLogger;
@@ -200,22 +199,22 @@ KLogger::~KLogger()
 
 bool KLogger::IsLevelEnabled(ELevel level) const
 {
-    return fPrivate->fLogger->isEnabledFor( Private::level2Ptr(level) );
+    return fPrivate->fLogger->isEnabledFor( level2Ptr(level) );
 }
 
 KLogger::ELevel KLogger::GetLevel() const
 {
-    return Private::ptr2Level( fPrivate->fLogger->getLevel() );
+    return ptr2Level( fPrivate->fLogger->getLevel() );
 }
 
-void KLogger::SetLevel(ELevel level) const
+void KLogger::SetLevel(ELevel level)
 {
-    fPrivate->fLogger->setLevel( Private::level2Ptr(level) );
+    fPrivate->fLogger->setLevel( level2Ptr(level) );
 }
 
 void KLogger::Log(ELevel level, const string& message, const Location& loc)
 {
-    fPrivate->log(Private::level2Ptr(level), message, loc);
+    fPrivate->log(level2Ptr(level), message, loc);
 }
 
 
@@ -227,59 +226,66 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
  */
 
 #include <iomanip>
+#include <map>
+#include <utility>
+
+typedef map<string, KLogger::ELevel> LoggerMap;
+static LoggerMap sLoggerMap;
+static const bool skColored = true;
+
+static inline const char* level2Str(KLogger::ELevel level)
+{
+    switch(level) {
+        case KLogger::eTrace : return "TRACE";
+        case KLogger::eDebug : return "DEBUG";
+        case KLogger::eInfo  : return "INFO";
+        case KLogger::eWarn  : return "WARN";
+        case KLogger::eError : return "ERROR";
+        case KLogger::eFatal : return "FATAL";
+        default     : return "XXX";
+    }
+}
 
 struct KLogger::Private
 {
-    const char* fLogger;
-    bool fColored;
-
-    static const char* level2Str(ELevel level)
+    Private(const string& name) : fLoggerIt( sLoggerMap.find(name) )
     {
-        switch(level) {
-            case eTrace : return "TRACE";
-            case eDebug : return "DEBUG";
-            case eInfo  : return "INFO";
-            case eWarn  : return "WARN";
-            case eError : return "ERROR";
-            case eFatal : return "FATAL";
-            default     : return "XXX";
+        if (fLoggerIt == sLoggerMap.end()) {
+            #ifdef NDEBUG
+                ELevel newLevel = eInfo;
+            #else
+                ELevel newLevel = eDebug;
+            #endif
+            pair<LoggerMap::iterator, bool> v = sLoggerMap.insert(make_pair(name, newLevel));
+            fLoggerIt = v.first;
         }
+
     }
 
-    void logCout(const char* level, const string& message, const Location& /*loc*/, const string& color = skOtherColor) {
-        if (fColored)
-            cout << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLogger << ": " << message << skEndColor << endl;
+    LoggerMap::iterator fLoggerIt;
+
+    void logCout(const char* level, const string& message, const Location& /*loc*/, const char* color = skOtherColor) {
+        if (skColored)
+            cout << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << skEndColor << endl;
         else
-            cout << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLogger << ": " << message << endl;
+            cout << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << endl;
     }
 
-    void logCerr(const char* level, const string& message, const Location& /*loc*/, const string& color = skOtherColor) {
-        if (fColored)
-            cerr << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLogger << ": " << message << skEndColor << endl;
+    void logCerr(const char* level, const string& message, const Location& /*loc*/, const char* color = skOtherColor) {
+        if (skColored)
+            cerr << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << skEndColor << endl;
         else
-            cerr << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLogger << ": " << message << endl;
+            cerr << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << endl;
     }
 };
 
-KLogger::KLogger(const char* name) : fPrivate(new Private())
-{
-    if (name == 0)
-        fPrivate->fLogger = "root";
-    else {
-        const char* logName = strrchr(name, '/') ? strrchr(name, '/') + 1 : name;
-        fPrivate->fLogger = logName;
-    }
-    fPrivate->fColored = false;
-}
+KLogger::KLogger(const char* name) :
+    fPrivate( new Private( name == 0 ? "root" : name ) )
+{ }
 
-KLogger::KLogger(const std::string& name) : fPrivate(new Private())
-{
-    if (name.empty())
-        fPrivate->fLogger = "root";
-    else
-        fPrivate->fLogger = name.c_str();
-    fPrivate->fColored = false;
-}
+KLogger::KLogger(const std::string& name) :
+    fPrivate( new Private( name.empty() ? "root" : name ) )
+{ }
 
 KLogger::~KLogger()
 {
@@ -288,33 +294,29 @@ KLogger::~KLogger()
 
 bool KLogger::IsLevelEnabled(ELevel level) const
 {
-    return GetLevel() >= level;
+    return fPrivate->fLoggerIt->second <= level;
 }
 
 KLogger::ELevel KLogger::GetLevel() const
 {
-    // TODO: implement levels for fallback logger
-#ifdef NDEBUG
-    return eInfo;
-#else
-    return eDebug;
-#endif
+    return fPrivate->fLoggerIt->second;
 }
 
-void KLogger::SetLevel(ELevel /*level*/) const
+void KLogger::SetLevel(ELevel level)
 {
-    // TODO: implement levels for fallback logger
+    fPrivate->fLoggerIt->second = level;
 }
 
 void KLogger::Log(ELevel level, const string& message, const Location& loc)
 {
-    const char* levelStr = Private::level2Str(level);
+    const char* levelStr = level2Str(level);
+    const char* color = level2Color(level);
 
-    if (level >= eFatal) {
-        fPrivate->logCerr(levelStr, message, loc);
+    if (level >= eError) {
+        fPrivate->logCerr(levelStr, message, loc, color);
     }
     else {
-        fPrivate->logCout(levelStr, message, loc);
+        fPrivate->logCout(levelStr, message, loc, color);
     }
 }
 

@@ -11,10 +11,10 @@ namespace katrin
     {
     }
 
-    static int sKSInelasticPennStructure = KESSInelasticPennBuilder::Attribute< string >( "name" )
+    STATICINT sKSInelasticPennStructure = KESSInelasticPennBuilder::Attribute< string >( "name" )
                                          + KESSInelasticPennBuilder::Attribute< bool >( "PhotoAbsorption" )
                                          + KESSInelasticPennBuilder::Attribute< bool >( "AugerRelaxation" );
 
-    static int sKSInelasticPenn = KSRootBuilder::ComplexElement< KESSInelasticPenn >( "kess_inelastic_penn" );
+    STATICINT sKSInelasticPenn = KSRootBuilder::ComplexElement< KESSInelasticPenn >( "kess_inelastic_penn" );
 
 }

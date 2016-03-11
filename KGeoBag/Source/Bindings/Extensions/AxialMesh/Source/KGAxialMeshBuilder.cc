@@ -55,12 +55,12 @@ namespace katrin
     {
     }
 
-    static int sKGAxialMeshStructure =
+    STATICINT sKGAxialMeshStructure =
         KGAxialMeshBuilder::Attribute< string >( "name" ) +
         KGAxialMeshBuilder::Attribute< string >( "surfaces" ) +
         KGAxialMeshBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGAxialMesh =
+    STATICINT sKGAxialMesh =
         KGInterfaceBuilder::ComplexElement< KGAxialMeshAttributor >( "axial_mesh" );
 
 }

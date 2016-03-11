@@ -13,15 +13,15 @@ namespace KGeoBag
     KGBoxSpace::KGBoxSpace() :
             fXA( 0. ),
             fXB( 0. ),
-            fXMeshCount( 1 ),
+            fXMeshCount( 2 ),
             fXMeshPower( 1. ),
             fYA( 0. ),
             fYB( 0. ),
-            fYMeshCount( 1 ),
+            fYMeshCount( 2 ),
             fYMeshPower( 1. ),
             fZA( 0. ),
             fZB( 0. ),
-            fZMeshCount( 1 ),
+            fZMeshCount( 2 ),
             fZMeshPower( 1. )
     {
     }

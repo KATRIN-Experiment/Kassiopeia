@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGCutConeSpaceBuilder =
+    STATICINT sKGCutConeSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGCutConeSpace >( "cut_cone_space" );
 
-    static const int sKGCutConeSpaceBuilderStructure =
+    STATICINT sKGCutConeSpaceBuilderStructure =
         KGCutConeSpaceBuilder::Attribute< string >( "name" ) +
         KGCutConeSpaceBuilder::Attribute< double >( "z1" ) +
         KGCutConeSpaceBuilder::Attribute< double >( "z2" ) +

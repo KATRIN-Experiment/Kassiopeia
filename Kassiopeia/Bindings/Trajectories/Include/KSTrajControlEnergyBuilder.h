@@ -28,6 +28,37 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetUpperLimit );
             return true;
         }
+        if( aContainer->GetName() == "min_length" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetMinLength );
+            return true;
+        }
+        if( aContainer->GetName() == "max_length" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetMaxLength );
+            return true;
+        }
+        if( aContainer->GetName() == "initial_step" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetInitialStep );
+            return true;
+        }
+        if( aContainer->GetName() == "adjustment" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetAdjustmentFactorUp );
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetAdjustmentFactorDown );
+            return true;
+        }
+        if( aContainer->GetName() == "adjustment_up" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetAdjustmentFactorUp );
+            return true;
+        }
+        if( aContainer->GetName() == "adjustment_down" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetAdjustmentFactorDown );
+            return true;
+        }
         return false;
     }
 

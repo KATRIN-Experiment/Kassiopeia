@@ -29,7 +29,8 @@ class KFMNamedScalarData: public KSAInputOutputObject
 
         KFMNamedScalarData():fName(""){};
 
-        KFMNamedScalarData(const KFMNamedScalarData& rhs)
+        KFMNamedScalarData(const KFMNamedScalarData& rhs):
+        KSAInputOutputObject()
         {
             fName = rhs.fName;
             fData = rhs.fData;
@@ -43,7 +44,10 @@ class KFMNamedScalarData: public KSAInputOutputObject
         void SetName( const std::string& name){fName = name;};
 
         void AddNextValue(double value){fData.push_back(value);};
+        unsigned int GetNValues() const {return fData.size();};
+
         double GetValue(unsigned int i) const {return fData[i];};
+        void SetValue(unsigned int i, double data){fData[i] = data;};
 
         void GetData(std::vector<double>* data) const {*data = fData;};
         void SetData(const std::vector<double>* data) {fData = *data;};
@@ -60,7 +64,7 @@ class KFMNamedScalarData: public KSAInputOutputObject
 };
 
 
-DefineKSAClassName( KFMNamedScalarData );
+DefineKSAClassName( KFMNamedScalarData )
 
 
 }//end namespace

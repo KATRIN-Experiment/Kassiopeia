@@ -15,8 +15,6 @@ namespace Kassiopeia
     class KSGeoSpace :
         public KSComponentTemplate< KSGeoSpace, KSSpace >
     {
-        public:
-            friend class KSGeoSpace;
 
         public:
             KSGeoSpace();
@@ -35,6 +33,7 @@ namespace Kassiopeia
         public:
             void AddContent( KGSpace* aSpace );
             void RemoveContent( KGSpace* aSpace );
+            vector< KGSpace* > GetContent();
 
             void AddCommand( KSCommand* anCommand );
             void RemoveCommand( KSCommand* anCommand );

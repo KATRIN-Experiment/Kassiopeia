@@ -8,6 +8,7 @@ namespace Kassiopeia
     {
     }
     KSTermMinZ::KSTermMinZ( const KSTermMinZ& aCopy ) :
+        KSComponent(),
         fMinZ( aCopy.fMinZ )
     {
     }

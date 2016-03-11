@@ -19,6 +19,30 @@ namespace KGeoBag
             double Aspect() const;
             void Transform( const KTransformation& transform );
 
+            virtual double NearestDistance(const KThreeVector& aPoint) const;
+            virtual KThreeVector NearestPoint(const KThreeVector& aPoint) const;
+            virtual KThreeVector NearestNormal(const KThreeVector& aPoint) const;
+            virtual bool NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd, KThreeVector& anIntersection) const;
+
+            virtual KGPointCloud<KGMESH_DIM> GetPointCloud() const;
+            virtual unsigned int GetNumberOfEdges() const {return 4;};
+            virtual void GetEdge(KThreeVector& start, KThreeVector& end, unsigned int index) const;
+
+            //assignment
+            inline KGMeshRectangle& operator=(const KGMeshRectangle& r)
+            {
+                if(&r != this)
+                {
+                    fA = r.fA;
+                    fB = r.fB;
+                    fP0 = r.fP0;
+                    fN1 = r.fN1;
+                    fN2 = r.fN2;
+                }
+                return *this;
+            }
+
+
             double GetA() const
             {
                 return fA;
@@ -38,6 +62,10 @@ namespace KGeoBag
             const KThreeVector& GetN2() const
             {
                 return fN2;
+            }
+            const KThreeVector GetN3() const
+            {
+                return fN1.Cross(fN2);
             }
             const KThreeVector GetP1() const
             {
@@ -59,6 +87,10 @@ namespace KGeoBag
             {
                 n2 = fN2;
             }
+            void GetN3( KThreeVector& n3 ) const
+            {
+                n3 = fN1.Cross(fN2);
+            }
             void GetP0( KThreeVector& p0 ) const
             {
                 p0 = fP0;
@@ -77,6 +109,10 @@ namespace KGeoBag
             }
 
         protected:
+
+            bool SameSide(KThreeVector point, KThreeVector A, KThreeVector B, KThreeVector C) const;
+
+
             double fA;
             double fB;
             KThreeVector fP0;

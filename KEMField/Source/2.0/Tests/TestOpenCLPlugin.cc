@@ -227,8 +227,8 @@ int main(int /*argc*/, char** /*argv*/)
 					   KDirichletBoundary,
 					   KLineSegment>();
 
-  w->SetP0(KThreeVector(-0.457222,0.0504778,-0.51175));
-  w->SetP1(KThreeVector(-0.463342,0.0511534,-0.515712));
+  w->SetP0(KEMThreeVector(-0.457222,0.0504778,-0.51175));
+  w->SetP1(KEMThreeVector(-0.463342,0.0511534,-0.515712));
   w->SetDiameter(0.0003);
   w->SetBoundaryValue(-900);
 

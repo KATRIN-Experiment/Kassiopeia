@@ -65,8 +65,9 @@ namespace Kassiopeia
         }
     }
 
-    void KSRootStepModifier::ExecutePreStepModification()
+    bool KSRootStepModifier::ExecutePreStepModification()
     {
+        //the following disables any change made to the initial particle, why?
         *fModifierParticle = *fInitialParticle;
         //  fStep->ModifierName().clear();
         //fStep->ModificationFlag() = false;
@@ -90,10 +91,14 @@ namespace Kassiopeia
             modmsg_debug( "  modifier particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
             modmsg_debug( "  modifier particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
 
-            return;
+            return false; //changes to inital particle state disabled
         }
 
-        ExecutePreStepModification( *fModifierParticle, *fParticleQueue );
+        bool hasChangedState = ExecutePreStepModification( *fModifierParticle, *fParticleQueue );
+
+        (void) hasChangedState;
+        //hasChangedState is unused because we are operating on the modifier particle
+        //this disables any changes to the intial particle
 
 //        if( fStep->ModificationFlag() == true )
 //        {
@@ -118,11 +123,12 @@ namespace Kassiopeia
         modmsg_debug( "  modifier particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
         modmsg_debug( "  modifier particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
 
-        return;
+        return false; //changes to initial particle state disabled
     }
-    void KSRootStepModifier::ExecutePostStepModifcation()
+
+    bool KSRootStepModifier::ExecutePostStepModifcation()
     {
-        ExecutePostStepModifcation( *fModifierParticle, *fFinalParticle, *fParticleQueue );
+        bool hasChangedState = ExecutePostStepModifcation( *fModifierParticle, *fFinalParticle, *fParticleQueue );
         //fFinalParticle->ReleaseLabel( fStep->ModifierName() );
 
         modmsg_debug( "terminator execution:" << eom )
@@ -147,35 +153,40 @@ namespace Kassiopeia
         modmsg_debug( "  final particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
         modmsg_debug( "  final particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
 
-        return;
+        return hasChangedState;
     }
-    void KSRootStepModifier::ExecutePreStepModification( KSParticle& anInitialParticle,
+
+    bool KSRootStepModifier::ExecutePreStepModification( KSParticle& anInitialParticle,
                                                          KSParticleQueue& aParticleQueue )
     {
+        bool hasChangedState = false;
         for( int tIndex = 0; tIndex < fModifiers.End(); tIndex++ )
         {
-            fModifiers.ElementAt( tIndex )->ExecutePreStepModification( anInitialParticle, aParticleQueue );
+            bool changed = fModifiers.ElementAt( tIndex )->ExecutePreStepModification( anInitialParticle, aParticleQueue );
+            if(changed){hasChangedState = true;};
         }
 
-        return;
+        return hasChangedState;
     }
 
-    void KSRootStepModifier::ExecutePostStepModifcation( KSParticle& anInitialParticle,
+    bool KSRootStepModifier::ExecutePostStepModifcation( KSParticle& anInitialParticle,
                                                          KSParticle& aFinalParticle,
                                                          KSParticleQueue& aParticleQueue )
     {
+        bool hasChangedState = false;
         for( int tIndex = 0; tIndex < fModifiers.End(); tIndex++ )
         {
-            fModifiers.ElementAt( tIndex )->ExecutePostStepModifcation( anInitialParticle,
+            bool changed = fModifiers.ElementAt( tIndex )->ExecutePostStepModifcation( anInitialParticle,
                                                                         aFinalParticle,
                                                                         aParticleQueue );
+            if(changed){hasChangedState = true;};
         }
 
-        return;
+        return hasChangedState;
     }
 
 
-    static const int sKSRootModifierDict =
+    STATICINT sKSRootModifierDict =
             KSDictionary< KSRootStepModifier >::AddCommand( &KSRootStepModifier::AddModifier,
                                                             &KSRootStepModifier::RemoveModifier,
                                                             "add_modifier",

@@ -9,6 +9,7 @@ namespace Kassiopeia
     {
     }
     KSTermMaxSteps::KSTermMaxSteps( const KSTermMaxSteps& aCopy ) :
+            KSComponent(),
             fMaxSteps( aCopy.fMaxSteps ),
             fSteps( aCopy.fMaxSteps )
     {

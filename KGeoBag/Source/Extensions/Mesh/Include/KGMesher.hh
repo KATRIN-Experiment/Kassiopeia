@@ -8,6 +8,7 @@
 #include "KGConicSectPortHousingSurfaceMesher.hh"
 #include "KGCylinderMesher.hh"
 #include "KGExtrudedSurfaceMesher.hh"
+#include "KGConicalWireArrayMesher.hh"
 #include "KGPortHousingSurfaceMesher.hh"
 #include "KGRodSurfaceMesher.hh"
 #include "KGRotatedSurfaceMesher.hh"
@@ -46,6 +47,7 @@ namespace KGeoBag
         virtual public KGExtrudedSurfaceMesher,
         virtual public KGRodSurfaceMesher,
         virtual public KGBeamSurfaceMesher,
+        virtual public KGConicalWireArrayMesher,
         virtual public KGPortHousingSurfaceMesher,
         virtual public KGConicSectPortHousingSurfaceMesher,
         virtual public KGFlattenedCircleSurfaceMesher,
@@ -83,6 +85,7 @@ namespace KGeoBag
             using KGExtrudedSurfaceMesher::VisitWrappedSurface;
             using KGRodSurfaceMesher::VisitWrappedSurface;
             using KGBeamSurfaceMesher::VisitWrappedSurface;
+            using KGConicalWireArrayMesher::VisitWrappedSurface;
             using KGPortHousingSurfaceMesher::VisitWrappedSurface;
             using KGConicSectPortHousingSurfaceMesher::VisitWrappedSurface;
 

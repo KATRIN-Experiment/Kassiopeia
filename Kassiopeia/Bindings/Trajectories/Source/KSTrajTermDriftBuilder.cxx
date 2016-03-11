@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTermDriftStructure =
+    STATICINT sKSTrajTermDriftStructure =
         KSTrajTermDriftBuilder::Attribute< string >( "name" );
 
-    static int sToolboxKSTrajTermDrift =
+    STATICINT sToolboxKSTrajTermDrift =
         KSRootBuilder::ComplexElement< KSTrajTermDrift >( "kstraj_term_drift" );
 
 }

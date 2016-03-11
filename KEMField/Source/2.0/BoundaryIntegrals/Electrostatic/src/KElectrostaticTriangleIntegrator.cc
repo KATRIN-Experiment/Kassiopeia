@@ -7,7 +7,7 @@ namespace KEMField
 
   /**
    * \image html potentialFromTriangle.gif
-   * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the 
+   * Returns the electric potential at a point P (P[0],P[1],P[2]) due to the
    * collection of triangles.
    */
   double KElectrostaticTriangleIntegrator::Potential(const KTriangle* source,
@@ -72,13 +72,13 @@ namespace KEMField
     if (z_loc[0]>1.e-14)
     {
       if (fabs(b_loc[0])<1.e-13)
-	I = z_loc[0]*(I1(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) - 
+	I = z_loc[0]*(I1(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) -
 		      I2(a_loc[0],u_loc[0],u_loc[1]));
       else if (fabs(b_loc[1])<1.e-13)
-	I = z_loc[0]*(I2(a_loc[1],u_loc[0],u_loc[1]) - 
+	I = z_loc[0]*(I2(a_loc[1],u_loc[0],u_loc[1]) -
 		      I1(a_loc[0],b_loc[0],u_loc[0],u_loc[1]));
       else
-	I = z_loc[0]*(I1(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) - 
+	I = z_loc[0]*(I1(a_loc[1],b_loc[1],u_loc[0],u_loc[1]) -
 		      I1(a_loc[0],b_loc[0],u_loc[0],u_loc[1]));
     }
     else
@@ -188,7 +188,7 @@ namespace KEMField
     for (int j=0;j<3;j++)
     {
       field[j] = (source->GetN1()[j]*local_field[0] +
-		  N2prime[j]*local_field[1] + 
+		  N2prime[j]*local_field[1] +
 		  source->GetN3()[j]*local_field[2]);
     }
 
@@ -229,7 +229,7 @@ namespace KEMField
       if (fabs(y)>5.e-14)
 	ans1 = y*asinh((a1+b1*y)/fabs(y)) + a1/sqrt(1.+b1*b1)*log(logArg1);
       else
-	ans1 = a1/sqrt(1.+b1*b1)*log(logArg1);      
+	ans1 = a1/sqrt(1.+b1*b1)*log(logArg1);
     }
     else
     {
@@ -251,6 +251,11 @@ namespace KEMField
     double g1 = (sqrt(b*b+1.)*sqrt(a*a+2*a*b*u1+(b*b+1.)*u1*u1+1.)+b*(a+b*u1)+u1);
     double g2 = (sqrt(b*b+1.)*sqrt(a*a+2*a*b*u2+(b*b+1.)*u2*u2+1.)+b*(a+b*u2)+u2);
 
+    //the following two lines are a patch to fix an error due floating point
+    //rounding which results in a negative value of g2/g1, by R. Combe 2/2/15
+    if(g1 <= 0){g1 = -(1+a*a+b*b)/(2*(b*b+1)*u1);};
+    if(g2 <= 0){g2 = -(1+a*a+b*b)/(2*(b*b+1)*u2);};
+
     if (fabs(g1)<1.e-12)
     {
       if (fabs(a)<1.e-14)
@@ -262,7 +267,10 @@ namespace KEMField
 	g2 = 1.e-12;
     }
 
-    return a/sqrt(b*b+1.)*log(g2/g1);
+    //adding fabs to the log argument to catch small negative arguments
+    //that still might slip through due to floating point math errors 2/2/15
+    return a/sqrt(b*b+1.)*log(fabs(g2/g1));
+
   }
 
   double KElectrostaticTriangleIntegrator::I3p(double a,double b,double u1,double u2) const
@@ -270,7 +278,12 @@ namespace KEMField
     double g1 = (sqrt(b*b+1.)*sqrt(a*a+2*a*b*u1+(b*b+1.)*u1*u1+1.)+b*(a+b*u1)+u1);
     double g2 = (sqrt(b*b+1.)*sqrt(a*a+2*a*b*u2+(b*b+1.)*u2*u2+1.)+b*(a+b*u2)+u2);
 
-    return 1./sqrt(b*b+1.)*log(g2/g1);
+    //the following two lines are a patch to fix an error due floating point
+    //rounding which results in a negative value of g2/g1, by R. Combe 2/2/15
+    if(g1 <= 0){g1 = -(1+a*a+b*b)/(2*(b*b+1)*u1);};
+    if(g2 <= 0){g2 = -(1+a*a+b*b)/(2*(b*b+1)*u2);};
+
+    return 1./sqrt(b*b+1.)*log(fabs(g2/g1));
   }
 
   double KElectrostaticTriangleIntegrator::I4(double alpha,
@@ -366,9 +379,12 @@ namespace KEMField
   {
     double g1 = sqrt(alpha*t1*t1 + gamma);
     double g2 = sqrt(alpha*t2*t2 + gamma);
-    double q = sqrt(gamma-alpha);
-
-    return prefac*1./q*atanh(q*(g2-g1)/((alpha-gamma)+g1*g2));
+    //expansion of atanh around q=0
+    if(gamma-alpha <= 0)
+      return prefac*(g2-g1)/((alpha-gamma)+g1*g2);
+    else {
+      double q=sqrt(gamma-alpha);
+      return prefac*1./q*atanh(q*(g2-g1)/((alpha-gamma)+g1*g2));}
   }
 
   double KElectrostaticTriangleIntegrator::I4_2(double a,double b,double u1,double u2) const

@@ -30,7 +30,7 @@
 using namespace KEMField;
 
 
-int main(int argc, char* argv[])
+int main()
 {
     //std::cout << std::setprecision(15);
 
@@ -63,8 +63,8 @@ int main(int argc, char* argv[])
     true_value.resize(size);
 
     int psi, nsi;
-    double real;
-    double imag;
+    // double real;
+    // double imag;
     for(int n=0; n<=degree; n++)
     {
         for(int m=0; m<=n; m++)

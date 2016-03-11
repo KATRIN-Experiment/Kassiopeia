@@ -38,6 +38,7 @@ namespace Kassiopeia
 
             void Print() const;
             void DoNothing() const;
+            bool IsValid() const;
 
             //******
             //labels
@@ -89,10 +90,14 @@ namespace Kassiopeia
             KSSide* GetCurrentSide() const;
             const string& GetCurrentSideName() const;
 
+            void SetLastStepSurface( KSSurface* aSurface );
+            KSSurface* GetLastStepSurface() const;
+
         private:
             bool fActive;
             KSSpace* fCurrentSpace;
             KSSurface* fCurrentSurface;
+            KSSurface* fLastStepSurface;
             KSSide* fCurrentSide;
             string fCurrentSpaceName;
             string fCurrentSurfaceName;
@@ -108,6 +113,8 @@ namespace Kassiopeia
 
             void SetElectricFieldCalculator( KSElectricField* aCalculator );
             KSElectricField* GetElectricFieldCalculator() const;
+
+            void ResetFieldCaching();
 
         protected:
             KSMagneticField* fMagneticFieldCalculator;
@@ -134,6 +141,16 @@ namespace Kassiopeia
             //******************
 
         public:
+            // quantum numbers
+
+            const int& GetMainQuantumNumber() const;
+
+            void SetMainQuantumNumber( const int& t );
+
+            const int& GetSecondQuantumNumber() const;
+
+            void SetSecondQuantumNumber( const int& t );
+
 
             //time (units are seconds)
 
@@ -232,6 +249,8 @@ namespace Kassiopeia
             void RecalculateAzimuthalAngleToX() const;
 
         protected:
+            mutable int fMainQuantumNumber;
+            mutable int fSecondQuantumNumber;
             mutable double fTime;
             mutable double fLength;
             mutable KThreeVector fPosition;

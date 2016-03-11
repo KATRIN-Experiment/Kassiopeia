@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
     }
     KSTermMaxTime::KSTermMaxTime( const KSTermMaxTime& aCopy ) :
+            KSComponent(),
             fTime( aCopy.fTime )
     {
     }

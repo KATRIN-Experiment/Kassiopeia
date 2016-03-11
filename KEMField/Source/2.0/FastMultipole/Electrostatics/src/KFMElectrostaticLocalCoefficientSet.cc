@@ -4,11 +4,11 @@
 namespace KEMField
 {
 
-KFMElectrostaticLocalCoefficientSet::KFMElectrostaticLocalCoefficientSet(){};
+KFMElectrostaticLocalCoefficientSet::KFMElectrostaticLocalCoefficientSet(){}
 
-KFMElectrostaticLocalCoefficientSet::~KFMElectrostaticLocalCoefficientSet(){};
+KFMElectrostaticLocalCoefficientSet::~KFMElectrostaticLocalCoefficientSet(){}
 
-std::string KFMElectrostaticLocalCoefficientSet::ClassName() const {return std::string("KFMElectrostaticLocalCoefficientSet");};
+std::string KFMElectrostaticLocalCoefficientSet::ClassName() const {return std::string("KFMElectrostaticLocalCoefficientSet");}
 
 void
 KFMElectrostaticLocalCoefficientSet::DefineOutputNode(KSAOutputNode* node) const

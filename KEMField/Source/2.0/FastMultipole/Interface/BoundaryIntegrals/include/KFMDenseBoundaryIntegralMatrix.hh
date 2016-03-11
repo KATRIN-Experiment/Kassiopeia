@@ -1,7 +1,19 @@
 #ifndef KFMDenseBoundaryIntegralMatrix_HH__
 #define KFMDenseBoundaryIntegralMatrix_HH__
 
+#include "KSortedSurfaceContainer.hh"
 #include "KBoundaryIntegralMatrix.hh"
+
+#ifdef KEMFIELD_USE_MPI
+    #include "KMPIInterface.hh"
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
+    #endif
+#else
+    #ifndef MPI_SINGLE_PROCESS
+        #define MPI_SINGLE_PROCESS if( true )
+    #endif
+#endif
 
 namespace KEMField
 {
@@ -19,41 +31,81 @@ namespace KEMField
 *
 */
 
-template< typename FastMultipoleIntegrator>
-class KFMDenseBoundaryIntegralMatrix: public KBoundaryIntegralMatrix< FastMultipoleIntegrator, false >
+
+template<typename FastMultipoleIntegrator>
+class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipoleIntegrator::Basis::ValueType >
 {
     public:
 
         typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
 
-        KFMDenseBoundaryIntegralMatrix(KSurfaceContainer& c, FastMultipoleIntegrator& integrator):
-            KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, integrator),
-            fFastMultipoleIntegrator(integrator)
+        KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator):
+            fIntegrator(integrator)
         {
-            fDimension = c.size();
+            fDimension = integrator.Dimension();
+            fZero = 0.0;
         };
 
         virtual ~KFMDenseBoundaryIntegralMatrix(){;};
 
+        virtual unsigned int Dimension() const {return fDimension;};
+
         virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
         {
+            #ifdef KEMFIELD_USE_MPI
+            if(KMPIInterface::GetInstance()->SplitMode())
+            {
+                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
+                {
+                    //uses the fast multipole integrator to compute the
+                    //action of the system matrix on the vector x
+                    this->fIntegrator.Update(x);
+                    for(unsigned int i=0; i<fDimension; i++)
+                    {
+                        //note we do not use the source index here, only the target index
+                        y[i] = this->fIntegrator.BoundaryIntegral(i);
+                    }
+                }
+            }
+            else
+            {
+                //uses the fast multipole integrator to compute the
+                //action of the system matrix on the vector x
+                this->fIntegrator.Update(x);
+                for(unsigned int i=0; i<fDimension; i++)
+                {
+                    //note we do not use the source index here, only the target index
+                    y[i] = this->fIntegrator.BoundaryIntegral(i);
+                }
+            }
+            #else
             //uses the fast multipole integrator to compute the
             //action of the system matrix on the vector x
             this->fIntegrator.Update(x);
-
             for(unsigned int i=0; i<fDimension; i++)
             {
                 //note we do not use the source index here, only the target index
-                y[i] = this->fIntegrator.BoundaryIntegral(this->fContainer.at(i/FastMultipoleIntegrator::Basis::Dimension), i);
+                y[i] = this->fIntegrator.BoundaryIntegral(i);
             }
+            #endif
         }
+
+        //following function must be defined but it is not implemented
+        virtual const ValueType& operator()(unsigned int sourceIndex, unsigned int targetIndex) const
+        {
+            fTemp = fIntegrator.BoundaryIntegral(sourceIndex, targetIndex);
+            return fTemp;
+        }
+
 
     protected:
 
-        unsigned int fDimension;
-
         //data
-        const FastMultipoleIntegrator& fFastMultipoleIntegrator;
+        FastMultipoleIntegrator& fIntegrator;
+        unsigned int fDimension;
+        ValueType fZero;
+        mutable ValueType fTemp;
+
 };
 
 

@@ -1,5 +1,5 @@
-#ifndef KGeoBag_KGCylinderMesher_hh_
-#define KGeoBag_KGCylinderMesher_hh_
+#ifndef KGeoBag_KGConicalWireArrayDiscreteRotationalMesher_hh_
+#define KGeoBag_KGConicalWireArrayDiscreteRotationalMesher_hh_
 
 #include "KGConicalWireArraySurface.hh"
 

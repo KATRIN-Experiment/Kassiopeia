@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSTrajTermGyrationStructure =
+    STATICINT sKSTrajTermGyrationStructure =
         KSTrajTermGyrationBuilder::Attribute< string >( "name" );
 
-    static int sToolboxKSTrajTermGyration =
+    STATICINT sToolboxKSTrajTermGyration =
         KSRootBuilder::ComplexElement< KSTrajTermGyration >( "kstraj_term_gyration" );
 
 }

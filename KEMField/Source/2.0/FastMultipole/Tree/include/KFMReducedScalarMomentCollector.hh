@@ -5,6 +5,7 @@
 #include <vector>
 #include <complex>
 #include <cmath>
+#include <cstdlib>
 
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
@@ -74,7 +75,7 @@ public KFMArrayFillingOperator< std::complex<double>, SpatialNDIM+1 >
 
         virtual void SetDivisions(int div)
         {
-            fDiv = std::fabs(div);
+            fDiv = std::abs(div);
             for(unsigned int i=1; i<SpatialNDIM+1; i++)
             {
                 fLowerLimits[i] = 0;
@@ -92,11 +93,23 @@ public KFMArrayFillingOperator< std::complex<double>, SpatialNDIM+1 >
             {
                 if(fPrimaryNode->HasChildren() )
                 {
-                    //loop over children
-                    for(unsigned int n = 0; n < fPrimaryNode->GetNChildren(); n++)
+                    if(fPrimaryNode->GetLevel() == 0)
                     {
-                        fChild = fPrimaryNode->GetChild(n);
-                        FillFromChild(fChild);
+                        //loop over top level children
+                        for(unsigned int n = 0; n < fPrimaryNode->GetNChildren(); n++)
+                        {
+                            fChild = fPrimaryNode->GetChild(n);
+                            FillFromTopLevelChild(fChild);
+                        }
+                    }
+                    else
+                    {
+                        //loop over children
+                        for(unsigned int n = 0; n < fPrimaryNode->GetNChildren(); n++)
+                        {
+                            fChild = fPrimaryNode->GetChild(n);
+                            FillFromChild(fChild);
+                        }
                     }
                 }
             }
@@ -120,6 +133,37 @@ public KFMArrayFillingOperator< std::complex<double>, SpatialNDIM+1 >
 
                 const unsigned int* spatial_dim_size =
                 KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<SpatialNDIM> >::GetNodeObject(child)->GetDimensions();
+
+                KFMArrayMath::RowMajorIndexFromOffset<SpatialNDIM>(child_storage_index, spatial_dim_size, spatial_index);
+                for(unsigned int i=0; i<SpatialNDIM; i++)
+                {
+                    index[i+1] = spatial_index[i];
+                }
+
+                for(unsigned int n=0; n<fNTerms; n++)
+                {
+                    index[0] = n;
+                    (*(this->fOutput))[index] = std::complex<double>( (*real_moments)[n], (*imag_moments)[n] );
+                }
+            }
+        }
+
+        virtual void FillFromTopLevelChild(KFMNode<ObjectTypeList>* child)
+        {
+            unsigned int child_storage_index = child->GetIndex();
+
+            int index[SpatialNDIM + 1];
+            unsigned int spatial_index[SpatialNDIM];
+
+            if(child != NULL && KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(child) != NULL )
+            {
+                ScalarMomentType* scalar_moments = KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(child);
+
+                std::vector<double>* real_moments = scalar_moments->GetRealMoments();
+                std::vector<double>* imag_moments = scalar_moments->GetImaginaryMoments();
+
+                const unsigned int* spatial_dim_size =
+                KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<SpatialNDIM> >::GetNodeObject(child)->GetTopLevelDimensions();
 
                 KFMArrayMath::RowMajorIndexFromOffset<SpatialNDIM>(child_storage_index, spatial_dim_size, spatial_index);
                 for(unsigned int i=0; i<SpatialNDIM; i++)

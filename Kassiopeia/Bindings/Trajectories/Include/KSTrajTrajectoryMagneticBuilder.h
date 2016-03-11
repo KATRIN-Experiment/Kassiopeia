@@ -18,9 +18,19 @@ namespace katrin
             aContainer->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( aContainer->GetName() == "reverse" )
+        if( aContainer->GetName() == "piecewise_tolerance" )
         {
-            aContainer->CopyTo( fObject, &KSTrajTrajectoryMagnetic::SetReverseDirection );
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryMagnetic::SetPiecewiseTolerance );
+            return true;
+        }
+        if( aContainer->GetName() == "max_segments" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryMagnetic::SetMaxNumberOfSegments );
+            return true;
+        }
+        if( aContainer->GetName() == "attempt_limit" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTrajectoryMagnetic::SetAttemptLimit );
             return true;
         }
         return false;

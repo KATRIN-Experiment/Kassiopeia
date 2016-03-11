@@ -1,12 +1,12 @@
 #include "KSParticle.h"
 #include "KSOperatorsMessage.h"
-
-#include "KConst.h"
-using katrin::KConst;
-
 #include "KSDictionary.h"
 
+#include <KConst.h>
 #include <cmath>
+
+using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -27,6 +27,7 @@ namespace Kassiopeia
             fActive( true ),
             fCurrentSpace( NULL ),
             fCurrentSurface( NULL ),
+            fLastStepSurface( NULL ),
             fCurrentSide( NULL ),
             fCurrentSpaceName( "" ),
             fCurrentSurfaceName( "" ),
@@ -39,6 +40,8 @@ namespace Kassiopeia
             fMass( 0. ),
             fCharge( 0. ),
             fMoment( 0. ),
+            fMainQuantumNumber( -1 ),
+            fSecondQuantumNumber( -1 ),
 
             fTime( 0. ),
             fLength( 0. ),
@@ -100,6 +103,7 @@ namespace Kassiopeia
             fActive( aParticle.fActive ),
             fCurrentSpace( aParticle.fCurrentSpace ),
             fCurrentSurface( aParticle.fCurrentSurface ),
+            fLastStepSurface( aParticle.fLastStepSurface ),
             fCurrentSide( aParticle.fCurrentSide ),
             fCurrentSpaceName( aParticle.fCurrentSpaceName ),
             fCurrentSurfaceName( aParticle.fCurrentSurfaceName ),
@@ -112,6 +116,8 @@ namespace Kassiopeia
             fMass( aParticle.fMass ),
             fCharge( aParticle.fCharge ),
             fMoment( aParticle.fMoment ),
+            fMainQuantumNumber( aParticle.fMainQuantumNumber ),
+            fSecondQuantumNumber( aParticle.fSecondQuantumNumber ),
 
             fTime( aParticle.fTime ),
             fLength( aParticle.fLength ),
@@ -174,6 +180,7 @@ namespace Kassiopeia
         fActive = aParticle.fActive;
         fCurrentSpace = aParticle.fCurrentSpace;
         fCurrentSurface = aParticle.fCurrentSurface;
+        fLastStepSurface = aParticle.fLastStepSurface;
         fCurrentSide = aParticle.fCurrentSide;
         fCurrentSpaceName = aParticle.fCurrentSpaceName;
         fCurrentSurfaceName = aParticle.fCurrentSurfaceName;
@@ -186,6 +193,8 @@ namespace Kassiopeia
         fMass = aParticle.fMass;
         fCharge = aParticle.fCharge;
         fMoment = aParticle.fMoment;
+        fMainQuantumNumber = aParticle.fMainQuantumNumber;
+        fSecondQuantumNumber = aParticle.fSecondQuantumNumber;
 
         fTime = aParticle.fTime;
         fLength = aParticle.fLength;
@@ -252,13 +261,46 @@ namespace Kassiopeia
         oprmsg << "  charge:     " << fCharge << ret;
         oprmsg << "  total spin: " << fMoment << ret;
         oprmsg << ret;
+        oprmsg << "  t:          " << fTime << ret;
         oprmsg << "  x:          " << fPosition[ 0 ] << ret;
         oprmsg << "  y:          " << fPosition[ 1 ] << ret;
         oprmsg << "  z:          " << fPosition[ 2 ] << ret;
         oprmsg << "  px:         " << fMomentum[ 0 ] << ret;
         oprmsg << "  py:         " << fMomentum[ 1 ] << ret;
-        oprmsg << "  pz:         " << fMomentum[ 2 ] << eom;
+        oprmsg << "  pz:         " << fMomentum[ 2 ] << ret;
+        oprmsg << ret;
+        oprmsg << "  B:          " << fMagneticField << ret;
+        oprmsg << "  E:          " << fElectricField << ret;
+        oprmsg << eom;
         return;
+    }
+    bool KSParticle::IsValid() const
+    {
+        // static properties
+        if ( !isfinite(fPID) )
+            return false;
+        if ( !isfinite(fMass) )
+            return false;
+        if ( !isfinite(fCharge) )
+            return false;
+        if ( !isfinite(fMoment) )
+            return false;
+
+        // dynamic properties
+        if ( !isfinite(fTime) )
+            return false;
+        if ( !isfinite(fPosition.X()) || !isfinite(fPosition.Y()) || !isfinite(fPosition.Z()) )
+            return false;
+        if ( !isfinite(fMomentum.X()) || !isfinite(fMomentum.Y()) || !isfinite(fMomentum.Z()) )
+            return false;
+
+        // other properties
+        if ( !isfinite(GetMagneticField().MagnitudeSquared()) )
+            return false;
+        if ( !isfinite(GetElectricField().MagnitudeSquared()) )
+            return false;
+
+        return true;
     }
 
     //******
@@ -406,6 +448,16 @@ namespace Kassiopeia
     	return fCurrentSideName;
     }
 
+    void KSParticle::SetLastStepSurface( KSSurface* aSurface )
+    {
+        fLastStepSurface = aSurface;
+        return;
+    }
+    KSSurface* KSParticle::GetLastStepSurface() const
+    {
+        return fLastStepSurface;
+    }
+
 //***********
 //calculators
 //***********
@@ -430,6 +482,24 @@ namespace Kassiopeia
         return fElectricFieldCalculator;
     }
 
+    void KSParticle::ResetFieldCaching()
+    {
+        fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
+        fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
+        fGetMagneticGradientAction = &KSParticle::RecalculateMagneticGradient;
+        fGetElectricPotentialAction = &KSParticle::RecalculateElectricPotential;
+
+        fGetLongMomentumAction = &KSParticle::RecalculateLongMomentum;
+        fGetTransMomentumAction = &KSParticle::RecalculateTransMomentum;
+        fGetLongVelocityAction = &KSParticle::RecalculateLongVelocity;
+        fGetTransVelocityAction = &KSParticle::RecalculateTransVelocity;
+        fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
+        fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
+        fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
+
+    }
+
 //*****************
 //static properties
 //*****************
@@ -451,6 +521,26 @@ namespace Kassiopeia
         return fMoment;
     }
 
+//***************
+//Quantum Numbers
+//***************
+    void KSParticle::SetMainQuantumNumber(const int &t)
+    {
+        fMainQuantumNumber = t;
+    }
+    const int& KSParticle::GetMainQuantumNumber() const
+    {
+        return fMainQuantumNumber;
+    }
+    void KSParticle::SetSecondQuantumNumber(const int &t)
+    {
+        fSecondQuantumNumber = t;
+    }
+    const int& KSParticle::GetSecondQuantumNumber() const
+    {
+        return fSecondQuantumNumber;
+    }
+
 //****
 //time
 //****
@@ -459,8 +549,8 @@ namespace Kassiopeia
     {
         fTime = t;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fTime" << ret );
-        //oprmsg_debug( "[" << fTime << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fTime" << ret );
+        oprmsg_debug( "[" << fTime << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -474,6 +564,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
 
@@ -491,8 +582,8 @@ namespace Kassiopeia
     {
         fLength = l;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fLength" << ret );
-        //oprmsg_debug( "[" << fLength << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fLength" << ret );
+        oprmsg_debug( "[" << fLength << "]" << eom );
 
         return;
     }
@@ -530,8 +621,8 @@ namespace Kassiopeia
     {
         fPosition = aPosition;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
-        //oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
+        oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -545,6 +636,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -552,8 +644,8 @@ namespace Kassiopeia
     {
         fPosition.SetComponents( anX, aY, aZ );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
-        //oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
+        oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -567,6 +659,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -574,8 +667,8 @@ namespace Kassiopeia
     {
         fPosition[ 0 ] = anX;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
-        //oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
+        oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -589,6 +682,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -596,8 +690,8 @@ namespace Kassiopeia
     {
         fPosition[ 1 ] = aY;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
-        //oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
+        oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -611,14 +705,16 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
+
         return;
     }
     void KSParticle::SetZ( const double& aZ )
     {
         fPosition[ 2 ] = aZ;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
-        //oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPosition" << ret );
+        oprmsg_debug( "[" << fPosition[0] << ", " << fPosition[1] << ", " << fPosition[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::RecalculateMagneticField;
         fGetElectricFieldAction = &KSParticle::RecalculateElectricField;
@@ -632,6 +728,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -648,9 +745,8 @@ namespace Kassiopeia
 
     const KThreeVector& KSParticle::GetMomentum() const
     {
-
-        //oprmsg_debug( "KSParticle: [" << this << "] getting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] getting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         (this->*fGetMomentumAction)();
         return fMomentum;
@@ -675,8 +771,8 @@ namespace Kassiopeia
     {
         fMomentum = aMomentum;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -692,6 +788,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -699,8 +796,8 @@ namespace Kassiopeia
     {
         fMomentum.SetComponents( anX, aY, aZ );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -716,6 +813,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -723,8 +821,8 @@ namespace Kassiopeia
     {
         fMomentum[ 0 ] = anX;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -740,6 +838,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -747,8 +846,8 @@ namespace Kassiopeia
     {
         fMomentum[ 1 ] = aY;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -764,6 +863,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -771,8 +871,8 @@ namespace Kassiopeia
     {
         fMomentum[ 2 ] = aZ;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMomentum" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -788,6 +888,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -811,20 +912,21 @@ namespace Kassiopeia
     void KSParticle::SetVelocity( const KThreeVector& NewVelocity )
     {
         double Speed = NewVelocity.Magnitude();
-        double LorentzFactor = 1.0 / sqrt( 1.0 - (Speed * Speed / (KConst::C() * KConst::C())) );
+        double Beta = Speed/KConst::C();
+        double LorentzFactor = 1.0 / sqrt( (1.0-Beta)*(1+Beta) );
 
         fMomentum = GetMass() * LorentzFactor * NewVelocity;
         fVelocity = NewVelocity;
         fLorentzFactor = LorentzFactor;
         fSpeed = Speed;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fVelocity" << ret );
-        //oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
-        //oprmsg_debug( "[" << fSpeed << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fVelocity" << ret );
+        oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
+        oprmsg_debug( "[" << fSpeed << "]" << eom );
 
         fGetVelocityAction = &KSParticle::DoNothing;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -840,6 +942,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -848,8 +951,8 @@ namespace Kassiopeia
     {
         fVelocity = (1. / (GetMass() * GetLorentzFactor())) * fMomentum;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fVelocity" << ret );
-        //oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fVelocity" << ret );
+        oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::DoNothing;
 
@@ -868,19 +971,20 @@ namespace Kassiopeia
 
     void KSParticle::SetSpeed( const double& NewSpeed )
     {
-        double LorentzFactor = 1.0 / sqrt( 1.0 - NewSpeed * NewSpeed / (KConst::C() * KConst::C()) );
-        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( LorentzFactor * LorentzFactor - 1.0 );
+        double Beta = NewSpeed / KConst::C();
+        double LorentzFactor = 1.0 / sqrt( (1.0-Beta)*(1+Beta) );
+        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( (LorentzFactor - 1.0) * (LorentzFactor + 1.0) );
 
         fMomentum.SetMagnitude( MomentumMagnitude );
         fLorentzFactor = LorentzFactor;
         fSpeed = NewSpeed;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fSpeed" << ret );
-        //oprmsg_debug( "[" << fSpeed << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor has been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fSpeed" << ret );
+        oprmsg_debug( "[" << fSpeed << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor has been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -896,6 +1000,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -904,8 +1009,8 @@ namespace Kassiopeia
     {
         fSpeed = GetVelocity().Magnitude();
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fSpeed" << ret );
-        //oprmsg_debug( "[" << fSpeed << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fSpeed" << ret );
+        oprmsg_debug( "[" << fSpeed << "]" << eom );
 
         fGetSpeedAction = &KSParticle::DoNothing;
 
@@ -924,15 +1029,15 @@ namespace Kassiopeia
 
     void KSParticle::SetLorentzFactor( const double& NewLorentzFactor )
     {
-        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( NewLorentzFactor * NewLorentzFactor - 1.0 );
+        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( (NewLorentzFactor - 1.0)*(NewLorentzFactor + 1.0) );
 
         fMomentum.SetMagnitude( MomentumMagnitude );
         fLorentzFactor = NewLorentzFactor;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fLorentzFactor" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fLorentzFactor" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -948,6 +1053,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -956,8 +1062,8 @@ namespace Kassiopeia
     {
         fLorentzFactor = sqrt( 1.0 + fMomentum.MagnitudeSquared() / (GetMass() * GetMass() * KConst::C() * KConst::C()) );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fLorentzFactor" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fLorentzFactor" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
 
         fGetLorentzFactorAction = &KSParticle::DoNothing;
 
@@ -980,10 +1086,10 @@ namespace Kassiopeia
         fMomentum.SetMagnitude( MomentumMagnitude );
         fKineticEnergy = NewKineticEnergy;
 
-        //utilmsg(eDebug) << "KSParticle: [" << this << "] setting fKineticEnergy" << ret );
-        //oprmsg_debug( "[" << fKineticEnergy << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fKineticEnergy" << ret );
+        oprmsg_debug( "[" << fKineticEnergy << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -999,6 +1105,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1007,11 +1114,11 @@ namespace Kassiopeia
     {
         fKineticEnergy = fMomentum.MagnitudeSquared() / ((1.0 + GetLorentzFactor()) * GetMass());
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fKineticEnergy" << ret );
-        //oprmsg_debug( "momentum.mag2: [" << fMomentum.MagnitudeSquared() << "]" << eom );
-        //oprmsg_debug( "lorentzfactor: [" << GetLorentzFactor() << "]" << eom );
-        //oprmsg_debug( "mass: [" << GetMass() << "]" << eom );
-        //oprmsg_debug( "kinetic energy: [" << fKineticEnergy << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fKineticEnergy" << ret );
+        oprmsg_debug( "momentum.mag2: [" << fMomentum.MagnitudeSquared() << "]" << eom );
+        oprmsg_debug( "lorentzfactor: [" << GetLorentzFactor() << "]" << eom );
+        oprmsg_debug( "mass: [" << GetMass() << "]" << eom );
+        oprmsg_debug( "kinetic energy: [" << fKineticEnergy << "]" << eom );
 
         fGetKineticEnergyAction = &KSParticle::DoNothing;
 
@@ -1023,8 +1130,8 @@ namespace Kassiopeia
     void KSParticle::SetKineticEnergy_eV( const double& NewKineticEnergy )
     {
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fKineticEnergy in eV" << ret );
-        //oprmsg_debug( "[" << NewKineticEnergy << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fKineticEnergy in eV" << ret );
+        oprmsg_debug( "[" << NewKineticEnergy << "]" << eom );
 
         double NewKineticEnergy_SI = NewKineticEnergy * KConst::Q();
         SetKineticEnergy( NewKineticEnergy_SI );
@@ -1035,8 +1142,8 @@ namespace Kassiopeia
     {
         fKineticEnergy_eV = GetKineticEnergy() / KConst::Q();
 
-        //oprmsg_debug( "KSParticle: [" << this << "] getting fKineticEnergy in eV" << ret );
-        //oprmsg_debug( "[" << fKineticEnergy_eV << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] getting fKineticEnergy in eV" << ret );
+        oprmsg_debug( "[" << fKineticEnergy_eV << "]" << eom );
 
         return fKineticEnergy_eV;
     }
@@ -1055,7 +1162,9 @@ namespace Kassiopeia
     {
         if( (NewPolarAngleToZ < 0.0) || (NewPolarAngleToZ > 180.0) )
         {
-            //oprmsg( eWarning ) << " Polar Angle is only defined between 0 and 180 " << eom;
+            oprmsg( eWarning ) <<"KSParticle: [" << this << "] setting fPolarAngleToZ" << ret;
+            oprmsg( eWarning ) <<"[" << fPolarAngleToZ << "]" << ret;
+            oprmsg( eWarning ) << "Polar Angle is only defined between 0 and 180 " << eom;
         }
         fPolarAngleToZ = NewPolarAngleToZ;
 
@@ -1064,8 +1173,8 @@ namespace Kassiopeia
 
         fMomentum.SetComponents( MomentumMagnitude * sin( NewPolarAngleToZ_SI ) * cos( GetAzimuthalAngleToX() ), MomentumMagnitude * sin( NewPolarAngleToZ_SI ) * sin( GetAzimuthalAngleToX() ), MomentumMagnitude * cos( NewPolarAngleToZ_SI ) );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPolarAngleToZ" << ret );
-        //oprmsg_debug( "[" << fPolarAngleToZ << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPolarAngleToZ" << ret );
+        oprmsg_debug( "[" << fPolarAngleToZ << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         //fGetLorentzFactorAction unchanged
@@ -1081,6 +1190,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         //fGetCyclotronFrequencyAction unchanged
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1089,8 +1199,8 @@ namespace Kassiopeia
     {
         fPolarAngleToZ = (180. / KConst::Pi()) * acos( fMomentum[ 2 ] / fMomentum.Magnitude() );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fPolarAngleToZ" << ret );
-        //oprmsg_debug( "[" << fPolarAngleToZ << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fPolarAngleToZ" << ret );
+        oprmsg_debug( "[" << fPolarAngleToZ << "]" << eom );
 
         fGetPolarAngleToZAction = &KSParticle::DoNothing;
 
@@ -1121,8 +1231,8 @@ namespace Kassiopeia
 
         fMomentum.SetComponents( MomentumMagnitude * sin( PolarAngleToZ_SI ) * cos( NewAzimuthalAngleToX_SI ), MomentumMagnitude * sin( PolarAngleToZ_SI ) * sin( NewAzimuthalAngleToX_SI ), MomentumMagnitude * cos( PolarAngleToZ_SI ) );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fAzimuthalAngleToX" << ret );
-        //oprmsg_debug( "[" << fAzimuthalAngleToX << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fAzimuthalAngleToX" << ret );
+        oprmsg_debug( "[" << fAzimuthalAngleToX << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         //fGetLorentzFactorAction unchanged
@@ -1138,15 +1248,16 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         //fGetCyclotronFrequencyAction unchanged
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
 
     void KSParticle::RecalculateAzimuthalAngleToX() const
     {
-        register double Px = GetMomentum()[ 0 ];
-        register double Py = GetMomentum()[ 1 ];
-        register double NewCosPhi = 0;
+        double Px = GetMomentum()[ 0 ];
+        double Py = GetMomentum()[ 1 ];
+        double NewCosPhi = 0;
 
         if( Px == 0. )
         {
@@ -1176,8 +1287,8 @@ namespace Kassiopeia
             }
         }
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fAzimuthalAngleToX" << ret );
-        //oprmsg_debug( "[" << fAzimuthalAngleToX << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fAzimuthalAngleToX" << ret );
+        oprmsg_debug( "[" << fAzimuthalAngleToX << "]" << eom );
 
         fGetAzimuthalAngleToXAction = &KSParticle::DoNothing;
 
@@ -1198,10 +1309,19 @@ namespace Kassiopeia
     {
         fMagneticField = aMagneticField;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticField" << ret );
-        //oprmsg_debug( "[" << fMagneticField[0] << ", " << fMagneticField[1] << ", " << fMagneticField[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticField" << ret );
+        oprmsg_debug( "[" << fMagneticField[0] << ", " << fMagneticField[1] << ", " << fMagneticField[2] << "]" << eom );
 
         fGetMagneticFieldAction = &KSParticle::DoNothing;
+
+        fGetLongMomentumAction = &KSParticle::RecalculateLongMomentum;
+        fGetTransMomentumAction = &KSParticle::RecalculateTransMomentum;
+        fGetLongVelocityAction = &KSParticle::RecalculateLongVelocity;
+        fGetTransVelocityAction = &KSParticle::RecalculateTransVelocity;
+        fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
+        fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
+        fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1227,8 +1347,8 @@ namespace Kassiopeia
     {
         fElectricField = aElectricField;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fElectricField" << ret );
-        //oprmsg_debug( "[" << fElectricField[0] << ", " << fElectricField[1] << ", " << fElectricField[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fElectricField" << ret );
+        oprmsg_debug( "[" << fElectricField[0] << ", " << fElectricField[1] << ", " << fElectricField[2] << "]" << eom );
 
         fGetElectricFieldAction = &KSParticle::DoNothing;
 
@@ -1256,8 +1376,8 @@ namespace Kassiopeia
     {
         fMagneticGradient = aMagneticGradient;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticGradient" << eom );
-        ////oprmsg_debug( "[" << fMagneticGradient << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticGradient" << eom );
+        oprmsg_debug( "[" << fMagneticGradient << "]" << eom );
 
         return;
     }
@@ -1283,8 +1403,8 @@ namespace Kassiopeia
     {
         fElectricPotential = anElectricPotential;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fElectricPotential" << ret );
-        //oprmsg_debug( "[" << fElectricPotential << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fElectricPotential" << ret );
+        oprmsg_debug( "[" << fElectricPotential << "]" << eom );
 
         fGetElectricPotentialAction = &KSParticle::DoNothing;
 
@@ -1310,10 +1430,10 @@ namespace Kassiopeia
         fMomentum += LongMomentumVector;
         fLongMomentum = aNewLongMomentum;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fLongMomentum" << ret );
-        //oprmsg_debug( "[" << fLongMomentum << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fLongMomentum" << ret );
+        oprmsg_debug( "[" << fLongMomentum << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -1329,6 +1449,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         //fGetOrbitalMagneticMomentAction unchanged
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1341,8 +1462,8 @@ namespace Kassiopeia
     {
         fLongMomentum = GetMagneticField().Unit().Dot( fMomentum );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fLongMomentum" << ret );
-        //oprmsg_debug( "[" << fLongMomentum << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fLongMomentum" << ret );
+        oprmsg_debug( "[" << fLongMomentum << "]" << eom );
 
         fGetLongMomentumAction = &KSParticle::DoNothing;
 
@@ -1362,10 +1483,10 @@ namespace Kassiopeia
         fMomentum = LongMomentumVector + TransMomentumVector;
         fTransMomentum = NewTransMomentum;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fTransMomentum" << ret );
-        //oprmsg_debug( "[" << fTransMomentum << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fTransMomentum" << ret );
+        oprmsg_debug( "[" << fTransMomentum << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -1381,6 +1502,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1391,10 +1513,12 @@ namespace Kassiopeia
     }
     void KSParticle::RecalculateTransMomentum() const
     {
-        fTransMomentum = sqrt( fMomentum.MagnitudeSquared() - GetLongMomentum() * GetLongMomentum() );
+        double p_mag = fMomentum.Magnitude();
+        double l_mag = GetLongMomentum();
+        fTransMomentum = sqrt( std::fabs( (p_mag - l_mag)*(p_mag + l_mag) ) );
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fTransMomentum" << ret );
-        //oprmsg_debug( "[" << fTransMomentum << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fTransMomentum" << ret );
+        oprmsg_debug( "[" << fTransMomentum << "]" << eom );
 
         fGetTransMomentumAction = &KSParticle::DoNothing;
 
@@ -1412,18 +1536,19 @@ namespace Kassiopeia
 
         fVelocity += LongVelocityVector;
         fSpeed = fVelocity.Magnitude();
-        fLorentzFactor = 1.0 / sqrt( 1.0 - (fSpeed * fSpeed / (KConst::C() * KConst::C())) );
+        double Beta = fSpeed / KConst::C();
+        fLorentzFactor = 1.0 / sqrt( (1.0 - Beta)*(1 + Beta) );
         fMomentum = (GetMass() * fLorentzFactor) * fVelocity;
         fLongVelocity = NewLongVelocity;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fLongVelocity" << ret );
-        //oprmsg_debug( "[" << fLongVelocity << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fVelocity, fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
-        //oprmsg_debug( "[" << fSpeed << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fLongVelocity" << ret );
+        oprmsg_debug( "[" << fLongVelocity << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fVelocity, fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
+        oprmsg_debug( "[" << fSpeed << "]" << eom );
 
         fGetVelocityAction = &KSParticle::DoNothing;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -1439,6 +1564,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1451,8 +1577,8 @@ namespace Kassiopeia
     {
         fLongVelocity = GetLongMomentum() / (GetMass() * GetLorentzFactor());
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fLongVelocity" << ret );
-        //oprmsg_debug( "[" << fLongVelocity << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fLongVelocity" << ret );
+        oprmsg_debug( "[" << fLongVelocity << "]" << eom );
 
         fGetLongVelocityAction = &KSParticle::DoNothing;
 
@@ -1470,18 +1596,19 @@ namespace Kassiopeia
 
         fVelocity += TransVelocityVector;
         fSpeed = fVelocity.Magnitude();
-        fLorentzFactor = 1.0 / sqrt( 1.0 - (fSpeed * fSpeed / (KConst::C() * KConst::C())) );
+        double Beta = fSpeed / KConst::C();
+        fLorentzFactor = 1.0 / sqrt( (1.0 - Beta)*(1 + Beta) );
         fMomentum = (GetMass() * fLorentzFactor) * fVelocity;
         fTransVelocity = NewTransVelocity;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fTransVelocity" << ret );
-        //oprmsg_debug( "[" << fTransVelocity << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fVelocity, fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
-        //oprmsg_debug( "[" << fSpeed << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fTransVelocity" << ret );
+        oprmsg_debug( "[" << fTransVelocity << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fVelocity, fLorentzFactor and fSpeed have been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fVelocity[0] << ", " << fVelocity[1] << ", " << fVelocity[2] << "]" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << ret );
+        oprmsg_debug( "[" << fSpeed << "]" << eom );
 
         fGetVelocityAction = &KSParticle::DoNothing;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -1497,6 +1624,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1509,8 +1637,8 @@ namespace Kassiopeia
     {
         fTransVelocity = GetTransMomentum() / (GetMass() * GetLorentzFactor());
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fTransVelocity" << ret );
-        //oprmsg_debug( "[" << fTransVelocity << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fTransVelocity" << ret );
+        oprmsg_debug( "[" << fTransVelocity << "]" << eom );
 
         fGetTransVelocityAction = &KSParticle::DoNothing;
 
@@ -1525,7 +1653,9 @@ namespace Kassiopeia
     {
         if( (NewPolarAngleToB < 0.0) || (NewPolarAngleToB > 180.0) )
         {
-            //oprmsg( eWarning ) << "Polar angle is only defined between 0 and 180 degree" << eom;
+            oprmsg( eWarning ) <<"KSParticle: [" << this << "] setting fPolarAngleToB" << ret;
+            oprmsg( eWarning ) <<"[" << fPolarAngleToB << "]" << ret;
+            oprmsg( eWarning ) << "Polar Angle is only defined between 0 and 180 degree" << eom;
         }
         double NewPolarAngleToB_SI = (KConst::Pi() / 180.) * NewPolarAngleToB;
         double MomentumMagnitude = fMomentum.Magnitude();
@@ -1535,8 +1665,8 @@ namespace Kassiopeia
         fMomentum = MomentumMagnitude * cos( NewPolarAngleToB_SI ) * LongUnit + MomentumMagnitude * sin( NewPolarAngleToB_SI ) * TransUnit;
         fPolarAngleToB = NewPolarAngleToB;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fPolarAngleToB" << ret );
-        //oprmsg_debug( "[" << fPolarAngleToB << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fPolarAngleToB" << ret );
+        oprmsg_debug( "[" << fPolarAngleToB << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         //fGetLorentzFactorAction unchanged
@@ -1552,6 +1682,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::DoNothing;
         //fGetCyclotronFrequencyAction unchanged
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1564,8 +1695,8 @@ namespace Kassiopeia
     {
         fPolarAngleToB = acos( fMomentum.Unit().Dot( GetMagneticField().Unit() ) ) * 180. / KConst::Pi();
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fPolarAngleToB" << ret );
-        //oprmsg_debug( "[" << fPolarAngleToB << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fPolarAngleToB" << ret );
+        oprmsg_debug( "[" << fPolarAngleToB << "]" << eom );
 
         fGetPolarAngleToBAction = &KSParticle::DoNothing;
 
@@ -1579,18 +1710,18 @@ namespace Kassiopeia
     void KSParticle::SetCyclotronFrequency( const double& NewCyclotronFrequency )
     {
         double LorentzFactor = (GetCharge() * GetMagneticField().Magnitude()) / (2.0 * KConst::Pi() * GetMass() * NewCyclotronFrequency);
-        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( LorentzFactor * LorentzFactor - 1.0 );
+        double MomentumMagnitude = GetMass() * KConst::C() * sqrt( (LorentzFactor + 1.0)*( LorentzFactor - 1.0) );
 
         fMomentum.SetMagnitude( MomentumMagnitude );
         fLorentzFactor = LorentzFactor;
         fCyclotronFrequency = NewCyclotronFrequency;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fCyclotronFrequency" << ret );
-        //oprmsg_debug( "[" << fCyclotronFrequency << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor has been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fCyclotronFrequency" << ret );
+        oprmsg_debug( "[" << fCyclotronFrequency << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fLorentzFactor has been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fLorentzFactor << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::DoNothing;
@@ -1606,15 +1737,19 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::DoNothing;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
+
 
         return;
     }
     void KSParticle::RecalculateCyclotronFrequency() const
     {
+    	oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
+
         fCyclotronFrequency = (fabs( GetCharge() ) * GetMagneticField().Magnitude()) / (2.0 * KConst::Pi() * GetMass() * GetLorentzFactor());
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fCyclotronFrequency" << ret );
-        //oprmsg_debug( "[" << fCyclotronFrequency << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fCyclotronFrequency" << ret );
+        oprmsg_debug( "[" << fCyclotronFrequency << "]" << eom );
 
         fGetCyclotronFrequencyAction = &KSParticle::DoNothing;
 
@@ -1646,12 +1781,12 @@ namespace Kassiopeia
         fTransMomentum = TransMomentumMagnitude;
         fOrbitalMagneticMoment = NewOrbitalMagneticMoment;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] setting fOrbitalMagneticMoment" << ret );
-        //oprmsg_debug( "[" << fOrbitalMagneticMoment << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
-        //oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
-        //oprmsg_debug( "KSParticle: [" << this << "] fTransMomentum has been secondarily recalculated" << ret );
-        //oprmsg_debug( "[" << fTransMomentum << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] setting fOrbitalMagneticMoment" << ret );
+        oprmsg_debug( "[" << fOrbitalMagneticMoment << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fMomentum has been recalculated" << ret );
+        oprmsg_debug( "[" << fMomentum[0] << ", " << fMomentum[1] << ", " << fMomentum[2] << "]" << ret );
+        oprmsg_debug( "KSParticle: [" << this << "] fTransMomentum has been secondarily recalculated" << ret );
+        oprmsg_debug( "[" << fTransMomentum << "]" << eom );
 
         fGetVelocityAction = &KSParticle::RecalculateVelocity;
         fGetLorentzFactorAction = &KSParticle::RecalculateLorentzFactor;
@@ -1667,6 +1802,7 @@ namespace Kassiopeia
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::DoNothing;
+        fGetGuidingCenterPositionAction = &KSParticle::RecalculateGuidingCenterPosition;
 
         return;
     }
@@ -1674,8 +1810,8 @@ namespace Kassiopeia
     {
         fOrbitalMagneticMoment = (GetTransMomentum() * GetTransMomentum()) / (2.0 * GetMass() * GetMagneticField().Magnitude());
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fOrbitalMagneticMoment" << ret );
-        //oprmsg_debug( "[" << fOrbitalMagneticMoment << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fOrbitalMagneticMoment" << ret );
+        oprmsg_debug( "[" << fOrbitalMagneticMoment << "]" << eom );
 
         fGetOrbitalMagneticMomentAction = &KSParticle::DoNothing;
 
@@ -1686,19 +1822,22 @@ namespace Kassiopeia
 //guiding center position
 //***********************
 
-//TODO: incorporate this into the caching system, figure out correct setter for gc position!
 
     const KThreeVector& KSParticle::GetGuidingCenterPosition() const
     {
         (this->*fGetGuidingCenterPositionAction)();
         return fGuidingCenterPosition;
     }
+
     void KSParticle::SetGuidingCenterPosition( const KThreeVector& NewGuidingCenterPosition )
     {
         fGuidingCenterPosition = NewGuidingCenterPosition;
+        oprmsg( eWarning ) <<"If this function is called, the correct position calculation needs to be implemented!"<<eom;
     }
+
     void KSParticle::RecalculateGuidingCenterPosition() const
     {
+    	oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
         fGuidingCenterPosition = GetPosition() + (1.0 / (GetCharge() * GetMagneticField().MagnitudeSquared())) * (GetMomentum().Cross( GetMagneticField() ));
 
         //calculate magnetic field at gc position
@@ -1715,15 +1854,15 @@ namespace Kassiopeia
         fPosition = tRealPosition;
         fMagneticField = tRealMagneticField;
 
-        //oprmsg_debug( "KSParticle: [" << this << "] recalculating fGuidingCenterPosition" << ret );
-        //oprmsg_debug( "[" << fGuidingCenterPosition[0] << ", " << fGuidingCenterPosition[1] << ", " << fGuidingCenterPosition[2] << "]" << eom );
+        oprmsg_debug( "KSParticle: [" << this << "] recalculating fGuidingCenterPosition" << ret );
+        oprmsg_debug( "[" << fGuidingCenterPosition[0] << ", " << fGuidingCenterPosition[1] << ", " << fGuidingCenterPosition[2] << "]" << eom );
 
         fGetGuidingCenterPositionAction = &KSParticle::DoNothing;
 
         return;
     }
 
-    static const int sKSParticleDict =
+    STATICINT sKSParticleDict =
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentRunId, "parent_run_id" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentEventId, "parent_event_id" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentTrackId, "parent_track_id" ) +
@@ -1731,6 +1870,8 @@ namespace Kassiopeia
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPID, "pid" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMass, "mass" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCharge, "charge" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMainQuantumNumber, "n" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSecondQuantumNumber, "l" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTime, "time" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLength, "length" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPosition, "position" ) +
@@ -1760,7 +1901,7 @@ namespace Kassiopeia
 			KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSideName, "current_side_name" );
 
 
-    static const int sKSKThreeVectorDict =
+    STATICINT sKSKThreeVectorDict =
     		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetX, "x" ) +
     		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetY, "y" ) +
     		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetZ, "z" ) +
@@ -1772,4 +1913,3 @@ namespace Kassiopeia
     		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::AzimuthalAngle, "azimuthal_angle" );
 
 } /* namespace Kassiopeia */
-

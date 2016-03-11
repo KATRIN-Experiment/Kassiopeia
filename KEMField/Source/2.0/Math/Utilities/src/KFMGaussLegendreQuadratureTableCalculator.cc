@@ -19,12 +19,15 @@ KFMGaussLegendreQuadratureTableCalculator::KFMGaussLegendreQuadratureTableCalcul
     fWeights.clear();
     fAbscissa.clear();
     fN = 0;
-};
+}
 
 KFMGaussLegendreQuadratureTableCalculator::~KFMGaussLegendreQuadratureTableCalculator()
 {
-
-};
+        if(fJ != NULL){kfm_matrix_free(fJ); fJ = NULL;};
+        if(fLambda != NULL){kfm_vector_free(fLambda); fLambda = NULL;};
+        if(fQ != NULL){kfm_matrix_free(fQ); fQ = NULL;};
+        if(fQ_transpose != NULL){kfm_matrix_free(fQ_transpose); fQ_transpose = NULL;};
+}
 
 void
 KFMGaussLegendreQuadratureTableCalculator::SetNTerms(unsigned int n)

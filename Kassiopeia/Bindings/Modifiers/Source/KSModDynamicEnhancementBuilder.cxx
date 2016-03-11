@@ -9,7 +9,7 @@ namespace katrin
     {
     }
 
-    static int SKSModDynamicEnhancementStructure =
+    STATICINT SKSModDynamicEnhancementStructure =
             KSModDynamicEnhancementBuilder::Attribute< string >( "name" )+
             KSModDynamicEnhancementBuilder::Attribute< string >( "synchrotron" )+
             KSModDynamicEnhancementBuilder::Attribute< string >( "scattering" )+
@@ -17,6 +17,6 @@ namespace katrin
             KSModDynamicEnhancementBuilder::Attribute< bool >( "dynamic" )+
             KSModDynamicEnhancementBuilder::Attribute< double>( "reference_energy" );
 
-    static int sKSModDynamicEnhancement =
+    STATICINT sKSModDynamicEnhancement =
             KSRootBuilder::ComplexElement< KSModDynamicEnhancement >( "ksmod_dynamic_enhancement" );
 }

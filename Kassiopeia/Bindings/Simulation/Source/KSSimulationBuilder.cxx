@@ -10,14 +10,15 @@ namespace katrin
     {
     }
 
-    static int sKSSimulation =
+    STATICINT sKSSimulation =
         KSRootBuilder::ComplexElement< KSSimulation >( "ks_simulation" );
 
-    static int sKSSimulationStructure =
+    STATICINT sKSSimulationStructure =
         KSSimulationBuilder::Attribute< string >( "name" ) +
         KSSimulationBuilder::Attribute< unsigned int >( "seed" ) +
         KSSimulationBuilder::Attribute< unsigned int >( "run" ) +
         KSSimulationBuilder::Attribute< unsigned int >( "events" ) +
+        KSSimulationBuilder::Attribute< unsigned int >( "step_report_iteration" ) +
         KSSimulationBuilder::Attribute< string >( "magnetic_field" ) +
         KSSimulationBuilder::Attribute< string >( "electric_field" ) +
         KSSimulationBuilder::Attribute< string >( "space" ) +

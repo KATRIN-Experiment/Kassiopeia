@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <complex>
-#include <stack>
 #include <cmath>
+#include <cstdlib>
 
 #include "KFMArrayMath.hh"
 
@@ -47,26 +47,20 @@ class KFMCubicSpaceTreeNavigator: public KFMNodeActor< KFMNode< ObjectTypeList >
                 fLowerCorner[i] = 0;
                 fDel[i] = 0;
                 fDelIndex[i] = 0;
-                fDimSize[i] = 0;
             }
 
             fFound = false;
             fTol = 1e-6;
+
+            fDefaultStackSize = 512;
+            fStackReallocateLimit = 384;
+            fPreallocatedStack.resize(fDefaultStackSize, NULL);
         }
 
         virtual ~KFMCubicSpaceTreeNavigator()
         {
 
         }
-
-        void SetDivisions(int n)
-        {
-            fDiv = std::fabs(n);
-            for(unsigned int i=0; i<SpatialNDIM; i++)
-            {
-                fDimSize[i] = fDiv;
-            }
-        };
 
         void SetPoint(const KFMPoint<SpatialNDIM>* p)
         {
@@ -91,21 +85,46 @@ class KFMCubicSpaceTreeNavigator: public KFMNodeActor< KFMNode< ObjectTypeList >
             fNodeList.clear();
             fCube = NULL;
 
+            //init stack
+            {
+                fPreallocatedStack.clear();
+                fPreallocatedStackTopPtr = &(fPreallocatedStack[0]);
+                fStackSize = 0;
+            }
+
             if(node != NULL)
             {
                 fCube = KFMObjectRetriever<ObjectTypeList, KFMCube<SpatialNDIM> >::GetNodeObject(node);
                 if(fCube)
                 {
-
                     if(fCube->PointIsInside(fPoint))
                     {
-
-                        //fNodeStack = std::stack< KFMNode<ObjectTypeList>* >();
-                        fNodeStack.push(node);
-
-                        while(fNodeStack.top()->HasChildren())
+                        //push on the first node
                         {
-                            fTempNode = fNodeStack.top();
+                            *(fPreallocatedStackTopPtr) = node; //set pointer
+                            ++fStackSize;//increment size
+                        }
+
+                        while( (*(fPreallocatedStackTopPtr))->HasChildren() )
+                        {
+                            //pop node
+                            fTempNode = *fPreallocatedStackTopPtr;
+
+                            //retrieve the divisions of this node
+                            //first get the tree properties associated with this node
+                            KFMCubicSpaceTreeProperties<SpatialNDIM>* tree_prop = NULL;
+                            tree_prop = KFMObjectRetriever<ObjectTypeList, KFMCubicSpaceTreeProperties<SpatialNDIM> >::GetNodeObject(fTempNode);
+                            if(fTempNode->GetLevel() == 0)
+                            {
+                                fDimSize = tree_prop->GetTopLevelDimensions();
+                                fDiv = fDimSize[0];
+                            }
+                            else
+                            {
+                                fDimSize = tree_prop->GetDimensions();
+                                fDiv = fDimSize[0];
+                            }
+
                             //locate the child containing the point
                             fCube = KFMObjectRetriever<ObjectTypeList, KFMCube<SpatialNDIM> >::GetNodeObject(fTempNode);
 
@@ -115,7 +134,7 @@ class KFMCubicSpaceTreeNavigator: public KFMNodeActor< KFMNode< ObjectTypeList >
 
                             for(unsigned int i=0; i<SpatialNDIM; i++)
                             {
-                                fDelIndex[i] = std::floor( std::fabs( fDel[i]/fLength) );
+                                fDelIndex[i] = (unsigned int)(std::floor(  std::fabs( fDel[i]/fLength) ));
                                 if(fDelIndex[i] == fDiv)
                                 {
                                     //takes care of pathological cases where the
@@ -132,44 +151,44 @@ class KFMCubicSpaceTreeNavigator: public KFMNodeActor< KFMNode< ObjectTypeList >
 
                             if(node_to_add != NULL )
                             {
-                                fNodeStack.push( node_to_add );
+                                //push child node
+                                {
+                                    ++fPreallocatedStackTopPtr; //increment top pointer
+                                    *(fPreallocatedStackTopPtr) = node_to_add; //set pointer
+                                    ++fStackSize;//increment size
+                                }
                             }
                             else
                             {
                                 PrintError();
                                 break;
                             }
+
+                            CheckStackSize();
                         }
 
                         //now pop the nodes off the stack into the vector
                         //(first node is the smallest containing the point)
-                        do
+
+                        while(fStackSize > 0)
                         {
-                            fNodeList.push_back(fNodeStack.top());
-                            fNodeStack.pop();
+                            //pop node
+                            fTempNode = *fPreallocatedStackTopPtr;
+                            fNodeList.push_back(fTempNode);
+                            {
+                                --fPreallocatedStackTopPtr; //decrement top pointer;
+                                --fStackSize;
+                            }
                         }
-                        while(fNodeStack.size() !=0 );
 
                         fFound = true;
-
-                        //if(fFound){std::cout<<"found point!"<<std::endl;}
 
                     }
                     else
                     {
                         kfmout<<"KFMCubicSpaceTreeNavigator::ApplyAction(): Warning, point:"<<fPoint[0]<<", "<<fPoint[1]<<", "<<fPoint[2]<<" not found in root node."<<kfmendl;
                     }
-
-
                 }
-                else
-                {
-                   // kfmout<<"KFMCubicSpaceTreeNavigator::ApplyAction(): Warning, node is not associated with a cube."<<kfmendl;
-                }
-            }
-            else
-            {
-               // kfmout<<"KFMCubicSpaceTreeNavigator::ApplyAction(): Warning, root node is NULL."<<kfmendl;
             }
         }
 
@@ -185,12 +204,31 @@ class KFMCubicSpaceTreeNavigator: public KFMNodeActor< KFMNode< ObjectTypeList >
         KFMCube<SpatialNDIM>* fCube;
         KFMPoint<SpatialNDIM> fLowerCorner;
         KFMPoint<SpatialNDIM> fDel;
-        unsigned int fDimSize[SpatialNDIM];
+        const unsigned int* fDimSize;
+        //unsigned int fDimSize[SpatialNDIM];
         unsigned int fDelIndex[3];
 
         KFMNode<ObjectTypeList>* fTempNode;
         std::vector< KFMNode<ObjectTypeList>* > fNodeList;
-        std::stack<KFMNode<ObjectTypeList>*> fNodeStack;
+
+        //stack space and functions for tree traversal
+        unsigned int fDefaultStackSize;
+        unsigned int fStackReallocateLimit;
+        typedef KFMNode<ObjectTypeList>* NodePtr;
+        NodePtr* fPreallocatedStackTopPtr;
+        std::vector< NodePtr > fPreallocatedStack;
+        unsigned int fStackSize;
+
+        inline void CheckStackSize()
+        {
+            if(fStackSize >= fStackReallocateLimit)
+            {
+                fPreallocatedStack.resize(3*fStackSize);
+                fStackReallocateLimit = 2*fStackSize;
+            }
+        };
+
+
 
 
         void PrintError()

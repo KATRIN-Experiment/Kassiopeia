@@ -18,7 +18,7 @@ namespace katrin
   {
     if (anAttribute->GetName() == "x1")
     {
-      double p1[2];
+      double p1[2] = {};
       anAttribute->CopyTo(p1[0]);
       p1[1] = fObject->GetP1(1);
       fObject->SetP1(p1);
@@ -26,7 +26,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y1")
     {
-      double p1[2];
+      double p1[2] = {};
       p1[0] = fObject->GetP1(0);
       anAttribute->CopyTo(p1[1]);
       fObject->SetP1(p1);
@@ -34,7 +34,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "x2")
     {
-      double p2[2];
+      double p2[2] = {};
       anAttribute->CopyTo(p2[0]);
       p2[1] = fObject->GetP2(1);
       fObject->SetP2(p2);
@@ -42,7 +42,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y2")
     {
-      double p2[2];
+      double p2[2] = {};
       p2[0] = fObject->GetP2(0);
       anAttribute->CopyTo(p2[1]);
       fObject->SetP2(p2);
@@ -58,7 +58,7 @@ namespace katrin
   {
     if (anAttribute->GetName() == "x1")
     {
-      double p1[2];
+      double p1[2] = {};
       anAttribute->CopyTo(p1[0]);
       p1[1] = fObject->GetP1(1);
       fObject->SetP1(p1);
@@ -66,7 +66,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y1")
     {
-      double p1[2];
+      double p1[2] = {};
       p1[0] = fObject->GetP1(0);
       anAttribute->CopyTo(p1[1]);
       fObject->SetP1(p1);
@@ -74,7 +74,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "x2")
     {
-      double p2[2];
+      double p2[2] = {};
       anAttribute->CopyTo(p2[0]);
       p2[1] = fObject->GetP2(1);
       fObject->SetP2(p2);
@@ -82,24 +82,20 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y2")
     {
-      double p2[2];
+      double p2[2] = {};
       p2[0] = fObject->GetP2(0);
       anAttribute->CopyTo(p2[1]);
       fObject->SetP2(p2);
       return true;
     }
     if (anAttribute->GetName() == "radius")
-    {
-      double radius;
-      anAttribute->CopyTo(radius);
-      fObject->SetRadius(radius);
+    {     
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::Arc::SetRadius);
       return true;
     }
     if (anAttribute->GetName() == "positive_orientation")
     {
-      bool positiveOrientation;
-      anAttribute->CopyTo(positiveOrientation);
-      fObject->IsPositivelyOriented(positiveOrientation);
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::Arc::IsPositivelyOriented);
       return true;
     }
     return false;
@@ -112,35 +108,27 @@ namespace katrin
   {
     if (anAttribute->GetName() == "z_min")
     {
-      double zMin;
-      anAttribute->CopyTo(zMin);
-      fObject->SetZMin(zMin);
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::SetZMin);
       return true;
     }
     if (anAttribute->GetName() == "z_max")
     {
-      double zMax;
-      anAttribute->CopyTo(zMax);
-      fObject->SetZMax(zMax);
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::SetZMax);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int nDisc;
-      anAttribute->CopyTo(nDisc);
-      fObject->SetNDisc(nDisc);
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::SetNDisc);
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_power")
     {
-      double discretizationPower;
-      anAttribute->CopyTo(discretizationPower);
-      fObject->SetDiscretizationPower(discretizationPower);
+      anAttribute->CopyTo(fObject, &KGExtrudedObject::SetDiscretizationPower);
       return true;
     }
     if (anAttribute->GetName() == "closed_form")
     {
-      bool closedLoops;
+      bool closedLoops = true;
       anAttribute->CopyTo(closedLoops);
       if (closedLoops)
 	fObject->Close();
@@ -156,34 +144,26 @@ namespace katrin
   {
     if (anElement->GetName() == "outer_line")
     {
-      KGExtrudedObject::Line* line;
-      anElement->ReleaseTo(line);
-      line->Initialize();
-      fObject->AddOuterSegment(line);
+      anElement->AsPointer<KGExtrudedObject::Line>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGExtrudedObject::AddOuterSegment);
       return true;
     }
     if (anElement->GetName() == "inner_line")
     {
-      KGExtrudedObject::Line* line;
-      anElement->ReleaseTo(line);
-      line->Initialize();
-      fObject->AddInnerSegment(line);
+      anElement->AsPointer<KGExtrudedObject::Line>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGExtrudedObject::AddInnerSegment);
       return true;
     }
     if (anElement->GetName() == "outer_arc")
     {
-      KGExtrudedObject::Arc* arc;
-      anElement->ReleaseTo(arc);
-      arc->Initialize();
-      fObject->AddOuterSegment(arc);
+      anElement->AsPointer<KGExtrudedObject::Arc>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGExtrudedObject::AddOuterSegment);
       return true;
     }
     if (anElement->GetName() == "inner_arc")
     {
-      KGExtrudedObject::Arc* arc;
-      anElement->ReleaseTo(arc);
-      arc->Initialize();
-      fObject->AddInnerSegment(arc);
+      anElement->AsPointer<KGExtrudedObject::Arc>()->Initialize();
+      anElement->ReleaseTo(fObject, &KGExtrudedObject::AddInnerSegment);
       return true;
     }
     return false;
@@ -207,7 +187,7 @@ namespace katrin
   {
     if (anElement->GetName() == "extruded_object")
     {
-      KGExtrudedObject* object;
+      KGExtrudedObject* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer<KGExtrudedObject> smartPtr(object);
@@ -236,7 +216,7 @@ namespace katrin
   {
     if (anElement->GetName() == "extruded_object")
     {
-      KGExtrudedObject* object;
+      KGExtrudedObject* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer<KGExtrudedObject> smartPtr(object);

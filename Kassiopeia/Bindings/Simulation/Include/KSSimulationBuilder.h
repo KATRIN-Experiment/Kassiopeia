@@ -15,6 +15,7 @@
 #include "KSRootTerminator.h"
 #include "KSRootWriter.h"
 #include "KSToolbox.h"
+#include "KSMainMessage.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -43,6 +44,15 @@ namespace katrin
         if( aContainer->GetName() == "events" )
         {
             aContainer->CopyTo( fObject, &KSSimulation::SetEvents );
+            return true;
+        }
+        if( aContainer->GetName() == "step_report_iteration" )
+        {
+            if ( aContainer->AsReference<unsigned int>() == 0 )
+            {
+                mainmsg( eError ) << "Paramter of attribute <" <<"step_report_iteration" <<"> should not be 0"<<eom;
+            }
+            aContainer->CopyTo( fObject, &KSSimulation::SetStepReportIteration );
             return true;
         }
         if( aContainer->GetName() == "magnetic_field" )

@@ -22,4 +22,6 @@ ElectrostaticRemoteToRemoteCopyAndScale(const unsigned int n_moment_sets,
             block_moments[block_id*term_stride + n] = scale_factor*node_moments[node_id*term_stride + n];
         }
     }
+
+    barrier(CLK_LOCAL_MEM_FENCE);
 }

@@ -34,8 +34,11 @@ int main( int argc, char** argv )
     string tFileName( argv[ 1 ] );
     string tPath( argv[ 2 ] );
 
+    KCommandLineTokenizer tCommandLine;
+    tCommandLine.ProcessCommandLine( argc, argv );
+
     KXMLTokenizer tTokenizer;
-    KVariableProcessor tVariableProcessor;
+    KVariableProcessor tVariableProcessor( tCommandLine.GetVariables() );
     KIncludeProcessor tIncludeProcessor;
     KLoopProcessor tLoopProcessor;
     KConditionProcessor tConditionProcessor;

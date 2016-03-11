@@ -22,10 +22,10 @@ namespace Kassiopeia
             virtual void DiceValue( vector< double >& aDicedValues );
 
         public:
-            ;K_SET_GET( double, ValueMin );
-            ;K_SET_GET( double, ValueMax );
-            ;K_SET_GET( double, ValueMean );
-            ;K_SET_GET( double, ValueSigma );
+            K_SET_GET( double, ValueMin )
+            K_SET_GET( double, ValueMax )
+            K_SET_GET( double, ValueMean )
+            K_SET_GET( double, ValueSigma )
 
         protected:
             double ValueFunction( const double& aValue ) const;

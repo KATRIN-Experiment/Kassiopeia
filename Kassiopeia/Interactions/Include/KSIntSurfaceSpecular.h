@@ -25,9 +25,34 @@ namespace Kassiopeia
             void ExecuteTransmission( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries );
 
         public:
-            ;K_SET_GET( double, Probability )
-            ;K_SET_GET( double, ReflectionLoss )
-            ;K_SET_GET( double, TransmissionLoss )
+
+            void SetReflectionLossFraction(double frac)
+            {
+                fReflectionLossFraction = frac;
+                fUseRelativeLoss = true;
+            };
+            double GetReflectionLossFraction() const {return fTransmissionLossFraction;};
+
+            void SetTransmissionLossFraction(double frac)
+            {
+                fTransmissionLossFraction = frac;
+                fUseRelativeLoss = true;
+            };
+            double GetTransmissionLossFraction() const {return fTransmissionLossFraction;};
+
+
+            K_SET_GET( double, Probability )
+            K_SET_GET( double, ReflectionLoss )
+            K_SET_GET( double, TransmissionLoss )
+
+
+        private:
+
+            double fReflectionLossFraction;
+            double fTransmissionLossFraction;
+            bool fUseRelativeLoss;
+
+
     };
 
 }

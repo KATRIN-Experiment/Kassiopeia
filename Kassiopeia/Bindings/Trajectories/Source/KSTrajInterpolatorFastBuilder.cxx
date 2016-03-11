@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static int sKSTrajInterpolatorFastStructure =
+    STATICINT sKSTrajInterpolatorFastStructure =
         KSTrajInterpolatorFastBuilder::Attribute< string >( "name" );
 
-    static int sToolboxKSTrajInterpolatorFast =
+    STATICINT sToolboxKSTrajInterpolatorFast =
         KSRootBuilder::ComplexElement< KSTrajInterpolatorFast >( "kstraj_interpolator_fast" );
 
 }

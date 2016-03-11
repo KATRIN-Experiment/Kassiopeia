@@ -1,4 +1,5 @@
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8.6 )
+
 project( KGeoBag )
 include( KasperDefaults )
 
@@ -22,8 +23,7 @@ option( KGeoBag_USE_VTK "Enable visualization with VTK" OFF )
 option( KGeoBag_USE_ROOT "Enable visualization with ROOT" OFF )
 
 if( KGeoBag_USE_VTK )
-    find_package( VTK REQUIRED )
-    kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
+    kasper_find_vtk()
 endif()
 
 if( KGeoBag_USE_ROOT )
@@ -40,14 +40,16 @@ if( KGeoBag_ENABLE_DEBUG )
 	add_cflag (KGeoBag_ENABLE_DEBUG)
 endif()
 
-# testing
+## testing
 kasper_module_test( Source/Test )
 
 # recursively build in these subdirectories
+add_subdirectory( Documentation )
 add_subdirectory( Source/Math )
+add_subdirectory( Source/Core )
 add_subdirectory( Source/Math/LinearAlgebra )
 add_subdirectory( Source/Math/SpaceTree )
-add_subdirectory( Source/Core )
+add_subdirectory( Source/Math/2DUtility )
 add_subdirectory( Source/Shapes )
 add_subdirectory( Source/Extensions/Mesh )
 add_subdirectory( Source/Extensions/AxialMesh )
@@ -60,7 +62,9 @@ add_subdirectory( Source/Extensions/Deformation )
 add_subdirectory( Source/Visualization )
 add_subdirectory( Source/Bindings )
 add_subdirectory( Source/Application )
+add_subdirectory( Source/Test/MeshNavigation )
 add_subdirectory( Source/XML )
+
 
 # install KGeoBag as a Kasper module
 kasper_install_module()

@@ -21,6 +21,9 @@ namespace KGeoBag
 
     void SetOrder(unsigned int order) { fOrder = order; }
 
+    void GetACoefficients(std::vector<double>& vec){vec = fA;};
+    void GetBCoefficients(std::vector<double>& vec){vec = fB;};
+
   private:
     unsigned int fOrder;
 

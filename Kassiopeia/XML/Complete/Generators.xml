@@ -108,6 +108,31 @@
 				the underlying distribution from which to draw.
 	-->
 
+	<ksgen_value_histogram name="value_histogram" path="" base="histogram.root" histogram="gaussian" formula="x"/>
+	<!--
+		description:
+			generates a single random value drawn from a ROOT histogram.
+			implemented using a ROOT TH1D and TFile->Get(), and a ROOT TF1 formula.
+			given ROOT file has to exist and contain a histogram with given name/path.
+
+		parameters:
+			name:
+				the name of this value.
+
+			path:
+				the path to search for the given file.
+				uses Kassiopeia's data directory by default.
+
+			base:
+				the filename to load the histogram from.
+
+			histogram:
+				the histogram from which to draw.
+
+			formula:
+				(optional) a formula to modify the drawn value.
+	-->
+
 	<ksgen_value_radius_cylindrical name="value_radius_cylindrical" radius_min="5." radius_max="10."/>
 	<!--
 		description:
@@ -270,7 +295,7 @@
 
 			theta_spherical:
 				creates an angle spherical value to set the theta coordinate.
-	-->	
+	-->
 
 	<!-- energy creators -->
 
@@ -289,7 +314,7 @@
 		elements:
 			energy_(fix|set|uniform|gauss|formula):
 				creates a (fix|set|uniform|gauss|formula) value to set the kinetic energy.
-	-->	
+	-->
 
 	<ksgen_energy_krypton_event name="energy_krypton_event" force_conversion="false" do_conversion="true" do_auger="true"/>
 	<!--
@@ -308,7 +333,7 @@
 
 			do_auger:
 				if true, generation of an auger cascade is enabled.
-	-->	
+	-->
 
 	<ksgen_energy_radon_event name="energy_radon_event" force_shake_off="false" force_conversion="false" do_shake_off="true" do_conversion="true" do_auger="true" isotope_number="220"/>
 	<!--
@@ -355,7 +380,7 @@
 		elements:
 			time_(fix|set|uniform|gauss|formula):
 				creates a (fix|set|uniform|gauss|formula) value to set the time.
-	-->	
+	-->
 
 	<!-- generators -->
 
@@ -391,7 +416,7 @@
 		elements:
 			any of the creators listed above may be used as elements.
 			only one instance from each of the categories position creator, direction creator, energy creator and time creator may be supplied.
-	-->	
+	-->
 
 
 </kassiopeia>

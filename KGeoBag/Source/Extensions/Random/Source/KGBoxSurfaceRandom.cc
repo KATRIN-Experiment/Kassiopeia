@@ -15,8 +15,8 @@ void KGeoBag::KGBoxSurfaceRandom::VisitBox(KGeoBag::KGBox* aBox) {
 	double depth = (aBox->GetP1().GetZ() - aBox->GetP0().GetZ());
 
 	// Areas
-	double AEndFaces = abs(2 * height * width);
-	double ASurface = abs(4 * depth * height);
+	double AEndFaces = std::abs(2.0 * height * width);
+	double ASurface = std::abs(4.0 * depth * height);
 
 	// Decide, if the point lies on one of the end faces
 	if(Uniform() > ASurface / (ASurface + AEndFaces)) {

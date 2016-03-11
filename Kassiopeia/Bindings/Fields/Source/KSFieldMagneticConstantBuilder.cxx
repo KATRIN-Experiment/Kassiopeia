@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSFieldMagneticConstantStructure =
+    STATICINT sKSFieldMagneticConstantStructure =
         KSFieldMagneticConstantBuilder::Attribute< string >( "name" ) +
         KSFieldMagneticConstantBuilder::Attribute< KThreeVector >( "field" );
 
-    static int sKSFieldMagneticConstant =
+    STATICINT sKSFieldMagneticConstant =
         KSRootBuilder::ComplexElement< KSFieldMagneticConstant >( "ksfield_magnetic_constant" );
 
 }

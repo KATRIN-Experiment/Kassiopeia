@@ -14,6 +14,7 @@ KFMElectrostaticFieldMapper_SingleThread::KFMElectrostaticFieldMapper_SingleThre
     fContainer = NULL;
 
     fDegree = 0;
+    fTopLevelDivisions = 0;
     fDivisions = 0;
     fZeroMaskSize = 0;
     fMaximumTreeDepth = 0;
@@ -28,9 +29,12 @@ KFMElectrostaticFieldMapper_SingleThread::KFMElectrostaticFieldMapper_SingleThre
     fMultipoleInitializer = new KFMElectrostaticMultipoleInitializer();
 
     fM2MConverter = new KFMElectrostaticRemoteToRemoteConverter();
-    fM2LConverter = new KFMElectrostaticRemoteToLocalConverter();
+
+    //fM2LConverter = new KFMElectrostaticRemoteToLocalConverter();
+    fM2LConverterInterface = new KFMElectrostaticRemoteToLocalConverterInterface();
+
     fL2LConverter = new KFMElectrostaticLocalToLocalConverter();
-};
+}
 
 KFMElectrostaticFieldMapper_SingleThread::~KFMElectrostaticFieldMapper_SingleThread()
 {
@@ -40,7 +44,10 @@ KFMElectrostaticFieldMapper_SingleThread::~KFMElectrostaticFieldMapper_SingleThr
     delete fLocalCoeffInitializer;
     delete fMultipoleInitializer;
     delete fM2MConverter;
-    delete fM2LConverter;
+
+    delete fM2LConverterInterface;
+    //delete fM2LConverter;
+
     delete fL2LConverter;
 }
 
@@ -52,7 +59,7 @@ KFMElectrostaticFieldMapper_SingleThread::SetTree(KFMElectrostaticTree* tree)
     KFMCube<KFMELECTROSTATICS_DIM>* world_cube;
     world_cube =  KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM> >::GetNodeObject(tree->GetRootNode());
     fWorldLength = world_cube->GetLength();
-};
+}
 
 //set parameters
 void
@@ -60,6 +67,7 @@ KFMElectrostaticFieldMapper_SingleThread::SetParameters(KFMElectrostaticParamete
 {
     fDegree = params.degree;
     fNTerms = (fDegree + 1)*(fDegree + 1);
+    fTopLevelDivisions = params.top_level_divisions;
     fDivisions = params.divisions;
     fZeroMaskSize = params.zeromask;
     fMaximumTreeDepth = params.maximum_tree_depth;
@@ -68,6 +76,7 @@ KFMElectrostaticFieldMapper_SingleThread::SetParameters(KFMElectrostaticParamete
     if(fVerbosity > 2)
     {
         //print the parameters
+        kfmout<<"KFMElectrostaticFieldMapper_SingleThread::SetParameters: top level divisions set to "<<params.top_level_divisions<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::SetParameters: divisions set to "<<params.divisions<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::SetParameters: degree set to "<<params.degree<<kfmendl;
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::SetParameters: zero mask size set to "<<params.zeromask<<kfmendl;
@@ -116,12 +125,20 @@ KFMElectrostaticFieldMapper_SingleThread::Initialize()
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::Initialize: Initializing the multipole to local translator. ";
     }
 
-    fM2LConverter->SetLength(fWorldLength);
-    fM2LConverter->SetMaxTreeDepth(fMaximumTreeDepth);
-    fM2LConverter->SetNumberOfTermsInSeries(fNTerms);
-    fM2LConverter->SetZeroMaskSize(fZeroMaskSize);
-    fM2LConverter->SetDivisions(fDivisions);
-    fM2LConverter->Initialize();
+//    fM2LConverter->SetLength(fWorldLength);
+//    fM2LConverter->SetMaxTreeDepth(fMaximumTreeDepth);
+//    fM2LConverter->SetNumberOfTermsInSeries(fNTerms);
+//    fM2LConverter->SetZeroMaskSize(fZeroMaskSize);
+//    fM2LConverter->SetDivisions(fDivisions);
+//    fM2LConverter->Initialize();
+
+    fM2LConverterInterface->SetLength(fWorldLength);
+    fM2LConverterInterface->SetMaxTreeDepth(fMaximumTreeDepth);
+    fM2LConverterInterface->SetNumberOfTermsInSeries(fNTerms);
+    fM2LConverterInterface->SetZeroMaskSize(fZeroMaskSize);
+    fM2LConverterInterface->SetDivisions(fDivisions);
+    fM2LConverterInterface->SetTopLevelDivisions(fTopLevelDivisions);
+    fM2LConverterInterface->Initialize();
 
     if(fVerbosity > 2)
     {
@@ -199,7 +216,7 @@ KFMElectrostaticFieldMapper_SingleThread::ComputeMultipoleMoments()
     //compute the individual multipole moments of each node due to owned electrodes
     fMultipoleDistributor->ProcessAndDistributeMoments();
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::ComputeMultipoleMoments: Done processing and distributing boundary element moments."<<kfmendl;
     }
@@ -207,7 +224,7 @@ KFMElectrostaticFieldMapper_SingleThread::ComputeMultipoleMoments()
     //now we perform the upward pass to collect child nodes' moments into their parents' moments
     fTree->ApplyRecursiveAction(fM2MConverter, false); //false indicates this visitation proceeds from child to parent
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::ComputeMultipoleMoments: Done performing the multipole to multipole (M2M) translations."<<kfmendl;
     }
@@ -224,7 +241,7 @@ KFMElectrostaticFieldMapper_SingleThread::InitializeLocalCoefficients() //full i
     //initialize all of local coefficient expansions for every node
     fTree->ApplyCorecursiveAction(fLocalCoeffInitializer);
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::InitializeLocalCoefficients: Done initializing local coefficient expansions."<<kfmendl;
     }
@@ -233,17 +250,25 @@ KFMElectrostaticFieldMapper_SingleThread::InitializeLocalCoefficients() //full i
 void
 KFMElectrostaticFieldMapper_SingleThread::ComputeLocalCoefficients()
 {
+//    //compute the local coefficients due to neighbors at the same tree level
+//    fM2LConverter->Prepare(fTree);
+//    do
+//    {
+//        fTree->ApplyCorecursiveAction(fM2LConverter);
+//    }
+//    while( !(fM2LConverter->IsFinished()) );
+//    fM2LConverter->Finalize(fTree);
+
     //compute the local coefficients due to neighbors at the same tree level
-    fM2LConverter->Prepare(fTree);
+    fM2LConverterInterface->Prepare();
     do
     {
-        fTree->ApplyCorecursiveAction(fM2LConverter);
+        fTree->ApplyCorecursiveAction(fM2LConverterInterface);
     }
-    while( !(fM2LConverter->IsFinished()) );
-    fM2LConverter->Finalize(fTree);
+    while( !(fM2LConverterInterface->IsFinished()) );
+    fM2LConverterInterface->Finalize();
 
-
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::ComputeLocalCoefficients: Done performing the multipole to local (M2L) translations."<<kfmendl;
     }
@@ -251,7 +276,7 @@ KFMElectrostaticFieldMapper_SingleThread::ComputeLocalCoefficients()
     //now form the downward distributions of the local coefficients
     fTree->ApplyRecursiveAction(fL2LConverter);
 
-    if(fVerbosity > 3)
+    if(fVerbosity > 2)
     {
         kfmout<<"KFMElectrostaticFieldMapper_SingleThread::ComputeLocalCoefficients: Done performing the local to local (L2L) translations."<<kfmendl;
     }

@@ -1,8 +1,6 @@
 #ifndef Kassiopeia_KSMathArray_h_
 #define Kassiopeia_KSMathArray_h_
 
-#include "KAssert.h"
-
 namespace Kassiopeia
 {
     // operations
@@ -56,7 +54,7 @@ namespace Kassiopeia
                 fLeft( aLeftOperand ),
                 fRight( aRightOperand )
             {
-                KSTATICASSERT( XLeft::sDimension == XRight::sDimension, dimension_mismatch_in_KMathExpression )
+                static_assert( XLeft::sDimension == XRight::sDimension, "Dimension mismatch in KMathExpression." );
             }
             virtual ~KSMathExpression()
             {

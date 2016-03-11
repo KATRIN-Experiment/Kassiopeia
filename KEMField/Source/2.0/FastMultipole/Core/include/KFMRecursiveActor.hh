@@ -46,76 +46,89 @@ class KFMRecursiveActor: public KFMNodeActor<NodeType>
             {
 
                 //make sure the stacks are empty
-                fNodeStack = std::stack< NodeType* >();
-                fSecondaryNodeStack = std::stack< NodeType* >();
+                std::stack< NodeType* >* nodeStack = new std::stack< NodeType* >();
+                std::stack< std::stack< NodeType* > >* secondaryNodeStack = new std::stack< std::stack< NodeType* > >();
+                secondaryNodeStack->push( std::stack< NodeType* >() );
 
                 //push on the first node
-                fNodeStack.push(node);
+                nodeStack->push(node);
+                secondaryNodeStack->top().push(node);
 
                 if(fVisitingOrderForward)
                 {
-                    do
+                    while(!(nodeStack->empty()))
                     {
                         //perform the operational visitors action on node at the top
                         //of the stack
-                        fOperationalActor->ApplyAction(fNodeStack.top());
+                        fOperationalActor->ApplyAction(nodeStack->top());
 
-                        if(fNodeStack.top()->HasChildren())
+                        if(nodeStack->top()->HasChildren())
                         {
-                            unsigned int n_children = fNodeStack.top()->GetNChildren();
-                            fTempNode = fNodeStack.top();
-                            fNodeStack.pop();
+                            unsigned int n_children = nodeStack->top()->GetNChildren();
+                            fTempNode = nodeStack->top();
+                            nodeStack->pop();
 
                             for(unsigned int i=0; i < n_children; i++)
                             {
                                 //assuming that the order in which we visit the children doesn't matter
-                                fNodeStack.push( fTempNode->GetChild(i) );
+                                nodeStack->push( fTempNode->GetChild(i) );
                             }
                         }
                         else
                         {
-                            fNodeStack.pop();
+                            nodeStack->pop();
                         }
-                    }
-                    while(fNodeStack.size() != 0 );
+                    };
+
                 }
                 else
                 {
                     do
                     {
-                        if(fNodeStack.size() != 0)
+                        if( !(secondaryNodeStack->empty()) )
                         {
-                            if(fNodeStack.top()->HasChildren() )
+                            if(secondaryNodeStack->top().top()->HasChildren() )
                             {
-                                fTempNode = fNodeStack.top();
-                                fSecondaryNodeStack.push(fNodeStack.top());
-                                fNodeStack.pop();
+                                fTempNode = secondaryNodeStack->top().top();
+
+                                secondaryNodeStack->push( std::stack<NodeType*>() );
 
                                 unsigned int n_children = fTempNode->GetNChildren();
 
                                 for(unsigned int i=0; i < n_children; i++)
                                 {
                                     //assuming that the order in which we visit the children doesn't matter
-                                    fNodeStack.push( fTempNode->GetChild(i) );
+                                    secondaryNodeStack->top().push( fTempNode->GetChild(i) );
                                 }
                             }
                             else
                             {
-                                fOperationalActor->ApplyAction(fNodeStack.top());
-                                fNodeStack.pop();
+                                bool isNew = true;
+                                do
+                                {
+                                    fOperationalActor->ApplyAction(secondaryNodeStack->top().top());
+                                    secondaryNodeStack->top().pop();
+                                    isNew = false;
+
+                                    if(secondaryNodeStack->top().size() == 0)
+                                    {
+                                        secondaryNodeStack->pop();
+                                        isNew = true;
+                                    }
+                                }
+                                while(isNew && secondaryNodeStack->size() != 0);
                             }
                         }
                         else
                         {
-                            if(fSecondaryNodeStack.size() != 0)
-                            {
-                                fOperationalActor->ApplyAction(fSecondaryNodeStack.top());
-                                fSecondaryNodeStack.pop();
-                            }
+                            secondaryNodeStack->pop();
                         }
                     }
-                    while(fNodeStack.size() != 0 || fSecondaryNodeStack.size() != 0 );
+                    while(  !(secondaryNodeStack->empty()) );
                 }
+
+                delete secondaryNodeStack;
+                delete nodeStack;
 
             }
         }
@@ -123,10 +136,7 @@ class KFMRecursiveActor: public KFMNodeActor<NodeType>
     private:
 
         KFMNodeActor<NodeType>* fOperationalActor;
-
         bool fVisitingOrderForward;
-        std::stack< NodeType* > fNodeStack;
-        std::stack< NodeType* > fSecondaryNodeStack;
         NodeType* fTempNode;
 
 };

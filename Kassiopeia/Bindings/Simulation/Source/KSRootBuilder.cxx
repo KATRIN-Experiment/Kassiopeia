@@ -10,7 +10,7 @@ namespace katrin
     {
     }
 
-    static int sKSRoot =
+    STATICINT sKSRoot =
         KElementProcessor::ComplexElement< KSRoot >( "kassiopeia" );
 
 }

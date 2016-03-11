@@ -24,18 +24,22 @@
 #include "KFMScalarMomentRemoteToRemoteConverter.hh"
 #include "KFMScalarMomentRemoteToLocalConverter.hh"
 #include "KFMReducedScalarMomentRemoteToLocalConverter.hh"
+#include "KFMRemoteToLocalConverterInterface.hh"
 #include "KFMScalarMomentLocalToLocalConverter.hh"
 #include "KFMCubicSpaceTreeNavigator.hh"
 #include "KFMCubicSpaceNodeAdjacencyProgenitor.hh"
+#include "KFMIdentitySetMerger.hh"
 #include "KFMIdentitySetCollector.hh"
-#include "KFMExternalIdentitySetCreator.hh"
-#include "KFMExternalIdentitySetNullifier.hh"
+#include "KFMIdentitySetListCreator.hh"
 #include "KFMElementLocator.hh"
 #include "KFMNodeIdentityListRange.hh"
 #include "KFMNodeIdentityListCreator.hh"
 #include "KFMNodeIdentityListRangeAssociator.hh"
 #include "KFMNodeFlagInitializer.hh"
+#include "KFMElementLocalInfluenceRangeCollector.hh"
+#include "KFMCollocationPointIdentitySetCreator.hh"
 
+#include <string>
 
 #define USE_REDUCED_M2L
 
@@ -51,12 +55,8 @@ KFMElectrostaticNearbyElementCounter;
 typedef KFMElementNodeAssociator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
 KFMElectrostaticElementNodeAssociator;
 
-
-typedef KFMExternalIdentitySetCreator< KFMElectrostaticNodeObjects >
-KFMElectrostaticExternalIdentitySetCreator;
-
-typedef KFMExternalIdentitySetNullifier< KFMElectrostaticNodeObjects >
-KFMElectrostaticExternalIdentitySetNullifier;
+typedef KFMIdentitySetListCreator< KFMElectrostaticNodeObjects >
+KFMElectrostaticIdentitySetListCreator;
 
 //distributor of element moments
 typedef KFMElementScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMELECTROSTATICS_DIM>
@@ -80,7 +80,6 @@ KFMElectrostaticLocalCoefficientResetter;
 //moment converters
 typedef KFMScalarMomentRemoteToRemoteConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMResponseKernel_3DLaplaceM2M, KFMELECTROSTATICS_DIM> KFMElectrostaticRemoteToRemoteConverter;
 
-
 typedef KFMScalarMomentLocalToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceL2L, KFMELECTROSTATICS_DIM>
 KFMElectrostaticLocalToLocalConverter;
 
@@ -92,19 +91,20 @@ typedef KFMScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMEl
 KFMElectrostaticRemoteToLocalConverter;
 #endif
 
+//interface to m2l converters to handle different divisions on top level
+typedef KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter> KFMElectrostaticRemoteToLocalConverterInterface;
 
 //navigator
 typedef KFMCubicSpaceTreeNavigator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
 KFMElectrostaticTreeNavigator;
 
 //id set collector
-typedef KFMIdentitySetCollector< KFMElectrostaticNodeObjects >
-KFMElectrostaticIdentitySetCollector;
+typedef KFMIdentitySetMerger< KFMElectrostaticNodeObjects >
+KFMElectrostaticNodeIdentitySetMerger;
 
 //inspector to determine node primacy
 typedef KFMCubicSpaceNodeAdjacencyProgenitor<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
 KFMElectrostaticAdjacencyProgenitor;
-
 
 
 //sorters for the identity set, and external identity set
@@ -122,6 +122,15 @@ KFMElectrostaticNodeIdentityListCreator;
 
 typedef KFMNodeIdentityListRangeAssociator< KFMElectrostaticNodeObjects >
 KFMElectrostaticNodeIdentityListRangeAssociator;
+
+typedef KFMElementInfluenceRangeCollector<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>
+KFMElectrostaticElementInfluenceRangeCollector;
+
+typedef KFMIdentitySetCollector< KFMElectrostaticNodeObjects >
+KFMElectrostaticNodeIdentitySetCollector;
+
+typedef KFMCollocationPointIdentitySetCreator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
+KFMElectrostaticCollocationPointIdentitySetCreator;
 
 //the local coefficient calculator
 //KFMLocalCoefficientCalculator* fLocalCoeffCalculator;
@@ -144,11 +153,9 @@ KFMElectrostaticNodeIdentityListRangeAssociator;
 class KFMElectrostaticTree: public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects >
 {
     public:
-        KFMElectrostaticTree():KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects >(){fMaxDirectCalls = 0;};
+        KFMElectrostaticTree():KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects >(){;}
         virtual ~KFMElectrostaticTree()
         {
-            KFMElectrostaticExternalIdentitySetNullifier nullifier;
-            this->ApplyRecursiveAction(&nullifier, false);
         };
 
         void SetParameters(KFMElectrostaticParameters params)
@@ -158,13 +165,13 @@ class KFMElectrostaticTree: public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFME
 
         KFMElectrostaticParameters GetParameters(){return fParameters;};
 
-        void SetMaxDirectCalls(unsigned int calls){fMaxDirectCalls = calls;};
-        unsigned int GetMaxDirectCalls() const {return fMaxDirectCalls;};
+        std::string GetUniqueID() const {return fUniqueID;};
+        void SetUniqueID(std::string unique_id){fUniqueID = unique_id;};
 
     private:
 
         KFMElectrostaticParameters fParameters;
-        unsigned int fMaxDirectCalls;
+        std::string fUniqueID;
 };
 
 

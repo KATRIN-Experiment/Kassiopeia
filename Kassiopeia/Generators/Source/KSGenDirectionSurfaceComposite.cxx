@@ -89,7 +89,6 @@ namespace Kassiopeia
                     tSurfaceNormal = tSurface->Normal( tParticle->GetPosition() );  // nearest normal to given point
 
                     // rotate direction vector by phi and theta
-
                     KThreeVector tOrthogonalOne = tSurfaceNormal.Unit().Orthogonal();
                     KThreeVector tOrthogonalTwo = tSurfaceNormal.Unit().Cross( tOrthogonalOne );
                     KThreeVector tFinalDirection = 1.
@@ -210,7 +209,7 @@ namespace Kassiopeia
         return;
     }
 
-    static int sKSGenDirectionSurfaceCompositeDict =
+    STATICINT sKSGenDirectionSurfaceCompositeDict =
             KSDictionary< KSGenDirectionSurfaceComposite >::AddCommand( &KSGenDirectionSurfaceComposite::SetThetaValue, &KSGenDirectionSurfaceComposite::ClearThetaValue, "set_theta", "clear_theta" ) +
             KSDictionary< KSGenDirectionSurfaceComposite >::AddCommand( &KSGenDirectionSurfaceComposite::SetPhiValue, &KSGenDirectionSurfaceComposite::ClearPhiValue, "set_phi", "clear_phi" );
 

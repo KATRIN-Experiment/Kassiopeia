@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <complex>
+#include <cstdlib>
 
 #include "KFMCube.hh"
 
@@ -113,10 +114,15 @@ class KFMScalarMomentRemoteToRemoteConverter: public KFMNodeActor< KFMNode<Objec
             fTargetCoeff.SetNumberOfTermsInSeries(fNTerms);
         };
 
+        virtual void SetTopLevelDivisions(int div)
+        {
+            fTopLevelDivisions = div;
+        }
+
         ////////////////////////////////////////////////////////////////////////
         virtual void SetDivisions(int div)
         {
-            fDiv = std::fabs(div);
+            fDiv = std::abs(div);
 
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
@@ -153,7 +159,7 @@ class KFMScalarMomentRemoteToRemoteConverter: public KFMNodeActor< KFMNode<Objec
             int shift[SpatialNDIM];
             for(unsigned int i=0; i<SpatialNDIM; i++)
             {
-                shift[i] = -1*(std::ceil( 1.0*(((double)fDiv)/2.0) ) - 1);
+                shift[i] = -1*(  (int)( std::ceil( 1.0*(((double)fDiv)/2.0) ) ) - 1);
             }
 
             fKernelResponse->SetOrigin(source_origin);
@@ -190,7 +196,7 @@ class KFMScalarMomentRemoteToRemoteConverter: public KFMNodeActor< KFMNode<Objec
         ////////////////////////////////////////////////////////////////////////
         virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
         {
-            if( node != NULL && node->HasChildren() )
+            if( node != NULL && node->HasChildren() && node->GetLevel() != 0 )
             {
                 double child_side_length =
                 KFMObjectRetriever<ObjectTypeList, KFMCube<SpatialNDIM> >::GetNodeObject(node->GetChild(0))->GetLength();
@@ -359,6 +365,7 @@ class KFMScalarMomentRemoteToRemoteConverter: public KFMNodeActor< KFMNode<Objec
         //internal data, basic properties and current state
         unsigned int fNTerms;
         unsigned int fTotalSpatialSize;
+        int fTopLevelDivisions;
         int fDiv;
         int fZeroMaskSize; //this is always set to zero!
         double fLength;
@@ -405,4 +412,4 @@ class KFMScalarMomentRemoteToRemoteConverter: public KFMNodeActor< KFMNode<Objec
 
 
 
-#endif /* __KFMScalarMomentRemoteToRemoteConverter_H__ */ 
+#endif /* __KFMScalarMomentRemoteToRemoteConverter_H__ */

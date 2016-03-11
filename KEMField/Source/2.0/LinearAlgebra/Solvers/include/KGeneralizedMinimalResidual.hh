@@ -1,3 +1,4 @@
+
 #ifndef KGeneralizedMinimalResidual_HH__
 #define KGeneralizedMinimalResidual_HH__
 
@@ -15,6 +16,8 @@
 #include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
+
+#include "KGeneralizedMinimalResidualState.hh"
 
 namespace KEMField
 {
@@ -59,11 +62,19 @@ class KGeneralizedMinimalResidual
             fW.resize(fDim);
             fJ = 0;
             fUseSVD = true; //default is to use SVD for solution calculation
+            fExternalStateSet = false;
         };
 
         virtual ~KGeneralizedMinimalResidual(){};
 
+        static std::string Name() { return std::string("gmres"); }
+        std::string NameLabel() { return std::string("gmres"); }
+
+        const KGeneralizedMinimalResidualState<ValueType>& GetState() const;
+        void SetState(const KGeneralizedMinimalResidualState<ValueType>& state);
+
         void Initialize();
+        void ResetAndInitialize();
         void AugmentKrylovSubspace();
         void UpdateSolution();
 
@@ -81,11 +92,11 @@ class KGeneralizedMinimalResidual
         void UseSingularValueDecomposition(){fUseSVD = true;};
         void UseBackSubstitution(){fUseSVD = false;};
 
-
     private:
 
         //inner product for vectors
         double InnerProduct(const Vector& a, const Vector& b);
+        void ReconstructState();
 
         //data
         unsigned int fDim;
@@ -116,12 +127,51 @@ class KGeneralizedMinimalResidual
         KSimpleVectorType fS; //Givens rotation sines
 
         bool fUseSVD;
+
+        bool fExternalStateSet;
+        mutable KGeneralizedMinimalResidualState<ValueType> fState;
 };
 
 template< typename ValueType >
 void
 KGeneralizedMinimalResidual<ValueType>::Initialize()
 {
+    if(fExternalStateSet) //we have data from a previous run of the same process
+    {
+        double inf_norm = 0;
+        for(unsigned int i=0; i<fDim; i++){ if( std::fabs(fX[i]) > inf_norm){inf_norm = std::fabs(fX[i]); }; };
+
+        if(InnerProduct(fX,fX) <  1e-14 )
+        {
+            //current solution guess is probably zero vector
+            //so load up the old checkpoint and go
+            ReconstructState();
+            return;
+        }
+        else
+        {
+            //first compute the residual of current solution
+            ResetAndInitialize();
+            //compare residual to previous checkpoint
+            if(fResidualNorm > fState.GetResidualNorm())
+            {
+                //current residual is worse than old checkpointed solution, so load it into memory
+                ReconstructState();
+                return;
+            }
+        }
+    }
+
+    //no previous state to load, go ahead
+    ResetAndInitialize();
+}
+
+
+template< typename ValueType >
+void
+KGeneralizedMinimalResidual<ValueType>::ResetAndInitialize()
+{
+
     //clear out any old data
     fH.resize(0);
     fV.resize(0);
@@ -133,7 +183,6 @@ KGeneralizedMinimalResidual<ValueType>::Initialize()
     //start iteration count at zero
     fJ = 0;
 
-    //first we compute the initial residual vector: r = b - Ax
     fA.Multiply(fX, fR);
     for(unsigned int i=0; i<fDim; i++)
     {
@@ -226,6 +275,12 @@ KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
 {
     if(fJ != 0)
     {
+        //clear out old values of fX
+        for(unsigned int i=0; i<fDim; i++)
+        {
+            fX[i] = 0.0;
+        }
+
         //the controller has decided that a restart is needed, or we have converged
         //so we compute the solution vector
 
@@ -325,6 +380,178 @@ KGeneralizedMinimalResidual<ValueType>::GetResidualVector(Vector& v) const
   for (unsigned int i = 0;i<fR.Dimension();i++)
     v[i] = fR(i);
 }
+
+template <typename ValueType>
+const KGeneralizedMinimalResidualState<ValueType>&
+KGeneralizedMinimalResidual<ValueType>::GetState() const
+{
+    fState.SetDimension(fDim);
+    fState.SetIterationCount(fJ);
+    fState.SetResidualNorm(fResidualNorm);
+
+    //have to handle x and b specially
+    //fill temp vector with x fState
+    KSimpleVectorType temp; temp.resize(fDim);
+    for(unsigned int i=0; i<fDim; i++)
+    {
+        temp[i] = fX(i);
+    }
+    fState.SetSolutionVector(&temp);
+
+    for(unsigned int i=0; i<fDim; i++)
+    {
+        temp[i] = fB(i);
+    }
+    fState.SetRightHandSide(&temp);
+
+    fState.SetResidualVector(&fR);
+    fState.SetMinimizationMatrix(&fH);
+    fState.SetKrylovSpaceBasis(&fV);
+    fState.SetMinimizationRightHandSide(&fP);
+    fState.SetGivensRotationCosines(&fC);
+    fState.SetGivensRotationSines(&fS);
+
+    return fState;
+}
+
+template <typename ValueType>
+void
+KGeneralizedMinimalResidual<ValueType>::SetState(const KGeneralizedMinimalResidualState<ValueType>& state)
+{
+    fState.SetDimension(state.GetDimension());
+    fState.SetIterationCount(state.GetIterationCount());
+    fState.SetResidualNorm(state.GetResidualNorm());
+
+    const KSimpleVector<ValueType>* temp;
+
+    temp = state.GetSolutionVector();
+    fState.SetSolutionVector(temp);
+
+    temp = state.GetRightHandSide();
+    fState.SetRightHandSide(temp);
+
+    temp = state.GetResidualVector();
+    fState.SetResidualVector(temp);
+
+    const std::vector< KSimpleVector<ValueType> >* h_temp;
+    h_temp = state.GetMinimizationMatrix();
+    fState.SetMinimizationMatrix(h_temp);
+
+    const std::vector< KSimpleVector<ValueType> >* v_temp;
+    v_temp = state.GetKrylovSpaceBasis();
+    fState.SetKrylovSpaceBasis(v_temp);
+
+    temp = state.GetMinimizationRightHandSide();
+    fState.SetMinimizationRightHandSide(temp);
+
+    temp = state.GetGivensRotationCosines();
+    fState.SetGivensRotationCosines(temp);
+
+    temp = state.GetGivensRotationSines();
+    fState.SetGivensRotationSines(temp);
+
+    fExternalStateSet = true;
+}
+
+
+
+template <typename ValueType>
+void
+KGeneralizedMinimalResidual<ValueType>::ReconstructState()
+{
+    if(fExternalStateSet)
+    {
+        fDim = fState.GetDimension();
+        fJ = fState.GetIterationCount();
+        fResidualNorm = fState.GetResidualNorm();
+
+        const KSimpleVectorType* temp;
+        temp = fState.GetSolutionVector();
+        for(unsigned int i=0; i<temp->size(); i++){fX[i] = (*temp)(i); };
+
+        temp = fState.GetResidualVector();
+        fR.resize(temp->size());
+        for(unsigned int i=0; i<temp->size(); i++){fR[i] = (*temp)(i); };
+
+        //clear out fH
+        for(unsigned int i=0; i<fH.size(); i++){fH[i].clear();};
+        //fill up with new data
+        std::vector< KSimpleVectorType > h_temp;
+        fState.GetMinimizationMatrix(&h_temp);
+        fH.resize(h_temp.size());
+        for(unsigned int i=0; i<h_temp.size(); i++)
+        {
+            unsigned int s = h_temp[i].size();
+            fH[i].resize(s);
+            for(unsigned int j= 0; j<s; j++)
+            {
+                fH[i][j] = h_temp[i][j];
+            }
+        }
+
+        //clear out fV
+        for(unsigned int i=0; i<fV.size(); i++){fV[i].clear();};
+        //fill up with new data
+        std::vector< KSimpleVectorType > v_temp;
+        fState.GetKrylovSpaceBasis(&v_temp);
+        fV.resize(v_temp.size());
+        for(unsigned int i=0; i<v_temp.size(); i++)
+        {
+            unsigned int s = v_temp[i].size();
+            fV[i].resize(s);
+            for(unsigned int j=0; j<s; j++)
+            {
+                fV[i][j] = v_temp[i][j];
+            }
+        }
+
+        temp = fState.GetMinimizationRightHandSide();
+        fP.resize(temp->size());
+        for(unsigned int i=0; i<temp->size(); i++){fP[i] = (*temp)(i); };
+
+        temp = fState.GetGivensRotationCosines();
+        fC.resize(temp->size());
+        for(unsigned int i=0; i<temp->size(); i++){fC[i] = (*temp)(i); };
+
+        temp = fState.GetGivensRotationSines();
+        fS.resize(temp->size());
+        for(unsigned int i=0; i<temp->size(); i++){fS[i] = (*temp)(i); };
+    }
+
+}
+
+
+
+template <typename ValueType, typename Stream>
+Stream& operator>>(Stream& s, KGeneralizedMinimalResidual<ValueType>& aData)
+{
+    s.PreStreamInAction(aData);
+
+    KGeneralizedMinimalResidualState<ValueType> state;
+    s >> state;
+    aData.SetState(state);
+
+    s.PostStreamInAction(aData);
+    return s;
+}
+
+
+template <typename ValueType, typename Stream>
+Stream& operator<<(Stream& s, const KGeneralizedMinimalResidual<ValueType>& aData)
+{
+    s.PreStreamOutAction(aData);
+
+    s << aData.GetState();
+
+    s.PostStreamOutAction(aData);
+
+    return s;
+}
+
+
+
+
+
 
 }
 

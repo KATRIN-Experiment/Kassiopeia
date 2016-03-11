@@ -11,11 +11,8 @@ set( KOMMON_VTK_SOURCE_FILENAMES
 )
 
 # external
-find_package( VTK REQUIRED )
-include( ${VTK_USE_FILE} )
-kasper_external_include_directories(
-	${VTK_INCLUDE_DIRS}
-)
+kasper_find_vtk()
+
 if( VTK_MAJOR_VERSION GREATER 5 )
 	set_property( SOURCE
 	    Utility/KVTKWindow.cxx
@@ -25,9 +22,7 @@ if( VTK_MAJOR_VERSION GREATER 5 )
 endif()
 
 # internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Utility
-)
+kasper_internal_include_directories( Utility )
 
 # link
 add_library( KommonVtk SHARED ${KOMMON_VTK_SOURCE_FILENAMES} )

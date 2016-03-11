@@ -26,10 +26,10 @@ namespace KGeoBag
 
         public:
             void StartPoint( const KTwoVector& aPoint );
-            void NextLine( const KTwoVector& aVertex, const unsigned int aCount = 1, const double aPower = 1. );
-            void NextArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount = 1 );
-            void PreviousLine( const KTwoVector& aVertex, const unsigned int aCount = 1, const double aPower = 1. );
-            void PreviousArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount = 1 );
+            void NextLine( const KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1. );
+            void NextArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount = 2 );
+            void PreviousLine( const KTwoVector& aVertex, const unsigned int aCount = 2, const double aPower = 1. );
+            void PreviousArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount = 2 );
 
             const Set& Elements() const;
 

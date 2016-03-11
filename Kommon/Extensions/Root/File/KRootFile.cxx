@@ -81,7 +81,7 @@ namespace katrin
 namespace katrin
 {
 
-    static int sRootFileStructure =
+    STATICINT sRootFileStructure =
         KRootFileBuilder::Attribute< string >( "path" ) +
         KRootFileBuilder::Attribute< string >( "default_path" ) +
         KRootFileBuilder::Attribute< string >( "base" ) +

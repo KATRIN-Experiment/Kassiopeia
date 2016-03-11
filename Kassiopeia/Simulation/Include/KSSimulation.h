@@ -25,6 +25,9 @@ namespace Kassiopeia
             void SetEvents( const unsigned int& anEvents );
             const unsigned int& GetEvents() const;
 
+            void SetStepReportIteration( const unsigned int& anIteration );
+            const unsigned int& GetStepReportIteration() const;
+
             void AddCommand( KSCommand* aCommand );
             void RemoveCommand( KSCommand* aCommand );
 
@@ -37,6 +40,7 @@ namespace Kassiopeia
             unsigned int fSeed;
             unsigned int fRun;
             unsigned int fEvents;
+            unsigned int fStepReportIteration;
             vector< KSCommand* > fCommands;
     };
 

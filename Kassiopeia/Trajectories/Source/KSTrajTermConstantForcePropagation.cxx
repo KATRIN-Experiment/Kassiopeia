@@ -8,18 +8,19 @@ namespace Kassiopeia
     KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation()
     {
     }
-    KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation( const KSTrajTermConstantForcePropagation& )
+    KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation( const KSTrajTermConstantForcePropagation& ):
+        KSComponent()
     {
     }
     KSTrajTermConstantForcePropagation* KSTrajTermConstantForcePropagation::Clone() const
     {
         return new KSTrajTermConstantForcePropagation( *this );
-    }    
+    }
     KSTrajTermConstantForcePropagation::~KSTrajTermConstantForcePropagation()
     {
     }
 
-    void KSTrajTermConstantForcePropagation::Differentiate( const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
+    void KSTrajTermConstantForcePropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const
     {
         KThreeVector tVelocity = aParticle.GetVelocity();
 

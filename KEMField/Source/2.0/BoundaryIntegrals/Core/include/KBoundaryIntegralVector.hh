@@ -72,6 +72,27 @@ namespace KEMField
       return value;
     }
 
+
+//stream for making hashes
+template<typename Stream, typename Integrator>
+Stream& operator<<(Stream& s, const KBoundaryIntegralVector<Integrator>& aData)
+{
+    s.PreStreamOutAction(aData);
+
+    unsigned int dim = aData.Dimension();
+    s << dim;
+
+    for(unsigned int i=0; i<dim; i++)
+    {
+        s << aData(i);
+    }
+
+    s.PostStreamOutAction(aData);
+
+    return s;
 }
+
+}
+
 
 #endif /* KBOUNDARYINTEGRALVECTOR_DEF */

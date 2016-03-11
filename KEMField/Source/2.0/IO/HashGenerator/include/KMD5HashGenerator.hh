@@ -19,7 +19,7 @@ namespace KEMField
 /**
 * @class KMD5HashGenerator
 *
-* @brief A streamer class for generating MD5 Hashes. 
+* @brief A streamer class for generating MD5 Hashes.
 *
 * KMD5HashGenerator is a class that accepts data streams, and generates MD5
 * hashes from them.
@@ -197,6 +197,27 @@ namespace KEMField
 
     template <class X>
     std::string GenerateHash(const X& x);
+
+    std::string GenerateHashFromString(const std::string& x)
+    {
+        unsigned int ch_size = x.size()+1;
+        char* ch_array;
+        ch_array = new char[ch_size];
+        for(unsigned int i=0; i<x.size(); i++)
+        {
+            ch_array[i] = x.at(i);
+        }
+        ch_array[x.size()] = '\0';
+
+        if (fMD5) delete fMD5;
+        fMD5 = new MD5();
+        fMD5->update( reinterpret_cast<unsigned char*>(ch_array), ch_size );
+        fMD5->finalize();
+        std::string value(fMD5->hex_digest());
+        delete[] ch_array;
+
+        return value;
+    }
 
     template <class Streamed>
     void PreStreamOutAction(const Streamed&);

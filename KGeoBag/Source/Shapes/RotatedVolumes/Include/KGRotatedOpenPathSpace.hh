@@ -34,7 +34,7 @@ namespace KGeoBag
                     fBottomPath( new KGPlanarCircle() ),
                     fSign( 1. ),
                     fRotatedMeshCount( 64 ),
-                    fFlattenedMeshCount( 1 ),
+                    fFlattenedMeshCount( 8 ),
                     fFlattenedMeshPower( 1. )
             {
                 CompilerCheck();
@@ -57,7 +57,7 @@ namespace KGeoBag
                     fBottomPath( new KGPlanarCircle() ),
                     fSign( 1. ),
                     fRotatedMeshCount( 64 ),
-                    fFlattenedMeshCount( 1 ),
+                    fFlattenedMeshCount( 8 ),
                     fFlattenedMeshPower( 1. )
             {
             }
@@ -221,17 +221,19 @@ namespace KGeoBag
                     {
                         return tTopPoint;
                     }
-                }
-
-                if( tBottomDistanceSquared < tJacketDistanceSquared )
-                {
-                    if( tBottomDistanceSquared < tTopDistanceSquared )
+                    else
                     {
-                        return tBottomPoint;
+                    	return tBottomPoint;
                     }
                 }
-
-                return tJacketPoint;
+                else if( tBottomDistanceSquared < tJacketDistanceSquared )
+                {
+					return tBottomPoint;
+                }
+                else
+                {
+					return tJacketPoint;
+                }
             }
             virtual KThreeVector VolumeNormal( const KThreeVector& aQuery ) const
             {
@@ -243,25 +245,25 @@ namespace KGeoBag
                 tTop.Z( fPath->Start().X() );
                 KThreeVector tTopPoint = tTop.Point( aQuery );
                 KThreeVector tTopNormal = tTop.Normal( aQuery );
-                double tTopDistance = (aQuery - tTopPoint).Magnitude();
+                double tTopDistanceSquared = (aQuery - tTopPoint).MagnitudeSquared();
 
                 KGFlattenedCircleSurface tBottom = KGFlattenedCircleSurface( fBottomPath );
                 tBottom.Sign( -1. );
                 tBottom.Z( fPath->End().X() );
                 KThreeVector tBottomPoint = tBottom.Point( aQuery );
                 KThreeVector tBottomNormal = tBottom.Normal( aQuery );
-                double tBottomDistance = (aQuery - tBottomPoint).Magnitude();
+                double tBottomDistanceSquared = (aQuery - tBottomPoint).MagnitudeSquared();
 
                 KTwoVector tJacketZRPoint = fPath->Point( tZRPoint );
                 KThreeVector tJacketPoint( cos( tAngle ) * tJacketZRPoint.R(), sin( tAngle ) * tJacketZRPoint.R(), tJacketZRPoint.Z() );
                 KTwoVector tJacketZRNormal = fPath->Normal( tZRPoint );
                 KThreeVector tJacketNormal( cos( tAngle ) * tJacketZRNormal.R(), sin( tAngle ) * tJacketZRNormal.R(), tJacketZRNormal.Z() );
-                double tJacketDistance = (aQuery - tJacketPoint).Magnitude();
+                double tJacketDistanceSquared = (aQuery - tJacketPoint).MagnitudeSquared();
 
                 KThreeVector tAveragePoint;
                 KThreeVector tAverageNormal;
 
-                if( tTopDistance < tBottomDistance )
+                if( tTopDistanceSquared < tBottomDistanceSquared )
                 {
                     tAveragePoint = .5 * (tTopPoint + tJacketPoint);
                     tAverageNormal = (tTopNormal + tJacketNormal).Unit();
@@ -278,7 +280,7 @@ namespace KGeoBag
                         }
                     }
 
-                    if( tTopDistance < tJacketDistance )
+                    if( tTopDistanceSquared < tJacketDistanceSquared )
                     {
                         return tTopNormal;
                     }
@@ -304,7 +306,7 @@ namespace KGeoBag
                         }
                     }
 
-                    if( tBottomDistance < tJacketDistance )
+                    if( tBottomDistanceSquared < tJacketDistanceSquared )
                     {
                         return tBottomNormal;
                     }

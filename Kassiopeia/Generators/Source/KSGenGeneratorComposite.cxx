@@ -6,15 +6,16 @@ namespace Kassiopeia
 {
 
     KSGenGeneratorComposite::KSGenGeneratorComposite() :
-            fPid( 11 ),
-            fCreators( 128 ),
-            fSpecials( 128 )
+            fPidValue( NULL ),
+            fSpecials( 128 ),
+            fCreators( 128 )
     {
     }
     KSGenGeneratorComposite::KSGenGeneratorComposite( const KSGenGeneratorComposite& aCopy ) :
-            fPid( aCopy.fPid ),            
-            fCreators( aCopy.fCreators ),
-            fSpecials( aCopy.fSpecials )
+            KSComponent(),
+            fPidValue( aCopy.fPidValue ),
+            fSpecials( aCopy.fSpecials ),
+            fCreators( aCopy.fCreators )
     {
     }
     KSGenGeneratorComposite* KSGenGeneratorComposite::Clone() const
@@ -25,10 +26,15 @@ namespace Kassiopeia
     {
     }
 
-    void KSGenGeneratorComposite::SetPid( const long long& aPid )
+    void KSGenGeneratorComposite::SetPid(KSGenValue *aPidValue )
     {
-        fPid = aPid;
+        fPidValue = aPidValue;
         return;
+    }
+
+    KSGenValue* KSGenGeneratorComposite::GetPid()
+    {
+        return fPidValue;
     }
 
     void KSGenGeneratorComposite::AddSpecial( KSGenSpecial* aSpecial )
@@ -72,19 +78,43 @@ namespace Kassiopeia
 
     void KSGenGeneratorComposite::ExecuteGeneration( KSParticleQueue& aPrimaries )
     {
+        vector< double > tPIDValues;
+        vector< double >::iterator tPIDValueIt;
+        fPidValue->DiceValue(tPIDValues);
 
-    	KSParticle* tParticle = KSParticleFactory::GetInstance()->Create( fPid );
-    	tParticle->AddLabel( GetName() );
-        aPrimaries.push_back( tParticle );
+        for( tPIDValueIt = tPIDValues.begin(); tPIDValueIt != tPIDValues.end(); tPIDValueIt++ )
+        {
+            KSParticle* tParticle = KSParticleFactory::GetInstance()->Create( std::floor(*tPIDValueIt) );
+            tParticle->AddLabel( GetName() );
+            aPrimaries.push_back( tParticle );
+        }
 
         fCreators.ForEach( &KSGenCreator::Dice, &aPrimaries );
         fSpecials.ForEach( &KSGenSpecial::DiceSpecial, &aPrimaries );
+
+        // check if particle state is valid
+        KSParticleIt tParticleIt;
+        for( tParticleIt = aPrimaries.begin(); tParticleIt != aPrimaries.end(); tParticleIt++ )
+        {
+            KSParticle* tParticle = *tParticleIt;
+            if (! tParticle->IsValid())
+            {
+                tParticle->Print();
+                genmsg( eError ) << "invalid particle state in generator <" << this->GetName() << ">" << eom;
+            }
+            tParticle->ResetFieldCaching();
+        }
 
         return;
     }
 
     void KSGenGeneratorComposite::InitializeComponent()
     {
+        if(fPidValue == NULL)
+        {
+            genmsg(eError) << "NO PID VALUE" << eom;
+        }
+        fPidValue->Initialize();
         fCreators.ForEach( &KSGenCreator::Initialize );
         fSpecials.ForEach( &KSGenSpecial::Initialize );
         return;
@@ -92,12 +122,13 @@ namespace Kassiopeia
 
     void KSGenGeneratorComposite::DeinitializeComponent()
     {
+        fPidValue->Deinitialize();
         fCreators.ForEach( &KSGenCreator::Deinitialize );
         fSpecials.ForEach( &KSGenSpecial::Deinitialize );
         return;
     }
 
-    static int sKSGenGeneratorCompositeDict =    
+    STATICINT sKSGenGeneratorCompositeDict =
         KSDictionary< KSGenGeneratorComposite >::AddCommand( &KSGenGeneratorComposite::AddSpecial, &KSGenGeneratorComposite::RemoveSpecial, "add_special", "remove_special" )+
         KSDictionary< KSGenGeneratorComposite >::AddCommand( &KSGenGeneratorComposite::AddCreator, &KSGenGeneratorComposite::RemoveCreator, "add_creator", "remove_creator" );
 

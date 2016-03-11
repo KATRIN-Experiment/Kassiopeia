@@ -11,6 +11,7 @@ namespace Kassiopeia
     {
     }
     KSGenValueFormula::KSGenValueFormula( const KSGenValueFormula& aCopy ) :
+            KSComponent(),
             fValueMin( aCopy.fValueMin ),
             fValueMax( aCopy.fValueMax ),
             fValueFormula( aCopy.fValueFormula ),

@@ -191,7 +191,7 @@ KFMElectrostaticLocalCoefficientCalculatorNumeric::IrregularSolidHarmonic(const 
     fDel[1] = point[1] - fOrigin[1];
     fDel[2] = point[2] - fOrigin[2];
 
-    std::complex<double> temp = KFMMath::IrregularSolidHarmonic_Cart(fL, fM, fDel);
+    std::complex<double> temp = KFMMath::IrregularSolidHarmonic_Cart((int)fL, (int)fM, fDel);
     result[0] = std::real(temp);
     result[1] = std::imag(temp);
 }

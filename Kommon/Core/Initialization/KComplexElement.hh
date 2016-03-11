@@ -1,6 +1,10 @@
 #ifndef Kommon_KComplexElement_hh_
 #define Kommon_KComplexElement_hh_
 
+#ifndef STATICINT
+#define STATICINT static const int __attribute__((__unused__))
+#endif
+
 #include "KElementBase.hh"
 #include "KAttributeBase.hh"
 

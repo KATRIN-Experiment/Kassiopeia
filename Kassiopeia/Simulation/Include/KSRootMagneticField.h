@@ -20,6 +20,7 @@ namespace Kassiopeia
         public:
             void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
             void CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient );
+            void CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient );
 
         public:
             void AddMagneticField( KSMagneticField* aMagneticField );

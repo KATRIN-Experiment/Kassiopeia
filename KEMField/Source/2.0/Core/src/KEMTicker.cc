@@ -30,7 +30,7 @@ namespace KEMField
     }
     else
     {
-      unsigned int counter = progress/fGoal*100.;
+      unsigned int counter = (unsigned int) std::fabs( progress/fGoal*100. );
       if (counter != fCounter)
       {
 	fCounter = counter;

@@ -25,7 +25,7 @@ double
 KVMRectangularSurface::x(double u, double v) const
 {
    return fP[0] + u*fN1[0] + v*fN2[0];
-};
+}
 
 
 
@@ -33,14 +33,14 @@ double
 KVMRectangularSurface::y(double u, double v) const
 {
     return fP[1] + u*fN1[1] + v*fN2[1];
-};
+}
 
 
 double
 KVMRectangularSurface::z(double u, double v) const
 {
     return fP[2] + u*fN1[2] + v*fN2[2];
-};
+}
 
 double
 KVMRectangularSurface::dxdu(double /*u*/, double /*v*/) const

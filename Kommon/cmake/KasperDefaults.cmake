@@ -1,24 +1,50 @@
+macro(set_path var value comment)
+    if(NOT DEFINED ${var})
+        set(${var} "${value}")
+    else(NOT DEFINED ${var})
+        set(${var} "${${var}}" CACHE PATH ${comment})
+    endif(NOT DEFINED ${var})
+endmacro(set_path)
+
+include(CMakeDependentOption)
+include(MacroParseArguments)
+
 if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
-    
+
     set(STANDALONE true)
 
-    include(CMakeDependentOption)
-    include(CheckCompiler)
-    include(CheckCXXCompilerFlag)
-
-    macro(set_path var value comment)
-        if(NOT DEFINED ${var})
-            set(${var} "${value}")
-        else(NOT DEFINED ${var})
-            set(${var} "${${var}}" CACHE PATH ${comment})
-        endif(NOT DEFINED ${var})
-    endmacro(set_path)
-    
+    # use this section to modifiy initial values of builtin CMAKE variables
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    
+        # modify the default installation prefix
         get_filename_component(BUILD_PARENT_DIR ${CMAKE_BINARY_DIR} PATH)
         set(CMAKE_INSTALL_PREFIX "${BUILD_PARENT_DIR}/install" CACHE PATH "Install path prefix, prepended onto install directories." FORCE)
-    endif()
     
+        if(NOT CMAKE_BUILD_TYPE)
+            set(CMAKE_BUILD_TYPE "" CACHE STRING "Choose build type (None | Debug | Release | RelWithDebInfo | MinSizeRel)" FORCE)
+        endif()
+        
+        # set compiler warning levels
+        set(_wflags_debug "-Wall -Wextra")
+        set(_wflags_release "-Wall -Werror")
+        
+        string(STRIP "${CMAKE_CXX_FLAGS} ${_wflags_debug}" _cxx_flags)
+        string(STRIP "${CMAKE_C_FLAGS} ${_wflags_debug}" _c_flags)
+        
+        set(CMAKE_CXX_FLAGS ${_cxx_flags} CACHE STRING "Flags used by the compiler during all build types." FORCE)
+        set(CMAKE_C_FLAGS ${_c_flags} CACHE STRING "Flags used by the compiler during all build types." FORCE)
+        
+        #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during debug builds." FORCE)
+        #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during debug builds." FORCE)
+        #set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during release with debug info builds." FORCE)
+        #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during release with debug info builds." FORCE)
+        
+        #set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} ${_wflags_release}" CACHE STRING "Flags used by the compiler during min. size release builds." FORCE)
+        #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} ${_wflags_release}" CACHE STRING "Flags used by the compiler during min. size release builds." FORCE)
+        #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${_wflags_release}" CACHE STRING "Flags used by the compiler during release builds." FORCE)
+        #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${_wflags_release}" CACHE STRING "Flags used by the compiler during release builds." FORCE)
+    endif()
+
     set_path(INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" "Install directory for headers")
     set_path(LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib" "Install directory for libraries")
     set_path(BIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/bin" "Install directory for binaries")
@@ -28,40 +54,32 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     set_path(OUTPUT_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/output" "Directory for output files")
     set_path(CACHE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/cache" "Directory for cache files")
     set_path(LOG_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/log" "Directory for log files")
-    
-    add_definitions(-Wall -Wextra)
-    
+
     # a temporary fix to Apple's historical exclusion of system includes
     if ( APPLE AND NOT CMAKE_INCLUDE_SYSTEM_FLAG_CXX)
         set (CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem ")
     endif ()
-    
-    # C++ 11
-    set(ENABLE_CXX11 OFF CACHE BOOL "Enable c++11")
-    mark_as_advanced(ENABLE_CXX11)
-    
-    if (ENABLE_CXX11)
-        CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-        CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-        if(COMPILER_SUPPORTS_CXX11)
-            set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" )
-        elseif(COMPILER_SUPPORTS_CXX0X)
-            set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++01" )
-        endif()
-    endif()
-    
+
+    set( CMAKE_MACOSX_RPATH ON )
+
+    # check compiler versions and set C++11 flag 
+    include(CheckCompiler)
+    message(STATUS "Using compiler ${COMPILER_ID} ${COMPILER_VERSION}")
+
     set(ROOT_FIND_QUIETLY TRUE)
+    set(Sphinx_FIND_QUIETLY TRUE)
+    set(Doxygen_FIND_QUIETLY TRUE)
     set(Boost_FIND_QUIETLY TRUE)
-    
+    set(VTK_FIND_QUIETLY TRUE)
+
     add_custom_target(reference)
-    
+
 else()
     set(STANDALONE false)
 
     # cleanup include dir definitions for this module
     set(MODULE_HEADER_DIRS)
-    set(EXTERNAL_INCLUDE_DIRS)    
-
+    set(EXTERNAL_INCLUDE_DIRS)
 endif()
 
 set(CMAKE_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/${PROJECT_NAME})
@@ -71,6 +89,7 @@ file(RELATIVE_PATH REL_MODULE_INSTALL_DIR "${CMAKE_INSTALL_DIR}" "${MODULE_INSTA
 set_property(GLOBAL PROPERTY MODULE_TARGETS)
 
 find_package (Doxygen)
+find_package (Sphinx)
 
 ###################
 # path mechanisms #
@@ -88,7 +107,9 @@ macro( kasper_module_paths PATH )
     set( ${PROJECT_NAME}_OUTPUT_INSTALL_DIR ${OUTPUT_INSTALL_DIR}/${PATH} )
     set( ${PROJECT_NAME}_LOG_INSTALL_DIR ${LOG_INSTALL_DIR}/${PATH} )
     set( ${PROJECT_NAME}_CACHE_INSTALL_DIR ${CACHE_INSTALL_DIR}/${PATH} )
-    
+
+    add_definitions( -DKASPER_INSTALL_DIR=${CMAKE_INSTALL_PREFIX} )
+
     add_definitions( -DINCLUDE_INSTALL_DIR=${${PROJECT_NAME}_INCLUDE_INSTALL_DIR} )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_INCLUDE_INSTALL_DIR}\")" )
     add_definitions( -DLIB_INSTALL_DIR=${${PROJECT_NAME}_LIB_INSTALL_DIR} )
@@ -154,19 +175,13 @@ macro(kasper_find_module NAME)
     else()
         set( VERSION "0" )
     endif()
-    
+
     find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE )
-    #include_directories( ${${NAME}_INCLUDE_DIRS} )
+    #message("${NAME}_INCLUDE_DIRS: ${${NAME}_INCLUDE_DIRS}")
     kasper_internal_include_directories( ${${NAME}_INCLUDE_DIRS} )
-    set( ${NAME}_INCLUDE_DIRS "${${NAME}_INCLUDE_DIRS}" PARENT_SCOPE )
-    
-    #message("${NAME}: ${${NAME}_INCLUDE_DIRS}")
-    
-    #list( APPEND KASPER_INCLUDE_DIRS ${${NAME}_INCLUDE_DIRS} )
-    #list( LENGTH KASPER_INCLUDE_DIRS LL)
-    #if( LL GREATER 1 )
-    #    list( REMOVE_DUPLICATES KASPER_INCLUDE_DIRS )
-    #endif()
+    #kasper_external_include_directories( ${${NAME}_INCLUDE_DIRS} )
+    #set( ${NAME}_INCLUDE_DIRS "${${NAME}_INCLUDE_DIRS}" PARENT_SCOPE )
+
 endmacro()
 
 macro(kasper_install_optional DEST_DIR)
@@ -272,9 +287,6 @@ macro(kasper_install_files DEST_DIR)
     install(FILES ${ARGN} DESTINATION ${DEST_DIR})
 endmacro()
 
-macro(kasper_include_default_dirs)
-    include_directories( ${MODULE_HEADER_DIRS} SYSTEM ${EXTERNAL_INCLUDE_DIRS} )
-endmacro()
 
 macro(kasper_install_module)
 
@@ -283,9 +295,9 @@ macro(kasper_install_module)
 
     get_property(MODULE_TARGETS GLOBAL PROPERTY MODULE_TARGETS)
     #list(APPEND EXTERNAL_INCLUDE_DIRS ${KASPER_INCLUDE_DIRS})
-    
+
     set(INSTALLED_INCLUDE_DIRS ${INCLUDE_INSTALL_DIR})
-    
+
     foreach(DIR ${EXTERNAL_INCLUDE_DIRS})
         if (NOT ${DIR} STREQUAL "SYSTEM")
             file(RELATIVE_PATH REL_DIR ${CMAKE_SOURCE_DIR} ${DIR})
@@ -295,7 +307,7 @@ macro(kasper_install_module)
         endif()
     endforeach()
     list(REMOVE_DUPLICATES INSTALLED_INCLUDE_DIRS)
-    
+
     configure_file(ModuleConfigInstalled.cmake.in ${PROJECT_NAME}ConfigInstalled.cmake @ONLY)
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigInstalled.cmake DESTINATION ${CMAKE_INSTALL_DIR}
             RENAME ${PROJECT_NAME}Config.cmake)
@@ -303,24 +315,22 @@ macro(kasper_install_module)
     if(STANDALONE)
         install(EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR} FILE ModuleTargets.cmake)
     else()
-        set(MODULE_INCLUDE_DIRS ${EXTERNAL_INCLUDE_DIRS} ${MODULE_HEADER_DIRS})
-        
-        #foreach(dir ${MODULE_HEADER_DIRS})
-        #    if(IS_ABSOLUTE ${dir})
-        #        list(APPEND MODULE_INCLUDE_DIRS ${dir})
-        #    else()
-        #        list(APPEND MODULE_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/${dir})
-        #    endif()
-        #endforeach()
-        
+
+        set(MODULE_INCLUDE_DIRS )
+        set(TMP_DIR_LIST ${MODULE_HEADER_DIRS};${EXTERNAL_INCLUDE_DIRS})
+        foreach(DIR ${TMP_DIR_LIST})
+            string(REPLACE " " "\\\ " DIR ${DIR})
+            list(APPEND MODULE_INCLUDE_DIRS ${DIR})
+        endforeach()
+
         list( LENGTH MODULE_INCLUDE_DIRS LL)
         if( LL GREATER 1 )
             list( REMOVE_DUPLICATES MODULE_INCLUDE_DIRS )
         endif()
-        
+
         configure_file(ModuleConfig.cmake.in ${PROJECT_NAME}Config.cmake @ONLY)
     endif()
-    
+
     #pkg-config
     include(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
 
@@ -330,10 +340,10 @@ macro(kasper_install_module)
     set( LIBDIRS )
     set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${DEPENDS_LIBRARIES} )
     foreach(LIB ${LIBS})
-    
+
         # try to match a directory name
         string(REGEX MATCH "^.*/" LIBDIR ${LIB})
-       
+
         if (LIBDIR)
             string(LENGTH ${LIBDIR} LIBDIRLEN)
             math(EXPR LIBDIRLEN "${LIBDIRLEN}-1")
@@ -341,7 +351,7 @@ macro(kasper_install_module)
             #message("${LIBDIR}")
             list(FIND LIBDIRS ${LIBDIR} LIBDIRINDEX)
             if (LIBDIRINDEX LESS 0)
-            
+
                 string(REGEX MATCH "^/usr" SYSLIBDIR ${LIBDIR})
                 string(REGEX MATCH "^/usr.*(root|boost)" SPECIALSYSLIBDIR ${LIBDIR})
                 if(NOT SYSLIBDIR)
@@ -349,7 +359,7 @@ macro(kasper_install_module)
                 elseif(SPECIALSYSLIBDIR)
                     list(APPEND LIBDIRS ${LIBDIR})
                 endif()
-                
+
             endif()
             STRING(REGEX REPLACE "${LIBDIR}/?(lib)?([^\\.]+)(\\..+)?$" "-l\\2" LIB ${LIB})
             set ( PC_LIBRARIES_STR "${PC_LIBRARIES_STR} ${LIB}" )
@@ -359,18 +369,16 @@ macro(kasper_install_module)
             set ( PC_LIBRARIES_STR "${PC_LIBRARIES_STR} -l${LIB}${SHARED_LIBRARY_SUFFIX}" )
         endif()
     endforeach()
-    
+
     set( PC_LD_FLAGS "-L\${libdir}" )
     set( PC_RPATH_STR "\${libdir}" )
     foreach(LIBDIR ${LIBDIRS})
         set ( PC_LD_FLAGS "${PC_LD_FLAGS} -L${LIBDIR}" )
         set ( PC_RPATH_STR "${PC_RPATH_STR} ${LIBDIR}" )
     endforeach()
-    
+
     set( PC_LIBRARIES_STR "${PC_LD_FLAGS} ${PC_LIBRARIES_STR}" )
-    
-    #message("${PC_RPATH_STR}")
-    
+
     set( PC_INCLUDE_DIR_STR "-I\${includedir}" )
     foreach(DIR ${INSTALLED_INCLUDE_DIRS})
         if(NOT DIR STREQUAL INCLUDE_INSTALL_DIR)
@@ -378,23 +386,21 @@ macro(kasper_install_module)
         endif()
     endforeach()
 
-    set( PC_CONTENTS "prefix=@CMAKE_INSTALL_PREFIX@
-exec_prefix=@BIN_INSTALL_DIR@
-libdir=@LIB_INSTALL_DIR@
-includedir=@INCLUDE_INSTALL_DIR@
-rpath=@PC_RPATH_STR@
+    set( PC_CONTENTS "prefix=${CMAKE_INSTALL_PREFIX}
+exec_prefix=${BIN_INSTALL_DIR}
+libdir=${LIB_INSTALL_DIR}
+includedir=${INCLUDE_INSTALL_DIR}
+rpath=${PC_RPATH_STR}
 
-Name: @PROJECT_NAME@
-Description: @DESCRIPTION@
-Version: @MODULE_VERSION@
+Name: ${PROJECT_NAME}
+Description: ${DESCRIPTION}
+Version: ${MODULE_VERSION}
 
-Libs: @PC_LIBRARIES_STR@
-Cflags: @PC_INCLUDE_DIR_STR@
+Libs: ${PC_LIBRARIES_STR}
+Cflags: ${CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
 ")
-
-    string(CONFIGURE "${PC_CONTENTS}" CONFIGURED_PC_CONTENTS @ONLY)
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER )
-    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc ${CONFIGURED_PC_CONTENTS})
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc ${PC_CONTENTS})
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig
             RENAME ${PROJECT_NAME}.pc )
@@ -421,15 +427,62 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
     endif(DOXYGEN_FOUND)
 endmacro()
 
+macro(kasper_add_doc_reference_sphinx SPHINX_FILE)
+    # Builds in the source tree (to instead build in the binary tree, switch CMAKE_CURRENT_SOURCE_DIR to CMAKE_CURRENT_BINARY_DIR in the line that starts with WORKING_DIRECTORY.
+    # This is intended for use by developers only when updating the reference documentation.
+    if (SPHINX_FOUND)
+        if(NOT PACKAGE_VERSION)
+            set(PACKAGE_VERSION ${MODULE_VERSION_MAJOR})
+        endif()
+        configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/conf.py.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/conf.py @ONLY)
+        configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/index.rst.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/index.rst @ONLY)
+        configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${SPHINX_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${SPHINX_FILE} @ONLY)
+        set(REF_BUILD_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}/Reference)
+        file(MAKE_DIRECTORY ${REF_BUILD_DIR})
+        add_custom_target (reference-${PROJECT_NAME}
+            ${SPHINX_EXECUTABLE} -b html ${CMAKE_CURRENT_BINARY_DIR}/Reference/ ${REF_BUILD_DIR}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Reference/
+            COMMENT "Generating API documentation with Sphinx for ${PROJECT_NAME}"
+            VERBATIM
+        )
+        add_dependencies(reference reference-${PROJECT_NAME})
+    endif(SPHINX_FOUND)
+endmacro()
+
 macro(kasper_install_doc)
     set(DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME})
     install(FILES ${ARGN} DESTINATION ${DOC_INSTALL_DIR})
 endmacro()
 
+
 # macros to facilitate a modular build via subdirectories
+
+macro( kasper_include_directories )
+
+    set(KASPER_DIRS)
+    set(SYSTEM_DIRS)
+
+    foreach(dir ${ARGN})
+        string(FIND ${dir} ${CMAKE_SOURCE_DIR} pos)
+        if(pos LESS 0)
+            list(APPEND SYSTEM_DIRS ${dir})
+        else()
+            list(APPEND KASPER_DIRS ${dir})
+        endif()
+    endforeach()
+
+    include_directories( ${KASPER_DIRS} )
+    include_directories( SYSTEM;${SYSTEM_DIRS} )
+endmacro()
+
+macro( kasper_include_default_dirs )
+    kasper_include_directories( ${MODULE_HEADER_DIRS};${EXTERNAL_INCLUDE_DIRS} )
+endmacro()
+
 macro( kasper_internal_include_directories )
 
     foreach(dir ${ARGN})
+        #message("${dir}")
         if(NOT IS_ABSOLUTE ${dir})
             set(dir ${CMAKE_CURRENT_SOURCE_DIR}/${dir})
         endif()
@@ -440,39 +493,74 @@ macro( kasper_internal_include_directories )
     if( LL GREATER 1 )
         list( REMOVE_DUPLICATES MODULE_HEADER_DIRS )
     endif()
-    
+
     if (CMAKE_CURRENT_SOURCE_DIR STRGREATER PROJECT_SOURCE_DIR)
         set (MODULE_HEADER_DIRS ${MODULE_HEADER_DIRS} PARENT_SCOPE)
     endif()
 
-    #include_directories( ${ARGN} )
-    include_directories( ${MODULE_HEADER_DIRS} )
+    kasper_include_directories( ${MODULE_HEADER_DIRS} )
 
 endmacro()
+
 
 macro( kasper_external_include_directories )
 
     list( APPEND EXTERNAL_INCLUDE_DIRS ${ARGN} )
-    
+
     list( LENGTH EXTERNAL_INCLUDE_DIRS LL)
     if( LL GREATER 1 )
+        list( REMOVE_ITEM EXTERNAL_INCLUDE_DIRS SYSTEM )
         list( REMOVE_DUPLICATES EXTERNAL_INCLUDE_DIRS )
     endif()
-    
+
     if (CMAKE_CURRENT_SOURCE_DIR STRGREATER PROJECT_SOURCE_DIR)
         #message("CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR} -- PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
         set( EXTERNAL_INCLUDE_DIRS ${EXTERNAL_INCLUDE_DIRS} PARENT_SCOPE )
     endif()
-    
-    include_directories( SYSTEM ${ARGN} )
-    #include_directories( ${ARGN} )
-  
+
+    kasper_include_directories( ${ARGN} )
+
 endmacro()
 
 macro (add_cflag CFLAG)
-  list (APPEND MODULE_CFLAGS ${CFLAG})
-  set (MODULE_CFLAGS ${MODULE_CFLAGS} PARENT_SCOPE)
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${CFLAG}")
-  set (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} PARENT_SCOPE)
+    list (APPEND MODULE_CFLAGS ${CFLAG})
+    set (MODULE_CFLAGS ${MODULE_CFLAGS} PARENT_SCOPE)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${CFLAG}")
+    set (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} PARENT_SCOPE)
 endmacro()
 
+macro(kasper_find_boost BVERSION)
+    CMAKE_PARSE_ARGUMENTS(ARG "REQUIRED" "" "COMPONENTS" ${ARGN})
+    if(ARG_REQUIRED)
+        set(ARG_REQUIRED "REQUIRED")
+    else()
+        set(ARG_REQUIRED )
+    endif()
+    
+    find_package(Boost ${BVERSION} ${ARG_REQUIRED} COMPONENTS ${ARG_COMPONENTS})
+    
+    # circumvent a C++11 boost bug in the filesystem library
+    if (Boost_VERSION LESS 105100)
+        add_definitions( -DBOOST_NO_SCOPED_ENUMS )
+    elseif (Boost_VERSION LESS 105700)
+        add_definitions( -DBOOST_NO_CXX11_SCOPED_ENUMS )
+    endif()
+    
+    kasper_external_include_directories( ${Boost_INCLUDE_DIRS} )
+endmacro()
+
+macro(kasper_find_vtk)                                   
+    # VTK versions below 6.0.1 do not compile with c++11 support
+    find_package( VTK REQUIRED NO_MODULE )
+    include(${VTK_USE_FILE})
+
+    if(${VTK_VERSION} VERSION_LESS "6.0.1")
+        message(FATAL_ERROR "At least VTK version 6.0.1 is required for C++11 support.")
+    endif()
+
+    if(VTK_VERSION VERSION_GREATER "6" AND VTK_QT_VERSION VERSION_GREATER "4")
+        find_package(Qt5Widgets REQUIRED QUIET)
+    endif()
+
+    kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
+endmacro()

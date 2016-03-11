@@ -346,22 +346,22 @@ namespace Kassiopeia
 
                 //thermal velocity of gas molecules
                 double T = 300.; //gas temperature
-                double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot()) );
+                double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot_kg()) );
                 KThreeVector MolVelocity( sigmaT * Gx, sigmaT * Gy, sigmaT * Gz );
 
                 //new electron velocity vector and energy:
 
                 //assume electron velocity along z
-                KThreeVector ElVelocity( 0., 0., sqrt( 2. * anE * KConst::Q() / KConst::M_el() ) );
+                KThreeVector ElVelocity( 0., 0., sqrt( 2. * anE * KConst::Q() / KConst::M_el_kg() ) );
                 //relative velocity electron-molecule
                 KThreeVector RelativeVelocity = ElVelocity - MolVelocity;
                 //transformation into CMS
-                KThreeVector CMSVelocity = (KConst::M_el() / (KConst::M_el() + KConst::M_prot()) * ElVelocity + 2. * KConst::M_prot() / (KConst::M_el() + KConst::M_prot()) * MolVelocity);
+                KThreeVector CMSVelocity = (KConst::M_el_kg() / (KConst::M_el_kg() + KConst::M_prot_kg()) * ElVelocity + 2. * KConst::M_prot_kg() / (KConst::M_el_kg() + KConst::M_prot_kg()) * MolVelocity);
                 //generation of random direction
                 KThreeVector Random( KRandom::GetInstance().Uniform(), KRandom::GetInstance().Uniform(), KRandom::GetInstance().Uniform() );
                 //new electron velocity
-                ElVelocity = KConst::M_prot() / (KConst::M_prot() + KConst::M_el()) * RelativeVelocity.Magnitude() * Random + CMSVelocity;
-                anEloss = anE - KConst::M_el() / (2. * KConst::Q()) * ElVelocity.Magnitude() * ElVelocity.Magnitude();
+                ElVelocity = KConst::M_prot_kg() / (KConst::M_prot_kg() + KConst::M_el_kg()) * RelativeVelocity.Magnitude() * Random + CMSVelocity;
+                anEloss = anE - KConst::M_el_kg() / (2. * KConst::Q()) * ElVelocity.Magnitude() * ElVelocity.Magnitude();
                 //check if electron won energy due to molecule scattering
                 if( anEloss < 0. )
                 {

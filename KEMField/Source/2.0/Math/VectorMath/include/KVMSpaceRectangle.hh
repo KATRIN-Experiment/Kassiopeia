@@ -76,7 +76,7 @@ inline KVMSpaceRectangle::KVMSpaceRectangle(const KVMSpaceRectangle &copyObject)
     fL1 = copyObject.fL1;
     fL2 = copyObject.fL2;
     InitializeParameters();
-};
+}
 
 inline KVMSpaceRectangle& KVMSpaceRectangle::operator=(const KVMSpaceRectangle& rhs)
 {

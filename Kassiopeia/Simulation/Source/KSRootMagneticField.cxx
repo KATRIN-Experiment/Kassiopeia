@@ -11,6 +11,7 @@ namespace Kassiopeia
     {
     }
     KSRootMagneticField::KSRootMagneticField( const KSRootMagneticField& aCopy ) :
+            KSComponent(),
             fCurrentField( aCopy.fCurrentField ),
             fCurrentGradient( aCopy.fCurrentGradient ),
             fMagneticFields( aCopy.fMagneticFields )
@@ -45,8 +46,31 @@ namespace Kassiopeia
         return;
     }
 
+    void KSRootMagneticField::CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient )
+    {
+        aField = KThreeVector::sZero;
+        aGradient = KThreeMatrix::sZero;
+        for( int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++ )
+        {
+            fMagneticFields.ElementAt( tIndex )->CalculateFieldAndGradient( aSamplePoint, aSampleTime, fCurrentField, fCurrentGradient );
+            aField += fCurrentField;
+            aGradient += fCurrentGradient;
+        }
+        return;
+    }
+
     void KSRootMagneticField::AddMagneticField( KSMagneticField* aMagneticField )
     {
+        //check that field is not already present
+        for( int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++ )
+        {
+            if(aMagneticField == fMagneticFields.ElementAt( tIndex ) )
+            {
+                fieldmsg_debug( "<" << GetName() << "> attempted to add magnetic field <" << aMagneticField->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
         if( fMagneticFields.AddElement( aMagneticField ) == -1 )
         {
             fieldmsg( eError ) << "<" << GetName() << "> could not add magnetic field <" << aMagneticField->GetName() << ">" << eom;
@@ -66,7 +90,7 @@ namespace Kassiopeia
         return;
     }
 
-    static const int sKSRootMagneticFieldDict =
+    STATICINT sKSRootMagneticFieldDict =
         KSDictionary< KSRootMagneticField >::AddCommand( &KSRootMagneticField::AddMagneticField, &KSRootMagneticField::RemoveMagneticField, "add_magnetic_field", "remove_magnetic_field" );
 
 }

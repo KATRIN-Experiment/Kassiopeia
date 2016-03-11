@@ -59,14 +59,14 @@ namespace katrin
     {
     }
 
-    static int sKGDiscreteRotationalMeshStructure =
+    STATICINT sKGDiscreteRotationalMeshStructure =
         KGDiscreteRotationalMeshBuilder::Attribute< string >( "name" ) +
         KGDiscreteRotationalMeshBuilder::Attribute< double >( "angle" ) +
         KGDiscreteRotationalMeshBuilder::Attribute< int >( "count" ) +
         KGDiscreteRotationalMeshBuilder::Attribute< string >( "surfaces" ) +
         KGDiscreteRotationalMeshBuilder::Attribute< string >( "spaces" );
 
-    static const int sKGDiscreteRotationalMesh =
+    STATICINT sKGDiscreteRotationalMesh =
         KGInterfaceBuilder::ComplexElement< KGDiscreteRotationalMeshAttributor >( "discrete_rotational_mesh" );
 
 }

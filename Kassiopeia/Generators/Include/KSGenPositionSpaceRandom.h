@@ -59,7 +59,7 @@ namespace Kassiopeia
             std::vector<KGeoBag::KGSpace*> fSpaces;
             KGeoBag::KGRandomPointGenerator random;
 
-        public:
+        protected:
             void InitializeComponent();
             void DeinitializeComponent();
     };

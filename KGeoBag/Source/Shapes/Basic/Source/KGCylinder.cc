@@ -4,8 +4,8 @@ namespace KGeoBag
 {
   KGCylinder::KGCylinder(const KThreeVector& p0,
 			 const KThreeVector& p1,
-			 double radius) : fAxialMeshCount(0),
-					  fLongitudinalMeshCount(0),
+			 double radius) : fAxialMeshCount(8),
+					  fLongitudinalMeshCount(8),
 					  fLongitudinalMeshPower(1.)
   {
     fP0 = p0;

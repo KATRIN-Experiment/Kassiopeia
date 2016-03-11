@@ -78,9 +78,7 @@ namespace katrin
 
                 if( OpenFileSubclass( tFileName, aMode ) == true )
                 {
-                    fResolvedPath = tFileName.substr( 0, tFileName.find_last_of( fDirectoryMark ) );
-                    fResolvedBase = tFileName.substr( tFileName.find_last_of( fDirectoryMark ) + 1 );
-                    fResolvedName = tFileName;
+                    SetResolvedAttributes( tFileName );
 
                     filemsg_debug( "successfully opened file <" << fResolvedName << ">" << eom );
 
@@ -104,9 +102,7 @@ namespace katrin
 
                     if( OpenFileSubclass( tFileName, aMode ) == true )
                     {
-                        fResolvedPath = tFileName.substr( 0, tFileName.find_last_of( fDirectoryMark ) );
-                        fResolvedBase = tFileName.substr( tFileName.find_last_of( fDirectoryMark ) + 1 );
-                        fResolvedName = tFileName;
+                        SetResolvedAttributes( tFileName );
 
                         filemsg_debug( "successfully opened file <" << fResolvedName << ">" << eom );
 
@@ -127,9 +123,7 @@ namespace katrin
 
 					if( OpenFileSubclass( tFileName, aMode ) == true )
 					{
-						fResolvedPath = tFileName.substr( 0, tFileName.find_last_of( fDirectoryMark ) );
-						fResolvedBase = tFileName.substr( tFileName.find_last_of( fDirectoryMark ) + 1 );
-						fResolvedName = tFileName;
+					    SetResolvedAttributes( tFileName );
 
 						filemsg_debug( "successfully opened file <" << fResolvedName << ">" << eom );
 
@@ -150,9 +144,7 @@ namespace katrin
 
 					if( OpenFileSubclass( tFileName, aMode ) == true )
 					{
-						fResolvedPath = tFileName.substr( 0, tFileName.find_last_of( fDirectoryMark ) );
-						fResolvedBase = tFileName.substr( tFileName.find_last_of( fDirectoryMark ) + 1 );
-						fResolvedName = tFileName;
+					    SetResolvedAttributes( tFileName );
 
 						filemsg_debug( "successfully opened file <" << fResolvedName << ">" << eom );
 
@@ -171,9 +163,7 @@ namespace katrin
 
                 if( OpenFileSubclass( tFileName, aMode ) == true )
                 {
-                    fResolvedPath = tFileName.substr( 0, tFileName.find_last_of( fDirectoryMark ) );
-                    fResolvedBase = tFileName.substr( tFileName.find_last_of( fDirectoryMark ) + 1 );
-                    fResolvedName = tFileName;
+                    SetResolvedAttributes( tFileName );
 
                     filemsg_debug( "successfully opened file <" << fResolvedName << ">" << eom );
 
@@ -239,6 +229,7 @@ namespace katrin
         }
         return true;
     }
+
     bool KFile::IsClosed()
     {
         if( fState == eClosed )
@@ -246,6 +237,22 @@ namespace katrin
             return true;
         }
         return false;
+    }
+
+    void KFile::SetResolvedAttributes(const string& resolvedName)
+    {
+        const string::size_type dirMarkPos = resolvedName.find_last_of( fDirectoryMark );
+        if ( dirMarkPos == string::npos )
+        {
+            fResolvedPath = ".";
+            fResolvedBase = resolvedName;
+            fResolvedName = "." + fDirectoryMark + resolvedName;
+        }
+        else {
+            fResolvedPath = resolvedName.substr( 0, resolvedName.find_last_of( fDirectoryMark ) );
+            fResolvedBase = resolvedName.substr( resolvedName.find_last_of( fDirectoryMark ) + 1 );
+            fResolvedName = resolvedName;
+        }
     }
 
     const string KFile::fDirectoryMark = string( "/" );

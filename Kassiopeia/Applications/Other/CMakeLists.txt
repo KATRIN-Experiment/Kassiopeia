@@ -1,6 +1,19 @@
 set( APPLICATIONS_OTHER_BASENAMES
-	ROOTFileMerge
 )
+
+if( Kassiopeia_USE_ROOT )
+    list( APPEND APPLICATIONS_OTHER_BASENAMES
+        ROOTFileMerge
+    )
+    if( Kommon_USE_BOOST )
+        list( APPEND APPLICATIONS_OTHER_BASENAMES
+            TrackCompare
+        )
+    endif( Kommon_USE_BOOST )
+endif( Kassiopeia_USE_ROOT )
+
+
+
 set( APPLICATIONS_OTHER_LIBRARIES
     ${Kommon_LIBRARIES}
     ${KGeoBag_LIBRARIES}
@@ -18,9 +31,10 @@ set( APPLICATIONS_OTHER_LIBRARIES
     KassiopeiaWriters
     KassiopeiaSimulation
 )
-set( APPLICATIONS_OTHER_PATH 
+set( APPLICATIONS_OTHER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
+
 kasper_internal_include_directories()
 foreach( BASENAME ${APPLICATIONS_OTHER_BASENAMES} )
 	add_executable( ${BASENAME} ${APPLICATIONS_OTHER_PATH}/${BASENAME}.cxx )

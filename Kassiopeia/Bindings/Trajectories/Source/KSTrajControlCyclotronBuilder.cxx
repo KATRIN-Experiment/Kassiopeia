@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTrajControlCyclotronStructure =
+    STATICINT sKSTrajControlCyclotronStructure =
         KSTrajControlCyclotronBuilder::Attribute< string >( "name" ) +
         KSTrajControlCyclotronBuilder::Attribute< double >( "fraction" );
 
-    static int sToolboxKSTrajControlCyclotron =
+    STATICINT sToolboxKSTrajControlCyclotron =
         KSRootBuilder::ComplexElement< KSTrajControlCyclotron >( "kstraj_control_cyclotron" );
 
 }

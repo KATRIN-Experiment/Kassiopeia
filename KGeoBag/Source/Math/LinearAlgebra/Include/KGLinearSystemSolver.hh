@@ -33,20 +33,20 @@ class KGLinearSystemSolver
 {
     public:
 
-        KGLinearSystemSolver(size_t dim);
+        KGLinearSystemSolver(unsigned int dim);
 
         virtual ~KGLinearSystemSolver();
 
-        size_t GetDimension() const {return fDim;};
+        unsigned int GetDimension() const {return fDim;};
 
 
         void SetMatrix(const double* mx);
 
-        void SetMatrixElement(size_t row, size_t col, const double& val);
+        void SetMatrixElement(unsigned int row, unsigned int col, const double& val);
 
         void SetBVector(const double* vec);
 
-        void SetBVectorElement(size_t index, const double& val);
+        void SetBVectorElement(unsigned int index, const double& val);
 
         void Reset(); //reset fA, fX, and fB to zero
 
@@ -54,12 +54,12 @@ class KGLinearSystemSolver
 
         void GetXVector(double* vec) const;
 
-        double GetXVectorElement(size_t i) const;
+        double GetXVectorElement(unsigned int i) const;
 
     private:
 
-        size_t fDim;
-        size_t fDimSize[2];
+        unsigned int fDim;
+        unsigned int fDimSize[2];
 
         kg_matrix* fA;
         kg_matrix* fU;

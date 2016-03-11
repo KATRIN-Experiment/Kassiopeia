@@ -5,11 +5,11 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    static int sKSWriteVTKStructure =
+    STATICINT sKSWriteVTKStructure =
         KSWriteVTKBuilder::Attribute< string >( "name" ) +
         KSWriteVTKBuilder::Attribute< string >( "base" ) +
         KSWriteVTKBuilder::Attribute< string >( "path" );
 
-    static int sKSWriteVTK =
+    STATICINT sKSWriteVTK =
         KSRootBuilder::ComplexElement< KSWriteVTK >( "kswrite_vtk" );
 }

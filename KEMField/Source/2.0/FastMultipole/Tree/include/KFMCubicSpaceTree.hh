@@ -50,8 +50,11 @@ class KFMCubicSpaceTree: public KFMTree<ObjectTypeList>
         {
             delete fTreeProperties;
             //reset the space tree properties pointer to null for all nodes
-            KFMNodeObjectNullifier<ObjectTypeList, KFMCubicSpaceTreeProperties<3> > treePropertyNullifier;
+            KFMNodeObjectNullifier<ObjectTypeList, KFMCubicSpaceTreeProperties<NDIM> > treePropertyNullifier;
             this->ApplyCorecursiveAction(&treePropertyNullifier);
+            delete fCompoundActor;
+            delete fProgenitor;
+            delete fConditionalProgenitor;
         }
 
         //access to manipulate tree properties
@@ -65,7 +68,7 @@ class KFMCubicSpaceTree: public KFMTree<ObjectTypeList>
 
         void AddPostSubdivisionAction(KFMNodeActor< KFMNode<ObjectTypeList> >* actor)
         {
-            //addes an additional action to be performed each node after the conditional progenator acts upon it
+            //adds an additional action to be performed each node after the conditional progenator acts upon it
             fCompoundActor->AddActor(actor);
         }
 

@@ -64,9 +64,9 @@ KFMScalarMultipoleExpansion::KFMScalarMultipoleExpansion()
 {
     fMomentsReal.resize(0);
     fMomentsImag.resize(0);
-};
+}
 
-KFMScalarMultipoleExpansion::~KFMScalarMultipoleExpansion(){;};
+KFMScalarMultipoleExpansion::~KFMScalarMultipoleExpansion(){;}
 
 void
 KFMScalarMultipoleExpansion::SetNumberOfTermsInSeries(unsigned int n_terms)
@@ -74,7 +74,7 @@ KFMScalarMultipoleExpansion::SetNumberOfTermsInSeries(unsigned int n_terms)
     if(n_terms > 0)
     {
         //compute the nearest integer square root
-        int degree_plus_one = std::floor( std::sqrt((double)n_terms) );
+        int degree_plus_one = (int) std::floor( std::sqrt((double)n_terms) );
         unsigned int expected_size = (degree_plus_one)*(degree_plus_one);
 
         if( expected_size != n_terms )
@@ -89,35 +89,38 @@ KFMScalarMultipoleExpansion::SetNumberOfTermsInSeries(unsigned int n_terms)
 
         Clear();
     }
-};
+}
 
 unsigned int
 KFMScalarMultipoleExpansion::GetNumberOfTermsInSeries() const
 {
     int degree  = GetDegree();
     return (degree+1)*(degree+1);
-};
+}
 
 
-int KFMScalarMultipoleExpansion::GetDegree() const
+int
+KFMScalarMultipoleExpansion::GetDegree() const
 {
     int storage_size = fMomentsReal.size();
     //now invert the triangle number
-    int degree = ( std::sqrt(1 + 8*storage_size) - 1)/2  - 1;
+    int degree = (int)( ( std::sqrt(1 + 8*storage_size) - 1)/2 ) - 1;
     return degree;
-};
+}
 
-unsigned int GetNumberOfTermsFromDegree(unsigned int degree)
+unsigned int
+KFMScalarMultipoleExpansion::GetNumberOfTermsFromDegree(unsigned int degree)
 {
     return (degree+1)*(degree+1);
 }
 
-unsigned int GetDegreeFromNumberOfTerms(unsigned int n_terms)
+unsigned int
+KFMScalarMultipoleExpansion::GetDegreeFromNumberOfTerms(unsigned int n_terms)
 {
-    if(n_terms != 0)
+    int degree = (int)( std::floor( std::sqrt((double)n_terms + 0.001) ) ) - 1;
+    if(degree > 0)
     {
-        unsigned int degree = std::floor( std::sqrt((double)n_terms + 0.001) ) - 1;
-        return degree;
+        return (unsigned int) degree;
     }
     else
     {
@@ -130,7 +133,7 @@ unsigned int GetDegreeFromNumberOfTerms(unsigned int n_terms)
 void
 KFMScalarMultipoleExpansion::SetDegree(const int& l_max)
 {
-    int degree = std::fabs(l_max);
+    int degree = std::abs(l_max);
     int size = TriangleNumber(degree + 1 );
 
     fMomentsReal.resize(size);

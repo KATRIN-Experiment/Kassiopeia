@@ -10,10 +10,10 @@ namespace katrin
     {
     }
 
-    static const int sKSRootTrajectory =
+    STATICINT sKSRootTrajectory =
         KSRootBuilder::ComplexElement< KSRootTrajectory >( "ks_root_trajectory" );
 
-    static const int sKSRootTrajectoryStructure =
+    STATICINT sKSRootTrajectoryStructure =
         KSRootTrajectoryBuilder::Attribute< string >( "name" ) +
         KSRootTrajectoryBuilder::Attribute< string >( "set_trajectory" );
 

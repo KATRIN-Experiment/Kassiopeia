@@ -22,6 +22,7 @@ namespace Kassiopeia
     {
     }
     KSRootSpaceInteraction::KSRootSpaceInteraction( const KSRootSpaceInteraction& aCopy ) :
+            KSComponent(),
             fSpaceInteractions( aCopy.fSpaceInteractions ),
             fSpaceInteraction( aCopy.fSpaceInteraction ),
             fStep( aCopy.fStep ),
@@ -223,6 +224,6 @@ namespace Kassiopeia
         }
     }
 
-    static const int sKSRootSpaceInteractionDict = KSDictionary< KSRootSpaceInteraction >::AddCommand( &KSRootSpaceInteraction::AddSpaceInteraction, &KSRootSpaceInteraction::RemoveSpaceInteraction, "add_space_interaction", "remove_space_interaction" );
+    STATICINT sKSRootSpaceInteractionDict = KSDictionary< KSRootSpaceInteraction >::AddCommand( &KSRootSpaceInteraction::AddSpaceInteraction, &KSRootSpaceInteraction::RemoveSpaceInteraction, "add_space_interaction", "remove_space_interaction" );
 
 }

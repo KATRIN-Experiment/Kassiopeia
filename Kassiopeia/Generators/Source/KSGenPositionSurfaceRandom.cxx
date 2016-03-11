@@ -47,7 +47,7 @@ namespace Kassiopeia
         for(KSParticleIt p = aPrimaries->begin(); p != aPrimaries->end(); ++p)
         {
             KThreeVector pos = random.Random(fSurfaces);
-            genmsg( eDebug ) << "surface random position generator <" << GetName() << "> diced position <" << pos << ">" << eom;
+            genmsg_debug( "surface random position generator <" << GetName() << "> diced position <" << pos << ">" << eom );
             (*p)->SetPosition(pos);
         }
     }

@@ -33,11 +33,11 @@ void kg_matrix_vector_product(const kg_matrix* m, const kg_vector* in, kg_vector
     {
 
         double elem;
-        for(size_t i=0; i<m->size1; i++)
+        for(unsigned int i=0; i<m->size1; i++)
         {
             elem = 0.0;
 
-            for(size_t j=0; j<m->size2; j++)
+            for(unsigned int j=0; j<m->size2; j++)
             {
                 elem += kg_matrix_get(m,i,j) * kg_vector_get(in, j);
             }
@@ -64,11 +64,11 @@ void kg_matrix_transpose_vector_product(const kg_matrix* m, const kg_vector* in,
     {
 
         double elem;
-        for(size_t i=0; i<m->size2; i++)
+        for(unsigned int i=0; i<m->size2; i++)
         {
             elem = 0.0;
 
-            for(size_t j=0; j<m->size1; j++)
+            for(unsigned int j=0; j<m->size1; j++)
             {
                 elem += kg_matrix_get(m,j,i) * kg_vector_get(in, j);
             }
@@ -101,10 +101,10 @@ void kg_sparse_matrix_vector_product(const kg_sparse_matrix* m, const kg_vector*
 
         double in_val;
         double mx_val;
-        size_t row;
-        size_t col;
+        unsigned int row;
+        unsigned int col;
 
-        for(size_t i=0; i < m->n_elements; i++)
+        for(unsigned int i=0; i < m->n_elements; i++)
         {
             row = (m->row)[i];
             col = (m->column)[i];
@@ -132,9 +132,9 @@ void kg_vector_outer_product(const kg_vector* a, const kg_vector* b, kg_matrix* 
     if( (a->size == p->size1) && ( b->size == p->size2) &&  (a->size == b->size) )
     {
         double elem;
-        for(size_t i=0; i<p->size1; i++)
+        for(unsigned int i=0; i<p->size1; i++)
         {
-            for(size_t j=0; j<p->size2; j++)
+            for(unsigned int j=0; j<p->size2; j++)
             {
                 elem = ( kg_vector_get(a,i) )*( kg_vector_get(b,j) );
                 kg_matrix_set(p, i, j, elem);

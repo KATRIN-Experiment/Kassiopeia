@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdio>
+
 #include "KConst.h"
 #include "KESSPhotoAbsorbtion.h"
 #include "KSParticle.h"

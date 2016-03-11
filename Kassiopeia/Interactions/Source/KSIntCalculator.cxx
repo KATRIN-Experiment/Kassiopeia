@@ -26,7 +26,7 @@ namespace Kassiopeia
     	fStepEnergyLoss = 0.0;
     }
 
-	static const int sKSIntCalculatorDict =
+    STATICINT sKSIntCalculatorDict =
 		KSDictionary< KSIntCalculator >::AddComponent( &KSIntCalculator::GetStepNInteractions, "step_number_of_interactions" ) +
 		KSDictionary< KSIntCalculator >::AddComponent( &KSIntCalculator::GetStepEnergyLoss, "step_energy_loss" );
 

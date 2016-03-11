@@ -35,6 +35,10 @@ class KFMElectrostaticFastMultipoleFieldSolver
         double Potential(const KPosition& P) const;
         KEMThreeVector ElectricField(const KPosition& P) const;
 
+        //for debugging and information purposes
+        int GetSubsetSize(const KPosition& P) const {SetPoint(P); return fSubsetSize;};
+        int GetTreeLevel(const KPosition& P) const {SetPoint(P); return fNodeList->size() - 1;};
+
     protected:
 
         void SetPoint(const double* p) const;
@@ -62,7 +66,10 @@ class KFMElectrostaticFastMultipoleFieldSolver
         mutable KFMCube<3>* fCube;
         mutable KFMPoint<3> fExpansionOrigin;
         mutable KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
-        mutable KFMExternalIdentitySet* fDirectCallIDSet;
+
+        mutable std::vector< KFMElectrostaticNode* >* fNodeList;
+        mutable unsigned int fSubsetSize;
+        mutable unsigned int* fDirectCallIDs;
 
         mutable bool fFallback;
 

@@ -9,7 +9,8 @@ namespace Kassiopeia
     KSTrajTermGyration::KSTrajTermGyration()
     {
     }
-    KSTrajTermGyration::KSTrajTermGyration( const KSTrajTermGyration& )
+    KSTrajTermGyration::KSTrajTermGyration( const KSTrajTermGyration& ):
+        KSComponent()
     {
     }
     KSTrajTermGyration* KSTrajTermGyration::Clone() const
@@ -20,7 +21,7 @@ namespace Kassiopeia
     {
     }
 
-    void KSTrajTermGyration::Differentiate( const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
+    void KSTrajTermGyration::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const
     {
         double tPhaseVelocity = 2. * KConst::Pi() * aParticle.GetCyclotronFrequency();
 

@@ -6,7 +6,8 @@ namespace Kassiopeia
     KSTrajIntegratorRK8::KSTrajIntegratorRK8()
     {
     }
-    KSTrajIntegratorRK8::KSTrajIntegratorRK8( const KSTrajIntegratorRK8& )
+    KSTrajIntegratorRK8::KSTrajIntegratorRK8( const KSTrajIntegratorRK8& ):
+        KSComponent()
     {
     }
     KSTrajIntegratorRK8* KSTrajIntegratorRK8::Clone() const

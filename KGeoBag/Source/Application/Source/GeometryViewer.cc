@@ -2,8 +2,6 @@
 #include "KGInterfaceBuilder.hh"
 #include "KGVTKGeometryPainter.hh"
 
-#include "KMessage.h"
-#include "KTextFile.h"
 #include "KCommandLineTokenizer.hh"
 #include "KXMLTokenizer.hh"
 #include "KVariableProcessor.hh"
@@ -13,6 +11,8 @@
 #include "KPrintProcessor.hh"
 #include "KElementProcessor.hh"
 #include "KTagProcessor.hh"
+#include "KMessage.h"
+#include "KTextFile.h"
 #include "KVTKWindow.h"
 
 #ifdef Kommon_USE_ROOT
@@ -26,7 +26,7 @@ int main( int argc, char** argv )
 {
     if( argc < 3 )
     {
-        cout << "usage: ./GeometryPainter <config_file_name.xml> <geometry_path>" << endl;
+        cout << "usage: ./GeometryViewer <config_file_name.xml> <geometry_path>" << endl;
         return -1;
     }
 
@@ -36,8 +36,11 @@ int main( int argc, char** argv )
     string tFileName( argv[ 1 ] );
     string tPath( argv[ 2 ] );
 
+    KCommandLineTokenizer tCommandLine;
+    tCommandLine.ProcessCommandLine( argc, argv );
+
     KXMLTokenizer tTokenizer;
-    KVariableProcessor tVariableProcessor;
+    KVariableProcessor tVariableProcessor( tCommandLine.GetVariables() );
     KIncludeProcessor tIncludeProcessor;
     KLoopProcessor tLoopProcessor;
     KConditionProcessor tConditionProcessor;

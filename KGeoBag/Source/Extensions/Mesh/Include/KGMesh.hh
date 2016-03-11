@@ -32,6 +32,8 @@ namespace KGeoBag
 
             void Clear();
 
+            bool HasData() const { if(fElements.size() != 0 ){return true;} return false;};
+
             const KGMeshElementVector* Elements() const;
             KGMeshElementVector* Elements();
 

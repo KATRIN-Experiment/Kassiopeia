@@ -8,32 +8,69 @@ namespace KEMField
     fSurfaceContainer(container)
   {
 
-    // We sort the surfaces by unique boundary description
-    for (KSurfaceContainer::iterator it=fSurfaceContainer.begin();
-    	 it!=fSurfaceContainer.end();it++)
-    {
-      bool isAssigned = false;
+    //temporary vectors to store look up table
+    std::vector< std::vector<unsigned int>* > sorted_surface_list;
 
-      if (fSortedSurfaces.size()!=0)
-      {
-    	int indexLevel = 0;
-    	for (KSurfaceContainer::KSurfaceDataIt dataIt = fSortedSurfaces.begin();
-    	     dataIt != fSortedSurfaces.end();++dataIt)
-    	{
-    	  KSurfacePrimitive* sP = (*dataIt)->at(0);
-	  if (*((*it)->GetBoundary()) == *(sP->GetBoundary()))
-    	  {
-    	    fSortedSurfaces.at(indexLevel)->push_back(*it);
-    	    isAssigned = true;
-    	    break;
-    	  }
-    	  indexLevel++;
-    	}
-      }
-    
-      if (!isAssigned) 
-    	fSortedSurfaces.push_back(new KSurfaceContainer::KSurfaceArray(1,*it));
+    // We sort the surfaces by unique boundary description
+    unsigned int index = 0;
+    for(KSurfaceContainer::iterator it=fSurfaceContainer.begin(); it!=fSurfaceContainer.end();it++)
+    {
+        bool isAssigned = false;
+
+        if(fSortedSurfaces.size()!=0)
+        {
+            int indexLevel = 0;
+            for (KSurfaceContainer::KSurfaceDataIt dataIt = fSortedSurfaces.begin(); dataIt != fSortedSurfaces.end();++dataIt)
+            {
+                KSurfacePrimitive* sP = (*dataIt)->at(0);
+                if (*((*it)->GetBoundary()) == *(sP->GetBoundary()))
+                {
+                    fSortedSurfaces.at(indexLevel)->push_back(*it);
+                    sorted_surface_list[indexLevel]->push_back(index);
+                    isAssigned = true;
+                    break;
+                }
+                indexLevel++;
+            }
+        }
+
+        if (!isAssigned)
+        {
+            fSortedSurfaces.push_back(new KSurfaceContainer::KSurfaceArray(1,*it));
+            sorted_surface_list.push_back( new std::vector<unsigned int>(1,index));
+        }
+
+        index++;
     }
+
+
+    //now we construct the index look-up maps
+    fNormalToSortedIndexMap.clear();
+    fSortedToNormalIndexMap.clear();
+
+    for(unsigned int i=0; i<sorted_surface_list.size(); i++)
+    {
+        for(unsigned int j=0; j<sorted_surface_list[i]->size(); j++)
+        {
+            fSortedToNormalIndexMap.push_back( sorted_surface_list[i]->at(j) );
+        }
+    }
+
+    unsigned int map_size = fSortedToNormalIndexMap.size();
+    fNormalToSortedIndexMap.resize(map_size);
+
+    for(unsigned int i=0; i<map_size; i++)
+    {
+        unsigned int normal_index = fSortedToNormalIndexMap[i];
+        fNormalToSortedIndexMap[normal_index] = i;
+    }
+
+    //clean up
+    for(unsigned int i=0; i<sorted_surface_list.size(); i++)
+    {
+        delete sorted_surface_list[i];
+    }
+
   }
 
   KSortedSurfaceContainer::~KSortedSurfaceContainer()

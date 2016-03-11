@@ -48,6 +48,7 @@ class KFMElectrostaticElementContainerBase
         virtual const KFMPoint<SpatialDimension>* GetCentroid(unsigned int id) const = 0;
         virtual double GetAspectRatio(unsigned int id) const = 0;
 
+        virtual void ClearBoundingBalls(){;};
         virtual void Clear(){;};
 
         virtual KFMObjectContainer< KFMPointCloud<SpatialDimension> >* GetPointCloudContainer() = 0;

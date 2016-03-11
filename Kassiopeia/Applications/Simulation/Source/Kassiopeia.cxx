@@ -13,6 +13,7 @@
 
 #ifdef Kommon_USE_ROOT
 #include "KFormulaProcessor.hh"
+#include "KSaveSettingsProcessor.hh"
 #endif
 
 #include "KSMainMessage.h"
@@ -54,8 +55,14 @@ int main( int argc, char** argv )
     tConditionProcessor.InsertAfter( &tLoopProcessor );
     tPrintProcessor.InsertAfter( &tConditionProcessor );
     tTagProcessor.InsertAfter( &tPrintProcessor );
-    tElementProcessor.InsertAfter( &tTagProcessor );
 
+#ifdef Kommon_USE_ROOT
+	KSaveSettingsProcessor tSSProcessor;
+	tSSProcessor.InsertAfter( &tPrintProcessor );
+	tTagProcessor.InsertAfter( &tSSProcessor );
+#endif
+
+    tElementProcessor.InsertAfter( &tTagProcessor );
 
     mainmsg( eNormal ) << "starting..." << eom;
 

@@ -81,7 +81,7 @@ namespace katrin
 namespace katrin
 {
 
-    static int sTextFileStructure =
+    STATICINT sTextFileStructure =
         KTextFileBuilder::Attribute< string >( "path" ) +
         KTextFileBuilder::Attribute< string >( "default_path" ) +
         KTextFileBuilder::Attribute< string >( "base" ) +

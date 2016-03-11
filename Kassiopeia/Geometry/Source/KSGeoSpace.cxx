@@ -13,6 +13,7 @@ namespace Kassiopeia
     {
     }
     KSGeoSpace::KSGeoSpace( const KSGeoSpace& aCopy ) :
+            KSComponent(),
             fContents( aCopy.fContents ),
             fCommands( aCopy.fCommands )
     {
@@ -68,9 +69,9 @@ namespace Kassiopeia
         double tDistance;
         KThreeVector tPoint;
         vector< KGSpace* >::const_iterator tSpace;
+
         double tNearestDistance = std::numeric_limits< double >::max();
         KThreeVector tNearestPoint;
-        vector< KGSpace* >::const_iterator tNearestSpace;
 
         for( tSpace = fContents.begin(); tSpace != fContents.end(); tSpace++ )
         {
@@ -80,11 +81,10 @@ namespace Kassiopeia
             {
                 tNearestDistance = tDistance;
                 tNearestPoint = tPoint;
-                tNearestSpace = tSpace;
             }
         }
 
-        return tPoint;
+        return tNearestPoint;
     }
     KThreeVector KSGeoSpace::Normal( const KThreeVector& aPoint ) const
     {
@@ -93,8 +93,7 @@ namespace Kassiopeia
         vector< KGSpace* >::const_iterator tSpace;
 
         double tNearestDistance = std::numeric_limits< double >::max();
-        KThreeVector tNearestPoint;
-        vector< KGSpace* >::const_iterator tNearestSpace;
+        const KGSpace* tNearestSpace = NULL;
 
         for( tSpace = fContents.begin(); tSpace != fContents.end(); tSpace++ )
         {
@@ -103,12 +102,15 @@ namespace Kassiopeia
             if( tDistance < tNearestDistance )
             {
                 tNearestDistance = tDistance;
-                tNearestPoint = tPoint;
-                tNearestSpace = tSpace;
+                tNearestSpace = (*tSpace);
             }
         }
 
-        return (*tNearestSpace)->Normal( aPoint );
+        if (tNearestSpace != NULL)
+            return tNearestSpace->Normal( aPoint );
+
+        geomsg( eWarning ) << "geo space <" << GetName() << "> could not find a nearest space to position " << aPoint << eom;
+        return KThreeVector::sInvalid;
     }
 
     void KSGeoSpace::AddContent( KGSpace* aSpace )
@@ -118,7 +120,7 @@ namespace Kassiopeia
         {
             if( (*tSpace) == aSpace )
             {
-                //todo: warning here
+                geomsg( eWarning ) <<"space <"<<aSpace->GetName()<<"> was already added to geo space <" << this->GetName() <<">"<<eom;
                 return;
             }
         }
@@ -136,8 +138,12 @@ namespace Kassiopeia
                 return;
             }
         }
-        //todo: warning here
+        geomsg( eWarning ) <<"can not remove space <"<<aSpace->GetName()<<">, as it was not found in geo space <" << this->GetName() <<">"<<eom;
         return;
+    }
+    vector< KGSpace* > KSGeoSpace::GetContent()
+    {
+    	return fContents;
     }
 
     void KSGeoSpace::AddCommand( KSCommand* anCommand )
@@ -147,7 +153,7 @@ namespace Kassiopeia
         {
             if( (*tCommand) == anCommand )
             {
-                //todo: warning here
+                geomsg( eWarning ) <<"command <"<<anCommand->GetName()<<"> was already added to geo space <" << this->GetName() <<">"<<eom;
                 return;
             }
         }
@@ -165,7 +171,7 @@ namespace Kassiopeia
                 return;
             }
         }
-        //todo: warning here
+        geomsg( eWarning ) <<"can not remove command <"<<anCommand->GetName()<<">, as it was not found in geo space <" << this->GetName() <<">"<<eom;
         return;
     }
 
@@ -178,21 +184,52 @@ namespace Kassiopeia
             (*tCommandIt)->GetChild()->Initialize();
         }
 
-        vector< KSSpace* >::iterator tGeoSpaceIt;
-        for( tGeoSpaceIt = fSpaces.begin(); tGeoSpaceIt != fSpaces.end(); tGeoSpaceIt++ )
+        vector< KSSpace* >::iterator tKSSpaceIt;
+        for( tKSSpaceIt = fSpaces.begin(); tKSSpaceIt != fSpaces.end(); tKSSpaceIt++ )
         {
-            (*tGeoSpaceIt)->Initialize();
+            (*tKSSpaceIt)->Initialize();
         }
-        vector< KSSurface* >::iterator tGeoSurfaceIt;
-        for( tGeoSurfaceIt = fSurfaces.begin(); tGeoSurfaceIt != fSurfaces.end(); tGeoSurfaceIt++ )
+        vector< KSSurface* >::iterator tKSSurfaceIt;
+        for( tKSSurfaceIt = fSurfaces.begin(); tKSSurfaceIt != fSurfaces.end(); tKSSurfaceIt++ )
         {
-            (*tGeoSurfaceIt)->Initialize();
+            (*tKSSurfaceIt)->Initialize();
         }
-        vector< KSSide* >::iterator tGeoSideIt;
-        for( tGeoSideIt = fSides.begin(); tGeoSideIt != fSides.end(); tGeoSideIt++ )
+        vector< KSSide* >::iterator tKSSideIt;
+        for( tKSSideIt = fSides.begin(); tKSSideIt != fSides.end(); tKSSideIt++ )
         {
-            (*tGeoSideIt)->Initialize();
-        }
+            (*tKSSideIt)->Initialize();
+
+            //check if navigation sides are really geometric boundaries of volumes
+            KSGeoSide* tGeoSide = dynamic_cast<KSGeoSide* >( (*tKSSideIt) );
+            if ( tGeoSide != NULL )
+            {
+                vector< KGSurface* > tSideSurfaces = tGeoSide->GetContent();
+
+                for( vector< KGSurface* >::const_iterator tSideSurface = tSideSurfaces.begin(); tSideSurface != tSideSurfaces.end(); tSideSurface++ )
+                {
+
+                    for( vector< KGSpace* >::const_iterator tSpace = fContents.begin(); tSpace != fContents.end(); tSpace++ )
+                    {
+                        bool tValid = false;
+
+                        const vector< KGSurface* >* tSurfaces = (*tSpace)->GetBoundaries();
+
+                        for( vector< KGSurface* >::const_iterator tSurface = tSurfaces->begin(); tSurface != tSurfaces->end(); tSurface++ )
+                        {
+                            if ( *(tSideSurface) == *(tSurface) )
+                            {
+                                tValid = true;
+                            }
+                        }
+
+                        if ( tValid == false )
+                        {
+                            geomsg( eError ) <<"geo_side <" <<(*tSideSurface)->GetName()<<"> is not a geometic boundary of space <"<<(*tSpace)->GetName()<<">, check your navigation configuration"<<eom;
+                        }
+                    }
+                }
+            }
+		}
 
         return;
     }

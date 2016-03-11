@@ -27,13 +27,21 @@ namespace Kassiopeia
             //**********
 
         public:
+
+            void Reset();
             void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
             void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
+            void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates) const;
+
 
         private:
             double fTime;
             KThreeVector fPosition;
             KThreeVector fVelocity;
+
+            //internal state for piecewise approximation
+            KSParticle fFirstParticle;
+            KSParticle fLastParticle;
     };
 
 }

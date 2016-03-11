@@ -7,19 +7,19 @@ void KFMElectrostaticSurfaceConverter::SetSurfaceContainer(const KSurfaceContain
 {
     fSurfaceContainer = container;
     fContainerIsSorted = false;
-};
+}
 
 void KFMElectrostaticSurfaceConverter::SetSortedSurfaceContainer(const KSortedSurfaceContainer* container)
 {
     fSortedSurfaceContainer = container;
     fContainerIsSorted = true;
-};
+}
 
 
 void KFMElectrostaticSurfaceConverter::SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container)
 {
     fElectrostaticElementContainer = container;
-};
+}
 
 
 void
@@ -66,7 +66,13 @@ KFMElectrostaticSurfaceConverter::Extract()
                 fTempElement.SetPointCloud( fTempPointCloud );
 
                 //compute and set the bounding ball
-                fTempElement.SetBoundingBall( fBoundingBallGenerator.Convert(&fTempPointCloud) );
+                KFMBall<3> bball = fBoundingBallGenerator.Convert(&fTempPointCloud);
+
+                //less optimal way of computing bounding sphere (but might be more numerically stable)
+                // bball.SetCenter(fTempPointCloud.GetCentroid());
+                // bball.SetRadius(fTempPointCloud.GetRadiusAboutCentroid());
+
+                fTempElement.SetBoundingBall( bball );
 
                 //extract the element centroid
                 KPosition centroid;

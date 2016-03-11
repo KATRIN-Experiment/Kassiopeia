@@ -3,7 +3,7 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( Kassiopeia, navmsg );
+KMESSAGE_DECLARE( Kassiopeia, navmsg )
 
 #ifdef Kassiopeia_ENABLE_DEBUG
 

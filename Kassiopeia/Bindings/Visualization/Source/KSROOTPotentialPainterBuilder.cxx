@@ -6,7 +6,7 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    static int sKSROOTPotentialPainterStructure =
+    STATICINT sKSROOTPotentialPainterStructure =
         KSROOTPotentialPainterBuilder::Attribute< string >( "name" ) +
         KSROOTPotentialPainterBuilder::Attribute< string >( "x_axis" ) +
         KSROOTPotentialPainterBuilder::Attribute< string >( "y_axis" ) +
@@ -19,10 +19,10 @@ namespace katrin
         KSROOTPotentialPainterBuilder::Attribute< bool >( "calc_pot" );
 
 
-    static int sKSROOTPotentialPainterWindow =
+    STATICINT sKSROOTPotentialPainterWindow =
         KROOTWindowBuilder::ComplexElement< KSROOTPotentialPainter >( "root_potential_painter" );
 
-    static int sKSROOTPotentialPainterPad =
+    STATICINT sKSROOTPotentialPainterPad =
         KROOTPadBuilder::ComplexElement< KSROOTPotentialPainter >( "root_potential_painter" );
 
 }

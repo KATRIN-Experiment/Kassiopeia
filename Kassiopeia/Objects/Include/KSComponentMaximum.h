@@ -3,7 +3,8 @@
 
 #include "KSDictionary.h"
 #include "KSNumerical.h"
-#include <iostream>
+#include "KSComponentValue.h"
+
 namespace Kassiopeia
 {
 
@@ -14,8 +15,7 @@ namespace Kassiopeia
         public:
             KSComponentMaximum( KSComponent* aParentComponent, XValueType* aParentPointer ) :
                     KSComponent(),
-                    fOperand( aParentPointer ),
-                    fMaximum( -1. * KSNumerical< XValueType >::Maximum )
+                    fMaximum( aParentPointer )
             {
                 Set( &fMaximum );
                 this->SetParent( aParentComponent );
@@ -23,7 +23,6 @@ namespace Kassiopeia
             }
             KSComponentMaximum( const KSComponentMaximum< XValueType >& aCopy ) :
                     KSComponent( aCopy ),
-                    fOperand( aCopy.fOperand ),
                     fMaximum( aCopy.fMaximum )
             {
                 Set( &fMaximum );
@@ -63,26 +62,25 @@ namespace Kassiopeia
             }
 
         public:
+            void InitializeComponent()
+            {
+                fMaximum.Reset();
+            }
+
             void PushUpdateComponent()
             {
                 objctmsg_debug( "component maximum <" << this->GetName() << "> pushing update" << eom );
-                if( fMaximum < (*fOperand) )
-                {
-                    fMaximum = (*fOperand);
-                }
-                return;
+                (void) fMaximum.Update();
             }
 
             void PullDeupdateComponent()
             {
                 objctmsg_debug( "component maximum <" << this->GetName() << "> pulling deupdate" << eom );
-                fMaximum = -1. * KSNumerical< XValueType >::Maximum;
-                return;
+                fMaximum.Reset();
             }
 
         private:
-            XValueType* fOperand;
-            XValueType fMaximum;
+            KSComponentValueMaximum< XValueType > fMaximum;
     };
 
 }

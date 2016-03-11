@@ -4,6 +4,7 @@
 #include "KComplexElement.hh"
 #include "KSFieldElectrostatic.h"
 #include "KSFieldsMessage.h"
+#include "KSFieldKrylovBEMSolverBuilder.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -15,38 +16,29 @@ namespace katrin
     inline bool KSKEMFieldVTKViewerBuilder::AddAttribute( KContainer* aContainer )
     {
         if( aContainer->GetName() == "file" )
-        {
-            std::string name;
-            aContainer->CopyTo( name );
-            fObject->SetFile( name );
+        {            
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::VTKViewer::SetFile );
             return true;
         }
         if( aContainer->GetName() == "view" )
         {
-            bool choice;
-            aContainer->CopyTo( choice );
-            fObject->ViewGeometry( choice );
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::VTKViewer::ViewGeometry );
             return true;
         }
         if( aContainer->GetName() == "save" )
         {
-            bool choice;
-            aContainer->CopyTo( choice );
-            fObject->SaveGeometry( choice );
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::VTKViewer::SaveGeometry );
+
             return true;
         }
         if( aContainer->GetName() == "preprocessing" )
         {
-            bool choice;
-            aContainer->CopyTo( choice );
-            fObject->Preprocessing( choice );
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::VTKViewer::Preprocessing );
             return true;
         }
         if( aContainer->GetName() == "postprocessing" )
         {
-            bool choice;
-            aContainer->CopyTo( choice );
-            fObject->Postprocessing( choice );
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::VTKViewer::Postprocessing );
             return true;
         }
         return false;
@@ -58,21 +50,66 @@ namespace katrin
     inline bool KSCachedBEMSolverBuilder::AddAttribute( KContainer* aContainer )
     {
         if( aContainer->GetName() == "name" )
-        {
-            std::string name;
-            aContainer->CopyTo( name );
-            fObject->SetName( name );
+        {            
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::CachedBEMSolver::SetName );
             return true;
         }
         if( aContainer->GetName() == "hash" )
         {
-            std::string hash;
-            aContainer->CopyTo( hash );
-            fObject->SetHash( hash );
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::CachedBEMSolver::SetHash );
             return true;
         }
         return false;
     }
+
+    typedef KComplexElement< KSFieldElectrostatic::ExplicitSuperpositionSolutionComponent > KSExplicitSuperpositionSolutionComponentBuilder;
+
+    template< >
+    inline bool KSExplicitSuperpositionSolutionComponentBuilder::AddAttribute( KContainer* aContainer )
+    {
+        if( aContainer->GetName() == "name" )
+        {            
+            aContainer->CopyTo( fObject->name );
+            return true;
+        }
+        if( aContainer->GetName() == "scale" )
+        {            
+            aContainer->CopyTo( fObject->scale );
+            return true;
+        }
+        if( aContainer->GetName() == "hash" )
+        {            
+            aContainer->CopyTo( fObject->hash );
+            return true;
+        }
+        return false;
+    }
+
+
+    typedef KComplexElement< KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver > KSExplicitSuperpositionCachedBEMSolverBuilder;
+
+    template< >
+    inline bool KSExplicitSuperpositionCachedBEMSolverBuilder::AddAttribute( KContainer* aContainer )
+    {
+        if( aContainer->GetName() == "name" )
+        {            
+            aContainer->CopyTo( fObject, &KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver::SetName );
+            return true;
+        }
+        return false;
+    }
+
+    template< >
+    inline bool KSExplicitSuperpositionCachedBEMSolverBuilder::AddElement( KContainer* anElement )
+    {
+        if( anElement->GetName() == "component" )
+        {
+            anElement->ReleaseTo( fObject, &KSFieldElectrostatic::ExplicitSuperpositionCachedBEMSolver::AddSolutionComponent );
+            return true;
+        }
+        return false;
+    }
+
 
     typedef KComplexElement< KSFieldElectrostatic::RobinHoodBEMSolver > KSRobinHoodBEMSolverBuilder;
 
@@ -123,122 +160,6 @@ namespace katrin
     }
 
 
-    typedef KComplexElement< KSFieldElectrostatic::FastMultipoleBEMSolver > KSFastMultipoleBEMSolverBuilder;
-
-    template< >
-    inline bool KSFastMultipoleBEMSolverBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "tolerance" )
-        {
-            aContainer->CopyTo( fObject, &KSFieldElectrostatic::FastMultipoleBEMSolver::SetTolerance );
-            return true;
-        }
-        if( aContainer->GetName() == "krylov_solver_type" )
-        {
-            aContainer->CopyTo( fObject, &KSFieldElectrostatic::FastMultipoleBEMSolver::SetKrylovSolverType );
-            return true;
-        }
-        if( aContainer->GetName() == "restart_cycle_size" )
-        {
-            aContainer->CopyTo( fObject, &KSFieldElectrostatic::FastMultipoleBEMSolver::SetRestartCycleSize );
-            return true;
-        }
-        if( aContainer->GetName() == "spatial_division" )
-        {
-            unsigned int nDivisions;
-            aContainer->CopyTo( nDivisions );
-            fObject->GetParameters()->divisions = nDivisions;
-            return true;
-        }
-        if( aContainer->GetName() == "expansion_degree" )
-        {
-            unsigned int nDegree;
-            aContainer->CopyTo( nDegree );
-            fObject->GetParameters()->degree = nDegree;
-            return true;
-        }
-        if( aContainer->GetName() == "neighbor_order" )
-        {
-            unsigned int nNeighborOrder;
-            aContainer->CopyTo( nNeighborOrder );
-            fObject->GetParameters()->zeromask = nNeighborOrder;
-            return true;
-        }
-        if( aContainer->GetName() == "maximum_tree_depth" )
-        {
-            unsigned int nMaxTreeDepth;
-            aContainer->CopyTo( nMaxTreeDepth );
-            fObject->GetParameters()->maximum_tree_depth = nMaxTreeDepth;
-            return true;
-        }
-        if( aContainer->GetName() == "region_expansion_factor" )
-        {
-            double dExpansionFactor;
-            aContainer->CopyTo( dExpansionFactor );
-            fObject->GetParameters()->region_expansion_factor = dExpansionFactor;
-            return true;
-        }
-        if( aContainer->GetName() == "use_region_size_estimation" )
-        {
-            bool useEstimation;
-            aContainer->CopyTo( useEstimation );
-            fObject->GetParameters()->use_region_estimation = useEstimation;
-            return true;
-        }
-        if( aContainer->GetName() == "world_cube_center_x" )
-        {
-            double x;
-            aContainer->CopyTo( x );
-            fObject->GetParameters()->world_center_x = x;
-            return true;
-        }
-        if( aContainer->GetName() == "world_cube_center_y" )
-        {
-            double y;
-            aContainer->CopyTo( y );
-            fObject->GetParameters()->world_center_y = y;
-            return true;
-        }
-        if( aContainer->GetName() == "world_cube_center_z" )
-        {
-            double z;
-            aContainer->CopyTo( z );
-            fObject->GetParameters()->world_center_z = z;
-            return true;
-        }
-        if( aContainer->GetName() == "world_cube_length" )
-        {
-            double l;
-            aContainer->CopyTo( l );
-            fObject->GetParameters()->world_length = l;
-            return true;
-        }
-        if( aContainer->GetName() == "use_caching" )
-        {
-            bool b;
-            aContainer->CopyTo( b );
-            fObject->GetParameters()->use_caching = b;
-            return true;
-        }
-        if( aContainer->GetName() == "verbosity" )
-        {
-            unsigned int n;
-            aContainer->CopyTo( n );
-            fObject->GetParameters()->verbosity = n;
-            return true;
-        }
-        if( aContainer->GetName() == "use_opencl" )
-        {
-            aContainer->CopyTo( fObject, &KSFieldElectrostatic::FastMultipoleBEMSolver::UseOpenCL );
-            return true;
-        }
-        if( aContainer->GetName() == "use_vtk" )
-        {
-            aContainer->CopyTo( fObject, &KSFieldElectrostatic::FastMultipoleBEMSolver::UseVTK );
-            return true;
-        }
-        return false;
-    }
 
     typedef KComplexElement< KSFieldElectrostatic::GaussianEliminationBEMSolver > KSGaussianEliminationBEMSolverBuilder;
 
@@ -261,94 +182,68 @@ namespace katrin
     inline bool KSElectrostaticZonalHarmonicFieldSolverBuilder::AddAttribute( KContainer* aContainer )
     {
         if( aContainer->GetName() == "number_of_bifurcations" )
-        {
-            int nBifurcations;
-            aContainer->CopyTo( nBifurcations );
-            fObject->GetParameters()->SetNBifurcations( nBifurcations );
+        {                      
+            fObject->GetParameters()->SetNBifurcations( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "convergence_ratio" )
         {
-            double convergenceRatio;
-            aContainer->CopyTo( convergenceRatio );
-            fObject->GetParameters()->SetConvergenceRatio( convergenceRatio );
+            fObject->GetParameters()->SetConvergenceRatio( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "proximity_to_sourcepoint" )
         {
-            double proximityToSourcePoint;
-            aContainer->CopyTo( proximityToSourcePoint );
-            fObject->GetParameters()->SetProximityToSourcePoint( proximityToSourcePoint );
+            fObject->GetParameters()->SetProximityToSourcePoint( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "convergence_parameter" )
         {
-            double convergenceParameter;
-            aContainer->CopyTo( convergenceParameter );
-            fObject->GetParameters()->SetConvergenceParameter( convergenceParameter );
+            fObject->GetParameters()->SetConvergenceParameter( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "number_of_central_coefficients" )
         {
-            int nCentralCoefficients;
-            aContainer->CopyTo( nCentralCoefficients );
-            fObject->GetParameters()->SetNCentralCoefficients( nCentralCoefficients );
+            fObject->GetParameters()->SetNCentralCoefficients( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "use_fractional_central_sourcepoint_spacing" )
         {
-            bool centralFractionalSpacing;
-            aContainer->CopyTo( centralFractionalSpacing );
-            fObject->GetParameters()->SetCentralFractionalSpacing( centralFractionalSpacing );
+            fObject->GetParameters()->SetCentralFractionalSpacing( aContainer->AsReference<bool>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_fractional_distance" )
         {
-            double centralFractionalDistance;
-            aContainer->CopyTo( centralFractionalDistance );
-            fObject->GetParameters()->SetCentralFractionalDistance( centralFractionalDistance );
+            fObject->GetParameters()->SetCentralFractionalDistance( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_spacing" )
         {
-            double centralDeltaZ;
-            aContainer->CopyTo( centralDeltaZ );
-            fObject->GetParameters()->SetCentralDeltaZ( centralDeltaZ );
+            fObject->GetParameters()->SetCentralDeltaZ( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_start" )
         {
-            double centralZ1;
-            aContainer->CopyTo( centralZ1 );
-            fObject->GetParameters()->SetCentralZ1( centralZ1 );
+            fObject->GetParameters()->SetCentralZ1( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "central_sourcepoint_end" )
         {
-            double centralZ2;
-            aContainer->CopyTo( centralZ2 );
-            fObject->GetParameters()->SetCentralZ2( centralZ2 );
+            fObject->GetParameters()->SetCentralZ2( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "number_of_remote_coefficients" )
         {
-            int nRemoteCoefficients;
-            aContainer->CopyTo( nRemoteCoefficients );
-            fObject->GetParameters()->SetNRemoteCoefficients( nRemoteCoefficients );
+            fObject->GetParameters()->SetNRemoteCoefficients( aContainer->AsReference<int>() );
             return true;
         }
         if( aContainer->GetName() == "remote_sourcepoint_start" )
         {
-            double remoteZ1;
-            aContainer->CopyTo( remoteZ1 );
-            fObject->GetParameters()->SetRemoteZ1( remoteZ1 );
+            fObject->GetParameters()->SetRemoteZ1( aContainer->AsReference<double>() );
             return true;
         }
         if( aContainer->GetName() == "remote_sourcepoint_end" )
         {
-            double remoteZ2;
-            aContainer->CopyTo( remoteZ2 );
-            fObject->GetParameters()->SetRemoteZ2( remoteZ2 );
+            fObject->GetParameters()->SetRemoteZ2( aContainer->AsReference<double>() );
             return true;
         }
         return false;
@@ -361,96 +256,80 @@ namespace katrin
     template< >
     inline bool KSFastMultipoleFieldSolverBuilder::AddAttribute( KContainer* aContainer )
     {
-        if( aContainer->GetName() == "spatial_division" )
+        if( aContainer->GetName() == "top_level_divisions" )
         {
-            unsigned int nDivisions;
-            aContainer->CopyTo( nDivisions );
-            fObject->GetParameters()->divisions = nDivisions;
+            aContainer->CopyTo( fObject->GetParameters()->top_level_divisions );
+            return true;
+        }
+        if( aContainer->GetName() == "tree_level_divisions" )
+        {
+            aContainer->CopyTo( fObject->GetParameters()->divisions );
             return true;
         }
         if( aContainer->GetName() == "expansion_degree" )
         {
-            unsigned int nDegree;
-            aContainer->CopyTo( nDegree );
-            fObject->GetParameters()->degree = nDegree;
+            aContainer->CopyTo( fObject->GetParameters()->degree );
             return true;
         }
         if( aContainer->GetName() == "neighbor_order" )
         {
-            unsigned int nNeighborOrder;
-            aContainer->CopyTo( nNeighborOrder );
-            fObject->GetParameters()->zeromask = nNeighborOrder;
+            aContainer->CopyTo( fObject->GetParameters()->zeromask );
             return true;
         }
         if( aContainer->GetName() == "maximum_tree_depth" )
         {
-            unsigned int nMaxTreeDepth;
-            aContainer->CopyTo( nMaxTreeDepth );
-            fObject->GetParameters()->maximum_tree_depth = nMaxTreeDepth;
+            aContainer->CopyTo( fObject->GetParameters()->maximum_tree_depth );
             return true;
         }
         if( aContainer->GetName() == "region_expansion_factor" )
         {
-            double dExpansionFactor;
-            aContainer->CopyTo( dExpansionFactor );
-            fObject->GetParameters()->region_expansion_factor = dExpansionFactor;
+            aContainer->CopyTo( fObject->GetParameters()->region_expansion_factor );
             return true;
         }
         if( aContainer->GetName() == "use_region_size_estimation" )
         {
-            bool useEstimation;
-            aContainer->CopyTo( useEstimation );
-            fObject->GetParameters()->use_region_estimation = useEstimation;
+            aContainer->CopyTo( fObject->GetParameters()->use_region_estimation );
             return true;
         }
         if( aContainer->GetName() == "world_cube_center_x" )
         {
-            double x;
-            aContainer->CopyTo( x );
-            fObject->GetParameters()->world_center_x = x;
+            aContainer->CopyTo( fObject->GetParameters()->world_center_x );
             return true;
         }
         if( aContainer->GetName() == "world_cube_center_y" )
         {
-            double y;
-            aContainer->CopyTo( y );
-            fObject->GetParameters()->world_center_y = y;
+            aContainer->CopyTo( fObject->GetParameters()->world_center_y );
             return true;
         }
         if( aContainer->GetName() == "world_cube_center_z" )
         {
-            double z;
-            aContainer->CopyTo( z );
-            fObject->GetParameters()->world_center_z = z;
+            aContainer->CopyTo( fObject->GetParameters()->world_center_z );
             return true;
         }
         if( aContainer->GetName() == "world_cube_length" )
         {
-            double l;
-            aContainer->CopyTo( l );
-            fObject->GetParameters()->world_length = l;
+            aContainer->CopyTo( fObject->GetParameters()->world_length );
             return true;
 
         }
         if( aContainer->GetName() == "use_caching" )
         {
-            bool b;
-            aContainer->CopyTo( b );
-            fObject->GetParameters()->use_caching = b;
+            aContainer->CopyTo( fObject->GetParameters()->use_caching );
             return true;
         }
         if( aContainer->GetName() == "verbosity" )
         {
-            unsigned int n;
-            aContainer->CopyTo( n );
-            fObject->GetParameters()->verbosity = n;
+            aContainer->CopyTo( fObject->GetParameters()->verbosity );
+            return true;
+        }
+        if( aContainer->GetName() == "insertion_ratio" )
+        {
+            aContainer->CopyTo( fObject->GetParameters()->insertion_ratio );
             return true;
         }
         if( aContainer->GetName() == "use_opencl" )
-        {
-            bool choice;
-            aContainer->CopyTo(choice);
-            fObject->UseOpenCL(choice);
+        {            
+            aContainer->CopyTo(fObject, &KSFieldElectrostatic::FastMultipoleFieldSolver::UseOpenCL);
             return true;
         }
         return false;
@@ -560,10 +439,18 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSFieldElectrostatic::SetHashThreshold );
             return true;
         }
+        if( aContainer->GetName() == "minimum_element_area" )
+        {
+            aContainer->CopyTo( fObject, &KSFieldElectrostatic::SetMinimumElementArea);
+            return true;
+        }
+        if( aContainer->GetName() == "maximum_element_aspect_ratio" )
+        {
+            aContainer->CopyTo( fObject, &KSFieldElectrostatic::SetMaximumElementAspectRatio);
+            return true;
+        }
         return false;
     }
-
-    typedef KComplexElement< KSFieldElectrostatic > KSFieldElectrostaticBuilder;
 
     template< >
     inline bool KSFieldElectrostaticBuilder::AddElement( KContainer* anElement )
@@ -578,6 +465,11 @@ namespace katrin
             anElement->ReleaseTo( fObject, &KSFieldElectrostatic::SetBEMSolver );
             return true;
         }
+        if( anElement->GetName() == "explicit_superposition_cached_bem_solver" )
+        {
+            anElement->ReleaseTo( fObject, &KSFieldElectrostatic::SetBEMSolver );
+            return true;
+        }
         if( anElement->GetName() == "gaussian_elimination_bem_solver" )
         {
             anElement->ReleaseTo( fObject, &KSFieldElectrostatic::SetBEMSolver );
@@ -588,7 +480,7 @@ namespace katrin
             anElement->ReleaseTo( fObject, &KSFieldElectrostatic::SetBEMSolver );
             return true;
         }
-        if( anElement->GetName() == "fast_multipole_bem_solver" )
+        if( anElement->GetName() == "krylov_bem_solver" )
         {
             anElement->ReleaseTo( fObject, &KSFieldElectrostatic::SetBEMSolver );
             return true;

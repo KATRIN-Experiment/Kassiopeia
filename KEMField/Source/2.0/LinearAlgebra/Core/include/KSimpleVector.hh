@@ -16,10 +16,14 @@ namespace KEMField
     KSimpleVector(const std::vector<ValueType>& v) { fElements = v; }
     virtual ~KSimpleVector() {}
 
-    const ValueType& operator()(unsigned int i) const { return fElements.at(i); }
+    const ValueType& operator()(unsigned int i) const { return fElements[i]; }
     ValueType& operator[](unsigned int i) { return fElements[i]; }
 
     unsigned int Dimension() const { return fElements.size(); }
+
+    unsigned int size() const {return fElements.size(); };
+
+    void clear() {fElements.clear();};
 
     void resize(unsigned int n,ValueType v=0) { fElements.resize(n,v); }
 

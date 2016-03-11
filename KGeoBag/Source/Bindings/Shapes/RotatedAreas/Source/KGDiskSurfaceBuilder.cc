@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static int sKGDiskSurfaceBuilder =
+    STATICINT sKGDiskSurfaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGDiskSurface >( "disk_surface" );
 
-    static int sKGDiskSurfaceBuilderStructure =
+    STATICINT sKGDiskSurfaceBuilderStructure =
         KGDiskSurfaceBuilder::Attribute< string >( "name" ) +
         KGDiskSurfaceBuilder::Attribute< double >( "r" ) +
         KGDiskSurfaceBuilder::Attribute< double >( "z" ) +

@@ -10,11 +10,11 @@ namespace katrin
     {
     }
 
-    static int sKSTermMaxLengthStructure =
+    STATICINT sKSTermMaxLengthStructure =
         KSTermMaxLengthBuilder::Attribute< string >( "name" ) +
         KSTermMaxLengthBuilder::Attribute< double >( "length" );
 
-    static int sKSTermMaxLength =
+    STATICINT sKSTermMaxLength =
         KSRootBuilder::ComplexElement< KSTermMaxLength >( "ksterm_max_length" );
 
 }

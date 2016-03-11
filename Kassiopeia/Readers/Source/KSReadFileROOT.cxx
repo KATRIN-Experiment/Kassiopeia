@@ -20,6 +20,16 @@ namespace Kassiopeia
     {
     }
 
+    bool KSReadFileROOT::TryFile( KRootFile* aFile )
+    {
+        if( aFile->Open( KFile::eRead ) == true )
+        {
+            aFile->Close();
+            return true;
+        }
+        return false;
+    }
+
     void KSReadFileROOT::OpenFile( KRootFile* aFile )
     {
         fRootFile = aFile;

@@ -6,8 +6,6 @@
  */
 #include "KTRandom.h"
 
-#include "KRandom.h"
-
 TRandom* gRandom = katrin::KTRandom::GetInstance();
 
 //ClassImp(katrin::KTRandom)

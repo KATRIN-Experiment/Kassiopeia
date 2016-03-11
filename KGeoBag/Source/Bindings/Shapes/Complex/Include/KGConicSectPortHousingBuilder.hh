@@ -18,43 +18,33 @@ namespace katrin
   inline bool KGConicSectPortHousingOrthogonalPortBuilder::AddAttribute(KContainer* anAttribute)
   {
     if (anAttribute->GetName() == "box_radial_mesh_count")
-    {
-      int xDisc;
-      anAttribute->CopyTo(xDisc);
-      fObject->SetXDisc(xDisc);
+    {      
+      fObject->SetXDisc( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "box_curve_mesh_count")
     {
-      int alphaPolySub;
-      anAttribute->CopyTo(alphaPolySub);
-      fObject->SetAlphaPolySub(alphaPolySub);
+      fObject->SetAlphaPolySub( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "cylinder_longitudinal_mesh_count")
     {
-      int cylDisc;
-      anAttribute->CopyTo(cylDisc);
-      fObject->SetCylDisc(cylDisc);
+      fObject->SetCylDisc( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "cylinder_axial_mesh_count")
     {
-      int polySub;
-      anAttribute->CopyTo(polySub);
-      fObject->SetPolySub(polySub);
+      fObject->SetPolySub( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "radius")
     {
-      double rSub;
-      anAttribute->CopyTo(rSub);
-      fObject->SetRSub(rSub);
+      fObject->SetRSub( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "x")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       anAttribute->CopyTo(a[ 0 ]);
       a[ 1 ] = fObject->GetASub(1);
       a[ 2 ] = fObject->GetASub(2);
@@ -63,7 +53,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       a[ 0 ] = fObject->GetASub(0);
       anAttribute->CopyTo(a[ 1 ]);
       a[ 2 ] = fObject->GetASub(2);
@@ -72,7 +62,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "z")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       a[ 0 ] = fObject->GetASub(0);
       a[ 1 ] = fObject->GetASub(1);
       anAttribute->CopyTo(a[ 2 ]);
@@ -89,42 +79,32 @@ namespace katrin
   {
     if (anAttribute->GetName() == "box_radial_mesh_count")
     {
-      int xDisc;
-      anAttribute->CopyTo(xDisc);
-      fObject->SetXDisc(xDisc);
+      fObject->SetXDisc( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "box_curve_mesh_count")
     {
-      int alphaPolySub;
-      anAttribute->CopyTo(alphaPolySub);
-      fObject->SetAlphaPolySub(alphaPolySub);
+      fObject->SetAlphaPolySub( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "cylinder_longitudinal_mesh_count")
     {
-      int cylDisc;
-      anAttribute->CopyTo(cylDisc);
-      fObject->SetCylDisc(cylDisc);
+      fObject->SetCylDisc( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "cylinder_axial_mesh_count")
     {
-      int polySub;
-      anAttribute->CopyTo(polySub);
-      fObject->SetPolySub(polySub);
+      fObject->SetPolySub( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "radius")
     {
-      double rSub;
-      anAttribute->CopyTo(rSub);
-      fObject->SetRSub(rSub);
+      fObject->SetRSub( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "x")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       anAttribute->CopyTo(a[ 0 ]);
       a[ 1 ] = fObject->GetASub(1);
       a[ 2 ] = fObject->GetASub(2);
@@ -133,7 +113,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "y")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       a[ 0 ] = fObject->GetASub(0);
       anAttribute->CopyTo(a[ 1 ]);
       a[ 2 ] = fObject->GetASub(2);
@@ -142,7 +122,7 @@ namespace katrin
     }
     if (anAttribute->GetName() == "z")
     {
-      double a[ 3 ];
+      double a[ 3 ] = {};
       a[ 0 ] = fObject->GetASub(0);
       a[ 1 ] = fObject->GetASub(1);
       anAttribute->CopyTo(a[ 2 ]);
@@ -159,44 +139,32 @@ namespace katrin
   {
     if (anAttribute->GetName() == "r1")
     {
-      double ra;
-      anAttribute->CopyTo(ra);
-      fObject->SetRAMain(ra);
+      fObject->SetRAMain( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "z1")
     {
-      double za;
-      anAttribute->CopyTo(za);
-      fObject->SetZAMain(za);
+      fObject->SetZAMain( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "r2")
     {
-      double rb;
-      anAttribute->CopyTo(rb);
-      fObject->SetRBMain(rb);
+      fObject->SetRBMain( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "z2")
     {
-      double zb;
-      anAttribute->CopyTo(zb);
-      fObject->SetZBMain(zb);
+      fObject->SetZBMain( anAttribute->AsReference<double>() );
       return true;
     }
     if (anAttribute->GetName() == "axial_mesh_count")
     {
-      int polyMain;
-      anAttribute->CopyTo(polyMain);
-      fObject->SetPolyMain(polyMain);
+      fObject->SetPolyMain( anAttribute->AsReference<int>() );
       return true;
     }
     if (anAttribute->GetName() == "longitudinal_mesh_count")
     {
-      int numDiscMain;
-      anAttribute->CopyTo(numDiscMain);
-      fObject->SetNumDiscMain(numDiscMain);
+      fObject->SetNumDiscMain( anAttribute->AsReference<int>() );
       return true;
     }
     return false;
@@ -207,19 +175,19 @@ namespace katrin
   {
     if (anElement->GetName() == "orthogonal_port")
     {
-      KGConicSectPortHousing::OrthogonalPort* orthogonalPort;
-      anElement->ReleaseTo(orthogonalPort);
-      fObject->AddPort(orthogonalPort);
-      orthogonalPort->Initialize();
-      return true;
+        KGConicSectPortHousing::OrthogonalPort* orthogonalPort = NULL;
+        anElement->ReleaseTo(orthogonalPort);
+        fObject->AddPort(orthogonalPort);
+        orthogonalPort->Initialize();
+        return true;
     }
     if (anElement->GetName() == "paraxial_port")
     {
-      KGConicSectPortHousing::ParaxialPort* paraxialPort;
-      anElement->ReleaseTo(paraxialPort);
-      fObject->AddPort(paraxialPort);
-      paraxialPort->Initialize();
-      return true;
+        KGConicSectPortHousing::ParaxialPort* paraxialPort = NULL;
+        anElement->ReleaseTo(paraxialPort);
+        fObject->AddPort(paraxialPort);
+        paraxialPort->Initialize();
+        return true;
     }
     return false;
   }
@@ -242,11 +210,11 @@ namespace katrin
   {
     if (anElement->GetName() == "conic_section_port_housing")
     {
-      KGConicSectPortHousing* object;
-      anElement->ReleaseTo(object);
-      KSmartPointer< KGConicSectPortHousing > smartPtr(object);
-      fObject->SetObject(smartPtr);
-      return true;
+        KGConicSectPortHousing* object = NULL;
+        anElement->ReleaseTo(object);
+        KSmartPointer< KGConicSectPortHousing > smartPtr(object);
+        fObject->SetObject(smartPtr);
+        return true;
     }
     return false;
   }
@@ -270,11 +238,11 @@ namespace katrin
   {
     if (anElement->GetName() == "conic_section_port_housing")
     {
-      KGConicSectPortHousing* object;
-      anElement->ReleaseTo(object);
-      KSmartPointer< KGConicSectPortHousing > smartPtr(object);
-      fObject->SetObject(smartPtr);
-      return true;
+        KGConicSectPortHousing* object = NULL;
+        anElement->ReleaseTo(object);
+        KSmartPointer< KGConicSectPortHousing > smartPtr(object);
+        fObject->SetObject(smartPtr);
+        return true;
     }
     return false;
   }

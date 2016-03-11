@@ -84,27 +84,42 @@ namespace Kassiopeia
 
 
     // A "ghost" particle
-    static int sGhostDefinition = KSParticleFactory::GetInstance()->Define( 0, 0., 0., 0. );
+    STATICINT sGhostDefinition = KSParticleFactory::GetInstance()->Define( 0, 0., 0., 0. );
 
     //electron
-    static int sElectronDefinition = KSParticleFactory::GetInstance()->Define( 11, KConst::M_el(), -1. * KConst::Q(), 0.5 );
+    STATICINT sElectronDefinition = KSParticleFactory::GetInstance()->Define( 11, KConst::M_el_kg(), -1. * KConst::Q(), 0.5 );
 
     //positron
-    static int sPositronDefinition = KSParticleFactory::GetInstance()->Define( -11, KConst::M_el(), KConst::Q(), 0.5 );
+    STATICINT sPositronDefinition = KSParticleFactory::GetInstance()->Define( -11, KConst::M_el_kg(), KConst::Q(), 0.5 );
 
     //muon
-    static int sMuMinusDefinition = KSParticleFactory::GetInstance()->Define( 12, KConst::M_mu(), -1 * KConst::Q(), 0.5 );
+    STATICINT sMuMinusDefinition = KSParticleFactory::GetInstance()->Define( 12, KConst::M_mu_kg(), -1 * KConst::Q(), 0.5 );
 
     //anti-muon
-    static int sMuPlusDefinition = KSParticleFactory::GetInstance()->Define( -12, KConst::M_mu(), KConst::Q(), 0.5 );
+    STATICINT sMuPlusDefinition = KSParticleFactory::GetInstance()->Define( -12, KConst::M_mu_kg(), KConst::Q(), 0.5 );
 
     //proton
-    static int sProtonDefinition = KSParticleFactory::GetInstance()->Define( 2212, KConst::M_prot(), KConst::Q(), 0.5 );
+    STATICINT sProtonDefinition = KSParticleFactory::GetInstance()->Define( 2212, KConst::M_prot_kg(), KConst::Q(), 0.5 );
 
     //anti-proton
-    static int sAntiProtonDefinition = KSParticleFactory::GetInstance()->Define( -2212, KConst::M_prot(), -1 * KConst::Q(), 0.5 );
+    STATICINT sAntiProtonDefinition = KSParticleFactory::GetInstance()->Define( -2212, KConst::M_prot_kg(), -1 * KConst::Q(), 0.5 );
 
     //neutron
-    static int sNeutronDefinition = KSParticleFactory::GetInstance()->Define( 2112, KConst::M_neut(), 0., 0.5 );
+    STATICINT sNeutronDefinition = KSParticleFactory::GetInstance()->Define( 2112, KConst::M_neut_kg(), 0., 0.5 );
+
+     //T+
+    STATICINT sTPlusDefinition = KSParticleFactory::GetInstance()->Define( 31, KConst::M_tPlus_kg(), KConst::Q(), 0.5 );
+
+    //T3+
+    STATICINT sT3PlusDefinition = KSParticleFactory::GetInstance()->Define( 33, KConst::M_T2_kg()+KConst::M_tPlus_kg(), 1*KConst::Q(), 0.5 );
+
+     //T5+
+    STATICINT sT5PlusDefinition = KSParticleFactory::GetInstance()->Define( 35, 2*KConst::M_T2_kg()+KConst::M_tPlus_kg(), 1*KConst::Q(), 0.5 );
+
+    //T-
+    STATICINT sTMinusDefinition = KSParticleFactory::GetInstance()->Define( -31, KConst::M_tPlus_kg(), -1*KConst::Q(), 0.5 );
+
+    //rydberg states
+    STATICINT sRydbergDefinition_0 = KSParticleFactory::GetInstance()->Define( 10000, 1.008*KConst::AtomicMassUnit_kg(), 0., 0.5 );
 
 }

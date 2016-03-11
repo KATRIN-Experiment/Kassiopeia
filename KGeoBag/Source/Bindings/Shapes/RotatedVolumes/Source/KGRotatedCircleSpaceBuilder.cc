@@ -4,10 +4,10 @@
 namespace katrin
 {
 
-    static const int sKGRotatedCircleSpaceBuilder =
+    STATICINT sKGRotatedCircleSpaceBuilder =
         KGInterfaceBuilder::ComplexElement< KGRotatedCircleSpace >( "rotated_circle_space" );
 
-    static const int sKGRotatedCircleSpaceBuilderStructure =
+    STATICINT sKGRotatedCircleSpaceBuilderStructure =
         KGRotatedCircleSpaceBuilder::Attribute< string >( "name" ) +
         KGRotatedCircleSpaceBuilder::Attribute< unsigned int >( "rotated_mesh_count" ) +
         KGRotatedCircleSpaceBuilder::ComplexElement< KGPlanarCircle >( "circle" );

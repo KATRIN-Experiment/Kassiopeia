@@ -22,6 +22,7 @@ namespace Kassiopeia
         fFile = fFile.substr( fFile.find_last_of( "/" ) + 1, std::string::npos );
     }
     KSFieldElectromagnet::KSFieldElectromagnet( const KSFieldElectromagnet& /*aCopy*/) :
+            KSComponent(),
             fDirectory( KEMFileInterface::GetInstance()->ActiveDirectory() ),
             fFile(),
             fSystem( NULL ),
@@ -54,6 +55,16 @@ namespace Kassiopeia
     void KSFieldElectromagnet::CalculateGradient( const KThreeVector& aSamplePoint, const double& /*aSampleTime*/, KThreeMatrix& aGradient )
     {
         aGradient = fConverter->InternalTensorToGlobal( fFieldSolver->MagneticFieldGradient( fConverter->GlobalToInternalPosition( aSamplePoint ) ) );
+        fieldmsg_debug( "magnetic field gradient at " <<aSamplePoint<< " is " << aGradient <<eom);
+        return;
+    }
+
+    void KSFieldElectromagnet::CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& /*aSampleTime*/, KThreeVector& aField, KThreeMatrix& aGradient )
+    {
+        std::pair<KEMThreeVector, KGradient> tFieldAndGradient = fFieldSolver->MagneticFieldAndGradient( fConverter->GlobalToInternalPosition( aSamplePoint ) );
+        aField = fConverter->InternalToGlobalVector( tFieldAndGradient.first );
+        aGradient = fConverter->InternalTensorToGlobal( tFieldAndGradient.second );
+        fieldmsg_debug( "magnetic field at " <<aSamplePoint<< " is " << aField <<eom);
         fieldmsg_debug( "magnetic field gradient at " <<aSamplePoint<< " is " << aGradient <<eom);
         return;
     }
@@ -120,6 +131,11 @@ namespace Kassiopeia
     KGradient KSFieldElectromagnet::IntegratingFieldSolver::MagneticFieldGradient( const KPosition& P ) const
     {
         return fIntegratingFieldSolver->MagneticFieldGradient( P );
+    }
+
+    std::pair<KEMThreeVector, KGradient> KSFieldElectromagnet::IntegratingFieldSolver::MagneticFieldAndGradient( const KPosition& P ) const
+    {
+        return std::make_pair(fIntegratingFieldSolver->MagneticField( P ),fIntegratingFieldSolver->MagneticFieldGradient( P ));
     }
 
     KSFieldElectromagnet::ZonalHarmonicFieldSolver::ZonalHarmonicFieldSolver() :
@@ -202,6 +218,11 @@ namespace Kassiopeia
     KGradient KSFieldElectromagnet::ZonalHarmonicFieldSolver::MagneticFieldGradient( const KPosition& P ) const
     {
         return fZonalHarmonicFieldSolver->MagneticFieldGradient( P );
+    }
+
+    std::pair<KEMThreeVector, KGradient> KSFieldElectromagnet::ZonalHarmonicFieldSolver::MagneticFieldAndGradient( const KPosition& P ) const
+    {
+        return fZonalHarmonicFieldSolver->MagneticFieldAndGradient( P );
     }
 
     void KSFieldElectromagnet::InitializeComponent()

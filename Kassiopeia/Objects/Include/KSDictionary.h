@@ -1,7 +1,10 @@
 #ifndef Kassiopeia_KSDictionary_h_
 #define Kassiopeia_KSDictionary_h_
 
-#include "KSComponent.h"
+#ifndef STATICINT
+#define STATICINT static const int __attribute__((__unused__))
+#endif
+
 #include "KSComponent.h"
 #include "KSCommand.h"
 

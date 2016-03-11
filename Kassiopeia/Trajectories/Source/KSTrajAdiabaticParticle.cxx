@@ -56,8 +56,10 @@ namespace Kassiopeia
             fGetMagneticFieldPtr( &KSTrajAdiabaticParticle::RecalculateMagneticField ),
             fGetElectricFieldPtr( &KSTrajAdiabaticParticle::RecalculateElectricField ),
             fGetMagneticGradientPtr( &KSTrajAdiabaticParticle::RecalculateMagneticGradient ),
+            fGetMagneticFieldAndGradientPtr( &KSTrajAdiabaticParticle::RecalculateMagneticGradient ),
             fGetElectricPotentialPtr( &KSTrajAdiabaticParticle::RecalculateElectricPotential ),
-            fGetElectricPotentialRPPtr( &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP )
+            fGetElectricPotentialRPPtr( &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP ),
+            fGetElectricFieldAndPotentialPtr( &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential )
 
     {
     }
@@ -71,7 +73,7 @@ namespace Kassiopeia
 
     void KSTrajAdiabaticParticle::PullFrom( const KSParticle& aParticle )
     {
-        trajmsg_debug( "adiabatic particle is pulling data from a particle..."<<ret);
+        trajmsg_debug( "adiabatic particle is pulling data from a particle..."<<eom);
 
         if( fMagneticFieldCalculator != aParticle.GetMagneticFieldCalculator() )
         {
@@ -80,6 +82,7 @@ namespace Kassiopeia
 
             fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::RecalculateMagneticField;
             fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticGradient;
+            fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient;
         }
 
         if( fElectricFieldCalculator != aParticle.GetElectricFieldCalculator() )
@@ -90,6 +93,7 @@ namespace Kassiopeia
             fGetElectricFieldPtr = &KSTrajAdiabaticParticle::RecalculateElectricField;
             fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotential;
             fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
+            fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
         }
 
         if( GetMass() != aParticle.GetMass() )
@@ -116,8 +120,10 @@ namespace Kassiopeia
             fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::DoNothing;
             fGetElectricFieldPtr = &KSTrajAdiabaticParticle::RecalculateElectricField;
             fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticGradient;
+            fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient;
             fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotential;
             fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP;
+            fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential;
 
             KThreeVector tGyrationVector = fGuidingCenter - fPosition;
             fAlpha = -1. * tGyrationVector.Unit();
@@ -128,11 +134,35 @@ namespace Kassiopeia
             fData[ 2 ] = fGuidingCenter.X();
             fData[ 3 ] = fGuidingCenter.Y();
             fData[ 4 ] = fGuidingCenter.Z();
+
+            //renormalize momentum magnitude, this is necessary because the electric potential can
+            //be different between the guiding center position and the particles true postion
+            //since we have been given the particle's momentum, we have to correct the guiding center
+            //momentum to account for this difference
+            double tMC2 = fMass*KConst::C()*KConst::C();
+            double tKineticEnergy = std::sqrt( fMomentum.MagnitudeSquared()*KConst::C()*KConst::C() + tMC2*tMC2 );
+            //calculate potential at particles position
+            double tRPPotential;
+            fElectricFieldCalculator->CalculatePotential( fPosition, fTime, tRPPotential );
+            //calulate potential at guiding center position
+            double tGCPotential;
+            fElectricFieldCalculator->CalculatePotential( fGuidingCenter, fTime, tGCPotential );
+            tKineticEnergy -= (tGCPotential - tRPPotential)*fCharge;
+
+            //need to take absolute value of sqrt argument to prevent nan's
+            //if we are in a situation where the argument goes negative this probably means that
+            //the guiding center approximation is not valid in that region
+            double tMomentumMagnitude = (1.0/KConst::C())*std::sqrt( std::fabs( (tKineticEnergy - tMC2)*(tKineticEnergy + tMC2) ) );
+
+            //TODO: Make sure we are not missing a correction term on the momentum due to difference in the magnetic
+            //vector potential between the g.c and particle position
+            fMomentum.SetMagnitude(tMomentumMagnitude);
+
             fData[ 5 ] = fMomentum.Dot( fMagneticField.Unit() );
             // though mathematically the expression inside the square root is guaranteed to be equal or bigger than 0
             // numerical errors can play us a trick and push it to negative values.
             // fabs() is therefore necessary to prevent everything to go bogus in that case.
-            fData[ 6 ] = sqrt( fabs( fMomentum.MagnitudeSquared() - fData[ 5 ] * fData[ 5 ] ) );
+            fData[ 6 ] = sqrt( fabs( (tMomentumMagnitude - fData[5])*(tMomentumMagnitude + fData[5])  ) );
             fData[ 7 ] = 0.;
 
 			trajmsg_debug( "**updating adiabatic particle:" << ret )
@@ -255,7 +285,15 @@ namespace Kassiopeia
         double tPM = GetMass() * KConst::C();
         double tPPhi = (GetCharge() * tPhi) / KConst::C();
         double tPGC = sqrt( fData[ 5 ] * fData[ 5 ] + fData[ 6 ] * fData[ 6 ] );
-        double tPR = sqrt( tPGC * tPGC + tPPhi * tPPhi - 2. * tPPhi * sqrt( tPGC * tPGC + tPM * tPM ) );
+
+        //need to take absolute value of sqrt argument to prevent nan's
+        //if we are in a situation where the argument goes negative this probably means that
+        //the guiding center approximation is not valid in that region
+        double tPR = sqrt( std::fabs( tPGC * tPGC + tPPhi * tPPhi - 2. * tPPhi * sqrt( tPGC * tPGC + tPM * tPM ) ) );
+
+        //TODO: Make sure we are not missing a correction term on the momentum due to difference in the magnetic
+        //vector potential between the g.c and particle position
+
         fMomentum.SetMagnitude( tPR );
 
         return fMomentum;
@@ -296,6 +334,11 @@ namespace Kassiopeia
         (this->*fGetMagneticGradientPtr)();
         return fMagneticGradient;
     }
+    const pair<const KThreeVector&, const KThreeMatrix&> KSTrajAdiabaticParticle::GetMagneticFieldAndGradient() const
+    {
+        (this->*fGetMagneticFieldAndGradientPtr)();
+        return std::make_pair(fMagneticField, fMagneticGradient );
+    }
     const double& KSTrajAdiabaticParticle::GetElectricPotential() const
     {
         (this->*fGetElectricPotentialPtr)();
@@ -305,6 +348,11 @@ namespace Kassiopeia
     {
         (this->*fGetElectricPotentialRPPtr)();
         return fElectricPotentialRP;
+    }
+    const pair<const KThreeVector&, const double&> KSTrajAdiabaticParticle::GetElectricFieldAndPotential() const
+    {
+        (this->*fGetElectricFieldAndPotentialPtr)();
+        return std::make_pair(fElectricField, fElectricPotential );
     }
 
     const KThreeVector& KSTrajAdiabaticParticle::GetGuidingCenter() const
@@ -401,6 +449,30 @@ namespace Kassiopeia
         fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::DoNothing;
         return;
     }
+    void KSTrajAdiabaticParticle::RecalculateMagneticFieldAndGradient() const
+    {
+        //first check if either the magfield or the gradient are already cached
+        //if one is cached, execute the function pointer of the other
+        if ( fGetMagneticFieldPtr == &KSTrajAdiabaticParticle::DoNothing )
+        {
+            (this->*fGetMagneticGradientPtr)();
+            fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::DoNothing;
+            return;
+        }
+        if ( fGetMagneticGradientPtr == &KSTrajAdiabaticParticle::DoNothing )
+        {
+            (this->*fGetMagneticFieldPtr)();
+            fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::DoNothing;
+            return;
+        }
+
+        //if none is cached, calculate both at once
+        fMagneticFieldCalculator->CalculateFieldAndGradient( GetGuidingCenter(), GetTime(), fMagneticField, fMagneticGradient );
+        fGetMagneticFieldAndGradientPtr = &KSTrajAdiabaticParticle::DoNothing;
+        fGetMagneticFieldPtr = &KSTrajAdiabaticParticle::DoNothing;
+        fGetMagneticGradientPtr = &KSTrajAdiabaticParticle::DoNothing;
+        return;
+    }
     void KSTrajAdiabaticParticle::RecalculateElectricPotential() const
     {
         fElectricFieldCalculator->CalculatePotential( GetGuidingCenter(), GetTime(), fElectricPotential );
@@ -411,6 +483,30 @@ namespace Kassiopeia
     {
         fElectricFieldCalculator->CalculatePotential( GetPosition(), GetTime(), fElectricPotentialRP );
         fGetElectricPotentialRPPtr = &KSTrajAdiabaticParticle::DoNothing;
+        return;
+    }
+    void KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential() const
+    {
+        //first check if either the electric field or the potential are already cached
+        //if one is cached, execute the function pointer of the other
+        if ( fGetElectricFieldPtr == &KSTrajAdiabaticParticle::DoNothing )
+        {
+            (this->*fGetElectricPotentialPtr)();
+            fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::DoNothing;
+            return;
+        }
+        if ( fGetElectricPotentialPtr == &KSTrajAdiabaticParticle::DoNothing )
+        {
+            (this->*fGetElectricFieldPtr)();
+            fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::DoNothing;
+            return;
+        }
+
+        //if none is cached, calculate both at once
+        fElectricFieldCalculator->CalculateFieldAndPotential( GetGuidingCenter(), GetTime(), fElectricField, fElectricPotential );
+        fGetElectricFieldAndPotentialPtr = &KSTrajAdiabaticParticle::DoNothing;
+        fGetElectricFieldPtr = &KSTrajAdiabaticParticle::DoNothing;
+        fGetElectricPotentialPtr = &KSTrajAdiabaticParticle::DoNothing;
         return;
     }
 

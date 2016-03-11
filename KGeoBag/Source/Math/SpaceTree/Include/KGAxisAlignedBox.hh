@@ -108,7 +108,7 @@ class KGAxisAlignedBox
             double distance;
             for(size_t i=0; i<NDIM; i++)
             {
-                distance = (*box)[i] - fCenter[i]; //distance from center in  i-th dimension
+                distance = std::fabs( (*box)[i] - fCenter[i] ); //distance from center in  i-th dimension
                 if( ( (fLength[NDIM]/2.0 - distance) - (box->GetLength(i)/2.0) ) < 0 )
                 {
                     return false;

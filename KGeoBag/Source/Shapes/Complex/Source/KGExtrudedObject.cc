@@ -753,7 +753,7 @@ namespace KGeoBag
 
     double dist = 0.;
 
-    double unit[2];
+    double unit[2] = {};
 
     if (AngleIsWithinRange(phi_P,fPhiStart,fPhiEnd,fPositiveOrientation))
     {

@@ -28,6 +28,7 @@ namespace Kassiopeia
     {
     }
     KSEvent::KSEvent( const KSEvent& aCopy ) :
+            KSComponent(),
             fEventId( aCopy.fEventId ),
             fEventCount( aCopy.fEventCount ),
             fParentRunId( aCopy.fParentRunId ),
@@ -84,7 +85,7 @@ namespace Kassiopeia
     {
     }
 
-    static const int sKSEventDict =
+    STATICINT sKSEventDict =
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetEventId, "event_id" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetEventCount, "event_count" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetParentRunId, "parent_run_id" ) +

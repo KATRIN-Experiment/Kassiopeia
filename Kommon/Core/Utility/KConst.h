@@ -1,3 +1,9 @@
+/**
+ * @file KConst.h
+ * @author W. Kaefer
+ * @author M. Kleesiek <marco.kleesiek@kit.edu>
+ */
+
 #ifndef KCONST_H_
 #define KCONST_H_
 
@@ -7,248 +13,268 @@
  * @mainpage %Kasper-Common API Reference
  *
  * Kasper's Common module contains various utility classes (IO, Math, Data Containers) and common constants.
- * Any Kasper module is by default linked against the Kasper-Common library.
- */
-
-/**
- @file KConst.h
- @brief Contains katrin::KConst
- @details
- *
+ * Any Kasper module is by default linked against the "KCommon" module.
  */
 
 namespace katrin {
 
 /**
- * \author W. Kaefer
- * \brief  this class contains various fundamental constants.
- *  \details Values are taken from PDG edition 2006, unless pointed out otherwise. The naming conventions are: normal name for SI units, a suffix _unit for something else.
- * For example, masses are usually give in both kg and eV with no suffix in the former case and suffix _eV in the latter.
- * Masses will probably be moved to some sort of particle table at some point.
+ * This class contains various fundamental constants.
+ * Values are taken from PDG edition 2006, unless pointed out otherwise. The naming conventions are: normal name for SI units, a suffix _unit for something else.
  **/
 class KConst
 {
-    public:
-        KConst();
-        virtual ~KConst();
+public:
+    KConst() = delete;
 
-        //mathematical numbers
-        static inline double Pi()
-        {
-            return 3.14159265358979311599796346854;
-        } //!< pi
+    //mathematical numbers
+    template<class XFloatT = double>
+    constexpr static XFloatT Pi()
+    {
+        return 3.141592653589793238462643383279502884L;
+    } //!< pi
 
-        static inline double C()
-        {
-            return 299792458.;
-        } //!< c im m/s
+    constexpr static double C()
+    {
+        return 299792458.0;
+    } //!< c im m/s
 
-        static inline double Q()
-        {
-            return 1.60217653E-19;
-        } //!< elementary charge  in C(>0)
+    constexpr static double Q()
+    {
+        return 1.60217653E-19;
+    } //!< elementary charge  in C(>0)
 
-        static inline double Alpha()
-        {
-            return 7.297352568E-3;
-        } //!< fine structure constant alpha
+    constexpr static double Alpha()
+    {
+        return 7.2973525664E-3;
+    } //!< fine structure constant alpha
 
-        static inline double Hbar()
-        {
-            return 1.05457168E-34;
-        }//!< hbar in J s-1
+    constexpr static double Hbar()
+    {
+        return 1.05457168E-34;
+    }//!< hbar in J s-1
 
-        static inline double HbarC_eV()
-        {
-            return 197.326968E-9;
-        }//!<hbar c in m eV.
+    constexpr static double HbarC_eV()
+    {
+        return 197.326968E-9;
+    }//!<hbar c in m eV.
 
-        static inline double kB()
-        {
-            return 1.3806505E-23;
-        }//!< Boltzmann constant J/K
+    constexpr static double kB()
+    {
+        return 1.3806505E-23;
+    }//!< Boltzmann constant J/K
 
-        static inline double kB_eV()
-        {
-            return 8.617343E-5;
-        }//!< Boltzmann constant eV/K
+    constexpr static double kB_eV()
+    {
+        return 8.617343E-5;
+    }//!< Boltzmann constant eV/K
 
-        static inline double N_A()
-        {
-            return 6.022141E+23;
-        }//!< Avogadro Constant in 1/mol
+    constexpr static double N_A()
+    {
+        return 6.022141E+23;
+    }//!< Avogadro Constant in 1/mol
 
-        //atomic properties
-        static inline double AtomicMassUnit()
-        {
-            return 1.66053886E-27;
-        } //!< unified atomic mass unit in kg
+    //atomic properties
+    constexpr static double AtomicMassUnit_kg()
+    {
+        return 1.66053886E-27;
+    } //!< unified atomic mass unit in kg
 
-        static inline double AtomicMassUnit_eV()
-        {
-            return 931.49404E6;
-        } //!< unified atomic mass unit in eV/c^2
+    constexpr static double AtomicMassUnit_eV()
+    {
+        return 931.49404E6;
+    } //!< unified atomic mass unit in eV/c^2
 
-        static inline double BohrRadius()
-        {
-            return 0.5291772108E-10;
-        } //!<Bohr radius (M_prot -> infinity)
+    constexpr static double BohrRadius()
+    {
+        return 0.5291772108E-10;
+    } //!<Bohr radius (M_prot -> infinity)
 
-        static inline double BohrRadiusSquared()
-        {
-            return 2.8002852043e-21;
-        } //!<squared Bohr radius
+    constexpr static double BohrRadiusSquared()
+    {
+        return 2.8002852043e-21;
+    } //!<squared Bohr radius
 
-        static inline double ERyd_eV()
-        {
-            return 13.6056923;
-        } //!< Rydberg energy (ionization energy of atomic hydrogen for m_prot -> infinity)
+    constexpr static double ERyd_eV()
+    {
+        return 13.6056923;
+    } //!< Rydberg energy (ionization energy of atomic hydrogen for m_prot -> infinity)
 
-        //EM coupling constants
-        static inline double EpsNull()
-        {
-            return 8.854187817E-12;
-        } //!< epsilon0, Constant of Newtons force.
+    //EM coupling constants
+    constexpr static double EpsNull()
+    {
+        return 8.854187817E-12;
+    } //!< epsilon0, Constant of Newtons force.
 
-        static inline double FourPiEps()
-        {
-            return 4. * Pi() * EpsNull();
-        } //!< 4  pi  epsilon0, Constant of Newtons force.
+    constexpr static double FourPiEps()
+    {
+        return 4. * Pi() * EpsNull();
+    } //!< 4  pi  epsilon0, Constant of Newtons force.
 
-        static inline double MuNull()
-        {
-            return 4.E-7 * Pi();
-        }//!< permeability of free space
+    constexpr static double MuNull()
+    {
+        return 4.E-7 * Pi();
+    }//!< permeability of free space
 
-        static inline double EtaNull()
-        {
-            return sqrt(MuNull() /EpsNull());
-        }//!< impedance of free space
+    static double EtaNull()
+    {
+        return sqrt( MuNull() / EpsNull() );
+    }//!< impedance of free space
 
-        //masses
-        static inline double M_el()
-        {
-            return 9.1093826E-31;
-        } //!< electron mass in kg
+    //masses
+    constexpr static double M_el_kg()
+    {
+        return 9.1093826E-31;
+    } //!< electron mass in kg
 
-        static inline double M_el_eV()
-        {
-            return 510.998918E3;
-        } //!< electron mass in ev
+    constexpr static double M_el_eV()
+    {
+        return 510.998918E3;
+    } //!< electron mass in ev/c^2
 
-        static inline double M_mu()
-        {
-            return 1.88353160e-28;
-        } //!< muon mass in kg
+    constexpr static double M_mu_kg()
+    {
+        return 1.88353160e-28;
+    } //!< muon mass in kg
 
-        static inline double M_mu_eV()
-        {
-            return 105.6583692E6;
-        } //!< muon mass in ev
+    constexpr static double M_mu_eV()
+    {
+        return 105.6583692E6;
+    } //!< muon mass in ev/c^2
 
-        static inline double M_prot()
-        {
-            return 1.67262171E-27;
-        } //!< proton mass in kg
+    constexpr static double M_prot_kg()
+    {
+        return 1.67262171E-27;
+    } //!< proton mass in kg
 
-        static inline double M_prot_eV()
-        {
-            return 938.272029E6;
-        } //!< proton mass in ev
+    constexpr static double M_prot_eV()
+    {
+        return 938.272029E6;
+    } //!< proton mass in ev/c^2
 
-        static inline double M_neut()
-        {
-            return 1.674927464E-27;
-        } //!< neutron mass in kg
+    constexpr static double M_neut_kg()
+    {
+        return 1.674927464E-27;
+    } //!< neutron mass in kg
 
-        static inline double M_neut_eV()
-        {
-            return 939.565360E6;
-        } //!< neutron mass in ev
+    constexpr static double M_neut_eV()
+    {
+        return 939.565360E6;
+    } //!< neutron mass in ev/c^2
 
-        static inline double M_deut()
-        {
-            return 3.34358334e-27;
-        } //!< deuteron mass in kg
+    constexpr static double M_deut_kg()
+    {
+        return 3.34358334e-27;
+    } //!< deuteron mass in kg
 
-        static inline double M_deut_eV()
-        {
-            return 1875.61282E6;
-        } //!< deuteron mass in eV.
+    constexpr static double M_deut_eV()
+    {
+        return 1875.61282E6;
+    } //!< deuteron mass in eV/c^2
 
-        //Tritium properties
-        static inline double M_T2()
-        {
-            return 6 * AtomicMassUnit();
-        } //!< tritium molecule mass in kg (estimation. needs a literature search)
+    //Tritium properties
+    constexpr static double M_tPlus_kg()
+    {
+        return 5.00735626e-27;
+    } //!ionized tritium atom mass in kg
 
-        static inline double M_T2_eV()
-        {
-            return 6 * AtomicMassUnit_eV();
-        } //!< tritium molecule mass in eV/c^2
+    constexpr static double M_tPlus_eV()
+    {
+        return 2.808920E9;
+    } //!ionized tritium atom mass in eV/c^2
 
-        static inline double Viscosity()
-        {
-            return 2.425E-6;
-        } //!< tritium viscosity coefficient at T=30K [Pa s] (cite? Sharipov?)
+    constexpr static double M_H2_kg()
+    {
+        return 2.015650 * AtomicMassUnit_kg();
+    }
 
-        //Silicon properties
-        static inline double M_Si()
-        {
-            return 28.086;
-        } //!< Silicon atomic mass in g per mol
+    constexpr static double M_H2_eV()
+    {
+        return 2.015650 * AtomicMassUnit_eV();
+    }
 
-        static inline double FermiConstant_eV()
-        {
-            return 1.16637E-5 * 1E-18 * KConst::HbarC_eV() * KConst::HbarC_eV() * KConst::HbarC_eV();
-        } //!< Fermi coupling constant [eVm^3]
+    constexpr static double M_T_kg()
+    {
+        return 3.0160495 * AtomicMassUnit_kg();
+    } //!< tritium atom mass in kg
 
-        //some SSC specific stuff
-        static inline double costhetaC()
-        {
-            return 0.9750; //!< cos(Cabibbo angle). Reference?
-        }
+    constexpr static double M_T_eV()
+    {
+        return 3.0160495 * AtomicMassUnit_eV();
+    } //!< tritium atom mass in eV/c^2
 
-        static inline double MatrixM()
-        {
-            return 2.348; //!< nuclear matrix element. Reference?
-        }
+    constexpr static double M_T2_kg()
+    {
+        return 6.032099 * AtomicMassUnit_kg();
+    } //!< tritium molecule mass in kg
 
-        static inline double gV()
-        {
-            return 1.0; //!< alternative to nuclear matrix element: use (g_V^2 + 3 * g_A^2) Reference?
-        }
+    constexpr static double M_T2_eV()
+    {
+        return 6.032099 * AtomicMassUnit_eV();
+    } //!< tritium molecule mass in eV/c^2
 
-        static inline double gA()
-        {
-            return 1.247; //!< alternative to nuclear matrix element: use (g_V^2 + 3 * g_A^2) Reference?
-        }
+    constexpr static double M_3He_eV()
+    {
+        return 3.0160293 * AtomicMassUnit_eV();
+    }
 
-        //neutrino mixing
-        static inline double Deltam21sq_eV()
-        {
-        	return 7.5e-5; // m2^2 - m1^2; Unit is eV^2; Reference: PDG 6/18/2012
-        }
+    constexpr static double M_3He_kg()
+    {
+        return 3.0160293 * AtomicMassUnit_kg();
+    }
 
-        static inline double Deltam32sq_eV()
-        {
-        	return 2.32e-3; //m3^2 - m2^2; Unit is eV^2; sign unknown; Reference: PDG 6/18/2012
-        }
+    constexpr static double Viscosity()
+    {
+        return 2.425E-6;
+    } //!< tritium viscosity coefficient at T=30K [Pa s] (cite? Sharipov?)
 
-        static inline double Ue1sq()
-        {
-        	return 0.672; // calculated from the angles in the reference; Reference: PDG 6/18/2012
-        }
+    //Silicon properties
+    constexpr static double M_Si()
+    {
+        return 28.086;
+    } //!< Silicon atomic mass in g per mol
 
-        static inline double Ue2sq()
-        {
-        	return 0.303; // calculated from the angles in the reference; Reference: PDG 6/18/2012
-        }
+    constexpr static double M_83Kr_kg()
+    {
+        return 82.914127 * AtomicMassUnit_kg();
+    } //!< 83Krypton atomic mass in kg
 
-        static inline double Ue3sq()
-        {
-        	return 0.025; // calculated from the angles in the reference; Reference: PDG 6/18/2012
-        }
+    constexpr static double M_83Kr_eV()
+    {
+        return 82.914127 * AtomicMassUnit_eV();
+    } //!< 83Krypton atomic mass in eV/c^2
+
+    constexpr static double FermiConstant_eV()
+    {
+        return 1.16637E-5 * 1E-18 * KConst::HbarC_eV() * KConst::HbarC_eV() * KConst::HbarC_eV();
+    } //!< Fermi coupling constant [eVm^3]
+
+    //neutrino mixing
+    constexpr static double Deltam21sq_eV()
+    {
+        return 7.5e-5; // m2^2 - m1^2; Unit is eV^2; Reference: PDG 6/18/2012
+    }
+
+    constexpr static double Deltam32sq_eV()
+    {
+        return 2.32e-3; //m3^2 - m2^2; Unit is eV^2; sign unknown; Reference: PDG 6/18/2012
+    }
+
+    constexpr static double Ue1sq()
+    {
+        return 0.672; // calculated from the angles in the reference; Reference: PDG 6/18/2012
+    }
+
+    constexpr static double Ue2sq()
+    {
+        return 0.303; // calculated from the angles in the reference; Reference: PDG 6/18/2012
+    }
+
+    constexpr static double Ue3sq()
+    {
+        return 0.025; // calculated from the angles in the reference; Reference: PDG 6/18/2012
+    }
+
 };
 
 }

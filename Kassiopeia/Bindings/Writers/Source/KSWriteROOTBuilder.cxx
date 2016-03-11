@@ -10,12 +10,12 @@ namespace katrin
     {
     }
 
-    static int sKSWriteROOTStructure =
+    STATICINT sKSWriteROOTStructure =
         KSWriteROOTBuilder::Attribute< string >( "name" ) +
         KSWriteROOTBuilder::Attribute< string >( "base" ) +
         KSWriteROOTBuilder::Attribute< string >( "path" );
 
-    static int sKSWriteROOT =
+    STATICINT sKSWriteROOT =
         KSRootBuilder::ComplexElement< KSWriteROOT >( "kswrite_root" );
 
 }
