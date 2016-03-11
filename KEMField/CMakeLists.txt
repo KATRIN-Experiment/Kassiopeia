@@ -1,11 +1,13 @@
 cmake_minimum_required( VERSION 2.8.6 )
+if(POLICY CMP0048)
+    cmake_policy(SET CMP0048 OLD)
+endif()
+if( POLICY CMP0053 )
+    cmake_policy( SET CMP0053 OLD )
+endif( POLICY CMP0053 )
 
 project(KEMField)
 include(KasperDefaults)
-
-if(POLICY CMP0053)
-    cmake_policy(SET CMP0053 OLD)
-endif()
 
 # Module version
 set(MODULE_VERSION_MAJOR 2)

@@ -1,6 +1,9 @@
 cmake_minimum_required( VERSION 2.8.6 )
+if(POLICY CMP0048)
+    cmake_policy(SET CMP0048 OLD)
+endif()
 
-project( Kassiopeia )
+project( Kasper )
 
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Kommon/cmake )
 include( KasperDefaults )

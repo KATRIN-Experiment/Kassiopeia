@@ -1,4 +1,7 @@
 cmake_minimum_required( VERSION 2.8.6 )
+if(POLICY CMP0048)
+    cmake_policy(SET CMP0048 OLD)
+endif()
 
 project( Kommon )
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${PROJECT_SOURCE_DIR}/GoogleTest/cmake )
