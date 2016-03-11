@@ -9,9 +9,12 @@ endmacro(set_path)
 include(CMakeDependentOption)
 include(MacroParseArguments)
 
-if( ${Kasper_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
-    
->>>>>>> 2f382a5... Minor changes to build system to allow building as a submodule of something else
+cmake_policy( SET CMP0011 NEW )
+if( POLICY 0053 )
+    cmake_policy( SET CMP0053 OLD )
+endif( POLICY 0053 )
+
+if( "${Kasper_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}" )
     set(STANDALONE true)
 
     # use this section to modifiy initial values of builtin CMAKE variables
