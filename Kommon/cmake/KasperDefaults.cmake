@@ -10,9 +10,6 @@ include(CMakeDependentOption)
 include(MacroParseArguments)
 
 cmake_policy( SET CMP0011 NEW )
-if( POLICY 0053 )
-    cmake_policy( SET CMP0053 OLD )
-endif( POLICY 0053 )
 
 if( "${Kasper_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}" )
     set(STANDALONE true)
@@ -179,15 +176,9 @@ macro(kasper_find_module NAME)
     else()
         set( VERSION "0" )
     endif()
-<<<<<<< HEAD
 
-    find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE )
-    #message("${NAME}_INCLUDE_DIRS: ${${NAME}_INCLUDE_DIRS}")
-=======
-    
     find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE HINTS ${Kasper_BINARY_DIR}/${NAME} )
-    #include_directories( ${${NAME}_INCLUDE_DIRS} )
->>>>>>> 2f382a5... Minor changes to build system to allow building as a submodule of something else
+    #message("${NAME}_INCLUDE_DIRS: ${${NAME}_INCLUDE_DIRS}")
     kasper_internal_include_directories( ${${NAME}_INCLUDE_DIRS} )
     #kasper_external_include_directories( ${${NAME}_INCLUDE_DIRS} )
     #set( ${NAME}_INCLUDE_DIRS "${${NAME}_INCLUDE_DIRS}" PARENT_SCOPE )
