@@ -23,6 +23,7 @@ namespace Kassiopeia
     class KSRootTerminator;
     class KSRootWriter;
     class KSRootStepModifier;
+    class KSRootEventModifier;
 
     class KSSimulation;
     class KSRun;
@@ -78,6 +79,7 @@ namespace Kassiopeia
             KSRootTerminator* fRootTerminator;
             KSRootWriter* fRootWriter;
             KSRootStepModifier* fRootStepModifier;
+            KSRootEventModifier* fRootEventModifier;
 
             unsigned int fRunIndex;
             unsigned int fEventIndex;

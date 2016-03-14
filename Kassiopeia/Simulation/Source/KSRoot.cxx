@@ -19,6 +19,7 @@
 #include "KSRootTerminator.h"
 #include "KSRootWriter.h"
 #include "KSRootStepModifier.h"
+#include "KSRootEventModifier.h"
 
 #include "KSParticle.h"
 #include "KSParticleFactory.h"
@@ -65,6 +66,7 @@ namespace Kassiopeia
             fRootTerminator( new KSRootTerminator() ),
             fRootWriter( new KSRootWriter() ),
             fRootStepModifier( new KSRootStepModifier() ),
+            fRootEventModifier( new KSRootEventModifier() ),
             fRunIndex( 0 ),
             fEventIndex( 0 ),
             fTrackIndex( 0 ),
@@ -133,6 +135,10 @@ namespace Kassiopeia
         fRootStepModifier->SetName( "root_stepmodifier" );
         fRootStepModifier->SetStep( fStep );
         fToolbox->AddObject( fRootStepModifier );
+
+        fRootEventModifier->SetName( "root_eventmodifier" );
+        fRootEventModifier->SetEvent( fEvent );
+        fToolbox->AddObject( fRootEventModifier );
     }
     KSRoot::KSRoot( const KSRoot& /*aCopy*/) :
             KSComponent(),
@@ -154,6 +160,7 @@ namespace Kassiopeia
             fRootTerminator( new KSRootTerminator() ),
             fRootWriter( new KSRootWriter() ),
             fRootStepModifier( new KSRootStepModifier() ),
+            fRootEventModifier( new KSRootEventModifier() ),
             fRunIndex( 0 ),
             fEventIndex( 0 ),
             fTrackIndex( 0 ),
@@ -221,6 +228,9 @@ namespace Kassiopeia
 
         fRootStepModifier->SetName( "root_stepmodifier" );
         fToolbox->AddObject( fRootStepModifier );
+
+        fRootEventModifier->SetName( "root_eventmodifier" );
+        fToolbox->AddObject( fRootEventModifier );
     }
     KSRoot* KSRoot::Clone() const
     {
@@ -265,6 +275,9 @@ namespace Kassiopeia
 
         fToolbox->RemoveObject( fRootStepModifier );
         delete fRootStepModifier;
+
+        fToolbox->RemoveObject( fRootEventModifier );
+        delete fRootEventModifier;
 
         fToolbox->RemoveObject( fRun );
         delete fRun;
@@ -419,6 +432,9 @@ namespace Kassiopeia
         // generate primaries
         fRootGenerator->ExecuteGeneration();
 
+        // execute post-step modification
+        fRootEventModifier->ExecutePreEventModification();
+
         // send report
         eventmsg( eNormal ) << "processing event " << fEvent->GetEventId() << " <" << fEvent->GetGeneratorName() << ">..." << eom;
 
@@ -470,6 +486,9 @@ namespace Kassiopeia
             fEvent->DiscreteMomentumChange() += fTrack->DiscreteMomentumChange();
             fEvent->DiscreteSecondaries() += fTrack->DiscreteSecondaries();
         }
+
+        // execute post-step modification
+        fRootEventModifier->ExecutePostEventModifcation();
 
         // write event
         fEvent->PushUpdate();
