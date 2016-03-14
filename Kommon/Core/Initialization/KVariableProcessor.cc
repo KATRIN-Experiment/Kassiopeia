@@ -42,6 +42,13 @@ namespace katrin
         delete fLocalMap;
     }
 
+    void KVariableProcessor::SetExternalMap( const VariableMap& anExternalMap )
+    {
+        delete fExternalMap;
+        fExternalMap = new VariableMap( anExternalMap );
+        return;
+    }
+
     void KVariableProcessor::ProcessToken( KBeginFileToken* aToken )
     {
         if( fElementState == eElementInactive )
