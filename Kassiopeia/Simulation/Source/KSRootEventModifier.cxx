@@ -60,6 +60,7 @@ namespace Kassiopeia
 
     bool KSRootEventModifier::ExecutePreEventModification()
     {
+
         if( fModifiers.End() == 0 )
         {
             modmsg_debug( "modifier calculation:" << eom )
@@ -117,6 +118,7 @@ namespace Kassiopeia
 
     bool KSRootEventModifier::ExecutePostEventModifcation()
     {
+
         bool hasChangedState = false;
         for( int tIndex = 0; tIndex < fModifiers.End(); tIndex++ )
         {
@@ -152,7 +154,7 @@ namespace Kassiopeia
     STATICINT sKSRootModifierDict =
             KSDictionary< KSRootEventModifier >::AddCommand( &KSRootEventModifier::AddModifier,
                                                             &KSRootEventModifier::RemoveModifier,
-                                                            "add_event_modifier",
-                                                            "remove_event_modifier" );
+                                                            "add_modifier",
+                                                            "remove_modifier" );
 
 }

@@ -1,3 +1,5 @@
+#include "LMCGlobals.hh"
+
 #include "KSRoot.h"
 #include "KSRunMessage.h"
 #include "KSEventMessage.h"
@@ -70,7 +72,8 @@ namespace Kassiopeia
             fRunIndex( 0 ),
             fEventIndex( 0 ),
             fTrackIndex( 0 ),
-            fStepIndex( 0 )
+            fStepIndex( 0 ),
+            fPersistentStepIndex( 0 ) // pls addition
     {
         KSParticleFactory::GetInstance()->SetMagneticField( fRootMagneticField );
         KSParticleFactory::GetInstance()->SetElectricField( fRootElectricField );
@@ -368,6 +371,8 @@ namespace Kassiopeia
 
         while( true )
         {
+
+            printf("fSimulation->GetEvents() is %d\n", fSimulation->GetEvents());  // pls addition
             // break if done
             if( fRun->GetTotalEvents() == fSimulation->GetEvents() )
             {
@@ -384,6 +389,7 @@ namespace Kassiopeia
             fEvent->ParentRunId() = fRun->GetRunId();
 
             // execute event
+            fStep->PauseFlag() = true;  // pls addition.
             ExecuteEvent();
 
             // update run
@@ -464,8 +470,60 @@ namespace Kassiopeia
             delete tParticle;
             fEvent->ParticleQueue().pop_front();
 
-            // execute a track
+            // pls code starts here:
+            fPersistentStepIndex = fStepIndex;  // This index updates before each track starts.  It is similar to
+            // fRun->TotalSteps() except that it updates BEFORE THE TRACK STARTS.
+            printf("fEvent->TotalSteps() is %d and fStepIndex is %d and fStep->FinalParticle().IsActive() is %d and fPersistenStepIndex is %d and fEvent->TotalTracks() is %d\n",
+            		fEvent->TotalSteps(), fStepIndex, fStep->FinalParticle().IsActive(), fPersistentStepIndex, fEvent->TotalTracks());
+        while( (fStep->PauseFlag() == true) && ((fStep->FinalParticle().IsActive() == true) || (fPersistentStepIndex == fStepIndex)))  // pls addition.
+                                    	//           middle of track                            new track starting
+            {
+
+        	// execute a track
             ExecuteTrack();
+ //           if (fStep->GetStepId() % 1000 == 0)
+            t += fStep->ContinuousTime();
+            if (t - t_old > 5.e-9)
+                {
+                pthread_mutex_lock (&mymutex);  // lock access to mutex before writing to globals.
+                Z = fStep->InitialParticle().GetPosition().Z();
+                R = fStep->InitialParticle().GetPosition().Perp();
+                K = fStep->InitialParticle().GetKineticEnergy_eV();
+                zvelocity = fStep->InitialParticle().GetVelocity().GetZ();
+                GammaZ = 1.0/pow(1.0-pow(zvelocity/2.99792e8,2.),0.5);
+
+                vlong = fStep->InitialParticle().GetLongVelocity();
+                dt = fStep->ContinuousTime();
+                fcyc = 1./8./dt;
+                de = fStep->ContinuousEnergyChange();
+                LarmorPower = -de/dt*1.602677e-19;
+     //           printf("z position is %g and dt is %g\n", Z, dt);
+
+                printf("Kassiopeia is about to send out a tick\n");
+              	 pthread_cond_signal(&tick);  // broadcast a tick to Locust.
+                 t_old = t;
+              	 printf("Kassiopeia says:  tick has happened; continuous time is %g and longvelocity is %f\n", t, zvelocity);
+              	 printf("Kassiopeia says:  fcyc is %g\n", fcyc);
+              	 printf("  initial particle momentum: %g\n", fStep->InitialParticle().GetMomentum().Z());
+                 printf("Mass is %g\n", fStep->InitialParticle().GetMass());
+                 printf("k.e. = %g eV\n", fStep->InitialParticle().GetKineticEnergy_eV());
+                 printf("Lorentz factor is %f\n", fStep->InitialParticle().GetLorentzFactor());
+                 printf("1/(sqrt(1-v^2/c^2) is %f\n", 1.0/pow(1.0-pow(fStep->InitialParticle().GetSpeed()/2.99792e8,2.),0.5));
+                 printf("FinalParticle().IsActive() is %d\n", fStep->FinalParticle().IsActive());
+//                 getchar();
+                 pthread_mutex_unlock (&mymutex);  // unlock access after writing.
+
+              	}
+
+            }  // while pause flag is true.  aka while Locust is hacking in.
+
+           if (fStep->PauseFlag() == false)
+              ExecuteTrack();  // just execute a track without dealing with globals or threads.
+
+// end pls additions.
+
+
+
 
             // move particles in track queue to event queue
             while( fTrack->ParticleQueue().empty() == false )
@@ -506,6 +564,10 @@ namespace Kassiopeia
 
     void KSRoot::ExecuteTrack()
     {
+    	// "if" brackets - pls addition.  If the track loop finished a.k.a. fPersistentStepIndex got updated.
+        if (fStep->PauseFlag() == false || (fPersistentStepIndex == fStepIndex))
+        {
+
         // reset track
         fTrack->TrackId() = fTrackIndex;
         fTrack->TotalSteps() = 0;
@@ -531,6 +593,8 @@ namespace Kassiopeia
 
         //clear any internal trajectory state
         fRootTrajectory->Reset();
+
+        }   // end pls addition.
 
         while( fStep->FinalParticle().IsActive() == true )
         {
@@ -574,6 +638,9 @@ namespace Kassiopeia
                 fTrack->DiscreteEnergyChange() += fStep->DiscreteEnergyChange();
                 fTrack->DiscreteMomentumChange() += fStep->DiscreteMomentumChange();
                 fTrack->DiscreteSecondaries() += fStep->DiscreteSecondaries();
+                if (fStep->PauseFlag() == true && fStep->FinalParticle().IsActive() == true)
+                  return;  // pls addition:  get out of this track for now.
+
             }
         }
 
