@@ -347,6 +347,34 @@ namespace Kassiopeia
         return;
     }
 
+
+
+    void WakeAfterEvent(unsigned TotalEvents, unsigned EventsSoFar)
+    {
+    	fEventInProgress = false;
+        if( TotalEvents == EventsSoFar-1 ) fRunInProgress = false;
+        fDigitizerCondition.notify_one();
+        return;
+    }
+
+
+
+    bool ReceivedEventStartSTLCondition()
+    {
+    if( fWaitBeforeEvent )
+    {
+    	printf("waiting for event trigger ...\n");
+    	fKassEventReady = true;
+        std::unique_lock< std::mutex >tLock( fMutex );
+        fPreEventCondition.wait( tLock );
+        fKassEventReady = false;
+        return true;
+    }
+    return false;
+    }
+
+
+
     void KSRoot::ExecuteRun()
     {
         // set random seed
@@ -372,8 +400,7 @@ namespace Kassiopeia
         while( true )
         {
 
-            printf("fSimulation->GetEvents() is %d\n", fSimulation->GetEvents());  // pls addition
-            // break if done
+             // break if done
             if( fRun->GetTotalEvents() == fSimulation->GetEvents() )
             {
                 break;
@@ -389,8 +416,15 @@ namespace Kassiopeia
             fEvent->ParentRunId() = fRun->GetRunId();
 
             // execute event
-            fStep->PauseFlag() = true;  // pls addition.
+            fStep->PauseFlag() = true;  // pls addition.  this will be replaced by step modifier class.
+            while (!ReceivedEventStartSTLCondition()) {}  // pls:  wait for event start.
+            printf("got the signal\n");
+
+            // end pls addition
+
             ExecuteEvent();
+
+            WakeAfterEvent(fRun->GetTotalEvents(), fSimulation->GetEvents()); // pls
 
             // update run
             fRun->TotalEvents() += 1;
@@ -415,7 +449,6 @@ namespace Kassiopeia
 
         // send report
         runmsg( eNormal ) << "...run " << fRun->GetRunId() << " complete" << eom;
-
         fStopRunSignal = false;
         return;
     }
@@ -470,7 +503,11 @@ namespace Kassiopeia
             delete tParticle;
             fEvent->ParticleQueue().pop_front();
 
+
+
             // pls code starts here:
+
+
             fPersistentStepIndex = fStepIndex;  // This index updates before each track starts.  It is similar to
             // fRun->TotalSteps() except that it updates BEFORE THE TRACK STARTS.
             printf("fEvent->TotalSteps() is %d and fStepIndex is %d and fStep->FinalParticle().IsActive() is %d and fPersistenStepIndex is %d and fEvent->TotalTracks() is %d\n",
@@ -481,11 +518,12 @@ namespace Kassiopeia
 
         	// execute a track
             ExecuteTrack();
- //           if (fStep->GetStepId() % 1000 == 0)
             t += fStep->ContinuousTime();
             if (t - t_old > 5.e-9)
                 {
-                pthread_mutex_lock (&mymutex);  // lock access to mutex before writing to globals.
+ //               pthread_mutex_lock (&mymutex);  // lock access to mutex before writing to globals.
+                std::unique_lock< std::mutex >tLock( fMutexDigitizer, std::defer_lock );  // lock access to mutex before writing to globals.
+                tLock.lock();
                 Z = fStep->InitialParticle().GetPosition().Z();
                 R = fStep->InitialParticle().GetPosition().Perp();
                 K = fStep->InitialParticle().GetKineticEnergy_eV();
@@ -497,10 +535,15 @@ namespace Kassiopeia
                 fcyc = 1./8./dt;
                 de = fStep->ContinuousEnergyChange();
                 LarmorPower = -de/dt*1.602677e-19;
+                tLock.unlock();
+
      //           printf("z position is %g and dt is %g\n", Z, dt);
 
                 printf("Kassiopeia is about to send out a tick\n");
-              	 pthread_cond_signal(&tick);  // broadcast a tick to Locust.
+                fDigitizerCondition.notify_one();  // notify Locust after writing.
+
+//                getchar();
+
                  t_old = t;
               	 printf("Kassiopeia says:  tick has happened; continuous time is %g and longvelocity is %f\n", t, zvelocity);
               	 printf("Kassiopeia says:  fcyc is %g\n", fcyc);
@@ -510,15 +553,18 @@ namespace Kassiopeia
                  printf("Lorentz factor is %f\n", fStep->InitialParticle().GetLorentzFactor());
                  printf("1/(sqrt(1-v^2/c^2) is %f\n", 1.0/pow(1.0-pow(fStep->InitialParticle().GetSpeed()/2.99792e8,2.),0.5));
                  printf("FinalParticle().IsActive() is %d\n", fStep->FinalParticle().IsActive());
-//                 getchar();
-                 pthread_mutex_unlock (&mymutex);  // unlock access after writing.
-
               	}
 
             }  // while pause flag is true.  aka while Locust is hacking in.
 
+
+
+
            if (fStep->PauseFlag() == false)
               ExecuteTrack();  // just execute a track without dealing with globals or threads.
+
+
+
 
 // end pls additions.
 
