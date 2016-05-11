@@ -85,7 +85,6 @@ namespace Kassiopeia
             unsigned int fEventIndex;
             unsigned int fTrackIndex;
             unsigned int fStepIndex;
-            unsigned int fPersistentStepIndex;
 
             static bool fStopRunSignal;
             static bool fStopEventSignal;
