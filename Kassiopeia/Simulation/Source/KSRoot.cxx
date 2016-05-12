@@ -368,6 +368,7 @@ namespace Kassiopeia
     	fKassEventReady = true;
         std::unique_lock< std::mutex >tLock( fMutex );
         fPreEventCondition.wait( tLock );
+        t_old = 0.;  // reset time on digitizer.
         fKassEventReady = false;
         return true;
     }
