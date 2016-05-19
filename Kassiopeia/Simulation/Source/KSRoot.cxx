@@ -354,25 +354,27 @@ namespace Kassiopeia
     {
     	fEventInProgress = false;
         if( TotalEvents == EventsSoFar-1 ) fRunInProgress = false;
-        fDigitizerCondition.notify_one();
+        fDigitizerCondition.notify_one();  // unlock
+        fKassReadyCondition.notify_one();  // unlock
         return;
     }
 
 
 
-    bool ReceivedEventStartSTLCondition()
+    bool ReceivedEventStartCondition()
     {
     if( fWaitBeforeEvent )
     {
     	printf("waiting for event trigger ...\n");
     	fKassEventReady = true;
+    	fKassReadyCondition.notify_one();
         std::unique_lock< std::mutex >tLock( fMutex );
         fPreEventCondition.wait( tLock );
-        t_old = 0.;  // reset time on digitizer.
         fKassEventReady = false;
+        t_old = 0.;  // reset time on digitizer.
         return true;
     }
-    return false;
+    return true; // check this.  should return true if no wait.
     }
 
 
@@ -418,9 +420,11 @@ namespace Kassiopeia
             fEvent->ParentRunId() = fRun->GetRunId();
 
             // execute event
-            while (!ReceivedEventStartSTLCondition()) {}  // pls:  wait for event start.
-            printf("testvar is %f\n", testvar);  // pls
-            printf("got the signal\n"); getchar(); // pls
+            if (ReceivedEventStartCondition())
+            {
+//            printf("testvar is %f\n", testvar);  // pls
+            printf("got the event trigger\n"); //getchar(); // pls
+            }
 
             ExecuteEvent();
 
