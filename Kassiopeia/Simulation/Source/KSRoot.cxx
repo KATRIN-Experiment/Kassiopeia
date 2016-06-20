@@ -365,8 +365,8 @@ namespace Kassiopeia
     {
     if( fWaitBeforeEvent )
     {
-    	printf("waiting for event trigger ...\n");
     	fKassEventReady = true;
+    	printf("waiting for event trigger ...\n");
     	fKassReadyCondition.notify_one();
         std::unique_lock< std::mutex >tLock( fMutex );
         fPreEventCondition.wait( tLock );
