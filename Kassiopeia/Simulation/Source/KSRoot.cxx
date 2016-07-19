@@ -366,7 +366,6 @@ namespace Kassiopeia
     if( fWaitBeforeEvent )
     {
     	fKassEventReady = true;
-    	printf("waiting for event trigger ...\n");
     	fKassReadyCondition.notify_one();
         std::unique_lock< std::mutex >tLock( fMutex );
         fPreEventCondition.wait( tLock );
@@ -420,10 +419,11 @@ namespace Kassiopeia
             fEvent->ParentRunId() = fRun->GetRunId();
 
             // execute event
+            printf("Kass is waiting for event trigger.\n");
             if (ReceivedEventStartCondition())
             {
 //            printf("testvar is %f\n", testvar);  // pls
-            printf("got the event trigger\n"); //getchar(); // pls
+            printf("Kass got the event trigger\n"); //getchar(); // pls
             }
 
             ExecuteEvent();
@@ -685,15 +685,17 @@ namespace Kassiopeia
         fStep->SurfaceNavigationFlag() = false;
 
         // send report
+	/*
         if( fStep->GetStepId() % fSimulation->GetStepReportIteration() == 0 )
         {
-            stepmsg( eNormal ) << "processing step " << fStep->GetStepId() << "... (";
-            stepmsg << "z = " << fStep->InitialParticle().GetPosition().Z() << ", ";
+	              stepmsg( eNormal ) << "processing step " << fStep->GetStepId() << "... (";
+	              stepmsg << "z = " << fStep->InitialParticle().GetPosition().Z() << ", ";
             stepmsg << "r = " << fStep->InitialParticle().GetPosition().Perp() << ", ";
             stepmsg << "k = " << fStep->InitialParticle().GetKineticEnergy_eV() << ", ";
             stepmsg << "e = " << fStep->InitialParticle().GetKineticEnergy_eV() + (fStep->InitialParticle().GetCharge() / KConst::Q()) * fStep->InitialParticle().GetElectricPotential();
             stepmsg << ")" << reom;
         }
+	*/
 
         // debug spritz
         stepmsg_debug( "processing step " << fStep->GetStepId() << eom )
