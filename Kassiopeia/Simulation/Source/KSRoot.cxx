@@ -356,16 +356,19 @@ namespace Kassiopeia
         if( TotalEvents == EventsSoFar-1 ) fRunInProgress = false;
         fDigitizerCondition.notify_one();  // unlock
         fKassReadyCondition.notify_one();  // unlock
+        printf("Kass is waking after event\n");
         return;
     }
 
 
 
     bool ReceivedEventStartCondition()
-    {
-    if( fWaitBeforeEvent )
-    {
-    	fKassEventReady = true;
+    {        
+      fKassEventReady = true;
+      fDigitizerCondition.notify_one();  // unlock if still locked.                            
+      if( fWaitBeforeEvent )
+	{
+
     	fKassReadyCondition.notify_one();
         std::unique_lock< std::mutex >tLock( fMutex );
         fPreEventCondition.wait( tLock );
