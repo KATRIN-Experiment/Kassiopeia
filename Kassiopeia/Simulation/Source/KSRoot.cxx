@@ -355,7 +355,7 @@ namespace Kassiopeia
     	fEventInProgress = false;
         if( TotalEvents == EventsSoFar-1 ) fRunInProgress = false;
         fDigitizerCondition.notify_one();  // unlock
-        fKassReadyCondition.notify_one();  // unlock
+	//        fKassReadyCondition.notify_one();  // unlock
         printf("Kass is waking after event\n");
         return;
     }
