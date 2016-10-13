@@ -353,9 +353,12 @@ namespace Kassiopeia
     void WakeAfterEvent(unsigned TotalEvents, unsigned EventsSoFar)
     {
     	fEventInProgress = false;
-        if( TotalEvents == EventsSoFar-1 ) fRunInProgress = false;
+        if( TotalEvents == EventsSoFar-1 ) 
+          {
+          fRunInProgress = false;
+          fKassReadyCondition.notify_one();
+          }
         fDigitizerCondition.notify_one();  // unlock
-	//        fKassReadyCondition.notify_one();  // unlock
         printf("Kass is waking after event\n");
         return;
     }
