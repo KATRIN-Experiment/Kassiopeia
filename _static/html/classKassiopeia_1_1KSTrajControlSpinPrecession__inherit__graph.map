@@ -1,0 +1,5 @@
+<map id="Kassiopeia::KSTrajControlSpinPrecession" name="Kassiopeia::KSTrajControlSpinPrecession">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajControlSpinPrecession \&gt;" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactSpinControl" alt="" coords="40,71,201,98"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajAdiabaticSpinControl" alt="" coords="29,122,212,149"/>
+</map>

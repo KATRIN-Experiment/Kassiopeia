@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classKassiopeia_1_1KESSScatteringCalculator.html" title="Kassiopeia::KESSScattering\lCalculator" alt="" coords="40,71,227,112"/>
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KESSElasticElsepa.html" title="Kassiopeia::KESSElasticElsepa" alt="" coords="310,46,515,73"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KESSInelasticBetheFano.html" title="Kassiopeia::KESSInelastic\lBetheFano" alt="" coords="325,120,501,161"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KESSInelasticPenn.html" title="Kassiopeia::KESSInelasticPenn" alt="" coords="309,193,516,219"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KESSElasticElsepa, KSIntCalculator \&gt;" alt="" coords="6,5,261,47"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KESSInelasticBetheFano,\l KSIntCalculator \&gt;" alt="" coords="18,135,249,191"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KESSInelasticPenn, KSIntCalculator \&gt;" alt="" coords="5,215,261,256"/>
+</map>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>Complex Shapes in KGeoBag &mdash; Kassiopeia 3.3 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    './',
+            VERSION:     '3.3',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Kassiopeia 3.3 documentation" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="Basic Shapes in KGeoBag" href="kgeobag_basic.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Kassiopeia 3.3 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">Complex Shapes in KGeoBag</a><ul>
+<li><a class="reference internal" href="#surfaces">Surfaces</a><ul>
+<li><a class="reference internal" href="#pump-port">Pump Port</a></li>
+<li><a class="reference internal" href="#conic-section-pump-port">Conic section pump port</a></li>
+<li><a class="reference internal" href="#beam">Beam</a></li>
+<li><a class="reference internal" href="#rod">Rod</a></li>
+<li><a class="reference internal" href="#extruded-surfaces-with-holes">Extruded surfaces with holes</a></li>
+<li><a class="reference internal" href="#rotated-surface">Rotated surface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spaces">Spaces</a><ul>
+<li><a class="reference internal" href="#pump-port-space">Pump Port Space</a></li>
+<li><a class="reference internal" href="#conic-section-pump-port-space">Conic Section Pump Port Space</a></li>
+<li><a class="reference internal" href="#beam-space">Beam Space</a></li>
+<li><a class="reference internal" href="#rod-space">Rod Space</a></li>
+<li><a class="reference internal" href="#extruded-space">Extruded Space</a></li>
+<li><a class="reference internal" href="#rotated-space">Rotated Space</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="kgeobag_basic.html" title="Basic Shapes in KGeoBag" accesskey="P">previous </a></li>
+              <li><a href="license.html" title="License" accesskey="N">next </a></li>
+              <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+            
+            <li class="visible-xs"><a href="_sources/kgeobag_complex.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Complex Shapes in KGeoBag</a><ul>
+<li><a class="reference internal" href="#surfaces">Surfaces</a><ul>
+<li><a class="reference internal" href="#pump-port">Pump Port</a></li>
+<li><a class="reference internal" href="#conic-section-pump-port">Conic section pump port</a></li>
+<li><a class="reference internal" href="#beam">Beam</a></li>
+<li><a class="reference internal" href="#rod">Rod</a></li>
+<li><a class="reference internal" href="#extruded-surfaces-with-holes">Extruded surfaces with holes</a></li>
+<li><a class="reference internal" href="#rotated-surface">Rotated surface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#spaces">Spaces</a><ul>
+<li><a class="reference internal" href="#pump-port-space">Pump Port Space</a></li>
+<li><a class="reference internal" href="#conic-section-pump-port-space">Conic Section Pump Port Space</a></li>
+<li><a class="reference internal" href="#beam-space">Beam Space</a></li>
+<li><a class="reference internal" href="#rod-space">Rod Space</a></li>
+<li><a class="reference internal" href="#extruded-space">Extruded Space</a></li>
+<li><a class="reference internal" href="#rotated-space">Rotated Space</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="kgeobag_basic.html"
+                        title="previous chapter">Basic Shapes in KGeoBag</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="license.html"
+                        title="next chapter">License</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/kgeobag_complex.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="complex-shapes-in-kgeobag">
+<span id="complex-kgeobag-label"></span><h1>Complex Shapes in KGeoBag<a class="headerlink" href="#complex-shapes-in-kgeobag" title="Permalink to this headline">¶</a></h1>
+<p>This section describes the more complicated shapes available in KGeoBag. Since as of yet, KGeoBag
+lacks the ability to perform boolean operations on solids (constructive solid geometry), shapes
+which cannot be represented as an assembly of basic shapes must be explicitly defined in C++.
+However, to augment the basic shapes, KGeoBag provides some addition complex shapes
+that are commonly encountered in experimental structures such as vacuum chambers, etc.</p>
+<p>Some of the examples in this section make use of the the more advanced features of the XML
+parser, including loops, conditional statements, and equation evaluation.</p>
+<div class="section" id="surfaces">
+<h2>Surfaces<a class="headerlink" href="#surfaces" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pump-port">
+<h3>Pump Port<a class="headerlink" href="#pump-port" title="Permalink to this headline">¶</a></h3>
+<p>The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers).
+The coordinates x,y,z are the end points of the ports. The ports can only be created in radial direction.</p>
+<a class="reference internal image-reference" href="_images/port_housing_surface_model.png"><img alt="_images/port_housing_surface_model.png" src="_images/port_housing_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">port_housing_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_port_housing_surface&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">port_housing</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.4&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">circular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;-.3&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.33&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">rectangular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.3&quot;</span> <span class="n">length</span><span class="o">=</span><span class="s">&quot;0.3&quot;</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;.15&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">circular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;-1./sqrt(2.)&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;-1./sqrt(2.)&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.053&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">port_housing</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">port_housing_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conic-section-pump-port">
+<h3>Conic section pump port<a class="headerlink" href="#conic-section-pump-port" title="Permalink to this headline">¶</a></h3>
+<p>This shape is a cut cone surface with circular ports.
+The ports can be created either orthogonal to the surface or parallel to the cone axis (paraxial).
+The coordinates x,y,z are the end points of the port.</p>
+<a class="reference internal image-reference" href="_images/conic_section_port_housing_surface_model.png"><img alt="_images/conic_section_port_housing_surface_model.png" src="_images/conic_section_port_housing_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">conic_section_port_housing_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_conic_section_port_housing_surface&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">conic_section_port_housing</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;2.75&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.79675&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;0.25&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;-0.067&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;offset&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;2.&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;nPorts&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;6&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;{[nPorts]-1}&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">if</span> <span class="n">condition</span><span class="o">=</span><span class="s">&quot;{([i] mod 2) eq 0}&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">orthogonal_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{.05 + .05*([i]+1)}&quot;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;/</span><span class="k">if</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="k">if</span> <span class="n">condition</span><span class="o">=</span><span class="s">&quot;{([i] mod 2) eq 1}&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">paraxial_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{.05 + .05*([i]+1)}&quot;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;/</span><span class="k">if</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">conic_section_port_housing</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">conic_section_port_housing_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beam">
+<h3>Beam<a class="headerlink" href="#beam" title="Permalink to this headline">¶</a></h3>
+<p>A beam creates a pipe which connects two polygons at each end.
+The polygons must have the same number of vertices but may lie in planes which are not parallel to each other.
+For the description of the parameters involved see the images below.</p>
+<a class="reference internal image-reference" href="_images/beam_description.png"><img alt="_images/beam_description.png" src="_images/beam_description.png" style="width: 500pt;" /></a>
+<p>In the following example, the variable <code class="docutils literal"><span class="pre">[poly]</span></code> dictates the the number of
+vertexes in each polygon at the ends of the beam.</p>
+<a class="reference internal image-reference" href="_images/beam_surface_model.png"><img alt="_images/beam_surface_model.png" src="_images/beam_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">beam_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_beam_surface&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">beam</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;20&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;poly&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;radius&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_start_max&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;-.25&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_start_min&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;-.75&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_end_max&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.75&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_end_min&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.25&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;[poly]&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">start_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">end_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">beam</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beam_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The beam shape can also be used to create more complex objects, such as a cut cone with two more cuts at both ends.</p>
+<a class="reference internal image-reference" href="_images/multicut_surface_model.png"><img alt="_images/multicut_surface_model.png" src="_images/multicut_surface_model.png" style="width: 500pt;" /></a>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">beam_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_multicut_surface&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">beam</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;60&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;60&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_start&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_end&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;radius_start&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;2.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;radius_end&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;phi_start&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;0.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;theta_start&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;30.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;phi_end&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;90.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;theta_end&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;30.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;poly&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;100&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;[poly]&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">start_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius_start]*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()) - sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()))}&quot;</span>
+                            <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius_start]*cos([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))}&quot;</span>
+                            <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{[radius_start]*sin([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))+[z_start]}&quot;</span>
+                            <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius_start]*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()) -sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()))}&quot;</span>
+                            <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius_start]*cos([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))}&quot;</span>
+                            <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{[radius_start]*sin([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))+[z_start]}&quot;</span>
+            <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">end_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius_end]*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()) -sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()))}&quot;</span>
+                      <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius_end]*cos([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))}&quot;</span>
+                      <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{[radius_end]*sin([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))+[z_end]}&quot;</span>
+                      <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius_end]*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()) - sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()))}&quot;</span>
+                      <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius_end]*cos([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))}&quot;</span>
+                      <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{[radius_end]*sin([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))+[z_end]}&quot;</span>
+            <span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">beam</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beam_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rod">
+<h3>Rod<a class="headerlink" href="#rod" title="Permalink to this headline">¶</a></h3>
+<p>The rod element can be used to create a rod like structure along
+a series of linear segments in three dimensional space. The rod has a circular
+cross section which is approximated by a polygon (governed by the <code class="docutils literal"><span class="pre">axial_mesh_count</span></code> parameter).
+This shape is defined by a radius (thickness of the rod) and
+a piecewise linear path specified by a by a list of in-order vertexes.</p>
+<a class="reference internal image-reference" href="_images/rod_surface_model.png"><img alt="_images/rod_surface_model.png" src="_images/rod_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>The following XML example creates a helix shaped rod surface, as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">rod_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_rod_surface&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">rod</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.2&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;12&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;n_turns&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;n_segments_per_turn&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;36&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;coil_radius&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;height_per_turn&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;{[n_turns]*[n_segments_per_turn]}&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">vertex</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[coil_radius]*TMath::Cos(2.*TMath::Pi()*([i] mod [n_segments_per_turn])/[n_segments_per_turn])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[coil_radius]*TMath::Sin(2.*TMath::Pi()*([i] mod [n_segments_per_turn])/[n_segments_per_turn])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;{[i]*[height_per_turn]/[n_segments_per_turn]}&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">rod</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">rod_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extruded-surfaces-with-holes">
+<h3>Extruded surfaces with holes<a class="headerlink" href="#extruded-surfaces-with-holes" title="Permalink to this headline">¶</a></h3>
+<p>With this element it is possible to create an extruded surface (from a poly-loop like curve) with arbitrary holes in it.
+The commands &lt;inner line/arc ...&gt;/&lt;outer line/arc ...&gt; define whether the extruded path will
+produce an outer or an inner surface. So &lt;inner line/arc ...&gt; defines if
+there will be a hole and what it will look like.</p>
+<a class="reference internal image-reference" href="_images/extruded_surface_model.png"><img alt="_images/extruded_surface_model.png" src="_images/extruded_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">extruded_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_extruded_surface&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">extruded_object</span> <span class="n">z_min</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">z_max</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="n">longitudinal_mesh_power</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">closed_form</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">inner_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{TMath::Sqrt(2.)}&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">extruded_object</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">extruded_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rotated-surface">
+<h3>Rotated surface<a class="headerlink" href="#rotated-surface" title="Permalink to this headline">¶</a></h3>
+<p>This shape is very similar to rotated poly-line surface in <a class="reference internal" href="kgeobag_basic.html#basic-kgeobag-label"><span class="std std-ref">Basic Shapes in KGeoBag</span></a>
+but with other variables. The coordinates in use in this shape are cylindrical. (z,r)</p>
+<a class="reference internal image-reference" href="_images/rotated_surface_model.png"><img alt="_images/rotated_surface_model.png" src="_images/rotated_surface_model.png" style="width: 500pt;" /></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">rotated_surface</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_rotated_surface&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">rotated_object</span> <span class="n">longitudinal_mesh_count_start</span><span class="o">=</span><span class="s">&quot;10&quot;</span> <span class="n">longitudinal_mesh_count_end</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="n">longitudinal_mesh_power</span><span class="o">=</span><span class="s">&quot;2.&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">arc</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">arc</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;2&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">rotated_object</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">rotated_surface</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="spaces">
+<h2>Spaces<a class="headerlink" href="#spaces" title="Permalink to this headline">¶</a></h2>
+<p>These elements generate volume (filled) objects.
+The for the following geometries is not supported at the moment.
+For the definition of the variables see the corresponding surfaces above.</p>
+<div class="section" id="pump-port-space">
+<h3>Pump Port Space<a class="headerlink" href="#pump-port-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization, see the above pump port surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">port_housing_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_port_housing_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">port_housing</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.4&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;50&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">circular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;-.3&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.33&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">rectangular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.3&quot;</span> <span class="n">length</span><span class="o">=</span><span class="s">&quot;0.3&quot;</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;.15&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">circular_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;-1./sqrt(2.)&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;-1./sqrt(2.)&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.053&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">port_housing</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">port_housing_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+<div class="section" id="conic-section-pump-port-space">
+<h3>Conic Section Pump Port Space<a class="headerlink" href="#conic-section-pump-port-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization, see the above conic section pump port surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">conic_section_port_housing_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_conic_section_port_housing_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">conic_section_port_housing</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;2.75&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.79675&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;0.25&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;-0.067&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;offset_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;2.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;nPorts_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;6&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;{[nPorts_]-1}&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="k">if</span> <span class="n">condition</span><span class="o">=</span><span class="s">&quot;{([i] mod 2) eq 0}&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">orthogonal_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{.05 + .05*([i]+1)}&quot;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;/</span><span class="k">if</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="k">if</span> <span class="n">condition</span><span class="o">=</span><span class="s">&quot;{([i] mod 2) eq 1}&quot;</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="n">paraxial_port</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{.05 + .05*([i]+1)}&quot;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;/</span><span class="k">if</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">conic_section_port_housing</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">conic_section_port_housing_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+<div class="section" id="beam-space">
+<h3>Beam Space<a class="headerlink" href="#beam-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization, see the beam surface above.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">beam_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_beam_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">beam</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;20&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;poly_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;50&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;radius_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_start_max_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;-.25&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_start_min_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;-.75&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_end_max_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.75&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;z_end_min_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;.25&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;[poly_]&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">start_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Sin(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{([z_start_max_]+[z_start_min_])*.5 + ([z_start_max_]-[z_start_min_])*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{([z_start_max_]+[z_start_min_])*.5 + ([z_start_max_]-[z_start_min_])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span><span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="n">end_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Sin(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;{([z_end_max_]+[z_end_min_])*.5 + ([z_end_max_]-[z_end_min_])*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;{[radius_]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;{([z_end_max_]+[z_end_min_])*.5 + ([z_end_max_]-[z_end_min_])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">beam</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">beam_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+<div class="section" id="rod-space">
+<h3>Rod Space<a class="headerlink" href="#rod-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization, see the above rod surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">rod_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_rod_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">rod</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;0.2&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="n">axial_mesh_count</span><span class="o">=</span><span class="s">&quot;12&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;n_turns_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;n_segments_per_turn_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;36&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;coil_radius_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">define</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;height_per_turn_&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">loop</span> <span class="n">variable</span><span class="o">=</span><span class="s">&quot;i&quot;</span> <span class="n">start</span><span class="o">=</span><span class="s">&quot;0&quot;</span> <span class="n">end</span><span class="o">=</span><span class="s">&quot;{[n_turns_]*[n_segments_per_turn_]}&quot;</span> <span class="n">step</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">vertex</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;{[coil_radius_]*TMath::Cos(2.*TMath::Pi()*([i] mod [n_segments_per_turn_])/[n_segments_per_turn_])}&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;{[coil_radius_]*TMath::Sin(2.*TMath::Pi()*([i] mod [n_segments_per_turn_])/[n_segments_per_turn_])}&quot;</span> <span class="n">z</span><span class="o">=</span><span class="s">&quot;{[i]*[height_per_turn_]/[n_segments_per_turn_]}&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">loop</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">rod</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">rod_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+<div class="section" id="extruded-space">
+<h3>Extruded Space<a class="headerlink" href="#extruded-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization see the above extruded space.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">extruded_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_extruded_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">extruded_object</span> <span class="n">z_min</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">z_max</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">longitudinal_mesh_count</span><span class="o">=</span><span class="s">&quot;40&quot;</span> <span class="n">longitudinal_mesh_power</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">closed_form</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">inner_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-.5&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_arc</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;{TMath::Sqrt(2.)}&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">outer_line</span> <span class="n">x1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">y1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">x2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">y2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">extruded_object</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">extruded_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+<div class="section" id="rotated-space">
+<h3>Rotated Space<a class="headerlink" href="#rotated-space" title="Permalink to this headline">¶</a></h3>
+<p>For visualization see the above rotated surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">rotated_space</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;example_rotated_space&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">rotated_object</span> <span class="n">longitudinal_mesh_count_start</span><span class="o">=</span><span class="s">&quot;10&quot;</span> <span class="n">longitudinal_mesh_count_end</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="n">longitudinal_mesh_power</span><span class="o">=</span><span class="s">&quot;2.&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;-1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;.5&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">arc</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;.5&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">line</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;1.&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">arc</span> <span class="n">z1</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">r1</span><span class="o">=</span><span class="s">&quot;1.&quot;</span> <span class="n">z2</span><span class="o">=</span><span class="s">&quot;0.&quot;</span> <span class="n">r2</span><span class="o">=</span><span class="s">&quot;2.&quot;</span> <span class="n">radius</span><span class="o">=</span><span class="s">&quot;2&quot;</span> <span class="n">positive_orientation</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">rotated_object</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">rotated_space</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="index.html">Kassiopeia 3.3 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="kgeobag_basic.html" title="Basic Shapes in KGeoBag" >previous</a></li>
+        <li><a href="license.html" title="License" >next</a></li>
+        <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, Daniel Furse, Stefan Groh, Nikolaus Trost, Martin Babutzka, John P. Barrett, Jan Behrens, Nicholas Buzinksy, Thomas Corona, Sanshiro Enomoto, Moritz Erhard, Joseph A. Formaggio, Ferenc Glueck, Fabian Harms, Florian Heizmann, Daniel Hilk, Wolfgang Kaefer, Marco Kleesiek, Benjamin Leiber, Susanne Mertens, Noah S. Oblath, Pascal Renschler, Johannes Schwarz, Penny L. Slocum, Nancy Wandkowsky, Kevin Wierman and Michael Zacher.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

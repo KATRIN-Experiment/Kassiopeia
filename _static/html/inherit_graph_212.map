@@ -1,0 +1,69 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRK54 \&gt;" alt="" coords="261,71,492,112"/>
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSTrajIntegratorRK54.html" title="Kassiopeia::KSTrajIntegratorRK54" alt="" coords="541,274,759,301"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRK65 \&gt;" alt="" coords="261,593,492,635"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSTrajIntegratorRK65.html" title="Kassiopeia::KSTrajIntegratorRK65" alt="" coords="541,731,759,758"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRK8 \&gt;" alt="" coords="261,3076,492,3117"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSTrajIntegratorRK8.html" title="Kassiopeia::KSTrajIntegratorRK8" alt="" coords="544,2986,756,3013"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRK86 \&gt;" alt="" coords="261,1116,492,1157"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSTrajIntegratorRK86.html" title="Kassiopeia::KSTrajIntegratorRK86" alt="" coords="541,1123,759,1150"/>
+<area shape="rect" id="node9" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRK87 \&gt;" alt="" coords="261,2553,492,2595"/>
+<area shape="rect" id="node10" href="$classKassiopeia_1_1KSTrajIntegratorRK87.html" title="Kassiopeia::KSTrajIntegratorRK87" alt="" coords="541,2495,759,2522"/>
+<area shape="rect" id="node11" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRKDP54 \&gt;" alt="" coords="261,1573,492,1615"/>
+<area shape="rect" id="node12" href="$classKassiopeia_1_1KSTrajIntegratorRKDP54.html" title="Kassiopeia::KSTrajIntegrator\lRKDP54" alt="" coords="557,1573,743,1615"/>
+<area shape="rect" id="node13" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorRKDP853 \&gt;" alt="" coords="261,2096,492,2137"/>
+<area shape="rect" id="node14" href="$classKassiopeia_1_1KSTrajIntegratorRKDP853.html" title="Kassiopeia::KSTrajIntegrator\lRKDP853" alt="" coords="557,2031,743,2072"/>
+<area shape="rect" id="node15" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajIntegratorSym4 \&gt;" alt="" coords="261,3337,492,3379"/>
+<area shape="rect" id="node16" href="$classKassiopeia_1_1KSTrajIntegratorSym4.html" title="Kassiopeia::KSTrajIntegratorSym4" alt="" coords="540,3313,760,3339"/>
+<area shape="rect" id="node17" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="5,1769,213,1811"/>
+<area shape="rect" id="node18" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,855,481,896"/>
+<area shape="rect" id="node19" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,1312,481,1353"/>
+<area shape="rect" id="node20" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,2684,481,2725"/>
+<area shape="rect" id="node21" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,3011,481,3052"/>
+<area shape="rect" id="node22" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,1769,481,1811"/>
+<area shape="rect" id="node23" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,2227,481,2268"/>
+<area shape="rect" id="node24" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="273,397,481,439"/>
+<area shape="rect" id="node25" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="12,1508,207,1549"/>
+<area shape="rect" id="node26" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="285,724,468,765"/>
+<area shape="rect" id="node27" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="285,1051,468,1092"/>
+<area shape="rect" id="node28" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="285,2423,468,2464"/>
+<area shape="rect" id="node29" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="285,2880,468,2921"/>
+<area shape="rect" id="node30" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="282,1508,471,1549"/>
+<area shape="rect" id="node31" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="279,1965,475,2007"/>
+<area shape="rect" id="node32" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="285,267,468,308"/>
+<area shape="rect" id="node33" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="12,1443,207,1484"/>
+<area shape="rect" id="node34" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="291,528,462,569"/>
+<area shape="rect" id="node35" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="291,985,462,1027"/>
+<area shape="rect" id="node36" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="291,2357,462,2399"/>
+<area shape="rect" id="node37" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="291,2815,462,2856"/>
+<area shape="rect" id="node38" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="282,1443,471,1484"/>
+<area shape="rect" id="node39" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="279,1900,475,1941"/>
+<area shape="rect" id="node40" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajElectricSystem \&gt;" alt="" coords="287,201,466,243"/>
+<area shape="rect" id="node41" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="12,1835,207,1876"/>
+<area shape="rect" id="node42" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="283,920,470,961"/>
+<area shape="rect" id="node43" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="283,1377,470,1419"/>
+<area shape="rect" id="node44" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="283,2749,470,2791"/>
+<area shape="rect" id="node45" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="283,3141,470,3183"/>
+<area shape="rect" id="node46" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="282,1835,471,1876"/>
+<area shape="rect" id="node47" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="279,2292,475,2333"/>
+<area shape="rect" id="node48" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="283,463,470,504"/>
+<area shape="rect" id="node49" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="12,1181,207,1223"/>
+<area shape="rect" id="node50" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="291,136,462,177"/>
+<area shape="rect" id="node51" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="291,659,462,700"/>
+<area shape="rect" id="node52" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="291,2161,462,2203"/>
+<area shape="rect" id="node53" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="295,2619,459,2660"/>
+<area shape="rect" id="node54" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="282,1181,471,1223"/>
+<area shape="rect" id="node55" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="279,1639,475,1680"/>
+<area shape="rect" id="node56" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajExactSystem \&gt;" alt="" coords="287,5,466,47"/>
+<area shape="rect" id="node57" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajExactTrappedSystem \&gt;" alt="" coords="6,3239,213,3280"/>
+<area shape="rect" id="node58" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajExactTrappedSystem \&gt;" alt="" coords="273,3207,480,3248"/>
+<area shape="rect" id="node59" href="$classKassiopeia_1_1KSMathSym4.html" title="Kassiopeia::KSMathSym4\l\&lt; KSTrajExactTrappedSystem \&gt;" alt="" coords="273,3272,480,3313"/>
+<area shape="rect" id="node60" href="$classKassiopeia_1_1KSMathIntegrator.html" title="Kassiopeia::KSMathIntegrator\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="12,1704,207,1745"/>
+<area shape="rect" id="node61" href="$classKassiopeia_1_1KSMathRK65.html" title="Kassiopeia::KSMathRK65\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="286,789,467,831"/>
+<area shape="rect" id="node62" href="$classKassiopeia_1_1KSMathRK86.html" title="Kassiopeia::KSMathRK86\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="286,1247,467,1288"/>
+<area shape="rect" id="node63" href="$classKassiopeia_1_1KSMathRK87.html" title="Kassiopeia::KSMathRK87\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="286,2488,467,2529"/>
+<area shape="rect" id="node64" href="$classKassiopeia_1_1KSMathRK8.html" title="Kassiopeia::KSMathRK8\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="286,2945,467,2987"/>
+<area shape="rect" id="node65" href="$classKassiopeia_1_1KSMathRKDP54.html" title="Kassiopeia::KSMathRKDP54\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="282,1704,471,1745"/>
+<area shape="rect" id="node66" href="$classKassiopeia_1_1KSMathRKDP853.html" title="Kassiopeia::KSMathRKDP853\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="279,2031,475,2072"/>
+<area shape="rect" id="node67" href="$classKassiopeia_1_1KSMathRKF54.html" title="Kassiopeia::KSMathRKF54\l\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="286,332,467,373"/>
+</map>

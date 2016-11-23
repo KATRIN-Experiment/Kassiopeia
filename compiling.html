@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>Getting starting with Kassiopiea &mdash; Kassiopeia 3.3 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    './',
+            VERSION:     '3.3',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Kassiopeia 3.3 documentation" href="index.html" />
+    <link rel="next" title="Examples and Tests" href="examples.html" />
+    <link rel="prev" title="External Documentation, Citation and Contact" href="external_documentation.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Kassiopeia 3.3 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">Getting starting with Kassiopiea</a><ul>
+<li><a class="reference internal" href="#downloading-the-code">Downloading the code</a></li>
+<li><a class="reference internal" href="#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></li>
+<li><a class="reference internal" href="#required-software-dependencies">Required software dependencies</a></li>
+<li><a class="reference internal" href="#compiling-the-code-using-cmake">Compiling the code using CMake</a></li>
+<li><a class="reference internal" href="#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></li>
+<li><a class="reference internal" href="#configuring-optional-dependencies">Configuring optional dependencies</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="external_documentation.html" title="External Documentation, Citation and Contact" accesskey="P">previous </a></li>
+              <li><a href="examples.html" title="Examples and Tests" accesskey="N">next </a></li>
+              <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+            
+            <li class="visible-xs"><a href="_sources/compiling.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting starting with Kassiopiea</a><ul>
+<li><a class="reference internal" href="#downloading-the-code">Downloading the code</a></li>
+<li><a class="reference internal" href="#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></li>
+<li><a class="reference internal" href="#required-software-dependencies">Required software dependencies</a></li>
+<li><a class="reference internal" href="#compiling-the-code-using-cmake">Compiling the code using CMake</a></li>
+<li><a class="reference internal" href="#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></li>
+<li><a class="reference internal" href="#configuring-optional-dependencies">Configuring optional dependencies</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="external_documentation.html"
+                        title="previous chapter">External Documentation, Citation and Contact</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="examples.html"
+                        title="next chapter">Examples and Tests</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/compiling.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="getting-starting-with-kassiopiea">
+<h1>Getting starting with Kassiopiea<a class="headerlink" href="#getting-starting-with-kassiopiea" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="downloading-the-code">
+<h2>Downloading the code<a class="headerlink" href="#downloading-the-code" title="Permalink to this headline">¶</a></h2>
+<p>The most recent version of <em>Kassiopeia</em> and its accompanying libraries can be found on its public github page
+located at:</p>
+<p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia">https://github.com/KATRIN-Experiment/Kassiopeia</a></p>
+<p>To obtain the code you may either download a .zip file containing the compressed source files from:</p>
+<p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip">https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip</a></p>
+<p>or, alternatively, use git to clone the repository with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ git clone https://github.com/KATRIN-Experiment/Kassiopeia.git
+</pre></div>
+</div>
+<p>The use of git is generally the preferred method as this will allow you to easily obtain updates
+and bug fixes without needing to download a fresh copy of the source.
+This can be done simply by executing the command::
+$ git pull
+from within the source directory. If you do not have the git software you may
+install it on a Debian/Ubuntu Linux system through the package manager with
+the the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ sudo apt-get install git
+</pre></div>
+</div>
+</div>
+<div class="section" id="supported-operating-systems-and-hardware-requirements">
+<h2>Supported operating systems and hardware requirements<a class="headerlink" href="#supported-operating-systems-and-hardware-requirements" title="Permalink to this headline">¶</a></h2>
+<p><em>Kassiopeia</em> is supported and intended to run on systems running either Linux or MacOS X. Currently, it
+has been compiled and tested to run on fresh installations of the Linux distributions Debian 8.6 and Ubuntu 16.04.1 LTS.
+It is also expected to compile and run on other Linux distributions, however this has not been tested, and
+the steps needed to compile <em>Kassiopeia</em> may deviate from what is outlined here.</p>
+<p>For minimal functionality and the ability to run the included example programs and simulations the following
+computer specifications or better are recommended:</p>
+<ul class="simple">
+<li>Architecture: x86-64</li>
+<li>CPU: Intel Core i3 &#64; 2.0 GHz</li>
+<li>RAM: 4 GB</li>
+<li>Free Disk Space: 10 GB</li>
+</ul>
+</div>
+<div class="section" id="required-software-dependencies">
+<h2>Required software dependencies<a class="headerlink" href="#required-software-dependencies" title="Permalink to this headline">¶</a></h2>
+<p><em>Kassiopeia</em> has been designed with an eye towards keeping reliance on external
+software packages and libraries to a minimum. That being said, there are a few packages which are required
+in order to build the software the comes in <em>Kassiopeia</em> distribution.
+The first and most obvious is a C/C++ compiler which is new enough
+to support the C++11 standard. The two recommended compilers are gcc/g++ and clang. The minimum required
+versions are gcc 4.6 and clang 3.0.
+Secondly, in order to build <em>Kassiopeia</em>, GNU make and cmake version 2.8.6 or greater is needed.
+The <em>Kassiopeia</em> build system is based on the flexible cmake system which can be configured by
+the command line. However, it is extremely useful to install the command line
+curses-based cmake GUI interface in order to easily configure optional dependencies.</p>
+<p>On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
+build system can be installed through the use of the package manager through the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ sudo apt-get install build-essential cmake cmake-curses-gui
+</pre></div>
+</div>
+<p>Beyond the build system, there are only two software packages which could be considered absolutely
+required dependencies, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> and <a class="reference external" href="https://root.cern.ch/">ROOT</a> (though this is not strictly true, if the user only wishes to compile <em>KEMField</em>).</p>
+<p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a>), which is a collection of extremely useful numerical routines.
+We recommend compiling and installing <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> from the source if possible.
+However, the necessary libraries can be installed on Debian/Ubuntu linux with following command:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ sudo apt-get install libgsl-dev
+</pre></div>
+</div>
+<p>The second required dependency is the <a class="reference external" href="https://root.cern.ch/">ROOT</a> software from CERN. While <a class="reference external" href="https://root.cern.ch/">ROOT</a> is not strictly required (e.g. if you
+are only interested in using <em>Kassiopeia</em> as a library for some external application), it does feature
+quite heavily as a means of saving simulation output data. Therefore, if you plan on saving the results
+and performing any analysis of <em>Kassiopeia</em> simulation results you will need to install <a class="reference external" href="https://root.cern.ch/">ROOT</a>.</p>
+<p>It is recommended that you install <a class="reference external" href="https://root.cern.ch/">ROOT</a> by downloading and compiling the source code according
+to the instructions on the CERN website. <em>Kassiopeia</em> requires <a class="reference external" href="https://root.cern.ch/">ROOT</a> to be built with XML support,
+and <a class="reference external" href="https://root.cern.ch/">ROOT</a> itself requires the X11, Xft, Xpm, and Xext development libraries. You may install
+the minimal set of development packages needed by ROOT on Debian/Ubuntu Linux by running the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ sudo apt-get install libx11-dev libxpm-dev libxft-dev libxext-dev libxml2-dev
+</pre></div>
+</div>
+<p>After compiling and installing ROOT, in order to compile <em>Kassiopeia</em> on Linux,
+your <code class="docutils literal"><span class="pre">$PATH</span></code> and <code class="docutils literal"><span class="pre">$LD_LIBRARY_PATH</span></code> environmental variables should be configured such that you can
+run the executables <code class="docutils literal"><span class="pre">root</span></code> and <code class="docutils literal"><span class="pre">root-config</span></code> from the command line. The configuration of
+these environmental variables is typically handled by ensuring that
+the script <code class="docutils literal"><span class="pre">thisroot.sh</span></code> (distributed with the ROOT source code) is executed upon login. On Linux
+this an be done by adding the following (with the appropriate change to the file path)
+to your login script (<code class="docutils literal"><span class="pre">~/.bashrc</span></code> file):</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="c">#Set up the ROOT environmental variables</span>
+<span class="n">source</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">ROOT</span><span class="o">-</span><span class="n">install</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span><span class="n">thisroot</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Once you have <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a> and <a class="reference external" href="https://root.cern.ch/">ROOT</a> installed, if you do not require any additional features,
+you can then proceed with configuring and compiling <em>Kassiopeia</em>.</p>
+</div>
+<div class="section" id="compiling-the-code-using-cmake">
+<h2>Compiling the code using CMake<a class="headerlink" href="#compiling-the-code-using-cmake" title="Permalink to this headline">¶</a></h2>
+<p>After installing the required dependencies,
+compiling a basic plain-vanilla version of <em>Kassiopeia</em>, with no extra features
+is a relatively simple process. For the sake of simplicity, this guide will
+assume that the <em>Kassiopeia</em> source code is located in the user&#8217;s home directory
+in <code class="docutils literal"><span class="pre">~/Kassiopeia</span></code>.</p>
+<p>To start, first <code class="docutils literal"><span class="pre">cd</span></code> into Kassiopeia&#8217;s source directory
+and create a <code class="docutils literal"><span class="pre">build</span></code> folder to hold the temporary files that will be created during compilation
+by executing the commands:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ cd ~/Kassiopeia
+$ mkdir ./build
+$ cd ./build
+</pre></div>
+</div>
+<p>Before running cmake, consider if you have a preference for which compiler is used.
+You may select the compiler by setting the environmental variables <code class="docutils literal"><span class="pre">CXX</span></code> and <code class="docutils literal"><span class="pre">CC</span></code>.
+For example, for clang you should set them to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">export</span> <span class="n">CXX</span><span class="o">=</span><span class="n">clang</span><span class="o">++</span>
+<span class="n">export</span> <span class="n">CC</span><span class="o">=</span><span class="n">clang</span>
+</pre></div>
+</div>
+<p>while for the gcc toolchain use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">export</span> <span class="n">CXX</span><span class="o">=</span><span class="n">g</span><span class="o">++</span>
+<span class="n">export</span> <span class="n">CC</span><span class="o">=</span><span class="n">gcc</span>
+</pre></div>
+</div>
+<p>Once you are within the build directory, you may bring up the cmake configuration GUI by typing:</p>
+<div class="highlight-default"><div class="highlight"><pre>$ ccmake ../
+</pre></div>
+</div>
+<p>You will be presented with screen which looks like this:</p>
+<a class="reference internal image-reference" href="_images/cmake_empty_cache.png"><img alt="_images/cmake_empty_cache.png" src="_images/cmake_empty_cache.png" style="width: 500pt;" /></a>
+<p>Hit <code class="docutils literal"><span class="pre">c</span></code> to configure the build, this will lead to a screen as below.</p>
+<a class="reference internal image-reference" href="_images/cmake_initial_config.png"><img alt="_images/cmake_initial_config.png" src="_images/cmake_initial_config.png" style="width: 500pt;" /></a>
+<p>At this point you may either accept the default values or
+use the arrow keys to select which option you wish to change. Press the <code class="docutils literal"><span class="pre">enter</span></code> key
+to activate/deactive an option for modification. The installation directory
+for the <em>Kassiopeia</em> software can be specified by setting the value of
+the option CMAKE_INSTALL_PREFIX. Once the configuration variable are set
+or if you accept the defaults, hit <code class="docutils literal"><span class="pre">c</span></code> to configure again, and then <code class="docutils literal"><span class="pre">g</span></code> to generate
+the make file and exit. Once the make file
+is generated, you can compile and install <em>Kassiopeia</em> by simply executing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>As compilation can take some time, you may use multiple CPU cores to accelerate the compilation,
+by passing <code class="docutils literal"><span class="pre">make</span></code> the <code class="docutils literal"><span class="pre">-j</span></code> option (e.g <code class="docutils literal"><span class="pre">make</span> <span class="pre">-j</span> <span class="pre">4</span> <span class="pre">install</span></code> to compile using four CPU cores).</p>
+</div>
+<div class="section" id="directory-structure-and-environmental-variables">
+<h2>Directory structure and environmental variables<a class="headerlink" href="#directory-structure-and-environmental-variables" title="Permalink to this headline">¶</a></h2>
+<p>Once compiled, the complete set of <em>Kassiopiea</em> executables and configuration files will be
+found in the specified installation directory. The installation directory is broken
+down into several components, these are:</p>
+<ul class="simple">
+<li>bin</li>
+<li>cache</li>
+<li>config</li>
+<li>data</li>
+<li>doc</li>
+<li>include</li>
+<li>lib</li>
+<li>log</li>
+<li>output</li>
+<li>scratch</li>
+</ul>
+<p>The <em>Kassiopeia</em> executable can be found under the <code class="docutils literal"><span class="pre">bin</span></code> directory. Also in this directory
+is the script <code class="docutils literal"><span class="pre">kasperenv.sh</span></code>, which can be used to configure all the necessary environmental variables
+needed to run <em>Kassiopeia</em>, by executing <code class="docutils literal"><span class="pre">source</span> <span class="pre">./kasperenv.sh</span></code> at the command prompt.</p>
+<p>The <code class="docutils literal"><span class="pre">bin</span></code> directory also contains other executables useful for interacting with the sub-components of
+<em>Kassiopeia</em> such as the <em>KEMField</em> or <em>KGeoBag</em> libraries.</p>
+<p>The <code class="docutils literal"><span class="pre">lib</span></code> directory contains all of the compiled libraries, as well as cmake and pkgconfig modules to enable
+linking against <em>Kassiopeia</em> by external programs. The <code class="docutils literal"><span class="pre">include</span></code> directory contains all of the header files
+of the compiled program.</p>
+<p>The other directories: <code class="docutils literal"><span class="pre">cache,</span> <span class="pre">config,</span> <span class="pre">data,</span> <span class="pre">doc,</span> <span class="pre">log,</span> <span class="pre">output,</span></code> and <code class="docutils literal"><span class="pre">scratch</span></code> are all further sub-divided
+into parts which relate to each sub-module of the code: <em>Kassiopeia</em>, <em>Kommon</em>, <em>KGeoBag</em>, or <em>KEMField</em>. The
+<code class="docutils literal"><span class="pre">cache</span></code> and <code class="docutils literal"><span class="pre">scratch</span></code> directories are responsible for storing temporary files needed during run time for
+later reuse. The <code class="docutils literal"><span class="pre">data</span></code> directory contains raw data distributed with <em>Kassiopeia</em> needed for certain calculations
+(e.g. molecular hydrogen scattering cross sections). The <code class="docutils literal"><span class="pre">log</span></code> directory provides space to collect logging output
+from simulations, while the <code class="docutils literal"><span class="pre">output</span></code> directory is where simulation output is saved unless otherwise specified.</p>
+<p>Once you have finished installing <em>Kassiopeia</em> and setting up
+the appropriate environmental variables you can attempt to run it (without arguments)
+by doing:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">cd</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Kassiopeia</span><span class="o">-</span><span class="n">install</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span>
+<span class="o">./</span><span class="n">Kassiopeia</span>
+</pre></div>
+</div>
+<p>The output of which should be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">usage</span><span class="p">:</span> <span class="o">./</span><span class="n">Kassiopeia</span> <span class="o">&lt;</span><span class="n">config_file_one</span><span class="o">.</span><span class="n">xml</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">config_file_one</span><span class="o">.</span><span class="n">xml</span><span class="o">&gt;</span> <span class="o">&lt;...&gt;</span><span class="p">]</span> <span class="p">[</span> <span class="o">-</span><span class="n">r</span> <span class="n">variable1</span><span class="o">=</span><span class="n">value1</span> <span class="n">variable2</span><span class="o">=</span><span class="n">value</span> <span class="o">...</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>If you receive error (either immediately, or at some later time) starting with the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="p">[</span><span class="n">INITIALIZATION</span> <span class="n">ERROR</span> <span class="n">MESSAGE</span><span class="p">]</span> <span class="n">variable</span> <span class="o">&lt;</span><span class="n">KASPERSYS</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+<p>then you need to (re)execute the <code class="docutils literal"><span class="pre">kasperenv.sh</span></code> script to ensure the environmental variables are set up properly.
+In order to auto-initialize these environmental variables upon login, the user
+may add the following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span class="c">#Set up the Kassiopeia environmental variables</span>
+<span class="n">source</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Kassiopeia</span><span class="o">-</span><span class="n">install</span><span class="o">&gt;/</span><span class="nb">bin</span><span class="o">/</span><span class="n">kasperenv</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>to their login (<code class="docutils literal"><span class="pre">~/.bashrc</span></code>) script.</p>
+</div>
+<div class="section" id="configuring-optional-dependencies">
+<h2>Configuring optional dependencies<a class="headerlink" href="#configuring-optional-dependencies" title="Permalink to this headline">¶</a></h2>
+<p><em>Kassiopeia</em> has a plethora of optional dependencies which provide additional
+capabilities and enhance the performance of the software. This optional dependencies
+are configurable through the cmake GUI interface. However, some of these optional
+settings require additional libraries or special hardware in order to operate.</p>
+<p>The use of some external libraries, (e.g. <a class="reference external" href="https://root.cern.ch/">ROOT</a> and <a class="reference external" href="http://www.vtk.org/">VTK</a>) is collectively toggled
+for all sub-modules at once. The <em>Kassiopeia</em> simulation software can link against
+these libraries using the <em>Kasper</em> flags outlined in the table below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="38%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">Collective options</th>
+</tr>
+<tr class="row-even"><th class="head">CMake option name</th>
+<th class="head">Required software</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>Kasper_USE_BOOST</td>
+<td><a class="reference external" href="http://www.boost.org/">Boost</a> developer libraries</td>
+<td>Build Boost dependent extensions.</td>
+</tr>
+<tr class="row-even"><td>Kasper_USE_GSL</td>
+<td>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a>)</td>
+<td>Build GSL dependent extensions</td>
+</tr>
+<tr class="row-odd"><td>Kasper_USE_ROOT</td>
+<td>The CERN <a class="reference external" href="https://root.cern.ch/">ROOT</a> libraries</td>
+<td>Build ROOT dependent extensions.</td>
+</tr>
+<tr class="row-even"><td>Kasper_USE_TBB</td>
+<td>Intel (<a class="reference external" href="https://www.threadingbuildingblocks.org/">TBB</a>) thread building blocks</td>
+<td>Build <a class="reference external" href="https://www.threadingbuildingblocks.org/">TBB</a> based parallel processing tools.</td>
+</tr>
+<tr class="row-odd"><td>Kasper_USE_VTK</td>
+<td>Kitware&#8217;s visualization toolkit <a class="reference external" href="http://www.vtk.org/">VTK</a></td>
+<td>Build advanced tools for visualization.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, the <code class="docutils literal"><span class="pre">Kasper_USE_ROOT</span></code> and <code class="docutils literal"><span class="pre">Kasper_USE_GSL</span></code> flags are turned on,
+reflecting their importance for the default configuration of <em>Kassiopeia</em>.</p>
+<p>Toggling of additional optional dependencies is very granular and may be enabled/disabled
+for the individual sub-modules: (<em>Kassiopeia</em>, <em>Kommon</em>, <em>KEMField, or *KGeoBag</em>). It is important
+to note changes in one sub-module may affect others since there is some interdependence between optional
+features across sub-modules. This is automatically
+accounted for by the cmake system in order to prevent situations where prerequisites are missing.
+To summarize the possible optional dependencies that are available, they
+have been divided according to the sub-module(s) which they modify. For performance reasons
+all of the sub-modules explicitly allow the toggling of debugging
+messages (which are disabled by default).</p>
+<p>The <em>Kassiopeia</em> sub-module has a rather limited set of additional options, which is:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="36%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">Kassiopeia options</th>
+</tr>
+<tr class="row-even"><th class="head">CMake option name</th>
+<th class="head">Required software</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>Kassiopeia_ENABLE_DEBUG</td>
+<td>None</td>
+<td>Enable Kassiopeia debugging messages.</td>
+</tr>
+</tbody>
+</table>
+<p>The optional dependencies the <em>Kommon</em> sub-module are given in the following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="38%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">Kommon options</th>
+</tr>
+<tr class="row-even"><th class="head">CMake option name</th>
+<th class="head">Required software</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>Kommon_ENABLE_DEBUG</td>
+<td>None</td>
+<td>Enable Kommon debugging messages.</td>
+</tr>
+<tr class="row-even"><td>Kommon_USE_Log4CXX</td>
+<td>Apache <a class="reference external" href="https://logging.apache.org/log4cxx/latest_stable/">Log4CXX</a> library</td>
+<td>Enable enhanced logging tools.</td>
+</tr>
+</tbody>
+</table>
+<p>The additional optional dependencies of the <em>KGeoBag</em> module are as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="38%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">KGeoBag options</th>
+</tr>
+<tr class="row-even"><th class="head">CMake option name</th>
+<th class="head">Required software</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>KGeoBag_ENABLE_DEBUG</td>
+<td>None</td>
+<td>Enable KGeoBag debugging messages.</td>
+</tr>
+<tr class="row-even"><td>KGeoBag_ENABLE_TEST</td>
+<td>None</td>
+<td>Build developer test executables.</td>
+</tr>
+</tbody>
+</table>
+<p>KEMField has a rather extensive set of additional compiler options so that it maybe adapted for
+use on special purpose machines (computing clusters, GPUs, etc.) for field solving tasks.
+These are listed as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="38%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="3">KEMField options</th>
+</tr>
+<tr class="row-even"><th class="head">CMake option name</th>
+<th class="head">Required software</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>KEMField_ENABLE_FM_APP</td>
+<td>None</td>
+<td>Build fast-multipole library applications.</td>
+</tr>
+<tr class="row-even"><td>KEMField_ENABLE_FM_TEST</td>
+<td>None</td>
+<td>Build fast-multipole developter tests.</td>
+</tr>
+<tr class="row-odd"><td>KEMField_ENABLE_TEST</td>
+<td>None</td>
+<td>Build developer tests.</td>
+</tr>
+<tr class="row-even"><td>KEMField_SILENT</td>
+<td>None</td>
+<td>Suppress all debugging output.</td>
+</tr>
+<tr class="row-odd"><td>KEMField_USE_CUDA</td>
+<td>The <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA</a> developer toolkit</td>
+<td>Enable CUDA extensions for NVidia GPUs.</td>
+</tr>
+<tr class="row-even"><td>KEMField_USE_FFTW</td>
+<td>The <a class="reference external" href="http://www.fftw.org/">FFTW</a> fast Fourier transform library</td>
+<td>Enable use of FFTW (conflicts with OpenCL).</td>
+</tr>
+<tr class="row-odd"><td>KEMField_USE_GSL</td>
+<td>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL</a>)</td>
+<td>Enable GSL dependent extensions, enables CBLAS.</td>
+</tr>
+<tr class="row-even"><td>KEMField_USE_KGEOBAG</td>
+<td>KGeoBag</td>
+<td>Enable geometric modeling and boundary meshing.</td>
+</tr>
+<tr class="row-odd"><td>KEMField_USE_KMESSAGE</td>
+<td>Kommon</td>
+<td>Fancy debugging messages from Kommon.</td>
+</tr>
+<tr class="row-even"><td>KEMField_USE_KOMMON</td>
+<td>Kommon</td>
+<td>Enable Kommon dependent extensions.</td>
+</tr>
+<tr class="row-odd"><td>KEMField_USE_KOMMON_BINDINGS</td>
+<td>Kommon</td>
+<td>Enable XML bindings.</td>
+</tr>
+<tr class="row-even"><td>KEMField_USE_MPI</td>
+<td>An MPI implementation (e.g. <a class="reference external" href="https://www.open-mpi.org/">OpenMPI</a> or <a class="reference external" href="http://www.mpich.org/">MPICH</a>)</td>
+<td>Enable multi-processing using MPI.</td>
+</tr>
+<tr class="row-odd"><td>KEMField_USE_OPENCL</td>
+<td>The <a class="reference external" href="https://www.khronos.org/opencl/">OpenCL</a> headers and library</td>
+<td>Enable use of GPU/Accelerator devices.</td>
+</tr>
+<tr class="row-even"><td>KEMField_USE_ZLIB</td>
+<td>The <a class="reference external" href="http://www.zlib.net/">ZLIB</a> compression library</td>
+<td>Use ZLIB for compression, default is <a class="reference external" href="https://code.google.com/archive/p/miniz/">miniz</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>It should be noted that if you have any interest in visualizing the data output from a Kassiopiea simulation,
+the use of the <a class="reference external" href="http://www.vtk.org/">VTK</a> toolkit is highly recommended.</p>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="index.html">Kassiopeia 3.3 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="external_documentation.html" title="External Documentation, Citation and Contact" >previous</a></li>
+        <li><a href="examples.html" title="Examples and Tests" >next</a></li>
+        <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, Daniel Furse, Stefan Groh, Nikolaus Trost, Martin Babutzka, John P. Barrett, Jan Behrens, Nicholas Buzinksy, Thomas Corona, Sanshiro Enomoto, Moritz Erhard, Joseph A. Formaggio, Ferenc Glueck, Fabian Harms, Florian Heizmann, Daniel Hilk, Wolfgang Kaefer, Marco Kleesiek, Benjamin Leiber, Susanne Mertens, Noah S. Oblath, Pascal Renschler, Johannes Schwarz, Penny L. Slocum, Nancy Wandkowsky, Kevin Wierman and Michael Zacher.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.8.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

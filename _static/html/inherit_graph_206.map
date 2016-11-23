@@ -1,0 +1,29 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermConstantForcePropagation \&gt;" alt="" coords="5,5,273,47"/>
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSTrajTermConstantForcePropagation.html" title="Kassiopeia::KSTrajTermConstant\lForcePropagation" alt="" coords="329,12,544,53"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermDrift \&gt;" alt="" coords="24,71,255,112"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSTrajTermDrift.html" title="Kassiopeia::KSTrajTermDrift" alt="" coords="343,90,530,117"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermGravity \&gt;" alt="" coords="24,136,255,177"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSTrajTermGravity.html" title="Kassiopeia::KSTrajTermGravity" alt="" coords="335,158,538,185"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermGyration \&gt;" alt="" coords="24,201,255,243"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSTrajTermGyration.html" title="Kassiopeia::KSTrajTermGyration" alt="" coords="331,230,542,257"/>
+<area shape="rect" id="node9" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermPropagation \&gt;" alt="" coords="24,267,255,308"/>
+<area shape="rect" id="node10" href="$classKassiopeia_1_1KSTrajTermPropagation.html" title="Kassiopeia::KSTrajTermPropagation" alt="" coords="321,307,552,334"/>
+<area shape="rect" id="node11" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermSynchrotron \&gt;" alt="" coords="24,332,255,373"/>
+<area shape="rect" id="node12" href="$classKassiopeia_1_1KSTrajTermSynchrotron.html" title="Kassiopeia::KSTrajTermSynchrotron" alt="" coords="321,398,552,425"/>
+<area shape="rect" id="node13" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryAdiabatic,\l KSTrajectory \&gt;" alt="" coords="24,462,255,518"/>
+<area shape="rect" id="node14" href="$classKassiopeia_1_1KSTrajTrajectoryAdiabatic.html" title="Kassiopeia::KSTrajTrajectory\lAdiabatic" alt="" coords="342,460,531,501"/>
+<area shape="rect" id="node15" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryAdiabaticSpin,\l KSTrajectory \&gt;" alt="" coords="24,542,255,598"/>
+<area shape="rect" id="node16" href="$classKassiopeia_1_1KSTrajTrajectoryAdiabaticSpin.html" title="Kassiopeia::KSTrajTrajectory\lAdiabaticSpin" alt="" coords="342,537,531,579"/>
+<area shape="rect" id="node17" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryElectric,\l KSTrajectory \&gt;" alt="" coords="24,622,255,678"/>
+<area shape="rect" id="node18" href="$classKassiopeia_1_1KSTrajTrajectoryElectric.html" title="Kassiopeia::KSTrajTrajectory\lElectric" alt="" coords="342,616,531,657"/>
+<area shape="rect" id="node19" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryExact, KSTrajectory \&gt;" alt="" coords="12,701,267,743"/>
+<area shape="rect" id="node20" href="$classKassiopeia_1_1KSTrajTrajectoryExact.html" title="Kassiopeia::KSTrajTrajectory\lExact" alt="" coords="342,692,531,733"/>
+<area shape="rect" id="node21" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryExactSpin,\l KSTrajectory \&gt;" alt="" coords="24,766,255,822"/>
+<area shape="rect" id="node22" href="$classKassiopeia_1_1KSTrajTrajectoryExactSpin.html" title="Kassiopeia::KSTrajTrajectory\lExactSpin" alt="" coords="342,765,531,807"/>
+<area shape="rect" id="node23" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryExactTrapped,\l KSTrajectory \&gt;" alt="" coords="24,846,255,902"/>
+<area shape="rect" id="node24" href="$classKassiopeia_1_1KSTrajTrajectoryExactTrapped.html" title="Kassiopeia::KSTrajTrajectory\lExactTrapped" alt="" coords="342,843,531,884"/>
+<area shape="rect" id="node25" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTrajectoryMagnetic,\l KSTrajectory \&gt;" alt="" coords="24,926,255,982"/>
+<area shape="rect" id="node26" href="$classKassiopeia_1_1KSTrajTrajectoryMagnetic.html" title="Kassiopeia::KSTrajTrajectory\lMagnetic" alt="" coords="342,915,531,956"/>
+<area shape="rect" id="node27" href="$classKassiopeia_1_1KSMathDifferentiator.html" title="Kassiopeia::KSMathDifferentiator\l\&lt; XSystemType \&gt;" alt="" coords="33,397,245,439"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Kassiopeia::KSTrajTermSynchrotron" name="Kassiopeia::KSTrajTermSynchrotron">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajTermSynchrotron \&gt;" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSMathDifferentiator.html" title="KSTrajExactDifferentiator" alt="" coords="37,71,204,98"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSMathDifferentiator.html" title="KSTrajAdiabaticDifferentiator" alt="" coords="26,122,215,149"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSMathDifferentiator.html" title="KSTrajExactTrappedDifferentiator" alt="" coords="13,173,228,199"/>
+</map>

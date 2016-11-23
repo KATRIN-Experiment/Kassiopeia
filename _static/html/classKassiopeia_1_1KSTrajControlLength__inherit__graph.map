@@ -1,0 +1,10 @@
+<map id="Kassiopeia::KSTrajControlLength" name="Kassiopeia::KSTrajControlLength">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajControlLength \&gt;" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactControl" alt="" coords="53,71,188,98"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactSpinControl" alt="" coords="40,122,201,149"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajAdiabaticSpinControl" alt="" coords="29,173,212,199"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajAdiabaticControl" alt="" coords="42,223,199,250"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactTrappedControl" alt="" coords="29,274,212,301"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajMagneticControl" alt="" coords="43,325,199,351"/>
+<area shape="rect" id="node9" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajElectricControl" alt="" coords="47,375,194,402"/>
+</map>
