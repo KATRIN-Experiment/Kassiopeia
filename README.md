@@ -9,6 +9,36 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 ============================================================================
 
 --------------------------------------------------
+ System requirements:
+--------------------------------------------------
+
+    Linux/MacOS (Windows+cygwin should work too, but has not been tested)
+
+    Some dependencies are only required if certain module are compiled in.
+
+    Dependencies:
+        CMake (www.cmake.org) version 2.8 or higher
+        G++ version 4.5 or higher (if compiling with GCC)
+        GSL (www.gnu.org/software/gsl)
+        ROOT (www.cern.ch/root) version 5.24 or higher (6.x should work too)
+            --enable-minuit2 (if you want to use KaFit)
+            --enable-fftw3 (if you want to use KEMField)
+
+    Optional Dependencies:
+        Boost (www.boost.org) version 1.46 or higher
+        LibXml2 (xmlsoft.org)
+        Log4CXX (logging.apache.org/log4cxx)
+        MPI (www.open-mpi.org or mpich.org)
+        OpenCL (www.khronos.org/opencl), installation details depend on your system
+        OpenSSL (openssl.org) version 0.9.6 or higher
+        PETSc (mcs.anl.gov/petsc)
+        VTK (www.vtk.org) version 5.0 or higher
+        zlib (www.zlib.net)
+        pdflatex (for making the documentation; minimum version not known)
+        doxygen (for making the documentation; minimum version not known)
+
+
+--------------------------------------------------
  Installation
 --------------------------------------------------
 
@@ -64,35 +94,6 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
        can call executables directly from the commandline.
        Furthermore this sets the $KASPERSYS environment variable.       
 
---------------------------------------------------
- System requirements:
---------------------------------------------------
-
-    Linux/MacOS (Windows+cygwin should work too, but has not been tested)
-
-    Some dependencies are only required if certain module are compiled in.
-
-    Dependencies:
-        CMake (www.cmake.org) version 2.8 or higher
-        G++ version 4.5 or higher (if compiling with GCC)
-        GSL (www.gnu.org/software/gsl)
-        ROOT (www.cern.ch/root) version 5.24 or higher (6.x should work too)
-            --enable-minuit2 (if you want to use KaFit)
-            --enable-fftw3 (if you want to use KEMField)
-
-    Optional Dependencies:
-        Boost (www.boost.org) version 1.46 or higher
-        LibXml2 (xmlsoft.org)
-        Log4CXX (logging.apache.org/log4cxx)
-        MPI (www.open-mpi.org or mpich.org)
-        OpenCL (www.khronos.org/opencl), installation details depend on your system
-        OpenSSL (openssl.org) version 0.9.6 or higher
-        PETSc (mcs.anl.gov/petsc)
-        VTK (www.vtk.org) version 5.0 or higher
-        zlib (www.zlib.net)
-        pdflatex (for making the documentation; minimum version not known)
-        doxygen (for making the documentation; minimum version not known)
-
 
 --------------------------------------------------
  Documentation
@@ -107,7 +108,7 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 
 
 --------------------------------------------------
- 4. Getting help
+ Getting help
 --------------------------------------------------
 
 
