@@ -1,5 +1,8 @@
 # Kassiopeia
-Simulation of electric and magnetic fields and particle tracking
+This Simulation package allows to run highly customizable particle tracking simulations
+along with calculations of electric and magnetic fields.
+
+Find a full user guide under http://katrin-experiment.github.io/Kassiopeia/index.html
 
 ============================================================================
 Kassiopeia: Simulation of electric and magnetic fields and particle tracking
