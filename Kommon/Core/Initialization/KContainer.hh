@@ -2,7 +2,6 @@
 #define Kommon_KContainer_hh_
 
 #include "KNamed.h"
-using katrin::KNamed;
 
 namespace katrin
 {
@@ -72,6 +71,8 @@ namespace katrin
             void CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType& ) );
             template< class XObjectType, class XMemberType, class XTargetType >
             void CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( const XTargetType& ) );
+
+            KContainer* ReleaseToNewContainer();
 
             template< class XTargetType >
             void ReleaseTo( XTargetType*& aTarget );
@@ -165,6 +166,8 @@ namespace katrin
         {
             return *tObject;
         }
+        catch(...) {}
+
         XTargetType* tTarget = NULL;
         return *tTarget;
     }
@@ -179,6 +182,8 @@ namespace katrin
         {
             return tObject;
         }
+        catch(...){}
+
         XTargetType* tTarget = NULL;
         return tTarget;
     }
@@ -292,6 +297,13 @@ namespace katrin
         {
             return;
         }
+    }
+
+    inline KContainer* KContainer::ReleaseToNewContainer(){
+        KContainer* newContainer = new KContainer();
+        newContainer->fHolder = fHolder;
+        fHolder = NULL;
+        return newContainer;
     }
 
 

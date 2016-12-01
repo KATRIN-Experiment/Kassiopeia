@@ -113,7 +113,7 @@ __forceinline__ __device__ CU_TYPE ER_EFieldLocalZ(CU_TYPE x1,
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE ER_Potential( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__ CU_TYPE ER_PotentialAnalytical( const CU_TYPE* P, const CU_TYPE* data )
 {
   // Rectangle calculation
 
@@ -151,7 +151,7 @@ __forceinline__ __device__ CU_TYPE ER_Potential( const CU_TYPE* P, const CU_TYPE
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE4 ER_EField( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__ CU_TYPE4 ER_EFieldAnalytical( const CU_TYPE* P, const CU_TYPE* data )
 {
   // Rectangle calculation
 

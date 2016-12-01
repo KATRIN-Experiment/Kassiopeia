@@ -1,10 +1,9 @@
 #include "KCommandLineTokenizer.hh"
 #include "KInitializationMessage.hh"
-#include<stdio.h>
 
 #include <cstring>
 
-#include <cstdlib>
+using namespace std;
 
 extern char** environ;
 
@@ -31,10 +30,10 @@ namespace katrin
 
         for (env = environ; *env != 0; env++)
         {
-            std::string tEnv(*env);
-            std::stringstream env_stream(tEnv);
-            std::getline(env_stream, tVariableName, '=');
-            std::getline(env_stream, tVariableValue, '=');
+            string tEnv(*env);
+            stringstream env_stream(tEnv);
+            getline(env_stream, tVariableName, '=');
+            getline(env_stream, tVariableValue, '=');
 
             fVariables[tVariableName] = tVariableValue;
         }

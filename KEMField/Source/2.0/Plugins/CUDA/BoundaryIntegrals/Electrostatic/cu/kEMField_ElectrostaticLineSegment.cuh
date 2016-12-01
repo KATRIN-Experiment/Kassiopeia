@@ -9,7 +9,8 @@
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EL_Potential( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__
+CU_TYPE EL_Potential( const CU_TYPE* P, const CU_TYPE* data )
 {
   // Wire calculation
 
@@ -84,7 +85,8 @@ __forceinline__ __device__ CU_TYPE EL_Potential( const CU_TYPE* P, const CU_TYPE
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE4 EL_EField( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__
+CU_TYPE4 EL_EField( const CU_TYPE* P, const CU_TYPE* data )
 {
   // Wire calculation
 
@@ -158,6 +160,17 @@ __forceinline__ __device__ CU_TYPE4 EL_EField( const CU_TYPE* P, const CU_TYPE* 
   field.z = data[6]/(4.*M_EPS0)*f[2];
 
   return field;
+}
+
+//______________________________________________________________________________
+
+__forceinline__ __device__
+CU_TYPE4 EL_EFieldAndPotential(const CU_TYPE* P, const CU_TYPE* data)
+{
+  CU_TYPE4 field = EL_EField( P, data );
+  CU_TYPE phi = EL_Potential( P, data );
+
+  return MAKECU4( field.x, field.y, field.z, phi );
 }
 
 #endif /* KEMFIELD_ELECTROSTATICLINESEGMENT_CUH */

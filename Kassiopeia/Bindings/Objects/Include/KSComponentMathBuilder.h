@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSComponentMath.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSObjectsMessage.h"
 #include "KSComponentGroup.h"
 
@@ -14,17 +14,17 @@ namespace katrin
     class KSComponentMathData
     {
         public:
-            string fName;
-            string fGroupName;
-            string fTerm;
-            vector< string > fParents;
+            std::string fName;
+            std::string fGroupName;
+            std::string fTerm;
+            std::vector< std::string > fParents;
     };
 
-    KSComponent* BuildOutputMath( vector< KSComponent* > aComponents, string aTerm )
+    KSComponent* BuildOutputMath( std::vector< KSComponent* > aComponents, std::string aTerm )
     {
         if( aComponents.at( 0 )->Is< unsigned short >() == true )
         {
-            vector< unsigned short* > tComponents;
+            std::vector< unsigned short* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< unsigned short >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -43,7 +43,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< short >() == true )
         {
-            vector< short* > tComponents;
+            std::vector< short* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< short >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -62,7 +62,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< unsigned int >() == true )
         {
-            vector< unsigned int* > tComponents;
+            std::vector< unsigned int* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< unsigned int >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -81,7 +81,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< int >() == true )
         {
-            vector< int* > tComponents;
+            std::vector< int* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< int >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -100,7 +100,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< unsigned long >() == true )
         {
-            vector< unsigned long* > tComponents;
+            std::vector< unsigned long* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< unsigned long >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -119,7 +119,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< long >() == true )
         {
-            vector< long* > tComponents;
+            std::vector< long* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< long >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -138,7 +138,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< float >() == true )
         {
-            vector< float* > tComponents;
+            std::vector< float* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< float >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -157,7 +157,7 @@ namespace katrin
 
         if( aComponents.at( 0 )->Is< double >() == true )
         {
-            vector< double* > tComponents;
+            std::vector< double* > tComponents;
             tComponents.push_back( aComponents.at( 0 )->As< double >() );
             for( size_t tIndex = 1; tIndex < aComponents.size(); tIndex++ )
             {
@@ -192,32 +192,32 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
         if( aContainer->GetName() == "group" )
         {
-            string tGroupName = aContainer->AsReference< string >();
+            std::string tGroupName = aContainer->AsReference< std::string >();
             fObject->fGroupName = tGroupName;
             return true;
         }
         if( aContainer->GetName() == "term" )
         {
-            string tTerm = aContainer->AsReference< string >();
+            std::string tTerm = aContainer->AsReference< std::string >();
             fObject->fTerm = tTerm;
             return true;
         }
         if( aContainer->GetName() == "component" )
         {
             objctmsg( eWarning ) <<"deprecated warning in KSComponentMathBuilder: Please use the attribute <parent> instead <component>"<<eom;
-            string tComponent = aContainer->AsReference< string >();
+            std::string tComponent = aContainer->AsReference< std::string >();
             fObject->fParents.push_back( tComponent );
             return true;
         }
         if( aContainer->GetName() == "parent" )
         {
-            string tComponent = aContainer->AsReference< string >();
+            std::string tComponent = aContainer->AsReference< std::string >();
             fObject->fParents.push_back( tComponent );
             return true;
         }
@@ -227,10 +227,10 @@ namespace katrin
     template< >
     inline bool KSComponentMathBuilder::End()
     {
-        vector< KSComponent* > tParentComponents;
+        std::vector< KSComponent* > tParentComponents;
         if( !fObject->fGroupName.empty() )
         {
-            KSComponentGroup* tComponentGroup = KSToolbox::GetInstance()->GetObjectAs< KSComponentGroup >( fObject->fGroupName );
+            KSComponentGroup* tComponentGroup = KToolbox::GetInstance().Get< KSComponentGroup >( fObject->fGroupName );
             for( size_t tNameIndex = 0; tNameIndex < fObject->fParents.size(); tNameIndex++ )
             {
                 KSComponent* tOneComponent = NULL;
@@ -254,7 +254,7 @@ namespace katrin
         {
             for( size_t tIndex = 0; tIndex < fObject->fParents.size(); tIndex++ )
             {
-                KSComponent* tOneComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( fObject->fParents.at( tIndex ) );
+                KSComponent* tOneComponent = KToolbox::GetInstance().Get< KSComponent >( fObject->fParents.at( tIndex ) );
                 tParentComponents.push_back( tOneComponent );
             }
         }

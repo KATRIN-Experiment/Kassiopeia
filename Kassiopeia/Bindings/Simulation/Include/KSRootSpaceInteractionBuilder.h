@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootSpaceInteraction.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_space_interaction" )
         {
-            fObject->AddSpaceInteraction( KSToolbox::GetInstance()->GetObjectAs< KSSpaceInteraction >( aContainer->AsReference< string >() ) );
+            fObject->AddSpaceInteraction( KToolbox::GetInstance().Get< KSSpaceInteraction >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

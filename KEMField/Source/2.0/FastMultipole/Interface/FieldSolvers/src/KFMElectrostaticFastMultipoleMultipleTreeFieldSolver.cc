@@ -1,4 +1,5 @@
 #include "KFMElectrostaticFastMultipoleMultipleTreeFieldSolver.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 
 #include <cmath>
 
@@ -7,7 +8,7 @@ namespace KEMField
 
 KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::KFMElectrostaticFastMultipoleMultipleTreeFieldSolver(const KSurfaceContainer& container):
 fSurfaceContainer(container),
-fDirectIntegrator(),
+fDirectIntegrator(KEBIFactory::MakeDefault()),
 fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
 fFastFieldSolver()
 {

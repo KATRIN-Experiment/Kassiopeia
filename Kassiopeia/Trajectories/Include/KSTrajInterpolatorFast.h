@@ -4,6 +4,8 @@
 #include "KSComponentTemplate.h"
 
 #include "KSTrajExactTypes.h"
+#include "KSTrajExactSpinTypes.h"
+#include "KSTrajAdiabaticSpinTypes.h"
 #include "KSTrajAdiabaticTypes.h"
 #include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
@@ -14,6 +16,8 @@ namespace Kassiopeia
     class KSTrajInterpolatorFast :
         public KSComponentTemplate< KSTrajInterpolatorFast >,
         public KSTrajExactInterpolator,
+        public KSTrajExactSpinInterpolator,
+        public KSTrajAdiabaticSpinInterpolator,
         public KSTrajAdiabaticInterpolator,
 		public KSTrajElectricInterpolator,
         public KSTrajMagneticInterpolator
@@ -28,6 +32,10 @@ namespace Kassiopeia
 
 
             virtual void Interpolate(double /*aTime*/, const KSTrajExactIntegrator& /*anIntegrator*/, const KSTrajExactDifferentiator& /*aDifferentiator*/, const KSTrajExactParticle& anInitialParticle, const KSTrajExactParticle& aFinalParticle, const double& aTimeStep, KSTrajExactParticle& anIntermediateParticle ) const;
+
+            virtual void Interpolate(double /*aTime*/, const KSTrajExactSpinIntegrator& /*anIntegrator*/, const KSTrajExactSpinDifferentiator& /*aDifferentiator*/, const KSTrajExactSpinParticle& anInitialParticle, const KSTrajExactSpinParticle& aFinalParticle, const double& aTimeStep, KSTrajExactSpinParticle& anIntermediateParticle ) const;
+
+            virtual void Interpolate(double /*aTime*/, const KSTrajAdiabaticSpinIntegrator& /*anIntegrator*/, const KSTrajAdiabaticSpinDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticSpinParticle& anInitialParticle, const KSTrajAdiabaticSpinParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticSpinParticle& anIntermediateParticle ) const;
 
             virtual void Interpolate(double /*aTime*/, const KSTrajAdiabaticIntegrator& /*anIntegrator*/, const KSTrajAdiabaticDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticParticle& anInitial, const KSTrajAdiabaticParticle& aFinal, const double& aValue, KSTrajAdiabaticParticle& anIntermediate ) const;
 
@@ -45,6 +53,26 @@ namespace Kassiopeia
                                                           const KSTrajExactParticle& anInitialValue,
                                                           const KSTrajExactParticle& aFinalValue,
                                                           std::vector<KSTrajExactParticle>* interpolatedValues) const;
+
+            virtual void GetPiecewiseLinearApproximation( double /*aTolerance*/,
+                                                          unsigned int /*nMaxSegments*/,
+                                                          double /*anInitialTime*/,
+                                                          double /*aFinalTime*/,
+                                                          const KSTrajExactSpinIntegrator& /*anIntegrator*/,
+                                                          const KSTrajExactSpinDifferentiator& /*aDifferentiator*/,
+                                                          const KSTrajExactSpinParticle& anInitialValue,
+                                                          const KSTrajExactSpinParticle& aFinalValue,
+                                                          std::vector<KSTrajExactSpinParticle>* interpolatedValues) const;
+
+            virtual void GetPiecewiseLinearApproximation( double /*aTolerance*/,
+                                                          unsigned int /*nMaxSegments*/,
+                                                          double /*anInitialTime*/,
+                                                          double /*aFinalTime*/,
+                                                          const KSTrajAdiabaticSpinIntegrator& /*anIntegrator*/,
+                                                          const KSTrajAdiabaticSpinDifferentiator& /*aDifferentiator*/,
+                                                          const KSTrajAdiabaticSpinParticle& anInitialValue,
+                                                          const KSTrajAdiabaticSpinParticle& aFinalValue,
+                                                          std::vector<KSTrajAdiabaticSpinParticle>* interpolatedValues) const;
 
             virtual void GetPiecewiseLinearApproximation( double /*aTolerance*/,
                                                           unsigned int /*nMaxSegments*/,

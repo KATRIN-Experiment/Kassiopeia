@@ -30,11 +30,9 @@ if (@PROJECT_NAME@_ENABLE_FM_APP)
         KEMSurfaces
         KEMIO
         KEMElectrostaticBoundaryIntegrals
-        KEMIntegratingFieldSolver
     )
 
     if (@PROJECT_NAME@_USE_VTK)
-    kasper_find_vtk()
     list (APPEND FAST_MULTIPOLE_APP_LIBS
     KEMVTKPlugin
     )
@@ -78,6 +76,7 @@ if (@PROJECT_NAME@_ENABLE_FM_APP)
 
     if (@PROJECT_NAME@_USE_VTK)
     list (APPEND FAST_MULTIPOLE_APP_LIBS
+      ${Kommon_Vtk_LIBRARIES}
       ${VTK_LIBRARIES})
     endif (@PROJECT_NAME@_USE_VTK)
 

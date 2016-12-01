@@ -3,7 +3,10 @@
 
 #include "KSComponentTemplate.h"
 #include "KSTrajExactTypes.h"
+#include "KSTrajExactSpinTypes.h"
+#include "KSTrajExactTrappedTypes.h"
 #include "KSTrajAdiabaticTypes.h"
+#include "KSTrajAdiabaticSpinTypes.h"
 #include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
 
@@ -13,7 +16,10 @@ namespace Kassiopeia
     class KSTrajTermPropagation :
         public KSComponentTemplate< KSTrajTermPropagation >,
         public KSTrajExactDifferentiator,
+        public KSTrajExactSpinDifferentiator,
+        public KSTrajExactTrappedDifferentiator,
         public KSTrajAdiabaticDifferentiator,
+        public KSTrajAdiabaticSpinDifferentiator,
         public KSTrajElectricDifferentiator,
         public KSTrajMagneticDifferentiator
     {
@@ -25,7 +31,10 @@ namespace Kassiopeia
 
         public:
             virtual void Differentiate(double /*aTime*/, const KSTrajExactParticle& aValue, KSTrajExactDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajExactSpinParticle& aValue, KSTrajExactSpinDerivative& aDerivative ) const;
+            virtual void Differentiate(double aTime, const KSTrajExactTrappedParticle& aValue, KSTrajExactTrappedDerivative& aDerivative) const;
             virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aValue, KSTrajAdiabaticDerivative& aDerivative ) const;
+            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticSpinParticle& aValue, KSTrajAdiabaticSpinDerivative& aDerivative ) const;
             virtual void Differentiate(double /*aTime*/, const KSTrajMagneticParticle& aValue, KSTrajMagneticDerivative& aDerivative ) const;
             virtual void Differentiate(double /*aTime*/, const KSTrajElectricParticle& aValue, KSTrajElectricDerivative& aDerivative ) const;
 

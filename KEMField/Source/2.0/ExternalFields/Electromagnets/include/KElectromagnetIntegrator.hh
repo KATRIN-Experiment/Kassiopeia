@@ -8,6 +8,8 @@
 
 namespace KEMField
 {
+  class ElectromagnetSingleThread;
+
   class KElectromagnetIntegrator :
     public KLineCurrentIntegrator,
     public KCurrentLoopIntegrator,
@@ -23,6 +25,9 @@ namespace KEMField
     using KCurrentLoopIntegrator::MagneticField;
     using KSolenoidIntegrator::MagneticField;
     using KCoilIntegrator::MagneticField;
+
+    // for selection of the correct field solver template and possibly elsewhere
+    typedef ElectromagnetSingleThread Kind;
 
     KElectromagnetIntegrator() {}
     virtual ~KElectromagnetIntegrator() {}

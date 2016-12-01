@@ -6,6 +6,7 @@ set (PRECONDITIONER_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KJacobiPreconditioner.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KBlockJacobiPreconditioner.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KImplicitKrylovPreconditioner.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KMatrixPreconditioner.hh
 )
 
 kasper_install_headers (${PRECONDITIONER_HEADERFILES})

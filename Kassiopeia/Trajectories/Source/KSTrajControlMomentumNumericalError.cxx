@@ -65,6 +65,52 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlMomentumNumericalError::Calculate( const KSTrajExactSpinParticle& aParticle, double& aValue )
+    {
+        if( fFirstStep == true )
+        {
+            trajmsg_debug( "stepsize energy on first step" << eom );
+            fTimeStep = 1.0/aParticle.GetCyclotronFrequency();
+            if(fSafetyFactor > 1.0){fSafetyFactor = 1.0/fSafetyFactor;};
+            fFirstStep = false;
+        }
+        trajmsg_debug( "stepsize numerical error suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+
+    void KSTrajControlMomentumNumericalError::Check( const KSTrajExactSpinParticle& anInitialParticle, const KSTrajExactSpinParticle& aFinalParticle, const KSTrajExactSpinError& anError, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+        //get Momentum error
+        double momentum_error_mag = (anError.GetMomentumError()).Magnitude();
+        aFlag = UpdateTimeStep(momentum_error_mag);
+        return;
+    }
+
+    void KSTrajControlMomentumNumericalError::Calculate( const KSTrajAdiabaticSpinParticle& aParticle, double& aValue )
+    {
+        if( fFirstStep == true )
+        {
+            trajmsg_debug( "stepsize energy on first step" << eom );
+            fTimeStep = 1.0/aParticle.GetCyclotronFrequency();
+            if(fSafetyFactor > 1.0){fSafetyFactor = 1.0/fSafetyFactor;};
+            fFirstStep = false;
+        }
+        trajmsg_debug( "stepsize numerical error suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+
+    void KSTrajControlMomentumNumericalError::Check( const KSTrajAdiabaticSpinParticle& anInitialParticle, const KSTrajAdiabaticSpinParticle& aFinalParticle, const KSTrajAdiabaticSpinError& anError, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+        //get Momentum error
+        double momentum_error_mag = (anError.GetMomentumError()).Magnitude();
+        aFlag = UpdateTimeStep(momentum_error_mag);
+        return;
+    }
+
     void KSTrajControlMomentumNumericalError::Calculate( const KSTrajAdiabaticParticle& aParticle, double& aValue )
     {
         if( fFirstStep == true )

@@ -23,7 +23,7 @@ namespace katrin {
  * A Mersenne Twister random number generator, which should be used as a singleton.
  */
 template<class XEngineType>
-class KRandomPrototype: public KSingletonAsReference<KRandomPrototype<XEngineType>>, KNonCopyable
+class KRandomPrototype: public KSingleton<KRandomPrototype<XEngineType>>, KNonCopyable
 {
 public:
     typedef XEngineType engine_type;

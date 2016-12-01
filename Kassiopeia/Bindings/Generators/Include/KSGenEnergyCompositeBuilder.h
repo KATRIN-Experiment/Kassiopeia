@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGenEnergyComposite.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "energy" )
         {
-            fObject->SetEnergyValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetEnergyValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

@@ -4,17 +4,6 @@
 #include "KSortedSurfaceContainer.hh"
 #include "KBoundaryIntegralMatrix.hh"
 
-#ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
-    #endif
-#else
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if( true )
-    #endif
-#endif
-
 namespace KEMField
 {
 
@@ -39,14 +28,27 @@ class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipo
 
         typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
 
+        /**
+         * leave memory management of the FastMultipoleIntegrator to caller
+         */
         KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator):
-            fIntegrator(integrator)
+            fIntegrator(&integrator,true)
         {
-            fDimension = integrator.Dimension();
+            fDimension = fIntegrator->Dimension();
             fZero = 0.0;
         };
 
-        virtual ~KFMDenseBoundaryIntegralMatrix(){;};
+        /**
+         * let smart pointer solve the memory management of FastMultipoleIntegrator
+         */
+        KFMDenseBoundaryIntegralMatrix(KSmartPointer<FastMultipoleIntegrator> integrator) :
+        	fIntegrator(integrator)
+        {
+        	fDimension = fIntegrator->Dimension();
+        	fZero = 0.0;
+        }
+
+        virtual ~KFMDenseBoundaryIntegralMatrix(){}
 
         virtual unsigned int Dimension() const {return fDimension;};
 
@@ -59,11 +61,11 @@ class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipo
                 {
                     //uses the fast multipole integrator to compute the
                     //action of the system matrix on the vector x
-                    this->fIntegrator.Update(x);
+                    this->fIntegrator->Update(x);
                     for(unsigned int i=0; i<fDimension; i++)
                     {
                         //note we do not use the source index here, only the target index
-                        y[i] = this->fIntegrator.BoundaryIntegral(i);
+                        y[i] = this->fIntegrator->BoundaryIntegral(i);
                     }
                 }
             }
@@ -71,21 +73,22 @@ class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipo
             {
                 //uses the fast multipole integrator to compute the
                 //action of the system matrix on the vector x
-                this->fIntegrator.Update(x);
+                this->fIntegrator->Update(x);
                 for(unsigned int i=0; i<fDimension; i++)
                 {
                     //note we do not use the source index here, only the target index
-                    y[i] = this->fIntegrator.BoundaryIntegral(i);
+                    y[i] = this->fIntegrator->BoundaryIntegral(i);
                 }
             }
             #else
             //uses the fast multipole integrator to compute the
             //action of the system matrix on the vector x
-            this->fIntegrator.Update(x);
+            this->fIntegrator->Update(x);
+
             for(unsigned int i=0; i<fDimension; i++)
             {
                 //note we do not use the source index here, only the target index
-                y[i] = this->fIntegrator.BoundaryIntegral(i);
+                y[i] = this->fIntegrator->BoundaryIntegral(i);
             }
             #endif
         }
@@ -93,7 +96,7 @@ class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipo
         //following function must be defined but it is not implemented
         virtual const ValueType& operator()(unsigned int sourceIndex, unsigned int targetIndex) const
         {
-            fTemp = fIntegrator.BoundaryIntegral(sourceIndex, targetIndex);
+            fTemp = fIntegrator->BoundaryIntegral(sourceIndex, targetIndex);
             return fTemp;
         }
 
@@ -101,7 +104,7 @@ class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipo
     protected:
 
         //data
-        FastMultipoleIntegrator& fIntegrator;
+        const KSmartPointer<FastMultipoleIntegrator> fIntegrator;
         unsigned int fDimension;
         ValueType fZero;
         mutable ValueType fTemp;

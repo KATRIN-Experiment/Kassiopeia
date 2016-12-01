@@ -15,7 +15,7 @@
 #include "KTagProcessor.hh"
 #include "KVTKWindow.h"
 
-#ifdef Kommon_USE_ROOT
+#ifdef KGeoBag_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
 
@@ -23,6 +23,7 @@
 
 using namespace KGeoBag;
 using namespace katrin;
+using namespace std;
 
 int main( int argc, char** argv )
 {
@@ -49,7 +50,7 @@ int main( int argc, char** argv )
     tVariableProcessor.InsertAfter( &tTokenizer );
     tIncludeProcessor.InsertAfter( &tVariableProcessor );
 
-  #ifdef Kommon_USE_ROOT
+  #ifdef KGeoBag_USE_ROOT
   	KFormulaProcessor tFormulaProcessor;
   	tFormulaProcessor.InsertAfter( &tVariableProcessor );
   	tIncludeProcessor.InsertAfter( &tFormulaProcessor );

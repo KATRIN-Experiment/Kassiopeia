@@ -14,7 +14,6 @@ using KGeoBag::KThreeVector;
 using KGeoBag::KTwoVector;
 
 #include <deque>
-using std::deque;
 
 namespace Kassiopeia
 {
@@ -45,11 +44,11 @@ namespace Kassiopeia
             //******
 
         public:
-            static const string sSeparator;
+            static const std::string sSeparator;
 
-            void SetLabel( const string& aLabel );
-            void AddLabel( const string& aLabel );
-            void ReleaseLabel( string& aLabel );
+            void SetLabel( const std::string& aLabel );
+            void AddLabel( const std::string& aLabel );
+            void ReleaseLabel( std::string& aLabel );
 
             void SetParentRunId( const int& anId );
             const int& GetParentRunId() const;
@@ -64,7 +63,7 @@ namespace Kassiopeia
             const int& GetParentStepId() const;
 
         private:
-            string fLabel;
+            std::string fLabel;
             int fParentRunId;
             int fParentEventId;
             int fParentTrackId;
@@ -80,15 +79,15 @@ namespace Kassiopeia
 
             void SetCurrentSpace( KSSpace* aSpace );
             KSSpace* GetCurrentSpace() const;
-            const string& GetCurrentSpaceName() const;
+            const std::string& GetCurrentSpaceName() const;
 
             void SetCurrentSurface( KSSurface* aSurface );
             KSSurface* GetCurrentSurface() const;
-            const string& GetCurrentSurfaceName() const;
+            const std::string& GetCurrentSurfaceName() const;
 
             void SetCurrentSide( KSSide* aSide );
             KSSide* GetCurrentSide() const;
-            const string& GetCurrentSideName() const;
+            const std::string& GetCurrentSideName() const;
 
             void SetLastStepSurface( KSSurface* aSurface );
             KSSurface* GetLastStepSurface() const;
@@ -99,9 +98,9 @@ namespace Kassiopeia
             KSSurface* fCurrentSurface;
             KSSurface* fLastStepSurface;
             KSSide* fCurrentSide;
-            string fCurrentSpaceName;
-            string fCurrentSurfaceName;
-            string fCurrentSideName;
+            std::string fCurrentSpaceName;
+            std::string fCurrentSurfaceName;
+            std::string fCurrentSideName;
 
             //***********
             //calculators
@@ -128,13 +127,15 @@ namespace Kassiopeia
             const long long& GetPID() const;
             const double& GetMass() const;
             const double& GetCharge() const;
-            const double& GetMoment() const;
+            const double& GetSpinMagnitude() const;
+            const double& GetGyromagneticRatio() const;
 
         protected:
             long long fPID;
             double fMass; // in kg
             double fCharge; // in Coulomb
-            double fMoment; // in hbar
+            double fSpinMagnitude; // in hbar
+            double fGyromagneticRatio; // in rad/sT
 
             //******************
             //dynamic properties
@@ -202,13 +203,34 @@ namespace Kassiopeia
 
             void RecalculateVelocity() const;
 
-            //speed (units are m/s)
+            //spin0
 
-            const double& GetSpeed() const;
+            const double& GetSpin0() const;
 
-            void SetSpeed( const double& speed );
+            void SetSpin0( const double& spin0 );
 
-            void RecalculateSpeed() const;
+            void RecalculateSpin0() const;
+
+            //spin
+
+            const KThreeVector& GetSpin() const;
+            double GetSpinX() const;
+            double GetSpinY() const;
+            double GetSpinZ() const;
+
+            void SetSpin( const KThreeVector& spin );
+            void SetSpin( const double& spinx, const double& spiny, const double& spinz );
+            void SetSpinX( const double& spinx );
+            void SetSpinY( const double& spiny );
+            void SetSpinZ( const double& spinz );
+
+            void SetInitialSpin( const KThreeVector& spin);
+
+            void NormalizeSpin() const;
+
+            void RecalculateSpin() const;
+
+            void RecalculateSpinGlobal() const;
 
             // lorentz factor (unitless)
 
@@ -217,6 +239,14 @@ namespace Kassiopeia
             void SetLorentzFactor( const double& lorentzfactor );
 
             void RecalculateLorentzFactor() const;
+
+            //speed (units are m/s)
+
+            const double& GetSpeed() const;
+
+            void SetSpeed( const double& speed );
+
+            void RecalculateSpeed() const;
 
             //kinetic energy (units are J)
 
@@ -232,7 +262,7 @@ namespace Kassiopeia
 
             void SetKineticEnergy_eV( const double& energy );
 
-            //polar angle of momentum vector (units are degrees)
+            //polar angle of momentum std::vector (units are degrees)
 
             const double& GetPolarAngleToZ() const;
 
@@ -240,7 +270,7 @@ namespace Kassiopeia
 
             void RecalculatePolarAngleToZ() const;
 
-            //azimuthal angle of momentum vector (units are degrees)
+            //azimuthal angle of momentum std::vector (units are degrees)
 
             const double& GetAzimuthalAngleToX() const;
 
@@ -256,6 +286,8 @@ namespace Kassiopeia
             mutable KThreeVector fPosition;
             mutable KThreeVector fMomentum;
             mutable KThreeVector fVelocity;
+            mutable double fSpin0;
+            mutable KThreeVector fSpin;
             mutable double fLorentzFactor;
             mutable double fSpeed;
             mutable double fKineticEnergy;
@@ -267,6 +299,8 @@ namespace Kassiopeia
             mutable void (KSParticle::*fGetPositionAction)() const;
             mutable void (KSParticle::*fGetMomentumAction)() const;
             mutable void (KSParticle::*fGetVelocityAction)() const;
+            //mutable void (KSParticle::*fGetSpin0Action)() const;
+            //mutable void (KSParticle::*fGetSpinAction)() const;
             mutable void (KSParticle::*fGetLorentzFactorAction)() const;
             mutable void (KSParticle::*fGetSpeedAction)() const;
             mutable void (KSParticle::*fGetKineticEnergyAction)() const;
@@ -412,9 +446,30 @@ namespace Kassiopeia
             mutable void (KSParticle::*fGetCyclotronFrequencyAction)() const;
             mutable void (KSParticle::*fGetOrbitalMagneticMomentAction)() const;
             mutable void (KSParticle::*fGetGuidingCenterPositionAction)() const;
+
+        public:
+
+            //spin component along local B
+
+            const double& GetAlignedSpin() const;
+
+            void SetAlignedSpin( const double& ) const;
+
+            //spin angle around local B, using <bz-by, bx-bz, by-bx> as the x-axis and B cross x as the y axis
+
+            const double& GetSpinAngle() const;
+
+            void SetSpinAngle( const double& ) const;
+
+            void RecalculateSpinBody() const;
+
+        protected:
+            mutable double fAlignedSpin;
+            mutable double fSpinAngle;
+
     };
 
-    typedef deque< KSParticle* > KSParticleQueue;
+    typedef std::deque< KSParticle* > KSParticleQueue;
     typedef KSParticleQueue::iterator KSParticleIt;
     typedef KSParticleQueue::const_iterator KSParticleCIt;
 

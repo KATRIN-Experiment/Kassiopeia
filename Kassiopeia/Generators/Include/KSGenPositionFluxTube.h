@@ -37,7 +37,7 @@ namespace Kassiopeia
         private:
             KSGenValue* fPhiValue;
             KSGenValue* fZValue;
-            vector<KSMagneticField*> fMagneticFields;
+            std::vector<KSMagneticField*> fMagneticFields;
             ;K_SET( double, Flux );
             ;K_SET( int, NIntegrationSteps );
             ;K_SET( bool, OnlySurface );

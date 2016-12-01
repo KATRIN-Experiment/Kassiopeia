@@ -940,7 +940,7 @@ namespace Kassiopeia
         tOrthogonalTwo = tInitialDirection.Cross( tOrthogonalOne );
         tFinalDirection = tInitialDirection.Magnitude() * (sin( tTheta ) * (cos( tPhi ) * tOrthogonalOne.Unit() + sin( tPhi ) * tOrthogonalTwo.Unit()) + cos( tTheta ) * tInitialDirection.Unit());
 
-        KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+        KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
         (*tSecondary) = anInitialParticle;
         tSecondary->SetMomentum( tFinalDirection );
         tSecondary->SetKineticEnergy_eV( tLostKineticEnergy - tIonisationEnergy );
@@ -1004,7 +1004,7 @@ namespace Kassiopeia
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -1017,6 +1017,6 @@ namespace katrin
 
     static int sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenBuilder::Attribute< string >( "name" ) + KSIntCalculatorHydrogenBuilder::Attribute< bool >( "elastic" ) + KSIntCalculatorHydrogenBuilder::Attribute< bool >( "excitation" ) + KSIntCalculatorHydrogenBuilder::Attribute< bool >( "ionisation" );
 
-    //static int sToolboxKSIntCalculatorHydrogen = KSToolboxBuilder::ComplexElement< KSIntCalculatorHydrogenData >( "ksint_calculator_hydrogen" );
+    //static int sToolboxKSIntCalculatorHydrogen = KToolboxBuilder::ComplexElement< KSIntCalculatorHydrogenData >( "ksint_calculator_hydrogen" );
 
 }

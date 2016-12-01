@@ -16,6 +16,8 @@
 *
 */
 
+#include "KEMThreeVector.hh"
+
 namespace KEMField
 {
 

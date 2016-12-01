@@ -1,7 +1,7 @@
 #ifndef KFMElectrostaticMultipoleDistribution_Kernel_Defined_H
 #define KFMElectrostaticMultipoleDistribution_Kernel_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 //these constants are defined at compile time
 //KFM_DEGREE

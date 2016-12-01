@@ -1,13 +1,23 @@
 #ifndef KEMFIELD_ELECTROSTATICBOUNDARYINTEGRALS_CL
 #define KEMFIELD_ELECTROSTATICBOUNDARYINTEGRALS_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #include "kEMField_BoundaryIntegrals.cl"
+
+#ifdef RECTANGLE
 #include "kEMField_ElectrostaticRectangle.cl"
+#endif
+#ifdef TRIANGLE
 #include "kEMField_ElectrostaticTriangle.cl"
+#endif
+#ifdef LINESEGMENT
 #include "kEMField_ElectrostaticLineSegment.cl"
+#endif
+#ifdef CONICSECTION
 #include "kEMField_ElectrostaticConicSection.cl"
+#endif
+
 
 //______________________________________________________________________________
 
@@ -60,6 +70,35 @@ CL_TYPE4 EBI_EField(const CL_TYPE* P,
 #ifdef CONICSECTION
   else if (shapeType[0] == CONICSECTION)
     return EC_EField(P,data);
+#endif
+
+    return (CL_TYPE4)(0.,0.,0.,0.);
+}
+
+
+//______________________________________________________________________________
+
+CL_TYPE4 EBI_EFieldAndPotential(const CL_TYPE* P,
+		   __global const short* shapeType,
+		   __global const CL_TYPE* data)
+{
+#ifdef TRIANGLE
+  if (shapeType[0] == TRIANGLE)
+    return ET_EFieldAndPotential(P,data);
+#else
+  if (false) {}
+#endif
+#ifdef RECTANGLE
+  else if (shapeType[0] == RECTANGLE)
+    return ER_EFieldAndPotential(P,data);
+#endif
+#ifdef LINESEGMENT
+  else if (shapeType[0] == LINESEGMENT)
+    return EL_EFieldAndPotential(P,data);
+#endif
+#ifdef CONICSECTION
+  else if (shapeType[0] == CONICSECTION)
+    return EC_EFieldAndPotential(P,data);
 #endif
 
     return (CL_TYPE4)(0.,0.,0.,0.);

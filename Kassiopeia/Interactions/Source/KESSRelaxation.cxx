@@ -322,7 +322,7 @@ namespace Kassiopeia
                                              const KSParticle& aFinalParticle,
                                              KSParticleQueue& aQueue)
 	{
-            KSParticle* AugerElectron = KSParticleFactory::GetInstance()->Create(11);
+            KSParticle* AugerElectron = KSParticleFactory::GetInstance().Create(11);
 
             (*AugerElectron) = aFinalParticle;
             AugerElectron->SetKineticEnergy_eV(augerEnergy_eV);

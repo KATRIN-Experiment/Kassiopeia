@@ -2,6 +2,8 @@
 
 #include <limits>
 
+using namespace std;
+
 namespace KGeoBag
 {
 

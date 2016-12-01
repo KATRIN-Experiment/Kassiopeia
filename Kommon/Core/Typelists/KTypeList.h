@@ -47,12 +47,12 @@ namespace katrin
       class KGenScatterHierarchy;
       // GenScatterHierarchy specialization: Typelist to Unit
       template <class T1, class T2, template <class> class Unit>
-      class KGenScatterHierarchy<KTypelist<T1, T2>, Unit>
+      class KGenScatterHierarchy<KTypeList<T1, T2>, Unit>
         : public KGenScatterHierarchy<T1, Unit>,
           public KGenScatterHierarchy<T2, Unit>
       {
       public:
-        typedef KTypelist<T1, T2> TList;
+        typedef KTypeList<T1, T2> TList;
         typedef KGenScatterHierarchy<T1, Unit> LeftBase;
         typedef KGenScatterHierarchy<T2, Unit> RightBase;
         template <typename T> struct Rebind
@@ -72,7 +72,7 @@ namespace katrin
       };
       // Do nothing for NullType
       template <template <class> class Unit>
-      class KGenScatterHierarchy<KNullType, Unit>
+      class KGenScatterHierarchy<KTypeNull, Unit>
       {
         template <typename T> struct Rebind
         {

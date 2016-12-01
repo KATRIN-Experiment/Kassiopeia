@@ -22,7 +22,6 @@
 #include "KBinaryDataStreamer.hh"
 #include "KEMFileInterface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -53,6 +52,7 @@
 
 
 #ifdef KEMFIELD_USE_OPENCL
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 #include "KFMElectrostaticFieldMapper_OpenCL.hh"
 #endif
@@ -70,7 +70,7 @@
 #include "KFMElectrostaticBasisDataExtractor.hh"
 #include "KSurfaceContainer.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -310,11 +310,11 @@ int main(int argc, char* argv[])
         KOpenCLSurfaceContainer* oclContainer1;
         oclContainer1 = new KOpenCLSurfaceContainer( surfaceContainer1 );
         KOpenCLInterface::GetInstance()->SetActiveData( oclContainer1 );
-        KOpenCLElectrostaticBoundaryIntegrator integrator1(*oclContainer1);
+        KOpenCLElectrostaticBoundaryIntegrator integrator1{KoclEBIFactory::MakeDefault(*oclContainer1)};
         KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver1 = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclContainer1,integrator1);
         direct_solver1->Initialize();
         #else
-        KElectrostaticBoundaryIntegrator integrator1;
+        KElectrostaticBoundaryIntegrator integrator1 {KEBIFactory::MakeDefault()};
         KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver1 = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer1,integrator1);
         #endif
 
@@ -324,11 +324,11 @@ int main(int argc, char* argv[])
         KOpenCLSurfaceContainer* oclContainer2;
         oclContainer2 = new KOpenCLSurfaceContainer( surfaceContainer2 );
         KOpenCLInterface::GetInstance()->SetActiveData( oclContainer2 );
-        KOpenCLElectrostaticBoundaryIntegrator integrator2(*oclContainer2);
+        KOpenCLElectrostaticBoundaryIntegrator integrator2{KoclEBIFactory::MakeDefault(*oclContainer2)};
         KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver2 = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclContainer2,integrator2);
         direct_solver2->Initialize();
         #else
-        KElectrostaticBoundaryIntegrator integrator2;
+        KElectrostaticBoundaryIntegrator integrator2 {KEBIFactory::MakeDefault()};
         KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver2 = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer2,integrator2);
         #endif
 

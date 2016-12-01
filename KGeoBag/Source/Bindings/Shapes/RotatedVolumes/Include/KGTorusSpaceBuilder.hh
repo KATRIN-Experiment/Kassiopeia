@@ -14,22 +14,22 @@ namespace katrin
     template< >
     bool KGTorusSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z" ) )
+        if( anAttribute->GetName() == "z" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSpace::Z );
             return true;
         }
-        if( anAttribute->GetName() == string( "r" ) )
+        if( anAttribute->GetName() == "r" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSpace::R );
             return true;
         }
-        if( anAttribute->GetName() == string( "radius" ) )
+        if( anAttribute->GetName() == "radius" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSpace::Radius );
             return true;

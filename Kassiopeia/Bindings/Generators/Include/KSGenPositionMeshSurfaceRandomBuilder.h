@@ -32,18 +32,18 @@ namespace katrin
         }
         if( aContainer->GetName() == "surfaces" )
         {
-            if( aContainer->AsReference< string >().size() == 0 )
+            if( aContainer->AsReference< std::string >().size() == 0 )
             {
                 return true;
             }
 
-            vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );
-            vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
+            std::vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
+            std::vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
             KGeoBag::KGSurface* tSurface;
 
             if( tSurfaces.size() == 0 )
             {
-                genmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+                genmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
                 return false;
             }
 

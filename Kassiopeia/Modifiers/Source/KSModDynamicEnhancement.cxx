@@ -60,7 +60,7 @@ namespace Kassiopeia
         return false; //intial particle state not changed
     }
 
-    bool KSModDynamicEnhancement::ExecutePostStepModifcation(KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& /*aQueue*/)
+    bool KSModDynamicEnhancement::ExecutePostStepModification(KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& /*aQueue*/)
     {
         double tInitialTime = anInitialParticle.GetTime();
         double tFinalTime = aFinalParticle.GetTime();
@@ -83,7 +83,7 @@ namespace Kassiopeia
     {
         if( fScattering != NULL && fReferenceCrossSectionEnergy != -1. && fDynamic )
         {
-            KSParticle* tInitialisationParticle = KSParticleFactory::GetInstance()->Create( 11 );
+            KSParticle* tInitialisationParticle = KSParticleFactory::GetInstance().Create( 11 );
             tInitialisationParticle->SetPosition(0., 0., 0.);
             tInitialisationParticle->SetMomentum(0, 0, 1.);
             tInitialisationParticle->SetKineticEnergy_eV(fReferenceCrossSectionEnergy);

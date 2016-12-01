@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGenMomentumRectangularComposite.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KGCore.hh"
 
 using namespace Kassiopeia;
@@ -23,7 +23,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "surface" )
         {
-            KGSurface* tSurface = KGInterface::GetInstance()->RetrieveSurface( aContainer->AsReference< string >() );
+            KGSurface* tSurface = KGInterface::GetInstance()->RetrieveSurface( aContainer->AsReference< std::string >() );
             fObject->SetXAxis( tSurface->GetXAxis() );
             fObject->SetYAxis( tSurface->GetYAxis() );
             fObject->SetZAxis( tSurface->GetZAxis() );
@@ -31,7 +31,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "space" )
         {
-            KGSpace* tSpace = KGInterface::GetInstance()->RetrieveSpace( aContainer->AsReference< string >() );
+            KGSpace* tSpace = KGInterface::GetInstance()->RetrieveSpace( aContainer->AsReference< std::string >() );
             fObject->SetXAxis( tSpace->GetXAxis() );
             fObject->SetYAxis( tSpace->GetYAxis() );
             fObject->SetZAxis( tSpace->GetZAxis() );
@@ -39,17 +39,17 @@ namespace katrin
         }
         if( aContainer->GetName() == "x" )
         {
-            fObject->SetXValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetXValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "y" )
         {
-            fObject->SetYValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetYValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "z" )
         {
-            fObject->SetZValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetZValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

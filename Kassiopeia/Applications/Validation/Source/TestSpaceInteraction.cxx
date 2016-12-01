@@ -8,7 +8,7 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSStep.h"
 #include "KSRootSpaceInteraction.h"
 #include "KSMainMessage.h"
@@ -142,8 +142,8 @@ int main( int anArgc, char** anArgv )
             tCommandField = tArgumentValue.substr( tPeriodPos + 1, tColonPos - tPeriodPos - 1 );
             tCommandChild = tArgumentValue.substr( tColonPos + 1 );
 
-            tParent = KSToolbox::GetInstance()->GetObject( tCommandParent );
-            tChild = KSToolbox::GetInstance()->GetObject( tCommandChild );
+            tParent = KToolbox::GetInstance().Get( tCommandParent );
+            tChild = KToolbox::GetInstance().Get( tCommandChild );
             tCommand = tParent->CreateCommand( tCommandField );
             tCommand->BindParent( tParent );
             tCommand->BindChild( tChild );
@@ -181,14 +181,14 @@ int main( int anArgc, char** anArgv )
 
     KSRootMagneticField tRootMagneticField;
     tRootMagneticField.AddMagneticField( &tMagneticFieldConstant );
-    KSParticleFactory::GetInstance()->SetMagneticField( &tRootMagneticField );
+    KSParticleFactory::GetInstance().SetMagneticField( &tRootMagneticField );
 
     KSElectricFieldConstant tElectricFieldConstant;
     tElectricFieldConstant.SetField( KThreeVector( 0., 0., -1000. ) );
 
     KSRootElectricField tRootElectricField;
     tRootElectricField.AddElectricField( &tElectricFieldConstant );
-    KSParticleFactory::GetInstance()->SetElectricField( &tRootElectricField );
+    KSParticleFactory::GetInstance().SetElectricField( &tRootElectricField );
 
     // initialize trajectories
     KSTrajTrajectoryExact tTrajectoryExact;
@@ -207,7 +207,7 @@ int main( int anArgc, char** anArgv )
     tRootTrajectory.SetStep( &tStep );
 
     // initialize space interaction
-    KSRootSpaceInteraction* tRootSpaceInteraction = KSToolbox::GetInstance()->GetObjectAs< KSRootSpaceInteraction >( "root_space_interaction" );
+    KSRootSpaceInteraction* tRootSpaceInteraction = KToolbox::GetInstance().Get< KSRootSpaceInteraction >( "root_space_interaction" );
     tRootSpaceInteraction->SetStep( &tStep );
     tRootSpaceInteraction->SetRootTrajectory( &tRootTrajectory );
 
@@ -226,9 +226,9 @@ int main( int anArgc, char** anArgv )
     }
 
     // initialize primary
-    KSParticleFactory::GetInstance()->SetMagneticField( &tRootMagneticField );
-    KSParticleFactory::GetInstance()->SetElectricField( &tRootElectricField );
-    KSParticle* tPrimary = KSParticleFactory::GetInstance()->Create( 11 );
+    KSParticleFactory::GetInstance().SetMagneticField( &tRootMagneticField );
+    KSParticleFactory::GetInstance().SetElectricField( &tRootElectricField );
+    KSParticle* tPrimary = KSParticleFactory::GetInstance().Create( 11 );
     tPrimary->SetTime( 0. );
     tPrimary->SetLength( 0. );
     tPrimary->SetPosition( 0., 0., 0. );
@@ -368,7 +368,6 @@ int main( int anArgc, char** anArgv )
         delete tCommand;
     }
 
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

@@ -21,7 +21,7 @@ namespace Kassiopeia
 
         public:
             bool ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
-            bool ExecutePostStepModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
+            bool ExecutePostStepModification( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
 
         public:
             K_GET(double, Enhancement )

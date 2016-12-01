@@ -1,4 +1,4 @@
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 //this function applies for non-scale invariant kernels also
 __kernel void

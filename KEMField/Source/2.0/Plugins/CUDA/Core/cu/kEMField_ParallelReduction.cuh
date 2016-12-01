@@ -55,6 +55,7 @@ __forceinline__ __device__ void Reduce4( CU_TYPE4* partialVal,
         	partialVal[local_i].x = partialVal[local_i].x + partialVal[local_i+tmp].x;
         	partialVal[local_i].y = partialVal[local_i].y + partialVal[local_i+tmp].y;
         	partialVal[local_i].z = partialVal[local_i].z + partialVal[local_i+tmp].z;
+        	partialVal[local_i].w = partialVal[local_i].w + partialVal[local_i+tmp].w;
         }
 
         if( 2*tmp != tmp_last ) {
@@ -63,6 +64,7 @@ __forceinline__ __device__ void Reduce4( CU_TYPE4* partialVal,
                     partialVal[local_i].x = partialVal[local_i].x + partialVal[jj].x;
                     partialVal[local_i].y = partialVal[local_i].y + partialVal[jj].y;
                     partialVal[local_i].z = partialVal[local_i].z + partialVal[jj].z;
+                    partialVal[local_i].w = partialVal[local_i].w + partialVal[jj].w;
                 }
             }
         }

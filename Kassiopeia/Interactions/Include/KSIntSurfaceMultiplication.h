@@ -72,7 +72,7 @@ namespace Kassiopeia
                     fSideSignIsNegative = true;
                 }
 
-                //bottom is the side on which the normal vector points inward
+                //bottom is the side on which the normal std::vector points inward
                 if( side_name == std::string("bottom") )
                 {
                     fSideName = side_name;

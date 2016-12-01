@@ -28,11 +28,9 @@ if (@PROJECT_NAME@_ENABLE_FM_TEST)
         KEMSurfaces
         KEMIO
         KEMElectrostaticBoundaryIntegrals
-        KEMIntegratingFieldSolver
     )
 
     if (@PROJECT_NAME@_USE_VTK)
-    kasper_find_vtk()
     list (APPEND FAST_MULTIPOLE_TEST_LIBS
     KEMVTKPlugin
     )
@@ -77,6 +75,7 @@ if (@PROJECT_NAME@_ENABLE_FM_TEST)
 
     if (@PROJECT_NAME@_USE_VTK)
     list (APPEND FAST_MULTIPOLE_TEST_LIBS
+      ${Kommon_Vtk_LIBRARIES}
       ${VTK_LIBRARIES})
     endif (@PROJECT_NAME@_USE_VTK)
 
@@ -122,6 +121,7 @@ if (@PROJECT_NAME@_ENABLE_FM_TEST)
 #        TestFastMultipoleDualTree
 #        TestFastMultipoleFieldMap
         TestFastMultipoleFieldSolver
+        TestMultilevelPreconditioners
     )
     endif (@PROJECT_NAME@_USE_KGEOBAG)
 

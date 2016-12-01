@@ -7,8 +7,7 @@ set(@PROJECT_NAME@_FOUND TRUE)
 # Update this section
 
 # The extra libraries one has to link against
-set(DEPENDS_LIBRARIES @ROOT_LIBRARIES@ @Boost_LIBRARIES@ @GSL_LIBRARIES@)
-
+set(@PROJECT_NAME@_DEPENDS @ROOT_LIBRARIES@ @Boost_LIBRARIES@ @GSL_LIBRARIES@ @VTK_LIBRARIES@)
 # End
 
 set(@PROJECT_NAME@_VERSION_MAJOR @MODULE_VERSION_MAJOR@)
@@ -18,19 +17,9 @@ set(@PROJECT_NAME@_VERSION @MODULE_VERSION@)
 
 set(@PROJECT_NAME@_INCLUDE_DIRS @MODULE_INCLUDE_DIRS@)
 
-set(@PROJECT_NAME@_LIBRARIES @MODULE_TARGETS@)
-set(@PROJECT_NAME@_Core_LIBRARIES KommonCore)
-if( Kommon_USE_BOOST )
-    set(@PROJECT_NAME@_Boost_LIBRARIES KommonBoost)
-endif( Kommon_USE_BOOST )
-if( Kommon_USE_ROOT )
-    set(@PROJECT_NAME@_Root_LIBRARIES KommonRoot)
-endif( Kommon_USE_ROOT )
-if( Kommon_USE_GSL )
-    set(@PROJECT_NAME@_Gsl_LIBRARIES KommonGsl)
-endif( Kommon_USE_GSL )
-if( Kommon_USE_VTK )
+set(@PROJECT_NAME@_LIBRARIES Kommon)
+if( KASPER_USE_VTK )
     set(@PROJECT_NAME@_Vtk_LIBRARIES KommonVtk)
-endif( Kommon_USE_VTK )
+endif()
 
 mark_as_advanced(@PROJECT_NAME@_DIR)

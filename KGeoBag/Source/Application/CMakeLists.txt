@@ -31,6 +31,7 @@ if( KGeoBag_USE_VTK )
 		MeshIntersectionTester
 	)
 	list( APPEND APPLICATION_LIBRARIES
+	   ${Kommon_Vtk_LIBRARIES}
 		KGeoBagVtkVisualization
 	)
 endif( KGeoBag_USE_VTK )

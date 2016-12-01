@@ -11,7 +11,8 @@
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ void Line_Centroid( CU_TYPE* cen, const CU_TYPE* data )
+__forceinline__ __device__
+void Line_Centroid( CU_TYPE* cen, const CU_TYPE* data )
 {
     cen[0] = (data[0] + data[3])*.5;
     cen[1] = (data[1] + data[4])*.5;
@@ -20,7 +21,19 @@ __forceinline__ __device__ void Line_Centroid( CU_TYPE* cen, const CU_TYPE* data
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ void Line_Normal( CU_TYPE* norm, const CU_TYPE* data )
+__forceinline__ __device__
+void Line_Length( CU_TYPE* length, const CU_TYPE* data )
+{
+	length[0] = SQRT( ((data[3] - data[0]) * (data[3] - data[0]))
+			+ ((data[4] - data[1]) * (data[4] - data[1]))
+			+ ((data[5] - data[2]) * (data[5] - data[2]))
+	);
+}
+
+//______________________________________________________________________________
+
+__forceinline__ __device__
+void Line_Normal( CU_TYPE* norm, const CU_TYPE* data )
 {
 
 }

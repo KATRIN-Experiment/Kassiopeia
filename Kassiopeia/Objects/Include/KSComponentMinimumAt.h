@@ -17,7 +17,7 @@ namespace Kassiopeia
                     KSComponent(),
                     fMinimum( aSourcePointer ),
                     fOperand( aParentPointer ),
-                    fMinimumAt( KSNumerical< XValueType >::Zero )
+                    fMinimumAt( KSNumerical< XValueType >::Zero() )
             {
                 Set( &fMinimumAt );
                 this->SetParent( aParentComponent );
@@ -46,7 +46,7 @@ namespace Kassiopeia
             {
                 return new KSComponentMinimumAt< XValueType, XValueTypeSource >( *this );
             }
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "component minimum_at <" << this->GetName() << "> building component named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XValueType >::GetComponent( this, aField );
@@ -60,7 +60,7 @@ namespace Kassiopeia
                 }
                 return tComponent;
             }
-            KSCommand* Command( const string& /*aField*/, KSComponent* /*aChild*/ )
+            KSCommand* Command( const std::string& /*aField*/, KSComponent* /*aChild*/ )
             {
                 return NULL;
             }

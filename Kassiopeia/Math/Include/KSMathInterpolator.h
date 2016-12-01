@@ -183,7 +183,7 @@ namespace Kassiopeia
             }
         }
 
-        //now fill up the output vector with the intermediate state results (in time order)
+        //now fill up the output std::vector with the intermediate state results (in time order)
         for(tFirst = tValues.begin(); tFirst != tValues.end(); tFirst++)
         {
             interpolatedValues->push_back(tFirst->first);

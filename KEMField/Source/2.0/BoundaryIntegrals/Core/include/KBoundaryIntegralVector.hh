@@ -13,7 +13,7 @@ namespace KEMField
   public:
     typedef typename Integrator::Basis::ValueType ValueType;
 
-    KBoundaryIntegralVector(KSurfaceContainer& c,Integrator& integrator);
+    KBoundaryIntegralVector(const KSurfaceContainer& c,Integrator& integrator);
 
     virtual ~KBoundaryIntegralVector() {}
 
@@ -27,7 +27,7 @@ namespace KEMField
     { static ValueType dummy; return dummy; }
 
   private:
-    KSurfaceContainer& fContainer;
+    const KSurfaceContainer& fContainer;
     const unsigned int fDimension;
     Integrator& fIntegrator;
 
@@ -37,7 +37,7 @@ namespace KEMField
 
   template <typename Integrator, bool enableCaching>
   KBoundaryIntegralVector<Integrator,enableCaching>::
-  KBoundaryIntegralVector(KSurfaceContainer& c,Integrator& integrator) :
+  KBoundaryIntegralVector(const KSurfaceContainer& c,Integrator& integrator) :
       KVector<ValueType>(),
       fContainer(c),
       fDimension(c.size()*Integrator::Basis::Dimension),

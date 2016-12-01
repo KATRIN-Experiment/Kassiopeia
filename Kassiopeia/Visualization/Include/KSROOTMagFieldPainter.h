@@ -35,20 +35,20 @@ namespace Kassiopeia
             virtual std::string GetYAxisLabel();
 
         private:
-            ;K_SET( string, XAxis );
-            ;K_SET( string, YAxis );
+            ;K_SET( std::string, XAxis );
+            ;K_SET( std::string, YAxis );
             ;K_SET( double, Zmin );
             ;K_SET( double, Zmax );
             ;K_SET( double, Zfix );
             ;K_SET( double, Rmax );
             ;K_SET( int, Zsteps  );
             ;K_SET( int, Rsteps  );
-            ;K_SET( string, MagneticFieldName );
+            ;K_SET( std::string, MagneticFieldName );
             ;K_SET( bool, AxialSymmetry);
-            ;K_SET( string, Plot );
+            ;K_SET( std::string, Plot );
             ;K_SET( bool, UseLogZ );
             ;K_SET( bool, GradNumerical);
-            ;K_SET( string, Draw);
+            ;K_SET( std::string, Draw);
             TH2D* fMap;
 
     };

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootTerminator.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_terminator" )
         {
-            fObject->AddTerminator( KSToolbox::GetInstance()->GetObjectAs< KSTerminator >( aContainer->AsReference< string >() ) );
+            fObject->AddTerminator( KToolbox::GetInstance().Get< KSTerminator >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

@@ -1,7 +1,9 @@
 #include "KSVTKTrackTerminatorPainterBuilder.h"
-#include "KVTKWindow.h"
+#include "KVTKWindowBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 

@@ -5,15 +5,17 @@
 #include "KGVTKNormalTester.hh"
 #include "KGVisualizationMessage.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGVTKNormalTester > KGVTKNormalTesterBuilder;
+    typedef KComplexElement< KGeoBag::KGVTKNormalTester > KGVTKNormalTesterBuilder;
 
     template< >
     inline bool KGVTKNormalTesterBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             aContainer->CopyTo( fObject, &KNamed::SetName );

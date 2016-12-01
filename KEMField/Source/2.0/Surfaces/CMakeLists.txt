@@ -26,6 +26,7 @@ set (SURFACES_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KTriangle.hh
 #  ${CMAKE_CURRENT_SOURCE_DIR}/include/KOrderedSurfaceContainer.hh
 #  ${CMAKE_CURRENT_SOURCE_DIR}/include/KSurfaceOrderingPredicate.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KSolidAngle.hh
 )
 
 set (SURFACES_SOURCEFILES
@@ -37,6 +38,7 @@ set (SURFACES_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KSurface.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KSurfaceContainer.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KTriangle.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/KSolidAngle.cc
   )
 
 ##################################################

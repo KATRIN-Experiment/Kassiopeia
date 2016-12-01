@@ -1,5 +1,8 @@
 #include "KGAppearanceBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace KGeoBag
 {
 

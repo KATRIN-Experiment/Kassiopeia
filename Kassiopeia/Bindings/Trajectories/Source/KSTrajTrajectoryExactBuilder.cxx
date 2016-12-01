@@ -11,16 +11,20 @@
 #include "KSTrajInterpolatorContinuousRungeKuttaBuilder.h"
 #include "KSTrajTermPropagationBuilder.h"
 #include "KSTrajTermSynchrotronBuilder.h"
+#include "KSTrajTermGravityBuilder.h"
 #include "KSTrajControlTimeBuilder.h"
 #include "KSTrajControlLengthBuilder.h"
 #include "KSTrajControlEnergyBuilder.h"
 #include "KSTrajControlMagneticMoment.h"
 #include "KSTrajControlCyclotronBuilder.h"
+#include "KSTrajControlBChangeBuilder.h"
 #include "KSTrajControlPositionNumericalError.h"
 #include "KSTrajControlMomentumNumericalError.h"
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -44,6 +48,7 @@ namespace katrin
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajInterpolatorContinuousRungeKutta >( "interpolator_crk" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajTermPropagation >( "term_propagation" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajTermSynchrotron >( "term_synchrotron" ) +
+        KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajTermGravity >( "term_gravity" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlTime >( "control_time" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlLength >( "control_length" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlEnergy >( "control_energy" ) +
@@ -51,6 +56,7 @@ namespace katrin
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlMomentumNumericalError >( "control_momentum_error" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlMagneticMoment >( "control_magnetic_moment" ) +
         KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlCyclotron >( "control_cyclotron" ) +
+        KSTrajTrajectoryExactBuilder::ComplexElement< KSTrajControlBChange >( "control_B_change" ) +
         KSTrajTrajectoryExactBuilder::Attribute< double >( "piecewise_tolerance" ) +
         KSTrajTrajectoryExactBuilder::Attribute< unsigned int >( "max_segments" );
 

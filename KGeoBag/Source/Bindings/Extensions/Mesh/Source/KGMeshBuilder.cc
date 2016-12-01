@@ -1,6 +1,9 @@
 #include "KGMeshBuilder.hh"
 #include "KGMesher.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace KGeoBag
 {
 

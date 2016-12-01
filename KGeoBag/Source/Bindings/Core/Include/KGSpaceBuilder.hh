@@ -4,16 +4,17 @@
 #include "KComplexElement.hh"
 
 #include "KGCore.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGSpace > KGSpaceBuilder;
+    typedef KComplexElement< KGeoBag::KGSpace > KGSpaceBuilder;
 
     template< >
     inline bool KGSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
+        using namespace KGeoBag;
+
         if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGSpace::SetName );
@@ -21,7 +22,7 @@ namespace katrin
         }
         if( anAttribute->GetName() == "node" )
         {
-            KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace( anAttribute->AsReference< string >() );
+            KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace( anAttribute->AsReference< std::string >() );
             if( tSource == NULL )
             {
                 return false;
@@ -38,7 +39,7 @@ namespace katrin
         }
         if( anAttribute->GetName() == "tree" )
         {
-            KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace( anAttribute->AsReference< string >() );
+            KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace( anAttribute->AsReference< std::string >() );
             if( tSource == NULL )
             {
                 return false;
@@ -59,6 +60,8 @@ namespace katrin
     template< >
     inline bool KGSpaceBuilder::AddElement( KContainer* anElement )
     {
+        using namespace KGeoBag;
+
         if( anElement->GetName() == "transformation" )
         {
             fObject->Transform( anElement->AsPointer< KTransformation >() );

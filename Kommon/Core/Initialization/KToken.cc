@@ -25,33 +25,33 @@ namespace katrin
     {
     }
 
-    void KToken::SetValue( const string& aValue )
+    void KToken::SetValue( const std::string& aValue )
     {
         fValue = aValue;
         return;
     }
 
-    const string& KToken::GetValue() const
+    const std::string& KToken::GetValue() const
     {
         return fValue;
     }
 
-    void KToken::SetPath( const string& aPath )
+    void KToken::SetPath( const std::string& aPath )
     {
         fPath = aPath;
         return;
     }
-    const string& KToken::GetPath() const
+    const std::string& KToken::GetPath() const
     {
         return fPath;
     }
 
-    void KToken::SetFile( const string& aFile )
+    void KToken::SetFile( const std::string& aFile )
     {
         fFile = aFile;
         return;
     }
-    const string& KToken::GetFile() const
+    const std::string& KToken::GetFile() const
     {
         return fFile;
     }

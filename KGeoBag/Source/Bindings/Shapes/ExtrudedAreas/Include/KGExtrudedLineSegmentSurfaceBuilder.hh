@@ -12,27 +12,27 @@ namespace katrin
     template< >
     inline bool KGExtrudedLineSegmentSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedLineSegmentSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmin" ) )
+        if( anAttribute->GetName() == "zmin" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedLineSegmentSurface::ZMin );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmax" ) )
+        if( anAttribute->GetName() == "zmax" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedLineSegmentSurface::ZMax );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_count" ) )
+        if( anAttribute->GetName() == "extruded_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedLineSegmentSurface::ExtrudedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_power" ) )
+        if( anAttribute->GetName() == "extruded_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedLineSegmentSurface::ExtrudedMeshPower );
             return true;
@@ -43,7 +43,7 @@ namespace katrin
     template< >
     inline bool KGExtrudedLineSegmentSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "line_segment" ) )
+        if( anElement->GetName() == "line_segment" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarLineSegment::CopyFrom );
             return true;

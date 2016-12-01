@@ -110,7 +110,7 @@ namespace KGeoBag
     {
         if( fParent != NULL )
         {
-            typename vector< KGExtendedSpace< XExtension >* >::iterator tIt;
+            typename std::vector< KGExtendedSpace< XExtension >* >::iterator tIt;
             for( tIt = fParent->fChildSpaces.begin(); tIt != fParent->fChildSpaces.end(); tIt++ )
             {
                 if( (*tIt) == this )
@@ -158,19 +158,19 @@ namespace KGeoBag
     }
 
     template< class XExtension >
-    const vector< KGExtendedSurface< XExtension >* >* KGExtendedSpace< XExtension >::GetBoundaries() const
+    const std::vector< KGExtendedSurface< XExtension >* >* KGExtendedSpace< XExtension >::GetBoundaries() const
     {
         return &fBoundaries;
     }
 
     template< class XExtension >
-    const vector< KGExtendedSurface< XExtension >* >* KGExtendedSpace< XExtension >::GetChildSurfaces() const
+    const std::vector< KGExtendedSurface< XExtension >* >* KGExtendedSpace< XExtension >::GetChildSurfaces() const
     {
         return &fChildSurfaces;
     }
 
     template< class XExtension >
-    const vector< KGExtendedSpace< XExtension >* >* KGExtendedSpace< XExtension >::GetChildSpaces() const
+    const std::vector< KGExtendedSpace< XExtension >* >* KGExtendedSpace< XExtension >::GetChildSpaces() const
     {
         return &fChildSpaces;
     }

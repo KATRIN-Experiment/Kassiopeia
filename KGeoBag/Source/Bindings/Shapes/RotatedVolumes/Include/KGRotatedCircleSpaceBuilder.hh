@@ -12,12 +12,12 @@ namespace katrin
     template< >
     inline bool KGRotatedCircleSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedCircleSpace::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "rotated_mesh_count" ) )
+        if( anAttribute->GetName() == "rotated_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedCircleSpace::RotatedMeshCount );
             return true;
@@ -28,7 +28,7 @@ namespace katrin
     template< >
     inline bool KGRotatedCircleSpaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "circle" ) )
+        if( anElement->GetName() == "circle" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarCircle::CopyFrom );
             return true;

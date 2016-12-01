@@ -1,7 +1,7 @@
 #ifndef KFMRaggedElementLookup_Defined_H
 #define KFMRaggedElementLookup_Defined_H
 
-#include  "kEMField_defines.h"
+#include  "kEMField_opencl_defines.h"
 
 //returns the element index in the global element list
 //and the corresponding node index in the local node list

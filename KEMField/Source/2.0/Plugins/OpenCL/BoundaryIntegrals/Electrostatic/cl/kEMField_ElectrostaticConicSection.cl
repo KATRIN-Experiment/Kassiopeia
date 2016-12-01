@@ -4,9 +4,6 @@
 #include "kEMField_ConicSection.cl"
 #include "kEMField_GaussianQuadrature.cl"
 
-#define M_PI 3.141592653589793238462643
-#define M_EPS0 8.85418782e-12
-
 // Wire geometry definition (as defined by the streamers in KConicSection.hh):
 //
 // data[0], data[2]: R1, Z1
@@ -371,6 +368,17 @@ CL_TYPE4 EC_EField(const CL_TYPE* P,
   }
 
   return field;
+}
+
+//______________________________________________________________________________
+
+CL_TYPE4 EC_EFieldAndPotential(const CL_TYPE* P,
+		    __global const CL_TYPE* data)
+{
+  CL_TYPE4 field = EC_EField( P, data );
+  CL_TYPE phi = EC_Potential( P, data );
+
+  return (CL_TYPE4)( field.s0, field.s1, field.s2, phi );
 }
 
 #endif /* KEMFIELD_ELECTROSTATICCONICSECTION_CL */

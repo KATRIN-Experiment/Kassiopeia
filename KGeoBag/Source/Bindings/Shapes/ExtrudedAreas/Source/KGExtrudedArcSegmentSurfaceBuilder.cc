@@ -1,6 +1,9 @@
 #include "KGExtrudedArcSegmentSurfaceBuilder.hh"
 #include "KGInterfaceBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace katrin
 {
 

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSComponentMinimumAt.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSObjectsMessage.h"
 #include "KSComponentGroup.h"
 
@@ -26,10 +26,10 @@ namespace katrin
     class KSComponentMinimumAtData
     {
         public:
-            string fName;
-            string fGroupName;
-            string fParentName;
-            string fSourceName;
+            std::string fName;
+            std::string fGroupName;
+            std::string fParentName;
+            std::string fSourceName;
     };
 
     KSComponent* BuildOutputMinimumAt( KSComponent* aComponent, KSComponent* aSource )
@@ -53,6 +53,7 @@ namespace katrin
             BUILD_OUTPUT( xVALUE, unsigned int )   \
             BUILD_OUTPUT( xVALUE, int )            \
             BUILD_OUTPUT( xVALUE, unsigned long )  \
+            BUILD_OUTPUT( xVALUE, long )           \
             BUILD_OUTPUT( xVALUE, float )          \
             BUILD_OUTPUT( xVALUE, double )         \
             BUILD_OUTPUT( xVALUE, KTwoVector )     \
@@ -64,11 +65,11 @@ namespace katrin
         BUILD_OUTPUT_CLASS( bool )
         BUILD_OUTPUT_CLASS( unsigned char )
         BUILD_OUTPUT_CLASS( char )
+        BUILD_OUTPUT_CLASS( unsigned short )
         BUILD_OUTPUT_CLASS( short )
-        BUILD_OUTPUT_CLASS( short )
+        BUILD_OUTPUT_CLASS( unsigned int )
         BUILD_OUTPUT_CLASS( int )
-        BUILD_OUTPUT_CLASS( int )
-        BUILD_OUTPUT_CLASS( long )
+        BUILD_OUTPUT_CLASS( unsigned long )
         BUILD_OUTPUT_CLASS( long )
         BUILD_OUTPUT_CLASS( float )
         BUILD_OUTPUT_CLASS( double )
@@ -97,32 +98,32 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
         if( aContainer->GetName() == "group" )
         {
-            string tGroupName = aContainer->AsReference< string >();
+            std::string tGroupName = aContainer->AsReference< std::string >();
             fObject->fGroupName = tGroupName;
             return true;
         }
         if( aContainer->GetName() == "component" )
         {
             objctmsg( eWarning ) <<"deprecated warning in KSComponentMinimumAtBuilder: Please use the attribute <parent> instead <component>"<<eom;
-            string tParentName = aContainer->AsReference< string >();
+            std::string tParentName = aContainer->AsReference< std::string >();
             fObject->fParentName = tParentName;
             return true;
         }
         if(  aContainer->GetName() == "parent" )
         {
-            string tParentName = aContainer->AsReference< string >();
+            std::string tParentName = aContainer->AsReference< std::string >();
             fObject->fParentName = tParentName;
             return true;
         }
         if( aContainer->GetName() == "source" )
         {
-            string tSourceName = aContainer->AsReference< string >();
+            std::string tSourceName = aContainer->AsReference< std::string >();
             fObject->fSourceName = tSourceName;
             return true;
         }
@@ -136,7 +137,7 @@ namespace katrin
         KSComponent* tSourceComponent = NULL;
         if( fObject->fGroupName.empty() == false )
         {
-            KSComponentGroup* tComponentGroup = KSToolbox::GetInstance()->GetObjectAs< KSComponentGroup >( fObject->fGroupName );
+            KSComponentGroup* tComponentGroup = KToolbox::GetInstance().Get< KSComponentGroup >( fObject->fGroupName );
             for( unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount(); tIndex++ )
             {
                 KSComponent* tGroupComponent = tComponentGroup->ComponentAt( tIndex );
@@ -162,8 +163,8 @@ namespace katrin
         }
         else
         {
-            tParentComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( fObject->fParentName );
-            tSourceComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( fObject->fSourceName );
+            tParentComponent = KToolbox::GetInstance().Get< KSComponent >( fObject->fParentName );
+            tSourceComponent = KToolbox::GetInstance().Get< KSComponent >( fObject->fSourceName );
         }
         KSComponent* tComponent = BuildOutputMinimumAt( tParentComponent, tSourceComponent );
         tComponent->SetName( fObject->fName );

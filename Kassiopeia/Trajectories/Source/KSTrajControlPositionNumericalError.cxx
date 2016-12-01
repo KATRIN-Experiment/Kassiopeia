@@ -75,6 +75,72 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlPositionNumericalError::Calculate( const KSTrajExactSpinParticle& aParticle, double& aValue )
+    {
+        if( fFirstStep == true )
+        {
+            trajmsg_debug( "stepsize control <"<< GetName() <<"> on first step" << eom );
+
+            if( aParticle.GetMagneticField().Magnitude() > 1e-9 )
+            {
+                fTimeStep = 1.0/aParticle.GetCyclotronFrequency();
+            }
+            else
+            {
+                double v = aParticle.GetVelocity().Magnitude();
+                fTimeStep = 100*(fAbsoluteError/v);
+            }
+            if(fSafetyFactor > 1.0){fSafetyFactor = 1.0/fSafetyFactor;};
+            fFirstStep = false;
+        }
+        trajmsg_debug( "stepsize control <"<< GetName() <<"> suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+
+    void KSTrajControlPositionNumericalError::Check( const KSTrajExactSpinParticle& anInitialParticle, const KSTrajExactSpinParticle& aFinalParticle, const KSTrajExactSpinError& anError, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+
+        //get position error
+        double position_error_mag = std::fabs( (anError.GetPositionError()).Magnitude() );
+        aFlag = UpdateTimeStep(position_error_mag);
+        return;
+    }
+
+    void KSTrajControlPositionNumericalError::Calculate( const KSTrajAdiabaticSpinParticle& aParticle, double& aValue )
+    {
+        if( fFirstStep == true )
+        {
+            trajmsg_debug( "stepsize control <"<< GetName() <<"> on first step" << eom );
+
+            if( aParticle.GetMagneticField().Magnitude() > 1e-9 )
+            {
+                fTimeStep = 1.0/aParticle.GetCyclotronFrequency();
+            }
+            else
+            {
+                double v = aParticle.GetVelocity().Magnitude();
+                fTimeStep = 100*(fAbsoluteError/v);
+            }
+            if(fSafetyFactor > 1.0){fSafetyFactor = 1.0/fSafetyFactor;};
+            fFirstStep = false;
+        }
+        trajmsg_debug( "stepsize control <"<< GetName() <<"> suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+
+    void KSTrajControlPositionNumericalError::Check( const KSTrajAdiabaticSpinParticle& anInitialParticle, const KSTrajAdiabaticSpinParticle& aFinalParticle, const KSTrajAdiabaticSpinError& anError, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+
+        //get position error
+        double position_error_mag = std::fabs( (anError.GetPositionError()).Magnitude() );
+        aFlag = UpdateTimeStep(position_error_mag);
+        return;
+    }
+
     void KSTrajControlPositionNumericalError::Calculate( const KSTrajAdiabaticParticle& aParticle, double& aValue )
     {
         if( fFirstStep == true )

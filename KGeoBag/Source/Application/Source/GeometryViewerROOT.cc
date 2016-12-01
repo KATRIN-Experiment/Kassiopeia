@@ -18,6 +18,7 @@
 
 using namespace KGeoBag;
 using namespace katrin;
+using namespace std;
 
 int main( int argc, char** argv )
 {
@@ -27,9 +28,9 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    KMessageTable::GetInstance()->SetTerminalVerbosity( eDebug );
-    KMessageTable::GetInstance()->SetLogVerbosity( eDebug );
-    KMessageTable::GetInstance()->Get( "k_initialization" )->SetTerminalVerbosity( eNormal );
+    KMessageTable::GetInstance().SetTerminalVerbosity( eDebug );
+    KMessageTable::GetInstance().SetLogVerbosity( eDebug );
+    KMessageTable::GetInstance().Get( "k_initialization" )->SetTerminalVerbosity( eNormal );
 
     string tFileName( argv[ 1 ] );
     string tPath( argv[ 2 ] );

@@ -15,6 +15,7 @@ if(Kassiopeia_USE_ROOT)
         TestGlukhov
         TestZonalHarmonicsConvergence
         TestRampedField
+        TestSynchrotron
 	)
 endif(Kassiopeia_USE_ROOT)
 

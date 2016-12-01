@@ -30,7 +30,7 @@ namespace Kassiopeia
 
 
         private:
-            vector<KSMagneticField*> fMagneticFields;
+            std::vector<KSMagneticField*> fMagneticFields;
             ;K_SET( double, Flux );
             ;K_SET( double, Rmax );
             ;K_SET( int, NIntegrationSteps );

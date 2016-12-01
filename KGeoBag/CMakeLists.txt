@@ -9,6 +9,8 @@ set( MODULE_VERSION_MINOR 1 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
+kasper_require_cpp11()
+
 # internal dependencies
 kasper_find_module( Kommon )
 foreach( FLAG ${Kommon_CFLAGS} )
@@ -19,8 +21,10 @@ endforeach( FLAG )
 find_package( GSL REQUIRED )
 kasper_external_include_directories( ${GSL_INCLUDE_DIRS} )
 
-option( KGeoBag_USE_VTK "Enable visualization with VTK" OFF )
-option( KGeoBag_USE_ROOT "Enable visualization with ROOT" OFF )
+#option( KGeoBag_USE_VTK "Enable visualization with VTK" OFF )
+#option( KGeoBag_USE_ROOT "Enable visualization with ROOT" OFF )
+set( KGeoBag_USE_VTK ${KASPER_USE_VTK} )
+set( KGeoBag_USE_ROOT ${KASPER_USE_ROOT} )
 
 if( KGeoBag_USE_VTK )
     kasper_find_vtk()

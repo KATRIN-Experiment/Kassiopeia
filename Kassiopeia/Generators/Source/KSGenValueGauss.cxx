@@ -36,17 +36,17 @@ namespace Kassiopeia
     void KSGenValueGauss::DiceValue( vector< double >& aDicedValues )
     {
         double tValue;
-        double tValueGaussMin = ValueFunction( fValueMin );
-        double tValueGaussMax = ValueFunction( fValueMax );
 
         if ( fValueMin == fValueMax )
         {
-        	tValue = KRandom::GetInstance().Gauss( fValueMean, fValueSigma );
+            tValue = KRandom::GetInstance().Gauss( fValueMean, fValueSigma );
         }
         else
         {
-			double tValueGauss = KRandom::GetInstance().Uniform( tValueGaussMin, tValueGaussMax );
-			fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSGenValueGauss::ValueFunction, tValueGauss, fValueMin, fValueMax, tValue );
+            double tValueGaussMin = ValueFunction( fValueMin );
+            double tValueGaussMax = ValueFunction( fValueMax );
+            double tValueGauss = KRandom::GetInstance().Uniform( tValueGaussMin, tValueGaussMax );
+            fSolver.Solve( KMathBracketingSolver::eBrent, this, &KSGenValueGauss::ValueFunction, tValueGauss, fValueMin, fValueMax, tValue );
         }
 
         aDicedValues.push_back( tValue );

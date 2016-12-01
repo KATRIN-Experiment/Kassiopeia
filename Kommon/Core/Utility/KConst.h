@@ -44,6 +44,16 @@ public:
         return 1.60217653E-19;
     } //!< elementary charge  in C(>0)
 
+    // constexpr static double g()
+    // {
+    //     return 2.002319304361;
+    // }//!< electron g-factor (>0)
+
+    constexpr static double mu_B()
+    {
+      return 9.27400968E-24;
+    }//!< Bohr magneton in J/T
+
     constexpr static double Alpha()
     {
         return 7.2973525664E-3;
@@ -195,12 +205,12 @@ public:
 
     constexpr static double M_T_kg()
     {
-        return 3.0160495 * AtomicMassUnit_kg();
+        return 3.01604928178 * AtomicMassUnit_kg();
     } //!< tritium atom mass in kg
 
     constexpr static double M_T_eV()
     {
-        return 3.0160495 * AtomicMassUnit_eV();
+        return 3.01604928178 * AtomicMassUnit_eV();
     } //!< tritium atom mass in eV/c^2
 
     constexpr static double M_T2_kg()
@@ -215,12 +225,12 @@ public:
 
     constexpr static double M_3He_eV()
     {
-        return 3.0160293 * AtomicMassUnit_eV();
+        return 3.01602932243 * AtomicMassUnit_eV();
     }
 
     constexpr static double M_3He_kg()
     {
-        return 3.0160293 * AtomicMassUnit_kg();
+        return 3.01602932243 * AtomicMassUnit_kg();
     }
 
     constexpr static double Viscosity()

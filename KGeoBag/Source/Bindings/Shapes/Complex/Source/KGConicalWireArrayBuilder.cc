@@ -1,6 +1,9 @@
 #include "KGConicalWireArrayBuilder.hh"
 #include "KGInterfaceBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace katrin
 {
 
@@ -9,10 +12,10 @@ namespace katrin
     KGConicalWireArrayBuilder::Attribute<double>("radius2") +
     KGConicalWireArrayBuilder::Attribute<double>("z1") +
     KGConicalWireArrayBuilder::Attribute<double>("z2") +
-    KGConicalWireArrayBuilder::Attribute<int>("wire_count") +
+    KGConicalWireArrayBuilder::Attribute<unsigned int>("wire_count") +
     KGConicalWireArrayBuilder::Attribute<double>("theta_start") +
     KGConicalWireArrayBuilder::Attribute<double>("diameter") +
-    KGConicalWireArrayBuilder::Attribute<int>("longitudinal_mesh_count") +
+    KGConicalWireArrayBuilder::Attribute<unsigned int>("longitudinal_mesh_count") +
   	KGConicalWireArrayBuilder::Attribute<double>("longitudinal_mesh_power");
 
   STATICINT sKGConicalWireArraySurfaceBuilderStructure =

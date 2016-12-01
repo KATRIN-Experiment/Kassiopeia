@@ -24,6 +24,8 @@ namespace katrin {
 		double GetMinX() const;
 		double GetMaxX() const;
 
+		const std::map<double, double>& GetData() const { return fData; }
+
 	private:
 		size_t fN;
 		std::map<double, double> fData;

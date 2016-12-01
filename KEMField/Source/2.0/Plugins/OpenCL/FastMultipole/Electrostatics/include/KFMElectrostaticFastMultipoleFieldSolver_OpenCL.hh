@@ -30,7 +30,7 @@ class KFMElectrostaticFastMultipoleFieldSolver_OpenCL
 {
     public:
 
-        KFMElectrostaticFastMultipoleFieldSolver_OpenCL(KOpenCLSurfaceContainer& container, KFMElectrostaticTree& tree);
+        KFMElectrostaticFastMultipoleFieldSolver_OpenCL(const KoclEBIConfig& config, KOpenCLSurfaceContainer& container, KFMElectrostaticTree& tree);
 
         virtual ~KFMElectrostaticFastMultipoleFieldSolver_OpenCL();
 

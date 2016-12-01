@@ -3,8 +3,6 @@
 
 #include "KComplexElement.hh"
 
-#include <cstdlib>
-
 namespace katrin
 {
 

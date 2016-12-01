@@ -2,12 +2,14 @@
 #include "KSParticle.h"
 #include "KConst.h"
 #include "KRandom.h"
-using katrin::KRandom;
 #include <map>
 #include "KSInteractionsMessage.h"
 #include "KESSPhotoAbsorbtion.h"
 #include "KESSRelaxation.h"
 #include <algorithm>
+
+using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {

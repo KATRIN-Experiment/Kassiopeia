@@ -4,16 +4,17 @@
 #include "KComplexElement.hh"
 
 #include "KGCore.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGSurface > KGSurfaceBuilder;
+    typedef KComplexElement< KGeoBag::KGSurface > KGSurfaceBuilder;
 
     template< >
     inline bool KGSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
+        using namespace KGeoBag;
+
         if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGSurface::SetName );
@@ -21,7 +22,7 @@ namespace katrin
         }
         if( anAttribute->GetName() == "node" )
         {
-            KGSurface* tSource = KGInterface::GetInstance()->RetrieveSurface( anAttribute->AsReference< string >() );
+            KGSurface* tSource = KGInterface::GetInstance()->RetrieveSurface( anAttribute->AsReference< std::string >() );
             if( tSource == NULL )
             {
                 return false;
@@ -44,7 +45,7 @@ namespace katrin
     {
         if( anElement->GetName() == "transformation" )
         {
-            fObject->Transform( anElement->AsPointer< KTransformation >() );
+            fObject->Transform( anElement->AsPointer< KGeoBag::KTransformation >() );
             return true;
         }
         return false;

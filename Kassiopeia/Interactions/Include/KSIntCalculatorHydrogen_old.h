@@ -220,7 +220,7 @@ class KSIntCalculatorHydrogenData
 };
 
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSInteractionsMessage.h"
 
 using namespace Kassiopeia;
@@ -269,7 +269,7 @@ namespace katrin
     template< >
     bool KSIntCalculatorHydrogenBuilder::End()
     {
-        KSToolbox* tToolBox = KSToolbox::GetInstance();
+        KToolbox& tToolBox = KToolbox::GetInstance();
         KSIntCalculator* aIntCalculator;
 
         if( fObject->GetElastic() == true )
@@ -277,27 +277,27 @@ namespace katrin
             aIntCalculator = new KSIntCalculatorHydrogenElastic();
             aIntCalculator->SetName( fObject->GetName() + "_elastic" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
 
             aIntCalculator = new KSIntCalculatorHydrogenVib();
             aIntCalculator->SetName( fObject->GetName() + "_vib" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
 
             aIntCalculator = new KSIntCalculatorHydrogenRot02();
             aIntCalculator->SetName( fObject->GetName() + "_rot02" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
 
             aIntCalculator = new KSIntCalculatorHydrogenRot13();
             aIntCalculator->SetName( fObject->GetName() + "_rot13" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
 
             aIntCalculator = new KSIntCalculatorHydrogenRot20();
             aIntCalculator->SetName( fObject->GetName() + "_rot20" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
         }
 
         if( fObject->GetExcitation() == true )
@@ -310,7 +310,7 @@ namespace katrin
             aIntCalculator = new KSIntCalculatorHydrogenIonisationOld();
             aIntCalculator->SetName( fObject->GetName() + "_ionisation" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
         }
 
         delete fObject;

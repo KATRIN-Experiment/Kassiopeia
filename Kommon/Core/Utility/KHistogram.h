@@ -53,7 +53,7 @@ public:
     const XCountingT& UnderFlow() const { return fUnderFlow; }
     const XCountingT& OverFlow() const { return fOverFlow; }
 
-    void Trim();
+    void Trim(size_t nPadBins = 0);
 
     XCountingT Sum(bool includeUnderOverFlow = true) const;
     XCountingT Integral(bool includeUnderOverFlow = true) const { return Sum(includeUnderOverFlow) * GetBinWidth(); }
@@ -193,7 +193,7 @@ inline void KHistogram<XValueT, XCountingT>::Normalize(bool includeUnderOverFlow
 }
 
 template<class XValueT, class XCountingT>
-inline void KHistogram<XValueT, XCountingT>::Trim()
+inline void KHistogram<XValueT, XCountingT>::Trim(size_t nPadBins)
 {
     size_t newStart = 0;
     size_t newEnd = fData.size();
@@ -201,6 +201,7 @@ inline void KHistogram<XValueT, XCountingT>::Trim()
     for (size_t i = 0; i < fData.size(); ++i) {
         if (fData[i] != 0) {
             newStart = i;
+            newStart -= std::min(newStart, nPadBins);
             break;
         }
     }
@@ -208,6 +209,7 @@ inline void KHistogram<XValueT, XCountingT>::Trim()
     for (size_t i = fData.size(); i > 0; --i) {
         if (fData[i-1] != 0) {
             newEnd = i;
+            newEnd += std::min(fData.size()-newEnd-1, nPadBins);
             break;
         }
     }

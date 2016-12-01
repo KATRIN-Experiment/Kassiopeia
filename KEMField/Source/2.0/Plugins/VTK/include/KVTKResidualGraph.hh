@@ -8,6 +8,7 @@
 #include <vtkContextView.h>
 
 #include "KIterativeSolver.hh"
+#include "KSimpleVector.hh"
 
 #include <vtkVersion.h>
 #include <vtkRenderer.h>

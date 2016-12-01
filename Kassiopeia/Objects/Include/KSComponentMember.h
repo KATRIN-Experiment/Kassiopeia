@@ -53,7 +53,7 @@ namespace Kassiopeia
             {
                 return new KSComponentMember< const XValueType& (XParentType::*)( void ) const >( *this );
             }
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "const-reference component member <" << this->GetName() << "> building component named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XValueType >::GetComponent( this, aField );
@@ -67,7 +67,7 @@ namespace Kassiopeia
                 }
                 return tComponent;
             }
-            KSCommand* Command( const string& /*aField*/, KSComponent* /*aChild*/ )
+            KSCommand* Command( const std::string& /*aField*/, KSComponent* /*aChild*/ )
             {
                 return NULL;
             }
@@ -163,7 +163,7 @@ namespace Kassiopeia
             {
                 return new KSComponentMember< XValueType (XParentType::*)( void ) const >( *this );
             }
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "copy-value component member <" << this->GetName() << "> building component named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XValueType >::GetComponent( this, aField );
@@ -177,7 +177,7 @@ namespace Kassiopeia
                 }
                 return tComponent;
             }
-            KSCommand* Command( const string& /*aField*/, KSComponent* /*aChild*/ )
+            KSCommand* Command( const std::string& /*aField*/, KSComponent* /*aChild*/ )
             {
                 return NULL;
             }
@@ -233,7 +233,7 @@ namespace Kassiopeia
 
     template< class XType >
     template< class XMemberType >
-    int KSDictionary< XType >::AddComponent( XMemberType aMember, const string& aLabel )
+    int KSDictionary< XType >::AddComponent( XMemberType aMember, const std::string& aLabel )
     {
         if( fComponentFactories == NULL )
         {

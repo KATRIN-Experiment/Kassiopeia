@@ -41,7 +41,7 @@ namespace Kassiopeia
 		KSGenShakeOff();
 		~KSGenShakeOff();
 
-        void CreateSO(vector<int>& vacancy, vector<double>& energy);
+        void CreateSO(vector<int>& vacancy, std::vector<double>& energy);
 		void SetForceCreation(bool asetting) { fForceCreation = asetting; }
 
 	protected:

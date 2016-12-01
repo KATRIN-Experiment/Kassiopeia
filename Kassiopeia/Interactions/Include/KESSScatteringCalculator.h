@@ -13,9 +13,7 @@ namespace Kassiopeia
     class KESSRelaxation;
     class KESSScatteringModule;
 
-    class KESSScatteringCalculator :
-
-    public KSComponentTemplate< KESSScatteringCalculator, KSIntCalculator >
+    class KESSScatteringCalculator
     {
         public:
             KESSScatteringCalculator();
@@ -40,13 +38,6 @@ namespace Kassiopeia
             //******
             //action
             //******
-
-        public:
-            virtual void ExecuteInteraction( const KSParticle& anInitialParticle,
-                                                   KSParticle& aFinalParticle,
-                                                   KSParticleQueue& aSecondaries ) = 0;
-            virtual void CalculateCrossSection( const KSParticle& aParticle,
-                                                double& aCrossSection ) = 0;
 
         protected:
 

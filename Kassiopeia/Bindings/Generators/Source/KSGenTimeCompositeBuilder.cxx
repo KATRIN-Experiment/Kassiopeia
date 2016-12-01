@@ -4,6 +4,7 @@
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueUniformBuilder.h"
 #include "KSGenValueGaussBuilder.h"
+#include "KSGenValueGeneralizedGaussBuilder.h"
 #include "KSRootBuilder.h"
 
 #ifdef KASSIOPEIA_USE_ROOT
@@ -12,6 +13,8 @@
 #endif
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -27,7 +30,8 @@ namespace katrin
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueSet >( "time_set" ) +
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueList >( "time_list" ) +
         KSGenTimeCompositeBuilder::ComplexElement< KSGenValueUniform >( "time_uniform" ) +
-        KSGenTimeCompositeBuilder::ComplexElement< KSGenValueGauss >( "time_gauss" );
+        KSGenTimeCompositeBuilder::ComplexElement< KSGenValueGauss >( "time_gauss" ) +
+        KSGenTimeCompositeBuilder::ComplexElement< KSGenValueGeneralizedGauss >( "time_generalized_gauss" );
 
     STATICINT sKSGenTimeComposite =
         KSRootBuilder::ComplexElement< KSGenTimeComposite >( "ksgen_time_composite" );

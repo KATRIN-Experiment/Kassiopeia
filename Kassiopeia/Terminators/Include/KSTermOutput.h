@@ -18,7 +18,6 @@ namespace Kassiopeia
     		KSTermOutput() :
                 fMinValue( -1.0*std::numeric_limits< XValueType >::max() ),
                 fMaxValue( std::numeric_limits<XValueType>::max() ),
-                fComponent( 0 ),
                 fValue( 0 ),
                 fFirstStep( true )
 			{
@@ -27,7 +26,6 @@ namespace Kassiopeia
 		            KSComponent(aCopy),
     				fMinValue( aCopy.fMinValue ),
     				fMaxValue( aCopy.fMaxValue ),
-    				fComponent( aCopy.fComponent ),
     				fValue( aCopy.fValue ),
     				fFirstStep( aCopy.fFirstStep )
     		{
@@ -49,9 +47,6 @@ namespace Kassiopeia
 					return;
 				}
 
-//        		cout <<"value is: "<<*fValue<<endl;
-//        		cout <<"adress is: "<<fValue<<endl;
-
         		if ( *fValue >= fMaxValue || *fValue <= fMinValue )
         		{
         			aFlag = true;
@@ -65,7 +60,7 @@ namespace Kassiopeia
             void ExecuteTermination( const KSParticle& /*anInitialParticle*/, KSParticle& aFinalParticle, KSParticleQueue& /*aParticleQueue*/ ) const
             {
                 aFinalParticle.SetActive( false );
-                aFinalParticle.SetLabel(  KNamed::GetName() );
+                aFinalParticle.SetLabel( katrin::KNamed::GetName() );
                 return;
             }
 
@@ -77,7 +72,6 @@ namespace Kassiopeia
         protected:
             ;K_SET_GET(double, MinValue);
             ;K_SET_GET(double, MaxValue);
-            ;K_SET_GET_PTR(KSComponent, Component);
             ;K_SET_GET_PTR( XValueType, Value );
             bool fFirstStep;
 

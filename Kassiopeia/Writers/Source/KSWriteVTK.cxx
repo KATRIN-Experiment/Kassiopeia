@@ -4,6 +4,8 @@
 
 #include "KFile.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

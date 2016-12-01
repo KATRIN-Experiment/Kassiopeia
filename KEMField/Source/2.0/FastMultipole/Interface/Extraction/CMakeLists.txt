@@ -24,7 +24,7 @@ set (INTERFACE_SOURCEFILES
 ##################################################
 
 add_library (KFMInterfaceExtraction SHARED ${INTERFACE_SOURCEFILES})
-target_link_libraries (KFMInterfaceExtraction KEMMath KEMSurfaces KFMCore KFMElectrostatics KEMIntegratingFieldSolver)
+target_link_libraries (KFMInterfaceExtraction KEMMath KEMSurfaces KFMCore KFMElectrostatics)
 
 kasper_install_headers (${INTERFACE_HEADERFILES})
 kasper_install_libraries (KFMInterfaceExtraction)

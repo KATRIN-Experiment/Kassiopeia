@@ -3,6 +3,9 @@
 #include "KGInterfaceBuilder.hh"
 #include "KGTransformationBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace katrin
 {
     STATICINT sKGSpaceBuilder =

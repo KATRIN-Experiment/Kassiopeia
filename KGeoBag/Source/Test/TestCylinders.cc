@@ -30,7 +30,7 @@ void FollowRecursion(Space* space);
 
 int main()
 {
-  // katrin::KMessageTable::GetInstance()->SetTerminalVerbosity(eDebug);
+  // katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
 
   // Outer Cylinder:
 

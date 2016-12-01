@@ -44,8 +44,8 @@ namespace KGeoBag
             void VisitSpace( KGSpace* aSpace );
             void VisitExtendedSpace( KGExtendedSpace< KGAxialMesh >* aSpace );
 
-            void SetFile( const string& aName );
-            const string& GetFile() const;
+            void SetFile( const std::string& aName );
+            const std::string& GetFile() const;
 
             void SetArcCount( const unsigned int& anArcCount );
             const unsigned int& GetArcCount() const;
@@ -78,7 +78,7 @@ namespace KGeoBag
             vtkSmartPointer< vtkPolyDataMapper > fMapper;
             vtkSmartPointer< vtkActor > fActor;
 
-            string fFile;
+            std::string fFile;
             unsigned int fArcCount;
             unsigned int fColorMode;
     };

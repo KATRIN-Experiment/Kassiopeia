@@ -76,6 +76,7 @@ add_library( KassiopeiaVisualization SHARED ${VISUALIZATION_SOURCE_FILENAMES} )
 set_target_properties( KassiopeiaVisualization PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaVisualization
     ${Kommon_LIBRARIES}
+    ${Kommon_Vtk_LIBRARIES}
     ${KGeoBag_LIBRARIES}
     KassiopeiaUtility
     KassiopeiaObjects

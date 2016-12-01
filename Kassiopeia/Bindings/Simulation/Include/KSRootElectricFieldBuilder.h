@@ -3,7 +3,9 @@
 
 #include "KComplexElement.hh"
 #include "KSRootElectricField.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+
+#include "KSFieldFinder.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +23,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_electric_field" )
         {
-            fObject->AddElectricField( KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( aContainer->AsReference< string >() ) );
+            fObject->AddElectricField( getElectricField( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

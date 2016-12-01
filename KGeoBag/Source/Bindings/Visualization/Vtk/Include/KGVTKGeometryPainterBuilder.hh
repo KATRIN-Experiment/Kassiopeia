@@ -5,15 +5,17 @@
 #include "KGVTKGeometryPainter.hh"
 #include "KGVisualizationMessage.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGVTKGeometryPainter > KGVTKGeometryPainterBuilder;
+    typedef KComplexElement< KGeoBag::KGVTKGeometryPainter > KGVTKGeometryPainterBuilder;
 
     template< >
     inline bool KGVTKGeometryPainterBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             aContainer->CopyTo( fObject, &KNamed::SetName );

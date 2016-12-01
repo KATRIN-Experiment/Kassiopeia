@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_PARALLELREDUCTION_CL
 #define KEMFIELD_PARALLELREDUCTION_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 //______________________________________________________________________________
 

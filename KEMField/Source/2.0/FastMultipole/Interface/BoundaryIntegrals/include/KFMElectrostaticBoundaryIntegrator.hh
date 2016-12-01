@@ -3,7 +3,7 @@
 
 #include "KSurfaceContainer.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
 
 #include "KFMElectrostaticTree.hh"
@@ -30,6 +30,7 @@
 
 #include <utility>
 
+#include "KBoundaryIntegralVector.hh"
 #include "KMD5HashGenerator.hh"
 
 namespace KEMField
@@ -54,8 +55,20 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
 {
     public:
 
-        KFMElectrostaticBoundaryIntegrator(KSurfaceContainer& surfaceContainer):
-        KElectrostaticBoundaryIntegrator(),
+        KFMElectrostaticBoundaryIntegrator(const KSurfaceContainer& surfaceContainer):
+        KElectrostaticBoundaryIntegrator(KEBIFactory::MakeDefaultForFFTM()),
+        fInitialized(false),
+        fSurfaceContainer(surfaceContainer)
+        {
+            fUniqueID = "INVALID_ID";
+            fTree = NULL;
+            fElementContainer = NULL;
+            fTreeIsOwned = true;
+            fSubdivisionCondition = NULL;
+        };
+
+        KFMElectrostaticBoundaryIntegrator(KElectrostaticBoundaryIntegrator directIntegrator, const KSurfaceContainer& surfaceContainer):
+        KElectrostaticBoundaryIntegrator(directIntegrator),
         fInitialized(false),
         fSurfaceContainer(surfaceContainer)
         {
@@ -452,7 +465,7 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
 
         bool fInitialized;
 
-        KSurfaceContainer& fSurfaceContainer;
+        const KSurfaceContainer& fSurfaceContainer;
         KFMElectrostaticSurfaceConverter fSurfaceConverter;
         KFMElectrostaticElementContainerBase<3,1>* fElementContainer;
 

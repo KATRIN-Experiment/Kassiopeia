@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_GAUSSIANCUBATURE_CL
 #define KEMFIELD_GAUSSIANCUBATURE_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 #include "kEMField_KFMArrayMath.cl"
 
 //define gaussian cubature macro

@@ -5,6 +5,8 @@
 #include "KSMathRK65.h"
 
 #include "KSTrajExactTypes.h"
+#include "KSTrajExactSpinTypes.h"
+#include "KSTrajAdiabaticSpinTypes.h"
 #include "KSTrajAdiabaticTypes.h"
 #include "KSTrajElectricTypes.h"
 #include "KSTrajMagneticTypes.h"
@@ -15,6 +17,8 @@ namespace Kassiopeia
     class KSTrajIntegratorRK65 :
         public KSComponentTemplate< KSTrajIntegratorRK65 >,
         public KSMathRK65< KSTrajExactSystem >,
+        public KSMathRK65< KSTrajExactSpinSystem >,
+        public KSMathRK65< KSTrajAdiabaticSpinSystem >,
         public KSMathRK65< KSTrajAdiabaticSystem >,
         public KSMathRK65< KSTrajElectricSystem >,
         public KSMathRK65< KSTrajMagneticSystem >

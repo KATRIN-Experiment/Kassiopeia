@@ -4,12 +4,11 @@
 #include "KGCore.hh"
 
 #include "KComplexElement.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGInterface > KGInterfaceBuilder;
+    typedef KComplexElement< KGeoBag::KGInterface > KGInterfaceBuilder;
 
     template< >
     inline bool KGInterfaceBuilder::Begin()
@@ -36,6 +35,8 @@ namespace katrin
     template< >
     inline bool KGInterfaceBuilder::AddElement( KContainer* aContainer )
     {
+        using namespace KGeoBag;
+
         if( aContainer->Is< KGSurface >() )
         {
             aContainer->ReleaseTo( fObject, &KGInterface::InstallSurface );

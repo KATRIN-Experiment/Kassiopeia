@@ -1,6 +1,5 @@
-#include "../Include/KSGenGeneratorSimulation.h"
-
-#include "../Include/KSGeneratorsMessage.h"
+#include "KSGenGeneratorSimulation.h"
+#include "KSGeneratorsMessage.h"
 #include "KSParticleFactory.h"
 
 namespace Kassiopeia
@@ -279,7 +278,7 @@ namespace Kassiopeia
                     if ( fFormulaTime != NULL )
                         tTime = fFormulaTime->Eval( tTime );
 
-                    KSParticle* tParticle = KSParticleFactory::GetInstance()->Create( tPID );
+                    KSParticle* tParticle = KSParticleFactory::GetInstance().Create( tPID );
                     tParticle->SetPosition( tPosition );
                     tParticle->SetMomentum( tDirection.Unit() );  // normalize again here to be safe
                     tParticle->SetKineticEnergy_eV( tEnergy );

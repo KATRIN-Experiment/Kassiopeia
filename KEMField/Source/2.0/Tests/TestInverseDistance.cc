@@ -15,7 +15,7 @@
 #include "KRobinHood.hh"
 #include "KMultiElementRobinHood.hh"
 #include "KSuccessiveSubspaceCorrection.hh"
-#include "KIterativeKrylovSolver.hh"
+#include "KSimpleIterativeKrylovSolver.hh"
 #include "KPreconditionedIterativeKrylovSolver.hh"
 #include "KJacobiPreconditioner.hh"
 #include "KBiconjugateGradientStabilized.hh"
@@ -318,7 +318,7 @@ int main(int argc, char** argv)
   }
   else if (method == 4)
   {
-    KIterativeKrylovSolver<double,KBiconjugateGradientStabilized> biCGStab;
+    KSimpleIterativeKrylovSolver<double,KBiconjugateGradientStabilized> biCGStab;
     biCGStab.SetTolerance(accuracy);
 
     biCGStab.AddVisitor(new KIterationDisplay<double>());

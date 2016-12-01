@@ -38,7 +38,7 @@ namespace Kassiopeia
 
             bool Initialize( int isotope );
 
-            void CreateCE( vector< int >& vacancy, vector< double >& energy );
+            void CreateCE( std::vector< int >& vacancy, std::vector< double >& energy );
             void SetForceCreation( bool asetting )
             {
                 fForceCreation = asetting;
@@ -58,11 +58,11 @@ namespace Kassiopeia
             int fIsotope;
             int DoDoubleConversion;
 
-            vector< vector< int > > fShell;
-            vector< vector< int > > fDoubleConv;
-            vector< vector< double > > fConvE;
-            vector< vector< double > > fConvProb;
-            vector< vector< double > > fConvProbNorm;
+            std::vector< std::vector< int > > fShell;
+            std::vector< std::vector< int > > fDoubleConv;
+            std::vector< std::vector< double > > fConvE;
+            std::vector< std::vector< double > > fConvProb;
+            std::vector< std::vector< double > > fConvProbNorm;
 
     };
 

@@ -19,7 +19,7 @@ namespace Kassiopeia
     class KSReadSet< KSReadValue< XType > >
     {
         protected:
-            typedef map< string, KSReadValue< XType > > ValueMap;
+            typedef map< std::string, KSReadValue< XType > > ValueMap;
             typedef typename ValueMap::iterator ValueIt;
             typedef typename ValueMap::const_iterator ValueCIt;
             typedef typename ValueMap::value_type ValueEntry;
@@ -29,9 +29,9 @@ namespace Kassiopeia
             ~KSReadSet();
 
         public:
-            KSReadValue< XType >& Add( const string& aLabel );
-            KSReadValue< XType >& Get( const string& aLabel ) const;
-            bool Exists( const string& aLabel) const;
+            KSReadValue< XType >& Add( const std::string& aLabel );
+            KSReadValue< XType >& Get( const std::string& aLabel ) const;
+            bool Exists( const std::string& aLabel) const;
 
         protected:
             mutable ValueMap fValueMap;
@@ -48,7 +48,7 @@ namespace Kassiopeia
     }
 
     template< class XType >
-    KSReadValue< XType >& KSReadSet< KSReadValue< XType > >::Add( const string& aLabel )
+    KSReadValue< XType >& KSReadSet< KSReadValue< XType > >::Add( const std::string& aLabel )
     {
         ValueIt tIt = fValueMap.find( aLabel );
         if( tIt == fValueMap.end() )
@@ -59,7 +59,7 @@ namespace Kassiopeia
         return tIt->second;
     }
     template< class XType >
-    KSReadValue< XType >& KSReadSet< KSReadValue< XType > >::Get( const string& aLabel ) const
+    KSReadValue< XType >& KSReadSet< KSReadValue< XType > >::Get( const std::string& aLabel ) const
     {
         ValueIt tIt = fValueMap.find( aLabel );
         if( tIt != fValueMap.end() )
@@ -70,7 +70,7 @@ namespace Kassiopeia
         return tIt->second;
     }
     template< class XType >
-    bool KSReadSet< KSReadValue< XType > >::Exists( const string& aLabel ) const
+    bool KSReadSet< KSReadValue< XType > >::Exists( const std::string& aLabel ) const
     {
         ValueIt tIt = fValueMap.find( aLabel );
         if( tIt != fValueMap.end() )
@@ -93,7 +93,7 @@ namespace Kassiopeia
     typedef KSReadSet< KSReadValue< double > > KSDoubleSet;
     typedef KSReadSet< KSReadValue< KThreeVector > > KSThreeVectorSet;
     typedef KSReadSet< KSReadValue< KTwoVector > > KSTwoVectorSet;
-    typedef KSReadSet< KSReadValue< string > > KSStringSet;
+    typedef KSReadSet< KSReadValue< std::string > > KSStringSet;
 
 }
 

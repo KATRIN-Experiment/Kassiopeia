@@ -84,7 +84,7 @@ namespace Kassiopeia
 
         for( tPIDValueIt = tPIDValues.begin(); tPIDValueIt != tPIDValues.end(); tPIDValueIt++ )
         {
-            KSParticle* tParticle = KSParticleFactory::GetInstance()->Create( std::floor(*tPIDValueIt) );
+            KSParticle* tParticle = KSParticleFactory::GetInstance().Create( std::floor(*tPIDValueIt) );
             tParticle->AddLabel( GetName() );
             aPrimaries.push_back( tParticle );
         }

@@ -8,7 +8,7 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSEvent.h"
 #include "KSRootGenerator.h"
 #include "KSMainMessage.h"
@@ -125,8 +125,8 @@ int main( int anArgc, char** anArgv )
             tCommandField = tArgumentValue.substr( tPeriodPos + 1, tColonPos - tPeriodPos - 1 );
             tCommandChild = tArgumentValue.substr( tColonPos + 1 );
 
-            tParent = KSToolbox::GetInstance()->GetObject( tCommandParent );
-            tChild = KSToolbox::GetInstance()->GetObject( tCommandChild );
+            tParent = KToolbox::GetInstance().Get( tCommandParent );
+            tChild = KToolbox::GetInstance().Get( tCommandChild );
             tCommand = tParent->CreateCommand( tCommandField );
             tCommand->BindParent( tParent );
             tCommand->BindChild( tChild );
@@ -135,7 +135,7 @@ int main( int anArgc, char** anArgv )
     }
 
     // initialize kassiopeia
-    KSRootGenerator* tRootGenerator = KSToolbox::GetInstance()->GetObjectAs< KSRootGenerator >( "root_generator" );
+    KSRootGenerator* tRootGenerator = KToolbox::GetInstance().Get< KSRootGenerator >( "root_generator" );
 
     tRootGenerator->Initialize();
     for( tCommandIt = tCommands.begin(); tCommandIt != tCommands.end(); tCommandIt++ )
@@ -334,7 +334,6 @@ int main( int anArgc, char** anArgv )
         delete tCommand;
     }
 
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

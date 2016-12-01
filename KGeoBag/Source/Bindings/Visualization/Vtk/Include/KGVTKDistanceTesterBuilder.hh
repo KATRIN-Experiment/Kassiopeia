@@ -5,15 +5,17 @@
 #include "KGVTKDistanceTester.hh"
 #include "KGVisualizationMessage.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGVTKDistanceTester > KGVTKDistanceTesterBuilder;
+    typedef KComplexElement< KGeoBag::KGVTKDistanceTester > KGVTKDistanceTesterBuilder;
 
     template< >
     inline bool KGVTKDistanceTesterBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             aContainer->CopyTo( fObject, &KNamed::SetName );

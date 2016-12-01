@@ -24,7 +24,7 @@ namespace Kassiopeia
 
         public:
             KSParticle* Create( const long long& aPID );
-            int Define( const long long& aPID, const double& aMass, const double& aCharge, const double& aMoment );
+            int Define( const long long& aPID, const double& aMass, const double& aCharge, const double& aSpinMagnitude, const double& aGyromagneticRatio );
 
             void SetSpace( KSSpace* aSpace );
             KSSpace* GetSpace();

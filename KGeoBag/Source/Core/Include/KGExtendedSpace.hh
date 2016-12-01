@@ -80,15 +80,15 @@ namespace KGeoBag
             void AddChildSpace( KGExtendedSpace< XExtension >* aSpace );
 
             const KGExtendedSpace< XExtension >* GetParent() const;
-            const vector< KGExtendedSurface< XExtension >* >* GetBoundaries() const;
-            const vector< KGExtendedSurface< XExtension >* >* GetChildSurfaces() const;
-            const vector< KGExtendedSpace< XExtension >* >* GetChildSpaces() const;
+            const std::vector< KGExtendedSurface< XExtension >* >* GetBoundaries() const;
+            const std::vector< KGExtendedSurface< XExtension >* >* GetChildSurfaces() const;
+            const std::vector< KGExtendedSpace< XExtension >* >* GetChildSpaces() const;
 
         private:
             KGExtendedSpace< XExtension >* fParent;
-            vector< KGExtendedSurface< XExtension >* > fBoundaries;
-            vector< KGExtendedSurface< XExtension >* > fChildSurfaces;
-            vector< KGExtendedSpace< XExtension >* > fChildSpaces;
+            std::vector< KGExtendedSurface< XExtension >* > fBoundaries;
+            std::vector< KGExtendedSurface< XExtension >* > fChildSurfaces;
+            std::vector< KGExtendedSpace< XExtension >* > fChildSpaces;
 
             //*************
             //transformable

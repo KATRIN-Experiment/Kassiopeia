@@ -16,7 +16,7 @@
 #include "KGaussianElimination.hh"
 #include "KRobinHood.hh"
 #include "KRobinHood_SingleThread.hh"
-#include "KIterativeKrylovSolver.hh"
+#include "KSimpleIterativeKrylovSolver.hh"
 #include "KBiconjugateGradientStabilized.hh"
 #include "KGeneralizedMinimalResidual.hh"
 
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
         {
             //now solve A*X=B with bicgstab solver
 
-            KIterativeKrylovSolver<double, KBiconjugateGradientStabilized> biCGStab;
+            KSimpleIterativeKrylovSolver<double, KBiconjugateGradientStabilized> biCGStab;
             biCGStab.SetTolerance(tolerance);
             biCGStab.AddVisitor(new KIterationDisplay<double>());
             biCGStab.Solve(A,X,B);
@@ -201,7 +201,7 @@ int main(int argc, char** argv)
         {
             //now solve A*X=B with a gmres solver
 
-            KIterativeKrylovSolver<double, KGeneralizedMinimalResidual> gmres;
+            KSimpleIterativeKrylovSolver<double, KGeneralizedMinimalResidual> gmres;
             gmres.SetTolerance(tolerance);
             gmres.AddVisitor(new KIterationDisplay<double>());
             gmres.Solve(A,X,B);

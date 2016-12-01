@@ -1637,7 +1637,7 @@ namespace Kassiopeia
                             + cos( tTheta ) * tInitialDirection.Unit()
                           );
 
-        KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+        KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
         (*tSecondary) = anInitialParticle;
         tSecondary->SetMomentum( tFinalDirection );
         tSecondary->SetKineticEnergy_eV( (tReducedInitialEnergy-tReducedFinalEnergy-1.)*BindingEnergy );

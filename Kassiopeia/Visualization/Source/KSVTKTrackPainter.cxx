@@ -7,6 +7,8 @@
 #include "vtkPointData.h"
 #include "vtkPolyLine.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
     KSVTKTrackPainter::KSVTKTrackPainter() :
@@ -73,80 +75,83 @@ namespace Kassiopeia
         bool tActive;
         vector< vtkIdType > tIds;
 
-        tRun << 0;
-        for( unsigned int tEventIndex = tRun.GetFirstEventIndex(); tEventIndex <= tRun.GetLastEventIndex(); tEventIndex++ )
+        for( unsigned int tRunIndex = 0; tRunIndex <= tRun.GetLastRunIndex(); tRunIndex++ )
         {
-            tEvent << tEventIndex;
-            for( long tTrackIndex = tEvent.GetFirstTrackIndex(); tTrackIndex <= tEvent.GetLastTrackIndex(); tTrackIndex++ )
+            tRun << tRunIndex;
+            for( unsigned int tEventIndex = tRun.GetFirstEventIndex(); tEventIndex <= tRun.GetLastEventIndex(); tEventIndex++ )
             {
-                tTrack << tTrackIndex;
-
-                tActive = false;
-
-                for( long tStepIndex = tTrack.GetFirstStepIndex(); tStepIndex <= tTrack.GetLastStepIndex(); tStepIndex++ )
+                tEvent << tEventIndex;
+                for( long tTrackIndex = tEvent.GetFirstTrackIndex(); tTrackIndex <= tEvent.GetLastTrackIndex(); tTrackIndex++ )
                 {
-                    tStep << tStepIndex;
+                    tTrack << tTrackIndex;
 
-                    if( tActive == false )
+                    tActive = false;
+
+                    for( long tStepIndex = tTrack.GetFirstStepIndex(); tStepIndex <= tTrack.GetLastStepIndex(); tStepIndex++ )
                     {
-                        if( (tPointObject.Valid() == true) && (tColorObject.Valid() == true) )
-                        {
-                            vismsg_debug( "output became active at <" << tStepIndex << ">" << eom );
+                        tStep << tStepIndex;
 
-                            fColors->InsertNextValue( tColorVariable.Value() );
-                            tIds.push_back( fPoints->InsertNextPoint( tPointVariable.Value().X(), tPointVariable.Value().Y(), tPointVariable.Value().Z() ) );
-
-                            tActive = true;
-                        }
-                    }
-                    else
-                    {
-                        if( (tPointObject.Valid() == true) && (tColorObject.Valid() == true) )
+                        if( tActive == false )
                         {
-                            fColors->InsertNextValue( tColorVariable.Value() );
-                            tIds.push_back( fPoints->InsertNextPoint( tPointVariable.Value().X(), tPointVariable.Value().Y(), tPointVariable.Value().Z() ) );
+                            if( (tPointObject.Valid() == true) && (tColorObject.Valid() == true) )
+                            {
+                                vismsg_debug( "output became active at <" << tStepIndex << ">" << eom );
+
+                                fColors->InsertNextValue( tColorVariable.Value() );
+                                tIds.push_back( fPoints->InsertNextPoint( tPointVariable.Value().X(), tPointVariable.Value().Y(), tPointVariable.Value().Z() ) );
+
+                                tActive = true;
+                            }
                         }
                         else
                         {
-                            vismsg_debug( "output became inactive at <" << tStepIndex << ">" << eom );
-
-                            if( tIds.empty() == false )
+                            if( (tPointObject.Valid() == true) && (tColorObject.Valid() == true) )
                             {
-                                vismsg_debug( "making polyline of <" << tIds.size() << "> points" << eom );
+                                fColors->InsertNextValue( tColorVariable.Value() );
+                                tIds.push_back( fPoints->InsertNextPoint( tPointVariable.Value().X(), tPointVariable.Value().Y(), tPointVariable.Value().Z() ) );
+                            }
+                            else
+                            {
+                                vismsg_debug( "output became inactive at <" << tStepIndex << ">" << eom );
 
-                                for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
+                                if( tIds.empty() == false )
                                 {
-                                    vtkSmartPointer< vtkPolyLine > tPolyLine = vtkSmartPointer< vtkPolyLine >::New();
-                                    tPolyLine->GetPointIds()->SetNumberOfIds( tIds.size() );
+                                    vismsg_debug( "making polyline of <" << tIds.size() << "> points" << eom );
+
                                     for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
                                     {
-                                        tPolyLine->GetPointIds()->SetId( tIndex, tIds.at( tIndex ) );
+                                        vtkSmartPointer< vtkPolyLine > tPolyLine = vtkSmartPointer< vtkPolyLine >::New();
+                                        tPolyLine->GetPointIds()->SetNumberOfIds( tIds.size() );
+                                        for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
+                                        {
+                                            tPolyLine->GetPointIds()->SetId( tIndex, tIds.at( tIndex ) );
+                                        }
+                                        tIds.clear();
+                                        fLines->InsertNextCell( tPolyLine );
                                     }
-                                    tIds.clear();
-                                    fLines->InsertNextCell( tPolyLine );
                                 }
-                            }
 
-                            tActive = false;
+                                tActive = false;
+                            }
                         }
+
                     }
 
-                }
-
-                if( tIds.empty() == false )
-                {
-                    vismsg_debug( "making polyline of <" << tIds.size() << "> points" << eom );
-
-                    for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
+                    if( tIds.empty() == false )
                     {
-                        vtkSmartPointer< vtkPolyLine > tPolyLine = vtkSmartPointer< vtkPolyLine >::New();
-                        tPolyLine->GetPointIds()->SetNumberOfIds( tIds.size() );
+                        vismsg_debug( "making polyline of <" << tIds.size() << "> points" << eom );
+
                         for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
                         {
-                            tPolyLine->GetPointIds()->SetId( tIndex, tIds.at( tIndex ) );
+                            vtkSmartPointer< vtkPolyLine > tPolyLine = vtkSmartPointer< vtkPolyLine >::New();
+                            tPolyLine->GetPointIds()->SetNumberOfIds( tIds.size() );
+                            for( unsigned int tIndex = 0; tIndex < tIds.size(); tIndex++ )
+                            {
+                                tPolyLine->GetPointIds()->SetId( tIndex, tIds.at( tIndex ) );
+                            }
+                            tIds.clear();
+                            fLines->InsertNextCell( tPolyLine );
                         }
-                        tIds.clear();
-                        fLines->InsertNextCell( tPolyLine );
                     }
                 }
             }
@@ -181,11 +186,25 @@ namespace Kassiopeia
 
             if( fOutFile.length() > 0 )
             {
-                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fOutFile;
+                if( !fPath.empty() )
+                {
+                    tFile = string( fPath ) + string( "/" ) + fOutFile;
+                }
+                else
+                {
+                    tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fOutFile;
+                }
             }
             else
             {
-                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+                if( !fPath.empty() )
+                {
+                    tFile = string( fPath ) + string( "/" ) + GetName() + string( ".vtp" );
+                }
+                else
+                {
+                    tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+                }
             }
 
             vismsg( eNormal ) << "vtk track painter <" << GetName() << "> is writing <" << fData->GetNumberOfCells() << "> cells to file <" << tFile << ">" << eom;

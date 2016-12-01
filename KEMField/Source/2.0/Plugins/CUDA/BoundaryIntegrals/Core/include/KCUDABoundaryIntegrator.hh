@@ -31,16 +31,24 @@ namespace KEMField
 
     mutable short fShapeInfo;
     mutable std::vector<CU_TYPE> fShapeData;
+    mutable std::vector<CU_TYPE> fIntegratorData;
 
     mutable double *fDeviceP;
     mutable short *fDeviceShapeInfo;
     mutable double *fDeviceShapeData;
+    mutable double *fDeviceIntegratorData;
+
+    bool fIntegratorDataCopied;
+
+  public:
+    CU_TYPE* GetIntegratorData() const { return fDeviceIntegratorData; }
   };
 
   template <class BasisPolicy>
   KCUDABoundaryIntegrator<BasisPolicy>::KCUDABoundaryIntegrator( KCUDASurfaceContainer& c ) :
     KCUDAAction(c),
     fDeviceP(NULL),
+	fDeviceIntegratorData(NULL),
     fDeviceShapeInfo(NULL),
     fDeviceShapeData(NULL)
   {
@@ -50,6 +58,7 @@ namespace KEMField
   KCUDABoundaryIntegrator<BasisPolicy>::~KCUDABoundaryIntegrator()
   {
     if( fDeviceP ) cudaFree( fDeviceP );
+    if( fDeviceIntegratorData ) cudaFree( fDeviceIntegratorData );
     if( fDeviceShapeInfo ) cudaFree( fDeviceShapeInfo );
     if( fDeviceShapeData ) cudaFree( fDeviceShapeData );
   }

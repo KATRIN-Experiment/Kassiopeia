@@ -1,8 +1,11 @@
 #include "KSROOTTrackPainterBuilder.h"
-#include "KROOTWindow.h"
+#include "KROOTWindowBuilder.h"
+#include "KROOTPadBuilder.h"
 #include "KROOTPad.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 

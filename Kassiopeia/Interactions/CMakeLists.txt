@@ -4,6 +4,8 @@ set( INTERACTIONS_HEADER_BASENAMES
 
     KSIntScattering.h
 
+    KSIntSpinFlip.h
+
     KSIntDecay.h
     KSIntDecayCalculator.h
     KSIntDecayCalculatorDeathConstRate.h
@@ -49,6 +51,8 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSInteractionsMessage.cxx
 
     KSIntScattering.cxx
+
+    KSIntSpinFlip.cxx
 
     KSIntDecay.cxx
     KSIntDecayCalculator.cxx

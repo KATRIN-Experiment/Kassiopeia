@@ -12,27 +12,27 @@ namespace katrin
     template< >
     inline bool KGExtrudedPolyLineSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedPolyLineSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmin" ) )
+        if( anAttribute->GetName() == "zmin" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedPolyLineSurface::ZMin );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmax" ) )
+        if( anAttribute->GetName() == "zmax" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedPolyLineSurface::ZMax );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_count" ) )
+        if( anAttribute->GetName() == "extruded_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedPolyLineSurface::ExtrudedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_power" ) )
+        if( anAttribute->GetName() == "extruded_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedPolyLineSurface::ExtrudedMeshPower );
             return true;
@@ -43,7 +43,7 @@ namespace katrin
     template< >
     inline bool KGExtrudedPolyLineSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "poly_line" ) )
+        if( anElement->GetName() == "poly_line" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarPolyLine::CopyFrom );
             return true;

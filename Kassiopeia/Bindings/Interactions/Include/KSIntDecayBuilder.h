@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSIntDecay.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -37,14 +37,14 @@ namespace katrin
         }
         if( aContainer->GetName() == "calculator" )
         {
-            KSIntDecayCalculator* tCalculator = KSToolbox::GetInstance()->GetObjectAs< KSIntDecayCalculator >( aContainer->AsReference< string >() );
+            KSIntDecayCalculator* tCalculator = KToolbox::GetInstance().Get< KSIntDecayCalculator >( aContainer->AsReference< std::string >() );
             fObject->AddCalculator( tCalculator );
             return true;
         }
         if( aContainer->GetName() == "calculators" )
         {
-            vector< KSIntDecayCalculator* > aCalculatorVector = KSToolbox::GetInstance()->GetObjectsAs< KSIntDecayCalculator >( aContainer->AsReference< string >() );
-            vector< KSIntDecayCalculator* >::iterator tIt;
+            std::vector< KSIntDecayCalculator* > aCalculatorVector = KToolbox::GetInstance().GetAll< KSIntDecayCalculator >( aContainer->AsReference< std::string >() );
+            std::vector< KSIntDecayCalculator* >::iterator tIt;
             for( tIt = aCalculatorVector.begin(); tIt != aCalculatorVector.end(); tIt++ )
             {
                 fObject->AddCalculator( (*tIt) );

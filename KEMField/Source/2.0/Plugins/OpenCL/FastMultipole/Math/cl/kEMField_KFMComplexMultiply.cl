@@ -1,4 +1,4 @@
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 inline CL_TYPE2 ComplexMultiply(CL_TYPE2 x, CL_TYPE2 y)
 {

@@ -1,20 +1,42 @@
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolver.hh"
+
 #include "KTimeTerminator.hh"
 
-#ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY if (KMPIInterface::GetInstance()->GetProcess()==0)
-    #endif
-#else
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY
-    #endif
-#endif
+#include "KBiconjugateGradientStabilized.hh"
+#include "KGeneralizedMinimalResidual.hh"
+#include "KPreconditionedBiconjugateGradientStabilized.hh"
+#include "KPreconditionedGeneralizedMinimalResidual.hh"
+
+#include "KJacobiPreconditioner.hh"
+#include "KImplicitKrylovPreconditioner.hh"
+
+#include "KIterativeKrylovRestartCondition.hh"
+#include "KSimpleIterativeKrylovSolver.hh"
+#include "KIterativeKrylovStateWriter.hh"
+#include "KIterativeKrylovStateReader.hh"
+#include "KPreconditionedIterativeKrylovSolver.hh"
+#include "KPreconditionedIterativeKrylovStateWriter.hh"
+#include "KPreconditionedIterativeKrylovStateReader.hh"
+
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
+#include "KBoundaryIntegralMatrix.hh"
+#include "KBoundaryIntegralVector.hh"
+#include "KBoundaryIntegralSolutionVector.hh"
+
+#include "KFMElectrostaticParametersConfiguration.hh"
+
+#include "KSortedSurfaceContainer.hh"
+#include "KDataDisplay.hh"
+
+#include "KMPIEnvironment.hh"
+
+using namespace KEMField::KFMElectrostaticTypes;
+
 namespace KEMField
 {
 
-KFMElectrostaticFastMultipoleBoundaryValueSolver::KFMElectrostaticFastMultipoleBoundaryValueSolver()
+KFMElectrostaticFastMultipoleBoundaryValueSolver::KFMElectrostaticFastMultipoleBoundaryValueSolver() :
+		fDirectIntegrator(KEBIFactory::MakeDefaultForFFTM())
 {
     fSolverName = std::string("gmres");
     fPreconditionerName = std::string("none");
@@ -187,7 +209,6 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SetConfigurationObject(KFMElec
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::Solve(KSurfaceContainer& surfaceContainer)
 {
-
     if(!fHaveRecievedSolverParameters)
     {
         MPI_SINGLE_PROCESS
@@ -528,57 +549,27 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::GetParameterInformationVector(
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
-    fm_integrator->Initialize(fSolverParameters);
-
-    FastMultipoleDenseMatrix denseA(*fm_integrator);
-    FastMultipoleSparseMatrix sparseA(surfaceContainer, *fm_integrator);
-    FastMultipoleMatrix fmA(denseA, sparseA);
+	KSmartPointer<FastMultipoleEBI> fm_integrator(new FastMultipoleEBI(fDirectIntegrator,surfaceContainer));
+    KSmartPointer<FastMultipoleMatrix> fmA = CreateMatrix(surfaceContainer,fm_integrator);
     KBoundaryIntegralSolutionVector< FastMultipoleEBI > fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector< FastMultipoleEBI > fmb(surfaceContainer, *fm_integrator);
 
     KIterativeKrylovRestartCondition* restart_cond = new KIterativeKrylovRestartCondition();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
-    #ifdef KEMFIELD_USE_MPI
-    KIterativeKrylovSolver<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI> gmres;
+    KSimpleIterativeKrylovSolver<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual> gmres;
     gmres.SetTolerance(fSolverTolerance);
     gmres.SetMaximumIterations(fMaxSolverIterations);
     gmres.SetRestartCondition(restart_cond);
-    #else
-    KIterativeKrylovSolver<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual> gmres;
-    gmres.SetTolerance(fSolverTolerance);
-    gmres.SetMaximumIterations(fMaxSolverIterations);
-    gmres.SetRestartCondition(restart_cond);
-    #endif
 
     if(fUseCheckpoints)
     {
-        #ifdef KEMFIELD_USE_MPI
-        //do not need to delete this visitor, as it is deleted by the solver
-        KIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI, KGeneralizedMinimalResidualState>* checkpoint_reader =
-        new KIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI, KGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
-        checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
-        gmres.AddVisitor(checkpoint_reader);
-
-        //do not need to delete this visitor, as it is deleted by the solver
-        KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI>* checkpoint =
-        new KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        gmres.AddVisitor( checkpoint );
-        #else
         //do not need to delete this visitor, as it is deleted by the solver
         KIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual, KGeneralizedMinimalResidualState>* checkpoint_reader =
         new KIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual, KGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
         checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
         gmres.AddVisitor(checkpoint_reader);
 
-        //do not need to delete this visitor, as it is deleted by the solver
-        KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>* checkpoint =
-        new KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        gmres.AddVisitor( checkpoint );
-        #endif
     }
 
     if(fUseTimer)
@@ -588,6 +579,15 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContainer& 
 
     MPI_SINGLE_PROCESS
     {
+        if(fUseCheckpoints)
+        {
+            //do not need to delete this visitor, as it is deleted by the solver
+            KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>* checkpoint =
+            new KIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
+            checkpoint->Interval(fCheckpointFrequency);
+            gmres.AddVisitor( checkpoint );
+        }
+
         if(fUseDisplay)
         {
             gmres.AddVisitor(new KIterationDisplay<double>( std::string("GMRES: ") ) );
@@ -619,7 +619,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContainer& 
         }
     }
 
-    gmres.Solve(fmA,fmx,fmb);
+    gmres.Solve(*fmA,fmx,fmb);
     fResidualNorm = gmres.ResidualNorm();
 
     MPI_SINGLE_PROCESS
@@ -636,15 +636,12 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES(KSurfaceContainer& 
             kfmout<<"Process/CPU time required to solve (sec): "<<time<<kfmendl;
         }
     }
-
-    delete fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
@@ -657,17 +654,10 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfaceCont
     KIterativeKrylovRestartCondition* restart_cond = new KIterativeKrylovRestartCondition();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
-    #ifdef KEMFIELD_USE_MPI
-    KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI> pgmres;
-    pgmres.SetTolerance(fSolverTolerance);
-    pgmres.SetRestartCondition(restart_cond);
-    pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #else
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
     pgmres.SetTolerance(fSolverTolerance);
     pgmres.SetRestartCondition(restart_cond);
     pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #endif
 
     if(fUseTimer)
     {
@@ -678,33 +668,24 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfaceCont
 
     if(fUseCheckpoints)
     {
-        #ifdef KEMFIELD_USE_MPI
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
-        new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
-        checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
-        pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #else
         //do not need to delete this visitor, as it is deleted by the solver
         KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
         new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
         checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
         pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #endif
     }
 
     MPI_SINGLE_PROCESS
     {
+        if(fUseCheckpoints)
+        {
+            //do not need to delete this visitor, as it is deleted by the solver
+            KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
+            new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
+            checkpoint->Interval(fCheckpointFrequency);
+            pgmres.AddVisitor( checkpoint );
+        }
+
         if(fUseDisplay)
         {
             pgmres.AddVisitor(new KIterationDisplay<double>( std::string("GMRES: ") ) );
@@ -755,25 +736,24 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_Jacobi(KSurfaceCont
     }
 
     delete fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
     KFMElectrostaticParameters alt_params = fSolverParameters;
     alt_params.degree = fPreconditionerDegree;
-    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     alt_fm_integrator->Initialize(alt_params, fm_integrator->GetTree());
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
-    FastMultipoleDenseMatrix alt_denseA(*alt_fm_integrator);
+    FastMultipoleDenseMatrix alt_denseA (*alt_fm_integrator);
     FastMultipoleSparseMatrix sparseA(surfaceContainer, *fm_integrator);
     FastMultipoleMatrix fmA(denseA, sparseA);
-    FastMultipoleMatrix alt_fmA(alt_denseA, sparseA);
+    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
 
     KBoundaryIntegralSolutionVector< FastMultipoleEBI > fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector< FastMultipoleEBI > fmb(surfaceContainer, *fm_integrator);
@@ -781,66 +761,48 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov(KSur
     KIterativeKrylovRestartCondition* restart_cond = new KIterativeKrylovRestartCondition();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
-    #ifdef KEMFIELD_USE_MPI
-    KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI> pgmres;
-    pgmres.SetTolerance(fSolverTolerance);
-    pgmres.SetRestartCondition(restart_cond);
-    pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #else
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
     pgmres.SetTolerance(fSolverTolerance);
     pgmres.SetRestartCondition(restart_cond);
     pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #endif
 
     if(fUseTimer)
     {
         pgmres.AddVisitor(new KTimeTerminator<FastMultipoleEBI::ValueType>(fMaxTimeAllowed, fTimeCheckFrequency));
     }
 
-    #ifdef KEMFIELD_USE_MPI
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
-    #else
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
-    #endif
+    KKrylovSolverConfiguration config;
+    config.SetSolverName("gmres");
+    config.SetMaxIterations(fMaxPreconditionerIterations);
+    config.SetTolerance(fPreconditionerTolerance);
+    config.SetUseDisplay(fUseDisplay);
+    config.SetDisplayName("Preconditioner: ");
+    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType> > IKP =
+    		KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config,alt_fmA);
 
     if(fUseCheckpoints)
     {
-        #ifdef KEMFIELD_USE_MPI
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
-        new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
-        checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
-        pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #else
         //do not need to delete this visitor, as it is deleted by the solver
         KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
         new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
         checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
         pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #endif
     }
 
     MPI_SINGLE_PROCESS
     {
+        if(fUseCheckpoints)
+        {
+            //do not need to delete this visitor, as it is deleted by the solver
+            KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
+            new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
+            checkpoint->Interval(fCheckpointFrequency);
+            pgmres.AddVisitor( checkpoint );
+        }
+
         if(fUseDisplay)
         {
             pgmres.AddVisitor(new KIterationDisplay<double>("GMRES: "));
-            IKP.GetSolver()->AddVisitor(new KIterationDisplay<double>(std::string("Preconditioner: ")));
         }
         #ifdef KEMFIELD_USE_VTK
         if(fUsePlot)
@@ -869,7 +831,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov(KSur
         }
     }
 
-    pgmres.Solve(fmA, IKP, fmx, fmb);
+    pgmres.Solve(fmA, *IKP, fmx, fmb);
     fResidualNorm = pgmres.ResidualNorm();
 
     MPI_SINGLE_PROCESS
@@ -889,16 +851,15 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_ImplicitKrylov(KSur
 
     delete fm_integrator;
     delete alt_fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImplicitKrylov(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
-    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     alt_fm_integrator->Initialize(fPreconditionerParameters);
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
@@ -908,7 +869,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImplicit
     FastMultipoleSparseMatrix alt_sparseA(surfaceContainer, *alt_fm_integrator);
 
     FastMultipoleMatrix fmA(denseA, sparseA);
-    FastMultipoleMatrix alt_fmA(alt_denseA, alt_sparseA);
+    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
 
     KBoundaryIntegralSolutionVector< FastMultipoleEBI > fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector< FastMultipoleEBI > fmb(surfaceContainer, *fm_integrator);
@@ -916,66 +877,48 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImplicit
     KIterativeKrylovRestartCondition* restart_cond = new KIterativeKrylovRestartCondition();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
-    #ifdef KEMFIELD_USE_MPI
-    KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI> pgmres;
-    pgmres.SetTolerance(fSolverTolerance);
-    pgmres.SetRestartCondition(restart_cond);
-    pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #else
     KPreconditionedIterativeKrylovSolver<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual> pgmres;
     pgmres.SetTolerance(fSolverTolerance);
     pgmres.SetRestartCondition(restart_cond);
     pgmres.SetMaximumIterations(fMaxSolverIterations);
-    #endif
 
     if(fUseTimer)
     {
         pgmres.AddVisitor(new KTimeTerminator<FastMultipoleEBI::ValueType>(fMaxTimeAllowed, fTimeCheckFrequency));
     }
 
-    #ifdef KEMFIELD_USE_MPI
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual_MPI > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
-    #else
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
-    #endif
+    KKrylovSolverConfiguration config;
+    config.SetSolverName("gmres");
+    config.SetMaxIterations(fMaxPreconditionerIterations);
+    config.SetTolerance(fPreconditionerTolerance);
+    config.SetUseDisplay(fUseDisplay);
+    config.SetDisplayName("Preconditioner: ");
+    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType> > IKP =
+    		KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config,alt_fmA);
 
     if(fUseCheckpoints)
     {
-        #ifdef KEMFIELD_USE_MPI
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
-        new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
-        checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
-        pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual_MPI>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #else
         //do not need to delete this visitor, as it is deleted by the solver
         KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>* checkpoint_reader =
         new KPreconditionedIterativeKrylovStateReader<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual, KPreconditionedGeneralizedMinimalResidualState>( fm_integrator->GetLabels() );
         checkpoint_reader->SetVerbosity(fSolverParameters.verbosity);
         pgmres.AddVisitor(checkpoint_reader);
-        //do not need to delete this visitor, as it is deleted by the solver
-        KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
-        new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
-        checkpoint->Interval(fCheckpointFrequency);
-        pgmres.AddVisitor( checkpoint );
-        #endif
     }
 
     MPI_SINGLE_PROCESS
     {
+        if(fUseCheckpoints)
+        {
+            //do not need to delete this visitor, as it is deleted by the solver
+            KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>* checkpoint =
+            new KPreconditionedIterativeKrylovStateWriter<FastMultipoleEBI::ValueType, KPreconditionedGeneralizedMinimalResidual>( fm_integrator->GetLabels() );
+            checkpoint->Interval(fCheckpointFrequency);
+            pgmres.AddVisitor( checkpoint );
+        }
+
         if(fUseDisplay)
         {
             pgmres.AddVisitor(new KIterationDisplay<double>("GMRES: "));
-            IKP.GetSolver()->AddVisitor(new KIterationDisplay<double>(std::string("Preconditioner: ")));
         }
         #ifdef KEMFIELD_USE_VTK
         if(fUsePlot)
@@ -1004,7 +947,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImplicit
         }
     }
 
-    pgmres.Solve(fmA, IKP, fmx, fmb);
+    pgmres.Solve(fmA, *IKP, fmx, fmb);
     fResidualNorm = pgmres.ResidualNorm();
 
     MPI_SINGLE_PROCESS
@@ -1024,13 +967,12 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveGMRES_IndependentImplicit
 
     delete fm_integrator;
     delete alt_fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
@@ -1042,7 +984,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB(KSurfaceContaine
     KIterativeKrylovRestartCondition* restart_cond = new KIterativeKrylovRestartCondition();
     restart_cond->SetNumberOfIterationsBetweenRestart(fIterationsBetweenRestart);
 
-    KIterativeKrylovSolver<FastMultipoleEBI::ValueType, KBiconjugateGradientStabilized> bicgstab;
+    KSimpleIterativeKrylovSolver<FastMultipoleEBI::ValueType, KBiconjugateGradientStabilized> bicgstab;
     bicgstab.SetTolerance(fSolverTolerance);
     bicgstab.SetRestartCondition(restart_cond);
     bicgstab.SetMaximumIterations(fMaxSolverIterations);
@@ -1122,13 +1064,12 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB(KSurfaceContaine
     }
 
     delete fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Jacobi(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
@@ -1224,25 +1165,24 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_Jacobi(KSurfaceC
     }
 
     delete fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKrylov(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
     KFMElectrostaticParameters alt_params = fSolverParameters;
     alt_params.degree = fPreconditionerDegree;
-    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     alt_fm_integrator->Initialize(alt_params, fm_integrator->GetTree());
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
     FastMultipoleDenseMatrix alt_denseA(*alt_fm_integrator);
     FastMultipoleSparseMatrix sparseA(surfaceContainer, *fm_integrator);
     FastMultipoleMatrix fmA(denseA, sparseA);
-    FastMultipoleMatrix alt_fmA(alt_denseA, sparseA);
+    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, sparseA));
 
     KBoundaryIntegralSolutionVector< FastMultipoleEBI > fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector< FastMultipoleEBI > fmb(surfaceContainer, *fm_integrator);
@@ -1260,9 +1200,15 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKrylov(K
         pbicgstab.AddVisitor(new KTimeTerminator<FastMultipoleEBI::ValueType>(fMaxTimeAllowed, fTimeCheckFrequency));
     }
 
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
+
+    KKrylovSolverConfiguration config;
+    config.SetSolverName("gmres");  // that's the way it was, I suspected bicgstab also, but there you go
+    config.SetMaxIterations(fMaxPreconditionerIterations);
+    config.SetTolerance(fPreconditionerTolerance);
+    config.SetUseDisplay(fUseDisplay);
+    config.SetDisplayName("Preconditioner: ");
+    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType> > IKP =
+    		KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config,alt_fmA);
 
     if(fUseCheckpoints)
     {
@@ -1287,7 +1233,6 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKrylov(K
         if(fUseDisplay)
         {
             pbicgstab.AddVisitor(new KIterationDisplay<double>("BICGSTAB: "));
-            IKP.GetSolver()->AddVisitor(new KIterationDisplay<double>(std::string("Preconditioner: ")));
         }
         #ifdef KEMFIELD_USE_VTK
         if(fUsePlot)
@@ -1316,7 +1261,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKrylov(K
         }
     }
 
-    pbicgstab.Solve(fmA, IKP, fmx, fmb);
+    pbicgstab.Solve(fmA, *IKP, fmx, fmb);
     fResidualNorm = pbicgstab.ResidualNorm();
 
     MPI_SINGLE_PROCESS
@@ -1336,16 +1281,15 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_ImplicitKrylov(K
 
     delete fm_integrator;
     delete alt_fm_integrator;
-    delete restart_cond;
 }
 
 void
 KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImplicitKrylov(KSurfaceContainer& surfaceContainer)
 {
-    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     fm_integrator->Initialize(fSolverParameters);
 
-    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(surfaceContainer);
+    FastMultipoleEBI* alt_fm_integrator = new FastMultipoleEBI(fDirectIntegrator,surfaceContainer);
     alt_fm_integrator->Initialize(fPreconditionerParameters);
 
     FastMultipoleDenseMatrix denseA(*fm_integrator);
@@ -1355,7 +1299,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImpli
     FastMultipoleSparseMatrix alt_sparseA(surfaceContainer, *alt_fm_integrator);
 
     FastMultipoleMatrix fmA(denseA, sparseA);
-    FastMultipoleMatrix alt_fmA(alt_denseA, alt_sparseA);
+    KSmartPointer<FastMultipoleMatrix> alt_fmA(new FastMultipoleMatrix(alt_denseA, alt_sparseA));
 
     KBoundaryIntegralSolutionVector< FastMultipoleEBI > fmx(surfaceContainer, *fm_integrator);
     KBoundaryIntegralVector< FastMultipoleEBI > fmb(surfaceContainer, *fm_integrator);
@@ -1373,9 +1317,14 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImpli
         pbicgstab.AddVisitor(new KTimeTerminator<FastMultipoleEBI::ValueType>(fMaxTimeAllowed, fTimeCheckFrequency));
     }
 
-    KImplicitKrylovPreconditioner<FastMultipoleEBI::ValueType, KGeneralizedMinimalResidual > IKP(alt_fmA);
-    IKP.GetSolver()->SetTolerance(fPreconditionerTolerance);
-    IKP.GetSolver()->SetMaximumIterations(fMaxPreconditionerIterations);
+    KKrylovSolverConfiguration config;
+    config.SetSolverName("gmres"); // sorry, that's the way it was
+    config.SetMaxIterations(fMaxPreconditionerIterations);
+    config.SetTolerance(fPreconditionerTolerance);
+    config.SetUseDisplay(fUseDisplay);
+    config.SetDisplayName("Preconditioner: ");
+    KSmartPointer<KPreconditioner<FastMultipoleEBI::ValueType> > IKP =
+    		KBuildKrylovPreconditioner<FastMultipoleEBI::ValueType>(config,alt_fmA);
 
     if(fUseCheckpoints)
     {
@@ -1400,7 +1349,6 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImpli
         if(fUseDisplay)
         {
             pbicgstab.AddVisitor(new KIterationDisplay<double>("BICGSTAB: "));
-            IKP.GetSolver()->AddVisitor(new KIterationDisplay<double>(std::string("Preconditioner: ")));
         }
         #ifdef KEMFIELD_USE_VTK
         if(fUsePlot)
@@ -1429,7 +1377,7 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImpli
         }
     }
 
-    pbicgstab.Solve(fmA, IKP, fmx, fmb);
+    pbicgstab.Solve(fmA, *IKP, fmx, fmb);
     fResidualNorm = pbicgstab.ResidualNorm();
 
     MPI_SINGLE_PROCESS
@@ -1449,7 +1397,6 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::SolveBICGSTAB_IndependentImpli
 
     delete fm_integrator;
     delete alt_fm_integrator;
-    delete restart_cond;
 }
 
 
@@ -1509,7 +1456,6 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::DetermineSolverType()
 }
 
 
-
 #ifdef KEMFIELD_USE_REALTIME_CLOCK
 timespec
 KFMElectrostaticFastMultipoleBoundaryValueSolver::TimeDifference(timespec start, timespec end)
@@ -1530,7 +1476,21 @@ KFMElectrostaticFastMultipoleBoundaryValueSolver::TimeDifference(timespec start,
 }
 #endif
 
+KSmartPointer<FastMultipoleMatrix>
+KFMElectrostaticFastMultipoleBoundaryValueSolver::CreateMatrix(
+		const KSurfaceContainer& surfaceContainer,
+		KSmartPointer<FastMultipoleEBI> fm_integrator) const
+{
+	fm_integrator->Initialize(fSolverParameters);
 
+	KSmartPointer<FastMultipoleDenseMatrix> denseA( new FastMultipoleDenseMatrix(fm_integrator) );
+	KSmartPointer<FastMultipoleSparseMatrix> sparseA(
+	        new FastMultipoleSparseMatrix(surfaceContainer, fm_integrator) );
 
+	return KSmartPointer<FastMultipoleMatrix>(
+			new FastMultipoleMatrix(denseA, sparseA) );
 }
- //end of namespace
+
+} //end of namespace
+
+

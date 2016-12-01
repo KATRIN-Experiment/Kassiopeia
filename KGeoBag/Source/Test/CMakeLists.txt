@@ -3,6 +3,7 @@ set (TEST_LIBS
     KGeoBagShapes
     KGeoBagMesh
     ${Kommon_LIBRARIES}
+    ${Kommon_Vtk_LIBRARIES}
 )
 
 # internal

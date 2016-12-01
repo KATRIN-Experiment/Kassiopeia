@@ -17,14 +17,20 @@ namespace Kassiopeia
     KSIntSurfaceDiffuse::KSIntSurfaceDiffuse() :
             fProbability( .0 ),
             fReflectionLoss( 0. ),
-            fTransmissionLoss( 0. )
+            fTransmissionLoss( 0. ),
+            fReflectionLossFraction( 0. ),
+            fTransmissionLossFraction( 0. ),
+            fUseRelativeLoss(false)
     {
     }
     KSIntSurfaceDiffuse::KSIntSurfaceDiffuse( const KSIntSurfaceDiffuse& aCopy ) :
             KSComponent(),
             fProbability( aCopy.fProbability ),
             fReflectionLoss( aCopy.fReflectionLoss ),
-            fTransmissionLoss( aCopy.fTransmissionLoss )
+            fTransmissionLoss( aCopy.fTransmissionLoss ),
+            fReflectionLossFraction( aCopy.fReflectionLossFraction ),
+            fTransmissionLossFraction( aCopy.fTransmissionLossFraction ),
+            fUseRelativeLoss( aCopy.fUseRelativeLoss)
     {
     }
     KSIntSurfaceDiffuse* KSIntSurfaceDiffuse::Clone() const

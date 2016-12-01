@@ -1,4 +1,10 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+
+
 <messages>
+
+    <file path="[log_path]" base="ToricTrapLog.txt"/>
 
 	<message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
@@ -141,39 +147,13 @@
 
 </geometry>
 
-<vtk_window 
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
-    <vtk_geometry_painter 
-        name="magnet_painter" 
-        file="ToricTrapMagnets.vtp"
-        surfaces="world/toric_trap/@magnet_tag"
-    />
-    <vtk_geometry_painter 
-        name="sheet_painter" 
-        file="ToricTrapSheet.vtp"
-        surfaces="world/toric_trap/sheet"
-    />
-</vtk_window>
-
 <kassiopeia>
 
 	<!-- magnetic fields -->
 
     <ksfield_electromagnet
         name="field_electromagnet"
+        directory="[KEMFIELD_CACHE]"
         file="ToricTrapMagnets.kbd"
         system="world/toric_trap"
         spaces="world/toric_trap/@magnet_tag"
@@ -195,7 +175,7 @@
     </ksfield_electromagnet>
 
     <!-- electric fields -->
-    
+
     <!--
     <ksfield_electrostatic
         name="field_electrostatic"
@@ -209,7 +189,6 @@
             check_sub_interval="100"
             display_interval="1"
             cache_matrix_elements="true"
-            use_vtk="true"
         />
         <zonal_harmonic_field_solver
             number_of_bifurcations="-1"
@@ -235,14 +214,14 @@
 
 	<!-- generators -->
 
-	<ksgen_generator_composite name="generator_fix">
+	<ksgen_generator_composite name="generator_fix" pid="11">
         <energy_composite>
             <energy_fix value="10."/>
         </energy_composite>
         <position_cylindrical_composite surface="world/toric_trap/target">
             <r_fix value="1.0e-3"/>
             <phi_fix value="270."/>
-            <z_fix value="0."/>
+            <z_fix value="1e-3"/>
         </position_cylindrical_composite>
         <direction_spherical_composite surface="world/toric_trap/target">
             <theta_fix value="75."/>
@@ -256,101 +235,96 @@
     <!-- trajectories-->
 
     <kstraj_trajectory_exact name="trajectory_exact">
-        <integrator_rk8 name="integrator_rk8"/>
+        <interpolator_crk name="interpolator_crk"/>
+        <integrator_rkdp853 name="integrator_rkdp853"/>
         <term_propagation name="term_propagation"/>
         <control_cyclotron name="control_cyclotron_1_64" fraction="{1. / 128.}"/>
         <control_time name="control_time" time="5.e-9"/>
     </kstraj_trajectory_exact>
 
 	<!-- space interactions -->
-    
+
     <ksint_scattering name="int_scattering">
-        <density_constant temperature="300." pressure="3.e0"/>    
+        <density_constant temperature="300." pressure="3.e0"/>
         <calculator_constant cross_section="1.e-18"/>
     </ksint_scattering>
 
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false" tolerance="1.e-6"/>
+    <ksnav_space name="nav_space" enter_split="false" exit_split="false"/>
 
     <!-- surface navigators -->
 
     <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
-    
+
     <!-- terminators -->
 
     <ksterm_death name="term_target"/>
     <ksterm_death name="term_world"/>
-    <ksterm_max_steps name="term_max_steps" steps="1024"/>
+    <ksterm_max_steps name="term_max_steps" steps="100000"/>
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="ToricTrapSimulation.root"/>
-    <kswrite_vtk name="write_vtk" base="ToricTrapSimulation"/>
+    <kswrite_root name="write_root" path="[output_path]" base="ToricTrapSimulation.root"/>
 
     <!-- output -->
 
-    <ks_output name="output_track_initial_particle" field="initial_particle" object="track"/>
-    <ks_output name="output_track_final_particle" field="final_particle" object="track"/>
-    <ks_output name="output_track_position" field="position" object="output_track_final_particle"/>
-    <ks_output name="output_track_length" field="length" object="output_track_final_particle"/>
+    <ks_component_member name="component_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="component_track_final_particle" field="final_particle" parent="track"/>
+    <ks_component_member name="component_track_position" field="position" parent="component_track_final_particle"/>
+    <ks_component_member name="component_track_length" field="length" parent="component_track_final_particle"/>
 
-    <ks_group name="output_track_world">
-        <output name="generator_name" field="generator_name" object="track"/>
-        <output name="terminator_name" field="terminator_name" object="track"/>
-        <output name="total_steps" field="total_steps" object="track"/>
-        <output name="initial_time" field="time" object="output_track_initial_particle"/>
-        <output name="initial_position" field="position" object="output_track_initial_particle"/>
-        <output name="initial_momentum" field="momentum" object="output_track_initial_particle"/>
-        <output name="initial_magnetic_field" field="magnetic_field" object="output_track_initial_particle"/>
-        <output name="initial_electric_field" field="electric_field" object="output_track_initial_particle"/>
-        <output name="initial_electric_potential" field="electric_potential" object="output_track_initial_particle"/>
-        <output name="initial_kinetic_energy" field="kinetic_energy_ev" object="output_track_initial_particle"/>
-        <output name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" object="output_track_initial_particle"/>
-        <output name="initial_polar_angle_to_z" field="polar_angle_to_z" object="output_track_initial_particle"/>
-        <output name="initial_polar_angle_to_b" field="polar_angle_to_b" object="output_track_initial_particle"/>
-        <output name="final_time" field="time" object="output_track_final_particle"/>
-        <output name="final_position" field="position" object="output_track_final_particle"/>
-        <output name="final_momentum" field="momentum" object="output_track_final_particle"/>
-        <output name="final_magnetic_field" field="magnetic_field" object="output_track_final_particle"/>
-        <output name="final_electric_field" field="electric_field" object="output_track_final_particle"/>
-        <output name="final_electric_potential" field="electric_potential" object="output_track_final_particle"/>
-        <output name="final_kinetic_energy" field="kinetic_energy_ev" object="output_track_final_particle"/>
-        <output name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" object="output_track_final_particle"/>
-        <output name="final_polar_angle_to_z" field="polar_angle_to_z" object="output_track_final_particle"/>
-        <output name="final_polar_angle_to_b" field="polar_angle_to_b" object="output_track_final_particle"/>
-    </ks_group>
+    <ks_component_group name="component_track_world">
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+        <component_member name="initial_time" field="time" parent="component_track_initial_particle"/>
+        <component_member name="initial_position" field="position" parent="component_track_initial_particle"/>
+        <component_member name="initial_momentum" field="momentum" parent="component_track_initial_particle"/>
+        <component_member name="initial_magnetic_field" field="magnetic_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
+        <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
+        <component_member name="final_time" field="time" parent="component_track_final_particle"/>
+        <component_member name="final_position" field="position" parent="component_track_final_particle"/>
+        <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
+        <component_member name="final_magnetic_field" field="magnetic_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_field" field="electric_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_potential" field="electric_potential" parent="component_track_final_particle"/>
+        <component_member name="final_kinetic_energy" field="kinetic_energy_ev" parent="component_track_final_particle"/>
+        <component_member name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_final_particle"/>
+    </ks_component_group>
 
-    <ks_output name="output_step_final_particle" field="final_particle" object="step"/>
-    <ks_output name="output_step_position" field="position" object="output_step_final_particle"/>
-    <ks_output name="output_step_z" field="z" object="output_step_position"/>
+    <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
+    <ks_component_member name="component_step_position" field="position" parent="component_step_final_particle"/>
+    <ks_component_member name="component_step_length" field="length" parent="component_step_final_particle"/>
 
-    <ks_group name="output_step_world">
-        <output name="step_id" field="step_id" object="step"/>
-        <output name="continuous_time" field="continuous_time" object="step"/>
-        <output name="continuous_length" field="continuous_length" object="step"/>
-        <output name="time" field="time" object="output_step_final_particle"/>
-        <output name="position" field="position" object="output_step_final_particle"/>
-        <output name="momentum" field="momentum" object="output_step_final_particle"/>
-        <output name="magnetic_field" field="magnetic_field" object="output_step_final_particle"/>
-        <output name="electric_field" field="electric_field" object="output_step_final_particle"/>
-        <output name="electric_potential" field="electric_potential" object="output_step_final_particle"/>
-        <output name="kinetic_energy" field="kinetic_energy_ev" object="output_step_final_particle"/>
-        <output name="orbital_magnetic_moment" field="orbital_magnetic_moment" object="output_step_final_particle"/>
-        <output name="polar_angle_to_z" field="polar_angle_to_z" object="output_step_final_particle"/>
-        <output name="polar_angle_to_b" field="polar_angle_to_b" object="output_step_final_particle"/>
-    </ks_group>
+    <ks_component_group name="component_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_time" field="continuous_time" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="time" field="time" parent="component_step_final_particle"/>
+        <component_member name="position" field="position" parent="component_step_final_particle"/>
+        <component_member name="momentum" field="momentum" parent="component_step_final_particle"/>
+        <component_member name="magnetic_field" field="magnetic_field" parent="component_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="component_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="component_step_final_particle"/>
+        <component_member name="kinetic_energy" field="kinetic_energy_ev" parent="component_step_final_particle"/>
+        <component_member name="orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_step_final_particle"/>
+        <component_member name="polar_angle_to_z" field="polar_angle_to_z" parent="component_step_final_particle"/>
+        <component_member name="polar_angle_to_b" field="polar_angle_to_b" parent="component_step_final_particle"/>
+    </ks_component_group>
 
     <!-- structure -->
 
     <ksgeo_space name="space_world" spaces="world">
         <command parent="root_terminator" field="remove_terminator" child="term_world"/>
-        <command parent="write_root" field="add_track_output" child="output_track_world"/>
-        <command parent="write_root" field="add_step_output" child="output_step_world"/>
-        <command parent="write_vtk" field="set_track_point" child="output_track_position"/>
-        <command parent="write_vtk" field="set_track_data" child="output_track_length"/>
-        <command parent="write_vtk" field="set_step_point" child="output_step_position"/>
-        <command parent="write_vtk" field="set_step_data" child="output_step_z"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
+        <command parent="write_root" field="add_track_output" child="component_track_world"/>
+        <command parent="write_root" field="add_step_output" child="component_step_world"/>
         <geo_surface name="surface_target" surfaces="world/toric_trap/target">
             <command parent="root_terminator" field="add_terminator" child="term_target"/>
         </geo_surface>
@@ -373,11 +347,6 @@
         surface_navigator="nav_surface"
         terminator="term_world"
         writer="write_root"
-        writer="write_vtk"
     />
 
 </kassiopeia>
-
-<!--
-
--->

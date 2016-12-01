@@ -5,15 +5,17 @@
 
 #include "KGMeshDeformer.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGMeshDeformer > KGMeshDeformerBuilder;
+    typedef KComplexElement< KGeoBag::KGMeshDeformer > KGMeshDeformerBuilder;
 
     template< >
     inline bool KGMeshDeformerBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "surfaces" )
         {
             vector< KGSurface* > tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );

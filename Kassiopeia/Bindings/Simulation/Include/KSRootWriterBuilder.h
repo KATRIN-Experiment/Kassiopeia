@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootWriter.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_writer" )
         {
-            fObject->AddWriter( KSToolbox::GetInstance()->GetObjectAs< KSWriter >( aContainer->AsReference< string >() ) );
+            fObject->AddWriter( KToolbox::GetInstance().Get< KSWriter >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

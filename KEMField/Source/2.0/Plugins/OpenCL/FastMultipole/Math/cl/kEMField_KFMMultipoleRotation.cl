@@ -1,7 +1,7 @@
 #ifndef KFMMultipoleRotation_Defined_H
 #define KFMMultipoleRotation_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 //______________________________________________________________________________
 

@@ -4,10 +4,7 @@
 #include "KProcessor.hh"
 
 #include <stack>
-using std::stack;
-
 #include <vector>
-using std::vector;
 
 namespace katrin
 {
@@ -33,9 +30,9 @@ namespace katrin
             } State;
             State fState;
 
-            vector< string > fTags;
-            vector< string >::iterator fTagIt;
-            stack< vector< string > > fTagStack;
+            std::vector< std::string > fTags;
+            std::vector< std::string >::iterator fTagIt;
+            std::stack< std::vector< std::string > > fTagStack;
     };
 
 }

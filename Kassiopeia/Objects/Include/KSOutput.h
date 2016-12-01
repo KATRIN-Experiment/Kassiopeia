@@ -59,11 +59,11 @@ namespace Kassiopeia
             {
                 return new KSOutput< XParentType, const XChildType& (XParentType::*)( void ) const >( *this );
             }
-            KSObject* Command( KSObject*, const string& )
+            KSObject* Command( KSObject*, const std::string& )
             {
                 return NULL;
             }
-            KSObject* Output( const string& aLabel )
+            KSObject* Output( const std::string& aLabel )
             {
                 KSObject* tChild = KSDictionary< XChildType >::GetOutput( this, aLabel );
                 if( tChild == NULL )
@@ -82,7 +82,7 @@ namespace Kassiopeia
                 {
                     fValue = (fTarget->*fMember)();
                     fUpdated = true;
-                    for( vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
+                    for( std::vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
                     {
                         (*tIt)->PushUpdate();
                     }
@@ -94,7 +94,7 @@ namespace Kassiopeia
                 if( fUpdated == true )
                 {
                     fUpdated = false;
-                    for( vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
+                    for( std::vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
                     {
                         (*tIt)->PushReset();
                     }
@@ -174,7 +174,7 @@ namespace Kassiopeia
         private:
             unsigned int fState;
             KSObject* fParentObject;
-            vector< KSObject* > fChildObjects;
+            std::vector< KSObject* > fChildObjects;
             bool fUpdated;
             XParentType* fTarget;
             const XChildType& (XParentType::*fMember)( void ) const;
@@ -258,11 +258,11 @@ namespace Kassiopeia
             {
                 return new KSOutput< XParentType, XChildType (XParentType::*)( void ) const >( *this );
             }
-            KSObject* Command( KSObject*, const string& )
+            KSObject* Command( KSObject*, const std::string& )
             {
                 return NULL;
             }
-            KSObject* Output( const string& aLabel )
+            KSObject* Output( const std::string& aLabel )
             {
                 KSObject* tChild = KSDictionary< XChildType >::GetOutput( this, aLabel );
                 if( tChild == NULL )
@@ -282,7 +282,7 @@ namespace Kassiopeia
                 {
                     fValue = (fTarget->*fMember)();
                     fUpdated = true;
-                    for( vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
+                    for( std::vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
                     {
                         (*tIt)->PushUpdate();
                     }
@@ -294,7 +294,7 @@ namespace Kassiopeia
                 if( fUpdated == true )
                 {
                     fUpdated = false;
-                    for( vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
+                    for( std::vector< KSObject* >::iterator tIt = fChildObjects.begin(); tIt != fChildObjects.end(); tIt++ )
                     {
                         (*tIt)->PushReset();
                     }
@@ -374,7 +374,7 @@ namespace Kassiopeia
         private:
             unsigned int fState;
             KSObject* fParentObject;
-            vector< KSObject* > fChildObjects;
+            std::vector< KSObject* > fChildObjects;
             bool fUpdated;
             XParentType* fTarget;
             XChildType (XParentType::*fMember)( void ) const;
@@ -418,7 +418,7 @@ namespace Kassiopeia
 
     template< class XType >
     template< class XMemberType >
-    int KSDictionary< XType >::AddOutput( XMemberType aMember, const string& aLabel )
+    int KSDictionary< XType >::AddOutput( XMemberType aMember, const std::string& aLabel )
     {
         if( fOutputFactories == NULL )
         {
@@ -455,9 +455,9 @@ namespace katrin
     class KSOutputData
     {
         public:
-            string fName;
+            std::string fName;
             KSObject* fParent;
-            string fField;
+            std::string fField;
     };
 
     typedef KComplexElement< KSOutputData > KSOutputBuilder;
@@ -474,19 +474,19 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
         if( aContainer->GetName() == "object" )
         {
-            KSObject* tObject = KSToolbox::GetInstance()->GetObject( aContainer->AsReference< string >() );
+            KTagged* tObject = KToolbox::GetInstance().Get<KTagged>( aContainer->AsReference< std::string >() );
             fObject->fParent = tObject;
             return true;
         }
         if( aContainer->GetName() == "field" )
         {
-            string tField = aContainer->AsReference< string >();
+            std::string tField = aContainer->AsReference< std::string >();
             fObject->fField = tField;
             return true;
         }

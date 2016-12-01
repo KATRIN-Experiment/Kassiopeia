@@ -18,11 +18,14 @@
 #include "KSTrajControlEnergyBuilder.h"
 #include "KSTrajControlMagneticMoment.h"
 #include "KSTrajControlCyclotronBuilder.h"
+#include "KSTrajControlBChangeBuilder.h"
 #include "KSTrajControlPositionNumericalError.h"
 #include "KSTrajControlMomentumNumericalError.h"
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -55,6 +58,7 @@ namespace katrin
         KSTrajTrajectoryAdiabaticBuilder::ComplexElement< KSTrajControlMomentumNumericalError >( "control_momentum_error" ) +
         KSTrajTrajectoryAdiabaticBuilder::ComplexElement< KSTrajControlMagneticMoment >( "control_magnetic_moment" ) +
         KSTrajTrajectoryAdiabaticBuilder::ComplexElement< KSTrajControlCyclotron >( "control_cyclotron" ) +
+        KSTrajTrajectoryAdiabaticBuilder::ComplexElement< KSTrajControlBChange >( "control_B_change" ) +
         KSTrajTrajectoryAdiabaticBuilder::Attribute< double >( "piecewise_tolerance" ) +
         KSTrajTrajectoryAdiabaticBuilder::Attribute< unsigned int >( "max_segments" ) +
         KSTrajTrajectoryAdiabaticBuilder::Attribute< bool >( "use_true_position" ) +

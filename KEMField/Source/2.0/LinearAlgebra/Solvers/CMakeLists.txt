@@ -15,6 +15,9 @@ set (LINEARALGEBRASOLVERS_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KSuccessiveSubspaceCorrection.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KSuccessiveSubspaceCorrection_SingleThread.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KIterativeKrylovSolver.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KKrylovSolverConfiguration.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KKrylovSolverFactory.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KSimpleIterativeKrylovSolver.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KPreconditionedIterativeKrylovSolver.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KGeneralizedMinimalResidual.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KGeneralizedMinimalResidualState.hh
@@ -34,5 +37,21 @@ set (LINEARALGEBRASOLVERS_HEADERFILES
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KPreconditionedGeneralizedMinimalResidual_MPI.hh
     )
   endif (@PROJECT_NAME@_USE_MPI)
+  
+set( LINEARALGEBRASOLVERS_SOURCEFILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/KKrylovSolverConfiguration.cc
+)
 
+# library
+add_library( KEMLinearAlgebraSolvers SHARED ${LINEARALGEBRASOLVERS_SOURCEFILES} )
+set_target_properties( KEMLinearAlgebraSolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+target_link_libraries( KEMLinearAlgebraSolvers 
+    ${LINEARALGEBRASOLVERS_LIBRARIES}
+)
+
+# install
 kasper_install_headers (${LINEARALGEBRASOLVERS_HEADERFILES})
+kasper_install_libraries( KEMLinearAlgebraSolvers )
+
+
+

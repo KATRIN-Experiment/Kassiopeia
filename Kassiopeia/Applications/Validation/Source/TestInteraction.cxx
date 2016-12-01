@@ -8,7 +8,7 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSIntScattering.h"
 #include "KSMainMessage.h"
 #include "KSParticleFactory.h"
@@ -21,10 +21,10 @@
 #include "TGraph.h"
 
 #include <sstream>
-using std::stringstream;
 
 using namespace Kassiopeia;
 using namespace katrin;
+using namespace std;
 
 int main( int anArgc, char** anArgv )
 {
@@ -70,7 +70,7 @@ int main( int anArgc, char** anArgv )
 
 
     // get stuff from toolbox
-    KSIntScattering* tScattering = KSToolbox::GetInstance()->GetObjectAs<KSIntScattering>( tScatteringName );
+    KSIntScattering* tScattering = katrin::KToolbox::GetInstance().Get<KSIntScattering>( tScatteringName );
     tScattering->Initialize();
 
     // initialize root
@@ -90,9 +90,9 @@ int main( int anArgc, char** anArgv )
 
 
     // make particles
-    KSParticle* tInitialParticle = KSParticleFactory::GetInstance()->Create( 11 );
-    KSParticle* tFinalParticle = KSParticleFactory::GetInstance()->Create( 11 );
-    KSParticle* tInteractionParticle = KSParticleFactory::GetInstance()->Create( 11 );
+    KSParticle* tInitialParticle = KSParticleFactory::GetInstance().Create( 11 );
+    KSParticle* tFinalParticle = KSParticleFactory::GetInstance().Create( 11 );
+    KSParticle* tInteractionParticle = KSParticleFactory::GetInstance().Create( 11 );
     KSParticleQueue tSecondaries;
 
     tInitialParticle->SetLength( 0.00 );
@@ -166,9 +166,6 @@ int main( int anArgc, char** anArgv )
 
     tApplication.Run();
 
-    // deinitialize kassiopeia
-
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

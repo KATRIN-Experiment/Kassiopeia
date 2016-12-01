@@ -3,7 +3,8 @@
 
 #include "KSGenPositionFluxTube.h"
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+#include "KSFieldFinder.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,12 +22,12 @@ namespace katrin
         }
         if( aContainer->GetName() == "phi" )
         {
-            fObject->SetPhiValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetPhiValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "z" )
         {
-            fObject->SetZValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetZValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "flux" )
@@ -46,7 +47,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "magnetic_field_name" )
         {
-            fObject->AddMagneticField( KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( aContainer->AsReference< string >() ) );
+            fObject->AddMagneticField( getMagneticField( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

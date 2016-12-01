@@ -17,12 +17,7 @@
 
 #include "KResidualVector.hh"
 
-#ifdef KEMFIELD_USE_MPI
-#include "KMPIInterface.hh"
-#define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
-#else
-#define MPI_SINGLE_PROCESS
-#endif
+#include "KMPIEnvironment.hh"
 
 namespace KEMField
 {
@@ -213,6 +208,5 @@ namespace KEMField
   }
 }
 
-#undef MPI_SINGLE_PROCESS
 
 #endif /* KITERATIVESTATEWRITER_DEF */

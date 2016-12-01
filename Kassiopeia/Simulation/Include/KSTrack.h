@@ -41,8 +41,8 @@ namespace Kassiopeia
             K_REFS( unsigned int, DiscreteSecondaries )
             K_REFS( double, DiscreteEnergyChange )
             K_REFS( double, DiscreteMomentumChange )
-            K_REFS( string, CreatorName )
-            K_REFS( string, TerminatorName )
+            K_REFS( std::string, CreatorName )
+            K_REFS( std::string, TerminatorName )
 
             //*********
             //particles

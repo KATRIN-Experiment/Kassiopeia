@@ -69,8 +69,8 @@ namespace Kassiopeia
             bool fSplit;
             KSIntDensity* fDensity;
             KSIntCalculator* fCalculator;
-            vector< KSIntCalculator* > fCalculators;
-            vector< double > fCrossSections;
+            std::vector< KSIntCalculator* > fCalculators;
+            std::vector< double > fCrossSections;
 
             double fEnhancement;
 

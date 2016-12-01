@@ -2,7 +2,6 @@
 set( OBJECTS_HEADER_BASENAMES
 	KSObjectsMessage.h
 	KSObject.h
-	KSToolbox.h
 	KSCommand.h
 	KSCommandGroup.h
 	KSComponent.h
@@ -39,7 +38,6 @@ endforeach( BASENAME )
 set( OBJECTS_SOURCE_BASENAMES
 	KSObjectsMessage.cxx
 	KSObject.cxx
-	KSToolbox.cxx
 	KSCommand.cxx
 	KSCommandGroup.cxx
 	KSComponent.cxx

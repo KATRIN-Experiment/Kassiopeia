@@ -3,8 +3,6 @@
 
 #include "KToken.hh"
 
-#include <cstdlib>
-
 namespace katrin
 {
 

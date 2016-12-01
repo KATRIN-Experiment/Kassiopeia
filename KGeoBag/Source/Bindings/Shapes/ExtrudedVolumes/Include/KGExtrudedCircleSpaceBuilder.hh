@@ -12,37 +12,37 @@ namespace katrin
     template< >
     inline bool KGExtrudedCircleSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmin" ) )
+        if( anAttribute->GetName() == "zmin" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::ZMin );
             return true;
         }
-        if( anAttribute->GetName() == string( "zmax" ) )
+        if( anAttribute->GetName() == "zmax" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::ZMax );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_count" ) )
+        if( anAttribute->GetName() == "extruded_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::ExtrudedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "extruded_mesh_power" ) )
+        if( anAttribute->GetName() == "extruded_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::ExtrudedMeshPower );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGExtrudedCircleSpace::FlattenedMeshPower );
             return true;
@@ -53,7 +53,7 @@ namespace katrin
     template< >
     inline bool KGExtrudedCircleSpaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "circle" ) )
+        if( anElement->GetName() == "circle" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarCircle::CopyFrom );
             return true;

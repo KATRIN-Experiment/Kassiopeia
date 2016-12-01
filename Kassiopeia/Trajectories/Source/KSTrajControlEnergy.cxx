@@ -14,6 +14,7 @@ namespace Kassiopeia
             fInitialStep( 1e-10 ),  // time
             fAdjustmentFactorUp( 0.5 ),  // factor
             fAdjustmentFactorDown( 0.5 ),  // factor
+            fStepRescale( 1. ),  // factor
             fTimeStep( 0. ),  // time
             fFirstStep( true )  // flag
     {
@@ -27,6 +28,7 @@ namespace Kassiopeia
             fInitialStep( aCopy.fInitialStep ),
             fAdjustmentFactorUp( aCopy.fAdjustmentFactorUp ),
             fAdjustmentFactorDown( aCopy.fAdjustmentFactorDown ),
+            fStepRescale( aCopy.fStepRescale ),
             fTimeStep( aCopy.fTimeStep ),
             fFirstStep( aCopy.fFirstStep )
     {
@@ -53,6 +55,10 @@ namespace Kassiopeia
             trajmsg_debug( "stepsize energy on first step" << eom );
             fTimeStep = fInitialStep;
             fFirstStep = false;
+        }
+        else
+        {
+            fTimeStep *= fStepRescale;
         }
 
         trajmsg_debug( "stepsize energy suggesting <" << fTimeStep << ">" << eom );
@@ -105,13 +111,143 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlEnergy::Calculate( const KSTrajExactSpinParticle& /*aParticle*/, double& aValue )
+    {
+        if ( (fFirstStep == true) || (fTimeStep == 0.) )
+        {
+            trajmsg_debug( "stepsize energy on first step" << eom );
+            fTimeStep = fInitialStep;
+            fFirstStep = false;
+        }
+        else
+        {
+            fTimeStep *= fStepRescale;
+        }
+
+        trajmsg_debug( "stepsize energy suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+    void KSTrajControlEnergy::Check( const KSTrajExactSpinParticle& anInitialParticle, const KSTrajExactSpinParticle& aFinalParticle, const KSTrajExactSpinError&, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+
+        double tFinalEnergy = (aFinalParticle.GetKineticEnergy() + aFinalParticle.GetCharge() * aFinalParticle.GetElectricPotential());
+        double tInitialEnergy = (anInitialParticle.GetKineticEnergy() + anInitialParticle.GetCharge() * anInitialParticle.GetElectricPotential());
+        double tNormalization = tFinalEnergy + tInitialEnergy;
+        double tEnergyViolation = 2. * fabs( (tFinalEnergy / tNormalization) - (tInitialEnergy / tNormalization) )  ;
+
+        if( tEnergyViolation < fLowerLimit )
+        {
+            trajmsg_debug( "stepsize energy increasing stepsize at violation <" << tEnergyViolation << ">" << eom) ;
+            fTimeStep = (1. + fAdjustmentFactorUp) * fTimeStep;
+            aFlag = false;
+            return;
+        }
+        if( tEnergyViolation > fUpperLimit )
+        {
+            trajmsg_debug( "stepsize energy decreasing stepsize at violation <" << tEnergyViolation << ">" << eom );
+            fTimeStep = (1. - fAdjustmentFactorDown) * fTimeStep;
+            aFlag = false;
+            return;
+        }
+
+        double tStepLength = aFinalParticle.GetLength() - anInitialParticle.GetLength();
+        // particle's speed is calculated only when needed since GetVelocity() is a rather expensive operation
+
+        if( tStepLength < fMinLength )
+        {
+            trajmsg_debug( "stepsize energy increasing stepsize at step length <" << tStepLength << ">" << eom) ;
+            fTimeStep = (1. + fAdjustmentFactorUp) * fMinLength / anInitialParticle.GetVelocity().Magnitude();
+            aFlag = false;
+            return;
+        }
+        if( tStepLength > fMaxLength )
+        {
+            trajmsg_debug( "stepsize energy decreasing stepsize at step length <" << tStepLength << ">" << eom) ;
+            fTimeStep = (1. - fAdjustmentFactorDown) * fMaxLength / anInitialParticle.GetVelocity().Magnitude();
+            aFlag = false;
+            return;
+        }
+
+        trajmsg_debug( "stepsize energy keeping stepsize at violation <" << tEnergyViolation << ">" << eom) ;
+        return;
+    }
+
+    void KSTrajControlEnergy::Calculate( const KSTrajAdiabaticSpinParticle& /*aParticle*/, double& aValue )
+    {
+        if ( (fFirstStep == true) || (fTimeStep == 0.) )
+        {
+            trajmsg_debug( "stepsize energy on first step" << eom );
+            fTimeStep = fInitialStep;
+            fFirstStep = false;
+        }
+        else
+        {
+            fTimeStep *= fStepRescale;
+        }
+
+        trajmsg_debug( "stepsize energy suggesting <" << fTimeStep << ">" << eom );
+        aValue = fTimeStep;
+        return;
+    }
+    void KSTrajControlEnergy::Check( const KSTrajAdiabaticSpinParticle& anInitialParticle, const KSTrajAdiabaticSpinParticle& aFinalParticle, const KSTrajAdiabaticSpinError&, bool& aFlag )
+    {
+        fTimeStep = aFinalParticle.GetTime() - anInitialParticle.GetTime();
+
+        double tFinalEnergy = (aFinalParticle.GetKineticEnergy() + aFinalParticle.GetCharge() * aFinalParticle.GetElectricPotential());
+        double tInitialEnergy = (anInitialParticle.GetKineticEnergy() + anInitialParticle.GetCharge() * anInitialParticle.GetElectricPotential());
+        double tNormalization = tFinalEnergy + tInitialEnergy;
+        double tEnergyViolation = 2. * fabs( (tFinalEnergy / tNormalization) - (tInitialEnergy / tNormalization) )  ;
+
+        if( tEnergyViolation < fLowerLimit )
+        {
+            trajmsg_debug( "stepsize energy increasing stepsize at violation <" << tEnergyViolation << ">" << eom) ;
+            fTimeStep = (1. + fAdjustmentFactorUp) * fTimeStep;
+            aFlag = false;
+            return;
+        }
+        if( tEnergyViolation > fUpperLimit )
+        {
+            trajmsg_debug( "stepsize energy decreasing stepsize at violation <" << tEnergyViolation << ">" << eom );
+            fTimeStep = (1. - fAdjustmentFactorDown) * fTimeStep;
+            aFlag = false;
+            return;
+        }
+
+        double tStepLength = aFinalParticle.GetLength() - anInitialParticle.GetLength();
+        // particle's speed is calculated only when needed since GetVelocity() is a rather expensive operation
+
+        if( tStepLength < fMinLength )
+        {
+            trajmsg_debug( "stepsize energy increasing stepsize at step length <" << tStepLength << ">" << eom) ;
+            fTimeStep = (1. + fAdjustmentFactorUp) * fMinLength / anInitialParticle.GetVelocity().Magnitude();
+            aFlag = false;
+            return;
+        }
+        if( tStepLength > fMaxLength )
+        {
+            trajmsg_debug( "stepsize energy decreasing stepsize at step length <" << tStepLength << ">" << eom) ;
+            fTimeStep = (1. - fAdjustmentFactorDown) * fMaxLength / anInitialParticle.GetVelocity().Magnitude();
+            aFlag = false;
+            return;
+        }
+
+        trajmsg_debug( "stepsize energy keeping stepsize at violation <" << tEnergyViolation << ">" << eom) ;
+        return;
+    }
+
     void KSTrajControlEnergy::Calculate( const KSTrajAdiabaticParticle& /*aParticle*/, double& aValue )
     {
         if ( (fFirstStep == true) || (fTimeStep == 0.) )
         {
             trajmsg_debug( "stepsize energy on first step" << eom );
-            fTimeStep = fInitialStep;;
+            fTimeStep = fInitialStep;
             fFirstStep = false;
+        }
+        else
+        {
+            fTimeStep *= fStepRescale;
         }
 
         trajmsg_debug( "stepsize energy suggesting <" << fTimeStep << ">" << eom );

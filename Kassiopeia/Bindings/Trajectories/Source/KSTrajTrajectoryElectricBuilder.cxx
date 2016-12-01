@@ -12,10 +12,13 @@
 #include "KSTrajTermPropagationBuilder.h"
 #include "KSTrajControlTimeBuilder.h"
 #include "KSTrajControlLengthBuilder.h"
+#include "KSTrajControlBChangeBuilder.h"
 #include "KSRootBuilder.h"
 
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -40,6 +43,7 @@ namespace katrin
         KSTrajTrajectoryElectricBuilder::ComplexElement< KSTrajTermPropagation >( "term_propagation" ) +
         KSTrajTrajectoryElectricBuilder::ComplexElement< KSTrajControlTime >( "control_time" ) +
         KSTrajTrajectoryElectricBuilder::ComplexElement< KSTrajControlLength >( "control_length" ) +
+        KSTrajTrajectoryElectricBuilder::ComplexElement< KSTrajControlBChange >( "control_B_change" ) +
         KSTrajTrajectoryElectricBuilder::Attribute< double >( "piecewise_tolerance" ) +
         KSTrajTrajectoryElectricBuilder::Attribute< unsigned int >( "max_segments" );
 

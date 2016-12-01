@@ -23,7 +23,7 @@ namespace Kassiopeia
                                                      KSParticleQueue& aQueue ) = 0;
 
             //returns true if any of the state variables of aFinalParticle are changed
-            virtual bool ExecutePostStepModifcation( KSParticle& anInitialParticle,
+            virtual bool ExecutePostStepModification( KSParticle& anInitialParticle,
                                                      KSParticle& aFinalParticle,
                                                      KSParticleQueue& aQueue ) = 0;
     };

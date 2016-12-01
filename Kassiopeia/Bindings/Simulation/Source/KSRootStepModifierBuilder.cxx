@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
     template< >
@@ -10,7 +12,7 @@ namespace katrin
     }
 
     STATICINT sKSRootStepModifier =
-            KSRootBuilder::ComplexElement< KSRootStepModifier >( "ks_root_stepmodifier" );
+            KSRootBuilder::ComplexElement< KSRootStepModifier >( "ks_root_step_modifier" );
 
     STATICINT sKSRootStepModifierStructure =
             KSRootStepModifierBuilder::Attribute< string >( "name" ) +

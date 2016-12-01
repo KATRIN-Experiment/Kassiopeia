@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSIntScattering.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -37,20 +37,20 @@ namespace katrin
         }
         if( aContainer->GetName() == "density" )
         {
-            KSIntDensity* tDensityCalculator = KSToolbox::GetInstance()->GetObjectAs< KSIntDensity >( aContainer->AsReference< string >() );
+            KSIntDensity* tDensityCalculator = KToolbox::GetInstance().Get< KSIntDensity >( aContainer->AsReference< std::string >() );
             fObject->SetDensity( tDensityCalculator->Clone() );
             return true;
         }
         if( aContainer->GetName() == "calculator" )
         {
-            KSIntCalculator* tCalculator = KSToolbox::GetInstance()->GetObjectAs< KSIntCalculator >( aContainer->AsReference< string >() );
+            KSIntCalculator* tCalculator = KToolbox::GetInstance().Get< KSIntCalculator >( aContainer->AsReference< std::string >() );
             fObject->AddCalculator( tCalculator );
             return true;
         }
         if( aContainer->GetName() == "calculators" )
         {
-            vector< KSIntCalculator* > aCalculatorVector = KSToolbox::GetInstance()->GetObjectsAs< KSIntCalculator >( aContainer->AsReference< string >() );
-            vector< KSIntCalculator* >::iterator tIt;
+            std::vector< KSIntCalculator* > aCalculatorVector = KToolbox::GetInstance().GetAll< KSIntCalculator >( aContainer->AsReference< std::string >() );
+            std::vector< KSIntCalculator* >::iterator tIt;
             for( tIt = aCalculatorVector.begin(); tIt != aCalculatorVector.end(); tIt++ )
             {
                 fObject->AddCalculator( (*tIt) );

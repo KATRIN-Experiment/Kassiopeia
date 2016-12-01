@@ -11,6 +11,7 @@ using katrin::KConst;
 #include <iostream>
 #include <cmath>
 #include <limits>
+#include <algorithm>
 
 namespace Kassiopeia
 {
@@ -61,8 +62,39 @@ namespace Kassiopeia
         double tMean = tKineticEnergy/fEnergyRequiredPerParticle;
         unsigned int tNParticles = KRandom::GetInstance().Poisson(tMean);
 
-        //energy should be probably be randomly partitioned, not completely equally distributed
-        double tChildEnergy = tKineticEnergy/((double)(tNParticles));
+        std::vector<double> tChildEnergy;
+        if(tNParticles > 1)
+        {
+            //randomly partition energy, not completely equally distributed
+            std::vector<double> tRandomSample;
+
+            tRandomSample.push_back(0);
+            for(unsigned int i=0; i<tNParticles-1; i++)
+            {
+                tRandomSample.push_back(KRandom::GetInstance().Uniform(0.0,1.0));
+            }
+            //order from min to max
+            std::sort(tRandomSample.begin(), tRandomSample.end() );
+
+            for(unsigned int i=0; i<tNParticles; i++)
+            {
+                double e_val = 0;
+                if(i+1 < tNParticles)
+                {
+                    e_val = (tRandomSample[i+1] - tRandomSample[i])*tKineticEnergy;
+                }
+                else
+                {
+                    e_val = (1.0 - tRandomSample[i])*tKineticEnergy;
+                }
+
+                tChildEnergy.push_back( e_val);
+            }
+        }
+        else
+        {
+            if(tNParticles == 1){tChildEnergy.push_back(tKineticEnergy);};
+        }
 
         //figure out the basis directions for the particle ejections
         //we eject them with a diffuse 'Lambertian' distribution
@@ -117,7 +149,7 @@ namespace Kassiopeia
 
                 //dice direction
                 double tAzimuthalAngle = KRandom::GetInstance().Uniform( 0., 2. * KConst::Pi() );
-                double tSinTheta = KRandom::GetInstance().Uniform( 0., 0.99 );
+                double tSinTheta = KRandom::GetInstance().Uniform( 0., 0.5 ); //this is not a true lambertian (has cut-off angle)
                 double tCosTheta = std::sqrt( (1.0 - tSinTheta)*(1.0 + tSinTheta) );
 
                 KThreeVector tDirection;
@@ -131,7 +163,7 @@ namespace Kassiopeia
                 }
 
                 tParticle->SetMomentum(tDirection);
-                tParticle->SetKineticEnergy(tChildEnergy);
+                tParticle->SetKineticEnergy(tChildEnergy[i]);
                 tParticle->SetCurrentSurface(NULL);
                 aQueue.push_back(tParticle);
             }

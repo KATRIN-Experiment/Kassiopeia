@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -21,7 +23,9 @@ namespace katrin
         KSNavMeshedSpaceBuilder::Attribute< double >( "spatial_resolution" ) +
         KSNavMeshedSpaceBuilder::Attribute< unsigned int >( "n_allowed_elements" ) +
         KSNavMeshedSpaceBuilder::Attribute< double >( "absolute_tolerance" ) +
-        KSNavMeshedSpaceBuilder::Attribute< double >( "relative_tolerance" );
+        KSNavMeshedSpaceBuilder::Attribute< double >( "relative_tolerance" ) +
+        KSNavMeshedSpaceBuilder::Attribute< string >( "path" );
+
 
     STATICINT sToolboxKSNavMeshedSpace =
         KSRootBuilder::ComplexElement< KSNavMeshedSpace >( "ksnav_meshed_space" );

@@ -28,10 +28,10 @@ namespace katrin
         }
         if(aContainer->GetName() == "spaces_allowed")
         {
-            vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< string >() );
+            std::vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
             if(tSpaces.size() == 0)
             {
-                genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+                genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">" << eom;
                 return false;
             }
 
@@ -43,10 +43,10 @@ namespace katrin
         }
         if(aContainer->GetName() == "spaces_forbidden")
         {
-            vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< string >() );
+            std::vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
             if(tSpaces.size() == 0)
             {
-                genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+                genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">" << eom;
                 return false;
             }
 

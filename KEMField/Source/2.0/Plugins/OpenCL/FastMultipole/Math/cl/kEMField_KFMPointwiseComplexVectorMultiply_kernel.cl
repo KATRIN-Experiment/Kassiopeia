@@ -1,7 +1,7 @@
 #ifndef KFMPointwiseComplexVectorMultiply_Defined_H
 #define KFMPointwiseComplexVectorMultiply_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 __kernel void
 PointwiseComplexVectorMultiply(const unsigned int array_size,

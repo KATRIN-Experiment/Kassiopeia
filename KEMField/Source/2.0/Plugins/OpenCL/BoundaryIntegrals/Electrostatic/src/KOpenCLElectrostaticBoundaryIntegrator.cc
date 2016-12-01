@@ -9,11 +9,17 @@
 
 namespace KEMField
 {
-  KOpenCLElectrostaticBoundaryIntegrator::KOpenCLElectrostaticBoundaryIntegrator(KOpenCLSurfaceContainer& c) :
-    KOpenCLBoundaryIntegrator<KElectrostaticBasis>(c), fPhiKernel(NULL), fEFieldKernel(NULL), fBufferPhi(NULL), fBufferEField(NULL)
+  KOpenCLElectrostaticBoundaryIntegrator::KOpenCLElectrostaticBoundaryIntegrator(
+		  const KOpenCLElectrostaticBoundaryIntegratorConfig& config,
+		  KOpenCLSurfaceContainer& c) :
+    KOpenCLBoundaryIntegrator<KElectrostaticBasis>(c),
+	fConfig(config),
+	fPhiKernel(NULL), fEFieldKernel(NULL), fEFieldAndPhiKernel(NULL),
+	fBufferPhi(NULL), fBufferEField(NULL), fBufferEFieldAndPhi(NULL)
   {
     std::stringstream options;
     options << GetOpenCLFlags() << " -DKEMFIELD_INTEGRATORFILE_CL=<" << OpenCLFile() <<">";
+    options << fConfig.fOpenCLFlags;
     fOpenCLFlags = options.str();
     ConstructOpenCLKernels();
     AssignBuffers();
@@ -23,9 +29,11 @@ namespace KEMField
   {
     if (fPhiKernel) delete fPhiKernel;
     if (fEFieldKernel) delete fEFieldKernel;
+    if (fEFieldAndPhiKernel) delete fEFieldAndPhiKernel;
 
     if (fBufferPhi) delete fBufferPhi;
     if (fBufferEField) delete fBufferEField;
+    if (fBufferEFieldAndPhi) delete fBufferEFieldAndPhi;
   }
 
   void KOpenCLElectrostaticBoundaryIntegrator::BoundaryVisitor::Visit(KDirichletBoundary& boundary)
@@ -76,19 +84,8 @@ namespace KEMField
 
     // Get name of kernel source file
     std::stringstream clFile;
-    clFile << KOpenCLInterface::GetInstance()->GetKernelPath() << "/kEMField_ElectrostaticBoundaryIntegrals_kernel.cl";
-
-    // if (fVerbose>1)
-    // {
-    //   std::stringstream s;  s<<"Reading source file "
-    //                          <<"\""<<clFile.str()<<"\"...";
-    //   KIOManager::GetInstance()->
-    //     Message("KEDirectFieldSolver",
-    //             "InitializeOpenCLPrimitives",
-    //             s.str(),
-    //             0,
-    //             1);
-    // }
+    clFile << KOpenCLInterface::GetInstance()->GetKernelPath() << "/"
+    		<< fConfig.fOpenCLKernelFile;
 
     // Read kernel source from file
     std::string sourceCode;
@@ -117,10 +114,6 @@ namespace KEMField
     }
     catch (cl::Error error)
     {
-      // int msgPart = 0;
-      // if (fVerbose>1)
-      // 	msgPart = 3;
-
       std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
       std::stringstream s;
       s<<"There was an error compiling the kernels.  Here is the information from the OpenCL C++ API:"<<std::endl;
@@ -129,12 +122,6 @@ namespace KEMField
       s<<"Build Options:\t"<<program.getBuildInfo<CL_PROGRAM_BUILD_OPTIONS>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
       s<<"Build Log:\t "<<program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(KOpenCLInterface::GetInstance()->GetDevice())<<std::endl;
       std::cout<<s.str()<<std::endl;
-      // KOpenCLInterface::GetInstance()->
-      // 	Message("KEDirectFieldSolver",
-      // 		"ConstructOpenCLPrimitives",
-      // 		s.str(),
-      // 		2,
-      // 		msgPart);
     }
 
     #ifdef DEBUG_OPENCL_COMPILER_OUTPUT
@@ -154,6 +141,7 @@ namespace KEMField
     // Make kernel
     fPhiKernel = new cl::Kernel(program, "Potential");
     fEFieldKernel = new cl::Kernel(program, "ElectricField");
+    fEFieldAndPhiKernel = new cl::Kernel(program, "ElectricFieldAndPotential");
 
     // Create memory buffers
     fBufferP = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
@@ -174,11 +162,16 @@ namespace KEMField
     fBufferEField = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 				   CL_MEM_WRITE_ONLY,
 				   sizeof(CL_TYPE4));
+    fBufferEFieldAndPhi = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+				   CL_MEM_WRITE_ONLY,
+				   sizeof(CL_TYPE4));
   }
 
   void KOpenCLElectrostaticBoundaryIntegrator::AssignBuffers() const
   {
     KOpenCLBoundaryIntegrator<KElectrostaticBasis>::AssignBuffers();
+
+    //std::cout << "Analytical Potential      - Workgroup Size: " << fPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
 
     // Set arguments to kernel
     fPhiKernel->setArg(0, *fBufferP);
@@ -186,9 +179,18 @@ namespace KEMField
     fPhiKernel->setArg(2, *fBufferShapeData);
     fPhiKernel->setArg(3, *fBufferPhi);
 
+    //std::cout << "Analytical Electric Field - Workgroup Size: " << fEFieldKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
+
     fEFieldKernel->setArg(0, *fBufferP);
     fEFieldKernel->setArg(1, *fBufferShapeInfo);
     fEFieldKernel->setArg(2, *fBufferShapeData);
     fEFieldKernel->setArg(3, *fBufferEField);
+
+    //std::cout << "Analytical EField and Pot - Workgroup Size: " << fEFieldAndPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
+
+    fEFieldAndPhiKernel->setArg(0, *fBufferP);
+    fEFieldAndPhiKernel->setArg(1, *fBufferShapeInfo);
+    fEFieldAndPhiKernel->setArg(2, *fBufferShapeData);
+    fEFieldAndPhiKernel->setArg(3, *fBufferEFieldAndPhi);
   }
 }

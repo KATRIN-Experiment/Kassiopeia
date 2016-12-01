@@ -144,12 +144,14 @@ namespace KEMField
       fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
       fStreamer >> key;
       for (std::vector<std::string>::iterator it = key.fLabels.begin();it!=key.fLabels.end();++it)
-	if (*it == label)
-	{
-	  value++;
-	  break;
-	}
-	readPoint = key.NextKey();
+      {
+	    if (*it == label){
+	      value++;
+	      break;
+	    }
+	  }
+
+	  readPoint = key.NextKey();
     }
 
     fStreamer.close();

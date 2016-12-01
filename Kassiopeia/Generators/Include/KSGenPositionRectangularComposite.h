@@ -46,7 +46,7 @@ namespace Kassiopeia
             KThreeVector fZAxis;
 
             std::map<CoordinateType, int> fCoordinateMap;
-            vector<pair<CoordinateType,KSGenValue*> > fValues;
+            std::vector<std::pair<CoordinateType,KSGenValue*> > fValues;
 
         protected:
             void InitializeComponent();

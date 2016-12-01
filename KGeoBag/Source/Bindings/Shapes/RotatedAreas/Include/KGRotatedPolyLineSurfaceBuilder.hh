@@ -12,12 +12,12 @@ namespace katrin
     template< >
     inline bool KGRotatedPolyLineSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "rotated_mesh_count" ) )
+        if( anAttribute->GetName() == "rotated_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSurface::RotatedMeshCount );
             return true;
@@ -28,7 +28,7 @@ namespace katrin
     template< >
     inline bool KGRotatedPolyLineSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "poly_line" ) )
+        if( anElement->GetName() == "poly_line" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarPolyLine::CopyFrom );
             return true;

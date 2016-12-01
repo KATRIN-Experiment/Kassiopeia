@@ -3,7 +3,9 @@
 #include "KSGenValueSetBuilder.h"
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueUniformBuilder.h"
+#include "KSGenValueBoltzmannBuilder.h"
 #include "KSGenValueGaussBuilder.h"
+#include "KSGenValueGeneralizedGaussBuilder.h"
 #include "KSRootBuilder.h"
 
 #ifdef Kassiopeia_USE_ROOT
@@ -12,6 +14,8 @@
 #endif
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -27,7 +31,9 @@ namespace katrin
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueSet >( "energy_set" ) +
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueList >( "energy_list" ) +
         KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueUniform >( "energy_uniform" ) +
-        KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueGauss >( "energy_gauss" ) ;
+        KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueBoltzmann >( "energy_boltzmann" ) +
+        KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueGauss >( "energy_gauss" ) +
+        KSGenEnergyCompositeBuilder::ComplexElement< KSGenValueGeneralizedGauss >( "energy_generalized_gauss" ) ;
 
     STATICINT sKSGenEnergyComposite =
         KSRootBuilder::ComplexElement< KSGenEnergyComposite >( "ksgen_energy_composite" );

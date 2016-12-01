@@ -172,6 +172,7 @@
 
     <!-- compute potentialmap along defined 3D mesh -->
     <ksfield_electric_potentialmap_calculator
+        name="calculator1"
         file="TestPotentialmap.vti"
         center="0.0 0.0 0.0"
         length="0.1 0.1 0.1"

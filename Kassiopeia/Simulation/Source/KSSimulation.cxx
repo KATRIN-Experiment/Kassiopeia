@@ -1,5 +1,7 @@
 #include "KSSimulation.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 
@@ -70,7 +72,7 @@ namespace Kassiopeia
 
     void KSSimulation::AddCommand( KSCommand* aCommand )
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             if( aCommand == (*tCommandIt) )
@@ -83,7 +85,7 @@ namespace Kassiopeia
     }
     void KSSimulation::RemoveCommand( KSCommand* aCommand )
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             if( aCommand == (*tCommandIt) )
@@ -96,7 +98,7 @@ namespace Kassiopeia
 
     void KSSimulation::InitializeComponent()
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             (*tCommandIt)->GetParent()->Initialize();
@@ -106,7 +108,7 @@ namespace Kassiopeia
     }
     void KSSimulation::DeinitializeComponent()
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             (*tCommandIt)->GetParent()->Deinitialize();
@@ -116,7 +118,7 @@ namespace Kassiopeia
     }
     void KSSimulation::ActivateComponent()
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             (*tCommandIt)->Activate();
@@ -126,7 +128,7 @@ namespace Kassiopeia
     }
     void KSSimulation::DeactivateComponent()
     {
-        vector< KSCommand* >::iterator tCommandIt;
+        std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
             (*tCommandIt)->Deactivate();

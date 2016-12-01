@@ -1,6 +1,9 @@
 #include "KGDiscreteRotationalMeshBuilder.hh"
 #include "KGDiscreteRotationalMesher.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace KGeoBag
 {
 

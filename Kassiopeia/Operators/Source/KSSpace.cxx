@@ -2,6 +2,8 @@
 #include "KSSurface.h"
 #include "KSSide.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

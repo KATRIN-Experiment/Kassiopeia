@@ -49,12 +49,12 @@ namespace Kassiopeia
 
         public:
             K_REFS( bool, GeneratorFlag )
-            K_REFS( string, GeneratorName )
+            K_REFS( std::string, GeneratorName )
             K_REFS( unsigned int, GeneratorPrimaries )
             K_REFS( double, GeneratorEnergy )
             K_REFS( double, GeneratorMinTime )
             K_REFS( double, GeneratorMaxTime )
-            K_REFS( KThreeVector, GeneratorLocation )
+            K_REFS( KGeoBag::KThreeVector, GeneratorLocation )
             K_REFS( double, GeneratorRadius )
 
             //*****

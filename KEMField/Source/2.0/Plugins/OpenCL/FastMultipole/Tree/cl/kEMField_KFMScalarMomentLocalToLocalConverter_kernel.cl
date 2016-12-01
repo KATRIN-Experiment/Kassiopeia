@@ -1,4 +1,4 @@
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 __kernel void
 ScalarMomentLocalToLocalConverter(const unsigned int array_size,

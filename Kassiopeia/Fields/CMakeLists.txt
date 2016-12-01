@@ -1,23 +1,13 @@
 # header files
 set( FIELDS_HEADER_BASENAMES
+	KSElectricKEMField.h
 	KSFieldsMessage.h
-	KSFieldElectromagnet.h
-	KSFieldElectrostatic.h
-	KSFieldKrylovBEMSolver.h
-	KSFieldMagneticConstant.h
-	KSFieldMagneticDipole.h
-	KSFieldElectricConstant.h
-	KSFieldElectricQuadrupole.h
-	KSFieldMagneticSuperPosition.h
-	KSFieldMagneticRamped.h
-	KSFieldElectricRamped.h
+	KSExampleFields.h
+	KSFieldFinder.h
+    KSMagneticKEMField.h
+
 )
-if( Kassiopeia_USE_VTK )
-	set( FIELDS_HEADER_BASENAMES
-		${FIELDS_HEADER_BASENAMES}
-		KSFieldElectricPotentialmap.h
-	)
-endif( Kassiopeia_USE_VTK )
+
 set( FIELDS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
@@ -27,24 +17,14 @@ endforeach( BASENAME )
 
 # source files
 set( FIELDS_SOURCE_BASENAMES
+    KSElectricKEMField.cxx
 	KSFieldsMessage.cxx
-	KSFieldElectromagnet.cxx
-	KSFieldElectrostatic.cxx
-	KSFieldKrylovBEMSolver.cxx
-	KSFieldMagneticConstant.cxx
-	KSFieldMagneticDipole.cxx
-	KSFieldElectricConstant.cxx
-	KSFieldElectricQuadrupole.cxx
-	KSFieldMagneticSuperPosition.cxx
-	KSFieldMagneticRamped.cxx
-	KSFieldElectricRamped.cxx
+	KSExampleFields.cxx
+	KSFieldFinder.cxx
+	KSMagneticKEMField.cxx
+
 )
-if( Kassiopeia_USE_VTK )
-	set( FIELDS_SOURCE_BASENAMES
-		${FIELDS_SOURCE_BASENAMES}
-		KSFieldElectricPotentialmap.cxx
-	)
-endif( Kassiopeia_USE_VTK )
+
 set( FIELDS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )

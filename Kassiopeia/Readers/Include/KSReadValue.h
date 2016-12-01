@@ -210,8 +210,49 @@ namespace Kassiopeia
     typedef KSReadValue< double > KSDouble;
     typedef KSReadValue< KThreeVector > KSThreeVector;
     typedef KSReadValue< KTwoVector > KSTwoVector;
-    typedef KSReadValue< string > KSString;
+    typedef KSReadValue< std::string > KSString;
 
+    template< >
+    const KSBool KSBool::sZero;
+
+    template< >
+    const KSUChar KSUChar::sZero;
+
+    template< >
+    const KSChar KSChar::sZero;
+
+    template< >
+    const KSUShort KSUShort::sZero;
+
+    template< >
+    const KSShort KSShort::sZero;
+
+    template< >
+    const KSUInt KSUInt::sZero;
+
+    template< >
+    const KSInt KSInt::sZero;
+
+    template< >
+    const KSULong KSULong::sZero;
+
+    template< >
+    const KSLong KSLong::sZero;
+
+    template< >
+    const KSFloat KSFloat::sZero;
+
+    template< >
+    const KSDouble KSDouble::sZero;
+
+    template< >
+    const KSThreeVector KSThreeVector::sZero;
+
+    template< >
+    const KSTwoVector KSTwoVector::sZero;
+
+    template< >
+    const KSString KSString::sZero;
 }
 
 #endif

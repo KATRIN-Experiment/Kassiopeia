@@ -1,0 +1,314 @@
+<!-- this file contains an annotated list of all the magnetic fields available in KEMField 2.0 -->
+
+<geometry>
+
+	<tag name="magnet_tag">
+		<tag name="hoop_tag">
+			<cylinder_surface
+				name="hoop_surface"
+				z1="-1."
+				z2="1."
+				r="4."
+			/>
+		</tag>
+		<tag name="coil_tag">
+			<cylinder_tube_space 
+				name="coil_space"
+				z1="-5."
+				z2="5."
+				r1="3.2"
+				r2="3.5"
+				radial_mesh_count="30"
+			/>
+		</tag>
+	</tag>
+	<tag name="electrode_tag">
+		<tag name="outer_tag">
+			<cylinder_space
+				name="outer_space"
+				z1="-2."
+				z2="2."
+				r="2."
+				radial_mesh_count="1500"
+				radial_mesh_power="1.5"
+				longitudinal_mesh_count="1000"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="128"
+			/>
+		</tag>
+		<tag name="inner_tag">
+			<cylinder_surface
+				name="inner_surface"
+				z1="-1."
+				z2="1."
+				r="1."
+				longitudinal_mesh_count="500"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="128"
+			/>
+		</tag>
+	</tag>
+
+	<space name="assembly">
+		<surface name="hoop" node="hoop_surface"/>
+		<space name="coil" node="coil_space"/>
+		<space name="outer" node="outer_space">
+			<surface name="inner" node="inner_surface"/>
+		</space>
+	</space>
+
+    <axial_mesh name="mesh" surfaces="assembly/@electrode_tag"/> 
+    <electrostatic_dirichlet name="electrode_outer" surfaces="assembly/@outer_tag" value="0."/>
+    <electrostatic_dirichlet name="electrode_inner" surfaces="assembly/@inner_tag" value="-1000."/>
+    <electromagnet name="electromagnet_hoop" surfaces="assembly/@hoop_tag" current="10000"/>
+    <electromagnet name="electromagnet_coil" spaces="assembly/@coil_tag" current="500000"/>
+
+</geometry>
+
+<kemfield>
+	<constant_magnetic_field name="magnetic_constant" field="0. 0. 10."/>
+	<!--
+		description:
+			provides a constant, uniform magnetic field.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			field:
+				the cartesian components of the magnetic field vector in tesla.
+	-->
+
+	<magnetic_dipole_field name="magnetic_dipole" location="0.1 0. 0." moment="0. 0. 10."/>
+	<!--
+		description:
+			provides a perfect dipole magnetic field.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			location:
+				cartesian components of the location of the dipole.
+
+			moment:
+				the components of the dipole moment vector in ampere * meter^2.
+	-->
+	
+	<magnetic_superposition_field
+		name="magnetic_superposition"
+		use_caching="true"
+	>
+		<add_field name="magnetic_constant" enhancement="1.0" />
+		<add_field name="magnetic_dipole" enhancement="1.0" />
+	</magnetic_superposition_field>
+	<!--
+		description:
+			combine an unlimited number of magnetic fields to a superposition field
+			acting like a single magnetic field
+		parameters:
+			name:
+				the name of the superposition field
+			use_caching:
+				store computed values for the magnetic potential, field or gradient
+				in a cache. The next time the same point will be evaluated, the
+				value is already available from the cache.
+				This works only with static fields.
+			add_field:
+				add a magnetic field to the superposition and specify the factor
+				by which it's intensity is scaled
+				name:
+					the name of the field that takes part in the superposition.
+				enhancement:
+					the scale factor of the field for the superposition.
+	-->
+	
+	<ramped_magnetic_field
+		name="magnetic_ramped"
+		root_field="magnetic_dipole"
+		ramping_type="linear"
+		num_cycles="10"
+		ramp_up_delay="-0.5"
+		ramp_down_delay="0.5"
+		ramp_up_time="1.0"
+		ramp_down_time="1.0"
+		time_constant="2.0"
+		time_scaling="1.0"
+	/>
+	<!--
+		description:
+			takes an magnetic field and modulates it with the time according
+			to the selected profile.
+			This field does not consider electrodynamics and just scales the 
+			underlying static field. It is only for sufficiently slowly varying
+			fields. Don't simulate an antenna with it!
+			
+			For details please see the implementation of the different profiles in 
+			the code (the file is KRampedMagneticField.cc).
+		parameters:
+			name:
+				the name of the magnetic field
+			root_field:
+				the name of the magnetic field that is to be varied with time
+			ramping_type:
+				linear, exponential inversion and flipbox are the options
+			num_cycles:
+				how often the ramping up and down cycle is repeated
+			ramp_up_delay:
+				delay before ramping up
+			ramp_down_delay:
+				delay before ramping down af
+			ramp_up_time:
+				time the linear ramp up takes
+			ramp_down_time:
+				time the linear ramp down takes
+			time_constant:
+				time constant for exponential ramping, otherwise unused value
+			time_scaling:
+				scale all times by a factor for quick frequency change
+			
+	-->
+	
+	<induced_azimuthal_electric_field
+		name="induced_azimuthal_electric_field"
+		root_field="magnetic_ramped"
+	/>
+	<!--
+		description:
+			this rather specialized electric field computes the induced electric 
+			field from the changes of the z-component of a ramped magnetic field.
+			Those circular electric field lines around a changing magnet field.
+			I'm not sure what exactly the formula in the code describes! Be careful!
+		
+		parameters:
+			name:
+				name of the electric field
+			root_field:
+				name of the ramped magnetic field from which the electric field is
+				computed
+	-->
+	
+		
+
+	<electromagnet_field
+        name="field_electromagnet"
+        directory="."
+        file="Magnets.kbd"
+        system="assembly"
+        surfaces="assembly/@hoop_tag"
+        spaces="assembly/@coil_tag"
+    >
+    	<integrating_field_solver/>
+    </electromagnet_field>
+    <!--
+    	description:
+    		provides a magnetic field arising from current-bearing elements computed with kemfield as initialized with kgeobag.
+    		to use this field a valid geometry must have been constructed, as is given above.
+    		this field must be equipped with at least one field solver to operate.
+    		see below for examples of field solvers.
+
+		parameters:
+			name:
+				the name of the magnetic field.
+
+			directory:
+				name of directory in which to cache computation.
+
+			file:
+				name of file in which to cache computation.
+
+			system:
+				path to exactly one kgeobag space whose coordinate system the 
+				computation will use.
+
+			surfaces:
+				paths to kgeobag surfaces which are equipped with both a 
+				discretization and electromagnetic properties.
+				
+			spaces:
+				paths to kgeobag surfaces which are equipped with both a 
+				discretization of the boundary and electromagnetic properties.
+	-->
+
+	<!-- field solvers -->
+
+	<electromagnet_field
+        name="field_electromagnet_zonal_harmonic"
+        system="assembly"
+        surfaces="assembly/@hoop_tag"
+        spaces="assembly/@coil_tag"
+    >
+        <zonal_harmonic_field_solver
+            number_of_bifurcations="-1"
+            convergence_ratio=".99"
+            convergence_parameter="1.e-15"
+            proximity_to_sourcepoint="1.e-12"
+            number_of_central_coefficients="500"
+            use_fractional_central_sourcepoint_spacing="false"
+            central_sourcepoint_spacing="2.e-6"
+            central_sourcepoint_start="-3.3e-3"
+            central_sourcepoint_end="3.3e-3"
+            number_of_remote_coefficients="200"
+            remote_sourcepoint_start="-1.e-1"
+            remote_sourcepoint_end="1.e-1"
+        />
+    </electromagnet_field>
+    <!--
+    	description:
+    		uses the zonal harmonic expansion about an axis to compute fields.
+    		only valid if the symmetry parameter is set to axial.
+
+		parameters:
+			number_of_bifurcations:
+				controls the number of times the surface container is recursively split.
+				each split at each level results in an independent zonal harmonic expansion.
+
+			convergence_ratio:
+				an expansion will not be attempted when the distance from the field point to the nearest source point divided by that source point's convergence radius exceeds this ratio.
+
+			convergence_parameter:
+				the series is declared converged when the sum of latest five terms divided by the entire sum is less than this ratio.
+
+			proximity_to_sourcepoint:
+				an expansion will include a single term with no convergence check when the distance from the field point to the nearest source point divided by that source point's convergence radius is less than this ratio.
+
+			number_of_central_coefficients:
+				the number of central coefficients to store per source point.
+
+			use_fractional_central_sourcepoint_spacing:
+				if true, the distance from one source point to the next will be computed using a fraction of the previous source point's convergence radius.
+
+			central_sourcepoint_spacing:
+				in all cases the spacing in meters between central source points will be at least this.
+
+			central_sourcepoint_start:
+				starting z value for the central set of source points.
+
+			central_sourcepoint_end:
+				ending z value for the central set of source points.
+
+			number_of_remote_coefficients:
+				the number of remote coefficients to store per source point.
+
+			remote_source_point_start:
+				starting z value for the remote set of source points.
+
+			remote_source_point_end:
+				ending z value for the remote set of source points.
+	-->
+
+	<electromagnet_field
+        name="field_electromagnet_integrating"
+        system="assembly"
+        surfaces="assembly/@hoop_tag"
+        spaces="assembly/@coil_tag"
+    >
+        <integrating_field_solver/>
+    </electromagnet_field>
+    <!--
+		description:
+			performs a sum over all components to obtain the final field.
+	-->
+
+
+</kemfield>

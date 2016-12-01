@@ -75,7 +75,8 @@ class KFMElectrostaticSparseBoundaryIntegralShellMatrix_OpenCL: KSquareMatrix<ty
                 //determine the opencl flags
                 std::stringstream ss;
                 ss << fOCLSurfaceContainer->GetOpenCLFlags();
-                ss << " -DKEMFIELD_INTEGRATORFILE_CL=<" << "kEMField_ElectrostaticBoundaryIntegrals.cl" <<">";
+                ss << " -DKEMFIELD_INTEGRATORFILE_CL=<" << "kEMField_ElectrostaticNumericBoundaryIntegrals.cl" <<">";
+                ss << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_OPENCL_FASTRWG; /* variable defined via cmake */
                 fBuildFlags = ss.str();
 
                 BuildBlockComputeKernel();

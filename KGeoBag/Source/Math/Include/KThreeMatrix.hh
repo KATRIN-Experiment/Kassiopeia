@@ -14,6 +14,8 @@ namespace KGeoBag
             static const KThreeMatrix sZero;
             static const KThreeMatrix sIdentity;
 
+            static KThreeMatrix OuterProduct( const KThreeVector& vector1, const KThreeVector& vector2 );
+
         public:
             KThreeMatrix();
             virtual ~KThreeMatrix();

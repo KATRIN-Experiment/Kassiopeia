@@ -1,7 +1,7 @@
 # CMakeLists for KEMField/CUDAPlugin
 # Daniel Hilk
 
-option (@PROJECT_NAME@_USE_CUDA "Use CUDA via Runtime API, C++11 enabled by default, requires OpenCL and VTK to be deactivated." OFF)
+option (@PROJECT_NAME@_USE_CUDA "Use CUDA (version 6.0+) via Runtime API, C++11 enabled by default, requires OpenCL and VTK to be deactivated." OFF)
 
 if (@PROJECT_NAME@_USE_CUDA)
 
@@ -17,16 +17,16 @@ if (@PROJECT_NAME@_USE_CUDA)
 
   # option in order to explicitly de-/activate double precision (fp64)
 
-  cmake_dependent_option( CUDA_USE_FP64 "De-/activate double precision (fp64)." ON
+  cmake_dependent_option( @PROJECT_NAME@_CUDA_USE_FP64 "De-/activate double precision (fp64)." ON
   @PROJECT_NAME@_USE_CUDA OFF)
-  mark_as_advanced( CUDA_USE_FP64 )
-  if (CUDA_USE_FP64)
+  mark_as_advanced( @PROJECT_NAME@_CUDA_USE_FP64 )
+  if (@PROJECT_NAME@_CUDA_USE_FP64)
     add_definitions (-DKEMFIELD_USE_DOUBLE_PRECISION)
     add_cflag (KEMFIELD_USE_DOUBLE_PRECISION)
-  endif (CUDA_USE_FP64)
+  endif (@PROJECT_NAME@_CUDA_USE_FP64)
 
 
-  # CUDA Fermi architecture
+  # CUDA compute capability 2.0 for Fermi architecture
 
   cmake_dependent_option( CUDA_USE_FERMI_ARCHITECTURE "Compile the CUDA code for compute capability version 2.0 (Fermi chips)." ON
   @PROJECT_NAME@_USE_CUDA OFF)
@@ -37,7 +37,7 @@ if (@PROJECT_NAME@_USE_CUDA)
   endif (CUDA_USE_FERMI_ARCHITECTURE)
 
 
-  # CUDA Kepler architecture
+  # CUDA compute capability 3.5 for Kepler architecture
  
  cmake_dependent_option( CUDA_USE_KEPLER_ARCHITECTURE "Compile the CUDA code for compute capability version 3.5 (Kepler chips)." OFF
   @PROJECT_NAME@_USE_CUDA OFF)
@@ -65,19 +65,29 @@ if (@PROJECT_NAME@_USE_CUDA)
 
   # selected CUDA device
 
-  set( CUDA_DEVICE_ID "0" CACHE STRING "Default CUDA device ID." )
-  mark_as_advanced( CUDA_DEVICE_ID )
-  add_definitions ( -DKEMFIELD_DEFAULT_GPU_ID=${CUDA_DEVICE_ID} )
-  add_cflag( KEMFIELD_DEFAULT_GPU_ID=${CUDA_DEVICE_ID} )
+  set( @PROJECT_NAME@_CUDA_DEVICE_ID "0" CACHE STRING "Default CUDA device ID." )
+  mark_as_advanced( @PROJECT_NAME@_CUDA_DEVICE_ID )
+  add_definitions ( -DKEMFIELD_DEFAULT_GPU_ID=${@PROJECT_NAME@_CUDA_DEVICE_ID} )
+  add_cflag( KEMFIELD_DEFAULT_GPU_ID=${@PROJECT_NAME@_CUDA_DEVICE_ID} )
 
 
-  # get thread block sizes suggested by CUDA Occupancy API (needs CUDA 6.5)
+  # print thread block sizes suggested by CUDA Occupancy API on terminal output (needs CUDA 6.5)
 
-  set( @PROJECT_NAME@_CUDABLOCKSIZES "0" CACHE STRING "View thread block sizes suggested by CUDA Occupancy API (needs CUDA 6.5)." )
-  mark_as_advanced( @PROJECT_NAME@_CUDABLOCKSIZES )
-  add_definitions ( -DKEMFIELD_OCCUPANCYAPI=${@PROJECT_NAME@_CUDABLOCKSIZES} )
-  add_cflag( KEMFIELD_OCCUPANCYAPI=${@PROJECT_NAME@_CUDABLOCKSIZES} )
-
+  cmake_dependent_option( @PROJECT_NAME@_CUDA_PRINT_BLOCK_SIZES "Print thread block sizes suggested by CUDA Occupancy API on terminal output (needs CUDA 6.5+)." OFF
+    @PROJECT_NAME@_USE_CUDA OFF)
+  mark_as_advanced( @PROJECT_NAME@_CUDA_PRINT_BLOCK_SIZES )
+  
+  if(@PROJECT_NAME@_CUDA_PRINT_BLOCK_SIZES)
+    add_cflag( KEMFIELD_OCCUPANCYAPI )
+  endif(@PROJECT_NAME@_CUDA_PRINT_BLOCK_SIZES)
+  
+  # enable fast evaluation of electrostatic boundary integrals in RWG basis
+  cmake_dependent_option( @PROJECT_NAME@_CUDA_FAST_RWG "If no field point has to be computed on surface: Enable fast evaluation of electrostatic boundary integrals in RWG basis." OFF
+      @PROJECT_NAME@_USE_CUDA OFF)
+  
+  if(@PROJECT_NAME@_CUDA_FAST_RWG)
+    add_cflag( KEMFIELD_CUFASTRWG )
+  endif(@PROJECT_NAME@_CUDA_FAST_RWG)
 
   # determine path of gcc via 'which' command (not from environment variable 'CC'!)
 
@@ -100,8 +110,10 @@ if (@PROJECT_NAME@_USE_CUDA)
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/Math/cu )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/cu )
-  kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/cu )
+  kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/include )
+  kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cu )
+  kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/cu )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/include )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/cu )
   kasper_internal_include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Integrating/include )
@@ -124,7 +136,7 @@ if (@PROJECT_NAME@_USE_CUDA)
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include/KCUDABoundaryIntegralVector.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include/KCUDABoundaryIntegralSolutionVector.hh
     #
-    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KCUDAElectrostaticBoundaryIntegrator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/include/KCUDAElectrostaticNumericBoundaryIntegrator.hh
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/include/KRobinHood_CUDA.hh
     #
@@ -139,9 +151,7 @@ if (@PROJECT_NAME@_USE_CUDA)
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/src/KCUDASurfaceContainer.cu
     #
-    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/src/KCUDAElectrostaticBoundaryIntegrator.cu
-    #
-    ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Integrating/src/KCUDAElectrostaticIntegratingFieldSolver.cu
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/src/KCUDAElectrostaticNumericBoundaryIntegrator.cu
   )
 
 
@@ -149,7 +159,6 @@ if (@PROJECT_NAME@_USE_CUDA)
   target_link_libraries (KEMCUDAPlugin
     KEMCore
     KEMSurfaces
-    KEMIntegratingFieldSolver
     ${CUDA_LIBRARIES}
   )
 

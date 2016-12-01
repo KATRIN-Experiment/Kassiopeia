@@ -10,63 +10,18 @@
 #endif
 
 #include "KSurfaceContainer.hh"
-#include "KSortedSurfaceContainer.hh"
-#include "KDataDisplay.hh"
-
-#include "KBoundaryIntegralMatrix.hh"
-#include "KBoundaryIntegralVector.hh"
-#include "KBoundaryIntegralSolutionVector.hh"
-
-#include "KBiconjugateGradientStabilized.hh"
-#include "KGeneralizedMinimalResidual.hh"
-#include "KPreconditionedBiconjugateGradientStabilized.hh"
-#include "KPreconditionedGeneralizedMinimalResidual.hh"
-#include "KJacobiPreconditioner.hh"
-#include "KImplicitKrylovPreconditioner.hh"
-
-#include "KIterativeKrylovRestartCondition.hh"
-#include "KIterativeKrylovSolver.hh"
-#include "KIterativeKrylovStateWriter.hh"
-#include "KIterativeKrylovStateReader.hh"
-#include "KPreconditionedIterativeKrylovSolver.hh"
-#include "KPreconditionedIterativeKrylovStateWriter.hh"
-#include "KPreconditionedIterativeKrylovStateReader.hh"
-
-#include "KFMBoundaryIntegralMatrix.hh"
-#include "KFMDenseBoundaryIntegralMatrix.hh"
-
-#include "KFMDenseBlockSparseMatrix.hh"
-#include "KFMSparseBoundaryIntegralMatrix_BlockCompressedRow.hh"
-
-#include "KFMElectrostaticBoundaryIntegrator.hh"
-#include "KFMElectrostaticBoundaryIntegratorEngine_SingleThread.hh"
-
-#include "KFMElectrostaticTree.hh"
-#include "KFMElectrostaticParameters.hh"
-#include "KFMElectrostaticTreeConstructor.hh"
-
-#ifdef KEMFIELD_USE_OPENCL
-#include "KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL.hh"
-#endif
 
 #ifdef KEMFIELD_USE_VTK
 #include "KVTKResidualGraph.hh"
 #include "KVTKIterationPlotter.hh"
 #endif
 
-
-#ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #include "KFMDenseBlockSparseMatrix_MPI.hh"
-    #include "KFMElectrostaticBoundaryIntegrator_MPI.hh"
-    #include "KGeneralizedMinimalResidual_MPI.hh"
-    #include "KPreconditionedGeneralizedMinimalResidual_MPI.hh"
-#endif
-
 #include "KSAStructuredASCIIHeaders.hh"
 
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration.hh"
-#include "KFMElectrostaticParametersConfiguration.hh"
+//#include "KFMElectrostaticParametersConfiguration.hh"
+#include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticTypes.hh"
 
 namespace KEMField
 {
@@ -89,45 +44,6 @@ namespace KEMField
 class KFMElectrostaticFastMultipoleBoundaryValueSolver
 {
     public:
-        //whole bunch of typedefs to simply which objects are constructed
-        #ifdef KEMFIELD_USE_OPENCL
-            #ifdef KEMFIELD_USE_MPI //mpi+opencl solver engines
-                //#pragma message("Using MPI+OpenCL")
-                typedef KFMElectrostaticBoundaryIntegrator_MPI<KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL>
-                FastMultipoleEBI;
-                typedef KFMSparseBoundaryIntegralMatrix_BlockCompressedRow<KFMElectrostaticNodeObjects,
-                    FastMultipoleEBI, KFMDenseBlockSparseMatrix_MPI<FastMultipoleEBI::ValueType> >
-                FastMultipoleSparseMatrix;
-            #else //mpi not enabled, default to single threaded opencl
-                //#pragma message("Using OpenCL only")
-                typedef KFMElectrostaticBoundaryIntegrator<KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL>
-                FastMultipoleEBI;
-                typedef KFMSparseBoundaryIntegralMatrix_BlockCompressedRow<KFMElectrostaticNodeObjects,
-                    FastMultipoleEBI, KFMDenseBlockSparseMatrix<FastMultipoleEBI::ValueType> >
-                FastMultipoleSparseMatrix;
-            #endif
-        #else //opencl not enabled, default to mpi/single threaded only
-            #if KEMFIELD_USE_MPI
-                //#pragma message("Using MPI Only")
-                typedef KFMElectrostaticBoundaryIntegrator_MPI<KFMElectrostaticBoundaryIntegratorEngine_SingleThread>
-                FastMultipoleEBI;
-                typedef KFMSparseBoundaryIntegralMatrix_BlockCompressedRow<KFMElectrostaticNodeObjects,
-                    FastMultipoleEBI, KFMDenseBlockSparseMatrix_MPI<FastMultipoleEBI::ValueType> >
-                FastMultipoleSparseMatrix;
-            #else //nothing enabled, single threaded only
-                //#pragma message("Using single thread")
-                typedef KFMElectrostaticBoundaryIntegrator<KFMElectrostaticBoundaryIntegratorEngine_SingleThread>
-                FastMultipoleEBI;
-                typedef KFMSparseBoundaryIntegralMatrix_BlockCompressedRow<KFMElectrostaticNodeObjects,
-                    FastMultipoleEBI, KFMDenseBlockSparseMatrix<FastMultipoleEBI::ValueType> >
-                FastMultipoleSparseMatrix;
-            #endif
-        #endif
-
-        typedef KFMDenseBoundaryIntegralMatrix<FastMultipoleEBI>
-        FastMultipoleDenseMatrix;
-        typedef KFMBoundaryIntegralMatrix< FastMultipoleDenseMatrix, FastMultipoleSparseMatrix>
-        FastMultipoleMatrix;
 
         KFMElectrostaticFastMultipoleBoundaryValueSolver();
         virtual ~KFMElectrostaticFastMultipoleBoundaryValueSolver();
@@ -145,6 +61,10 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
         //ability to set independent tree parameters for the preconditioner
         //only used in the case where the preconditioner type is independent_implicit_krylov
         void SetPreconditionerElectrostaticParameters(KFMElectrostaticParameters params){fPreconditionerParameters = params;};
+
+        void SetDirectIntegrator( const KElectrostaticBoundaryIntegrator& integrator) {
+        	fDirectIntegrator = integrator;
+        }
 
         //relative tolerance before convergence is reached
         void SetTolerance(double tol){fSolverTolerance = tol;};
@@ -211,6 +131,7 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
 
         KFMElectrostaticParameters fSolverParameters;
         KFMElectrostaticParameters fPreconditionerParameters;
+        KElectrostaticBoundaryIntegrator fDirectIntegrator;
         bool fHaveRecievedSolverParameters;
 
         std::string fSolverName;
@@ -236,6 +157,11 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
 
         //determine which solver type to use
         unsigned int DetermineSolverType();
+
+        //generate Matrix
+        KSmartPointer<KFMElectrostaticTypes::FastMultipoleMatrix> CreateMatrix(
+        		const KSurfaceContainer& surfaceContainer,
+				KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>) const;
 
         //profiling
         #ifdef KEMFIELD_USE_REALTIME_CLOCK

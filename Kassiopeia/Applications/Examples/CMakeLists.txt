@@ -1,7 +1,20 @@
 set( APPLICATIONS_EXAMPLES_BASENAMES
 	QuadrupoleTrapAnalysis
 )
-set( APPLICATIONS_EXAMPLES_LIBRARIES
+set( APPLICATIONS_EXAMPLES_LIBRARIES )
+
+if( Kassiopeia_USE_ROOT )
+list( APPEND APPLICATIONS_EXAMPLES_BASENAMES
+        TrackMagneticTransitionCheck
+        DipoleTrapComparison
+        )
+
+list( APPEND APPLICATIONS_EXAMPLES_LIBRARIES
+        ${ROOT_LIBRARIES}
+)
+endif( Kassiopeia_USE_ROOT )
+
+list( APPEND APPLICATIONS_EXAMPLES_LIBRARIES
     ${Kommon_LIBRARIES}
     ${KGeoBag_LIBRARIES}
     ${KEMField_LIBRARIES}
