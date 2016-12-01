@@ -78,6 +78,7 @@ target_link_libraries( KassiopeiaVisualization
     ${Kommon_LIBRARIES}
     ${Kommon_Vtk_LIBRARIES}
     ${KGeoBag_LIBRARIES}
+    KassiopeiaFields
     KassiopeiaUtility
     KassiopeiaObjects
     KassiopeiaOperators
