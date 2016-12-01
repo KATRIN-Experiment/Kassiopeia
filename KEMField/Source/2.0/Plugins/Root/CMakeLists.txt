@@ -21,6 +21,7 @@ if (@PROJECT_NAME@_USE_ROOT)
 
   add_library (KEMRootPlugin SHARED ${KEMROOT_SOURCEFILES})
   target_link_libraries (KEMRootPlugin KEMVisualization
+    KEMMath KEMCore ${Kommon_LIBRARIES} ${GSL_LIBRARIES}
     ${ROOT_LIBRARIES} )
 
   kasper_install_headers (${KEMROOT_HEADERFILES})

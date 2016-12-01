@@ -36,6 +36,11 @@ set (FIELDSOLVER_ELECTRIC_LINK_LIBRARIES
     KEMZHGenerator
     KFMElectrostatics
     KFMInterfaceFieldSolvers
+    KEMHashGenerator 
+    KEMCore
+    KEMFieldElectricBoundaryIntegrators 
+    KEMElectrostaticBoundaryIntegrals
+    KEMFieldExceptions
 )
 
 if (@PROJECT_NAME@_USE_OPENCL)

@@ -33,6 +33,13 @@ endforeach( BASENAME )
 set (FIELDSOLVER_MAGNETIC_LINK_LIBRARIES
     KEMElectromagnets
     KEMZHSolver
+    KEMHashGenerator 
+    KEMCore
+    KEMFileManipulation 
+    KEMIO 
+    KEMStructuredASCII 
+    ${GSL_LIBRARIES} 
+    ${OPENCL_LIBRARIES}
 )
 
 # library
