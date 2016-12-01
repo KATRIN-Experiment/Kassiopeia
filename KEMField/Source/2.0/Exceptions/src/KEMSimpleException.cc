@@ -17,11 +17,11 @@ KEMSimpleException::KEMSimpleException(
 {
 }
 
-KEMSimpleException::~KEMSimpleException() _GLIBCXX_USE_NOEXCEPT
+KEMSimpleException::~KEMSimpleException() noexcept 
 {
 }
 
-const char* KEMSimpleException::what() const _GLIBCXX_USE_NOEXCEPT
+const char* KEMSimpleException::what() const noexcept
 {
 	return fInformation.c_str();
 }

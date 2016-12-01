@@ -17,9 +17,9 @@ class KEMSimpleException : public std::exception
 {
 public:
 	KEMSimpleException(std::string information);
-	~KEMSimpleException() _GLIBCXX_USE_NOEXCEPT;
+	~KEMSimpleException() noexcept;
 
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const noexcept;
 
 private:
 	std::string fInformation;

@@ -19,11 +19,11 @@ KKeyNotFoundException::KKeyNotFoundException(
 {
 }
 
-KKeyNotFoundException::~KKeyNotFoundException() _GLIBCXX_USE_NOEXCEPT
+KKeyNotFoundException::~KKeyNotFoundException() noexcept
 {
 }
 
-const char* KKeyNotFoundException::what() const _GLIBCXX_USE_NOEXCEPT
+const char* KKeyNotFoundException::what() const noexcept
 {
 	switch(fErrorCode) {
 	case noEntry:
