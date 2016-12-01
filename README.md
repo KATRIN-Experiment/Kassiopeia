@@ -14,7 +14,8 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
             > cd build
 
     1.5. Consider setting important environmental variables now.
-        Selecting a specific compile to be configured by CMake is done for example by
+        Selecting a specific compiler to be configured 
+        by CMake is done for example by
             > export CXX=clang++
             > export CC=clang
         to use the Clang/LLVM compiler, or
@@ -25,34 +26,40 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
     2. Run cmake (or ccmake, or cmake-gui, if you prefer):
             > cmake ..
 
-    2.5. If applicable, make any changes you need to the configuration, and (re)generate the makefiles.
-        e.g. You may want to change the install prefix (NOTE: most users will probably want to do this).
-        The default is <Source-Directory>/install.
-        If you're not doing a general install for your system, or if you just want to use a different location,
-        you should change CMAKE_INSTALL_PREFIX to your desired location.
-        Note the CMAKE_BUILD_TYPE. If you do not plan to debug kasper applications, 'Release' will give you
-        the best execution performance.
-        If you use one of the GUI variants (ccmake or cmake-gui), you can just go through a list of all the
-        available build options. Most options also have a short description.
-        Note that some variables have dependencies (e.g. BUILD_KASSIOPEIA will also enable BUILD_KEMFIELD).
+    2.5. If applicable, make any changes you need to the configuration, 
+         and (re)generate the makefiles. e.g. You may want to change the 
+         install prefix (NOTE: most users will probably want to do this).
+         The default is <Source-Directory>/install. If you're not doing 
+         a general install for your system, or if you just want to use 
+         a different location, you should change CMAKE_INSTALL_PREFIX 
+         to your desired location. Note the CMAKE_BUILD_TYPE. 
+         If you do not plan to debug kasper applications, 
+         'Release' will give you the best execution performance.
+         If you use one of the GUI variants (ccmake or cmake-gui), 
+         you can just go through a list of all the available build options. 
+         Most options also have a short description. Note that some variables 
+         have dependencies (e.g. BUILD_KASSIOPEIA will also enable BUILD_KEMFIELD).
 
     3. Then type
             > make
-        to start the build process. This can take some time, depending on the modules you activated in CMake.
-        If you have more than one CPU core on your system, you can build several files in parallel:
+        to start the build process. This can take some time, 
+        depending on the modules you activated in CMake.
+        If you have more than one CPU core on your system, 
+        you can build several files in parallel:
             > make -j2
-        Make sure to keep the number passed to 'make' smaller than the number of actual CPU cores.
+        Make sure to keep the number passed to 'make' smaller 
+        than the number of actual CPU cores.
 
     4. Install the executables and libraries with
             > make install
-        Executables are installed in the bin/ directory, and libraries are installed in the lib/ directory.
+        Executables are installed in the bin/ directory, 
+        and libraries are installed in the lib/ directory.
 
     5. Include kasperenv.sh in your .bashrc with 
             > source /path/to/Kasper/install/bin/kasperenv.sh 
-       This script adds the bin/ directory to your $PATH so you can call executables directly from the commandline.
-       Furthermore this sets the $KASPERSYS environment variable. This step is very important if you use 
-       Katrin specific configurations or Geometry. These configurations use the $KASPERSYS variable to find other
-       files.
+       This script adds the bin/ directory to your $PATH so you 
+       can call executables directly from the commandline.
+       Furthermore this sets the $KASPERSYS environment variable.       
 
 --------------------------------------------------
  System requirements:
@@ -90,8 +97,9 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 
     1. Documentation distributed with Kasper
         A. This README file
-        B. The Kasper Documentation Center is an HTML page that will lead you to all of the documentation that is
-            included in the Kasper distribution:
+        B. The Kasper Documentation Center is an HTML page that will 
+           lead you to all of the documentation that is included 
+           in the Kasper distribution:
                  http://katrin-experiment.github.io/Kassiopeia/index.html
 
 
