@@ -24,6 +24,6 @@ set( KOMMON_VTK_SOURCE_FILENAMES
 kasper_install_headers( ${KOMMON_VTK_HEADER_FILENAMES} )
 
 add_library( KommonVtk SHARED ${KOMMON_VTK_SOURCE_FILENAMES} )
-target_link_libraries( KommonVtk ${VTK_LIBRARIES} )
+target_link_libraries( KommonVtk ${VTK_LIBRARIES} Kommon )
 kasper_install_libraries( KommonVtk )
 

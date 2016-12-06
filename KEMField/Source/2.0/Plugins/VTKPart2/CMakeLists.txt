@@ -47,6 +47,9 @@ endif( @PROJECT_NAME@_USE_VTK )
 if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG )
       list( APPEND VTK-PART2_LINK_LIBRARIES
           ${KGEOBAG_LIBRARIES}
+	  KGeoBagMath
+	  KGeoBagCore
+	  Kommon
           ${VTK_LIBRARIES}
           
       )

@@ -80,16 +80,16 @@ if( KASPER_USE_TBB )
     add_subdirectory( TBB )
 endif()
 
-# a distinct shared library "KommonVtk" is built here!
-if( KASPER_USE_VTK )
-	add_subdirectory( Vtk )
-endif()
-
 kasper_include_default_dirs()
 kasper_install_headers( ${KOMMON_HEADER_FILES} )
 
 add_library( Kommon SHARED ${KOMMON_SOURCE_FILES} )
 target_link_libraries( Kommon ${EXTERNAL_LIBRARIES} )
 kasper_install_libraries( Kommon )
+
+# a distinct shared library "KommonVtk" is built here!
+if( KASPER_USE_VTK )
+        add_subdirectory( Vtk )
+endif()
 
 kasper_install_module()
