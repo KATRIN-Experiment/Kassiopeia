@@ -88,6 +88,23 @@ namespace Kassiopeia
         }
     }
 
+    void KSTrajInterpolatorHermite::GetInterpolate(double aTime,
+            const KSTrajAdiabaticIntegrator& anIntegrator,
+            const KSTrajAdiabaticDifferentiator& aDifferentiator,
+            const KSTrajAdiabaticParticle& anInitialParticle,
+            const KSTrajAdiabaticParticle& aFinalParticle,
+            const double& aTimeStep,
+            KSTrajAdiabaticParticle& anIntermediateParticle ) const
+    {
+// This is a routine to call the interpolater from a step modifier for Project 8.
+
+
+    	KSTrajInterpolatorHermite::Interpolate(aTime, anIntegrator, aDifferentiator, anInitialParticle, aFinalParticle, aTimeStep, anIntermediateParticle);
+
+    }
+
+
+
     void KSTrajInterpolatorHermite::Interpolate(double aTime,
                                                 const KSTrajAdiabaticIntegrator& anIntegrator,
                                                 const KSTrajAdiabaticDifferentiator& aDifferentiator,
@@ -132,9 +149,14 @@ namespace Kassiopeia
                 CubicHermite(tFraction, h30, h31, h32, h33);
 
                 //retrieve the first derivative evaluation from the integrator
+
                 KSTrajAdiabaticDerivative initialDerivative;
                 initialDerivative = 0.0;
-                bool isValid = anIntegrator.GetInitialDerivative(initialDerivative);
+//                bool isValid = anIntegrator.GetInitialDerivative(initialDerivative);
+
+            	bool isValid = true;  // Project 8 edit
+
+
                 if(!isValid)
                 {
                     aDifferentiator.Differentiate(anInitialParticle.GetTime(), anInitialParticle, initialDerivative);
@@ -143,7 +165,8 @@ namespace Kassiopeia
                 //retrieve the final derivative evaluation from the integrator
                 KSTrajAdiabaticDerivative finalDerivative;
                 finalDerivative = 0.0;
-                isValid = anIntegrator.GetFinalDerivative(finalDerivative);
+//                isValid = anIntegrator.GetFinalDerivative(finalDerivative);
+                isValid = true;  // Project 8 edit
                 if(!isValid)
                 {
                     aDifferentiator.Differentiate(aFinalParticle.GetTime(), aFinalParticle, finalDerivative);
@@ -153,6 +176,7 @@ namespace Kassiopeia
                 anIntermediateParticle = h30*anInitialParticle + h31*tDeltaTime*initialDerivative + h32*tDeltaTime*finalDerivative + h33*aFinalParticle;
                 anIntermediateParticle[0] = tInterpolatedTime; //explicitly set the time variable
             }
+
 
             //interpolate alpha and beta linearly
             //(leaving this unchanged from fast interpolator, may need to improve this)
