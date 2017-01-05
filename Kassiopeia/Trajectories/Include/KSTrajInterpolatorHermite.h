@@ -26,14 +26,6 @@ namespace Kassiopeia
             virtual ~KSTrajInterpolatorHermite();
 
         public:
-            void GetInterpolate(double aTime,
-                    const KSTrajAdiabaticIntegrator& anIntegrator,
-                    const KSTrajAdiabaticDifferentiator& aDifferentiator,
-                    const KSTrajAdiabaticParticle& anInitialParticle,
-                    const KSTrajAdiabaticParticle& aFinalParticle,
-                    const double& aTimeStep,
-                    KSTrajAdiabaticParticle& anIntermediateParticle ) const;
-
 
             virtual void Interpolate(double aTime, const KSTrajExactIntegrator& anIntegrator, const KSTrajExactDifferentiator& aDifferentiator, const KSTrajExactParticle& anInitialParticle, const KSTrajExactParticle& aFinalParticle, const double& aTimeStep, KSTrajExactParticle& anIntermediateParticle ) const;
 
