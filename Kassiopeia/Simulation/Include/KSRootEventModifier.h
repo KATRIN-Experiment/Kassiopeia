@@ -25,6 +25,7 @@ namespace Kassiopeia
         //**********
 
     public:
+
         bool ExecutePreEventModification( KSEvent& anEvent );
         bool ExecutePostEventModification( KSEvent& anEvent );
 
@@ -45,6 +46,7 @@ namespace Kassiopeia
         //******
 
     public:
+
         void SetEvent( KSEvent* anEvent );
 
         bool ExecutePreEventModification();
@@ -54,7 +56,6 @@ namespace Kassiopeia
         virtual void PushDeupdateComponent();
 
     private:
-
         KSEvent* fEvent;
     };
 

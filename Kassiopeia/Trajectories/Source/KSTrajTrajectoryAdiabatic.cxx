@@ -52,6 +52,8 @@ namespace Kassiopeia
     {
     }
 
+
+
     void KSTrajTrajectoryAdiabatic::SetIntegrator( KSTrajAdiabaticIntegrator* anIntegrator )
     {
         if( fIntegrator == NULL )
@@ -62,6 +64,7 @@ namespace Kassiopeia
         trajmsg( eError ) << "cannot set integrator in <" << this->GetName() << "> with <" << anIntegrator << ">" << eom;
         return;
     }
+
     void KSTrajTrajectoryAdiabatic::ClearIntegrator( KSTrajAdiabaticIntegrator* anIntegrator )
     {
         if( fIntegrator == anIntegrator )

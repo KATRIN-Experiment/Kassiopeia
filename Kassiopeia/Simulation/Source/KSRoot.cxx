@@ -1,3 +1,6 @@
+#include "LMCGlobalsDeclaration.hh"  // pls addition
+#include "LMCGlobalsDefinition.hh"  // pls addition
+
 #include "KSRoot.h"
 #include "KSRunMessage.h"
 #include "KSEventMessage.h"
@@ -262,9 +265,6 @@ namespace Kassiopeia
     }
     KSRoot::~KSRoot()
     {
-        /*
-         * KToolbox takes care of destruction
-         */
     }
 
     void KSRoot::Execute( KSSimulation* aSimulation )
@@ -379,6 +379,42 @@ namespace Kassiopeia
         return;
     }
 
+
+
+    void WakeAfterEvent(unsigned TotalEvents, unsigned EventsSoFar)
+    {
+    	fEventInProgress = false;
+        if( TotalEvents == EventsSoFar-1 ) 
+          {
+          fRunInProgress = false;
+          fKassReadyCondition.notify_one();
+          }
+        fDigitizerCondition.notify_one();  // unlock
+        printf("Kass is waking after event\n");
+        return;
+    }
+
+
+
+    bool ReceivedEventStartCondition()
+    {        
+      fKassEventReady = true;
+      fDigitizerCondition.notify_one();  // unlock if still locked.                            
+      if( fWaitBeforeEvent )
+	{
+
+    	fKassReadyCondition.notify_one();
+        std::unique_lock< std::mutex >tLock( fMutex );
+        fPreEventCondition.wait( tLock );
+        fKassEventReady = false;
+        t_old = 0.;  // reset time on digitizer.
+        return true;
+    }
+    return true; // check this.  should return true if no wait.
+    }
+
+
+
     void KSRoot::ExecuteRun()
     {
         // set random seed
@@ -423,7 +459,16 @@ namespace Kassiopeia
             fEvent->ParentRunId() = fRun->GetRunId();
 
             // execute event
+            printf("Kass is waiting for event trigger.\n");
+            if (ReceivedEventStartCondition())
+            {
+//            printf("testvar is %f\n", testvar);  // pls
+            printf("Kass got the event trigger\n"); //getchar(); // pls
+            }
+
             ExecuteEvent();
+
+            WakeAfterEvent(fRun->GetTotalEvents(), fSimulation->GetEvents()); // pls
 
             // update run
             fRun->TotalEvents() += 1;
@@ -451,7 +496,6 @@ namespace Kassiopeia
 
         // send report
         runmsg( eNormal ) << "...run " << fRun->GetRunId() << " complete" << eom;
-
         fStopRunSignal = false;
         return;
     }
@@ -478,6 +522,9 @@ namespace Kassiopeia
 
         // generate primaries
         fRootGenerator->ExecuteGeneration();
+
+        // execute post-step modification
+        fRootEventModifier->ExecutePreEventModification();
 
         // send report
         eventmsg( eNormal ) << "processing event " << fEvent->GetEventId() << " <" << fEvent->GetGeneratorName() << ">..." << eom;
@@ -508,7 +555,6 @@ namespace Kassiopeia
             delete tParticle;
             fEvent->ParticleQueue().pop_front();
 
-            // execute a track
             ExecuteTrack();
 
             // move particles in track queue to event queue
@@ -551,6 +597,7 @@ namespace Kassiopeia
 
     void KSRoot::ExecuteTrack()
     {
+
         // reset track
         fTrack->TrackId() = fTrackIndex;
         fTrack->TotalSteps() = 0;
@@ -621,6 +668,7 @@ namespace Kassiopeia
                 fTrack->DiscreteEnergyChange() += fStep->DiscreteEnergyChange();
                 fTrack->DiscreteMomentumChange() += fStep->DiscreteMomentumChange();
                 fTrack->DiscreteSecondaries() += fStep->DiscreteSecondaries();
+
             }
         }
 
@@ -693,15 +741,17 @@ namespace Kassiopeia
         fStep->SurfaceNavigationFlag() = false;
 
         // send report
+	/*
         if( fStep->GetStepId() % fSimulation->GetStepReportIteration() == 0 )
         {
-            stepmsg( eNormal ) << "processing step " << fStep->GetStepId() << "... (";
-            stepmsg << "z = " << fStep->InitialParticle().GetPosition().Z() << ", ";
+	              stepmsg( eNormal ) << "processing step " << fStep->GetStepId() << "... (";
+	              stepmsg << "z = " << fStep->InitialParticle().GetPosition().Z() << ", ";
             stepmsg << "r = " << fStep->InitialParticle().GetPosition().Perp() << ", ";
             stepmsg << "k = " << fStep->InitialParticle().GetKineticEnergy_eV() << ", ";
             stepmsg << "e = " << fStep->InitialParticle().GetKineticEnergy_eV() + (fStep->InitialParticle().GetCharge() / KConst::Q()) * fStep->InitialParticle().GetElectricPotential();
             stepmsg << ")" << reom;
         }
+	*/
 
         // debug spritz
         stepmsg_debug( "processing step " << fStep->GetStepId() << eom )

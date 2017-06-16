@@ -51,6 +51,7 @@ namespace Kassiopeia
         public:
             K_REFS( std::string, TerminatorName )
             K_REFS( bool, TerminatorFlag )
+            K_REFS( bool, PauseFlag ); // pls addition.
 
             //**********
             //trajectory
