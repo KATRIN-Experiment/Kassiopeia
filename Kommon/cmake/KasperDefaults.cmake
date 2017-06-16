@@ -9,9 +9,8 @@ endmacro(set_path)
 include(CMakeDependentOption)
 include(MacroParseArguments)
 
-cmake_policy( SET CMP0011 NEW )
+if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
 
-if( "${Kasper_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}" )
     set(STANDALONE true)
 
     # use this section to modifiy initial values of builtin CMAKE variables
@@ -177,7 +176,7 @@ macro(kasper_find_module NAME)
         set( VERSION "0" )
     endif()
 
-    find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE HINTS ${Kasper_BINARY_DIR}/${NAME} )
+    find_package( ${NAME} ${VERSION} REQUIRED NO_MODULE )
     #message("${NAME}_INCLUDE_DIRS: ${${NAME}_INCLUDE_DIRS}")
     kasper_internal_include_directories( ${${NAME}_INCLUDE_DIRS} )
     #kasper_external_include_directories( ${${NAME}_INCLUDE_DIRS} )

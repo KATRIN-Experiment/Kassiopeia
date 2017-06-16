@@ -1,6 +1,5 @@
 # header files
 set( OPERATORS_HEADER_BASENAMES
-    KSEventModifier.h
 	KSOperatorsMessage.h
 	KSParticle.h
 	KSParticleFactory.h
@@ -31,7 +30,6 @@ endforeach( BASENAME )
 
 # source files
 set( OPERATORS_SOURCE_BASENAMES
-    KSEventModifier.cxx
 	KSOperatorsMessage.cxx
 	KSParticle.cxx
 	KSParticleFactory.cxx
