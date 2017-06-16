@@ -41,21 +41,33 @@ cmake_dependent_option (@PROJECT_NAME@_OPENCL_INTERNAL_1_1 "Use internally packa
   @PROJECT_NAME@_USE_OPENCL OFF)
 mark_as_advanced(FORCE @PROJECT_NAME@_OPENCL_INTERNAL_1_1)
 if (@PROJECT_NAME@_OPENCL_INTERNAL_1_1)
-  set (@PROJECT_NAME@_OPENCL_CFLAGS ${@PROJECT_NAME@_OPENCL_CFLAGS} -isystem\"${CMAKE_SOURCE_DIR}/@PROJECT_NAME@/opencl/1.1\")
+  set (@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/@PROJECT_NAME@/opencl/1.1\")
+  string (REPLACE "\"" "" @PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_VAR ${@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_STR} )
+  set (@PROJECT_NAME@_OPENCL_CFLAGS ${@PROJECT_NAME@_OPENCL_CFLAGS} -isystem ${@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_VAR})
 endif (@PROJECT_NAME@_OPENCL_INTERNAL_1_1)
 
 cmake_dependent_option (@PROJECT_NAME@_OPENCL_INTERNAL_1_2 "Use internally packaged OpenCL 1.2 headers" OFF
   @PROJECT_NAME@_USE_OPENCL OFF)
 mark_as_advanced(FORCE @PROJECT_NAME@_OPENCL_INTERNAL_1_2)
 if (@PROJECT_NAME@_OPENCL_INTERNAL_1_2)
-  set (@PROJECT_NAME@_OPENCL_CFLAGS ${@PROJECT_NAME@_OPENCL_CFLAGS} -isystem\"${CMAKE_SOURCE_DIR}/@PROJECT_NAME@/opencl/1.2\")
+    set (@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/@PROJECT_NAME@/opencl/1.2\")
+    string (REPLACE "\"" "" @PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_VAR ${@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_STR} )
+  set (@PROJECT_NAME@_OPENCL_CFLAGS ${@PROJECT_NAME@_OPENCL_CFLAGS} -isystem ${@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_VAR})
 endif (@PROJECT_NAME@_OPENCL_INTERNAL_1_2)
+
+set(KEMFIELD_OPENCL_FASTRWG "FALSE" CACHE STRING "If no field point has to be computed on surface: Enable (=1) fast evaluation of electrostatic boundary integrals in RWG basis (0=disabled).")
+mark_as_advanced(FORCE KEMFIELD_OPENCL_FASTRWG)
+add_cflag(KEMFIELD_OPENCL_FASTRWG)
 
 option (@PROJECT_NAME@_USE_OPENCL "Use OpenCL via C++ wrapper API, requires CUDA to be deactivated." OFF)
 if (@PROJECT_NAME@_USE_OPENCL)
 
   # deactivate CUDA because linking against two APIs can lead to program compilation problems
   set( KEMField_USE_CUDA OFF CACHE BOOL "(Required)" FORCE)
+
+  # force deactivation of FFTW because it permutes FFT outputs in a different way
+  # than the native FFT, which leades to incorrect fast multipole response functions
+  set( KEMField_USE_FFTW OFF CACHE BOOL "(Required)" FORCE)
 
   find_package (OpenCL REQUIRED)
 
@@ -98,7 +110,7 @@ if (@PROJECT_NAME@_USE_OPENCL)
   endif (APPLE)
 
   execute_process(COMMAND ./GenerateOpenCLHeader
-    OUTPUT_FILE ${CMAKE_BINARY_DIR}/@PROJECT_NAME@/kEMField_defines.h
+    OUTPUT_FILE ${CMAKE_BINARY_DIR}/@PROJECT_NAME@/kEMField_opencl_defines.h
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     RESULT_VARIABLE USE_DOUBLE_PRECISION_GPU)
 
@@ -119,6 +131,8 @@ if (@PROJECT_NAME@_USE_OPENCL)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include)
+  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/include)
+  kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Integrating/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FastMultipole/Electrostatics/include)
@@ -142,6 +156,9 @@ if (@PROJECT_NAME@_USE_OPENCL)
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/include/KOpenCLBoundaryIntegralSolutionVector.hh
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KOpenCLElectrostaticBoundaryIntegrator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/include/KOpenCLElectrostaticBoundaryIntegratorFactory.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/include/KOpenCLElectrostaticNumericBoundaryIntegrator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/include/KOpenCLElectrostaticRWGBoundaryIntegrator.hh
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/include/KGaussSeidel_OpenCL.hh
     #${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/include/KFMDenseBlockSparseMatrix_OpenCL.hh
@@ -190,8 +207,9 @@ if (@PROJECT_NAME@_USE_OPENCL)
     ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/src/KOpenCLSurfaceContainer.cc
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/src/KOpenCLElectrostaticBoundaryIntegrator.cc
-    #
-    ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Integrating/src/KOpenCLElectrostaticIntegratingFieldSolver.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/src/KOpenCLElectrostaticBoundaryIntegratorFactory.cc
+    #${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/src/KOpenCLElectrostaticNumericBoundaryIntegrator.cc
+    #${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/src/KOpenCLElectrostaticRWGBoundaryIntegrator.cc
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/FastMultipole/Electrostatics/src/KFMElectrostaticMultipoleBatchCalculator_OpenCL.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FastMultipole/Electrostatics/src/KFMElectrostaticFastMultipoleFieldSolver_OpenCL.cc
@@ -216,10 +234,11 @@ if (@PROJECT_NAME@_USE_OPENCL)
     )
 
   set (OPENCLPLUGIN_CLFILES
-    ${CMAKE_BINARY_DIR}/@PROJECT_NAME@/kEMField_defines.h
+    ${CMAKE_BINARY_DIR}/@PROJECT_NAME@/kEMField_opencl_defines.h
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/cl/kEMField_GaussianQuadrature.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/cl/kEMField_GaussianCubature.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/Math/cl/kEMField_VectorOperations.cl
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/cl/kEMField_ParallelReduction.cl
     #
@@ -227,6 +246,7 @@ if (@PROJECT_NAME@_USE_OPENCL)
     ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/cl/kEMField_Triangle.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/cl/kEMField_LineSegment.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/cl/kEMField_ConicSection.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/cl/kEMField_SolidAngle.cl
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Core/cl/kEMField_BoundaryIntegrals.cl
     #
@@ -236,6 +256,22 @@ if (@PROJECT_NAME@_USE_OPENCL)
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/cl/kEMField_ElectrostaticConicSection.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/cl/kEMField_ElectrostaticBoundaryIntegrals.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/Electrostatic/cl/kEMField_ElectrostaticBoundaryIntegrals_kernel.cl
+    #
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubature_CommonFunctions.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureTriangle_7Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureTriangle_12Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureTriangle_33Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureRectangle_7Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureRectangle_12Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticCubatureRectangle_33Point.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticQuadratureLineSegment.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticNumericBoundaryIntegrals.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/ElectrostaticNumeric/cl/kEMField_ElectrostaticNumericBoundaryIntegrals_kernel.cl
+    #
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/cl/kEMField_ElectrostaticRWGBoundaryIntegrals.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/cl/kEMField_ElectrostaticRWGBoundaryIntegrals_kernel.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/cl/kEMField_ElectrostaticRWGRectangle.cl
+    ${CMAKE_CURRENT_SOURCE_DIR}/BoundaryIntegrals/RWG/cl/kEMField_ElectrostaticRWGTriangle.cl
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/cl/kEMField_LinearAlgebra.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/LinearAlgebra/cl/kEMField_LinearAlgebra_kernel.cl
@@ -296,7 +332,6 @@ if (@PROJECT_NAME@_USE_OPENCL)
   target_link_libraries (KEMOpenCLPlugin
     KEMCore
     KEMSurfaces
-    KEMIntegratingFieldSolver
     KFMKernel
     KFMTree
     KFMMath

@@ -22,13 +22,13 @@ namespace katrin
         }
         if( aContainer->GetName() == "surfaces" )
         {
-			vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );
-			vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
+			std::vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
+			std::vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
 			KGeoBag::KGSurface* tSurface;
 
 			if( tSurfaces.size() == 0 )
 			{
-				oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+				oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
 				return false;
 			}
 
@@ -41,13 +41,13 @@ namespace katrin
         }
         if( aContainer->GetName() == "spaces" )
         {
-            vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< string >() );
-            vector< KGeoBag::KGSpace* >::const_iterator tSpaceIt;
+            std::vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
+            std::vector< KGeoBag::KGSpace* >::const_iterator tSpaceIt;
             KGeoBag::KGSpace* tSpace;
 
             if( tSpaces.size() == 0 )
             {
-            	oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+            	oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
                 return false;
             }
 

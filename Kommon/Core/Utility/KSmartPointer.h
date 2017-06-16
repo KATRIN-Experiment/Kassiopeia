@@ -1,29 +1,11 @@
 #ifndef KSMARTPOINTER_DEF
 #define KSMARTPOINTER_DEF
 
-#include <cstddef>
+#include <memory>
+#include <utility>
 
 namespace katrin
 {
-
-class Counter
-{
-    template < typename T>
-    friend class KSmartPointer;
-
-    Counter() :fCount(0){}
-
-    int Increment()
-    {
-        return ++fCount;
-    }
-    int Decrement()
-    {
-        return --fCount;
-    }
-
-    int fCount;
-};
 
 template< typename T >
 class KSmartPointer
@@ -32,112 +14,72 @@ public:
     template <typename U>
     friend class KSmartPointer; // for copy constructor from derived or non const class
 
-
     KSmartPointer() :
-        fPointer( 0 ),
-        fCounter( 0 )
-    {
-        fCounter = new Counter();
-        fCounter->Increment();
-    }
+        fSharedPtr()
+    { }
 
     KSmartPointer( T* pValue ) :
-        fPointer( pValue ),
-        fCounter( 0 )
-    {
-        fCounter = new Counter();
-        fCounter->Increment();
-    }
-
-    /** The non template copy constructor is necessary to avoid the use
-     * of the default copy constructor that would not increment the counter.
-     * Sadly, the template copy constructor below comes after the default copy
-     * constructor in the overloading hierachy.
-     */
-    KSmartPointer( const KSmartPointer< T >& sp ) :
-        fPointer( sp.fPointer ),
-        fCounter( sp.fCounter )
-    {
-        fCounter->Increment();
-    }
+        fSharedPtr( pValue )
+    { }
 
     template< typename U>
     KSmartPointer( const KSmartPointer< U >& sp ) :
-    fPointer( sp.fPointer ),
-    fCounter( sp.fCounter )
-    {
-        fCounter->Increment();
-    }
+        fSharedPtr( sp.fSharedPtr )
+    { }
 
-    ~KSmartPointer()
-    {
-        if( fCounter->Decrement() == 0 )
-        {
-            delete fPointer;
-            delete fCounter;
-        }
-    }
+    template< typename U>
+    KSmartPointer( KSmartPointer< U >&& sp ) :
+        fSharedPtr( std::move(sp.fSharedPtr) )
+    { }
 
     T& operator*()
     {
-        return *fPointer;
+        return *fSharedPtr;
     }
 
     const T& operator*() const
     {
-        return *fPointer;
+        return *fSharedPtr;
     }
 
     T* operator->()
     {
-        return fPointer;
+        return fSharedPtr.get();
     }
 
     const T* operator->() const
     {
-        return fPointer;
+        return fSharedPtr.get();
     }
 
     bool Null() const
     {
-        return fPointer == NULL;
+        return !fSharedPtr;
     }
 
     KSmartPointer< T >& operator=( const KSmartPointer< T >& sp )
     {
-        if( this != &sp )
-        {
-            if( fCounter->Decrement() == 0 )
-            {
-                delete fPointer;
-                delete fCounter;
-            }
-
-            fPointer = sp.fPointer;
-            fCounter = sp.fCounter;
-            fCounter->Increment();
-        }
+        fSharedPtr = sp.fSharedPtr;
         return *this;
     }
 
     bool operator==( const KSmartPointer< T >& sp ) const
     {
-        return fPointer == sp.fPointer;
+        return fSharedPtr == sp.fSharedPtr;
     }
 
     bool operator<( const KSmartPointer< T >& sp ) const
     {
-        return fPointer < sp.fPointer;
+        return fSharedPtr < sp.fSharedPtr;
     }
 
     bool operator>( const KSmartPointer< T >& sp ) const
     {
-        return fPointer > sp.fPointer;
+        return fSharedPtr > sp.fSharedPtr;
     }
 
 private:
-    T* fPointer;
-    Counter* fCounter;
+    std::shared_ptr<T> fSharedPtr;
 };
 }
 

@@ -1,0 +1,163 @@
+<!--
+this is a working example for the explicit superposition charge density solver.
+It defines the same geometry twice to configure it with different potentials.
+The charge densities for both configurations then have to be computed and stored in 
+the cache directory.
+Now the explicit superposition field solver can be invoked and gives a superposed field.
+For more information on the explicit superposition charge density solver see below.
+Here follows a simple description how to execute this file:
+
+- Use it with SimpleElectricFieldCalculator ,
+- Run with field1 and field2 first to create the charge density files,
+- Then run InspectEMFile on the files ExplicitSuperpositionTest-Outer.kbd and ExplicitSuperpositionTest-Inner.kbd
+in your KEMField cache directory.
+
+- Make sure the hash values in the component elements are the same as those you found in the 
+.kbd files. If not change them in this file. (Unfortunately, the hash values are machine dependent.
+So they might not be the same as on the machine this file has been created and tested on.)
+
+- Now you are ready to compute the explicit superposition field named superposition_field with the
+SimpleElectricFieldCalculator.
+-->
+
+<geometry>
+    <cylinder_surface name="cylinder_surface_inner" z1="-0.3" z2="0.4" r="0.55"
+        longitudinal_mesh_count="10"
+        longitudinal_mesh_power="2." axial_mesh_count="20"/>
+
+    <cylinder_surface name="cylinder_surface_outer" z1="-0.3" z2="0.4" r="1.05"
+        longitudinal_mesh_count="10"
+        longitudinal_mesh_power="2." axial_mesh_count="20"/>
+
+<space name="global" >
+    <surface name="inner" node="cylinder_surface_inner" >
+	<transformation rotation_euler="90 90 0" displacement="1 1 1"/>
+    </surface>
+    <surface name="outer" node="cylinder_surface_outer" >
+	<transformation rotation_euler="90 90 0" displacement="1 1 1"/>
+    </surface> 
+</space>
+
+<electrostatic_dirichlet
+    name="outer_dirichlet_1"
+    surfaces="global/outer"
+    value="1"
+/>
+
+<electrostatic_dirichlet
+    name="inner_dirichlet_1"
+    surfaces="global/inner"
+    value="0"
+/>
+
+<!-- double to generate different potential configuration -->
+    <cylinder_surface name="cylinder_surface_inner2" z1="-0.3" z2="0.4" r="0.55"
+        longitudinal_mesh_count="10"
+        longitudinal_mesh_power="2." axial_mesh_count="20"/>
+
+    <cylinder_surface name="cylinder_surface_outer2" z1="-0.3" z2="0.4" r="1.05"
+        longitudinal_mesh_count="10"
+        longitudinal_mesh_power="2." axial_mesh_count="20"/>
+
+<space name="global2" >
+    <surface name="inner2" node="cylinder_surface_inner2" >
+	<transformation rotation_euler="90 90 0" displacement="1 1 1"/>
+    </surface>
+    <surface name="outer2" node="cylinder_surface_outer2" >
+	<transformation rotation_euler="90 90 0" displacement="1 1 1"/>
+    </surface> 
+</space>
+
+<electrostatic_dirichlet
+    name="outer_dirichlet_2"
+    surfaces="global2/outer2"
+    value="0"
+/>
+
+<electrostatic_dirichlet
+    name="inner_dirichlet_2"
+    surfaces="global2/inner2"
+    value="1"
+/>
+
+<mesh name="meshing" surfaces="global/#" surfaces="global2/#" />
+</geometry>
+
+
+<kemfield>
+    <electrostatic_field  name="field1" 
+        file="ExplicitSuperpositionTest-Outer.kbd"
+        symmetry="none" 
+	surfaces="global/outer"
+	surfaces="global/inner"
+    >
+	<robin_hood_bem_solver
+            tolerance="1e-8"
+            display_interval="1"
+        />
+	<integrating_field_solver
+            use_opencl="true"
+        />
+    </electrostatic_field>
+
+    <electrostatic_field  name="field2" 
+        file="ExplicitSuperpositionTest-Inner.kbd"
+        symmetry="none" 
+	surfaces="global2/outer2"
+	surfaces="global2/inner2"
+    >
+	<robin_hood_bem_solver
+            tolerance="1e-8"
+            display_interval="1"
+        />
+	<integrating_field_solver
+            use_opencl="true"
+        />
+    </electrostatic_field>
+
+    <electrostatic_field name="superposition_field"
+        symmetry="none"
+        surfaces="global/outer"
+        surfaces="global/inner"
+    >
+        <explicit_superposition_cached_charge_density_solver name="super">
+            <component name="outer" scale="100" hash="50b0ed03244d564f56efa6249412f8ce"/>
+            <component name="inner" scale="-20" hash="844296c98e90b612273736ccb0f81ffe"/>
+        </explicit_superposition_cached_charge_density_solver>
+        <integrating_field_solver
+            use_opencl="true"
+        />
+    </electrostatic_field>
+    <!--
+    	description:
+    		the explicit superposition cached charge densiy solver
+    		computes the superposition field of the different configurations specified
+    		in the component elements by adding their scaled charge densities. All
+    		component have to use the same geometric setup, but with different electric potentials.
+    		The precomputed charge densities have to be in the KEMField cache directory.
+    		
+    	parameters:
+    		name:
+    			the name of the cached charge density solver.
+    			
+    		component:
+    			this describes one potential configuration that is part of the superposition.
+    			Its parameters are:
+    			
+    			name:
+    				the name of the component, just for clarification
+    				
+    			scale: by what factor to scale the potential (and thus charge density values)
+    				of the precomputed charge densities. For example:
+    				There is a precomputed charge density with all surfaces set to zero potential except
+    				for one particular electrode which is at 1 Volt. To describe a situation in which
+    				this electrode is at -20 Volts, this configuration is scaled by -20 and added to the
+    				superposition solver.
+    				
+    			hash:
+    				the hash value of the solution for this component.
+    				These hash values are machine dependent and	can be found in the
+    				output of the InspectEMFile helper programm. See instruction at the
+    				top of this file 
+    -->
+</kemfield>

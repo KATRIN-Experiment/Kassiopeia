@@ -12,22 +12,22 @@ namespace katrin
     template< >
     inline bool KGRotatedArcSegmentSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "rotated_mesh_count" ) )
+        if( anAttribute->GetName() == "rotated_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::RotatedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::FlattenedMeshPower );
             return true;
@@ -38,7 +38,7 @@ namespace katrin
     template< >
     inline bool KGRotatedArcSegmentSpaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "arc_segment" ) )
+        if( anElement->GetName() == "arc_segment" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarArcSegment::CopyFrom );
             return true;

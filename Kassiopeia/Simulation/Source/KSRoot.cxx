@@ -4,7 +4,7 @@
 #include "KSTrackMessage.h"
 #include "KSStepMessage.h"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSNumerical.h"
 
 #include "KSRootMagneticField.h"
@@ -19,6 +19,9 @@
 #include "KSRootTerminator.h"
 #include "KSRootWriter.h"
 #include "KSRootStepModifier.h"
+#include "KSRootTrackModifier.h"
+#include "KSRootEventModifier.h"
+#include "KSRootRunModifier.h"
 
 #include "KSParticle.h"
 #include "KSParticleFactory.h"
@@ -30,12 +33,12 @@
 #include "KSStep.h"
 
 #include "KRandom.h"
-using katrin::KRandom;
 
 #include <limits>
-using std::numeric_limits;
-
 #include <signal.h>
+
+using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -43,7 +46,7 @@ namespace Kassiopeia
     bool KSRoot::fStopEventSignal = false;
     bool KSRoot::fStopTrackSignal = false;
     bool KSRoot::fGSLErrorSignal = false;
-    std::string KSRoot::fGSLErrorString = "";
+    string KSRoot::fGSLErrorString = "";
     string KSRoot::fStopSignalName = "";
 
     KSRoot::KSRoot() :
@@ -52,7 +55,7 @@ namespace Kassiopeia
             fEvent( new KSEvent() ),
             fTrack( new KSTrack() ),
             fStep( new KSStep() ),
-            fToolbox( KSToolbox::GetInstance() ),
+            fToolbox( KToolbox::GetInstance() ),
             fRootMagneticField( new KSRootMagneticField() ),
             fRootElectricField( new KSRootElectricField() ),
             fRootSpace( new KSRootSpace() ),
@@ -65,74 +68,91 @@ namespace Kassiopeia
             fRootTerminator( new KSRootTerminator() ),
             fRootWriter( new KSRootWriter() ),
             fRootStepModifier( new KSRootStepModifier() ),
+            fRootTrackModifier( new KSRootTrackModifier() ),
+            fRootEventModifier( new KSRootEventModifier() ),
+            fRootRunModifier( new KSRootRunModifier() ),
             fRunIndex( 0 ),
             fEventIndex( 0 ),
             fTrackIndex( 0 ),
             fStepIndex( 0 )
     {
-        KSParticleFactory::GetInstance()->SetMagneticField( fRootMagneticField );
-        KSParticleFactory::GetInstance()->SetElectricField( fRootElectricField );
+        KSParticleFactory::GetInstance().SetMagneticField( fRootMagneticField );
+        KSParticleFactory::GetInstance().SetElectricField( fRootElectricField );
+
+        fOnce = false;
 
         fRun->SetName( "run" );
-        fToolbox->AddObject( fRun );
+        fToolbox.Add<KSRun>(fRun, "run");
 
         fEvent->SetName( "event" );
-        fToolbox->AddObject( fEvent );
+        fToolbox.Add(fEvent);
 
         fTrack->SetName( "track" );
-        fToolbox->AddObject( fTrack );
+        fToolbox.Add(fTrack);
 
         fStep->SetName( "step" );
-        fToolbox->AddObject( fStep );
+        fToolbox.Add(fStep);
 
         this->SetName( "root" );
-        fToolbox->AddObject( this );
 
         fRootMagneticField->SetName( "root_magnetic_field" );
-        fToolbox->AddObject( fRootMagneticField );
+        fToolbox.Add(fRootMagneticField);
 
         fRootElectricField->SetName( "root_electric_field" );
-        fToolbox->AddObject( fRootElectricField );
+        fToolbox.Add(fRootElectricField);
 
         fRootSpace->SetName( "root_space" );
-        fToolbox->AddObject( fRootSpace );
+        fToolbox.Add(fRootSpace);
 
         fRootGenerator->SetName( "root_generator" );
         fRootGenerator->SetEvent( fEvent );
-        fToolbox->AddObject( fRootGenerator );
+        fToolbox.Add(fRootGenerator);
 
         fRootTrajectory->SetName( "root_trajectory" );
         fRootTrajectory->SetStep( fStep );
-        fToolbox->AddObject( fRootTrajectory );
+        fToolbox.Add(fRootTrajectory);
 
         fRootSpaceInteraction->SetName( "root_space_interaction" );
         fRootSpaceInteraction->SetStep( fStep );
         fRootSpaceInteraction->SetTrajectory( fRootTrajectory );
-        fToolbox->AddObject( fRootSpaceInteraction );
+        fToolbox.Add(fRootSpaceInteraction);
 
         fRootSpaceNavigator->SetName( "root_space_navigator" );
         fRootSpaceNavigator->SetStep( fStep );
         fRootSpaceNavigator->SetTrajectory( fRootTrajectory );
-        fToolbox->AddObject( fRootSpaceNavigator );
+        fToolbox.Add(fRootSpaceNavigator);
 
         fRootSurfaceInteraction->SetName( "root_surface_interaction" );
         fRootSurfaceInteraction->SetStep( fStep );
-        fToolbox->AddObject( fRootSurfaceInteraction );
+        fToolbox.Add(fRootSurfaceInteraction);
 
         fRootSurfaceNavigator->SetName( "root_surface_navigator" );
         fRootSurfaceNavigator->SetStep( fStep );
-        fToolbox->AddObject( fRootSurfaceNavigator );
+        fToolbox.Add(fRootSurfaceNavigator);
 
         fRootTerminator->SetName( "root_terminator" );
         fRootTerminator->SetStep( fStep );
-        fToolbox->AddObject( fRootTerminator );
+        fToolbox.Add(fRootTerminator);
 
         fRootWriter->SetName( "root_writer" );
-        fToolbox->AddObject( fRootWriter );
+        fToolbox.Add(fRootWriter);
 
-        fRootStepModifier->SetName( "root_stepmodifier" );
+        fRootStepModifier->SetName( "root_step_modifier" );
         fRootStepModifier->SetStep( fStep );
-        fToolbox->AddObject( fRootStepModifier );
+        fToolbox.Add( fRootStepModifier );
+
+        fRootTrackModifier->SetName( "root_track_modifier" );
+        fRootTrackModifier->SetTrack( fTrack );
+        fToolbox.Add( fRootTrackModifier );
+
+        fRootEventModifier->SetName( "root_event_modifier" );
+        fRootEventModifier->SetEvent( fEvent );
+        fToolbox.Add( fRootEventModifier );
+
+        fRootRunModifier->SetName( "root_run_modifier" );
+        fRootRunModifier->SetRun( fRun );
+        fToolbox.Add( fRootRunModifier );
+
     }
     KSRoot::KSRoot( const KSRoot& /*aCopy*/) :
             KSComponent(),
@@ -141,7 +161,7 @@ namespace Kassiopeia
             fEvent( new KSEvent() ),
             fTrack( new KSTrack() ),
             fStep( new KSStep() ),
-            fToolbox( KSToolbox::GetInstance() ),
+            fToolbox( KToolbox::GetInstance() ),
             fRootMagneticField( new KSRootMagneticField() ),
             fRootElectricField( new KSRootElectricField() ),
             fRootSpace( new KSRootSpace() ),
@@ -154,73 +174,87 @@ namespace Kassiopeia
             fRootTerminator( new KSRootTerminator() ),
             fRootWriter( new KSRootWriter() ),
             fRootStepModifier( new KSRootStepModifier() ),
+            fRootTrackModifier( new KSRootTrackModifier() ),
+            fRootEventModifier( new KSRootEventModifier() ),
+            fRootRunModifier( new KSRootRunModifier() ),
             fRunIndex( 0 ),
             fEventIndex( 0 ),
             fTrackIndex( 0 ),
             fStepIndex( 0 )
     {
-        KSParticleFactory::GetInstance()->SetMagneticField( fRootMagneticField );
-        KSParticleFactory::GetInstance()->SetElectricField( fRootElectricField );
+        KSParticleFactory::GetInstance().SetMagneticField( fRootMagneticField );
+        KSParticleFactory::GetInstance().SetElectricField( fRootElectricField );
+
+        fOnce = false;
 
         fRun->SetName( "run" );
-        fToolbox->AddObject( fRun );
+        fToolbox.Add(fRun);
 
         fEvent->SetName( "event" );
-        fToolbox->AddObject( fEvent );
+        fToolbox.Add(fEvent);
 
         fTrack->SetName( "track" );
-        fToolbox->AddObject( fTrack );
+        fToolbox.Add(fTrack);
 
         fStep->SetName( "step" );
-        fToolbox->AddObject( fStep );
+        fToolbox.Add(fStep);
 
         this->SetName( "root" );
-        fToolbox->AddObject( this );
 
         fRootMagneticField->SetName( "root_magnetic_field" );
-        fToolbox->AddObject( fRootMagneticField );
+        fToolbox.Add(fRootMagneticField);
 
         fRootElectricField->SetName( "root_electric_field" );
-        fToolbox->AddObject( fRootElectricField );
+        fToolbox.Add(fRootElectricField);
 
         fRootSpace->SetName( "root_space" );
-        fToolbox->AddObject( fRootSpace );
+        fToolbox.Add(fRootSpace);
 
         fRootGenerator->SetName( "root_generator" );
         fRootGenerator->SetEvent( fEvent );
-        fToolbox->AddObject( fRootGenerator );
+        fToolbox.Add(fRootGenerator);
 
         fRootTrajectory->SetName( "root_trajectory" );
         fRootTrajectory->SetStep( fStep );
-        fToolbox->AddObject( fRootTrajectory );
+        fToolbox.Add(fRootTrajectory);
 
         fRootSpaceInteraction->SetName( "root_space_interaction" );
         fRootSpaceInteraction->SetStep( fStep );
         fRootSpaceInteraction->SetTrajectory( fRootTrajectory );
-        fToolbox->AddObject( fRootSpaceInteraction );
+        fToolbox.Add(fRootSpaceInteraction);
 
         fRootSpaceNavigator->SetName( "root_space_navigator" );
         fRootSpaceNavigator->SetStep( fStep );
         fRootSpaceNavigator->SetTrajectory( fRootTrajectory );
-        fToolbox->AddObject( fRootSpaceNavigator );
+        fToolbox.Add(fRootSpaceNavigator);
 
         fRootSurfaceInteraction->SetName( "root_surface_interaction" );
         fRootSurfaceInteraction->SetStep( fStep );
-        fToolbox->AddObject( fRootSurfaceInteraction );
+        fToolbox.Add(fRootSurfaceInteraction);
 
         fRootSurfaceNavigator->SetName( "root_surface_navigator" );
         fRootSurfaceNavigator->SetStep( fStep );
-        fToolbox->AddObject( fRootSurfaceNavigator );
+        fToolbox.Add(fRootSurfaceNavigator);
 
         fRootTerminator->SetName( "root_terminator" );
         fRootTerminator->SetStep( fStep );
-        fToolbox->AddObject( fRootTerminator );
+        fToolbox.Add(fRootTerminator);
 
         fRootWriter->SetName( "root_writer" );
-        fToolbox->AddObject( fRootWriter );
+        fToolbox.Add(fRootWriter);
 
-        fRootStepModifier->SetName( "root_stepmodifier" );
-        fToolbox->AddObject( fRootStepModifier );
+        fRootStepModifier->SetName( "root_step_modifier" );
+        fToolbox.Add( fRootStepModifier );
+
+        fRootTrackModifier->SetName( "root_track_modifier" );
+        fToolbox.Add( fRootTrackModifier );
+
+        fRootEventModifier->SetName( "root_event_modifier" );
+        fToolbox.Add( fRootEventModifier );
+
+        fRootRunModifier->SetName( "root_run_modifier" );
+        fToolbox.Add( fRootRunModifier );
+
     }
     KSRoot* KSRoot::Clone() const
     {
@@ -228,66 +262,55 @@ namespace Kassiopeia
     }
     KSRoot::~KSRoot()
     {
-        fToolbox->RemoveObject( this );
-
-        fToolbox->RemoveObject( fRootMagneticField );
-        delete fRootMagneticField;
-
-        fToolbox->RemoveObject( fRootElectricField );
-        delete fRootElectricField;
-
-        fToolbox->RemoveObject( fRootSpace );
-        delete fRootSpace;
-
-        fToolbox->RemoveObject( fRootGenerator );
-        delete fRootGenerator;
-
-        fToolbox->RemoveObject( fRootTrajectory );
-        delete fRootTrajectory;
-
-        fToolbox->RemoveObject( fRootSpaceInteraction );
-        delete fRootSpaceInteraction;
-
-        fToolbox->RemoveObject( fRootSpaceNavigator );
-        delete fRootSpaceNavigator;
-
-        fToolbox->RemoveObject( fRootSurfaceInteraction );
-        delete fRootSurfaceInteraction;
-
-        fToolbox->RemoveObject( fRootSurfaceNavigator );
-        delete fRootSurfaceNavigator;
-
-        fToolbox->RemoveObject( fRootTerminator );
-        delete fRootTerminator;
-
-        fToolbox->RemoveObject( fRootWriter );
-        delete fRootWriter;
-
-        fToolbox->RemoveObject( fRootStepModifier );
-        delete fRootStepModifier;
-
-        fToolbox->RemoveObject( fRun );
-        delete fRun;
-
-        fToolbox->RemoveObject( fEvent );
-        delete fEvent;
-
-        fToolbox->RemoveObject( fTrack );
-        delete fTrack;
-
-        fToolbox->RemoveObject( fStep );
-        delete fStep;
+        /*
+         * KToolbox takes care of destruction
+         */
     }
 
     void KSRoot::Execute( KSSimulation* aSimulation )
     {
         fSimulation = aSimulation;
 
-        Initialize();
-        fSimulation->Initialize();
+        vector< KSRunModifier* >* staticRunModifiers  = fSimulation->GetStaticRunModifiers();
+        vector< KSEventModifier* >* staticEventModifiers = fSimulation->GetStaticEventModifiers();
+        vector< KSTrackModifier* >* staticTrackModifiers = fSimulation->GetStaticTrackModifiers();
+        vector< KSStepModifier* >* staticStepModifiers = fSimulation->GetStaticStepModifiers();
 
-        Activate();
-        fSimulation->Activate();
+        if(!fOnce)
+        {
+            for(unsigned int i=0; i<staticRunModifiers->size(); i++)
+            {
+                staticRunModifiers->at(i)->Initialize();
+                staticRunModifiers->at(i)->Activate();
+                fRootRunModifier->AddModifier( staticRunModifiers->at(i) );
+            };
+            for(unsigned int i=0; i<staticEventModifiers->size(); i++)
+            {
+                staticEventModifiers->at(i)->Initialize();
+                staticEventModifiers->at(i)->Activate();
+                fRootEventModifier->AddModifier( staticEventModifiers->at(i) );
+            };
+            for(unsigned int i=0; i<staticTrackModifiers->size(); i++)
+            {
+                staticTrackModifiers->at(i)->Initialize();
+                staticTrackModifiers->at(i)->Activate();
+                fRootTrackModifier->AddModifier( staticTrackModifiers->at(i) );
+            };
+            for(unsigned int i=0; i<staticStepModifiers->size(); i++)
+            {
+                staticStepModifiers->at(i)->Initialize();
+                staticStepModifiers->at(i)->Activate();
+                fRootStepModifier->AddModifier( staticStepModifiers->at(i) );
+            };
+
+            Initialize();
+            fSimulation->Initialize();
+
+            Activate();
+            fSimulation->Activate();
+
+            fOnce = true;
+        }
 
         //signal handling
         signal(SIGINT, &(KSRoot::SignalHandler) );
@@ -297,7 +320,10 @@ namespace Kassiopeia
         //GSL error handling
         fDefaultGSLErrorHandler = gsl_set_error_handler( &Kassiopeia::KSRoot::GSLErrorHandler );
 
-        mainmsg( eNormal ) << "\u263B  welcome to Kassiopeia 3.3 \u263B" << eom;
+        mainmsg( eNormal ) << "\u263B  welcome to Kassiopeia 3.3  \u263B" << eom;
+#ifdef Kassiopeia_ENABLE_DEBUG
+        mainmsg( eWarning ) << "Kassiopeia is running in debug mode - compile without debug flags to speed up simulations" << eom;
+#endif
 
         ExecuteRun();
 
@@ -318,9 +344,31 @@ namespace Kassiopeia
         fSimulation->Deactivate();
         Deactivate();
 
+        for(unsigned int i=0; i<staticRunModifiers->size(); i++)
+        {
+            staticRunModifiers->at(i)->Deactivate();
+            staticRunModifiers->at(i)->Deinitialize();
+        };
+        for(unsigned int i=0; i<staticEventModifiers->size(); i++)
+        {
+            staticEventModifiers->at(i)->Deactivate();
+            staticEventModifiers->at(i)->Deinitialize();
+
+        };
+        for(unsigned int i=0; i<staticTrackModifiers->size(); i++)
+        {
+            staticTrackModifiers->at(i)->Deactivate();
+            staticTrackModifiers->at(i)->Deinitialize();
+        };
+        for(unsigned int i=0; i<staticStepModifiers->size(); i++)
+        {
+            staticStepModifiers->at(i)->Deactivate();
+            staticStepModifiers->at(i)->Deinitialize();
+        };
+
+
         fSimulation->Deinitialize();
         Deinitialize();
-
         fSimulation = NULL;
 
         fRunIndex = 0;
@@ -353,8 +401,12 @@ namespace Kassiopeia
         // send report
         runmsg( eNormal ) << "processing run " << fRun->GetRunId() << "..." << eom;
 
+
+
         while( true )
         {
+            fRootRunModifier->ExecutePreRunModification();
+
             // break if done
             if( fRun->GetTotalEvents() == fSimulation->GetEvents() )
             {
@@ -385,14 +437,17 @@ namespace Kassiopeia
             fRun->DiscreteMomentumChange() += fEvent->DiscreteMomentumChange();
             fRun->DiscreteSecondaries() += fEvent->DiscreteSecondaries();
 
+            fRootRunModifier->ExecutePostRunModification();
         }
 
         // write run
         fRun->PushUpdate();
+        fRootRunModifier->PushUpdate();
 
         fRootWriter->ExecuteRun();
 
         fRun->PushDeupdate();
+        fRootRunModifier->PushDeupdate();
 
         // send report
         runmsg( eNormal ) << "...run " << fRun->GetRunId() << " complete" << eom;
@@ -416,6 +471,11 @@ namespace Kassiopeia
         fEvent->DiscreteSecondaries() = 0;
         fEventIndex++;
 
+        //clear any internal trajectory state
+        fRootTrajectory->Reset();
+
+        fRootEventModifier->ExecutePreEventModification();
+
         // generate primaries
         fRootGenerator->ExecuteGeneration();
 
@@ -423,13 +483,13 @@ namespace Kassiopeia
         eventmsg( eNormal ) << "processing event " << fEvent->GetEventId() << " <" << fEvent->GetGeneratorName() << ">..." << eom;
 
         KSParticle* tParticle;
-        while( fEvent->ParticleQueue().empty() == false )
+        while(!fEvent->ParticleQueue().empty())
         {
             //signal handler break
             if ( fStopRunSignal || fStopEventSignal )
             {
                 //signal handler clears event queue
-                while( fEvent->ParticleQueue().empty() == false )
+                while(!fEvent->ParticleQueue().empty())
                 {
                     tParticle = fEvent->ParticleQueue().front();
                     delete tParticle;
@@ -452,7 +512,7 @@ namespace Kassiopeia
             ExecuteTrack();
 
             // move particles in track queue to event queue
-            while( fTrack->ParticleQueue().empty() == false )
+            while(!fTrack->ParticleQueue().empty())
             {
                 // pop a particle off the queue
                 fEvent->ParticleQueue().push_back( fTrack->ParticleQueue().front() );
@@ -471,12 +531,16 @@ namespace Kassiopeia
             fEvent->DiscreteSecondaries() += fTrack->DiscreteSecondaries();
         }
 
+        fRootEventModifier->ExecutePostEventModification();
+
         // write event
         fEvent->PushUpdate();
+        fRootEventModifier->PushUpdate();
 
         fRootWriter->ExecuteEvent();
 
         fEvent->PushDeupdate();
+        fRootEventModifier->PushDeupdate();
 
         // send report
         eventmsg( eNormal ) << "...completed event " << fEvent->GetEventId() << " <" << fEvent->GetGeneratorName() << ">" << eom;
@@ -503,6 +567,8 @@ namespace Kassiopeia
         // send report
         trackmsg( eNormal ) << "processing track " << fTrack->GetTrackId() << " <" << fTrack->GetCreatorName() << ">..." << eom;
 
+        fRootTrackModifier->ExecutePreTrackModification();
+
         // start navigation
         fRootSpaceNavigator->StartNavigation( fTrack->InitialParticle(), fRootSpace );
 
@@ -513,15 +579,15 @@ namespace Kassiopeia
         //clear any internal trajectory state
         fRootTrajectory->Reset();
 
-        while( fStep->FinalParticle().IsActive() == true )
+        while( fStep->FinalParticle().IsActive() )
         {
             //signal handler break
             if ( fStopRunSignal || fStopEventSignal || fStopTrackSignal )
             {
-                std::cout<<"breaking!"<<std::endl;
+                cout<<"breaking!"<<endl;
                 //signal handler clears event queue
                 KSParticle* tParticle;
-                while( fTrack->ParticleQueue().empty() == false )
+                while(!fTrack->ParticleQueue().empty())
                 {
                     tParticle = fTrack->ParticleQueue().front();
                     delete tParticle;
@@ -534,7 +600,7 @@ namespace Kassiopeia
             ExecuteStep();
 
             // move particles in step queue to track queue
-            while( fStep->ParticleQueue().empty() == false )
+            while(!fStep->ParticleQueue().empty())
             {
                 // pop a particle off the queue
                 fTrack->ParticleQueue().push_back( fStep->ParticleQueue().front() );
@@ -561,13 +627,18 @@ namespace Kassiopeia
         fTrack->FinalParticle() = fStep->FinalParticle();
         fTrack->TerminatorName() = fStep->TerminatorName();
 
+        fRootTrackModifier->ExecutePostTrackModification();
+
+
         // write track
 
         fTrack->PushUpdate();
+        fRootTrackModifier->PushUpdate();
 
         fRootWriter->ExecuteTrack();
 
         fTrack->PushDeupdate();
+        fRootTrackModifier->PushDeupdate();
 
         fTrackIndex++;
 
@@ -748,7 +819,7 @@ namespace Kassiopeia
                     }
 
                     // execute post-step modification
-                    fRootStepModifier->ExecutePostStepModifcation();
+                    fRootStepModifier->ExecutePostStepModification();
 
                     // push update
                     fStep->PushUpdate();
@@ -790,7 +861,7 @@ namespace Kassiopeia
                 }
 
                 // execute post-step modification
-                bool hasPostModified = fRootStepModifier->ExecutePostStepModifcation();
+                bool hasPostModified = fRootStepModifier->ExecutePostStepModification();
                 if(hasPostModified){fRootTrajectory->Reset();};
 
                 // push update
@@ -884,6 +955,9 @@ namespace Kassiopeia
         fRootTerminator->Initialize();
         fRootWriter->Initialize();
         fRootStepModifier->Initialize();
+        fRootTrackModifier->Initialize();
+        fRootEventModifier->Initialize();
+        fRootRunModifier->Initialize();
 
         return;
     }
@@ -907,6 +981,9 @@ namespace Kassiopeia
         fRootTerminator->Deinitialize();
         fRootWriter->Deinitialize();
         fRootStepModifier->Deinitialize();
+        fRootTrackModifier->Deinitialize();
+        fRootEventModifier->Deinitialize();
+        fRootRunModifier->Deinitialize();
 
         return;
     }
@@ -930,6 +1007,9 @@ namespace Kassiopeia
         fRootTerminator->Activate();
         fRootWriter->Activate();
         fRootStepModifier->Activate();
+        fRootTrackModifier->Activate();
+        fRootEventModifier->Activate();
+        fRootRunModifier->Activate();
 
         return;
     }
@@ -953,6 +1033,9 @@ namespace Kassiopeia
         fRootTerminator->Deactivate();
         fRootWriter->Deactivate();
         fRootStepModifier->Deactivate();
+        fRootTrackModifier->Deactivate();
+        fRootEventModifier->Deactivate();
+        fRootRunModifier->Deactivate();
 
         return;
     }
@@ -979,7 +1062,7 @@ namespace Kassiopeia
         //only cache this message for the first error we encounter
         if(!fGSLErrorSignal)
         {
-            std::stringstream ss;
+            stringstream ss;
             ss << "GSL error " << aErrNo << " <" << aReason << "> at <"  << aFile << ":" << aLine << ">. stopping track...";
             fGSLErrorString = ss.str();
         }

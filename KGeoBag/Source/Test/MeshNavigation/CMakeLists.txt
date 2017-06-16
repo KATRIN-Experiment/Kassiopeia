@@ -2,6 +2,7 @@ if(KGeoBag_USE_VTK)
 
 set (TESTMESHNAVIGATION_LIBS
     ${Kommon_LIBRARIES}
+    ${Kommon_Vtk_LIBRARIES}
     KGeoBagMath
     KGeoBagCore
     KGeoBagShapes

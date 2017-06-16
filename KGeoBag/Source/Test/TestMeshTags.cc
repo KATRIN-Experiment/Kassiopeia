@@ -23,7 +23,7 @@ void FollowRecursion(KGMeshSpace* space);
 
 int main()
 {
-  katrin::KMessageTable::GetInstance()->SetTerminalVerbosity(eDebug);
+  katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
 
   // Construct the shapes
   KGCylinder* outerCylinder = new KGCylinder();

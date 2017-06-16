@@ -14,27 +14,27 @@ namespace katrin
     template< >
     inline bool KGCutConeSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z1" ) )
+        if( anAttribute->GetName() == "z1" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSpace::Z1 );
             return true;
         }
-        if( anAttribute->GetName() == string( "r1" ) )
+        if( anAttribute->GetName() == "r1" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSpace::R1 );
             return true;
         }
-        if( anAttribute->GetName() == string( "z2" ) )
+        if( anAttribute->GetName() == "z2" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSpace::Z2 );
             return true;
         }
-        if( anAttribute->GetName() == string( "r2" ) )
+        if( anAttribute->GetName() == "r2" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSpace::R2 );
             return true;

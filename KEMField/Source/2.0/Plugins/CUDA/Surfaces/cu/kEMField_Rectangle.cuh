@@ -13,7 +13,8 @@
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ void Rect_Centroid( CU_TYPE* cen, const CU_TYPE* data )
+__forceinline__ __device__
+void Rect_Centroid( CU_TYPE* cen, const CU_TYPE* data )
 {
     cen[0] = data[2] + data[0]*data[5]*.5 + data[1]*data[8]*.5;
     cen[1] = data[3] + data[0]*data[6]*.5 + data[1]*data[9]*.5;
@@ -22,7 +23,8 @@ __forceinline__ __device__ void Rect_Centroid( CU_TYPE* cen, const CU_TYPE* data
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ void Rect_Normal( CU_TYPE* norm, const CU_TYPE* data )
+__forceinline__ __device__
+void Rect_Normal( CU_TYPE* norm, const CU_TYPE* data )
 {
     norm[0] = data[6]*data[10] - data[7]*data[9];
     norm[1] = data[7]*data[8]  - data[5]*data[10];

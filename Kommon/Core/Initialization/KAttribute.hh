@@ -3,11 +3,6 @@
 
 #include "KAttributeBase.hh"
 
-#include <sstream>
-using std::stringstream;
-
-#include <cstdlib>
-
 namespace katrin
 {
     template< class XType >

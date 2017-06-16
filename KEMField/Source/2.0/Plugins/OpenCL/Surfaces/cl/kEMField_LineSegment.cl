@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_LINESEGMENT_CL
 #define KEMFIELD_LINESEGMENT_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 // Wire geometry definition (as defined by the streamers in KLineSegment.hh):
 //
@@ -17,6 +17,17 @@ void Line_Centroid(CL_TYPE* cen,
   cen[0] = (data[0] + data[3])*.5;
   cen[1] = (data[1] + data[4])*.5;
   cen[2] = (data[2] + data[5])*.5;
+}
+
+//______________________________________________________________________________
+
+void Line_Length(CL_TYPE* length,
+		__global const CL_TYPE* data)
+{
+  length[0] = SQRT( ((data[3] - data[0]) * (data[3] - data[0]))
+		  + ((data[4] - data[1]) * (data[4] - data[1]))
+		  + ((data[5] - data[2]) * (data[5] - data[2]))
+  );
 }
 
 //______________________________________________________________________________

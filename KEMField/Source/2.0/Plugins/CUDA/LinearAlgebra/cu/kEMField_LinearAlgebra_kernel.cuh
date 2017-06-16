@@ -5,7 +5,8 @@
 
 //______________________________________________________________________________
 
-__global__ void GetMatrixElementKernel( int* ij,
+__global__
+void GetMatrixElementKernel( int* ij,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         const short* shapeInfo,
@@ -23,7 +24,8 @@ __global__ void GetMatrixElementKernel( int* ij,
 
 //______________________________________________________________________________
 
-__global__ void GetVectorElementKernel( int* i,
+__global__
+void GetVectorElementKernel( int* i,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         CU_TYPE* value )
@@ -36,7 +38,8 @@ __global__ void GetVectorElementKernel( int* i,
 
 //______________________________________________________________________________
 
-__global__ void GetSolutionVectorElementKernel( int* i,
+__global__
+void GetSolutionVectorElementKernel( int* i,
         CU_TYPE* q,
         CU_TYPE* value)
 {
@@ -46,7 +49,8 @@ __global__ void GetSolutionVectorElementKernel( int* i,
 
 //______________________________________________________________________________
 
-__global__ void GetMaximumVectorElementKernel( const int* boundaryInfo,
+__global__
+void GetMaximumVectorElementKernel( const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         CU_TYPE* value )
 {
@@ -56,7 +60,8 @@ __global__ void GetMaximumVectorElementKernel( const int* boundaryInfo,
 
 //______________________________________________________________________________
 
-__global__ void GetMaximumSolutionVectorElementKernel( const int* boundaryInfo,
+__global__
+void GetMaximumSolutionVectorElementKernel( const int* boundaryInfo,
         const CU_TYPE* basisData,
         CU_TYPE* value )
 {

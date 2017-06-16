@@ -65,6 +65,100 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajExactSpinIntegrator& /*anIntegrator*/, const KSTrajExactSpinDifferentiator& /*aDifferentiator*/, const KSTrajExactSpinParticle& anInitialParticle, const KSTrajExactSpinParticle& aFinalParticle, const double& aTimeStep, KSTrajExactSpinParticle& anIntermediateParticle ) const
+    {
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tFraction = aTimeStep / (tFinalTime - tInitialTime);
+        double tInterpolatedTime = tInitialTime + aTimeStep;
+
+        // interpolate the length
+        double tInitialLength = anInitialParticle.GetLength();
+        double tFinalLength = aFinalParticle.GetLength();
+        double tInterpolatedLength = tInitialLength + tFraction * (tFinalLength - tInitialLength);
+
+        // interpolate the position
+        KThreeVector tInitialPosition = anInitialParticle.GetPosition();
+        KThreeVector tFinalPosition = aFinalParticle.GetPosition();
+        KThreeVector tInterpolatedPosition = tInitialPosition + tFraction * (tFinalPosition - tInitialPosition);
+
+        // interpolate the momentum direction
+        KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+        KThreeVector tFinalMomentum = aFinalParticle.GetMomentum();
+        KThreeVector tInitialMomentumDirection = tInitialMomentum.Unit();
+        KThreeVector tFinalMomentumDirection = tFinalMomentum.Unit();
+        KThreeVector tRotationVector = tInitialMomentumDirection.Cross( tFinalMomentumDirection );
+        double tRotationAngle = tFraction * asin( tRotationVector.Magnitude() );
+        KThreeVector tRotationAxis = tRotationVector.Unit();
+        KThreeVector tInterpolatedMomentumDirection = cos( tRotationAngle ) * tInitialMomentumDirection + sin( tRotationAngle ) * tRotationAxis.Cross( tInitialMomentumDirection );
+
+        // interpolate the momentum magnitude
+        double tInitialMomentumMagnitude = tInitialMomentum.Magnitude();
+        double tFinalMomentumMagnitude = tFinalMomentum.Magnitude();
+        double tInterpolatedMomentumMagnitude = tInitialMomentumMagnitude + tFraction * (tFinalMomentumMagnitude - tInitialMomentumMagnitude);
+
+        // does not interpolate spin
+
+        anIntermediateParticle = 0.;
+        anIntermediateParticle[ 0 ] = tInterpolatedTime;
+        anIntermediateParticle[ 1 ] = tInterpolatedLength;
+        anIntermediateParticle[ 2 ] = tInterpolatedPosition.X();
+        anIntermediateParticle[ 3 ] = tInterpolatedPosition.Y();
+        anIntermediateParticle[ 4 ] = tInterpolatedPosition.Z();
+        anIntermediateParticle[ 5 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.X();
+        anIntermediateParticle[ 6 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.Y();
+        anIntermediateParticle[ 7 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.Z();
+
+        return;
+    }
+
+    void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajAdiabaticSpinIntegrator& /*anIntegrator*/, const KSTrajAdiabaticSpinDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticSpinParticle& anInitialParticle, const KSTrajAdiabaticSpinParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticSpinParticle& anIntermediateParticle ) const
+    {
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tFraction = aTimeStep / (tFinalTime - tInitialTime);
+        double tInterpolatedTime = tInitialTime + aTimeStep;
+
+        // interpolate the length
+        double tInitialLength = anInitialParticle.GetLength();
+        double tFinalLength = aFinalParticle.GetLength();
+        double tInterpolatedLength = tInitialLength + tFraction * (tFinalLength - tInitialLength);
+
+        // interpolate the position
+        KThreeVector tInitialPosition = anInitialParticle.GetPosition();
+        KThreeVector tFinalPosition = aFinalParticle.GetPosition();
+        KThreeVector tInterpolatedPosition = tInitialPosition + tFraction * (tFinalPosition - tInitialPosition);
+
+        // interpolate the momentum direction
+        KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+        KThreeVector tFinalMomentum = aFinalParticle.GetMomentum();
+        KThreeVector tInitialMomentumDirection = tInitialMomentum.Unit();
+        KThreeVector tFinalMomentumDirection = tFinalMomentum.Unit();
+        KThreeVector tRotationVector = tInitialMomentumDirection.Cross( tFinalMomentumDirection );
+        double tRotationAngle = tFraction * asin( tRotationVector.Magnitude() );
+        KThreeVector tRotationAxis = tRotationVector.Unit();
+        KThreeVector tInterpolatedMomentumDirection = cos( tRotationAngle ) * tInitialMomentumDirection + sin( tRotationAngle ) * tRotationAxis.Cross( tInitialMomentumDirection );
+
+        // interpolate the momentum magnitude
+        double tInitialMomentumMagnitude = tInitialMomentum.Magnitude();
+        double tFinalMomentumMagnitude = tFinalMomentum.Magnitude();
+        double tInterpolatedMomentumMagnitude = tInitialMomentumMagnitude + tFraction * (tFinalMomentumMagnitude - tInitialMomentumMagnitude);
+
+        // does not interpolate spin
+
+        anIntermediateParticle = 0.;
+        anIntermediateParticle[ 0 ] = tInterpolatedTime;
+        anIntermediateParticle[ 1 ] = tInterpolatedLength;
+        anIntermediateParticle[ 2 ] = tInterpolatedPosition.X();
+        anIntermediateParticle[ 3 ] = tInterpolatedPosition.Y();
+        anIntermediateParticle[ 4 ] = tInterpolatedPosition.Z();
+        anIntermediateParticle[ 5 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.X();
+        anIntermediateParticle[ 6 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.Y();
+        anIntermediateParticle[ 7 ] = tInterpolatedMomentumMagnitude * tInterpolatedMomentumDirection.Z();
+
+        return;
+    }
+
     void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajAdiabaticIntegrator& /*anIntegrator*/, const KSTrajAdiabaticDifferentiator& /*aDifferentiator*/, const KSTrajAdiabaticParticle& anInitialParticle, const KSTrajAdiabaticParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticParticle& anIntermediateParticle ) const
     {
         double tInitialTime = anInitialParticle.GetTime();
@@ -194,6 +288,44 @@ namespace Kassiopeia
         const KSTrajExactParticle& anInitialParticle,
         const KSTrajExactParticle& aFinalParticle,
         std::vector<KSTrajExactParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajExactSpinIntegrator& /*anIntegrator*/,
+        const KSTrajExactSpinDifferentiator& /*aDifferentiator*/,
+        const KSTrajExactSpinParticle& anInitialParticle,
+        const KSTrajExactSpinParticle& aFinalParticle,
+        std::vector<KSTrajExactSpinParticle>* interpolatedValues
+    )
+    const
+    {
+        interpolatedValues->clear();
+        interpolatedValues->push_back(anInitialParticle);
+        interpolatedValues->push_back(aFinalParticle);
+    }
+
+    void KSTrajInterpolatorFast::GetPiecewiseLinearApproximation
+    (
+        double /*aTolerance*/,
+        unsigned int /*nMaxSegments*/,
+        double /*anInitialTime*/,
+        double /*aFinalTime*/,
+        const KSTrajAdiabaticSpinIntegrator& /*anIntegrator*/,
+        const KSTrajAdiabaticSpinDifferentiator& /*aDifferentiator*/,
+        const KSTrajAdiabaticSpinParticle& anInitialParticle,
+        const KSTrajAdiabaticSpinParticle& aFinalParticle,
+        std::vector<KSTrajAdiabaticSpinParticle>* interpolatedValues
     )
     const
     {

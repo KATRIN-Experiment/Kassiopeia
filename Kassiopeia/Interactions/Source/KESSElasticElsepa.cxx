@@ -4,12 +4,12 @@
 #include <algorithm>
 
 #include "KConst.h"
-using katrin::KConst;
-
 #include "KRandom.h"
-using katrin::KRandom;
 
 #include "KSInteractionsMessage.h"
+
+using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {

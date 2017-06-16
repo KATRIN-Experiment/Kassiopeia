@@ -2,12 +2,10 @@
 
 #include <iomanip>
 #include <ostream>
-using std::cout;
-using std::endl;
 
-#include <cstdio>
-#include <cstdlib>
 #include <execinfo.h>
+
+using namespace std;
 
 namespace katrin
 {
@@ -47,18 +45,18 @@ namespace katrin
             fMessageLine(),
             fMessageLines(),
 
-            fTerminalVerbosity( KMessageTable::GetInstance()->GetTerminalVerbosity() ),
-            fTerminalStream( KMessageTable::GetInstance()->GetTerminalStream() ),
-            fLogVerbosity( KMessageTable::GetInstance()->GetLogVerbosity() ),
-            fLogStream( KMessageTable::GetInstance()->GetLogStream() )
+            fTerminalVerbosity( KMessageTable::GetInstance().GetTerminalVerbosity() ),
+            fTerminalStream( KMessageTable::GetInstance().GetTerminalStream() ),
+            fLogVerbosity( KMessageTable::GetInstance().GetLogVerbosity() ),
+            fLogStream( KMessageTable::GetInstance().GetLogStream() )
     {
-        fMessageLine.setf( KMessageTable::GetInstance()->GetFormat(), std::ios::floatfield );
-        fMessageLine.precision( KMessageTable::GetInstance()->GetPrecision() );
-        KMessageTable::GetInstance()->Add( this );
+        fMessageLine.setf( KMessageTable::GetInstance().GetFormat(), std::ios::floatfield );
+        fMessageLine.precision( KMessageTable::GetInstance().GetPrecision() );
+        KMessageTable::GetInstance().Add( this );
     }
     KMessage::~KMessage()
     {
-        KMessageTable::GetInstance()->Remove( this );
+        KMessageTable::GetInstance().Remove( this );
     }
 
     const string& KMessage::GetKey()

@@ -57,22 +57,22 @@ namespace Kassiopeia
             void CreateColors();
 
         private:
-            ;K_SET( string, Path );
-            ;K_SET( string, Base );
-            ;K_SET( string, XAxis );
-            ;K_SET( string, YAxis );
-            ;K_SET( string, StepOutputGroupName );
-            ;K_SET( string, PositionName );
-    	    ;K_SET( string, TrackOutputGroupName );
-			;K_SET( string, ColorVariable );
+            ;K_SET( std::string, Path );
+            ;K_SET( std::string, Base );
+            ;K_SET( std::string, XAxis );
+            ;K_SET( std::string, YAxis );
+            ;K_SET( std::string, StepOutputGroupName );
+            ;K_SET( std::string, PositionName );
+    	    ;K_SET( std::string, TrackOutputGroupName );
+			;K_SET( std::string, ColorVariable );
 			;K_SET( ColorMode, ColorMode );
 			;K_SET( ColorPalette, ColorPalette );
-            ;K_SET( string, DrawOptions );
+            ;K_SET( std::string, DrawOptions );
             ;K_SET( PlotMode, PlotMode );
             ;K_SET( bool, AxialMirror );
             TMultiGraph* fMultigraph;
-            vector<std::pair< TColor, double > > fBaseColors;
-            vector<Color_t> fColorVector;
+            std::vector<std::pair< TColor, double > > fBaseColors;
+            std::vector<Color_t> fColorVector;
 
     };
 

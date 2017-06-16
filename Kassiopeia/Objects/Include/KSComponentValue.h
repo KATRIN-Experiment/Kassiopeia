@@ -24,7 +24,7 @@ namespace Kassiopeia
         public:
             KSComponentValue( XValueType* aParentPointer ) :
                     fOperand( aParentPointer ),
-                    fValue( KSNumerical< XValueType >::Zero )
+                    fValue( KSNumerical< XValueType >::Zero() )
             {
             }
             KSComponentValue( const KSComponentValue< XValueType >& aCopy ) :
@@ -74,32 +74,32 @@ namespace Kassiopeia
     template< class XValueType >
     inline void KSComponentValueMaximum< XValueType >::Reset()
     {
-        this->fValue = -1. * KSNumerical< XValueType >::Maximum;
+        this->fValue = KSNumerical< XValueType >::Lowest();
         return;
     }
     // initialize non-scalar types with zero because the magnitude will always be positive
     template<  >
     inline void KSComponentValueMaximum< KTwoVector >::Reset()
     {
-        this->fValue = KSNumerical< KTwoVector >::Zero;
+        this->fValue = KSNumerical< KTwoVector >::Zero();
         return;
     }
     template<  >
     inline void KSComponentValueMaximum< KThreeVector >::Reset()
     {
-        this->fValue = KSNumerical< KThreeVector >::Zero;
+        this->fValue = KSNumerical< KThreeVector >::Zero();
         return;
     }
     template<  >
     inline void KSComponentValueMaximum< KTwoMatrix >::Reset()
     {
-        this->fValue = KSNumerical< KTwoMatrix >::Zero;
+        this->fValue = KSNumerical< KTwoMatrix >::Zero();
         return;
     }
     template<  >
     inline void KSComponentValueMaximum< KThreeMatrix >::Reset()
     {
-        this->fValue = KSNumerical< KThreeMatrix >::Zero;
+        this->fValue = KSNumerical< KThreeMatrix >::Zero();
         return;
     }
 
@@ -120,6 +120,7 @@ namespace Kassiopeia
         {
             this->fValue = *(this->fOperand);
             return true;
+
         }
         return false;
     }
@@ -183,7 +184,7 @@ namespace Kassiopeia
     template< class XValueType >
     inline void KSComponentValueMinimum< XValueType >::Reset()
     {
-        this->fValue = KSNumerical< XValueType >::Maximum;
+        this->fValue = KSNumerical< XValueType >::Maximum();
         return;
     }
 
@@ -267,7 +268,7 @@ namespace Kassiopeia
     template< class XValueType >
     inline void KSComponentValueIntegral< XValueType >::Reset()
     {
-        this->fValue = KSNumerical< XValueType >::Zero;
+        this->fValue = KSNumerical< XValueType >::Zero();
         return;
     }
 
@@ -287,7 +288,7 @@ namespace Kassiopeia
         public:
             KSComponentValueDelta( XValueType* aParentPointer ) :
                     KSComponentValue< XValueType >( aParentPointer ),
-                    fLastValue( KSNumerical< XValueType >::Zero )
+                    fLastValue( KSNumerical< XValueType >::Zero() )
             {
             }
             KSComponentValueDelta( const KSComponentValueDelta< XValueType >& aCopy ) :
@@ -311,8 +312,8 @@ namespace Kassiopeia
     template< class XValueType >
     inline void KSComponentValueDelta< XValueType >::Reset()
     {
-        this->fValue = KSNumerical< XValueType >::Zero;
-        this->fLastValue = KSNumerical< XValueType >::Zero;
+        this->fValue = KSNumerical< XValueType >::Zero();
+        this->fLastValue = KSNumerical< XValueType >::Zero();
         return;
     }
 

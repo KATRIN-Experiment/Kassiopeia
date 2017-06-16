@@ -23,12 +23,12 @@ namespace katrin
             void ReleaseCalculators( KSIntScattering* aScattering );
 
         private:
-            K_SET_GET( string, Name )
+            K_SET_GET( std::string, Name )
             K_SET_GET( bool, Elastic )
             K_SET_GET( bool, Excitation )
             K_SET_GET( bool, Ionisation )
-            K_SET_GET( string, Molecule )
-            vector< KSIntCalculator* > fCalculators;
+            K_SET_GET( std::string, Molecule )
+            std::vector< KSIntCalculator* > fCalculators;
     };
 
     typedef KComplexElement< KSIntCalculatorHydrogenSet > KSIntCalculatorHydrogenSetBuilder;
@@ -91,7 +91,7 @@ namespace katrin
             aIntCalculator->SetTag( fObject->GetName() );
             fObject->AddCalculator( aIntCalculator );
 
-            if ( fObject->GetMolecule() == string ("tritium") )
+            if ( fObject->GetMolecule() == std::string ("tritium") )
             {
 				aIntCalculator = new KSIntCalculatorHydrogenRot20();
 				aIntCalculator->SetName( fObject->GetName() + "_rot_20" );

@@ -1,19 +1,18 @@
 # CMakeLists for KEMField/FastMultipole/Math
 # Author: J. P. Barrett
 
-option (KEMField_USE_GSL "Use GSL" OFF)
 if (KEMField_USE_GSL)
   find_package(GSL REQUIRED)
   kasper_external_include_directories (${GSL_INCLUDE_DIRS})
-  add_cflag(KEMFIELD_USE_GSL)
-endif (KEMField_USE_GSL)
+  add_definitions(-DKEMFIELD_USE_GSL)
+endif ()
 
 option (KEMField_USE_FFTW "Use FFTW" OFF)
 if (KEMField_USE_FFTW)
   find_package(FFTW 3.3.4 REQUIRED)
   kasper_external_include_directories (${FFTW_INCLUDE_DIRS})
   add_cflag(KEMFIELD_USE_FFTW)
-endif (KEMField_USE_FFTW)
+endif ()
 
 kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -52,19 +51,19 @@ set (MATH_UTILITIES_SOURCEFILES
 
 add_library (KFMMathUtilities SHARED ${MATH_UTILITIES_SOURCEFILES})
 
-if(KEMField_USE_GSL)
+if(KASPER_USE_GSL)
     if(KEMField_USE_FFTW)
         target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES} ${FFTW_LIBRARIES})
-    else(KEMField_USE_FFTW)
+    else()
         target_link_libraries (KFMMathUtilities KEMCore ${GSL_LIBRARIES})
-    endif(KEMField_USE_FFTW)
-else(KEMField_USE_GSL)
+    endif()
+else()
     if(KEMField_USE_FFTW)
         target_link_libraries (KFMMathUtilities KEMCore ${FFTW_LIBRARIES})
-    else(KEMField_USE_FFTW)
+    else()
         target_link_libraries (KFMMathUtilities KEMCore )
-    endif(KEMField_USE_FFTW)
-endif (KEMField_USE_GSL)
+    endif()
+endif ()
 
 kasper_install_headers (${MATH_UTILITIES_HEADERFILES})
 kasper_install_libraries (KFMMathUtilities)

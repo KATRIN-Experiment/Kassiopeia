@@ -14,7 +14,19 @@
 
 #include "KDataDisplay.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+// definition of integrator types
+// see KEMField::KElectrostaticBoundaryIntegratorFactory::Make(std::string)
+// for a complete list of options
+
+std::string integratorType{"numeric"};
+//std::string integratorType{"analytic"};
+//std::string integratorType{"rwg"};
+
+std::string oclIntegratorType{"numeric"};
+//std::string oclIntegratorType{"analytic"};
+//std::string oclIntegratorType{"rwg"};
+
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -53,17 +65,17 @@
 #include "KIterativeStateReader.hh"
 #include "KIterativeStateWriter.hh"
 
+
+#include "KMPIEnvironment.hh"
+
 #ifdef KEMFIELD_USE_MPI
 #include "KGaussSeidel_MPI.hh"
 #include "KRobinHood_MPI.hh"
-#define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
-#else
-#define MPI_SINGLE_PROCESS
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
@@ -76,7 +88,7 @@
 #endif
 #endif
 
-#include "KIterativeKrylovSolver.hh"
+#include "KSimpleIterativeKrylovSolver.hh"
 #include "KBiconjugateGradientStabilized.hh"
 #include "KGeneralizedMinimalResidual.hh"
 
@@ -129,7 +141,6 @@ double Time()
 
   return 0.;
 }
-
 
 int main(int argc, char* argv[])
 {
@@ -478,20 +489,21 @@ int main(int argc, char* argv[])
 
 #ifdef KEMFIELD_USE_OPENCL
   KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-  KOpenCLElectrostaticBoundaryIntegrator integrator(oclSurfaceContainer);
+  KOpenCLElectrostaticBoundaryIntegrator integrator{KoclEBIFactory::Make(oclIntegratorType,oclSurfaceContainer)};
   KSquareMatrix<double>* A = new KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> >(oclSurfaceContainer,integrator);
 
   KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(oclSurfaceContainer,integrator);
   KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(oclSurfaceContainer,integrator);
 #else
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator{KEBIFactory::Make(integratorType)};
   KSquareMatrix<double>* A;
   if (cache)
   {
     A = new KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator,true>(surfaceContainer,integrator);
-//    double tmp; // TODO: WHAT IS THIS VARIABLE FOR?
+// ability to read out matrix elements
+//    double tmp;
 //    for (unsigned int i=0;i<A->Dimension();i++)
-//      for (unsigned int j=0;j<A->Dimension();j++) // TODO: WHAT IS THIS CODE FOR?
+//      for (unsigned int j=0;j<A->Dimension();j++)
 //        tmp = (*A)(i,j);
   }
   else
@@ -651,7 +663,7 @@ int main(int argc, char* argv[])
     }
     else if (method == 4)
     {
-      KIterativeKrylovSolver<KElectrostaticBoundaryIntegrator::ValueType, KBiconjugateGradientStabilized> biCGStab;
+      KSimpleIterativeKrylovSolver<KElectrostaticBoundaryIntegrator::ValueType, KBiconjugateGradientStabilized> biCGStab;
       biCGStab.SetTolerance(accuracy);
 
       MPI_SINGLE_PROCESS
@@ -681,7 +693,7 @@ int main(int argc, char* argv[])
     else if (method == 5)
     {
         //TODO, make this preconditioned!!
-      KIterativeKrylovSolver<KElectrostaticBoundaryIntegrator::ValueType, KBiconjugateGradientStabilized> biCGStab;
+      KSimpleIterativeKrylovSolver<KElectrostaticBoundaryIntegrator::ValueType, KBiconjugateGradientStabilized> biCGStab;
       biCGStab.SetTolerance(accuracy);
 
       MPI_SINGLE_PROCESS
@@ -748,7 +760,7 @@ int main(int argc, char* argv[])
 
       MPI_SINGLE_PROCESS
       {
-      KIterativeKrylovSolver< KElectrostaticBoundaryIntegrator::ValueType, KGeneralizedMinimalResidual> gmres;
+      KSimpleIterativeKrylovSolver< KElectrostaticBoundaryIntegrator::ValueType, KGeneralizedMinimalResidual> gmres;
       gmres.SetTolerance(accuracy);
       //gmres.SetRestartParameter(30);
 

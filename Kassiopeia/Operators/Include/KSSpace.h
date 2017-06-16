@@ -58,9 +58,9 @@ namespace Kassiopeia
 
         protected:
             KSSpace* fParent;
-            vector< KSSpace* > fSpaces;
-            vector< KSSurface* > fSurfaces;
-            vector< KSSide* > fSides;
+            std::vector< KSSpace* > fSpaces;
+            std::vector< KSSurface* > fSurfaces;
+            std::vector< KSSide* > fSides;
     };
 
 }

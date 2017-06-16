@@ -62,7 +62,16 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSROOTPotentialPainter::SetCalcPot );
             return true;
         }
-
+        if( aContainer->GetName() == "compare_fields" )
+        {
+            aContainer->CopyTo( fObject, &KSROOTPotentialPainter::SetComparison );
+            return true;
+        }
+        if( aContainer->GetName() == "reference_field" )
+        {
+            aContainer->CopyTo( fObject, &KSROOTPotentialPainter::SetReferenceFieldName );
+            return true;
+        }
         return false;
     }
 

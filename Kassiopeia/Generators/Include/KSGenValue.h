@@ -17,7 +17,7 @@ namespace Kassiopeia
             virtual ~KSGenValue();
 
         public:
-            virtual void DiceValue( vector< double >& aDicedValue ) = 0;
+            virtual void DiceValue( std::vector< double >& aDicedValue ) = 0;
     };
 
 }

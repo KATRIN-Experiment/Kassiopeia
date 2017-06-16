@@ -1,6 +1,8 @@
 #include "KGCore.hh"
 #include "KGCoreMessage.hh"
 
+using namespace std;
+
 namespace KGeoBag
 {
 

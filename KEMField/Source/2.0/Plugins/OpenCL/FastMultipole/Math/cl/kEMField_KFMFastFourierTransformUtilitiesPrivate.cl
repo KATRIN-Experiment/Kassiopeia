@@ -1,7 +1,7 @@
 #ifndef KFMFastFourierUtilities_Defined_H
 #define KFMFastFourierUtilities_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 #include "kEMField_KFMComplexMultiply.cl"
 
 ////////////////////////////////////////////////////////////////////////////////

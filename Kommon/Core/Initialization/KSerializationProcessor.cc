@@ -1,9 +1,10 @@
 #include "KSerializationProcessor.hh"
 #include "KInitializationMessage.hh"
 
-#include <cstdlib>
 #include <typeinfo>
 #include <fstream>
+
+using namespace std;
 
 namespace katrin
 {
@@ -212,16 +213,6 @@ namespace katrin
     void KSerializationProcessor::ProcessToken( KEndParsingToken* aToken)
     {
         completeconfig += "<!-- got an end parsing token -->\n";
-
-        if(fOutputFilename.size() == 0)
-        {
-            fOutputFilename = "output_config.xml";
-        }
-        std::ofstream output(fOutputFilename.c_str());
-        output << completeconfig;
-        output.close();
-
-        initmsg( eNormal ) <<"KSerializationProcessor saving all data in <"<<fOutputFilename<<">"<<eom;
 
         initmsg_debug( "<!-- got an end parsing token -->" << eom);
         initmsg_debug( "at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom);

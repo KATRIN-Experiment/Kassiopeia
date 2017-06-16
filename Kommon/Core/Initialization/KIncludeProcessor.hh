@@ -4,9 +4,6 @@
 #include "KProcessor.hh"
 
 #include <vector>
-using std::vector;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -43,11 +40,11 @@ namespace katrin
             } AttributeState;
             AttributeState fAttributeState;
 
-            vector< string > fNames;
-            vector< string > fPaths;
-            vector< string > fBases;
+            std::vector< std::string > fNames;
+            std::vector< std::string > fPaths;
+            std::vector< std::string > fBases;
 
-            vector< string > fDefaultPaths;
+            std::vector< std::string > fDefaultPaths;
     };
 
 }

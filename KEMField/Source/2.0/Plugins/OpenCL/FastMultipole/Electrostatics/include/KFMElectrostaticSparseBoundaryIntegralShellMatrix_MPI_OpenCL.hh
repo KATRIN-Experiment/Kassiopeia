@@ -21,7 +21,7 @@
 #include "KMPIInterface.hh"
 
 
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticNumericBoundaryIntegrator.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegrator.hh"
 #include "KElectrostaticBasis.hh"
@@ -82,7 +82,8 @@ class KFMElectrostaticSparseBoundaryIntegralShellMatrix_MPI_OpenCL: KSquareMatri
                 //determine the opencl flags
                 std::stringstream ss;
                 ss << fOCLSurfaceContainer->GetOpenCLFlags();
-                ss << " -DKEMFIELD_INTEGRATORFILE_CL=<" << "kEMField_ElectrostaticBoundaryIntegrals.cl" <<">";
+                ss << " -DKEMFIELD_INTEGRATORFILE_CL=<" << "kEMField_ElectrostaticNumericBoundaryIntegrals.cl" <<">";
+                ss << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_OPENCL_FAST_RWG; /* variable defined via cmake */
                 fBuildFlags = ss.str();
 
                 BuildBlockComputeKernel();

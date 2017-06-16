@@ -26,7 +26,7 @@ namespace Kassiopeia
             unsigned int CommandCount() const;
 
         private:
-            typedef vector< KSCommand* > CommandVector;
+            typedef std::vector< KSCommand* > CommandVector;
             typedef CommandVector::iterator CommandIt;
             typedef CommandVector::const_iterator CommandCIt;
 

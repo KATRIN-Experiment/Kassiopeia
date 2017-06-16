@@ -69,6 +69,7 @@ namespace Kassiopeia
             const KThreeVector& GetMagneticField() const;
             const KThreeVector& GetElectricField() const;
             const double& GetElectricPotential() const;
+            const KThreeMatrix& GetElectricGradient() const;
             const KThreeMatrix& GetMagneticGradient() const;
 
             const KThreeVector& GetGuidingCenter() const;
@@ -97,6 +98,7 @@ namespace Kassiopeia
             mutable KThreeVector fMagneticField;
             mutable KThreeVector fElectricField;
             mutable KThreeMatrix fMagneticGradient;
+            mutable KThreeMatrix fElectricGradient;
             mutable double fElectricPotential;
 
             mutable KThreeVector fGuidingCenter;
@@ -117,11 +119,13 @@ namespace Kassiopeia
             void RecalculateMagneticGradient() const;
             void RecalculateElectricField() const;
             void RecalculateElectricPotential() const;
+            void RecalculateElectricGradient() const;
 
             mutable void (KSTrajExactParticle::*fGetMagneticFieldPtr)() const;
             mutable void (KSTrajExactParticle::*fGetElectricFieldPtr)() const;
             mutable void (KSTrajExactParticle::*fGetMagneticGradientPtr)() const;
             mutable void (KSTrajExactParticle::*fGetElectricPotentialPtr)() const;
+            mutable void (KSTrajExactParticle::*fGetElectricGradientPtr)() const;
     };
 
     inline KSTrajExactParticle& KSTrajExactParticle::operator=( const double& anOperand )
@@ -131,6 +135,7 @@ namespace Kassiopeia
         fGetElectricFieldPtr = &KSTrajExactParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajExactParticle::RecalculateMagneticGradient;
         fGetElectricPotentialPtr = &KSTrajExactParticle::RecalculateElectricPotential;
+        fGetElectricGradientPtr = &KSTrajExactParticle::RecalculateElectricGradient;
         return *this;
     }
 
@@ -141,6 +146,7 @@ namespace Kassiopeia
         fGetElectricFieldPtr = &KSTrajExactParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajExactParticle::RecalculateMagneticGradient;
         fGetElectricPotentialPtr = &KSTrajExactParticle::RecalculateElectricPotential;
+        fGetElectricGradientPtr = &KSTrajExactParticle::RecalculateElectricGradient;
         return *this;
     }
 
@@ -152,6 +158,7 @@ namespace Kassiopeia
         fGetElectricFieldPtr = &KSTrajExactParticle::RecalculateElectricField;
         fGetMagneticGradientPtr = &KSTrajExactParticle::RecalculateMagneticGradient;
         fGetElectricPotentialPtr = &KSTrajExactParticle::RecalculateElectricPotential;
+        fGetElectricGradientPtr = &KSTrajExactParticle::RecalculateElectricGradient;
         return *this;
     }
 
@@ -171,6 +178,7 @@ namespace Kassiopeia
         fElectricField = aParticle.fElectricField;
         fMagneticGradient = aParticle.fMagneticGradient;
         fElectricPotential = aParticle.fElectricPotential;
+        fElectricGradient = aParticle.fElectricGradient;
 
         fGuidingCenter = aParticle.fGuidingCenter;
         fLongMomentum = aParticle.fLongMomentum;
@@ -184,6 +192,7 @@ namespace Kassiopeia
         fGetElectricFieldPtr = aParticle.fGetElectricFieldPtr;
         fGetMagneticGradientPtr = aParticle.fGetMagneticGradientPtr;
         fGetElectricPotentialPtr = aParticle.fGetElectricPotentialPtr;
+        fGetElectricGradientPtr = aParticle.fGetElectricGradientPtr;
 
         return *this;
     }

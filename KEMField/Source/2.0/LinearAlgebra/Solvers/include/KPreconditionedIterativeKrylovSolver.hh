@@ -6,6 +6,7 @@
 
 #include "KIterativeSolver.hh"
 #include "KPreconditioner.hh"
+#include "KIterativeKrylovSolver.hh"
 #include "KIterativeKrylovRestartCondition.hh"
 
 namespace KEMField
@@ -15,7 +16,7 @@ namespace KEMField
 *
 *@file KPreconditionedIterativeKrylovSolver.hh
 *@class KPreconditionedIterativeKrylovSolver
-*@brief controller class for right-preconditoned krylov solvers
+*@brief controller class for right-preconditioned krylov solvers
 *@details
 *
 *<b>Revision History:<b>
@@ -25,11 +26,11 @@ namespace KEMField
 */
 
 template <typename ValueType, template <typename> class ParallelTrait>
-class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
+class KPreconditionedIterativeKrylovSolver: public KIterativeKrylovSolver<ValueType>
 {
     public:
-        typedef KSquareMatrix<ValueType> Matrix;
-        typedef KVector<ValueType> Vector;
+		using typename KIterativeKrylovSolver<ValueType>::Matrix;
+		using typename KIterativeKrylovSolver<ValueType>::Vector;
         typedef KPreconditioner<ValueType> Preconditioner;
 
         KPreconditionedIterativeKrylovSolver();
@@ -37,7 +38,11 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
 
         void Solve(const Matrix& A, Preconditioner& P, Vector& x, const Vector& b);
 
-        //set tolerancing (default is absolute tolerance on l2 residual norm)
+        void SetPreconditioner(KSmartPointer<Preconditioner> preconditioner) {
+        	fPreconditioner = preconditioner;
+        }
+
+        //set tolerance (default is absolute tolerance on l2 residual norm)
         virtual void SetTolerance(double d) { SetRelativeTolerance(d); };
         virtual void SetAbsoluteTolerance(double d){ this->fTolerance = d; fUseRelativeTolerance = false;};
         virtual void SetRelativeTolerance(double d){ this->fTolerance = d; fUseRelativeTolerance = true;};
@@ -54,65 +59,30 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
             }
         }
 
-        void SetMaximumIterations(unsigned int i){fMaxIterations = i;}
-        void SetRestartCondition(KIterativeKrylovRestartCondition* restart)
-        {
-            if(!fExternalRestartCondition){delete fRestartCondition; fExternalRestartCondition = true;};
-            fRestartCondition = restart;
-        };
-
         ParallelTrait<ValueType>* GetTrait() {return fTrait;};
 
     private:
+        virtual void SolveCore(Vector& x, const Vector& b);
+
         unsigned int Dimension() const { return (fTrait ? fTrait->Dimension() : 0); }
         void SetResidualVector(const Vector& v) { if (fTrait) fTrait->SetResidualVector(v); }
         void GetResidualVector(Vector& v) { if (fTrait) fTrait->GetResidualVector(v); }
 
-        virtual bool HasConverged()
-        {
-            if(fUseRelativeTolerance)
-            {
-                double relative_residual_norm = (this->fResidualNorm)/(fInitialResidual);
-                if( relative_residual_norm > this->fTolerance ){return false;}
-                else{return true;}
-            }
-            else
-            {
-                if( this->fResidualNorm > this->fTolerance ){ return false; }
-                else{ return true; }
-            }
-        }
+        virtual bool HasConverged() const;
 
-        double InnerProduct(const Vector& a, const Vector& b)
-        {
-            double result = 0.;
+        double InnerProduct(const Vector& a, const Vector& b);
 
-            unsigned int dim = a.Dimension();
-            for(unsigned int i=0; i<dim; i++)
-            {
-                result += a(i)*b(i);
-            }
-
-            return result;
-        }
-
-        unsigned int fMaxIterations;
-        KIterativeKrylovRestartCondition* fRestartCondition;
         ParallelTrait<ValueType>* fTrait;
-        bool fExternalRestartCondition;
         bool fUseRelativeTolerance;
         double fInitialResidual;
+
+        KSmartPointer<Preconditioner> fPreconditioner;
   };
 
     template <typename ValueType,template <typename> class ParallelTrait>
     KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::KPreconditionedIterativeKrylovSolver():
-        fMaxIterations(UINT_MAX),
-        fRestartCondition(NULL),
         fTrait(NULL)
         {
-            //create a default restart condition
-            fRestartCondition = new KIterativeKrylovRestartCondition();
-            fExternalRestartCondition = false;
             fUseRelativeTolerance = false;
             fInitialResidual = 1.0;
         };
@@ -120,10 +90,6 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
     template <typename ValueType,template <typename> class ParallelTrait>
     KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::~KPreconditionedIterativeKrylovSolver()
     {
-        if(!fExternalRestartCondition)
-        {
-            delete fRestartCondition;
-        }
     };
 
     template <typename ValueType,template <typename> class ParallelTrait>
@@ -146,15 +112,15 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
             solutionUpdated = false;
             trait.AugmentKrylovSubspace();
             trait.GetResidualNorm(this->fResidualNorm);
-            fRestartCondition->UpdateProgress(this->fResidualNorm);
+            this->GetRestartCondition()->UpdateProgress(this->fResidualNorm);
             this->fIteration++;
 
-            if( fRestartCondition->PerformRestart() )
+            if( this->GetRestartCondition()->PerformRestart() )
             {
                 trait.UpdateSolution();
                 trait.ResetAndInitialize(); //clears krylov subspace vectors, restarts from current solution
             }
-            else if( HasConverged() || (this->fIteration >= this->fMaxIterations) )
+            else if( HasConverged() || (this->fIteration >= this->GetMaximumIterations()) )
             {
                 trait.UpdateSolution();
                 solutionUpdated = true;
@@ -169,7 +135,7 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
 
             this->AcceptVisitors();
         }
-        while( !( HasConverged() ) && (this->fIteration < this->fMaxIterations) && !(this->Terminate()) );
+        while( !( HasConverged() ) && (this->fIteration < this->GetMaximumIterations()) && !(this->Terminate()) );
 
         if(!solutionUpdated){trait.UpdateSolution();};
 
@@ -177,6 +143,42 @@ class KPreconditionedIterativeKrylovSolver: public KIterativeSolver<ValueType>
         this->FinalizeVisitors();
 
         fTrait = NULL;
+    }
+
+    template <typename ValueType,template <typename> class ParallelTrait>
+    void KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::SolveCore(Vector& x, const Vector& b)
+    {
+    	Solve(*(this->GetMatrix()),*fPreconditioner,x,b);
+    }
+
+    template <typename ValueType,template <typename> class ParallelTrait>
+    inline bool KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::HasConverged() const
+    {
+        if(fUseRelativeTolerance)
+        {
+            double relative_residual_norm = (this->fResidualNorm)/(fInitialResidual);
+            if( relative_residual_norm > this->fTolerance ){return false;}
+            else{return true;}
+        }
+        else
+        {
+            if( this->fResidualNorm > this->fTolerance ){ return false; }
+            else{ return true; }
+        }
+    }
+
+    template <typename ValueType,template <typename> class ParallelTrait>
+    double KPreconditionedIterativeKrylovSolver<ValueType,ParallelTrait>::InnerProduct(const Vector& a, const Vector& b)
+    {
+        double result = 0.;
+
+        unsigned int dim = a.Dimension();
+        for(unsigned int i=0; i<dim; i++)
+        {
+            result += a(i)*b(i);
+        }
+
+        return result;
     }
 
 }//end of KEMField namespace

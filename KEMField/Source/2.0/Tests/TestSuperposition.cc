@@ -14,7 +14,7 @@
 
 #include "KDataDisplay.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -62,7 +62,7 @@
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
@@ -263,7 +263,7 @@ int main(int argc, char* argv[])
 			   potential2,
 			   scale);
 
-  KElectrostaticBoundaryIntegrator anIntegrator;
+  KElectrostaticBoundaryIntegrator anIntegrator {KEBIFactory::MakeDefault()};
 
   KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,anIntegrator);
   KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,anIntegrator);
@@ -295,9 +295,10 @@ KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> v2(surfaceContainer2,a
 
 #ifdef KEMFIELD_USE_OPENCL
   KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-  KOpenCLElectrostaticBoundaryIntegrator integrator(oclSurfaceContainer);
+  KOpenCLElectrostaticBoundaryIntegrator integrator {
+	  KoclEBIFactory::MakeDefault(oclSurfaceContainer)};
 #else
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
 #endif
 
   double P[3] = {0,0,0};
@@ -786,12 +787,13 @@ void ComputeChargeDensity(KSurfaceContainer& surfaceContainer,double rh_accuracy
 {
 #ifdef KEMFIELD_USE_OPENCL
   KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-  KOpenCLElectrostaticBoundaryIntegrator integrator(oclSurfaceContainer);
+  KOpenCLElectrostaticBoundaryIntegrator integrator {
+	  KoclEBIFactory::MakeDefault(oclSurfaceContainer)};
   KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > A(oclSurfaceContainer,integrator);
   KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(oclSurfaceContainer,integrator);
   KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(oclSurfaceContainer,integrator);
 #else
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
   KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,
 							      integrator);
   KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);

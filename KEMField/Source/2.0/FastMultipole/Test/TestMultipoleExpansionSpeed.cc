@@ -14,7 +14,7 @@
 #include "KSurfaceTypes.hh"
 #include "KSurface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 
 #include "KSurfaceContainer.hh"
 #include "KBoundaryIntegralMatrix.hh"
@@ -285,7 +285,7 @@ int main(int argc, char** argv)
     }
 
 
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
   KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(sC,integrator);
 
     //normalize charge density on all triangles so they have unit potential

@@ -2,7 +2,8 @@
 #include "KSNavigatorsMessage.h"
 
 #include <limits>
-using std::numeric_limits;
+
+using namespace std;
 
 namespace Kassiopeia
 {

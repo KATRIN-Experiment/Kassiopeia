@@ -10,7 +10,8 @@
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE K_elliptic( CU_TYPE eta )
+__forceinline__ __device__
+CU_TYPE K_elliptic( CU_TYPE eta )
 {
   CU_TYPE ln4=1.386294361119890;
   CU_TYPE a[10]={9.657359028085625e-2,3.088514627130518e-2,
@@ -47,7 +48,8 @@ __forceinline__ __device__ CU_TYPE K_elliptic( CU_TYPE eta )
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE E_elliptic( CU_TYPE eta )
+__forceinline__ __device__
+CU_TYPE E_elliptic( CU_TYPE eta )
 {
   CU_TYPE c[10]={4.431471805608895e-1,5.680519456755915e-2,
 		 2.183181167613048e-2,1.156959574529540e-2,
@@ -84,7 +86,8 @@ __forceinline__ __device__ CU_TYPE E_elliptic( CU_TYPE eta )
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EK_elliptic( CU_TYPE eta )
+__forceinline__ __device__
+CU_TYPE EK_elliptic( CU_TYPE eta )
 {
   CU_TYPE k2,EK,k2n,a,b,cn;
   int n;
@@ -111,7 +114,8 @@ __forceinline__ __device__ CU_TYPE EK_elliptic( CU_TYPE eta )
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EC_PotentialFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
+__forceinline__ __device__
+CU_TYPE EC_PotentialFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
 {
   CU_TYPE Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
   CU_TYPE R = par[3]+P[0]/par[6]*(par[5]-par[3]);
@@ -129,7 +133,8 @@ __forceinline__ __device__ CU_TYPE EC_PotentialFromChargedRing( const CU_TYPE *P
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EC_EFieldRFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
+__forceinline__ __device__
+CU_TYPE EC_EFieldRFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
 {
   CU_TYPE Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
   CU_TYPE R = par[3]+P[0]/par[6]*(par[5]-par[3]);
@@ -148,7 +153,8 @@ __forceinline__ __device__ CU_TYPE EC_EFieldRFromChargedRing( const CU_TYPE *P, 
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EC_EFieldZFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
+__forceinline__ __device__
+CU_TYPE EC_EFieldZFromChargedRing( const CU_TYPE *P, CU_TYPE *par )
 {
   CU_TYPE Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
   CU_TYPE R = par[3]+P[0]/par[6]*(par[5]-par[3]);
@@ -172,7 +178,8 @@ GaussianQuadrature(EC_EFieldZFromChargedRing)
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE EC_Potential( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__
+CU_TYPE EC_Potential( const CU_TYPE* P, const CU_TYPE* data )
 {
   CU_TYPE ln4=1.386294361119890;
 
@@ -254,7 +261,8 @@ __forceinline__ __device__ CU_TYPE EC_Potential( const CU_TYPE* P, const CU_TYPE
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE4 EC_EField( const CU_TYPE* P, const CU_TYPE* data )
+__forceinline__ __device__
+CU_TYPE4 EC_EField( const CU_TYPE* P, const CU_TYPE* data )
 {
   CU_TYPE ln4=1.386294361119890;
 
@@ -365,6 +373,18 @@ __forceinline__ __device__ CU_TYPE4 EC_EField( const CU_TYPE* P, const CU_TYPE* 
   }
 
   return field;
+}
+
+
+//______________________________________________________________________________
+
+__forceinline__ __device__
+CU_TYPE4 EC_EFieldAndPotential(const CU_TYPE* P, const CU_TYPE* data)
+{
+  CU_TYPE4 field = EL_EField( P, data );
+  CU_TYPE phi = EL_Potential( P, data );
+
+  return MAKECU4( field.x, field.y, field.z, phi );
 }
 
 #endif /* KEMFIELD_ELECTROSTATICCONICSECTION_CUH */

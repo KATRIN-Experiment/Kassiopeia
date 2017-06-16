@@ -23,6 +23,11 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSTrajTermSynchrotron::SetEnhancement );
             return true;
         }
+        if( aContainer->GetName() == "old_methode" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajTermSynchrotron::SetOldMethode );
+            return true;
+        }
         return false;
     }
 

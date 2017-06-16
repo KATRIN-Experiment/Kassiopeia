@@ -342,8 +342,11 @@ namespace Kassiopeia
         }
 
         //we use the kemfield file interface
-        std::string file( SCRATCH_DEFAULT_DIR );
-        file = file + "/" + fFileName;
+        if ( fPath == "" )
+        {
+            fPath = SCRATCH_DEFAULT_DIR;
+        }
+        std::string file = fPath + "/" + fFileName;
 
         KEMFileInterface::GetInstance()->Write(file, data, "octree", labels );
     }

@@ -13,6 +13,9 @@
 #include "KSRootMagneticField.h"
 #include "KSMainMessage.h"
 
+#include "KSFieldFinder.h"
+#include "KToolbox.h"
+
 #include "KConst.h"
 
 #include "KRandom.h"
@@ -28,6 +31,7 @@
 #include "KEMVTKFieldCanvas.hh"
 
 #include <sstream>
+
 using std::stringstream;
 
 using namespace Kassiopeia;
@@ -75,7 +79,7 @@ int main( int anArgc, char** anArgv )
   unsigned int tCount = 100;
 
   // initialize magnetic field
-  KSMagneticField* tRootMagneticField = KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( tPath );
+  KSMagneticField* tRootMagneticField = getMagneticField( tPath );
 
   if (tRootMagneticField)
   {
@@ -84,7 +88,7 @@ int main( int anArgc, char** anArgv )
   }
 
   // initialize electric field
-  KSElectricField* tRootElectricField = KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( tPath );
+  KSElectricField* tRootElectricField = getElectricField( tPath );
 
   if (tRootElectricField)
   {
@@ -240,7 +244,6 @@ if (tRootElectricField)
    tRootElectricField->Deinitialize();
  }
 
-KSToolbox::DeleteInstance();
 
 return 0;
 }

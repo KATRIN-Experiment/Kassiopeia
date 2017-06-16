@@ -4,6 +4,7 @@
 #include "KSGenEnergyKryptonEventBuilder.h"
 #include "KSGenEnergyRadonEventBuilder.h"
 #include "KSGenEnergyLeadEventBuilder.h"
+#include "KSGenEnergyRydbergBuilder.h"
 #include "KSGenNCompositeBuilder.h"
 #include "KSGenLCompositeBuilder.h"
 #include "KSGenLUniformMaxNBuilder.h"
@@ -11,6 +12,7 @@
 #include "KSGenPositionRectangularCompositeBuilder.h"
 #include "KSGenPositionCylindricalCompositeBuilder.h"
 #include "KSGenPositionSphericalCompositeBuilder.h"
+#include "KSGenPositionFrustrumCompositeBuilder.h"
 #include "KSGenPositionSpaceRandomBuilder.h"
 #include "KSGenPositionSurfaceRandomBuilder.h"
 #include "KSGenPositionSurfaceAdjustmentStepBuilder.h"
@@ -18,6 +20,7 @@
 #include "KSGenMomentumRectangularCompositeBuilder.h"
 #include "KSGenDirectionSphericalCompositeBuilder.h"
 #include "KSGenDirectionSurfaceCompositeBuilder.h"
+#include "KSGenSpinCompositeBuilder.h"
 #include "KSGenPositionMaskBuilder.h"
 #include "KSGenTimeCompositeBuilder.h"
 #include "KSGenValueFixBuilder.h"
@@ -34,6 +37,8 @@
 #endif
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -52,6 +57,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyKryptonEvent >( "energy_krypton_event" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyRadonEvent >( "energy_radon_event" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyLeadEvent >( "energy_lead_event" ) +
+        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyRydberg >( "energy_rydberg" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenNComposite >( "n_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenLComposite >( "l_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenLUniformMaxN >( "l_uniform_max_n" ) +
@@ -59,6 +65,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionRectangularComposite >( "position_rectangular_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionCylindricalComposite >( "position_cylindrical_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSphericalComposite >( "position_spherical_composite" ) +
+        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionFrustrumComposite >( "position_frustrum_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSpaceRandom >( "position_space_random" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceAdjustmentStep >( "position_surface_adjustment_step" ) +
@@ -67,6 +74,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenMomentumRectangularComposite >( "momentum_rectangular_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenDirectionSphericalComposite >( "direction_spherical_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenDirectionSurfaceComposite >( "direction_surface_composite" ) +
+        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenSpinComposite >( "spin_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenTimeComposite >( "time_composite" )+
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenValueFix >( "pid_fix" )+
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenValueGauss >( "pid_gauss" )+

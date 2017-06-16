@@ -8,13 +8,14 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-
-#include "KSFieldElectrostatic.h"
-#include "KSFieldElectromagnet.h"
 #include "KElectromagnetContainer.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+#include "KElectrostaticBoundaryFieldWithKGeoBag.hh"
+#include "KElectricZHFieldSolver.hh"
 #include "KSMainMessage.h"
 #include "KConst.h"
+
+#include "KThreeVector.hh"
 
 #include "TApplication.h"
 #include "TCanvas.h"
@@ -24,6 +25,7 @@
 #include <sstream>
 using std::stringstream;
 
+using namespace KEMField;
 using namespace Kassiopeia;
 using namespace katrin;
 
@@ -76,21 +78,23 @@ int main( int anArgc, char** anArgv )
 //    TGraph tMagStrengthGraph;
 
 
-    KSFieldElectrostatic* tElField = KSToolbox::GetInstance()->GetObjectAs<KSFieldElectrostatic>( tElFieldName );
+    KElectrostaticBoundaryFieldWithKGeoBag* tElField =
+            KToolbox::GetInstance().Get<KElectrostaticBoundaryFieldWithKGeoBag>( tElFieldName );
     tElField->Initialize();
 
-//    KSFieldElectromagnet* tMagField = KSToolbox::GetInstance()->GetObjectAs<KSFieldElectromagnet>( tMagFieldName );
+//    KStaticElectromagnetField* tMagField =
+//          KToolbox::GetInstance().Get<KStaticElectromagnetField>( tMagFieldName );
 //    tMagField->Initialize();
 
-    KGBEMConverter* tElConverter = tElField->GetConverter();
+    KEMField::KSmartPointer<KGeoBag::KGBEMConverter> tElConverter = tElField->GetConverter();
 //    KGElectromagnetConverter* tMagConverter = tMagField->GetConverter();
 
-    KSFieldElectrostatic::ZonalHarmonicFieldSolver* tElZHSolver = dynamic_cast<KSFieldElectrostatic::ZonalHarmonicFieldSolver*>(tElField->GetFieldSolver());
-//    KSFieldElectromagnet::ZonalHarmonicFieldSolver* tMagZHSolver = dynamic_cast<KSFieldElectromagnet::ZonalHarmonicFieldSolver*>(tMagField->GetFieldSolver());
+    KElectricZHFieldSolver* tElZHSolver = dynamic_cast<KElectricZHFieldSolver*>(&(*tElField->GetFieldSolver()));
+//    KZonalHarmonicMagnetostaticFieldSolver* tMagZHSolver = dynamic_cast<KZonalHarmonicMagnetostaticFieldSolver*>(&(*tMagField->GetFieldSolver()));
 
     double tZ = -12.2;
     double tR = 0.;
-    KThreeVector tPosition;
+    KGeoBag::KThreeVector tPosition;
 
     for( int i=0; i<5000; i++)
     {
@@ -165,8 +169,6 @@ int main( int anArgc, char** anArgv )
     tApplication.Run();
 
     // deinitialize kassiopeia
-
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

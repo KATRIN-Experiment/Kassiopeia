@@ -97,6 +97,8 @@ private:
     ///\brief standart terminal, used by showonscreen
     static std::string       terminal_std;
 
+    static int               strm_precision;
+
     //----------------------------------------------------------------------------------
     // member functions (auxiliary functions)
     // ---------------------------------------------------
@@ -730,6 +732,8 @@ inline Gnuplot& Gnuplot::plot_xy(const X& x, const Y& y, const std::string &titl
     if (name == "")
         return *this;
 
+    tmp.precision( Gnuplot::strm_precision );
+
     //
     // write the data to file
     //
@@ -772,6 +776,8 @@ inline Gnuplot& Gnuplot::plot_xy_err(const X &x,
     std::string name = create_tmpfile(tmp);
     if (name == "")
         return *this;
+
+    tmp.precision( Gnuplot::strm_precision );
 
     //
     // write the data to file
@@ -817,6 +823,8 @@ inline Gnuplot& Gnuplot::plot_xyz(const X &x,
     std::string name = create_tmpfile(tmp);
     if (name == "")
         return *this;
+
+    tmp.precision( Gnuplot::strm_precision );
 
     //
     // write the data to file

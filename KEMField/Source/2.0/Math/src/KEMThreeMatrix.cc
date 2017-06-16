@@ -21,4 +21,7 @@ namespace KEMField
     {
     }
 
+    const KEMThreeMatrix KEMThreeMatrix::sZero = KEMThreeMatrix(0. , 0. , 0. ,
+                                                                0. , 0. , 0. ,
+                                                                0. , 0. , 0. );
 }

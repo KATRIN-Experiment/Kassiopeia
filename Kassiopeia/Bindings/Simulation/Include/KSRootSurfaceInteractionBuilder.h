@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootSurfaceInteraction.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "set_surface_interaction" )
         {
-            fObject->SetSurfaceInteraction( KSToolbox::GetInstance()->GetObjectAs< KSSurfaceInteraction >( aContainer->AsReference< string >() ) );
+            fObject->SetSurfaceInteraction( KToolbox::GetInstance().Get< KSSurfaceInteraction >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

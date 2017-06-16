@@ -6,7 +6,8 @@
 #include "KSurface.hh"
 #include "KSurfaceTypes.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorOptions.hh"
+
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -24,8 +25,6 @@
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
-#include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
@@ -75,10 +74,11 @@ int main(int argc, char* argv[])
 #endif
     "\t -m, --method             (gauss"
 #ifdef KEMFIELD_USE_PETSC
-    ", robinhood or PETSc)\n";
+    ", robinhood or PETSc)\n"
 #else
-  " or robinhood)\n";
+  " or robinhood)\n"
 #endif
+    "\t -b, --integrator_type         (integrator_type 0=analytic, 1=RWG, 2=numeric)\n";
 
   int verbose = 3;
   int scale = 1;
@@ -90,6 +90,7 @@ int main(int argc, char* argv[])
   bool usePlot = false;
 #endif
   int method = 1;
+  int integrator_type = 2;
 
   static struct option longOptions[] = {
     {"help", no_argument, 0, 'h'},
@@ -102,12 +103,13 @@ int main(int argc, char* argv[])
     {"with-plot", no_argument, 0, 'e'},
 #endif
     {"method", required_argument, 0, 'm'},
+    {"integrator_type", required_argument, 0, 'b'},
   };
 
 #ifdef KEMFIELD_USE_VTK
-  static const char *optString = "hv:s:p:t:a:i:em:";
+  static const char *optString = "hv:s:p:t:a:i:em:b:";
 #else
-  static const char *optString = "hv:s:p:t:a:i:m:";
+  static const char *optString = "hv:s:p:t:a:i:m:b:";
 #endif
 
   while(1) {
@@ -145,6 +147,9 @@ int main(int argc, char* argv[])
 #endif
     case('m'):
       method = atoi(optarg);
+      break;
+    case('b'):
+      integrator_type = atoi(optarg);
       break;
     default: // unrecognized option
       MPI_SINGLE_PROCESS
@@ -200,76 +205,84 @@ int main(int argc, char* argv[])
     r0 = r1;
   }
 
-  if (method == 0)
+  IntegratorOption integratorSelection = integratorOptionList.at(integrator_type);
+  MPI_SINGLE_PROCESS
   {
-    KElectrostaticBoundaryIntegrator integrator;
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
-
-    KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
-    gaussianElimination.Solve(A,x,b);
+          KEMField::cout << "Using "<< integratorSelection.name << " integrator." << KEMField::endl;
   }
-  else if (method == 1)
+
+  if (method == 0) // Gaussian Elimination
+  {
+
+      KElectrostaticBoundaryIntegrator integrator {integratorSelection.Create()};
+      KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
+      KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
+      KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
+
+      KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
+      gaussianElimination.Solve(A,x,b);
+  }
+  else if (method == 1) // Robin Hood
   {
 #ifdef KEMFIELD_USE_OPENCL
-    KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-    KOpenCLElectrostaticBoundaryIntegrator integrator(oclSurfaceContainer);
-    KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > A(oclSurfaceContainer,integrator);
-    KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(oclSurfaceContainer,integrator);
-    KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(oclSurfaceContainer,integrator);
+	  KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
+	  KOpenCLElectrostaticBoundaryIntegrator integrator {integratorSelection.CreateOCL(oclSurfaceContainer)};
+	  KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > A(oclSurfaceContainer,integrator);
+	  KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(oclSurfaceContainer,integrator);
+	  KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(oclSurfaceContainer,integrator);
 #else
-    KElectrostaticBoundaryIntegrator integrator;
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
+	  KElectrostaticBoundaryIntegrator integrator {integratorSelection.Create()};
+	  KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
+	  KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
+	  KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
 #endif
 
 #if defined(KEMFIELD_USE_MPI) && defined(KEMFIELD_USE_OPENCL)
-    KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
-	       KRobinHood_MPI_OpenCL> robinHood;
+	  KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
+	  KRobinHood_MPI_OpenCL> robinHood;
 #ifndef KEMFIELD_USE_DOUBLE_PRECISION
-    robinHood.SetTolerance((accuracy > 1.e-5 ? accuracy : 1.e-5));
+	  robinHood.SetTolerance((accuracy > 1.e-5 ? accuracy : 1.e-5));
 #else
-    robinHood.SetTolerance(accuracy);
+	  robinHood.SetTolerance(accuracy);
 #endif
 #elif defined(KEMFIELD_USE_MPI)
-    KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
-	       KRobinHood_MPI> robinHood;
+	  KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
+	  KRobinHood_MPI> robinHood;
 #elif defined(KEMFIELD_USE_OPENCL)
-    KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
-	       KRobinHood_OpenCL> robinHood;
+	  KRobinHood<KElectrostaticBoundaryIntegrator::ValueType,
+	  KRobinHood_OpenCL> robinHood;
 #ifndef KEMFIELD_USE_DOUBLE_PRECISION
-    robinHood.SetTolerance((accuracy > 1.e-5 ? accuracy : 1.e-5));
+	  robinHood.SetTolerance((accuracy > 1.e-5 ? accuracy : 1.e-5));
 #else
-    robinHood.SetTolerance(accuracy);
+	  robinHood.SetTolerance(accuracy);
 #endif
 #else
-    KRobinHood<KElectrostaticBoundaryIntegrator::ValueType> robinHood;
+	  KRobinHood<KElectrostaticBoundaryIntegrator::ValueType> robinHood;
 #endif
 
-    robinHood.AddVisitor(new KIterationDisplay<KElectrostaticBoundaryIntegrator::ValueType>());
+	  robinHood.AddVisitor(new KIterationDisplay<KElectrostaticBoundaryIntegrator::ValueType>());
 
 #ifdef KEMFIELD_USE_VTK
-    MPI_SINGLE_PROCESS
-      if (usePlot)
-	robinHood.AddVisitor(new KVTKIterationPlotter<KElectrostaticBoundaryIntegrator::ValueType>(5));
+	  MPI_SINGLE_PROCESS
+	  if (usePlot)
+		  robinHood.AddVisitor(new KVTKIterationPlotter<KElectrostaticBoundaryIntegrator::ValueType>(5));
 #endif
 
-    robinHood.SetResidualCheckInterval(increment);
-    robinHood.Solve(A,x,b);
-  }
-#ifdef KEMFIELD_USE_PETSC
-  else if (method == 2)
-  {
-    KElectrostaticBoundaryIntegrator integrator;
-    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
-    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
-    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
+	  robinHood.SetResidualCheckInterval(increment);
+	  robinHood.Solve(A,x,b);
+  } // robin hood method
 
-    KPETScSolver<KElectrostaticBoundaryIntegrator::ValueType> petscSolver;
-    petscSolver.SetTolerance(accuracy);
-    petscSolver.Solve(A,x,b);
+#ifdef KEMFIELD_USE_PETSC
+  else if (method == 2) // in this particular case the numeric boundary integrator has been implemented exclusively
+  {
+      KElectrostaticBoundaryIntegrator integrator;
+      KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
+      KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
+      KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
+
+      KPETScSolver<KElectrostaticBoundaryIntegrator::ValueType> petscSolver;
+      petscSolver.SetTolerance(accuracy);
+      petscSolver.Solve(A,x,b);
   }
 #endif
 

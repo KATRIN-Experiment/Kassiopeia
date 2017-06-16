@@ -1,4 +1,4 @@
-#include "../Include/KSGenSpecial.h"
+#include "KSGenSpecial.h"
 
 namespace Kassiopeia
 {

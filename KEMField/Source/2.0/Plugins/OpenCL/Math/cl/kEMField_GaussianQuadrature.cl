@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_GAUSSIANQUADRATURE_CL
 #define KEMFIELD_GAUSSIANQUADRATURE_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #define EVALUATE( x )       x
 #define CONCATENATE(x, y)  x ## EVALUATE(y)

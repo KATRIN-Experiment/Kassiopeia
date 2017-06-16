@@ -8,6 +8,7 @@
 #include <fstream>
 
 
+
 #include "KGBox.hh"
 #include "KGRectangle.hh"
 #include "KGRotatedObject.hh"
@@ -25,7 +26,7 @@
 #include "KEMFileInterface.hh"
 #include "KDataDisplay.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -60,7 +61,7 @@
 #include "KFMElectrostaticFieldMapper_OpenCL.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticNumericBoundaryIntegrator.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
@@ -329,13 +330,13 @@ int main(int argc, char** argv)
         KOpenCLInterface::GetInstance()->SetActiveData( oclSurfaceContainer );
     }
 
-    KOpenCLElectrostaticBoundaryIntegrator direct_integrator(*oclSurfaceContainer);
+    KOpenCLElectrostaticNumericBoundaryIntegrator direct_integrator(*oclSurfaceContainer);
     KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > A(*oclSurfaceContainer,direct_integrator);
     KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(*oclSurfaceContainer,direct_integrator);
     KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(*oclSurfaceContainer,direct_integrator);
     #else
     //standard
-    KElectrostaticBoundaryIntegrator direct_integrator;
+    KElectrostaticBoundaryIntegrator direct_integrator {KEBIFactory::MakeDefault()};
     KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,direct_integrator);
     KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,direct_integrator);
     KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,direct_integrator);
@@ -394,7 +395,7 @@ int main(int argc, char** argv)
         KOpenCLInterface::GetInstance()->SetActiveData( oclSurfaceContainer );
     }
 
-    KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclSurfaceContainer, direct_integrator);
+    KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>(*oclSurfaceContainer, direct_integrator);
     direct_solver->Initialize();
     #else
     KElectrostaticBoundaryIntegrator direct_integrator_single_thread;

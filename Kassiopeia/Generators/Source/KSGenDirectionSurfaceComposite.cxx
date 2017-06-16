@@ -75,7 +75,7 @@ namespace Kassiopeia
                     tSurface = fSurfaces.front();
 
                     // find surface which is closest to the particle
-                    tSmallestSurfaceDistance = KSNumerical< double >::Maximum;
+                    tSmallestSurfaceDistance = KSNumerical< double >::Maximum();
                     for( tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end(); tSurfaceIt++ )
                     {
                         tSurfacePoint = (*tSurfaceIt)->Point( tParticle->GetPosition() );  // nearest point on surface to given point

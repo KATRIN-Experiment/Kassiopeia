@@ -3,8 +3,6 @@
 
 #include "KProcessor.hh"
 
-#include <cstdlib>
-
 namespace katrin
 {
     class KSerializationProcessor :
@@ -29,11 +27,12 @@ namespace katrin
             virtual void ProcessToken( KCommentToken* aToken );
             virtual void ProcessToken( KErrorToken* aToken );
 
-            string GetConfig(){return completeconfig;}
+            std::string GetConfig() { return completeconfig; }
+            void Clear() { completeconfig.clear(); }
 
        private:
-            string completeconfig;
-            string fOutputFilename;
+            std::string completeconfig;
+            std::string fOutputFilename;
 
             typedef enum
             {

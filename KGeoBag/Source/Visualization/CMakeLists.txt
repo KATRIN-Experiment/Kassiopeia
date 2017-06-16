@@ -74,14 +74,15 @@ if( KGeoBag_USE_VTK )
 	# target
 	add_library( KGeoBagVtkVisualization SHARED ${VTK_VISUALIZATION_SOURCE_FILES} ${VTK_VISUALIZATION_HEADER_FILES} )
 	target_link_libraries( KGeoBagVtkVisualization
-		${VTK_LIBRARIES}
-		${Kommon_LIBRARIES}
 		KGeoBagBasicVisualization
 		KGeoBagCore
 		KGeoBagShapes
 		KGeoBagAppearance
 		KGeoBagMesh
 		KGeoBagAxialMesh
+        ${Kommon_LIBRARIES}
+        ${Kommon_Vtk_LIBRARIES}
+        ${VTK_LIBRARIES}
 	)
 
 	# install

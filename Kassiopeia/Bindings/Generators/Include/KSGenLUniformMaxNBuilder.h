@@ -7,7 +7,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGenLUniformMaxN.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin {

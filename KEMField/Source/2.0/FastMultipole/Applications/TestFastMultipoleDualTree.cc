@@ -7,7 +7,6 @@
 #include <sstream>
 #include <fstream>
 
-
 #include "KGBox.hh"
 #include "KGRectangle.hh"
 #include "KGRotatedObject.hh"
@@ -25,7 +24,7 @@
 #include "KEMFileInterface.hh"
 #include "KDataDisplay.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -57,7 +56,7 @@
 #ifdef KEMFIELD_USE_OPENCL
 #include "KFMElectrostaticTreeManager_OpenCL.hh"
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticNumericBoundaryIntegrator.hh"
 #include "KOpenCLElectrostaticIntegratingFieldSolver.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 #endif
@@ -94,7 +93,7 @@ using namespace KEMField;
 
 
 //#ifdef KEMFIELD_USE_OPENCL
-//KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver;
+//KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>* direct_solver;
 //#else
 KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver;
 //#endif
@@ -247,7 +246,7 @@ int main(int argc, char** argv)
     std::cout<<"n elements in surface container = "<<surfaceContainer.size()<<std::endl;
 
 
-//    KElectrostaticBoundaryIntegrator integrator;
+//    KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
 //    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
 //    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
 //    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
@@ -333,10 +332,10 @@ int main(int argc, char** argv)
 
 //    #ifdef KEMFIELD_USE_OPENCL
     KOpenCLSurfaceContainer ocl_container(surfaceContainer);
-//    KOpenCLElectrostaticBoundaryIntegrator integrator(ocl_container);
-//    direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(ocl_container,integrator);
+//    KOpenCLElectrostaticNumericBoundaryIntegrator integrator(ocl_container);
+//    direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>(ocl_container,integrator);
 //    #else
-    KElectrostaticBoundaryIntegrator integrator;
+    KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
     direct_solver = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer,integrator);
 //    #endif
 

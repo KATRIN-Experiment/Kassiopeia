@@ -623,7 +623,7 @@ namespace Kassiopeia
         tOrthogonalTwo = tInitialDirection.Cross( tOrthogonalOne );
         tFinalDirection = tInitialDirection.Magnitude() * (sin( tTheta ) * (cos( tPhi ) * tOrthogonalOne.Unit() + sin( tPhi ) * tOrthogonalTwo.Unit()) + cos( tTheta ) * tInitialDirection.Unit());
 
-        KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+        KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
         (*tSecondary) = anInitialParticle;
         tSecondary->SetMomentum( tFinalDirection );
         tSecondary->SetKineticEnergy_eV( tLostKineticEnergy - fIonizationEnergy );
@@ -641,7 +641,7 @@ namespace Kassiopeia
     double KSIntCalculatorArgonSingleIonisation::GetEnergyLoss( const double &anEnergy, const double & ) const
     {
         assert( anEnergy == anEnergy );
-        assert( anEnergy > 0. );
+        assert( anEnergy > fIonizationEnergy );
 
         double tmpSecEnergy;
         double tmpMaxCross = KConst::BohrRadiusSquared() * 13.2 / anEnergy * log( (anEnergy + 120.0 / anEnergy) / 15.76 ) * 10.3 * 10.3 / (pow( 0. - 2. + 100. / (10. + anEnergy), 2 ) + 10.3 * 10.3);
@@ -800,7 +800,7 @@ namespace Kassiopeia
             tOrthogonalTwo = tInitialDirection.Cross( tOrthogonalOne );
             tFinalDirection = tInitialDirection.Magnitude() * (sin( tTheta ) * (cos( tPhi ) * tOrthogonalOne.Unit() + sin( tPhi ) * tOrthogonalTwo.Unit()) + cos( tTheta ) * tInitialDirection.Unit());
 
-            KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+            KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
             (*tSecondary) = anInitialParticle;
             tSecondary->SetMomentum( tFinalDirection );
             tSecondary->SetKineticEnergy_eV( tLostKineticEnergy - fIonizationEnergy->at( i ) );

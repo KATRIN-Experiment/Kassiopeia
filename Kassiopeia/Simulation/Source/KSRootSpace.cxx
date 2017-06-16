@@ -2,6 +2,8 @@
 
 #include "KSGeometryMessage.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

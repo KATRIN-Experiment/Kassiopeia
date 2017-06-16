@@ -19,7 +19,7 @@ namespace KEMField
   public:
     typedef typename Integrator::Basis::ValueType ValueType;
 
-    KBoundaryIntegralMatrix(KSurfaceContainer& c,Integrator& integrator);
+    KBoundaryIntegralMatrix(const KSurfaceContainer& c,Integrator& integrator);
 
     ~KBoundaryIntegralMatrix() {}
 
@@ -47,7 +47,7 @@ namespace KEMField
     }
 
   protected:
-    KSurfaceContainer& fContainer;
+    const KSurfaceContainer& fContainer;
     const unsigned int fDimension;
     Integrator& fIntegrator;
 
@@ -57,7 +57,7 @@ namespace KEMField
 
   template <class Integrator, bool enableCaching>
   KBoundaryIntegralMatrix<Integrator,enableCaching>::
-  KBoundaryIntegralMatrix(KSurfaceContainer& c,Integrator& integrator) :
+  KBoundaryIntegralMatrix(const KSurfaceContainer& c,Integrator& integrator) :
     KSquareMatrix<ValueType>(),
     fContainer(c),
     fDimension(c.size()*Integrator::Basis::Dimension),

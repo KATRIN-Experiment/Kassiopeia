@@ -7,5 +7,6 @@ set (LINEARALGEBRA_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KBoundaryIntegralMatrix.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KBoundaryIntegralVector.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KBoundaryIntegralSolutionVector.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KBoundaryMatrixGenerator.hh
 )
 

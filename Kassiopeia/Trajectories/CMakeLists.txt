@@ -7,10 +7,25 @@ set( TRAJECTORIES_HEADER_BASENAMES
     KSTrajExactError.h
     KSTrajExactTypes.h
 
+    KSTrajExactSpinParticle.h
+    KSTrajExactSpinDerivative.h
+    KSTrajExactSpinError.h
+    KSTrajExactSpinTypes.h
+
+    KSTrajExactTrappedParticle.h
+    KSTrajExactTrappedDerivative.h
+    KSTrajExactTrappedError.h
+    KSTrajExactTrappedTypes.h
+
     KSTrajAdiabaticParticle.h
     KSTrajAdiabaticDerivative.h
     KSTrajAdiabaticError.h
     KSTrajAdiabaticTypes.h
+
+    KSTrajAdiabaticSpinParticle.h
+    KSTrajAdiabaticSpinDerivative.h
+    KSTrajAdiabaticSpinError.h
+    KSTrajAdiabaticSpinTypes.h
 
     KSTrajElectricParticle.h
     KSTrajElectricDerivative.h
@@ -29,6 +44,7 @@ set( TRAJECTORIES_HEADER_BASENAMES
     KSTrajIntegratorRK86.h
     KSTrajIntegratorRK87.h
     KSTrajIntegratorRK8.h
+    KSTrajIntegratorSym4.h
 
     KSTrajInterpolatorFast.h
     KSTrajInterpolatorHermite.h
@@ -37,10 +53,14 @@ set( TRAJECTORIES_HEADER_BASENAMES
     KSTrajTermPropagation.h
     KSTrajTermConstantForcePropagation.h
     KSTrajTermSynchrotron.h
+    KSTrajTermGravity.h
     KSTrajTermGyration.h
     KSTrajTermDrift.h
 
     KSTrajControlCyclotron.h
+    KSTrajControlBChange.h
+    KSTrajControlSpinPrecession.h
+    KSTrajControlMDot.h
     KSTrajControlTime.h
     KSTrajControlLength.h
     KSTrajControlEnergy.h
@@ -49,7 +69,10 @@ set( TRAJECTORIES_HEADER_BASENAMES
     KSTrajControlMagneticMoment.h
 
     KSTrajTrajectoryExact.h
+    KSTrajTrajectoryExactSpin.h
+    KSTrajTrajectoryExactTrapped.h
     KSTrajTrajectoryAdiabatic.h
+    KSTrajTrajectoryAdiabaticSpin.h
     KSTrajTrajectoryElectric.h
     KSTrajTrajectoryMagnetic.h
     KSTrajTrajectoryLinear.h
@@ -69,9 +92,21 @@ set( TRAJECTORIES_SOURCE_BASENAMES
     KSTrajExactDerivative.cxx
     KSTrajExactError.cxx
 
+    KSTrajExactSpinParticle.cxx
+    KSTrajExactSpinDerivative.cxx
+    KSTrajExactSpinError.cxx
+
+    KSTrajExactTrappedParticle.cxx
+    KSTrajExactTrappedDerivative.cxx
+    KSTrajExactTrappedError.cxx
+
     KSTrajAdiabaticParticle.cxx
     KSTrajAdiabaticDerivative.cxx
     KSTrajAdiabaticError.cxx
+
+    KSTrajAdiabaticSpinParticle.cxx
+    KSTrajAdiabaticSpinDerivative.cxx
+    KSTrajAdiabaticSpinError.cxx
 
     KSTrajElectricParticle.cxx
     KSTrajElectricDerivative.cxx
@@ -88,6 +123,7 @@ set( TRAJECTORIES_SOURCE_BASENAMES
     KSTrajIntegratorRK86.cxx
     KSTrajIntegratorRK87.cxx
     KSTrajIntegratorRK8.cxx
+    KSTrajIntegratorSym4.cxx
 
     KSTrajInterpolatorFast.cxx
     KSTrajInterpolatorHermite.cxx
@@ -96,10 +132,14 @@ set( TRAJECTORIES_SOURCE_BASENAMES
     KSTrajTermPropagation.cxx
     KSTrajTermConstantForcePropagation.cxx
     KSTrajTermSynchrotron.cxx
+    KSTrajTermGravity.cxx
     KSTrajTermGyration.cxx
     KSTrajTermDrift.cxx
 
     KSTrajControlCyclotron.cxx
+    KSTrajControlBChange.cxx
+    KSTrajControlSpinPrecession.cxx
+    KSTrajControlMDot.cxx
     KSTrajControlTime.cxx
     KSTrajControlLength.cxx
     KSTrajControlEnergy.cxx
@@ -108,7 +148,10 @@ set( TRAJECTORIES_SOURCE_BASENAMES
     KSTrajControlMagneticMoment.cxx
 
     KSTrajTrajectoryExact.cxx
+    KSTrajTrajectoryExactSpin.cxx
+    KSTrajTrajectoryExactTrapped.cxx
     KSTrajTrajectoryAdiabatic.cxx
+    KSTrajTrajectoryAdiabaticSpin.cxx
     KSTrajTrajectoryElectric.cxx
     KSTrajTrajectoryMagnetic.cxx
     KSTrajTrajectoryLinear.cxx

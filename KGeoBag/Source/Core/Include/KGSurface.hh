@@ -46,7 +46,7 @@ namespace KGeoBag
             KGExtendedSurface< XExtension >* MakeExtension( const typename XExtension::Surface& aCopy );
 
         protected:
-            vector< KGExtensibleSurface* > fExtensions;
+            std::vector< KGExtensibleSurface* > fExtensions;
 
             //************
             //structurable

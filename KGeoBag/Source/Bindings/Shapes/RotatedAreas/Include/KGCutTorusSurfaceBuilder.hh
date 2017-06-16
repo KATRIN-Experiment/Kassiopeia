@@ -4,16 +4,17 @@
 #include "KGCutTorusSurface.hh"
 
 #include "KComplexElement.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGCutTorusSurface > KGCutTorusSurfaceBuilder;
+    typedef KComplexElement< KGeoBag::KGCutTorusSurface > KGCutTorusSurfaceBuilder;
 
     template< >
     inline bool KGCutTorusSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
+        using namespace KGeoBag;
+
         if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );

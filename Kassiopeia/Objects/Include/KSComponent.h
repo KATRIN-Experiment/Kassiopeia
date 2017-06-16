@@ -18,8 +18,8 @@ namespace Kassiopeia
 
         public:
             virtual KSComponent* Clone() const = 0;
-            virtual KSComponent* Component( const string& aField ) = 0;
-            virtual KSCommand* Command( const string& aField, KSComponent* aChild ) = 0;
+            virtual KSComponent* Component( const std::string& aField ) = 0;
+            virtual KSCommand* Command( const std::string& aField, KSComponent* aChild ) = 0;
 
         public:
             typedef enum
@@ -63,7 +63,7 @@ namespace Kassiopeia
 
         protected:
             KSComponent* fParentComponent;
-            vector< KSComponent* > fChildComponents;
+            std::vector< KSComponent* > fChildComponents;
     };
 
     template< >

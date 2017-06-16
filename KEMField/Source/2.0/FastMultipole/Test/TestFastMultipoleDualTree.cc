@@ -7,7 +7,6 @@
 #include <sstream>
 #include <fstream>
 
-
 #include "KGBox.hh"
 #include "KGRectangle.hh"
 #include "KGRotatedObject.hh"
@@ -25,7 +24,7 @@
 #include "KEMFileInterface.hh"
 #include "KDataDisplay.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -53,7 +52,7 @@
 #ifdef KEMFIELD_USE_OPENCL
 #include "KFMElectrostaticTreeManager_OpenCL.hh"
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticNumericBoundaryIntegrator.hh"
 #include "KOpenCLElectrostaticIntegratingFieldSolver.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 #endif
@@ -244,7 +243,7 @@ int main(int argc, char** argv)
     params.verbosity = 2;
 
 
-    KElectrostaticBoundaryIntegrator integrator;
+    KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
     KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
     KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
     KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);
@@ -263,8 +262,8 @@ int main(int argc, char** argv)
 
     #ifdef KEMFIELD_USE_OPENCL
     KOpenCLSurfaceContainer ocl_container(surfaceContainer);
-    KOpenCLElectrostaticBoundaryIntegrator ocl_integrator(ocl_container);
-    KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(ocl_container,ocl_integrator);
+    KOpenCLElectrostaticNumericBoundaryIntegrator ocl_integrator(ocl_container);
+    KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>(ocl_container,ocl_integrator);
     #else
     KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer,integrator);
     #endif

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootSpaceNavigator.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "set_space_navigator" )
         {
-            fObject->SetSpaceNavigator( KSToolbox::GetInstance()->GetObjectAs< KSSpaceNavigator >( aContainer->AsReference< string >() ) );
+            fObject->SetSpaceNavigator( KToolbox::GetInstance().Get< KSSpaceNavigator >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

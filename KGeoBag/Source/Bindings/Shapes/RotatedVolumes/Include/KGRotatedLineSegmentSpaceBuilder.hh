@@ -12,22 +12,22 @@ namespace katrin
     template< >
     inline bool KGRotatedLineSegmentSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSpace::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "rotated_mesh_count" ) )
+        if( anAttribute->GetName() == "rotated_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSpace::RotatedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSpace::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSpace::FlattenedMeshPower );
             return true;
@@ -38,7 +38,7 @@ namespace katrin
     template< >
     inline bool KGRotatedLineSegmentSpaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "line_segment" ) )
+        if( anElement->GetName() == "line_segment" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarLineSegment::CopyFrom );
             return true;

@@ -32,13 +32,13 @@ namespace Kassiopeia
             void Display();
             void Write();
 
-            ;K_SET( string, File )
-            ;K_SET( string, Path )
-            ;K_SET( string, OutFile )
-            ;K_SET( string, PointObject )
-            ;K_SET( string, PointVariable )
-            ;K_SET( string, ColorObject )
-            ;K_SET( string, ColorVariable )
+            ;K_SET( std::string, File )
+            ;K_SET( std::string, Path )
+            ;K_SET( std::string, OutFile )
+            ;K_SET( std::string, PointObject )
+            ;K_SET( std::string, PointVariable )
+            ;K_SET( std::string, ColorObject )
+            ;K_SET( std::string, ColorVariable )
 
         private:
             vtkSmartPointer< vtkPoints > fPoints;

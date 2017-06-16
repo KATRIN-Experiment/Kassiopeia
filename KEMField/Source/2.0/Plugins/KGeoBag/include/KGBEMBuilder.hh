@@ -24,7 +24,7 @@ namespace KGeoBag
             virtual ~KGBEMAttributor()
             {
                 KGExtendedSurface< KGBEM< BasisPolicy, KDirichletBoundary > >* tBEMSurface;
-                for( vector< KGSurface* >::iterator tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++ )
+                for( std::vector< KGSurface* >::iterator tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++ )
                 {
                     tBEMSurface = (*tIt)->template MakeExtension< KGBEM< BasisPolicy, KDirichletBoundary > >();
                     tBEMSurface->SetName( this->GetName() );
@@ -32,7 +32,7 @@ namespace KGeoBag
                     tBEMSurface->SetBoundaryValue( this->GetBoundaryValue() );
                 }
                 KGExtendedSpace< KGBEM< BasisPolicy, KDirichletBoundary > >* tBEMSpace;
-                for( vector< KGSpace* >::iterator tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++ )
+                for( std::vector< KGSpace* >::iterator tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++ )
                 {
                     tBEMSpace = (*tIt)->template MakeExtension< KGBEM< BasisPolicy, KDirichletBoundary > >();
                     tBEMSpace->SetName( this->GetName() );
@@ -52,8 +52,8 @@ namespace KGeoBag
             }
 
         private:
-            vector< KGSurface* > fSurfaces;
-            vector< KGSpace* > fSpaces;
+            std::vector< KGSurface* > fSurfaces;
+            std::vector< KGSpace* > fSpaces;
     };
 
     template< class BasisPolicy >
@@ -69,7 +69,7 @@ namespace KGeoBag
             virtual ~KGBEMAttributor()
             {
                 KGExtendedSurface< KGBEM< BasisPolicy, KNeumannBoundary > >* tBEMSurface;
-                for( vector< KGSurface* >::iterator tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++ )
+                for( std::vector< KGSurface* >::iterator tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++ )
                 {
                     tBEMSurface = (*tIt)->template MakeExtension< KGBEM< BasisPolicy, KNeumannBoundary > >();
                     tBEMSurface->SetName( this->GetName() );
@@ -77,7 +77,7 @@ namespace KGeoBag
                     tBEMSurface->SetNormalBoundaryFlux( this->GetNormalBoundaryFlux() );
                 }
                 KGExtendedSpace< KGBEM< BasisPolicy, KNeumannBoundary > >* tBEMSpace;
-                for( vector< KGSpace* >::iterator tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++ )
+                for( std::vector< KGSpace* >::iterator tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++ )
                 {
                     tBEMSpace = (*tIt)->template MakeExtension< KGBEM< BasisPolicy, KNeumannBoundary > >();
                     tBEMSpace->SetName( this->GetName() );
@@ -97,8 +97,8 @@ namespace KGeoBag
             }
 
         private:
-            vector< KGSurface* > fSurfaces;
-            vector< KGSpace* > fSpaces;
+            std::vector< KGSurface* > fSurfaces;
+            std::vector< KGSpace* > fSpaces;
     };
 
     typedef KGBEMAttributor< KElectrostaticBasis, KDirichletBoundary > KGElectrostaticDirichletAttributor;
@@ -110,15 +110,17 @@ namespace KGeoBag
 
 #include "KComplexElement.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGElectrostaticDirichletAttributor > KGElectrostaticDirichletBuilder;
+    typedef KComplexElement< KGeoBag::KGElectrostaticDirichletAttributor > KGElectrostaticDirichletBuilder;
 
     template< >
     inline bool KGElectrostaticDirichletBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace KGeoBag;
+        using namespace std;
+
         if( aContainer->GetName() == "name" )
         {
             fObject->SetName( aContainer->AsReference< string >() );
@@ -178,11 +180,14 @@ namespace katrin
         return false;
     }
 
-    typedef KComplexElement< KGElectrostaticNeumannAttributor > KGElectrostaticNeumannBuilder;
+    typedef KComplexElement< KGeoBag::KGElectrostaticNeumannAttributor > KGElectrostaticNeumannBuilder;
 
     template< >
     inline bool KGElectrostaticNeumannBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace KGeoBag;
+        using namespace std;
+
         if( aContainer->GetName() == "name" )
         {
             fObject->SetName( aContainer->AsReference< string >() );

@@ -2,11 +2,14 @@
 #include "KTextFile.h"
 #include "KFile.h"
 #include "KSInteractionsMessage.h"
-#include <map>
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 #include "KConst.h"
-using katrin::KConst;
+
+#include <map>
+
+using namespace std;
+using namespace katrin;
+using namespace KGeoBag;
 
 namespace Kassiopeia
 {
@@ -23,15 +26,15 @@ namespace Kassiopeia
     }
 
 
-    void KESSScatteringCalculator::ReadMFP( std::string data_filename,
-                                            std::map< double, double > &MapForTables )
+    void KESSScatteringCalculator::ReadMFP( string data_filename,
+                                            map< double, double > &MapForTables )
     {
         char line[ 196 ];
         double one = 0, two = 0, three = 0;
 
-        std::string myPathToTable = DATA_DEFAULT_DIR;
+        string myPathToTable = DATA_DEFAULT_DIR;
 
-        std::string UnusedReturnValue;
+        string UnusedReturnValue;
         FILE *MapFile = fopen( (myPathToTable + "/" + data_filename).c_str(), "r" );
 
         if( MapFile == 0 )
@@ -50,24 +53,24 @@ namespace Kassiopeia
             sscanf( line, "%lf %lf %lf", &one, &two, &three );
             if( feof( MapFile ) == false )
             {
-                MapForTables.insert( std::pair< double, double >( one, two ) );
+                MapForTables.insert( pair< double, double >( one, two ) );
             }
         }
     }
 
-    void KESSScatteringCalculator::ReadPDF( std::string data_filename,
-                                            std::map< double, std::vector< std::vector< double > > > &MapForTables )
+    void KESSScatteringCalculator::ReadPDF( string data_filename,
+                                            map< double, vector< vector< double > > > &MapForTables )
     {
         char line[ 196 ];
         double one = 0, two = 0, three = 0;
 
-        std::string myPathToTable = DATA_DEFAULT_DIR;
+        string myPathToTable = DATA_DEFAULT_DIR;
 
-        std::string UnusedReturnValue;
+        string UnusedReturnValue;
 
         double oldOne = 0.;
 
-        std::vector< std::vector< double > > elScTable;
+        vector< vector< double > > elScTable;
         vector< double > theta; //
         vector< double > integralTheta; //
 
@@ -97,7 +100,7 @@ namespace Kassiopeia
                     elScTable.push_back( theta );
                     elScTable.push_back( integralTheta );
 
-                    MapForTables.insert( std::pair< double, std::vector< std::vector< double > > >( oldOne, elScTable ) );
+                    MapForTables.insert( pair< double, vector< vector< double > > >( oldOne, elScTable ) );
 
                     theta.clear();
                     integralTheta.clear();

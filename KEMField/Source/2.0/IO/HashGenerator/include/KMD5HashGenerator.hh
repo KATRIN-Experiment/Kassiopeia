@@ -72,8 +72,15 @@ namespace KEMField
 	  if (d.MaskedBits())
 	  {
 	    index = endian_min + endian_dir*d.MaskedBytes();
+#if (__GNUC__ > 5) || (__clang_major__ == 3) && (__clang_minor__ >= 8) || (__clang_major__ > 3)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshift-negative-value"
+#endif
 	    significantBit = (~(0xff << 1)) << (d.MaskedBits() - 1);
-	  }
+#if (__GNUC__ > 5) || (__clang_major__ == 3) && (__clang_minor__ >= 8) || (__clang_major__ > 3)
+#pragma GCC diagnostic pop
+#endif
+      }
 	  else
 	  {
 	    index = endian_min + endian_dir*(d.MaskedBytes()-1);
@@ -137,7 +144,14 @@ namespace KEMField
 	  if (d.MaskedBits())
 	  {
 	    index = endian_min + endian_dir*d.MaskedBytes();
+#if (__GNUC__ > 5) || (__clang_major__ == 3) && (__clang_minor__ >= 8) || (__clang_major__ > 3)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshift-negative-value"
+#endif
 	    significantBit = (~(0xff << 1)) << (d.MaskedBits() - 1);
+#if (__GNUC__ > 5) || (__clang_major__ == 3) && (__clang_minor__ >= 8) || (__clang_major__ > 3)
+#pragma GCC diagnostic pop
+#endif
 	  }
 	  else
 	  {

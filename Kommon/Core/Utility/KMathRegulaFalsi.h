@@ -16,22 +16,19 @@
 
 namespace katrin {
 
-namespace prototype {
+enum class KEMathRegulaFalsiMethod {
+   Pegasus, AndersonBjoerck, Illinois
+};
 
 template<class XFloatT>
 class KMathRegulaFalsi {
 public:
-    enum class EMethod {
-        Pegasus, AndersonBjoerck, Illinois
-    };
-
-public:
-    KMathRegulaFalsi(XFloatT relError = 1E-5, uint16_t nMax = 1000, EMethod method = EMethod::AndersonBjoerck) :
+    KMathRegulaFalsi(XFloatT relError = 1E-5, uint16_t nMax = 1000, KEMathRegulaFalsiMethod method = KEMathRegulaFalsiMethod::AndersonBjoerck) :
         fRelError(relError), fNMax(nMax), fMethod(method) { };
 
     void SetRelativeError(XFloatT relError) { fRelError = relError; }
     void SetNMax(uint16_t nMax) { fNMax = nMax; }
-    void SetMethod(EMethod method) { fMethod = method; }
+    void SetMethod(KEMathRegulaFalsiMethod method) { fMethod = method; }
     void SetBisectionRatio(XFloatT bisec = 0.1) { fBisec = std::max(0.0, std::min(1.0, bisec)); }
 
     template<class XCallableT>
@@ -43,7 +40,7 @@ private:
     XFloatT fRelError;
     uint16_t fNCounter = 0;
     uint16_t fNMax;
-    EMethod fMethod;
+    KEMathRegulaFalsiMethod fMethod;
     XFloatT fBisec = 0.1;
 };
 
@@ -94,10 +91,10 @@ inline XFloatT KMathRegulaFalsi<XFloatT>::FindIntercept(const XCallableT& callab
 
         double g = 0.5; // fMethod == EMethod::Illinois
 
-        if (fMethod == EMethod::Pegasus) {
+        if (fMethod == KEMathRegulaFalsiMethod::Pegasus) {
             g = f3/(f3+f2);
         }
-        else if  (fMethod == EMethod::AndersonBjoerck) {
+        else if  (fMethod == KEMathRegulaFalsiMethod::AndersonBjoerck) {
             if (bisection) {
                 g = f3/(f3+f2);
             }
@@ -116,9 +113,7 @@ inline XFloatT KMathRegulaFalsi<XFloatT>::FindIntercept(const XCallableT& callab
         << fNMax << " function evaluations.";
 }
 
-}
-
-using KMathRegulaFalsi = prototype::KMathRegulaFalsi<double>;
+using KMathRegulaFalsiD = KMathRegulaFalsi<double>;
 
 }
 

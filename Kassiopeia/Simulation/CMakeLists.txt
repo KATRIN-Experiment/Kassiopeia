@@ -13,6 +13,9 @@ set( SIMULATION_HEADER_BASENAMES
     KSRootElectricField.h
     KSRootMagneticField.h
     KSRootStepModifier.h
+    KSRootTrackModifier.h
+    KSRootEventModifier.h
+    KSRootRunModifier.h
     KSRootSpace.h
     KSRootGenerator.h
     KSRootTrajectory.h
@@ -24,7 +27,7 @@ set( SIMULATION_HEADER_BASENAMES
     KSRootWriter.h
     KSRoot.h
 )
-set( SIMULATION_HEADER_PATH 
+set( SIMULATION_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${SIMULATION_HEADER_BASENAMES} )
@@ -46,6 +49,9 @@ set( SIMULATION_SOURCE_BASENAMES
     KSRootElectricField.cxx
     KSRootMagneticField.cxx
     KSRootStepModifier.cxx
+    KSRootTrackModifier.cxx
+    KSRootEventModifier.cxx
+    KSRootRunModifier.cxx
     KSRootSpace.cxx
     KSRootGenerator.cxx
     KSRootTrajectory.cxx
@@ -57,7 +63,7 @@ set( SIMULATION_SOURCE_BASENAMES
     KSRootWriter.cxx
     KSRoot.cxx
 )
-set( SIMULATION_SOURCE_PATH 
+set( SIMULATION_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${SIMULATION_SOURCE_BASENAMES} )
@@ -67,7 +73,7 @@ endforeach( BASENAME )
 # data files
 set( SIMULATION_DATA_BASENAMES
 )
-set( SIMULATION_DATA_PATH 
+set( SIMULATION_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/DataFiles
 )
 foreach( BASENAME ${SIMULATION_DATA_BASENAMES} )

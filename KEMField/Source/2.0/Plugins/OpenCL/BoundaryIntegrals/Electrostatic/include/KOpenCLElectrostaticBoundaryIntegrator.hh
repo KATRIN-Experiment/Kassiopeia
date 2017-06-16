@@ -3,9 +3,13 @@
 
 #include "KOpenCLBoundaryIntegrator.hh"
 #include "KSurfaceVisitors.hh"
+#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorConfig.hh"
 
 namespace KEMField
 {
+  class ElectrostaticOpenCL;
+
   class KOpenCLElectrostaticBoundaryIntegrator :
     public KOpenCLBoundaryIntegrator<KElectrostaticBasis>,
     public KSelectiveVisitor<KShapeVisitor, KTYPELIST_4(KTriangle,
@@ -19,12 +23,23 @@ namespace KEMField
     typedef KBoundaryType<Basis,KDirichletBoundary> DirichletBoundary;
     typedef KBoundaryType<Basis,KNeumannBoundary> NeumannBoundary;
 
-    using KSelectiveVisitor<KShapeVisitor, KTYPELIST_4(KTriangle,
-						       KRectangle,
-						       KLineSegment,
-						       KConicSection)>::Visit;
+    // for selection of the correct KIntegratingFieldSolver template and possibly elsewhere
+    typedef ElectrostaticOpenCL Kind;
 
-    KOpenCLElectrostaticBoundaryIntegrator(KOpenCLSurfaceContainer& c);
+    using IntegratorSingleThread = KElectrostaticBoundaryIntegrator;
+
+    using AcceptedBoundaries = KTYPELIST_2(KDirichletBoundary,KNeumannBoundary);
+    using AcceptedShapes = KTYPELIST_4(KTriangle, KRectangle, KLineSegment, KConicSection);
+    using AcceptedBasis = KTYPELIST_1(KElectrostaticBasis);
+
+    using KSelectiveVisitor<KShapeVisitor,AcceptedShapes>::Visit;
+
+    KOpenCLElectrostaticBoundaryIntegrator(
+    		const KOpenCLElectrostaticBoundaryIntegratorConfig& config,
+			KOpenCLSurfaceContainer& c);
+
+    // TODO the rule of three (google it) and build copy constructor and
+    // assignment operator because we have a destructor.
     ~KOpenCLElectrostaticBoundaryIntegrator();
 
     void Visit(KTriangle& t) { ComputeBoundaryIntegral(t); }
@@ -42,8 +57,12 @@ namespace KEMField
     double Potential(const SourceShape*, const KPosition&) const;
     template <class SourceShape>
     KEMThreeVector ElectricField(const SourceShape*, const KPosition&) const;
+    template <class SourceShape>
+    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
 
-    std::string OpenCLFile() const { return "kEMField_ElectrostaticBoundaryIntegrals.cl"; }
+    std::string OpenCLFile() const { return fConfig.fOpenCLSourceFile; }
+
+    KElectrostaticBoundaryIntegrator GetCPUIntegrator() { return fConfig.fCPUIntegrator; }
 
   private:
     class BoundaryVisitor :
@@ -51,7 +70,7 @@ namespace KEMField
 			       KTYPELIST_2(KDirichletBoundary,KNeumannBoundary)>
     {
     public:
-      using KSelectiveVisitor<KBoundaryVisitor,KTYPELIST_2(KDirichletBoundary,KNeumannBoundary)>::Visit;
+      using KSelectiveVisitor<KBoundaryVisitor,AcceptedBoundaries>::Visit;
 
       BoundaryVisitor() {}
       virtual ~BoundaryVisitor() {}
@@ -71,11 +90,11 @@ namespace KEMField
     };
 
     class BasisVisitor :
-      public KSelectiveVisitor<KBasisVisitor,KTYPELIST_1(KElectrostaticBasis)>
+      public KSelectiveVisitor<KBasisVisitor,AcceptedBasis>
     {
     public:
       using KSelectiveVisitor<KBasisVisitor,
-			      KTYPELIST_1(KElectrostaticBasis)>::Visit;
+			      AcceptedBasis>::Visit;
 
       BasisVisitor() : fBasisValue(NULL) {}
       virtual ~BasisVisitor() {}
@@ -102,11 +121,15 @@ namespace KEMField
     void ConstructOpenCLKernels() const;
     void AssignBuffers() const;
 
+    KOpenCLElectrostaticBoundaryIntegratorConfig fConfig;
+
     mutable cl::Kernel *fPhiKernel;
     mutable cl::Kernel *fEFieldKernel;
+    mutable cl::Kernel *fEFieldAndPhiKernel;
 
     mutable cl::Buffer *fBufferPhi;
     mutable cl::Buffer *fBufferEField;
+    mutable cl::Buffer *fBufferEFieldAndPhi;
   };
 
   template <class SourceShape>
@@ -177,6 +200,41 @@ namespace KEMField
 			&eField);
 
     return KEMThreeVector(eField.s[0],eField.s[1],eField.s[2]);
+  }
+
+  template <class SourceShape>
+  std::pair<KEMThreeVector,double> KOpenCLElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const SourceShape* source, const KPosition& aPosition) const
+  {
+	    StreamSourceToBuffer(source);
+
+	    CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
+
+	    KOpenCLInterface::GetInstance()->GetQueue().
+	      enqueueWriteBuffer(*fBufferP,
+				 CL_TRUE,
+				 0,
+				 3*sizeof(CL_TYPE),
+				 P);
+
+	    cl::NDRange global(1);
+	    cl::NDRange local(1);
+
+	    KOpenCLInterface::GetInstance()->GetQueue().
+	      enqueueNDRangeKernel(*fEFieldAndPhiKernel,
+				   cl::NullRange,
+				   global,
+				   local);
+
+	    CL_TYPE4 eFieldAndPhi;
+
+	    KOpenCLInterface::GetInstance()->GetQueue().
+	      enqueueReadBuffer(*fBufferEFieldAndPhi,
+				CL_TRUE,
+				0,
+				sizeof(CL_TYPE4),
+				&eFieldAndPhi);
+
+	    return std::make_pair( KEMThreeVector(eFieldAndPhi.s[0],eFieldAndPhi.s[1],eFieldAndPhi.s[2]), eFieldAndPhi.s[3] );
   }
 
   template <class SourceShape>

@@ -23,6 +23,8 @@ std::string Gnuplot::terminal_std = "x11";
 std::string Gnuplot::terminal_std = "x11";
 #endif
 
+int Gnuplot::strm_precision = 12;
+
 //------------------------------------------------------------------------------
 //
 // constructor: set a style during construction

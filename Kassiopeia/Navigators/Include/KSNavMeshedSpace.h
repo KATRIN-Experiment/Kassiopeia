@@ -92,6 +92,9 @@ namespace Kassiopeia
             void SetFileName(std::string filename){ fFileName = filename;};
             std::string GetFileName() const {return fFileName;};
 
+            void SetPath(std::string path){ fPath = path;};
+            std::string GetPath() const {return fPath;};
+
         public:
 
             void CalculateNavigation( const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle, const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius, const double& aTrajectoryStep, KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag );
@@ -108,6 +111,7 @@ namespace Kassiopeia
             void SaveTree();
 
             std::string fFileName;
+            std::string fPath;
             std::vector< std::string > fLabels;
 
             //solve quadratic for intersection time
@@ -202,7 +206,7 @@ namespace Kassiopeia
                     {
                         unsigned int n_elem = aData->Elements()->size();
                         double sum_area = 0.0;
-                        for( vector< KGMeshElement* >::iterator tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++ )
+                        for( std::vector< KGMeshElement* >::iterator tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++ )
                         {
                             sum_area += (*tElementIt)->Area();
                         }

@@ -1,6 +1,8 @@
 #include "KSGenPositionSphericalComposite.h"
 #include "KSGeneratorsMessage.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

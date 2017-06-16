@@ -4,10 +4,7 @@
 #include "KProcessor.hh"
 
 #include <stack>
-using std::stack;
-
 #include <map>
-using std::map;
 
 namespace katrin
 {
@@ -41,8 +38,8 @@ namespace katrin
             ElementState fElementState;
             AttributeState fAttributeState;
 
-            string fName;
-            string fValue;
+            std::string fName;
+            std::string fValue;
     };
 
 }

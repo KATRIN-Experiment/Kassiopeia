@@ -1,5 +1,9 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
 <messages>
-	
+
+    <file path="[log_path]" base="AnalyticSimulationLog.txt"/>
+
     <message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
 
@@ -31,7 +35,7 @@
     <!-- world -->
 
     <cylinder_space name="world_space" z1="-200.0e-3" z2="200.0e-3" r="200.0e-3"/>
-    
+
     <!-- cell -->
 
     <tag name="cell_tag">
@@ -43,13 +47,13 @@
     <tag name="target_tag">
         <disk_surface name="target_surface" r="8.e-4" z="0."/>
     </tag>
-    
+
     <!-- assembly -->
 
     <space name="world" node="world_space">
         <space name="cell" node="cell_space">
             <surface name="target" node="target_surface"/>
-        </space> 
+        </space>
     </space>
 
     <!-- appearance -->
@@ -69,7 +73,7 @@
     />
 
     <!-- electric fields -->
-    
+
     <ksfield_electric_quadrupole
         name="field_electric_quadrupole"
         location="0. 0. 0."
@@ -96,7 +100,7 @@
         <time_composite>
             <time_fix value="0."/>
         </time_composite>
-    </ksgen_generator_composite>    
+    </ksgen_generator_composite>
 
 	<!-- trajectories-->
 
@@ -107,9 +111,9 @@
     </kstraj_trajectory_exact>
 
 	<!-- space interactions -->
-    
+
     <ksint_scattering name="int_constant_scattering" split="false">
-        <density_constant name="density_constant" temperature="300." pressure="3.e0"/>  
+        <density_constant name="density_constant" temperature="300." pressure="3.e0"/>
         <calculator_constant name="calculator_constant" cross_section="1.e-18"/>
     </ksint_scattering>
 
@@ -131,7 +135,7 @@
     <!-- surface navigators -->
 
     <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
-    
+
     <!-- terminators -->
 
     <ksterm_max_steps name="term_max_steps" steps="10000000"/>
@@ -140,12 +144,12 @@
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="AnalyticSimulation.root"/>
+    <kswrite_root name="write_root" path="[output_path]" base="AnalyticSimulation.root"/>
 
     <!-- output -->
 
     <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
-    
+
     <ks_component_group name="component_step_world">
         <component_member name="step_id" field="step_id" parent="step"/>
         <component_member name="continuous_time" field="continuous_time" parent="step"/>
@@ -233,33 +237,3 @@
     />
 
 </kassiopeia>
-
-<vtk_window 
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
-    <vtk_geometry_painter 
-        name="geometry_painter"
-        spaces="world/cell"
-        surfaces="world/cell/target"
-    />
-    <vtk_track_painter
-        name="track_painter"
-        file="AnalyticSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_world"
-        color_variable="kinetic_energy"
-    />
-</vtk_window>

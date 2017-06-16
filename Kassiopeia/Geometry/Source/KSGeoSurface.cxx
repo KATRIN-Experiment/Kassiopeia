@@ -3,6 +3,8 @@
 #include "KSGeometryMessage.h"
 #include <limits>
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.8.6 )
 
-project( Kassiopeia )
+project( Kasper )
 
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Kommon/cmake )
 include( KasperDefaults )
@@ -34,13 +34,13 @@ set( BUILD_KOMMON_DESC "Build Kommon" )
 option( BUILD_KOMMON ${BUILD_KOMMON_DESC} ON )
 
 set( BUILD_KGEOBAG_DESC "Build KGeoBag [geometry system]" )
-option( BUILD_KGEOBAG ${BUILD_KGEOBAG_DESC} OFF )
+option( BUILD_KGEOBAG ${BUILD_KGEOBAG_DESC} ON )
 
 set( BUILD_KEMFIELD_DESC "Build KEMField [electromagnetic simulation system]" )
-option( BUILD_KEMFIELD ${BUILD_KEMFIELD_DESC} OFF )
+option( BUILD_KEMFIELD ${BUILD_KEMFIELD_DESC} ON )
 
 set( BUILD_KASSIOPEIA_DESC "Build Kassiopeia [particle tracking simulation system]" )
-option( BUILD_KASSIOPEIA ${BUILD_KASSIOPEIA_DESC} OFF )
+option( BUILD_KASSIOPEIA ${BUILD_KASSIOPEIA_DESC} ON )
 
 #set( CMAKE_C_FLAGS ${CMAKE_C_FLAGS_INIT} )
 #set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS_INIT} )
@@ -50,7 +50,7 @@ if (CMAKE_BUILD_TYPE MATCHES Rel)
     option( COMPILER_TUNE_OPTIONS "Enable additional tuning options [compiles for local CPU, use with care!]" OFF )
     if( COMPILER_TUNE_OPTIONS )
         # these are advanced options for GCC which might improve performance ... or break everything - use with care!
-        set( TUNING_OPTIONS "-funroll-loops -march=native -mtune=native -mfpmath=sse" )
+        set( TUNING_OPTIONS "-march=native -mfpmath=sse -funroll-loops" )
         set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${TUNING_OPTIONS}" )
         set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TUNING_OPTIONS}" )
     endif()
@@ -74,7 +74,7 @@ if (CMAKE_COMPILER_IS_GNUCXX)
         set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ftrack-macro-expansion=1" )
         set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftrack-macro-expansion=1" )
     endif( GCC_REDUCE_MEMORY )
-    
+
     option( GCC_ENABLE_PIPES "Use pipes to speed up compiling with GCC by adding the -pipe flag" OFF )
     if( GCC_ENABLE_PIPES )
         set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pipe" )
@@ -84,43 +84,30 @@ endif()
 
 mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
+
+# Global dependency options
+option( KASPER_USE_BOOST "Build Boost dependent modules" OFF )
+option( KASPER_USE_ROOT "Build ROOT dependent modules" ON )
+option( KASPER_USE_GSL "Build GSL dependent modules" OFF )
+option( KASPER_USE_VTK "Build VTK dependent modules" OFF )
+option( KASPER_USE_TBB "Build TBB dependent modules" OFF )
+
 # Make sure all dependencies are being built
 # Every module must be listed before its dependencies and activate ONLY its
 # direct dependencies.
-
 
 if( BUILD_KASSIOPEIA )
     set( BUILD_KOMMON ON CACHE BOOL "${BUILD_KOMMON_DESC} (Required)" FORCE )
     set( BUILD_KGEOBAG ON CACHE BOOL "${BUILD_KGEOBAG_DESC} (Required)" FORCE )
     set( BUILD_KEMFIELD ON CACHE BOOL "${BUILD_KEMFIELD_DESC} (Required)" FORCE )
 
-    set( Kommon_USE_GSL ON CACHE BOOL "(Required)" FORCE )
-    if( Kassiopeia_USE_ROOT )
-        set( Kommon_USE_ROOT ON CACHE BOOL "(Required)" FORCE )
-        set( KGeoBag_USE_ROOT ON CACHE BOOL "(Required)" FORCE )
-    endif( Kassiopeia_USE_ROOT )
-
-    if( Kassiopeia_USE_VTK )
-        set( Kommon_USE_VTK ON CACHE BOOL "(Required)" FORCE )
-        set( KGeoBag_USE_VTK ON CACHE BOOL "(Required)" FORCE )
-    endif( Kassiopeia_USE_VTK )
+    set( KASPER_USE_GSL ON CACHE BOOL "(Required)" FORCE )
 endif()
 
 if( BUILD_KGEOBAG )
     set( BUILD_KOMMON ON CACHE BOOL "${BUILD_KOMMON_DESC} (Required)" FORCE )
-
-    set( Kommon_USE_GSL ON CACHE BOOL "(Required)" FORCE )
-
-    if( KGeoBag_USE_ROOT )
-        set( Kommon_USE_ROOT ON CACHE BOOL "(Required)" FORCE )
-    endif( KGeoBag_USE_ROOT )
-
-    if( KGeoBag_USE_VTK )
-        set( Kommon_USE_VTK ON CACHE BOOL "(Required)" FORCE )
-    endif( KGeoBag_USE_VTK )
+    set( KASPER_USE_GSL ON CACHE BOOL "(Required)" FORCE )
 endif()
-
-
 
 # Build modules
 # The order seems to matter! Please place dependent modules at the end.
@@ -141,7 +128,14 @@ if( BUILD_KASSIOPEIA )
     add_subdirectory( Kassiopeia )
 endif()
 
+if( BUILD_KTEMPLATE )
+    add_subdirectory( KTemplate )
+endif()
+
+#add_subdirectory( Documentation )
+
 install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR} )
 
 configure_file( Kommon/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
-install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh DESTINATION ${BIN_INSTALL_DIR} )
+configure_file( Kommon/create_kasper_user_directory.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
+install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh DESTINATION ${BIN_INSTALL_DIR} )

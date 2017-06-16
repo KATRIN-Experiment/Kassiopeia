@@ -1,4 +1,4 @@
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 //defined at compile time
 //KFM_DEGREE

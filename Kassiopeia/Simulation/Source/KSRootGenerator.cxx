@@ -77,8 +77,8 @@ namespace Kassiopeia
         double tEnergy;
         double tTotalEnergy = 0;
         double tTime;
-        double tMinTime = KSNumerical< double >::Maximum;
-        double tMaxTime = -1. * KSNumerical< double >::Maximum;
+        double tMinTime = KSNumerical< double >::Maximum();
+        double tMaxTime = -1. * KSNumerical< double >::Maximum();
         double tRadius;
         double tMaxRadius = 0.;
 

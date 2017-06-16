@@ -13,17 +13,7 @@ set( BINDINGS_HEADER_FILES
     Objects/Include/KSComponentMinimumAtBuilder.h
 
     # fields
-    Fields/Include/KSFieldElectromagnetBuilder.h
-    Fields/Include/KSFieldElectrostaticBuilder.h
-    Fields/Include/KSFieldKrylovBEMSolverBuilder.h
-    Fields/Include/KSFieldFMElectrostaticParametersBuilder.h
-    Fields/Include/KSFieldMagneticConstantBuilder.h
-    Fields/Include/KSFieldMagneticDipoleBuilder.h
-    Fields/Include/KSFieldMagneticSuperPositionBuilder.h
-    Fields/Include/KSFieldElectricConstantBuilder.h
-    Fields/Include/KSFieldElectricQuadrupoleBuilder.h
-    Fields/Include/KSFieldMagneticRampedBuilder.h
-    Fields/Include/KSFieldElectricRampedBuilder.h
+    # moved to KEMField
 
     # geometry
     Geometry/Include/KSGeoSpaceBuilder.h
@@ -35,16 +25,22 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenValueSetBuilder.h
     Generators/Include/KSGenValueListBuilder.h
     Generators/Include/KSGenValueUniformBuilder.h
+    Generators/Include/KSGenValueBoltzmannBuilder.h
     Generators/Include/KSGenValueGaussBuilder.h
+    Generators/Include/KSGenValueGeneralizedGaussBuilder.h
     Generators/Include/KSGenValueRadiusCylindricalBuilder.h
     Generators/Include/KSGenValueRadiusSphericalBuilder.h
+    Generators/Include/KSGenValueRadiusFractionBuilder.h
+    Generators/Include/KSGenValueAngleCosineBuilder.h
     Generators/Include/KSGenValueAngleSphericalBuilder.h
     Generators/Include/KSGenValueParetoBuilder.h
+    Generators/Include/KSGenValueZFrustrumBuilder.h
     Generators/Include/KSGenEnergyCompositeBuilder.h
     Generators/Include/KSGenEnergyKryptonEventBuilder.h
     Generators/Include/KSGenEnergyRadonEventBuilder.h
     Generators/Include/KSGenEnergyLeadEventBuilder.h
     Generators/Include/KSGenEnergyBetaDecayBuilder.h
+    Generators/Include/KSGenEnergyRydbergBuilder.h
     Generators/Include/KSGenNCompositeBuilder.h
     Generators/Include/KSGenLCompositeBuilder.h
     Generators/Include/KSGenLStatisticalBuilder.h
@@ -59,9 +55,11 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenPositionMaskBuilder.h
     Generators/Include/KSGenPositionFluxTubeBuilder.h
     Generators/Include/KSGenPositionHomogeneousFluxTubeBuilder.h
+    Generators/Include/KSGenPositionFrustrumCompositeBuilder.h
     Generators/Include/KSGenMomentumRectangularCompositeBuilder.h
     Generators/Include/KSGenDirectionSphericalCompositeBuilder.h
     Generators/Include/KSGenDirectionSurfaceCompositeBuilder.h
+    Generators/Include/KSGenSpinCompositeBuilder.h
     Generators/Include/KSGenTimeCompositeBuilder.h
     Generators/Include/KSGenGeneratorCompositeBuilder.h
 
@@ -74,6 +72,7 @@ set( BINDINGS_HEADER_FILES
     Trajectories/Include/KSTrajIntegratorRK86Builder.h
     Trajectories/Include/KSTrajIntegratorRK87Builder.h
     Trajectories/Include/KSTrajIntegratorRK8Builder.h
+    Trajectories/Include/KSTrajIntegratorSym4Builder.h
     Trajectories/Include/KSTrajInterpolatorFastBuilder.h
     Trajectories/Include/KSTrajInterpolatorHermiteBuilder.h
     Trajectories/Include/KSTrajInterpolatorContinuousRungeKuttaBuilder.h
@@ -81,6 +80,7 @@ set( BINDINGS_HEADER_FILES
     Trajectories/Include/KSTrajTermConstantForcePropagationBuilder.h
     Trajectories/Include/KSTrajTermSynchrotronBuilder.h
     Trajectories/Include/KSTrajTermGyrationBuilder.h
+    Trajectories/Include/KSTrajTermGravityBuilder.h
     Trajectories/Include/KSTrajTermDriftBuilder.h
     Trajectories/Include/KSTrajControlTimeBuilder.h
     Trajectories/Include/KSTrajControlLengthBuilder.h
@@ -89,8 +89,14 @@ set( BINDINGS_HEADER_FILES
     Trajectories/Include/KSTrajControlMomentumNumericalErrorBuilder.h
     Trajectories/Include/KSTrajControlMagneticMomentBuilder.h
     Trajectories/Include/KSTrajControlCyclotronBuilder.h
+    Trajectories/Include/KSTrajControlBChangeBuilder.h
+    Trajectories/Include/KSTrajControlSpinPrecessionBuilder.h
+    Trajectories/Include/KSTrajControlMDotBuilder.h
     Trajectories/Include/KSTrajTrajectoryExactBuilder.h
+    Trajectories/Include/KSTrajTrajectoryExactSpinBuilder.h
+    Trajectories/Include/KSTrajTrajectoryAdiabaticSpinBuilder.h
     Trajectories/Include/KSTrajTrajectoryAdiabaticBuilder.h
+    Trajectories/Include/KSTrajTrajectoryExactTrappedBuilder.h
     Trajectories/Include/KSTrajTrajectoryElectricBuilder.h
     Trajectories/Include/KSTrajTrajectoryMagneticBuilder.h
     Trajectories/Include/KSTrajTrajectoryLinearBuilder.h
@@ -108,7 +114,9 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntDecayCalculatorFerencIonisationBuilder.h
     Interactions/Include/KSIntCalculatorHydrogenBuilder.h
     Interactions/Include/KSIntCalculatorArgonBuilder.h
+    Interactions/Include/KSIntCalculatorKESSBuilder.h
     Interactions/Include/KSIntScatteringBuilder.h
+    Interactions/Include/KSIntSpinFlipBuilder.h
     Interactions/Include/KSIntDecayBuilder.h
     Interactions/Include/KSIntSurfaceSpecularBuilder.h
     Interactions/Include/KSIntSurfaceDiffuseBuilder.h
@@ -120,6 +128,7 @@ set( BINDINGS_HEADER_FILES
 
     # modifiers
     Modifiers/Include/KSModDynamicEnhancementBuilder.h
+    Modifiers/Include/KSModEventReportBuilder.h
 
     # navigators
     Navigators/Include/KSNavSurfaceBuilder.h
@@ -159,6 +168,9 @@ set( BINDINGS_HEADER_FILES
     Simulation/Include/KSRootSurfaceInteractionBuilder.h
     Simulation/Include/KSRootSpaceNavigatorBuilder.h
     Simulation/Include/KSRootStepModifierBuilder.h
+    Simulation/Include/KSRootTrackModifierBuilder.h
+    Simulation/Include/KSRootEventModifierBuilder.h
+    Simulation/Include/KSRootRunModifierBuilder.h
     Simulation/Include/KSRootSurfaceNavigatorBuilder.h
     Simulation/Include/KSRootTerminatorBuilder.h
     Simulation/Include/KSRootWriterBuilder.h
@@ -173,6 +185,9 @@ if( Kassiopeia_USE_ROOT )
         Generators/Include/KSGenValueHistogramBuilder.h
         Generators/Include/KSGenGeneratorSimulationBuilder.h
         Writers/Include/KSWriteROOTBuilder.h
+        Writers/Include/KSWriteROOTConditionOutputBuilder.h
+        Writers/Include/KSWriteROOTConditionTerminatorBuilder.h
+        Writers/Include/KSWriteROOTConditionStepBuilder.h
         Visualization/Include/KSROOTTrackPainterBuilder.h
         Visualization/Include/KSROOTPotentialPainterBuilder.h
         Visualization/Include/KSROOTMagFieldPainterBuilder.h
@@ -187,7 +202,6 @@ endif( Kassiopeia_USE_ROOT )
 
 if( Kassiopeia_USE_VTK )
     list( APPEND BINDINGS_HEADER_FILES
-        Fields/Include/KSFieldElectricPotentialmapBuilder.h
         Writers/Include/KSWriteVTKBuilder.h
     )
 endif( Kassiopeia_USE_VTK )
@@ -207,17 +221,8 @@ set( BINDINGS_SOURCE_FILES
     Objects/Source/KSComponentMinimumAtBuilder.cxx
 
     # fields
-    Fields/Source/KSFieldElectromagnetBuilder.cxx
-    Fields/Source/KSFieldElectrostaticBuilder.cxx
-    Fields/Source/KSFieldKrylovBEMSolverBuilder.cxx
-    Fields/Source/KSFieldFMElectrostaticParametersBuilder.cxx
-    Fields/Source/KSFieldMagneticConstantBuilder.cxx
-    Fields/Source/KSFieldMagneticDipoleBuilder.cxx
-    Fields/Source/KSFieldMagneticSuperPositionBuilder.cxx
-    Fields/Source/KSFieldElectricConstantBuilder.cxx
-    Fields/Source/KSFieldElectricQuadrupoleBuilder.cxx
-    Fields/Source/KSFieldMagneticRampedBuilder.cxx
-    Fields/Source/KSFieldElectricRampedBuilder.cxx
+    # moved to KEMField. This is for backward XML compatibility
+    Fields/Source/KSFieldKEMFieldObjectsBuilder.cxx
 
     # geometry
     Geometry/Source/KSGeoSpaceBuilder.cxx
@@ -229,16 +234,22 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenValueSetBuilder.cxx
     Generators/Source/KSGenValueListBuilder.cxx
     Generators/Source/KSGenValueUniformBuilder.cxx
+    Generators/Source/KSGenValueBoltzmannBuilder.cxx
     Generators/Source/KSGenValueGaussBuilder.cxx
+    Generators/Source/KSGenValueGeneralizedGaussBuilder.cxx
     Generators/Source/KSGenValueRadiusCylindricalBuilder.cxx
     Generators/Source/KSGenValueRadiusSphericalBuilder.cxx
+    Generators/Source/KSGenValueRadiusFractionBuilder.cxx
+    Generators/Source/KSGenValueAngleCosineBuilder.cxx
     Generators/Source/KSGenValueAngleSphericalBuilder.cxx
     Generators/Source/KSGenValueParetoBuilder.cxx
+    Generators/Source/KSGenValueZFrustrumBuilder.cxx
     Generators/Source/KSGenEnergyCompositeBuilder.cxx
     Generators/Source/KSGenEnergyKryptonEventBuilder.cxx
     Generators/Source/KSGenEnergyRadonEventBuilder.cxx
     Generators/Source/KSGenEnergyLeadEventBuilder.cxx
     Generators/Source/KSGenEnergyBetaDecayBuilder.cxx
+    Generators/Source/KSGenEnergyRydbergBuilder.cxx
     Generators/Source/KSGenNCompositeBuilder.cxx
     Generators/Source/KSGenLCompositeBuilder.cxx
     Generators/Source/KSGenLStatisticalBuilder.cxx
@@ -247,6 +258,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenPositionRectangularCompositeBuilder.cxx
     Generators/Source/KSGenPositionCylindricalCompositeBuilder.cxx
     Generators/Source/KSGenPositionSphericalCompositeBuilder.cxx
+    Generators/Source/KSGenPositionFrustrumCompositeBuilder.cxx
     Generators/Source/KSGenPositionSpaceRandomBuilder.cxx
     Generators/Source/KSGenPositionSurfaceRandomBuilder.cxx
     Generators/Source/KSGenPositionMeshSurfaceRandomBuilder.cxx
@@ -256,6 +268,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx
     Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx
     Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx
+    Generators/Source/KSGenSpinCompositeBuilder.cxx
     Generators/Source/KSGenTimeCompositeBuilder.cxx
     Generators/Source/KSGenGeneratorCompositeBuilder.cxx
 
@@ -267,6 +280,7 @@ set( BINDINGS_SOURCE_FILES
     Trajectories/Source/KSTrajIntegratorRK86Builder.cxx
     Trajectories/Source/KSTrajIntegratorRK87Builder.cxx
     Trajectories/Source/KSTrajIntegratorRK8Builder.cxx
+    Trajectories/Source/KSTrajIntegratorSym4Builder.cxx
     Trajectories/Source/KSTrajInterpolatorFastBuilder.cxx
     Trajectories/Source/KSTrajInterpolatorHermiteBuilder.cxx
     Trajectories/Source/KSTrajInterpolatorContinuousRungeKuttaBuilder.cxx
@@ -274,8 +288,12 @@ set( BINDINGS_SOURCE_FILES
     Trajectories/Source/KSTrajTermConstantForcePropagationBuilder.cxx
     Trajectories/Source/KSTrajTermSynchrotronBuilder.cxx
     Trajectories/Source/KSTrajTermGyrationBuilder.cxx
+    Trajectories/Source/KSTrajTermGravityBuilder.cxx
     Trajectories/Source/KSTrajTermDriftBuilder.cxx
     Trajectories/Source/KSTrajControlCyclotronBuilder.cxx
+    Trajectories/Source/KSTrajControlBChangeBuilder.cxx
+    Trajectories/Source/KSTrajControlSpinPrecessionBuilder.cxx
+    Trajectories/Source/KSTrajControlMDotBuilder.cxx
     Trajectories/Source/KSTrajControlTimeBuilder.cxx
     Trajectories/Source/KSTrajControlLengthBuilder.cxx
     Trajectories/Source/KSTrajControlEnergyBuilder.cxx
@@ -283,7 +301,10 @@ set( BINDINGS_SOURCE_FILES
     Trajectories/Source/KSTrajControlMomentumNumericalErrorBuilder.cxx
     Trajectories/Source/KSTrajControlMagneticMomentBuilder.cxx
     Trajectories/Source/KSTrajTrajectoryExactBuilder.cxx
+    Trajectories/Source/KSTrajTrajectoryExactSpinBuilder.cxx
+    Trajectories/Source/KSTrajTrajectoryAdiabaticSpinBuilder.cxx
     Trajectories/Source/KSTrajTrajectoryAdiabaticBuilder.cxx
+    Trajectories/Source/KSTrajTrajectoryExactTrappedBuilder.cxx
     Trajectories/Source/KSTrajTrajectoryElectricBuilder.cxx
     Trajectories/Source/KSTrajTrajectoryMagneticBuilder.cxx
     Trajectories/Source/KSTrajTrajectoryLinearBuilder.cxx
@@ -301,7 +322,9 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx
     Interactions/Source/KSIntCalculatorHydrogenBuilder.cxx
     Interactions/Source/KSIntCalculatorArgonBuilder.cxx
+    Interactions/Source/KSIntCalculatorKESSBuilder.cxx
     Interactions/Source/KSIntScatteringBuilder.cxx
+    Interactions/Source/KSIntSpinFlipBuilder.cxx
     Interactions/Source/KSIntDecayBuilder.cxx
     Interactions/Source/KSIntSurfaceSpecularBuilder.cxx
     Interactions/Source/KSIntSurfaceDiffuseBuilder.cxx
@@ -313,6 +336,7 @@ set( BINDINGS_SOURCE_FILES
 
     # modifiers
     Modifiers/Source/KSModDynamicEnhancementBuilder.cxx
+    Modifiers/Source/KSModEventReportBuilder.cxx
 
     # navigators
     Navigators/Source/KSNavSurfaceBuilder.cxx
@@ -353,6 +377,9 @@ set( BINDINGS_SOURCE_FILES
     Simulation/Source/KSRootSurfaceInteractionBuilder.cxx
     Simulation/Source/KSRootSpaceNavigatorBuilder.cxx
     Simulation/Source/KSRootStepModifierBuilder.cxx
+    Simulation/Source/KSRootTrackModifierBuilder.cxx
+    Simulation/Source/KSRootEventModifierBuilder.cxx
+    Simulation/Source/KSRootRunModifierBuilder.cxx
     Simulation/Source/KSRootSurfaceNavigatorBuilder.cxx
     Simulation/Source/KSRootTerminatorBuilder.cxx
     Simulation/Source/KSRootWriterBuilder.cxx
@@ -367,6 +394,9 @@ if( Kassiopeia_USE_ROOT )
         Generators/Source/KSGenValueHistogramBuilder.cxx
         Generators/Source/KSGenGeneratorSimulationBuilder.cxx
         Writers/Source/KSWriteROOTBuilder.cxx
+    	Writers/Source/KSWriteROOTConditionOutputBuilder.cxx
+        Writers/Source/KSWriteROOTConditionTerminatorBuilder.cxx
+        Writers/Source/KSWriteROOTConditionStepBuilder.cxx
         Visualization/Source/KSROOTTrackPainterBuilder.cxx
         Visualization/Source/KSROOTPotentialPainterBuilder.cxx
         Visualization/Source/KSROOTMagFieldPainterBuilder.cxx
@@ -381,7 +411,6 @@ endif( Kassiopeia_USE_ROOT )
 
 if( Kassiopeia_USE_VTK )
     list( APPEND BINDINGS_SOURCE_FILES
-        Fields/Source/KSFieldElectricPotentialmapBuilder.cxx
         Writers/Source/KSWriteVTKBuilder.cxx
     )
 endif( Kassiopeia_USE_VTK )

@@ -5,21 +5,18 @@
 #include "KProcessor.hh"
 
 #include <map>
-using std::map;
-
-#include <cstdlib>
 
 namespace katrin
 {
     class KAttributeBase;
     class KElementBase;
 
-    typedef map< string, KAttributeBase* (*)( KElementBase* ) > KAttributeMap;
+    typedef std::map< std::string, KAttributeBase* (*)( KElementBase* ) > KAttributeMap;
     typedef KAttributeMap::value_type KAttributeEntry;
     typedef KAttributeMap::iterator KAttributeIt;
     typedef KAttributeMap::const_iterator KAttributeCIt;
 
-    typedef map< string, KElementBase* (*)( KElementBase* ) > KElementMap;
+    typedef std::map< std::string, KElementBase* (*)( KElementBase* ) > KElementMap;
     typedef KElementMap::value_type KElementEntry;
     typedef KElementMap::iterator KElementIt;
     typedef KElementMap::const_iterator KElementCIt;

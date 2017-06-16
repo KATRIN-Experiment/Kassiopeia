@@ -1,6 +1,9 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+
 <messages>
 
-	<file base="PhotoMultiplierTubeLog.txt"/>
+	<file path="[log_path]" base="PhotoMultiplierTubeLog.txt"/>
 
 	<message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
@@ -276,6 +279,7 @@
 
     <ksfield_electrostatic
         name="kemfield_e"
+        directory="[KEMFIELD_CACHE]"
         file="PhotoMultiplierTubeElectrodes.kbd"
         system="world/photomultiplier_tube"
         surfaces="world/photomultiplier_tube/@electrode_tag"
@@ -387,17 +391,15 @@
         <control_time name="stepsizetime" time="1e-6" />
     </kstraj_trajectory_exact>
 
-    <!-- space interactions -->
+    <!-- surface navigator -->
 
-
-    <!-- <ksnav_space name="nav_space" tolerance="1.e-6"/> -->
     <ksnav_surface name="nav_surface"/>
 
     <!-- surface interactions -->
-
- 	<!-- probability=0 indicates reflection will take place -->
-
-   <ksint_surface_multiplication name="int_surface_multiplication" side="bottom" energy_loss_fraction="0.01" required_energy_per_particle_ev="30."/>
+   <ksint_surface_multiplication name="int_surface_multiplication"
+                                 side="bottom"
+                                 energy_loss_fraction="0.05"
+                                 required_energy_per_particle_ev="10."/>
 
     <!-- terminators -->
 
@@ -412,13 +414,8 @@
 
     <kswrite_root
         name="write_root"
+        path="[output_path]"
         base="PhotoMultiplierTubeSimulation.root"
-    />
-
-
-    <kswrite_vtk
-        name="write_vtk"
-        base="PhotoMultiplierTubeSimulation.vtp"
     />
 
 
@@ -472,10 +469,6 @@
     <ksgeo_space name="space_world" spaces="world">
         <command parent="write_root" field="add_track_output" child="component_track_world"/>
         <command parent="write_root" field="add_step_output" child="component_step_world"/>
-        <command parent="write_vtk" field="set_track_point" child="component_track_position"/>
-        <command parent="write_vtk" field="set_track_data" child="component_track_world"/>
-        <command parent="write_vtk" field="set_step_point" child="component_step_position"/>
-        <command parent="write_vtk" field="set_step_data" child="component_step_world"/>
         <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
         <command parent="root_terminator" field="add_terminator" child="term_max_z"/>
         <command parent="root_terminator" field="add_terminator" child="term_min_z"/>
@@ -528,6 +521,9 @@
         </geo_surface>
     </ksgeo_space>
 
+
+    <!-- space navigator -->
+
     <ksnav_meshed_space name="nav_meshed_space" root_space="space_world" max_octree_depth="9" n_allowed_elements="1"/>
 
     <!-- simulation -->
@@ -535,7 +531,7 @@
     <ks_simulation
         name="pmt_simulation"
         run="1"
-        seed="51385"
+        seed="12345"
         events="1"
         electric_field="kemfield_e"
         space="space_world"
@@ -544,37 +540,6 @@
         space_navigator="nav_meshed_space"
         surface_navigator="nav_surface"
         writer="write_root"
-        writer="write_vtk"
     />
 
 </kassiopeia>
-
-<vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
-    <vtk_geometry_painter
-        name="geometry_painter"
-        file="PhotoMultiplierTubeSimulation.vtp"
-        surfaces="world/#"
-    />
-    <vtk_track_painter
-        name="track_painter"
-        file="PhotoMultiplierTubeSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_world"
-        color_variable="time"
-    />
-</vtk_window>

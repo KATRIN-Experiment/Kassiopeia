@@ -23,20 +23,20 @@
 #include "KEMThreeVector.hh"
 #include "KEMFileInterface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
 #include "KOpenCLElectrostaticIntegratingFieldSolver.hh"
 #endif
 
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
 
 #include "KFMElectrostaticTree.hh"
@@ -66,15 +66,7 @@
 #include "TGraph2D.h"
 #endif
 
-#ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-#endif
-
-#ifdef KEMFIELD_USE_MPI
-    #define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
-#else
-    #define MPI_SINGLE_PROCESS
-#endif
+#include "KMPIEnvironment.hh"
 
 using namespace KGeoBag;
 using namespace KEMField;
@@ -487,7 +479,6 @@ int main(int argc, char** argv)
    (void) mode;
    (void) n_evaluations;
 
-
     MPI_SINGLE_PROCESS
     {
 
@@ -515,11 +506,12 @@ int main(int argc, char** argv)
             KOpenCLInterface::GetInstance()->SetActiveData( oclSurfaceContainer );
         }
 
-        KOpenCLElectrostaticBoundaryIntegrator direct_integrator(*oclSurfaceContainer);
+        KOpenCLElectrostaticBoundaryIntegrator direct_integrator {
+        	KoclEBIFactory::MakeDefault(*oclSurfaceContainer)};
         KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclSurfaceContainer, direct_integrator);
         direct_solver->Initialize();
         #else
-        KElectrostaticBoundaryIntegrator direct_integrator_single_thread;
+        KElectrostaticBoundaryIntegrator direct_integrator_single_thread {KEBIFactory::MakeDefault()};
         KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer, direct_integrator_single_thread);
         #endif
 
@@ -538,7 +530,11 @@ int main(int argc, char** argv)
 
         //now build the fast multipole field solver
         #ifdef KEMFIELD_USE_OPENCL
-        KFMElectrostaticFastMultipoleFieldSolver_OpenCL* fast_solver = new KFMElectrostaticFastMultipoleFieldSolver_OpenCL(*oclSurfaceContainer, *tree);
+        KFMElectrostaticFastMultipoleFieldSolver_OpenCL* fast_solver =
+        		new KFMElectrostaticFastMultipoleFieldSolver_OpenCL(
+        		KoclEBIFactory::MakeDefaultConfig(),
+				*oclSurfaceContainer,
+				*tree);
         #else
         KFMElectrostaticFastMultipoleFieldSolver* fast_solver = new KFMElectrostaticFastMultipoleFieldSolver(surfaceContainer, *tree);
         #endif
@@ -975,11 +971,9 @@ int main(int argc, char** argv)
 
     }//end mpi single process
 
-
     #if KEMFIELD_USE_MPI
     KMPIInterface::GetInstance()->Finalize();
     #endif
-
 
     return 0;
 }

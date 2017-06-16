@@ -1,7 +1,7 @@
 #ifndef KFMVectorScale_Defined_H
 #define KFMVectorScale_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 __kernel void
 VectorScale(const unsigned int array_size,

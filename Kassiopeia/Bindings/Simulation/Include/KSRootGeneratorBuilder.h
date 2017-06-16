@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootGenerator.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "set_generator" )
         {
-            fObject->SetGenerator( KSToolbox::GetInstance()->GetObjectAs< KSGenerator >( aContainer->AsReference< string >() ) );
+            fObject->SetGenerator( KToolbox::GetInstance().Get< KSGenerator >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

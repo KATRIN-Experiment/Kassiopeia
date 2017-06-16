@@ -7,8 +7,6 @@
 namespace Kassiopeia
 {
 
-    class KSTrack;
-
     class KSTerminator:
         public KSComponentTemplate<  KSTerminator >
     {

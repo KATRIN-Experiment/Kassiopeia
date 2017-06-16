@@ -1,4 +1,8 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+
 <messages>
+    <file path="[log_path]" base="DipoleTrapLog.txt"/>
 
 	<message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
@@ -143,6 +147,7 @@
 
     <ksfield_electromagnet
         name="field_electromagnet"
+        directory="[KEMFIELD_CACHE]"
         file="DipoleTrapMagnets.kbd"
         system="world/dipole_trap"
         spaces="world/dipole_trap/@magnet_tag"
@@ -166,17 +171,18 @@
 
     <ksfield_electrostatic
         name="field_electrostatic"
+        directory="[KEMFIELD_CACHE]"
         file="DipoleTrapElectrodes.kbd"
         system="world/dipole_trap"
         surfaces="world/dipole_trap/@electrode_tag"
         symmetry="axial"
     >
         <robin_hood_bem_solver
+            integrator="analytic"
             tolerance="1.e-10"
             check_sub_interval="100"
             display_interval="1"
             cache_matrix_elements="true"
-            use_vtk="true"
         />
         <zonal_harmonic_field_solver
             number_of_bifurcations="-1"
@@ -201,7 +207,7 @@
 
 	<!-- generators -->
 
-	<ksgen_generator_composite name="generator_uniform">
+	<ksgen_generator_composite name="generator_uniform" pid="11">
         <energy_composite>
             <energy_fix value="1."/>
         </energy_composite>
@@ -229,20 +235,9 @@
         <control_time name="control_time" time="5.e-9"/>
     </kstraj_trajectory_exact>
 
-	<!-- space interactions -->
-
-    <ksint_scattering name="int_scattering">
-        <density_constant temperature="300." pressure="3.e0"/>
-        <calculator_constant cross_section="1.e-18"/>
-    </ksint_scattering>
-
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false" tolerance="1.e-6"/>
-
-    <!-- surface interactions -->
-
-    <ksint_surface_diffuse name="int_surface_diffuse" probability=".01" reflection_loss="0." transmission_loss="0."/>
+    <ksnav_space name="nav_space" enter_split="false" exit_split="false"/>
 
     <!-- surface navigators -->
 
@@ -258,7 +253,6 @@
     <!-- writers -->
 
     <kswrite_root name="write_root" base="DipoleTrapSimulation.root"/>
-    <kswrite_vtk name="write_vtk" base="DipoleTrapSimulation"/>
 
     <!-- output -->
 
@@ -320,10 +314,6 @@
         <command parent="root_terminator" field="remove_terminator" child="term_world"/>
         <command parent="write_root" field="add_track_output" child="component_track_world"/>
         <command parent="write_root" field="add_step_output" child="component_step_world"/>
-        <command parent="write_vtk" field="set_track_point" child="component_track_position"/>
-        <command parent="write_vtk" field="set_track_data" child="component_track_length"/>
-        <command parent="write_vtk" field="set_step_point" child="component_step_position"/>
-        <command parent="write_vtk" field="set_step_data" child="component_step_length"/>
         <geo_surface name="surface_upstream_target" surfaces="world/dipole_trap/upstream_target">
             <command parent="root_terminator" field="add_terminator" child="term_upstream_target"/>
         </geo_surface>
@@ -348,51 +338,6 @@
         surface_navigator="nav_surface"
         terminator="term_world"
         writer="write_root"
-        writer="write_vtk"
     />
 
 </kassiopeia>
-
-<vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
-    <vtk_geometry_painter
-        name="geometry_painter"
-        file="DipoleTrapGeometry.vtp"
-        surfaces="world/dipole_trap/#"
-    />
-    <vtk_track_painter
-        name="track_painter"
-        file="DipoleTrapSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_world"
-        color_variable="polar_angle_to_b"
-    />
-    <vtk_track_terminator_painter
-        name="terminator_painter"
-        file="DipoleTrapSimulation.root"
-        point_object="component_track_world"
-        point_variable="final_position"
-        terminator_object="component_track_world"
-        terminator_variable="terminator_name"
-        add_terminator="term_upstream_target"
-        add_color="0 255 0"
-        add_terminator="term_downstream_target"
-        add_color="0 255 0"
-        add_terminator="term_max_steps"
-        add_color="255 0 0"
-    />
-</vtk_window>

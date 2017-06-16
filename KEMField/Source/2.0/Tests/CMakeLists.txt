@@ -9,6 +9,13 @@ endif (@PROJECT_NAME@_ENABLE_TEST)
 if (@PROJECT_NAME@_ENABLE_TEST)
 
     kasper_internal_include_directories(${@PROJECT_NAME@_INCLUDE_DIRS})
+  
+  set (TESTS_HEADERS
+    include/KElectrostaticBoundaryIntegratorOptions.hh
+    )
+
+    kasper_internal_include_directories( include )
+    kasper_install_headers( ${TESTS_HEADERS} )
 
   set (TESTS_LIBS
     ${ROOT_LIBRARIES}
@@ -23,15 +30,14 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     KEMFileManipulation
     KEMElectrostaticBoundaryIntegrals
     KEMElectromagnets
-    KEMIntegratingFieldSolver
     KEMZHGenerator
     KEMZHSolver
     KEMVisualization
     )
 
   if (@PROJECT_NAME@_USE_VTK)
-    kasper_find_vtk()
     list (APPEND TESTS_LIBS
+    ${Kommon_Vtk_LIBRARIES}
     KEMVTKPlugin
     )
   endif (@PROJECT_NAME@_USE_VTK)
@@ -86,10 +92,6 @@ if (@PROJECT_NAME@_ENABLE_TEST)
       ${VTK_LIBRARIES})
   endif (@PROJECT_NAME@_USE_VTK)
 
-  add_executable (TestBoundaryIntegrator
-    ${CMAKE_CURRENT_SOURCE_DIR}/TestBoundaryIntegrator.cc)
-  target_link_libraries (TestBoundaryIntegrator ${TESTS_LIBS} )
-
   add_executable (TestElectromagnets
     ${CMAKE_CURRENT_SOURCE_DIR}/TestElectromagnets.cc)
   target_link_libraries (TestElectromagnets ${TESTS_LIBS} )
@@ -98,9 +100,9 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     ${CMAKE_CURRENT_SOURCE_DIR}/TestElectromagnetViewer.cc)
   target_link_libraries (TestElectromagnetViewer ${TESTS_LIBS} )
 
-    add_executable (TestDiskCapacitance
-      ${CMAKE_CURRENT_SOURCE_DIR}/TestDiskCapacitance.cc)
-    target_link_libraries (TestDiskCapacitance ${TESTS_LIBS} )
+  add_executable (TestDiskCapacitance
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestDiskCapacitance.cc)
+  target_link_libraries (TestDiskCapacitance ${TESTS_LIBS} )
 
   add_executable (TestEMFileInterface
     ${CMAKE_CURRENT_SOURCE_DIR}/TestEMFileInterface.cc)
@@ -113,6 +115,30 @@ if (@PROJECT_NAME@_ENABLE_TEST)
   add_executable (TestAnisotropicPoisson
     ${CMAKE_CURRENT_SOURCE_DIR}/TestAnisotropicPoisson.cc)
   target_link_libraries (TestAnisotropicPoisson ${TESTS_LIBS} )
+  
+  add_executable (TestCubatureSpeedStandAlone
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestCubatureSpeedStandAlone.cc)
+  target_link_libraries (TestCubatureSpeedStandAlone ${TESTS_LIBS} )
+  
+  add_executable (TestIntegratorFunctionality
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorFunctionality.cc)
+  target_link_libraries (TestIntegratorFunctionality ${TESTS_LIBS} )
+  
+  add_executable (TestIntegratorSpeed
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorSpeed.cc)
+  target_link_libraries (TestIntegratorSpeed ${TESTS_LIBS} )
+
+  add_executable (TestIntegratorSpeedWithKbdInput
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorSpeedWithKbdInput.cc)
+  target_link_libraries (TestIntegratorSpeedWithKbdInput ${TESTS_LIBS} )
+
+  add_executable (TestIntegratorRWG
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorRWG.cc)
+  target_link_libraries (TestIntegratorRWG ${TESTS_LIBS} )
+  
+  add_executable (TestIntegratorRWGAccuracy
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorRWGAccuracy.cc)
+  target_link_libraries (TestIntegratorRWGAccuracy ${TESTS_LIBS} )
 
   add_executable (TestInverseDistance
     ${CMAKE_CURRENT_SOURCE_DIR}/TestInverseDistance.cc)
@@ -143,13 +169,18 @@ if (@PROJECT_NAME@_ENABLE_TEST)
   target_link_libraries (TestZonalHarmonics ${TESTS_LIBS}  )
 
   kasper_install_executables (
-    TestBoundaryIntegrator
+    TestCubatureSpeedStandAlone
     TestDiskCapacitance
     TestElectromagnets
     TestElectromagnetViewer
     TestEMFileInterface
     TestGeometry
     TestAnisotropicPoisson
+    TestIntegratorFunctionality
+    TestIntegratorSpeed
+    TestIntegratorSpeedWithKbdInput
+    TestIntegratorRWG
+    TestIntegratorRWGAccuracy
     TestInverseDistance
     TestSVDSolver
     TestBinaryTruncation
@@ -158,6 +189,32 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     TestVisitor
     TestZonalHarmonics
     )
+
+############
+### ROOT ###
+############
+
+  if (@PROJECT_NAME@_USE_ROOT)
+
+  add_executable (TestIntegratorDistRatioLineSegmentROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorDistRatioLineSegmentROOT.cc)
+  target_link_libraries (TestIntegratorDistRatioLineSegmentROOT ${TESTS_LIBS} )
+  
+  add_executable (TestIntegratorDistRatioRectangleROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorDistRatioRectangleROOT.cc)
+  target_link_libraries (TestIntegratorDistRatioRectangleROOT ${TESTS_LIBS} )
+  
+  add_executable (TestIntegratorDistRatioTriangleROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorDistRatioTriangleROOT.cc)
+  target_link_libraries (TestIntegratorDistRatioTriangleROOT ${TESTS_LIBS} )
+
+  kasper_install_executables (
+    TestIntegratorDistRatioLineSegmentROOT
+    TestIntegratorDistRatioRectangleROOT
+    TestIntegratorDistRatioTriangleROOT
+  )
+
+  endif (@PROJECT_NAME@_USE_ROOT)
 
 ################
 ### KMessage ###
@@ -181,22 +238,43 @@ if (@PROJECT_NAME@_ENABLE_TEST)
 
   if (@PROJECT_NAME@_USE_CUDA)
 
-  cuda_add_executable(TestCUDASurfaceContainer
-	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDASurfaceContainer.cu)
-  target_link_libraries (TestCUDASurfaceContainer ${TESTS_LIBS} )
+  if (@PROJECT_NAME@_USE_ROOT)
+    cuda_add_executable (TestIntegratorTriangleROOTCUDA
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorTriangleROOTCUDA.cu)
+    target_link_libraries (TestIntegratorTriangleROOTCUDA ${TESTS_LIBS} )
+    
+    cuda_add_executable (TestIntegratorRectangleROOTCUDA
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorRectangleROOTCUDA.cu)
+    target_link_libraries (TestIntegratorRectangleROOTCUDA ${TESTS_LIBS} )
+    
+    cuda_add_executable (TestIntegratorLineSegmentROOTCUDA
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorLineSegmentROOTCUDA.cu)
+    target_link_libraries (TestIntegratorLineSegmentROOTCUDA ${TESTS_LIBS} )
+    
+    kasper_install_executables (
+      TestIntegratorTriangleROOTCUDA
+      TestIntegratorRectangleROOTCUDA
+      TestIntegratorLineSegmentROOTCUDA
+    )
+    
+  endif (@PROJECT_NAME@_USE_ROOT)
+  
+  cuda_add_executable(TestCUDAPlugin
+	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDAPlugin.cu)
+  target_link_libraries (TestCUDAPlugin ${TESTS_LIBS} )
+  
+  cuda_add_executable (TestIntegratorFunctionalityCUDA
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorFunctionalityCUDA.cu)
+  target_link_libraries (TestIntegratorFunctionalityCUDA ${TESTS_LIBS} )
 
-  cuda_add_executable(TestCUDABoundaryIntegrator
-	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDABoundaryIntegrator.cu)
-  target_link_libraries (TestCUDABoundaryIntegrator ${TESTS_LIBS} )
-
-  cuda_add_executable(TestCUDARobinHood
-	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDARobinHood.cu)
-  target_link_libraries (TestCUDARobinHood ${TESTS_LIBS} )
-
+  cuda_add_executable (TestIntegratorSpeedWithKbdInputCUDA
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorSpeedWithKbdInputCUDA.cu)
+  target_link_libraries (TestIntegratorSpeedWithKbdInputCUDA ${TESTS_LIBS} )
+  
   kasper_install_executables(
-  	TestCUDASurfaceContainer
-	TestCUDABoundaryIntegrator
-    TestCUDARobinHood
+    TestCUDAPlugin
+	TestIntegratorFunctionalityCUDA
+	TestIntegratorSpeedWithKbdInputCUDA
   )
 
   endif (@PROJECT_NAME@_USE_CUDA)
@@ -223,18 +301,39 @@ if (@PROJECT_NAME@_ENABLE_TEST)
 
   if (@PROJECT_NAME@_USE_OPENCL)
 
+  if (@PROJECT_NAME@_USE_ROOT)
+    add_executable (TestIntegratorTriangleROOTOpenCL
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorTriangleROOTOpenCL.cc)
+    target_link_libraries (TestIntegratorTriangleROOTOpenCL ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+    
+    add_executable (TestIntegratorRectangleROOTOpenCL
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorRectangleROOTOpenCL.cc)
+    target_link_libraries (TestIntegratorRectangleROOTOpenCL ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+    
+    add_executable (TestIntegratorLineSegmentROOTOpenCL
+      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorLineSegmentROOTOpenCL.cc)
+    target_link_libraries (TestIntegratorLineSegmentROOTOpenCL ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+    
+    kasper_install_executables (
+      TestIntegratorTriangleROOTOpenCL
+      TestIntegratorRectangleROOTOpenCL
+      TestIntegratorLineSegmentROOTOpenCL
+    )
+    
+  endif (@PROJECT_NAME@_USE_ROOT)
+
   add_executable (TestOpenCLPlugin
     ${CMAKE_CURRENT_SOURCE_DIR}/TestOpenCLPlugin.cc)
   target_link_libraries (TestOpenCLPlugin ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
   
-  add_executable (TestOpenCLRobinHood
-    ${CMAKE_CURRENT_SOURCE_DIR}/TestOpenCLRobinHood.cc)
-  target_link_libraries (TestOpenCLRobinHood ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
+  add_executable (TestIntegratorFunctionalityOpenCL
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorFunctionalityOpenCL.cc)
+  target_link_libraries (TestIntegratorFunctionalityOpenCL ${OPENCL_LIBRARIES} ${TESTS_LIBS} )
 
   kasper_install_executables (
-  TestOpenCLPlugin
-  TestOpenCLRobinHood
-    )
+    TestIntegratorFunctionalityOpenCL
+    TestOpenCLPlugin
+  )
 
   endif (@PROJECT_NAME@_USE_OPENCL)
 
@@ -264,12 +363,17 @@ if (@PROJECT_NAME@_ENABLE_TEST)
 #      ${CMAKE_CURRENT_SOURCE_DIR}/TestSphericalImageCharge.cc)
 #    target_link_libraries (TestSphericalImageCharge ${TESTS_LIBS} ${Kommon_LIBRARIES})
 
+  add_executable (TestVectorTypes
+    ${CMAKE_CURRENT_SOURCE_DIR}/TestVectorTypes.cc)
+  target_link_libraries (TestVectorTypes ${TESTS_LIBS} )
+  
     kasper_install_executables (
       TestCubeCapacitance
       TestSphereCapacitance
       TestSuperposition
       TestSymmetryGroups
 #      TestSphericalImageCharge
+      TestVectorTypes
       )
 
   endif (@PROJECT_NAME@_USE_KGEOBAG)

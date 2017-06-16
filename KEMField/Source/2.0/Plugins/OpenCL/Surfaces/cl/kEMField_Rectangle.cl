@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_RECTANGLE_CL
 #define KEMFIELD_RECTANGLE_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 // Rectangle geometry definition (as defined by the streamers in KRectangle.hh):
 //

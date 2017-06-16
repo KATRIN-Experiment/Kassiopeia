@@ -34,7 +34,7 @@ namespace Kassiopeia
             //***********
 
         public:
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "component <" << this->GetName() << "> building output named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XThisType >::GetComponent( this, aField );
@@ -48,7 +48,7 @@ namespace Kassiopeia
                     return tComponent;
                 }
             }
-            KSCommand* Command( const string& aField, KSComponent* aChild )
+            KSCommand* Command( const std::string& aField, KSComponent* aChild )
             {
                 objctmsg_debug( "component <" << this->GetName() << "> building command named <" << aField << ">" << eom )
                 KSCommand* tCommand = KSDictionary< XThisType >::GetCommand( this, aChild, aField );
@@ -86,7 +86,7 @@ namespace Kassiopeia
             //***********
 
         public:
-            KSComponent* Component( const string& aLabel )
+            KSComponent* Component( const std::string& aLabel )
             {
                 objctmsg_debug( "component <" << this->GetName() << "> building component named <" << aLabel << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XThisType >::GetComponent( this, aLabel );
@@ -101,7 +101,7 @@ namespace Kassiopeia
                     return tComponent;
                 }
             }
-            KSCommand* Command( const string& aField, KSComponent* aChild )
+            KSCommand* Command( const std::string& aField, KSComponent* aChild )
             {
                 objctmsg_debug( "component <" << this->GetName() << "> building command named <" << aField << ">" << eom )
                 KSCommand* tCommand = KSDictionary< XThisType >::GetCommand( this, aChild, aField );

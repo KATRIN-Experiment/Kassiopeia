@@ -1,8 +1,10 @@
 #include "KSROOTMagFieldPainterBuilder.h"
-#include "KROOTWindow.h"
-#include "KROOTPad.h"
+#include "KROOTWindowBuilder.h"
+#include "KROOTPadBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 

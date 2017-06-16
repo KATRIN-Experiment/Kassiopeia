@@ -4,12 +4,7 @@
 #include "KInitializationMessage.hh"
 
 #include <string>
-using std::string;
-
 #include <sstream>
-using std::istringstream;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -24,17 +19,17 @@ namespace katrin
             virtual KToken* Clone() = 0;
 
         public:
-            void SetValue( const string& aValue );
-            const string& GetValue() const;
+            void SetValue( const std::string& aValue );
+            const std::string& GetValue() const;
 
             template< typename XDataType >
             XDataType GetValue() const;
 
-            void SetPath( const string& aPath );
-            const string& GetPath() const;
+            void SetPath( const std::string& aPath );
+            const std::string& GetPath() const;
 
-            void SetFile( const string& aFile );
-            const string& GetFile() const;
+            void SetFile( const std::string& aFile );
+            const std::string& GetFile() const;
 
             void SetLine( const int& aLine );
             const int& GetLine() const;
@@ -43,10 +38,10 @@ namespace katrin
             const int& GetColumn() const;
 
         private:
-            string fValue;
+            std::string fValue;
 
-            string fPath;
-            string fFile;
+            std::string fPath;
+            std::string fFile;
             int fLine;
             int fColumn;
     };
@@ -54,12 +49,12 @@ namespace katrin
     template< typename XDataType >
     inline XDataType KToken::GetValue() const
     {
-        istringstream Converter( fValue );
+        std::istringstream Converter( fValue );
         XDataType Data;
         Converter >> Data;
         if (Converter.fail() || (Data != Data) )  // also check for NaN
         {
-            string TypeName = KMessage::TypeName< XDataType >();
+            std::string TypeName = KMessage::TypeName< XDataType >();
             initmsg( eWarning ) << "error processing token <" << fValue << "> with type <" << TypeName << ">, replaced with <" << Data << ">" << ret;
             initmsg( eWarning ) << "in path <" << fPath << "> in file <" << fFile << "> at line <" << fLine << "> at column <" << fColumn << ">" << eom;
         }
@@ -69,9 +64,9 @@ namespace katrin
     template<>
     inline bool KToken::GetValue< bool >() const
     {
-        if ( fValue == string("0")
-                || fValue == string("false") || fValue == string("False") || fValue == string("FALSE")
-                || fValue == string("no") || fValue == string("No") || fValue == string("NO") )
+        if ( fValue == std::string("0")
+                || fValue == std::string("false") || fValue == std::string("False") || fValue == std::string("FALSE")
+                || fValue == std::string("no") || fValue == std::string("No") || fValue == std::string("NO") )
         {
             return false;
         }
@@ -79,7 +74,7 @@ namespace katrin
     }
 
     template<>
-    inline string KToken::GetValue< string >() const
+    inline std::string KToken::GetValue< std::string >() const
     {
         return fValue;
     }

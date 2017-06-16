@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_BOUNDARYINTEGRALS_CL
 #define KEMFIELD_BOUNDARYINTEGRALS_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #ifdef RECTANGLE
 #include "kEMField_Rectangle.cl"

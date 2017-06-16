@@ -1,8 +1,10 @@
 #include "KGROOTGeometryPainterBuilder.hh"
-#include "KROOTWindow.h"
-#include "KROOTPad.h"
+#include "KROOTWindowBuilder.h"
+#include "KROOTPadBuilder.h"
 
 using namespace KGeoBag;
+using namespace std;
+
 namespace katrin
 {
 

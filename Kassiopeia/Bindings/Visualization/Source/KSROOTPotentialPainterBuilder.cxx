@@ -1,8 +1,10 @@
 #include "KSROOTPotentialPainterBuilder.h"
-#include "KROOTWindow.h"
-#include "KROOTPad.h"
+#include "KROOTWindowBuilder.h"
+#include "KROOTPadBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -16,7 +18,9 @@ namespace katrin
         KSROOTPotentialPainterBuilder::Attribute< double >( "z_max" ) +
         KSROOTPotentialPainterBuilder::Attribute< int >( "r_steps" ) +
         KSROOTPotentialPainterBuilder::Attribute< int >( "z_steps" ) +
-        KSROOTPotentialPainterBuilder::Attribute< bool >( "calc_pot" );
+        KSROOTPotentialPainterBuilder::Attribute< bool >( "calc_pot" ) +
+        KSROOTPotentialPainterBuilder::Attribute< bool >( "compare_fields" ) +
+        KSROOTPotentialPainterBuilder::Attribute< string >( "reference_field" );
 
 
     STATICINT sKSROOTPotentialPainterWindow =

@@ -8,7 +8,7 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSStep.h"
 #include "KSRootTrajectory.h"
 #include "KSMainMessage.h"
@@ -135,8 +135,8 @@ int main( int anArgc, char** anArgv )
             tCommandField = tArgumentValue.substr( tPeriodPos + 1, tColonPos - tPeriodPos - 1 );
             tCommandChild = tArgumentValue.substr( tColonPos + 1 );
 
-            tParent = KSToolbox::GetInstance()->GetObject( tCommandParent );
-            tChild = KSToolbox::GetInstance()->GetObject( tCommandChild );
+            tParent = KToolbox::GetInstance().Get( tCommandParent );
+            tChild = KToolbox::GetInstance().Get( tCommandChild );
             tCommand = tParent->CreateCommand( tCommandField );
             tCommand->BindParent( tParent );
             tCommand->BindChild( tChild );
@@ -172,7 +172,7 @@ int main( int anArgc, char** anArgv )
     KSStep tStep;
 
     // initialize root trajectory
-    KSRootTrajectory* tRootTrajectory = KSToolbox::GetInstance()->GetObjectAs< KSRootTrajectory >( "root_trajectory" );
+    KSRootTrajectory* tRootTrajectory = KToolbox::GetInstance().Get< KSRootTrajectory >( "root_trajectory" );
     tRootTrajectory->SetStep( &tStep );
 
     tRootTrajectory->Initialize();
@@ -209,9 +209,9 @@ int main( int anArgc, char** anArgv )
     tRootElectricField.AddElectricField( &tElectricFieldConstant );
 
     // initialize primary
-    KSParticleFactory::GetInstance()->SetMagneticField( &tRootMagneticField );
-    KSParticleFactory::GetInstance()->SetElectricField( &tRootElectricField );
-    KSParticle* tPrimary = KSParticleFactory::GetInstance()->Create( 11 );
+    KSParticleFactory::GetInstance().SetMagneticField( &tRootMagneticField );
+    KSParticleFactory::GetInstance().SetElectricField( &tRootElectricField );
+    KSParticle* tPrimary = KSParticleFactory::GetInstance().Create( 11 );
     tPrimary->SetTime( 0. );
     tPrimary->SetLength( 0. );
     tPrimary->SetPosition( 1., 0., 0. );
@@ -341,7 +341,6 @@ int main( int anArgc, char** anArgv )
         delete tCommand;
     }
 
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

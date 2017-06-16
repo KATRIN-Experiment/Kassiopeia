@@ -49,7 +49,7 @@ namespace Kassiopeia
             //**********
 
         public:
-            K_REFS( string, TerminatorName )
+            K_REFS( std::string, TerminatorName )
             K_REFS( bool, TerminatorFlag )
 
             //**********
@@ -57,8 +57,8 @@ namespace Kassiopeia
             //**********
 
         public:
-            K_REFS( string, TrajectoryName )
-            K_REFS( KThreeVector, TrajectoryCenter )
+            K_REFS( std::string, TrajectoryName )
+            K_REFS( KGeoBag::KThreeVector, TrajectoryCenter )
             K_REFS( double, TrajectoryRadius )
             K_REFS( double, TrajectoryStep )
 
@@ -67,7 +67,7 @@ namespace Kassiopeia
             //*****************
 
         public:
-            K_REFS( string, SpaceInteractionName )
+            K_REFS( std::string, SpaceInteractionName )
             K_REFS( double, SpaceInteractionStep )
             K_REFS( bool, SpaceInteractionFlag )
 
@@ -76,7 +76,7 @@ namespace Kassiopeia
             //****************
 
         public:
-            K_REFS( string, SpaceNavigationName )
+            K_REFS( std::string, SpaceNavigationName )
             K_REFS( double, SpaceNavigationStep )
             K_REFS( bool, SpaceNavigationFlag )
 
@@ -85,7 +85,7 @@ namespace Kassiopeia
             //*******************
 
         public:
-            K_REFS( string, SurfaceInteractionName )
+            K_REFS( std::string, SurfaceInteractionName )
             K_REFS( bool, SurfaceInteractionFlag )
 
             //******************
@@ -93,7 +93,7 @@ namespace Kassiopeia
             //******************
 
         public:
-            K_REFS( string, SurfaceNavigationName )
+            K_REFS( std::string, SurfaceNavigationName )
             K_REFS( bool, SurfaceNavigationFlag )
 
             //*********

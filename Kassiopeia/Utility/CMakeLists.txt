@@ -7,6 +7,7 @@ set( UTILITY_HEADER_BASENAMES
     KSExpression.h
     KSList.h
     KSUtilityMessage.h
+    KSPathResolver.h
 )
 set( UTILITY_HEADER_PATH 
 	${CMAKE_CURRENT_SOURCE_DIR}/Include

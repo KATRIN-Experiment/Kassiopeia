@@ -1,111 +1,392 @@
-#ifndef KINTEGRATINGFIELDSOLVER_DEF
-#define KINTEGRATINGFIELDSOLVER_DEF
+#ifndef KELECTROSTATICINTEGRATINGFIELDSOLVER_DEF
+#define KELECTROSTATICINTEGRATINGFIELDSOLVER_DEF
 
+#include "KIntegratingFieldSolverTemplate.hh"
 #include "KSurfaceContainer.hh"
-#include "KElectrostaticBoundaryIntegrator.hh"
 
 namespace KEMField
 {
-  template <class Integrator>
-  class KIntegratingFieldSolver;
+class ElectrostaticSingleThread;
 
-  template <>
-  class KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>
-  {
-  public:
-    typedef KElectrostaticBoundaryIntegrator::Basis Basis;
+template <class Integrator>
+class KIntegratingFieldSolver<Integrator,ElectrostaticSingleThread>
+{
+public:
+	typedef typename Integrator::Basis Basis;
 
-    KIntegratingFieldSolver(const KSurfaceContainer& container,
-			    KElectrostaticBoundaryIntegrator& integrator);
-    virtual ~KIntegratingFieldSolver() {}
+	KIntegratingFieldSolver(const KSurfaceContainer& container, Integrator& integrator);
+	virtual ~KIntegratingFieldSolver() {}
 
-    virtual void Initialize() {}
+	virtual void Initialize() {}
 
-    double Potential(const KPosition& P) const;
-    KEMThreeVector ElectricField(const KPosition& P) const;
+	double Potential(const KPosition& P) const;
+	KEMThreeVector ElectricField(const KPosition& P) const;
+	std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const;
 
-    double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
-    KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+	// functions without Kahan summation
+	double PotentialNoKahanSum(const KPosition& P) const;
+	KEMThreeVector ElectricFieldNoKahanSum(const KPosition& P) const;
+	std::pair<KEMThreeVector,double> ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const;
 
-  protected:
-    const KSurfaceContainer& fContainer;
-    KElectrostaticBoundaryIntegrator& fIntegrator;
+	double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+	KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+	std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
 
-  private:
-    class ShapeVisitorForPotential :
-      public KSelectiveVisitor<KShapeVisitor,
-			       KElectrostaticBoundaryIntegrator::AcceptedShapes>
-    {
-    public:
-      using KSelectiveVisitor<KShapeVisitor,KElectrostaticBoundaryIntegrator::AcceptedShapes>::Visit;
+protected:
+	const KSurfaceContainer& fContainer;
+	Integrator& fIntegrator;
 
-     ShapeVisitorForPotential(KElectrostaticBoundaryIntegrator& integrator) :
-      fIntegrator(integrator) {}
+private:
+	class ShapeVisitorForPotential :
+			public KSelectiveVisitor<KShapeVisitor,
+			typename Integrator::AcceptedShapes>
+	{
+	public:
+		using KSelectiveVisitor<KShapeVisitor,typename Integrator::AcceptedShapes>::Visit;
 
-      void Visit(KTriangle& t) { ComputePotential(t); }
-      void Visit(KRectangle& r) { ComputePotential(r); }
-      void Visit(KLineSegment& l) { ComputePotential(l); }
-      void Visit(KConicSection& c) { ComputePotential(c); }
-      void Visit(KRing& r) { ComputePotential(r); }
-      void Visit(KTriangleGroup& t) { ComputePotential(t); }
-      void Visit(KRectangleGroup& r) { ComputePotential(r); }
-      void Visit(KLineSegmentGroup& l) { ComputePotential(l);}
-      void Visit(KConicSectionGroup& c) { ComputePotential(c); }
-      void Visit(KRingGroup& r) { ComputePotential(r); }
+		ShapeVisitorForPotential(Integrator& integrator) : fIntegrator(integrator) {}
 
-      template <class ShapePolicy>
-      void ComputePotential(ShapePolicy& s)
-      {
-	fPotential = fIntegrator.Potential(&s,fP);
-      }
+		void Visit(KTriangle& t) { ComputePotential(t); }
+		void Visit(KRectangle& r) { ComputePotential(r); }
+		void Visit(KLineSegment& l) { ComputePotential(l); }
+		void Visit(KConicSection& c) { ComputePotential(c); }
+		void Visit(KRing& r) { ComputePotential(r); }
+		void Visit(KTriangleGroup& t) { ComputePotential(t); }
+		void Visit(KRectangleGroup& r) { ComputePotential(r); }
+		void Visit(KLineSegmentGroup& l) { ComputePotential(l);}
+		void Visit(KConicSectionGroup& c) { ComputePotential(c); }
+		void Visit(KRingGroup& r) { ComputePotential(r); }
 
-      void SetPosition(const KPosition& p) const { fP = p; }
-      double GetNormalizedPotential() const { return fPotential; }
+		template <class ShapePolicy>
+		void ComputePotential(ShapePolicy& s)
+		{
+			fPotential = fIntegrator.Potential(&s,fP);
+		}
 
-    private:
-      mutable KPosition fP;
-      double fPotential;
-      KElectrostaticBoundaryIntegrator& fIntegrator;
-    };
+		void SetPosition(const KPosition& p) const { fP = p; }
+		double GetNormalizedPotential() const { return fPotential; }
 
-    class ShapeVisitorForElectricField :
-      public KSelectiveVisitor<KShapeVisitor,
-			       KElectrostaticBoundaryIntegrator::AcceptedShapes>
-    {
-    public:
-      using KSelectiveVisitor<KShapeVisitor,KElectrostaticBoundaryIntegrator::AcceptedShapes>::Visit;
+	private:
+		mutable KPosition fP;
+		double fPotential;
+		Integrator& fIntegrator;
+	};
 
-      ShapeVisitorForElectricField(KElectrostaticBoundaryIntegrator& integrator) : fIntegrator(integrator) {}
+	class ShapeVisitorForElectricField :
+			public KSelectiveVisitor<KShapeVisitor,
+			typename Integrator::AcceptedShapes>
+	{
+	public:
+		using KSelectiveVisitor<KShapeVisitor,typename Integrator::AcceptedShapes>::Visit;
 
-      void Visit(KTriangle& t) { ComputeElectricField(t); }
-      void Visit(KRectangle& r) { ComputeElectricField(r); }
-      void Visit(KLineSegment& l) { ComputeElectricField(l); }
-      void Visit(KConicSection& c) { ComputeElectricField(c); }
-      void Visit(KRing& r) { ComputeElectricField(r); }
-      void Visit(KTriangleGroup& t) { ComputeElectricField(t); }
-      void Visit(KRectangleGroup& r) { ComputeElectricField(r); }
-      void Visit(KLineSegmentGroup& l) { ComputeElectricField(l);}
-      void Visit(KConicSectionGroup& c) { ComputeElectricField(c); }
-      void Visit(KRingGroup& r) { ComputeElectricField(r); }
+		ShapeVisitorForElectricField(Integrator& integrator) : fIntegrator(integrator) {}
 
-      template <class ShapePolicy>
-      void ComputeElectricField(ShapePolicy& s)
-      {
-	fElectricField = fIntegrator.ElectricField(&s,fP);
-      }
+		void Visit(KTriangle& t) { ComputeElectricField(t); }
+		void Visit(KRectangle& r) { ComputeElectricField(r); }
+		void Visit(KLineSegment& l) { ComputeElectricField(l); }
+		void Visit(KConicSection& c) { ComputeElectricField(c); }
+		void Visit(KRing& r) { ComputeElectricField(r); }
+		void Visit(KTriangleGroup& t) { ComputeElectricField(t); }
+		void Visit(KRectangleGroup& r) { ComputeElectricField(r); }
+		void Visit(KLineSegmentGroup& l) { ComputeElectricField(l);}
+		void Visit(KConicSectionGroup& c) { ComputeElectricField(c); }
+		void Visit(KRingGroup& r) { ComputeElectricField(r); }
 
-      void SetPosition(const KPosition& p) const { fP = p; }
-      KEMThreeVector& GetNormalizedElectricField() const { return fElectricField;}
+		template <class ShapePolicy>
+		void ComputeElectricField(ShapePolicy& s)
+		{
+			fElectricField = fIntegrator.ElectricField(&s,fP);
+		}
 
-    private:
-      mutable KPosition fP;
-      mutable KEMThreeVector fElectricField;
-      KElectrostaticBoundaryIntegrator& fIntegrator;
-    };
+		void SetPosition(const KPosition& p) const { fP = p; }
+		KEMThreeVector& GetNormalizedElectricField() const { return fElectricField;}
 
-    mutable ShapeVisitorForPotential fShapeVisitorForPotential;
-    mutable ShapeVisitorForElectricField fShapeVisitorForElectricField;
-  };
+	private:
+		mutable KPosition fP;
+		mutable KEMThreeVector fElectricField;
+		Integrator& fIntegrator;
+	};
+
+	class ShapeVisitorForElectricFieldAndPotential :
+			public KSelectiveVisitor<KShapeVisitor,
+			typename Integrator::AcceptedShapes>
+	{
+	public:
+		using KSelectiveVisitor<KShapeVisitor,typename Integrator::AcceptedShapes>::Visit;
+
+		ShapeVisitorForElectricFieldAndPotential(Integrator& integrator) : fIntegrator(integrator) {}
+
+		void Visit(KTriangle& t) { ComputeElectricFieldAndPotential(t); }
+		void Visit(KRectangle& r) { ComputeElectricFieldAndPotential(r); }
+		void Visit(KLineSegment& l) { ComputeElectricFieldAndPotential(l); }
+		void Visit(KConicSection& c) { ComputeElectricFieldAndPotential(c); }
+		void Visit(KRing& r) { ComputeElectricFieldAndPotential(r); }
+		void Visit(KTriangleGroup& t) { ComputeElectricFieldAndPotential(t); }
+		void Visit(KRectangleGroup& r) { ComputeElectricFieldAndPotential(r); }
+		void Visit(KLineSegmentGroup& l) { ComputeElectricFieldAndPotential(l);}
+		void Visit(KConicSectionGroup& c) { ComputeElectricFieldAndPotential(c); }
+		void Visit(KRingGroup& r) { ComputeElectricFieldAndPotential(r); }
+
+		template <class ShapePolicy>
+		void ComputeElectricFieldAndPotential(ShapePolicy& s)
+		{
+			fElectricFieldAndPotential = fIntegrator.ElectricFieldAndPotential(&s,fP);
+		}
+
+		void SetPosition(const KPosition& p) const { fP = p; }
+		std::pair<KEMThreeVector,double>& GetNormalizedElectricFieldAndPotential() const { return fElectricFieldAndPotential;}
+
+	private:
+		mutable KPosition fP;
+		mutable std::pair<KEMThreeVector,double> fElectricFieldAndPotential;
+		Integrator& fIntegrator;
+	};
+
+	mutable ShapeVisitorForPotential fShapeVisitorForPotential;
+	mutable ShapeVisitorForElectricField fShapeVisitorForElectricField;
+	mutable ShapeVisitorForElectricFieldAndPotential fShapeVisitorForElectricFieldAndPotential;
+};
+
+
+template <class Integrator>
+KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::
+KIntegratingFieldSolver(const KSurfaceContainer& container,
+		Integrator& integrator)
+		: fContainer(container),
+		  fIntegrator(integrator),
+		  fShapeVisitorForPotential(integrator),
+		  fShapeVisitorForElectricField(integrator),
+		  fShapeVisitorForElectricFieldAndPotential(integrator)
+		  {
+
+		  }
+
+template <class Integrator>
+double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential(const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForPotential.SetPosition(P);
+	double sum = 0.;
+	double c = 0.;
+	double y = 0.;
+	double t = 0.;
+	KSurfaceContainer::iterator it;
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForPotential);
+		y = fShapeVisitorForPotential.GetNormalizedPotential()*fIntegrator.BasisValue(*it,0) - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
+}
+
+template <class Integrator>
+KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricField.SetPosition(P);
+	KEMThreeVector sum(0.,0.,0.);
+	KEMThreeVector c(0.,0.,0.);
+	KEMThreeVector y(0.,0.,0.);
+	KEMThreeVector t(0.,0.,0.);
+	KSurfaceContainer::iterator it;
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForElectricField);
+		y = fShapeVisitorForElectricField.GetNormalizedElectricField()*fIntegrator.BasisValue(*it,0) - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
+}
+
+template <class Integrator>
+std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
+
+	KEMThreeVector sumField(0.,0.,0.);
+	KEMThreeVector cField(0.,0.,0.);
+	KEMThreeVector yField(0.,0.,0.);
+	KEMThreeVector tField(0.,0.,0.);
+
+	double sumPot = 0.;
+	double cPot = 0.;
+	double yPot = 0.;
+	double tPot = 0.;
+
+	KSurfaceContainer::iterator it;
+	std::pair<KEMThreeVector,double> itFieldAndPot;
+	double itBasisValue = 0.;
+
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForElectricFieldAndPotential);
+
+		itFieldAndPot = fShapeVisitorForElectricFieldAndPotential.GetNormalizedElectricFieldAndPotential();
+		itBasisValue = fIntegrator.BasisValue(*it,0);
+
+		yField = itFieldAndPot.first*itBasisValue - cField;
+		tField = sumField + yField;
+		cField = (tField - sumField) - yField;
+		sumField = tField;
+
+		yPot = itFieldAndPot.second*itBasisValue - cPot;
+		tPot = sumPot + yPot;
+		cPot = (tPot - sumPot) - yPot;
+		sumPot = tPot;
+
+	}
+	return std::make_pair( sumField, sumPot );
+}
+
+template <class Integrator>
+double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::PotentialNoKahanSum(const KPosition& P) const
+{
+	fShapeVisitorForPotential.SetPosition(P);
+	double sum = 0.;
+	KSurfaceContainer::iterator it;
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForPotential);
+		sum += ( fShapeVisitorForPotential.GetNormalizedPotential()*fIntegrator.BasisValue(*it,0) );
+	}
+	return sum;
+}
+
+template <class Integrator>
+KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldNoKahanSum(const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricField.SetPosition(P);
+	KEMThreeVector sum(0.,0.,0.);
+	KSurfaceContainer::iterator it;
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForElectricField);
+		sum += ( fShapeVisitorForElectricField.GetNormalizedElectricField()*fIntegrator.BasisValue(*it,0) );
+	}
+	return sum;
+}
+
+template <class Integrator>
+std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
+
+	KEMThreeVector sumField(0.,0.,0.);
+	double sumPot = 0.;
+
+	KSurfaceContainer::iterator it;
+	std::pair<KEMThreeVector,double> itFieldAndPot;
+	double itBasisValue = 0.;
+
+	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
+	{
+		(*it)->Accept(fShapeVisitorForElectricFieldAndPotential);
+
+		itFieldAndPot = fShapeVisitorForElectricFieldAndPotential.GetNormalizedElectricFieldAndPotential();
+		itBasisValue = fIntegrator.BasisValue(*it,0);
+
+		sumField += (itFieldAndPot.first*itBasisValue);
+		sumPot += (itFieldAndPot.second*itBasisValue);
+	}
+	return std::make_pair( sumField, sumPot );
+}
+
+template <class Integrator>
+double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForPotential.SetPosition(P);
+	double sum = 0.;
+	double c = 0.;
+	double y = 0.;
+	double t = 0.;
+	unsigned int id;
+	for(unsigned int i=0; i<SetSize; ++i)
+	{
+		id = SurfaceIndexSet[i];
+		fContainer[id]->Accept(fShapeVisitorForPotential);
+		y = fShapeVisitorForPotential.GetNormalizedPotential()*fIntegrator.BasisValue(fContainer[id],0) - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
+}
+
+template <class Integrator>
+KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricField.SetPosition(P);
+	KEMThreeVector sum(0.,0.,0.);
+	KEMThreeVector c(0.,0.,0.);
+	KEMThreeVector y(0.,0.,0.);
+	KEMThreeVector t(0.,0.,0.);
+	unsigned int id;
+	for(unsigned int i=0; i<SetSize; ++i)
+	{
+		id = SurfaceIndexSet[i];
+		fContainer[id]->Accept(fShapeVisitorForElectricField);
+		y = fShapeVisitorForElectricField.GetNormalizedElectricField()*fIntegrator.BasisValue(fContainer[id],0) - c;
+		t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
+}
+
+template <class Integrator>
+std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
+{
+	// Kahan Sum to mitigate rounding error
+	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
+
+	KEMThreeVector sumField(0.,0.,0.);
+	KEMThreeVector cField(0.,0.,0.);
+	KEMThreeVector yField(0.,0.,0.);
+	KEMThreeVector tField(0.,0.,0.);
+
+	double sumPot = 0.;
+	double cPot = 0.;
+	double yPot = 0.;
+	double tPot = 0.;
+
+	KSurfaceContainer::iterator it;
+	std::pair<KEMThreeVector,double> itFieldAndPot;
+	double itBasisValue = 0.;
+
+	unsigned int id;
+
+	for(unsigned int i=0; i<SetSize; ++i)
+	{
+		id = SurfaceIndexSet[i];
+		fContainer[id]->Accept(fShapeVisitorForElectricFieldAndPotential);
+
+		itFieldAndPot = fShapeVisitorForElectricFieldAndPotential.GetNormalizedElectricFieldAndPotential();
+		itBasisValue = fIntegrator.BasisValue(*it,0);
+
+		yField = itFieldAndPot.first*itBasisValue - cField;
+		tField = sumField + yField;
+		cField = (tField - sumField) - yField;
+		sumField = tField;
+
+		yPot = itFieldAndPot.second*itBasisValue - cPot;
+		tPot = sumPot + yPot;
+		cPot = (tPot - sumPot) - yPot;
+		sumPot = tPot;
+
+	}
+	return std::make_pair( sumField, sumPot );
+}
+
 }
 
 #endif /* KELECTROSTATICINTEGRATINGFIELDSOLVER_DEF */

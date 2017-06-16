@@ -19,17 +19,17 @@ namespace katrin
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z" ) )
+        if( anAttribute->GetName() == "z" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSurface::Z );
             return true;
         }
-        if( anAttribute->GetName() == string( "r" ) )
+        if( anAttribute->GetName() == "r" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSurface::R );
             return true;
         }
-        if( anAttribute->GetName() == string( "radius" ) )
+        if( anAttribute->GetName() == "radius" )
         {
             anAttribute->CopyTo( fObject, &KGTorusSurface::Radius );
             return true;

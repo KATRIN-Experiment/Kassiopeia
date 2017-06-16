@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -19,7 +21,8 @@ namespace katrin
         KSTrajControlEnergyBuilder::Attribute< double >( "initial_step" ) +
         KSTrajControlEnergyBuilder::Attribute< double >( "adjustment" ) +
         KSTrajControlEnergyBuilder::Attribute< double >( "adjustment_up" ) +
-        KSTrajControlEnergyBuilder::Attribute< double >( "adjustment_down" );
+        KSTrajControlEnergyBuilder::Attribute< double >( "adjustment_down" ) +
+        KSTrajControlEnergyBuilder::Attribute< double >( "step_rescale" );
 
     STATICINT sToolboxKSTrajControlEnergy =
         KSRootBuilder::ComplexElement< KSTrajControlEnergy >( "kstraj_control_energy" );

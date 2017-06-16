@@ -73,7 +73,7 @@ void EMVisitor::VisitSurface(KGExtendedSurface< EM >* emSurface)
 
 int main()
 {
-  // katrin::KMessageTable::GetInstance()->SetTerminalVerbosity(eDebug);
+  // katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
 
   // Outer Cylinder:
 

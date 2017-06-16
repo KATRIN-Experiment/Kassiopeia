@@ -22,7 +22,7 @@ namespace Kassiopeia
             virtual ~KSIntDecay();
 
         public:
-            vector<double> CalculateLifetimes(
+            std::vector<double> CalculateLifetimes(
                     const KSParticle& aTrajectoryInitialParticle
             );
 
@@ -60,8 +60,8 @@ namespace Kassiopeia
         private:
             bool fSplit;
             KSIntDecayCalculator* fCalculator;
-            vector< KSIntDecayCalculator* > fCalculators;
-            vector< double > fLifeTimes;
+            std::vector< KSIntDecayCalculator* > fCalculators;
+            std::vector< double > fLifeTimes;
 
             double fEnhancement;
 

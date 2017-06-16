@@ -11,14 +11,20 @@ namespace Kassiopeia
     KSIntSurfaceSpecular::KSIntSurfaceSpecular() :
             fProbability( .0 ),
             fReflectionLoss( 0. ),
-            fTransmissionLoss( 0. )
+            fTransmissionLoss( 0. ),
+            fReflectionLossFraction( 0. ),
+            fTransmissionLossFraction( 0. ),
+            fUseRelativeLoss(false)
     {
     }
     KSIntSurfaceSpecular::KSIntSurfaceSpecular( const KSIntSurfaceSpecular& aCopy ) :
             KSComponent(),
             fProbability( aCopy.fProbability ),
             fReflectionLoss( aCopy.fReflectionLoss ),
-            fTransmissionLoss( aCopy.fTransmissionLoss )
+            fTransmissionLoss( aCopy.fTransmissionLoss ),
+            fReflectionLossFraction( aCopy.fReflectionLossFraction ),
+            fTransmissionLossFraction( aCopy.fTransmissionLossFraction ),
+            fUseRelativeLoss( aCopy.fUseRelativeLoss)
     {
     }
     KSIntSurfaceSpecular* KSIntSurfaceSpecular::Clone() const

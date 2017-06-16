@@ -82,13 +82,13 @@ namespace KEMField
     int global(1);
     int local(1);
 
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, GetSolutionVectorElementKernel, 0, 0);
         std::cout << "[GetSolutionVectorElementKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[GetSolutionVectorElementKernel] Set block size: " << local << std::endl;
-    }
+#endif
 
     GetSolutionVectorElementKernel <<<global,local>>> (
         fDeviceI,
@@ -112,13 +112,13 @@ namespace KEMField
     int global(1);
     int local(1);
 
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, GetSolutionVectorElementKernel, 0, 0);
         std::cout << "[GetSolutionVectorElementKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[GetSolutionVectorElementKernel] Set block size: " << local << std::endl;
-    }
+#endif
 
     GetSolutionVectorElementKernel <<<global,local>>> (
         fDeviceI,
@@ -137,13 +137,13 @@ namespace KEMField
     int global(1);
     int local(1);
 
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, GetMaximumSolutionVectorElementKernel, 0, 0);
         std::cout << "[GetMaximumSolutionVectorElementKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[GetMaximumSolutionVectorElementKernel] Set block size: " << local << std::endl;
-    }
+#endif
 
     GetMaximumSolutionVectorElementKernel <<<global,local>>> (
         fContainer.GetBoundaryInfo(),
@@ -160,7 +160,7 @@ namespace KEMField
   void KBoundaryIntegralSolutionVector<KCUDABoundaryIntegrator<BasisPolicy> >::ConstructCUDAKernels() const
   {
     // define fNLocal
-    if( fNLocal == -1 ) fNLocal = 512;
+    if( fNLocal == -1 ) fNLocal = 384;
 
     // Create memory buffers
     cudaMalloc( (void**) &fDeviceI, sizeof(int) );

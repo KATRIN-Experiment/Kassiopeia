@@ -7,7 +7,8 @@
 namespace Kassiopeia
 {
     class KESSElasticElsepa :
-        public KSComponentTemplate< KESSElasticElsepa, KESSScatteringCalculator >
+        public KSComponentTemplate< KESSElasticElsepa, KSIntCalculator >,
+        public KESSScatteringCalculator
     {
         public:
             KESSElasticElsepa();
@@ -30,7 +31,7 @@ namespace Kassiopeia
         private:
             std::map< double, double > fElScMFPMap;
 
-            //!<map contains a dictionary and a vector of two vectors containing the values
+            //!<map contains a dictionary and a std::vector of two std::vectors containing the values
             std::map< double, std::vector< std::vector< double > > > fElScMap;
 
             double GetScatteringPolarAngle( const double& aKineticEnergy );

@@ -2,7 +2,9 @@
 
 #include <cmath>
 
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KFMDirectCallCounter.hh"
+
 
 namespace KEMField
 {
@@ -10,7 +12,7 @@ namespace KEMField
 KFMElectrostaticFastMultipoleFieldSolver::KFMElectrostaticFastMultipoleFieldSolver(const KSurfaceContainer& container, KFMElectrostaticTree& tree):
 fSurfaceContainer(container),
 fTree(tree),
-fDirectIntegrator(),
+fDirectIntegrator(KEBIFactory::MakeAnalytic()),
 fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
 fFastFieldSolver(),
 fNavigator()
@@ -162,6 +164,7 @@ KFMElectrostaticFastMultipoleFieldSolver::SetPoint(const double* p) const
             fFallback = true;
         }
 
+        fFastFieldSolver.SetExpansionRadius( KFMElectrostaticLocalCoefficientFieldCalculator::fRootThreeOverTwo*(fCube->GetLength()) );
         fFastFieldSolver.SetExpansionOrigin(fCube->GetCenter());
         fFastFieldSolver.SetLocalCoefficients(fLocalCoeff);
     }

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSCommandGroup.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -16,13 +16,13 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->SetName( tName );
             return true;
         }
         if( aContainer->GetName() == "command" )
         {
-            KSCommand* tCommand = KSToolbox::GetInstance()->GetObjectAs< KSCommand >( aContainer->AsReference< string >() );
+            KSCommand* tCommand = KToolbox::GetInstance().Get< KSCommand >( aContainer->AsReference< std::string >() );
             fObject->AddCommand( tCommand->Clone() );
             return true;
         }

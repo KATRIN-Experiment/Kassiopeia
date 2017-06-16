@@ -25,7 +25,7 @@ void SetUpDerivedSpaces(KGSpace* space,KGMeshSpace* meshSpace);
 
 int main()
 {
-  katrin::KMessageTable::GetInstance()->SetTerminalVerbosity(eDebug);
+  katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
 
   // Construct the shapes
   KGCylinder* outerCylinder = new KGCylinder();

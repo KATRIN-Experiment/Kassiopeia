@@ -57,6 +57,9 @@ namespace KEMField
     double Determinant() const;
     double Trace() const;
 
+    //standard matrices
+    static const KEMThreeMatrix sZero;
+
   protected:
     double fData[9];
   };

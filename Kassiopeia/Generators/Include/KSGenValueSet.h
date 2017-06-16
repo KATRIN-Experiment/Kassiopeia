@@ -18,7 +18,7 @@ namespace Kassiopeia
             virtual ~KSGenValueSet();
 
         public:
-            void DiceValue( vector< double >& aDicedValues );
+            void DiceValue( std::vector< double >& aDicedValues );
 
         public:
             K_SET_GET( double, ValueStart )

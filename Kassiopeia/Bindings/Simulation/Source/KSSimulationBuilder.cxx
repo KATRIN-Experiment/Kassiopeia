@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -19,6 +21,10 @@ namespace katrin
         KSSimulationBuilder::Attribute< unsigned int >( "run" ) +
         KSSimulationBuilder::Attribute< unsigned int >( "events" ) +
         KSSimulationBuilder::Attribute< unsigned int >( "step_report_iteration" ) +
+        KSSimulationBuilder::Attribute< string >( "add_static_run_modifier" ) +
+        KSSimulationBuilder::Attribute< string >( "add_static_event_modifier" ) +
+        KSSimulationBuilder::Attribute< string >( "add_static_track_modifier" ) +
+        KSSimulationBuilder::Attribute< string >( "add_static_step_modifier" ) +
         KSSimulationBuilder::Attribute< string >( "magnetic_field" ) +
         KSSimulationBuilder::Attribute< string >( "electric_field" ) +
         KSSimulationBuilder::Attribute< string >( "space" ) +

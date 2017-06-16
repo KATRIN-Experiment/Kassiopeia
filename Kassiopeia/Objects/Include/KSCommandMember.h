@@ -310,7 +310,7 @@ namespace Kassiopeia
 
     template< class XType >
     template< class XParentType, class XChildType >
-    int KSDictionary< XType >::AddCommand( void (XParentType::*anAddMember)( XChildType* ), void (XParentType::*aRemoveMember)( XChildType* ), const string& anAddField, const string& aRemoveField )
+    int KSDictionary< XType >::AddCommand( void (XParentType::*anAddMember)( XChildType* ), void (XParentType::*aRemoveMember)( XChildType* ), const std::string& anAddField, const std::string& aRemoveField )
     {
         if( fCommandFactories == NULL )
         {
@@ -328,7 +328,7 @@ namespace Kassiopeia
 
     template< class XType >
     template< class XParentType, class XChildType >
-    int KSDictionary< XType >::AddCommand( void (XParentType::*aSetMember)( const XChildType& ), const XChildType& (XParentType::*aGetMember)() const, const string& aParameterField )
+    int KSDictionary< XType >::AddCommand( void (XParentType::*aSetMember)( const XChildType& ), const XChildType& (XParentType::*aGetMember)() const, const std::string& aParameterField )
     {
         if( fCommandFactories == NULL )
         {

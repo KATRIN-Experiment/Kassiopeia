@@ -14,7 +14,7 @@ namespace KGeoBag
     {
         KGExtensibleSpace* tExtensible;
         KGExtendedSpace< XExtension >* tExtended;
-        vector< KGExtensibleSpace* >::const_iterator tIt;
+        std::vector< KGExtensibleSpace* >::const_iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtensible = *tIt;
@@ -32,7 +32,7 @@ namespace KGeoBag
     {
         KGExtensibleSpace* tExtensible;
         KGExtendedSpace< XExtension >* tExtended;
-        vector< KGExtensibleSpace* >::const_iterator tIt;
+        std::vector< KGExtensibleSpace* >::const_iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtensible = *tIt;
@@ -50,7 +50,7 @@ namespace KGeoBag
     {
         KGExtensibleSpace* tExtensible;
         KGExtendedSpace< XExtension >* tExtended;
-        vector< KGExtensibleSpace* >::iterator tIt;
+        std::vector< KGExtensibleSpace* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtensible = *tIt;
@@ -68,7 +68,7 @@ namespace KGeoBag
     {
         KGExtensibleSpace* tExtensible;
         KGExtendedSpace< XExtension >* tExtended;
-        vector< KGExtensibleSpace* >::iterator tIt;
+        std::vector< KGExtensibleSpace* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtensible = *tIt;
@@ -90,7 +90,7 @@ namespace KGeoBag
     {
         KGExtensibleSpace* tExtensible;
         KGExtendedSpace< XExtension >* tExtended;
-        vector< KGExtensibleSpace* >::iterator tIt;
+        std::vector< KGExtensibleSpace* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtensible = *tIt;

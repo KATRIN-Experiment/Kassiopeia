@@ -22,12 +22,12 @@ namespace katrin
 
         if( aContainer->GetName() == "siliconside" )
         {
-            if( aContainer->AsReference< string >() == "inside" )
+            if( aContainer->AsReference< std::string >() == "inside" )
             {
                 fObject->SetSurfaceOrientation( KESSSurfaceInteraction::eNormalPointingAway );
 
             }
-            else if( aContainer->AsReference< string >() == "outside" )
+            else if( aContainer->AsReference< std::string >() == "outside" )
             {
                 fObject->SetSurfaceOrientation( KESSSurfaceInteraction::eNormalPointingSilicon );
             }

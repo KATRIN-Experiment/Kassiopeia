@@ -3,7 +3,7 @@
 
 #include "KBoundaryIntegralVector.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
 
 #include "KFMElectrostaticTree.hh"
@@ -32,18 +32,7 @@
 #include <utility>
 
 #include "KMD5HashGenerator.hh"
-#include "KMPIInterface.hh"
-
-
-#ifdef KEMFIELD_USE_MPI
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
-    #endif
-#else
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS
-    #endif
-#endif
+#include "KMPIEnvironment.hh"
 
 namespace KEMField
 {
@@ -67,11 +56,13 @@ class KFMElectrostaticBoundaryIntegrator_MPI: public KElectrostaticBoundaryInteg
 {
     public:
 
-        KFMElectrostaticBoundaryIntegrator_MPI(KSurfaceContainer& surfaceContainer):
-        KElectrostaticBoundaryIntegrator(),
-        fInitialized(false),
-        fSurfaceContainer(surfaceContainer),
-        fTrait(NULL)
+
+
+        KFMElectrostaticBoundaryIntegrator_MPI(KElectrostaticBoundaryIntegrator directIntegrator, const KSurfaceContainer& surfaceContainer):
+            KElectrostaticBoundaryIntegrator(directIntegrator),
+            fInitialized(false),
+            fSurfaceContainer(surfaceContainer),
+            fTrait(NULL)
         {
             fUniqueID = "INVALID_ID";
             fTree = NULL;
@@ -92,6 +83,34 @@ class KFMElectrostaticBoundaryIntegrator_MPI: public KElectrostaticBoundaryInteg
                 fTrait = new ParallelTrait();
             }
         };
+
+
+        KFMElectrostaticBoundaryIntegrator_MPI(const KSurfaceContainer& surfaceContainer):
+            KElectrostaticBoundaryIntegrator(KEBIFactory::MakeDefaultForFFTM()),
+            fInitialized(false),
+            fSurfaceContainer(surfaceContainer),
+            fTrait(NULL)
+        {
+            fUniqueID = "INVALID_ID";
+            fTree = NULL;
+            fElementContainer = NULL;
+            fTreeIsOwned = true;
+            fDimension = fSurfaceContainer.size();
+            fSubdivisionCondition = NULL;
+
+            if(KMPIInterface::GetInstance()->SplitMode())
+            {
+                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
+                {
+                    fTrait = new ParallelTrait();
+                }
+            }
+            else
+            {
+                fTrait = new ParallelTrait();
+            }
+        };
+
 
         virtual ~KFMElectrostaticBoundaryIntegrator_MPI()
         {
@@ -989,7 +1008,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI: public KElectrostaticBoundaryInteg
 ////////////////////////////////////////////////////////////////////////////////
 
         void
-        ComputeUniqueHash(KSurfaceContainer& surfaceContainer, const KFMElectrostaticParameters& parameters)
+        ComputeUniqueHash(const KSurfaceContainer& surfaceContainer, const KFMElectrostaticParameters& parameters)
         {
             int HashMaskedBits = 20;
             double HashThreshold = 1.e-14;
@@ -1051,7 +1070,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI: public KElectrostaticBoundaryInteg
         bool fInitialized;
         unsigned int fDimension;
 
-        KSurfaceContainer& fSurfaceContainer;
+        const KSurfaceContainer& fSurfaceContainer;
         KFMElectrostaticSurfaceConverter fSurfaceConverter;
         KFMElectrostaticElementContainerBase<3,1>* fElementContainer;
 

@@ -4,13 +4,8 @@
 #include "KProcessor.hh"
 
 #include <stack>
-using std::stack;
-
 #include <vector>
-using std::vector;
-
 #include <sstream>
-using std::stringstream;
 
 namespace katrin
 {
@@ -19,7 +14,7 @@ namespace katrin
         public KProcessor
     {
         private:
-            typedef vector< KToken* > TokenVector;
+            typedef std::vector< KToken* > TokenVector;
             typedef TokenVector::iterator TokenIt;
             typedef TokenVector::const_iterator TokenCIt;
 
@@ -37,7 +32,7 @@ namespace katrin
 
         private:
             void Reset();
-            void Evaluate( KToken* aToken, const string& aName, const string& aValue );
+            void Evaluate( KToken* aToken, const std::string& aName, const std::string& aValue );
             void Dispatch( KToken* aToken );
 
             typedef enum
@@ -53,7 +48,7 @@ namespace katrin
             AttributeState fAttributeState;
 
             unsigned int fNest;
-            string fVariable;
+            std::string fVariable;
             int fStartValue;
             int fEndValue;
             int fStepValue;
@@ -61,8 +56,8 @@ namespace katrin
             KProcessor* fNewParent;
             KProcessor* fOldParent;
 
-            static const string fStartBracket;
-            static const string fEndBracket;
+            static const std::string fStartBracket;
+            static const std::string fEndBracket;
     };
 
 }

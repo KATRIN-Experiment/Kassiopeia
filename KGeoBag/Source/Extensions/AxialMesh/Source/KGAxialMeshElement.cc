@@ -1,4 +1,4 @@
-#include "../Include/KGAxialMeshElement.hh"
+#include "KGAxialMeshElement.hh"
 
 namespace KGeoBag
 {

@@ -47,8 +47,8 @@ namespace KGeoBag
             K_SET( double, LineSize )
 
         private:
-            vector< const KGSurface* > fSurfaces;
-            vector< const KGSpace* > fSpaces;
+            std::vector< const KGSurface* > fSurfaces;
+            std::vector< const KGSpace* > fSpaces;
 
             vtkSmartPointer< vtkPoints > fPoints;
             vtkSmartPointer< vtkUnsignedCharArray > fColors;

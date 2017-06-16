@@ -12,27 +12,27 @@ namespace katrin
     template< >
     inline bool KGShellPolyLoopSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGShellPolyLoopSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "angle_start" ) )
+        if( anAttribute->GetName() == "angle_start" )
         {
             anAttribute->CopyTo( fObject, &KGShellPolyLoopSurface::AngleStart );
             return true;
         }
-        if( anAttribute->GetName() == string( "angle_stop" ) )
+        if( anAttribute->GetName() == "angle_stop" )
         {
             anAttribute->CopyTo( fObject, &KGShellPolyLoopSurface::AngleStop );
             return true;
         }
-        if( anAttribute->GetName() == string( "shell_mesh_count" ) )
+        if( anAttribute->GetName() == "shell_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGShellPolyLoopSurface::ShellMeshCount );
             return true;
         }
-         if( anAttribute->GetName() == string( "shell_mesh_power" ) )
+         if( anAttribute->GetName() == "shell_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGShellPolyLoopSurface::ShellMeshPower );
             return true;
@@ -43,7 +43,7 @@ namespace katrin
     template< >
     inline bool KGShellPolyLoopSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "poly_loop" ) )
+        if( anElement->GetName() == "poly_loop" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarPolyLoop::CopyFrom );
             return true;

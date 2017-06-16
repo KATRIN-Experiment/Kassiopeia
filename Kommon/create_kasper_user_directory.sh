@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+  then
+    echo "Usage: $0 user_directory_name"
+    return 0
+fi
+
+T_KASPERSYS=`readlink -f $1`
+T_KASPER_INSTALL=@CMAKE_INSTALL_PREFIX@
+
+mkdir -p $T_KASPERSYS/bin
+
+cp -n -r $T_KASPER_INSTALL/cache $T_KASPERSYS
+cp -n -r $T_KASPER_INSTALL/config $T_KASPERSYS
+cp -n -r $T_KASPER_INSTALL/data $T_KASPERSYS
+cp -n -r $T_KASPER_INSTALL/log $T_KASPERSYS
+cp -n -r $T_KASPER_INSTALL/output $T_KASPERSYS
+cp -n -r $T_KASPER_INSTALL/scratch $T_KASPERSYS
+
+echo "#!/bin/sh" >> $T_KASPERSYS/bin/kasperenv.sh
+echo "source $T_KASPER_INSTALL/bin/kasperenv.sh $T_KASPERSYS" >> $T_KASPERSYS/bin/kasperenv.sh
+
+echo "\033[32;1mKASPER user directory ${T_KASPERSYS} created\033[0m"
+echo "\033[32;1msource ${T_KASPERSYS}/bin/kasperenv.sh in your .bashrc/.zshrc to use it permanently\033[0m"
+
+source $T_KASPERSYS/bin/kasperenv.sh
+
+return 0

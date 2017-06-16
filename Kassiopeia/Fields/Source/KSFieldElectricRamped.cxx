@@ -1,6 +1,6 @@
 #include "KSFieldElectricRamped.h"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSFieldElectromagnet.h"
 
 #include "KThreeVector.hh"
@@ -75,7 +75,8 @@ namespace Kassiopeia
         double tHigh = tUp   + fRampUpTime    * fTimeScalingFactor;
         double tDown = tHigh + fRampDownDelay * fTimeScalingFactor;
         double tLow  = tDown + fRampDownTime  * fTimeScalingFactor;
-
+        double tOmega = 2.*M_PI/tLength;
+        
         double Field = 0.;
         switch( fRampingType )
         {
@@ -102,7 +103,12 @@ namespace Kassiopeia
                 else if (tTime >= tUp)
                     Field = 1. - exp( -(tTime - tUp) / fTimeConstant );
                 break;
-
+            
+            case rtSinus :
+				if (tTime >=  tUp)
+					Field = sin(tTime*tOmega);
+				break;				
+					
             default :
                 fieldmsg( eError ) << "Specified ramping type is not implemented" << eom;
                 break;
@@ -116,7 +122,7 @@ namespace Kassiopeia
     {
         fieldmsg_debug( "Initializing root electric field <" << fRootElectricFieldName << "> from ramped electric field <" << GetName() << ">" << eom );
 
-        fRootElectricField = KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( fRootElectricFieldName );
+        fRootElectricField = katrin::KToolbox::GetInstance().Get< KSElectricField >( fRootElectricFieldName );
         if (! fRootElectricField)
         {
             fieldmsg( eError ) << "Ramped electric field <" << GetName() << "> can't find root electric field <" << fRootElectricFieldName << ">!" << eom;

@@ -18,6 +18,8 @@ using katrin::KRandom;
 
 #include <cmath>
 
+using namespace std;
+
 namespace KGeoBag
 {
     KGVTKMeshIntersectionTester::KGVTKMeshIntersectionTester():

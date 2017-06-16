@@ -20,8 +20,8 @@ namespace KGeoBag
             void AddSpace( KGSpace* aSpace );
 
         private:
-            vector< KGSurface* > fSurfaces;
-            vector< KGSpace* > fSpaces;
+            std::vector< KGSurface* > fSurfaces;
+            std::vector< KGSpace* > fSpaces;
             K_SET_GET( double, LineCurrent )
             K_SET_GET( double, ScalingFactor )
             K_SET_GET( double, Direction )
@@ -31,15 +31,17 @@ namespace KGeoBag
 
 #include "KComplexElement.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGElectromagnetAttributor > KGElectromagnetBuilder;
+    typedef KComplexElement< KGeoBag::KGElectromagnetAttributor > KGElectromagnetBuilder;
 
     template< >
     inline bool KGElectromagnetBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace KGeoBag;
+        using namespace std;
+
         if( aContainer->GetName() == "name" )
         {
             fObject->SetName( aContainer->AsReference< string >() );

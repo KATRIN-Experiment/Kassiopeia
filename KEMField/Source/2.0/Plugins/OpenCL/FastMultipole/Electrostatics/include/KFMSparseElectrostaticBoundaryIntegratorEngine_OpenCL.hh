@@ -67,7 +67,7 @@ class KFMSparseElectrostaticBoundaryIntegratorEngine_OpenCL
 
         void InitializeLocalCoefficientsForPrimaryNodes();
 
-        //needed when MPI is in used and all processes must communicate thier
+        //needed when MPI is in used and all processes must communicate their
         //influence with the GPU
         void RecieveTopLevelLocalCoefficients();
         void SendTopLevelLocalCoefficients();

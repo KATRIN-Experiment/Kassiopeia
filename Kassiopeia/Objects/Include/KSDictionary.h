@@ -9,7 +9,6 @@
 #include "KSCommand.h"
 
 #include <map>
-using std::multimap;
 
 namespace Kassiopeia
 {
@@ -39,12 +38,12 @@ namespace Kassiopeia
             KSDictionary();
             ~KSDictionary();
 
-            typedef multimap< string, const KSCommandFactory* > CommandFactoryMap;
+            typedef std::multimap< std::string, const KSCommandFactory* > CommandFactoryMap;
             typedef CommandFactoryMap::iterator CommandFactoryIt;
             typedef CommandFactoryMap::const_iterator CommandFactoryCIt;
             typedef CommandFactoryMap::value_type CommandFactoryEntry;
 
-            typedef multimap< string, const KSComponentFactory* > ComponentFactoryMap;
+            typedef std::multimap< std::string, const KSComponentFactory* > ComponentFactoryMap;
             typedef ComponentFactoryMap::iterator ComponentFactoryIt;
             typedef ComponentFactoryMap::const_iterator ComponentFactoryCIt;
             typedef ComponentFactoryMap::value_type ComponentFactoryEntry;
@@ -53,22 +52,22 @@ namespace Kassiopeia
             static ComponentFactoryMap* fComponentFactories;
 
         public:
-            static KSCommand* GetCommand( KSComponent* aParent, KSComponent* aChild, const string& aField );
+            static KSCommand* GetCommand( KSComponent* aParent, KSComponent* aChild, const std::string& aField );
             template< class XParentType, class XChildType >
-            static int AddCommand( void (XParentType::*anAddMember)( XChildType* ), void (XParentType::*aRemoveMember)( XChildType* ), const string& anAddField, const string& aRemoveField );
+            static int AddCommand( void (XParentType::*anAddMember)( XChildType* ), void (XParentType::*aRemoveMember)( XChildType* ), const std::string& anAddField, const std::string& aRemoveField );
             template< class XParentType, class XChildType >
-            static int AddCommand( void (XParentType::*aSetMember)( const XChildType& ), const XChildType& (XParentType::*aGetMember)() const, const string& aParameterField );
+            static int AddCommand( void (XParentType::*aSetMember)( const XChildType& ), const XChildType& (XParentType::*aGetMember)() const, const std::string& aParameterField );
 
-            static KSComponent* GetComponent( KSComponent* aParent, const string& aField );
+            static KSComponent* GetComponent( KSComponent* aParent, const std::string& aField );
             template< class XMemberType >
-            static int AddComponent( XMemberType aMember, const string& aField );
+            static int AddComponent( XMemberType aMember, const std::string& aField );
     };
 
     template< class XType >
     typename KSDictionary< XType >::CommandFactoryMap* KSDictionary< XType >::fCommandFactories = NULL;
 
     template< class XType >
-    KSCommand* KSDictionary< XType >::GetCommand( KSComponent* aParent, KSComponent* aChild, const string& aField )
+    KSCommand* KSDictionary< XType >::GetCommand( KSComponent* aParent, KSComponent* aChild, const std::string& aField )
     {
         if( fCommandFactories == NULL )
         {
@@ -87,7 +86,7 @@ namespace Kassiopeia
                 tCommand = tIt->second->CreateCommand( aParent, aChild );
                 if( tCommand != NULL )
                 {
-                    tCommand->SetName( aParent->GetName() + string( "/" ) + aField + string( "/" ) + aChild->GetName() );
+                    tCommand->SetName( aParent->GetName() + std::string( "/" ) + aField + std::string( "/" ) + aChild->GetName() );
                     return tCommand;
                 }
             }
@@ -101,7 +100,7 @@ namespace Kassiopeia
     typename KSDictionary< XType >::ComponentFactoryMap* KSDictionary< XType >::fComponentFactories = NULL;
 
     template< class XType >
-    KSComponent* KSDictionary< XType >::GetComponent( KSComponent* aParent, const string& aField )
+    KSComponent* KSDictionary< XType >::GetComponent( KSComponent* aParent, const std::string& aField )
     {
         if( fComponentFactories == NULL )
         {
@@ -120,7 +119,7 @@ namespace Kassiopeia
                 tComponent = tIt->second->CreateComponent( aParent );
                 if( tComponent != NULL )
                 {
-                    tComponent->SetName( aParent->GetName() + string( "/" ) + aField );
+                    tComponent->SetName( aParent->GetName() + std::string( "/" ) + aField );
                     return tComponent;
                 }
             }

@@ -1,8 +1,7 @@
 #include "KVariableProcessor.hh"
-
 #include "KInitializationMessage.hh"
 
-#include <cstdlib>
+using namespace std;
 
 namespace katrin
 {

@@ -59,6 +59,11 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetAdjustmentFactorDown );
             return true;
         }
+        if( aContainer->GetName() == "step_rescale" )
+        {
+            aContainer->CopyTo( fObject, &KSTrajControlEnergy::SetStepRescale );
+            return true;
+        }
         return false;
     }
 

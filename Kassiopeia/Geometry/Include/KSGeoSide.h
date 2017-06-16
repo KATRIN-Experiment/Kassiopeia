@@ -33,7 +33,7 @@ namespace Kassiopeia
         public:
             void AddContent( KGSurface* aSurface );
             void RemoveContent( KGSurface* aSurface );
-            vector< KGSurface* > GetContent();
+            std::vector< KGSurface* > GetContent();
 
             void AddCommand( KSCommand* anCommand );
             void RemoveCommand( KSCommand* anCommand );
@@ -46,8 +46,8 @@ namespace Kassiopeia
             KSGeoSpace* fOutsideParent;
             KSGeoSpace* fInsideParent;
 
-            mutable vector< KGSurface* > fContents;
-            mutable vector< KSCommand* > fCommands;
+            mutable std::vector< KGSurface* > fContents;
+            mutable std::vector< KSCommand* > fCommands;
     };
 
 }

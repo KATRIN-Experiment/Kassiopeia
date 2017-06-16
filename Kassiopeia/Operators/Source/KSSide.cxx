@@ -31,7 +31,7 @@ namespace Kassiopeia
     }
     void KSSide::SetParent( KSSpace* aParent )
     {
-        for( vector< KSSide* >::iterator tSideIt = aParent->fSides.begin(); tSideIt != aParent->fSides.end(); tSideIt++ )
+        for( std::vector< KSSide* >::iterator tSideIt = aParent->fSides.begin(); tSideIt != aParent->fSides.end(); tSideIt++ )
         {
             if( (*tSideIt) == this )
             {

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSFieldMagneticSuperPosition.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -59,7 +59,7 @@ namespace katrin
         if( aContainer->Is< KSFieldMagneticSuperPositionData >() == true )
         {
         	KSFieldMagneticSuperPositionData* tFieldMagneticSuperPositionData = aContainer->AsPointer< KSFieldMagneticSuperPositionData >();
-        	KSMagneticField* tMagneticField = KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( tFieldMagneticSuperPositionData->fName );
+        	KSMagneticField* tMagneticField = KToolbox::GetInstance().Get< KSMagneticField >( tFieldMagneticSuperPositionData->fName );
             fObject->AddMagneticField( tMagneticField, tFieldMagneticSuperPositionData->fEnhancement );
             return true;
         }

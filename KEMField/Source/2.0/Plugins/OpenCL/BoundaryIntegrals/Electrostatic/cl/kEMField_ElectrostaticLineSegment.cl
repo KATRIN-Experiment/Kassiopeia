@@ -3,9 +3,6 @@
 
 #include "kEMField_LineSegment.cl"
 
-#define M_PI 3.141592653589793238462643
-#define M_EPS0 8.85418782e-12
-
 // Wire geometry definition (as defined by the streamers in KLineSegment.hh):
 //
 // data[0..2]: P0[0..2]
@@ -163,6 +160,17 @@ CL_TYPE4 EL_EField(const CL_TYPE* P,
   field.z = data[6]/(4.*M_EPS0)*f[2];
 
   return field;
+}
+
+//______________________________________________________________________________
+
+CL_TYPE4 EL_EFieldAndPotential(const CL_TYPE* P,
+		    __global const CL_TYPE* data)
+{
+  CL_TYPE4 field = EL_EField( P, data );
+  CL_TYPE phi = EL_Potential( P, data );
+
+  return (CL_TYPE4)( field.s0, field.s1, field.s2, phi );
 }
 
 #endif /* KEMFIELD_ELECTROSTATICLINESEGMENT_CL */

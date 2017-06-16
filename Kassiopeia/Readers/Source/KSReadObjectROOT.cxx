@@ -1,5 +1,7 @@
 #include "KSReadObjectROOT.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

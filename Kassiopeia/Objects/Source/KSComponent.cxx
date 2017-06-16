@@ -1,5 +1,7 @@
 #include "KSComponent.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

@@ -1,0 +1,270 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+<messages>
+
+    <file path="[log_path]" base="AnalyticSimulationLog.txt"/>
+	
+    <message key="k_file" terminal="normal" log="warning"/>
+	<message key="k_initialization" terminal="normal" log="warning"/>
+
+    <message key="kg_core" terminal="normal" log="warning"/>
+	<message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_mesh" terminal="normal" log="warning"/>
+    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+
+	<message key="ks_object" terminal="debug" log="normal"/>
+    <message key="ks_operator" terminal="debug" log="normal"/>
+	<message key="ks_field" terminal="debug" log="normal"/>
+	<message key="ks_geometry" terminal="debug" log="normal"/>
+    <message key="ks_generator" terminal="debug" log="normal"/>
+	<message key="ks_trajectory" terminal="debug" log="normal"/>
+	<message key="ks_interaction" terminal="debug" log="normal"/>
+    <message key="ks_navigator" terminal="debug" log="normal"/>
+	<message key="ks_terminator" terminal="debug" log="normal"/>
+	<message key="ks_writer" terminal="debug" log="normal"/>
+	<message key="ks_main" terminal="debug" log="normal"/>
+	<message key="ks_run" terminal="debug" log="normal"/>
+	<message key="ks_event" terminal="debug" log="normal"/>
+	<message key="ks_track" terminal="debug" log="normal"/>
+	<message key="ks_step" terminal="debug" log="normal"/>
+
+</messages>
+
+<geometry>
+
+    <!-- world -->
+
+    <cylinder_space name="world_space" z1="-200.0e-3" z2="200.0e-3" r="200.0e-3"/>
+    
+    <!-- cell -->
+
+    <tag name="cell_tag">
+        <cylinder_space name="cell_space" z1="-5.e-4" z2="5.e-4" r="1.e-3"/>
+    </tag>
+
+    <!-- target -->
+
+    <tag name="target_tag">
+        <disk_surface name="target_surface" r="8.e-4" z="0."/>
+    </tag>
+    
+    <!-- assembly -->
+
+    <space name="world" node="world_space">
+        <space name="cell" node="cell_space">
+            <surface name="target" node="target_surface"/>
+        </space> 
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_cell" color="96 96 255 96" arc="72" spaces="world/cell"/>
+    <appearance name="app_target" color="255 96 255 96" arc="72" surfaces="world/cell/target"/>
+
+</geometry>
+
+<kassiopeia>
+
+	<!-- magnetic fields -->
+
+    <ksfield_magnetic_constant
+        name="field_magnetic_constant"
+        field="0. 0. 5."
+    />
+
+    <!-- electric fields -->
+    
+    <ksfield_electric_quadrupole
+        name="field_electric_quadrupole"
+        location="0. 0. 0."
+        strength="-10000."
+        length="1.e-2"
+        radius="1.e-2"
+    />
+
+	<!-- generators -->
+
+    <ksgen_generator_composite name="generator_fix">
+        <energy_composite>
+            <energy_fix value="1000."/>
+        </energy_composite>
+        <position_cylindrical_composite>
+            <r_fix value="3.e-4"/>
+            <phi_fix value="0."/>
+            <z_fix value="-1.e-3"/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite>
+            <theta_fix value="90."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>    
+
+	<!-- trajectories-->
+
+    <kstraj_trajectory_exact name="trajectory_exact">
+        <integrator_rk8 name="integrator_rk8"/>
+        <term_propagation name="term_propagation"/>
+        <control_cyclotron name="control_cyclotron_1_16" fraction="{1. / 32.}"/>
+    </kstraj_trajectory_exact>
+
+	<!-- space interactions -->
+    
+    <ksint_scattering name="int_constant_scattering" split="false">
+        <density_constant name="density_constant" temperature="300." pressure="3.e0"/>  
+        <calculator_constant name="calculator_constant" cross_section="1.e-18"/>
+    </ksint_scattering>
+
+    <ksint_scattering name="int_hydrogen_scattering" split="false">
+        <density_constant name="density_constant" temperature="300." pressure="3.e0"/>
+        <calculator_hydrogen name="calculator_hydrogen" elastic="false" excitation="false" ionisation="true"/>
+    </ksint_scattering>
+
+    <!-- space navigators -->
+
+    <ksnav_space name="nav_space" enter_split="false" exit_split="false" tolerance="1.e-6"/>
+
+    <!-- surface interactions -->
+
+    <ksint_surface_diffuse name="int_surface_diffuse" probability=".3" reflection_loss="0." transmission_loss="10."/>
+    <ksint_surface_specular name="int_surface_specular_top" probability=".5" reflection_loss="0." transmission_loss="0."/>
+    <ksint_surface_specular name="int_surface_specular_bottom" probability=".5" reflection_loss="0." transmission_loss="0."/>
+
+    <!-- surface navigators -->
+
+    <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
+    
+    <!-- terminators -->
+
+    <ksterm_max_steps name="term_max_steps" steps="10000000"/>
+    <ksterm_min_energy name="term_min_energy" energy="1."/>
+    <ksterm_secondaries name="term_secondaries"/>
+
+    <!-- writers -->
+
+    <kswrite_root name="write_root" path="[output_path]" base="AnalyticSimulation.root"/>
+
+    <!-- output -->
+
+    <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
+    
+    <ks_component_group name="component_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_time" field="continuous_time" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="time" field="time" parent="component_step_final_particle"/>
+        <component_member name="position" field="position" parent="component_step_final_particle"/>
+        <component_member name="momentum" field="momentum" parent="component_step_final_particle"/>
+        <component_member name="magnetic_field" field="magnetic_field" parent="component_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="component_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="component_step_final_particle"/>
+        <component_member name="kinetic_energy" field="kinetic_energy_ev" parent="component_step_final_particle"/>
+    </ks_component_group>
+
+    <ks_component_member name="component_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="component_track_final_particle" field="final_particle" parent="track"/>
+
+    <ks_component_member name="z_length" field="continuous_length" parent="step"/>
+    <ks_component_group name="component_track_world">
+        <component_member name="creator_name" field="creator_name" parent="track"/>
+        <component_member name="terminator_name" field="terminator_name" parent="track"/>
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+        <component_member name="continuous_time" field="continuous_time" parent="track"/>
+        <component_member name="continuous_length" field="continuous_length" parent="track"/>
+        <component_member name="initial_time" field="time" parent="component_track_initial_particle"/>
+        <component_member name="initial_position" field="position" parent="component_track_initial_particle"/>
+        <component_member name="initial_momentum" field="momentum" parent="component_track_initial_particle"/>
+        <component_member name="initial_magnetic_field" field="magnetic_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
+        <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
+        <component_member name="initial_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_initial_particle"/>
+        <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="final_time" field="time" parent="component_track_final_particle"/>
+        <component_member name="final_position" field="position" parent="component_track_final_particle"/>
+        <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
+        <component_member name="final_magnetic_field" field="magnetic_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_field" field="electric_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_potential" field="electric_potential" parent="component_track_final_particle"/>
+        <component_member name="final_kinetic_energy" field="kinetic_energy_ev" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_final_particle"/>
+        <component_member name="final_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_final_particle"/>
+        <component_member name="final_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_final_particle"/>
+        <component_member name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_final_particle"/>
+    </ks_component_group>
+
+    <!-- structure -->
+
+    <ksgeo_space name="space_world" spaces="world">
+        <command parent="root_terminator" field="add_terminator" child="term_secondaries"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
+        <command parent="root_terminator" field="add_terminator" child="term_min_energy"/>
+        <command parent="write_root" field="add_track_output" child="component_track_world"/>
+        <command parent="write_root" field="add_step_output" child="component_step_world"/>
+        <geo_space name="space_cell" spaces="world/cell">
+            <command parent="root_space_interaction" field="add_space_interaction" child="int_hydrogen_scattering"/>
+            <geo_side name="side_top" surfaces="world/cell/top">
+                <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_specular_top"/>
+            </geo_side>
+            <geo_side name="side_bottom" surfaces="world/cell/bottom">
+                <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_specular_bottom"/>
+            </geo_side>
+            <geo_surface name="surface_target" surfaces="world/cell/target">
+                <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_diffuse"/>
+            </geo_surface>
+        </geo_space>
+    </ksgeo_space>
+
+    <!-- simulation -->
+
+    <ks_simulation
+        name="analytic_simulation"
+        run="1"
+        seed="51385"
+        events="1"
+        magnetic_field="field_magnetic_constant"
+        electric_field="field_electric_quadrupole"
+        space="space_world"
+        generator="generator_fix"
+        trajectory="trajectory_exact"
+        space_navigator="nav_space"
+        surface_navigator="nav_surface"
+        writer="write_root"
+    />
+
+</kassiopeia>
+
+<vtk_window 
+    name="vtk_window"
+    enable_display="true"
+    enable_write="true"
+    frame_title="KGeoBag Visualization"
+    frame_size_x="1024"
+    frame_size_y="768"
+    frame_color_red=".2"
+    frame_color_green=".2"
+    frame_color_blue=".2"
+    view_angle="45"
+    eye_angle="0.5"
+    multi_samples="4"
+    depth_peeling="10"
+>
+    <vtk_geometry_painter 
+        name="geometry_painter"
+        spaces="world/cell"
+        surfaces="world/cell/target"
+    />
+    <vtk_track_painter
+        name="track_painter"
+        path="[output_path]"
+        file="AnalyticSimulation.root"
+        point_object="component_step_world"
+        point_variable="position"
+        color_object="component_step_world"
+        color_variable="kinetic_energy"
+    />
+</vtk_window>

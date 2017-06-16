@@ -1,6 +1,9 @@
 #include "KGConicSectPortHousingBuilder.hh"
 #include "KGInterfaceBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace katrin
 {
 

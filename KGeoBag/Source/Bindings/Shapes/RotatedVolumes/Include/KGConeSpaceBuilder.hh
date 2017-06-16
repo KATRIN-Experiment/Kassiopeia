@@ -14,22 +14,22 @@ namespace katrin
     template< >
     inline bool KGConeSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "za" ) )
+        if( anAttribute->GetName() == "za" )
         {
             anAttribute->CopyTo( fObject, &KGConeSpace::ZA );
             return true;
         }
-        if( anAttribute->GetName() == string( "zb" ) )
+        if( anAttribute->GetName() == "zb" )
         {
             anAttribute->CopyTo( fObject, &KGConeSpace::ZB );
             return true;
         }
-        if( anAttribute->GetName() == string( "rb" ) )
+        if( anAttribute->GetName() == "rb" )
         {
             anAttribute->CopyTo( fObject, &KGConeSpace::RB );
             return true;

@@ -209,6 +209,10 @@ namespace Kassiopeia
         {
             fZValue->Initialize();
         }
+        for ( auto tIndex: fMagneticFields )
+        {
+            tIndex->Initialize();
+        }
         return;
     }
     void KSGenPositionFluxTube::DeinitializeComponent()
@@ -220,6 +224,10 @@ namespace Kassiopeia
         if( fZValue != NULL )
         {
             fZValue->Deinitialize();
+        }
+        for ( auto tIndex: fMagneticFields )
+        {
+            tIndex->Deinitialize();
         }
         return;
     }

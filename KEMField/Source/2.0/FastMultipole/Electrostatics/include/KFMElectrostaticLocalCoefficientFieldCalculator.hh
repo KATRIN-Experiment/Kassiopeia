@@ -31,6 +31,7 @@ class KFMElectrostaticLocalCoefficientFieldCalculator
 
         void SetDegree(int degree);
         void SetExpansionOrigin(const double* origin);
+        void SetExpansionRadius(double er){fExpansionRadius = er;};
 
         void SetLocalCoefficients(const KFMElectrostaticLocalCoefficientSet* set);
         void SetRealMoments(const double* real_mom);
@@ -55,6 +56,7 @@ class KFMElectrostaticLocalCoefficientFieldCalculator
         unsigned int fSize;
         double fKFactor;
         double fOrigin[3];
+        double fExpansionRadius;
 
         mutable double fDel[3];
         mutable double fCosTheta;
@@ -92,6 +94,8 @@ class KFMElectrostaticLocalCoefficientFieldCalculator
         mutable double* fRealMomentsB;
         mutable double* fImagMomentsB;
 
+    public:
+        static const double fRootThreeOverTwo;
 
 };
 

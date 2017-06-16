@@ -5,19 +5,9 @@
 #include "KFMDenseBlockSparseMatrix.hh"
 
 #include "KBoundaryIntegralMatrix.hh"
+#include "KMPIEnvironment.hh"
 
 #define ENABLE_SPARSE_MATRIX
-
-#ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
-    #endif
-#else
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if( true )
-    #endif
-#endif
 
 namespace KEMField
 {
@@ -45,9 +35,23 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow: public KBoundaryIntegr
         typedef KSquareMatrix<ValueType> Matrix;
         typedef KVector<ValueType> Vector;
 
-        KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(KSurfaceContainer& c, FastMultipoleIntegrator& integrator):
-            KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, integrator),
+        KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(const KSurfaceContainer& c, KSmartPointer<FastMultipoleIntegrator> integrator):
+            KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, *integrator),
             fFastMultipoleIntegrator(integrator),
+            fTrait(NULL),
+            fDimension(c.size()),
+            fUniqueID(integrator->GetUniqueIDString()),
+            fElementBufferSize(0),
+            fIndexBufferSize(0),
+            fMaxRowWidth(0),
+            fVerbosity(integrator->GetVerbosity())
+            {
+                ConstructTrait();
+            }
+
+        KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(const KSurfaceContainer& c, FastMultipoleIntegrator& integrator):
+            KBoundaryIntegralMatrix<FastMultipoleIntegrator>(c, integrator),
+            fFastMultipoleIntegrator(&integrator,true),
             fTrait(NULL),
             fDimension(c.size()),
             fUniqueID(integrator.GetUniqueIDString()),
@@ -56,84 +60,40 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow: public KBoundaryIntegr
             fMaxRowWidth(0),
             fVerbosity(integrator.GetVerbosity())
             {
-                std::string msg;
-                #ifdef KEMFIELD_USE_MPI
-                if(KMPIInterface::GetInstance()->SplitMode())
-                {
-                    if( !(KMPIInterface::GetInstance()->IsEvenGroupMember() ) )
-                    {
-                        //split mode in use, only odd processes run a sparse matrix
-                        fTrait = new ParallelTrait(fUniqueID, fVerbosity);
-                        fElementBufferSize = fTrait->GetSuggestedMatrixElementBufferSize();
-                        fIndexBufferSize = fTrait->GetSuggestedIndexBufferSize();
-                        fMaxRowWidth = fTrait->GetSuggestedMaximumRowWidth();
-                        Initialize();
-                        fTrait->Initialize();
-                        msg = fTrait->GetStructureMessage();
-                    }
-                }
-                else
-                {
-                    //all process run a sparse matrix
-                    fTrait = new ParallelTrait(fUniqueID, fVerbosity);
-                    fElementBufferSize = fTrait->GetSuggestedMatrixElementBufferSize();
-                    fIndexBufferSize = fTrait->GetSuggestedIndexBufferSize();
-                    fMaxRowWidth = fTrait->GetSuggestedMaximumRowWidth();
-                    Initialize();
-                    fTrait->Initialize();
-                    msg = fTrait->GetStructureMessage();
-                }
-                KMPIInterface::GetInstance()->PrintMessage(msg);
-                #else
+                ConstructTrait();
+            }
+
+        void ConstructTrait()
+        {
+            std::string msg;
+            if(ActiveProcess())
+            {
                 fTrait = new ParallelTrait(fUniqueID, fVerbosity);
                 fElementBufferSize = fTrait->GetSuggestedMatrixElementBufferSize();
                 fIndexBufferSize = fTrait->GetSuggestedIndexBufferSize();
                 fMaxRowWidth = fTrait->GetSuggestedMaximumRowWidth();
                 Initialize();
                 fTrait->Initialize();
-                #endif
-            };
+#ifdef KEMFIELD_USE_MPI
+                msg = fTrait->GetStructureMessage();
+#endif
+            }
+#ifdef KEMFIELD_USE_MPI
+                KMPIInterface::GetInstance()->PrintMessage(msg);
+#endif
+        }
 
         virtual ~KFMSparseBoundaryIntegralMatrix_BlockCompressedRow()
         {
             delete fTrait;
-        };
+        }
 
 
         void Initialize()
         {
-            #ifdef ENABLE_SPARSE_MATRIX
-                #ifdef KEMFIELD_USE_MPI
-                if(KMPIInterface::GetInstance()->SplitMode())
-                {
-                    if( !(KMPIInterface::GetInstance()->IsEvenGroupMember() ) )
-                    {
-                        KFMDenseBlockSparseMatrixGenerator<ObjectTypeList, KSquareMatrix<ValueType> > dbsmGenerator;
-                        dbsmGenerator.SetMatrix(this);
-                        dbsmGenerator.SetUniqueID(fUniqueID);
-                        dbsmGenerator.SetMaxMatrixElementBufferSize(fElementBufferSize);
-                        dbsmGenerator.SetMaxIndexBufferSize(fIndexBufferSize);
-                        dbsmGenerator.SetMaxAllowableRowWidth(fMaxRowWidth);
-                        dbsmGenerator.SetVerbosity(fVerbosity);
-                        dbsmGenerator.Initialize();
-                        fFastMultipoleIntegrator.GetTree()->ApplyCorecursiveAction(&dbsmGenerator);
-                        dbsmGenerator.Finalize();
-                    }
-                }
-                else
-                {
-                    KFMDenseBlockSparseMatrixGenerator<ObjectTypeList, KSquareMatrix<ValueType> > dbsmGenerator;
-                    dbsmGenerator.SetMatrix(this);
-                    dbsmGenerator.SetUniqueID(fUniqueID);
-                    dbsmGenerator.SetMaxMatrixElementBufferSize(fElementBufferSize);
-                    dbsmGenerator.SetMaxIndexBufferSize(fIndexBufferSize);
-                    dbsmGenerator.SetMaxAllowableRowWidth(fMaxRowWidth);
-                    dbsmGenerator.SetVerbosity(fVerbosity);
-                    dbsmGenerator.Initialize();
-                    fFastMultipoleIntegrator.GetTree()->ApplyCorecursiveAction(&dbsmGenerator);
-                    dbsmGenerator.Finalize();
-                }
-                #else
+#ifdef ENABLE_SPARSE_MATRIX
+            if(ActiveProcess())
+            {
                 KFMDenseBlockSparseMatrixGenerator<ObjectTypeList, KSquareMatrix<ValueType> > dbsmGenerator;
                 dbsmGenerator.SetMatrix(this);
                 dbsmGenerator.SetUniqueID(fUniqueID);
@@ -142,36 +102,35 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow: public KBoundaryIntegr
                 dbsmGenerator.SetMaxAllowableRowWidth(fMaxRowWidth);
                 dbsmGenerator.SetVerbosity(fVerbosity);
                 dbsmGenerator.Initialize();
-                fFastMultipoleIntegrator.GetTree()->ApplyCorecursiveAction(&dbsmGenerator);
+                fFastMultipoleIntegrator->GetTree()->ApplyCorecursiveAction(&dbsmGenerator);
                 dbsmGenerator.Finalize();
-                #endif
-            #endif
+            }
+#endif
         }
 
         virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
         {
-            #ifdef KEMFIELD_USE_MPI
-            if(KMPIInterface::GetInstance()->SplitMode())
-            {
-                if( !(KMPIInterface::GetInstance()->IsEvenGroupMember() ) )
-                {
-                    fTrait->Multiply(x,y);
-                }
-            }
-            else
-            {
+            if(ActiveProcess())
                 fTrait->Multiply(x,y);
-            }
-            #else
-            fTrait->Multiply(x,y);
-            #endif
         }
 
+    private:
+        bool ActiveProcess() const
+        {
+#ifdef KEMFIELD_USE_MPI
+            if(KMPIInterface::GetInstance()->SplitMode())
+                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
+                    return false;
+            return true;
+#else
+            return true;
+#endif
+        }
 
     protected:
 
         //data
-        FastMultipoleIntegrator& fFastMultipoleIntegrator;
+        const KSmartPointer<FastMultipoleIntegrator> fFastMultipoleIntegrator;
         ParallelTrait* fTrait;
 
         unsigned int fDimension;

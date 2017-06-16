@@ -20,12 +20,12 @@ namespace katrin
         }
         if( aContainer->GetName() == "direction" )
         {
-            if( aContainer->AsReference< string >() == "forward" )
+            if( aContainer->AsReference< std::string >() == "forward" )
             {
                 fObject->SetDirection( KSTrajTermPropagation::eForward );
                 return true;
             }
-            if( aContainer->AsReference< string >() == "backward" )
+            if( aContainer->AsReference< std::string >() == "backward" )
             {
                 fObject->SetDirection( KSTrajTermPropagation::eBackward );
                 return true;

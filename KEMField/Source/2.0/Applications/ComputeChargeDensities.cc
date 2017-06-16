@@ -8,6 +8,7 @@
 #include <sstream>
 #include <sys/stat.h>
 
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KTypelist.hh"
 #include "KSurfaceTypes.hh"
 #include "KSurface.hh"
@@ -22,7 +23,6 @@
 #include "KIterativeStateReader.hh"
 #include "KIterativeStateWriter.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -45,7 +45,7 @@
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
@@ -325,12 +325,12 @@ int main(int argc, char* argv[])
 
 #ifdef KEMFIELD_USE_OPENCL
   KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-  KOpenCLElectrostaticBoundaryIntegrator integrator(oclSurfaceContainer);
+  KOpenCLElectrostaticBoundaryIntegrator integrator{KoclEBIFactory::MakeDefault(oclSurfaceContainer)};
   KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > A(oclSurfaceContainer,integrator);
   KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > b(oclSurfaceContainer,integrator);
   KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis> > x(oclSurfaceContainer,integrator);
 #else
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeDefault()};
   KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,integrator);
   KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);
   KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(surfaceContainer,integrator);

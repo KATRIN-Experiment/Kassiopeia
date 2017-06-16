@@ -20,6 +20,8 @@ using katrin::KConst;
 
 #include <cmath>
 
+using namespace std;
+
 namespace KGeoBag
 {
 

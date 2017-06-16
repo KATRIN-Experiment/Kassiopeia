@@ -15,11 +15,9 @@
 
 #include "KSurface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
-
 #include "KSurfaceContainer.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -104,7 +102,7 @@ int main(int argc, char** argv)
 
     KEMField::cout<<"solving for "<<surfaceContainer.size()<<" elements"<<KEMField::endl;
 
-    KElectrostaticBoundaryIntegrator integrator;
+    KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
     KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer,
 								integrator);
     KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(surfaceContainer,integrator);

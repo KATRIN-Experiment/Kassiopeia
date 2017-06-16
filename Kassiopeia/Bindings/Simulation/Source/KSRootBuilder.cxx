@@ -1,7 +1,10 @@
 #include "KSRootBuilder.h"
 #include "KElementProcessor.hh"
+#include "KRoot.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -11,6 +14,8 @@ namespace katrin
     }
 
     STATICINT sKSRoot =
-        KElementProcessor::ComplexElement< KSRoot >( "kassiopeia" );
+        KRootBuilder::ComplexElement< KSRoot >( "kassiopeia" );
 
+    STATICINT sKSRootCompat =
+        KElementProcessor::ComplexElement< KSRoot >( "kassiopeia" );
 }

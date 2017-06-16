@@ -8,10 +8,14 @@
 namespace KEMField
 {
 
-KFMElectrostaticFastMultipoleFieldSolver_OpenCL::KFMElectrostaticFastMultipoleFieldSolver_OpenCL(KOpenCLSurfaceContainer& container, KFMElectrostaticTree& tree):
+KFMElectrostaticFastMultipoleFieldSolver_OpenCL::
+KFMElectrostaticFastMultipoleFieldSolver_OpenCL(
+		const KoclEBIConfig& config,
+		KOpenCLSurfaceContainer& container,
+		KFMElectrostaticTree& tree):
 fSurfaceContainer(container),
 fTree(tree),
-fDirectIntegrator(fSurfaceContainer),
+fDirectIntegrator( config, fSurfaceContainer),
 fFastFieldSolver(),
 fNavigator()
 {
@@ -156,6 +160,7 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::SetPoint(const double* p) const
             fFallback = true;
         }
 
+        fFastFieldSolver.SetExpansionRadius( KFMElectrostaticLocalCoefficientFieldCalculator::fRootThreeOverTwo*(fCube->GetLength()) );
         fFastFieldSolver.SetExpansionOrigin(fCube->GetCenter());
         fFastFieldSolver.SetLocalCoefficients(fLocalCoeff);
     }

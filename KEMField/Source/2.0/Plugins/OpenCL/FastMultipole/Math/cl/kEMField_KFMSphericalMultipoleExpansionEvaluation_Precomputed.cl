@@ -1,7 +1,7 @@
 #ifndef KFMSphericalMultipoleExpansionEvaluation_Defined_H
 #define KFMSphericalMultipoleExpansionEvaluation_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 #include "kEMField_KFMSphericalMultipoleMath.cl"
 
 void

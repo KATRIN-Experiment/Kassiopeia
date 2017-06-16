@@ -334,7 +334,7 @@ namespace Kassiopeia
         (this->*fGetMagneticGradientPtr)();
         return fMagneticGradient;
     }
-    const pair<const KThreeVector&, const KThreeMatrix&> KSTrajAdiabaticParticle::GetMagneticFieldAndGradient() const
+    const std::pair<const KThreeVector&, const KThreeMatrix&> KSTrajAdiabaticParticle::GetMagneticFieldAndGradient() const
     {
         (this->*fGetMagneticFieldAndGradientPtr)();
         return std::make_pair(fMagneticField, fMagneticGradient );
@@ -349,7 +349,7 @@ namespace Kassiopeia
         (this->*fGetElectricPotentialRPPtr)();
         return fElectricPotentialRP;
     }
-    const pair<const KThreeVector&, const double&> KSTrajAdiabaticParticle::GetElectricFieldAndPotential() const
+    const std::pair<const KThreeVector&, const double&> KSTrajAdiabaticParticle::GetElectricFieldAndPotential() const
     {
         (this->*fGetElectricFieldAndPotentialPtr)();
         return std::make_pair(fElectricField, fElectricPotential );

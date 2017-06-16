@@ -7,7 +7,7 @@
 
 #include "KComplexElement.hh"
 #include "KSIntDecayCalculatorFerencBBRTransition.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 
 using namespace Kassiopeia;

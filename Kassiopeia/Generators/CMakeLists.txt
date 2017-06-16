@@ -4,21 +4,27 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenCreator.h
 
     KSGenValue.h
+    KSGenValueBoltzmann.h
     KSGenValueFix.h
     KSGenValueSet.h
     KSGenValueList.h
     KSGenValueUniform.h
     KSGenValueGauss.h
+    KSGenValueGeneralizedGauss.h
     KSGenValueRadiusCylindrical.h
     KSGenValueRadiusSpherical.h
+    KSGenValueRadiusFraction.h
+    KSGenValueAngleCosine.h
     KSGenValueAngleSpherical.h
     KSGenValuePareto.h
+    KSGenValueZFrustrum.h
 
     KSGenEnergyComposite.h
     KSGenEnergyKryptonEvent.h
     KSGenEnergyRadonEvent.h
     KSGenEnergyLeadEvent.h
     KSGenEnergyBetaDecay.h
+    KSGenEnergyRydberg.h
     KSGenNComposite.h
     KSGenLComposite.h
     KSGenLUniformMaxN.h
@@ -28,6 +34,7 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenPositionRectangularComposite.h
     KSGenPositionCylindricalComposite.h
     KSGenPositionSphericalComposite.h
+    KSGenPositionFrustrumComposite.h
     KSGenPositionSpaceRandom.h
     KSGenPositionSurfaceRandom.h
     KSGenPositionMeshSurfaceRandom.h
@@ -38,6 +45,8 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenDirectionSphericalComposite.h
     KSGenDirectionSurfaceComposite.h
     KSGenMomentumRectangularComposite.h
+
+    KSGenSpinComposite.h
 
     KSGenTimeComposite.h
 
@@ -70,21 +79,27 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenCreator.cxx
 
     KSGenValue.cxx
+    KSGenValueBoltzmann.cxx
     KSGenValueFix.cxx
     KSGenValueSet.cxx
     KSGenValueList.cxx
     KSGenValueUniform.cxx
     KSGenValueGauss.cxx
+    KSGenValueGeneralizedGauss.cxx
     KSGenValueRadiusCylindrical.cxx
     KSGenValueRadiusSpherical.cxx
+    KSGenValueRadiusFraction.cxx
+    KSGenValueAngleCosine.cxx
     KSGenValueAngleSpherical.cxx
     KSGenValuePareto.cxx
+    KSGenValueZFrustrum.cxx
 
     KSGenEnergyComposite.cxx
     KSGenEnergyKryptonEvent.cxx
     KSGenEnergyRadonEvent.cxx
     KSGenEnergyLeadEvent.cxx
     KSGenEnergyBetaDecay.cxx
+    KSGenEnergyRydberg.cxx
     KSGenNComposite.cxx
     KSGenLComposite.cxx
     KSGenLUniformMaxN.cxx
@@ -94,6 +109,7 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenPositionRectangularComposite.cxx
     KSGenPositionCylindricalComposite.cxx
     KSGenPositionSphericalComposite.cxx
+    KSGenPositionFrustrumComposite.cxx
     KSGenPositionSpaceRandom.cxx
     KSGenPositionSurfaceRandom.cxx
     KSGenPositionMeshSurfaceRandom.cxx
@@ -105,6 +121,8 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenDirectionSurfaceComposite.cxx
 
     KSGenMomentumRectangularComposite.cxx
+
+    KSGenSpinComposite.cxx
 
     KSGenTimeComposite.cxx
 
@@ -150,7 +168,7 @@ foreach( BASENAME ${GENERATORS_DATA_BASENAMES} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${GENERATORS_HEADER_PATH} )
+kasper_internal_include_directories( ${GENERATORS_HEADER_PATH} ../Readers/Include )
 add_library( KassiopeiaGenerators SHARED ${GENERATORS_SOURCE_FILENAMES} )
 set_target_properties( KassiopeiaGenerators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaGenerators
@@ -161,6 +179,10 @@ target_link_libraries( KassiopeiaGenerators
     KassiopeiaOperators
     KassiopeiaReaders
 )
+
+if( Kassiopeia_USE_ROOT )
+    target_link_libraries( KassiopeiaGenerators ${ROOT_LIBRARIES} )
+endif( Kassiopeia_USE_ROOT )
 
 # install
 kasper_install_headers( ${GENERATORS_HEADER_FILENAMES} )

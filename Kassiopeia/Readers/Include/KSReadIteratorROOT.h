@@ -23,7 +23,7 @@ namespace Kassiopeia
         public KSStringSet
     {
         private:
-            typedef map< string, KSReadObjectROOT* > ObjectMap;
+            typedef map< std::string, KSReadObjectROOT* > ObjectMap;
             typedef ObjectMap::iterator ObjectIt;
             typedef ObjectMap::const_iterator ObjectCIt;
             typedef ObjectMap::value_type ObjectEntry;
@@ -60,9 +60,9 @@ namespace Kassiopeia
             //*******
 
         public:
-            bool HasObject( const string& aLabel );
-            KSReadObjectROOT& GetObject( const string& aLabel );
-            const KSReadObjectROOT& GetObject( const string& aLabel ) const;
+            bool HasObject( const std::string& aLabel );
+            KSReadObjectROOT& GetObject( const std::string& aLabel );
+            const KSReadObjectROOT& GetObject( const std::string& aLabel ) const;
 
         protected:
             TTree* fData;

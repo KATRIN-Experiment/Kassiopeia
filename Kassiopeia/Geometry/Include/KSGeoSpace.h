@@ -33,7 +33,7 @@ namespace Kassiopeia
         public:
             void AddContent( KGSpace* aSpace );
             void RemoveContent( KGSpace* aSpace );
-            vector< KGSpace* > GetContent();
+            std::vector< KGSpace* > GetContent();
 
             void AddCommand( KSCommand* anCommand );
             void RemoveCommand( KSCommand* anCommand );
@@ -43,8 +43,8 @@ namespace Kassiopeia
             void DeinitializeComponent();
 
         private:
-            mutable vector< KGSpace* > fContents;
-            mutable vector< KSCommand* > fCommands;
+            mutable std::vector< KGSpace* > fContents;
+            mutable std::vector< KSCommand* > fCommands;
     };
 
 }

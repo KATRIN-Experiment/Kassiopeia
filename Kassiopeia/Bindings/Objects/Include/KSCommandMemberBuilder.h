@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSCommandMember.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -12,10 +12,10 @@ namespace katrin
     class KSCommandMemberData
     {
         public:
-            string fName;
+            std::string fName;
             KSComponent* fParent;
             KSComponent* fChild;
-            string fField;
+            std::string fField;
     };
 
     typedef KComplexElement< KSCommandMemberData > KSCommandMemberBuilder;
@@ -32,25 +32,25 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
         if( aContainer->GetName() == "parent" )
         {
-            KSComponent* tComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( aContainer->AsReference< string >() );
+            KSComponent* tComponent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );
             fObject->fParent = tComponent;
             return true;
         }
         if( aContainer->GetName() == "child" )
         {
-            KSComponent* tComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( aContainer->AsReference< string >() );
+            KSComponent* tComponent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );
             fObject->fChild = tComponent;
             return true;
         }
         if( aContainer->GetName() == "field" )
         {
-            string tField = aContainer->AsReference< string >();
+            std::string tField = aContainer->AsReference< std::string >();
             fObject->fField = tField;
             return true;
         }

@@ -3,12 +3,12 @@
 
 #include "kEMField_cuda_defines.h"
 
-// todo: define this dynamically
-#include "kEMField_ElectrostaticBoundaryIntegrals.cuh"
+#include "kEMField_ElectrostaticNumericBoundaryIntegrals.cuh"
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE LA_GetMatrixElement( int i, // target
+__forceinline__ __device__
+CU_TYPE LA_GetMatrixElement( int i, // target
         int j, // source
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,
@@ -28,14 +28,16 @@ __forceinline__ __device__ CU_TYPE LA_GetMatrixElement( int i, // target
 
 //______________________________________________________________________________
 
- __forceinline__ __device__ int LA_GetVectorSize( const int* boundaryInfo )
+ __forceinline__ __device__
+ int LA_GetVectorSize( const int* boundaryInfo )
 {
     return BI_GetNumElements( boundaryInfo );
 }
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE LA_GetVectorElement( int i,
+__forceinline__ __device__
+CU_TYPE LA_GetVectorElement( int i,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData )
 {
@@ -46,7 +48,8 @@ __forceinline__ __device__ CU_TYPE LA_GetVectorElement( int i,
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE LA_GetMaximumVectorElement( const int* boundaryInfo,
+__forceinline__ __device__
+CU_TYPE LA_GetMaximumVectorElement( const int* boundaryInfo,
         const CU_TYPE* boundaryData )
 {
     CU_TYPE max = -1.e30;
@@ -64,7 +67,8 @@ __forceinline__ __device__ CU_TYPE LA_GetMaximumVectorElement( const int* bounda
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE LA_GetMaximumSolutionVectorElement( const int* boundaryInfo,
+__forceinline__ __device__
+CU_TYPE LA_GetMaximumSolutionVectorElement( const int* boundaryInfo,
         const CU_TYPE* basisData)
 {
     CU_TYPE max = -1.e30;

@@ -14,7 +14,8 @@ namespace Kassiopeia
     class KESSScatteringCalculator;
 
     class KESSInelasticPenn :
-        public KSComponentTemplate< KESSInelasticPenn, KESSScatteringCalculator >
+        public KSComponentTemplate< KESSInelasticPenn, KSIntCalculator >,
+        public KESSScatteringCalculator
     {
         public:
             KESSInelasticPenn();
@@ -31,7 +32,7 @@ namespace Kassiopeia
         private:
             std::map< double, double > fInElScMFPMap;
 
-            //!<map contains a dictionary and a vector of two vectors containing the values
+            //!<map contains a dictionary and a std::vector of two std::vectors containing the values
             std::map< double, std::vector< std::vector< double > > > fInElScMap;
 
             double CalculateEnergyLoss( const double& Ekin );

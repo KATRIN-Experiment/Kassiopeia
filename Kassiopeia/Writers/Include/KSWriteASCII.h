@@ -17,8 +17,6 @@ using KGeoBag::KThreeVector;
 using KGeoBag::KTwoVector;
 
 #include <map>
-using std::map;
-using std::pair;
 
 namespace Kassiopeia
 {
@@ -39,8 +37,8 @@ namespace Kassiopeia
 			void MakeTitle( KSComponent* aComponent, int aTrack );
 
 		private:
-			string fLabel;
-			string fType;
+			std::string fLabel;
+			std::string fType;
 			KSWriteASCII* fWriter;
 			unsigned int fIndex;
 			unsigned int fLength;
@@ -49,20 +47,20 @@ namespace Kassiopeia
 			{
 			private:
 				KSComponent* fComponent;
-				string fType;
+				std::string fType;
 				int fPrecision;
 
 			public:
-				Objekt(KSComponent* aComponent, string aType, int Precision);
+				Objekt(KSComponent* aComponent, std::string aType, int Precision);
 				~Objekt();
-				string getValue();
+				std::string getValue();
 			};
 
-			vector< KSComponent* > fComponents;
-			vector< Objekt* > fObjekts;
+			std::vector< KSComponent* > fComponents;
+			std::vector< Objekt* > fObjekts;
 		};
 
-		typedef map< KSComponent*, Data* > KSComponentMap;
+		typedef std::map< KSComponent*, Data* > KSComponentMap;
 		typedef KSComponentMap::iterator ComponentIt;
 		typedef KSComponentMap::const_iterator ComponentCIt;
 		typedef KSComponentMap::value_type ComponentEntry;
@@ -74,8 +72,8 @@ namespace Kassiopeia
 		virtual ~KSWriteASCII();
 
 	public:
-		void SetBase( const string& aBase );
-		void SetPath( const string& aPath );
+		void SetBase( const std::string& aBase );
+		void SetPath( const std::string& aPath );
 		void SetStepIteration( const unsigned int& aValue );
 		void SetPrecision( const unsigned int& aValue );
 
@@ -84,8 +82,8 @@ namespace Kassiopeia
 
 
 	private:
-		string fBase;
-		string fPath;
+		std::string fBase;
+		std::string fPath;
 		unsigned int fStepIteration;
 		unsigned int fStepIterationIndex;
 		unsigned int fPrecision;
@@ -116,7 +114,7 @@ namespace Kassiopeia
 
 		KTextFile* fTextFile;
 
-		string fKey;
+		std::string fKey;
 		KSComponentMap fRunComponents;
 		KSComponentMap fActiveRunComponents;
 		unsigned int fRunIndex;
@@ -148,16 +146,16 @@ namespace Kassiopeia
 
 		static const int fBufferSize;
 		static const int fSplitLevel;
-		static const string fLabel;
+		static const std::string fLabel;
 
 	};
 
-	inline void KSWriteASCII::SetBase( const string& aBase )
+	inline void KSWriteASCII::SetBase( const std::string& aBase )
 	{
 		fBase = aBase;
 		return;
 	}
-	inline void KSWriteASCII::SetPath( const string& aPath )
+	inline void KSWriteASCII::SetPath( const std::string& aPath )
 	{
 		fPath = aPath;
 		return;

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSTermOutput.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSComponentGroup.h"
 #include "KSTerminatorsMessage.h"
 #include <limits>
@@ -15,9 +15,9 @@ namespace katrin
 	class KSTermOutputData
 	{
 		public:
-			string fName;
-			string fGroupName;
-			string fComponentName;
+			std::string fName;
+			std::string fGroupName;
+			std::string fComponentName;
 			double fMinValue;
 			double fMaxValue;
 	};
@@ -38,7 +38,7 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
@@ -56,20 +56,20 @@ namespace katrin
         }
         if( aContainer->GetName() == "group" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fGroupName = tName;
             return true;
         }
         if( aContainer->GetName() == "component" )
         {
             termmsg( eWarning ) <<"deprecated warning in KSTermOutputBuilder: Please use the attribute <output> instead <component>"<<eom;
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fComponentName = tName;
             return true;
         }
         if( aContainer->GetName() == "output" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fComponentName = tName;
             return true;
         }
@@ -82,7 +82,7 @@ namespace katrin
         KSComponent* tComponent = NULL;
         if( fObject->fGroupName.empty() == false )
         {
-            KSComponentGroup* tComponentGroup = KSToolbox::GetInstance()->GetObjectAs< KSComponentGroup >( fObject->fGroupName );
+            KSComponentGroup* tComponentGroup = KToolbox::GetInstance().Get< KSComponentGroup >( fObject->fGroupName );
             for( unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount(); tIndex++ )
             {
                 KSComponent* tGroupComponent = tComponentGroup->ComponentAt( tIndex );
@@ -100,7 +100,7 @@ namespace katrin
         }
         else
         {
-            tComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( fObject->fComponentName );
+            tComponent = KToolbox::GetInstance().Get< KSComponent >( fObject->fComponentName );
         }
 
 
@@ -112,7 +112,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< unsigned short >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -126,7 +125,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< short >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -140,7 +138,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< unsigned int >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -154,7 +151,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< int >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -168,7 +164,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< unsigned long >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -182,7 +177,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< long >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -196,7 +190,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< float >() );
         	tTerm = tTermOutput;
             delete fObject;
@@ -210,7 +203,6 @@ namespace katrin
         	tTermOutput->SetName( fObject->fName );
         	tTermOutput->SetMinValue( fObject->fMinValue );
         	tTermOutput->SetMaxValue( fObject->fMaxValue );
-        	tTermOutput->SetComponent( tComponent );
         	tTermOutput->SetValue( tComponent->As< double >() );
         	tTerm = tTermOutput;
             delete fObject;

@@ -727,8 +727,6 @@ namespace KEMField
       *( (fContainer.GetCentralSourcePoints())[fmCentralSPIndex]);
     const double* sPcoeff = sP.GetRawPointerToCoeff();
 
-    if (r<fContainer.GetParameters().GetProximityToSourcePoint())
-      return false;
 
     // rho,u,s:
     double delz = z-sP.GetZ0();
@@ -838,21 +836,28 @@ namespace KEMField
     {
       return false;
     }
+	if (r<fContainer.GetParameters().GetProximityToSourcePoint())
+	{
+		magneticField[0] = magneticField[1] = 0.;
+		g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = 0.;
+	}
+	else
+	{
+		double cosine = P[0]/r;
+		double sine = P[1]/r;
+		g[0]=Brr*cosine*cosine + 1./r*Br*sine*sine;
+		g[1]=g[3]=Brr*cosine*sine - 1./r*Br*cosine*sine;
+		g[2]=Bzr*cosine;
+		g[4]=Brr*sine*sine + 1./r*Br*cosine*cosine;
+		g[5]=Bzr*sine;
+		g[6]=Bzr*cosine;
+		g[7]=Bzr*sine;
 
-    double cosine = P[0]/r;
-    double sine = P[1]/r;
-    g[0]=Brr*cosine*cosine + 1./r*Br*sine*sine;
-    g[1]=g[3]=Brr*cosine*sine - 1./r*Br*cosine*sine;
-    g[2]=Bzr*cosine;
-    g[4]=Brr*sine*sine + 1./r*Br*cosine*cosine;
-    g[5]=Bzr*sine;
-    g[6]=Bzr*cosine;
-    g[7]=Bzr*sine;
-    g[8] = Bzz;
-
-    magneticField[0] = cosine*Br;
-    magneticField[1] = sine*Br;
-    magneticField[2] = Bz;
+		magneticField[0] = cosine*Br;
+		magneticField[1] = sine*Br;
+	}
+	magneticField[2] = Bz;
+	g[8] = Bzz;
 
     return true;
   }

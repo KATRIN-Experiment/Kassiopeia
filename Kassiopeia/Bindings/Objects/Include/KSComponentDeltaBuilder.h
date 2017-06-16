@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSComponentDelta.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSObjectsMessage.h"
 #include "KSComponentGroup.h"
 
@@ -26,9 +26,9 @@ namespace katrin
     class KSComponentDeltaData
     {
         public:
-            string fName;
-            string fGroupName;
-            string fParentName;
+            std::string fName;
+            std::string fGroupName;
+            std::string fParentName;
     };
 
     KSComponent* BuildOutputDelta( KSComponent* aComponent )
@@ -125,26 +125,26 @@ namespace katrin
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->fName = tName;
             return true;
         }
         if( aContainer->GetName() == "group" )
         {
-            string tGroupName = aContainer->AsReference< string >();
+            std::string tGroupName = aContainer->AsReference< std::string >();
             fObject->fGroupName = tGroupName;
             return true;
         }
         if( aContainer->GetName() == "component" )
         {
             objctmsg( eWarning ) <<"deprecated warning in KSComponentDeltaBuilder: Please use the attribute <parent> instead <component>"<<eom;
-            string tParentName = aContainer->AsReference< string >();
+            std::string tParentName = aContainer->AsReference< std::string >();
             fObject->fParentName = tParentName;
             return true;
         }
         if( aContainer->GetName() == "parent" )
         {
-            string tParentName = aContainer->AsReference< string >();
+            std::string tParentName = aContainer->AsReference< std::string >();
             fObject->fParentName = tParentName;
             return true;
         }
@@ -157,7 +157,7 @@ namespace katrin
         KSComponent* tParentComponent = NULL;
         if( fObject->fGroupName.empty() == false )
         {
-            KSComponentGroup* tComponentGroup = KSToolbox::GetInstance()->GetObjectAs< KSComponentGroup >( fObject->fGroupName );
+            KSComponentGroup* tComponentGroup = KToolbox::GetInstance().Get< KSComponentGroup >( fObject->fGroupName );
             for( unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount(); tIndex++ )
             {
                 KSComponent* tGroupComponent = tComponentGroup->ComponentAt( tIndex );
@@ -175,7 +175,7 @@ namespace katrin
         }
         else
         {
-            tParentComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( fObject->fParentName );
+            tParentComponent = KToolbox::GetInstance().Get< KSComponent >( fObject->fParentName );
         }
         KSComponent* tComponent = BuildOutputDelta( tParentComponent );
         tComponent->SetName( fObject->fName );

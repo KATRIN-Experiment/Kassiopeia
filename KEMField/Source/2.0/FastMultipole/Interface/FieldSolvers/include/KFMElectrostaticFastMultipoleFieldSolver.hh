@@ -1,6 +1,7 @@
 #ifndef KFMElectrostaticFastMultipoleFieldSolver_HH__
 #define KFMElectrostaticFastMultipoleFieldSolver_HH__
 
+#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticLocalCoefficientFieldCalculator.hh"
 

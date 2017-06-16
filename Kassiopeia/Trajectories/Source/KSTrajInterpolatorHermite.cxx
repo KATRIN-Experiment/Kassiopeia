@@ -89,6 +89,146 @@ namespace Kassiopeia
     }
 
     void KSTrajInterpolatorHermite::Interpolate(double aTime,
+                                                const KSTrajExactSpinIntegrator& anIntegrator,
+                                                const KSTrajExactSpinDifferentiator& aDifferentiator,
+                                                const KSTrajExactSpinParticle& anInitialParticle,
+                                                const KSTrajExactSpinParticle& aFinalParticle,
+                                                const double& aTimeStep,
+                                                KSTrajExactSpinParticle& anIntermediateParticle ) const
+    {
+        //cubic interpolation on all variables, except postion, which is quintic
+
+        //exactspin particle data:
+        //0 is time
+        //1 is length
+        //2 is x component of position
+        //3 is y component of position
+        //4 is z component of position
+        //5 is x component of momentum
+        //6 is y component of momentum
+        //7 is z component of momentum
+        //8 is 0 component of spin
+        //9 is x component of spin
+        //10 is y component of spin
+        //11 is z component of spin
+
+        //compute the time step data
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tDeltaTime = tFinalTime - tInitialTime;
+        double tFraction = aTimeStep / tDeltaTime;
+        double tInterpolatedTime = tInitialTime + aTimeStep;
+
+        //time step
+        if( tFraction >= 0.0 && tFraction <= 1.0)
+        {
+            //compute the cubic hermite polynomials
+            double h30, h31, h32, h33;
+            CubicHermite(tFraction, h30, h31, h32, h33);
+
+            //retrieve the first derivative evaluation from the integrator
+            KSTrajExactSpinDerivative initialDerivative;
+            initialDerivative = 0.0;;
+            bool isValid = anIntegrator.GetInitialDerivative(initialDerivative );
+            if(!isValid)
+            {
+                aDifferentiator.Differentiate(anInitialParticle.GetTime(), anInitialParticle, initialDerivative);
+            }
+
+            //retrieve the final derivative evaluation from the integrator
+            KSTrajExactSpinDerivative finalDerivative;
+            finalDerivative = 0.0;
+            isValid = anIntegrator.GetFinalDerivative(finalDerivative );
+            if(!isValid)
+            {
+                aDifferentiator.Differentiate(aFinalParticle.GetTime(), aFinalParticle, finalDerivative);
+            }
+
+            //compute the cubic interpolation for all variables in the particle array
+            anIntermediateParticle = h30*anInitialParticle + h31*tDeltaTime*initialDerivative + h32*tDeltaTime*finalDerivative + h33*aFinalParticle;
+            anIntermediateParticle[0] = tInterpolatedTime; //explicitly set the time variable
+
+            return;
+        }
+        else
+        {
+            //outside of step range, use linear interpolator to extrapolate
+            trajmsg_debug( "time step out of range defaulting to linear interpolator." << eom );
+
+            fFastInterpolator.Interpolate(aTime, anIntegrator, aDifferentiator, anInitialParticle, aFinalParticle, aTimeStep, anIntermediateParticle);
+        }
+    }
+
+    void KSTrajInterpolatorHermite::Interpolate(double aTime,
+                                                const KSTrajAdiabaticSpinIntegrator& anIntegrator,
+                                                const KSTrajAdiabaticSpinDifferentiator& aDifferentiator,
+                                                const KSTrajAdiabaticSpinParticle& anInitialParticle,
+                                                const KSTrajAdiabaticSpinParticle& aFinalParticle,
+                                                const double& aTimeStep,
+                                                KSTrajAdiabaticSpinParticle& anIntermediateParticle ) const
+    {
+        //cubic interpolation on all variables, except postion, which is quintic
+
+        //Adiabaticspin particle data:
+        //0 is time
+        //1 is length
+        //2 is x component of position
+        //3 is y component of position
+        //4 is z component of position
+        //5 is x component of momentum
+        //6 is y component of momentum
+        //7 is z component of momentum
+        //8 is B-aligned component of spin
+        //9 is B-perp angle of spin
+
+        //compute the time step data
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tDeltaTime = tFinalTime - tInitialTime;
+        double tFraction = aTimeStep / tDeltaTime;
+        double tInterpolatedTime = tInitialTime + aTimeStep;
+
+        //time step
+        if( tFraction >= 0.0 && tFraction <= 1.0)
+        {
+            //compute the cubic hermite polynomials
+            double h30, h31, h32, h33;
+            CubicHermite(tFraction, h30, h31, h32, h33);
+
+            //retrieve the first derivative evaluation from the integrator
+            KSTrajAdiabaticSpinDerivative initialDerivative;
+            initialDerivative = 0.0;;
+            bool isValid = anIntegrator.GetInitialDerivative(initialDerivative );
+            if(!isValid)
+            {
+                aDifferentiator.Differentiate(anInitialParticle.GetTime(), anInitialParticle, initialDerivative);
+            }
+
+            //retrieve the final derivative evaluation from the integrator
+            KSTrajAdiabaticSpinDerivative finalDerivative;
+            finalDerivative = 0.0;
+            isValid = anIntegrator.GetFinalDerivative(finalDerivative );
+            if(!isValid)
+            {
+                aDifferentiator.Differentiate(aFinalParticle.GetTime(), aFinalParticle, finalDerivative);
+            }
+
+            //compute the cubic interpolation for all variables in the particle array
+            anIntermediateParticle = h30*anInitialParticle + h31*tDeltaTime*initialDerivative + h32*tDeltaTime*finalDerivative + h33*aFinalParticle;
+            anIntermediateParticle[0] = tInterpolatedTime; //explicitly set the time variable
+
+            return;
+        }
+        else
+        {
+            //outside of step range, use linear interpolator to extrapolate
+            trajmsg_debug( "time step out of range defaulting to linear interpolator." << eom );
+
+            fFastInterpolator.Interpolate(aTime, anIntegrator, aDifferentiator, anInitialParticle, aFinalParticle, aTimeStep, anIntermediateParticle);
+        }
+    }
+
+    void KSTrajInterpolatorHermite::Interpolate(double aTime,
                                                 const KSTrajAdiabaticIntegrator& anIntegrator,
                                                 const KSTrajAdiabaticDifferentiator& aDifferentiator,
                                                 const KSTrajAdiabaticParticle& anInitialParticle,
@@ -294,6 +434,22 @@ namespace Kassiopeia
 
     double
     KSTrajInterpolatorHermite::DistanceMetric(const KSTrajExactParticle& valueA, const KSTrajExactParticle& valueB) const
+    {
+        KThreeVector a = valueA.GetPosition();
+        KThreeVector b = valueB.GetPosition();
+        return (a-b).Magnitude();
+    }
+
+    double
+    KSTrajInterpolatorHermite::DistanceMetric(const KSTrajExactSpinParticle& valueA, const KSTrajExactSpinParticle& valueB) const
+    {
+        KThreeVector a = valueA.GetPosition();
+        KThreeVector b = valueB.GetPosition();
+        return (a-b).Magnitude();
+    }
+
+    double
+    KSTrajInterpolatorHermite::DistanceMetric(const KSTrajAdiabaticSpinParticle& valueA, const KSTrajAdiabaticSpinParticle& valueB) const
     {
         KThreeVector a = valueA.GetPosition();
         KThreeVector b = valueB.GetPosition();

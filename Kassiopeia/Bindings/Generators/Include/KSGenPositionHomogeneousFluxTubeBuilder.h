@@ -3,7 +3,12 @@
 
 #include "KSGenPositionHomogeneousFluxTube.h"
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+
+#include "KToolbox.h"
+#include "KSFieldFinder.h"
+
+#include "KToolbox.h"
+
 
 using namespace Kassiopeia;
 namespace katrin
@@ -56,7 +61,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "magnetic_field_name" )
         {
-            fObject->AddMagneticField( KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( aContainer->AsReference< string >() ) );
+            fObject->AddMagneticField( getMagneticField( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

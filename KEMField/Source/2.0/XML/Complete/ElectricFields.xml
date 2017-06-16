@@ -1,0 +1,1137 @@
+<!-- this file contains an annotated list of all the electric fields available in KEMField 2.0 -->
+
+<geometry>
+
+	<tag name="magnet_tag">
+		<tag name="hoop_tag">
+			<cylinder_surface
+				name="hoop_surface"
+				z1="-1."
+				z2="1."
+				r="4."
+			/>
+		</tag>
+		<tag name="coil_tag">
+			<cylinder_tube_space 
+				name="coil_space"
+				z1="-5."
+				z2="5."
+				r1="3.2"
+				r2="3.5"
+				radial_mesh_count="30"
+			/>
+		</tag>
+	</tag>
+	<tag name="electrode_tag">
+		<tag name="outer_tag">
+			<cylinder_space
+				name="outer_space"
+				z1="-2."
+				z2="2."
+				r="2."
+				radial_mesh_count="5"
+				radial_mesh_power="1.5"
+				longitudinal_mesh_count="10"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="12"
+			/>
+		</tag>
+		<tag name="inner_tag">
+			<cylinder_surface
+				name="inner_surface"
+				z1="-1."
+				z2="1."
+				r="1."
+				longitudinal_mesh_count="5"
+				longitudinal_mesh_power="2."
+				axial_mesh_count="12"
+			/>
+		</tag>
+	</tag>
+
+	<space name="assembly">
+		<surface name="hoop" node="hoop_surface"/>
+		<space name="coil" node="coil_space"/>
+		<space name="outer" node="outer_space">
+			<surface name="inner" node="inner_surface"/>
+		</space>
+	</space>
+
+    <axial_mesh name="axial_mesh" surfaces="assembly/@electrode_tag"/>
+    <mesh name="mesh" surfaces="assembly/@electrode_tag"/> 
+    <electrostatic_dirichlet name="electrode_outer" surfaces="assembly/@outer_tag" value="0."/>
+    <electrostatic_dirichlet name="electrode_inner" surfaces="assembly/@inner_tag" value="-1000."/>
+    <electromagnet name="electromagnet_hoop" surfaces="assembly/@hoop_tag" current="10000"/>
+    <electromagnet name="electromagnet_coil" spaces="assembly/@coil_tag" current="500000"/>
+
+</geometry>
+
+<kemfield>
+
+    <constant_electric_field name="electric_constant" field="2 0 -1" />
+    <!--
+        description:
+			provides a constant, uniform electric field.
+
+        parameters:
+
+            name:
+			the name of the electric field.
+
+            field:
+			the cartesian components of the electric field vector in volts per meter.
+    -->
+
+    <electric_quadrupole_field name="electric_quadrupole" location="0. 0. 0." strength="-10000." length="1.e-2" radius="1.e-2"/>
+    <!--
+        description:
+			provides a perfect quadrupole electric field.
+			equipotential surfaces are hyperboloids of revolution about the z axis, with asymptotic cones at zero potential.
+			the potential in cylindrical coordinates obeys:
+			
+				V(z,r,phi) = V0 * (z^2 - r^2 / 2) / (z0^2 + r0^2 / 2)
+
+        parameters:
+			name:
+				the name of the electric field.
+
+			location:
+				the vertex of the asymptotic cones.
+
+			strength:
+				V0 in the equation above, in volts.
+
+			length:
+				z0 in the equation above, in meters.
+
+			radius:
+				r0 in the equation above, in meters.
+	-->
+	
+	<ramped_electric_field
+		name="ramped_electric_field"
+		root_field="electric_quadrupole"
+		ramping_type="linear"
+		num_cycles="10"
+		ramp_up_delay="-0.1"
+		ramp_down_delay="0.1"
+		ramp_up_time="0.2"
+		ramp_down_time="0.2"
+		time_constant="2.0"
+		time_scaling="1.0"
+	
+	/>
+	<!--
+		description:
+			takes an electric field and modulates it with the time according
+			to the selected profile.
+			This field does not consider electrodynamics and just scales the 
+			underlying static field. It is only for sufficiently slowly varying
+			fields. Don't simulate an antenna with it!
+			
+			For details please see the implementation of the different profiles in 
+			the code (the file is KRampedElectricField.cc).
+		parameters:
+			name:
+				the name of the electric field
+			root_field:
+				the name of the electric field that is to be varied with time
+			ramping_type:
+				linear, exponential and sinus are the options
+			num_cycles:
+				how often the ramping up and down cycle is repeated
+			ramp_up_delay:
+				delay before ramping up
+			ramp_down_delay:
+				delay before ramping down af
+			ramp_up_time:
+				time the linear ramp up takes
+			ramp_down_time:
+				time the linear ramp down takes
+			time_constant:
+				time constant for exponential ramping, otherwise unused value
+			time_scaling:
+				scale all times by a factor for quick frequency change
+	-->
+	
+	<ramped_transitional_electric_field
+		name="ramped_transitional_electric_field"
+		root_field_1="electric_constant"
+		root_field_2="electric_quadrupole"
+		ramping_type="sinus"
+		num_cycles="10"
+		ramp_up_delay="-0.1"
+		ramp_down_delay="0.1"
+		ramp_up_time="0.2"
+		ramp_down_time="0.2"
+		time_constant="2.0"
+		time_scaling="1.0"
+	/>
+	<!--
+		description:
+			as an extension to the ramped electric field this field
+			accepts to field. The first is active from the beginning and
+			ramped down as the second is ramped up.
+			All configurations of the ramping profile are the same as the 
+			normal ramped electric field
+			
+		parameters:
+			name:
+				the name of the electric field
+			root_field_1:
+				the name of the field before the transition starts
+			root_field_2:
+				the name of the field after the transition starts
+			all other parameters:
+				same as in <ramped_electric_field/>
+	-->
+	
+	<electric_potentialmap_calculator
+		name="electric_potentialmap_calculator"
+		directory="."
+		file="CompleteXMLPotentialMap.vti"
+		center="0 0 0"
+		length="1.5 1.5 1.5"
+		mirror_x="false"
+		mirror_y="false"
+		mirror_z="false"
+		spacing="0.1"
+		spaces="outer_space"
+		field="electric_quadrupole"
+	/>
+	<!--
+		description:
+			Creates a potential map stored in the .vti image format.
+		
+		
+		parameters:
+			name:
+				name of the calculator
+			directory:
+				the directory of the data file.
+				Defaults to the KEMField scratch directory.
+			file:
+				the name of the image data file containing the map.
+				Use .vti as extension.
+			center:
+				The center of the cubic mapping region
+			length:
+				The length of the cube where the map is created
+			mirror_x:
+				boolean option to reduce the map size for mirror symmetric problems
+				along the x axis
+			mirror_y:
+				boolean option to reduce the map size for mirror symmetric problems
+				along the y axis
+			mirror_z:
+				boolean option to reduce the map size for mirror symmetric problems
+				along the z axis. These mirror options are combinable.
+			spacing:
+				Distance between the evaluation points for the map.
+			spaces:
+				Define spaces to confine the map to points within the intersection of
+				these spaces.
+			field:
+				the name of the field to map
+	-->
+	
+	<electric_potentialmap
+		name="electric_potentialmap"
+		directory="."
+		file="CompleteXMLPotentialMap.vti"
+		interpolation="cubic"
+	/>
+	<!--
+		description:
+			electric field interpolated from a precomputed potentialmap
+		
+		parameters:
+			name:
+				the name of the field
+			directory:
+				the directory of the potential map image data file
+			file:
+				the name of the potential map image data file
+			interpolation: 
+				none or nearest: just take the value of the nearest point of the map
+				linear: linear interpolation from surrounding points
+				cubic: cubic interpolation from surrounding points
+	-->
+	
+	<!-- the induced_azimuthal_electric_field can be found in the
+	MagneticFields.xml file as it is generated from a magnetic field. -->
+	
+
+	<electrostatic_field
+        name="field_electrostatic"
+        directory="."
+        file="Electrodes.kbd"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+        symmetry="axial"
+        hash_masked_bits="0"
+        hash_threshold="1e5"
+        minimum_element_area="1e-3"
+        maximum_element_aspect_ratio="1e100"
+    >
+    	<gaussian_elimination_charge_density_solver/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		provides an electric field arising from disctretized elements computed 
+    		with kemfield as initialized with kgeobag. To use this field, a valid
+    		geometry must have been constructed, as in the beginning of this file.
+    		The electrostatic field requires exactly one charge density solver for
+    		the boundary element method and one field solver.
+    		All solvers available are presented in the examples further down in this
+    		file.
+
+		parameters:
+			name:
+				the name of the electric field.
+
+			directory:
+				name of directory in which to cache computation. No directory should
+				default to the KEMField cache.
+
+			file:
+				name of file in which to cache computation.
+
+			system:
+				path to exactly one kgeobag space whose coordinate system the 
+				computation will use.
+
+			surfaces:
+				paths to KGeoBag surfaces which are equipped with both a 
+				discretization and electromagnetic properties.
+				Surfaces not fulfilling both criteria are ignored.
+
+			symmetry:
+				may be none, axial or discrete_axial, which constrains methods 
+				that may be used in computation. The symmetry is always defined along
+				the z-axis.
+				
+			hash_masked_bits:
+				this value is passed to the charge density solver 
+				to configure the retrival mechanism for precomputed solutions 
+				of the charge density solver.
+				You should not have to use this option.
+				
+			hash_threshold:
+				this value is passed to the charge density solver
+				to configure the retrival mechanism for precomputed solutions 
+				of the charge density solver.
+				You should not have to use this option.
+			
+			minimum_element_area:
+			    elements of the geometry with an area below this value are ignored
+			    in the electric field computation
+			
+			maximum_element_aspect_ratio:
+				elements with an aspect ratio above this value are ignored in the 
+				electric field computation.
+				The aspect ratio of a triangle is the ratio of the longest side over
+				the corresponding height.
+				The aspect ratio of a rectangle is the ratio of the longer side over
+				the shorter side.
+				The aspect ratio of a wire is the length divided by the diameter.
+			
+	-->
+	
+	<!-- electrostatic field helper tools -->
+	
+	
+	<electrostatic_field
+        name="field_electrostatic_viewer"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+    	<viewer
+    		view="true"
+    		preprocessing="true"
+    		postprocessing="true"
+    		file="ElectricFieldComplete.vti"
+    		save="true"
+    	/>
+    	<gaussian_elimination_charge_density_solver/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+            the viewer opens a window and displays the geometry. It can also save the
+            geometry as in the vtk XML format. If KEMField is compiled without VTK
+            support, the viewer is simply ignored.
+            
+        parameters:
+        	view:
+        		boolean option if true the image will be displayed 
+        		in the preprocessing or postprocessing step of the field computation.
+        		Defaults to true.
+        		
+        	preprocessing:
+        		boolean option to start the viewer before the charge density solver 
+        		initialization. Defaults to false.
+        	
+        	postprocessing:
+        		boolean option to start the viewer after the field solver 
+        		initialization. There is no difference in the display between this
+        		option and the preprocessing variant. If both these parameters are
+        		true, the display pops up twice or the file is saved two times.
+        		The second time overwriting the data from the first save operation.
+        		Defaults to false.
+        		
+        	file:
+        		specify the name and location of the image data file in .vti format
+        	
+        	save:
+        		boolean option to save the generated geometry as a .vti file. Specify
+        		the name with the file parameter.
+        		Defaults to false.
+        		
+    -->
+    
+    <electrostatic_field
+        name="field_electrostatic_boundary_element_info"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+		<boundary_element_info/>
+    	<gaussian_elimination_charge_density_solver/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		display the number of discretized surface elements of the geometry
+    		on the console before any computation starts.
+    	
+    	parameters: none
+    -->
+    
+    <electrostatic_field
+        name="field_electrostatic_timer"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+		<timer/>
+    	<gaussian_elimination_charge_density_solver/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		display the times for charge density solving and
+    		field solver initialization.
+    			
+    	parameters: none
+   	-->
+    
+    <!-- charge density solvers -->
+    
+    <electrostatic_field
+        name="field_electrostatic_gaussian_elimination_charge_density_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+        file="CompleteElectricFields.kbd"
+    >
+        <gaussian_elimination_charge_density_solver
+            integrator="analytic"
+        />
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		uses the gaussian elimination technique to compute charge densities.
+    		
+    	parameters: none
+    -->
+    
+    <electrostatic_field
+        name="field_electrostatic_robin_hood_charge_density_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+    	<boundary_element_info/>
+       	<robin_hood_charge_density_solver
+       		tolerance="1e-8"
+       		check_sub_interval="100"
+       		display_interval="1"
+       		write_interval="0"
+       		plot_interval="1"
+       		cache_matrix_elements="true"
+       		use_opencl="true"
+       		use_vtk="true"
+       	
+       	/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+   	<!--
+   		description:
+   			the robin hood charge density solver is an iterative linear equation 
+   			solver. It redistributes the charges, so that the equation of the row
+   			where the worst error is detected is satisfied.
+   			It is a Gauss-Seidel variant.
+   			
+   		parameters:
+   			tolerance:
+   				specify the desired reduction of the start residual to define 
+   				convergence. This defaults to 1e-8, meaning that the algorithm will
+   				stop when the norm of the residual has fallen to 1e-8 times its value 
+   				in the first iteration (the norm of the vector describing the desired
+   				potential distribution).
+   			
+   			check_sub_interval:
+   				the algorithm will iterate this many lines of the matrix before 
+   				checking for convergence and allowing visitors to run.
+   				Defaults to the dimension of the boundary element matrix.
+   			
+   			display_interval:
+   				specify how often the state of the iteration with number of 
+   				iterations  and residual is displayed. While the value is integer it
+   				will display every check_sub_interval except for the case that the
+   				value is 0.
+   				It defaults to 0.
+   			
+   			write_interval:
+   				specify how often the state of the iteration is saved. It allows to
+   				recover the iteration from this state if the job has been 
+   				interrupted. While the value is integer it will display every 
+   				check_sub_interval except for the case that the value is 0.
+   				It defaults to 0.
+   				
+   			
+   			plot_interval:
+   				display the convergence curve of the residuum in a graph
+   				While the value is integer it will display every check_sub_interval
+   				except for the case that the value is 0.
+   				It defaults to 0.
+   			
+   			cache_matrix_elements:
+   				boolean arguement to store the computed matrix elements of the 
+   				boundary element matrix. This potentially speeds the computation up
+   				as elements don't have to be recomputed but	it is only possible if
+   				enough RAM is available to store all matrix elements. The storage
+   				size scales with n^2, where n is the number of discretized boundary
+   				elements.
+   			
+   			use_opencl:
+   				speed up the computation by using OpenCL, only when compiled with 
+   				OpenCL and an available parallel device (i.e graphics card).
+   				
+   			use_vtk:
+   				this option has to be true for the plot_interval parameter to create
+   				a graph showing the convergence
+   	-->
+   	
+   	<electrostatic_field
+        name="field_electrostatic_cached_charge_density_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+    	<boundary_element_info/>
+       	<cached_charge_density_solver
+       		name="SurfaceContainer_25630838769cd7b820865b2f7c245ef2"
+			hash="25630838769cd7b820865b2f7c245ef2"
+       	/>
+    	<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		This solver loads precomputed charge densities from .kbd files.
+    		If a name is provided it will load the surface container with this name from any
+    		file in the active directory (normally the KEMField cache directory).
+    		If only the hash is provided it will scan the KEMField cache for a solution
+    		with the same hash.  
+    		
+    		Compute the field_electrostatic_gaussian_elimination_charge_density_solver
+    		to have the solution ready in the cache for this example.
+    	
+    	parameters:
+    		name: 
+    		    the name of the surface container. It normally is the the combination of
+    		    the word SurfaceContainer and underscore and the hash value (see example in the code).
+    		    Try this to avoid comparisions of hash values which may differ from machine to machine.
+    		    To get the hash values of the surface containers, run the InspectEMFile command on the .kbd file.
+    		
+    		hash:
+    			the hash value of the geometry and boundary values.
+    			A solution with the same hash values if present is the loaded from the cache directory.
+    			Be aware that the hash may depend on the machine and one might not find
+    			soludions that have been computed on another machine by the hash value.
+    -->
+    
+    
+	<electrostatic_field
+		name="field_electrostatic_krylov_and_fast_multipole_charge_density_solver"
+		system="assembly"
+		surfaces="assembly/@electrode_tag"
+	>
+		<krylov_charge_density_solver
+			solver_name="gmres"
+			tolerance="1e-8"
+			max_iterations="500"
+			iterations_between_restarts="500"
+			use_display="true"
+			show_plot="true"
+		>
+			<fast_multipole_matrix/>
+		</krylov_charge_density_solver>
+		<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		the Krylov charge density solver is a solver using Krylov subspace methods
+    		to solve the linear charge densities equation.
+    		It offers the choice of GMRES and BiCGStab and requires to specify a matrix
+    		vector multiplication method to convert charge densities into potentials
+    		on the source elements. As of today only the fast multipole matrix is available.
+    		Optionally a preconditioner can be added. For details on the matrix and preconditioners
+    		see the next examples.
+    		
+    	parameters:
+    		solver_name:
+    			specify the solver type by name. gmres and bicgstab are available.
+    			
+    		tolerance:
+    			specify the desired reduction of the start residual to define convergence.
+   				This defaults to 1e-8, meaning that the algorithm will stop 
+   				when the norm of the residual has fallen to 1e-8 times its value 
+   				in the first iteration (the norm of the vector describing the desired potential distribution).
+   			
+   			max_iterations:
+   				specify the maximum number of iterations after which the solver
+   				will finish regardless of convergence
+   				
+   			iterations_between_restart:
+   				specify the maximuum number of iterations before the algorithm will
+   				restart. This means using the last solution but discarding the constructed
+   				Krylov subspace. For more information on the theory of restarted gmres or bicgstab, 
+   				google it.
+    		  	
+    		use_display:
+    			display progress in the form of iteration number and residual on the console
+
+			show_ploy:
+				works with vtk only: display the convergence curve in a graph
+    		  
+    
+    -->
+    
+    <electrostatic_field
+		name="field_electrostatic_fast_multipole_matrix_in_charge_density_solver"
+		system="assembly"
+		surfaces="assembly/@electrode_tag"
+	>
+		<krylov_charge_density_solver
+			solver_name="gmres"
+			tolerance="1e-8"
+			max_iterations="500"
+			iterations_between_restarts="500"
+			use_display="true"
+			show_plot="true"
+		>
+			<fast_multipole_matrix
+				strategy="balanced"
+				top_level_divisions="4"
+				tree_level_divisions="2"
+				expansion_degree="4"
+				neighbor_order="2"
+				maximum_tree_depth="2"
+				region_expansion_factor="1.1"
+				use_region_size_estimation="true"
+				world_cube_center="0 0 0"
+				world_cube_length="10"
+				use_caching="false"
+				verbosity="3"
+				insertion_ratio="1.33333333333"
+				bias_degree="2"
+				allowed_number="1"
+				allowed_fraction="0.5"
+				
+			/>
+		</krylov_charge_density_solver>
+		<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		The fast multipole matrix uses the KATRIN FFTM method to compute the multiplication
+    		of the charge density problem matrix with a vector.
+    		It works by constructing an adaptive tree of cubes and subcubes, computing
+    		multipole expansions as approximations of the electric field by local charges and
+    		converting them into local expansion to approximate the field of far away
+    		charges. Then the result vector is created by evaluating at the source element's
+    		centroids.
+    		
+    		Most important for accuracy of this approximate multiplication method
+    		are the neighbor_order and expansion_degree.
+    		
+    		The level divisions and maximum tree depth allow to optimize the computation
+    		time.
+    		
+    		The world cube is the top level cube that has to contain all source elements
+    		and is a starting point for the algorithm.
+    	
+    	parameters:
+    		strategy:
+    			strategy for the construction of the tree of cubes. The option are:
+    			- agressive
+    				divide a cube into smaller subcubes if at least on element can be 
+    				used for at least one of the subcubes multipole expansions. This
+    				option like all other does respect the maximum_tree_depth.
+    			- balanced
+    			- guided
+    		top_level_divisions:
+    			the world cube gets divided into this many cubes along each side
+    			to create the first level of cubes. For MPI the number of top level cubes
+    			(which is top_level_divisions^3) has to be at least the number of MPI nodes.
+    		tree_level_divisions:
+    			in all but the first subdivision the cubes get divided into this many
+    			cubes along each side. Two is the smallest useful value and a very good choice, too.
+    		expansion_degree:
+    			the maximum degree of the multipole and local expansions used in the algorithm
+    			for precise results values in the range of 10 to 13 are recommended combined
+    			with a zero_mask size of 3. The example uses smaller values to speed up the computation
+    			to a manageable time for a demonstation.
+    		neighbor_order:
+    			the distance in cubes that neighbors are defined by
+    			Cubes being having less than this number of cubes inbetween them in any
+    			direction are considered neighbors.
+    			Neighbors define the dead zone where the multipole expansion is not valid.
+    			Greater numbers like 3 make the algorithm more accurate but slower
+    		maximum_tree_depth:
+    			the maximum depth to which cubes are subdivided
+    			this restricts the tree size and computation time for the local moments
+    			at the cost of more direct evaluations later
+    		region_expansion_factor:
+    			the factor by which the estimated region for the world cube is expanded
+    			in size to compensate for slight errors in the region estimation algorithm
+    			and to ensure all source elements are inside the world cube
+    		use_region_size_estimation:
+    			this boolean option allows the automatic selection of the world cube
+    			from the underlying geometry so that all field sources are covered.
+    			Use with a region expansion factor (for example 1.1) to compensate for slight
+    			errors in the estimate. Try larger ones if elements are missed out.
+    		world_cube_center:
+    			if the region estimation in not used, the cube center can be defined
+    			manually by passing this option the vector of the user's choice
+    		world_cube_length:
+    			manually set the side length of the world cube
+    		use_caching:
+    			currently without effect
+    		verbosity:
+    			values between 0 and 3 define the amount of output on the console.
+    			A value of zero is mostly silent and a value of three gives maximum
+    			information.
+    		insertion_ratio:
+    			elements are accepted by a cube if they are within the smallest ball around the 
+    			cube multiplied by this factor which should be greater than one (for example 1.3).
+    			This allows small elements sitting on the borders of cubes to be accepted by small
+    			cubes and limit direct evaluation to a more local region.	
+    		bias_degree:
+    			if strategy = Balanced, scale factor for biasing fft events
+    		allowed_number:
+    			if strategy = Guided, number of elements above which subdivision is triggered
+    		allowed_fraction:
+    			if strategy = Guided, fraction of elements abouve which subdivision is triggered
+    -->
+    
+    <electrostatic_field
+		name="field_electrostatic_preconditioner_in_charge_density_solver"
+		system="assembly"
+		surfaces="assembly/@electrode_tag"
+	>
+		<krylov_charge_density_solver
+			solver_name="gmres"
+			tolerance="1e-8"
+			max_iterations="500"
+			use_display="true"
+		>
+			<fast_multipole_matrix
+				top_level_divisions="4"
+				tree_level_divisions="2"
+				expansion_degree="4"
+				neighbor_order="2"
+				maximum_tree_depth="2"
+				region_expansion_factor="1.1"
+				use_region_size_estimation="true"
+				verbosity="3"
+			/>
+			<krylov_preconditioner
+				solver_name="gmres"
+				tolerance="1e-2"
+				max_iterations="5"
+				iterations_between_restarts="5"
+				use_display="true"
+				show_plot="true"
+			>
+				<fast_multipole_matrix
+					top_level_divisions="4"
+					tree_level_divisions="2"
+					expansion_degree="1"
+					neighbor_order="2"
+					maximum_tree_depth="2"
+					region_expansion_factor="1.1"
+					use_region_size_estimation="true"
+					verbosity="3"
+				/>
+			</krylov_preconditioner>
+		</krylov_charge_density_solver>
+		<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		the preconditioner is a inner Krylov solver as right preconditioner for Krylov solvers.
+    		In each main iteration step the solution is multiplied with the preconditioner matrix first.
+    		An approximate inverse of the matrix works best and is implemented as a fast and not too accurate
+    		Krylov solver. Accordingly, the preconditioner offers the same parameters as the Krylov solver
+    		and requires matrix too, in this case a less accurate but much faster choice is advised.
+    		Furthermore the Krylov preconditioner can also accept an inner preconditioner, just like
+    		the Krylov solver. This is called multilevel preconditioning.
+    		
+    	parameters:
+    		solver_name:
+    			the name of the particular Krylov solver to be used: GMRES or BiCGStab
+    		tolerance:
+    			the relative reduction of the norm of the residuum to declare the preconditioner converged
+    		max_iterations:
+    			the maximum number of iterations of the preconditioner.
+    			For the preconditioner, this is an important value.
+    			The approximate inverse is best calculated by stopping the iteration
+    			prematurely. By variation of this value, accurracy vs precision can easily be optimized.
+    		iterations_between_restarts:
+    			same as with the Krylov solver probably never needed in a preconditioner
+    			though because of the low number of iterations
+    		use_display: see Krylov solver
+    		show_plot: see Krylov solver
+    		
+    -->
+    
+    <electrostatic_field
+		name="field_electrostatic_old_krylov_charge_density_solver"
+		system="assembly"
+		surfaces="assembly/@electrode_tag"
+	>
+		<krylov_charge_density_solver_old
+			solver_name="gmres"
+			preconditioner="independent_implicit_krylov"
+			tolerance="1e-8"
+			max_iterations="500"
+			iterations_between_restarts="500"
+			preconditioner_tolerance="1e-2"
+			max_preconditioner_iterations="5"
+			preconditioner_degree="2"
+			intermediate_save_interval="0"
+			use_display="true"
+			show_plot="true"
+			use_timer="true"
+			time_limit_in_seconds="100"
+			time_check_interval="1"
+		>
+			<fftm_multiplication
+				strategy="balanced"
+				top_level_divisions="4"
+				tree_level_divisions="2"
+				expansion_degree="5"
+				maximum_tree_depth="2"
+				region_expansion_factor="1.1"
+				use_region_size_estimation="true"
+				world_cube_center_x="0"
+				world_cube_center_y="0"
+				world_cube_center_z="0"
+				world_cube_length="10"
+				use_caching="false"
+				verbosity="3"
+				insertion_ratio="1.33333333333"
+			/>
+			<preconditioner_electrostatic_parameters
+				strategy="balanced"
+				top_level_divisions="4"
+				tree_level_divisions="2"
+				expansion_degree="2"
+				maximum_tree_depth="2"
+				region_expansion_factor="1.1"
+				use_region_size_estimation="true"
+				world_cube_center_x="0"
+				world_cube_center_y="0"
+				world_cube_center_z="0"
+				world_cube_length="10"
+				use_caching="false"
+				verbosity="3"
+				insertion_ratio="1.33333333333"
+			/>
+		</krylov_charge_density_solver_old>
+		<integrating_field_solver/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		the old Krylov solver only allows a single level preconditioning
+    		but the new Krylov solver cannot store intermediate results to restart
+    		after the process has been terminated externally (time limit on server, blackout,...)
+    		
+    		The parameters for the fftm_multiplication and
+    		the preconditioner_electrostatic_parameters are the same
+    		as for the fast_multipole_matrix above. So read there how they work. 
+    	
+    	parameters:
+    		solver_name:
+    			specify the solver type by name. gmres and bicgstab are available.
+    			
+    		preconditioner:
+    			specify the preconditioner type. Options are:
+    			- none
+    				use no preconditioner
+    			- jacobi
+    				use the inverse of the diagonal as preconditioner
+    			- implicit_krylov
+    				use an inner Krylov solver with a different FFTM matrix defined by
+    				the attributes of the Krylov solver.
+    			- independent_implicit_krylov
+    				use an inner Krylov solver with a different FFTM matrix defined by
+    				the preconditioner_electrostatic_parameters element. This is more
+    				flexible than the other Krylov preconditioner option.
+    		
+    		tolerance:
+    			specify the desired reduction of the start residual to define convergence.
+   				This defaults to 1e-8, meaning that the algorithm will stop 
+   				when the norm of the residual has fallen to 1e-8 times its value 
+   				in the first iteration (the norm of the vector describing the desired potential distribution).
+   			
+   			max_iterations:
+   				specify the maximum number of iterations after which the solver
+   				will finish regardless of convergence
+   				
+   			iterations_between_restart:
+   				specify the maximuum number of iterations before the algorithm will
+   				restart. This means using the last solution but discarding the constructed
+   				Krylov subspace. For more information on the theory of restarted gmres or bicgstab, 
+   				google it.
+   			
+   			preconditioner_tolerance:
+   				only for the implicit_krylov preconditioner!
+   				define the tolerance just as in the main procedure
+    		
+    		max_preconditioner_iterations:
+    			only for the implicit_krylov preconditioner!
+    			define after how many iterations the precondiitoner stops regardless
+    			of convergence
+    		
+    		preconditioner_degree:
+    			only for the implicit_krylov preconditioner!
+    			the maximum expansion degree of the multipole and local expansions
+    			used in the preconditioner
+    		
+    		intermediate_save_interval:
+    			the number of main iteration steps between subsequent saves of the 
+    			intermediate state to the disk
+    		  	
+    		use_display:
+    			display progress in the form of iteration number and residual on the console
+
+			show_ploy:
+				works with vtk only: display the convergence curve in a graph
+    		
+    		use_timer:
+    			boolean option to stop the programm at the end of a main iteration
+    			after a specified amount of time has passed.
+    			For time_check_interval greater than one, the timer will be called
+    			less often to check if the programm should terminate.
+    			
+    		time_limit_in_seconds:
+    			time after which the timer will terminate when the then current
+    			iteration finishes
+    			
+    		time_check_interval:
+    			the number of main iterations between calls to the timer enabling
+    			it to stop the process.
+    -->
+    
+    <!-- field solvers -->
+    
+    <electrostatic_field
+        name="field_electrostatic_integrating_field_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+    	<gaussian_elimination_charge_density_solver/>
+    	<integrating_field_solver
+    		use_opencl="true"
+    	/>
+    </electrostatic_field>
+    <!--
+		description:
+			performs a sum over all discretized components to obtain the final field.
+
+		parameters:
+			use_opencl:
+				if true and kemfield has been compiled with opencl support, opencl will be used in the computation.
+	-->
+	
+	<electrostatic_field
+        name="field_electrostatic_zonal_harmonic_field_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+        symmetry="axial"
+    >
+    	<gaussian_elimination_charge_density_solver/>
+		<zonal_harmonic_field_solver
+            number_of_bifurcations="-1"
+            convergence_ratio=".99"
+            convergence_parameter="1.e-15"
+            proximity_to_sourcepoint="1.e-12"
+            number_of_central_coefficients="500"
+            use_fractional_central_sourcepoint_spacing="false"
+            central_sourcepoint_spacing="2.e-6"
+            central_sourcepoint_start="-3.3e-3"
+            central_sourcepoint_end="3.3e-3"
+            number_of_remote_coefficients="200"
+            remote_sourcepoint_start="-1.e-1"
+            remote_sourcepoint_end="1.e-1"
+        />
+    </electrostatic_field>
+    <!--
+    	description:
+    		uses the zonal harmonic expansion about an axis to compute fields.
+    		only valid if the symmetry parameter is set to axial.
+
+		parameters:
+			number_of_bifurcations:
+				controls the number of times the surface container is recursively 
+				split.
+				Each split at each level results in an independent zonal harmonic 
+				expansion.
+
+			convergence_ratio:
+				an expansion will not be attempted when the distance from the field
+				point to the nearest source point divided by that source point's
+				convergence radius exceeds this ratio.
+
+			convergence_parameter:
+				the series is declared converged when the sum of latest five terms
+				divided by the entire sum is less than this ratio.
+
+			proximity_to_sourcepoint:
+				an expansion will include a single term with no convergence check
+				when the distance from the field point to the nearest source point 
+				divided by that source point's convergence radius is less than this 
+				ratio.
+
+			number_of_central_coefficients:
+				the number of central coefficients to store per source point.
+
+			use_fractional_central_sourcepoint_spacing:
+				if true, the distance from one source point to the next will be 
+				computed using a fraction of the previous source point's convergence 
+				radius.
+
+			central_sourcepoint_spacing:
+				in all cases the spacing in meters between central source points will 
+				be at least this.
+
+			central_sourcepoint_start:
+				starting z value for the central set of source points.
+
+			central_sourcepoint_end:
+				ending z value for the central set of source points.
+
+			number_of_remote_coefficients:
+				the number of remote coefficients to store per source point.
+
+			remote_source_point_start:
+				starting z value for the remote set of source points.
+
+			remote_source_point_end:
+				ending z value for the remote set of source points.
+	-->
+	
+	<electrostatic_field
+        name="field_electrostatic_fast_multipole_field_solver"
+        system="assembly"
+        surfaces="assembly/@electrode_tag"
+    >
+    	<gaussian_elimination_charge_density_solver/>
+    	<fast_multipole_field_solver
+    		top_level_divisions="4"
+    		tree_level_divisions="2"
+    		expansion_degree="5"
+    		neighbor_order="2"
+    		maximum_tree_depth="2"
+    		region_expansion_factor="1.1"
+    		use_region_size_estimation="true"
+    		world_cube_center_x="0.1"
+    		world_cube_center_y="0.1"
+    		world_cube_center_z="0.1"
+    		world_cube_length="1.5"
+    		use_caching="true"
+    		verbosity="3"
+    		insertion_ratio="1.33333333333"
+    		use_opencl="true"
+    	/>
+    </electrostatic_field>
+    <!--
+    	description:
+    		the fast multipole field solver adaptively divides the 
+    		world cube into smaller cube and computes multipole expansions
+    		around the cube center describing the far field for the source elements
+    		inside the cube.
+    		It then transforms these (among other things using the fast Fourier
+    		transformation) into local expansions describing the influence of 
+    		sources far enough away on the electric field and potential inside the cube.
+    		These expansions are stored inside a tree structure describing the different
+    		cubes. This is the initialization procedure.
+    		
+    		After initialization the field and potential is evaluated at a point by
+    		computing the corresponding expansion and adding the directly determined
+    		contribution of nearby source elements.
+    	
+    	parameters:
+    	   	top_level_divisions:
+    			the world cube gets divided into this many cubes along each side
+    			to create the first level of cubes.
+    		tree_level_divisions:
+    			in all but the first subdivision the cubes get divided into this many
+    			cubes along each side. Two is the smallest useful value and a very good choice, too.
+    		expansion_degree:
+    			the maximum degree of the multipole and local expansions used in the algorithm
+    			for precise results values in the range of 10 to 13 are recommended combined
+    			with a zero_mask size of 3. The example uses smaller values to speed up the computation
+    			to a manageable time for a demonstation.
+    		neighbor_order:
+    			the distance in cubes that neighbors are defined by
+    			Cubes being having less than this number of cubes inbetween them in any
+    			direction are considered neighbors.
+    			Neighbors define the dead zone where the multipole expansion is not valid.
+    			Greater numbers like 3 make the algorithm more accurate but slower
+    		maximum_tree_depth:
+    			the maximum depth to which cubes are subdivided
+    			this restricts the tree size and computation time for the local moments
+    			at the cost of more direct evaluations later
+    		region_expansion_factor:
+    			the factor by which the estimated region for the world cube is expanded
+    			in size to compensate for slight errors in the region estimation algorithm
+    			and to ensure all source elements are inside the world cube
+    		use_region_size_estimation:
+    			this boolean option allows the automatic selection of the world cube
+    			from the underlying geometry so that all field sources are covered.
+    			Use with a region expansion factor (for example 1.1) to compensate for slight
+    			errors in the estimate. Try larger ones if elements are missed out.
+    		world_cube_center_x:
+    		world_cube_center_y:
+    		world_cube_center_z:
+    			if the region estimation in not used, the cube center can be defined
+    			manually by passing these options the position of the user's choice
+    		world_cube_length:
+    			manually set the side length of the world cube
+    		use_caching:
+    			currently without effect
+    		verbosity:
+    			values between 0 and 3 define the amount of output on the console.
+    			A value of zero is mostly silent and a value of three gives maximum
+    			information.
+    		insertion_ratio:
+    			elements are accepted by a cube if they are within the smallest ball around the 
+    			cube multiplied by this factor which should be greater than one (for example 1.3).
+    			This allows small elements sitting on the borders of cubes to be accepted by small
+    			cubes and limit direct evaluation to a more local region.
+    		use_opencl:
+    			use OpenCl to speed up the initialization process and direct evaluations.
+    -->
+</kemfield>

@@ -4,6 +4,8 @@
 
 #include <limits>
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

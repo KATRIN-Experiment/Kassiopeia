@@ -5,15 +5,17 @@
 #include "KGVTKPointTester.hh"
 #include "KGVisualizationMessage.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGVTKPointTester > KGVTKPointTesterBuilder;
+    typedef KComplexElement< KGeoBag::KGVTKPointTester > KGVTKPointTesterBuilder;
 
     template< >
     inline bool KGVTKPointTesterBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             aContainer->CopyTo( fObject, &KNamed::SetName );
