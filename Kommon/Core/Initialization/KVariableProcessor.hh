@@ -23,8 +23,6 @@ namespace katrin
             KVariableProcessor( const VariableMap& anExternalMap );
             virtual ~KVariableProcessor();
 
-            void SetExternalMap( const VariableMap& anExternalMap );
-
             virtual void ProcessToken( KBeginFileToken* aToken );
             virtual void ProcessToken( KBeginElementToken* aToken );
             virtual void ProcessToken( KBeginAttributeToken* aToken );

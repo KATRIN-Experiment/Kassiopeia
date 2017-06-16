@@ -162,7 +162,6 @@ set( BINDINGS_HEADER_FILES
     # simulation
     Simulation/Include/KSRootMagneticFieldBuilder.h
     Simulation/Include/KSRootElectricFieldBuilder.h
-    Simulation/Include/KSRootEventModifierBuilder.h
     Simulation/Include/KSRootGeneratorBuilder.h
     Simulation/Include/KSRootTrajectoryBuilder.h
     Simulation/Include/KSRootSpaceInteractionBuilder.h
@@ -372,7 +371,6 @@ set( BINDINGS_SOURCE_FILES
     # simulation
     Simulation/Source/KSRootMagneticFieldBuilder.cxx
     Simulation/Source/KSRootElectricFieldBuilder.cxx
-    Simulation/Source/KSRootEventModifierBuilder.cxx
     Simulation/Source/KSRootGeneratorBuilder.cxx
     Simulation/Source/KSRootTrajectoryBuilder.cxx
     Simulation/Source/KSRootSpaceInteractionBuilder.cxx

@@ -11,7 +11,6 @@ set( SIMULATION_HEADER_BASENAMES
 	KSTrack.h
 	KSStep.h
     KSRootElectricField.h
-    KSRootEventModifier.h
     KSRootMagneticField.h
     KSRootStepModifier.h
     KSRootTrackModifier.h
@@ -48,7 +47,6 @@ set( SIMULATION_SOURCE_BASENAMES
 	KSTrack.cxx
 	KSStep.cxx
     KSRootElectricField.cxx
-    KSRootEventModifier.cxx
     KSRootMagneticField.cxx
     KSRootStepModifier.cxx
     KSRootTrackModifier.cxx
