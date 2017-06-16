@@ -57,7 +57,7 @@ namespace KGeoBag
     void SetThetaStart(double d) { fThetaStart = d; }
     void SetDiameter(double d) { fDiameter = d; }
     void SetNDisc(unsigned int d) { fNDisc = d; }
-    void SetNDiscPower(unsigned int d) { fNDiscPower = d; }
+    void SetNDiscPower(double d) { fNDiscPower = d; }
 
     double GetR1() const { return fR1; }
     double GetZ1() const { return fZ1; }

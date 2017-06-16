@@ -153,7 +153,7 @@ namespace Kassiopeia
     {
     	if( fRmax < 0 )
     	{
-    		fRmax = abs( fRmax );
+    		fRmax = fabs( fRmax );
     		genmsg(eWarning) << "r_max negative, using absolute value<"<<fRmax<<">" << eom;
     	}
 

@@ -2,7 +2,8 @@
 
 #include "KSObject.h"
 #include "KSVisualizationMessage.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+#include "KSFieldFinder.h"
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -410,7 +411,7 @@ namespace Kassiopeia
 
     void KSROOTMagFieldPainter::Render(){
 		vismsg(eNormal) << "Getting magnetic field <" << fMagneticFieldName << "> from the toolbox" << eom;
-		KSMagneticField* tMagField = KSToolbox::GetInstance()->GetObjectAs<KSMagneticField>( fMagneticFieldName );
+		KSMagneticField* tMagField = getMagneticField( fMagneticFieldName );
 		if ( tMagField == NULL)
 			vismsg(eError) << "No magnetic Field!" << eom;
 		if ( fPlot!="magnetic_field_abs" && fPlot!="magnetic_field_x" && fPlot!="magnetic_field_x_abs"&& fPlot!="magnetic_field_y" && fPlot!="magnetic_field_y_abs" && fPlot!="magnetic_field_z" && fPlot!="magnetic_field_z_abs" && fPlot!="magnetic_potential_abs" && fPlot!="magnetic_gradient_z" && fPlot!="magnetic_gradient_z_abs" && fPlot!="magnetic_gradient_x" && fPlot!="magnetic_gradient_x_abs" && fPlot!="magnetic_gradient_y" && fPlot!="magnetic_gradient_y_abs" )

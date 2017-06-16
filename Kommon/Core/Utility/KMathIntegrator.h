@@ -14,7 +14,7 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
-#include <utility>
+#include <map>
 
 namespace katrin
 {
@@ -27,19 +27,10 @@ enum class KEMathIntegrationMethod {
 };
 
 // forward declarations
-
-template<class XSamplingPolicy>
-class KMathIntegratorPrototype;
-
-namespace integrator_policies {
+namespace policies {
     struct PlainSumming;
     struct KahanSumming;
 }
-
-/**
- * Type definition for a numerical integrator using Kahan summing.
- */
-using KMathIntegrator = KMathIntegratorPrototype<integrator_policies::KahanSumming>;
 
 /**
  * A numerical integrator, implementing a trapezoidal, the simpson and the romberg method.
@@ -50,19 +41,19 @@ using KMathIntegrator = KMathIntegratorPrototype<integrator_policies::KahanSummi
  * If a given precision is not achieved within the maximum number of steps, either a warning is printed
  * or an exception is thrown.
  */
-template<class XSamplingPolicy = integrator_policies::PlainSumming>
-class KMathIntegratorPrototype : private XSamplingPolicy
+template<class XFloatT = double, class XSamplingPolicy = policies::PlainSumming>
+class KMathIntegrator : private XSamplingPolicy
 {
 public:
-    KMathIntegratorPrototype(double precision = 1E-4, KEMathIntegrationMethod method = KEMathIntegrationMethod::Simpson);
-    virtual ~KMathIntegratorPrototype() { }
+    KMathIntegrator(XFloatT precision = 1E-4, KEMathIntegrationMethod method = KEMathIntegrationMethod::Simpson);
+    virtual ~KMathIntegrator() { }
 
     /**
      * Perform the integration.
       * @return
      */
     template<class XIntegrandType>
-    double Integrate(XIntegrandType& func);
+    XFloatT Integrate(XIntegrandType& func);
 
     /**
      * Perform the integration.
@@ -71,34 +62,34 @@ public:
       * @return
      */
     template<class XIntegrandType>
-    double Integrate(XIntegrandType& func, double xStart, double xEnd);
+    XFloatT Integrate(XIntegrandType& func, XFloatT xStart, XFloatT xEnd);
 
     /**
      * Set the integration limits.
      * @param xStart
      * @param xEnd
      */
-    void SetRange(double xStart, double xEnd) { fXStart = xStart; fXEnd = xEnd; }
-    std::pair<double, double> GetRange() const { return std::make_pair(fXStart, fXEnd); }
+    void SetRange(XFloatT xStart, XFloatT xEnd) { fXStart = xStart; fXEnd = xEnd; }
+    std::pair<XFloatT, XFloatT> GetRange() const { return std::make_pair(fXStart, fXEnd); }
 
     /**
      * Set the desired precision.
      * @param precision
      */
-    void SetPrecision(double precision);
-    double GetPrecision() const { return fPrecision; }
+    void SetPrecision(XFloatT precision);
+    XFloatT GetPrecision() const { return fPrecision; }
 
-    uint32_t SetMinSteps(uint32_t min);
-    uint32_t GetMinSteps() const { return 1 << fJMin; }
-    uint32_t SetMaxSteps(uint32_t max);
-    uint32_t GetMaxSteps() const { return 1 << fJMax; }
+    uint32_t SetMinSteps(int32_t min);
+    uint32_t GetMinSteps() const { return (1 << fJMin) + 1; }
+    uint32_t SetMaxSteps(int32_t max);
+    uint32_t GetMaxSteps() const { return (1 << fJMax) + 1; }
 
     /**
      * Fix the minimum and maximum number of steps to the same value.
      * @param minAndMax
      * @return
      */
-    uint32_t SetSteps(uint32_t minAndMax) { SetMinSteps(minAndMax); return SetMaxSteps(minAndMax); }
+    uint32_t SetSteps(int32_t minAndMax) { SetMinSteps(minAndMax); return SetMaxSteps(minAndMax); }
 
     /**
      * Configure the integration algorithm.
@@ -111,33 +102,34 @@ public:
     void FallbackOnLowPrecision(bool fallback) { fFallbackOnLowPrec = fallback; }
 
     uint32_t NumberOfIterations() const { return fIteration; }
-    uint64_t NumberOfSteps() const { return (fIteration == 0) ? 0 : ((uint64_t) 1 << (fIteration - 1)) + 1; }
+    uint32_t NumberOfSteps() const;
 
 protected:
     static uint32_t ilog2_ceil(uint32_t v);
+    static uint32_t fourthRoot(uint32_t A);
 
     struct K1DPolyInterpolator;
 
     void Reset();
 
     template<class XIntegrandType>
-    double NextTrapezoid(XIntegrandType& integrand);
+    XFloatT NextTrapezoid(XIntegrandType& integrand);
     template<class XIntegrandType>
-    double QTrap(XIntegrandType& integrand);
+    XFloatT QTrap(XIntegrandType& integrand);
     template<class XIntegrandType>
-    double QSimp(XIntegrandType& integrand);
+    XFloatT QSimp(XIntegrandType& integrand);
     template<class XIntegrandType>
-    double QRomb(XIntegrandType& integrand, const uint32_t K = 5);
+    XFloatT QRomb(XIntegrandType& integrand, const uint32_t K = 5);
 
-    double fXStart;
-    double fXEnd;
+    XFloatT fXStart;
+    XFloatT fXEnd;
 
-    double fPrecision;
+    XFloatT fPrecision;
     uint32_t fJMin, fJMax;    // 2^(fJMax) is the maximum, 2^(fJMin) the minimum allowed number of steps.
 
     KEMathIntegrationMethod fMethod;
 
-    double fCurrentResult;
+    XFloatT fCurrentResult;
     uint32_t fIteration;
 
     bool fThrowExceptions;
@@ -146,22 +138,21 @@ protected:
 
 class KMathIntegratorException: public KExceptionPrototype<KMathIntegratorException, KException> { };
 
-template<class XSamplingPolicy>
-struct KMathIntegratorPrototype<XSamplingPolicy>::K1DPolyInterpolator {
-    K1DPolyInterpolator(std::vector<double> &xv, std::vector<double> &yv, int32_t m) :
-        n(xv.size()), mm(m), jsav(0), cor(0), xx(&xv[0]), yy(&yv[0]), dy(0.0) {
-        dj = std::min(1, (int) std::pow((double) n, 0.25));
-    }
+template<class XFloatT, class XSamplingPolicy>
+struct KMathIntegrator<XFloatT, XSamplingPolicy>::K1DPolyInterpolator {
+    K1DPolyInterpolator(std::vector<XFloatT> &xv, std::vector<XFloatT> &yv, int32_t m) :
+        n(xv.size()), mm(m), jsav(0), cor(0), xx(&xv[0]), yy(&yv[0]), dy(0.0)
+        { dj = std::max<int32_t>(1, fourthRoot(n)); }
 
-    double RawInterpolate(int32_t jlo, double x);
+    XFloatT RawInterpolate(int32_t jlo, XFloatT x);
 
     int32_t n, mm, jsav, cor, dj;
-    const double *xx, *yy;
-    double dy;
+    const XFloatT *xx, *yy;
+    XFloatT dy;
 };
 
-template<class XSamplingPolicy>
-inline uint32_t KMathIntegratorPrototype<XSamplingPolicy>::ilog2_ceil(uint32_t v)
+template<class XFloatT, class XSamplingPolicy>
+inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::ilog2_ceil(uint32_t v)
 {
     v--;
     v |= v >> 1;
@@ -176,14 +167,23 @@ inline uint32_t KMathIntegratorPrototype<XSamplingPolicy>::ilog2_ceil(uint32_t v
     return r;
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
+inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::fourthRoot(uint32_t A)
+{
+    uint32_t x = 1;
+    while (((x*x)*(x*x)) <= A) { ++x; }
+    return --x;
+    //    return std::max(0, (int) std::pow((XFloatT) x, 1.0/4.0));
+}
+
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::NextTrapezoid(XIntegrandType& integrand) {
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::NextTrapezoid(XIntegrandType& integrand) {
 
     ++fIteration;
     if (fIteration == 1) {
-        const double sum = XSamplingPolicy::SumSamplingPoints(2, fXStart, (fXEnd - fXStart), integrand);
-//        const double sum = integrand(fXStart) + integrand(fXEnd);
+        const XFloatT sum = XSamplingPolicy::SumSamplingPoints(2, fXStart, (fXEnd - fXStart), integrand);
+//        const XFloatT sum = integrand(fXStart) + integrand(fXEnd);
         fCurrentResult = 0.5 * (fXEnd - fXStart) * sum;
     }
     else {
@@ -191,18 +191,18 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::NextTrapezoid(XIntegran
         for (uint32_t j = 1; j < fIteration - 1; j++)
             it <<= 1;
 
-        const double del = (fXEnd - fXStart) / (double) it;
-        const double xStart = fXStart + 0.5 * del;
+        const XFloatT del = (fXEnd - fXStart) / (XFloatT) it;
+        const XFloatT xStart = fXStart + 0.5 * del;
 
-        const double sum = XSamplingPolicy::SumSamplingPoints(it, xStart, del, integrand);
+        const XFloatT sum = XSamplingPolicy::SumSamplingPoints(it, xStart, del, integrand);
 
         fCurrentResult = 0.5 * (fCurrentResult + del * sum);
     }
     return fCurrentResult;
 }
 
-template<class XSamplingPolicy>
-inline KMathIntegratorPrototype<XSamplingPolicy>::KMathIntegratorPrototype(double precision, KEMathIntegrationMethod method) :
+template<class XFloatT, class XSamplingPolicy>
+inline KMathIntegrator<XFloatT, XSamplingPolicy>::KMathIntegrator(XFloatT precision, KEMathIntegrationMethod method) :
 	fXStart(0.0),
 	fXEnd(0.0),
 	fPrecision(1.0),
@@ -217,42 +217,52 @@ inline KMathIntegratorPrototype<XSamplingPolicy>::KMathIntegratorPrototype(doubl
 	SetPrecision(precision);
 }
 
-template<class XSamplingPolicy>
-inline void KMathIntegratorPrototype<XSamplingPolicy>::Reset()
+template<class XFloatT, class XSamplingPolicy>
+inline void KMathIntegrator<XFloatT, XSamplingPolicy>::Reset()
 {
     fIteration = 0;
     fCurrentResult = 0.0;
 }
 
-template<class XSamplingPolicy>
-inline void KMathIntegratorPrototype<XSamplingPolicy>::SetPrecision(double precision)
+template<class XFloatT, class XSamplingPolicy>
+inline void KMathIntegrator<XFloatT, XSamplingPolicy>::SetPrecision(XFloatT precision)
 {
 	if (precision <= 0.0)
 		precision = 1.0;
 	fPrecision = precision;
 }
 
-template<class XSamplingPolicy>
-inline uint32_t KMathIntegratorPrototype<XSamplingPolicy>::SetMinSteps(uint32_t min)
+template<class XFloatT, class XSamplingPolicy>
+inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::SetMinSteps(int32_t min)
 {
-    fJMin = ilog2_ceil(min);
+    if (min < 2)
+        fJMin = 2;
+    else
+        fJMin = ilog2_ceil(min-1);
+
     if (fJMax < fJMin)
         fJMax = fJMin;
+
     return GetMinSteps();
 }
 
-template<class XSamplingPolicy>
-inline uint32_t KMathIntegratorPrototype<XSamplingPolicy>::SetMaxSteps(uint32_t max)
+template<class XFloatT, class XSamplingPolicy>
+inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::SetMaxSteps(int32_t max)
 {
-    fJMax = ilog2_ceil(max);
+    if (max < 2)
+        fJMax = 16;
+    else
+        fJMax = ilog2_ceil(max-1);
+
     if (fJMin > fJMax)
         fJMin = fJMax;
+
     return GetMaxSteps();
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::Integrate(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType& integrand)
 {
     Reset();
 
@@ -275,22 +285,22 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::Integrate(XIntegrandTyp
     }
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::Integrate(XIntegrandType& integrand, double xStart, double xEnd)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType& integrand, XFloatT xStart, XFloatT xEnd)
 {
     SetRange(xStart, xEnd);
     return Integrate(integrand);
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::QTrap(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QTrap(XIntegrandType& integrand)
 {
     /*Returns the integral of the function or functor func from a to b. The constants EPS can be
      set to the desired fractional accuracy and JMAX so that 2 to the power JMAX-1 is the maximum
      allowed number of steps. Integration is performed by the trapezoidal rule.*/
-    double s = 0.0, olds = 0.0; //Initial value of olds is arbitrary.
+    XFloatT s = 0.0, olds = 0.0; //Initial value of olds is arbitrary.
     for (uint32_t j = 0; j <= fJMax; j++) {
         olds = s;
         s = NextTrapezoid(integrand);
@@ -309,14 +319,14 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::QTrap(XIntegrandType& i
     return s;
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::QSimp(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QSimp(XIntegrandType& integrand)
 {
     /*Returns the integral of the function or functor func from a to b. The constants EPS can be
      set to the desired fractional accuracy and JMAX so that 2 to the power JMAX-1 is the maximum
      allowed number of steps. Integration is performed by Simpson’s rule.*/
-    double s = 0.0, st = 0.0, ost = 0.0, os = 0.0;
+    XFloatT s = 0.0, st = 0.0, ost = 0.0, os = 0.0;
     for (uint32_t j = 0; j <= fJMax; j++) {
         ost = st;
         os = s;
@@ -348,9 +358,9 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::QSimp(XIntegrandType& i
     }
 }
 
-template<class XSamplingPolicy>
+template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::QRomb(XIntegrandType& integrand, const uint32_t K)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QRomb(XIntegrandType& integrand, const uint32_t K)
 {
     /*Returns the integral of the function or functor func from a to b. Integration is performed by
      Romberg’s method of order 2K, where, e.g., K=2 is Simpson’s rule.*/
@@ -361,10 +371,10 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::QRomb(XIntegrandType& i
 
     const uint32_t jMax = std::max(fJMax+1, K);
 
-    std::vector<double> s(jMax, 0.0), h(jMax+1, 0.0); // These store the successive trapezoidal approximations and their relative stepsizes.
+    std::vector<XFloatT> s(jMax, 0.0), h(jMax+1, 0.0); // These store the successive trapezoidal approximations and their relative stepsizes.
     K1DPolyInterpolator polint(h, s, K);
 
-    double ss = 0.0/*, oss = 0.0*/;
+    XFloatT ss = 0.0/*, oss = 0.0*/;
 
     h[0] = 1.0;
     for (uint32_t j = 1; j <= jMax; j++) {
@@ -402,16 +412,16 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::QRomb(XIntegrandType& i
     }
 }
 
-template<class XSamplingPolicy>
-inline double KMathIntegratorPrototype<XSamplingPolicy>::K1DPolyInterpolator::RawInterpolate(int32_t jl, double x)
+template<class XFloatT, class XSamplingPolicy>
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::K1DPolyInterpolator::RawInterpolate(int32_t jl, XFloatT x)
 {
     /*Given a value x, and using pointers to data xx and yy, this routine returns an interpolated
      value y, and stores an error estimate dy. The returned value is obtained by mm-point polynomial
      interpolation on the subrange xx[jl..jl+mm-1].*/
     int32_t i, m, ns = 0;
-    double y, den, dif, dift, ho, hp, w;
-    const double *xa = &xx[jl], *ya = &yy[jl];
-    std::vector<double> c(mm), d(mm);
+    XFloatT y, den, dif, dift, ho, hp, w;
+    const XFloatT *xa = &xx[jl], *ya = &yy[jl];
+    std::vector<XFloatT> c(mm), d(mm);
     dif = fabs(x - xa[0]);
     for (i = 0; i < mm; i++) { // Here we find the index ns of the closest table entry,
         if ((dift = fabs(x - xa[i])) < dif) {
@@ -445,16 +455,27 @@ inline double KMathIntegratorPrototype<XSamplingPolicy>::K1DPolyInterpolator::Ra
     return y;
 }
 
-namespace integrator_policies {
+template<class XFloatT, class XSamplingPolicy>
+inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::NumberOfSteps() const
+{
+    if (fIteration == 0)
+        return 0;
+    else if (fIteration == 1)
+        return 2;
+    else
+        return ( 1 << (fIteration - 1)) + 1;
+}
+
+namespace policies {
 
 struct PlainSumming
 {
-    template<class XIntegrandType>
-    double SumSamplingPoints(uint32_t n, const double& xStart, const double& del, XIntegrandType& integrand) const
+    template<class XFloatT, class XIntegrandType>
+    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
     {
-        double sum = 0.0;
+        XFloatT sum = 0.0;
         for (uint32_t j = 0; j < n; j++) {
-            const double x = xStart + (double) j * del;
+            const XFloatT x = xStart + (XFloatT) j * del;
             sum += integrand(x);
         }
         return sum;
@@ -463,12 +484,12 @@ struct PlainSumming
 
 struct KahanSumming
 {
-    template<class XIntegrandType>
-    double SumSamplingPoints(uint32_t n, const double& xStart, const double& del, XIntegrandType& integrand) const
+    template<class XFloatT, class XIntegrandType>
+    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
     {
-        KMathKahanSum sum;
+        KMathKahanSum<XFloatT> sum;
         for (uint32_t j = 0; j < n; j++) {
-            const double x = xStart + (double) j * del;
+            const XFloatT x = xStart + (XFloatT) j * del;
             sum += integrand(x);
         }
         return sum;

@@ -2,10 +2,8 @@
 #include "KInitializationMessage.hh"
 
 #include <iostream>
-using std::cout;
-using std::endl;
 
-#include <cstdlib>
+using namespace std;
 
 namespace katrin
 {
@@ -106,7 +104,17 @@ namespace katrin
         {
             if( fAttributeState == eCondition )
             {
-                fCondition = aToken->GetValue< bool >();
+                const string condStr = aToken->GetValue();
+                if( condStr.find_first_of("{}[]") != string::npos )
+                {
+                    initmsg(eError) << "A condition containing an unevaluated "
+                        << "formula {} or variable [] could not be interpreted." << eom;
+                    fCondition = false;
+                }
+                else
+                {
+                    fCondition = aToken->GetValue< bool >();
+                }
                 fAttributeState = eAttributeComplete;
                 return;
             }

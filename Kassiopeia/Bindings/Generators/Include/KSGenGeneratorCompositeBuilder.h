@@ -5,7 +5,7 @@
 #include "KSGenGeneratorComposite.h"
 #include "KSGeneratorsMessage.h"
 #include "KSGenValueFix.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -23,36 +23,36 @@ namespace katrin
         }        
         if( aContainer->GetName() == "energy" )
         {
-            fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
+            fObject->AddCreator( KToolbox::GetInstance().Get< KSGenCreator >( aContainer->AsReference< std::string >() ) );
             genmsg(eWarning) << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders" << eom;
             return true;
         }
         if( aContainer->GetName() == "position" )
         {
-            fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
+            fObject->AddCreator( KToolbox::GetInstance().Get< KSGenCreator >( aContainer->AsReference< std::string >() ) );
             genmsg(eWarning) << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders" << eom;
             return true;
         }
         if( aContainer->GetName() == "direction" )
         {
-            fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
+            fObject->AddCreator( KToolbox::GetInstance().Get< KSGenCreator >( aContainer->AsReference< std::string >() ) );
             genmsg(eWarning) << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders" << eom;
             return true;
         }
         if( aContainer->GetName() == "time" )
         {
-            fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
+            fObject->AddCreator( KToolbox::GetInstance().Get< KSGenCreator >( aContainer->AsReference< std::string >() ) );
             genmsg(eWarning) << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders" << eom;
             return true;
         }
         if( aContainer->GetName() == "creator" )
         {
-            fObject->AddCreator( KSToolbox::GetInstance()->GetObjectAs< KSGenCreator >( aContainer->AsReference< string >() ) );
+            fObject->AddCreator( KToolbox::GetInstance().Get< KSGenCreator >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "special" )
         {
-            fObject->AddSpecial( KSToolbox::GetInstance()->GetObjectAs< KSGenSpecial >( aContainer->AsReference< string >() ) );
+            fObject->AddSpecial( KToolbox::GetInstance().Get< KSGenSpecial >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "pid" )

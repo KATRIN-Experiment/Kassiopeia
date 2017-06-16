@@ -1,7 +1,8 @@
 #include "KSWriteROOT.h"
-#include "KSaveSettingsProcessor.hh"
 #include "KSWritersMessage.h"
 #include "KSComponentGroup.h"
+
+using namespace std;
 
 namespace Kassiopeia
 {
@@ -285,6 +286,10 @@ namespace Kassiopeia
             fPath( "" ),
             fStepIteration( 1 ),
             fStepIterationIndex( 0 ),
+            fRunWriteConditions( 16 ),
+            fEventWriteConditions( 16 ),
+            fTrackWriteConditions( 16 ),
+            fStepWriteConditions( 16 ),
             fFile( NULL ),
             fRunKeys( NULL ),
             fRunData( NULL ),
@@ -327,6 +332,10 @@ namespace Kassiopeia
             fPath( aCopy.fPath ),
             fStepIteration( aCopy.fStepIteration ),
             fStepIterationIndex( 0 ),
+            fRunWriteConditions( aCopy.fRunWriteConditions ),
+            fEventWriteConditions( aCopy.fEventWriteConditions ),
+            fTrackWriteConditions( aCopy.fTrackWriteConditions ),
+            fStepWriteConditions( aCopy.fStepWriteConditions ),
             fFile( NULL ),
             fRunKeys( NULL ),
             fRunData( NULL ),
@@ -371,6 +380,136 @@ namespace Kassiopeia
     {
     }
 
+
+    void KSWriteROOT::AddRunWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        //check that write condition is not already present
+        for( int tIndex = 0; tIndex < fRunWriteConditions.End(); tIndex++ )
+        {
+            if(aWriteCondition == fRunWriteConditions.ElementAt( tIndex ) )
+            {
+                wtrmsg_debug( "<" << GetName() << "> attempted to add run write condition <" << aWriteCondition->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
+        if( fRunWriteConditions.AddElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not add run write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> adding run write condition<" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::RemoveRunWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        if( fRunWriteConditions.RemoveElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not remove run write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> removing run write condition <" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::AddEventWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        //check that write condition is not already present
+        for( int tIndex = 0; tIndex < fEventWriteConditions.End(); tIndex++ )
+        {
+            if(aWriteCondition == fEventWriteConditions.ElementAt( tIndex ) )
+            {
+                wtrmsg_debug( "<" << GetName() << "> attempted to add event write condition <" << aWriteCondition->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
+        if( fEventWriteConditions.AddElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not add event write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> adding event write condition<" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::RemoveEventWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        if( fEventWriteConditions.RemoveElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not remove event write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> removing event write condition <" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::AddTrackWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        //check that write condition is not already present
+        for( int tIndex = 0; tIndex < fTrackWriteConditions.End(); tIndex++ )
+        {
+            if(aWriteCondition == fTrackWriteConditions.ElementAt( tIndex ) )
+            {
+                wtrmsg_debug( "<" << GetName() << "> attempted to add track write condition <" << aWriteCondition->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
+        if( fTrackWriteConditions.AddElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not add track write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> adding track write condition<" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::RemoveTrackWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        if( fTrackWriteConditions.RemoveElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not remove track write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> removing track write condition <" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::AddStepWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        //check that write condition is not already present
+        for( int tIndex = 0; tIndex < fStepWriteConditions.End(); tIndex++ )
+        {
+            if(aWriteCondition == fStepWriteConditions.ElementAt( tIndex ) )
+            {
+                wtrmsg_debug( "<" << GetName() << "> attempted to add step write condition <" << aWriteCondition->GetName() << "> which is already present."  << eom );
+                return;
+            }
+        }
+
+        if( fStepWriteConditions.AddElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not add step write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> adding step write condition<" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+    void KSWriteROOT::RemoveStepWriteCondition( KSWriteROOTCondition* aWriteCondition )
+    {
+        if( fStepWriteConditions.RemoveElement( aWriteCondition ) == -1 )
+        {
+            wtrmsg( eError ) << "<" << GetName() << "> could not remove step write condition <" << aWriteCondition->GetName() << ">" << eom;
+            return;
+        }
+        wtrmsg_debug( "<" << GetName() << "> removing step write condition <" << aWriteCondition->GetName() << ">" << eom );
+        return;
+    }
+
+
     void KSWriteROOT::ExecuteRun()
     {
         wtrmsg_debug( "ROOT writer <" << fName << "> is filling a run" << eom );
@@ -388,9 +527,25 @@ namespace Kassiopeia
 			fRunLastStepIndex = fStepIndex - 1;
         }
 
-        for( ComponentIt tIt = fActiveRunComponents.begin(); tIt != fActiveRunComponents.end(); tIt++ )
+        //check write condition
+        bool tWriteCondition = true;;
+        for( int tIndex = 0; tIndex < fRunWriteConditions.End(); tIndex++ )
         {
-            tIt->second->Fill();
+            bool tLocalFlag = true;
+            fRunWriteConditions.ElementAt( tIndex )->CalculateWriteCondition( tLocalFlag );
+            if ( tLocalFlag == false )
+            {
+                tWriteCondition = false;
+                break;
+            }
+        }
+
+        if ( tWriteCondition == true )
+        {
+            for( ComponentIt tIt = fActiveRunComponents.begin(); tIt != fActiveRunComponents.end(); tIt++ )
+            {
+                tIt->second->Fill();
+            }
         }
         fRunData->Fill();
 
@@ -414,9 +569,25 @@ namespace Kassiopeia
 			fEventLastStepIndex = fStepIndex - 1;
         }
 
-        for( ComponentIt tIt = fActiveEventComponents.begin(); tIt != fActiveEventComponents.end(); tIt++ )
+        //check write condition
+        bool tWriteCondition = true;;
+        for( int tIndex = 0; tIndex < fEventWriteConditions.End(); tIndex++ )
         {
-            tIt->second->Fill();
+            bool tLocalFlag = true;
+            fEventWriteConditions.ElementAt( tIndex )->CalculateWriteCondition( tLocalFlag );
+            if ( tLocalFlag == false )
+            {
+                tWriteCondition = false;
+                break;
+            }
+        }
+
+        if ( tWriteCondition == true )
+        {
+            for( ComponentIt tIt = fActiveEventComponents.begin(); tIt != fActiveEventComponents.end(); tIt++ )
+            {
+                tIt->second->Fill();
+            }
         }
         fEventData->Fill();
 
@@ -435,9 +606,25 @@ namespace Kassiopeia
         	fTrackLastStepIndex = fStepIndex - 1;
 		}
 
-        for( ComponentIt tIt = fActiveTrackComponents.begin(); tIt != fActiveTrackComponents.end(); tIt++ )
+        //check write condition
+        bool tWriteCondition = true;;
+        for( int tIndex = 0; tIndex < fTrackWriteConditions.End(); tIndex++ )
         {
-            tIt->second->Fill();
+            bool tLocalFlag = true;
+            fTrackWriteConditions.ElementAt( tIndex )->CalculateWriteCondition( tLocalFlag );
+            if ( tLocalFlag == false )
+            {
+                tWriteCondition = false;
+                break;
+            }
+        }
+
+        if( tWriteCondition == true )
+        {
+            for( ComponentIt tIt = fActiveTrackComponents.begin(); tIt != fActiveTrackComponents.end(); tIt++ )
+            {
+                tIt->second->Fill();
+            }
         }
         fTrackData->Fill();
 
@@ -455,13 +642,29 @@ namespace Kassiopeia
     		return;
     	}
 
+    	//check write condition
+    	bool tWriteCondition = true;;
+        for( int tIndex = 0; tIndex < fStepWriteConditions.End(); tIndex++ )
+        {
+            bool tLocalFlag = true;
+            fStepWriteConditions.ElementAt( tIndex )->CalculateWriteCondition( tLocalFlag );
+            if ( tLocalFlag == false )
+            {
+                tWriteCondition = false;
+                break;
+            }
+        }
+
         if( fStepComponent == true )
         {
             wtrmsg_debug( "ROOT writer <" << fName << "> is filling a step" << eom );
 
-            for( ComponentIt tIt = fActiveStepComponents.begin(); tIt != fActiveStepComponents.end(); tIt++ )
+            if ( tWriteCondition == true )
             {
-                tIt->second->Fill();
+                for( ComponentIt tIt = fActiveStepComponents.begin(); tIt != fActiveStepComponents.end(); tIt++ )
+                {
+                    tIt->second->Fill();
+                }
             }
             fStepData->Fill();
         }
@@ -740,8 +943,6 @@ namespace Kassiopeia
                 tIt->second->Stop();
             }
 
-            StoreConfig();
-
             fFile->File()->Write( "", TObject::kOverwrite );
 
             for( tIt = fRunComponents.begin(); tIt != fRunComponents.end(); tIt++ )
@@ -772,54 +973,14 @@ namespace Kassiopeia
         return;
     }
 
-    void KSWriteROOT::StoreConfig(string ConfigDirName)
-    {
-    	std::vector<string> commands = katrin::KSaveSettingsProcessor::getCommands();
-		std::vector<string> values = katrin::KSaveSettingsProcessor::getValues();
-
-		for(size_t treeconfindex=0;treeconfindex<commands.size();treeconfindex++)
-		{
-			wtrmsg_debug( commands.at(treeconfindex) << ": " << values.at(treeconfindex) << eom);
-		}
-		if( (fFile != NULL) && (fFile->IsOpen() == true) )
-		{
-		    fFile->File()->cd();
-			gDirectory->mkdir(ConfigDirName.c_str());
-			gDirectory->cd(ConfigDirName.c_str());
-
-			for(size_t treeconfindex=0;treeconfindex<commands.size();treeconfindex++)
-			{
-				if(commands.at(treeconfindex) == "cd")
-					gDirectory->cd(values.at(treeconfindex).c_str());
-				else if(commands.at(treeconfindex) == "mkdir")
-				{
-					if(gDirectory->GetDirectory(values.at(treeconfindex).c_str()) == 0)
-						gDirectory->mkdir(values.at(treeconfindex).c_str());
-				}
-				else if(commands.at(treeconfindex) == "tobjstring")
-				{
-					TObjString XML_element = TObjString(values.at(treeconfindex).c_str());
-					XML_element.Write();
-				}
-				else
-				{
-					//Unknown format
-					wtrmsg (eWarning) << "Unknown stored config tree tag: "  << commands.at(treeconfindex) << eom;
-				}
-			}
-			gDirectory->cd("/");
-			fFile->File()->Write();
-		}
-		else
-		{
-			wtrmsg (eWarning) << "Can not write config tree to ROOT file - no ROOT file opened." << eom;
-		}
-    }
-
     STATICINT sKSWriteROOTDict =
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddRunComponent, &KSWriteROOT::RemoveRunComponent, "add_run_output", "remove_run_output" ) +
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddEventComponent, &KSWriteROOT::RemoveEventComponent, "add_event_output", "remove_event_output" ) +
         KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddTrackComponent, &KSWriteROOT::RemoveTrackComponent, "add_track_output", "remove_track_output" ) +
-        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddStepComponent, &KSWriteROOT::RemoveStepComponent, "add_step_output", "remove_step_output" );
+        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddStepComponent, &KSWriteROOT::RemoveStepComponent, "add_step_output", "remove_step_output" ) +
 
+        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddRunWriteCondition, &KSWriteROOT::RemoveRunWriteCondition, "add_run_write_condition", "remove_run_write_condition" ) +
+        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddEventWriteCondition, &KSWriteROOT::RemoveEventWriteCondition, "add_event_write_condition", "remove_event_write_condition" ) +
+        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddTrackWriteCondition, &KSWriteROOT::RemoveTrackWriteCondition, "add_track_write_condition", "remove_track_write_condition" ) +
+        KSDictionary< KSWriteROOT >::AddCommand( &KSWriteROOT::AddStepWriteCondition, &KSWriteROOT::RemoveStepWriteCondition, "add_step_write_condition", "remove_step_write_condition" );
 }

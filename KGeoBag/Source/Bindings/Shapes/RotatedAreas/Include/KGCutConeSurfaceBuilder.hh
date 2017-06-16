@@ -19,22 +19,22 @@ namespace katrin
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z1" ) )
+        if( anAttribute->GetName() == "z1" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSurface::Z1 );
             return true;
         }
-        if( anAttribute->GetName() == string( "r1" ) )
+        if( anAttribute->GetName() == "r1" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSurface::R1 );
             return true;
         }
-        if( anAttribute->GetName() == string( "z2" ) )
+        if( anAttribute->GetName() == "z2" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSurface::Z2 );
             return true;
         }
-        if( anAttribute->GetName() == string( "r2" ) )
+        if( anAttribute->GetName() == "r2" )
         {
             anAttribute->CopyTo( fObject, &KGCutConeSurface::R2 );
             return true;

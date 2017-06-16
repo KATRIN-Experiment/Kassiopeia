@@ -12,22 +12,22 @@ namespace katrin
     template< >
     inline bool KGFlattenedCircleSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedCircleSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z" ) )
+        if( anAttribute->GetName() == "z" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedCircleSurface::Z );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedCircleSurface::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedCircleSurface::FlattenedMeshPower );
             return true;
@@ -38,7 +38,7 @@ namespace katrin
     template< >
     inline bool KGFlattenedCircleSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "circle" ) )
+        if( anElement->GetName() == "circle" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarCircle::CopyFrom );
             return true;

@@ -4,16 +4,17 @@
 #include "KComplexElement.hh"
 
 #include "KGAnnulusSurface.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGAnnulusSurface > KGAnnulusSurfaceBuilder;
+    typedef KComplexElement< KGeoBag::KGAnnulusSurface > KGAnnulusSurfaceBuilder;
 
     template< >
     inline bool KGAnnulusSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
+        using namespace KGeoBag;
+
         if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );

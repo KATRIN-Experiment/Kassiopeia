@@ -4,16 +4,17 @@
 #include "KComplexElement.hh"
 
 #include "KGDiskSurface.hh"
-using namespace KGeoBag;
 
 namespace katrin
 {
 
-    typedef KComplexElement< KGDiskSurface > KGDiskSurfaceBuilder;
+    typedef KComplexElement< KGeoBag::KGDiskSurface > KGDiskSurfaceBuilder;
 
     template< >
     inline bool KGDiskSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
+        using namespace KGeoBag;
+
         if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KNamed::SetName );

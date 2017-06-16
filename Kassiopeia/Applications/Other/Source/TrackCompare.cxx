@@ -10,12 +10,12 @@
 #include "TObjArray.h"
 
 #include <limits>
-using std::numeric_limits;
 
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
 using namespace Kassiopeia;
+using namespace std;
 
 static struct sMultigraph_s {
     TMultiGraph *ZPosition;
@@ -142,7 +142,7 @@ int AnalyzeFile( KRootFile *aRootFile, po::variables_map aOptions )
     KSReadStepROOT&     tStepReader     = tReader.GetStep();
 
     KSReadObjectROOT&   tTrackWorld     = tTrackReader.GetObject( "output_track_world" );
-    //KSReadObjectROOT&   tStepWorld      = tStepReader.GetObject( "output_step_world" );
+    //KSReadObjectROOT&   tStepWorld      = tStepReader.Get( "output_step_world" );
 
     for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
     {
@@ -328,8 +328,8 @@ int AnalyzeFile( KRootFile *aRootFile, po::variables_map aOptions )
 
 int main(int argc, char **argv)
 {
-    //katrin::KMessageTable::GetInstance()->SetTerminalVerbosity( eDebug );
-    //katrin::KMessageTable::GetInstance()->SetLogVerbosity( eDebug );
+    //katrin::KMessageTable::GetInstance().SetTerminalVerbosity( eDebug );
+    //katrin::KMessageTable::GetInstance().SetLogVerbosity( eDebug );
 
     po::positional_options_description popt;
     popt.add( "file", -1 );

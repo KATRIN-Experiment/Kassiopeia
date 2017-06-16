@@ -5,6 +5,7 @@
 #include <limits.h>
 #include "KSAStructuredASCIIHeaders.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KKrylovSolverConfiguration.hh"
 
 namespace KEMField
 {
@@ -29,43 +30,29 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration: public KSAI
         KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration()
     :fFFTMParams(NULL),fPreconditionerFFTMParams(NULL)
         {
-            fSolverName = "gmres";
             fPreconditionerName = "none";
 
-            fSolverTolerance = 0.1;
-            fMaxSolverIterations = UINT_MAX;
-            fIterationsBetweenRestart = UINT_MAX;
             fPreconditionerTolerance = 0.1;
             fMaxPreconditionerIterations = UINT_MAX;
             fPreconditionerDegree = 0;
-
-            fUseCheckpoints = 0;
-            fCheckpointFrequency = 1;
-
-            fUseDisplay = 0;
-            fUsePlot = 0;
-
-            fUseTimer = 0;
-            fTimeLimitSeconds = 3e10; //seconds
-            fTimeCheckFrequency = 1;
         }
 
         virtual ~KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration();
 
-        std::string GetSolverName() const {return fSolverName;};
-        void SetSolverName(const std::string& name){fSolverName = name;};
+        std::string GetSolverName() const {return fSolverParams.GetSolverName();};
+        void SetSolverName(const std::string& name){fSolverParams.SetSolverName(name);};
 
         std::string GetPreconditionerName() const {return fPreconditionerName;};
         void SetPreconditionerName(const std::string& n){fPreconditionerName = n;};
 
-        double GetSolverTolerance() const {return fSolverTolerance;};
-        void SetSolverTolerance(const double& t){fSolverTolerance = t;};
+        double GetSolverTolerance() const {return fSolverParams.GetTolerance();};
+        void SetSolverTolerance(const double& t){fSolverParams.SetTolerance(t);};
 
-        int GetMaxSolverIterations() const {return fMaxSolverIterations;};
-        void SetMaxSolverIterations(const int& n){fMaxSolverIterations = n;};
+        int GetMaxSolverIterations() const {return fSolverParams.GetMaxIterations();};
+        void SetMaxSolverIterations(const int& n){fSolverParams.SetMaxIterations(n);};
 
-        int GetIterationsBetweenRestart() const {return fIterationsBetweenRestart;};
-        void SetIterationsBetweenRestart(const int& d){fIterationsBetweenRestart = d;};
+        int GetIterationsBetweenRestart() const {return fSolverParams.GetIterationsBetweenRestart();};
+        void SetIterationsBetweenRestart(const int& d){fSolverParams.SetIterationsBetweenRestart(d);};
 
         double GetPreconditionerTolerance() const {return fPreconditionerTolerance;};
         void SetPreconditionerTolerance(const double& t){fPreconditionerTolerance = t;};
@@ -76,26 +63,26 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration: public KSAI
         int GetPreconditionerDegree() const {return fPreconditionerDegree;};
         void SetPreconditionerDegree(const int& deg){fPreconditionerDegree = deg;};
 
-        int GetUseCheckpoints() const {return fUseCheckpoints;};
-        void SetUseCheckpoints(const int& z){fUseCheckpoints = z;};
+        int GetUseCheckpoints() const {return fSolverParams.IsUseCheckpoints();};
+        void SetUseCheckpoints(const int& z){fSolverParams.SetUseCheckpoints(z);};
 
-        int GetCheckpointFrequency() const {return fCheckpointFrequency;};
-        void SetCheckpointFrequency(const int& z){fCheckpointFrequency = z;};
+        int GetCheckpointFrequency() const {return fSolverParams.GetStepsBetweenCheckpoints();};
+        void SetCheckpointFrequency(const int& z){fSolverParams.SetStepsBetweenCheckpoints(z);};
 
-        int GetUseDisplay() const {return fUseDisplay;};
-        void SetUseDisplay(const int& t){fUseDisplay = t;};
+        int GetUseDisplay() const {return fSolverParams.IsUseDisplay();};
+        void SetUseDisplay(const int& t){fSolverParams.SetUseDisplay(t);};
 
-        int GetUsePlot() const {return fUsePlot;};
-        void SetUsePlot(const int& r){fUsePlot= r;};
+        int GetUsePlot() const {return fSolverParams.IsUsePlot();};
+        void SetUsePlot(const int& r){fSolverParams.SetUsePlot(r);};
 
-        int GetUseTimer() const {return fUseTimer;};
-        void SetUseTimer(const int& r){fUseTimer = r;};
+        int GetUseTimer() const {return fSolverParams.IsUseTimer();};
+        void SetUseTimer(const int& r){fSolverParams.SetUseTimer(r);};
 
-        double GetTimeLimitSeconds() const {return fTimeLimitSeconds;};
-        void SetTimeLimitSeconds(const double& t){fTimeLimitSeconds = t;};
+        double GetTimeLimitSeconds() const {return fSolverParams.GetTimeLimitSeconds();};
+        void SetTimeLimitSeconds(const double& t){fSolverParams.SetTimeLimitSeconds(t);};
 
-        int GetTimeCheckFrequency() const {return fTimeCheckFrequency;};
-        void SetTimeCheckFrequency(const int& f){fTimeCheckFrequency = f;};
+        int GetTimeCheckFrequency() const {return fSolverParams.GetStepsBetweenTimeChecks();};
+        void SetTimeCheckFrequency(const int& f){fSolverParams.SetStepsBetweenTimeChecks(f);};
 
         KFMElectrostaticParameters* GetFFTMParams(){return fFFTMParams;}
         void SetFFTMParams(KFMElectrostaticParameters* config);
@@ -147,26 +134,13 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration: public KSAI
 
     protected:
 
-        std::string fSolverName;
         std::string fPreconditionerName;
 
-        double fSolverTolerance;
-        int fMaxSolverIterations;
-        int fIterationsBetweenRestart;
         double fPreconditionerTolerance;
         int fMaxPreconditionerIterations;
         int fPreconditionerDegree;
 
-        int fUseCheckpoints;
-        int fCheckpointFrequency;
-
-        int fUseDisplay;
-        int fUsePlot;
-
-        int fUseTimer;
-        double fTimeLimitSeconds;
-        int fTimeCheckFrequency;
-
+        KKrylovSolverConfiguration fSolverParams;
         KFMElectrostaticParameters* fFFTMParams;
         KFMElectrostaticParameters* fPreconditionerFFTMParams;
 };

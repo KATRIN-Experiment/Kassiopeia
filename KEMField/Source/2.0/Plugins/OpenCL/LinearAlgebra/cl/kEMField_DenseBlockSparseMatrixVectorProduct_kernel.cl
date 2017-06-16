@@ -1,4 +1,4 @@
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 void ReduceRow( __local CL_TYPE* scratch, __global CL_TYPE* target)
 {

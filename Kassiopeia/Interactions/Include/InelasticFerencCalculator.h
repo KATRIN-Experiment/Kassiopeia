@@ -68,9 +68,9 @@ namespace Kassiopeia
             /*!
              \brief set the molecule type for which calculations will be performed
 
-             \param aMolecule string name of a registered molecule type
+             \param aMolecule std::string name of a registered molecule type
              */
-            virtual void setmolecule( const string& aMolecule );
+            virtual void setmolecule( const std::string& aMolecule );
 
             /*!
              \brief returns the Ionization Energy of a secondary electron (a dice is thrown (weighted with the cross sections) to determine the shell from which the secondary electron is emmitted)
@@ -260,7 +260,7 @@ namespace Kassiopeia
             std::vector< int > fNOccupation; //orbital occupation number
 
             double fIonizationEnergy;
-            string fMoleculeType;
+            std::string fMoleculeType;
             int fMinimum; //position of orbital with minimal energy.
     };
 }

@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_CONICSECTION_CL
 #define KEMFIELD_CONICSECTION_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 // Conic section geometry definition (as defined by the streamers in KConicSection.hh):
 //

@@ -7,6 +7,7 @@ namespace Kassiopeia
     KSRootElectricField::KSRootElectricField() :
         fCurrentPotential(),
         fCurrentField(),
+        fCurrentGradient(),
         fElectricFields( 128 )
     {
     }
@@ -14,6 +15,7 @@ namespace Kassiopeia
             KSComponent(),
             fCurrentPotential( aCopy.fCurrentPotential ),
             fCurrentField( aCopy.fCurrentField ),
+            fCurrentGradient( aCopy.fCurrentGradient ),
             fElectricFields( aCopy.fElectricFields )
     {
     }
@@ -42,6 +44,16 @@ namespace Kassiopeia
         {
             fElectricFields.ElementAt( tIndex )->CalculateField( aSamplePoint, aSampleTime, fCurrentField );
             aField += fCurrentField;
+        }
+        return;
+    }
+    void KSRootElectricField::CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient )
+    {
+        aGradient = KThreeMatrix::sZero;
+        for( int tIndex = 0; tIndex < fElectricFields.End(); tIndex++ )
+        {
+            fElectricFields.ElementAt( tIndex )->CalculateGradient( aSamplePoint, aSampleTime, fCurrentGradient );
+            aGradient += fCurrentGradient;
         }
         return;
     }

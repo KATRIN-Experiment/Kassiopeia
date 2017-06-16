@@ -64,6 +64,98 @@ namespace Kassiopeia
         }
     }
 
+    void KSTrajInterpolatorContinuousRungeKutta::Interpolate(double aTime,
+                                                const KSTrajExactSpinIntegrator& anIntegrator,
+                                                const KSTrajExactSpinDifferentiator& aDifferentiator,
+                                                const KSTrajExactSpinParticle& anInitialParticle,
+                                                const KSTrajExactSpinParticle& aFinalParticle,
+                                                const double& aTimeStep,
+                                                KSTrajExactSpinParticle& anIntermediateParticle ) const
+    {
+        //exactspin particle data:
+        //0 is time
+        //1 is length
+        //2 is x component of position
+        //3 is y component of position
+        //4 is z component of position
+        //5 is x component of momentum
+        //6 is y component of momentum
+        //7 is z component of momentum
+        //8 is 0 component of spin
+        //9 is x component of spin
+        //10 is y component of spin
+        //11 is z component of spin
+
+        //compute the time step data
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tDeltaTime = tFinalTime - tInitialTime;
+        double tFraction = aTimeStep / tDeltaTime;
+
+        bool validRange = false;
+        if( tFraction >= 0.0 && tFraction <= 1.0){validRange = true;};
+
+        if(validRange && anIntegrator.HasDenseOutput())
+        {
+            //the integrator supports interpolation, compute the needed value
+            anIntegrator.Interpolate(tFraction, anIntermediateParticle);
+            return;
+        }
+        else
+        {
+            //no support from this integrator, default to hermite interpolant
+            trajmsg_debug( "time step out of range or current ode integrator not equiped with dense output, defaulting to hermite interpolator." << eom );
+
+            fHermiteInterpolator.Interpolate(aTime, anIntegrator, aDifferentiator, anInitialParticle, aFinalParticle, aTimeStep, anIntermediateParticle);
+            return;
+        }
+    }
+
+    void KSTrajInterpolatorContinuousRungeKutta::Interpolate(double aTime,
+                                                const KSTrajAdiabaticSpinIntegrator& anIntegrator,
+                                                const KSTrajAdiabaticSpinDifferentiator& aDifferentiator,
+                                                const KSTrajAdiabaticSpinParticle& anInitialParticle,
+                                                const KSTrajAdiabaticSpinParticle& aFinalParticle,
+                                                const double& aTimeStep,
+                                                KSTrajAdiabaticSpinParticle& anIntermediateParticle ) const
+    {
+        //adiabaticspin particle data:
+        //0 is time
+        //1 is length
+        //2 is x component of position
+        //3 is y component of position
+        //4 is z component of position
+        //5 is x component of momentum
+        //6 is y component of momentum
+        //7 is z component of momentum
+        //8 is B-aligned component of spin
+        //9 is B-perp angle of spin
+
+        //compute the time step data
+        double tInitialTime = anInitialParticle.GetTime();
+        double tFinalTime = aFinalParticle.GetTime();
+        double tDeltaTime = tFinalTime - tInitialTime;
+        double tFraction = aTimeStep / tDeltaTime;
+
+        bool validRange = false;
+        if( tFraction >= 0.0 && tFraction <= 1.0){validRange = true;};
+
+        if(validRange && anIntegrator.HasDenseOutput())
+        {
+            //the integrator supports interpolation, compute the needed value
+            anIntegrator.Interpolate(tFraction, anIntermediateParticle);
+            return;
+        }
+        else
+        {
+            //no support from this integrator, default to hermite interpolant
+            trajmsg_debug( "time step out of range or current ode integrator not equiped with dense output, defaulting to hermite interpolator." << eom );
+
+            fHermiteInterpolator.Interpolate(aTime, anIntegrator, aDifferentiator, anInitialParticle, aFinalParticle, aTimeStep, anIntermediateParticle);
+            return;
+        }
+    }
+
     void KSTrajInterpolatorContinuousRungeKutta::Interpolate(double aTime, const KSTrajAdiabaticIntegrator& anIntegrator, const KSTrajAdiabaticDifferentiator& aDifferentiator, const KSTrajAdiabaticParticle& anInitialParticle, const KSTrajAdiabaticParticle& aFinalParticle, const double& aTimeStep, KSTrajAdiabaticParticle& anIntermediateParticle ) const
     {
         //we only do cubic interpolation on the adiabatic particle
@@ -190,6 +282,22 @@ namespace Kassiopeia
 
     double
     KSTrajInterpolatorContinuousRungeKutta::DistanceMetric(const KSTrajExactParticle& valueA, const KSTrajExactParticle& valueB) const
+    {
+        KThreeVector a = valueA.GetPosition();
+        KThreeVector b = valueB.GetPosition();
+        return (a-b).Magnitude();
+    }
+
+    double
+    KSTrajInterpolatorContinuousRungeKutta::DistanceMetric(const KSTrajExactSpinParticle& valueA, const KSTrajExactSpinParticle& valueB) const
+    {
+        KThreeVector a = valueA.GetPosition();
+        KThreeVector b = valueB.GetPosition();
+        return (a-b).Magnitude();
+    }
+
+    double
+    KSTrajInterpolatorContinuousRungeKutta::DistanceMetric(const KSTrajAdiabaticSpinParticle& valueA, const KSTrajAdiabaticSpinParticle& valueB) const
     {
         KThreeVector a = valueA.GetPosition();
         KThreeVector b = valueB.GetPosition();

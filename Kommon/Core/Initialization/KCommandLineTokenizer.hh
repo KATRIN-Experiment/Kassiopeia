@@ -2,16 +2,8 @@
 #define Kommon_KCommandLineTokenizer_hh_
 
 #include <string>
-using std::string;
-
 #include <vector>
-using std::vector;
-
 #include <map>
-using std::map;
-using std::pair;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -27,21 +19,21 @@ namespace katrin
             //**********
 
         public:
-            void ProcessCommandLine( int anArgc, char** anArgv );
+            void ProcessCommandLine( int anArgc = 0, char** anArgv = nullptr );
 
-            const vector< string >& GetFiles();
-            const map< string, string >& GetVariables();
+            const std::vector< std::string >& GetFiles();
+            const std::map< std::string, std::string >& GetVariables();
 
         private:
-            vector< string > fFiles;
-            map< string, string > fVariables;
+            std::vector< std::string > fFiles;
+            std::map< std::string, std::string > fVariables;
     };
 
-    inline const vector< string >& KCommandLineTokenizer::GetFiles()
+    inline const std::vector< std::string >& KCommandLineTokenizer::GetFiles()
     {
         return fFiles;
     }
-    inline const map< string, string >& KCommandLineTokenizer::GetVariables()
+    inline const std::map< std::string, std::string >& KCommandLineTokenizer::GetVariables()
     {
         return fVariables;
     }

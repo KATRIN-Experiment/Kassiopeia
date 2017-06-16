@@ -2,6 +2,8 @@
 #include "KSWritersMessage.h"
 #include "KSComponentGroup.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 

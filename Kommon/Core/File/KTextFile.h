@@ -4,10 +4,6 @@
 #include "KFile.h"
 
 #include <fstream>
-using std::fstream;
-using std::ios_base;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -20,17 +16,17 @@ namespace katrin
             virtual ~KTextFile();
 
         public:
-            fstream* File();
+            std::fstream* File();
 
         protected:
-            virtual bool OpenFileSubclass( const string& aName, const Mode& aMode );
+            virtual bool OpenFileSubclass( const std::string& aName, const Mode& aMode );
             virtual bool CloseFileSubclass();
 
         private:
-            fstream* fFile;
+            std::fstream* fFile;
     };
 
-    inline KTextFile* CreateConfigTextFile( const string& aBase )
+    inline KTextFile* CreateConfigTextFile( const std::string& aBase )
     {
         KTextFile* tFile = new KTextFile();
         tFile->SetDefaultPath( CONFIG_DEFAULT_DIR );
@@ -38,7 +34,7 @@ namespace katrin
         return tFile;
     }
 
-    inline KTextFile* CreateScratchTextFile( const string& aBase )
+    inline KTextFile* CreateScratchTextFile( const std::string& aBase )
     {
         KTextFile* tFile = new KTextFile();
         tFile->SetDefaultPath( SCRATCH_DEFAULT_DIR );
@@ -46,7 +42,7 @@ namespace katrin
         return tFile;
     }
 
-    inline KTextFile* CreateDataTextFile( const string& aBase )
+    inline KTextFile* CreateDataTextFile( const std::string& aBase )
     {
         KTextFile* tFile = new KTextFile();
         tFile->SetDefaultPath( DATA_DEFAULT_DIR );
@@ -54,7 +50,7 @@ namespace katrin
         return tFile;
     }
 
-    inline KTextFile* CreateOutputTextFile( const string& aBase )
+    inline KTextFile* CreateOutputTextFile( const std::string& aBase )
     {
         KTextFile* tFile = new KTextFile();
         tFile->SetDefaultPath( OUTPUT_DEFAULT_DIR );

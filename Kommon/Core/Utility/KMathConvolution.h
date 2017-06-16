@@ -21,13 +21,13 @@ public:
     virtual ~KMathConvolution() { }
 
     XKernelType& GetKernel() { return fKernel; }
-    KMathIntegrator& GetIntegrator() { return fIntegrator; }
+    KMathIntegrator<double>& GetIntegrator() { return fIntegrator; }
 
     template<class XFunctionType>
     double Convolute(XFunctionType& function, double x);
 
 protected:
-    KMathIntegrator fIntegrator;
+    KMathIntegrator<double> fIntegrator;
     XKernelType fKernel;
 
     template<class XFunctionType>

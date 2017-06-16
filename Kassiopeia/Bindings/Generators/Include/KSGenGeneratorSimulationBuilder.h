@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGenGeneratorSimulation.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin

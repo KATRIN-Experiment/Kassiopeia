@@ -30,7 +30,6 @@ endforeach( BASENAME )
 # source files
 set( READERS_SOURCE_BASENAMES
 	KSReadersMessage.cxx
-
 	KSReadIterator.cxx
 	KSReadFile.cxx
 )

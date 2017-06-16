@@ -1,5 +1,7 @@
 #include "KGCore.hh"
 
+using namespace std;
+
 namespace KGeoBag
 {
 

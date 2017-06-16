@@ -7,9 +7,6 @@ kasper_install_config_subdir( Complete
     Complete/Navigators.xml
     Complete/Terminators.xml
     Complete/Writers.xml
-)
-
-kasper_install_config_subdir( Complete
     Complete/Fields.xml
 )
 
@@ -18,23 +15,30 @@ kasper_install_config_subdir( Validation
     Validation/TestTrajectory.xml
     Validation/TestSpaceInteraction.xml
     Validation/TestElectricFieldLines.xml
-)
-
-
-kasper_install_config_subdir( Validation
     Validation/TestField.xml
     Validation/TestRampedField.xml
     Validation/TestDiscreteRotationalField.xml
     Validation/TestNavigation.xml
     Validation/TestPotentialmap.xml
+	Validation/TestSynchrotron.xml
 )
 
-
-kasper_install_config_subdir( Examples
-    Examples/AnalyticSimulation.xml
-    Examples/QuadrupoleTrapSimulation.xml
-    Examples/DipoleTrapSimulation.xml
-    Examples/DipoleTrapMeshedSpaceSimulation.xml
-    Examples/ToricTrapSimulation.xml
-    Examples/PhotoMultiplierTubeSimulation.xml
-)
+if( Kassiopeia_USE_VTK )
+    kasper_install_config_subdir( Examples
+        Examples/VTK/AnalyticSimulation.xml
+        Examples/VTK/QuadrupoleTrapSimulation.xml
+        Examples/VTK/DipoleTrapSimulation.xml
+        Examples/VTK/DipoleTrapMeshedSpaceSimulation.xml
+        Examples/VTK/ToricTrapSimulation.xml
+        Examples/VTK/PhotoMultiplierTubeSimulation.xml
+    )
+else( Kassiopeia_USE_VTK )
+    kasper_install_config_subdir( Examples
+        Examples/AnalyticSimulation.xml
+        Examples/QuadrupoleTrapSimulation.xml
+        Examples/DipoleTrapSimulation.xml
+        Examples/DipoleTrapMeshedSpaceSimulation.xml
+        Examples/ToricTrapSimulation.xml
+        Examples/PhotoMultiplierTubeSimulation.xml
+    )
+endif( Kassiopeia_USE_VTK )

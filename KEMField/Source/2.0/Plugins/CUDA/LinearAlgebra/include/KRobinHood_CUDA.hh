@@ -107,7 +107,7 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::ConstructCUDAKernels() const
   {
-     fNLocal = 512;
+     fNLocal = 384;
      fData.SetMinimumWorkgroupSizeForKernels(fNLocal);
   }
 
@@ -203,13 +203,13 @@ namespace KEMField
     if( !fReadResidual ) {
       if( fX.InfinityNorm()>1.e-16 ) {
 
-        if( KEMFIELD_OCCUPANCYAPI ) {
-            int blockSize;   // The launch configurator returned block size
-            int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
-            cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, InitializeVectorApproximationKernel, 0, 0);
-            std::cout << "[InitializeVectorApproximationKernel] Suggested block size: " << blockSize << std::endl;
-            std::cout << "[InitializeVectorApproximationKernel] Set block size: " << fNLocal << std::endl;
-        }
+#ifdef KEMFIELD_OCCUPANCYAPI
+		  int blockSize = 0;   // The launch configurator returned block size
+		  int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+		  cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, InitializeVectorApproximationKernel, 0, 0);
+		  std::cout << "[InitializeVectorApproximationKernel] Suggested block size: " << blockSize << std::endl;
+		  std::cout << "[InitializeVectorApproximationKernel] Set block size: " << fNLocal << std::endl;
+#endif
 
     	  InitializeVectorApproximationKernel <<<fNWorkgroups,fNLocal>>> (
 					dynamic_cast<KCUDASurfaceContainer&>(fData).GetBoundaryInfo(),
@@ -227,13 +227,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::FindResidual()
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, FindResidualKernel, 0, 0);
         std::cout << "[FindResidualKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[FindResidualKernel] Set block size: " << fNLocal << std::endl;
-    }
+#endif
 
       FindResidualKernel <<<fNWorkgroups, fNLocal>>> (
               fDeviceResidual,
@@ -246,13 +246,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::FindResidualNorm(double& residualNorm)
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, FindResidualNormKernel, 0, 0);
         std::cout << "[FindResidualNormKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[FindResidualNormKernel] Set block size: " << "1" << std::endl;
-    }
+#endif
 
     FindResidualNormKernel <<<1,1>>> (
         dynamic_cast<KCUDASurfaceContainer&>(fData).GetBoundaryInfo(),
@@ -265,13 +265,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::CompleteResidualNormalization(double& residualNorm)
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, CompleteResidualNormalizationKernel, 0, 0);
         std::cout << "[CompleteResidualNormalizationKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[CompleteResidualNormalizationKernel] Set block size: " << "1" << std::endl;
-    }
+#endif
 
     CompleteResidualNormalizationKernel <<<1, 1>>> (
         dynamic_cast<KCUDASurfaceContainer&>(fData).GetBoundaryInfo(),
@@ -286,25 +286,23 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::IdentifyLargestResidualElement()
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, IdentifyLargestResidualElementKernel, 0, 0);
         std::cout << "[IdentifyLargestResidualElementKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[IdentifyLargestResidualElementKernel] Set block size: " << fNLocal << std::endl;
-    }
+#endif
 
     IdentifyLargestResidualElementKernel <<<fNWorkgroups, fNLocal, fNLocal*sizeof(int)>>> (
     		fDeviceResidual,
     		fDevicePartialMaxResidualIndex );
 
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, CompleteLargestResidualIdentificationKernel, 0, 0);
         std::cout << "[CompleteLargestResidualIdentificationKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[CompleteLargestResidualIdentificationKernel] Set block size: " << "1" << std::endl;
-    }
+#endif
 
     CompleteLargestResidualIdentificationKernel <<<1, 1>>> (
         fDeviceResidual,
@@ -317,13 +315,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::ComputeCorrection()
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, ComputeCorrectionKernel, 0, 0);
         std::cout << "[ComputeCorrectionKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[ComputeCorrectionKernel] Set block size: " << "1" << std::endl;
-    }
+#endif
 
     ComputeCorrectionKernel <<<1, 1>>> (
         dynamic_cast<KCUDASurfaceContainer&>(fData).GetShapeInfo(),
@@ -340,13 +338,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::UpdateSolutionApproximation()
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, UpdateSolutionApproximationKernel, 0, 0);
         std::cout << "[UpdateSolutionApproximationKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[UpdateSolutionApproximationKernel] Set block size: " << "1" << std::endl;
-    }
+#endif
 
     UpdateSolutionApproximationKernel <<<1, 1>>> (
         dynamic_cast<KCUDASurfaceContainer&>(fData).GetBasisData(),
@@ -357,13 +355,13 @@ namespace KEMField
   template <typename ValueType>
   void KRobinHood_CUDA<ValueType>::UpdateVectorApproximation()
   {
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, UpdateVectorApproximationKernel, 0, 0);
         std::cout << "[UpdateVectorApproximationKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[UpdateVectorApproximationKernel] Set block size: " << fNLocal << std::endl;
-    }
+#endif
 
     UpdateVectorApproximationKernel <<<fNWorkgroups, fNLocal>>> (
         dynamic_cast<KCUDASurfaceContainer&>(fData).GetShapeInfo(),

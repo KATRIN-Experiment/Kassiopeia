@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -12,7 +14,8 @@ namespace katrin
 
     STATICINT sKSTrajTermSynchrotronStructure =
         KSTrajTermSynchrotronBuilder::Attribute< string >( "name" ) +
-        KSTrajTermSynchrotronBuilder::Attribute< double >( "enhancement" );
+        KSTrajTermSynchrotronBuilder::Attribute< double >( "enhancement" ) +
+        KSTrajTermSynchrotronBuilder::Attribute< bool >( "old_methode" );
 
     STATICINT sToolboxKSTrajTermSynchrotron =
         KSRootBuilder::ComplexElement< KSTrajTermSynchrotron >( "kstraj_term_synchrotron" );

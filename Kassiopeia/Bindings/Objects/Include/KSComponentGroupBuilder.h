@@ -3,20 +3,19 @@
 
 #include "KComplexElement.hh"
 #include "KSComponentGroup.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
-using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSComponentGroup > KSComponentGroupBuilder;
+    typedef KComplexElement< Kassiopeia::KSComponentGroup > KSComponentGroupBuilder;
 
     template< >
     inline bool KSComponentGroupBuilder::AddAttribute( KContainer* aContainer )
     {
         if( aContainer->GetName() == "name" )
         {
-            string tName = aContainer->AsReference< string >();
+            std::string tName = aContainer->AsReference< std::string >();
             fObject->SetName( tName );
             return true;
         }
@@ -26,9 +25,9 @@ namespace katrin
     template< >
     inline bool KSComponentGroupBuilder::AddElement( KContainer* aContainer )
     {
-        if( aContainer->Is< KSComponent >() == true )
+        if( aContainer->Is< Kassiopeia::KSComponent >() == true )
         {
-            aContainer->ReleaseTo( fObject, &KSComponentGroup::AddComponent);
+            aContainer->ReleaseTo( fObject, &Kassiopeia::KSComponentGroup::AddComponent);
             return true;
         }
         return false;

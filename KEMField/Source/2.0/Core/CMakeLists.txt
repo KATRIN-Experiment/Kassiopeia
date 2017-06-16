@@ -61,9 +61,16 @@ if (@PROJECT_NAME@_USE_MPI)
   set (CMAKE_SHARED_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_EXECUTABLE_SUFFIX ${CMAKE_EXECUTABLE_SUFFIX} PARENT_SCOPE)
 
-  set( @PROJECT_NAME@_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
+#  set( @PROJECT_NAME@_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
+    set( @PROJECT_NAME@_USE_ROOT ${KASPER_USE_ROOT} )
 
 endif (@PROJECT_NAME@_USE_MPI)
+
+option(@PROJECT_NAME@_USE_REALTIME_CLOCK "Use real time clock for timing applications." OFF)
+mark_as_advanced(FORCE @PROJECT_NAME@_USE_REALTIME_CLOCK)
+if (@PROJECT_NAME@_USE_REALTIME_CLOCK)
+  add_cflag (KEMFIELD_USE_REALTIME_CLOCK)
+endif (@PROJECT_NAME@_USE_REALTIME_CLOCK)
 
 kasper_internal_include_directories (${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -73,10 +80,13 @@ set (KEMCORE_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KDataDisplay.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMCout.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMConstants.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMStringUtils.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMTicker.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KFundamentalTypeCounter.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KFundamentalTypes.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KMPIEnvironment.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointer.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KTimer.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypelist.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypelistVisitor.hh
   )
@@ -84,8 +94,10 @@ set (KEMCORE_HEADERFILES
 set (KEMCORE_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMConstants.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMCout.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMStringUtils.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMTicker.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KFundamentalTypes.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/KTimer.cc
   )
 
 if (@PROJECT_NAME@_USE_MPI)
@@ -109,6 +121,13 @@ endif (@PROJECT_NAME@_USE_KMESSAGE)
 
 add_library (KEMCore SHARED ${KEMCORE_SOURCEFILES})
 target_link_libraries (KEMCore ${Kommon_LIBRARIES})
+
+add_executable( KSmartPointer_test test/KSmartPointer_test.cc )
+  target_link_libraries( KSmartPointer_test 
+    KEMCore
+  )
+  
+  kasper_install_executables( KSmartPointer_test )
 
 kasper_install_headers (${KEMCORE_HEADERFILES})
 kasper_install_libraries (KEMCore)

@@ -6,11 +6,10 @@
 #include "KSMainMessage.h"
 
 #include "gsl/gsl_errno.h"
+#include "KToolbox.h"
 
 namespace Kassiopeia
 {
-
-    class KSToolbox;
     class KSRootMagneticField;
     class KSRootElectricField;
     class KSRootSpace;
@@ -23,7 +22,9 @@ namespace Kassiopeia
     class KSRootTerminator;
     class KSRootWriter;
     class KSRootStepModifier;
+    class KSRootTrackModifier;
     class KSRootEventModifier;
+    class KSRootRunModifier;
 
     class KSSimulation;
     class KSRun;
@@ -41,6 +42,7 @@ namespace Kassiopeia
             virtual ~KSRoot();
 
         public:
+
             void Execute( KSSimulation* aSimulation );
 
         protected:
@@ -66,7 +68,8 @@ namespace Kassiopeia
             KSTrack* fTrack;
             KSStep* fStep;
 
-            KSToolbox* fToolbox;
+            katrin::KToolbox& fToolbox;
+
             KSRootMagneticField* fRootMagneticField;
             KSRootElectricField* fRootElectricField;
             KSRootSpace* fRootSpace;
@@ -79,7 +82,12 @@ namespace Kassiopeia
             KSRootTerminator* fRootTerminator;
             KSRootWriter* fRootWriter;
             KSRootStepModifier* fRootStepModifier;
+            KSRootTrackModifier* fRootTrackModifier;
             KSRootEventModifier* fRootEventModifier;
+            KSRootRunModifier* fRootRunModifier;
+
+            bool fOnce;
+
 
             unsigned int fRunIndex;
             unsigned int fEventIndex;
@@ -89,7 +97,7 @@ namespace Kassiopeia
             static bool fStopRunSignal;
             static bool fStopEventSignal;
             static bool fStopTrackSignal;
-            static string fStopSignalName;
+            static std::string fStopSignalName;
 
             gsl_error_handler_t* fDefaultGSLErrorHandler;
             static bool fGSLErrorSignal;

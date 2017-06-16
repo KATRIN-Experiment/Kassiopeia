@@ -4,20 +4,14 @@
 #include "KNamed.h"
 
 #include <ostream>
-using std::ostream;
-
 #include <string>
-using std::string;
-
 #include <set>
-using std::set;
-
 
 namespace katrin
 {
 
-    typedef string KTag;
-    typedef set< string > KTagSet;
+    typedef std::string KTag;
+    typedef std::set< std::string > KTagSet;
     typedef KTagSet::iterator KTagSetIt;
     typedef KTagSet::const_iterator KTagSetCIt;
 
@@ -58,7 +52,7 @@ namespace katrin
             static KTagSet sOpenTags;
     };
 
-    inline ostream& operator<<( ostream& aStream, const KTagged& aTagged )
+    inline std::ostream& operator<<( std::ostream& aStream, const KTagged& aTagged )
     {
         aStream << "<" << aTagged.GetName() << "> with tags <";
         for( KTagSetIt tIter = aTagged.GetTags().begin(); tIter != aTagged.GetTags().end(); tIter++ )

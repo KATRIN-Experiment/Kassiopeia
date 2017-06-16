@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_LINEARALGEBRA_CL
 #define KEMFIELD_LINEARALGEBRA_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #include KEMFIELD_INTEGRATORFILE_CL
 

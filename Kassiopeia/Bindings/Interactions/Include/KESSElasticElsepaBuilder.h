@@ -2,7 +2,7 @@
 #define KESSELASTICELSEPABUILDER_H
 
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSInteractionsMessage.h"
 #include "KESSElasticElsepa.h"
 

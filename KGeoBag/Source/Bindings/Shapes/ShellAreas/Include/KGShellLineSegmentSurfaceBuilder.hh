@@ -12,27 +12,27 @@ namespace katrin
     template< >
     inline bool KGShellLineSegmentSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGShellLineSegmentSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "angle_start" ) )
+        if( anAttribute->GetName() == "angle_start" )
         {
             anAttribute->CopyTo( fObject, &KGShellLineSegmentSurface::AngleStart );
             return true;
         }
-        if( anAttribute->GetName() == string( "angle_stop" ) )
+        if( anAttribute->GetName() == "angle_stop" )
         {
             anAttribute->CopyTo( fObject, &KGShellLineSegmentSurface::AngleStop );
             return true;
         }
-        if( anAttribute->GetName() == string( "shell_mesh_count" ) )
+        if( anAttribute->GetName() == "shell_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGShellLineSegmentSurface::ShellMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "shell_mesh_power" ) )
+        if( anAttribute->GetName() == "shell_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGShellLineSegmentSurface::ShellMeshPower );
             return true;
@@ -43,7 +43,7 @@ namespace katrin
     template< >
     inline bool KGShellLineSegmentSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "line_segment" ) )
+        if( anElement->GetName() == "line_segment" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarLineSegment::CopyFrom );
             return true;

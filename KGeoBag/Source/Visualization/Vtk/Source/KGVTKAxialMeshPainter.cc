@@ -12,6 +12,8 @@
 #include "KConst.h"
 #include <cmath>
 
+using namespace std;
+
 namespace KGeoBag
 {
     const unsigned int KGVTKAxialMeshPainter::sArea = 0;

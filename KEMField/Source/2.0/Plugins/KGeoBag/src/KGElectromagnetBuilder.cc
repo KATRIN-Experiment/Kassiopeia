@@ -1,5 +1,8 @@
 #include "KGElectromagnetBuilder.hh"
 
+using namespace KGeoBag;
+using namespace std;
+
 namespace KGeoBag
 {
 
@@ -47,7 +50,6 @@ namespace KGeoBag
 
 #include "KGInterfaceBuilder.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 

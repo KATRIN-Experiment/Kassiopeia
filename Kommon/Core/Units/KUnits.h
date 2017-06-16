@@ -20,11 +20,11 @@ namespace katrin
             typedef KDimension< KTYPELIST7( KTypeInteger< XMassPowerValue >, KTypeInteger< XLengthPowerValue >, KTypeInteger< XTimePowerValue >, KTypeInteger< XChargePowerValue >, KTypeInteger< XTemperaturePowerValue >, KTypeInteger< XIntensityPowerValue >, KTypeInteger< XAnglePowerValue > ) > Dimension;
 
         public:
-            static const string fSymbol;
-            static const string ConstructUnitSymbol()
+            static const std::string fSymbol;
+            static const std::string ConstructUnitSymbol()
             {
 
-                stringstream Symbol;
+                std::stringstream Symbol;
                 Symbol.clear();
                 Symbol.str( "" );
 
@@ -108,7 +108,7 @@ namespace katrin
 
     //can't use macros on this line because eclipse thinks it's an error
     template< int XMassPowerValue, int XLengthPowerValue, int XTimePowerValue, int XChargePowerValue, int XTemperaturePowerValue, int XIntensityPowerValue, int XAnglePowerValue >
-    const string KUnit< KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > > >::fSymbol = KUnit< KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > > >::ConstructUnitSymbol();
+    const std::string KUnit< KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > > >::fSymbol = KUnit< KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > > >::ConstructUnitSymbol();
 
     //**********************
     //scaled unit definition
@@ -124,7 +124,7 @@ namespace katrin
             typedef KDimension< KTYPELIST7( KTypeInteger< XMassPowerValue >, KTypeInteger< XLengthPowerValue >, KTypeInteger< XTimePowerValue >, KTypeInteger< XChargePowerValue >, KTypeInteger< XTemperaturePowerValue >, KTypeInteger< XIntensityPowerValue >, KTypeInteger< XAnglePowerValue > ) > Dimension;
 
         public:
-            static const string fSymbol;
+            static const std::string fSymbol;
             static const double fScaleToThisUnitFromBaseUnit;
     };
 
@@ -142,7 +142,7 @@ namespace katrin
             typedef KDimension< KTYPELIST7( KTypeInteger< XMassPowerValue >, KTypeInteger< XLengthPowerValue >, KTypeInteger< XTimePowerValue >, KTypeInteger< XChargePowerValue >, KTypeInteger< XTemperaturePowerValue >, KTypeInteger< XIntensityPowerValue >, KTypeInteger< XAnglePowerValue > ) > Dimension;
 
         public:
-            static const string fSymbol;
+            static const std::string fSymbol;
             static const double fOffsetToThisUnitFromBaseUnit;
     };
 

@@ -83,13 +83,13 @@ namespace KEMField
     int global(1);
     int local(1);
 
-    if( KEMFIELD_OCCUPANCYAPI ) {
-        int blockSize;   // The launch configurator returned block size
-        int minGridSize; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
+#ifdef KEMFIELD_OCCUPANCYAPI
+        int blockSize = 0;   // The launch configurator returned block size
+        int minGridSize = 0; // The minimum grid size needed to achieve the maximum occupancy for a full device launch
         cudaOccupancyMaxPotentialBlockSize( &minGridSize, &blockSize, GetMatrixElementKernel, 0, 0);
         std::cout << "[GetMatrixElementKernel] Suggested block size: " << blockSize << std::endl;
         std::cout << "[GetMatrixElementKernel] Set block size: " << local << std::endl;
-    }
+#endif
 
     GetMatrixElementKernel <<<global, local>>> (
             fDeviceIJ,
@@ -112,7 +112,7 @@ namespace KEMField
     // device management
 
     // define fNLocal
-    if( fNLocal == -1 ) fNLocal = 512;
+    if( fNLocal == -1 ) fNLocal = 384;
 
     fData.SetMinimumWorkgroupSizeForKernels(fNLocal);
 

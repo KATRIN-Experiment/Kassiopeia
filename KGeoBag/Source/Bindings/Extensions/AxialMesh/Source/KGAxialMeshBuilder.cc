@@ -1,6 +1,9 @@
 #include "KGAxialMeshBuilder.hh"
 #include "KGAxialMesher.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace KGeoBag
 {
 

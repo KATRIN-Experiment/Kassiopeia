@@ -105,7 +105,7 @@ namespace Kassiopeia
 
         do{
 
-            E = E0 * KRandom::GetInstance().Uniform();
+            E = E0 * KRandom::GetInstance().Uniform(fMinEnergy/E0, fMaxEnergy/E0);
             F = Fermi(E,mnu,E0,Z);
 
         }while((Fermimax * KRandom::GetInstance().Uniform() ) > F);

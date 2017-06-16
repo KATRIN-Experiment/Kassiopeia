@@ -110,7 +110,7 @@ namespace KGeoBag
     {
         if( fParent != NULL )
         {
-            typename vector< KGExtendedSurface< XExtension >* >::iterator tIt;
+            typename std::vector< KGExtendedSurface< XExtension >* >::iterator tIt;
             for( tIt = fParent->fBoundaries.begin(); tIt != fParent->fBoundaries.end(); tIt++ )
             {
                 if( (*tIt) == this )

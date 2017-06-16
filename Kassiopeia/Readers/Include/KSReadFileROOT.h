@@ -19,7 +19,7 @@ namespace Kassiopeia
         public KSReadFile
     {
         public:
-            typedef map< string, KSReadObjectROOT* > ObjectMap;
+            typedef map< std::string, KSReadObjectROOT* > ObjectMap;
             typedef ObjectMap::iterator ObjectIt;
             typedef ObjectMap::const_iterator ObjectCIt;
             typedef ObjectMap::value_type ObjectEntry;

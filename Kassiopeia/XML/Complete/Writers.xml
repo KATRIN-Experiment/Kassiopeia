@@ -25,6 +25,61 @@
 			base:
 				base name of the file.
 	-->
+	
+	<kswrite_root_condition_output name="condition_initial_energy" group="output_track_world" parent="initial_energy" max_value="{1e3}"/>
+		<!--
+		description:
+			a write condition for the root writer
+			the decision to write or not to write is based on an output variable
+
+		parameters:
+			name:
+				the name of this write condition.
+
+			parent:
+				the name of the output variable which is used for the write decision
+
+			group:
+				the name of the group the output variable is in (optional)
+
+			max_value:
+				the writer does only write to disc if the value of the output variable is below this value
+				
+			min_value:
+				the writer does only write to disc if the value of the output variable is above this value	
+		-->
+		
+	<kswrite_root_condition_step name="condition_nth_step" group="component_step_world" parent="step_id" nth_step="{1000}"/>
+        <!--
+        description:
+            a write condition for the root writer to reduce output file size while keeping tracking precision
+            only every nth_step (int!) the root writer records a step
+
+        parameters:
+            name:
+                the name of this write condition.
+
+            parent:
+                the name of the output variable which is used for the write decision (must be of type int)
+
+            group:
+                the name of the group the output variable is in (optional)
+
+            nth_step:
+                the fraction of steps to be recorded
+                
+        example:
+            <ks_component_group name="component_step_world">
+                <component_member name="step_id" field="step_id" parent="step"/>
+            </ks_component_group>
+            
+            <kswrite_root_condition_step name="condition_nth_step" group="component_step_world" parent="step_id" nth_step="{1000}"/>
+            <ksgeo_space name="space_world" spaces="world">
+                <command parent="write_root" field="add_step_output" child="component_step_world"/>
+                <command parent="write_root" field="add_step_write_condition" child="condition_nth_step"/>
+            </ksgeo_space>
+        -->
+	
 
 	<kswrite_vtk name="write_vtk" path="." base="Writers.vtp"/>
 	<!--

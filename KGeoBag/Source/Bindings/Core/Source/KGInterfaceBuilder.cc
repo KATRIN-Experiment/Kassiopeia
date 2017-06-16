@@ -1,5 +1,9 @@
 #include "KGInterfaceBuilder.hh"
 #include "KElementProcessor.hh"
+#include "KRoot.h"
+
+using namespace std;
+using namespace KGeoBag;
 
 namespace katrin
 {
@@ -13,6 +17,8 @@ namespace katrin
         KGInterfaceBuilder::Attribute< bool >( "reset" );
 
     STATICINT sKGInterface =
-        KElementProcessor::ComplexElement< KGInterface >( "geometry" );
+        KRootBuilder::ComplexElement< KGInterface >( "geometry" );
 
+    STATICINT sKGInterfaceCompat =
+        KElementProcessor::ComplexElement< KGInterface >( "geometry" );
 }

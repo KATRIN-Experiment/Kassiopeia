@@ -3,6 +3,8 @@
 #include "KSIntCalculatorConstantBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -25,7 +27,7 @@ namespace katrin
 
     void KSIntCalculatorHydrogenSet::AddCalculator( KSIntCalculator* aCalculator )
     {
-    	KSToolbox::GetInstance()->AddObject( aCalculator );
+        katrin::KToolbox::GetInstance().Add(aCalculator);
         fCalculators.push_back( aCalculator );
         return;
     }

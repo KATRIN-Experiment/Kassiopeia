@@ -3,12 +3,12 @@
 #include "KSIntCalculatorConstantBuilder.h"
 #include "KSIntCalculatorHydrogenBuilder.h"
 #include "KSIntCalculatorArgonBuilder.h"
-#include "KESSElasticElsepa.h"
-#include "KESSInelasticBetheFano.h"
-#include "KESSInelasticPenn.h"
+#include "KSIntCalculatorKESSBuilder.h"
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -38,8 +38,5 @@ namespace katrin
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorConstant >( "calculator_constant" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorHydrogenSet >( "calculator_hydrogen" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorArgonSet >( "calculator_argon" ) +
-        KSIntScatteringBuilder::ComplexElement< KESSElasticElsepa >( "elastic_elsepa" ) +
-        KSIntScatteringBuilder::ComplexElement< KESSInelasticBetheFano >( "inelastic_bethefano" ) +
-        KSIntScatteringBuilder::ComplexElement< KESSInelasticPenn >( "inelastic_penn" );
-
+        KSIntScatteringBuilder::ComplexElement< KSIntCalculatorKESSSet >( "calculator_kess" );
 }

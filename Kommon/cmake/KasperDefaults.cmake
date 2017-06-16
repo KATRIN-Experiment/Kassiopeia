@@ -16,30 +16,30 @@ if( "${Kasper_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}" )
 
     # use this section to modifiy initial values of builtin CMAKE variables
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    
+
         # modify the default installation prefix
         get_filename_component(BUILD_PARENT_DIR ${CMAKE_BINARY_DIR} PATH)
         set(CMAKE_INSTALL_PREFIX "${BUILD_PARENT_DIR}/install" CACHE PATH "Install path prefix, prepended onto install directories." FORCE)
-    
+
         if(NOT CMAKE_BUILD_TYPE)
             set(CMAKE_BUILD_TYPE "" CACHE STRING "Choose build type (None | Debug | Release | RelWithDebInfo | MinSizeRel)" FORCE)
         endif()
-        
+
         # set compiler warning levels
         set(_wflags_debug "-Wall -Wextra")
         set(_wflags_release "-Wall -Werror")
-        
+
         string(STRIP "${CMAKE_CXX_FLAGS} ${_wflags_debug}" _cxx_flags)
         string(STRIP "${CMAKE_C_FLAGS} ${_wflags_debug}" _c_flags)
-        
+
         set(CMAKE_CXX_FLAGS ${_cxx_flags} CACHE STRING "Flags used by the compiler during all build types." FORCE)
         set(CMAKE_C_FLAGS ${_c_flags} CACHE STRING "Flags used by the compiler during all build types." FORCE)
-        
+
         #set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during debug builds." FORCE)
         #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during debug builds." FORCE)
         #set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during release with debug info builds." FORCE)
         #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${_wflags_debug}" CACHE STRING "Flags used by the compiler during release with debug info builds." FORCE)
-        
+
         #set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} ${_wflags_release}" CACHE STRING "Flags used by the compiler during min. size release builds." FORCE)
         #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} ${_wflags_release}" CACHE STRING "Flags used by the compiler during min. size release builds." FORCE)
         #set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${_wflags_release}" CACHE STRING "Flags used by the compiler during release builds." FORCE)
@@ -63,7 +63,7 @@ if( "${Kasper_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}" )
 
     set( CMAKE_MACOSX_RPATH ON )
 
-    # check compiler versions and set C++11 flag 
+    # check compiler versions and set C++11 flag
     include(CheckCompiler)
     message(STATUS "Using compiler ${COMPILER_ID} ${COMPILER_VERSION}")
 
@@ -185,6 +185,14 @@ macro(kasper_find_module NAME)
 
 endmacro()
 
+macro(kasper_append_paths PARENT_VAR)
+    foreach(RELPATH ${ARGN})
+        get_filename_component(ABSPATH ${RELPATH} ABSOLUTE)
+        list(APPEND ${PARENT_VAR} ${ABSPATH})
+    endforeach()
+    set (${PARENT_VAR} ${${PARENT_VAR}} PARENT_SCOPE)
+endmacro()
+
 macro(kasper_install_optional DEST_DIR)
     set(INST_CODE "")
     foreach(SRC_FILE ${ARGN})
@@ -244,44 +252,12 @@ macro(kasper_install_data)
     install(FILES ${ARGN} DESTINATION ${${PROJECT_NAME}_DATA_INSTALL_DIR})
 endmacro()
 
-macro(kasper_configure_data)
-    foreach(FILE ${ARGN})
-        configure_file(${FILE} ${CMAKE_CURRENT_BINARY_DIR}/${FILE} @ONLY)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${FILE} DESTINATION ${${PROJECT_NAME}_DATA_INSTALL_DIR})
-    endforeach()
-endmacro()
-
-macro(kasper_install_data_subdir SUBDIR)
-    install(FILES ${ARGN} DESTINATION ${${PROJECT_NAME}_DATA_INSTALL_DIR}/${SUBDIR})
-endmacro()
-
-macro(kasper_configure_data_subdir SUBDIR)
-    foreach(FILE ${ARGN})
-        configure_file(${FILE} ${CMAKE_CURRENT_BINARY_DIR}/${FILE} @ONLY)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${FILE} DESTINATION ${${PROJECT_NAME}_DATA_INSTALL_DIR}/${SUBDIR})
-    endforeach()
-endmacro()
-
 macro(kasper_install_config)
     install(FILES ${ARGN} DESTINATION ${${PROJECT_NAME}_CONFIG_INSTALL_DIR})
 endmacro()
 
-macro(kasper_configure_config)
-    foreach(FILE ${ARGN})
-        configure_file(${FILE} ${CMAKE_CURRENT_BINARY_DIR}/${FILE} @ONLY)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${FILE} DESTINATION ${${PROJECT_NAME}_CONFIG_INSTALL_DIR})
-    endforeach()
-endmacro()
-
 macro(kasper_install_config_subdir SUBDIR)
     install(FILES ${ARGN} DESTINATION ${${PROJECT_NAME}_CONFIG_INSTALL_DIR}/${SUBDIR})
-endmacro()
-
-macro(kasper_configure_config_subdir SUBDIR)
-    foreach(FILE ${ARGN})
-        configure_file(${FILE} ${CMAKE_CURRENT_BINARY_DIR}/${FILE} @ONLY)
-        install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${FILE} DESTINATION ${${PROJECT_NAME}_CONFIG_INSTALL_DIR}/${SUBDIR})
-    endforeach()
 endmacro()
 
 macro(kasper_install_files DEST_DIR)
@@ -333,13 +309,21 @@ macro(kasper_install_module)
     endif()
 
     #pkg-config
+    kasper_export_pkgconfig()
+endmacro()
+
+
+macro(kasper_export_pkgconfig)
+
     include(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
 
     set(DESCRIPTION ${ARGV0})
 
     set( PC_LIBRARIES_STR )
     set( LIBDIRS )
-    set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${DEPENDS_LIBRARIES} )
+    set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
+    list( REMOVE_DUPLICATES LIBS )
+
     foreach(LIB ${LIBS})
 
         # try to match a directory name
@@ -372,6 +356,10 @@ macro(kasper_install_module)
     endforeach()
 
     set( PC_LD_FLAGS "-L\${libdir}" )
+    if( GCC_FORCE_LINKING )
+        set( PC_LD_FLAGS "${PC_LD_FLAGS} -Wl,--no-as-needed" )
+    endif()
+
     set( PC_RPATH_STR "\${libdir}" )
     foreach(LIBDIR ${LIBDIRS})
         set ( PC_LD_FLAGS "${PC_LD_FLAGS} -L${LIBDIR}" )
@@ -387,6 +375,8 @@ macro(kasper_install_module)
         endif()
     endforeach()
 
+    GET_PROPERTY(GLOBAL_CXX11_FLAG GLOBAL PROPERTY CXX11_FLAG)
+
     set( PC_CONTENTS "prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=${BIN_INSTALL_DIR}
 libdir=${LIB_INSTALL_DIR}
@@ -398,7 +388,7 @@ Description: ${DESCRIPTION}
 Version: ${MODULE_VERSION}
 
 Libs: ${PC_LIBRARIES_STR}
-Cflags: ${CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
+Cflags: ${GLOBAL_CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
 ")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER )
     file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc ${PC_CONTENTS})
@@ -407,6 +397,7 @@ Cflags: ${CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
             RENAME ${PROJECT_NAME}.pc )
 
 endmacro()
+
 
 macro(kasper_add_doc_reference DOXYGEN_FILE)
     # Builds in the source tree (to instead build in the binary tree, switch CMAKE_CURRENT_SOURCE_DIR to CMAKE_CURRENT_BINARY_DIR in the line that starts with WORKING_DIRECTORY.
@@ -447,6 +438,48 @@ macro(kasper_add_doc_reference_sphinx SPHINX_FILE)
             VERBATIM
         )
         add_dependencies(reference reference-${PROJECT_NAME})
+    endif(SPHINX_FOUND)
+endmacro()
+
+macro(kasper_add_user_reference_sphinx SPHINX_FILE DOXYGEN_FILE)
+    # Builds in the binary tree.
+    # This is intended for use by developers only when updating the reference documentation.
+    if (SPHINX_FOUND)
+        if (DOXYGEN_FOUND)
+            if(NOT PACKAGE_VERSION)
+                set(PACKAGE_VERSION ${MODULE_VERSION_MAJOR})
+            endif()
+            #first generate the doxygen C++ API reference
+            configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${DOXYGEN_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE} @ONLY)
+            set(REF_BUILD_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}/UserGuide)
+            file(MAKE_DIRECTORY ${REF_BUILD_DIR})
+            set(DOXY_REF_BUILD_DIR ${REF_BUILD_DIR}/_static)
+            file(MAKE_DIRECTORY ${DOXY_REF_BUILD_DIR})
+            add_custom_target (api-reference-${PROJECT_NAME}
+                ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE}
+                WORKING_DIRECTORY ${DOXY_REF_BUILD_DIR}
+                COMMENT "Generating API documentation with Doxygen for ${PROJECT_NAME}"
+                VERBATIM
+            )
+            string(TOLOWER ${PROJECT_NAME} LOWERCASE_PROJECT_NAME)
+            ADD_CUSTOM_COMMAND(OUTPUT ${LOWERCASE_PROJECT_NAME}.tag
+                    POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/Reference/_static/
+                    COMMAND ${CMAKE_COMMAND} -E copy ${DOXY_REF_BUILD_DIR}/${LOWERCASE_PROJECT_NAME}.tag ${CMAKE_CURRENT_BINARY_DIR}/Reference/_static/
+                    DEPENDS api-reference-${PROJECT_NAME}
+            )
+            #careful...this file copy directive is only executed once
+            #(it does not update if the .rst source files are changed, only if the build directory is removed!)
+            file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Reference/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Reference/)
+            add_custom_target (user-reference-${PROJECT_NAME}
+                ${SPHINX_EXECUTABLE} -b html ${CMAKE_CURRENT_BINARY_DIR}/Reference/ ${REF_BUILD_DIR}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Reference/
+                COMMENT "Generating user documentation with Sphinx for ${PROJECT_NAME}"
+                VERBATIM
+                DEPENDS  ${LOWERCASE_PROJECT_NAME}.tag
+            )
+            add_dependencies(reference user-reference-${PROJECT_NAME})
+        endif(DOXYGEN_FOUND)
     endif(SPHINX_FOUND)
 endmacro()
 
@@ -537,20 +570,24 @@ macro(kasper_find_boost BVERSION)
     else()
         set(ARG_REQUIRED )
     endif()
-    
+
     find_package(Boost ${BVERSION} ${ARG_REQUIRED} COMPONENTS ${ARG_COMPONENTS})
-    
+
     # circumvent a C++11 boost bug in the filesystem library
     if (Boost_VERSION LESS 105100)
         add_definitions( -DBOOST_NO_SCOPED_ENUMS )
     elseif (Boost_VERSION LESS 105700)
         add_definitions( -DBOOST_NO_CXX11_SCOPED_ENUMS )
     endif()
-    
+
+    if (Boost_DIR MATCHES "NOTFOUND" AND Boost_FOUND)
+        unset(Boost_DIR CACHE)
+    endif()
+
     kasper_external_include_directories( ${Boost_INCLUDE_DIRS} )
 endmacro()
 
-macro(kasper_find_vtk)                                   
+macro(kasper_find_vtk)
     # VTK versions below 6.0.1 do not compile with c++11 support
     find_package( VTK REQUIRED NO_MODULE )
     include(${VTK_USE_FILE})

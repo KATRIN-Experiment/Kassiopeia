@@ -2,9 +2,8 @@
 #include "KInitializationMessage.hh"
 
 #include <sstream>
-using std::stringstream;
 
-#include <cstdlib>
+using namespace std;
 
 namespace katrin
 {

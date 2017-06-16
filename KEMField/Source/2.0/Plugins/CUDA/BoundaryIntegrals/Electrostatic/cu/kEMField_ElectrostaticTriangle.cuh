@@ -402,7 +402,7 @@ __forceinline__ __device__ CU_TYPE ET_Local_Ez(CU_TYPE a0,CU_TYPE a1,
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE ET_Potential(const CU_TYPE* P, const CU_TYPE* data)
+__forceinline__ __device__ CU_TYPE ET_PotentialAnalytical(const CU_TYPE* P, const CU_TYPE* data)
 {
   // Triangle calculation
 
@@ -517,7 +517,7 @@ __forceinline__ __device__ CU_TYPE ET_Potential(const CU_TYPE* P, const CU_TYPE*
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ CU_TYPE4 ET_EField(const CU_TYPE* P, const CU_TYPE* data)
+__forceinline__ __device__ CU_TYPE4 ET_EFieldAnalytical(const CU_TYPE* P, const CU_TYPE* data)
 {
   // Triangle calculation
 

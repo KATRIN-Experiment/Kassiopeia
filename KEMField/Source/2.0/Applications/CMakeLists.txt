@@ -15,19 +15,11 @@ set (APPLICATIONS_LIBS
   KEMFileManipulation
   KEMElectrostaticBoundaryIntegrals
   KEMElectromagnets
-  KEMIntegratingFieldSolver
   KEMZHGenerator
   KEMZHSolver
   KEMVisualization
   KFMMathUtilities
   )
-
-if (@PROJECT_NAME@_USE_VTK)
-  kasper_find_vtk()
-  list (APPEND APPLICATIONS_LIBS
-    KEMVTKPlugin
-    )
-endif (@PROJECT_NAME@_USE_VTK)
 
 if (@PROJECT_NAME@_USE_ROOT)
   kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
@@ -57,8 +49,7 @@ if (@PROJECT_NAME@_USE_PETSc)
 endif (@PROJECT_NAME@_USE_PETSc)
 
 if (@PROJECT_NAME@_USE_VTK)
-  kasper_find_vtk()
-  list (APPEND APPLICATIONS_LIBS ${VTK_LIBRARIES} )
+  list (APPEND APPLICATIONS_LIBS KEMVTKPlugin ${Kommon_Vtk_LIBRARIES} )
 endif (@PROJECT_NAME@_USE_VTK)
 
 set_property(
@@ -77,9 +68,17 @@ add_executable (ComputeChargeDensities
   ${CMAKE_CURRENT_SOURCE_DIR}/ComputeChargeDensities.cc)
 target_link_libraries (ComputeChargeDensities ${APPLICATIONS_LIBS} )
 
+add_executable (ComputeChargeDensitiesFromElcd33File
+  ${CMAKE_CURRENT_SOURCE_DIR}/ComputeChargeDensitiesFromElcd33File.cc)
+target_link_libraries (ComputeChargeDensitiesFromElcd33File ${APPLICATIONS_LIBS} )
+
 add_executable (ComputeSphericalCapacitor
   ${CMAKE_CURRENT_SOURCE_DIR}/ComputeSphericalCapacitor.cc)
 target_link_libraries (ComputeSphericalCapacitor ${APPLICATIONS_LIBS} )
+
+add_executable (WriteKbdToAscii
+  ${CMAKE_CURRENT_SOURCE_DIR}/WriteKbdToAscii.cc)
+target_link_libraries (WriteKbdToAscii ${APPLICATIONS_LIBS} )
 
 add_executable (TransferEMElement
   ${CMAKE_CURRENT_SOURCE_DIR}/TransferEMElement.cc)
@@ -95,11 +94,38 @@ target_link_libraries (InspectEMFile ${APPLICATIONS_LIBS} )
 
 kasper_install_executables (
   ComputeChargeDensities
+  ComputeChargeDensitiesFromElcd33File
   ComputeSphericalCapacitor
+  WriteKbdToAscii
   TransferEMElement
   HashEMGeometry
   InspectEMFile
   )
+
+if (@PROJECT_NAME@_USE_ROOT)
+
+  add_executable (AspectRatioFromKbdROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/AspectRatioFromKbdROOT.cc)
+  target_link_libraries (AspectRatioFromKbdROOT ${APPLICATIONS_LIBS} )
+
+    add_executable (CompareFieldsAndPotentialsROOT
+      ${CMAKE_CURRENT_SOURCE_DIR}/CompareFieldsAndPotentialsROOT.cc)
+    target_link_libraries (CompareFieldsAndPotentialsROOT ${APPLICATIONS_LIBS} )
+
+  add_executable (DistanceRatioFromKbdROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/DistanceRatioFromKbdROOT.cc)
+  target_link_libraries (DistanceRatioFromKbdROOT ${APPLICATIONS_LIBS} )
+  
+  kasper_install_executables (
+    AspectRatioFromKbdROOT
+    CompareFieldsAndPotentialsROOT
+    DistanceRatioFromKbdROOT
+  )
+
+endif (@PROJECT_NAME@_USE_ROOT)
+
+
+
 
 if (@PROJECT_NAME@_USE_VTK)
 

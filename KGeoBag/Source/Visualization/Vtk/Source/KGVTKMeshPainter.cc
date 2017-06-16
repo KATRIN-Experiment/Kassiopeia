@@ -12,9 +12,11 @@
 #include "vtkLine.h"
 
 #include "KConst.h"
-#include <cmath>
 
+#include <cmath>
 #include <iostream>
+
+using namespace std;
 
 namespace KGeoBag
 {

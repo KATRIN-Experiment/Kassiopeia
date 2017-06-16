@@ -2,6 +2,8 @@
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 //macro for the destructor and the attributes
@@ -64,6 +66,14 @@ namespace katrin
     //add/remove track output
     KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( AddTrackOutput );
     KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( RemoveTrackOutput );
+
+    //add/remove step write condition
+    KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( AddStepWriteCondition );
+    KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( RemoveStepWriteCondition );
+
+    //add/remove track write condition
+    KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( AddTrackWriteCondition );
+    KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( RemoveTrackWriteCondition );
 
     //set/clear vtk step point
     KSCOMMANDMEMBERSIMPLEBUILDERSOURCE( SetStepPoint );

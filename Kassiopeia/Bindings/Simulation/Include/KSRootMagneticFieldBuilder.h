@@ -3,7 +3,9 @@
 
 #include "KComplexElement.hh"
 #include "KSRootMagneticField.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+
+#include "KSFieldFinder.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +23,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_magnetic_field" )
         {
-            fObject->AddMagneticField( KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( aContainer->AsReference< string >() ) );
+            fObject->AddMagneticField( getMagneticField( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

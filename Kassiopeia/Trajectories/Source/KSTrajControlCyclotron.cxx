@@ -34,6 +34,30 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlCyclotron::Calculate( const KSTrajExactSpinParticle& aParticle, double& aValue )
+    {
+        double tCyclotronFrequency = aParticle.GetCyclotronFrequency();
+        aValue = fFraction / tCyclotronFrequency;
+        return;
+    }
+    void KSTrajControlCyclotron::Check( const KSTrajExactSpinParticle&, const KSTrajExactSpinParticle&, const KSTrajExactSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlCyclotron::Calculate( const KSTrajAdiabaticSpinParticle& aParticle, double& aValue )
+    {
+        double tCyclotronFrequency = aParticle.GetCyclotronFrequency();
+        aValue = fFraction / tCyclotronFrequency;
+        return;
+    }
+    void KSTrajControlCyclotron::Check( const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
     void KSTrajControlCyclotron::Calculate( const KSTrajAdiabaticParticle& aParticle, double& aValue )
     {
         double tCyclotronFrequency = aParticle.GetCyclotronFrequency();

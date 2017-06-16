@@ -4,7 +4,7 @@
 #include "KComplexElement.hh"
 #include "KSGenDirectionSurfaceComposite.h"
 #include "KSGeneratorsMessage.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KGCore.hh"
 
 using namespace Kassiopeia;
@@ -29,12 +29,12 @@ namespace katrin
         }
         if(aContainer->GetName() == "surfaces")
         {
-            vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );
-            vector< KGeoBag::KGSurface* >::iterator tSurfaceIt;
+            std::vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
+            std::vector< KGeoBag::KGSurface* >::iterator tSurfaceIt;
             KGeoBag::KGSurface* tSurface;
 
             if(tSurfaces.size() == 0) {
-                genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+                genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">" << eom;
                 return false;
             }
 
@@ -47,12 +47,12 @@ namespace katrin
 
         if( aContainer->GetName() == "theta" )
         {
-            fObject->SetThetaValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetThetaValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "phi" )
         {
-            fObject->SetPhiValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetPhiValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

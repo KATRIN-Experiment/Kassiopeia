@@ -1,6 +1,8 @@
 #include "KSRootEventModifierBuilder.h"
 #include "KSRootBuilder.h"
 
+#include <string>
+
 using namespace Kassiopeia;
 namespace katrin
 {
@@ -10,9 +12,9 @@ namespace katrin
     }
 
     STATICINT sKSRootEventModifier =
-            KSRootBuilder::ComplexElement< KSRootEventModifier >( "ks_root_eventmodifier" );
+            KSRootBuilder::ComplexElement< KSRootEventModifier >( "ks_root_event_modifier" );
 
     STATICINT sKSRootEventModifierStructure =
-            KSRootEventModifierBuilder::Attribute< string >( "name" ) +
-            KSRootEventModifierBuilder::Attribute< string >( "add_modifier" );
+            KSRootEventModifierBuilder::Attribute< std::string >( "name" ) +
+            KSRootEventModifierBuilder::Attribute< std::string >( "add_modifier" );
 }

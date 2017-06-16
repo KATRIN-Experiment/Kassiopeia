@@ -19,23 +19,25 @@ namespace KGeoBag
             void AddSpace( KGSpace* aSpace );
 
         private:
-            vector< KGSurface* > fSurfaces;
-            vector< KGSpace* > fSpaces;
+            std::vector< KGSurface* > fSurfaces;
+            std::vector< KGSpace* > fSpaces;
     };
 
 }
 
 #include "KComplexElement.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGAxialMeshAttributor > KGAxialMeshBuilder;
+    typedef KComplexElement< KGeoBag::KGAxialMeshAttributor > KGAxialMeshBuilder;
 
     template< >
     inline bool KGAxialMeshBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             fObject->SetName( aContainer->AsReference< string >() );

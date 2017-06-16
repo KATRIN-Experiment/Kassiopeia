@@ -2,6 +2,7 @@
 set( MODIFIERS_HEADER_BASENAMES
     KSModifiersMessage.h
     KSModDynamicEnhancement.h
+    KSModEventReport.h
 )
 set( MODIFIERS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
@@ -14,6 +15,7 @@ endforeach( BASENAME )
 set( MODIFIERS_SOURCE_BASENAMES
     KSModifiersMessage.cxx
     KSModDynamicEnhancement.cxx
+    KSModEventReport.cxx
 )
 set( MODIFIERS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source

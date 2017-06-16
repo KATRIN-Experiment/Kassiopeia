@@ -2,28 +2,12 @@
 #define KMESSAGE_H_
 
 #include <vector>
-using std::vector;
-
 #include <map>
-using std::map;
-
 #include <utility>
-using std::pair;
-
 #include <string>
-using std::string;
-
 #include <sstream>
-using std::stringstream;
-
 #include <ostream>
-using std::ostream;
-
 #include <iomanip>
-using std::setprecision;
-using std::fixed;
-using std::scientific;
-
 #include <cstdlib>
 #include <cxxabi.h>  // needed to convert typename to string
 
@@ -61,7 +45,7 @@ namespace katrin
     class KMessage
     {
         public:
-            KMessage( const string& aKey, const string& aDescription, const string& aPrefix, const string& aSuffix );
+            KMessage( const std::string& aKey, const std::string& aDescription, const std::string& aPrefix, const std::string& aSuffix );
             virtual ~KMessage();
 
         private:
@@ -73,11 +57,11 @@ namespace katrin
             //**************
 
         public:
-            const string& GetKey();
-            void SetKey( const string& aKey );
+            const std::string& GetKey();
+            void SetKey( const std::string& aKey );
 
         protected:
-            string fKey;
+            std::string fKey;
 
             //*********
             //interface
@@ -88,7 +72,7 @@ namespace katrin
              * Helper function to convert typename to human-readable string, see: http://stackoverflow.com/a/19123821
              */
             template< typename XDataType >
-            static string TypeName();
+            static std::string TypeName();
 
         public:
             KMessage& operator()( const KMessageSeverity& );
@@ -106,39 +90,39 @@ namespace katrin
             void Shutdown();
 
         protected:
-            string fSystemDescription;
-            string fSystemPrefix;
-            string fSystemSuffix;
+            std::string fSystemDescription;
+            std::string fSystemPrefix;
+            std::string fSystemSuffix;
 
-            string fErrorColorPrefix;
-            string fErrorColorSuffix;
-            string fErrorDescription;
+            std::string fErrorColorPrefix;
+            std::string fErrorColorSuffix;
+            std::string fErrorDescription;
 
-            string fWarningColorPrefix;
-            string fWarningColorSuffix;
-            string fWarningDescription;
+            std::string fWarningColorPrefix;
+            std::string fWarningColorSuffix;
+            std::string fWarningDescription;
 
-            string fNormalColorPrefix;
-            string fNormalColorSuffix;
-            string fNormalDescription;
+            std::string fNormalColorPrefix;
+            std::string fNormalColorSuffix;
+            std::string fNormalDescription;
 
-            string fDebugColorPrefix;
-            string fDebugColorSuffix;
-            string fDebugDescription;
+            std::string fDebugColorPrefix;
+            std::string fDebugColorSuffix;
+            std::string fDebugDescription;
 
-            string fDefaultColorPrefix;
-            string fDefaultColorSuffix;
-            string fDefaultDescription;
+            std::string fDefaultColorPrefix;
+            std::string fDefaultColorSuffix;
+            std::string fDefaultDescription;
 
         private:
             KMessageSeverity fSeverity;
 
-            string KMessage::*fColorPrefix;
-            string KMessage::*fDescription;
-            string KMessage::*fColorSuffix;
+            std::string KMessage::*fColorPrefix;
+            std::string KMessage::*fDescription;
+            std::string KMessage::*fColorSuffix;
 
-            stringstream fMessageLine;
-            vector< pair< string, char > > fMessageLines;
+            std::stringstream fMessageLine;
+            std::vector< std::pair< std::string, char > > fMessageLines;
 
             //********
             //settings
@@ -148,27 +132,27 @@ namespace katrin
             void SetFormat( const KMessageFormat& aFormat );
             void SetPrecision( const KMessagePrecision& aPrecision );
             void SetTerminalVerbosity( const KMessageSeverity& aVerbosity );
-            void SetTerminalStream( ostream* aTerminalStream );
+            void SetTerminalStream( std::ostream* aTerminalStream );
             void SetLogVerbosity( const KMessageSeverity& aVerbosity );
-            void SetLogStream( ostream* aLogStream );
+            void SetLogStream( std::ostream* aLogStream );
 
         private:
             KMessageSeverity fTerminalVerbosity;
-            ostream* fTerminalStream;
+            std::ostream* fTerminalStream;
             KMessageSeverity fLogVerbosity;
-            ostream* fLogStream;
+            std::ostream* fLogStream;
 
     };
 
     template< typename XDataType >
-    string KMessage::TypeName()
+    std::string KMessage::TypeName()
     {
         int StatusFlag;
-        string TypeName = typeid( XDataType ).name();
+        std::string TypeName = typeid( XDataType ).name();
         char *DemangledName = abi::__cxa_demangle( TypeName.c_str(), NULL, NULL, &StatusFlag );
         if ( StatusFlag == 0 )
         {
-            TypeName = string( DemangledName );
+            TypeName = std::string( DemangledName );
             free( DemangledName );
         }
         return TypeName;
@@ -188,21 +172,21 @@ namespace katrin
     }
     inline KMessage& KMessage::operator<<( const KMessageNewline& )
     {
-        fMessageLines.push_back( pair< string, char >( fMessageLine.str(), '\n' ) );
+        fMessageLines.push_back( std::pair< std::string, char >( fMessageLine.str(), '\n' ) );
         fMessageLine.clear();
         fMessageLine.str( "" );
         return *this;
     }
     inline KMessage& KMessage::operator<<( const KMessageOverline& )
     {
-        fMessageLines.push_back( pair< string, char >( fMessageLine.str(), '\r' ) );
+        fMessageLines.push_back( std::pair< std::string, char >( fMessageLine.str(), '\r' ) );
         fMessageLine.clear();
         fMessageLine.str( "" );
         return *this;
     }
     inline KMessage& KMessage::operator<<( const KMessageNewlineEnd& )
     {
-        fMessageLines.push_back( pair< string, char >( fMessageLine.str(), '\n' ) );
+        fMessageLines.push_back( std::pair< std::string, char >( fMessageLine.str(), '\n' ) );
         fMessageLine.clear();
         fMessageLine.str( "" );
         Flush();
@@ -210,7 +194,7 @@ namespace katrin
     }
     inline KMessage& KMessage::operator<<( const KMessageOverlineEnd& )
     {
-        fMessageLines.push_back( pair< string, char >( fMessageLine.str(), '\r' ) );
+        fMessageLines.push_back( std::pair< std::string, char >( fMessageLine.str(), '\r' ) );
         fMessageLine.clear();
         fMessageLine.str( "" );
         Flush();
@@ -236,7 +220,7 @@ namespace katrin
 
         public:
             void Add( KMessage* aMessage );
-            KMessage* Get( const string& aKey );
+            KMessage* Get( const std::string& aKey );
             void Remove( KMessage* aMessage );
 
             void SetFormat( const KMessageFormat& aFormat );
@@ -248,17 +232,17 @@ namespace katrin
             void SetTerminalVerbosity( const KMessageSeverity& aVerbosity );
             const KMessageSeverity& GetTerminalVerbosity();
 
-            void SetTerminalStream( ostream* aTerminalStream );
-            ostream* GetTerminalStream();
+            void SetTerminalStream( std::ostream* aTerminalStream );
+            std::ostream* GetTerminalStream();
 
             void SetLogVerbosity( const KMessageSeverity& aVerbosity );
             const KMessageSeverity& GetLogVerbosity();
 
-            void SetLogStream( ostream* aLogStream );
-            ostream* GetLogStream();
+            void SetLogStream( std::ostream* aLogStream );
+            std::ostream* GetLogStream();
 
         private:
-            typedef map< string, KMessage* > MessageMap;
+            typedef std::map< std::string, KMessage* > MessageMap;
             typedef MessageMap::value_type MessageEntry;
             typedef MessageMap::iterator MessageIt;
             typedef MessageMap::const_iterator MessageCIt;
@@ -268,9 +252,9 @@ namespace katrin
             KMessageFormat fFormat;
             KMessagePrecision fPrecision;
             KMessageSeverity fTerminalVerbosity;
-            ostream* fTerminalStream;
+            std::ostream* fTerminalStream;
             KMessageSeverity fLogVerbosity;
-            ostream* fLogStream;
+            std::ostream* fLogStream;
     };
 
 }

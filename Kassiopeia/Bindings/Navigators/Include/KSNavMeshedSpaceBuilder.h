@@ -2,7 +2,7 @@
 #define Kassiopeia_KSNavMeshedSpaceBuilder_h_
 
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 #include "KSNavMeshedSpace.h"
 #include "KSNavigatorsMessage.h"
@@ -44,7 +44,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "root_space" )
         {
-            fObject->SetRootSpace( KSToolbox::GetInstance()->GetObjectAs< KSSpace >( aContainer->AsReference< string >() ) );
+            fObject->SetRootSpace( KToolbox::GetInstance().Get< KSSpace >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "max_octree_depth" )
@@ -70,6 +70,11 @@ namespace katrin
         if( aContainer->GetName() == "relative_tolerance" )
         {
             aContainer->CopyTo( fObject, &KSNavMeshedSpace::SetRelativeTolerance );
+            return true;
+        }
+        if( aContainer->GetName() == "path" )
+        {
+            aContainer->CopyTo( fObject, &KSNavMeshedSpace::SetPath );
             return true;
         }
         return false;

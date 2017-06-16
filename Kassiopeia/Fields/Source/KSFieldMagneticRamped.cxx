@@ -1,6 +1,6 @@
 #include "KSFieldMagneticRamped.h"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSFieldElectromagnet.h"
 
 #include "KThreeVector.hh"
@@ -261,7 +261,7 @@ namespace Kassiopeia
     {
         fieldmsg_debug( "Initializing root magnetic field <" << fRootMagneticFieldName << "> from ramped magnetic field <" << GetName() << ">" << eom );
 
-        fRootMagneticField = KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( fRootMagneticFieldName );
+        fRootMagneticField = katrin::KToolbox::GetInstance().Get< KSMagneticField >( fRootMagneticFieldName );
         if (! fRootMagneticField)
         {
             fieldmsg( eError ) << "Ramped magnetic field <" << GetName() << "> can't find root magnetic field <" << fRootMagneticFieldName << ">!" << eom;
@@ -344,7 +344,7 @@ namespace Kassiopeia
     {
         fieldmsg_debug( "Initializing ramped magnetic field <" << fRampedMagneticFieldName << "> from induced azimuthal electric field <" << GetName() << ">" << eom );
 
-        fRampedMagneticField = KSToolbox::GetInstance()->GetObjectAs< KSFieldMagneticRamped >( fRampedMagneticFieldName );
+        fRampedMagneticField = katrin::KToolbox::GetInstance().Get< KSFieldMagneticRamped >( fRampedMagneticFieldName );
         if (! fRampedMagneticField)
         {
             fieldmsg( eError ) << "Induced azimuthal electric field <" << GetName() << "> can't find ramped magnetic field <" << fRampedMagneticFieldName << ">!" << eom;

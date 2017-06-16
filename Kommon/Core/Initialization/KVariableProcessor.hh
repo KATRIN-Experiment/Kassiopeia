@@ -4,10 +4,7 @@
 #include "KProcessor.hh"
 
 #include <stack>
-using std::stack;
-
 #include <map>
-using std::map;
 
 namespace katrin
 {
@@ -16,7 +13,7 @@ namespace katrin
         public KProcessor
     {
         private:
-            typedef map< string, string > VariableMap;
+            typedef std::map< std::string, std::string > VariableMap;
             typedef VariableMap::value_type VariableEntry;
             typedef VariableMap::iterator VariableIt;
             typedef VariableMap::const_iterator VariableCIt;
@@ -53,16 +50,16 @@ namespace katrin
             ElementState fElementState;
             AttributeState fAttributeState;
 
-            string fName;
-            string fValue;
+            std::string fName;
+            std::string fValue;
             VariableMap* fExternalMap;
             VariableMap* fGlobalMap;
             VariableMap* fLocalMap;
-            stack< VariableMap* > fLocalMapStack;
+            std::stack< VariableMap* > fLocalMapStack;
 
-            static const string fStartBracket;
-            static const string fEndBracket;
-            static const string fNameValueSeparator;
+            static const std::string fStartBracket;
+            static const std::string fEndBracket;
+            static const std::string fNameValueSeparator;
     };
 
 }

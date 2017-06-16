@@ -14,7 +14,7 @@ namespace KGeoBag
     {
         KGExtensibleSurface* tExtension;
         KGExtendedSurface< XExtension >* tOtherExtension;
-        vector< KGExtensibleSurface* >::const_iterator tIt;
+        std::vector< KGExtensibleSurface* >::const_iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtension = *tIt;
@@ -32,7 +32,7 @@ namespace KGeoBag
     {
         KGExtensibleSurface* tExtension;
         KGExtendedSurface< XExtension >* tOtherExtension;
-        vector< KGExtensibleSurface* >::const_iterator tIt;
+        std::vector< KGExtensibleSurface* >::const_iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtension = *tIt;
@@ -50,7 +50,7 @@ namespace KGeoBag
     {
         KGExtensibleSurface* tExtension;
         KGExtendedSurface< XExtension >* tOtherExtension;
-        vector< KGExtensibleSurface* >::iterator tIt;
+        std::vector< KGExtensibleSurface* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtension = *tIt;
@@ -68,7 +68,7 @@ namespace KGeoBag
     {
         KGExtensibleSurface* tExtension;
         KGExtendedSurface< XExtension >* tOtherExtension;
-        vector< KGExtensibleSurface* >::iterator tIt;
+        std::vector< KGExtensibleSurface* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtension = *tIt;
@@ -90,7 +90,7 @@ namespace KGeoBag
     {
         KGExtensibleSurface* tExtension;
         KGExtendedSurface< XExtension >* tOtherExtension;
-        vector< KGExtensibleSurface* >::iterator tIt;
+        std::vector< KGExtensibleSurface* >::iterator tIt;
         for( tIt = fExtensions.begin(); tIt != fExtensions.end(); tIt++ )
         {
             tExtension = *tIt;

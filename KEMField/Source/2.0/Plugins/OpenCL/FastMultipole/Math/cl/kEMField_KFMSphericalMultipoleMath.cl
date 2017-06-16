@@ -2,7 +2,7 @@
 #define KFMSphericalMultipole_Defined_H
 
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #define SQRT_OF_THREE 1.7320508075688772935274463
 

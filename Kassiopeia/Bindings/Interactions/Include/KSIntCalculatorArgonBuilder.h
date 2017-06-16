@@ -27,7 +27,7 @@ namespace katrin
             K_SET_GET(bool, DoubleIonisation)
             K_SET_GET(bool, Excitation)
             K_SET_GET(bool, Elastic)
-            vector<KSIntCalculator*> fCalculators;
+            std::vector<KSIntCalculator*> fCalculators;
     };
 
 
@@ -104,7 +104,7 @@ namespace katrin
 
             for( unsigned int i = 0; i < 25; ++i )
             {
-                stringstream tmp;
+                std::stringstream tmp;
                 tmp << (i + 1);
                 aIntCalculator = new KSIntCalculatorArgonExcitation();
                 aIntCalculator->SetName( fObject->GetName() + "_excitation_state_" + tmp.str() );

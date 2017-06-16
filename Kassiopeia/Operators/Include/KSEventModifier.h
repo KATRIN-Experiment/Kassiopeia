@@ -17,12 +17,14 @@ namespace Kassiopeia
 
         public:
 
-            //returns true if any of the state variables of anInitialParticle are changed
-            virtual bool ExecutePreEventModification() = 0;
 
-            //returns true if any of the state variables of aFinalParticle are changed
-            virtual bool ExecutePostEventModifcation() = 0;
-    };
+            //returns true if any of the state variables of anEvent are changed
+            virtual bool ExecutePreEventModification( KSEvent& anEvent ) = 0;
+
+            //returns true if any of the state variables of anEvent are changed
+            virtual bool ExecutePostEventModification( KSEvent& anEvent ) = 0;
+
+     };
 
 }
 

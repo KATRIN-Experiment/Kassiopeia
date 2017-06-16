@@ -7,6 +7,7 @@
 #include <sstream>
 #include <sys/stat.h>
 
+
 #include "KGRotatedObject.hh"
 
 #include "KGMesher.hh"
@@ -36,7 +37,7 @@
 #include "KVector.hh"
 #include "KSimpleVector.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -115,7 +116,7 @@ KFMElectrostaticFastMultipoleFieldSolver* fast_solver;
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
-KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* direct_solver;
+KIntegratingFieldSolver<KOpenCLElectrostaticNumericBoundaryIntegrator>* direct_solver;
 #else
 KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver;
 #endif

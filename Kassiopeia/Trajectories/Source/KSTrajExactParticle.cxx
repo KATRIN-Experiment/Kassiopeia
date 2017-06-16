@@ -35,6 +35,7 @@ namespace Kassiopeia
             fMagneticField( 0., 0., 0. ),
             fElectricField( 0., 0., 0. ),
             fMagneticGradient( 0., 0., 0., 0., 0., 0., 0., 0., 0. ),
+            fElectricGradient( 0., 0., 0., 0., 0., 0., 0., 0., 0. ),
             fElectricPotential( 0. ),
 
             fGuidingCenter( 0., 0., 0. ),
@@ -48,7 +49,8 @@ namespace Kassiopeia
             fGetMagneticFieldPtr( &KSTrajExactParticle::RecalculateMagneticField ),
             fGetElectricFieldPtr( &KSTrajExactParticle::RecalculateElectricField ),
             fGetMagneticGradientPtr( &KSTrajExactParticle::RecalculateMagneticGradient ),
-            fGetElectricPotentialPtr( &KSTrajExactParticle::RecalculateElectricPotential )
+            fGetElectricPotentialPtr( &KSTrajExactParticle::RecalculateElectricPotential ),
+            fGetElectricGradientPtr( &KSTrajExactParticle::RecalculateElectricGradient )
     {
     }
     KSTrajExactParticle::~KSTrajExactParticle()
@@ -79,6 +81,7 @@ namespace Kassiopeia
 
             fGetElectricFieldPtr = &KSTrajExactParticle::RecalculateElectricField;
             fGetElectricPotentialPtr = &KSTrajExactParticle::RecalculateElectricPotential;
+            fGetElectricGradientPtr = &KSTrajExactParticle::RecalculateElectricGradient;
         }
 
         if( GetMass() != aParticle.GetMass() )
@@ -111,6 +114,7 @@ namespace Kassiopeia
             fGetElectricFieldPtr = &KSTrajExactParticle::RecalculateElectricField;
             fGetMagneticGradientPtr = &KSTrajExactParticle::RecalculateMagneticGradient;
             fGetElectricPotentialPtr = &KSTrajExactParticle::RecalculateElectricPotential;
+            fGetElectricGradientPtr = &KSTrajExactParticle::RecalculateElectricGradient;
         }
 
         if( GetMomentum() != aParticle.GetMomentum() )
@@ -268,6 +272,11 @@ namespace Kassiopeia
         (this->*fGetMagneticGradientPtr)();
         return fMagneticGradient;
     }
+    const KThreeMatrix& KSTrajExactParticle::GetElectricGradient() const
+    {
+        (this->*fGetElectricGradientPtr)();
+        return fElectricGradient;
+    }
     const double& KSTrajExactParticle::GetElectricPotential() const
     {
         (this->*fGetElectricPotentialPtr)();
@@ -334,6 +343,12 @@ namespace Kassiopeia
     {
         fMagneticFieldCalculator->CalculateGradient( GetPosition(), GetTime(), fMagneticGradient );
         fGetMagneticGradientPtr = &KSTrajExactParticle::DoNothing;
+        return;
+    }
+    void KSTrajExactParticle::RecalculateElectricGradient() const
+    {
+        fElectricFieldCalculator->CalculateGradient( GetPosition(), GetTime(), fElectricGradient );
+        fGetElectricGradientPtr = &KSTrajExactParticle::DoNothing;
         return;
     }
     void KSTrajExactParticle::RecalculateElectricPotential() const

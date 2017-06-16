@@ -13,6 +13,7 @@ set( MATH_HEADER_BASENAMES
     KSMathRKF54.h
     KSMathRKDP54.h
     KSMathRKDP853.h
+    KSMathSym4.h
     KSMathInterpolator.h
 )
 set( MATH_HEADER_PATH

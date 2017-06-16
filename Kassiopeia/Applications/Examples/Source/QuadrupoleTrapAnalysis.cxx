@@ -7,8 +7,8 @@ using namespace Kassiopeia;
 
 int main()
 {
-    katrin::KMessageTable::GetInstance()->SetTerminalVerbosity( eDebug );
-    katrin::KMessageTable::GetInstance()->SetLogVerbosity( eDebug );
+    katrin::KMessageTable::GetInstance().SetTerminalVerbosity( eDebug );
+    katrin::KMessageTable::GetInstance().SetLogVerbosity( eDebug );
 
     KRootFile* tRootFile = KRootFile::CreateOutputRootFile( "QuadrupoleTrapSimulation.root" );
 
@@ -20,7 +20,7 @@ int main()
     KSReadTrackROOT& tTrackReader = tReader.GetTrack();
     KSReadStepROOT& tStepReader= tReader.GetStep();
 
-//    KSReadObjectROOT& tWorld = tStepReader.GetObject( "component_step_world" );
+//    KSReadObjectROOT& tWorld = tStepReader.Get( "component_step_world" );
 //    KSDouble& tLength = tWorld.Get< KSDouble >( "time" );
 
     KSReadObjectROOT& tCell = tStepReader.GetObject( "component_step_cell" );

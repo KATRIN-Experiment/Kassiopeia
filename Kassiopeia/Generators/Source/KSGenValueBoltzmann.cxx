@@ -1,0 +1,48 @@
+#include "KSGenValueBoltzmann.h"
+
+#include "KSGeneratorsMessage.h"
+
+#include "KRandom.h"
+#include "KConst.h"
+#include <math.h>
+//using katrin::KRandom;
+using namespace katrin;
+
+namespace Kassiopeia
+{
+
+    KSGenValueBoltzmann::KSGenValueBoltzmann() :
+            fValueMass( 1. ),
+            fValuekT( 1. )
+    {
+    }
+    KSGenValueBoltzmann::KSGenValueBoltzmann( const KSGenValueBoltzmann& aCopy ) :
+            KSComponent(),
+            fValueMass( aCopy.fValueMass ),
+            fValuekT( aCopy.fValuekT )
+    {
+    }
+    KSGenValueBoltzmann* KSGenValueBoltzmann::Clone() const
+    {
+        return new KSGenValueBoltzmann( *this );
+    }
+    KSGenValueBoltzmann::~KSGenValueBoltzmann()
+    {
+    }
+
+    void KSGenValueBoltzmann::DiceValue( vector< double >& aDicedValues )
+    {
+        double tValue;
+
+        double fValueSigma = sqrt( fValuekT / fValueMass );
+        double v1 = katrin::KRandom::GetInstance().Gauss( 0., fValueSigma );
+        double v2 = katrin::KRandom::GetInstance().Gauss( 0., fValueSigma );
+        double v3 = katrin::KRandom::GetInstance().Gauss( 0., fValueSigma );
+        tValue = 0.5 * fValueMass * ( v1 * v1 + v2 * v2 + v3 * v3 ) / KConst::Q();
+
+        aDicedValues.push_back( tValue );
+
+        return;
+    }
+
+}

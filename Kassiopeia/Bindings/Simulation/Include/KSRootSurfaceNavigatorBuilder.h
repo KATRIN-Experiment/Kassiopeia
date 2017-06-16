@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootSurfaceNavigator.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "set_surface_navigator" )
         {
-            fObject->SetSurfaceNavigator( KSToolbox::GetInstance()->GetObjectAs< KSSurfaceNavigator >( aContainer->AsReference< string >() ) );
+            fObject->SetSurfaceNavigator( KToolbox::GetInstance().Get< KSSurfaceNavigator >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

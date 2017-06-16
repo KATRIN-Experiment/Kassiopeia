@@ -20,6 +20,7 @@ namespace Kassiopeia
         public:
             virtual void CalculatePotential( const KThreeVector& aSamplePoint, const double& aSampleTime, double& aPotential );
             virtual void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
+            virtual void CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient );
             virtual void CalculateFieldAndPotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, double& aPotentia );
 
         public:
@@ -29,6 +30,7 @@ namespace Kassiopeia
         private:
             double fCurrentPotential;
             KThreeVector fCurrentField;
+            KThreeMatrix fCurrentGradient;
 
             KSList< KSElectricField > fElectricFields;
     };

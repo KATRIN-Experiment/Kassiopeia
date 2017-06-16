@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootTrajectory.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "set_trajectory" )
         {
-            fObject->SetTrajectory( KSToolbox::GetInstance()->GetObjectAs< KSTrajectory >( aContainer->AsReference< string >() ) );
+            fObject->SetTrajectory( KToolbox::GetInstance().Get< KSTrajectory >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

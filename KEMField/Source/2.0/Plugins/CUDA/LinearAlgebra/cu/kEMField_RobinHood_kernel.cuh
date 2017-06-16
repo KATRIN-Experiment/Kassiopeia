@@ -7,7 +7,8 @@
 
 //______________________________________________________________________________
 
-__forceinline__ __device__ int RH_BoundaryRatioExceeded( int iElement,
+__forceinline__ __device__
+int RH_BoundaryRatioExceeded( int iElement,
         const int* boundaryInfo,
         const int* counter )
 {
@@ -46,7 +47,8 @@ __forceinline__ __device__ int RH_BoundaryRatioExceeded( int iElement,
 
 //______________________________________________________________________________
 
-__global__ void InitializeVectorApproximationKernel( const int* boundaryInfo,
+__global__
+void InitializeVectorApproximationKernel( const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         const short* shapeInfo,
         const CU_TYPE* shapeData,
@@ -67,7 +69,8 @@ __global__ void InitializeVectorApproximationKernel( const int* boundaryInfo,
 
 //______________________________________________________________________________
 
-__global__ void FindResidualKernel( CU_TYPE* b_diff,
+__global__
+void FindResidualKernel( CU_TYPE* b_diff,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         const CU_TYPE* b_iterative,
@@ -90,7 +93,8 @@ __global__ void FindResidualKernel( CU_TYPE* b_diff,
 
 //______________________________________________________________________________
 
-__global__ void FindResidualNormKernel( const int* boundaryInfo,
+__global__
+void FindResidualNormKernel( const int* boundaryInfo,
         CU_TYPE* b_diff,
         CU_TYPE* residual )
 {
@@ -104,7 +108,8 @@ __global__ void FindResidualNormKernel( const int* boundaryInfo,
 
 //______________________________________________________________________________
 
-__global__ void CompleteResidualNormalizationKernel( const int* boundaryInfo,
+__global__
+void CompleteResidualNormalizationKernel( const int* boundaryInfo,
         const CU_TYPE* boundaryData,
         CU_TYPE* residual )
 {
@@ -115,7 +120,8 @@ __global__ void CompleteResidualNormalizationKernel( const int* boundaryInfo,
 
 //______________________________________________________________________________
 
-__global__ void IdentifyLargestResidualElementKernel( CU_TYPE* residual,
+__global__
+void IdentifyLargestResidualElementKernel( CU_TYPE* residual,
         int* partialMaxResidualIndex )
 {
     int i =  blockIdx.x * blockDim.x + threadIdx.x;
@@ -162,7 +168,8 @@ __global__ void IdentifyLargestResidualElementKernel( CU_TYPE* residual,
 
 //______________________________________________________________________________
 
-__global__ void CompleteLargestResidualIdentificationKernel( CU_TYPE* residual,
+__global__
+void CompleteLargestResidualIdentificationKernel( CU_TYPE* residual,
         const int* boundaryInfo,
         int* partialMaxResidualIndex,
         int* maxResidualIndex,
@@ -191,7 +198,8 @@ __global__ void CompleteLargestResidualIdentificationKernel( CU_TYPE* residual,
 
 //______________________________________________________________________________
 
-__global__ void ComputeCorrectionKernel( const short* shapeInfo,
+__global__
+void ComputeCorrectionKernel( const short* shapeInfo,
         const CU_TYPE* shapeData,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,
@@ -218,7 +226,8 @@ __global__ void ComputeCorrectionKernel( const short* shapeInfo,
 
 //______________________________________________________________________________
 
-__global__ void UpdateSolutionApproximationKernel( CU_TYPE* q,
+__global__
+void UpdateSolutionApproximationKernel( CU_TYPE* q,
         CU_TYPE* qCorr,
         int* maxResidualIndex )
 {
@@ -228,7 +237,8 @@ __global__ void UpdateSolutionApproximationKernel( CU_TYPE* q,
 
 //______________________________________________________________________________
 
-__global__ void UpdateVectorApproximationKernel( const short* shapeInfo,
+__global__
+void UpdateVectorApproximationKernel( const short* shapeInfo,
         const CU_TYPE* shapeData,
         const int* boundaryInfo,
         const CU_TYPE* boundaryData,

@@ -2,20 +2,11 @@
 #define Kommon_KXMLTokenizer_hh_
 
 #include "KProcessor.hh"
-
 #include "KFile.h"
-using katrin::KFile;
-
 #include "KTextFile.h"
-using katrin::KTextFile;
 
 #include <stack>
-using std::stack;
-
 #include <vector>
-using std::vector;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -42,12 +33,12 @@ namespace katrin
         private:
             void Increment();
             bool AtEnd();
-            bool AtOneOf( const string& aSet );
-            bool AtExactly( const string& aString );
+            bool AtOneOf( const std::string& aSet );
+            bool AtExactly( const std::string& aString );
 
             KTextFile* fFile;
-            string fPath;
-            string fName;
+            std::string fPath;
+            std::string fName;
             int fLine;
             int fColumn;
             char fChar;
@@ -80,10 +71,10 @@ namespace katrin
             //********
 
         private:
-            string Trim( const string& aBuffer );
-            string fBuffer;
-            string fCommentBuffer;
-            stack< string > fNames;
+            std::string Trim( const std::string& aBuffer );
+            std::string fBuffer;
+            std::string fCommentBuffer;
+            std::stack< std::string > fNames;
             KBeginParsingToken* fBeginParsing;
             KBeginFileToken* fBeginFile;
             KBeginElementToken* fBeginElement;
@@ -103,35 +94,35 @@ namespace katrin
             //**************
 
         private:
-            static const string fSpace;
-            static const string fTab;
-            static const string fNewLine;
-            static const string fCarriageReturn;
+            static const std::string fSpace;
+            static const std::string fTab;
+            static const std::string fNewLine;
+            static const std::string fCarriageReturn;
 
-            static const string fLowerCase;
-            static const string fUpperCase;
-            static const string fNumerals;
+            static const std::string fLowerCase;
+            static const std::string fUpperCase;
+            static const std::string fNumerals;
 
-            static const string fLeftBraces;
-            static const string fOperators;
-            static const string fRightBraces;
+            static const std::string fLeftBraces;
+            static const std::string fOperators;
+            static const std::string fRightBraces;
 
-            static const string fLeftAngle;
-            static const string fRightAngle;
-            static const string fLeftAngleSlash;
-            static const string fRightSlashAngle;
-            static const string fEqual;
-            static const string fQuote;
-            static const string fCommentStart;
-            static const string fCommentEnd;
+            static const std::string fLeftAngle;
+            static const std::string fRightAngle;
+            static const std::string fLeftAngleSlash;
+            static const std::string fRightSlashAngle;
+            static const std::string fEqual;
+            static const std::string fQuote;
+            static const std::string fCommentStart;
+            static const std::string fCommentEnd;
 
-            static const string fParameterLeftBrace;
-            static const string fParameterRightBrace;
+            static const std::string fParameterLeftBrace;
+            static const std::string fParameterRightBrace;
 
-            static const string fWhiteSpaceChars;
-            static const string fNameStartChars;
-            static const string fNameChars;
-            static const string fValueChars;
+            static const std::string fWhiteSpaceChars;
+            static const std::string fNameStartChars;
+            static const std::string fNameChars;
+            static const std::string fValueChars;
     };
 
 }

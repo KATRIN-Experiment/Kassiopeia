@@ -8,7 +8,7 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSIntScattering.h"
 #include "KSMainMessage.h"
 #include "KSParticleFactory.h"
@@ -150,9 +150,9 @@ int main( int /*anArgc*/, char** /*anArgv*/ )
 
 
     // make particles
-    KSParticle* tInitialParticle = KSParticleFactory::GetInstance()->Create( 11 );
-    KSParticle* tFinalParticle = KSParticleFactory::GetInstance()->Create( 11 );
-    KSParticle* tInteractionParticle = KSParticleFactory::GetInstance()->Create( 11 );
+    KSParticle* tInitialParticle = KSParticleFactory::GetInstance().Create( 11 );
+    KSParticle* tFinalParticle = KSParticleFactory::GetInstance().Create( 11 );
+    KSParticle* tInteractionParticle = KSParticleFactory::GetInstance().Create( 11 );
     KSParticleQueue tSecondaries;
 
     tInitialParticle->SetLength( 0.00 );
@@ -325,9 +325,6 @@ int main( int /*anArgc*/, char** /*anArgv*/ )
 
     tApplication.Run();
 
-    // deinitialize kassiopeia
-
-    KSToolbox::DeleteInstance();
 
     return 0;
 }

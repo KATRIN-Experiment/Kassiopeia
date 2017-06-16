@@ -45,10 +45,7 @@ using katrin::KVTKPainter;
 #include "vtkActor.h"
 
 #include <vector>
-using std::vector;
-
 #include <deque>
-using std::deque;
 
 namespace KGeoBag
 {
@@ -99,9 +96,9 @@ namespace KGeoBag
         void WriteSTL();
 
     public:
-        void SetFile( const string& aName );
-        const string& GetFile() const;
-        void SetPath( const string& aPath );
+        void SetFile( const std::string& aName );
+        const std::string& GetFile() const;
+        void SetPath( const std::string& aPath );
 
         void SetWriteSTL( bool aFlag );
 
@@ -109,12 +106,12 @@ namespace KGeoBag
         void AddSpace( KGSpace* aSpace );
 
     private:
-        string fFile;
-        string fPath;
+        std::string fFile;
+        std::string fPath;
         bool fWriteSTL;
 
-        vector< KGSurface* > fSurfaces;
-        vector< KGSpace* > fSpaces;
+        std::vector< KGSurface* > fSurfaces;
+        std::vector< KGSpace* > fSpaces;
 
         KGAppearanceData fDefaultData;
 

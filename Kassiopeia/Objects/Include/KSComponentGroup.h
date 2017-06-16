@@ -16,8 +16,8 @@ namespace Kassiopeia
 
         public:
             KSComponentGroup* Clone() const;
-            KSComponent* Component( const string& aField );
-            KSCommand* Command( const string& aField, KSComponent* aChild );
+            KSComponent* Component( const std::string& aField );
+            KSCommand* Command( const std::string& aField, KSComponent* aChild );
 
         public:
             void AddComponent( KSComponent* aComponent );
@@ -28,7 +28,7 @@ namespace Kassiopeia
             unsigned int ComponentCount() const;
 
         private:
-            typedef vector< KSComponent* > ComponentVector;
+            typedef std::vector< KSComponent* > ComponentVector;
             typedef ComponentVector::iterator ComponentIt;
             typedef ComponentVector::const_iterator ComponentCIt;
 

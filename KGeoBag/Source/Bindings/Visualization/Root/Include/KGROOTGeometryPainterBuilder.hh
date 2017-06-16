@@ -5,15 +5,17 @@
 #include "KGROOTGeometryPainter.hh"
 #include "KGVisualizationMessage.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGROOTGeometryPainter > KGROOTGeometryPainterBuilder;
+    typedef KComplexElement< KGeoBag::KGROOTGeometryPainter > KGROOTGeometryPainterBuilder;
 
     template< >
     inline bool KGROOTGeometryPainterBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace KGeoBag;
+        using namespace std;
+
         if( aContainer->GetName() == "name" )
         {
             aContainer->CopyTo( fObject, &KNamed::SetName );

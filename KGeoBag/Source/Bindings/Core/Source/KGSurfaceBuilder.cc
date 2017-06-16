@@ -2,6 +2,9 @@
 #include "KGTransformationBuilder.hh"
 #include "KGInterfaceBuilder.hh"
 
+using namespace std;
+using namespace KGeoBag;
+
 namespace katrin
 {
     STATICINT sKGSurfaceBuilder =

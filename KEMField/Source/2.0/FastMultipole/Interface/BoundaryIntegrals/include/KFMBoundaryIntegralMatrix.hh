@@ -3,6 +3,7 @@
 
 #include "KSimpleVector.hh"
 #include "KSquareMatrix.hh"
+#include "KMPIEnvironment.hh"
 
 //#define DEBUG_TIME_BALANCE
 
@@ -11,18 +12,8 @@
 #endif
 
 #ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
-    #endif
     #define DENSE_PRODUCT_TAG 700
     #define SPARSE_PRODUCT_TAG 701
-    #define MPI_SECOND_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==1 )
-#else
-    #ifndef MPI_SINGLE_PROCESS
-        #define MPI_SINGLE_PROCESS if( true )
-    #endif
-    #define MPI_SECOND_PROCESS if ( true )
 #endif
 
 namespace KEMField
@@ -47,11 +38,26 @@ class KFMBoundaryIntegralMatrix: public KSquareMatrix< typename DenseMatrixType:
     public:
         typedef typename DenseMatrixType::ValueType ValueType;
 
-        KFMBoundaryIntegralMatrix(const DenseMatrixType& dm, const SparseMatrixType& sm):
+        /**
+         * leave memory management of the sparse end dense matrices to caller
+         */
+        KFMBoundaryIntegralMatrix(const DenseMatrixType& dm,const SparseMatrixType& sm) :
+        	fDenseMatrix(&dm,true),fSparseMatrix(&sm,true)
+        {
+        	fDimension = fDenseMatrix->Dimension();
+        	fX.resize(fDimension);
+        	fTempDense.resize(fDimension);
+        	fTempSparse.resize(fDimension);
+        }
+
+        /**
+         * let smart pointer solve the memory management of dense and sparse matrices
+         */
+        KFMBoundaryIntegralMatrix(KSmartPointer<const DenseMatrixType> dm, KSmartPointer<const SparseMatrixType> sm):
                                   fDenseMatrix(dm),
                                   fSparseMatrix(sm)
         {
-            fDimension = fDenseMatrix.Dimension();
+            fDimension = fDenseMatrix->Dimension();
             fX.resize(fDimension);
             fTempDense.resize(fDimension);
             fTempSparse.resize(fDimension);
@@ -153,7 +159,7 @@ class KFMBoundaryIntegralMatrix: public KSquareMatrix< typename DenseMatrixType:
 
         virtual const ValueType& operator()(unsigned int i, unsigned int j) const
         {
-            return fDenseMatrix(i,j);
+            return (*fDenseMatrix)(i,j);
         }
 
     protected:
@@ -161,18 +167,18 @@ class KFMBoundaryIntegralMatrix: public KSquareMatrix< typename DenseMatrixType:
         void EvaluateDense() const
         {
             //compute the contribution from the dense component
-            fDenseMatrix.Multiply(fX,fTempDense);
+            fDenseMatrix->Multiply(fX,fTempDense);
         }
 
         void EvaluateSparse() const
         {
             //compute contribution from sparse component
-            fSparseMatrix.Multiply(fX,fTempSparse);
+            fSparseMatrix->Multiply(fX,fTempSparse);
         }
 
         unsigned int fDimension;
-        const DenseMatrixType& fDenseMatrix;
-        const SparseMatrixType& fSparseMatrix;
+        const KSmartPointer<const DenseMatrixType> fDenseMatrix;
+        const KSmartPointer<const SparseMatrixType> fSparseMatrix;
         mutable KSimpleVector<ValueType> fTempDense;
         mutable KSimpleVector<ValueType> fTempSparse;
         mutable KSimpleVector<ValueType> fX;

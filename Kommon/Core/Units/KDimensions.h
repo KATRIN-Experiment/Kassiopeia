@@ -1,17 +1,12 @@
 #ifndef KSDIMENSIONS_H_
 #define KSDIMENSIONS_H_
 
-#include "KSAssert.h"
-
 #include "KTypeList.h"
 #include "KTypeInteger.h"
 #include "KTypeLogic.h"
 
 #include <string>
-using std::string;
-
 #include <sstream>
-using std::stringstream;
 
 namespace katrin
 {
@@ -56,16 +51,16 @@ namespace katrin
                 public:
                      enum
                     {
-                        Value = KSTypeEqual< KDimension< KTYPELIST7( KTypeInteger< XMassPowerValue >, KTypeInteger< XLengthPowerValue >, KTypeInteger< XTimePowerValue >, KTypeInteger< XChargePowerValue >, KTypeInteger< XTemperaturePowerValue >, KTypeInteger< XIntensityPowerValue >, KTypeInteger< XAnglePowerValue > ) >, KDimension< KTYPELIST7( KTypeInteger< XRightMassPowerValue >, KTypeInteger< XRightLengthPowerValue >, KTypeInteger< XRightTimePowerValue >, KTypeInteger< XRightChargePowerValue >, KTypeInteger< XRightTemperaturePowerValue >, KTypeInteger< XRightIntensityPowerValue >, KTypeInteger< XRightAnglePowerValue > ) > >::Value
+                        Value = KTypeEqual< KDimension< KTYPELIST7( KTypeInteger< XMassPowerValue >, KTypeInteger< XLengthPowerValue >, KTypeInteger< XTimePowerValue >, KTypeInteger< XChargePowerValue >, KTypeInteger< XTemperaturePowerValue >, KTypeInteger< XIntensityPowerValue >, KTypeInteger< XAnglePowerValue > ) >, KDimension< KTYPELIST7( KTypeInteger< XRightMassPowerValue >, KTypeInteger< XRightLengthPowerValue >, KTypeInteger< XRightTimePowerValue >, KTypeInteger< XRightChargePowerValue >, KTypeInteger< XRightTemperaturePowerValue >, KTypeInteger< XRightIntensityPowerValue >, KTypeInteger< XRightAnglePowerValue > ) > >::Value
                     };
             };
 
         public:
-            static const string fSymbol;
-            static const string ConstructDimensionSymbol()
+            static const std::string fSymbol;
+            static const std::string ConstructDimensionSymbol()
             {
 
-                stringstream Symbol;
+                std::stringstream Symbol;
                 Symbol.clear();
                 Symbol.str( "" );
 
@@ -150,7 +145,7 @@ namespace katrin
 
     //eclipse cannot understand this line, but it is nonetheless correct.
     template< int XMassPowerValue, int XLengthPowerValue, int XTimePowerValue, int XChargePowerValue, int XTemperaturePowerValue, int XIntensityPowerValue, int XAnglePowerValue >
-    const string KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KSTypeNull > > > > > > > >::fSymbol = KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KSTypeNull > > > > > > > >::ConstructDimensionSymbol();
+    const std::string KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > >::fSymbol = KDimension< KTypeList< KTypeInteger< XMassPowerValue >, KTypeList< KTypeInteger< XLengthPowerValue >, KTypeList< KTypeInteger< XTimePowerValue >, KTypeList< KTypeInteger< XChargePowerValue >, KTypeList< KTypeInteger< XTemperaturePowerValue >, KTypeList< KTypeInteger< XIntensityPowerValue >, KTypeList< KTypeInteger< XAnglePowerValue >, KTypeNull > > > > > > > >::ConstructDimensionSymbol();
 
     //******************
     //dimension typedefs
@@ -160,42 +155,42 @@ namespace katrin
     typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KDimensionless;
 
     //base dimensions
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMassDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSLengthDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSTimeDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSChargeDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSTemperatureDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 > ) > KSIntensityDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 > ) > KSAngleDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMassDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KLengthDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KTimeDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KChargeDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KTemperatureDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< 0 > ) > KIntensityDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 > ) > KAngleDimension;
 
     //derived mechanical dimensions
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSAreaDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 3 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSVolumeDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSFrequencyDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 > ) > KSAngularFrequencyDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSVelocityDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSAccelerationDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMomentumDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSForceDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 > ) > KSAngularMomentumDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 > ) > KSTorqueDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSEnergyDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -3 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSPowerDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSPressureDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KAreaDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 3 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KVolumeDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KFrequencyDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 1 > ) > KAngularFrequencyDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KVelocityDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KAccelerationDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMomentumDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KForceDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 > ) > KAngularMomentumDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 > ) > KTorqueDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KEnergyDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -3 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KPowerDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KPressureDimension;
 
     //derived electromagnetic dimensions
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSElectricPotentialDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSElectricFieldDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMagneticPotentialDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMagneticFieldDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< -1 >, KTypeInteger< -3 >, KTypeInteger< 2 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSElectricPermittivityDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMagneticPermeabilityDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KElectricPotentialDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -2 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KElectricFieldDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMagneticPotentialDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMagneticFieldDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< -1 >, KTypeInteger< -3 >, KTypeInteger< 2 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KElectricPermittivityDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< -2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMagneticPermeabilityDimension;
 
-    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSCurrentDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSResistanceDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSInductanceDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< -1 >, KTypeInteger< -2 >, KTypeInteger< 2 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSCapacitanceDimension;
-    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KSMagneticFluxDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KCurrentDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KResistanceDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KInductanceDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< -1 >, KTypeInteger< -2 >, KTypeInteger< 2 >, KTypeInteger< 2 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KCapacitanceDimension;
+    typedef KDimension< KTYPELIST7( KTypeInteger< 1 >, KTypeInteger< 2 >, KTypeInteger< -1 >, KTypeInteger< -1 >, KTypeInteger< 0 >, KTypeInteger< 0 >, KTypeInteger< 0 > ) > KMagneticFluxDimension;
 
 }
 

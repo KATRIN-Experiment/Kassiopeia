@@ -2,10 +2,7 @@
 #define KNAMED_H_
 
 #include <string>
-using std::string;
-
 #include <ostream>
-using std::ostream;
 
 namespace katrin
 {
@@ -22,15 +19,15 @@ namespace katrin
             //**************
 
         public:
-            bool HasName( const string& aName ) const;
-            const string& GetName() const;
-            void SetName( const string& aName );
+            bool HasName( const std::string& aName ) const;
+            const std::string& GetName() const;
+            void SetName( const std::string& aName );
 
         protected:
-            string fName;
+            std::string fName;
     };
 
-    inline bool KNamed::HasName( const string& aName ) const
+    inline bool KNamed::HasName( const std::string& aName ) const
     {
         if( fName == aName )
         {
@@ -38,17 +35,17 @@ namespace katrin
         }
         return false;
     }
-    inline void KNamed::SetName( const string& aName )
+    inline void KNamed::SetName( const std::string& aName )
     {
         fName = aName;
         return;
     }
-    inline const string& KNamed::GetName() const
+    inline const std::string& KNamed::GetName() const
     {
         return fName;
     }
 
-    inline ostream& operator<<( ostream& aStream, const KNamed& aNamed )
+    inline std::ostream& operator<<( std::ostream& aStream, const KNamed& aNamed )
     {
         aStream << "<" << aNamed.GetName() << ">";
         return aStream;

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSIntDecayCalculatorGlukhovIonisation.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 
 using namespace Kassiopeia;

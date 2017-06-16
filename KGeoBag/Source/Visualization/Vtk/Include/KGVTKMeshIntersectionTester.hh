@@ -78,8 +78,8 @@ namespace KGeoBag
             double fLineSize;
 
             //surface arrays
-            vector< KGSurface* > fSurfaces;
-            vector< KGSpace* > fSpaces;
+            std::vector< KGSurface* > fSurfaces;
+            std::vector< KGSpace* > fSpaces;
 
             //vtk data
             vtkSmartPointer< vtkPoints > fPoints;

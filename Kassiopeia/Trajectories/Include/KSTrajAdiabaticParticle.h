@@ -72,10 +72,10 @@ namespace Kassiopeia
             void SetMagneticField( const KThreeVector& aField ) const;
             const KThreeVector& GetElectricField() const;
             const KThreeMatrix& GetMagneticGradient() const;
-            const pair<const KThreeVector&, const KThreeMatrix&> GetMagneticFieldAndGradient() const;
+            const std::pair<const KThreeVector&, const KThreeMatrix&> GetMagneticFieldAndGradient() const;
             const double& GetElectricPotential() const;
             const double& GetElectricPotentialRP() const;
-            const pair<const KThreeVector&, const double&> GetElectricFieldAndPotential() const;
+            const std::pair<const KThreeVector&, const double&> GetElectricFieldAndPotential() const;
 
             const KThreeVector& GetGuidingCenter() const; //basic
             const double& GetLongMomentum() const; //basic

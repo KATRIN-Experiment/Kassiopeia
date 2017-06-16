@@ -41,15 +41,17 @@ namespace KGeoBag
 
 #include "KComplexElement.hh"
 
-using namespace KGeoBag;
 namespace katrin
 {
 
-    typedef KComplexElement< KGDiscreteRotationalMeshAttributor > KGDiscreteRotationalMeshBuilder;
+    typedef KComplexElement< KGeoBag::KGDiscreteRotationalMeshAttributor > KGDiscreteRotationalMeshBuilder;
 
     template< >
     inline bool KGDiscreteRotationalMeshBuilder::AddAttribute( KContainer* aContainer )
     {
+        using namespace std;
+        using namespace KGeoBag;
+
         if( aContainer->GetName() == "name" )
         {
             fObject->SetName( aContainer->AsReference< string >() );

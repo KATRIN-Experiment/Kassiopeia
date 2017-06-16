@@ -12,22 +12,22 @@ namespace katrin
     template< >
     inline bool KGRotatedPolyLineSpaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSpace::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "rotated_mesh_count" ) )
+        if( anAttribute->GetName() == "rotated_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSpace::RotatedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSpace::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGRotatedPolyLineSpace::FlattenedMeshPower );
             return true;
@@ -38,7 +38,7 @@ namespace katrin
     template< >
     inline bool KGRotatedPolyLineSpaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "poly_line" ) )
+        if( anElement->GetName() == "poly_line" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarPolyLine::CopyFrom );
             return true;

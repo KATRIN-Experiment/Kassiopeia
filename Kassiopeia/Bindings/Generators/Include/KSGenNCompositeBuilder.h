@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGenNComposite.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -21,7 +21,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "n_value" )
         {
-            fObject->SetNValue( KSToolbox::GetInstance()->GetObjectAs< KSGenValue >( aContainer->AsReference< string >() ) );
+            fObject->SetNValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

@@ -19,12 +19,12 @@ namespace Kassiopeia
             virtual ~KSGenValueFormula();
 
         public:
-            virtual void DiceValue( vector< double >& aDicedValues );
+            virtual void DiceValue( std::vector< double >& aDicedValues );
 
         public:
             ;K_SET_GET( double, ValueMin );
             ;K_SET_GET( double, ValueMax );
-            ;K_SET_GET( string, ValueFormula );
+            ;K_SET_GET( std::string, ValueFormula );
 
         public:
             void InitializeComponent();

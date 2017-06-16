@@ -1,7 +1,7 @@
 #ifndef KEMFIELD_ROBINHOOD_KERNEL_CL
 #define KEMFIELD_ROBINHOOD_KERNEL_CL
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #include "kEMField_LinearAlgebra.cl"
 

@@ -10,7 +10,7 @@
 #include "KSurfaceTypes.hh"
 #include "KSurface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 
 #include "KSurfaceContainer.hh"
 #include "KBoundaryIntegralMatrix.hh"
@@ -198,7 +198,7 @@ int main(int /*argc*/, char** /*argv*/)
   // sC.push_back(t3);
   // sC.push_back(t4);
 
-  KElectrostaticBoundaryIntegrator integrator;
+  KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
   KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(sC,integrator);
 
   for (unsigned int i=0;i<A.Dimension();i++)

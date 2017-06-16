@@ -197,7 +197,7 @@ namespace Kassiopeia
                 public Action
             {
                 public:
-                    PointAction( KThreeVector* aData, vector< vtkIdType >& anIds, vtkSmartPointer< vtkPoints > aPoints ) :
+                    PointAction( KThreeVector* aData, std::vector< vtkIdType >& anIds, vtkSmartPointer< vtkPoints > aPoints ) :
                             fData( aData ),
                             fIds( anIds ),
                             fPoints( aPoints )
@@ -215,13 +215,13 @@ namespace Kassiopeia
 
                 private:
                     KThreeVector* fData;
-                    vector< vtkIdType >& fIds;
+                    std::vector< vtkIdType >& fIds;
                     vtkSmartPointer< vtkPoints > fPoints;
 
             };
 
-            typedef map< KSComponent*, Action* > ActionMap;
-            typedef pair< KSComponent*, Action* > ActionEntry;
+            typedef std::map< KSComponent*, Action* > ActionMap;
+            typedef std::pair< KSComponent*, Action* > ActionEntry;
             typedef ActionMap::iterator ActionIt;
             typedef ActionMap::const_iterator ActionCIt;
 
@@ -232,12 +232,12 @@ namespace Kassiopeia
             ~KSWriteVTK();
 
         public:
-            void SetBase( const string& aBase );
-            void SetPath( const string& aPath );
+            void SetBase( const std::string& aBase );
+            void SetPath( const std::string& aPath );
 
         private:
-            string fBase;
-            string fPath;
+            std::string fBase;
+            std::string fPath;
 
         public:
             void ExecuteRun();
@@ -275,7 +275,7 @@ namespace Kassiopeia
             KSComponent* fTrackDataComponent;
             ActionMap fTrackDataActions;
 
-            vector< vtkIdType > fTrackIds;
+            std::vector< vtkIdType > fTrackIds;
             vtkSmartPointer< vtkPoints > fTrackPoints;
             vtkSmartPointer< vtkCellArray > fTrackVertices;
             vtkSmartPointer< vtkPolyData > fTrackData;
@@ -293,7 +293,7 @@ namespace Kassiopeia
             KSComponent* fStepDataComponent;
             ActionMap fStepDataActions;
 
-            vector< vtkIdType > fStepIds;
+            std::vector< vtkIdType > fStepIds;
             vtkSmartPointer< vtkPoints > fStepPoints;
             vtkSmartPointer< vtkCellArray > fStepLines;
             vtkSmartPointer< vtkPolyData > fStepData;

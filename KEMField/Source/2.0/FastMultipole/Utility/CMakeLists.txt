@@ -4,6 +4,8 @@
 kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (KFM_UTIL_HEADERFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFastMultipoleMatrixGenerator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTypes.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNamedScalarData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNamedScalarDataCollection.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticFastMultipoleBoundaryValueSolver.hh
@@ -12,6 +14,7 @@ set (KFM_UTIL_HEADERFILES
 )
 
 set (KFM_UTIL_SOURCEFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFastMultipoleMatrixGenerator.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMNamedScalarData.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMNamedScalarDataCollection.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticFastMultipoleBoundaryValueSolver.cc
@@ -29,8 +32,10 @@ set (KFM_UTIL_LIBS
         KFMInterfaceExtraction
         KFMInterfaceFieldSolvers
         KEMCore
+        KEMFieldExceptions
         KEMFileManipulation
         KEMHashGenerator
+        KEMLinearAlgebraSolvers
         KEMStructuredASCII
         KEMMath
         KEMSurfaces
@@ -43,7 +48,6 @@ if(@PROJECT_NAME@_USE_OPENCL)
 endif(@PROJECT_NAME@_USE_OPENCL)
 
 if (@PROJECT_NAME@_USE_VTK)
-    kasper_find_vtk()
     list (APPEND KFM_UTIL_LIBS KEMVTKPlugin)
     add_cflag (KEMFIELD_USE_VTK)
 endif (@PROJECT_NAME@_USE_VTK)

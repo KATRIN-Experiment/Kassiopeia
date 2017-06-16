@@ -1,7 +1,7 @@
 #include "KFile.h"
 #include "KFileMessage.h"
 
-#include <cstdlib>
+using namespace std;
 
 namespace katrin
 {

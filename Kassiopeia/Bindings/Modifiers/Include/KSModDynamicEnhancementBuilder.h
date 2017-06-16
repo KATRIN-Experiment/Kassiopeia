@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSModDynamicEnhancement.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -20,12 +20,12 @@ namespace katrin
         }
         if( aContainer->GetName() == "synchrotron" )
         {
-            fObject->SetSynchrotron( KSToolbox::GetInstance()->GetObjectAs< KSTrajTermSynchrotron >( aContainer->AsReference< string >() ) );
+            fObject->SetSynchrotron( KToolbox::GetInstance().Get< KSTrajTermSynchrotron >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "scattering" )
         {
-            fObject->SetScattering( KSToolbox::GetInstance()->GetObjectAs< KSIntScattering >( aContainer->AsReference< string >() ) );
+            fObject->SetScattering( KToolbox::GetInstance().Get< KSIntScattering >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         if( aContainer->GetName() == "static_enhancement" )

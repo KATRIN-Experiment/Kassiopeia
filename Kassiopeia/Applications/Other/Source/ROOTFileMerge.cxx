@@ -111,8 +111,8 @@ void FillDataPresenceBranch( TTree *tOutputDataPresenceTree, TTree *tInputDataPr
 
 int main( int argc, char** argv )
 {
-    KMessageTable::GetInstance()->SetTerminalVerbosity( eNormal );
-    KMessageTable::GetInstance()->SetLogVerbosity( eNormal );
+    KMessageTable::GetInstance().SetTerminalVerbosity( eNormal );
+    KMessageTable::GetInstance().SetLogVerbosity( eNormal );
 
     const int tBufferSize = 64000;
     const int tSplitSize = 99;

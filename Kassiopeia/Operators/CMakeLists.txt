@@ -14,11 +14,15 @@ set( OPERATORS_HEADER_BASENAMES
 	KSSurface.h
 	KSSurfaceInteraction.h
 	KSSurfaceNavigator.h
+    KSSide.h
 	KSStepModifier.h
+    KSTrackModifier.h
+    KSEventModifier.h
+    KSRunModifier.h
 	KSTerminator.h
 	KSWriter.h
 )
-set( OPERATORS_HEADER_PATH 
+set( OPERATORS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${OPERATORS_HEADER_BASENAMES} )
@@ -36,17 +40,20 @@ set( OPERATORS_SOURCE_BASENAMES
 	KSGenerator.cxx
 	KSTrajectory.cxx
 	KSSpace.cxx
-	KSSurface.cxx
-	KSSide.cxx
-	KSSpaceInteraction.cxx
-	KSSpaceNavigator.cxx
+    KSSpaceInteraction.cxx
+    KSSpaceNavigator.cxx
+    KSSurface.cxx
 	KSSurfaceInteraction.cxx
 	KSSurfaceNavigator.cxx
+    KSSide.cxx
 	KSStepModifier.cxx
+    KSTrackModifier.cxx
+    KSEventModifier.cxx
+    KSRunModifier.cxx
 	KSTerminator.cxx
 	KSWriter.cxx
 )
-set( OPERATORS_SOURCE_PATH 
+set( OPERATORS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${OPERATORS_SOURCE_BASENAMES} )
@@ -67,6 +74,3 @@ target_link_libraries( KassiopeiaOperators
 # install
 kasper_install_headers( ${OPERATORS_HEADER_FILENAMES} )
 kasper_install_libraries( KassiopeiaOperators )
-
-
-	

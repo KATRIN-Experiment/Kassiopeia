@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <string>
+#include <iostream>
 
 namespace KEMField
 {
@@ -21,6 +22,7 @@ namespace KEMField
     static const KEMThreeVector sXUnit;
     static const KEMThreeVector sYUnit;
     static const KEMThreeVector sZUnit;
+    static const KEMThreeVector sZero;
 
   public:
     KEMThreeVector();
@@ -448,16 +450,16 @@ namespace KEMField
   inline std::string KDirection::Name() { return "KDirection"; }
 
 /**
-* @class KMagneticField
+* @class KMagneticFieldVector
 *
 * @brief A three-vector that does not transform with a translation.
 *
 * @author T.J. Corona
 */
-  class KMagneticField : public KEMThreeVector_<false>
+  class KMagneticFieldVector : public KEMThreeVector_<false>
   {
   public:
-    static std::string Name() { return "MagneticField"; }
+    static std::string Name() { return "MagneticFieldVector"; }
   };
 }
 

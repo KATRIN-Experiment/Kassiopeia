@@ -17,7 +17,7 @@ namespace Kassiopeia
             virtual ~KSGenValueAngleSpherical();
 
         public:
-            virtual void DiceValue( vector< double >& aDicedValues );
+            virtual void DiceValue( std::vector< double >& aDicedValues );
 
         public:
             K_SET_GET( double, AngleMin )

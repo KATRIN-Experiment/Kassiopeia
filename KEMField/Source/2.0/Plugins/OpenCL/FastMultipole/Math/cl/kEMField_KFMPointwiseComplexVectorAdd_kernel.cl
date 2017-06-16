@@ -3,7 +3,7 @@
 
 
 
-#include  "kEMField_defines.h"
+#include  "kEMField_opencl_defines.h"
 __kernel void
 PointwiseComplexVectorAdd(const unsigned int array_size,
                           __global CL_TYPE2* input1,

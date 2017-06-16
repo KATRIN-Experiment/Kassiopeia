@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSCommandMember.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include <type_traits>
 
 using namespace Kassiopeia;
@@ -19,15 +19,17 @@ namespace katrin
                 fChild(0),
                 fField("")
             {}
-            string fName;
+            std::string fName;
             KSComponent* fParent;
             KSComponent* fChild;
-            string fField;
+            std::string fField;
     };
 
 //marco definition,
-// as all builder for adding or removing from the root toolboxes look the same, except for the names and strings
+// as all builder for adding or removing from the root toolboxes look the same, except for the names and std::strings
 #define KSCOMMANDMEMBERSIMPLEBUILDERHEADER( xDEFAULTPARENTNAME, xFIELDNAME, xBUILDERNAME )\
+    \
+    using namespace std;\
     \
     class KSCommandMember ## xBUILDERNAME ## Data :\
             public KSCommandMemberSimpleData\
@@ -47,19 +49,19 @@ namespace katrin
     {\
         if( aContainer->GetName() == "name" )\
         {\
-            string tName = aContainer->AsReference< string >();\
+            std::string tName = aContainer->AsReference< std::string >();\
             fObject->fName = tName;\
             return true;\
         }\
         if( aContainer->GetName() == "parent" )\
         {\
-            KSComponent* tParent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( aContainer->AsReference< string >() );\
+            KSComponent* tParent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );\
             fObject->fParent = tParent;\
             return true;\
         }\
         if( aContainer->GetName() == "child" )\
         {\
-            KSComponent* tComponent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( aContainer->AsReference< string >() );\
+            KSComponent* tComponent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );\
             fObject->fChild = tComponent;\
             return true;\
         }\
@@ -71,7 +73,7 @@ namespace katrin
         fObject->fField = xFIELDNAME ;\
         if ( fObject->fParent == 0 )\
         {\
-            fObject->fParent = KSToolbox::GetInstance()->GetObjectAs< KSComponent >( xDEFAULTPARENTNAME );\
+            fObject->fParent = KToolbox::GetInstance().Get< KSComponent >( xDEFAULTPARENTNAME );\
         }\
         KSCommand* tCommand = fObject->fParent->Command( fObject->fField, fObject->fChild );\
         if( fObject->fName.length() != 0 )\
@@ -131,6 +133,14 @@ namespace katrin
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for add_track_output", "add_track_output", AddTrackOutput );
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for remove_track_output", "remove_track_output", RemoveTrackOutput );
 
+    //add/remove step write condition
+    KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for add_step_write_condition", "add_step_write_condition", AddStepWriteCondition );
+    KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for remove_step_write_condition", "remove_step_write_condition", RemoveStepWriteCondition );
+
+    //add/remove track write condition
+    KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for add_track_write_condition", "add_track_write_condition", AddTrackWriteCondition );
+    KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for remove_track_write_condition", "remove_track_write_condition", RemoveTrackWriteCondition );
+
     //set/clear vtk step point
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for set_step_point", "set_step_point", SetStepPoint );
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for clear_step_point", "clear_step_point", ClearStepPoint );
@@ -146,6 +156,7 @@ namespace katrin
     //set/clear vtk track data
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for set_track_data", "set_track_data", SetTrackData );
     KSCOMMANDMEMBERSIMPLEBUILDERHEADER( "no default parent for clear_track_data", "clear_track_data", ClearTrackData );
+
 
 
 #undef KSCOMMANDMEMBERSIMPLEBUILDERHEADER

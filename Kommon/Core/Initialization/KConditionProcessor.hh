@@ -4,15 +4,8 @@
 #include "KProcessor.hh"
 
 #include <stack>
-using std::stack;
-
 #include <vector>
-using std::vector;
-
 #include <sstream>
-using std::stringstream;
-
-#include <cstdlib>
 
 namespace katrin
 {
@@ -21,7 +14,7 @@ namespace katrin
         public KProcessor
     {
         private:
-            typedef vector< KToken* > TokenVector;
+            typedef std::vector< KToken* > TokenVector;
             typedef TokenVector::iterator TokenIt;
             typedef TokenVector::const_iterator TokenCIt;
 

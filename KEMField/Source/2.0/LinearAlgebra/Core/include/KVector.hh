@@ -38,6 +38,8 @@ namespace KEMField
     {
         return std::abs(argument);
     }
+
+    virtual void Fill(ValueType x);
   };
 
   template <typename ValueType>
@@ -74,6 +76,13 @@ namespace KEMField
   inline unsigned int KVector<unsigned int>::abs(unsigned int argument)
   {
       return argument;
+  }
+
+  template <typename ValueType>
+  void KVector<ValueType>::Fill(ValueType x)
+  {
+  	for(unsigned int i=0; i<Dimension(); i++)
+  		this->operator[](i) = x;
   }
 
 }

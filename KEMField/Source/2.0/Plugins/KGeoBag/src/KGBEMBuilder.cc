@@ -2,6 +2,8 @@
 #include "KGInterfaceBuilder.hh"
 
 using namespace KGeoBag;
+using namespace std;
+
 namespace katrin
 {
 

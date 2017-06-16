@@ -26,13 +26,13 @@ namespace Kassiopeia
             virtual ~KSGenValueHistogram();
 
         public:
-            virtual void DiceValue( vector< double >& aDicedValues );
+            virtual void DiceValue( std::vector< double >& aDicedValues );
 
         public:
-            ;K_SET_GET( string, Base );
-            ;K_SET_GET( string, Path );
-            ;K_SET_GET( string, Histogram );
-            ;K_SET_GET( string, Formula );
+            ;K_SET_GET( std::string, Base );
+            ;K_SET_GET( std::string, Path );
+            ;K_SET_GET( std::string, Histogram );
+            ;K_SET_GET( std::string, Formula );
 
         public:
             void InitializeComponent();

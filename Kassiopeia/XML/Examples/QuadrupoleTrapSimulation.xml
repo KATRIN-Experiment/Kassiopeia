@@ -1,5 +1,10 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+
 <messages>
-	
+
+    <file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
+
     <message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
 
@@ -35,9 +40,9 @@
     <!-- world -->
 
     <cylinder_space name="world_space" z1="-200.0e-3" z2="200.0e-3" r="200.0e-3"/>
-    
+
     <!-- electrodes -->
-    
+
     <tag name="electrode_tag" name="endcap_electrode_tag">
         <rotated_poly_line_surface name="endcap_electrode_surface" rotated_mesh_count="128">
             <poly_line>
@@ -48,7 +53,7 @@
             </poly_line>
         </rotated_poly_line_surface>
     </tag>
-    
+
     <tag name="electrode_tag" name="ring_electrode_tag">
         <rotated_poly_line_surface name="ring_electrode_surface" rotated_mesh_count="128">
             <poly_line>
@@ -64,13 +69,13 @@
             </poly_line>
         </rotated_poly_line_surface>
     </tag>
-    
+
     <!-- solenoid -->
 
     <tag name="magnet_tag" name="solenoid_tag">
         <cylinder_tube_space name="solenoid_space" z1="-50.e-3" z2="50.e-3" r1="8.000e-3" r2="9.000e-3" radial_mesh_count="30"/>
     </tag>
-    
+
     <!-- cell -->
 
     <tag name="cell_tag">
@@ -82,14 +87,14 @@
     <tag name="target_tag">
         <disk_surface name="target_surface" r="4.4e-3" z="0."/>
     </tag>
-    
+
     <!-- assembly -->
 
     <space name="cell_assembly" node="cell_space">
         <surface name="target" node="target_surface"/>
     </space>
-    
-    <space name="quadrupole_trap_assembly">  
+
+    <space name="quadrupole_trap_assembly">
         <surface name="top_endcap_electrode" node="endcap_electrode_surface"/>
         <surface name="bottom_endcap_electrode" node="endcap_electrode_surface">
                 <transformation rotation_euler="0. 180. 0."/>
@@ -140,6 +145,7 @@
 
     <ksfield_electromagnet
         name="field_electromagnet"
+        directory="[KEMFIELD_CACHE]"
         file="QuadrupoleTrapMagnets.kbd"
         system="world/quadrupole_trap"
         spaces="world/quadrupole_trap/@magnet_tag"
@@ -160,9 +166,10 @@
     </ksfield_electromagnet>
 
     <!-- electric fields -->
-    
+
     <ksfield_electrostatic
         name="field_electrostatic"
+        directory="[KEMFIELD_CACHE]"
         file="QuadrupoleTrapElectrodes.kbd"
         system="world/quadrupole_trap"
         surfaces="world/quadrupole_trap/@electrode_tag"
@@ -173,7 +180,6 @@
             check_sub_interval="100"
             display_interval="1"
             cache_matrix_elements="true"
-            use_vtk="true"
         />
         <zonal_harmonic_field_solver
             number_of_bifurcations="-1"
@@ -193,11 +199,11 @@
 
 	<!-- generators -->
 
-    <ksgen_generator_composite name="generator_fix">
+    <ksgen_generator_composite name="generator_fix" pid="11">
         <energy_composite>
             <energy_fix value="2."/>
         </energy_composite>
-        <position_cylindrical_composite surface="world/quadrupole_trap/start">            
+        <position_cylindrical_composite surface="world/quadrupole_trap/start">
             <r_fix value="5.e-4"/>
             <phi_fix value="0."/>
             <z_fix value="0."/>
@@ -211,13 +217,13 @@
         </time_composite>
     </ksgen_generator_composite>
 
-    <ksgen_generator_composite name="generator_set">
+    <ksgen_generator_composite name="generator_set" pid="11">
         <energy_composite>
             <energy_fix value="2."/>
         </energy_composite>
         <position_cylindrical_composite surface="world/quadrupole_trap/start">
             <r_set value_start="2.e-4" value_stop="1.e-3" value_count="3"/>
-            <phi_set value_start="30." value_stop="360." value_count="12"/>            
+            <phi_set value_start="30." value_stop="360." value_count="12"/>
             <z_fix value="0."/>
         </position_cylindrical_composite>
         <direction_spherical_composite surface="world/quadrupole_trap/start">
@@ -229,7 +235,7 @@
         </time_composite>
     </ksgen_generator_composite>
 
-    <ksgen_generator_composite name="generator_uniform">
+    <ksgen_generator_composite name="generator_uniform" pid="11">
         <energy_composite>
             <energy_fix value="2."/>
         </energy_composite>
@@ -258,15 +264,15 @@
     <kstraj_control_cyclotron name="control_cyclotron_1_64" fraction="{1. / 64.}"/>
 
 	<!-- space interactions -->
-    
+
     <ksint_scattering name="int_scattering" split="true">
-        <density_constant temperature="300." pressure="3.e0"/>    
+        <density_constant temperature="300." pressure="3.e0"/>
         <calculator_constant cross_section="1.e-18"/>
     </ksint_scattering>
 
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false" tolerance="1.e-6"/>
+    <ksnav_space name="nav_space" enter_split="false" exit_split="false"/>
 
     <!-- surface interactions -->
 
@@ -275,7 +281,7 @@
     <!-- surface navigators -->
 
     <ksnav_surface name="nav_surface" transmission_split="true" reflection_split="false"/>
-    
+
     <!-- terminators -->
 
     <ksterm_max_steps name="term_max_steps" steps="16000000"/>
@@ -285,15 +291,14 @@
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="QuadrupoleTrapSimulation.root"/>
-    <kswrite_vtk name="write_vtk" base="QuadrupoleTrapSimulation"/>
+    <kswrite_root name="write_root" path="[output_path]" base="QuadrupoleTrapSimulation.root"/>
 
     <!-- output -->
 
     <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
     <ks_component_member name="component_step_position" field="position" parent="component_step_final_particle"/>
     <ks_component_member name="component_step_length" field="length" parent="component_step_final_particle"/>
-    
+
     <ks_component_group name="component_step_world">
         <component_member name="step_id" field="step_id" parent="step"/>
         <component_member name="continuous_time" field="continuous_time" parent="step"/>
@@ -347,7 +352,7 @@
         <component_member name="final_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_final_particle"/>
         <component_member name="final_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_final_particle"/>
         <component_member name="z_length_internal" field="continuous_length" parent="track"/>
-        <component_integral name="z_length_integral" component="z_length"/>
+        <component_integral name="z_length_integral" parent="z_length"/>
     </ks_component_group>
 
     <!-- structure -->
@@ -358,10 +363,6 @@
         <command parent="trajectory_exact" field="add_control" child="control_cyclotron_1_16"/>
         <command parent="write_root" field="add_track_output" child="component_track_world"/>
         <command parent="write_root" field="add_step_output" child="component_step_world"/>
-        <command parent="write_vtk" field="set_track_point" child="component_track_position"/>
-        <command parent="write_vtk" field="set_track_data" child="component_track_length"/>
-        <command parent="write_vtk" field="set_step_point" child="component_step_position"/>
-        <command parent="write_vtk" field="set_step_data" child="component_step_length"/>
         <geo_surface name="surface_start" surfaces="world/quadrupole_trap/start">
             <command parent="root_terminator" field="add_terminator" child="term_start"/>
         </geo_surface>
@@ -394,36 +395,6 @@
         space_navigator="nav_space"
         surface_navigator="nav_surface"
         writer="write_root"
-        writer="write_vtk"
     />
 
 </kassiopeia>
-
-<vtk_window 
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
-    <vtk_geometry_painter 
-        name="geometry_painter" 
-        surfaces="world/quadrupole_trap/#"
-    />
-    <vtk_track_painter
-        name="track_painter"
-        file="QuadrupoleTrapSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_cell"
-        color_variable="polar_angle_to_b"
-    />
-</vtk_window>

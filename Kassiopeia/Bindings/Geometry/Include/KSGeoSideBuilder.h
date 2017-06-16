@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGeoSide.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSOperatorsMessage.h"
 
 using namespace Kassiopeia;
@@ -22,13 +22,13 @@ namespace katrin
         }
         if( aContainer->GetName() == "surfaces" )
         {
-            vector< KGSurface* > tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< string >() );
-            vector< KGSurface* >::const_iterator tSurfaceIt;
+            std::vector< KGSurface* > tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
+            std::vector< KGSurface* >::const_iterator tSurfaceIt;
             KGSurface* tSurface;
 
             if( tSurfaces.size() == 0 )
             {
-                oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+                oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
                 return false;
             }
 
@@ -41,16 +41,16 @@ namespace katrin
         }
         if( aContainer->GetName() == "spaces" )
         {
-            vector< KGSpace* > tSpaces = KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< string >() );
-            vector< KGSpace* >::const_iterator tSpaceIt;
+            std::vector< KGSpace* > tSpaces = KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
+            std::vector< KGSpace* >::const_iterator tSpaceIt;
             KGSpace* tSpace;
-            const vector< KGSurface* >* tSurfaces;
-            vector< KGSurface* >::const_iterator tSurfaceIt;
+            const std::vector< KGSurface* >* tSurfaces;
+            std::vector< KGSurface* >::const_iterator tSurfaceIt;
             KGSurface* tSurface;
 
             if( tSpaces.size() == 0 )
             {
-                oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+                oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
                 return false;
             }
 

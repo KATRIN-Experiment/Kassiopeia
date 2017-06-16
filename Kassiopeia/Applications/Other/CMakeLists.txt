@@ -5,17 +5,17 @@ if( Kassiopeia_USE_ROOT )
     list( APPEND APPLICATIONS_OTHER_BASENAMES
         ROOTFileMerge
     )
-    if( Kommon_USE_BOOST )
+    if( KASPER_USE_BOOST )
+        kasper_find_boost( 1.44.0 REQUIRED COMPONENTS program_options)
         list( APPEND APPLICATIONS_OTHER_BASENAMES
             TrackCompare
         )
-    endif( Kommon_USE_BOOST )
-endif( Kassiopeia_USE_ROOT )
-
-
+    endif()
+endif()
 
 set( APPLICATIONS_OTHER_LIBRARIES
     ${Kommon_LIBRARIES}
+    ${Kommon_Vtk_LIBRARIES}
     ${KGeoBag_LIBRARIES}
     ${KEMField_LIBRARIES}
     KassiopeiaUtility
@@ -31,6 +31,13 @@ set( APPLICATIONS_OTHER_LIBRARIES
     KassiopeiaWriters
     KassiopeiaSimulation
 )
+
+if( KASPER_USE_BOOST )
+    list( APPEND APPLICATIONS_OTHER_LIBRARIES
+        ${Boost_LIBRARIES}
+    )
+endif()
+
 set( APPLICATIONS_OTHER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )

@@ -1,7 +1,9 @@
 #include "KGVTKGeometryPainterBuilder.hh"
-#include "KVTKWindow.h"
+#include "KVTKWindowBuilder.h"
 
 using namespace KGeoBag;
+using namespace std;
+
 namespace katrin
 {
 

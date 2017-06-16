@@ -19,17 +19,17 @@ namespace katrin
             anAttribute->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z1" ) )
+        if( anAttribute->GetName() == "z1" )
         {
             anAttribute->CopyTo( fObject, &KGCylinderSurface::Z1 );
             return true;
         }
-        if( anAttribute->GetName() == string( "z2" ) )
+        if( anAttribute->GetName() == "z2" )
         {
             anAttribute->CopyTo( fObject, &KGCylinderSurface::Z2 );
             return true;
         }
-        if( anAttribute->GetName() == string( "length" ) )
+        if( anAttribute->GetName() == "length" )
         {
             const double tLength = anAttribute->AsReference< double >();
             const double tZMin = tLength / -2.0;
@@ -38,7 +38,7 @@ namespace katrin
             fObject->Z2( tZMax );
             return true;
         }
-        if( anAttribute->GetName() == string( "r" ) )
+        if( anAttribute->GetName() == "r" )
         {
             anAttribute->CopyTo( fObject, &KGCylinderSurface::R );
             return true;

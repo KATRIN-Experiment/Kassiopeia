@@ -12,22 +12,22 @@ namespace katrin
     template< >
     inline bool KGFlattenedPolyLoopSurfaceBuilder::AddAttribute( KContainer* anAttribute )
     {
-        if( anAttribute->GetName() == string( "name" ) )
+        if( anAttribute->GetName() == "name" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedPolyLoopSurface::SetName );
             return true;
         }
-        if( anAttribute->GetName() == string( "z" ) )
+        if( anAttribute->GetName() == "z" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedPolyLoopSurface::Z );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_count" ) )
+        if( anAttribute->GetName() == "flattened_mesh_count" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedPolyLoopSurface::FlattenedMeshCount );
             return true;
         }
-        if( anAttribute->GetName() == string( "flattened_mesh_power" ) )
+        if( anAttribute->GetName() == "flattened_mesh_power" )
         {
             anAttribute->CopyTo( fObject, &KGFlattenedPolyLoopSurface::FlattenedMeshPower );
             return true;
@@ -38,7 +38,7 @@ namespace katrin
     template< >
     inline bool KGFlattenedPolyLoopSurfaceBuilder::AddElement( KContainer* anElement )
     {
-        if( anElement->GetName() == string( "poly_loop" ) )
+        if( anElement->GetName() == "poly_loop" )
         {
             anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarPolyLoop::CopyFrom );
             return true;

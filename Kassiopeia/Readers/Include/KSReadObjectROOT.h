@@ -65,7 +65,7 @@ namespace Kassiopeia
                     unsigned int fEntry;
             };
 
-            vector< Presence > fPresences;
+            std::vector< Presence > fPresences;
             bool fValid;
             unsigned int fIndex;
             TTree* fStructure;

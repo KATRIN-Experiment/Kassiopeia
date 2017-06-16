@@ -42,7 +42,7 @@ namespace Kassiopeia
             {
                 return new KSComponentMinimum< XValueType >( *this );
             }
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "component minimum <" << this->GetName() << "> building component named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XValueType >::GetComponent( this, aField );
@@ -56,7 +56,7 @@ namespace Kassiopeia
                 }
                 return tComponent;
             }
-            KSCommand* Command( const string& /*aField*/, KSComponent* /*aChild*/ )
+            KSCommand* Command( const std::string& /*aField*/, KSComponent* /*aChild*/ )
             {
                 return NULL;
             }

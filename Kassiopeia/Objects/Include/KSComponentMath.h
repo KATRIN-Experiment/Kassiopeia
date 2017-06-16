@@ -13,11 +13,11 @@ namespace Kassiopeia
         public KSComponent
     {
         public:
-            KSComponentMath( vector< KSComponent* > aParentComponents, vector< XValueType* > aParentPointers, string aTerm ) :
+            KSComponentMath( std::vector< KSComponent* > aParentComponents, std::vector< XValueType* > aParentPointers, std::string aTerm ) :
                     KSComponent(),
                     fParentComponents( aParentComponents ),
                     fParents( aParentPointers ),
-                    fResult( KSNumerical< XValueType >::Zero )
+                    fResult( KSNumerical< XValueType >::Zero() )
             {
                 Set( &fResult );
                 this->SetParent( aParentComponents.at( 0 ) );
@@ -28,17 +28,17 @@ namespace Kassiopeia
 
                 for( size_t tIndex = 0; tIndex < fParents.size(); tIndex++ )
                 {
-                    //create string for variable name x0,x1,etc.
-                    string tVariable( "x" );
-                    stringstream tIndexConverter;
+                    //create std::string for variable name x0,x1,etc.
+                    std::string tVariable( "x" );
+                    std::stringstream tIndexConverter;
                     tIndexConverter << tIndex;
                     tVariable += tIndexConverter.str();
 
-                    stringstream tParameterConverter;
+                    std::stringstream tParameterConverter;
                     tParameterConverter << "[" << tIndexConverter.str() << "]";
 
                     //replace x with [index], this denotes a parameter for TF1
-                    while( aTerm.find( tVariable ) != string::npos )
+                    while( aTerm.find( tVariable ) != std::string::npos )
                     {
                         aTerm.replace( aTerm.find( tVariable ), tVariable.length(), tParameterConverter.str() );
                     }
@@ -47,7 +47,7 @@ namespace Kassiopeia
                 fTerm = aTerm;
 
                 //check if all x are replaced in formula
-                if( fTerm.find( string( "x" ) ) != string::npos || fTerm.find( string( "X" ) ) != string::npos )
+                if( fTerm.find( std::string( "x" ) ) != std::string::npos || fTerm.find( std::string( "X" ) ) != std::string::npos )
                 {
                     objctmsg( eError ) << "Error in KSComponentMath: could not replace all variables in term! Use only x0,x1,etc., one for each component" << eom;
                 }
@@ -84,7 +84,7 @@ namespace Kassiopeia
             {
                 return new KSComponentMath< XValueType >( *this );
             }
-            KSComponent* Component( const string& aField )
+            KSComponent* Component( const std::string& aField )
             {
                 objctmsg_debug( "component math <" << this->GetName() << "> building component named <" << aField << ">" << eom )
                 KSComponent* tComponent = KSDictionary< XValueType >::GetComponent( this, aField );
@@ -98,7 +98,7 @@ namespace Kassiopeia
                 }
                 return tComponent;
             }
-            KSCommand* Command( const string& /*aField*/, KSComponent* /*aChild*/)
+            KSCommand* Command( const std::string& /*aField*/, KSComponent* /*aChild*/)
             {
                 return NULL;
             }
@@ -139,10 +139,10 @@ namespace Kassiopeia
 //            }
 
         private:
-            vector< KSComponent* > fParentComponents;
-            vector< XValueType* > fParents;
+            std::vector< KSComponent* > fParentComponents;
+            std::vector< XValueType* > fParents;
             XValueType fResult;
-            string fTerm;
+            std::string fTerm;
             TF1* fFunction;
     };
 

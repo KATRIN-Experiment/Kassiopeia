@@ -126,9 +126,9 @@ namespace Kassiopeia
         return false; //changes to initial particle state disabled
     }
 
-    bool KSRootStepModifier::ExecutePostStepModifcation()
+    bool KSRootStepModifier::ExecutePostStepModification()
     {
-        bool hasChangedState = ExecutePostStepModifcation( *fModifierParticle, *fFinalParticle, *fParticleQueue );
+        bool hasChangedState = ExecutePostStepModification( *fModifierParticle, *fFinalParticle, *fParticleQueue );
         //fFinalParticle->ReleaseLabel( fStep->ModifierName() );
 
         modmsg_debug( "terminator execution:" << eom )
@@ -169,14 +169,14 @@ namespace Kassiopeia
         return hasChangedState;
     }
 
-    bool KSRootStepModifier::ExecutePostStepModifcation( KSParticle& anInitialParticle,
+    bool KSRootStepModifier::ExecutePostStepModification( KSParticle& anInitialParticle,
                                                          KSParticle& aFinalParticle,
                                                          KSParticleQueue& aParticleQueue )
     {
         bool hasChangedState = false;
         for( int tIndex = 0; tIndex < fModifiers.End(); tIndex++ )
         {
-            bool changed = fModifiers.ElementAt( tIndex )->ExecutePostStepModifcation( anInitialParticle,
+            bool changed = fModifiers.ElementAt( tIndex )->ExecutePostStepModification( anInitialParticle,
                                                                         aFinalParticle,
                                                                         aParticleQueue );
             if(changed){hasChangedState = true;};

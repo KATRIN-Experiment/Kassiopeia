@@ -31,12 +31,45 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlTime::Calculate( const KSTrajExactSpinParticle&, double& aValue )
+    {
+        aValue = fTime;
+        return;
+    }
+    void KSTrajControlTime::Check( const KSTrajExactSpinParticle&, const KSTrajExactSpinParticle&, const KSTrajExactSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlTime::Calculate( const KSTrajAdiabaticSpinParticle&, double& aValue )
+    {
+        aValue = fTime;
+        return;
+    }
+    void KSTrajControlTime::Check( const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
     void KSTrajControlTime::Calculate( const KSTrajAdiabaticParticle&, double& aValue )
     {
         aValue = fTime;
         return;
     }
     void KSTrajControlTime::Check( const KSTrajAdiabaticParticle&, const KSTrajAdiabaticParticle&, const KSTrajAdiabaticError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlTime::Calculate( const KSTrajExactTrappedParticle&, double& aValue )
+    {
+        aValue = fTime;
+        return;
+    }
+    void KSTrajControlTime::Check( const KSTrajExactTrappedParticle&, const KSTrajExactTrappedParticle&, const KSTrajExactTrappedError&, bool& aFlag )
     {
         aFlag = true;
         return;

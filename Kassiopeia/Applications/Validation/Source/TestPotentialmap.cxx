@@ -11,11 +11,13 @@
 #include "KTagProcessor.hh"
 #include "KElementProcessor.hh"
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSObject.h"
 #include "KSEvent.h"
 #include "KSRootMagneticField.h"
 #include "KSMainMessage.h"
+
+#include "KSFieldFinder.h"
 
 #include "KConst.h"
 
@@ -32,6 +34,7 @@
 #include "KEMVTKFieldCanvas.hh"
 
 #include <sstream>
+
 using std::stringstream;
 
 using namespace Kassiopeia;
@@ -95,7 +98,7 @@ int main( int argc, char** argv )
   bool tPlotField     = true;
 
   // initialize electric field
-  KSElectricField* tRootElectricFieldDirect = KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( tPathDirect );
+  KSElectricField* tRootElectricFieldDirect = getElectricField( tPathDirect );
 
   if (tRootElectricFieldDirect)
   {
@@ -103,7 +106,7 @@ int main( int argc, char** argv )
     tRootElectricFieldDirect->Activate();
   }
 
-  KSElectricField* tRootElectricFieldFromMap = KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( tPathPotentialmap );
+  KSElectricField* tRootElectricFieldFromMap = getElectricField( tPathPotentialmap );
 
   if (tRootElectricFieldFromMap)
   {
@@ -342,7 +345,6 @@ int main( int argc, char** argv )
     tRootElectricFieldFromMap->Deinitialize();
   }
 
-  KSToolbox::DeleteInstance();
 
   return 0;
 }

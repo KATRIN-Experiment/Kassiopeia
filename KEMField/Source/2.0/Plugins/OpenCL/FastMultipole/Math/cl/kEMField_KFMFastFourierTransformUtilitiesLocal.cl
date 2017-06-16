@@ -1,7 +1,7 @@
 #ifndef KFMFastFourierUtilitiesLocal_Defined_H
 #define KFMFastFourierUtilitiesLocal_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //base 2 integer log and exponentiation

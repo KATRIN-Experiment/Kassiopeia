@@ -1,3 +1,6 @@
+<!-- This file is DEPRECATED. It is only useful for debugging old XML files.
+ For the new bindings in KEMField, see the KEMField complete XML. -->
+
 <!-- this file contains an annotated list of all the fields available in kassiopeia 3.0 -->
 <!-- you can run this file through kassiopeia built with debug messages on to see the objects being added and removed from the toolbox -->
 

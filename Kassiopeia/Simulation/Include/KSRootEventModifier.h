@@ -2,14 +2,14 @@
 #define Kassiopeia_KSRootEventModifier_h_
 
 #include "KSEventModifier.h"
-#include "KSEvent.h"
-#include "KSList.h"
 #include "KSParticle.h"
+#include "KSStep.h"
+#include "KSEvent.h"
+#include "KSTrack.h"
+#include "KSList.h"
 
 namespace Kassiopeia
 {
-
-    class KSTrack;
 
     class KSRootEventModifier :
             public KSComponentTemplate< KSRootEventModifier, KSEventModifier >
@@ -25,8 +25,9 @@ namespace Kassiopeia
         //**********
 
     public:
-        //bool ExecutePreEventModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
-        //bool ExecutePostEventModifcation( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
+
+        bool ExecutePreEventModification( KSEvent& anEvent );
+        bool ExecutePostEventModification( KSEvent& anEvent );
 
         //***********
         //composition
@@ -45,10 +46,11 @@ namespace Kassiopeia
         //******
 
     public:
-        void SetEvent( KSEvent* aEvent );
+
+        void SetEvent( KSEvent* anEvent );
 
         bool ExecutePreEventModification();
-        bool ExecutePostEventModifcation();
+        bool ExecutePostEventModification();
 
         virtual void PushUpdateComponent();
         virtual void PushDeupdateComponent();

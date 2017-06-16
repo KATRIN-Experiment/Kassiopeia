@@ -7,10 +7,12 @@ using katrin::KFile;
 #include "KConst.h"
 using katrin::KConst;
 
-#include "TColor.h"
+#include <TColor.h>
 
 #include <cmath>
 #include <limits>
+
+using namespace std;
 
 namespace KGeoBag
 {
@@ -1469,11 +1471,10 @@ namespace KGeoBag
         	{
         		KThreeVector tSinglePoint = *(tSetIt->begin());
 				LocalToGlobal( tSinglePoint, tPoint1 );
-    			for( TubeMesh::GroupCIt tNextGroupIt = ( tSetIt + 1)->begin(); tNextGroupIt != ( tSetIt + 1)->end(); tNextGroupIt++ )
+    			for( TubeMesh::GroupCIt tNextGroupIt = ( tSetIt + 1)->begin(); tNextGroupIt != ( tSetIt + 1)->end(); tNextGroupIt ++ )
     			{
                     LocalToGlobal( *tNextGroupIt, tPoint2 );
                     tParallelLinesGroup.push_back( Lines::Line( tPoint1, tPoint2 ) );
-    				tNextGroupIt++;
     			}
     			aParallelLines.fData.push_back( tParallelLinesGroup );
     			tSetIt++;

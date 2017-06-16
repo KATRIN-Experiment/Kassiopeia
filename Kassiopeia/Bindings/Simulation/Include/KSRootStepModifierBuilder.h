@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSRootStepModifier.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -20,7 +20,7 @@ namespace katrin
         }
         if( aContainer->GetName() == "add_modifier" )
         {
-            fObject->AddModifier( KSToolbox::GetInstance()->GetObjectAs< KSStepModifier >( aContainer->AsReference< string >() ) );
+            fObject->AddModifier( KToolbox::GetInstance().Get< KSStepModifier >( aContainer->AsReference< std::string >() ) );
             return true;
         }
         return false;

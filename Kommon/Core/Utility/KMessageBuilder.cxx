@@ -1,6 +1,8 @@
 #include "KMessageBuilder.h"
-
 #include "KElementProcessor.hh"
+#include "KRoot.h"
+
+using namespace std;
 
 namespace katrin
 {
@@ -40,6 +42,7 @@ namespace katrin
                                          KMessageTableBuilder::ComplexElement< KTextFile >( "file" ) +
                                          KMessageTableBuilder::ComplexElement< KMessageData >( "message" );
 
-    STATICINT sMessageTable = KElementProcessor::ComplexElement< KMessageTable >( "messages" );
+    STATICINT sMessageTable = KRootBuilder::ComplexElement< KMessageTable >( "messages" );
+    STATICINT sMessageTableCompat = KElementProcessor::ComplexElement< KMessageTable >( "messages" );
 
 }

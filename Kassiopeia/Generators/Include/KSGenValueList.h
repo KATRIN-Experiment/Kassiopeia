@@ -18,11 +18,11 @@ namespace Kassiopeia
             virtual ~KSGenValueList();
 
         public:
-            void DiceValue( vector< double >& aDicedValues );
+            void DiceValue( std::vector< double >& aDicedValues );
             void AddValue( double aValue );
 
         public:
-            vector<double> fValues;
+            std::vector<double> fValues;
     };
 
 }

@@ -362,7 +362,7 @@ namespace Kassiopeia
         tOrthogonalTwo = tInitialDirection.Cross( tOrthogonalOne );
         tFinalDirection = tInitialDirection.Magnitude() * (sin( tTheta ) * (cos( tPhi ) * tOrthogonalOne.Unit() + sin( tPhi ) * tOrthogonalTwo.Unit()) + cos( tTheta ) * tInitialDirection.Unit());
 
-        KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+        KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
         (*tSecondary) = anInitialParticle;
         tSecondary->SetMomentum( tFinalDirection );
         tSecondary->SetKineticEnergy_eV( tLostKineticEnergy - fIonizationEnergy );
@@ -455,7 +455,7 @@ namespace Kassiopeia
             tOrthogonalTwo = tInitialDirection.Cross( tOrthogonalOne );
             tFinalDirection = tInitialDirection.Magnitude() * (sin( tTheta ) * (cos( tPhi ) * tOrthogonalOne.Unit() + sin( tPhi ) * tOrthogonalTwo.Unit()) + cos( tTheta ) * tInitialDirection.Unit());
 
-            KSParticle* tSecondary = KSParticleFactory::GetInstance()->Create( 11 );
+            KSParticle* tSecondary = KSParticleFactory::GetInstance().Create( 11 );
             (*tSecondary) = anInitialParticle;
             tSecondary->SetMomentum( tFinalDirection );
             tSecondary->SetKineticEnergy_eV( tLostKineticEnergy - fIonizationEnergy->at( i ) );
@@ -583,7 +583,7 @@ namespace Kassiopeia
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-#include "KSToolbox.h"
+#include "KToolbox.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -596,6 +596,6 @@ namespace katrin
 
     static int sKSIntCalculatorArgonStructure = KSIntCalculatorArgonBuilder::Attribute< string >( "name" ) + KSIntCalculatorArgonBuilder::Attribute< bool >( "elastic" ) + KSIntCalculatorArgonBuilder::Attribute< bool >( "excitation" ) + KSIntCalculatorArgonBuilder::Attribute< bool >( "single_ionisation" ) + KSIntCalculatorArgonBuilder::Attribute< bool >( "double_ionisation" );
 
-    static int sToolboxKSIntCalculatorArgon = KSToolboxBuilder::ComplexElement< KSIntCalculatorArgonData >( "ksint_calculator_argon" );
+    static int sToolboxKSIntCalculatorArgon = KToolboxBuilder::ComplexElement< KSIntCalculatorArgonData >( "ksint_calculator_argon" );
 
 }

@@ -2,7 +2,7 @@
 
 <messages>
 
-	<file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
+	<file path="[log_path]" base="TestFieldLog.txt"/>
 
 	<message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>

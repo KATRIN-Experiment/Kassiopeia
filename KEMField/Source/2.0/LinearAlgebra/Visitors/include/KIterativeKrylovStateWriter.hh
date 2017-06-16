@@ -48,7 +48,7 @@ class KIterativeKrylovStateWriter: public KIterativeSolver<ValueType>::Visitor
 {
     public:
 
-        typedef KIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
+        typedef KSimpleIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
 
         KIterativeKrylovStateWriter(std::vector< std::string > labels):
             KIterativeSolver<ValueType>::Visitor()
@@ -68,8 +68,8 @@ class KIterativeKrylovStateWriter: public KIterativeSolver<ValueType>::Visitor
 
         virtual void Initialize(KIterativeSolver<ValueType>& solver)
         {
-            KIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
-            krylov_solver = dynamic_cast< KIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
+            KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
+            krylov_solver = dynamic_cast< KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
 
             if(krylov_solver != NULL)
             {
@@ -110,8 +110,8 @@ class KIterativeKrylovStateWriter: public KIterativeSolver<ValueType>::Visitor
 
         virtual void Visit(KIterativeSolver<ValueType>& solver)
         {
-            KIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
-            krylov_solver = dynamic_cast< KIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
+            KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
+            krylov_solver = dynamic_cast< KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
 
             if(krylov_solver != NULL)
             {
@@ -170,8 +170,8 @@ class KIterativeKrylovStateWriter: public KIterativeSolver<ValueType>::Visitor
 
         virtual void Finalize(KIterativeSolver<ValueType>& solver)
         {
-            KIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
-            krylov_solver = dynamic_cast< KIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
+            KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* krylov_solver = NULL;
+            krylov_solver = dynamic_cast< KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>* >(&solver);
 
             if(krylov_solver != NULL)
             {

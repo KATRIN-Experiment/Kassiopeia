@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include "KEMCout.hh"
+#include "KIterativeSolver.hh"
 
 #ifdef KEMFIELD_USE_MPI
     #include "KMPIInterface.hh"

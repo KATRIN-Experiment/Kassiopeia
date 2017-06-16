@@ -19,7 +19,8 @@ set (ZONALHARMONICSOLVER_SOURCEFILES
 
 add_library (KEMZHSolver SHARED ${ZONALHARMONICSOLVER_SOURCEFILES})
 target_link_libraries (KEMZHSolver KEMCore KEMSurfaces
-KEMElectromagnets KEMIntegratingFieldSolver KEMZHGenerator)
+KEMElectromagnets KEMZHGenerator KEMElectrostaticBoundaryIntegrals 
+KEMMath KEMSurfaces KEMCore KEMFieldExceptions ${GSL_LIBRARIES})
 
 kasper_install_headers (${ZONALHARMONICSOLVER_HEADERFILES})
 kasper_install_libraries (KEMZHSolver)

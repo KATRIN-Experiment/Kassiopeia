@@ -1,12 +1,6 @@
 # CMakeLists for KEMField/LinearAlgebra/Visitors
 # Author: T.J. Corona
 
-option(@PROJECT_NAME@_USE_REALTIME_CLOCK "Use real time clock for timing applications." OFF)
-mark_as_advanced(FORCE @PROJECT_NAME@_USE_REALTIME_CLOCK)
-if (@PROJECT_NAME@_USE_REALTIME_CLOCK)
-  add_cflag (KEMFIELD_USE_REALTIME_CLOCK)
-endif (@PROJECT_NAME@_USE_REALTIME_CLOCK)
-
 kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (LINEARALGEBRAVISITORS_HEADERFILES
@@ -19,6 +13,7 @@ set (LINEARALGEBRAVISITORS_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KPreconditionedIterativeKrylovStateReader.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KResidualVector.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KIterationTerminator.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KIterativeSolverTimer.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KTimeTerminator.hh
 )
 

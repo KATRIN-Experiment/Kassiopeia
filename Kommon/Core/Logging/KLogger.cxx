@@ -7,8 +7,8 @@
 
 #include "KLogger.h"
 
-#include <cstdlib>
-#include <cstring>
+#include <chrono>
+#include <iomanip>
 
 using namespace std;
 using namespace katrin;
@@ -233,7 +233,9 @@ typedef map<string, KLogger::ELevel> LoggerMap;
 static LoggerMap sLoggerMap;
 static const bool skColored = true;
 
-static inline const char* level2Str(KLogger::ELevel level)
+namespace {
+
+const char* level2Str(KLogger::ELevel level)
 {
     switch(level) {
         case KLogger::eTrace : return "TRACE";
@@ -244,6 +246,29 @@ static inline const char* level2Str(KLogger::ELevel level)
         case KLogger::eFatal : return "FATAL";
         default     : return "XXX";
     }
+}
+
+void printTime(ostream& strm)
+{
+    using namespace std::chrono;
+
+    const auto now = system_clock::now();
+    const time_t cTime = system_clock::to_time_t(now);
+
+    auto duration = now.time_since_epoch();
+    duration -= duration_cast<seconds>(duration);
+
+    /*
+     * Unfortunately, g++ < 5.0 does not implement std::put_time, so I have to
+     * resort to strftime at this point:
+     */
+    char dateTimeStr[24];
+    strftime(dateTimeStr, sizeof(dateTimeStr), "%F %T", localtime(&cTime));
+    strm << dateTimeStr;
+    strm << "." << setfill('0') << setw(3) << duration_cast<milliseconds>(duration).count();
+    strm << setfill(' ');
+}
+
 }
 
 struct KLogger::Private
@@ -265,17 +290,33 @@ struct KLogger::Private
     LoggerMap::iterator fLoggerIt;
 
     void logCout(const char* level, const string& message, const Location& /*loc*/, const char* color = skOtherColor) {
-        if (skColored)
-            cout << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << skEndColor << endl;
-        else
-            cout << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << endl;
+        if (skColored) {
+            cout << color;
+            printTime(cout);
+            cout << " [" << setw(5) << level << "] " << setw(10) << fLoggerIt->first << ": " << message;
+            cout << skEndColor;
+            cout << endl;
+        }
+        else {
+            printTime(cout);
+            cout << " [" << setw(5) << level << "] " << setw(10) << fLoggerIt->first << ": " << message;
+            cout << endl;
+        }
     }
 
     void logCerr(const char* level, const string& message, const Location& /*loc*/, const char* color = skOtherColor) {
-        if (skColored)
-            cerr << color << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << skEndColor << endl;
-        else
-            cerr << __DATE__ " " __TIME__ " [" << setw(5) << level << "] " << setw(16) << fLoggerIt->first << ": " << message << endl;
+        if (skColored) {
+            cerr << color;
+            printTime(cerr);
+            cerr << " [" << setw(5) << level << "] " << setw(10) << fLoggerIt->first << ": " << message;
+            cerr << skEndColor;
+            cerr << endl;
+        }
+        else {
+            printTime(cerr);
+            cerr << " [" << setw(5) << level << "] " << setw(10) << fLoggerIt->first << ": " << message;
+            cerr << endl;
+        }
     }
 };
 
@@ -312,12 +353,10 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
     const char* levelStr = level2Str(level);
     const char* color = level2Color(level);
 
-    if (level >= eError) {
+    if (level >= eError)
         fPrivate->logCerr(levelStr, message, loc, color);
-    }
-    else {
+    else
         fPrivate->logCout(levelStr, message, loc, color);
-    }
 }
 
 #endif

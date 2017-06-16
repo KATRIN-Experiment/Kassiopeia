@@ -5,6 +5,7 @@
 #include "KSGenValueUniformBuilder.h"
 #include "KSGenValueGaussBuilder.h"
 #include "KSGenValueRadiusCylindricalBuilder.h"
+#include "KSGenValueRadiusFractionBuilder.h"
 #include "KSRootBuilder.h"
 
 #ifdef Kassiopeia_USE_ROOT
@@ -13,6 +14,8 @@
 #endif
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -34,6 +37,7 @@ namespace katrin
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueUniform >( "r_uniform" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueGauss >( "r_gauss" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueRadiusCylindrical >( "r_cylindrical" ) +
+        KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueRadiusFraction >( "r_fraction" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueFix >( "phi_fix" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueSet >( "phi_set" ) +
         KSGenPositionCylindricalCompositeBuilder::ComplexElement< KSGenValueList >( "phi_list" ) +

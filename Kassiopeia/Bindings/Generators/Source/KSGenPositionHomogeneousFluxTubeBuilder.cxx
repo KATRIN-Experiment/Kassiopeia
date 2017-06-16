@@ -3,6 +3,8 @@
 #include "KSGenGeneratorCompositeBuilder.h"
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 

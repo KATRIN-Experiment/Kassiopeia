@@ -46,7 +46,7 @@ namespace Kassiopeia
             std::map< double, double >* GetData();
 
             /**
-             * \brief Returns a vector with read in parameters. The length of this vector is
+             * \brief Returns a std::vector with read in parameters. The length of this std::vector is
              * defined by numOfParameters.
              */
             std::vector< double >* GetParameters();
@@ -85,7 +85,7 @@ namespace Kassiopeia
             std::map< double*, double >* GetData();
 
             /**
-             * \brief Returns a vector with read in parameters. The length of this vector is
+             * \brief Returns a std::vector with read in parameters. The length of this std::vector is
              * defined by numOfParameters.
              */
             std::vector< double >* GetParameters();

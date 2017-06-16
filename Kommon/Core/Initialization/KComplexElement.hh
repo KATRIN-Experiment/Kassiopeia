@@ -31,11 +31,11 @@ namespace katrin
 
             static KElementBase* Create( KElementBase* aParentElement );
             template< class XAttributeType >
-            static int Attribute( const string& aName );
+            static int Attribute( const std::string& aName );
             template< class XElementType >
-            static int SimpleElement( const string& aName );
+            static int SimpleElement( const std::string& aName );
             template< class XElementType >
-            static int ComplexElement( const string& aName );
+            static int ComplexElement( const std::string& aName );
 
         protected:
             XType* fObject;
@@ -109,7 +109,7 @@ namespace katrin
     KAttributeMap* KComplexElement< XType >::sAttributes = NULL;
     template< class XType >
     template< class XAttributeType >
-    int KComplexElement< XType >::Attribute( const string& aName )
+    int KComplexElement< XType >::Attribute( const std::string& aName )
     {
         if( sAttributes == NULL )
         {
@@ -122,7 +122,7 @@ namespace katrin
     KElementMap* KComplexElement< XType >::sElements = NULL;
     template< class XType >
     template< class XElementType >
-    int KComplexElement< XType >::SimpleElement( const string& aName )
+    int KComplexElement< XType >::SimpleElement( const std::string& aName )
     {
         if( sElements == NULL )
         {
@@ -133,7 +133,7 @@ namespace katrin
     }
     template< class XType >
     template< class XElementType >
-    int KComplexElement< XType >::ComplexElement( const string& aName )
+    int KComplexElement< XType >::ComplexElement( const std::string& aName )
     {
         if( sElements == NULL )
         {

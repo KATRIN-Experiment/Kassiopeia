@@ -34,6 +34,34 @@ namespace Kassiopeia
         return;
     }
 
+    void KSTrajControlLength::Calculate( const KSTrajExactSpinParticle& aParticle, double& aValue )
+    {
+        double tLongVelocity = aParticle.GetLongVelocity();
+        double tTransVelocity = aParticle.GetTransVelocity();
+        double tSpeed = sqrt( tLongVelocity * tLongVelocity + tTransVelocity * tTransVelocity );
+        aValue = fLength / tSpeed;
+        return;
+    }
+    void KSTrajControlLength::Check( const KSTrajExactSpinParticle&, const KSTrajExactSpinParticle&, const KSTrajExactSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlLength::Calculate( const KSTrajAdiabaticSpinParticle& aParticle, double& aValue )
+    {
+        double tLongVelocity = aParticle.GetLongVelocity();
+        double tTransVelocity = aParticle.GetTransVelocity();
+        double tSpeed = sqrt( tLongVelocity * tLongVelocity + tTransVelocity * tTransVelocity );
+        aValue = fLength / tSpeed;
+        return;
+    }
+    void KSTrajControlLength::Check( const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinParticle&, const KSTrajAdiabaticSpinError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
     void KSTrajControlLength::Calculate( const KSTrajAdiabaticParticle& aParticle, double& aValue )
     {
         double tLongVelocity = aParticle.GetLongVelocity();
@@ -43,6 +71,20 @@ namespace Kassiopeia
         return;
     }
     void KSTrajControlLength::Check( const KSTrajAdiabaticParticle&, const KSTrajAdiabaticParticle&, const KSTrajAdiabaticError&, bool& aFlag )
+    {
+        aFlag = true;
+        return;
+    }
+
+    void KSTrajControlLength::Calculate( const KSTrajExactTrappedParticle& aParticle, double& aValue )
+    {
+        double tLongVelocity = aParticle.GetLongVelocity();
+        double tTransVelocity = aParticle.GetTransVelocity();
+        double tSpeed = sqrt( tLongVelocity * tLongVelocity + tTransVelocity * tTransVelocity );
+        aValue = fLength / tSpeed;
+        return;
+    }
+    void KSTrajControlLength::Check( const KSTrajExactTrappedParticle&, const KSTrajExactTrappedParticle&, const KSTrajExactTrappedError&, bool& aFlag )
     {
         aFlag = true;
         return;

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KSGeoSpace.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSOperatorsMessage.h"
 
 using namespace Kassiopeia;
@@ -22,13 +22,13 @@ namespace katrin
         }
         if( aContainer->GetName() == "spaces" )
         {
-            vector< KGSpace* > tSpaces = KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< string >() );
-            vector< KGSpace* >::iterator tSpaceIt;
+            std::vector< KGSpace* > tSpaces = KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
+            std::vector< KGSpace* >::iterator tSpaceIt;
             KGSpace* tSpace;
 
             if( tSpaces.size() == 0 )
             {
-                oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
+                oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
                 return false;
             }
 

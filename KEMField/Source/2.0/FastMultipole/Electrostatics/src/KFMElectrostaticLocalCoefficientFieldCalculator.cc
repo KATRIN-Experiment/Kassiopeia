@@ -14,6 +14,9 @@
 namespace KEMField
 {
 
+const double
+KFMElectrostaticLocalCoefficientFieldCalculator::fRootThreeOverTwo = 0.86602540378443865;
+
 KFMElectrostaticLocalCoefficientFieldCalculator::KFMElectrostaticLocalCoefficientFieldCalculator():
 fDegree(-1)
 {
@@ -47,6 +50,7 @@ fDegree(-1)
     fSize = 0;
     fNTerms = 0;
 
+    fExpansionRadius = 0.0;
     fRealMomentsB = NULL;
     fImagMomentsB = NULL;
 
@@ -226,7 +230,15 @@ KFMElectrostaticLocalCoefficientFieldCalculator::ElectricField(const double* p, 
     fDel[1] = p[1] - fOrigin[1];
     fDel[2] = p[2] - fOrigin[2];
 
-
+    //if we are too close to the expansion origin, or z=0
+    //then to avoid numerical instability in the analytic field expression
+    //which appears when the spherical coordinate unit vectors are ill-defined
+    //we will instead evaluate the field using a numerical derivative
+    if( fDel[2] == 0 || std::sqrt(fDel[0]*fDel[0] + fDel[1]*fDel[1] + fDel[2]*fDel[2]) < 1e-6*fExpansionRadius)
+    {
+        ElectricFieldNumerical(p, f);
+        return;
+    }
 
     //we need to avoid positions near the z-axis, because the spherical coordinate
     //unit vectors theta-hat and phi-hat become undefined there
@@ -378,19 +390,7 @@ void
 KFMElectrostaticLocalCoefficientFieldCalculator::ElectricFieldNumerical(const double* p, double* f) const
 {
     double temp[3];
-    double eps = (p[0] - fOrigin[0])*(p[0] - fOrigin[0]);
-    eps += (p[1] - fOrigin[1])*(p[1] - fOrigin[1]);
-    eps += (p[2] - fOrigin[2])*(p[2] - fOrigin[2]);
-    eps = std::sqrt(eps);
-
-    if(eps != 0)
-    {
-        eps *= 1e-6;
-    }
-    else
-    {
-        eps = 1e-6;
-    }
+    double eps = 1e-6*fExpansionRadius;
 
     for(int i=0; i<3; i++){temp[i] = p[i];};
     temp[0] += eps;
@@ -417,9 +417,9 @@ KFMElectrostaticLocalCoefficientFieldCalculator::ElectricFieldNumerical(const do
     double phi_zn = Potential(temp);
 
     //now we compute the 2-point derivatives for each direction to get the field
-    f[0] = (phi_xp - phi_xn)/(2.0*eps);
-    f[0] = (phi_yp - phi_yn)/(2.0*eps);
-    f[0] = (phi_zp - phi_zn)/(2.0*eps);
+    f[0] = -1.0*(phi_xp - phi_xn)/(2.0*eps);
+    f[1] = -1.0*(phi_yp - phi_yn)/(2.0*eps);
+    f[2] = -1.0*(phi_zp - phi_zn)/(2.0*eps);
 }
 
 

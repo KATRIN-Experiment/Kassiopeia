@@ -3,8 +3,6 @@
 
 #include "KProcessor.hh"
 
-#include <cstdlib>
-
 namespace katrin
 {
     class KChattyProcessor :

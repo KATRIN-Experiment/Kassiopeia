@@ -47,7 +47,7 @@ namespace KEMField
     void              SetP0(const KPosition& p)  { fP0 = p; }
     void              SetN1(const KDirection& d) { fN1 = d; SetN3(); }
     void              SetN2(const KDirection& d) { fN2 = d; SetN3(); }
-    void              SetN3()                    { fN3 = fN1.Cross(fN2).Unit();}
+    void              SetN3()                    { fN3 = (fN1.Cross(fN2)).Unit();}
 
     const double&     GetA()                  const { return fA; }
     const double&     GetB()                  const { return fB; }

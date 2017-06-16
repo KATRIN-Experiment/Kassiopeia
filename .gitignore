@@ -18,7 +18,6 @@ CMakeFiles/
 .idea/
 *.kdev4*
 home/
-Makefile
 CTestTestfile.cmake
 cmake_install.cmake
 *Config.cmake
@@ -29,3 +28,4 @@ cmake_install.cmake
 *.vtp
 *.vti
 *.pyc
+.ipynb_checkpoints/

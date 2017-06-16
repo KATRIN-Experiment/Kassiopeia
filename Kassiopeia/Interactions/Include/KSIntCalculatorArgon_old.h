@@ -43,7 +43,7 @@ namespace Kassiopeia
             std::map< double, double >* GetData();
 
             /**
-             * \brief Returns a vector with read in parameters. The length of this vector is
+             * \brief Returns a std::vector with read in parameters. The length of this std::vector is
              * defined by numOfParameters.
              */
             std::vector< double >* GetParameters();
@@ -240,7 +240,7 @@ class KSIntCalculatorArgonData
 };
 
 #include "KComplexElement.hh"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include "KSInteractionsMessage.h"
 
 using namespace Kassiopeia;
@@ -296,7 +296,7 @@ namespace katrin
     template< >
     bool KSIntCalculatorArgonBuilder::End()
     {
-        KSToolbox* tToolBox = KSToolbox::GetInstance();
+        KToolbox& tToolBox = KToolbox::GetInstance();
         KSIntCalculator* aIntCalculator;
 
         if( fObject->GetElastic() )
@@ -304,7 +304,7 @@ namespace katrin
             aIntCalculator = new KSIntCalculatorArgonElastic();
             aIntCalculator->SetName( fObject->GetName() + "_elastic" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
         }
 
         if( fObject->GetSingleIonisation() )
@@ -312,7 +312,7 @@ namespace katrin
             aIntCalculator = new KSIntCalculatorArgonSingleIonisation();
             aIntCalculator->SetName( fObject->GetName() + "_single_ionisation" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
         }
 
         if( fObject->GetDoubleIonisation() )
@@ -320,20 +320,20 @@ namespace katrin
             aIntCalculator = new KSIntCalculatorArgonDoubleIonisation();
             aIntCalculator->SetName( fObject->GetName() + "_double_ionisation" );
             aIntCalculator->SetTag( fObject->GetName() );
-            tToolBox->AddObject( aIntCalculator );
+            tToolBox.AddObject( aIntCalculator );
         }
 
         if( fObject->GetExcitation() )
         {
             for( unsigned int i = 0; i < 25; ++i )
             {
-                stringstream tmp;
+                std::stringstream tmp;
                 tmp << (i + 1);
                 aIntCalculator = new KSIntCalculatorArgonExcitation();
                 aIntCalculator->SetName( fObject->GetName() + "_excitation_state_" + tmp.str() );
                 aIntCalculator->SetTag( fObject->GetName() );
                 static_cast< KSIntCalculatorArgonExcitation* >( aIntCalculator )->SetExcitationState( i + 1 );
-                tToolBox->AddObject( aIntCalculator );
+                tToolBox.AddObject( aIntCalculator );
             }
         }
 

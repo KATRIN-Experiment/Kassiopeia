@@ -1,7 +1,7 @@
 #ifndef KFMRectangleMultipoleNumerical_Defined_H
 #define KFMRectangleMultipoleNumerical_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 #include "kEMField_KFMSphericalMultipoleMath.cl"
 #include "kEMField_GaussianCubature.cl"
 

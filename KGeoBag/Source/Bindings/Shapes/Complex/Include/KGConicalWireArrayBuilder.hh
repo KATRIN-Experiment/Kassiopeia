@@ -44,7 +44,7 @@ namespace katrin
     if (anAttribute->GetName() == "theta_start")
     {
       anAttribute->CopyTo(fObject, &KGConicalWireArray::SetThetaStart);
-      return true;
+	  return true;
     }
     if (anAttribute->GetName() == "diameter")
     {
@@ -82,7 +82,8 @@ namespace katrin
   {
     if (anElement->GetName() == "conical_wire_array")
     {
-      KGConicalWireArray* object = anElement->AsPointer<KGConicalWireArray>();
+      KGConicalWireArray* object = NULL;
+      anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);
@@ -110,7 +111,8 @@ namespace katrin
   {
     if (anElement->GetName() == "conical_wire_array")
     {
-      KGConicalWireArray* object = anElement->AsPointer<KGConicalWireArray>();
+      KGConicalWireArray* object = NULL;
+      anElement->ReleaseTo(object);
       object->Initialize();
       KSmartPointer< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);

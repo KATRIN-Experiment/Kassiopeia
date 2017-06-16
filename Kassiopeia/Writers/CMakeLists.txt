@@ -13,6 +13,10 @@ if( Kassiopeia_USE_ROOT )
     set( WRITERS_HEADER_BASENAMES
     	${WRITER_HEADER_BASENAMES}
     	KSWriteROOT.h
+    	KSWriteROOTCondition.h
+    	KSWriteROOTConditionOutput.h
+        KSWriteROOTConditionTerminator.h
+        KSWriteROOTConditionStep.h
     )
 endif( Kassiopeia_USE_ROOT )
 set( WRITERS_HEADER_PATH 
@@ -37,6 +41,7 @@ if( Kassiopeia_USE_ROOT )
     set( WRITERS_SOURCE_BASENAMES
     	${WRITERS_SOURCE_BASENAMES}
     	KSWriteROOT.cxx
+    	KSWriteROOTCondition.cxx
     )
 endif( Kassiopeia_USE_ROOT )
 set( WRITERS_SOURCE_PATH 

@@ -1,5 +1,18 @@
+# include directories
+kasper_internal_include_directories(
+    Functions
+    Geometry
+    Logging
+    File
+    Initialization
+    Typelists
+    Units
+    Utility
+    ../Extensions/Root/Initialization
+)
+
 # headers
-set( KOMMON_CORE_HEADER_FILENAMES
+set(KOMMON_CORE_HEADER_FILES
     Typelists/KTypeNull.h
     Typelists/KTypeList.h
     Typelists/KTypeChain.h
@@ -9,6 +22,7 @@ set( KOMMON_CORE_HEADER_FILENAMES
     File/KFileMessage.h
     File/KFile.h
     File/KTextFile.h
+    File/KPathResolver.h
     Initialization/KInitializationMessage.hh
     Initialization/KToken.hh
     Initialization/KTypedTokens.hh
@@ -16,7 +30,6 @@ set( KOMMON_CORE_HEADER_FILENAMES
     Initialization/KCommandLineTokenizer.hh
     Initialization/KXMLTokenizer.hh
     Initialization/KChattyProcessor.hh
-    Initialization/KSaveSettingsProcessor.hh
     Initialization/KVariableProcessor.hh
     Initialization/KIncludeProcessor.hh
     Initialization/KLoopProcessor.hh
@@ -31,6 +44,9 @@ set( KOMMON_CORE_HEADER_FILENAMES
     Initialization/KSimpleElement.hh
     Initialization/KComplexElement.hh
     Initialization/KElementProcessor.hh
+    Initialization/KVariant.h
+    Initialization/KArgumentList.h
+    Initialization/KXMLInitializer.hh
     Utility/Gnuplot.hpp
     Utility/KException.h
     Utility/KRandom.h
@@ -57,7 +73,6 @@ set( KOMMON_CORE_HEADER_FILENAMES
     Utility/KSmartPointer.h
     Utility/KTypeTraits.h
     Utility/KMessage.h
-    Utility/KMessageBuilder.h
     Utility/KUtilityMessage.h
     Utility/KNamed.h
     Utility/KTagged.h
@@ -65,21 +80,28 @@ set( KOMMON_CORE_HEADER_FILENAMES
     Utility/KPainter.h
     Utility/KMathBilinearInterpolator.h
     Utility/KHashMap.h
+    Utility/KApplication.h
+    Utility/KApplicationRunner.h
+    Utility/KApplicationRunnerBuilder.h
+    Utility/KRoot.h
+    Utility/KToolbox.h
+    Utility/KMessageBuilder.h
+    Utility/KNamedBuilder.h
     Logging/KLogger.h
 )
 
 # sources
-set( KOMMON_CORE_SOURCE_FILENAMES
+set(KOMMON_CORE_SOURCE_FILES
     File/KFileMessage.cxx
     File/KFile.cxx
     File/KTextFile.cxx
+    File/KPathResolver.cxx
     Initialization/KInitializationMessage.cc
     Initialization/KToken.cc
     Initialization/KProcessor.cc
     Initialization/KXMLTokenizer.cc
     Initialization/KCommandLineTokenizer.cc
     Initialization/KChattyProcessor.cc
-    Initialization/KSaveSettingsProcessor.cc
     Initialization/KVariableProcessor.cc
     Initialization/KIncludeProcessor.cc
     Initialization/KLoopProcessor.cc
@@ -91,63 +113,39 @@ set( KOMMON_CORE_SOURCE_FILENAMES
     Initialization/KAttributeBase.cc
     Initialization/KElementBase.cc
     Initialization/KElementProcessor.cc
+    Initialization/KVariant.cxx
+    Initialization/KArgumentList.cxx
+    Initialization/KXMLInitializer.cc
+    Units/KDimensions.cxx
+    Units/KUnits.cxx
     Utility/Gnuplot.cpp
     Utility/KMessage.cxx
-    Utility/KMessageBuilder.cxx
     Utility/KUtilityMessage.cxx
     Utility/KNamed.cxx
     Utility/KTagged.cxx
     Utility/KWindow.cxx
     Utility/KPainter.cxx
+    Utility/KApplication.cxx
+    Utility/KApplicationRunner.cxx
+    Utility/KApplicationRunnerBuilder.cxx
+    Utility/KRoot.cxx
+    Utility/KToolbox.cxx
+    Utility/KMessageBuilder.cxx
+    Utility/KNamedBuilder.cxx
     Logging/KLogger.cxx
 )
 
-# external
-option( Kommon_USE_Log4CXX "Enable advanced logging facilities, if LOG4CXX library is available." ON )
-set(LOG4CXX_FOUND FALSE)
-
-if(Kommon_USE_Log4CXX)
-    find_package( Log4CXX )
-endif()
-
-if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE MATCHES "DEBUG" OR CMAKE_BUILD_TYPE MATCHES "RELWITHDEBINFO" )
-    set (LEVEL "DEBUG")
-else()
-    set (LEVEL "INFO")
-endif()
-
 if( LOG4CXX_FOUND )
-    set(LOGGER_CONFIGURATION "${Kommon_CONFIG_INSTALL_DIR}/log4cxx.properties" )
-    set_source_files_properties(Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
-        "LOG4CXX;LOGGER_CONFIGURATION=${LOGGER_CONFIGURATION}"
-    )
-    
-    kasper_external_include_directories( ${LOG4CXX_INCLUDE_DIR} )
+    if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE MATCHES "DEBUG" OR CMAKE_BUILD_TYPE MATCHES "RELWITHDEBINFO" )
+        set (LEVEL "DEBUG")
+    else()
+        set (LEVEL "INFO")
+    endif()
     
     configure_file( Logging/log4cxx.properties.in ${CMAKE_CURRENT_BINARY_DIR}/log4cxx.properties @ONLY )
     kasper_install_optional( ${Kommon_CONFIG_INSTALL_DIR} ${CMAKE_CURRENT_BINARY_DIR}/log4cxx.properties )
 endif()
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Functions
-	${CMAKE_CURRENT_SOURCE_DIR}/Geometry
-	${CMAKE_CURRENT_SOURCE_DIR}/Logging
-	${CMAKE_CURRENT_SOURCE_DIR}/File
-	${CMAKE_CURRENT_SOURCE_DIR}/Initialization
-	${CMAKE_CURRENT_SOURCE_DIR}/Typelists
-	${CMAKE_CURRENT_SOURCE_DIR}/Units
-	${CMAKE_CURRENT_SOURCE_DIR}/Utility
-)
-
-# link
-add_library( KommonCore SHARED ${KOMMON_CORE_SOURCE_FILENAMES} )
-if( LOG4CXX_FOUND )
-	target_link_libraries( KommonCore ${LOG4CXX_LIBRARY} )
-else()
-    target_link_libraries( KommonCore )
-endif()
-
-# install
-kasper_install_libraries( KommonCore )
-kasper_install_headers( ${KOMMON_CORE_HEADER_FILENAMES} )
+# propagate path variable to parent scope
+kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_CORE_HEADER_FILES} )
+kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_CORE_SOURCE_FILES} )

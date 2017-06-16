@@ -13,14 +13,14 @@
 namespace Kassiopeia
 {
     KSVTKTrackTerminatorPainter::KSVTKTrackTerminatorPainter() :
+            fPointSize( 2 ),
             fPoints( vtkSmartPointer< vtkPoints >::New() ),
-            fColors( vtkSmartPointer< vtkUnsignedCharArray >::New() ),
             fVertices( vtkSmartPointer< vtkCellArray >::New() ),
+            fColors( vtkSmartPointer< vtkUnsignedCharArray >::New() ),
             fData( vtkSmartPointer< vtkPolyData >::New() ),
             fMapper( vtkSmartPointer< vtkPolyDataMapper >::New() ),
             fActor( vtkSmartPointer< vtkActor >::New() ),
-            fNamedColors( vtkSmartPointer< vtkNamedColors >::New() ),
-            fPointSize( 2 )
+            fNamedColors( vtkSmartPointer< vtkNamedColors >::New() )
     {
         fColors->SetNumberOfComponents( 3 );
         fData->SetPoints( fPoints );
@@ -65,7 +65,7 @@ namespace Kassiopeia
         KSReadObjectROOT& tTerminatorObject = tTrack.GetObject( fTerminatorObject );
         const KSString& tTerminatorVariable = tPointObject.Get< KSString >( fTerminatorVariable );
 
-        bool tActive;
+        // TODO: Use it or delete it. bool tActive;
         vtkIdType tId;
 
         tRun << 0;

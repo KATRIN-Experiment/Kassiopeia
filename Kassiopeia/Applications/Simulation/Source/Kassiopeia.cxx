@@ -1,3 +1,5 @@
+#include <KSSimulation.h>
+#include <KSRoot.h>
 #include "KMessage.h"
 #include "KTextFile.h"
 
@@ -11,13 +13,15 @@
 #include "KElementProcessor.hh"
 #include "KTagProcessor.hh"
 
-#ifdef Kommon_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KFormulaProcessor.hh"
-#include "KSaveSettingsProcessor.hh"
 #endif
 
 #include "KSMainMessage.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+
+#include <vector>
+#include <string>
 
 using namespace Kassiopeia;
 using namespace katrin;
@@ -45,7 +49,7 @@ int main( int argc, char** argv )
 	tVariableProcessor.InsertAfter( &tTokenizer );
 	tIncludeProcessor.InsertAfter( &tVariableProcessor );
 
-#ifdef Kommon_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 	KFormulaProcessor tFormulaProcessor;
 	tFormulaProcessor.InsertAfter( &tVariableProcessor );
 	tIncludeProcessor.InsertAfter( &tFormulaProcessor );
@@ -56,28 +60,27 @@ int main( int argc, char** argv )
     tPrintProcessor.InsertAfter( &tConditionProcessor );
     tTagProcessor.InsertAfter( &tPrintProcessor );
 
-#ifdef Kommon_USE_ROOT
-	KSaveSettingsProcessor tSSProcessor;
-	tSSProcessor.InsertAfter( &tPrintProcessor );
-	tTagProcessor.InsertAfter( &tSSProcessor );
-#endif
-
     tElementProcessor.InsertAfter( &tTagProcessor );
 
     mainmsg( eNormal ) << "starting..." << eom;
 
-    KSToolbox::GetInstance();
+    KToolbox::GetInstance();
 
     KTextFile* tFile;
-    for( vector< string >::const_iterator tIter = tCommandLine.GetFiles().begin(); tIter != tCommandLine.GetFiles().end(); tIter++ )
+    for( auto tFilename : tCommandLine.GetFiles() )
     {
         tFile = new KTextFile();
-        tFile->AddToNames( *tIter );
+        tFile->AddToNames( tFilename );
         tTokenizer.ProcessFile( tFile );
         delete tFile;
     }
-
-    KSToolbox::DeleteInstance();
+/*
+    KSRoot* tRoot = KToolbox::GetInstance().GetAll<KSRoot>()[0];
+    for( auto sim : KToolbox::GetInstance().GetAll<KSSimulation>())
+    {
+        tRoot->Execute(sim);
+    }
+*/
 
     mainmsg( eNormal ) << "...finished" << eom;
 

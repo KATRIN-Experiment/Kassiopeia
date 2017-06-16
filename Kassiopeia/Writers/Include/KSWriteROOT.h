@@ -3,6 +3,9 @@
 
 #include "KSWriter.h"
 
+#include "KSWriteROOTCondition.h"
+#include "KSList.h"
+
 #include "KFile.h"
 using katrin::KFile;
 
@@ -46,8 +49,8 @@ namespace Kassiopeia
                     void MakeBranches( KSComponent* aComponent );
 
                     TTree* fStructure;
-                    string fLabel;
-                    string fType;
+                    std::string fLabel;
+                    std::string fType;
 
                     TTree* fPresence;
                     unsigned int fIndex;
@@ -55,7 +58,7 @@ namespace Kassiopeia
 
                     TTree* fData;
 
-                    vector< KSComponent* > fComponents;
+                    std::vector< KSComponent* > fComponents;
             };
 
             typedef map< KSComponent*, Data* > KSComponentMap;
@@ -70,15 +73,34 @@ namespace Kassiopeia
             virtual ~KSWriteROOT();
 
         public:
-            void SetBase( const string& aBase );
-            void SetPath( const string& aPath );
+            void SetBase( const std::string& aBase );
+            void SetPath( const std::string& aPath );
             void SetStepIteration( const unsigned int& aValue );
 
         private:
-            string fBase;
-            string fPath;
+            std::string fBase;
+            std::string fPath;
             unsigned int fStepIteration;
             unsigned int fStepIterationIndex;
+
+        public:
+            void AddRunWriteCondition( KSWriteROOTCondition* aWriteCondition );
+            void RemoveRunWriteCondition( KSWriteROOTCondition* aWriteCondition );
+
+            void AddEventWriteCondition( KSWriteROOTCondition* aWriteCondition );
+            void RemoveEventWriteCondition( KSWriteROOTCondition* aWriteCondition );
+
+            void AddTrackWriteCondition( KSWriteROOTCondition* aWriteCondition );
+            void RemoveTrackWriteCondition( KSWriteROOTCondition* aWriteCondition );
+
+            void AddStepWriteCondition( KSWriteROOTCondition* aWriteCondition );
+            void RemoveStepWriteCondition( KSWriteROOTCondition* aWriteCondition );
+
+        private:
+            KSList< KSWriteROOTCondition > fRunWriteConditions;
+            KSList< KSWriteROOTCondition > fEventWriteConditions;
+            KSList< KSWriteROOTCondition > fTrackWriteConditions;
+            KSList< KSWriteROOTCondition > fStepWriteConditions;
 
         public:
             void ExecuteRun();
@@ -101,11 +123,10 @@ namespace Kassiopeia
         protected:
             virtual void InitializeComponent();
             virtual void DeinitializeComponent();
-            virtual void StoreConfig(string ConfigDirName = "config");
 
         private:
             KRootFile* fFile;
-            string fKey;
+            std::string fKey;
 
             TTree* fRunKeys;
             TTree* fRunData;
@@ -146,15 +167,15 @@ namespace Kassiopeia
 
             static const Int_t fBufferSize;
             static const Int_t fSplitLevel;
-            static const string fLabel;
+            static const std::string fLabel;
     };
 
-    inline void KSWriteROOT::SetBase( const string& aBase )
+    inline void KSWriteROOT::SetBase( const std::string& aBase )
     {
         fBase = aBase;
         return;
     }
-    inline void KSWriteROOT::SetPath( const string& aPath )
+    inline void KSWriteROOT::SetPath( const std::string& aPath )
     {
         fPath = aPath;
         return;

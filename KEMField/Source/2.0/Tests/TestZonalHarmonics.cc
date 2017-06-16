@@ -19,7 +19,7 @@
 #include "KBinaryDataStreamer.hh"
 #include "KSADataStreamer.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 
 #include "KElectrostaticIntegratingFieldSolver.hh"
 #include "KElectromagnetIntegratingFieldSolver.hh"
@@ -108,7 +108,7 @@ int main(int /*argc*/, char** /*argv*/)
   KIntegratingFieldSolver<KElectromagnetIntegrator>
     integratingBFieldSolver(electromagnetContainer,electromagnetIntegrator);
 
-  KElectrostaticBoundaryIntegrator electrostaticIntegrator;
+  KElectrostaticBoundaryIntegrator electrostaticIntegrator {KEBIFactory::MakeDefault()};
   KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>
     integratingEFieldSolver(electrostaticContainer,electrostaticIntegrator);
 

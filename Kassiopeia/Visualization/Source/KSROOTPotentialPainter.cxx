@@ -2,12 +2,13 @@
 
 #include "KSObject.h"
 #include "KSVisualizationMessage.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
 #include <fstream>
 #include <iostream>
 #include <limits>
 
 #include "KSElectricField.h"
+#include "KSFieldFinder.h"
 
 namespace Kassiopeia
 {
@@ -15,7 +16,8 @@ namespace Kassiopeia
             fXAxis( "z" ),
             fYAxis( "y" ),
             fCalcPot(1),
-            fMap()
+            fMap(),
+            fComparison( false )
     {
     }
     KSROOTPotentialPainter::~KSROOTPotentialPainter()
@@ -25,11 +27,25 @@ namespace Kassiopeia
     void KSROOTPotentialPainter::Render()
     {
         vismsg(eNormal) << "Getting electric field " << fElectricFieldName << " from the toolbox" << eom;
-        KSElectricField* tElField = KSToolbox::GetInstance()->GetObjectAs<KSElectricField>( fElectricFieldName );
+        KSElectricField* tElField = getElectricField( fElectricFieldName );
         if ( tElField == NULL)
             vismsg(eError) << "No electric Field!" << eom;
         vismsg(eNormal) << "Initialize electric field (again)" << eom;
         tElField->Initialize();
+
+        // reference field
+        KSElectricField* tRefField = NULL;
+        if( fComparison )
+        {
+            vismsg(eNormal) << "Getting reference electric field " << fReferenceFieldName << " from the toolbox" << eom;
+            tRefField = getElectricField( fReferenceFieldName );
+
+            if ( tRefField == NULL)
+                vismsg(eError) << "No electric Field!" << eom;
+
+            vismsg(eNormal) << "Initialize electric field (again)" << eom;
+            tRefField->Initialize();
+        }
 
         double tDeltaZ = fabs(fZmax-fZmin)/fZsteps;
         double tDeltaR = fabs(fRmax)/fRsteps;
@@ -39,6 +55,11 @@ namespace Kassiopeia
 
         KThreeVector ElectricField;
         Double_t tPotential;
+
+        KThreeVector tRefElectricField;
+        Double_t tRefPotential;
+
+        Double_t tRelError = 0.;
 
         vismsg(eNormal) << "start calculating potential map" << eom;
         for( int i=0; i<fZsteps; i++)
@@ -50,20 +71,85 @@ namespace Kassiopeia
             {
                 tR = j * tDeltaR;
 
-                if(fYAxis=="y") tPosition.SetComponents(0.,tR,tZ);
-                else if(fYAxis=="x") tPosition.SetComponents(tR,0.,tZ);
-                else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
                 if(fCalcPot==0)
                 {
-                	tElField->CalculateField(tPosition,0.0,ElectricField);
-                    Map->SetBinContent(i+1,fRsteps-j+1,ElectricField.Magnitude());
-                    Map->SetBinContent(i+1,fRsteps+j+1,ElectricField.Magnitude());
+                    if( !fComparison )
+                    {
+                        if(fYAxis=="y") tPosition.SetComponents(0.,-tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(-tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculateField(tPosition,0.0,ElectricField);
+                        Map->SetBinContent(i+1,fRsteps-j+1,ElectricField.Magnitude());
+
+                        if(fYAxis=="y") tPosition.SetComponents(0.,tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculateField(tPosition,0.0,ElectricField);
+                        Map->SetBinContent(i+1,fRsteps+j+1,ElectricField.Magnitude());
+                    }
+                    else
+                    {
+                        if(fYAxis=="y") tPosition.SetComponents(0.,-tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(-tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculateField(tPosition,0.0,ElectricField);
+                        tRefField->CalculateField(tPosition,0.0,tRefElectricField);
+
+                        tRelError = fabs((ElectricField.X()-tRefElectricField.X())+(ElectricField.Y()-tRefElectricField.Y())+(ElectricField.Z()-tRefElectricField.Z()));
+                        Map->SetBinContent(i+1,fRsteps-j+1,tRelError);
+
+                        if(fYAxis=="y") tPosition.SetComponents(0.,tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculateField(tPosition,0.0,ElectricField);
+                        tRefField->CalculateField(tPosition,0.0,tRefElectricField);
+
+                        tRelError = fabs((ElectricField.X()-tRefElectricField.X())+(ElectricField.Y()-tRefElectricField.Y())+(ElectricField.Z()-tRefElectricField.Z()));
+                        Map->SetBinContent(i+1,fRsteps+j+1,tRelError);
+                    }
                 }
                 else
                 {
-                	tElField->CalculatePotential(tPosition,0.0,tPotential);
-                	Map->SetBinContent(i+1,fRsteps-j+1,tPotential);
-                    Map->SetBinContent(i+1,fRsteps+j+1,tPotential);
+                    if( !fComparison )
+                    {
+                        if(fYAxis=="y") tPosition.SetComponents(0.,-tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(-tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculatePotential(tPosition,0.0,tPotential);
+                        Map->SetBinContent(i+1,fRsteps-j+1,tPotential);
+
+                        if(fYAxis=="y") tPosition.SetComponents(0.,tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculatePotential(tPosition,0.0,tPotential);
+                        Map->SetBinContent(i+1,fRsteps+j+1,tPotential);
+                    }
+                    else
+                    {
+                        if(fYAxis=="y") tPosition.SetComponents(0.,-tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(-tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculatePotential(tPosition,0.0,tPotential);
+                        tRefField->CalculatePotential(tPosition,0.0,tRefPotential);
+                        tRelError = fabs(tPotential-tRefPotential);
+                        Map->SetBinContent(i+1,fRsteps-j+1,tRelError);
+
+                        if(fYAxis=="y") tPosition.SetComponents(0.,tR,tZ);
+                        else if(fYAxis=="x") tPosition.SetComponents(tR,0.,tZ);
+                        else vismsg(eError) << "Please use x or y for the Y-Axis and z for the X-Axis. All other combinations are not yet included" << eom;
+
+                        tElField->CalculatePotential(tPosition,0.0,tPotential);
+                        tRefField->CalculatePotential(tPosition,0.0,tRefPotential);
+                        tRelError = fabs(tPotential-tRefPotential);
+                        Map->SetBinContent(i+1,fRsteps+j+1,tRelError);
+                    }
                 }
             }
 

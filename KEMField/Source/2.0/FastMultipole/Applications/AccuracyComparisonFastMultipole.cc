@@ -7,6 +7,7 @@
 #include <sstream>
 #include <sys/stat.h>
 
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KGRotatedObject.hh"
 
 #include "KGMesher.hh"
@@ -29,7 +30,6 @@
 #include "KBinaryDataStreamer.hh"
 #include "KEMFileInterface.hh"
 
-#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
@@ -61,6 +61,7 @@
 
 
 #ifdef KEMFIELD_USE_OPENCL
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KFMElectrostaticFastMultipoleFieldSolver_OpenCL.hh"
 #include "KFMElectrostaticFieldMapper_OpenCL.hh"
 #endif
@@ -467,11 +468,12 @@ int main(int argc, char* argv[])
     KOpenCLSurfaceContainer* oclContainer;
     oclContainer = new KOpenCLSurfaceContainer( surfaceContainer );
     KOpenCLInterface::GetInstance()->SetActiveData( oclContainer );
-    KOpenCLElectrostaticBoundaryIntegrator integrator(*oclContainer);
+    //KOpenCLElectrostaticNumericBoundaryIntegrator integrator(*oclContainer);
+    KOpenCLElectrostaticBoundaryIntegrator integrator{KoclEBIFactory::MakeDefault(*oclContainer)};
     direct_solver = new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclContainer,integrator);
     direct_solver->Initialize();
     #else
-    KElectrostaticBoundaryIntegrator integrator;
+    KElectrostaticBoundaryIntegrator integrator {KEBIFactory::MakeDefault()};
     direct_solver = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer,integrator);
     #endif
 
@@ -541,7 +543,7 @@ int main(int argc, char* argv[])
 
     //now build the field solver
     #ifdef KEMFIELD_USE_OPENCL
-        fast_solver = new KFMElectrostaticFastMultipoleFieldSolver_OpenCL(*oclContainer, *tree);
+        fast_solver = new KFMElectrostaticFastMultipoleFieldSolver_OpenCL(KoclEBIFactory::MakeDefaultConfig(),*oclContainer, *tree);
     #else
         fast_solver = new KFMElectrostaticFastMultipoleFieldSolver(surfaceContainer, *tree);
     #endif

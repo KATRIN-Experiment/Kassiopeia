@@ -13,7 +13,9 @@
 #include "KSEvent.h"
 #include "KSRootMagneticField.h"
 #include "KSMainMessage.h"
-#include "KSToolbox.h"
+#include "KToolbox.h"
+
+#include "KSFieldFinder.h"
 
 #include "KConst.h"
 
@@ -29,10 +31,10 @@
 #include "TMultiGraph.h"
 
 #include <sstream>
-using std::stringstream;
 
 using namespace Kassiopeia;
 using namespace katrin;
+using namespace std;
 
 int main( int argc, char** argv )
 {
@@ -84,9 +86,10 @@ int main( int argc, char** argv )
 
     // initialize magnetic field
     KSMagneticField* tRootMagneticField = NULL;
-    if ( KSToolbox::GetInstance()->HasObjectAs< KSMagneticField >( tPathB ) )
-        tRootMagneticField = KSToolbox::GetInstance()->GetObjectAs< KSMagneticField >( tPathB );
-
+    try
+    {
+        tRootMagneticField = getMagneticField( tPathB );
+    } catch(...) {}
     if (tRootMagneticField)
     {
         tRootMagneticField->Initialize();
@@ -95,8 +98,10 @@ int main( int argc, char** argv )
 
     // initialize electric field
     KSElectricField* tRootElectricField = NULL;
-    if (KSToolbox::GetInstance()->HasObjectAs< KSElectricField >( tPathE ))
-        tRootElectricField = KSToolbox::GetInstance()->GetObjectAs< KSElectricField >( tPathE );
+    try
+    {
+        tRootElectricField = getElectricField( tPathE );
+    } catch(...) {}
 
     if (tRootElectricField)
     {
@@ -236,7 +241,6 @@ int main( int argc, char** argv )
         tRootElectricField->Deinitialize();
     }
 
-    //KSToolbox::DeleteInstance();
 
     return 0;
 }

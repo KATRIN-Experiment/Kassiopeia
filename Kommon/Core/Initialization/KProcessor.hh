@@ -3,8 +3,6 @@
 
 #include "KTypedTokens.hh"
 
-#include <cstdlib>
-
 namespace katrin
 {
 

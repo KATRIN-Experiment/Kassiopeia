@@ -1,7 +1,7 @@
 #ifndef KFMElectrostaticMultipole_Kernel_Defined_H
 #define KFMElectrostaticMultipole_Kernel_Defined_H
 
-#include "kEMField_defines.h"
+#include "kEMField_opencl_defines.h"
 
 #include "kEMField_KFMTriangleMultipole.cl"
 #include "kEMField_KFMTriangleMultipoleNumerical.cl"

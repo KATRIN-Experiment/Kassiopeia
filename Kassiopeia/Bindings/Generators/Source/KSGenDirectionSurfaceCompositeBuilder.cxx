@@ -4,6 +4,8 @@
 #include "KSGenValueListBuilder.h"
 #include "KSGenValueUniformBuilder.h"
 #include "KSGenValueGaussBuilder.h"
+#include "KSGenValueGeneralizedGaussBuilder.h"
+#include "KSGenValueAngleCosineBuilder.h"
 #include "KSGenValueAngleSphericalBuilder.h"
 #include "KSRootBuilder.h"
 
@@ -13,6 +15,8 @@
 #endif
 
 using namespace Kassiopeia;
+using namespace std;
+
 namespace katrin
 {
 
@@ -32,12 +36,15 @@ namespace katrin
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueList >( "theta_list" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueUniform >( "theta_uniform" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGauss >( "theta_gauss" ) +
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGeneralizedGauss >( "theta_generalized_gauss" ) +
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueAngleCosine >( "theta_cosine" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueAngleSpherical >( "theta_spherical" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueFix >( "phi_fix" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueSet >( "phi_set" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueList >( "phi_list" ) +
             KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueUniform >( "phi_uniform" ) +
-            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGauss >( "phi_gauss" );
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGauss >( "phi_gauss" ) +
+            KSGenDirectionSurfaceCompositeBuilder::ComplexElement< KSGenValueGeneralizedGauss >( "phi_generalized_gauss" );
 
     STATICINT sKSGenDirectionSurfaceComposite =
             KSRootBuilder::ComplexElement< KSGenDirectionSurfaceComposite >( "ksgen_direction_surface_composite" );
