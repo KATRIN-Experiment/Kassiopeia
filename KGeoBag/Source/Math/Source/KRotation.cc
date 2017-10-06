@@ -1,6 +1,7 @@
 #include "KRotation.hh"
 
 #include <cmath>
+#include <cassert>
 
 namespace KGeoBag
 {
@@ -93,6 +94,11 @@ namespace KGeoBag
         fData[8] = tCosineBeta;
 
         return;
+    }
+    void KRotation::SetEulerAngles( const vector<double>& anArray )
+    {
+        assert(anArray.size() == 3);
+        SetEulerAngles( anArray[0], anArray[1], anArray[2] );
     }
 
     void KRotation::SetEulerZYZAngles( const double& anAlpha, const double& aBeta, const double& aGamma )

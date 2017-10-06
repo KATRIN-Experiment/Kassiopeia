@@ -81,6 +81,36 @@ namespace Kassiopeia
 
         fOnce = false;
 
+        this->SetName( "root" );
+
+        if (fToolbox.Get<KSRun>("run") != NULL )
+        {
+            mainmsg(eWarning) << "Kassiopeia will re-use already existing root objects." << eom;
+
+            fRun   = fToolbox.Get<KSRun>("run");
+            fEvent = fToolbox.Get<KSEvent>("event");
+            fTrack = fToolbox.Get<KSTrack>("track");
+            fStep  = fToolbox.Get<KSStep>("step");
+
+            fRootMagneticField      = fToolbox.Get<KSRootMagneticField>("root_magnetic_field");
+            fRootElectricField      = fToolbox.Get<KSRootElectricField>("root_electric_field");
+            fRootSpace              = fToolbox.Get<KSRootSpace>("root_space");
+            fRootGenerator          = fToolbox.Get<KSRootGenerator>("root_generator");
+            fRootTrajectory         = fToolbox.Get<KSRootTrajectory>("root_trajectory");
+            fRootSpaceInteraction   = fToolbox.Get<KSRootSpaceInteraction>("root_space_interaction");
+            fRootSpaceNavigator     = fToolbox.Get<KSRootSpaceNavigator>("root_space_navigator");
+            fRootSurfaceInteraction = fToolbox.Get<KSRootSurfaceInteraction>("root_surface_interaction");
+            fRootSurfaceNavigator   = fToolbox.Get<KSRootSurfaceNavigator>("root_surface_navigator");
+            fRootTerminator         = fToolbox.Get<KSRootTerminator>("root_terminator");
+            fRootWriter             = fToolbox.Get<KSRootWriter>("root_writer");
+            fRootStepModifier       = fToolbox.Get<KSRootStepModifier>("root_step_modifier");
+            fRootTrackModifier      = fToolbox.Get<KSRootTrackModifier>("root_track_modifier");
+            fRootEventModifier      = fToolbox.Get<KSRootEventModifier>("root_event_modifier");
+            fRootRunModifier        = fToolbox.Get<KSRootRunModifier>("root_run_modifier");
+
+            return;
+        }
+
         fRun->SetName( "run" );
         fToolbox.Add<KSRun>(fRun, "run");
 
@@ -92,8 +122,6 @@ namespace Kassiopeia
 
         fStep->SetName( "step" );
         fToolbox.Add(fStep);
-
-        this->SetName( "root" );
 
         fRootMagneticField->SetName( "root_magnetic_field" );
         fToolbox.Add(fRootMagneticField);
@@ -188,7 +216,7 @@ namespace Kassiopeia
         fOnce = false;
 
         fRun->SetName( "run" );
-        fToolbox.Add(fRun);
+        fToolbox.Add<KSRun>(fRun, "run");
 
         fEvent->SetName( "event" );
         fToolbox.Add(fEvent);

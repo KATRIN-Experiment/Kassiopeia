@@ -25,12 +25,13 @@ namespace KGeoBag
             KThreeMatrix( const KThreeMatrix& aMatrix );
             KThreeMatrix& operator=( const KThreeMatrix& aMatrix );
 
-            KThreeMatrix( const double anArray[9] );
-            KThreeMatrix& operator=( const double anArray[9] );
+            KThreeMatrix( const double anArray[ 9 ] );
+            KThreeMatrix& operator=( const double anArray[ 9 ] );
 
             KThreeMatrix( const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY, const double& aYZ, const double& aZX, const double& aZY, const double& aZZ );
             void SetComponents( const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY, const double& aYZ, const double& aZX, const double& aZY, const double& aZZ );
-            void SetComponents( const double* anArray );
+            void SetComponents( const double anArray[ 9 ] );
+            void SetComponents( const vector<double>& anArray );
 
             //cast
 
@@ -147,8 +148,26 @@ namespace KGeoBag
 
         return;
     }
-    inline void KThreeMatrix::SetComponents( const double* anArray )
+    inline void KThreeMatrix::SetComponents( const double anArray[9] )
     {
+        fData[0] = anArray[ 0 ];
+        fData[1] = anArray[ 1 ];
+        fData[2] = anArray[ 2 ];
+
+        fData[3] = anArray[ 3 ];
+        fData[4] = anArray[ 4 ];
+        fData[5] = anArray[ 5 ];
+
+        fData[6] = anArray[ 6 ];
+        fData[7] = anArray[ 7 ];
+        fData[8] = anArray[ 8 ];
+
+        return;
+    }
+    inline void KThreeMatrix::SetComponents( const vector<double>& anArray )
+    {
+        assert( anArray.size() == 9 );
+
         fData[0] = anArray[ 0 ];
         fData[1] = anArray[ 1 ];
         fData[2] = anArray[ 2 ];

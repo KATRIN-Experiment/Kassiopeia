@@ -171,7 +171,7 @@ namespace KEMField
   {
     KOpenCLBoundaryIntegrator<KElectrostaticBasis>::AssignBuffers();
 
-    //std::cout << "Analytical Potential      - Workgroup Size: " << fPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
+    //std::cout << "Potential      - Workgroup Size: " << fPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
 
     // Set arguments to kernel
     fPhiKernel->setArg(0, *fBufferP);
@@ -179,14 +179,14 @@ namespace KEMField
     fPhiKernel->setArg(2, *fBufferShapeData);
     fPhiKernel->setArg(3, *fBufferPhi);
 
-    //std::cout << "Analytical Electric Field - Workgroup Size: " << fEFieldKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
+    //std::cout << "Electric Field - Workgroup Size: " << fEFieldKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
 
     fEFieldKernel->setArg(0, *fBufferP);
     fEFieldKernel->setArg(1, *fBufferShapeInfo);
     fEFieldKernel->setArg(2, *fBufferShapeData);
     fEFieldKernel->setArg(3, *fBufferEField);
 
-    //std::cout << "Analytical EField and Pot - Workgroup Size: " << fEFieldAndPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
+    //std::cout << "EField and Pot - Workgroup Size: " << fEFieldAndPhiKernel->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice())) << std::endl;
 
     fEFieldAndPhiKernel->setArg(0, *fBufferP);
     fEFieldAndPhiKernel->setArg(1, *fBufferShapeInfo);

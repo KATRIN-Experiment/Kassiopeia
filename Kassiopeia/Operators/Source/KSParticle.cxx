@@ -38,6 +38,7 @@ namespace Kassiopeia
             fElectricFieldCalculator( NULL ),
 
             fPID( 0 ),
+	    fStringID( "" ),
             fMass( 0. ),
             fCharge( 0. ),
             fSpinMagnitude( 0. ),
@@ -119,6 +120,7 @@ namespace Kassiopeia
             fElectricFieldCalculator( aParticle.fElectricFieldCalculator ),
 
             fPID( aParticle.fPID ),
+	    fStringID( aParticle.fStringID ),
             fMass( aParticle.fMass ),
             fCharge( aParticle.fCharge ),
             fSpinMagnitude( aParticle.fSpinMagnitude ),
@@ -202,6 +204,7 @@ namespace Kassiopeia
         fElectricFieldCalculator = aParticle.fElectricFieldCalculator;
 
         fPID = aParticle.fPID;
+	fStringID = aParticle.fStringID;
         fMass = aParticle.fMass;
         fCharge = aParticle.fCharge;
         fSpinMagnitude = aParticle.fSpinMagnitude;
@@ -275,6 +278,7 @@ namespace Kassiopeia
         oprmsg( eNormal );
         oprmsg << "particle state:" << ret;
         oprmsg << "  id:                  " << fPID << ret;
+	oprmsg << "  string id:           " << fStringID << ret;
         oprmsg << "  mass:                " << fMass << ret;
         oprmsg << "  charge:              " << fCharge << ret;
         oprmsg << "  spin magnitude:          " << fSpinMagnitude << ret;
@@ -535,6 +539,10 @@ namespace Kassiopeia
     {
         return fPID;
     }
+    const std::string& KSParticle::GetStringID() const
+    {
+        return fStringID;
+	}
     const double& KSParticle::GetMass() const
     {
         return fMass;
@@ -2230,6 +2238,7 @@ namespace Kassiopeia
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentTrackId, "parent_track_id" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentStepId, "parent_step_id" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPID, "pid" ) +
+                KSDictionary< KSParticle >::AddComponent( &KSParticle::GetStringID, "string_id" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMass, "mass" ) +
     		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCharge, "charge" ) +
         KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpinMagnitude, "total_spin" ) +

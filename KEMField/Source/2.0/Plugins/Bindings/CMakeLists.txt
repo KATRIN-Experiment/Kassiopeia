@@ -20,7 +20,7 @@ set( @PROJECT_NAME@_USE_KGEOBAG ON CACHE BOOL "(Required)" FORCE )
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include)
 
   set (KEMFIELD_BINDINGS_HEADERFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolbox.hh
+#    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolbox.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMToolboxBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KEMBindingsMessage.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/include/KSmartPointerRelease.hh
@@ -56,10 +56,11 @@ set( @PROJECT_NAME@_USE_KGEOBAG ON CACHE BOOL "(Required)" FORCE )
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include/KIntegratingMagnetostaticFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/include/KZonalHarmonicMagnetostaticFieldSolverBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticPotentialmapBuilder.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/include/KMagnetostaticConstantFieldBuilder.hh
     )
-  
+
   set (KEMFIELD_BINDINGS_SOURCEFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMToolbox.cc
+#    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMToolbox.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMToolboxBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/src/KEMBindingsMessage.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KBoundaryElementInfoDisplayBuilder.cc
@@ -92,6 +93,7 @@ set( @PROJECT_NAME@_USE_KGEOBAG ON CACHE BOOL "(Required)" FORCE )
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/src/KIntegratingMagnetostaticFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldSolvers/Magnetic/src/KZonalHarmonicMagnetostaticFieldSolverBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticPotentialmapBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Magnetic/src/KMagnetostaticConstantFieldBuilder.cc
     )
 
   add_library (KEMFieldBindings SHARED ${KEMFIELD_BINDINGS_SOURCEFILES})

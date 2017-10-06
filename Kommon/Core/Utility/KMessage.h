@@ -84,9 +84,11 @@ namespace katrin
             KMessage& operator<<( const KMessageNewlineEnd& );
             KMessage& operator<<( const KMessageOverlineEnd& );
 
-        private:
+        public:
             void SetSeverity( const KMessageSeverity& aSeverity );
             void Flush();
+
+        private:
             void Shutdown();
 
         protected:
@@ -210,7 +212,6 @@ namespace katrin
     class KMessageTable :
         public KSingleton< KMessageTable >
     {
-
         public:
             friend class KSingleton< KMessageTable > ;
 

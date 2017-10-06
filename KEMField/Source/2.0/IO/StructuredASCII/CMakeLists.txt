@@ -47,6 +47,8 @@ if (KEMField_USE_ZLIB)
   kasper_external_include_directories (${ZLIB_INCLUDE_DIRS})
   add_cflag(KEMFIELD_USE_ZLIB)
 else (KEMField_USE_ZLIB)
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
 list (APPEND STRUCTUREDASCII_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c

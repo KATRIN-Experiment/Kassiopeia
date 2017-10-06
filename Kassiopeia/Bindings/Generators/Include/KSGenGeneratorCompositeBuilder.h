@@ -5,6 +5,7 @@
 #include "KSGenGeneratorComposite.h"
 #include "KSGeneratorsMessage.h"
 #include "KSGenValueFix.h"
+#include "KSGenStringValueFix.h"
 #include "KToolbox.h"
 
 using namespace Kassiopeia;
@@ -62,6 +63,13 @@ namespace katrin
             fObject->SetPid(tPidValue);
             return true;
         }
+	if( aContainer->GetName() == "string_id" )
+        {
+	  KSGenStringValueFix* tStringIdValue = new KSGenStringValueFix();
+	  tStringIdValue->SetValue(aContainer->AsReference<std::string>());
+	  fObject->SetStringId(tStringIdValue);
+	  return true;
+        }
         return false;
     }
 
@@ -84,17 +92,21 @@ namespace katrin
     template< >
     inline bool KSGenGeneratorCompositeBuilder::End()
     {
-        if (fObject->GetPid() == NULL)
+       if ((fObject->GetPid() != NULL) && (fObject->GetStringId() != NULL))
         {
-            genmsg(eWarning) << "No Particle id was set. Kassiopeia assumes that electrons (pid=11) should be tracked" << eom;
+            genmsg(eWarning) << "pid <" << fObject->GetPid() << "> overrides string_id <" << fObject->GetStringId() << ">. Only one should be used, to avoid confusion." << eom;
+        }
+       else if ((fObject->GetPid() == NULL) && (fObject->GetStringId() == NULL))
+        {
+            genmsg(eWarning) << "No particle id (pid) or string_id was set. Kassiopeia assumes that electrons (pid=11 or string_id=\"e-\") should be tracked" << eom;
             KSGenValueFix* tPidValue = new KSGenValueFix();
             tPidValue->SetValue(11);
             fObject->SetPid(tPidValue);
         }
-
-        return true;
+       
+       return true;
     }
-
+    
 }
 
 #endif

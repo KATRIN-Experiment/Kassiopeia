@@ -322,6 +322,7 @@ macro(kasper_export_pkgconfig)
     set( LIBDIRS )
     set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
     list( REMOVE_DUPLICATES LIBS )
+    #message("${PROJECT_NAME}: ${LIBS}")
 
     foreach(LIB ${LIBS})
 
@@ -337,7 +338,7 @@ macro(kasper_export_pkgconfig)
             if (LIBDIRINDEX LESS 0)
 
                 string(REGEX MATCH "^/usr" SYSLIBDIR ${LIBDIR})
-                string(REGEX MATCH "^/usr.*(root|boost)" SPECIALSYSLIBDIR ${LIBDIR})
+                string(REGEX MATCH "^/usr.*(root|boost|vtk)" SPECIALSYSLIBDIR ${LIBDIR})
                 if(NOT SYSLIBDIR)
                     list(INSERT LIBDIRS 0 ${LIBDIR})
                 elseif(SPECIALSYSLIBDIR)
@@ -376,6 +377,11 @@ macro(kasper_export_pkgconfig)
 
     GET_PROPERTY(GLOBAL_CXX11_FLAG GLOBAL PROPERTY CXX11_FLAG)
 
+    set( LINKER_FLAGS )
+    if ("${CMAKE_EXE_LINKER_FLAGS}" MATCHES "--no-as-needed")
+        set( LINKER_FLAGS "-Wl,--no-as-needed")
+    endif()
+
     set( PC_CONTENTS "prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=${BIN_INSTALL_DIR}
 libdir=${LIB_INSTALL_DIR}
@@ -386,7 +392,7 @@ Name: ${PROJECT_NAME}
 Description: ${DESCRIPTION}
 Version: ${MODULE_VERSION}
 
-Libs: ${PC_LIBRARIES_STR}
+Libs: ${PC_LIBRARIES_STR} ${LINKER_FLAGS}
 Cflags: ${GLOBAL_CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
 ")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER )
@@ -588,6 +594,7 @@ endmacro()
 
 macro(kasper_find_vtk)
     # VTK versions below 6.0.1 do not compile with c++11 support
+    set(VTK_USE_FILE ON)
     find_package( VTK REQUIRED NO_MODULE )
     include(${VTK_USE_FILE})
 
@@ -596,7 +603,7 @@ macro(kasper_find_vtk)
     endif()
 
     if(VTK_VERSION VERSION_GREATER "6" AND VTK_QT_VERSION VERSION_GREATER "4")
-        find_package(Qt5Widgets REQUIRED QUIET)
+        find_package(Qt5Widgets QUIET)
     endif()
 
     kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )

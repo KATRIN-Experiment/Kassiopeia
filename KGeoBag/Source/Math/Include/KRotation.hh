@@ -3,6 +3,9 @@
 
 #include "KThreeMatrix.hh"
 
+#include <vector>
+using std::vector;
+
 namespace KGeoBag
 {
 
@@ -19,6 +22,7 @@ namespace KGeoBag
             void SetIdentity();
             void SetAxisAngle( const KThreeVector& anAxis, const double& anAngle );
             void SetEulerAngles( const double& anAlpha, const double& aBeta, const double& aGamma );
+            void SetEulerAngles( const vector<double>& anArray );
             void SetEulerZYZAngles( const double& anAlpha, const double& aBeta, const double& aGamma );
             void SetRotatedFrame( const KThreeVector& x, const KThreeVector& y, const KThreeVector& z );
     };

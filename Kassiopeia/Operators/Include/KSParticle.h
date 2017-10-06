@@ -125,6 +125,7 @@ namespace Kassiopeia
 
         public:
             const long long& GetPID() const;
+	    const std::string& GetStringID() const;
             const double& GetMass() const;
             const double& GetCharge() const;
             const double& GetSpinMagnitude() const;
@@ -132,6 +133,7 @@ namespace Kassiopeia
 
         protected:
             long long fPID;
+	    std::string fStringID;
             double fMass; // in kg
             double fCharge; // in Coulomb
             double fSpinMagnitude; // in hbar

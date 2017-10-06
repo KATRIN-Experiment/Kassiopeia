@@ -28,11 +28,13 @@ set( KGeoBag_USE_ROOT ${KASPER_USE_ROOT} )
 
 if( KGeoBag_USE_VTK )
     kasper_find_vtk()
+    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_VTK )
 endif()
 
 if( KGeoBag_USE_ROOT )
     find_package( ROOT REQUIRED )
     kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
+    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_ROOT )
 endif()
 
 # installing

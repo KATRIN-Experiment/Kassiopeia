@@ -895,10 +895,10 @@ namespace KEMField
     MPI_Aint addresses[4];
     MPI_Datatype typelist[3] = {MPI_INT,MPI_DOUBLE,MPI_DOUBLE};
 
-    MPI_Address(&fRes_real,&addresses[0]);
-    MPI_Address(&(fRes_real.fIndex),&addresses[1]);
-    MPI_Address(&(fRes_real.fRes),&addresses[2]);
-    MPI_Address(&(fRes_real.fCorrection),&addresses[3]);
+    MPI_Get_address(&fRes_real,&addresses[0]);
+    MPI_Get_address(&(fRes_real.fIndex),&addresses[1]);
+    MPI_Get_address(&(fRes_real.fRes),&addresses[2]);
+    MPI_Get_address(&(fRes_real.fCorrection),&addresses[3]);
 
     displacements[0] = addresses[1] - addresses[0];
     displacements[1] = addresses[2] - addresses[0];
@@ -924,11 +924,11 @@ namespace KEMField
     MPI_Aint addresses[5];
     MPI_Datatype typelist[4] = {MPI_INT,MPI_DOUBLE,MPI_DOUBLE,MPI_DOUBLE};
 
-    MPI_Address(&fRes_complex,&addresses[0]);
-    MPI_Address(&(fRes_complex.fIndex),&addresses[1]);
-    MPI_Address(&(fRes_complex.fRes),&addresses[2]);
-    MPI_Address(&(fRes_complex.fCorrection_real),&addresses[3]);
-    MPI_Address(&(fRes_complex.fCorrection_imag),&addresses[4]);
+    MPI_Get_address(&fRes_complex,&addresses[0]);
+    MPI_Get_address(&(fRes_complex.fIndex),&addresses[1]);
+    MPI_Get_address(&(fRes_complex.fRes),&addresses[2]);
+    MPI_Get_address(&(fRes_complex.fCorrection_real),&addresses[3]);
+    MPI_Get_address(&(fRes_complex.fCorrection_imag),&addresses[4]);
 
     displacements[0] = addresses[1] - addresses[0];
     displacements[1] = addresses[2] - addresses[0];

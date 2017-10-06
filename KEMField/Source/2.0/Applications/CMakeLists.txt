@@ -76,9 +76,9 @@ add_executable (ComputeSphericalCapacitor
   ${CMAKE_CURRENT_SOURCE_DIR}/ComputeSphericalCapacitor.cc)
 target_link_libraries (ComputeSphericalCapacitor ${APPLICATIONS_LIBS} )
 
-add_executable (WriteKbdToAscii
-  ${CMAKE_CURRENT_SOURCE_DIR}/WriteKbdToAscii.cc)
-target_link_libraries (WriteKbdToAscii ${APPLICATIONS_LIBS} )
+add_executable (KdbConverter
+  ${CMAKE_CURRENT_SOURCE_DIR}/KdbConverter.cc)
+target_link_libraries (KdbConverter ${APPLICATIONS_LIBS} )
 
 add_executable (TransferEMElement
   ${CMAKE_CURRENT_SOURCE_DIR}/TransferEMElement.cc)
@@ -96,7 +96,7 @@ kasper_install_executables (
   ComputeChargeDensities
   ComputeChargeDensitiesFromElcd33File
   ComputeSphericalCapacitor
-  WriteKbdToAscii
+  KdbConverter
   TransferEMElement
   HashEMGeometry
   InspectEMFile

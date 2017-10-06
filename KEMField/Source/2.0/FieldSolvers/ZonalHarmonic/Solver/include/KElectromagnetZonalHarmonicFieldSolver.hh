@@ -52,6 +52,10 @@ namespace KEMField
 				  KGradient& g) const;
     bool RemoteGradientExpansion(const KPosition& P,
 				 KGradient& g) const;
+    bool CentralGradientExpansionNumerical(const KPosition& P,
+				  KGradient& g) const;
+    bool RemoteGradientExpansionNumerical(const KPosition& P,
+				 KGradient& g) const;
     bool CentralMagneticFieldAndGradientExpansion(const KPosition& P,
                   KGradient& g,
                   KEMThreeVector& B) const;

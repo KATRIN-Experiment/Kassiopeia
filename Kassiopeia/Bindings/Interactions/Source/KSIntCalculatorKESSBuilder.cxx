@@ -46,7 +46,7 @@ namespace katrin
     {
     }
 
-    static int sKSIntCalculatorKESSStructure =
+    static int __attribute__((__unused__)) sKSIntCalculatorKESSStructure =
         KSIntCalculatorKESSSetBuilder::Attribute< string >( "name" ) +
         KSIntCalculatorKESSSetBuilder::Attribute< bool >( "elastic" ) +
         KSIntCalculatorKESSSetBuilder::Attribute< string >( "inelastic" ) +

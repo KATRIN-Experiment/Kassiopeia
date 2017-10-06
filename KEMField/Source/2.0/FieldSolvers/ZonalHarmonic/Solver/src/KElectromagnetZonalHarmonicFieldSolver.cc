@@ -123,7 +123,6 @@ namespace KEMField
   KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(const KPosition& P) const
   {
     KEMThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
-
     KGradient g;
 
     if( fCentralFirst)
@@ -165,9 +164,6 @@ namespace KEMField
 
     }
 
-
-
-
     if (fSubsetFieldSolvers.size()!=0)
     {
       MagneticFieldGradientAccumulator accumulator(P);
@@ -177,8 +173,10 @@ namespace KEMField
 			     accumulator);
     }
 
-    return fIntegratingFieldSolver.MagneticFieldGradient(P);
-  }
+    g = fIntegratingFieldSolver.MagneticFieldGradient(P);
+
+    return g;
+}
 
   std::pair<KEMThreeVector, KGradient> KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const KPosition& P) const
   {
@@ -186,6 +184,7 @@ namespace KEMField
 
     KEMThreeVector B;
     KGradient g;
+
 
     if( fCentralFirst)
     {
@@ -238,7 +237,10 @@ namespace KEMField
                  accumulator);
     }
 
-    return std::make_pair(fIntegratingFieldSolver.MagneticField(P), fIntegratingFieldSolver.MagneticFieldGradient(P));
+    B = fIntegratingFieldSolver.MagneticField(P);
+    g = fIntegratingFieldSolver.MagneticFieldGradient(P);
+
+    return std::make_pair(B, g);
   }
 
   bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionMagneticField(const KPosition& P, KEMThreeVector& magneticField) const
@@ -707,8 +709,8 @@ namespace KEMField
 
   bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteGradientExpansion(const KPosition& P,KGradient& g) const
   {
-      KEMThreeVector B(0.,0.,0.);
-      return RemoteMagneticFieldAndGradientExpansion(P,g,B);
+    KEMThreeVector B(0.,0.,0.);
+    return RemoteMagneticFieldAndGradientExpansion(P,g,B);
   }
 
   bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralMagneticFieldAndGradientExpansion(const KPosition& P,KGradient& g, KEMThreeVector& magneticField) const
@@ -836,10 +838,15 @@ namespace KEMField
     {
       return false;
     }
+
 	if (r<fContainer.GetParameters().GetProximityToSourcePoint())
 	{
+        //when particle is on or near axis of symmetry, to avoid numerical
+        //instability in calculating the azimuthal angle we use a numerical derivative
+        //to calculate the gradient
 		magneticField[0] = magneticField[1] = 0.;
-		g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = 0.;
+		g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
+        CentralGradientExpansionNumerical(P,g);
 	}
 	else
 	{
@@ -852,12 +859,12 @@ namespace KEMField
 		g[5]=Bzr*sine;
 		g[6]=Bzr*cosine;
 		g[7]=Bzr*sine;
+        g[8] = Bzz;
 
 		magneticField[0] = cosine*Br;
 		magneticField[1] = sine*Br;
 	}
 	magneticField[2] = Bz;
-	g[8] = Bzz;
 
     return true;
   }
@@ -981,13 +988,17 @@ namespace KEMField
       return false;
     }
 
-    g[8] = Bzz;
+
     magneticField[2] = Bz;
 
     if (r<fContainer.GetParameters().GetProximityToSourcePoint())
     {
-        g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = 0.;
+        //when particle is on or near axis of symmetry, to avoid numerical
+        //instability in calculating the azimuthal angle we use a numerical derivative
+        //to calculate the gradient
+        g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
         magneticField[0] = magneticField[1] = 0.;
+        RemoteGradientExpansionNumerical(P,g);
     }
     else
     {
@@ -1000,6 +1011,7 @@ namespace KEMField
       g[5]=Bzr*sine;
       g[6]=Bzr*cosine;
       g[7]=Bzr*sine;
+      g[8] = Bzz;
 
       magneticField[0] = cosine*Br;
       magneticField[1] = sine*Br;
@@ -1007,4 +1019,61 @@ namespace KEMField
 
     return true;
   }
+
+    bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralGradientExpansionNumerical(const KPosition& P,
+				  KGradient& g) const
+    {
+        //slow, brute force, three-point numerical differentiation
+        double num_eps = 1e-6;
+        bool retval = true;
+        KEMThreeVector coord_ax[3];
+        KEMThreeVector result[3];
+        coord_ax[0]  = KEMThreeVector(1,0,0);
+        coord_ax[1]  = KEMThreeVector(0,1,0);
+        coord_ax[2]  = KEMThreeVector(0,0,1);
+
+        for(unsigned int i=0; i<3; i++)
+        {
+            KEMThreeVector forward;
+            KEMThreeVector backward;
+            retval *= CentralExpansionMagneticField( P + num_eps*coord_ax[i], forward);
+            retval *= CentralExpansionMagneticField( P - num_eps*coord_ax[i], backward);
+            result[i] = (forward - backward)/(2.0*num_eps);
+            g(0,i) = result[i][0];
+            g(1,i) = result[i][1];
+            g(2,i) = result[i][2];
+        }
+
+        return retval;
+    }
+
+    bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteGradientExpansionNumerical(const KPosition& P,
+				 KGradient& g) const
+    {
+        //slow, brute force, three-point numerical differentiation
+        double num_eps = 1e-6;
+        bool retval = true;
+        KEMThreeVector coord_ax[3];
+        KEMThreeVector result[3];
+        coord_ax[0]  = KEMThreeVector(1,0,0);
+        coord_ax[1]  = KEMThreeVector(0,1,0);
+        coord_ax[2]  = KEMThreeVector(0,0,1);
+
+        for(unsigned int i=0; i<3; i++)
+        {
+            KEMThreeVector forward;
+            KEMThreeVector backward;
+            retval *= RemoteExpansionMagneticField( P + num_eps*coord_ax[i], forward);
+            retval *= RemoteExpansionMagneticField( P - num_eps*coord_ax[i], backward);
+            result[i] = (forward - backward)/(2.0*num_eps);
+            g(0,i) = result[i][0];
+            g(1,i) = result[i][1];
+            g(2,i) = result[i][2];
+        }
+
+        return retval;
+    }
+
+
+
 }

@@ -113,7 +113,14 @@ namespace katrin
                 }
                 else
                 {
-                    fCondition = aToken->GetValue< bool >();
+                    if( aToken->GetValue< string >().empty() )
+                    {
+                        fCondition = false;
+                    }
+                    else
+                    {
+                        fCondition = aToken->GetValue< bool >();
+                    }
                 }
                 fAttributeState = eAttributeComplete;
                 return;

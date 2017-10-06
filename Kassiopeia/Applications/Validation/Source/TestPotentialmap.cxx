@@ -35,6 +35,7 @@
 
 #include <sstream>
 
+using std::string;
 using std::stringstream;
 
 using namespace Kassiopeia;
@@ -348,4 +349,3 @@ int main( int argc, char** argv )
 
   return 0;
 }
-

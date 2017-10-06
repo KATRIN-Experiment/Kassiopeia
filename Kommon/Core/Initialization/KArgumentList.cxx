@@ -199,7 +199,7 @@ void KArgumentSchema::KElement::Print(std::ostream& os, size_t NameWidth)
     os << fDescription << endl;
 }
 
-void KArgumentSchema::KElement::Validate(const std::string& Value, std::string Name) throw(KException)
+void KArgumentSchema::KElement::Validate(const std::string& Value, std::string Name) 
 {
     if (Name.empty()) {
         Name = fName;
@@ -342,7 +342,7 @@ void KArgumentSchema::Print(std::ostream& os)
     }
 }
 
-void KArgumentSchema::Validate(KArgumentList& ArgumentList) throw(KException)
+void KArgumentSchema::Validate(KArgumentList& ArgumentList) 
 {
     // verification: parameter //
     if (ArgumentList.Length() < fNumberOfRequiredParameters) {

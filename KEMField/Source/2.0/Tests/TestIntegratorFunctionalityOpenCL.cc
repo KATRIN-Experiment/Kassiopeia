@@ -27,9 +27,9 @@
 #include "KOpenCLSurfaceContainer.hh"
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 
-#define PRINTCST
-//#define TRI
-#define RECT
+//#define PRINTCST
+#define TRI
+//#define RECT
 //#define LINE
 
 using namespace KEMField;

@@ -206,6 +206,20 @@
 					
 				max_value
 					the maximal value
+	-->
+
+	<ksterm_magnetron name="term_magnetron" max_phi="360"/>
+	<!-- 
+		descrition:
+			this terminator kills particles after completing a certain azimuthal portion of a magnetron period
+			
+			parameters:
+				name:
+					the name of the terminator
+					
+				max_phi:
+					the azimuthal angle surpassed under magnetron motion before the particle is killed
+
 	 -->
 
 </kassiopeia>

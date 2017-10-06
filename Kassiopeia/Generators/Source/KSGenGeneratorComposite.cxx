@@ -7,6 +7,7 @@ namespace Kassiopeia
 
     KSGenGeneratorComposite::KSGenGeneratorComposite() :
             fPidValue( NULL ),
+	    fStringIdValue( NULL ),
             fSpecials( 128 ),
             fCreators( 128 )
     {
@@ -14,6 +15,7 @@ namespace Kassiopeia
     KSGenGeneratorComposite::KSGenGeneratorComposite( const KSGenGeneratorComposite& aCopy ) :
             KSComponent(),
             fPidValue( aCopy.fPidValue ),
+	    fStringIdValue( aCopy.fStringIdValue ),
             fSpecials( aCopy.fSpecials ),
             fCreators( aCopy.fCreators )
     {
@@ -36,6 +38,17 @@ namespace Kassiopeia
     {
         return fPidValue;
     }
+
+    void KSGenGeneratorComposite::SetStringId(KSGenStringValue *aStringIdValue )
+    {
+        fStringIdValue = aStringIdValue;
+        return;
+    }
+
+    KSGenStringValue* KSGenGeneratorComposite::GetStringId()
+    {
+        return fStringIdValue;
+	}
 
     void KSGenGeneratorComposite::AddSpecial( KSGenSpecial* aSpecial )
     {
@@ -78,20 +91,36 @@ namespace Kassiopeia
 
     void KSGenGeneratorComposite::ExecuteGeneration( KSParticleQueue& aPrimaries )
     {
-        vector< double > tPIDValues;
-        vector< double >::iterator tPIDValueIt;
-        fPidValue->DiceValue(tPIDValues);
+      if (fPidValue != NULL)
+      	{
+	  vector< double > tPIDValues;
+	  vector< double >::iterator tPIDValueIt;
+	  fPidValue->DiceValue(tPIDValues);
+	  
+	  for( tPIDValueIt = tPIDValues.begin(); tPIDValueIt != tPIDValues.end(); tPIDValueIt++ )
+	    {
+	      KSParticle* tParticle = KSParticleFactory::GetInstance().Create( std::floor(*tPIDValueIt) );
+	      tParticle->AddLabel( GetName() );
+	      aPrimaries.push_back( tParticle );
+	    }
+	}
+      else if (fStringIdValue != NULL)
+	{
+	  vector< std::string > tStringIdValues;
+	  vector< std::string >::iterator tStringIdValueIt;
+	  fStringIdValue->DiceValue(tStringIdValues);
 
-        for( tPIDValueIt = tPIDValues.begin(); tPIDValueIt != tPIDValues.end(); tPIDValueIt++ )
-        {
-            KSParticle* tParticle = KSParticleFactory::GetInstance().Create( std::floor(*tPIDValueIt) );
-            tParticle->AddLabel( GetName() );
-            aPrimaries.push_back( tParticle );
-        }
-
-        fCreators.ForEach( &KSGenCreator::Dice, &aPrimaries );
-        fSpecials.ForEach( &KSGenSpecial::DiceSpecial, &aPrimaries );
-
+	  for( tStringIdValueIt = tStringIdValues.begin(); tStringIdValueIt != tStringIdValues.end(); tStringIdValueIt++ )
+	    {
+	      KSParticle* tParticle = KSParticleFactory::GetInstance().StringCreate( *tStringIdValueIt );
+	      tParticle->AddLabel( GetName() );
+	      aPrimaries.push_back( tParticle );
+	    }
+	}
+      
+      fCreators.ForEach( &KSGenCreator::Dice, &aPrimaries );
+      fSpecials.ForEach( &KSGenSpecial::DiceSpecial, &aPrimaries );
+      
         // check if particle state is valid
         KSParticleIt tParticleIt;
         for( tParticleIt = aPrimaries.begin(); tParticleIt != aPrimaries.end(); tParticleIt++ )
@@ -110,19 +139,33 @@ namespace Kassiopeia
 
     void KSGenGeneratorComposite::InitializeComponent()
     {
-        if(fPidValue == NULL)
+      if((fPidValue == NULL) && (fStringIdValue == NULL))
         {
-            genmsg(eError) << "NO PID VALUE" << eom;
+            genmsg(eError) << "NO PID VALUE OR STRING_ID VALUE" << eom;
         }
-        fPidValue->Initialize();
-        fCreators.ForEach( &KSGenCreator::Initialize );
-        fSpecials.ForEach( &KSGenSpecial::Initialize );
-        return;
+      if(fPidValue != NULL)
+	{
+	  fPidValue->Initialize();
+	}
+      if(fStringIdValue != NULL)
+	{
+	  fStringIdValue->Initialize();
+	}
+      fCreators.ForEach( &KSGenCreator::Initialize );
+      fSpecials.ForEach( &KSGenSpecial::Initialize );
+      return;
     }
 
     void KSGenGeneratorComposite::DeinitializeComponent()
     {
-        fPidValue->Deinitialize();
+      if(fPidValue != NULL)
+	{
+	  fPidValue->Deinitialize();
+	}
+      if(fStringIdValue != NULL)
+	{
+	  fStringIdValue->Deinitialize();
+	}
         fCreators.ForEach( &KSGenCreator::Deinitialize );
         fSpecials.ForEach( &KSGenSpecial::Deinitialize );
         return;

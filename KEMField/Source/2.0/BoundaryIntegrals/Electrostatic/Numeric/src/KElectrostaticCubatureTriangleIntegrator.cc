@@ -446,7 +446,7 @@ std::pair<KEMThreeVector, double> KElectrostaticCubatureTriangleIntegrator::Elec
 
 double KElectrostaticCubatureTriangleIntegrator::Potential(const KTriangle* source, const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[11] = {
 			source->GetA(),
@@ -520,7 +520,7 @@ double KElectrostaticCubatureTriangleIntegrator::Potential(const KTriangle* sour
 
 KEMThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[11] = {
 			source->GetA(),
@@ -594,7 +594,7 @@ KEMThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KTr
 
 std::pair<KEMThreeVector, double> KElectrostaticCubatureTriangleIntegrator::ElectricFieldAndPotential(const KTriangle* source, const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[11] = {
 			source->GetA(),

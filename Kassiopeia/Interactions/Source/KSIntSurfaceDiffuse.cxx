@@ -54,65 +54,69 @@ namespace Kassiopeia
         }
         return;
     }
-    void KSIntSurfaceDiffuse::ExecuteReflection( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
-    {
-        double tKineticEnergy = anInitialParticle.GetKineticEnergy();
+void KSIntSurfaceDiffuse::ExecuteReflection(const KSParticle& anInitialParticle,
+		KSParticle& aFinalParticle, KSParticleQueue&) {
+	double tKineticEnergy = anInitialParticle.GetKineticEnergy();
 
-        if(fUseRelativeLoss)
-        {
-            tKineticEnergy *= (1.0 - fReflectionLossFraction);
-        }
-        else
-        {
-            tKineticEnergy -= std::fabs(KConst::Q() * fReflectionLoss);
-        }
+	if (fUseRelativeLoss) {
+		tKineticEnergy *= (1.0 - fReflectionLossFraction);
+	} else {
+		tKineticEnergy -= std::fabs(KConst::Q() * fReflectionLoss);
+	}
 
-        //prevent kinetic energy from going negative
-        if(tKineticEnergy < 0.0)
-        {
-            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> tried to give a particle a negative kinetic energy." << eom;
-            return;
-        }
+	//prevent kinetic energy from going negative
+	if (tKineticEnergy < 0.0) {
+		intmsg(eError) << "surface diffuse interaction named <" << GetName()
+				<< "> tried to give a particle a negative kinetic energy."
+				<< eom;
+		return;
+	}
 
-        //generate angles for diffuse 'Lambertian' reflection direction
-        double tAzimuthalAngle = KRandom::GetInstance().Uniform( 0., 2. * KConst::Pi() );
-        double tSinTheta = KRandom::GetInstance().Uniform( 0., 1. );
-        double tCosTheta = std::sqrt( (1.0 - tSinTheta)*(1.0 + tSinTheta) );
+	//generate angles for diffuse 'Lambertian' reflection direction
+	double tAzimuthalAngle = KRandom::GetInstance().Uniform(0.,
+			2. * KConst::Pi());
+	double tSinTheta = std::sqrt(KRandom::GetInstance().Uniform(0., 1.)); // only KRandom::GetInstance().Uniform( 0., 1. ); is wrong: see http://www.sciencedirect.com/science/article/pii/S0042207X02001732
+	double tCosTheta = std::sqrt((1.0 - tSinTheta) * (1.0 + tSinTheta));
 
-        KThreeVector tNormal;
-        if( anInitialParticle.GetCurrentSurface() != NULL )
-        {
-            tNormal = anInitialParticle.GetCurrentSurface()->Normal( anInitialParticle.GetPosition() );
-        }
-        else if( anInitialParticle.GetCurrentSide() != NULL )
-        {
-            tNormal = anInitialParticle.GetCurrentSide()->Normal( anInitialParticle.GetPosition() );
-        }
-        else
-        {
-            intmsg( eError ) << "surface diffuse interaction named <" << GetName() << "> was given a particle with neither a surface nor a side set" << eom;
-            return;
-        }
+	KThreeVector tNormal;
+	if (anInitialParticle.GetCurrentSurface() != NULL) {
+		tNormal = anInitialParticle.GetCurrentSurface()->Normal(
+				anInitialParticle.GetPosition());
+	} else if (anInitialParticle.GetCurrentSide() != NULL) {
+		tNormal = anInitialParticle.GetCurrentSide()->Normal(
+				anInitialParticle.GetPosition());
+	} else {
+		intmsg(eError) << "surface diffuse interaction named <" << GetName()
+				<< "> was given a particle with neither a surface nor a side set"
+				<< eom;
+		return;
+	}
 
-        KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
-        double tMomentumMagnitude = tInitialMomentum.Magnitude();
+	KThreeVector tInitialMomentum = anInitialParticle.GetMomentum();
+	double tMomentumMagnitude = tInitialMomentum.Magnitude();
 
-        KThreeVector tInitialNormalMomentum = tInitialMomentum.Dot( tNormal ) * tNormal;
-        KThreeVector tInitialTangentMomentum = tInitialMomentum - tInitialNormalMomentum;
-        KThreeVector tInitialOrthogonalMomentum = tInitialTangentMomentum.Cross( tInitialNormalMomentum.Unit() );
+	KThreeVector tInitialNormalMomentum = tInitialMomentum.Dot(tNormal)
+			* tNormal;
+	KThreeVector tInitialTangentMomentum = tInitialMomentum
+			- tInitialNormalMomentum;
+	KThreeVector tInitialOrthogonalMomentum = tInitialTangentMomentum.Cross(
+			tInitialNormalMomentum.Unit());
 
-        //define reflected direction
-        KThreeVector tReflectedDirection = -1.0*tCosTheta*tInitialNormalMomentum.Unit();
-        tReflectedDirection += tSinTheta*std::cos(tAzimuthalAngle)*tInitialTangentMomentum.Unit();
-        tReflectedDirection += tSinTheta*std::sin(tAzimuthalAngle)*tInitialOrthogonalMomentum.Unit();
+	//define reflected direction
+	KThreeVector tReflectedDirection = -1.0 * tCosTheta
+			* tInitialNormalMomentum.Unit();
+	tReflectedDirection += tSinTheta * std::cos(tAzimuthalAngle)
+			* tInitialTangentMomentum.Unit();
+	tReflectedDirection += tSinTheta * std::sin(tAzimuthalAngle)
+			* tInitialOrthogonalMomentum.Unit();
 
-        KThreeVector tReflectedMomentum = tMomentumMagnitude*tReflectedDirection;
+	KThreeVector tReflectedMomentum = tMomentumMagnitude * tReflectedDirection;
 
-        aFinalParticle = anInitialParticle;
-        aFinalParticle.SetMomentum( tReflectedMomentum );
-        aFinalParticle.SetKineticEnergy( tKineticEnergy );
+	aFinalParticle = anInitialParticle;
+	aFinalParticle.SetMomentum(tReflectedMomentum);
+	aFinalParticle.SetKineticEnergy(tKineticEnergy);
 
-        return;
+	return;
     }
     void KSIntSurfaceDiffuse::ExecuteTransmission( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& )
     {

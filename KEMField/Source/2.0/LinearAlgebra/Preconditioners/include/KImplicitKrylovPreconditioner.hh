@@ -47,7 +47,7 @@ public:
 
 	virtual ~KImplicitKrylovPreconditioner() {}
 
-	virtual std::string Name(){ return std::string("implicit krylov preconditioner"); }
+	virtual std::string Name(){ return std::string("implicit_krylov"); }
 
 	KSmartPointer< KIterativeKrylovSolver<ValueType> > GetSolver(){return fSolver;}
 

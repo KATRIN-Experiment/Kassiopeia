@@ -1,5 +1,6 @@
 #include "KVariableProcessor.hh"
 #include "KInitializationMessage.hh"
+#include "KToolbox.h"
 
 using namespace std;
 
@@ -230,18 +231,119 @@ namespace katrin
             return;
         }
 
+        KToolbox& toolbox = KToolbox::GetInstance();
+
         if( fElementState == eActiveLocalDefine )
         {
-            VariableIt ExternalIt = fExternalMap->find( fName );
-            if( ExternalIt == fExternalMap->end() )
+            if( toolbox.Get(fName) == nullptr )
+            {
+                VariableIt ExternalIt = fExternalMap->find( fName );
+                if( ExternalIt == fExternalMap->end() )
+                {
+                    VariableIt GlobalIt = fGlobalMap->find( fName );
+                    if( GlobalIt == fGlobalMap->end() )
+                    {
+                        VariableIt FileIt = fLocalMap->find( fName );
+                        if( FileIt == fLocalMap->end() )
+                        {
+                            fLocalMap->insert( VariableEntry( fName, fValue ) );
+                        }
+                        else
+                        {
+                            initmsg( eError ) << "redefinition of local variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                            initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                        }
+                    }
+                    else
+                    {
+                        initmsg( eError ) << "redefinition of global variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                        initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                    }
+
+                }
+                else
+                {
+                    initmsg( eError ) << "redefinition of external variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                    initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                }
+            }
+            else
+            {
+                initmsg( eError ) << "redefinition of toolbox variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+            }
+
+            fElementState = eElementComplete;
+            fName.clear();
+            fValue.clear();
+            return;
+        }
+
+        if( fElementState == eActiveGlobalDefine )
+        {
+            if( toolbox.Get(fName) == nullptr )
+            {
+                VariableIt ExternalIt = fExternalMap->find( fName );
+                if( ExternalIt == fExternalMap->end() )
+                {
+                    VariableIt LocalIt = fLocalMap->find( fName );
+                    if( LocalIt == fLocalMap->end() )
+                    {
+                        VariableIt GlobalIt = fGlobalMap->find( fName );
+                        if( GlobalIt == fGlobalMap->end() )
+                        {
+
+                            fGlobalMap->insert( VariableEntry( fName, fValue ) );
+                        }
+                        else
+                        {
+                            initmsg( eError ) << "redefinition of global variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                            initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                        }
+                    }
+                    else
+                    {
+                        initmsg( eError ) << "redefinition of local variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                        initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                    }
+                }
+                else
+                {
+                    initmsg( eError ) << "redefinition of external variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                    initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                }
+            }
+            else
+            {
+                initmsg( eError ) << "redefinition of toolbox variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+            }
+
+            fElementState = eElementComplete;
+            fName.clear();
+            fValue.clear();
+            return;
+        }
+
+        if( fElementState == eActiveExternalDefine )
+        {
+            if( toolbox.Get(fName) == nullptr )
             {
                 VariableIt GlobalIt = fGlobalMap->find( fName );
                 if( GlobalIt == fGlobalMap->end() )
                 {
-                    VariableIt FileIt = fLocalMap->find( fName );
-                    if( FileIt == fLocalMap->end() )
+                    VariableIt LocalIt = fLocalMap->find( fName );
+                    if( LocalIt == fLocalMap->end() )
                     {
-                        fLocalMap->insert( VariableEntry( fName, fValue ) );
+                        VariableIt ExternalIt = fExternalMap->find( fName );
+                        if( ExternalIt == fExternalMap->end() )
+                        {
+                            fExternalMap->insert( VariableEntry( fName, fValue ) );
+                        }
+                        else
+                        {
+                            initmsg( eNormal ) << "external variable <" << ExternalIt->first << "> with default value <" << fValue << "> overridden with user value <" << ExternalIt->second << ">" << eom;
+                        }
                     }
                     else
                     {
@@ -254,85 +356,10 @@ namespace katrin
                     initmsg( eError ) << "redefinition of global variable  <" << fName << "> with new value <" << fValue << ">" << ret;
                     initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
                 }
-
             }
             else
             {
-                initmsg( eError ) << "redefinition of external variable  <" << fName << "> with new value <" << fValue << ">" << ret;
-                initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-            }
-
-            fElementState = eElementComplete;
-            fName.clear();
-            fValue.clear();
-            return;
-        }
-
-        if( fElementState == eActiveGlobalDefine )
-        {
-            VariableIt ExternalIt = fExternalMap->find( fName );
-            if( ExternalIt == fExternalMap->end() )
-            {
-                VariableIt LocalIt = fLocalMap->find( fName );
-                if( LocalIt == fLocalMap->end() )
-                {
-                    VariableIt GlobalIt = fGlobalMap->find( fName );
-                    if( GlobalIt == fGlobalMap->end() )
-                    {
-
-                        fGlobalMap->insert( VariableEntry( fName, fValue ) );
-                    }
-                    else
-                    {
-                        initmsg( eError ) << "redefinition of global variable  <" << fName << "> with new value <" << fValue << ">" << ret;
-                        initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-                    }
-                }
-                else
-                {
-                    initmsg( eError ) << "redefinition of local variable  <" << fName << "> with new value <" << fValue << ">" << ret;
-                    initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-                }
-            }
-            else
-            {
-                initmsg( eError ) << "redefinition of external variable  <" << fName << "> with new value <" << fValue << ">" << ret;
-                initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-            }
-
-            fElementState = eElementComplete;
-            fName.clear();
-            fValue.clear();
-            return;
-        }
-
-        if( fElementState == eActiveExternalDefine )
-        {
-            VariableIt GlobalIt = fGlobalMap->find( fName );
-            if( GlobalIt == fGlobalMap->end() )
-            {
-                VariableIt LocalIt = fLocalMap->find( fName );
-                if( LocalIt == fLocalMap->end() )
-                {
-                    VariableIt ExternalIt = fExternalMap->find( fName );
-                    if( ExternalIt == fExternalMap->end() )
-                    {
-                        fExternalMap->insert( VariableEntry( fName, fValue ) );
-                    }
-                    else
-                    {
-                        initmsg( eNormal ) << "external variable <" << ExternalIt->first << "> with default value <" << fValue << "> overridden with user value <" << ExternalIt->second << ">" << eom;
-                    }
-                }
-                else
-                {
-                    initmsg( eError ) << "redefinition of local variable  <" << fName << "> with new value <" << fValue << ">" << ret;
-                    initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-                }
-            }
-            else
-            {
-                initmsg( eError ) << "redefinition of global variable  <" << fName << "> with new value <" << fValue << ">" << ret;
+                initmsg( eError ) << "redefinition of toolbox variable  <" << fName << "> with new value <" << fValue << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
             }
 
@@ -517,6 +544,8 @@ namespace katrin
         string tBuffer;
         stack< string > tBufferStack;
 
+        KToolbox& toolbox = KToolbox::GetInstance();
+
         tValue = aToken->GetValue();
 
         tBufferStack.push( "" );
@@ -552,33 +581,42 @@ namespace katrin
                     tDefaultValue = tBuffer.substr(tNameValueSepPos + 1);
                 }
 
-                VariableIt ExternalVariable = fExternalMap->find( tVarName );
-                if( ExternalVariable != fExternalMap->end() )
+                const string* tToolboxVariable = toolbox.Get<string>(tVarName);
+                if( tToolboxVariable != nullptr )
                 {
-                    tBuffer = ExternalVariable->second;
+                    tBuffer = *tToolboxVariable;
                 }
                 else
                 {
-                    VariableIt GlobalVariable = fGlobalMap->find( tVarName );
-                    if( GlobalVariable != fGlobalMap->end() )
+
+                    VariableIt ExternalVariable = fExternalMap->find( tVarName );
+                    if( ExternalVariable != fExternalMap->end() )
                     {
-                        tBuffer = GlobalVariable->second;
+                        tBuffer = ExternalVariable->second;
                     }
                     else
                     {
-                        VariableIt FileVariable = fLocalMap->find( tVarName );
-                        if( FileVariable != fLocalMap->end() )
+                        VariableIt GlobalVariable = fGlobalMap->find( tVarName );
+                        if( GlobalVariable != fGlobalMap->end() )
                         {
-                            tBuffer = FileVariable->second;
-                        }
-                        else if ( tNameValueSepPos != string::npos )
-                        {
-                            tBuffer = tDefaultValue;
+                            tBuffer = GlobalVariable->second;
                         }
                         else
                         {
-                            initmsg( eError ) << "variable <" << tBuffer << ">" << " is not defined" << ret;
-                            initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                            VariableIt FileVariable = fLocalMap->find( tVarName );
+                            if( FileVariable != fLocalMap->end() )
+                            {
+                                tBuffer = FileVariable->second;
+                            }
+                            else if ( tNameValueSepPos != string::npos )
+                            {
+                                tBuffer = tDefaultValue;
+                            }
+                            else
+                            {
+                                initmsg( eError ) << "variable <" << tBuffer << ">" << " is not defined" << ret;
+                                initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+                            }
                         }
                     }
                 }

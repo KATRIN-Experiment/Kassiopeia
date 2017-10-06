@@ -56,7 +56,13 @@ namespace katrin
     }
     KMessage::~KMessage()
     {
-        KMessageTable::GetInstance().Remove( this );
+        /** In UnitTestKasper it seems, a static deinitialization fiasco happens:
+         * KMessageTable is destroyed before the last KMessage instance is destroyed.
+         * According to the standard, this should not happen. But the following workaround
+         * (double checking the initialization state) seems to work.
+         */
+         if (KMessageTable::IsInitialized())
+             KMessageTable::GetInstance().Remove( this );
     }
 
     const string& KMessage::GetKey()
@@ -211,7 +217,6 @@ namespace katrin
 
 namespace katrin
 {
-
     KMessageTable::KMessageTable() :
             fMessageMap(),
             fFormat( cout.flags() ),
@@ -222,6 +227,7 @@ namespace katrin
             fLogStream( NULL )
     {
     }
+
     KMessageTable::~KMessageTable()
     {
     }

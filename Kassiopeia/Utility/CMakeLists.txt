@@ -18,7 +18,6 @@ endforeach( BASENAME )
 
 # source files
 set( UTILITY_SOURCE_BASENAMES
-    KSNumerical.cxx
     KSMutex.cxx
     KSCondition.cxx
     KSUtilityMessage.cxx

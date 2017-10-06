@@ -37,7 +37,10 @@ inline bool KRootBuilder::AddElement(KContainer *aContainer)
         KToolbox::GetInstance().AddContainer(*aContainer);
         return true;
     }
-
+    if( aContainer->GetName() == "kemfield" )
+    {
+        return true;
+    }
 
     return false;
 }

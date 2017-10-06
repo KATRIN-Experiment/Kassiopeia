@@ -99,24 +99,26 @@ bool KLinearInterpolationPotentialMapVTK::GetValue( const string& array, const K
 
     // get coordinates of surrounding mesh points
     static const char map[8][3] =
-    {
-            { -1, -1, -1 },  // c000
-            {  1, -1, -1 },  // c100
-            { -1,  1, -1 },  // c010
-            {  1,  1, -1 },  // c110
-            { -1, -1,  1 },  // c001
-            {  1, -1,  1 },  // c101
-            { -1,  1,  1 },  // c011
-            {  1,  1,  1 },  // c111
-    };
+        {
+            { 0, 0, 0 },  // c000
+            { 1, 0, 0 },  // c100
+            { 0, 1, 0 },  // c010
+            { 1, 1, 0 },  // c110
+            { 0, 0, 1 },  // c001
+            { 1, 0, 1 },  // c101
+            { 0, 1, 1 },  // c011
+            { 1, 1, 1 },  // c111
+        };
     static KEMThreeVector vertices[8];
     static double values[3][8];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
+    //compute corner point of mesh cell aSamplePoint belongs to
+    KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
     for ( int i = 0; i < 8; i++ )
     {
         // first compute the coordinates of the surrounding mesh points ...
-        KEMThreeVector point = aSamplePoint + 0.5 * KEMThreeVector( map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+        KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
         vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
@@ -164,96 +166,98 @@ bool KCubicInterpolationPotentialMapVTK::GetValue( const string& array, const KP
     // get coordinates of surrounding mesh points
     static const char map[64][3] =
     {
-            //
-            { -3, -3, -3 },  // 00
-            { -3, -3, -1 },
-            { -3, -3,  1 },
-            { -3, -3,  3 },
+        //
+        { -1, -1, -1 },  // 00
+        { -1, -1,  0 },
+        { -1, -1,  1 },
+        { -1, -1,  2 },
 
-            { -3, -1, -3 },  // 04
-            { -3, -1, -1 },
-            { -3, -1,  1 },
-            { -3, -1,  3 },
+        { -1,  0, -1 },  // 04
+        { -1,  0,  0 },
+        { -1,  0,  1 },
+        { -1,  0,  2 },
 
-            { -3,  1, -3 },  // 08
-            { -3,  1, -1 },
-            { -3,  1,  1 },
-            { -3,  1,  3 },
+        { -1,  1, -1 },  // 08
+        { -1,  1,  0 },
+        { -1,  1,  1 },
+        { -1,  1,  2 },
 
-            { -3,  3, -3 },  // 12
-            { -3,  3, -1 },
-            { -3,  3,  1 },
-            { -3,  3,  3 },
-            //
-            { -1, -3, -3 },  // 16
-            { -1, -3, -1 },
-            { -1, -3,  1 },
-            { -1, -3,  3 },
+        { -1,  2, -1 },  // 12
+        { -1,  2,  0 },
+        { -1,  2,  1 },
+        { -1,  2,  2 },
+        //
+        {  0, -1, -1 },  // 16
+        {  0, -1,  0 },
+        {  0, -1,  1 },
+        {  0, -1,  2 },
 
-            { -1, -1, -3 },  // 20
-            { -1, -1, -1 },
-            { -1, -1,  1 },
-            { -1, -1,  3 },
+        {  0,  0, -1 },  // 20
+        {  0,  0,  0 },
+        {  0,  0,  1 },
+        {  0,  0,  2 },
 
-            { -1,  1, -3 },  // 24
-            { -1,  1, -1 },
-            { -1,  1,  1 },
-            { -1,  1,  3 },
+        {  0,  1, -1 },  // 24
+        {  0,  1,  0 },
+        {  0,  1,  1 },
+        {  0,  1,  2 },
 
-            { -1,  3, -3 },  // 28
-            { -1,  3, -1 },
-            { -1,  3,  1 },
-            { -1,  3,  3 },
-            //
-            {  1, -3, -3 },  // 32
-            {  1, -3, -1 },
-            {  1, -3,  1 },
-            {  1, -3,  3 },
+        {  0,  2, -1 },  // 28
+        {  0,  2,  0 },
+        {  0,  2,  1 },
+        {  0,  2,  2 },
+        //
+        {  1, -1, -1 },  // 22
+        {  1, -1,  0 },
+        {  1, -1,  1 },
+        {  1, -1,  2 },
 
-            {  1, -1, -3 },  // 36
-            {  1, -1, -1 },
-            {  1, -1,  1 },
-            {  1, -1,  3 },
+        {  1,  0, -1 },  // 26
+        {  1,  0,  0 },
+        {  1,  0,  1 },
+        {  1,  0,  2 },
 
-            {  1,  1, -3 },  // 40
-            {  1,  1, -1 },
-            {  1,  1,  1 },
-            {  1,  1,  3 },
+        {  1,  1, -1 },  // 40
+        {  1,  1,  0 },
+        {  1,  1,  1 },
+        {  1,  1,  2 },
 
-            {  1,  3, -3 },  // 44
-            {  1,  3, -1 },
-            {  1,  3,  1 },
-            {  1,  3,  3 },
-            //
-            {  3, -3, -3 },  // 48
-            {  3, -3, -1 },
-            {  3, -3,  1 },
-            {  3, -3,  3 },
+        {  1,  2, -1 },  // 44
+        {  1,  2,  0 },
+        {  1,  2,  1 },
+        {  1,  2,  2 },
+        //
+        {  2, -1, -1 },  // 48
+        {  2, -1,  0 },
+        {  2, -1,  1 },
+        {  2, -1,  2 },
 
-            {  3, -1, -3 },  // 52
-            {  3, -1, -1 },
-            {  3, -1,  1 },
-            {  3, -1,  3 },
+        {  2,  0, -1 },  // 52
+        {  2,  0,  0 },
+        {  2,  0,  1 },
+        {  2,  0,  2 },
 
-            {  3,  1, -3 },  // 56
-            {  3,  1, -1 },
-            {  3,  1,  1 },
-            {  3,  1,  3 },
+        {  2,  1, -1 },  // 56
+        {  2,  1,  0 },
+        {  2,  1,  1 },
+        {  2,  1,  2 },
 
-            {  3,  3, -3 },  // 60
-            {  3,  3, -1 },
-            {  3,  3,  1 },
-            {  3,  3,  3 },
+        {  2,  2, -1 },  // 60
+        {  2,  2,  0 },
+        {  2,  2,  1 },
+        {  2,  2,  2 },
     };
     static KEMThreeVector vertices[64];
     static double values[3][64];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
-    for ( int i = 0; i < 64; i++ )
-    {
-        // first compute the coordinates of the surrounding mesh points ...
-        KEMThreeVector point = aSamplePoint + 0.5 * KEMThreeVector( map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
-        vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
+    //compute corner point of mesh cell aSamplePoint belongs to
+        KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
+        for ( int i = 0; i < 64; i++ )
+        {
+            // first compute the coordinates of the surrounding mesh points ...
+            KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+            vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
         // ... then retrieve data at these points

@@ -15,8 +15,9 @@ set( VTK-PART2_HEADERFILES
 )
 
 if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
-    list( APPEND VTK-PART2_HEADERFILES 
+    list( APPEND VTK-PART2_HEADERFILES
         ${CMAKE_CURRENT_SOURCE_DIR}/include/KElectrostaticPotentialMap.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/KMagnetostaticFieldMap.hh
     )
 endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
 
@@ -27,8 +28,9 @@ set( VTK-PART2_SOURCEFILES
 )
 
 if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
-    list( APPEND VTK-PART2_SOURCEFILES 
+    list( APPEND VTK-PART2_SOURCEFILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KElectrostaticPotentialMap.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/KMagnetostaticFieldMap.cc
     )
 endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
 
@@ -36,11 +38,12 @@ endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
 
 set( VTK-PART2_LINK_LIBRARIES
     KEMFieldsElectric
+    KEMFieldsMagnetic
 )
 if( @PROJECT_NAME@_USE_VTK )
       list( APPEND VTK-PART2_LINK_LIBRARIES
         KEMVTKPlugin
-          
+
       )
 endif( @PROJECT_NAME@_USE_VTK )
 
@@ -51,15 +54,15 @@ if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG )
 	  KGeoBagCore
 	  Kommon
           ${VTK_LIBRARIES}
-          
+
       )
 endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG )
 
-add_library (KEMVTKPart2 SHARED 
-  ${VTK-PART2_SOURCEFILES} 
+add_library (KEMVTKPart2 SHARED
+  ${VTK-PART2_SOURCEFILES}
 )
 
 target_link_libraries ( KEMVTKPart2 ${VTK-PART2_LINK_LIBRARIES})
-  
+
 kasper_install_headers ( ${VTK-PART2_HEADERFILES} )
 kasper_install_libraries (KEMVTKPart2)

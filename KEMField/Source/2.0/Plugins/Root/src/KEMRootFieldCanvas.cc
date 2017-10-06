@@ -61,14 +61,16 @@ namespace KEMField
   {
     // Read in the conicSects
 
+    int __attribute__((unused)) _ret;
+
     if (conicSectfile!="NULL")
     {
       FILE *inputfull = fopen(conicSectfile.c_str(),"r");
 
       int NconicSect;
 
-      (void) fscanf(inputfull,"%i",&NconicSect);
-  
+      _ret = fscanf(inputfull,"%i",&NconicSect);
+
       TLine *eline[NconicSect];
 
       double ex_0[NconicSect];
@@ -80,7 +82,7 @@ namespace KEMField
 
       for (int s=0;s<NconicSect;s++)
       {
-          (void) fscanf(inputfull,"%le %le %le %le %le %i",&ex_0[s],&ey_0[s],&ex_1[s],&ey_1[s],&temp1,&temp2);
+          _ret = fscanf(inputfull,"%le %le %le %le %le %i",&ex_0[s],&ey_0[s],&ex_1[s],&ey_1[s],&temp1,&temp2);
           eline[s] = new TLine(ex_0[s],ey_0[s],ex_1[s],ey_1[s]);
       }
 
@@ -134,8 +136,8 @@ namespace KEMField
 
       int Nwire;
 
-      (void) fscanf(inputwire,"%i",&Nwire);
-  
+      _ret = fscanf(inputwire,"%i",&Nwire);
+
       TLine *wline[Nwire];
 
       double wx_0[Nwire];
@@ -150,7 +152,7 @@ namespace KEMField
 
       for (int s=0;s<Nwire;s++)
       {
-        (void) fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wx_0[s],&wy_0[s],&wx_1[s],&wy_1[s],&wd[s],&temp3,&temp4,&temp5,&temp6);
+        _ret = fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wx_0[s],&wy_0[s],&wx_1[s],&wy_1[s],&wd[s],&temp3,&temp4,&temp5,&temp6);
         wline[s] = new TLine(wx_0[s],wy_0[s],wx_1[s],wy_1[s]);
       }
 
@@ -208,8 +210,8 @@ namespace KEMField
 
       int Ncoil;
 
-      (void) fscanf(inputcoil,"%i",&Ncoil);
-  
+      _ret = fscanf(inputcoil,"%i",&Ncoil);
+
       TBox *box[Ncoil];
 
       double z_mid[Ncoil];
@@ -220,7 +222,7 @@ namespace KEMField
 
       for (int j=0;j<Ncoil;j++)
       {
-        (void) fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
+        _ret = fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
         box[j] = new TBox((z_mid[j]-z_len[j]/2),
                           r_min[j],
                           (z_mid[j]+z_len[j]/2),
@@ -262,14 +264,17 @@ namespace KEMField
                                       std::string coilfile)
   {
     // Read in the conicSects
+
+    int __attribute__((unused)) _ret;
+
     if (conicSectfile!="NULL")
     {
       FILE *inputfull = fopen(conicSectfile.c_str(),"r");
 
       int NconicSect;
 
-      (void) fscanf(inputfull,"%i",&NconicSect);
-  
+      _ret = fscanf(inputfull,"%i",&NconicSect);
+
       TEllipse *e[NconicSect];
 
       double ez_0[NconicSect];
@@ -281,7 +286,7 @@ namespace KEMField
 
       for (int s=0;s<NconicSect;s++)
       {
-        (void) fscanf(inputfull,"%le %le %le %le %le %i",&ez_0[s],&er_0[s],&ez_1[s],&er_1[s],&temp1,&temp2);
+        _ret = fscanf(inputfull,"%le %le %le %le %le %i",&ez_0[s],&er_0[s],&ez_1[s],&er_1[s],&temp1,&temp2);
 
         if (ez_0[s]<z && ez_1[s]>z)
         {
@@ -308,8 +313,8 @@ namespace KEMField
 
       int Nwire;
 
-      (void) fscanf(inputwire,"%i",&Nwire);
-  
+      _ret = fscanf(inputwire,"%i",&Nwire);
+
       TEllipse *w[Nwire];
 
       double wz_0[Nwire];
@@ -324,7 +329,7 @@ namespace KEMField
 
       for (int s=0;s<Nwire;s++)
       {
-        (void) fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wz_0[s],&wr_0[s],&wz_1[s],&wr_1[s],&wd[s],&phi[s],&numwire[s],&temp5,&temp6);
+        _ret = fscanf(inputwire,"%le %le %le %le %le %le %i %le %i",&wz_0[s],&wr_0[s],&wz_1[s],&wr_1[s],&wd[s],&phi[s],&numwire[s],&temp5,&temp6);
 
         double z_tot = fabs(wz_1[s]-wz_0[s]);
 
@@ -369,8 +374,8 @@ namespace KEMField
 
       int Ncoil;
 
-      (void) fscanf(inputcoil,"%i",&Ncoil);
-  
+      _ret = fscanf(inputcoil,"%i",&Ncoil);
+
       TEllipse *coil[Ncoil];
 
       double z_mid[Ncoil];
@@ -381,7 +386,7 @@ namespace KEMField
 
       for (int j=0;j<Ncoil;j++)
       {
-        (void) fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
+        _ret = fscanf(inputcoil,"%le %le %le %le %le ",&z_mid[j],&r_min[j],&r_thk[j],&z_len[j],&temp);
         if (z_mid[j]+z_len[j]/2>z &&
             z_mid[j]-z_len[j]/2<z)
         {

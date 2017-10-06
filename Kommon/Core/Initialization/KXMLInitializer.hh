@@ -32,7 +32,7 @@ public:
     void Configure(int argc = 0, char** argv = nullptr);
 
     void DumpConfiguration(std::ostream& strm, bool includeArguments = true);
-    const KArgumentList& GetArguments() { return fArguments; }
+    KArgumentList& GetArguments() { return fArguments; }
 
 protected:
     void ParseCommandLine(int argc, char** argv);

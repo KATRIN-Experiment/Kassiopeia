@@ -200,7 +200,7 @@ std::pair<KEMThreeVector,double> KElectrostaticQuadratureLineSegmentIntegrator::
 
 double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegment* source,const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[7] = {
 			source->GetP0().X(),
@@ -245,7 +245,7 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegme
 
 KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[7] = {
 			source->GetP0().X(),
@@ -289,7 +289,7 @@ KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(cons
 
 std::pair<KEMThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential(const KLineSegment* source, const KPosition& P) const
 {
-	// save geometry info on triangle into array, same convention as CUDA/OpenCL implementation
+	// save geometry info on triangle into array, same convention as OpenCL implementation
 
 	const double data[7] = {
 			source->GetP0().X(),

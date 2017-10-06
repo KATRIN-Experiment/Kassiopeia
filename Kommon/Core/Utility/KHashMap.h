@@ -95,7 +95,7 @@ public:
      * @throw KException If the requested key doesn't exist.
      * @return
      */
-    const Result& Get( const Input& key ) const throw (KException);
+    const Result& Get( const Input& key ) const ;
 
     /**
      * Get the current efficiency (number of read over number of write accesses).
@@ -241,7 +241,7 @@ inline bool KHashMap< Input, Result, Hash >::Get( const Input& input, Result& re
 }
 
 template< class Input, class Result, class Hash >
-inline const Result& KHashMap< Input, Result, Hash >::Get( const Input& input ) const throw (KException)
+inline const Result& KHashMap< Input, Result, Hash >::Get( const Input& input ) const 
 {
     CacheMapConstIterator it = fHashMap.find( input );
 

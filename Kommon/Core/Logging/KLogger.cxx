@@ -51,7 +51,7 @@ inline const char* level2Color(KLogger::ELevel level)
 
 }
 
-#if defined(LOG4CXX)
+#ifdef LOG4CXX
 
 /*
  * Default implementation for systems with the 'log4cxx' library installed.

@@ -71,10 +71,11 @@
 		<density_constant temperature="300." pressure="1.e-7"/>
 		<calculator_constant cross_section="1.e-15"/>
 		<calculator_hydrogen elastic="true" excitation="true" ionisation="true"/>
-	</ksint_scattering>
-	<!--
-		description:
-			this is the condensed form of the main scattering interaction for kassiopeia.
+        <calculator_ion gas="H_2"/>
+    </ksint_scattering>
+    <!--
+     description:
+     this is the condensed form of the main scattering interaction for kassiopeia.
 
 		elements:
 			density_constant:
@@ -98,6 +99,17 @@
 						
 					molecule:
 						if set to tritium, the rot20 calculator is also added
+     
+            calculator_ion:
+                builds an ion calculator, used for ionization of gas by ions
+                this affects the following ions: H^+, H_2^+, H_3^+, H^-
+                                                 D^+, D_2^+, D_3^+, D^-
+                                                 T^+, T_2^+, T_3^+, T^-
+     
+                parameters:
+					gas:
+                        set the name of the gas species to be used. 
+                        only H_2 is available at present and is used by default.
 	-->
 
 </kassiopeia>

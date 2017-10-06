@@ -52,6 +52,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::Attribute< string >( "special" ) +
         KSGenGeneratorCompositeBuilder::Attribute< string >( "creator" ) +
         KSGenGeneratorCompositeBuilder::Attribute< double >( "pid" ) +
+        KSGenGeneratorCompositeBuilder::Attribute< string >( "string_id" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyComposite >( "energy_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyBetaDecay >( "energy_beta_decay" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyKryptonEvent >( "energy_krypton_event" ) +

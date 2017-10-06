@@ -50,6 +50,7 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/Gnuplot.hpp
     Utility/KException.h
     Utility/KRandom.h
+    Utility/KRandomBuilder.h
     Utility/KConst.h
     Utility/KConsoleMuter.h
     Utility/KHash.h
@@ -87,6 +88,7 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/KToolbox.h
     Utility/KMessageBuilder.h
     Utility/KNamedBuilder.h
+    Utility/KProgressDisplay.h
     Logging/KLogger.h
 )
 
@@ -119,6 +121,7 @@ set(KOMMON_CORE_SOURCE_FILES
     Units/KDimensions.cxx
     Units/KUnits.cxx
     Utility/Gnuplot.cpp
+    Utility/KRandomBuilder.cxx
     Utility/KMessage.cxx
     Utility/KUtilityMessage.cxx
     Utility/KNamed.cxx
@@ -141,7 +144,7 @@ if( LOG4CXX_FOUND )
     else()
         set (LEVEL "INFO")
     endif()
-    
+
     configure_file( Logging/log4cxx.properties.in ${CMAKE_CURRENT_BINARY_DIR}/log4cxx.properties @ONLY )
     kasper_install_optional( ${Kommon_CONFIG_INSTALL_DIR} ${CMAKE_CURRENT_BINARY_DIR}/log4cxx.properties )
 endif()

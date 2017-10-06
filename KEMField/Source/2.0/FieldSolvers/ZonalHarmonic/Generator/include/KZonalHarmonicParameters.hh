@@ -13,7 +13,7 @@ namespace KEMField
       fConvergenceRatio(0.99),
       fProximityToSourcePoint(1.e-14),
       fConvergenceParameter(1.e-15),
-      fCoaxialityTolerance(1.e-8),
+      fCoaxialityTolerance(1.e-10),
       fNCentralCoefficients(500),
       fCentralFractionalSpacing(true),
       fCentralFractionalDistance(.2),

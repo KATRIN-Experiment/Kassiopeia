@@ -310,11 +310,11 @@ namespace Kassiopeia
             void CalculateCrossSection( const double anEnergy, double& aCrossSection );
             void ExecuteInteraction( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries );
             void CalculateDoublyDifferentialCrossSection( const double aReducedInitialEnergy, const double aReducedFinalEnergy, const double aCosTheta, double& aCrossSection );
-
+            void CalculateFinalEnergy( const double aReducedInitialEnergy, double& aReducedFinalEnergy );
+        
         protected:
             void CalculateEnergyDifferentialCrossSection( const double aReducedInitialEnergy, const double aReducedFinalEnergy, double& aCrossSection );
             void CalculateTheta( const double aReducedInitialEnergy, const double aReducedFinalEnergy, double& aTheta );
-            void CalculateFinalEnergy( const double aReducedInitialEnergy, double& aReducedFinalEnergy );
 
             double CrossParam_A1, CrossParam_A2, CrossParam_A3;
             double CrossExponent;

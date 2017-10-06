@@ -4,6 +4,7 @@
 #include "KSDictionary.h"
 #include "KSNumerical.h"
 #include "TF1.h"
+#include <memory>
 
 namespace Kassiopeia
 {
@@ -53,7 +54,7 @@ namespace Kassiopeia
                 }
 
                 // initialize function once, parameters are updated every PushUpdate call
-                fFunction = new TF1( "(anonymous)", fTerm.c_str(), -1., 1. );
+                fFunction = std::make_shared<TF1>( "(anonymous)", fTerm.c_str(), -1., 1. );
             }
             KSComponentMath( const KSComponentMath< XValueType >& aCopy ) :
                     KSComponent( aCopy ),
@@ -72,7 +73,6 @@ namespace Kassiopeia
             }
             virtual ~KSComponentMath()
             {
-                delete fFunction;
             }
 
             //***********
@@ -143,7 +143,7 @@ namespace Kassiopeia
             std::vector< XValueType* > fParents;
             XValueType fResult;
             std::string fTerm;
-            TF1* fFunction;
+            std::shared_ptr<TF1> fFunction;
     };
 
 }

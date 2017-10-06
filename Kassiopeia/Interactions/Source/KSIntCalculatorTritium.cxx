@@ -22,9 +22,7 @@ namespace Kassiopeia
 /////       Elastic         /////
 /////////////////////////////////
 
-void KSIntCalculatorTritiumElastic::CalculateCrossSection( const double anEnergie,
-                                                            double& aCrossSection
-                                                          )
+void KSIntCalculatorTritiumElastic::CalculateCrossSection( const double anEnergie, double& aCrossSection )
 {
 //        See: Liu, Phys. Rev. A35 (1987) 591,
 //        Trajmar, Phys Reports 97 (1983) 221.
@@ -50,20 +48,17 @@ void KSIntCalculatorTritiumElastic::CalculateCrossSection( const double anEnergi
         {
             if( anEnergie >= e[ i ] && anEnergie < e[ i + 1 ] )
                 aCrossSection = 1.e-20 *
-                                ( s[ i ] + (s[ i + 1 ] - s[ i ])
-                                           * (anEnergie - e[ i ])
-                                           / (e[ i + 1 ] - e[ i ])
-                                );
+                    ( s[ i ] + (s[ i + 1 ] - s[ i ])
+                               * (anEnergie - e[ i ])
+                               / (e[ i + 1 ] - e[ i ])
+                    );
         }
     }
 
     return;
 }
 
-void KSIntCalculatorTritiumElastic::CalculateEloss( const double anEnergie,
-                                                     const double aTheta,
-                                                     double& anEloss
-                                                   )
+void KSIntCalculatorTritiumElastic::CalculateEloss( const double anEnergie, const double aTheta, double& anEloss )
 {
     double H2molmass = 69.e6;
     double emass = 1. / (KConst::Alpha() * KConst::Alpha());
@@ -73,51 +68,48 @@ void KSIntCalculatorTritiumElastic::CalculateEloss( const double anEnergie,
 
     //check if electron won energy by elastic scattering on a molecule;
     //this keeps electron energies around the gas temperature
+    if( anEnergie < 1. )
+    {
+        double rndNr = sqrt (-2.* log(KRandom::GetInstance().Uniform()));
+        double rndAngle = 2. * KConst::Pi() * KRandom::GetInstance().Uniform();
 
-//    if( anEnergie < 1. )
-//    {
-//        double rndNr = sqrt (-2.* log(KRandom::GetInstance().Uniform()));
-//        double rndAngle = 2. * KConst::Pi() * KRandom::GetInstance().Uniform();
-//
-//        //generation of molecule velocity by maxwell-boltzmann distribution
-//        double Gx = rndNr * cos( rndAngle );
-//        double Gy = rndNr * sin( rndAngle );
-//        double Gz = sqrt( -2. * log( KRandom::GetInstance().Uniform() ) )
-//                    * cos( 2. * KConst::Pi() * KRandom::GetInstance().Uniform() );
-//
-//        //thermal velocity of gas molecules
-//        double T = 300.; //gas temperature
-//        double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot_kg()) );
-//        KThreeVector MolVelocity( sigmaT * Gx, sigmaT * Gy, sigmaT * Gz );
-//
-//        //new electron velocity vector and energy:
-//
-//        //assume electron velocity along z
-//        KThreeVector ElVelocity( 0., 0., sqrt( 2. * anEnergie * KConst::Q() / KConst::M_el_kg() ) );
-//        //relative velocity electron-molecule
-//        KThreeVector RelativeVelocity = ElVelocity - MolVelocity;
-//        //transformation into CMS
-//        KThreeVector CMSVelocity = (
-//                                    KConst::M_el_kg() / (KConst::M_el_kg()
-//                                    + KConst::M_prot_kg()) * ElVelocity
-//                                    + 2. * KConst::M_prot_kg() * MolVelocity
-//                                         / (KConst::M_el_kg() + KConst::M_prot_kg())
-//                                   );
-//
-//        //generation of random direction
-//        KThreeVector Random( KRandom::GetInstance().Uniform(),
-//                             KRandom::GetInstance().Uniform(),
-//                             KRandom::GetInstance().Uniform()
-//                           );
-//
-//        //new electron velocity
-//        ElVelocity = KConst::M_prot_kg() / (KConst::M_prot_kg() + KConst::M_el_kg())
-//                                      * RelativeVelocity.Magnitude() * Random.Unit()
-//                     + CMSVelocity;
-//
-//        anEloss = anEnergie - KConst::M_el_kg() / (2. * KConst::Q())
-//                              * ElVelocity.Magnitude() * ElVelocity.Magnitude();
-//    }
+        //generation of molecule velocity by maxwell-boltzmann distribution
+        double Gx = rndNr * cos( rndAngle );
+        double Gy = rndNr * sin( rndAngle );
+        double Gz = sqrt( -2. * log( KRandom::GetInstance().Uniform() ) )
+                    * cos( 2. * KConst::Pi() * KRandom::GetInstance().Uniform() );
+
+        //thermal velocity of gas molecules
+        double T = 300.; //gas temperature
+        double sigmaT = sqrt( KConst::kB() * T / (2. * KConst::M_prot_kg()) );
+        KThreeVector MolVelocity( sigmaT * Gx, sigmaT * Gy, sigmaT * Gz );
+
+        //new electron velocity vector and energy:
+
+        //assume electron velocity along z
+        KThreeVector ElVelocity( 0., 0., sqrt( 2. * anEnergie * KConst::Q() / KConst::M_el_kg() ) );
+        //relative velocity electron-molecule
+        KThreeVector RelativeVelocity = ElVelocity - MolVelocity;
+        //transformation into CMS
+        KThreeVector CMSVelocity = (
+            KConst::M_el_kg() / (KConst::M_el_kg()
+            + KConst::M_prot_kg()) * ElVelocity
+            + 2. * KConst::M_prot_kg() * MolVelocity
+                 / (KConst::M_el_kg() + KConst::M_prot_kg())
+           );
+
+        //generation of random direction
+        KThreeVector Random( KRandom::GetInstance().Uniform(),
+                             KRandom::GetInstance().Uniform(),
+                             KRandom::GetInstance().Uniform()
+                           );
+
+        //new electron velocity
+        ElVelocity = KConst::M_prot_kg() / (KConst::M_prot_kg() + KConst::M_el_kg())
+             * RelativeVelocity.Magnitude() * Random.Unit() + CMSVelocity;
+
+        anEloss = anEnergie - KConst::M_el_kg() / (2. * KConst::Q()) * ElVelocity.Magnitude() * ElVelocity.Magnitude();
+    }
     return;
 }
 

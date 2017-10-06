@@ -26,7 +26,7 @@ kasper_module_debug()
 
 set(EXTERNAL_LIBRARIES)
 
-#external
+# external
 option( Kommon_USE_Log4CXX "Enable advanced logging facilities, if LOG4CXX library is available." OFF )
 mark_as_advanced( CLEAR Kommon_USE_Log4CXX )
 set(LOG4CXX_FOUND FALSE)
@@ -36,7 +36,7 @@ if(Kommon_USE_Log4CXX)
     
     if( LOG4CXX_FOUND )
         set(LOGGER_CONFIGURATION "${Kommon_CONFIG_INSTALL_DIR}/log4cxx.properties" )
-        set_source_files_properties(Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
+        set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
             "LOG4CXX;LOGGER_CONFIGURATION=${LOGGER_CONFIGURATION}"
         )
         kasper_external_include_directories( ${LOG4CXX_INCLUDE_DIR} )
@@ -52,6 +52,7 @@ set(KOMMON_SOURCE_FILES)
 add_subdirectory( cmake )
 add_subdirectory( Core )
 add_subdirectory( Documentation )
+
 
 if( KASPER_USE_BOOST )
     find_package( Boost 1.42.0 REQUIRED )

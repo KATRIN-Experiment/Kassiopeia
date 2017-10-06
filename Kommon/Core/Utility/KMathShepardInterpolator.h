@@ -7,7 +7,8 @@
 #ifndef KMATHSHEPARDINTERPOLATOR_H_
 #define KMATHSHEPARDINTERPOLATOR_H_
 
-#include <assert.h>
+#include <cassert>
+#include <cmath>
 #include <algorithm>
 #include <vector>
 #include <array>

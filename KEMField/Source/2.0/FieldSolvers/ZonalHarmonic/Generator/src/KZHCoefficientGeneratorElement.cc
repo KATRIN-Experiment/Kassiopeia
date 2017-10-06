@@ -11,13 +11,15 @@ namespace KEMField
     // then, check that they are coaxial
     KDirection betweenOrigins = (GetCoordinateSystem().GetOrigin()-coordinateSystem.GetOrigin());
     if (betweenOrigins.MagnitudeSquared() < coaxialityTolerance)
+    {
       return true;
+    }
     else
     {
       betweenOrigins = betweenOrigins.Unit();
 
       if (1.-fabs(GetCoordinateSystem().GetZAxis().Dot(betweenOrigins)) > coaxialityTolerance)
-  	return false;
+        return false;
     }
 
     return true;

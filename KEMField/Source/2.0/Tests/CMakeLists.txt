@@ -50,14 +50,6 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     )
   endif (@PROJECT_NAME@_USE_ROOT)
 
-  if (@PROJECT_NAME@_USE_CUDA)
-    find_package(CUDA REQUIRED)
-    kasper_external_include_directories(${CUDA_INCLUDE_DIRS})
-    list (APPEND TESTS_LIBS
-    KEMCUDAPlugin
-    )
-  endif (@PROJECT_NAME@_USE_CUDA)
-
   if (@PROJECT_NAME@_USE_OPENCL)
     find_package(OpenCL REQUIRED)
     kasper_external_include_directories( ${OPENCL_INCLUDE_DIRS} )
@@ -231,53 +223,6 @@ if (@PROJECT_NAME@_ENABLE_TEST)
     )
 
   endif (@PROJECT_NAME@_USE_KMESSAGE)
-
-############
-### CUDA ###
-############
-
-  if (@PROJECT_NAME@_USE_CUDA)
-
-  if (@PROJECT_NAME@_USE_ROOT)
-    cuda_add_executable (TestIntegratorTriangleROOTCUDA
-      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorTriangleROOTCUDA.cu)
-    target_link_libraries (TestIntegratorTriangleROOTCUDA ${TESTS_LIBS} )
-    
-    cuda_add_executable (TestIntegratorRectangleROOTCUDA
-      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorRectangleROOTCUDA.cu)
-    target_link_libraries (TestIntegratorRectangleROOTCUDA ${TESTS_LIBS} )
-    
-    cuda_add_executable (TestIntegratorLineSegmentROOTCUDA
-      ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorLineSegmentROOTCUDA.cu)
-    target_link_libraries (TestIntegratorLineSegmentROOTCUDA ${TESTS_LIBS} )
-    
-    kasper_install_executables (
-      TestIntegratorTriangleROOTCUDA
-      TestIntegratorRectangleROOTCUDA
-      TestIntegratorLineSegmentROOTCUDA
-    )
-    
-  endif (@PROJECT_NAME@_USE_ROOT)
-  
-  cuda_add_executable(TestCUDAPlugin
-	${CMAKE_CURRENT_SOURCE_DIR}/TestCUDAPlugin.cu)
-  target_link_libraries (TestCUDAPlugin ${TESTS_LIBS} )
-  
-  cuda_add_executable (TestIntegratorFunctionalityCUDA
-    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorFunctionalityCUDA.cu)
-  target_link_libraries (TestIntegratorFunctionalityCUDA ${TESTS_LIBS} )
-
-  cuda_add_executable (TestIntegratorSpeedWithKbdInputCUDA
-    ${CMAKE_CURRENT_SOURCE_DIR}/TestIntegratorSpeedWithKbdInputCUDA.cu)
-  target_link_libraries (TestIntegratorSpeedWithKbdInputCUDA ${TESTS_LIBS} )
-  
-  kasper_install_executables(
-    TestCUDAPlugin
-	TestIntegratorFunctionalityCUDA
-	TestIntegratorSpeedWithKbdInputCUDA
-  )
-
-  endif (@PROJECT_NAME@_USE_CUDA)
 
 ####################
 ### OpenCL + MPI ###

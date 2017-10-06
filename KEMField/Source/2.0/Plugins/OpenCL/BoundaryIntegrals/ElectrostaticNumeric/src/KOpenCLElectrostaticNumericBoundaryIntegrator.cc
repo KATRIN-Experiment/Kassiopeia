@@ -15,7 +15,7 @@ namespace KEMField
   {
     std::stringstream options;
     options << GetOpenCLFlags() << " -DKEMFIELD_INTEGRATORFILE_CL=<" << OpenCLFile() <<">";
-    options << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_OPENCL_FASTRWG; /* variable defined via cmake */
+    options << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_FASTRWG_VALUE; /* variable defined via cmake */
     fOpenCLFlags = options.str();
     ConstructOpenCLKernels();
     AssignBuffers();

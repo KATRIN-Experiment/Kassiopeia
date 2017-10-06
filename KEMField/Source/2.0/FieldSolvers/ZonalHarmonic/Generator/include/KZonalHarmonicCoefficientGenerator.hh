@@ -1,6 +1,7 @@
 #ifndef KZONALHARMONICCOEFFICIENTGENERATOR_H
 #define KZONALHARMONICCOEFFICIENTGENERATOR_H
 
+#include "KMessageInterface.hh"
 #include "KEMCoordinateSystem.hh"
 #include "KEMTicker.hh"
 
@@ -108,6 +109,7 @@ namespace KEMField
     subcontainers.back()->IsOwner(false);
 
     unsigned int element = 0;
+    unsigned int grouped_elements = 0;
 
     for (;element<fElementContainer.size();element++)
     {
@@ -116,8 +118,8 @@ namespace KEMField
 
       if (fGenerator)
       {
-    subcontainers.back()->push_back(fElementContainer.at(element));
-    coordinateSystems.push_back(KEMCoordinateSystem(fGenerator->GetCoordinateSystem()));
+        subcontainers.back()->push_back(fElementContainer.at(element));
+        coordinateSystems.push_back(KEMCoordinateSystem(fGenerator->GetCoordinateSystem()));
         break;
       }
       else
@@ -132,14 +134,15 @@ namespace KEMField
 
       if (fGenerator)
       {
-    for (unsigned int j=0;j<coordinateSystems.size();j++)
-    {
-      if (fGenerator->IsCoaxial( coordinateSystems.at(j), coaxialityTolerance ))
-      {
-        subcontainers.at(j)->push_back(fElementContainer.at(i));
-        newCoordinateSystem = false;
-      }
-    }
+        for (unsigned int j=0;j<coordinateSystems.size();j++)
+        {
+          if (fGenerator->IsCoaxial( coordinateSystems.at(j), coaxialityTolerance ))
+          {
+            subcontainers.at(j)->push_back(fElementContainer.at(i));
+            newCoordinateSystem = false;
+            grouped_elements++;
+          }
+        }
       }
       else
       {
@@ -149,11 +152,18 @@ namespace KEMField
 
       if (newCoordinateSystem)
       {
-    subcontainers.push_back(new ElementContainer());
-    subcontainers.back()->IsOwner(false);
-    subcontainers.back()->push_back(fElementContainer.at(i));
-    coordinateSystems.push_back(KEMCoordinateSystem(fGenerator->GetCoordinateSystem()));
+        subcontainers.push_back(new ElementContainer());
+        subcontainers.back()->IsOwner(false);
+        subcontainers.back()->push_back(fElementContainer.at(i));
+        coordinateSystems.push_back(KEMCoordinateSystem(fGenerator->GetCoordinateSystem()));
       }
+    }
+
+    if (grouped_elements > 0)
+    {
+      KDataDisplay<KMessage_KEMField> kem_cout;
+      kem_cout.GetStream().SetSeverity( katrin::eWarning );
+      kem_cout << "Added " << grouped_elements << " elements to existing coaxial group (coax. tolerance " << coaxialityTolerance << ")" << KEMField::endl;
     }
 
     if (!(nonAxiallySymmetricElements->empty()))

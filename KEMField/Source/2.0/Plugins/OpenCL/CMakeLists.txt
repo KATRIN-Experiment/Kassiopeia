@@ -55,15 +55,16 @@ if (@PROJECT_NAME@_OPENCL_INTERNAL_1_2)
   set (@PROJECT_NAME@_OPENCL_CFLAGS ${@PROJECT_NAME@_OPENCL_CFLAGS} -isystem ${@PROJECT_NAME@_OPENCL_TEMP_INCLUDE_DIR_VAR})
 endif (@PROJECT_NAME@_OPENCL_INTERNAL_1_2)
 
-set(KEMFIELD_OPENCL_FASTRWG "FALSE" CACHE STRING "If no field point has to be computed on surface: Enable (=1) fast evaluation of electrostatic boundary integrals in RWG basis (0=disabled).")
-mark_as_advanced(FORCE KEMFIELD_OPENCL_FASTRWG)
-add_cflag(KEMFIELD_OPENCL_FASTRWG)
+cmake_dependent_option (@PROJECT_NAME@_OPENCL_FASTRWG "Activate the fast evaluation of electrostatic boundary integrals in RWG basis if no field point has to be computed on any surface." OFF @PROJECT_NAME@_USE_OPENCL OFF)
+mark_as_advanced(FORCE @PROJECT_NAME@_OPENCL_FASTRWG)
+if (@PROJECT_NAME@_OPENCL_FASTRWG)
+  add_cflag(KEMFIELD_FASTRWG_VALUE=1)
+else (@PROJECT_NAME@_OPENCL_FASTRWG)
+  add_cflag(KEMFIELD_FASTRWG_VALUE=0)  
+endif (@PROJECT_NAME@_OPENCL_FASTRWG)
 
-option (@PROJECT_NAME@_USE_OPENCL "Use OpenCL via C++ wrapper API, requires CUDA to be deactivated." OFF)
+option (@PROJECT_NAME@_USE_OPENCL "Use OpenCL via C++ wrapper API." OFF)
 if (@PROJECT_NAME@_USE_OPENCL)
-
-  # deactivate CUDA because linking against two APIs can lead to program compilation problems
-  set( KEMField_USE_CUDA OFF CACHE BOOL "(Required)" FORCE)
 
   # force deactivation of FFTW because it permutes FFT outputs in a different way
   # than the native FFT, which leades to incorrect fast multipole response functions

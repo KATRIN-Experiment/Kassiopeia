@@ -38,7 +38,7 @@
 
 #ifdef KEMFIELD_USE_MPI
 #include "KRobinHood_MPI.hh"
-#define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
+//#define MPI_SINGLE_PROCESS if (KMPIInterface::GetInstance()->GetProcess()==0)
 #else
 #define MPI_SINGLE_PROCESS
 #endif

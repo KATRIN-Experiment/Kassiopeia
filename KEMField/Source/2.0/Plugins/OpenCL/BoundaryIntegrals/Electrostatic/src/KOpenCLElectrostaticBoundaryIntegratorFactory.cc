@@ -63,7 +63,7 @@ KoclEBIConfig KOpenCLElectrostaticBoundaryIntegratorFactory::MakeNumericConfig()
 	config.fOpenCLSourceFile = "kEMField_ElectrostaticNumericBoundaryIntegrals.cl";
 	config.fOpenCLKernelFile = "kEMField_ElectrostaticNumericBoundaryIntegrals_kernel.cl";
 	std::stringstream flags;
-	flags << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_OPENCL_FASTRWG;
+	flags << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_FASTRWG_VALUE;
 	config.fOpenCLFlags = flags.str();
 	//config.fOpenCLFlags = " -DKEMFIELD_OCLFASTRWG=" + std::string(KEMFIELD_OPENCL_FASTRWG); /* variable defined via cmake */
 	config.fCPUIntegrator = KEBIFactory::MakeNumeric();
@@ -77,7 +77,7 @@ KoclEBIConfig KOpenCLElectrostaticBoundaryIntegratorFactory::MakeRWGConfig()
 	config.fOpenCLSourceFile = "kEMField_ElectrostaticRWGBoundaryIntegrals.cl";
 	config.fOpenCLKernelFile = "kEMField_ElectrostaticRWGBoundaryIntegrals_kernel.cl";
 	std::stringstream flags;
-	flags << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_OPENCL_FASTRWG;
+	flags << " -DKEMFIELD_OCLFASTRWG=" << KEMFIELD_FASTRWG_VALUE;
 	//config.fOpenCLFlags = " -DKEMFIELD_OCLFASTRWG=" + std::string(KEMFIELD_OPENCL_FASTRWG);
 	config.fOpenCLFlags = flags.str();
 	config.fCPUIntegrator = KEBIFactory::MakeRWG();

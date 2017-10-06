@@ -20,8 +20,10 @@ namespace KGeoBag
             KTwoMatrix( const KTwoMatrix& aMatrix );
             KTwoMatrix& operator=( const KTwoMatrix& aMatrix );
 
-            KTwoMatrix( const double anArray[4] );
-            KTwoMatrix& operator=( const double anArray[4] );
+            KTwoMatrix( const double anArray[ 4 ] );
+            KTwoMatrix& operator=( const double anArray[ 4 ] );
+
+            KTwoMatrix( const vector<double>& anArray );
 
             //cast
 
@@ -90,6 +92,17 @@ namespace KGeoBag
         fData[3] = anArray[3];
 
         return *this;
+    }
+
+    inline KTwoMatrix::KTwoMatrix( const vector<double>& anArray )
+    {
+        assert( anArray.size() == 4 );
+        
+        fData[0] = anArray[0];
+        fData[1] = anArray[1];
+
+        fData[2] = anArray[2];
+        fData[3] = anArray[3];
     }
 
     inline KTwoMatrix::operator double *()
@@ -209,4 +222,3 @@ namespace KGeoBag
 }
 
 #endif
-

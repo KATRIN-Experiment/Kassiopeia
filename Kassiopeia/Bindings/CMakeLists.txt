@@ -113,6 +113,7 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntDecayCalculatorFerencBBRTransitionBuilder.h
     Interactions/Include/KSIntDecayCalculatorFerencIonisationBuilder.h
     Interactions/Include/KSIntCalculatorHydrogenBuilder.h
+    Interactions/Include/KSIntCalculatorIonBuilder.h
     Interactions/Include/KSIntCalculatorArgonBuilder.h
     Interactions/Include/KSIntCalculatorKESSBuilder.h
     Interactions/Include/KSIntScatteringBuilder.h
@@ -153,6 +154,7 @@ set( BINDINGS_HEADER_FILES
     Terminators/Include/KSTermOutputBuilder.h
     Terminators/Include/KSTermMinDistanceBuilder.h
     Terminators/Include/KSTermStepsizeBuilder.h
+    Terminators/Include/KSTermMagnetronBuilder.h
 
     # writers
     Writers/Include/KSWriteASCIIBuilder.h
@@ -321,6 +323,7 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx
     Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx
     Interactions/Source/KSIntCalculatorHydrogenBuilder.cxx
+    Interactions/Source/KSIntCalculatorIonBuilder.cxx    
     Interactions/Source/KSIntCalculatorArgonBuilder.cxx
     Interactions/Source/KSIntCalculatorKESSBuilder.cxx
     Interactions/Source/KSIntScatteringBuilder.cxx
@@ -361,7 +364,7 @@ set( BINDINGS_SOURCE_FILES
     Terminators/Source/KSTermOutputBuilder.cxx
     Terminators/Source/KSTermMinDistanceBuilder.cxx
     Terminators/Source/KSTermStepsizeBuilder.cxx
-
+    Terminators/Source/KSTermMagnetronBuilder.cxx
 
     # writers
     Writers/Source/KSWriteASCIIBuilder.cxx
