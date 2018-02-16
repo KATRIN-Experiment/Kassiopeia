@@ -19,7 +19,7 @@
 #include "KMagneticSuperpositionFieldBuilder.hh"
 #include "KStaticElectromagnetFieldBuilder.hh"
 
-#ifdef KASPER_USE_VTK
+#ifdef Kassiopeia_USE_VTK
 #include "KElectrostaticPotentialmapBuilder.hh"
 #include "KMagnetostaticFieldmapBuilder.hh"
 #endif
@@ -36,7 +36,7 @@ STATICINT sKSRootConstant =
         KSRootBuilder::ComplexElement< KElectrostaticBoundaryFieldWithKGeoBag >( "ksfield_electrostatic" ) +
         KSRootBuilder::ComplexElement< KRampedElectricField >( "ksfield_electric_ramped" ) +
         KSRootBuilder::ComplexElement< KRampedElectric2Field >( "ksfield_electric_ramped_2fields") +
-#ifdef KASPER_USE_VTK
+#ifdef Kassiopeia_USE_VTK
         KSRootBuilder::ComplexElement< KElectrostaticPotentialmap >( "ksfield_electric_potentialmap" ) +
         KSRootBuilder::ComplexElement< KElectrostaticPotentialmapCalculator >( "ksfield_electric_potentialmap_calculator" ) +
 #endif
@@ -47,7 +47,7 @@ STATICINT sKSRootConstant =
         KSRootBuilder::ComplexElement< KMagneticDipoleField >( "ksfield_magnetic_dipole" ) +
         KSRootBuilder::ComplexElement< KRampedMagneticField >( "ksfield_magnetic_ramped" ) +
         KSRootBuilder::ComplexElement< KMagneticSuperpositionField >( "ksfield_magnetic_super_position" ) +
-#ifdef KASPER_USE_VTK
+#ifdef Kassiopeia_USE_VTK
         KSRootBuilder::ComplexElement< KMagnetostaticFieldmap >( "ksfield_magnetic_fieldmap" ) +
         KSRootBuilder::ComplexElement< KMagnetostaticFieldmapCalculator >( "ksfield_magnetic_fieldmap_calculator" ) +
 #endif

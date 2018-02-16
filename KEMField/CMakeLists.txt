@@ -1,17 +1,19 @@
-cmake_minimum_required( VERSION 2.8.6 )
+cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
+# KEMField version
+set(MODULE_VERSION_MAJOR 3)
+set(MODULE_VERSION_MINOR 0)
+set(MODULE_VERSION_PATCH 0)
+set(MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}")
+
+#project(KEMField VERSION ${MODULE_VERSION})
 project(KEMField)
+
 include(KasperDefaults)
 
 if(POLICY CMP0053)
     cmake_policy(SET CMP0053 OLD)
 endif()
-
-# Module version
-set(MODULE_VERSION_MAJOR 2)
-set(MODULE_VERSION_MINOR 1)
-set(MODULE_VERSION_PATCH 0)
-set(MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}")
 
 # paths
 kasper_module_paths( KEMField )
@@ -49,7 +51,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/data)
 # NOTE: If files in a subdirectory INCLUDE HEADERS from other subdirectories,
 # this subdirectory has to come AFTER those other directories.
 # Otherwise you will encounter strange linker or even compiler errors.
-set (SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/Source/2.0)
+set (SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+
 add_subdirectory(${SOURCE}/Core)
 add_subdirectory(${SOURCE}/Exceptions)
 add_subdirectory(${SOURCE}/IO/HashGenerator)

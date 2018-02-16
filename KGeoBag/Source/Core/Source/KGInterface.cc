@@ -1,5 +1,7 @@
 #include "KGCore.hh"
 
+#include <boost/algorithm/string.hpp>
+
 using namespace std;
 
 namespace KGeoBag
@@ -7,7 +9,7 @@ namespace KGeoBag
 
     KGInterface* KGInterface::sInstance = NULL;
 
-    const char KGInterface::sSeparator = ',';
+    const char KGInterface::sSeparator[] = "\t ,;";
     const char KGInterface::sNest = '/';
     const char KGInterface::sTag = '@';
     const char KGInterface::sRecurse = ':';
@@ -146,65 +148,31 @@ namespace KGeoBag
 
     void KGInterface::RetrieveSurfacesBySpecifier( vector< KGSurface* >& anAccumulator, KGSpace* aNode, string aSpecifier )
     {
-        size_t tSeparatorPos = aSpecifier.find_first_of( sSeparator );
-        string tHead = aSpecifier.substr( 0, tSeparatorPos );
-        string tTail = aSpecifier.substr( tSeparatorPos + 1 );
+        vector< string > tPathList;
+        boost::split( tPathList, aSpecifier, boost::is_any_of(sSeparator) );
 
         coremsg_debug( "  retrieving surfaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom );
 
-        if( tSeparatorPos == string::npos )
+        for ( auto & tPath : tPathList )
         {
-            string tPath = tHead;
-
             coremsg_debug( "  retrieving final surfaces for path <" << tPath << ">" << eom );
 
             RetrieveSurfacesByPath( anAccumulator, aNode, tPath );
-
-            return;
-        }
-        else
-        {
-            string tPath = tHead;
-
-            coremsg_debug( "  retrieving surfaces for path <" << tPath << ">" << eom );
-
-            RetrieveSurfacesByPath( anAccumulator, aNode, tPath );
-
-            RetrieveSurfacesBySpecifier( anAccumulator, aNode, tTail );
-
-            return;
         }
     }
 
     void KGInterface::RetrieveSpacesBySpecifier( vector< KGSpace* >& anAccumulator, KGSpace* aNode, string aSpecifier )
     {
-        size_t tSeparatorPos = aSpecifier.find_first_of( sSeparator );
-        string tHead = aSpecifier.substr( 0, tSeparatorPos );
-        string tTail = aSpecifier.substr( tSeparatorPos + 1 );
+        vector< string > tPathList;
+        boost::split( tPathList, aSpecifier, boost::is_any_of(sSeparator) );
 
         coremsg_debug( "  retrieving spaces for specifier <" << aSpecifier << "> at <" << aNode->GetName() << ">" << eom );
 
-        if( tSeparatorPos == string::npos )
+        for ( auto & tPath : tPathList )
         {
-            string tPath = tHead;
-
             coremsg_debug( "  retrieving final spaces for path <" << tPath << ">" << eom );
 
             RetrieveSpacesByPath( anAccumulator, aNode, tPath );
-
-            return;
-        }
-        else
-        {
-            string tPath = tHead;
-
-            coremsg_debug( "  retrieving spaces for path <" << tPath << ">" << eom );
-
-            RetrieveSpacesByPath( anAccumulator, aNode, tPath );
-
-            RetrieveSpacesBySpecifier( anAccumulator, aNode, tTail );
-
-            return;
         }
     }
 

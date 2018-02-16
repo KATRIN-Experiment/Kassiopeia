@@ -51,7 +51,7 @@ namespace Kassiopeia
 
         return tParticle;
 	}
-  
+
   int KSParticleFactory::Define( const long long& aPID, const std::string& aStringID, const std::vector<std::string> aAltStringIDs, const double& aMass, const double& aCharge, const double& aSpinMagnitude, const double& aGyromagneticRatio  )
     {
         ParticleIt tIter = fParticles.find( aPID );
@@ -116,7 +116,7 @@ namespace Kassiopeia
         return fElectricField;
     }
 
-  
+
     // A "ghost" particle
   STATICINT sGhostDefinition = KSParticleFactory::GetInstance().Define( 0, "ghost", {}, 0., 0., 0., 0. );
 
@@ -140,13 +140,13 @@ namespace Kassiopeia
 
     //neutron
     STATICINT sNeutronDefinition = KSParticleFactory::GetInstance().Define( 2112, "n", {}, KConst::M_neut_kg(), 0., 0.5, -1.83247172e+8 );
-  
+
     //deuterium plus
     STATICINT sDeuteriumPlusDefinition = KSParticleFactory::GetInstance().Define( 99041, "D^+", {"D+"}, KConst::M_deut_kg(), KConst::Q(), 0.5, 0 );
-    
+
      //deuterium 2 plus
   STATICINT sDeuteriumTwoPlusDefinition = KSParticleFactory::GetInstance().Define( 99042, "D_2^+", {"D2^+","D2+"}, 2.0*KConst::M_deut_kg(), KConst::Q(), 0.5, 0 );
-    
+
     //deuterium 3 plus
 
   STATICINT sDeuteriumThreePlusDefinition = KSParticleFactory::GetInstance().Define( 99043, "D_3^+", {"D3^+","D3+"}, 3.0*KConst::M_deut_kg(), KConst::Q(), 0.5, 0 );
@@ -179,7 +179,7 @@ namespace Kassiopeia
 
     //H2+ (NOTE: One has to decide whether ortho or para for spin...)
     STATICINT sH2PlusDefinition = KSParticleFactory::GetInstance().Define( 99012, "H_2^+", {"H2^+","H2+"}, KConst::M_H2Plus_kg(), 1*KConst::Q(), 0.5, 0 );
-    
+
     //H3+
     STATICINT sH3PlusDefinition = KSParticleFactory::GetInstance().Define( 99013, "H_3^+", {"H3^+","H3+"}, KConst::M_H3Plus_kg(), 1*KConst::Q(), 0.5, 0 );
 

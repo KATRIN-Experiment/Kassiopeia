@@ -24,8 +24,11 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntCalculatorArgon.h
 
     KSIntSurfaceSpecular.h
+    KSIntSurfaceUCN.h
     KSIntSurfaceDiffuse.h
     KSIntSurfaceMultiplication.h
+
+    KSIntSurfaceSpinFlip.h
 
     KESSElasticElsepa.h
     KESSInelasticBetheFano.h
@@ -73,8 +76,11 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntCalculatorArgon.cxx
 
     KSIntSurfaceSpecular.cxx
+    KSIntSurfaceUCN.cxx
     KSIntSurfaceDiffuse.cxx
     KSIntSurfaceMultiplication.cxx
+
+    KSIntSurfaceSpinFlip.cxx
 
     KESSElasticElsepa.cxx
     KESSInelasticBetheFano.cxx

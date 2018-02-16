@@ -44,6 +44,14 @@ namespace Kassiopeia
             K_REFS( double, DiscreteEnergyChange )
             K_REFS( double, DiscreteMomentumChange )
 
+            //********
+            //modifier
+            //********
+
+        public:
+            K_REFS( std::string, ModifierName )
+            K_REFS( bool, ModifierFlag )
+
             //**********
             //terminator
             //**********

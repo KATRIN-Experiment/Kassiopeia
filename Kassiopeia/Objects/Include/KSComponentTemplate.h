@@ -50,6 +50,12 @@ namespace Kassiopeia
             }
             KSCommand* Command( const std::string& aField, KSComponent* aChild )
             {
+                if ( aChild == nullptr )
+                {
+                    objctmsg( eError ) << "component <" << this->GetName() << "> could not build command named <" << aField << "> (invalid child component)" << eom;
+                    return nullptr;
+                }
+
                 objctmsg_debug( "component <" << this->GetName() << "> building command named <" << aField << ">" << eom )
                 KSCommand* tCommand = KSDictionary< XThisType >::GetCommand( this, aChild, aField );
                 if( tCommand == NULL )

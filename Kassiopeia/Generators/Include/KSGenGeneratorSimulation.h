@@ -31,6 +31,7 @@ namespace Kassiopeia
             virtual void ExecuteGeneration( KSParticleQueue& aPrimaries );
 
         public:
+            // note that some of these member variables cannot be set via XML bindings yet
             ;K_SET_GET( std::string, Base );
             ;K_SET_GET( std::string, Path );
             ;K_SET_GET( std::string, PositionX );
@@ -51,6 +52,11 @@ namespace Kassiopeia
             ;K_SET_GET( std::string, KineticEnergyName );
             ;K_SET_GET( std::string, TimeName );
             ;K_SET_GET( std::string, PIDName );
+            ;K_SET_GET( KThreeVector, DefaultPosition );
+            ;K_SET_GET( KThreeVector, DefaultDirection );
+            ;K_SET_GET( double, DefaultEnergy );
+            ;K_SET_GET( double, DefaultTime );
+            ;K_SET_GET( int, DefaultPID );
 
         protected:
             void InitializeComponent();

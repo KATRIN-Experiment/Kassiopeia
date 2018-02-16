@@ -16,6 +16,7 @@ set( BINDINGS_HEADER_FILES
   Shapes/Complex/Include/KGPortHousingBuilder.hh
   Shapes/Complex/Include/KGRodBuilder.hh
   Shapes/Complex/Include/KGRotatedObjectBuilder.hh
+  Shapes/Complex/Include/KGComplexAnnulusBuilder.hh
 
   # planar paths
   Shapes/PlanarShapes/Include/KGPlanarLineSegmentBuilder.hh
@@ -129,6 +130,7 @@ set( BINDINGS_SOURCE_FILES
     Shapes/Complex/Source/KGPortHousingBuilder.cc
     Shapes/Complex/Source/KGRodBuilder.cc
     Shapes/Complex/Source/KGRotatedObjectBuilder.cc
+    Shapes/Complex/Source/KGComplexAnnulusBuilder.cc
 
     # planar paths
     Shapes/PlanarShapes/Source/KGPlanarLineSegmentBuilder.cc

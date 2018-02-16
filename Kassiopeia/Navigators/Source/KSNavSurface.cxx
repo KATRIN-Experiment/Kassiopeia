@@ -64,8 +64,8 @@ namespace Kassiopeia
                 navmsg( eNormal ) << "  transmission occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
 
                 aFinalParticle = aNavigationParticle;
-				aFinalParticle.SetLabel( GetName() );
-				aFinalParticle.AddLabel( tCurrentSurface->GetName() );
+                aFinalParticle.SetLabel( GetName() );
+                aFinalParticle.AddLabel( tCurrentSurface->GetName() );
                 aFinalParticle.AddLabel( "transmission" );
 
                 if( fTransmissionSplit == true )
@@ -85,8 +85,8 @@ namespace Kassiopeia
                 navmsg( eNormal ) << "  reflection occurred on child surface <" << tCurrentSurface->GetName() << ">" << eom;
 
                 aFinalParticle = aNavigationParticle;
-				aFinalParticle.SetLabel( GetName() );
-				aFinalParticle.AddLabel( tCurrentSurface->GetName() );
+                aFinalParticle.SetLabel( GetName() );
+                aFinalParticle.AddLabel( tCurrentSurface->GetName() );
                 aFinalParticle.AddLabel( "reflection" );
 
                 if( fReflectionSplit == true )
@@ -97,7 +97,6 @@ namespace Kassiopeia
                     tTransmissionSplitParticle->ResetFieldCaching();
                     aParticleQueue.push_back( tTransmissionSplitParticle );
                     aFinalParticle.SetActive( false );
-
                 }
                 return;
             }

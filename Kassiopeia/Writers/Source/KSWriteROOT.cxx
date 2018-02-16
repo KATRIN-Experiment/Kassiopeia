@@ -2,6 +2,11 @@
 #include "KSWritersMessage.h"
 #include "KSComponentGroup.h"
 
+#ifdef Kassiopeia_USE_BOOST
+//#include "KPathUtils.h"
+//using katrin::KPathUtils;
+#endif
+
 using namespace std;
 
 namespace Kassiopeia
@@ -516,15 +521,15 @@ namespace Kassiopeia
 
         if ( fEventIndex != 0 )
         {
-			fRunLastEventIndex = fEventIndex - 1;
+            fRunLastEventIndex = fEventIndex - 1;
         }
         if ( fTrackIndex != 0 )
         {
-			fRunLastTrackIndex = fTrackIndex - 1;
+            fRunLastTrackIndex = fTrackIndex - 1;
         }
         if ( fStepIndex != 0 )
         {
-			fRunLastStepIndex = fStepIndex - 1;
+            fRunLastStepIndex = fStepIndex - 1;
         }
 
         //check write condition
@@ -562,11 +567,11 @@ namespace Kassiopeia
 
         if ( fTrackIndex != 0 )
         {
-			fEventLastTrackIndex = fTrackIndex - 1;
+            fEventLastTrackIndex = fTrackIndex - 1;
         }
         if ( fStepIndex != 0 )
         {
-			fEventLastStepIndex = fStepIndex - 1;
+            fEventLastStepIndex = fStepIndex - 1;
         }
 
         //check write condition
@@ -602,9 +607,9 @@ namespace Kassiopeia
         wtrmsg_debug( "ROOT writer <" << fName << "> is filling a track" << eom );
 
         if ( fStepIndex != 0 )
-		{
-        	fTrackLastStepIndex = fStepIndex - 1;
-		}
+        {
+            fTrackLastStepIndex = fStepIndex - 1;
+        }
 
         //check write condition
         bool tWriteCondition = true;;
@@ -635,15 +640,15 @@ namespace Kassiopeia
     }
     void KSWriteROOT::ExecuteStep()
     {
-    	if ( fStepIterationIndex % fStepIteration != 0 )
-    	{
+        if ( fStepIterationIndex % fStepIteration != 0 )
+        {
             wtrmsg_debug( "ROOT writer <" << fName << "> is skipping a step because of step iteration value <"<<fStepIteration<<">" << eom );
-    		fStepIterationIndex++;
-    		return;
-    	}
+            fStepIterationIndex++;
+            return;
+        }
 
-    	//check write condition
-    	bool tWriteCondition = true;;
+        //check write condition
+        bool tWriteCondition = true;;
         for( int tIndex = 0; tIndex < fStepWriteConditions.End(); tIndex++ )
         {
             bool tLocalFlag = true;
@@ -846,6 +851,9 @@ namespace Kassiopeia
         fFile = KRootFile::CreateOutputRootFile( fBase );
         if( !fPath.empty() )
         {
+#ifdef Kassiopeia_USE_BOOST
+//            KPathUtils::MakeDirectory( fPath );
+#endif
             fFile->AddToPaths( fPath );
         }
 

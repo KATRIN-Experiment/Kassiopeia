@@ -120,8 +120,10 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntSpinFlipBuilder.h
     Interactions/Include/KSIntDecayBuilder.h
     Interactions/Include/KSIntSurfaceSpecularBuilder.h
+    Interactions/Include/KSIntSurfaceUCNBuilder.h
     Interactions/Include/KSIntSurfaceDiffuseBuilder.h
     Interactions/Include/KSIntSurfaceMultiplicationBuilder.h
+    Interactions/Include/KSIntSurfaceSpinFlipBuilder.h
     Interactions/Include/KESSSurfaceInteractionBuilder.h
     Interactions/Include/KESSElasticElsepaBuilder.h
     Interactions/Include/KESSInelasticPennBuilder.h
@@ -129,6 +131,7 @@ set( BINDINGS_HEADER_FILES
 
     # modifiers
     Modifiers/Include/KSModDynamicEnhancementBuilder.h
+    Modifiers/Include/KSModSplitOnTurnBuilder.h
     Modifiers/Include/KSModEventReportBuilder.h
 
     # navigators
@@ -323,15 +326,17 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntDecayCalculatorFerencBBRTransitionBuilder.cxx
     Interactions/Source/KSIntDecayCalculatorFerencIonisationBuilder.cxx
     Interactions/Source/KSIntCalculatorHydrogenBuilder.cxx
-    Interactions/Source/KSIntCalculatorIonBuilder.cxx    
+    Interactions/Source/KSIntCalculatorIonBuilder.cxx
     Interactions/Source/KSIntCalculatorArgonBuilder.cxx
     Interactions/Source/KSIntCalculatorKESSBuilder.cxx
     Interactions/Source/KSIntScatteringBuilder.cxx
     Interactions/Source/KSIntSpinFlipBuilder.cxx
     Interactions/Source/KSIntDecayBuilder.cxx
     Interactions/Source/KSIntSurfaceSpecularBuilder.cxx
+    Interactions/Source/KSIntSurfaceUCNBuilder.cxx
     Interactions/Source/KSIntSurfaceDiffuseBuilder.cxx
     Interactions/Source/KSIntSurfaceMultiplicationBuilder.cxx
+    Interactions/Source/KSIntSurfaceSpinFlipBuilder.cxx
     Interactions/Source/KESSSurfaceInteractionBuilder.cxx
     Interactions/Source/KESSElasticElsepaBuilder.cxx
     Interactions/Source/KESSInelasticPennBuilder.cxx
@@ -339,6 +344,7 @@ set( BINDINGS_SOURCE_FILES
 
     # modifiers
     Modifiers/Source/KSModDynamicEnhancementBuilder.cxx
+    Modifiers/Source/KSModSplitOnTurnBuilder.cxx
     Modifiers/Source/KSModEventReportBuilder.cxx
 
     # navigators

@@ -15,14 +15,14 @@ namespace katrin
         public:
             KSCommandMemberSimpleData() :
                 fName(""),
-                fParent(0),
-                fChild(0),
-                fField("")
+                fParentName(""),
+                fChildName(""),
+                fFieldName("")
             {}
             std::string fName;
-            KSComponent* fParent;
-            KSComponent* fChild;
-            std::string fField;
+            std::string fParentName;
+            std::string fChildName;
+            std::string fFieldName;
     };
 
 //marco definition,
@@ -55,14 +55,14 @@ namespace katrin
         }\
         if( aContainer->GetName() == "parent" )\
         {\
-            KSComponent* tParent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );\
-            fObject->fParent = tParent;\
+            std::string tParent = aContainer->AsReference< std::string >();\
+            fObject->fParentName = tParent;\
             return true;\
         }\
         if( aContainer->GetName() == "child" )\
         {\
-            KSComponent* tComponent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );\
-            fObject->fChild = tComponent;\
+            std::string tComponent = aContainer->AsReference< std::string >();\
+            fObject->fChildName = tComponent;\
             return true;\
         }\
         return false;\
@@ -70,13 +70,26 @@ namespace katrin
     template< >\
     inline bool KSCommandMember ## xBUILDERNAME ## Builder::End()\
     {\
-        fObject->fField = xFIELDNAME ;\
-        if ( fObject->fParent == 0 )\
-        {\
-            fObject->fParent = KToolbox::GetInstance().Get< KSComponent >( xDEFAULTPARENTNAME );\
+        fObject->fFieldName = xFIELDNAME ;\
+        if ( fObject->fParentName.empty() ) {\
+            fObject->fParentName = xDEFAULTPARENTNAME;\
         }\
-        KSCommand* tCommand = fObject->fParent->Command( fObject->fField, fObject->fChild );\
-        if( fObject->fName.length() != 0 )\
+        KSComponent* tParent = KToolbox::GetInstance().Get< KSComponent >( fObject->fParentName );\
+        if ( tParent == nullptr )\
+        {\
+            objctmsg( eError ) << "command member <" << fObject->fName << "> could not find parent <" << fObject->fParentName << ">" << eom;\
+        }\
+        KSComponent* tChild = KToolbox::GetInstance().Get< KSComponent >( fObject->fChildName );\
+        if ( tChild == nullptr )\
+        {\
+            objctmsg( eError ) << "command member <" << fObject->fName << "> could not find child <" << fObject->fChildName << ">" << eom;\
+        }\
+        KSCommand* tCommand = tParent->Command( fObject->fFieldName, tChild );\
+        if ( tCommand == nullptr )\
+        {\
+            objctmsg( eError ) << "command member <" << fObject->fName << "> could not find field <" << fObject->fFieldName << "> with parent <" << fObject->fParentName << ">" << eom;\
+        }\
+        if( ! fObject->fName.empty() )\
         {\
             tCommand->SetName( fObject->fName );\
         }\

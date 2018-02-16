@@ -45,6 +45,8 @@ namespace katrin
             std::vector< std::string > fBases;
 
             std::vector< std::string > fDefaultPaths;
+
+            std::vector< std::string > fIncludedPaths;
     };
 
 }

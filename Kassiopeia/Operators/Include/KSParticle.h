@@ -46,6 +46,7 @@ namespace Kassiopeia
         public:
             static const std::string sSeparator;
 
+            const std::string& GetLabel( ) const;
             void SetLabel( const std::string& aLabel );
             void AddLabel( const std::string& aLabel );
             void ReleaseLabel( std::string& aLabel );
@@ -125,7 +126,7 @@ namespace Kassiopeia
 
         public:
             const long long& GetPID() const;
-	    const std::string& GetStringID() const;
+        const std::string& GetStringID() const;
             const double& GetMass() const;
             const double& GetCharge() const;
             const double& GetSpinMagnitude() const;
@@ -133,7 +134,7 @@ namespace Kassiopeia
 
         protected:
             long long fPID;
-	    std::string fStringID;
+        std::string fStringID;
             double fMass; // in kg
             double fCharge; // in Coulomb
             double fSpinMagnitude; // in hbar

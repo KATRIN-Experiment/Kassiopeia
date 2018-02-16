@@ -1,14 +1,16 @@
-cmake_minimum_required( VERSION 2.8.6 )
+cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
-project( Kommon )
-set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${PROJECT_SOURCE_DIR}/GoogleTest/cmake )
-include( KasperDefaults )
-
-# version
+# Kommon version
 set( MODULE_VERSION_MAJOR 1 )
-set( MODULE_VERSION_MINOR 1 )
+set( MODULE_VERSION_MINOR 2 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
+
+#project( Kommon VERSION ${MODULE_VERSION} )
+project( Kommon )
+
+#set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${PROJECT_SOURCE_DIR}/GoogleTest/cmake )
+include( KasperDefaults )
 
 # compiler requirements
 kasper_require_cpp11()
@@ -33,7 +35,7 @@ set(LOG4CXX_FOUND FALSE)
 
 if(Kommon_USE_Log4CXX)
     find_package( Log4CXX )
-    
+
     if( LOG4CXX_FOUND )
         set(LOGGER_CONFIGURATION "${Kommon_CONFIG_INSTALL_DIR}/log4cxx.properties" )
         set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
@@ -53,11 +55,11 @@ add_subdirectory( cmake )
 add_subdirectory( Core )
 add_subdirectory( Documentation )
 
-
 if( KASPER_USE_BOOST )
-    find_package( Boost 1.42.0 REQUIRED )
+    find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
     kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
-	add_subdirectory( Boost )
+    list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
+    add_subdirectory( Boost )
 endif()
 
 if( KASPER_USE_ROOT )
@@ -65,14 +67,14 @@ if( KASPER_USE_ROOT )
     kasper_external_include_directories( ${ROOT_INCLUDE_DIR} )
     add_definitions( -DKommon_USE_ROOT )
     list(APPEND EXTERNAL_LIBRARIES ${ROOT_LIBRARIES} )
-	add_subdirectory( Root )
+    add_subdirectory( Root )
 endif()
 
 if( KASPER_USE_GSL )
     find_package( GSL REQUIRED )
     kasper_external_include_directories( ${GSL_INCLUDE_DIRS} )
     list(APPEND EXTERNAL_LIBRARIES ${GSL_LIBRARIES} )
-	add_subdirectory( Gsl )
+    add_subdirectory( Gsl )
 endif()
 
 if( KASPER_USE_TBB )

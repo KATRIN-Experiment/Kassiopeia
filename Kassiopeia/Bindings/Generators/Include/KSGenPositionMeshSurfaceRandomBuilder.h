@@ -44,7 +44,7 @@ namespace katrin
             if( tSurfaces.size() == 0 )
             {
                 genmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
-                return false;
+                return true;
             }
 
             for( tSurfaceIt = tSurfaces.begin(); tSurfaceIt != tSurfaces.end(); tSurfaceIt++ )

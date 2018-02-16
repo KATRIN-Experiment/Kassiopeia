@@ -215,11 +215,11 @@ inline void KThreeVector::SetPolarAngle( const double &anAngle )
 }
 inline void KThreeVector::SetAzimuthalAngleInDegrees( const double &anAngle )
 {
-    SetAzimuthalAngle( KConst::Pi() / 360. * anAngle );
+    SetAzimuthalAngle( KConst::Pi() / 180. * anAngle );
 }
 inline void KThreeVector::SetPolarAngleInDegrees( const double &anAngle )
 {
-    SetPolarAngle( KConst::Pi() / 360. * anAngle );
+    SetPolarAngle( KConst::Pi() / 180. * anAngle );
 }
 inline KThreeVector::operator double *()
 {
@@ -318,11 +318,11 @@ inline double KThreeVector::AzimuthalAngle() const
 }
 inline double KThreeVector::PolarAngleInDegrees() const
 {
-    return PolarAngle() * 360. / KConst::Pi();
+    return PolarAngle() * 180. / KConst::Pi();
 }
 inline double KThreeVector::AzimuthalAngleInDegrees() const
 {
-    return AzimuthalAngle() * 360. / KConst::Pi();
+    return AzimuthalAngle() * 180. / KConst::Pi();
 }
 
 inline KThreeVector KThreeVector::Unit() const

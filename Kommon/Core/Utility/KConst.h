@@ -204,7 +204,7 @@ public:
     }
 
     //Mass values for H2+, H3+, H-, D-, T2+, and He+ from NIST Chemistry WebBook, NIST Standard Reference Database Number 69, http://webbook.nist.gov/chemistry/
-    
+
     constexpr static double M_H2Plus_kg()
     {
         return 2.01533 * AtomicMassUnit_kg();
@@ -234,7 +234,7 @@ public:
     {
         return 1.00849 * AtomicMassUnit_eV();
     }
-    
+
     constexpr static double M_HePlus_kg()
     {
         return 4.002053 * AtomicMassUnit_kg();
@@ -254,15 +254,15 @@ public:
     {
         return 2.0146503577 * AtomicMassUnit_eV();
     }
- 
+
     constexpr static double M_T_kg()
     {
-        return 3.01604928178 * AtomicMassUnit_kg();
+        return 3.0160495 * AtomicMassUnit_kg();
     } //!< tritium atom mass in kg
 
     constexpr static double M_T_eV()
     {
-        return 3.01604928178 * AtomicMassUnit_eV();
+        return 3.0160495 * AtomicMassUnit_eV();
     } //!< tritium atom mass in eV/c^2
 
     constexpr static double M_T2_kg()
@@ -284,12 +284,12 @@ public:
     {
         return 6.0315499755 * AtomicMassUnit_eV();
     }
-    
+
     constexpr static double M_3He_kg()
     {
-        return 3.01602932243 * AtomicMassUnit_kg();
+        return 3.0160293 * AtomicMassUnit_kg();
     }
-	
+
     constexpr static double M_3He_eV()
     {
         return 3.01602932243 * AtomicMassUnit_eV();
@@ -301,7 +301,7 @@ public:
     {
         return 4.002603254 * AtomicMassUnit_kg();
     } //!< 4He mass in kg
- 
+
     constexpr static double M_4He_eV()
     {
         return 4.002603254 * AtomicMassUnit_eV();
@@ -313,13 +313,13 @@ public:
       return 15.43; //eV
       //Value from NIST Chemistry WebBook: http://webbook.nist.gov/cgi/cbook.cgi?ID=C1333740&Mask=20
     }
-    
+
     constexpr static double BindingEnergy_He()
     {
       return 24.587387; //eV
       //Value from NIST Basic Atomic Spectroscopic Data Handbook: http://physics.nist.gov/PhysRefData/Handbook/Tables/heliumtable1.htm
     }
-    
+
     constexpr static double Viscosity()
     {
         return 2.425E-6;

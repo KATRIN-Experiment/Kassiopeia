@@ -18,7 +18,7 @@ namespace Kassiopeia
     		KSTermTrapped* Clone() const;
             virtual ~KSTermTrapped();
 
-            K_SET_GET(unsigned int, MaxTurns)
+            K_SET_GET(int, MaxTurns)
 
         public:
             void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
@@ -29,7 +29,7 @@ namespace Kassiopeia
             virtual void DeactivateComponent();
 
         private:
-            unsigned int fCurrentTurns;
+            int fCurrentTurns;
             double fCurrentDotProduct;
     };
 

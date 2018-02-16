@@ -32,7 +32,7 @@ namespace katrin
             if(tSpaces.size() == 0)
             {
                 genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">" << eom;
-                return false;
+                return true;
             }
 
             for(vector< KGeoBag::KGSpace* >::iterator tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++)
@@ -47,7 +47,7 @@ namespace katrin
             if(tSpaces.size() == 0)
             {
                 genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">" << eom;
-                return false;
+                return true;
             }
 
             for(vector< KGeoBag::KGSpace* >::iterator tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++)

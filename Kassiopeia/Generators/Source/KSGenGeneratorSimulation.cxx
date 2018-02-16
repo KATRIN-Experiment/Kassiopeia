@@ -26,6 +26,11 @@ namespace Kassiopeia
             fKineticEnergyName( "final_kinetic_energy" ),
             fTimeName( "final_time" ),
             fPIDName( "" ),
+            fDefaultPosition( KThreeVector(0,0,0) ),
+            fDefaultDirection( KThreeVector(0,0,0) ),
+            fDefaultEnergy( 1. ),
+            fDefaultTime( 0. ),
+            fDefaultPID( 11 ),  // electron
             fRootFile( NULL ),
             fFormulaPositionX( NULL ),
             fFormulaPositionY( NULL ),
@@ -234,11 +239,11 @@ namespace Kassiopeia
                             continue;
                     }
 
-                    KThreeVector tPosition(0, 0, 0);
-                    KThreeVector tDirection(0, 0, 0);
-                    double tEnergy = 0.;
-                    double tTime = 0.;
-                    int tPID = 11;
+                    KThreeVector tPosition = fDefaultPosition;
+                    KThreeVector tDirection = fDefaultDirection;
+                    double tEnergy = fDefaultEnergy;
+                    double tTime = fDefaultTime;
+                    int tPID = fDefaultPID;
 
                     if ( ! fPositionName.empty() )
                     {
@@ -284,6 +289,9 @@ namespace Kassiopeia
                     tParticle->SetKineticEnergy_eV( tEnergy );
                     tParticle->SetTime( tTime );
                     tParticle->AddLabel( GetName() );
+                    tParticle->AddLabel( std::to_string(tRunReader.GetRunIndex()) );  // append run/event/track no. to creator name
+                    tParticle->AddLabel( std::to_string(tEventReader.GetEventIndex()) );
+                    tParticle->AddLabel( std::to_string(tTrackReader.GetTrackIndex()) );
 
                     aParticleQueue.push_back( tParticle );
                 }

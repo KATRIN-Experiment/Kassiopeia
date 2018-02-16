@@ -20,7 +20,7 @@ namespace KGeoBag
             static KGInterface* sInstance;
 
         public:
-            static const char sSeparator;
+            static const char sSeparator[];
             static const char sNest;
             static const char sTag;
             static const char sRecurse;

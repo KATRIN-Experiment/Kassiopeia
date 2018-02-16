@@ -28,6 +28,11 @@ namespace katrin
             aContainer->CopyTo( fObject, &KSGenValueSet::SetValueStop );
             return true;
         }
+        if( aContainer->GetName() == "value_increment" )
+        {
+            aContainer->CopyTo( fObject, &KSGenValueSet::SetValueIncrement );
+            return true;
+        }
         if( aContainer->GetName() == "value_count" )
         {
             aContainer->CopyTo( fObject, &KSGenValueSet::SetValueCount );

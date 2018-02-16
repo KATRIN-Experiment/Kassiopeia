@@ -1,5 +1,6 @@
 set( APPLICATIONS_EXAMPLES_BASENAMES
 	QuadrupoleTrapAnalysis
+	MultiFileAnalysis
 )
 set( APPLICATIONS_EXAMPLES_LIBRARIES )
 
@@ -31,6 +32,7 @@ list( APPEND APPLICATIONS_EXAMPLES_LIBRARIES
     KassiopeiaWriters
     KassiopeiaVisualization
     KassiopeiaSimulation
+		KassiopeiaBindings
 )
 set( APPLICATIONS_EXAMPLES_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source

@@ -12,13 +12,14 @@ namespace katrin
         KProcessor(),
         fElementState( eElementInactive ),
         fAttributeState( eAttributeInactive ),
+        fProcessorState( eIfCondition ),
         fNest( 0 ),
         fCondition( false ),
         fIfTokens(),
+        fElseTokens(),
         fNewParent( NULL ),
         fOldParent( NULL )
     {
-
     }
 
     KConditionProcessor::~KConditionProcessor()
@@ -32,12 +33,13 @@ namespace katrin
             if( aToken->GetValue() == string( "if" ) )
             {
                 fNest++;
-
+                
                 if( fNest == 1 )
                 {
                     fOldParent = this->fParent;
                     fNewParent = this->GetFirstParent();
                     fElementState = eActive;
+                    fProcessorState = eIfCondition;
                     return;
                 }
             }
@@ -48,12 +50,33 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
+            if( aToken->GetValue() == string( "else" ) )
+            {
+                fNest++;
+
+                if( fNest == 2 )
+                {
+                    //fOldParent = this->fParent;
+                    //fNewParent = this->GetFirstParent();
+                    fElementState = eElseActive;
+                    fProcessorState = eElseCondition;
+                    return;
+                }
+            }
 
             if( aToken->GetValue() == string( "if" ) )
             {
                 fNest++;
             }
-            fIfTokens.push_back( aToken->Clone() );
+
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -82,10 +105,16 @@ namespace katrin
             return;
         }
 
-
         if( fElementState == eElementComplete )
         {
-        	fIfTokens.push_back( aToken->Clone() );
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -129,7 +158,14 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
-        	fIfTokens.push_back( aToken->Clone() );
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -155,7 +191,14 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
-        	fIfTokens.push_back( aToken->Clone() );
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -170,7 +213,7 @@ namespace katrin
             return;
         }
 
-        if( fElementState == eActive )
+        if( fElementState == eActive || fElementState == eElseActive )
         {
         	//hijack the token stream
             Remove();
@@ -181,7 +224,14 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
-        	fIfTokens.push_back( aToken->Clone() );
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -198,7 +248,14 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
-        	fIfTokens.push_back( aToken->Clone() );
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 
@@ -227,15 +284,16 @@ namespace katrin
                     Remove();
                     InsertAfter( fOldParent );
 
-
                     //copy the state into stack variables and reset (otherwise nesting is not possible)
                     TokenVector tIfTokens = fIfTokens;
+                    TokenVector tElseTokens = fElseTokens;
                     bool tCondition = fCondition;
 
                     //reset the object
                     fNest = 0;
                     fCondition = false;
                     fIfTokens.clear();
+                    fElseTokens.clear();
                     fNewParent = NULL;
                     fOldParent = NULL;
                     fElementState = eElementInactive;
@@ -245,24 +303,48 @@ namespace katrin
 
                     if ( tCondition == true )
                     {
-						for( TokenIt It = tIfTokens.begin(); It != tIfTokens.end(); It++ )
-						{
-							tToken = (*It)->Clone();
-							Dispatch( tToken );
-							delete tToken;
-						}
+                        for( TokenIt It = tIfTokens.begin(); It != tIfTokens.end(); It++ )
+                        {
+                            tToken = (*It)->Clone();
+                            Dispatch( tToken );
+                            delete tToken;
+                        }
+                    }
+                    else {
+                        for( TokenIt It = tElseTokens.begin(); It != tElseTokens.end(); It++ )
+                        {
+                            tToken = (*It)->Clone();
+                            Dispatch( tToken );
+                            delete tToken;
+                        }
                     }
 
-					//delete the old tokens (made with new during collection)
-					for( TokenIt It = tIfTokens.begin(); It != tIfTokens.end(); It++ )
-					{
-						delete *It;
-					}
+                    //delete the old tokens (made with new during collection)
+                    for( TokenIt It = tIfTokens.begin(); It != tIfTokens.end(); It++ )
+                    {
+                        delete *It;
+                    }
+                    for( TokenIt It = tElseTokens.begin(); It != tElseTokens.end(); It++ )
+                    {
+                        delete *It;
+                    }
                     return;
                 }
             }
 
-            fIfTokens.push_back( aToken->Clone() );
+            if( aToken->GetValue() == string( "else" ) )
+            {
+                fNest--;
+            }
+
+            if( fProcessorState == eIfCondition )
+            {
+                fIfTokens.push_back( aToken->Clone() );
+            }
+            else if( fProcessorState == eElseCondition )
+            {
+                fElseTokens.push_back( aToken->Clone() );
+            }
             return;
         }
 

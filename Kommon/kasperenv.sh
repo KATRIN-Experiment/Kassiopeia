@@ -35,10 +35,10 @@ fi
 
 export KASPERSYS
 
-if [ -d $KASPERSYS/cache/KEMField/ ] ; then
-    touch $KASPERSYS/cache/KEMField/.test && KEMFIELD_CACHE=$KASPERSYS/cache/KEMField
+if [ -w $KASPERSYS/cache/KEMField/ ] ; then
+    KEMFIELD_CACHE=$KASPERSYS/cache/KEMField
 else
-    echo "Directory $KASPERSYS/cache/KEMField/ does not exist, setting KEMField cache to $HOME/.cache/KEMField"
+    echo "Directory $KASPERSYS/cache/KEMField/ does not exist or is not writeable, setting KEMField cache to $HOME/.cache/KEMField"
     KEMFIELD_CACHE=$HOME/.cache/KEMField
 fi
 

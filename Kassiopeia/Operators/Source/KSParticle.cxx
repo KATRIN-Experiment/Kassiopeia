@@ -14,9 +14,9 @@ namespace Kassiopeia
 
     const string KSParticle::sSeparator = string( ":" );
 
-    //**********
-    //assignment
-    //**********
+////////////
+//assignment
+////////////
 
     KSParticle::KSParticle() :
             fLabel( "" ),
@@ -38,7 +38,7 @@ namespace Kassiopeia
             fElectricFieldCalculator( NULL ),
 
             fPID( 0 ),
-	    fStringID( "" ),
+            fStringID( "" ),
             fMass( 0. ),
             fCharge( 0. ),
             fSpinMagnitude( 0. ),
@@ -120,7 +120,7 @@ namespace Kassiopeia
             fElectricFieldCalculator( aParticle.fElectricFieldCalculator ),
 
             fPID( aParticle.fPID ),
-	    fStringID( aParticle.fStringID ),
+            fStringID( aParticle.fStringID ),
             fMass( aParticle.fMass ),
             fCharge( aParticle.fCharge ),
             fSpinMagnitude( aParticle.fSpinMagnitude ),
@@ -204,7 +204,7 @@ namespace Kassiopeia
         fElectricFieldCalculator = aParticle.fElectricFieldCalculator;
 
         fPID = aParticle.fPID;
-	fStringID = aParticle.fStringID;
+        fStringID = aParticle.fStringID;
         fMass = aParticle.fMass;
         fCharge = aParticle.fCharge;
         fSpinMagnitude = aParticle.fSpinMagnitude;
@@ -275,13 +275,13 @@ namespace Kassiopeia
     }
     void KSParticle::Print() const
     {
-        oprmsg( eNormal );
+        oprmsg( eInfo );
         oprmsg << "particle state:" << ret;
         oprmsg << "  id:                  " << fPID << ret;
-	oprmsg << "  string id:           " << fStringID << ret;
+        oprmsg << "  string id:           " << fStringID << ret;
         oprmsg << "  mass:                " << fMass << ret;
         oprmsg << "  charge:              " << fCharge << ret;
-        oprmsg << "  spin magnitude:          " << fSpinMagnitude << ret;
+        oprmsg << "  spin magnitude:      " << fSpinMagnitude << ret;
         oprmsg << "  gyromagnetic ratio:  " << fGyromagneticRatio << ret;
         oprmsg << ret;
         oprmsg << "  t:          " << fTime << ret;
@@ -324,6 +324,10 @@ namespace Kassiopeia
             return false;
         if ( !isfinite(fSpin0) || !isfinite(fSpin.X()) || !isfinite(fSpin.Y()) || !isfinite(fSpin.Z()) )
             return false;
+        /** require E > 0 for tracking */
+        if ( fMomentum.MagnitudeSquared() <= 0. )
+            return false;
+
         // other properties
         if ( !isfinite(GetMagneticField().MagnitudeSquared()) )
             return false;
@@ -333,10 +337,14 @@ namespace Kassiopeia
         return true;
     }
 
-    //******
-    //labels
-    //******
+////////
+//labels
+////////
 
+    const string& KSParticle::GetLabel( ) const
+    {
+        return fLabel;
+    }
     void KSParticle::SetLabel( const string& aLabel )
     {
         fLabel = aLabel;
@@ -398,9 +406,9 @@ namespace Kassiopeia
         return fParentStepId;
     }
 
-//*****
+///////
 //state
-//*****
+///////
 
     void KSParticle::SetActive( const bool& aFlag )
     {
@@ -417,11 +425,11 @@ namespace Kassiopeia
         fCurrentSpace = aSpace;
         if ( fCurrentSpace != 0 )
         {
-        	fCurrentSpaceName = fCurrentSpace->GetName();
+            fCurrentSpaceName = fCurrentSpace->GetName();
         }
         else
         {
-        	fCurrentSpaceName = string( "" );
+            fCurrentSpaceName = string( "" );
         }
         return;
     }
@@ -431,7 +439,7 @@ namespace Kassiopeia
     }
     const string& KSParticle::GetCurrentSpaceName() const
     {
-    	return fCurrentSpaceName;
+        return fCurrentSpaceName;
     }
 
     void KSParticle::SetCurrentSurface( KSSurface* aSurface )
@@ -439,11 +447,11 @@ namespace Kassiopeia
         fCurrentSurface = aSurface;
         if ( fCurrentSurface != 0 )
         {
-        	fCurrentSurfaceName = fCurrentSurface->GetName();
+            fCurrentSurfaceName = fCurrentSurface->GetName();
         }
         else
         {
-        	fCurrentSurfaceName = string( "" );
+            fCurrentSurfaceName = string( "" );
         }
         return;
     }
@@ -453,7 +461,7 @@ namespace Kassiopeia
     }
     const string& KSParticle::GetCurrentSurfaceName() const
     {
-    	return fCurrentSurfaceName;
+        return fCurrentSurfaceName;
     }
 
     void KSParticle::SetCurrentSide( KSSide* aSide )
@@ -461,11 +469,11 @@ namespace Kassiopeia
         fCurrentSide = aSide;
         if ( fCurrentSide != 0 )
         {
-        	fCurrentSideName = fCurrentSide->GetName();
+            fCurrentSideName = fCurrentSide->GetName();
         }
         else
         {
-        	fCurrentSideName = string( "" );
+            fCurrentSideName = string( "" );
         }
         return;
     }
@@ -475,7 +483,7 @@ namespace Kassiopeia
     }
     const string& KSParticle::GetCurrentSideName() const
     {
-    	return fCurrentSideName;
+        return fCurrentSideName;
     }
 
     void KSParticle::SetLastStepSurface( KSSurface* aSurface )
@@ -488,9 +496,9 @@ namespace Kassiopeia
         return fLastStepSurface;
     }
 
-//***********
+/////////////
 //calculators
-//***********
+/////////////
 
     void KSParticle::SetMagneticFieldCalculator( KSMagneticField* aMagFieldCalculator )
     {
@@ -531,9 +539,9 @@ namespace Kassiopeia
 
     }
 
-//*****************
+///////////////////
 //static properties
-//*****************
+///////////////////
 
     const long long& KSParticle::GetPID() const
     {
@@ -542,7 +550,7 @@ namespace Kassiopeia
     const std::string& KSParticle::GetStringID() const
     {
         return fStringID;
-	}
+    }
     const double& KSParticle::GetMass() const
     {
         return fMass;
@@ -560,9 +568,9 @@ namespace Kassiopeia
         return fGyromagneticRatio;
     }
 
-//***************
+/////////////////
 //Quantum Numbers
-//***************
+/////////////////
     void KSParticle::SetMainQuantumNumber(const int &t)
     {
         fMainQuantumNumber = t;
@@ -580,9 +588,9 @@ namespace Kassiopeia
         return fSecondQuantumNumber;
     }
 
-//****
+//////
 //time
-//****
+//////
 
     void KSParticle::SetTime( const double& t )
     {
@@ -613,9 +621,9 @@ namespace Kassiopeia
         return fTime;
     }
 
-//******
+////////
 //length
-//******
+////////
 
     void KSParticle::SetLength( const double& l )
     {
@@ -631,9 +639,9 @@ namespace Kassiopeia
         return fLength;
     }
 
-//********
+//////////
 //position
-//********
+//////////
 
     const KThreeVector& KSParticle::GetPosition() const
     {
@@ -778,9 +786,9 @@ namespace Kassiopeia
         return;
     }
 
-//********
+//////////
 //momentum
-//********
+//////////
 
     const KThreeVector& KSParticle::GetMomentum() const
     {
@@ -897,8 +905,6 @@ namespace Kassiopeia
 
         fGetLongMomentumAction = &KSParticle::RecalculateLongMomentum;
         fGetTransMomentumAction = &KSParticle::RecalculateTransMomentum;
-        fGetLongVelocityAction = &KSParticle::RecalculateLongVelocity;
-        fGetTransVelocityAction = &KSParticle::RecalculateTransVelocity;
         fGetPolarAngleToBAction = &KSParticle::RecalculatePolarAngleToB;
         fGetCyclotronFrequencyAction = &KSParticle::RecalculateCyclotronFrequency;
         fGetOrbitalMagneticMomentAction = &KSParticle::RecalculateOrbitalMagneticMoment;
@@ -938,9 +944,9 @@ namespace Kassiopeia
         return;
     }
 
-//********
+//////////
 //velocity
-//********
+//////////
 
     const KThreeVector& KSParticle::GetVelocity() const
     {
@@ -998,9 +1004,9 @@ namespace Kassiopeia
         return;
     }
 
-//********
+///////
 //spin0
-//********
+///////
 
     const double& KSParticle::GetSpin0() const
     {
@@ -1041,9 +1047,9 @@ namespace Kassiopeia
         return;
     }
 
-//********
+//////
 //spin
-//********
+//////
 
     const KThreeVector& KSParticle::GetSpin() const
     {
@@ -1262,9 +1268,9 @@ namespace Kassiopeia
 
     }
 
-//*****
+///////
 //speed
-//*****
+///////
 
     const double& KSParticle::GetSpeed() const
     {
@@ -1320,9 +1326,9 @@ namespace Kassiopeia
         return;
     }
 
-//**************
+////////////////
 //lorentz factor
-//**************
+////////////////
 
     const double& KSParticle::GetLorentzFactor() const
     {
@@ -1373,9 +1379,9 @@ namespace Kassiopeia
         return;
     }
 
-//**************
+////////////////
 //kinetic energy
-//**************
+////////////////
 
     const double& KSParticle::GetKineticEnergy() const
     {
@@ -1428,7 +1434,7 @@ namespace Kassiopeia
         return;
     }
 
-//setter and getter for KineticEnergy in eV
+    // setter and getter for KineticEnergy in eV
 
     void KSParticle::SetKineticEnergy_eV( const double& NewKineticEnergy )
     {
@@ -1451,9 +1457,9 @@ namespace Kassiopeia
         return fKineticEnergy_eV;
     }
 
-//****************
+//////////////////
 //polar angle to z
-//****************
+//////////////////
 
     const double& KSParticle::GetPolarAngleToZ() const
     {
@@ -1510,9 +1516,9 @@ namespace Kassiopeia
         return;
     }
 
-//********************
+//////////////////////
 //azimuthal angle to x
-//********************
+//////////////////////
 
     const double& KSParticle::GetAzimuthalAngleToX() const
     {
@@ -1598,9 +1604,9 @@ namespace Kassiopeia
         return;
     }
 
-//**************
+////////////////
 //magnetic field
-//**************
+////////////////
 
     const KThreeVector& KSParticle::GetMagneticField() const
     {
@@ -1636,18 +1642,19 @@ namespace Kassiopeia
 
     void KSParticle::RecalculateMagneticField() const
     {
-        //std::cout << fMagneticFieldCalculator << " " << GetPosition() << " " << GetTime() << " " << fMagneticField << "\n";
-        fMagneticFieldCalculator->CalculateField( GetPosition(), GetTime(), fMagneticField );
-        fGetMagneticFieldAction = &KSParticle::DoNothing;
+        if(fMagneticFieldCalculator != NULL){
+            fMagneticFieldCalculator->CalculateField( GetPosition(), GetTime(), fMagneticField );
+            fGetMagneticFieldAction = &KSParticle::DoNothing;
+        }
 
         //RecalculateSpinBody();
 
         return;
     }
 
-//**************
+////////////////
 //electric field
-//**************
+////////////////
 
     const KThreeVector& KSParticle::GetElectricField() const
     {
@@ -1674,9 +1681,9 @@ namespace Kassiopeia
         return;
     }
 
-//***********************
+/////////////////////////
 //magnetic field gradient
-//***********************
+/////////////////////////
 
     const KThreeMatrix& KSParticle::GetMagneticGradient() const
     {
@@ -1700,12 +1707,13 @@ namespace Kassiopeia
     {
         fMagneticFieldCalculator->CalculateGradient( GetPosition(), GetTime(), fMagneticGradient );
         fGetMagneticGradientAction = &KSParticle::DoNothing;
+
         return;
     }
 
-//******************
+////////////////////
 //electric potential
-//******************
+////////////////////
 
     const double& KSParticle::GetElectricPotential() const
     {
@@ -1732,9 +1740,9 @@ namespace Kassiopeia
         return;
     }
 
-//*********************
+///////////////////////
 //longitudinal momentum
-//*********************
+///////////////////////
 
     void KSParticle::SetLongMomentum( const double& aNewLongMomentum )
     {
@@ -1784,9 +1792,9 @@ namespace Kassiopeia
         return;
     }
 
-//*******************
+/////////////////////
 //transverse momentum
-//*******************
+/////////////////////
 
     void KSParticle::SetTransMomentum( const double& NewTransMomentum )
     {
@@ -1839,9 +1847,9 @@ namespace Kassiopeia
         return;
     }
 
-//*********************
+///////////////////////
 //longitudinal velocity
-//*********************
+///////////////////////
 
     void KSParticle::SetLongVelocity( const double& NewLongVelocity )
     {
@@ -1899,9 +1907,9 @@ namespace Kassiopeia
         return;
     }
 
-//*******************
+/////////////////////
 //transverse velocity
-//*******************
+/////////////////////
 
     void KSParticle::SetTransVelocity( const double& NewTransVelocity )
     {
@@ -1959,9 +1967,9 @@ namespace Kassiopeia
         return;
     }
 
-//****************
+//////////////////
 //polar angle to B
-//****************
+//////////////////
 
     void KSParticle::SetPolarAngleToB( const double& NewPolarAngleToB )
     {
@@ -2017,9 +2025,9 @@ namespace Kassiopeia
         return;
     }
 
-//*******************
+/////////////////////
 //cyclotron frequency
-//*******************
+/////////////////////
 
     void KSParticle::SetCyclotronFrequency( const double& NewCyclotronFrequency )
     {
@@ -2058,7 +2066,7 @@ namespace Kassiopeia
     }
     void KSParticle::RecalculateCyclotronFrequency() const
     {
-    	oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
+        oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
 
         fCyclotronFrequency = (fabs( GetCharge() ) * GetMagneticField().Magnitude()) / (2.0 * KConst::Pi() * GetMass() * GetLorentzFactor());
 
@@ -2075,9 +2083,9 @@ namespace Kassiopeia
         return fCyclotronFrequency;
     }
 
-//***********************
+/////////////////////////
 //orbital magnetic moment
-//***********************
+/////////////////////////
 
     const double& KSParticle::GetOrbitalMagneticMoment() const
     {
@@ -2132,9 +2140,9 @@ namespace Kassiopeia
         return;
     }
 
-//***********************
+/////////////////////////
 //guiding center position
-//***********************
+/////////////////////////
 
 
     const KThreeVector& KSParticle::GetGuidingCenterPosition() const
@@ -2151,7 +2159,7 @@ namespace Kassiopeia
 
     void KSParticle::RecalculateGuidingCenterPosition() const
     {
-    	oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
+        oprmsg_assert( fMagneticField.Magnitude(), != 0.0 );
         fGuidingCenterPosition = GetPosition() + (1.0 / (GetCharge() * GetMagneticField().MagnitudeSquared())) * (GetMomentum().Cross( GetMagneticField() ));
 
         //calculate magnetic field at gc position
@@ -2176,117 +2184,114 @@ namespace Kassiopeia
         return;
     }
 
-//***********************
+//////////////
 //aligned spin
-//***********************
+/////////////
 
+    const double& KSParticle::GetAlignedSpin() const
+    {
+        return fAlignedSpin;
+    }
 
-        const double& KSParticle::GetAlignedSpin() const
+    void KSParticle::SetAlignedSpin( const double& anAlignedSpin ) const
+    {
+        fAlignedSpin = anAlignedSpin;
+    }
+
+////////////
+//spin angle
+////////////
+
+    const double& KSParticle::GetSpinAngle() const
+    {
+        return fSpinAngle;
+    }
+
+    void KSParticle::SetSpinAngle( const double& aSpinAngle ) const
+    {
+        fSpinAngle = aSpinAngle;
+    }
+
+    void KSParticle::RecalculateSpinBody() const
+    {
+        //std::cout << "RECALCULATING SPIN (body):\n\tInitial:\tspin0:\t" << fSpin0 << "\tspin: " << fSpin << "\n";
+
+        KThreeVector LocalZ = fMagneticField / fMagneticField.Magnitude();
+        KThreeVector LocalX  ( LocalZ.Z() - LocalZ.Y(), LocalZ.X() - LocalZ.Z(), LocalZ.Y() - LocalZ.X() );
+        LocalX = LocalX / LocalX.Magnitude();
+        fAlignedSpin =  fSpin.Dot( LocalZ ) / fSpin.Magnitude();
+        if ( std::isnan( fAlignedSpin ) )
         {
-            return fAlignedSpin;
+            fAlignedSpin = 1.;
+            //std::cout << "*fixed NaN m (in KSP); B: " << fMagneticField << "\n";
+        }
+        if (fAlignedSpin < 0.99999 && fAlignedSpin > -0.99999 )
+        {
+            //std::cout << fSpin.Dot( LocalX );
+            fSpinAngle = acos( fSpin.Dot( LocalX ) / fSpin.Magnitude() / sqrt( 1 - fAlignedSpin * fAlignedSpin ) );
+        }
+        else
+        {
+            fSpinAngle = 0;
         }
 
-        void KSParticle::SetAlignedSpin( const double& anAlignedSpin ) const
-        {
-            fAlignedSpin = anAlignedSpin;
-        }
-
-//***********************
-//aligned spin
-//***********************
-
-
-        const double& KSParticle::GetSpinAngle() const
-        {
-            return fSpinAngle;
-        }
-
-        void KSParticle::SetSpinAngle( const double& aSpinAngle ) const
-        {
-            fSpinAngle = aSpinAngle;
-        }
-
-        void KSParticle::RecalculateSpinBody() const
-        {
-            //std::cout << "RECALCULATING SPIN (body):\n\tInitial:\tspin0:\t" << fSpin0 << "\tspin: " << fSpin << "\n";
-
-            KThreeVector LocalZ = fMagneticField / fMagneticField.Magnitude();
-            KThreeVector LocalX  ( LocalZ.Z() - LocalZ.Y(), LocalZ.X() - LocalZ.Z(), LocalZ.Y() - LocalZ.X() );
-            LocalX = LocalX / LocalX.Magnitude();
-            fAlignedSpin =  fSpin.Dot( LocalZ ) / fSpin.Magnitude();
-            if ( std::isnan( fAlignedSpin ) )
-            {
-                fAlignedSpin = 1.;
-                //std::cout << "*fixed NaN m (in KSP); B: " << fMagneticField << "\n";
-            }
-            if (fAlignedSpin < 0.99999 && fAlignedSpin > -0.99999 )
-            {
-                //std::cout << fSpin.Dot( LocalX );
-                fSpinAngle = acos( fSpin.Dot( LocalX ) / fSpin.Magnitude() / sqrt( 1 - fAlignedSpin * fAlignedSpin ) );
-            }
-            else
-            {
-                fSpinAngle = 0;
-            }
-
-            //std::cout << "\tFinal:\t\tm: " << fAlignedSpin << "\tphi: " << fSpinAngle << "\n";
-        }
+        //std::cout << "\tFinal:\t\tm: " << fAlignedSpin << "\tphi: " << fSpinAngle << "\n";
+    }
 
     STATICINT sKSParticleDict =
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentRunId, "parent_run_id" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentEventId, "parent_event_id" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentTrackId, "parent_track_id" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentStepId, "parent_step_id" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPID, "pid" ) +
-                KSDictionary< KSParticle >::AddComponent( &KSParticle::GetStringID, "string_id" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMass, "mass" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCharge, "charge" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpinMagnitude, "total_spin" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetGyromagneticRatio, "gyromagnetic_ratio" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentRunId, "parent_run_id" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentEventId, "parent_event_id" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentTrackId, "parent_track_id" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentStepId, "parent_step_id" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPID, "pid" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetStringID, "string_id" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMass, "mass" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCharge, "charge" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpinMagnitude, "total_spin" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetGyromagneticRatio, "gyromagnetic_ratio" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMainQuantumNumber, "n" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSecondQuantumNumber, "l" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTime, "time" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLength, "length" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPosition, "position" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMomentum, "momentum" ) +
-               KSDictionary< KSParticle >::AddComponent( &KSParticle::GetVelocity, "velocity" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpin0, "spin0" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpin, "spin" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetAlignedSpin, "aligned_spin" ) +
-        KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpinAngle, "spin_angle" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpeed, "speed" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLorentzFactor, "lorentz_factor" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetKineticEnergy, "kinetic_energy" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetKineticEnergy_eV, "kinetic_energy_ev" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPolarAngleToZ, "polar_angle_to_z" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetAzimuthalAngleToX, "azimuthal_angle_to_x" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMagneticField, "magnetic_field" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetElectricField, "electric_field" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMagneticGradient, "magnetic_gradient" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetElectricPotential, "electric_potential" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongMomentum, "long_momentum" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTransMomentum, "trans_momentum" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongVelocity, "long_velocity" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTransVelocity, "trans_velocity" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongMomentum, "long_momentum" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPolarAngleToB, "polar_angle_to_b" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCyclotronFrequency, "cyclotron_frequency" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetOrbitalMagneticMoment, "orbital_magnetic_moment" ) +
-    		KSDictionary< KSParticle >::AddComponent( &KSParticle::GetGuidingCenterPosition, "guiding_center_position" ) +
-			KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSpaceName, "current_space_name" ) +
-			KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSurfaceName, "current_surface_name" ) +
-			KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSideName, "current_side_name" );
-
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTime, "time" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLength, "length" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPosition, "position" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMomentum, "momentum" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetVelocity, "velocity" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpin0, "spin0" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpin, "spin" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetAlignedSpin, "aligned_spin" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpinAngle, "spin_angle" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSpeed, "speed" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLorentzFactor, "lorentz_factor" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetKineticEnergy, "kinetic_energy" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetKineticEnergy_eV, "kinetic_energy_ev" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPolarAngleToZ, "polar_angle_to_z" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetAzimuthalAngleToX, "azimuthal_angle_to_x" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMagneticField, "magnetic_field" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetElectricField, "electric_field" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMagneticGradient, "magnetic_gradient" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetElectricPotential, "electric_potential" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongMomentum, "long_momentum" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTransMomentum, "trans_momentum" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongVelocity, "long_velocity" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTransVelocity, "trans_velocity" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLongMomentum, "long_momentum" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPolarAngleToB, "polar_angle_to_b" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCyclotronFrequency, "cyclotron_frequency" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetOrbitalMagneticMoment, "orbital_magnetic_moment" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetGuidingCenterPosition, "guiding_center_position" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSpaceName, "current_space_name" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSurfaceName, "current_surface_name" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetCurrentSideName, "current_side_name" );
 
     STATICINT sKSKThreeVectorDict =
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetX, "x" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetY, "y" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetZ, "z" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::Magnitude, "magnitude" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::MagnitudeSquared, "magnitude_squared" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::Perp, "perp" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::PerpSquared, "perp_squared" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::PolarAngle, "polar_angle" ) +
-    		KSDictionary< KThreeVector >::AddComponent( &KThreeVector::AzimuthalAngle, "azimuthal_angle" );
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetX, "x" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetY, "y" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::GetZ, "z" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::Magnitude, "magnitude" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::MagnitudeSquared, "magnitude_squared" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::Perp, "perp" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::PerpSquared, "perp_squared" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::PolarAngle, "polar_angle" ) +
+            KSDictionary< KThreeVector >::AddComponent( &KThreeVector::AzimuthalAngle, "azimuthal_angle" );
 
 } /* namespace Kassiopeia */
