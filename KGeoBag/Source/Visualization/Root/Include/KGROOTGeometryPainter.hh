@@ -33,6 +33,13 @@ using katrin::KROOTPainter;
 #include "KGRotatedPolyLoopSpace.hh"
 #include "KGExtrudedCircleSpace.hh"
 #include "KGExtrudedPolyLoopSpace.hh"
+#include "KGWrappedSurface.hh"
+#include "KGPortHousingSurface.hh"
+#include "KGBeamSurface.hh"
+#include "KGBeam.hh"
+#include "KGComplexAnnulus.hh"
+#include "KGComplexAnnulusSurface.hh"
+
 
 //include root stuff
 #include "TPolyLine.h"
@@ -86,7 +93,10 @@ namespace KGeoBag
         public KGRotatedCircleSpace::Visitor,
         public KGRotatedPolyLoopSpace::Visitor,
         public KGExtrudedCircleSpace::Visitor,
-        public KGExtrudedPolyLoopSpace::Visitor
+        public KGExtrudedPolyLoopSpace::Visitor,
+		public KGPortHousingSurface::Visitor,
+		public KGBeamSurface::Visitor,
+		public KGComplexAnnulusSurface::Visitor
     {
         public:
     		KGROOTGeometryPainter();
@@ -156,6 +166,9 @@ namespace KGeoBag
             virtual void VisitExtrudedPathSurface( KGExtrudedPolyLineSurface* aExtrudedPolyLineSurface );
             virtual void VisitExtrudedPathSurface( KGExtrudedCircleSurface* aExtrudedCircleSurface );
             virtual void VisitExtrudedPathSurface( KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface );
+            virtual void VisitWrappedSurface( KGWrappedSurface<KGPortHousing>* aPortHousingSurface);
+            virtual void VisitWrappedSurface( KGWrappedSurface<KGBeam>* aBeamSurface);
+            virtual void VisitWrappedSurface( KGWrappedSurface<KGComplexAnnulus>* aComplexAnnulus);
 
             //**************
             //space visitors
@@ -173,6 +186,7 @@ namespace KGeoBag
 
         private:
             void LocalToGlobal( const KThreeVector& aLocal, KThreeVector& aGlobal );
+            double distance(KTwoVector Vector1, KTwoVector Vector2);
 
             //**********
             //data types
@@ -235,6 +249,22 @@ namespace KGeoBag
             {
             };
 
+            class PortMesh:
+            	public Mesh
+            {
+            };
+            class BeamMesh:
+            	public Mesh
+            {
+            };
+            class RingMesh:
+            	public Mesh
+            {
+            };
+
+
+
+
             class Lines
             {
                 public:
@@ -260,6 +290,12 @@ namespace KGeoBag
 				public Lines
             {
             };
+
+            class ArcLines :
+            	public Lines
+            {
+            };
+
 
             class IntersectionPoints
             {
@@ -293,6 +329,43 @@ namespace KGeoBag
 					Set fData;
             };
 
+            class SubPortOrderedPoints{
+            public:
+            	typedef OrderedPoints Element;
+            	typedef deque< Element > Set;
+            	typedef Set::iterator SetIt;
+            	typedef Set::const_iterator SetCIt;
+            public:
+            	Set fData;
+            };
+
+            class ConnectionPoints{
+            public:
+            	typedef pair<KTwoVector,OrderedPoints::SetCIt> Element;
+            	typedef deque< Element > Group;
+            	typedef Group::iterator GroupIt;
+            	typedef Group::const_iterator GroupCIt;
+            	typedef deque< Group > Set;
+            	typedef Set::iterator SetIt;
+            	typedef Set::const_iterator SetCIt;
+            public:
+            	Set fData;
+            };
+
+
+            class Partition
+            {
+            	public:
+            	typedef double Value;
+            	typedef deque< Value > Set;
+            	typedef Set::iterator It;
+            	typedef Set::const_iterator CIt;
+
+            	public:
+            		Set fData;
+            };
+
+
             //****************
             //points functions
             //****************
@@ -312,32 +385,62 @@ namespace KGeoBag
             void ClosedPointsRotatedToTorusMesh( const ClosedPoints& aPoints, TorusMesh& aMesh );
             void OpenPointsExtrudedToFlatMesh( const OpenPoints& aPoints, const double& aZMin, const double& aZMax, FlatMesh& aMesh );
             void ClosedPointsExtrudedToTubeMesh( const ClosedPoints& aPoints, const double& aZMin, const double& aZMax, TubeMesh& aMesh );
+            void OpenPointsToShellMesh(const OpenPoints& aPoints, ShellMesh& aMesh,const unsigned int& aCount, const double& aPower, const double& AngleStart, const double& AngleStop);
+            void ClosedPointsToMainPortMesh(const double* PointA, const double* PointB, const double aRadius, PortMesh& aMesh);
+            void ClosedPointsToSubPortMesh(const KGPortHousing::CircularPort* aCircularPort, PortMesh& aMesh);
+            void ClosedPointsToBeamMesh(const vector<vector<double>> aStartCoord, const vector<vector<double>> aEndCoord, BeamMesh& aMesh);
+            void ClosedPointsToFlatMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh);
+            void ClosedPointsToRingMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh);
+
+
 
             //**************
             //line functions
             //**************
 
+            void ShellMeshToArcLines(const ShellMesh aMesh, ArcLines& anArcLines);
+            void ShellMeshToParallelLines(const ShellMesh aMesh, ParallelLines& aParallelLines);
             void TubeMeshToCircleLines( const TubeMesh aMesh, CircleLines& aCircleLines );
             void TubeMeshToParallelLines( const TubeMesh aMesh, ParallelLines& aParallelLines );
             void TorusMeshToCircleLines( const TorusMesh aMesh, CircleLines& aCircleLines );
             void TorusMeshToParallelLines( const TorusMesh aMesh, ParallelLines& aParallelLines );
+            void PortMeshToCircleLines(const PortMesh aMesh, CircleLines& aCircleLines);
+            void PortMeshToParallelLines(const PortMesh aMesh, ParallelLines& aParallelLines);
+            void BeamMeshToCircleLines(const BeamMesh aMesh, CircleLines& aCircleLines);
+            void BeamMeshToParallelLines(const BeamMesh aMesh, ParallelLines& aParallelLines);
+            void FlatMeshToCircleLines(const FlatMesh aMesh, CircleLines& aCircleLines);
+            void RingMeshToCircleLines(const RingMesh aMesh, CircleLines& aCicleLines);
+
+
 
             //**********************
             //intersection functions
             //**********************
 
             void LinesToIntersections( const CircleLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints );
+            void LinesToIntersections( const ArcLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints );
             void LinesToIntersections( const ParallelLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints );
             void CalculatePlaneIntersection( const KThreeVector aStartPoint, const KThreeVector anEndPoint, KThreeVector& anIntersectionPoint, bool& anIntersection );
             void TransformToPlaneSystem( const KThreeVector aPoint, KTwoVector& aPlanePoint );
 
             void IntersectionPointsToOrderedPoints( const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints );
+            void IntersectionPointsToOrderedPoints(const IntersectionPoints aMainIntersectionPoints, const IntersectionPoints aRingIntersectionPoints, OrderedPoints& anOrderdPoints);
+            void ShellIntersectionPointsToOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& OrderedPoints);
 
             void CreateClosedOrderedPoints( const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints );
+            void CreateShellClosedOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
             void CreateOpenOrderedPoints( const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints );
+            void CreateShellOpenOrderedPoints( const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
             void CreateDualOrderedPoints( const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints );
 
             void CombineOrderedPoints( OrderedPoints& anOrderedPoints );
+            void CombineOrderedPoints(OrderedPoints& aMainOrderedPoints, SubPortOrderedPoints& aSubOrderedPoints, OrderedPoints& anOrderedPoints);
+
+            //*******************
+            //partition functions
+            //*******************
+
+            void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower, Partition& aPartition );
 
 
             //*******************

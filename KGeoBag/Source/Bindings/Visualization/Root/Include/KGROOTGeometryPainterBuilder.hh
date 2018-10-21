@@ -35,7 +35,7 @@ namespace katrin
             if( tSurfaces.size() == 0 )
             {
                 coremsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
-                return false;
+                return true;
             }
 
             for( tSurfaceIt = tSurfaces.begin(); tSurfaceIt != tSurfaces.end(); tSurfaceIt++ )
@@ -59,7 +59,7 @@ namespace katrin
             if( tSpaces.size() == 0 )
             {
                 coremsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
-                return false;
+                return true;
             }
 
             for( tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++ )
@@ -71,18 +71,18 @@ namespace katrin
         }
         if( aContainer->GetName() == "plane_normal" )
         {
-			aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetPlaneNormal );
-			return true;
+            aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetPlaneNormal );
+            return true;
         }
         if( aContainer->GetName() == "plane_point" )
         {
-			aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetPlanePoint );
-			return true;
+            aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetPlanePoint );
+            return true;
         }
         if( aContainer->GetName() == "swap_axis" )
         {
-			aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetSwapAxis );
-			return true;
+            aContainer->CopyTo( fObject, &KGROOTGeometryPainter::SetSwapAxis );
+            return true;
         }
         if( aContainer->GetName() == "epsilon" )
         {

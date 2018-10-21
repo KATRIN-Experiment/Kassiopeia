@@ -19,6 +19,7 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermOutput.h
     KSTermMinDistance.h
     KSTermStepsize.h
+    KSTermMagnetron.h
 )
 set( TERMINATORS_HEADER_PATH 
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
@@ -47,6 +48,7 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermSecondaries.cxx
     KSTermMinDistance.cxx
     KSTermStepsize.cxx
+    KSTermMagnetron.cxx
 )
 set( TERMINATORS_SOURCE_PATH 
 	${CMAKE_CURRENT_SOURCE_DIR}/Source

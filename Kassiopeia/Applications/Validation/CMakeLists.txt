@@ -11,6 +11,7 @@ if(Kassiopeia_USE_ROOT)
 	list( APPEND VALIDATION_SOURCE_BASENAMES
         TestInteraction
         TestHydrogenInteraction
+	TestIonInteraction
         TestArgonInteraction
         TestGlukhov
         TestZonalHarmonicsConvergence

@@ -52,7 +52,7 @@ namespace katrin
             if( tSurfaces.size() == 0 )
             {
                 coremsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
-                return false;
+                return true;
             }
 
             for( tSurfaceIt = tSurfaces.begin(); tSurfaceIt != tSurfaces.end(); tSurfaceIt++ )
@@ -71,7 +71,7 @@ namespace katrin
             if( tSpaces.size() == 0 )
             {
                 coremsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< string >() << ">" << eom;
-                return false;
+                return true;
             }
 
             for( tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++ )

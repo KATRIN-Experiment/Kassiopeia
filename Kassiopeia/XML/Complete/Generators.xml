@@ -412,6 +412,13 @@
 			pid:
 				the id of the particle species to generate.
 				11 is electron.
+				
+			string_id:
+				the string id of the particle species to generate.
+				"e-" is for the electron.
+				This is an alternative to using a pid.
+				If both pid and string_id are used, pid overrides string_id.
+				Only one should be used, to avoid confusion.
 
 		elements:
 			any of the creators listed above may be used as elements.

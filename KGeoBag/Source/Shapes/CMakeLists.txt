@@ -102,6 +102,9 @@ set( SHAPES_HEADER_FILES
 	Complex/Include/KGRod.hh
 	Complex/Include/KGRodSurface.hh
 	Complex/Include/KGRodSpace.hh
+	Complex/Include/KGComplexAnnulus.hh
+	Complex/Include/KGComplexAnnulusSurface.hh
+	
 )
 
 # source
@@ -189,6 +192,7 @@ set( SHAPES_SOURCE_FILES
     Complex/Source/KGRotatedSpace.cc
     Complex/Source/KGPortHousingSpace.cc
     Complex/Source/KGConicSectPortHousingSpace.cc
+    Complex/Source/KGComplexAnnulus.cc
 )
 
 # internal

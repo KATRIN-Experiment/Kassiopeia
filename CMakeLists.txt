@@ -1,5 +1,13 @@
-cmake_minimum_required( VERSION 2.8.6 )
+set( CMAKE_MINIMUM_VERSION "2.8.6" )
+cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
+# project version
+set( KASPER_VERSION_MAJOR 3 )
+set( KASPER_VERSION_MINOR 5 )
+set( KASPER_VERSION_PATCH 0 )
+set( KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}" )
+
+#project( Kasper VERSION ${KASPER_VERSION} )
 project( Kasper )
 
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Kommon/cmake )
@@ -42,9 +50,9 @@ option( BUILD_KEMFIELD ${BUILD_KEMFIELD_DESC} ON )
 set( BUILD_KASSIOPEIA_DESC "Build Kassiopeia [particle tracking simulation system]" )
 option( BUILD_KASSIOPEIA ${BUILD_KASSIOPEIA_DESC} ON )
 
-#set( CMAKE_C_FLAGS ${CMAKE_C_FLAGS_INIT} )
-#set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS_INIT} )
-#set( CMAKE_EXE_LINKER_FLAG ${CMAKE_EXE_LINKER_FLAGS_INIT} )
+set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror" )
+#set( CMAKE_EXE_LINKER_FLAG "${CMAKE_EXE_LINKER_FLAGS}" )
 
 if (CMAKE_BUILD_TYPE MATCHES Rel)
     option( COMPILER_TUNE_OPTIONS "Enable additional tuning options [compiles for local CPU, use with care!]" OFF )
@@ -56,12 +64,12 @@ if (CMAKE_BUILD_TYPE MATCHES Rel)
     endif()
 endif()
 
-option( COMPILER_ENABLE_PROFILING "Enable profiling( gprof-based, adds -pg flag to GCC calls )" OFF )
-if( COMPILER_ENABLE_PROFILING )
-    set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pg" )
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg" )
-    set( CMAKE_EXE_LINKER_FLAGS" ${CMAKE_EXE_LINKER_FLAGS} -g -pg" )
-endif()
+#option( COMPILER_ENABLE_PROFILING "Enable profiling( gprof-based, adds -pg flag to GCC calls )" OFF )
+#if( COMPILER_ENABLE_PROFILING )
+#    set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -pg" )
+#    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -pg" )
+#    set( CMAKE_EXE_LINKER_FLAGS" ${CMAKE_EXE_LINKER_FLAGS} -g -pg" )
+#endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     option( GCC_FORCE_LINKING "Fix linker errors with some GCC versions by adding the --no-as-needed flag" ON )
@@ -75,7 +83,7 @@ if (CMAKE_COMPILER_IS_GNUCXX)
         set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftrack-macro-expansion=1" )
     endif( GCC_REDUCE_MEMORY )
 
-    option( GCC_ENABLE_PIPES "Use pipes to speed up compiling with GCC by adding the -pipe flag" OFF )
+    option( GCC_ENABLE_PIPES "Use pipes to speed up compiling with GCC by adding the -pipe flag" ON )
     if( GCC_ENABLE_PIPES )
         set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pipe" )
         set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe" )
@@ -86,11 +94,19 @@ mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
 
 # Global dependency options
-option( KASPER_USE_BOOST "Build Boost dependent modules" OFF )
+option( KASPER_USE_BOOST "Build Boost dependent modules" ON )
 option( KASPER_USE_ROOT "Build ROOT dependent modules" ON )
 option( KASPER_USE_GSL "Build GSL dependent modules" OFF )
 option( KASPER_USE_VTK "Build VTK dependent modules" OFF )
-option( KASPER_USE_TBB "Build TBB dependent modules" OFF )
+
+# Advanced options mainly for testing
+option( KASPER_EXPERIMENTAL "Enable some experimental features" OFF )
+if( KASPER_EXPERIMENTAL )
+    option( KASPER_USE_TBB "Build TBB dependent modules" OFF )
+    if( KASPER_USE_TBB )
+        message( "WARNING: Enabling TBB can produce inconsistent or wrong results in KaFit. It is strongly recommended to leave this option disabled until further investigation." )
+    endif()
+endif( KASPER_EXPERIMENTAL )
 
 # Make sure all dependencies are being built
 # Every module must be listed before its dependencies and activate ONLY its
@@ -106,6 +122,7 @@ endif()
 
 if( BUILD_KGEOBAG )
     set( BUILD_KOMMON ON CACHE BOOL "${BUILD_KOMMON_DESC} (Required)" FORCE )
+
     set( KASPER_USE_GSL ON CACHE BOOL "(Required)" FORCE )
 endif()
 
@@ -114,6 +131,8 @@ endif()
 
 if( BUILD_KOMMON )
     add_subdirectory( Kommon )
+
+    set( KASPER_USE_BOOST ON CACHE BOOL "(Required)" FORCE )
 endif()
 
 if( BUILD_KGEOBAG )
@@ -126,10 +145,6 @@ endif()
 
 if( BUILD_KASSIOPEIA )
     add_subdirectory( Kassiopeia )
-endif()
-
-if( BUILD_KTEMPLATE )
-    add_subdirectory( KTemplate )
 endif()
 
 #add_subdirectory( Documentation )

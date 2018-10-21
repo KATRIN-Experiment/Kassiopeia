@@ -11,6 +11,9 @@
 #include "KAttribute.hh"
 #include "KSimpleElement.hh"
 
+#include <string>
+using std::string;
+
 namespace katrin
 {
 

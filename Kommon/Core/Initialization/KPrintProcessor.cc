@@ -12,6 +12,7 @@ namespace katrin
             KProcessor(),
             fElementState( eElementInactive ),
             fAttributeState( eAttributeInactive ),
+            fMessageType( eNormal ),
             fName( "" ),
             fValue( "" )
     {
@@ -28,6 +29,19 @@ namespace katrin
             if( aToken->GetValue() == string( "print" ) )
             {
                 fElementState = eElementActive;
+                fMessageType = eNormal;
+                return;
+            }
+            if( aToken->GetValue() == string( "warning" ) )
+            {
+                fElementState = eElementActive;
+                fMessageType = eWarning;
+                return;
+            }
+            if( aToken->GetValue() == string( "error" ) )
+            {
+                fElementState = eElementActive;
+                fMessageType = eError;
                 return;
             }
 
@@ -155,10 +169,28 @@ namespace katrin
 
         if( fElementState == eElementComplete )
         {
-            initmsg( eNormal ) << "value of <" << fName << "> is <" << fValue << ">" << eom;
+            if (fName.empty())
+            {
+                initmsg( fMessageType ) << fValue;
+            }
+            else
+            {
+                initmsg( fMessageType ) << "value of <" << fName << "> is <" << fValue << ">";
+            }
+
+            if (fMessageType == eError)
+            {
+                initmsg( fMessageType ) << ret << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
+            }
+            else
+            {
+                initmsg( fMessageType ) << eom;
+            }
+
             fName.clear();
             fValue.clear();
             fElementState = eElementInactive;
+            fMessageType = eNormal;
             return;
         }
 

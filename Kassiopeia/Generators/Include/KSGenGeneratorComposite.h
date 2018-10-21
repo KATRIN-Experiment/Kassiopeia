@@ -3,6 +3,7 @@
 
 #include "KSGenerator.h"
 #include "KSGenValue.h"
+#include "KSGenStringValue.h"
 #include "KSGenCreator.h"
 #include "KSList.h"
 
@@ -35,6 +36,9 @@ namespace Kassiopeia
             void SetPid( KSGenValue* aPidValue );
             KSGenValue* GetPid();
 
+	    void SetStringId( KSGenStringValue* aStringIdValue );
+            KSGenStringValue* GetStringId();
+
             void AddCreator( KSGenCreator* aCreator );
             void RemoveCreator( KSGenCreator* aCreator );
 
@@ -47,6 +51,7 @@ namespace Kassiopeia
 
         protected:
             KSGenValue* fPidValue;
+	    KSGenStringValue* fStringIdValue;
             KSList< KSGenSpecial > fSpecials;
             KSList< KSGenCreator > fCreators;
     };

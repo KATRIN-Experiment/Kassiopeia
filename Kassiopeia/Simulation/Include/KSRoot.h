@@ -62,13 +62,13 @@ namespace Kassiopeia
             static void GSLErrorHandler(const char* aReason, const char* aFile, int aLine, int aErrNo);
 
         private:
+            katrin::KToolbox& fToolbox;
+
             KSSimulation* fSimulation;
             KSRun* fRun;
             KSEvent* fEvent;
             KSTrack* fTrack;
             KSStep* fStep;
-
-            katrin::KToolbox& fToolbox;
 
             KSRootMagneticField* fRootMagneticField;
             KSRootElectricField* fRootElectricField;
@@ -87,7 +87,7 @@ namespace Kassiopeia
             KSRootRunModifier* fRootRunModifier;
 
             bool fOnce;
-
+            bool fRestartNavigation;
 
             unsigned int fRunIndex;
             unsigned int fEventIndex;

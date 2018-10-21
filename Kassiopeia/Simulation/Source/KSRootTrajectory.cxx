@@ -1,6 +1,8 @@
 #include "KSRootTrajectory.h"
 #include "KSTrajectoriesMessage.h"
 
+#include <limits>
+
 namespace Kassiopeia
 {
 
@@ -122,6 +124,7 @@ namespace Kassiopeia
         if( !( fTrajectoryParticle->GetPosition() == fTrajectoryParticle->GetPosition() ) )
         {
             trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the position." << eom;
+            fTrajectoryParticle->Print();
             fFailureFlag = true;
             return;
         }
@@ -129,6 +132,7 @@ namespace Kassiopeia
         if( !( fTrajectoryParticle->GetMagneticField() == fTrajectoryParticle->GetMagneticField() ) )
         {
             trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the magnetic field." << eom;
+            fTrajectoryParticle->Print();
             fFailureFlag = true;
             return;
         }
@@ -136,6 +140,15 @@ namespace Kassiopeia
         if( !( fTrajectoryParticle->GetElectricField() == fTrajectoryParticle->GetElectricField() ) )
         {
             trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a NAN value in the electric field." << eom;
+            fTrajectoryParticle->Print();
+            fFailureFlag = true;
+            return;
+        }
+
+        if ( fTrajectoryParticle->GetMomentum().MagnitudeSquared() <= std::numeric_limits<double>::min() )  // fastest option to check non-zero momentum
+        {
+            trajmsg( eWarning ) << "trajectory <" << GetName() << "> encountered a null value in the momentum." << eom;
+            fTrajectoryParticle->Print();
             fFailureFlag = true;
             return;
         }

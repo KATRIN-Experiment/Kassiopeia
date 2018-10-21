@@ -35,12 +35,12 @@ fi
 
 export KASPERSYS
 
-{
-    touch $KASPERSYS/cache/KEMField/.test && KEMFIELD_CACHE=$KASPERSYS/cache/KEMField
-} || {
-   echo "setting kemfield cache to $HOME/.cache/KEMField"
-   KEMFIELD_CACHE=$HOME/.cache/KEMField
-}
+if [ -w $KASPERSYS/cache/KEMField/ ] ; then
+    KEMFIELD_CACHE=$KASPERSYS/cache/KEMField
+else
+    echo "Directory $KASPERSYS/cache/KEMField/ does not exist or is not writeable, setting KEMField cache to $HOME/.cache/KEMField"
+    KEMFIELD_CACHE=$HOME/.cache/KEMField
+fi
 
 export KEMFIELD_CACHE
 mkdir -p $KEMFIELD_CACHE
@@ -53,5 +53,13 @@ export CMAKE_PREFIX_PATH=$KASPER_INSTALL:${CMAKE_PREFIX_PATH//${OLD_CMAKE_PREF}/
 
 echo -e "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m"
 echo -e "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m"
+
+_kafit-krypton-auto()
+{
+    local curr_arg; 
+    curr_arg=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W 'DrawData drawdata DrawResponse drawresponse DrawRP drawrp DrawMF drawmf Test test Fit fit DrawFitResult drawfitresult DrawResidual drawresidual FitSummary fitsummary --mode= --num= --ringselection=\" --fitrange=\" --batch= --auto= --average= --relative= --input= --output= true false uniform ring pixel' -- $curr_arg ) );
+}  
+[ ! -z "$BASH" ] && complete -o nospace -F  _kafit-krypton-auto  kafit-krypton
 
 return 0

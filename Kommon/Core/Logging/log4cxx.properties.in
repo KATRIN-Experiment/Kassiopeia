@@ -2,6 +2,7 @@ log4j.rootLogger=@LEVEL@, stdout
 
 # log4j.logger.kdb=DEBUG, stdout, R
 log4j.logger.kali=INFO
+log4j.logger.IDLE=INFO
 
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 log4j.appender.stdout.target=System.out

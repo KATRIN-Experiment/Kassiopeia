@@ -24,7 +24,8 @@ namespace Kassiopeia
 
         public:
             KSParticle* Create( const long long& aPID );
-            int Define( const long long& aPID, const double& aMass, const double& aCharge, const double& aSpinMagnitude, const double& aGyromagneticRatio );
+	    KSParticle* StringCreate( const std::string& aStringID );
+	    int Define( const long long& aPID, const std::string& aStringID, const std::vector<std::string> aAltStringIDs, const double& aMass, const double& aCharge, const double& aSpinMagnitude, const double& aGyromagneticRatio );
 
             void SetSpace( KSSpace* aSpace );
             KSSpace* GetSpace();
@@ -41,7 +42,13 @@ namespace Kassiopeia
             typedef ParticleMap::const_iterator ParticleCIt;
             typedef ParticleMap::value_type ParticleEntry;
 
+	    typedef map< std::string, KSParticle* > ParticleStringMap;
+            typedef ParticleStringMap::iterator ParticleStringIt;
+            typedef ParticleStringMap::const_iterator ParticleStringCIt;
+            typedef ParticleStringMap::value_type ParticleStringEntry;
+
             ParticleMap fParticles;
+	    ParticleStringMap fParticleString;
             KSSpace* fSpace;
             KSMagneticField* fMagneticField;
             KSElectricField* fElectricField;

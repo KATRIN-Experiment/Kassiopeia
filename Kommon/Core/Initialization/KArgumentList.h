@@ -65,7 +65,7 @@ class KArgumentSchema {
         virtual KElement& WithDefault(const KVariant& Prototype);
         virtual KElement& WhichIs(const std::string& Description);
         virtual void Print(std::ostream& os, size_t NameWidth);
-        virtual void Validate(const std::string& Value, std::string Name = "") throw(KException);
+        virtual void Validate(const std::string& Value, std::string Name = "") ;
         virtual KVariant DefaultValue(void) const;
       protected:
         std::string fName;
@@ -83,7 +83,7 @@ class KArgumentSchema {
     virtual KArgumentSchema& AllowUnknown(void);
   public:
     virtual void Print(std::ostream& os = std::cout);
-    virtual void Validate(KArgumentList& ArgumentList) throw(KException);
+    virtual void Validate(KArgumentList& ArgumentList) ;
   protected:
     virtual KElement& AddParameter(std::string Names);
     virtual KElement& AddOption(std::string Names);

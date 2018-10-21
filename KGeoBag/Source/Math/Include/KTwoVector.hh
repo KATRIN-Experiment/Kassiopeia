@@ -10,6 +10,10 @@ using std::istream;
 #include <ostream>
 using std::ostream;
 
+#include <vector>
+using std::vector;
+
+#include <cassert>
 #include <cmath>
 
 namespace KGeoBag
@@ -36,11 +40,13 @@ namespace KGeoBag
             KTwoVector( const KTwoVector& aVector );
             KTwoVector& operator=( const KTwoVector& aVector );
 
-            KTwoVector( const double anArray[2] );
-            KTwoVector& operator=( const double anArray[2] );
+            KTwoVector( const double anArray[ 2 ] );
+            KTwoVector& operator=( const double anArray[ 2 ] );
 
             KTwoVector( const double& anX, const double& aY );
             void SetComponents( const double& anX, const double& aY );
+            void SetComponents( const double aData[ 2 ] );
+            void SetComponents( const vector<double>& aData );
             void SetMagnitude( const double& aMagnitude );
 
             //cast
@@ -109,6 +115,17 @@ namespace KGeoBag
     {
         fData[0] = anX;
         fData[1] = aY;
+    }
+    inline void KTwoVector::SetComponents( const double aData[2] )
+    {
+        fData[ 0 ] = aData[ 0 ];
+        fData[ 1 ] = aData[ 1 ];
+    }
+    inline void KTwoVector::SetComponents( const vector<double>& aData )
+    {
+        assert(aData.size() == 2);
+        fData[ 0 ] = aData[ 0 ];
+        fData[ 1 ] = aData[ 1 ];
     }
     inline void KTwoVector::SetMagnitude( const double& aMagnitude )
     {

@@ -157,6 +157,7 @@ namespace Kassiopeia
 
         return;
     }
+
     void KSRootTerminator::ExecuteTermination()
     {
         ExecuteTermination( *fTerminatorParticle, *fFinalParticle, *fParticleQueue );

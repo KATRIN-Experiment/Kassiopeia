@@ -2,6 +2,7 @@
 #include "KSIntDensityConstantBuilder.h"
 #include "KSIntCalculatorConstantBuilder.h"
 #include "KSIntCalculatorHydrogenBuilder.h"
+#include "KSIntCalculatorIonBuilder.h"
 #include "KSIntCalculatorArgonBuilder.h"
 #include "KSIntCalculatorKESSBuilder.h"
 #include "KSRootBuilder.h"
@@ -37,6 +38,7 @@ namespace katrin
         KSIntScatteringBuilder::ComplexElement< KSIntDensityConstant >( "density_constant" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorConstant >( "calculator_constant" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorHydrogenSet >( "calculator_hydrogen" ) +
+        KSIntScatteringBuilder::ComplexElement< KSIntCalculatorIon >( "calculator_ion" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorArgonSet >( "calculator_argon" ) +
         KSIntScatteringBuilder::ComplexElement< KSIntCalculatorKESSSet >( "calculator_kess" );
 }

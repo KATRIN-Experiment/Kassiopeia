@@ -69,15 +69,15 @@ namespace Kassiopeia
     {
         //the following disables any change made to the initial particle, why?
         *fModifierParticle = *fInitialParticle;
-        //  fStep->ModifierName().clear();
-        //fStep->ModificationFlag() = false;
+        fStep->ModifierName().clear();
+        fStep->ModifierFlag() = false;
 
         if( fModifiers.End() == 0 )
         {
             modmsg_debug( "modifier calculation:" << eom )
             modmsg_debug( "  no modifier active" << eom )
-            //modmsg_debug( "  modifier name: <" << fStep->GetModifierName() << ">" << eom )
-            //modmsg_debug( "  modifier flag: <" << fStep->GetModificationFlag() << ">" << eom )
+            modmsg_debug( "  modifier name: <" << fStep->GetModifierName() << ">" << eom )
+            modmsg_debug( "  modifier flag: <" << fStep->GetModifierFlag() << ">" << eom )
 
             modmsg_debug( "modifier calculation terminator particle state: " << eom )
             modmsg_debug( "  modifier particle space: <" << (fModifierParticle->GetCurrentSpace() ? fModifierParticle->GetCurrentSpace()->GetName() : "" ) << ">" << eom )
@@ -94,22 +94,22 @@ namespace Kassiopeia
             return false; //changes to inital particle state disabled
         }
 
-        bool hasChangedState = ExecutePreStepModification( *fModifierParticle, *fParticleQueue );
+        fStep->ModifierFlag() = ExecutePreStepModification( *fModifierParticle, *fParticleQueue );
 
-        (void) hasChangedState;
+        (void) fStep->ModifierFlag();
         //hasChangedState is unused because we are operating on the modifier particle
         //this disables any changes to the intial particle
 
-//        if( fStep->ModificationFlag() == true )
-//        {
-//            modmsg_debug( "modifier calculation:" << eom )
-//            modmsg_debug( "  modification may occur" << eom )
-//        }
-//        else
-//        {
-//            modmsg_debug( "modifier calculation:" << eom )
-//            modmsg_debug( "  modification will not occur" << eom )
-//        }
+        if( fStep->ModifierFlag() == true )
+        {
+            modmsg_debug( "modifier calculation:" << eom )
+            modmsg_debug( "  modification may occur" << eom )
+        }
+        else
+        {
+            modmsg_debug( "modifier calculation:" << eom )
+            modmsg_debug( "  modification will not occur" << eom )
+        }
 
         modmsg_debug( "modifier calculation modifier particle state: " << eom )
         modmsg_debug( "  modifier particle space: <" << (fModifierParticle->GetCurrentSpace() ? fModifierParticle->GetCurrentSpace()->GetName() : "" ) << ">" << eom )
@@ -129,9 +129,9 @@ namespace Kassiopeia
     bool KSRootStepModifier::ExecutePostStepModification()
     {
         bool hasChangedState = ExecutePostStepModification( *fModifierParticle, *fFinalParticle, *fParticleQueue );
-        //fFinalParticle->ReleaseLabel( fStep->ModifierName() );
+        fFinalParticle->ReleaseLabel( fStep->ModifierName() );
 
-        modmsg_debug( "terminator execution:" << eom )
+        modmsg_debug( "modifier execution:" << eom )
         modmsg_debug( "  terminator name: <" << fStep->TerminatorName() << ">" << eom )
         modmsg_debug( "  step continuous time: <" << fStep->ContinuousTime() << ">" << eom )
         modmsg_debug( "  step continuous length: <" << fStep->ContinuousLength() << ">" << eom )
@@ -141,7 +141,7 @@ namespace Kassiopeia
         modmsg_debug( "  step discrete energy change: <" << fStep->DiscreteEnergyChange() << ">" << eom )
         modmsg_debug( "  step discrete momentum change: <" << fStep->DiscreteMomentumChange() << ">" << eom )
 
-        modmsg_debug( "terminator final particle state: " << eom )
+        modmsg_debug( "modifier final particle state: " << eom )
         modmsg_debug( "  final particle space: <" << (fModifierParticle->GetCurrentSpace() ? fModifierParticle->GetCurrentSpace()->GetName() : "" ) << ">" << eom )
         modmsg_debug( "  final particle surface: <" << (fModifierParticle->GetCurrentSurface() ? fModifierParticle->GetCurrentSurface()->GetName() : "" ) << ">" << eom )
         modmsg_debug( "  final particle time: <" << fModifierParticle->GetTime() << ">" << eom )

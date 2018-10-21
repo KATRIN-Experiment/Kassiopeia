@@ -4,6 +4,11 @@
 
 #include "KFile.h"
 
+#ifdef Kassiopeia_USE_BOOST
+//#include "KPathUtils.h"
+//using katrin::KPathUtils;
+#endif
+
 using namespace std;
 
 namespace Kassiopeia
@@ -372,14 +377,20 @@ namespace Kassiopeia
     {
         wtrmsg_debug( "stopping VTK writer" << eom );
 
-        if( fBase.length() == 0 )
+        if( fBase.empty() )
         {
             fBase = GetName();
         }
 
-        if( fPath.length() == 0 )
+        if( fPath.empty() )
         {
             fPath = OUTPUT_DEFAULT_DIR;
+        }
+        else
+        {
+#ifdef Kassiopeia_USE_BOOST
+//            KPathUtils::MakeDirectory( fPath );
+#endif
         }
 
         vtkSmartPointer< vtkXMLPolyDataWriter > tStepWriter = vtkSmartPointer< vtkXMLPolyDataWriter >::New();

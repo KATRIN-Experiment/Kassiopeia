@@ -4,7 +4,6 @@ along with calculations of electric and magnetic fields.
 
 Find a full user guide under http://katrin-experiment.github.io/Kassiopeia/index.html
 
-============================================================================
 Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 ============================================================================
 
@@ -115,4 +114,4 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
     Primary email contacts:
         Kasper development list: katrin-kasper@lists.kit.edu
         Nikolaus Trost: nikolaus.trost(at)kit.edu
-        Noah Oblath: nsoblath@mit.edu
+        Nicholas Buzinsky: buzinsky@mit.edu

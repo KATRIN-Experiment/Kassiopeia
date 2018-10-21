@@ -129,10 +129,10 @@ namespace Kassiopeia
     }
 
     void KSRootSurfaceNavigator::FinalizeNavigation()
-	{
-    	FinalizeNavigation( *fFinalParticle );
-		return;
-	}
+    {
+        FinalizeNavigation( *fFinalParticle );
+        return;
+    }
 
     STATICINT sKSRootSurfaceNavigatorDict =
         KSDictionary< KSRootSurfaceNavigator >::AddCommand( &KSRootSurfaceNavigator::SetSurfaceNavigator, &KSRootSurfaceNavigator::ClearSurfaceNavigator, "set_surface_navigator", "clear_surface_navigator" );

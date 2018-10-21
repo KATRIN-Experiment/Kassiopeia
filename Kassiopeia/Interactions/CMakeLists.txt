@@ -19,12 +19,16 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntCalculator.h
     KSIntCalculatorConstant.h
     KSIntCalculatorHydrogen.h
+    KSIntCalculatorIon.h
     KSIntCalculatorTritium.h
     KSIntCalculatorArgon.h
 
     KSIntSurfaceSpecular.h
+    KSIntSurfaceUCN.h
     KSIntSurfaceDiffuse.h
     KSIntSurfaceMultiplication.h
+
+    KSIntSurfaceSpinFlip.h
 
     KESSElasticElsepa.h
     KESSInelasticBetheFano.h
@@ -67,12 +71,16 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntCalculator.cxx
     KSIntCalculatorConstant.cxx
     KSIntCalculatorHydrogen.cxx
+    KSIntCalculatorIon.cxx
     KSIntCalculatorTritium.cxx
     KSIntCalculatorArgon.cxx
 
     KSIntSurfaceSpecular.cxx
+    KSIntSurfaceUCN.cxx
     KSIntSurfaceDiffuse.cxx
     KSIntSurfaceMultiplication.cxx
+
+    KSIntSurfaceSpinFlip.cxx
 
     KESSElasticElsepa.cxx
     KESSInelasticBetheFano.cxx

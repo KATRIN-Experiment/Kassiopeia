@@ -1,0 +1,7 @@
+# $Id$
+
+set( TOOLS_PYTHON_SOURCES
+	KassiopeiaReader.py
+)
+
+install(FILES ${TOOLS_PYTHON_SOURCES} DESTINATION ${LIB_INSTALL_DIR}/python)

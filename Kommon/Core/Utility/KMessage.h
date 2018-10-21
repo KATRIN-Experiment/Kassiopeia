@@ -36,7 +36,8 @@ namespace katrin
     static const KMessageSeverity eError = 0;
     static const KMessageSeverity eWarning = 1;
     static const KMessageSeverity eNormal = 2;
-    static const KMessageSeverity eDebug = 3;
+    static const KMessageSeverity eInfo = 3;
+    static const KMessageSeverity eDebug = 4;
     static const KMessageNewline ret = KMessageNewline();
     static const KMessageOverline rret = KMessageOverline();
     static const KMessageNewlineEnd eom = KMessageNewlineEnd();
@@ -84,9 +85,11 @@ namespace katrin
             KMessage& operator<<( const KMessageNewlineEnd& );
             KMessage& operator<<( const KMessageOverlineEnd& );
 
-        private:
+        public:
             void SetSeverity( const KMessageSeverity& aSeverity );
             void Flush();
+
+        private:
             void Shutdown();
 
         protected:
@@ -105,6 +108,10 @@ namespace katrin
             std::string fNormalColorPrefix;
             std::string fNormalColorSuffix;
             std::string fNormalDescription;
+
+            std::string fInfoColorPrefix;
+            std::string fInfoColorSuffix;
+            std::string fInfoDescription;
 
             std::string fDebugColorPrefix;
             std::string fDebugColorSuffix;
@@ -210,7 +217,6 @@ namespace katrin
     class KMessageTable :
         public KSingleton< KMessageTable >
     {
-
         public:
             friend class KSingleton< KMessageTable > ;
 
@@ -273,6 +279,7 @@ namespace xNAMESPACE\
     };\
 \
     using katrin::eDebug;\
+    using katrin::eInfo;\
     using katrin::eNormal;\
     using katrin::eWarning;\
     using katrin::eError;\

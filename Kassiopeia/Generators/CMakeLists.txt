@@ -4,8 +4,10 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenCreator.h
 
     KSGenValue.h
+    KSGenStringValue.h
     KSGenValueBoltzmann.h
     KSGenValueFix.h
+    KSGenStringValueFix.h
     KSGenValueSet.h
     KSGenValueList.h
     KSGenValueUniform.h
@@ -79,8 +81,10 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenCreator.cxx
 
     KSGenValue.cxx
+    KSGenStringValue.cxx
     KSGenValueBoltzmann.cxx
     KSGenValueFix.cxx
+    KSGenStringValueFix.cxx
     KSGenValueSet.cxx
     KSGenValueList.cxx
     KSGenValueUniform.cxx

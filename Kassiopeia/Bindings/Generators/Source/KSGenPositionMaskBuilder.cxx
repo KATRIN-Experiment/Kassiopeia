@@ -29,7 +29,7 @@ namespace katrin
             KSGenPositionMaskBuilder::ComplexElement< KSGenPositionRectangularComposite >( "position_rectangular_composite" ) +
             KSGenPositionMaskBuilder::ComplexElement< KSGenPositionCylindricalComposite >( "position_cylindrical_composite" ) +
             KSGenPositionMaskBuilder::ComplexElement< KSGenPositionSphericalComposite >( "position_spherical_composite" ) +
-            KSGenPositionMaskBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
+//            KSGenPositionMaskBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
             KSGenPositionMaskBuilder::ComplexElement< KSGenPositionSpaceRandom >( "position_space_random" ) +
             KSGenPositionMaskBuilder::ComplexElement< KSGenPositionMeshSurfaceRandom >( "position_mesh_surface_random" );
 

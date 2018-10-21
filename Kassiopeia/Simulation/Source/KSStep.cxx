@@ -16,6 +16,8 @@ namespace Kassiopeia
             fDiscreteSecondaries( 0 ),
             fDiscreteEnergyChange( 0. ),
             fDiscreteMomentumChange( 0. ),
+            fModifierName( "" ),
+            fModifierFlag( false ),
             fTerminatorName( "" ),
             fTerminatorFlag( false ),
             fTrajectoryName( "" ),
@@ -53,6 +55,8 @@ namespace Kassiopeia
             fDiscreteSecondaries( aCopy.fDiscreteSecondaries ),
             fDiscreteEnergyChange( aCopy.fDiscreteSecondaries ),
             fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange ),
+            fModifierName( aCopy.fModifierName ),
+            fModifierFlag( aCopy.fModifierFlag ),
             fTerminatorName( aCopy.fTerminatorName ),
             fTerminatorFlag( aCopy.fTerminatorFlag ),
             fTrajectoryName( aCopy.fTrajectoryName ),
@@ -90,6 +94,8 @@ namespace Kassiopeia
         fDiscreteSecondaries = aCopy.fDiscreteSecondaries;
         fDiscreteEnergyChange = aCopy.fDiscreteEnergyChange;
         fDiscreteMomentumChange = aCopy.fDiscreteMomentumChange;
+        fModifierName = aCopy.fModifierName;
+        fModifierFlag = aCopy.fModifierFlag;
         fTerminatorName = aCopy.fTerminatorName;
         fTerminatorFlag = aCopy.fTerminatorFlag;
         fTrajectoryName = aCopy.fTrajectoryName;
@@ -134,6 +140,8 @@ namespace Kassiopeia
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteSecondaries, "discrete_secondaries" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteEnergyChange, "discrete_energy_change" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteMomentumChange, "discrete_momentum_change" ) +
+        KSDictionary< KSStep >::AddComponent( &KSStep::GetModifierName, "modifier_name" ) +
+        KSDictionary< KSStep >::AddComponent( &KSStep::GetModifierFlag, "modifier_flag" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetTerminatorName, "terminator_name" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetTerminatorFlag, "terminator_flag" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetTrajectoryName, "trajectory_name" ) +

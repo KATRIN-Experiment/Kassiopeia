@@ -11,7 +11,7 @@ KMESSAGE_DECLARE( Kassiopeia, mainmsg )
     mainmsg( eDebug ) << xCONTENT;
 
 #define mainmsg_assert( xVARIABLE, xASSERTION )\
-    if (! (xVARIABLE xASSERTION)) fieldmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
+    if (! (xVARIABLE xASSERTION)) mainmsg( eError ) << "Assertion failed: " << #xVARIABLE << " " << #xASSERTION << " but " << #xVARIABLE << " is " << (xVARIABLE) << eom;
 
 #endif
 

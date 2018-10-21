@@ -113,7 +113,7 @@ inline Object* KToolbox::Get(const std::string& aName)
     if ( (entry != fObjects.end()) && (entry->second->AsPointer<Object>()) )
         return entry->second->AsPointer<Object>();
 
-    initmsg(eWarning) << "No suitable Object called <" << aName << "> in Toolbox" << eom;
+    initmsg(eDebug) << "No suitable Object called <" << aName << "> in Toolbox" << eom;
     return nullptr;
 }
 

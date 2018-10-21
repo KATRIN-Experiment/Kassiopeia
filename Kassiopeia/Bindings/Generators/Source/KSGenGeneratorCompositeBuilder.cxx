@@ -52,6 +52,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::Attribute< string >( "special" ) +
         KSGenGeneratorCompositeBuilder::Attribute< string >( "creator" ) +
         KSGenGeneratorCompositeBuilder::Attribute< double >( "pid" ) +
+        KSGenGeneratorCompositeBuilder::Attribute< string >( "string_id" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyComposite >( "energy_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyBetaDecay >( "energy_beta_decay" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyKryptonEvent >( "energy_krypton_event" ) +
@@ -67,7 +68,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSphericalComposite >( "position_spherical_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionFrustrumComposite >( "position_frustrum_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSpaceRandom >( "position_space_random" ) +
-        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
+//        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceAdjustmentStep >( "position_surface_adjustment_step" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionMeshSurfaceRandom >( "position_mesh_surface_random" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionMask >( "position_mask" ) +

@@ -1,4 +1,5 @@
 #include "KSGenValueSet.h"
+#include "KSGeneratorsMessage.h"
 
 namespace Kassiopeia
 {
@@ -6,6 +7,7 @@ namespace Kassiopeia
     KSGenValueSet::KSGenValueSet() :
             fValueStart( 0. ),
             fValueStop( 0. ),
+            fValueIncrement( 0. ),
             fValueCount( 0 )
     {
     }
@@ -13,6 +15,7 @@ namespace Kassiopeia
             KSComponent(),
             fValueStart( aCopy.fValueStart ),
             fValueStop( aCopy.fValueStop ),
+            fValueIncrement( aCopy.fValueIncrement ),
             fValueCount( aCopy.fValueCount )
     {
     }
@@ -27,9 +30,21 @@ namespace Kassiopeia
     void KSGenValueSet::DiceValue( vector< double >& aDicedValues )
     {
         double tValue;
-        double tValueIncrement = (fValueStop - fValueStart) / ((double) (fValueCount > 1 ? fValueCount - 1 : 1));
+        double tValueCount = fValueCount;
+        double tValueIncrement = (fValueStop - fValueStart) / ((double) (tValueCount > 1 ? tValueCount - 1 : 1));
 
-        for( unsigned int tIndex = 0; tIndex < fValueCount; tIndex++ )
+        if ( fValueIncrement != 0. )
+        {
+            if ( (fValueCount > 0) && (fValueIncrement != tValueIncrement) )  // only fail if the two definitions do not match
+            {
+                genmsg( eError ) << "generator <" << GetName() << "> cannot dice <" << fValueCount << "> values with a step size of <" << fValueIncrement << ">" << eom;
+                return;
+            }
+            tValueIncrement = fValueIncrement;
+            tValueCount = (fValueStop - fValueStart) / tValueIncrement;
+        }
+
+        for( unsigned int tIndex = 0; tIndex < tValueCount; tIndex++ )
         {
             tValue = fValueStart + tIndex * tValueIncrement;
             aDicedValues.push_back( tValue );

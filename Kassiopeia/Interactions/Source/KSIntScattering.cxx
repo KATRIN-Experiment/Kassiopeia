@@ -177,7 +177,7 @@ namespace Kassiopeia
 
                 fCalculator->ExecuteInteraction( anInteractionParticle, *tSplitParticle, aSecondaries );
                 aSecondaries.push_back( tSplitParticle );
-
+                
                 aFinalParticle.SetActive( false );
                 aFinalParticle.SetLabel( GetName() );
             }

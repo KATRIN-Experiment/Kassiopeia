@@ -20,9 +20,13 @@ namespace katrin
 
         public:
             void ProcessCommandLine( int anArgc = 0, char** anArgv = nullptr );
+            void ProcessCommandLine( std::vector<std::string> anArgList );
 
             const std::vector< std::string >& GetFiles();
             const std::map< std::string, std::string >& GetVariables();
+
+        protected:
+            void ReadEnvironmentVars();
 
         private:
             std::vector< std::string > fFiles;

@@ -2,6 +2,7 @@
 set( MODIFIERS_HEADER_BASENAMES
     KSModifiersMessage.h
     KSModDynamicEnhancement.h
+    KSModSplitOnTurn.h
     KSModEventReport.h
 )
 set( MODIFIERS_HEADER_PATH
@@ -15,6 +16,7 @@ endforeach( BASENAME )
 set( MODIFIERS_SOURCE_BASENAMES
     KSModifiersMessage.cxx
     KSModDynamicEnhancement.cxx
+    KSModSplitOnTurn.cxx
     KSModEventReport.cxx
 )
 set( MODIFIERS_SOURCE_PATH

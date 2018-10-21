@@ -35,19 +35,26 @@ namespace katrin
 
             typedef enum
             {
-                eElementInactive, eActive, eElementComplete
+                eElementInactive, eActive, eElseActive, eElementComplete = -1
             } ElementState;
             ElementState fElementState;
 
             typedef enum
             {
-                eAttributeInactive, eCondition, eAttributeComplete
+                eAttributeInactive, eCondition, eAttributeComplete = -1
             } AttributeState;
             AttributeState fAttributeState;
+
+            typedef enum
+            {
+                eIfCondition, eElseCondition
+            } ProcessorState;
+            ProcessorState fProcessorState;
 
             unsigned int fNest;
             bool fCondition;
             TokenVector fIfTokens;
+            TokenVector fElseTokens;
             KProcessor* fNewParent;
             KProcessor* fOldParent;
     };

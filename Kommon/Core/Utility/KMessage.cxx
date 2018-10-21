@@ -16,23 +16,27 @@ namespace katrin
             fSystemPrefix( aPrefix ),
             fSystemSuffix( aSuffix ),
 
-            fErrorColorPrefix( "\33[31;1m" ),
+            fErrorColorPrefix( "\33[31;1m" ),  // bold red
             fErrorColorSuffix( "\33[0m" ),
             fErrorDescription( "ERROR" ),
 
-            fWarningColorPrefix( "\33[33;1m" ),
+            fWarningColorPrefix( "\33[33;1m" ),  // bold yellow
             fWarningColorSuffix( "\33[0m" ),
             fWarningDescription( "WARNING" ),
 
-            fNormalColorPrefix( "\33[32;1m" ),
+            fNormalColorPrefix( "\33[32;1m" ),  // bold green
             fNormalColorSuffix( "\33[0m" ),
             fNormalDescription( "NORMAL" ),
 
-            fDebugColorPrefix( "\33[36;1m" ),
+            fInfoColorPrefix( "\33[34;1m" ),  // bold blue
+            fInfoColorSuffix( "\33[0m" ),
+            fInfoDescription( "INFO" ),
+
+            fDebugColorPrefix( "\33[36;1m" ),  // bold cyan
             fDebugColorSuffix( "\33[0m" ),
             fDebugDescription( "DEBUG" ),
 
-            fDefaultColorPrefix( "\33[37;1m" ),
+            fDefaultColorPrefix( "\33[37;1m" ),  // bold white
             fDefaultColorSuffix( "\33[0m" ),
             fDefaultDescription( "UNKNOWN" ),
 
@@ -56,7 +60,13 @@ namespace katrin
     }
     KMessage::~KMessage()
     {
-        KMessageTable::GetInstance().Remove( this );
+        /** In UnitTestKasper it seems, a static deinitialization fiasco happens:
+         * KMessageTable is destroyed before the last KMessage instance is destroyed.
+         * According to the standard, this should not happen. But the following workaround
+         * (double checking the initialization state) seems to work.
+         */
+         if (KMessageTable::IsInitialized())
+             KMessageTable::GetInstance().Remove( this );
     }
 
     const string& KMessage::GetKey()
@@ -91,6 +101,12 @@ namespace katrin
                 fColorPrefix = &KMessage::fNormalColorPrefix;
                 fDescription = &KMessage::fNormalDescription;
                 fColorSuffix = &KMessage::fNormalColorSuffix;
+                break;
+
+            case eInfo :
+                fColorPrefix = &KMessage::fInfoColorPrefix;
+                fDescription = &KMessage::fInfoDescription;
+                fColorSuffix = &KMessage::fInfoColorSuffix;
                 break;
 
             case eDebug :
@@ -211,17 +227,17 @@ namespace katrin
 
 namespace katrin
 {
-
     KMessageTable::KMessageTable() :
             fMessageMap(),
-            fFormat( cout.flags() ),
-            fPrecision( cout.precision() ),
+            fFormat( cerr.flags() ),
+            fPrecision( cerr.precision() ),
             fTerminalVerbosity( eNormal ),
-            fTerminalStream( &cout ),
-            fLogVerbosity( eNormal ),
+            fTerminalStream( &cerr ),
+            fLogVerbosity( eInfo ),
             fLogStream( NULL )
     {
     }
+
     KMessageTable::~KMessageTable()
     {
     }

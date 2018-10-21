@@ -3,6 +3,7 @@
 
 #include "KInitializationMessage.hh"
 
+#include <KStringUtils.h>
 #include <string>
 #include <sstream>
 
@@ -19,6 +20,12 @@ namespace katrin
             virtual KToken* Clone() = 0;
 
         public:
+            template< class OutputT >
+            inline const std::vector<OutputT> AsVector() const;
+
+            template< class OutputT >
+            inline const std::pair<OutputT,OutputT> AsPair() const;
+
             void SetValue( const std::string& aValue );
             const std::string& GetValue() const;
 
@@ -64,13 +71,88 @@ namespace katrin
     template<>
     inline bool KToken::GetValue< bool >() const
     {
-        if ( fValue == std::string("0")
+        if ( fValue == std::string("0") || fValue == std::string("")
+                || fValue == std::string("null") || fValue == std::string("Null") || fValue == std::string("NULL")
+                || fValue == std::string("nan") || fValue == std::string("NaN") || fValue == std::string("NAN")
+                || fValue == std::string("none") || fValue == std::string("None") || fValue == std::string("None")
                 || fValue == std::string("false") || fValue == std::string("False") || fValue == std::string("FALSE")
                 || fValue == std::string("no") || fValue == std::string("No") || fValue == std::string("NO") )
         {
             return false;
         }
         return true;
+    }
+
+    /* KToken string conversion specializations */
+
+    template< class OutputT >
+    inline const std::vector<OutputT> KToken::AsVector() const
+    {
+        return KStringUtils::Split<OutputT>(fValue, ";, |/");
+    }
+
+    template< class OutputT >
+    inline const std::pair<OutputT,OutputT> KToken::AsPair() const
+    {
+        std::vector<OutputT> tmp;
+        size_t n = KStringUtils::Split<OutputT>(fValue, ";, |/", tmp);
+        if (n != 2)
+        {
+            initmsg( eWarning ) << "error processing token <" << fValue << "> as a pair of double values, replaced with zeros." << ret;
+            initmsg( eWarning ) << "in path <" << fPath << "> in file <" << fFile << "> at line <" << fLine << "> at column <" << fColumn << ">" << eom;
+            return std::make_pair(0, 0);
+        }
+        return std::make_pair(tmp[0], tmp[1]);
+    }
+
+    template<>
+    inline int8_t KToken::GetValue<int8_t>() const
+    {
+        const int helper = KToken::GetValue<int>();
+        return (helper >= -128 && helper <= 127) ? helper : 0;
+    }
+
+    template<>
+    inline uint8_t KToken::GetValue<uint8_t>() const
+    {
+        const int helper = KToken::GetValue<int>();
+        return (helper >= 0 && helper <= 255) ? helper : 0;
+    }
+
+    template<>
+    inline std::vector<double> KToken::GetValue< std::vector<double> >() const
+    {
+        return AsVector<double>();
+    }
+
+    template<>
+    inline std::vector<int> KToken::GetValue< std::vector<int> >() const
+    {
+        return AsVector<int>();
+    }
+
+    template<>
+    inline std::vector<unsigned int> KToken::GetValue< std::vector<unsigned int> >() const
+    {
+        return AsVector<unsigned int>();
+    }
+
+    template<>
+    inline std::pair<double, double> KToken::GetValue< std::pair<double, double> >() const
+    {
+        return AsPair<double>();
+    }
+
+    template<>
+    inline std::pair<int, int> KToken::GetValue< std::pair<int, int> >() const
+    {
+        return AsPair<int>();
+    }
+
+    template<>
+    inline std::pair<unsigned int, unsigned int> KToken::GetValue< std::pair<unsigned int, unsigned int> >() const
+    {
+        return AsPair<unsigned int>();
     }
 
     template<>

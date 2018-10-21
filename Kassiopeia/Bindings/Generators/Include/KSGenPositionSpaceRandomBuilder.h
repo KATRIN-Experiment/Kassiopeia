@@ -30,21 +30,21 @@ namespace katrin
 
         if(aContainer->GetName() == "spaces")
         {
-			vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
-			vector< KGeoBag::KGSpace* >::iterator tSpaceIt;
-			KGeoBag::KGSpace* tSpace;
+            vector< KGeoBag::KGSpace* > tSpaces = KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
+            vector< KGeoBag::KGSpace* >::iterator tSpaceIt;
+            KGeoBag::KGSpace* tSpace;
 
-			if(tSpaces.size() == 0) {
-					genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
-					return false;
-			}
+            if(tSpaces.size() == 0) {
+                    genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
+                    return true;
+            }
 
-			for(tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++) {
-					tSpace = *tSpaceIt;
-					fObject->AddSpace(tSpace);
-			}
-			return true;
-		}
+            for(tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++) {
+                    tSpace = *tSpaceIt;
+                    fObject->AddSpace(tSpace);
+            }
+            return true;
+        }
 
         return false;
     }

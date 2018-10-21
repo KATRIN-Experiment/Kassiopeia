@@ -76,7 +76,7 @@ namespace katrin
 
     void KXMLTokenizer::ParseBegin()
     {
-        initmsg_debug( "in begin" << eom );
+        //initmsg_debug( "in begin" << eom );
 
         ProcessToken( fBeginParsing );
         fState = &KXMLTokenizer::ParseBeginFile;
@@ -85,7 +85,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseBeginFile()
     {
-        initmsg_debug( "in beginfile" << eom );
+        //initmsg_debug( "in beginfile" << eom );
 
         //if file does not open then bail, otherwise go on
         if( fFile->Open( KFile::eRead ) == false )
@@ -139,7 +139,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseElementBeginName()
     {
-        initmsg_debug( "in elementbeginname: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in elementbeginname: current character is <" << fChar << ">" << eom )
 
         //if at name, append char to name, then recurse
         if( AtOneOf( fNameChars ) )
@@ -220,7 +220,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseElementHeader()
     {
-        initmsg_debug( "in elementheader: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in elementheader: current character is <" << fChar << ">" << eom )
 
         //if at whitespace, then recurse
         if( AtOneOf( fWhiteSpaceChars ) )
@@ -291,7 +291,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseElementData()
     {
-        initmsg_debug( "in elementvalue: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in elementvalue: current character is <" << fChar << ">" << eom )
 
         //if at whitespace or value, then append character to value, recurse
         if( AtOneOf( fWhiteSpaceChars ) || AtOneOf( fValueChars ) )
@@ -386,7 +386,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseElementEndName()
     {
-        initmsg_debug( "in endelementname: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in endelementname: current character is <" << fChar << ">" << eom )
 
         //if at name, then append char to name, then recurse
         if( AtOneOf( fNameChars ) )
@@ -433,7 +433,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseAttributeName()
     {
-        initmsg_debug( "in attributename: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in attributename: current character is <" << fChar << ">" << eom )
 
         //if at name, then append char to name buffer, then recurse
         if( AtOneOf( fNameChars ) )
@@ -473,7 +473,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseAttributeValue()
     {
-        initmsg_debug( "in attributevalue; current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in attributevalue; current character is <" << fChar << ">" << eom )
 
         //if at whitespace or value, then append char to value, then recurse
         if( AtOneOf( fWhiteSpaceChars ) || AtOneOf( fValueChars ) )
@@ -519,7 +519,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseEndFile()
     {
-        initmsg_debug( "in endfile" << eom );
+        //initmsg_debug( "in endfile" << eom );
 
         //if at whitespace, then append char to value, then recurse
         if( fFile->Close() == false )
@@ -547,7 +547,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseEnd()
     {
-        initmsg_debug( "in end: current file name is <" << fFile->GetName() << ">" << eom )
+        //initmsg_debug( "in end: current file name is <" << fFile->GetName() << ">" << eom )
 
         ProcessToken( fEndParsing );
         fState = &KXMLTokenizer::ParseEnd;
@@ -555,7 +555,7 @@ namespace katrin
     }
     void KXMLTokenizer::ParseComment()
     {
-        initmsg_debug( "in comment: current character is <" << fChar << ">" << eom )
+        //initmsg_debug( "in comment: current character is <" << fChar << ">" << eom )
 
         //if at "-->" then prepare comment, then revert to old state
         if( AtExactly( fCommentEnd ) )
@@ -636,7 +636,7 @@ namespace katrin
         }
 
         //increment the iterator
-        initmsg_debug( "popping the iterator" << eom )
+        //initmsg_debug( "popping the iterator" << eom )
         fChar = fFile->File()->get();
 
         //make sure that incrementing didn't put the iterator at the end
@@ -692,24 +692,24 @@ namespace katrin
         while( tIter != aString.end() )
         {
             //grab a character
-            initmsg_debug( "file character is <" << fChar << ">, comparison character is <" << *tIter << ">" << eom )
+            //initmsg_debug( "file character is <" << fChar << ">, comparison character is <" << *tIter << ">" << eom )
 
             //if that puts us at the end, try to go back and return false
             if( AtEnd() )
             {
-                initmsg_debug( "hit the end" << eom )
+                //initmsg_debug( "hit the end" << eom )
                 tMatched = false;
                 break;
             }
             //if a mismatch is found, try to go back and return false
             if( fChar != *tIter )
             {
-                initmsg_debug( "<" << fChar << "> seriously does not match <" << *tIter << ">" << eom )
+                //initmsg_debug( "<" << fChar << "> seriously does not match <" << *tIter << ">" << eom )
                 tMatched = false;
                 break;
             }
 
-            initmsg_debug( "popping the iterator" << eom )
+            //initmsg_debug( "popping the iterator" << eom )
 
             fChar = fFile->File()->get();
             tIter++;
@@ -718,7 +718,7 @@ namespace katrin
         //go back
         while( tIter != aString.begin() )
         {
-            initmsg_debug( "unpopping the iterator" << eom )
+            //initmsg_debug( "unpopping the iterator" << eom )
 
             fFile->File()->unget();
             tIter--;
@@ -855,5 +855,5 @@ namespace katrin
     const string KXMLTokenizer::fWhiteSpaceChars = KXMLTokenizer::fSpace + KXMLTokenizer::fTab + KXMLTokenizer::fNewLine + KXMLTokenizer::fCarriageReturn;
     const string KXMLTokenizer::fNameStartChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + string( ":_" );
     const string KXMLTokenizer::fNameChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + string( ":_-." );
-    const string KXMLTokenizer::fValueChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + KXMLTokenizer::fLeftBraces + KXMLTokenizer::fOperators + KXMLTokenizer::fRightBraces + KXMLTokenizer::fParameterLeftBrace + KXMLTokenizer::fParameterRightBrace + string( "@:_.,#;" );
+    const string KXMLTokenizer::fValueChars = KXMLTokenizer::fLowerCase + KXMLTokenizer::fUpperCase + KXMLTokenizer::fNumerals + KXMLTokenizer::fLeftBraces + KXMLTokenizer::fOperators + KXMLTokenizer::fRightBraces + KXMLTokenizer::fParameterLeftBrace + KXMLTokenizer::fParameterRightBrace + string( "@:_.,#;^" );
 }

@@ -23,7 +23,8 @@ namespace katrin
         fAttributeState( eAttributeInactive ),
         fNames(),
         fPaths(),
-        fBases()
+        fBases(),
+        fIncludedPaths()
     {
     }
 
@@ -217,7 +218,7 @@ namespace katrin
 
                 vector<string>::const_iterator It;
 
-                initmsg << "unable to open file with names <";
+                initmsg( eError ) << "unable to open file with names <";
                 It = fNames.begin();
                 while( It != fNames.end() )
                 {
@@ -250,7 +251,7 @@ namespace katrin
                         initmsg << ",";
                     }
                 }
-                initmsg( eError ) << ">" << eom;
+                initmsg << ">" << eom;
             }
 
             fElementState = eElementInactive;
@@ -258,12 +259,24 @@ namespace katrin
             fPaths.clear();
             fBases.clear();
 
-            KXMLTokenizer* aNewTokenizer = new KXMLTokenizer();
-            aNewTokenizer->InsertBefore( GetFirstParent() );
-            aNewTokenizer->ProcessFile( aFile );
-            aNewTokenizer->Remove();
+            std::string tFileName = aFile->GetName();
+            if ( std::find( fIncludedPaths.begin(), fIncludedPaths.end(), tFileName ) != fIncludedPaths.end() )
+            {
+                initmsg( eWarning ) << "skipping file <" << tFileName << "> since it was already included" << eom;
+            }
+            else
+            {
+                initmsg( eInfo ) << "including file <" << tFileName << ">" << eom;
+                fIncludedPaths.push_back( tFileName );
 
-            delete aNewTokenizer;
+                KXMLTokenizer* aNewTokenizer = new KXMLTokenizer();
+                aNewTokenizer->InsertBefore( GetFirstParent() );
+                aNewTokenizer->ProcessFile( aFile );
+                aNewTokenizer->Remove();
+
+                delete aNewTokenizer;
+            }
+
             delete aFile;
         }
 

@@ -14,7 +14,7 @@ using namespace std;
 using namespace katrin;
 
 
-bool KVariant::AsBool(void) const throw(KException)
+bool KVariant::AsBool(void) const
 {
     if (fType == Type_Void) {
         throw KException() << "conversion from undefined to bool";
@@ -49,7 +49,7 @@ bool KVariant::AsBool(void) const throw(KException)
             << AsString() << "\"";
 }
 
-long long KVariant::AsLong(void) const throw(KException)
+long long KVariant::AsLong(void) const
 {
     if (fType == Type_Void) {
         throw KException() << "conversion from undefined to integer";
@@ -86,7 +86,7 @@ long long KVariant::AsLong(void) const throw(KException)
 	    <<"bad type to convert to int: \"" << AsString() << "\"";
 }
 
-double KVariant::AsDouble(void) const throw(KException)
+double KVariant::AsDouble(void) const
 {
     if (fType == Type_Void) {
         throw KException() << "conversion from undefined to double";
@@ -144,7 +144,7 @@ std::string KVariant::AsString(void) const
     return os.str();
 }
 
-KUnknown& KVariant::AsUnknown(void) throw(KException)
+KUnknown& KVariant::AsUnknown(void)
 {
     if (fType == Type_Void) {
         throw KException() << "conversion from undefined to unknown";
@@ -157,7 +157,7 @@ KUnknown& KVariant::AsUnknown(void) throw(KException)
     return *fPrimitive.fUnknownValue;
 }
 
-const KUnknown& KVariant::AsUnknown(void) const throw(KException)
+const KUnknown& KVariant::AsUnknown(void) const
 {
     if (fType == Type_Void) {
         throw KException() << "conversion from undefined to unknown";

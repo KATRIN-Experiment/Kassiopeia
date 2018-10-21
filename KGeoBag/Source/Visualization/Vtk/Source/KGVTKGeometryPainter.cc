@@ -4,6 +4,11 @@
 #include "KFile.h"
 using katrin::KFile;
 
+#ifdef KGeoBag_USE_BOOST
+//#include "KPathUtils.h"
+//using katrin::KPathUtils;
+#endif
+
 #include "KConst.h"
 using katrin::KConst;
 
@@ -28,7 +33,7 @@ namespace KGeoBag
     KGVTKGeometryPainter::KGVTKGeometryPainter() :
             fFile(),
             fPath( "" ),
-            fWriteSTL( true ),
+            fWriteSTL( false ),
             fSurfaces(),
             fSpaces(),
             fDefaultData(),
@@ -108,7 +113,7 @@ namespace KGeoBag
     {
         string tFile;
 
-        if( fFile.length() > 0 )
+        if( ! fFile.empty() )
         {
             if ( fPath.empty() )
             {
@@ -116,6 +121,9 @@ namespace KGeoBag
             }
             else
             {
+#ifdef KGeoBag_USE_BOOST
+//                KPathUtils::MakeDirectory( fPath );
+#endif
                 tFile = fPath + string( "/" ) + fFile;
             }
         }
@@ -141,7 +149,7 @@ namespace KGeoBag
     {
         string tFile;
 
-        if( fFile.length() > 0 )
+        if( ! fFile.empty() )
         {
             if ( fPath.empty() )
             {
@@ -149,6 +157,9 @@ namespace KGeoBag
             }
             else
             {
+#ifdef KGeoBag_USE_BOOST
+//                KPathUtils::MakeDirectory( fPath );
+#endif
                 tFile = fPath + string( "/" ) + fFile;
             }
 
@@ -1288,8 +1299,8 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
     {
         aThreePoints.fData.clear();
 
-    	// determine number of rod vertices
-    	unsigned int tNCoordinates = aRodSpace->GetObject()->GetNCoordinates();
+        // determine number of rod vertices
+        unsigned int tNCoordinates = aRodSpace->GetObject()->GetNCoordinates();
 
         // 1 SubThreePoint object = 2 Vertices
         ThreePoints tSubThreePoints;
@@ -1298,17 +1309,17 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
 
         for( unsigned int tCoordinateIt=0; tCoordinateIt<(tNCoordinates-1); tCoordinateIt++ )
         {
-        	tSubThreePoints.fData.clear();
+            tSubThreePoints.fData.clear();
 
             tStartPoint.SetComponents(
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[0],
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[1],
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[2]
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[0],
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[1],
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt)[2]
             );
             tEndPoint.SetComponents(
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 0),
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 1),
-            		aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 2)
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 0),
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 1),
+                    aRodSpace->GetObject()->GetCoordinate(tCoordinateIt+1, 2)
             );
 
             tSubThreePoints.fData.push_back( tStartPoint );
@@ -1324,16 +1335,16 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
     {
         aThreePoints.fData.clear();
 
-    	// gathering data from wire array object
-		unsigned int tWiresInArray = aConicalWireArraySurface->GetObject()->GetNWires();
-		double tThetaOffset = aConicalWireArraySurface->GetObject()->GetThetaStart() * (KConst::Pi() / 180.);
+        // gathering data from wire array object
+        unsigned int tWiresInArray = aConicalWireArraySurface->GetObject()->GetNWires();
+        double tThetaOffset = aConicalWireArraySurface->GetObject()->GetThetaStart() * (KConst::Pi() / 180.);
 
-		double tZ1 = aConicalWireArraySurface->GetObject()->GetZ1();
-		double tR1 = aConicalWireArraySurface->GetObject()->GetR1();
-		double tZ2 = aConicalWireArraySurface->GetObject()->GetZ2();
-		double tR2 = aConicalWireArraySurface->GetObject()->GetR2();
+        double tZ1 = aConicalWireArraySurface->GetObject()->GetZ1();
+        double tR1 = aConicalWireArraySurface->GetObject()->GetR1();
+        double tZ2 = aConicalWireArraySurface->GetObject()->GetZ2();
+        double tR2 = aConicalWireArraySurface->GetObject()->GetR2();
 
-		double tAngleStep = 2*KConst::Pi()/tWiresInArray;
+        double tAngleStep = 2*KConst::Pi()/tWiresInArray;
 
         // 1 SubThreePoint object = 2 Vertices
         ThreePoints tSubThreePoints;
@@ -1342,17 +1353,17 @@ void KGVTKGeometryPainter::VisitShellPathSurface( KGShellPolyLoopSurface* aShell
 
         for( unsigned int tWireIt=0; tWireIt<tWiresInArray; tWireIt++ )
         {
-        	tSubThreePoints.fData.clear();
+            tSubThreePoints.fData.clear();
 
             tStartPoint.SetComponents(
-				tR1*cos( tWireIt*tAngleStep + tThetaOffset ),
-				tR1*sin( tWireIt*tAngleStep + tThetaOffset ),
-				tZ1
+                tR1*cos( tWireIt*tAngleStep + tThetaOffset ),
+                tR1*sin( tWireIt*tAngleStep + tThetaOffset ),
+                tZ1
             );
             tEndPoint.SetComponents(
-				tR2*cos( tWireIt*tAngleStep + tThetaOffset ),
-				tR2*sin( tWireIt*tAngleStep + tThetaOffset ),
-				tZ2
+                tR2*cos( tWireIt*tAngleStep + tThetaOffset ),
+                tR2*sin( tWireIt*tAngleStep + tThetaOffset ),
+                tZ2
             );
 
             tSubThreePoints.fData.push_back( tStartPoint );
@@ -1563,7 +1574,7 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
     }
     void KGVTKGeometryPainter::ThreePointsToTubeMesh( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius )
     {
-    	unsigned int tArc = fCurrentData->GetArc();
+        unsigned int tArc = fCurrentData->GetArc();
 
         double tFraction;
         unsigned int tCount;
@@ -1585,45 +1596,45 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
 
         for( ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end(); tThreePointsIt++ )
         {
-			// define start and end point
-			tStartPoint = *tThreePointsIt;
-			tThreePointsIt++;
-			tEndPoint = *tThreePointsIt;
+            // define start and end point
+            tStartPoint = *tThreePointsIt;
+            tThreePointsIt++;
+            tEndPoint = *tThreePointsIt;
 
-			// determine center of rod axis
-			tCenterPoint = (tEndPoint + tStartPoint)/2.;
+            // determine center of rod axis
+            tCenterPoint = (tEndPoint + tStartPoint)/2.;
 
-			// rod axis unit vector
-			tAxisUnit = (tEndPoint-tStartPoint).Unit();
-			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
-			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
+            // rod axis unit vector
+            tAxisUnit = (tEndPoint-tStartPoint).Unit();
+            if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
+            if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
 
-			// computation of Euler angles
-			tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
-			tTheta = toDegree * acos(tAxisUnit.GetZ());
+            // computation of Euler angles
+            tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
+            tTheta = toDegree * acos(tAxisUnit.GetZ());
 
-			if(tR<1.e-10)
-			  tPhi=0.;
-			else
-			{
-				if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
-					tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
-				else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
-					tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
-				else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
-					tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
-				else
-					tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
-			}
+            if(tR<1.e-10)
+              tPhi=0.;
+            else
+            {
+                if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
+                    tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
+                else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
+                    tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
+                else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
+                    tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
+                else
+                    tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
+            }
 
-			tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
+            tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
 
 
-			// computing and setting mesh points
+            // computing and setting mesh points
             tGroup.clear();
             for( tCount = 0; tCount < tArc; tCount++ )
             {
-        	    tEulerZXZ.SetOrigin( tStartPoint );
+                tEulerZXZ.SetOrigin( tStartPoint );
                 tFraction = (double) (tCount) / (double) (tArc);
 
                 tPoint.X() = (tStartPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
@@ -1639,7 +1650,7 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
             tGroup.clear();
             for( tCount = 0; tCount < tArc; tCount++ )
             {
-        	    tEulerZXZ.SetOrigin( tEndPoint );
+                tEulerZXZ.SetOrigin( tEndPoint );
                 tFraction = (double) (tCount) / (double) (tArc);
 
                 tPoint.X() = (tEndPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
@@ -1655,11 +1666,11 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
         }
         vismsg_debug( "rotated open points into <" << aMesh.fData.size() * aMesh.fData.front().size() << "> tube mesh vertices" << eom );
 
-    	return;
+        return;
     }
     void KGVTKGeometryPainter::ThreePointsToTubeMeshToVTK( const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius )
     {
-    	unsigned int tArc = fCurrentData->GetArc();
+        unsigned int tArc = fCurrentData->GetArc();
 
         double tFraction;
         unsigned int tCount;
@@ -1681,44 +1692,44 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
 
         for( ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end(); tThreePointsIt++ )
         {
-			// define start and end point
-			tStartPoint = *tThreePointsIt;
-			tThreePointsIt++;
-			tEndPoint = *tThreePointsIt;
+            // define start and end point
+            tStartPoint = *tThreePointsIt;
+            tThreePointsIt++;
+            tEndPoint = *tThreePointsIt;
 
-			// determine center of rod axis
-			tCenterPoint = (tEndPoint + tStartPoint)/2.;
+            // determine center of rod axis
+            tCenterPoint = (tEndPoint + tStartPoint)/2.;
 
-			// rod axis unit vector
-			tAxisUnit = (tEndPoint-tStartPoint).Unit();
-			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
-			if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
+            // rod axis unit vector
+            tAxisUnit = (tEndPoint-tStartPoint).Unit();
+            if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()>0.) tAxisUnit.SetZ(1.);
+            if(fabs(tAxisUnit.GetZ())>1. && tAxisUnit.GetZ()<0.) tAxisUnit.SetZ(-1.);
 
-			// computation of Euler angles
-			tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
-			tTheta = toDegree * acos(tAxisUnit.GetZ());
+            // computation of Euler angles
+            tR = sqrt(tAxisUnit.GetX()*tAxisUnit.GetX() + tAxisUnit.GetY()*tAxisUnit.GetY());
+            tTheta = toDegree * acos(tAxisUnit.GetZ());
 
-			if(tR<1.e-10)
-			  tPhi=0.;
-			else
-			{
-				if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
-					tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
-				else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
-					tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
-				else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
-					tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
-				else
-					tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
-			}
+            if(tR<1.e-10)
+              tPhi=0.;
+            else
+            {
+                if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() >= 0.)
+                    tPhi=180.-toDegree*asin(tAxisUnit.GetX()/tR);
+                else if(tAxisUnit.GetX() >= 0. && tAxisUnit.GetY() <= 0.)
+                    tPhi=toDegree*asin(tAxisUnit.GetX()/tR);
+                else if(tAxisUnit.GetX() <= 0. && tAxisUnit.GetY() >= 0.)
+                    tPhi=180.+toDegree*asin(-tAxisUnit.GetX()/tR);
+                else
+                    tPhi=360.-toDegree*asin(-tAxisUnit.GetX()/tR);
+            }
 
-			tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
+            tEulerZXZ.SetRotationEuler( tPhi, tTheta, 0. );
 
-			// computing and setting mesh points
+            // computing and setting mesh points
             tGroup.clear();
             for( tCount = 0; tCount < tArc; tCount++ )
             {
-        	    tEulerZXZ.SetOrigin( tStartPoint );
+                tEulerZXZ.SetOrigin( tStartPoint );
                 tFraction = (double) (tCount) / (double) (tArc);
 
                 tPoint.X() = (tStartPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
@@ -1734,7 +1745,7 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
             tGroup.clear();
             for( tCount = 0; tCount < tArc; tCount++ )
             {
-        	    tEulerZXZ.SetOrigin( tEndPoint );
+                tEulerZXZ.SetOrigin( tEndPoint );
                 tFraction = (double) (tCount) / (double) (tArc);
 
                 tPoint.X() = (tEndPoint.X() + aTubeRadius * cos( 2. * KConst::Pi() * tFraction ));
@@ -1755,7 +1766,7 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
         }
         vismsg_debug( "rotated open points into <" << aMesh.fData.size() * aMesh.fData.front().size() << "> tube mesh vertices" << eom );
 
-    	return;
+        return;
     }
 
     //*******************
@@ -2053,10 +2064,10 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh( const ClosedPoints& a
     }
     void KGVTKGeometryPainter::TubeMeshToVTK( const KThreeVector& anApexStart, const TubeMesh& aMesh, const KThreeVector& anApexEnd )
     {
-    	if ( aMesh.fData.size() == 0 )
-    	{
-    		vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
-    	}
+        if ( aMesh.fData.size() == 0 )
+        {
+            vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
+        }
 
         //object allocation
         KThreeVector tPoint;
@@ -2163,7 +2174,7 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK( const ShellMesh& aMesh )
 {
     if ( aMesh.fData.size() == 0 )
     {
-	    vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
+        vismsg( eWarning ) <<"mesh has size of zero, check your geometry"<<eom;
     }
 
     //object allocation

@@ -4,25 +4,29 @@
 # please be considerate and make additions as neatly as you can.
 # thank you! -dan.
 
-cmake_minimum_required( VERSION 2.8.6 )
-
-project( Kassiopeia )
-include( KasperDefaults )
+cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 if(POLICY CMP0053)
     cmake_policy(SET CMP0053 OLD)
 endif()
 
-# module version
+# Kassiopeia version
 set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 3 )
-set( MODULE_VERSION_PATCH 2 )
+set( MODULE_VERSION_MINOR 5 )
+set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
+
+#project( Kassiopeia VERSION ${MODULE_VERSION} )
+project( Kassiopeia )
+
+include( KasperDefaults )
 
 # require c++11
 kasper_require_cpp11()
 
 # module options
+# build in boost functionality [utilities]
+SET( Kassiopeia_USE_BOOST ${KASPER_USE_BOOST} )
 # build in root functionality [writers, visualization]
 SET( Kassiopeia_USE_ROOT ${KASPER_USE_ROOT} )
 # build in vtk functionality [visualization]
@@ -34,33 +38,40 @@ kasper_module_paths( Kassiopeia )
 # module debugging
 kasper_module_debug()
 if( Kassiopeia_ENABLE_DEBUG )
-	add_cflag( Kassiopeia_ENABLE_DEBUG )
+    dd_cflag( Kassiopeia_ENABLE_DEBUG )
+endif()
+
+# external dependencies: boost
+if( Kassiopeia_USE_BOOST )
+    find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
+    kasper_external_include_directories( ${Boost_INCLUDE_DIRS} )
+    add_definitions( -DKassiopeia_USE_BOOST )
 endif()
 
 # external dependencies: root
 if( Kassiopeia_USE_ROOT )
-	find_package( ROOT 5.24.0 REQUIRED )
-	kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
-	add_definitions( -DKassiopeia_USE_ROOT )
+    find_package( ROOT 5.24.0 REQUIRED )
+    kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
+    add_definitions( -DKassiopeia_USE_ROOT )
 endif()
 
 # external dependencies: vtk
 if( Kassiopeia_USE_VTK )
-	kasper_find_vtk()
-	add_definitions( -DKassiopeia_USE_VTK )
+    kasper_find_vtk()
+    add_definitions( -DKassiopeia_USE_VTK )
 endif()
 
 
 # internal dependencies: kommon
 kasper_find_module( Kommon )
 foreach( FLAG ${Kommon_CFLAGS} )
-	add_definitions( -D${FLAG} )
+    add_definitions( -D${FLAG} )
 endforeach()
 
 # internal dependencies: kgeobag
 kasper_find_module( KGeoBag )
 foreach( FLAG ${KGeoBag_CFLAGS} )
-	add_definitions( -D${FLAG} )
+    add_definitions( -D${FLAG} )
 endforeach()
 
 # # internal dependencies: kemfield
@@ -118,13 +129,14 @@ add_subdirectory( Readers )
 add_subdirectory( XML )
 add_subdirectory( Visualization )
 add_subdirectory( Bindings )
+add_subdirectory( Python )
 add_subdirectory( Applications/Simulation )
 
 
 add_subdirectory( Applications/Validation )
 if( Kassiopeia_USE_ROOT )
-	add_subdirectory( Applications/Examples )
-	add_subdirectory( Applications/Other )
+    add_subdirectory( Applications/Examples )
+    add_subdirectory( Applications/Other )
 endif( )
 
 kasper_install_module()

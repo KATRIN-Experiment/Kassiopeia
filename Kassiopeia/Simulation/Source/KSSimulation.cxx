@@ -1,4 +1,5 @@
 #include "KSSimulation.h"
+#include "KSMainMessage.h"
 
 using namespace std;
 
@@ -72,6 +73,14 @@ namespace Kassiopeia
 
     void KSSimulation::AddCommand( KSCommand* aCommand )
     {
+        if ( aCommand == nullptr )
+        {
+            mainmsg( eError ) << "simulation <" << this->GetName() << "> could not add invalid command" << eom;
+            return;
+        }
+
+        mainmsg_debug( "simulation <" << this->GetName() << "> adding command <" << aCommand->GetName() << ">" << eom );
+
         std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {
@@ -85,6 +94,14 @@ namespace Kassiopeia
     }
     void KSSimulation::RemoveCommand( KSCommand* aCommand )
     {
+        if ( aCommand == nullptr )
+        {
+            mainmsg( eError ) << "simulation <" << this->GetName() << "> could not remove invalid command" << eom;
+            return;
+        }
+
+        mainmsg_debug( "simulation <" << this->GetName() << "> removing command <" << aCommand->GetName() << ">" << eom );
+
         std::vector< KSCommand* >::iterator tCommandIt;
         for( tCommandIt = fCommands.begin(); tCommandIt != fCommands.end(); tCommandIt++ )
         {

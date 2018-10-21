@@ -57,21 +57,21 @@ class KVariant {
     inline KVariant(const KVariant& Value);
     inline ~KVariant();
     inline KVariant& operator=(const KVariant& Value);
-    inline void Assign(const KVariant& Value) throw(KException);
+    inline void Assign(const KVariant& Value) ;
   public:
-    template<typename T> inline T As(void) const throw(KException);
+    template<typename T> inline T As(void) const ;
     inline KVariant Or(const KVariant& DefaultValue) const;
-    inline operator bool() const throw(KException);
-    inline operator int() const throw(KException);
-    inline operator unsigned int() const throw(KException);
-    inline operator long() const throw(KException);
-    inline operator unsigned long() const throw(KException);
-    inline operator long long() const throw(KException);
-    inline operator unsigned long long() const throw(KException);
-    inline operator float() const throw(KException);
-    inline operator double() const throw(KException);
+    inline operator bool() const ;
+    inline operator int() const ;
+    inline operator unsigned int() const ;
+    inline operator long() const ;
+    inline operator unsigned long() const ;
+    inline operator long long() const ;
+    inline operator unsigned long long() const ;
+    inline operator float() const ;
+    inline operator double() const ;
     inline operator std::string() const;
-    inline operator const KUnknown&() const throw(KException);
+    inline operator const KUnknown&() const ;
   public:
     inline bool IsVoid(void) const;
     inline bool IsBool(void) const;
@@ -79,12 +79,12 @@ class KVariant {
     inline bool IsNumeric(void) const;
     inline bool IsString(void) const;
     inline bool IsUnknown(void) const;
-    bool AsBool(void) const throw(KException);
-    long long AsLong(void) const throw(KException);
-    double AsDouble(void) const throw(KException);
+    bool AsBool(void) const ;
+    long long AsLong(void) const ;
+    double AsDouble(void) const ;
     std::string AsString(void) const;
-    KUnknown& AsUnknown(void) throw(KException);
-    const KUnknown& AsUnknown(void) const throw(KException);
+    KUnknown& AsUnknown(void) ;
+    const KUnknown& AsUnknown(void) const ;
   private:
     enum TValueType { 
 	Type_Void, Type_Bool, Type_Long, Type_Double, Type_String, Type_Unknown
@@ -338,7 +338,7 @@ KVariant& KVariant::operator=(const KVariant& Value)
     return *this;
 }
 
-void KVariant::Assign(const KVariant& Value) throw(KException)
+void KVariant::Assign(const KVariant& Value) 
 {
     if (fType == Type_Void) {
 	throw KException() << "assignment to void variable not allowed";
@@ -361,7 +361,7 @@ void KVariant::Assign(const KVariant& Value) throw(KException)
 }
 
 template <typename T> 
-inline T KVariant::As(void) const throw(KException)
+inline T KVariant::As(void) const 
 {
     return katrin::KVariantDecoder<T>::As(*this);
 }
@@ -376,47 +376,47 @@ inline KVariant KVariant::Or(const KVariant& DefaultValue) const
     }
 }
 
-KVariant::operator bool() const throw(KException)
+KVariant::operator bool() const 
 {
     return As<bool>();
 }
 
-KVariant::operator int() const throw(KException)
+KVariant::operator int() const 
 {
     return As<int>();
 }
 
-KVariant::operator unsigned int() const throw(KException)
+KVariant::operator unsigned int() const 
 {
     return As<unsigned int>();
 }
 
-KVariant::operator long() const throw(KException)
+KVariant::operator long() const 
 {
     return As<long>();
 }
 
-KVariant::operator unsigned long() const throw(KException)
+KVariant::operator unsigned long() const 
 {
     return As<unsigned long>();
 }
 
-KVariant::operator long long() const throw(KException)
+KVariant::operator long long() const 
 {
     return As<long long>();
 }
 
-KVariant::operator unsigned long long() const throw(KException)
+KVariant::operator unsigned long long() const 
 {
     return As<unsigned long long>();
 }
 
-KVariant::operator float() const throw(KException)
+KVariant::operator float() const 
 {
     return As<float>();
 }
 
-KVariant::operator double() const throw(KException)
+KVariant::operator double() const 
 {
     return As<double>();
 }
@@ -426,7 +426,7 @@ KVariant::operator std::string() const
     return As<std::string>();
 }
 
-KVariant::operator const KUnknown&() const throw(KException)
+KVariant::operator const KUnknown&() const 
 {
     return As<const KUnknown&>();
 }

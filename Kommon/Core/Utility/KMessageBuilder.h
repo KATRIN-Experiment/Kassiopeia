@@ -50,6 +50,11 @@ namespace katrin
                 fObject->fTerminalVerbosity = eNormal;
                 return true;
             }
+            if( aContainer->AsReference< std::string >() == std::string( "info" ) )
+            {
+                fObject->fTerminalVerbosity = eInfo;
+                return true;
+            }
             if( aContainer->AsReference< std::string >() == std::string( "debug" ) )
             {
                 fObject->fTerminalVerbosity = eDebug;
@@ -72,6 +77,11 @@ namespace katrin
             if( aContainer->AsReference< std::string >() == std::string( "normal" ) )
             {
                 fObject->fLogVerbosity = eNormal;
+                return true;
+            }
+            if( aContainer->AsReference< std::string >() == std::string( "info" ) )
+            {
+                fObject->fLogVerbosity = eInfo;
                 return true;
             }
             if( aContainer->AsReference< std::string >() == std::string( "debug" ) )
@@ -133,6 +143,11 @@ namespace katrin
                 fObject->SetTerminalVerbosity( eNormal );
                 return true;
             }
+            if( anAttribute->AsReference< std::string >() == std::string( "info" ) )
+            {
+                fObject->SetTerminalVerbosity( eInfo );
+                return true;
+            }
             if( anAttribute->AsReference< std::string >() == std::string( "debug" ) )
             {
                 fObject->SetTerminalVerbosity( eDebug );
@@ -155,6 +170,11 @@ namespace katrin
             if( anAttribute->AsReference< std::string >() == std::string( "normal" ) )
             {
                 fObject->SetLogVerbosity( eNormal );
+                return true;
+            }
+            if( anAttribute->AsReference< std::string >() == std::string( "info" ) )
+            {
+                fObject->SetLogVerbosity( eInfo );
                 return true;
             }
             if( anAttribute->AsReference< std::string >() == std::string( "debug" ) )
@@ -213,11 +233,11 @@ namespace katrin
             KMessageData* tMessageData = anElement->AsPointer< KMessageData >();
             if ( tMessageData->fKey == std::string("all"))
             {
-            	KMessageTable::GetInstance().SetTerminalVerbosity( tMessageData->fTerminalVerbosity );
-            	KMessageTable::GetInstance().SetLogVerbosity( tMessageData->fLogVerbosity );
-            	KMessageTable::GetInstance().SetFormat( tMessageData->fFormat );
-            	KMessageTable::GetInstance().SetPrecision( tMessageData->fPrecision );
-            	return true;
+                KMessageTable::GetInstance().SetTerminalVerbosity( tMessageData->fTerminalVerbosity );
+                KMessageTable::GetInstance().SetLogVerbosity( tMessageData->fLogVerbosity );
+                KMessageTable::GetInstance().SetFormat( tMessageData->fFormat );
+                KMessageTable::GetInstance().SetPrecision( tMessageData->fPrecision );
+                return true;
             }
             KMessage* tMessage = KMessageTable::GetInstance().Get( tMessageData->fKey );
             if( tMessage != NULL )

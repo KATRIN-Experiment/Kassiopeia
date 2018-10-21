@@ -17,13 +17,8 @@ namespace katrin
     {
     }
 
-    void KCommandLineTokenizer::ProcessCommandLine( int anArgC, char** anArgV )
+    void KCommandLineTokenizer::ReadEnvironmentVars()
     {
-        if( anArgC <= 1 )
-        {
-            return;
-        }
-
         char** env;
         string tVariableName;
         string tVariableValue;
@@ -37,7 +32,25 @@ namespace katrin
 
             fVariables[tVariableName] = tVariableValue;
         }
+    }
 
+    void KCommandLineTokenizer::ProcessCommandLine( int anArgC, char** anArgV )
+    {
+        if( anArgC <= 1 )
+        {
+            return;
+        }
+
+        vector<string> tArgList;
+        for ( int tArgumentCount = 0; tArgumentCount < anArgC; tArgumentCount++ )
+        {
+            tArgList.push_back( string(anArgV[tArgumentCount]) );
+        }
+
+        ProcessCommandLine( tArgList );
+
+        /*
+        ReadEnvironmentVars();
 
         char** tArgument = anArgV;
         int tArgumentCount = 1;
@@ -62,6 +75,8 @@ namespace katrin
             tArgumentCount++;
         }
 
+        string tVariableName;
+        string tVariableValue;
         string tVariableDescription;
         size_t tVariableEqualPos;
 
@@ -83,6 +98,64 @@ namespace katrin
             tArgumentCount++;
         }
 
+        return;
+        */
+    }
+
+    void KCommandLineTokenizer::ProcessCommandLine( vector<string> anArgList )
+    {
+        if( anArgList.size() <= 1 )
+        {
+            return;
+        }
+
+        ReadEnvironmentVars();
+
+        vector<string> tArgument = anArgList;
+        size_t tArgumentCount = 1;
+        string tFileName;
+        while( tArgument[tArgumentCount] != "-r" )
+        {
+            tFileName = tArgument[tArgumentCount];
+            fFiles.push_back( tFileName );
+
+            initmsg_debug( "adding file named <" << tFileName << ">" << eom );
+
+            tArgumentCount++;
+
+            if( tArgumentCount == anArgList.size() )
+            {
+                return;
+            }
+        }
+
+        if( tArgument[tArgumentCount] == "-r" )
+        {
+            tArgumentCount++;
+        }
+
+        string tVariableName;
+        string tVariableValue;
+        string tVariableDescription;
+        size_t tVariableEqualPos;
+
+        while( tArgumentCount < anArgList.size() )
+        {
+            tVariableDescription = tArgument[tArgumentCount];
+            if( tVariableDescription.length() < 3 )
+            {
+                initmsg( eError ) << "could not interpret command line argument <" << tVariableDescription << ">" << eom;
+                return;
+            }
+            tVariableEqualPos = tVariableDescription.find( '=' );
+            tVariableName = tVariableDescription.substr( 0, tVariableEqualPos );
+            tVariableValue = tVariableDescription.substr( tVariableEqualPos + 1 );
+            fVariables[tVariableName] = tVariableValue;
+
+            initmsg_debug( "defining variable named <" << tVariableName << "> with value <" << tVariableValue << ">" << eom );
+
+            tArgumentCount++;
+        }
 
         return;
     }

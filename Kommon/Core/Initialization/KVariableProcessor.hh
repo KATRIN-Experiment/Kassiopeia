@@ -18,6 +18,9 @@ namespace katrin
             typedef VariableMap::iterator VariableIt;
             typedef VariableMap::const_iterator VariableCIt;
 
+            typedef std::map< std::string, std::uint32_t > ReferenceCountMap;
+            typedef ReferenceCountMap::value_type ReferenceCountEntry;
+
         public:
             KVariableProcessor();
             KVariableProcessor( const VariableMap& anExternalMap );
@@ -38,11 +41,18 @@ namespace katrin
 
             typedef enum
             {
-                eElementInactive, eActiveLocalDefine, eActiveGlobalDefine, eActiveExternalDefine, eActiveLocalUndefine, eActiveGlobalUndefine, eActiveExternalUndefine, eElementComplete
+                /*  0 */ eElementInactive,
+                /*  1 */ eActiveLocalDefine,eActiveGlobalDefine, eActiveExternalDefine,
+                /*  4 */ eActiveLocalRedefine, eActiveGlobalRedefine, eActiveExternalRedefine,
+                /*  7 */ eActiveLocalUndefine, eActiveGlobalUndefine, eActiveExternalUndefine,
+                /* 10 */ eActiveLocalAppend, eActiveGlobalAppend, eActiveExternalAppend,
+                /* -1 */ eElementComplete = -1
             } ElementState;
             typedef enum
             {
-                eAttributeInactive, eActiveName, eActiveValue, eAttributeComplete
+                /*  0 */ eAttributeInactive,
+                /*  1 */ eActiveName, eActiveValue,
+                /* -1 */ eAttributeComplete = -1
             } AttributeState;
 
             ElementState fElementState;
@@ -50,6 +60,7 @@ namespace katrin
 
             std::string fName;
             std::string fValue;
+            ReferenceCountMap fRefCountMap; // need only one instance since variable names are unique
             VariableMap* fExternalMap;
             VariableMap* fGlobalMap;
             VariableMap* fLocalMap;
@@ -58,6 +69,7 @@ namespace katrin
             static const std::string fStartBracket;
             static const std::string fEndBracket;
             static const std::string fNameValueSeparator;
+            static const std::string fAppendValueSeparator;
     };
 
 }

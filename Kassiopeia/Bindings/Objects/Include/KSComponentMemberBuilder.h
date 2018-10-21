@@ -1,9 +1,10 @@
 #ifndef Kassiopeia_KSComponentMemberBuilder_h_
 #define Kassiopeia_KSComponentMemberBuilder_h_
 
+#include "KToolbox.h"
 #include "KComplexElement.hh"
 #include "KSComponentMember.h"
-#include "KToolbox.h"
+#include "KSObjectsMessage.h"
 
 using namespace Kassiopeia;
 namespace katrin
@@ -13,8 +14,8 @@ namespace katrin
     {
         public:
             std::string fName;
-            KSComponent* fParent;
-            std::string fField;
+            std::string fFieldName;
+            std::string fParentName;
     };
 
     typedef KComplexElement< KSComponentMemberData > KSComponentBuilder;
@@ -37,14 +38,14 @@ namespace katrin
         }
         if( aContainer->GetName() == "parent" )
         {
-            KSComponent* tComponent = KToolbox::GetInstance().Get< KSComponent >( aContainer->AsReference< std::string >() );
-            fObject->fParent = tComponent;
+            std::string tParent = aContainer->AsReference< std::string >();
+            fObject->fParentName = tParent;
             return true;
         }
         if( aContainer->GetName() == "field" )
         {
             std::string tField = aContainer->AsReference< std::string >();
-            fObject->fField = tField;
+            fObject->fFieldName = tField;
             return true;
         }
         return false;
@@ -53,8 +54,17 @@ namespace katrin
     template< >
     inline bool KSComponentBuilder::End()
     {
-        KSComponent* tComponent = fObject->fParent->Component( fObject->fField );
-        if( fObject->fName.size() != 0 )
+        KSComponent* tParent = KToolbox::GetInstance().Get< KSComponent >( fObject->fParentName );
+        if ( tParent == nullptr )
+        {
+            objctmsg( eError ) << "component member <" << fObject->fName << "> could not find parent <" << fObject->fParentName << ">" << eom;
+        }
+        KSComponent* tComponent = tParent->Component( fObject->fFieldName );
+        if ( tComponent == nullptr )
+        {
+            objctmsg( eError ) << "component member <" << fObject->fName << "> could not find field <" << fObject->fFieldName << "> with parent <" << fObject->fParentName << ">" << eom;
+        }
+        if( ! fObject->fName.empty() )
         {
             tComponent->SetName( fObject->fName );
         }

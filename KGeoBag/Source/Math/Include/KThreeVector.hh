@@ -13,6 +13,10 @@ using std::istream;
 #include <ostream>
 using std::ostream;
 
+#include <vector>
+using std::vector;
+
+#include <cassert>
 #include <cmath>
 
 namespace KGeoBag
@@ -40,15 +44,21 @@ namespace KGeoBag
     KThreeVector( const double anArray[ 3 ] );
     KThreeVector& operator=( const double anArray[ 3 ] );
 
+    KThreeVector( const vector<double>& aVector );
+    KThreeVector& operator=( const vector<double>& aVector );
+
     KThreeVector( const double& aX, const double& aY, const double& aZ );
     void SetComponents( const double& aX, const double& aY, const double& aZ );
-    void SetComponents( const double* aData );
+    void SetComponents( const double aData[ 3 ] );
+    void SetComponents( const vector<double>& aData );
     void SetMagnitude( const double& aMagnitude );
     void SetX( const double& aX );
     void SetY( const double& aY );
     void SetZ( const double& aZ );
     void SetPolarAngle( const double& anAngle );
     void SetAzimuthalAngle( const double& anAngle );
+    void SetPolarAngleInDegrees( const double& anAngle );
+    void SetAzimuthalAngleInDegrees( const double& anAngle );
 
     //cast
 
@@ -71,6 +81,7 @@ namespace KGeoBag
     const double& GetZ() const;
 
     const double* Components() const;
+    const vector<double> ComponentVector() const;
 
     //comparison
 
@@ -87,6 +98,8 @@ namespace KGeoBag
     double PerpSquared() const;
     double PolarAngle() const;
     double AzimuthalAngle() const;
+    double PolarAngleInDegrees() const;
+    double AzimuthalAngleInDegrees() const;
     KThreeVector Unit() const;
     KThreeVector Orthogonal() const;
     KThreeVector Cross( const KThreeVector& aVector ) const;
@@ -127,6 +140,22 @@ inline KThreeVector& KThreeVector::operator=( const double anArray[ 3 ] )
     return *this;
 }
 
+inline KThreeVector::KThreeVector( const vector<double>& aVector )
+{
+    assert( aVector.size() == 3 );
+    fData[ 0 ] = aVector[ 0 ];
+    fData[ 1 ] = aVector[ 1 ];
+    fData[ 2 ] = aVector[ 2 ];
+}
+inline KThreeVector& KThreeVector::operator=( const vector<double>& aVector )
+{
+    assert( aVector.size() == 3 );
+    fData[ 0 ] = aVector[ 0 ];
+    fData[ 1 ] = aVector[ 1 ];
+    fData[ 2 ] = aVector[ 2 ];
+    return *this;
+}
+
 inline KThreeVector::KThreeVector( const double& aX, const double& aY, const double& aZ )
 {
     fData[ 0 ] = aX;
@@ -139,8 +168,15 @@ inline void KThreeVector::SetComponents( const double& aX, const double& aY, con
     fData[ 1 ] = aY;
     fData[ 2 ] = aZ;
 }
-inline void KThreeVector::SetComponents( const double* aData )
+inline void KThreeVector::SetComponents( const double aData[ 3 ] )
 {
+    fData[ 0 ] = aData[ 0 ];
+    fData[ 1 ] = aData[ 1 ];
+    fData[ 2 ] = aData[ 2 ];
+}
+inline void KThreeVector::SetComponents( const vector<double>& aData )
+{
+    assert(aData.size() == 3);
     fData[ 0 ] = aData[ 0 ];
     fData[ 1 ] = aData[ 1 ];
     fData[ 2 ] = aData[ 2 ];
@@ -176,6 +212,14 @@ inline void KThreeVector::SetPolarAngle( const double &anAngle )
     const double tMagnitude = Magnitude();
     const double tRadius = Perp();
     SetComponents( tMagnitude * X() / tRadius * sin( anAngle ), tMagnitude * Y() / tRadius * sin( anAngle ), tMagnitude * cos( anAngle ) );
+}
+inline void KThreeVector::SetAzimuthalAngleInDegrees( const double &anAngle )
+{
+    SetAzimuthalAngle( KConst::Pi() / 180. * anAngle );
+}
+inline void KThreeVector::SetPolarAngleInDegrees( const double &anAngle )
+{
+    SetPolarAngle( KConst::Pi() / 180. * anAngle );
 }
 inline KThreeVector::operator double *()
 {
@@ -235,6 +279,11 @@ inline const double* KThreeVector::Components() const
 {
     return (const double*)fData;
 }
+inline const vector<double> KThreeVector::ComponentVector() const
+{
+    vector<double> tData = { fData[0], fData[1], fData[2] };
+    return tData;
+}
 
 inline double KThreeVector::Dot( const KThreeVector& aVector ) const
 {
@@ -266,6 +315,14 @@ inline double KThreeVector::PolarAngle() const
 inline double KThreeVector::AzimuthalAngle() const
 {
     return atan2( fData[ 1 ], fData[ 0 ] );
+}
+inline double KThreeVector::PolarAngleInDegrees() const
+{
+    return PolarAngle() * 180. / KConst::Pi();
+}
+inline double KThreeVector::AzimuthalAngleInDegrees() const
+{
+    return AzimuthalAngle() * 180. / KConst::Pi();
 }
 
 inline KThreeVector KThreeVector::Unit() const

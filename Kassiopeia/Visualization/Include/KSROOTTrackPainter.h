@@ -16,12 +16,13 @@ using katrin::KROOTPainter;
 
 namespace Kassiopeia
 {
+    class KSReadFileROOT;
 
     class KSROOTTrackPainter :
         public KROOTPainter
     {
         public:
-    		KSROOTTrackPainter();
+            KSROOTTrackPainter();
             ~KSROOTTrackPainter();
 
             virtual void Render();
@@ -40,7 +41,7 @@ namespace Kassiopeia
 
             typedef enum
             {
-            	eColorFix, eColorStep, eColorTrack
+                eColorFix, eColorStep, eColorTrack
             } ColorMode;
 
             typedef enum
@@ -54,7 +55,7 @@ namespace Kassiopeia
             } PlotMode;
 
         private:
-            void CreateColors();
+            void CreateColors( KSReadFileROOT& aReader );
 
         private:
             ;K_SET( std::string, Path );
@@ -63,10 +64,10 @@ namespace Kassiopeia
             ;K_SET( std::string, YAxis );
             ;K_SET( std::string, StepOutputGroupName );
             ;K_SET( std::string, PositionName );
-    	    ;K_SET( std::string, TrackOutputGroupName );
-			;K_SET( std::string, ColorVariable );
-			;K_SET( ColorMode, ColorMode );
-			;K_SET( ColorPalette, ColorPalette );
+            ;K_SET( std::string, TrackOutputGroupName );
+            ;K_SET( std::string, ColorVariable );
+            ;K_SET( ColorMode, ColorMode );
+            ;K_SET( ColorPalette, ColorPalette );
             ;K_SET( std::string, DrawOptions );
             ;K_SET( PlotMode, PlotMode );
             ;K_SET( bool, AxialMirror );
@@ -78,8 +79,8 @@ namespace Kassiopeia
 
     inline void KSROOTTrackPainter::AddBaseColor(TColor aColor, double aFraction = -1.0 )
     {
-    	vismsg( eNormal ) <<"ROOTTrackPainter adding color " <<aColor.GetRed()<<","<<aColor.GetGreen()<<","<<aColor.GetBlue()<<" with fraction "<<aFraction<<eom;
-    	fBaseColors.push_back( std::pair< TColor, double > ( aColor, aFraction) );
+        vismsg( eNormal ) <<"ROOTTrackPainter adding color " <<aColor.GetRed()<<","<<aColor.GetGreen()<<","<<aColor.GetBlue()<<" with fraction "<<aFraction<<eom;
+        fBaseColors.push_back( std::pair< TColor, double > ( aColor, aFraction) );
     }
 
 }

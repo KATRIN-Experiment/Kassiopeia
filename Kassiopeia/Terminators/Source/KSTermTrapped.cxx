@@ -41,6 +41,9 @@ namespace Kassiopeia
 
     void KSTermTrapped::CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag )
     {
+        if (fMaxTurns < 0)
+            termmsg( eError ) << "negative maximal number of turns defined in Trapped terminator <" << this->GetName() << ">" << eom;
+
         double DotProduct = anInitialParticle.GetMagneticField().Dot( anInitialParticle.GetMomentum() );
 
         if( DotProduct * fCurrentDotProduct < 0. )

@@ -37,6 +37,7 @@ namespace katrin
 
             ElementState fElementState;
             AttributeState fAttributeState;
+            KMessageSeverity fMessageType;
 
             std::string fName;
             std::string fValue;

@@ -22,22 +22,22 @@ namespace katrin
         }
         if( aContainer->GetName() == "surfaces" )
         {
-			std::vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
-			std::vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
-			KGeoBag::KGSurface* tSurface;
+            std::vector< KGeoBag::KGSurface* > tSurfaces = KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces( aContainer->AsReference< std::string >() );
+            std::vector< KGeoBag::KGSurface* >::const_iterator tSurfaceIt;
+            KGeoBag::KGSurface* tSurface;
 
-			if( tSurfaces.size() == 0 )
-			{
-				oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
-				return false;
-			}
+            if( tSurfaces.size() == 0 )
+            {
+                oprmsg( eWarning ) << "no surfaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
+                return true;
+            }
 
-			for( tSurfaceIt = tSurfaces.begin(); tSurfaceIt != tSurfaces.end(); tSurfaceIt++ )
-			{
-				tSurface = *tSurfaceIt;
-				fObject->AddSurface( tSurface );
-			}
-			return true;
+            for( tSurfaceIt = tSurfaces.begin(); tSurfaceIt != tSurfaces.end(); tSurfaceIt++ )
+            {
+                tSurface = *tSurfaceIt;
+                fObject->AddSurface( tSurface );
+            }
+            return true;
         }
         if( aContainer->GetName() == "spaces" )
         {
@@ -47,8 +47,8 @@ namespace katrin
 
             if( tSpaces.size() == 0 )
             {
-            	oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
-                return false;
+                oprmsg( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
+                return true;
             }
 
             for( tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++ )
