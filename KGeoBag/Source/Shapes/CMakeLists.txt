@@ -104,7 +104,18 @@ set( SHAPES_HEADER_FILES
 	Complex/Include/KGRodSpace.hh
 	Complex/Include/KGComplexAnnulus.hh
 	Complex/Include/KGComplexAnnulusSurface.hh
-	
+	Complex/Include/KGLinearWireGrid.hh
+	Complex/Include/KGLinearWireGridSurface.hh
+	Complex/Include/KGLinearWireGridSpace.hh
+	Complex/Include/KGQuadraticWireGrid.hh
+    Complex/Include/KGQuadraticWireGridSurface.hh
+    Complex/Include/KGQuadraticWireGridSpace.hh
+    Complex/Include/KGCircleWire.hh
+    Complex/Include/KGCircleWireSurface.hh
+    Complex/Include/KGCircleWireSpace.hh
+    Complex/Include/KGCircularWirePins.hh
+    Complex/Include/KGCircularWirePinsSurface.hh
+    Complex/Include/KGCircularWirePinsSpace.hh
 )
 
 # source
@@ -188,6 +199,10 @@ set( SHAPES_SOURCE_FILES
     Complex/Source/KGConicSectPortHousing.cc
     Complex/Source/KGBeam.cc
     Complex/Source/KGRod.cc
+    Complex/Source/KGLinearWireGrid.cc
+    Complex/Source/KGQuadraticWireGrid.cc
+    Complex/Source/KGCircleWire.cc
+    Complex/Source/KGCircularWirePins.cc
 
     Complex/Source/KGRotatedSpace.cc
     Complex/Source/KGPortHousingSpace.cc

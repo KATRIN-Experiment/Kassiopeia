@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
+#ifndef KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
+#define KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
 
 #include "KMagneticFieldSolver.hh"
 
@@ -24,10 +24,10 @@ public:
 
     void InitializeCore( KElectromagnetContainer& container );
 
-    KEMThreeVector MagneticPotentialCore( const KPosition& P ) const;
-    KEMThreeVector MagneticFieldCore( const KPosition& P ) const;
+    KThreeVector MagneticPotentialCore( const KPosition& P ) const;
+    KThreeVector MagneticFieldCore( const KPosition& P ) const;
     KGradient MagneticGradientCore( const KPosition& P ) const;
-    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore( const KPosition& P ) const;
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore( const KPosition& P ) const;
 
     KZonalHarmonicParameters* GetParameters()
     {
@@ -43,4 +43,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_ */
+#endif /* KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_ */

@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICFIELD_HH_
+#ifndef KMAGNETOSTATICFIELD_HH_
+#define KMAGNETOSTATICFIELD_HH_
 
 #include "KMagneticField.hh"
 
@@ -23,11 +23,11 @@ public:
 
 	using KMagneticField::MagneticPotential;
 
-	KEMThreeVector MagneticPotential(const KPosition& P) const {
+	KThreeVector MagneticPotential(const KPosition& P) const {
 		return MagneticPotentialCore(P);
 	}
 
-	KEMThreeVector MagneticField(const KPosition& P) const {
+	KThreeVector MagneticField(const KPosition& P) const {
 	    return MagneticFieldCore(P);
 	}
 
@@ -37,12 +37,12 @@ public:
 
 private:
 
-	virtual KEMThreeVector MagneticPotentialCore(const KPosition& P, const double& /*time*/) const
+	virtual KThreeVector MagneticPotentialCore(const KPosition& P, const double& /*time*/) const
 	{
 		return MagneticPotentialCore(P);
 	}
 
-	virtual KEMThreeVector MagneticFieldCore(const KPosition& P, const double& /*time*/) const
+	virtual KThreeVector MagneticFieldCore(const KPosition& P, const double& /*time*/) const
 	{
 		return MagneticFieldCore(P);
 	}
@@ -52,22 +52,22 @@ private:
 		return MagneticGradientCore(P);
 	}
 
-    virtual std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P, const double& /*time*/) const
+    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P, const double& /*time*/) const
     {
         return MagneticFieldAndGradientCore(P);
     }
 
-	virtual KEMThreeVector MagneticPotentialCore(const KPosition& P) const = 0;
-	virtual KEMThreeVector MagneticFieldCore(const KPosition& P) const = 0;
+	virtual KThreeVector MagneticPotentialCore(const KPosition& P) const = 0;
+	virtual KThreeVector MagneticFieldCore(const KPosition& P) const = 0;
 	virtual KGradient MagneticGradientCore(const KPosition& P) const = 0;
-    virtual std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
+    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
     {
         //default behavior is to simply call the field and gradient separately
         //this function may be overloaded to perform a more efficient combined calculation
-        KEMThreeVector field = MagneticFieldCore(P);
+        KThreeVector field = MagneticFieldCore(P);
         KGradient grad = MagneticGradientCore(P);
 
-        return std::pair<KEMThreeVector, KGradient>(field,grad);
+        return std::pair<KThreeVector, KGradient>(field,grad);
     }
 
 };
@@ -75,4 +75,4 @@ private:
 
 
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICFIELD_HH_ */
+#endif /* KMAGNETOSTATICFIELD_HH_ */

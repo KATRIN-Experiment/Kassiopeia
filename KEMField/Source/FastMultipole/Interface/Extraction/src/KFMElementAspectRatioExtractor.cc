@@ -1,5 +1,6 @@
 #include "KFMElementAspectRatioExtractor.hh"
-#include "KEMThreeVector.hh"
+
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField
 {

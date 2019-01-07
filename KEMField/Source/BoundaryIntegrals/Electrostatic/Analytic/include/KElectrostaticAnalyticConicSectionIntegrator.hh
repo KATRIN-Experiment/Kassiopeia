@@ -19,7 +19,7 @@ namespace KEMField
     ~KElectrostaticAnalyticConicSectionIntegrator() {}
 
     double Potential( const KConicSection* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KConicSection* source, const KPosition& P ) const;
+    KThreeVector ElectricField( const KConicSection* source, const KPosition& P ) const;
     using KElectrostaticElementIntegrator<KConicSection>::Potential;
     using KElectrostaticElementIntegrator<KConicSection>::ElectricField;
   };

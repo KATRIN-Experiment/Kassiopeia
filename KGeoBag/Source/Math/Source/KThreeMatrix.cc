@@ -28,8 +28,5 @@ namespace KGeoBag
         fData[7] = 0.;
         fData[8] = 0.;
     }
-    KThreeMatrix::~KThreeMatrix()
-    {
-    }
 
 }

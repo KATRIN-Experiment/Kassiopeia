@@ -6,8 +6,6 @@
 #include "KFMPoint.hh"
 #include "KFMPointCloud.hh"
 
-#include "KEMThreeVector.hh"
-
 #include "KVMPathIntegral.hh"
 #include "KVMLineIntegral.hh"
 #include "KVMSurfaceIntegral.hh"
@@ -26,6 +24,7 @@
 
 #include <cstdlib>
 #include <iomanip>
+#include "KThreeVector_KEMField.hh"
 
 using namespace KEMField;
 
@@ -42,13 +41,13 @@ int main()
     aCalc->SetDegree(degree);
 
 
-    KEMThreeVector origin1(0.,0.,0.);
-    KEMThreeVector origin2(1.32, 0.434231, 0.34534);
-    KEMThreeVector point(1.4, 2.1454, 1.343432);
-    KEMThreeVector del1 = point - origin1;
-    KEMThreeVector del2 = point - origin2;
-    KEMThreeVector del_origin = origin2 - origin1;
-    KEMThreeVector del_origin_par = origin1 - origin2;
+    KThreeVector origin1(0.,0.,0.);
+    KThreeVector origin2(1.32, 0.434231, 0.34534);
+    KThreeVector point(1.4, 2.1454, 1.343432);
+    KThreeVector del1 = point - origin1;
+    KThreeVector del2 = point - origin2;
+    KThreeVector del_origin = origin2 - origin1;
+    KThreeVector del_origin_par = origin1 - origin2;
 
     std::vector< std::complex<double> > source;
     std::vector< std::complex<double> > source1;

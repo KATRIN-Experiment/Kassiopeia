@@ -1,8 +1,7 @@
 #ifndef KELECTROMAGNETINTEGRATINGFIELDSOLVER_DEF
 #define KELECTROMAGNETINTEGRATINGFIELDSOLVER_DEF
 
-#include "KEMThreeMatrix.hh"
-
+#include "KThreeMatrix_KEMField.hh"
 #include "KElectromagnetContainer.hh"
 #include "KIntegratingFieldSolverTemplate.hh"
 
@@ -20,8 +19,8 @@ namespace KEMField
 	fIntegrator(integrator) {}
     virtual ~KIntegratingFieldSolver() {}
 
-    KEMThreeVector VectorPotential(const KPosition& P) const;
-    KEMThreeVector MagneticField(const KPosition& P) const;
+    KThreeVector VectorPotential(const KPosition& P) const;
+    KThreeVector MagneticField(const KPosition& P) const;
     KGradient MagneticFieldGradient(const KPosition& P) const;
 
     const KElectromagnetContainer& GetContainer() const { return fContainer; }
@@ -36,7 +35,7 @@ namespace KEMField
 	fContainer(container),fIntegrator(integrator),fP(P),fVectorPotential(0.,0.,0.) {}
       ~VectorPotentialAction() {}
 
-      KEMThreeVector GetVectorPotential() const { return fVectorPotential; }
+      KThreeVector GetVectorPotential() const { return fVectorPotential; }
 
       template <class Electromagnet>
       void Act(Type2Type<Electromagnet>)
@@ -50,7 +49,7 @@ namespace KEMField
       const KElectromagnetContainer& fContainer;
       const Integrator& fIntegrator;
       const KPosition& fP;
-      KEMThreeVector fVectorPotential;
+      KThreeVector fVectorPotential;
     };
 
     class MagneticFieldAction
@@ -62,7 +61,7 @@ namespace KEMField
 	fContainer(container),fIntegrator(integrator),fP(P),fMagneticField(0.,0.,0.) {}
       ~MagneticFieldAction() {}
 
-      KEMThreeVector GetMagneticField() const { return fMagneticField; }
+      KThreeVector GetMagneticField() const { return fMagneticField; }
 
       template <class Electromagnet>
       void Act(Type2Type<Electromagnet>)
@@ -76,7 +75,7 @@ namespace KEMField
       const KElectromagnetContainer& fContainer;
       const Integrator& fIntegrator;
       const KPosition& fP;
-      KEMThreeVector fMagneticField;
+      KThreeVector fMagneticField;
     };
 
     KElectromagnetContainer& fContainer;
@@ -85,7 +84,7 @@ namespace KEMField
 
 
   template <class Integrator>
-  KEMThreeVector KIntegratingFieldSolver<Integrator,ElectromagnetSingleThread>::VectorPotential(const KPosition& P) const
+  KThreeVector KIntegratingFieldSolver<Integrator,ElectromagnetSingleThread>::VectorPotential(const KPosition& P) const
   {
     VectorPotentialAction action(fContainer,fIntegrator,P);
 
@@ -95,7 +94,7 @@ namespace KEMField
   }
 
   template <class Integrator>
-  KEMThreeVector KIntegratingFieldSolver<Integrator,ElectromagnetSingleThread>::MagneticField(const KPosition& P) const
+  KThreeVector KIntegratingFieldSolver<Integrator,ElectromagnetSingleThread>::MagneticField(const KPosition& P) const
   {
     MagneticFieldAction action(fContainer,fIntegrator,P);
 
@@ -115,8 +114,8 @@ namespace KEMField
       Pplus[i] += epsilon;
       KPosition Pminus = P;
       Pminus[i] -= epsilon;
-      KEMThreeVector Bplus = MagneticField(Pplus);
-      KEMThreeVector Bminus = MagneticField(Pminus);
+      KThreeVector Bplus = MagneticField(Pplus);
+      KThreeVector Bminus = MagneticField(Pminus);
       for (unsigned int j=0;j<3;j++)
 	g[j + 3*i] = (Bplus[j]-Bminus[j])/(2.*epsilon);
     }

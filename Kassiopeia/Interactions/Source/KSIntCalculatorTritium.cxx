@@ -6,8 +6,8 @@
  */
 #include "KSIntCalculatorTritium.h"
 
-#include <KRandom.h>
-#include <KThreeVector.hh>
+#include "KRandom.h"
+#include "KThreeVector.hh"
 
 using namespace std;
 using namespace katrin;

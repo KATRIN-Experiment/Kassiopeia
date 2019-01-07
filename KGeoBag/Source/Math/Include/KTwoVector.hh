@@ -33,7 +33,7 @@ namespace KGeoBag
 
         public:
             KTwoVector();
-            ~KTwoVector();
+            virtual ~KTwoVector() = default;
 
             //assignment
 

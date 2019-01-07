@@ -49,6 +49,7 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenMomentumRectangularComposite.h
 
     KSGenSpinComposite.h
+    KSGenSpinRelativeComposite.h
 
     KSGenTimeComposite.h
 
@@ -127,6 +128,7 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenMomentumRectangularComposite.cxx
 
     KSGenSpinComposite.cxx
+    KSGenSpinRelativeComposite.cxx
 
     KSGenTimeComposite.cxx
 

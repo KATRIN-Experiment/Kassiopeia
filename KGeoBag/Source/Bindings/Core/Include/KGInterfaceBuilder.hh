@@ -49,7 +49,7 @@ namespace katrin
             KGSurface* tSurface = new KGSurface();
             tSurface->SetName( tArea->GetName() );
             tSurface->SetTags( tArea->GetTags() );
-            tSurface->Area( tArea );
+            tSurface->Area( std::shared_ptr<KGArea>(tArea) );
             fObject->InstallSurface( tSurface );
             return true;
         }
@@ -65,7 +65,7 @@ namespace katrin
             KGSpace* tSpace = new KGSpace();
             tSpace->SetName( tVolume->GetName() );
             tSpace->SetTags( tVolume->GetTags() );
-            tSpace->Volume( tVolume );
+            tSpace->Volume( std::shared_ptr<KGVolume>(tVolume) );
             fObject->InstallSpace( tSpace );
             return true;
         }

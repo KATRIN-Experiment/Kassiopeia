@@ -1,8 +1,8 @@
 #ifndef KCOORDINATESYSTEM_H
 #define KCOORDINATESYSTEM_H
 
-#include "KEMThreeVector.hh"
-#include "KEMThreeMatrix.hh"
+#include "KThreeMatrix_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField{
 
@@ -36,12 +36,12 @@ namespace KEMField{
 
     KPosition ToLocal(const KPosition& p) const;
     KDirection ToLocal(const KDirection& d) const;
-    KEMThreeVector ToLocal(const KEMThreeVector& v) const;
+    KThreeVector ToLocal(const KThreeVector& v) const;
     KGradient ToLocal(const KGradient& g) const;
 
     KPosition ToGlobal(const KPosition& p) const;
     KDirection ToGlobal(const KDirection& d) const;
-    KEMThreeVector ToGlobal(const KEMThreeVector& v) const;
+    KThreeVector ToGlobal(const KThreeVector& v) const;
     KGradient ToGlobal(const KGradient& g) const;
 
     void SetOrigin(const KPosition& origin) { fOrigin = origin; }

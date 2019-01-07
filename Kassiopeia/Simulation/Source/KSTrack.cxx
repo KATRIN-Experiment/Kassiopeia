@@ -17,6 +17,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( 0 ),
             fDiscreteEnergyChange( 0. ),
             fDiscreteMomentumChange( 0. ),
+            fNumberOfTurns( 0 ),
             fCreatorName( "" ),
             fTerminatorName( "" ),
             fInitialParticle(),
@@ -37,6 +38,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( aCopy.fDiscreteSecondaries ),
             fDiscreteEnergyChange( aCopy.fDiscreteSecondaries ),
             fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange ),
+            fNumberOfTurns( aCopy.fNumberOfTurns ),
             fCreatorName( aCopy.fCreatorName ),
             fTerminatorName( aCopy.fTerminatorName ),
             fInitialParticle( aCopy.fInitialParticle ),
@@ -57,6 +59,7 @@ namespace Kassiopeia
         fDiscreteSecondaries = aCopy.fDiscreteSecondaries;
         fDiscreteEnergyChange = aCopy.fDiscreteEnergyChange;
         fDiscreteMomentumChange = aCopy.fDiscreteMomentumChange;
+        fNumberOfTurns = aCopy.fNumberOfTurns;
         fCreatorName = aCopy.fCreatorName;
         fTerminatorName = aCopy.fTerminatorName;
         fInitialParticle = aCopy.fInitialParticle;
@@ -84,6 +87,7 @@ namespace Kassiopeia
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetDiscreteSecondaries, "discrete_secondaries" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetDiscreteEnergyChange, "discrete_energy_change" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetDiscreteMomentumChange, "discrete_momentum_change" ) +
+        KSDictionary< KSTrack >::AddComponent( &KSTrack::GetNumberOfTurns, "number_of_turns" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetCreatorName, "creator_name" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetTerminatorName, "terminator_name" ) +
         KSDictionary< KSTrack >::AddComponent( &KSTrack::GetInitialParticle, "initial_particle" ) +

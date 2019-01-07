@@ -10,7 +10,6 @@
 #include "KMagnetostaticConstantField.hh"
 #include "KSElectricKEMField.h"
 #include "KSMagneticKEMField.h"
-#include "KEMVectorConverters.hh"
 
 using namespace KEMField;
 
@@ -21,7 +20,7 @@ KSElectricField* MakeConstantElectricField(
         KGeoBag::KThreeVector field)
 {
     KElectrostaticConstantField* kemfield = new KElectrostaticConstantField();
-    kemfield->SetField(K2KEMThreeVector(field));
+    kemfield->SetField(field);
 
     KSElectricKEMField* kasfield = new KSElectricKEMField();
     kasfield->SetElectricField(kemfield);
@@ -32,7 +31,7 @@ KSMagneticField* MakeConstantMagneticField(
         KGeoBag::KThreeVector field)
 {
     KMagnetostaticConstantField* kemfield = new KMagnetostaticConstantField();
-    kemfield->SetField(K2KEMThreeVector(field));
+    kemfield->SetField(field);
 
     KSMagneticKEMField* kasfield = new KSMagneticKEMField();
     kasfield->SetMagneticField(kemfield);

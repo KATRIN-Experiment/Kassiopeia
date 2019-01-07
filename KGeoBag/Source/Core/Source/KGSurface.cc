@@ -137,7 +137,7 @@ namespace KGeoBag
         KGSurface* tClone = new KGSurface();
 
         //copy name
-        tClone->fName = fName;
+        tClone->SetName(this->GetName());
 
         //copy tags
         tClone->fTags = fTags;
@@ -189,7 +189,7 @@ namespace KGeoBag
         }
 
         //visit area
-        if( fArea.Null() == false )
+        if( fArea )
         {
             fArea->Accept( aVisitor );
         }
@@ -201,19 +201,19 @@ namespace KGeoBag
     //navigable
     //*********
 
-    void KGSurface::Area( const KSmartPointer< KGArea >& anArea )
+    void KGSurface::Area( const std::shared_ptr< KGArea >& anArea )
     {
         fArea = anArea;
         return;
     }
-    const KSmartPointer< KGArea >& KGSurface::Area() const
+    const std::shared_ptr< KGArea >& KGSurface::Area() const
     {
         return fArea;
     }
 
     bool KGSurface::Above( const KThreeVector& aQueryPoint ) const
     {
-        if( fArea.Null() == false )
+        if( fArea )
         {
             KThreeVector tLocalQueryPoint;
 
@@ -227,7 +227,7 @@ namespace KGeoBag
     }
     KThreeVector KGSurface::Point( const KThreeVector& aQueryPoint ) const
     {
-        if( fArea.Null() == false )
+        if( fArea )
         {
             KThreeVector tLocalQueryPoint;
             KThreeVector tLocalNearestPoint;
@@ -249,7 +249,7 @@ namespace KGeoBag
     }
     KThreeVector KGSurface::Normal( const KThreeVector& aQueryPoint ) const
     {
-        if( fArea.Null() == false )
+        if( fArea )
         {
             KThreeVector tLocalQueryPoint;
             KThreeVector tLocalNearestNormal;

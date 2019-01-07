@@ -1,3 +1,4 @@
+
 #ifndef KSURFACE_DEF
 #error "Do not include KSurfaceAction.hh directly. Include KSurface.hh instead."
 #endif
@@ -8,8 +9,8 @@
 #include "KTypeManipulation.hh"
 #include "KFundamentalTypeCounter.hh"
 
-#include "KSurfaceID.hh"
-#include "KSurfaceTypes.hh"
+#include "../../../Surfaces/include/KSurfaceID.hh"
+#include "../../../Surfaces/include/KSurfaceTypes.hh"
 
 namespace KEMField
 {

@@ -68,7 +68,7 @@ KFMElectrostaticFastMultipoleFieldSolver::Potential(const KPosition& P) const
     }
 }
 
-KEMThreeVector
+KThreeVector
 KFMElectrostaticFastMultipoleFieldSolver::ElectricField(const KPosition& P) const
 {
     SetPoint(P);
@@ -76,13 +76,13 @@ KFMElectrostaticFastMultipoleFieldSolver::ElectricField(const KPosition& P) cons
     if(!fFallback)
     {
         double fast_f[3];
-        KEMThreeVector f;
+        KThreeVector f;
         fFastFieldSolver.ElectricField(P, fast_f);
         f[0] = fast_f[0];
         f[1] = fast_f[1];
         f[2] = fast_f[2];
 
-        KEMThreeVector direct_f;
+        KThreeVector direct_f;
 
         if(fSubsetSize != 0)
         {

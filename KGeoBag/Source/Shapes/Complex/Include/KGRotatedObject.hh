@@ -6,10 +6,12 @@
 #include <cmath>
 #include <string>
 
+#include "KGBoundary.hh"
+
 namespace KGeoBag
 {
 
-  class KGRotatedObject
+  class KGRotatedObject : public KGBoundary
   {
   public:
     KGRotatedObject() : fNPolyBegin(0),
@@ -241,7 +243,7 @@ namespace KGeoBag
     // discretization number about the z-axis for the first opening
     unsigned int fNPolyBegin;
     // discretization number about the z-axis for the second opening
-    unsigned int fNPolyEnd; 
+    unsigned int fNPolyEnd;
 
     // # of segments that comprise the 2-D image
     unsigned int fNSegments;

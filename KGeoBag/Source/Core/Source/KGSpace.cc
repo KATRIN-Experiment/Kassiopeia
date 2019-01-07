@@ -39,7 +39,7 @@ namespace KGeoBag
             fZAxis( KThreeVector::sZUnit ),
             fVolume()
     {
-        Volume( aVolume );
+        Volume( std::shared_ptr<KGVolume>(aVolume) );
     }
     KGSpace::~KGSpace()
     {
@@ -232,7 +232,7 @@ namespace KGeoBag
         KGSpace* tClone = new KGSpace();
 
         //copy name
-        tClone->fName = fName;
+        tClone->SetName(this->GetName());
 
         //copy tags
         tClone->fTags = fTags;
@@ -272,7 +272,7 @@ namespace KGeoBag
         KGSpace* tClone = new KGSpace();
 
         //copy name
-        tClone->fName = fName;
+        tClone->SetName(this->GetName());
 
         //copy tags
         tClone->fTags = fTags;
@@ -352,7 +352,7 @@ namespace KGeoBag
         }
 
         //visit the volume
-        if( fVolume.Null() == false )
+        if( fVolume )
         {
             fVolume->Accept( aVisitor );
         }
@@ -382,7 +382,7 @@ namespace KGeoBag
         }
 
         //visit the volume
-        if( fVolume.Null() == false )
+        if( fVolume )
         {
             fVolume->Accept( aVisitor );
         }
@@ -421,7 +421,7 @@ namespace KGeoBag
     //navigable
     //*********
 
-    void KGSpace::Volume( const KSmartPointer< KGVolume >& aVolume )
+    void KGSpace::Volume( const std::shared_ptr< KGVolume >& aVolume )
     {
         //clear out old boundaries
         KGSurface* tBoundary;
@@ -434,13 +434,13 @@ namespace KGeoBag
         }
 
         //put in new boundaries
-        vector< KSmartPointer< KGArea > >::const_iterator tAreaIt;
+        vector< std::shared_ptr< KGBoundary > >::const_iterator tAreaIt;
         for( tAreaIt = aVolume->Boundaries().begin(); tAreaIt != aVolume->Boundaries().end(); tAreaIt++ )
         {
             tBoundary = new KGSurface();
             tBoundary->SetName( (*tAreaIt)->GetName() );
             tBoundary->SetTags( (*tAreaIt)->GetTags() );
-            tBoundary->Area( *tAreaIt );
+            tBoundary->Area( std::static_pointer_cast<KGArea,KGBoundary>(*tAreaIt) );  // FIXME this code looks ugly
             AddBoundary( tBoundary );
         }
 
@@ -449,14 +449,14 @@ namespace KGeoBag
 
         return;
     }
-    const KSmartPointer< KGVolume >& KGSpace::Volume() const
+    const std::shared_ptr< KGVolume >& KGSpace::Volume() const
     {
         return fVolume;
     }
 
     bool KGSpace::Outside( const KThreeVector& aQueryPoint ) const
     {
-        if( fVolume.Null() == false )
+        if( fVolume )
         {
             KThreeVector tLocalQueryPoint;
 
@@ -483,7 +483,7 @@ namespace KGeoBag
     }
     KThreeVector KGSpace::Point( const KThreeVector& aQueryPoint ) const
     {
-        if( fVolume.Null() == false )
+        if( fVolume )
         {
             KThreeVector tLocalQueryPoint;
             KThreeVector tLocalNearestPoint;
@@ -542,7 +542,7 @@ namespace KGeoBag
     }
     KThreeVector KGSpace::Normal( const KThreeVector& aQueryPoint ) const
     {
-        if( fVolume.Null() == false )
+        if( fVolume )
         {
             KThreeVector tLocalQueryPoint;
             KThreeVector tLocalNearestNormal;

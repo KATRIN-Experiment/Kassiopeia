@@ -76,12 +76,12 @@ void KZonalHarmonicMagnetostaticFieldSolver::InitializeCore( KElectromagnetConta
     return;
 }
 
-KEMThreeVector KZonalHarmonicMagnetostaticFieldSolver::MagneticPotentialCore( const KPosition& P ) const
+KThreeVector KZonalHarmonicMagnetostaticFieldSolver::MagneticPotentialCore( const KPosition& P ) const
 {
     return fZonalHarmonicFieldSolver->VectorPotential( P );
 }
 
-KEMThreeVector KZonalHarmonicMagnetostaticFieldSolver::MagneticFieldCore( const KPosition& P ) const
+KThreeVector KZonalHarmonicMagnetostaticFieldSolver::MagneticFieldCore( const KPosition& P ) const
 {
     return fZonalHarmonicFieldSolver->MagneticField( P );
 }
@@ -91,7 +91,7 @@ KGradient KZonalHarmonicMagnetostaticFieldSolver::MagneticGradientCore( const KP
     return fZonalHarmonicFieldSolver->MagneticFieldGradient( P );
 }
 
-std::pair<KEMThreeVector, KGradient> KZonalHarmonicMagnetostaticFieldSolver::MagneticFieldAndGradientCore( const KPosition& P ) const
+std::pair<KThreeVector, KGradient> KZonalHarmonicMagnetostaticFieldSolver::MagneticFieldAndGradientCore( const KPosition& P ) const
 {
     return fZonalHarmonicFieldSolver->MagneticFieldAndGradient( P );
 }

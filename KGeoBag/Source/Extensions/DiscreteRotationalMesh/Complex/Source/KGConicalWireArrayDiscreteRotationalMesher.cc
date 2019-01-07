@@ -9,43 +9,39 @@ namespace KGeoBag
     void KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface(KGWrappedSurface< KGConicalWireArray >* conicalWireArraySurface)
     {
       KTransformation transform;
-      transform.SetRotationAxisAngle(conicalWireArraySurface->GetObject()->GetThetaStart(),0.,0.);
+      transform.SetRotationAxisAngle( conicalWireArraySurface->GetObject()->GetThetaStart(), 0., 0. );
 
-      std::vector<double> segments(conicalWireArraySurface->GetObject()->GetNDisc(),0.);
+      const double wireLength = conicalWireArraySurface->GetObject()->GetLength();
+      const unsigned int wireCount = conicalWireArraySurface->GetObject()->GetNWires();
+      const double wireR1 = conicalWireArraySurface->GetObject()->GetR1();
+      const double wireZ1 = conicalWireArraySurface->GetObject()->GetZ1();
+      const double wireR2 = conicalWireArraySurface->GetObject()->GetR2();
+      const double wireZ2 = conicalWireArraySurface->GetObject()->GetZ2();
+      const double wireDiameter = conicalWireArraySurface->GetObject()->GetDiameter();
 
-      KGComplexMesher::DiscretizeInterval(
-    		  conicalWireArraySurface->GetObject()->GetLength(),
-    		  conicalWireArraySurface->GetObject()->GetNDisc(),
-    		  conicalWireArraySurface->GetObject()->GetNDiscPower(),
-    		  segments);
+      const double wireNDisc = conicalWireArraySurface->GetObject()->GetNDisc();
 
-      KThreeVector start(conicalWireArraySurface->GetObject()->GetR1(),
-			 0.,
-			 conicalWireArraySurface->GetObject()->GetZ1());
+      std::vector<double> segments( wireNDisc, 0. );
+      KGComplexMesher::DiscretizeInterval( wireLength, wireNDisc, conicalWireArraySurface->GetObject()->GetNDiscPower(), segments );
 
-      KThreeVector end = start;
+      KThreeVector startPoint( wireR1, 0., wireZ1 );
+      KThreeVector endPoint( wireR2, 0., wireZ2 );
 
-      KThreeVector v1( conicalWireArraySurface->GetObject()->GetR1(), 0., conicalWireArraySurface->GetObject()->GetZ1());
-      KThreeVector v2( conicalWireArraySurface->GetObject()->GetR2(), 0., conicalWireArraySurface->GetObject()->GetZ2());
-      KThreeVector vd = v2-v1;
-      double dist = vd.Magnitude();
+      KThreeVector distanceVector = endPoint - startPoint;
+      KThreeVector unitVector(distanceVector/distanceVector.Magnitude());
 
-      KThreeVector unit(vd/dist);
-
-      for (unsigned int i=0;i<conicalWireArraySurface->GetObject()->GetNDisc();i++)
+      for( unsigned int i=0; i<wireNDisc; i++ )
       {
-		start = end;
-		end += segments[i]*unit;
+		endPoint += segments[i]*unitVector;
 
-		KGMeshWire singleWire(start,
-					  start + segments[i]*unit,
-					  conicalWireArraySurface->GetObject()->GetDiameter());
-
+		KGMeshWire singleWire(startPoint, endPoint, wireDiameter );
 		singleWire.Transform(transform);
 
 		KGDiscreteRotationalMeshWire* w = new KGDiscreteRotationalMeshWire(singleWire);
-		w->NumberOfElements(conicalWireArraySurface->GetObject()->GetNWires());
-		fCurrentElements->push_back(w);
+		w->NumberOfElements( wireCount );
+		GetCurrentElements()->push_back(w);
+
+        startPoint = endPoint;
       }
     }
 }

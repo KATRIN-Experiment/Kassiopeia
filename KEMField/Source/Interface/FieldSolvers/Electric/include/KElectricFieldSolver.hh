@@ -5,11 +5,11 @@
  *      Author: gosda
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_KELECTRICFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_KELECTRICFIELDSOLVER_HH_
+#ifndef KELECTRICFIELDSOLVER_HH_
+#define KELECTRICFIELDSOLVER_HH_
 
+#include "KThreeVector_KEMField.hh"
 #include "KSurfaceContainer.hh"
-#include "KEMThreeVector.hh"
 
 namespace KEMField {
 
@@ -30,11 +30,11 @@ public:
         return PotentialCore(P);
     }
 
-    KEMThreeVector ElectricField(const KPosition& P) const {
+    KThreeVector ElectricField(const KPosition& P) const {
         return ElectricFieldCore(P);
     }
 
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const
+    std::pair<KThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const
     {
         return ElectricFieldAndPotentialCore(P);
     }
@@ -42,9 +42,9 @@ public:
 private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
     virtual double PotentialCore(const KPosition& P ) const = 0;
-    virtual KEMThreeVector ElectricFieldCore( const KPosition& P) const = 0;
+    virtual KThreeVector ElectricFieldCore( const KPosition& P) const = 0;
 
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -53,9 +53,9 @@ private:
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P);
-        KEMThreeVector field = ElectricFieldCore(P);
+        KThreeVector field = ElectricFieldCore(P);
 
-        return std::pair<KEMThreeVector,double>(field,potential);
+        return std::pair<KThreeVector,double>(field,potential);
     };
 
     bool fInitialized;
@@ -63,4 +63,4 @@ private:
 
 }
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_KELECTRICFIELDSOLVER_HH_ */
+#endif /* KELECTRICFIELDSOLVER_HH_ */

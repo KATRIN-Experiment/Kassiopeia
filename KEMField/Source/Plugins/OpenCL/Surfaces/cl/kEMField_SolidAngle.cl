@@ -8,7 +8,7 @@
 // Functions for computing solid angle from Euler-Eriksson's formula as described in paper PIER 63, 243-278, 2006
 // Author: Daniel Hilk
 
-#define SOLIDANGLEMINDIST 1.e-15 /* for check if field point is on surface */
+#define SOLIDANGLEMINDIST 1.e-12 /* for check if field point is on surface */
 
 //______________________________________________________________________________
 

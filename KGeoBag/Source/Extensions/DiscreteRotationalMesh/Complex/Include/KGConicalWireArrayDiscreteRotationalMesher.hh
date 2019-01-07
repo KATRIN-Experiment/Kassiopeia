@@ -12,10 +12,7 @@ namespace KGeoBag
     public KGWrappedSurface<KGConicalWireArray>::Visitor
   {
   public:
-    using KGDiscreteRotationalMesherBase::VisitExtendedSurface;
-    using KGDiscreteRotationalMesherBase::VisitExtendedSpace;
 
-  public:
     KGConicalWireArrayDiscreteRotationalMesher()
     {
     }
@@ -23,7 +20,7 @@ namespace KGeoBag
     {
     }
 
-  protected:
+  public:
     void VisitWrappedSurface(KGWrappedSurface< KGConicalWireArray >* conicalWireArraySurface);
   };
 

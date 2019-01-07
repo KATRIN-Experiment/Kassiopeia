@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # Kommon version
 set( MODULE_VERSION_MAJOR 1 )
-set( MODULE_VERSION_MINOR 2 )
+set( MODULE_VERSION_MINOR 3 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
@@ -29,21 +29,19 @@ kasper_module_debug()
 set(EXTERNAL_LIBRARIES)
 
 # external
-option( Kommon_USE_Log4CXX "Enable advanced logging facilities, if LOG4CXX library is available." OFF )
+find_package( Log4CXX )
+if(LOG4CXX_FOUND)
+    option( Kommon_USE_Log4CXX "Enable advanced logging facilities, if LOG4CXX library is available." ON )
+endif()
 mark_as_advanced( CLEAR Kommon_USE_Log4CXX )
-set(LOG4CXX_FOUND FALSE)
 
 if(Kommon_USE_Log4CXX)
-    find_package( Log4CXX )
-
-    if( LOG4CXX_FOUND )
         set(LOGGER_CONFIGURATION "${Kommon_CONFIG_INSTALL_DIR}/log4cxx.properties" )
         set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
             "LOG4CXX;LOGGER_CONFIGURATION=${LOGGER_CONFIGURATION}"
         )
         kasper_external_include_directories( ${LOG4CXX_INCLUDE_DIR} )
         list(APPEND EXTERNAL_LIBRARIES ${LOG4CXX_LIBRARY} )
-    endif()
 endif()
 
 # to be populated by subdirectories

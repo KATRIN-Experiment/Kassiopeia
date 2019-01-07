@@ -15,7 +15,7 @@ set (HASHGENERATOR_SOURCEFILES
 ##################################################
 
 add_library (KEMHashGenerator SHARED ${HASHGENERATOR_SOURCEFILES})
-target_link_libraries (KEMHashGenerator KEMCore)
+target_link_libraries (KEMHashGenerator KEMCore KEMMath KGeoBagMath)
 
 kasper_install_headers (${HASHGENERATOR_HEADERFILES})
 kasper_install_libraries (KEMHashGenerator)

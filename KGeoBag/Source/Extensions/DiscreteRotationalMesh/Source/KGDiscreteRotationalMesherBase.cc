@@ -11,15 +11,10 @@ namespace KGeoBag
     {
     }
 
-    void KGDiscreteRotationalMesherBase::VisitExtendedSurface( KGExtendedSurface< KGDiscreteRotationalMesh >* aSurface )
-    {
-        fCurrentElements = aSurface->Elements();
-        return;
-    }
+    void KGDiscreteRotationalMesherBase::SetMeshElementOutput( KGDiscreteRotationalMeshElementVector* aMeshElementVector)
 
-    void KGDiscreteRotationalMesherBase::VisitExtendedSpace( KGExtendedSpace< KGDiscreteRotationalMesh >* aSpace )
     {
-        fCurrentElements = aSpace->Elements();
+        fCurrentElements = aMeshElementVector;
         return;
     }
 

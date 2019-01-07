@@ -60,6 +60,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenDirectionSphericalCompositeBuilder.h
     Generators/Include/KSGenDirectionSurfaceCompositeBuilder.h
     Generators/Include/KSGenSpinCompositeBuilder.h
+    Generators/Include/KSGenSpinRelativeCompositeBuilder.h
     Generators/Include/KSGenTimeCompositeBuilder.h
     Generators/Include/KSGenGeneratorCompositeBuilder.h
 
@@ -118,6 +119,8 @@ set( BINDINGS_HEADER_FILES
     Interactions/Include/KSIntCalculatorKESSBuilder.h
     Interactions/Include/KSIntScatteringBuilder.h
     Interactions/Include/KSIntSpinFlipBuilder.h
+    Interactions/Include/KSIntSpinFlipPulseBuilder.h
+    Interactions/Include/KSIntSpinRotateYPulseBuilder.h
     Interactions/Include/KSIntDecayBuilder.h
     Interactions/Include/KSIntSurfaceSpecularBuilder.h
     Interactions/Include/KSIntSurfaceUCNBuilder.h
@@ -150,6 +153,8 @@ set( BINDINGS_HEADER_FILES
     Terminators/Include/KSTermMinLongEnergyBuilder.h
     Terminators/Include/KSTermMaxLongEnergyBuilder.h
     Terminators/Include/KSTermMaxTimeBuilder.h
+    Terminators/Include/KSTermMaxTotalTimeBuilder.h
+    Terminators/Include/KSTermMaxStepTimeBuilder.h
     Terminators/Include/KSTermMaxLengthBuilder.h
     Terminators/Include/KSTermMaxStepsBuilder.h
     Terminators/Include/KSTermTrappedBuilder.h
@@ -191,6 +196,7 @@ if( Kassiopeia_USE_ROOT )
         Generators/Include/KSGenGeneratorSimulationBuilder.h
         Writers/Include/KSWriteROOTBuilder.h
         Writers/Include/KSWriteROOTConditionOutputBuilder.h
+        Writers/Include/KSWriteROOTConditionPeriodicBuilder.h
         Writers/Include/KSWriteROOTConditionTerminatorBuilder.h
         Writers/Include/KSWriteROOTConditionStepBuilder.h
         Visualization/Include/KSROOTTrackPainterBuilder.h
@@ -274,6 +280,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx
     Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx
     Generators/Source/KSGenSpinCompositeBuilder.cxx
+    Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx
     Generators/Source/KSGenTimeCompositeBuilder.cxx
     Generators/Source/KSGenGeneratorCompositeBuilder.cxx
 
@@ -331,6 +338,8 @@ set( BINDINGS_SOURCE_FILES
     Interactions/Source/KSIntCalculatorKESSBuilder.cxx
     Interactions/Source/KSIntScatteringBuilder.cxx
     Interactions/Source/KSIntSpinFlipBuilder.cxx
+    Interactions/Source/KSIntSpinFlipPulseBuilder.cxx
+    Interactions/Source/KSIntSpinRotateYPulseBuilder.cxx
     Interactions/Source/KSIntDecayBuilder.cxx
     Interactions/Source/KSIntSurfaceSpecularBuilder.cxx
     Interactions/Source/KSIntSurfaceUCNBuilder.cxx
@@ -363,6 +372,8 @@ set( BINDINGS_SOURCE_FILES
     Terminators/Source/KSTermMinLongEnergyBuilder.cxx
     Terminators/Source/KSTermMaxLongEnergyBuilder.cxx
     Terminators/Source/KSTermMaxTimeBuilder.cxx
+    Terminators/Source/KSTermMaxTotalTimeBuilder.cxx
+    Terminators/Source/KSTermMaxStepTimeBuilder.cxx
     Terminators/Source/KSTermMaxLengthBuilder.cxx
     Terminators/Source/KSTermMaxStepsBuilder.cxx
     Terminators/Source/KSTermTrappedBuilder.cxx
@@ -404,6 +415,7 @@ if( Kassiopeia_USE_ROOT )
         Generators/Source/KSGenGeneratorSimulationBuilder.cxx
         Writers/Source/KSWriteROOTBuilder.cxx
     	Writers/Source/KSWriteROOTConditionOutputBuilder.cxx
+        Writers/Source/KSWriteROOTConditionPeriodicBuilder.cxx
         Writers/Source/KSWriteROOTConditionTerminatorBuilder.cxx
         Writers/Source/KSWriteROOTConditionStepBuilder.cxx
         Visualization/Source/KSROOTTrackPainterBuilder.cxx

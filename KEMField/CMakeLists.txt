@@ -1,47 +1,53 @@
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
+if(POLICY CMP0053)
+    cmake_policy(SET CMP0053 NEW)
+endif()
+
 # KEMField version
 set(MODULE_VERSION_MAJOR 3)
-set(MODULE_VERSION_MINOR 0)
+set(MODULE_VERSION_MINOR 6)
 set(MODULE_VERSION_PATCH 0)
 set(MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}")
 
-#project(KEMField VERSION ${MODULE_VERSION})
-project(KEMField)
+project( KEMField )
 
-include(KasperDefaults)
+include( KasperDefaults )
 
-if(POLICY CMP0053)
-    cmake_policy(SET CMP0053 OLD)
-endif()
+# require c++11
+kasper_require_cpp11()
 
-# paths
-kasper_module_paths( KEMField )
+# module options
 
-#set(MODULE_HEADER_DIRS)
-#set(MODULE_CFLAGS)
-#set(KASPER_INCLUDE_DIRS)
-#set(EXTERNAL_INCLUDE_DIRS)
-
-kasper_find_module(Kommon)
-
-#option (@PROJECT_NAME@_USE_VTK "Enables the use of VTK for visualization" OFF)
-set (@PROJECT_NAME@_USE_VTK ${KASPER_USE_VTK})
-if (@PROJECT_NAME@_USE_VTK)
+#option (${PROJECT_NAME}_USE_VTK "Enables the use of VTK for visualization" OFF)
+set (${PROJECT_NAME}_USE_VTK ${KASPER_USE_VTK})
+if (${PROJECT_NAME}_USE_VTK)
   kasper_find_vtk()
 endif()
 
-#option (@PROJECT_NAME@_USE_ROOT "Link against ROOT" OFF)
-set (@PROJECT_NAME@_USE_ROOT ${KASPER_USE_ROOT})
-if (@PROJECT_NAME@_USE_ROOT)
+#option (${PROJECT_NAME}_USE_ROOT "Link against ROOT" OFF)
+set (${PROJECT_NAME}_USE_ROOT ${KASPER_USE_ROOT})
+if (${PROJECT_NAME}_USE_ROOT)
   find_package(ROOT REQUIRED)
 endif()
 
 #option (KEMField_USE_GSL "Use GSL" OFF)
-set (@PROJECT_NAME@_USE_GSL ${KASPER_USE_GSL})
-if (@PROJECT_NAME@_USE_GSL)
+set (${PROJECT_NAME}_USE_GSL ${KASPER_USE_GSL})
+if (${PROJECT_NAME}_USE_GSL)
   find_package(GSL REQUIRED)
 endif ()
+
+# paths
+kasper_module_paths( KEMField )
+
+# internal dependencies: kommon
+kasper_find_module( Kommon )
+add_cflag (KEMFIELD_USE_KOMMON)
+
+# internal dependencies: kgeobag
+kasper_find_module( KGeoBag )
+add_cflag (KEMFIELD_USE_KGEOBAG)
+
 
 # Input files
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/data)
@@ -94,12 +100,13 @@ add_subdirectory(${SOURCE}/Interface/FieldSolvers/Electric)
 add_subdirectory(${SOURCE}/Interface/FieldSolvers/Magnetic)
 add_subdirectory(${SOURCE}/Interface/Fields/Magnetic)
 add_subdirectory(${SOURCE}/Interface/Fields/Electric)
-add_subdirectory(${SOURCE}/Plugins/KGeoBag)
+add_subdirectory(${SOURCE}/Interface/KGeoBag)
 add_subdirectory(${SOURCE}/Plugins/VTKPart2)
-add_subdirectory(${SOURCE}/Plugins/Bindings)
+add_subdirectory(${SOURCE}/Bindings)
 add_subdirectory(${SOURCE}/Plugins/Root)
-add_subdirectory(${SOURCE}/Applications)
-add_subdirectory(${SOURCE}/Tests)
+add_subdirectory(${SOURCE}/Applications/Calculation)
+add_subdirectory(${SOURCE}/Applications/Test)
+add_subdirectory(${SOURCE}/Applications/Tools)
 add_subdirectory(${SOURCE}/FastMultipole/Test)
 add_subdirectory(${SOURCE}/FastMultipole/Applications)
 add_subdirectory(${SOURCE}/XML)

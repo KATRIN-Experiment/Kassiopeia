@@ -13,7 +13,7 @@ namespace KGeoBag
         public:
             KTwoMatrix();
             KTwoMatrix( const double& anXX, const double& anXY, const double& aYX, const double& aYY );
-            virtual ~KTwoMatrix();
+            virtual ~KTwoMatrix() = default;
 
             //assignment
 
@@ -97,7 +97,7 @@ namespace KGeoBag
     inline KTwoMatrix::KTwoMatrix( const vector<double>& anArray )
     {
         assert( anArray.size() == 4 );
-        
+
         fData[0] = anArray[0];
         fData[1] = anArray[1];
 

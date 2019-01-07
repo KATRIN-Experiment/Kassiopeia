@@ -59,8 +59,6 @@ namespace KGeoBag
     double p_theta = KGExtrudedObject::Theta(P[0],P[1]);
     double p_z = P[2];
 
-    bool withinZ = true;
-    (void) withinZ; //remove compiler warning
     double w_z = P[2];
     double z_limits[2] = {fZ1,fZ2};
     double d_theta[2] = {2.*M_PI*fR1/fNWires,2.*M_PI*fR2/fNWires};
@@ -75,12 +73,10 @@ namespace KGeoBag
     if (w_z < z_limits[0])
     {
       w_z = z_limits[0];
-      withinZ = false;
     }
     if (w_z > z_limits[1])
     {
       w_z = z_limits[1];
-      withinZ = false;
     }
 
     bool withinR = false;

@@ -883,7 +883,7 @@ namespace KGeoBag
 
     void KGROOTGeometryPainter::VisitWrappedSurface( KGWrappedSurface<KGPortHousing>* aPortHousingSurface)
     {
-        KSmartPointer< KGPortHousing > fPortHousing = aPortHousingSurface ->GetObject();
+        std::shared_ptr< KGPortHousing > fPortHousing = aPortHousingSurface ->GetObject();
 
         //First we compute the main cylinder.
         PortMesh tMainPortMesh;
@@ -985,7 +985,7 @@ namespace KGeoBag
 
     void KGROOTGeometryPainter::VisitWrappedSurface( KGWrappedSurface<KGBeam>* aBeamSurface){
 
-        KSmartPointer<KGBeam> fBeam = aBeamSurface->GetObject();
+        std::shared_ptr<KGBeam> fBeam = aBeamSurface->GetObject();
         vector<vector<double>> tStartCoord = fBeam->GetStartCoords();
         vector<vector<double>> tEndCoord = fBeam -> GetEndCoords();
 
@@ -1028,7 +1028,7 @@ namespace KGeoBag
     }
     void KGROOTGeometryPainter::VisitWrappedSurface(KGWrappedSurface<KGComplexAnnulus>* aComplexAnnulus)
     {
-        KSmartPointer<KGComplexAnnulus> fComplexAnnulus = aComplexAnnulus->GetObject();
+        std::shared_ptr<KGComplexAnnulus> fComplexAnnulus = aComplexAnnulus->GetObject();
 
         //Meshing the main circle
 
@@ -1835,7 +1835,7 @@ namespace KGeoBag
 
         return;
     }
-    void KGROOTGeometryPainter::ClosedPointsToFlatMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh)
+    void KGROOTGeometryPainter::ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh)
     {
         unsigned int tArc = fCurrentData->GetArc();
 
@@ -1864,7 +1864,7 @@ namespace KGeoBag
         return;
     }
 
-    void KGROOTGeometryPainter::ClosedPointsToRingMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh)
+    void KGROOTGeometryPainter::ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh)
     {
         unsigned int tArc = fCurrentData->GetArc();
 

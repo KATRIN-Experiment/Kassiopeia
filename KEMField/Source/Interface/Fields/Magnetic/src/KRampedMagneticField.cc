@@ -31,16 +31,16 @@ KRampedMagneticField::KRampedMagneticField()  :
 KRampedMagneticField::~KRampedMagneticField() {
 }
 
-KEMThreeVector KRampedMagneticField::MagneticPotentialCore(
+KThreeVector KRampedMagneticField::MagneticPotentialCore(
         const KPosition& aSamplePoint, const double& aSampleTime) const {
-    KEMThreeVector aPotential = fRootMagneticField->MagneticPotential( aSamplePoint, aSampleTime );
+    KThreeVector aPotential = fRootMagneticField->MagneticPotential( aSamplePoint, aSampleTime );
     double Modulation = GetModulationFactor( aSampleTime );
     return aPotential * Modulation;
 }
 
-KEMThreeVector KRampedMagneticField::MagneticFieldCore(
+KThreeVector KRampedMagneticField::MagneticFieldCore(
         const KPosition& aSamplePoint, const double& aSampleTime) const {
-    KEMThreeVector aField = fRootMagneticField->MagneticField( aSamplePoint, aSampleTime);
+    KThreeVector aField = fRootMagneticField->MagneticField( aSamplePoint, aSampleTime);
     double Modulation = GetModulationFactor( aSampleTime );
     return aField * Modulation;
 }

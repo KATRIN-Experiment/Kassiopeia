@@ -1,9 +1,8 @@
 #ifndef KCONICSECTION_DEF
 #define KCONICSECTION_DEF
 
-#include "KShape.hh"
-
-#include "KSymmetryGroup.hh"
+#include "../../../Surfaces/include/KShape.hh"
+#include "../../../Surfaces/include/KSymmetryGroup.hh"
 
 namespace KEMField
 {

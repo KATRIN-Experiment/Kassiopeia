@@ -89,6 +89,8 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/KMessageBuilder.h
     Utility/KNamedBuilder.h
     Utility/KProgressDisplay.h
+    Utility/PositiveValue.h
+    Utility/Printable.h
     Logging/KLogger.h
 )
 
@@ -135,8 +137,11 @@ set(KOMMON_CORE_SOURCE_FILES
     Utility/KToolbox.cxx
     Utility/KMessageBuilder.cxx
     Utility/KNamedBuilder.cxx
+    Utility/Printable.cxx
     Logging/KLogger.cxx
 )
+
+set_source_files_properties(Initialization/KVariant.cxx PROPERTIES COMPILE_FLAGS -D__GLIBCXX_USE_CXX11_ABI=0)
 
 if( LOG4CXX_FOUND )
     if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE MATCHES "DEBUG" OR CMAKE_BUILD_TYPE MATCHES "RELWITHDEBINFO" )

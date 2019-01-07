@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "KBasis.hh"
+#include "../../../Surfaces/include/KBasis.hh"
 
 namespace KEMField
 {

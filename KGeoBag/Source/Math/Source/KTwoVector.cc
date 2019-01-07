@@ -17,8 +17,5 @@ namespace KGeoBag
         fData[0] = 0.;
         fData[1] = 0.;
     }
-    KTwoVector::~KTwoVector()
-    {
-    }
 
 }

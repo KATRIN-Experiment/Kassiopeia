@@ -26,7 +26,7 @@ KMagneticSuperpositionField::KMagneticSuperpositionField()  :
 KMagneticSuperpositionField::~KMagneticSuperpositionField() {
 }
 
-KEMThreeVector KMagneticSuperpositionField::MagneticPotentialCore(
+KThreeVector KMagneticSuperpositionField::MagneticPotentialCore(
         const KPosition& aSamplePoint, const double& aSampleTime) const
 {
     CheckAndPrintCachingDisabledWarning();
@@ -36,7 +36,7 @@ KEMThreeVector KMagneticSuperpositionField::MagneticPotentialCore(
     return CalculateDirectPotential(aSamplePoint, aSampleTime);
 }
 
-KEMThreeVector KMagneticSuperpositionField::MagneticFieldCore(
+KThreeVector KMagneticSuperpositionField::MagneticFieldCore(
         const KPosition& aSamplePoint, const double& aSampleTime) const
 {
     CheckAndPrintCachingDisabledWarning();
@@ -56,9 +56,9 @@ KGradient KMagneticSuperpositionField::MagneticGradientCore(
 
 }
 
-KEMThreeVector KMagneticSuperpositionField::CalculateCachedPotential(
+KThreeVector KMagneticSuperpositionField::CalculateCachedPotential(
         const KPosition& aSamplePoint, const double& aSampleTime) const {
-    KEMThreeVector aPotential (KEMThreeVector::sZero);
+    KThreeVector aPotential (KThreeVector::sZero);
     //looking in cache for aSamplePoint
     auto potentialVector = fPotentialCache.find(aSamplePoint);
     if(potentialVector != fPotentialCache.end() ) {
@@ -70,8 +70,8 @@ KEMThreeVector KMagneticSuperpositionField::CalculateCachedPotential(
     }
 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
-    vector<KEMThreeVector> tPotentials;
-    KEMThreeVector tCurrentPotential;
+    vector<KThreeVector> tPotentials;
+    KThreeVector tCurrentPotential;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++)
     {
         tCurrentPotential = fMagneticFields.at( tIndex )->MagneticPotential( aSamplePoint, aSampleTime );
@@ -82,9 +82,9 @@ KEMThreeVector KMagneticSuperpositionField::CalculateCachedPotential(
     return aPotential;
 }
 
-KEMThreeVector KMagneticSuperpositionField::CalculateCachedField(
+KThreeVector KMagneticSuperpositionField::CalculateCachedField(
         const KPosition& aSamplePoint, const double& aSampleTime) const {
-    KEMThreeVector aField (KEMThreeVector::sZero);
+    KThreeVector aField (KThreeVector::sZero);
     //looking in cache for aSamplePoint
     auto fieldVector = fFieldCache.find(aSamplePoint);
     if(fieldVector != fFieldCache.end() ) {
@@ -96,8 +96,8 @@ KEMThreeVector KMagneticSuperpositionField::CalculateCachedField(
     }
 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
-    vector<KEMThreeVector> tFields;
-    KEMThreeVector tCurrentField;
+    vector<KThreeVector> tFields;
+    KThreeVector tCurrentField;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++)
     {
         tCurrentField = fMagneticFields.at( tIndex )->MagneticField( aSamplePoint, aSampleTime );
@@ -166,10 +166,10 @@ void KMagneticSuperpositionField::InitializeCore() {
     }
 }
 
-KEMThreeVector KMagneticSuperpositionField::CalculateDirectPotential(
+KThreeVector KMagneticSuperpositionField::CalculateDirectPotential(
         const KPosition& aSamplePoint, const double& aSampleTime) const
 {
-    KEMThreeVector potential(KEMThreeVector::sZero);
+    KThreeVector potential(KThreeVector::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++)
     {
         potential += fEnhancements.at(tIndex) *
@@ -178,10 +178,10 @@ KEMThreeVector KMagneticSuperpositionField::CalculateDirectPotential(
     return potential;
 }
 
-KEMThreeVector KMagneticSuperpositionField::CalculateDirectField(
+KThreeVector KMagneticSuperpositionField::CalculateDirectField(
         const KPosition& aSamplePoint, const double& aSampleTime) const
 {
-    KEMThreeVector field(KEMThreeVector::sZero);
+    KThreeVector field(KThreeVector::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++)
     {
         field += fEnhancements.at(tIndex) *

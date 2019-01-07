@@ -6,7 +6,6 @@
  */
 #include "KSElectricKEMField.h"
 #include "KElectricField.hh"
-#include "KEMVectorConverters.hh"
 
 using namespace KEMField;
 
@@ -26,7 +25,7 @@ KSElectricKEMField::KSElectricKEMField(const KSElectricKEMField& aCopy) :
 KSElectricKEMField::KSElectricKEMField(KEMField::KElectricField* field) :
 	KSComponent(),fField(field)
 {
-	fName = field->Name();
+	SetName(field->Name());
 }
 
 
@@ -38,7 +37,7 @@ KSElectricKEMField* KSElectricKEMField::Clone() const
 void KSElectricKEMField::CalculatePotential(
 		const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
 		double& aPotential) {
-	aPotential = fField->Potential(K2KEMThreeVector(aSamplePoint),aSampleTime);
+	aPotential = fField->Potential(aSamplePoint,aSampleTime);
 }
 
 void KSElectricKEMField::SetElectricField(KEMField::KElectricField* field) {
@@ -53,16 +52,14 @@ const KEMField::KElectricField* KSElectricKEMField::getElectricField()
 void KSElectricKEMField::CalculateField(
 		const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
 		KGeoBag::KThreeVector& aField) {
-	KEMThreeVector field =
-			fField->ElectricField(K2KEMThreeVector(aSamplePoint),aSampleTime);
-	aField = KEM2KThreeVector(field);
+	 aField = fField->ElectricField(aSamplePoint,aSampleTime);
 }
 
 void
 KSElectricKEMField::CalculateFieldAndPotential( const KGeoBag::KThreeVector& aSamplePoint,
         const double& aSampleTime, KGeoBag::KThreeVector& aField, double& aPotential)
 {
-    std::pair<KEMThreeVector, double> potential_field_pair = fField->ElectricFieldAndPotential(K2KEMThreeVector(aSamplePoint),aSampleTime);
+    std::pair<KThreeVector, double> potential_field_pair = fField->ElectricFieldAndPotential(aSamplePoint,aSampleTime);
     aPotential = potential_field_pair.second;
     aField = potential_field_pair.first;
 }

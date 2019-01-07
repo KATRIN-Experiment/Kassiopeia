@@ -8,6 +8,14 @@
 namespace KGeoBag
 {
 
+/**
+* @class KThreeMatrix
+*
+* @brief A three by three matrix.
+*
+* @author D.L. Furse
+*/
+
     class KThreeMatrix
     {
         public:
@@ -18,7 +26,9 @@ namespace KGeoBag
 
         public:
             KThreeMatrix();
-            virtual ~KThreeMatrix();
+            virtual ~KThreeMatrix() = default;
+
+            static std::string Name() { return "KThreeMatrix"; }
 
             //assignment
 
@@ -27,6 +37,9 @@ namespace KGeoBag
 
             KThreeMatrix( const double anArray[ 9 ] );
             KThreeMatrix& operator=( const double anArray[ 9 ] );
+
+            explicit KThreeMatrix( const double& aValue );
+            KThreeMatrix& operator=( const double& aValue );
 
             KThreeMatrix( const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY, const double& aYZ, const double& aZX, const double& aZY, const double& aZZ );
             void SetComponents( const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY, const double& aYZ, const double& aZX, const double& aZY, const double& aZZ );
@@ -49,6 +62,9 @@ namespace KGeoBag
             //properties
 
             KThreeMatrix Inverse() const;
+            KThreeMatrix Transpose() const;
+            KThreeMatrix Multiply(const KThreeMatrix&) const;
+            KThreeMatrix MultiplyTranspose(const KThreeMatrix&) const;
             double Determinant() const;
             double Trace() const;
 
@@ -116,6 +132,37 @@ namespace KGeoBag
         fData[8] = anArray[8];
 
         return *this;
+    }
+
+    inline KThreeMatrix::KThreeMatrix( const double& aValue )
+    {
+      fData[0] = aValue;
+      fData[1] = aValue;
+      fData[2] = aValue;
+
+      fData[3] = aValue;
+      fData[4] = aValue;
+      fData[5] = aValue;
+
+      fData[6] = aValue;
+      fData[7] = aValue;
+      fData[8] = aValue;
+    }
+    inline KThreeMatrix& KThreeMatrix::operator=( const double& aValue )
+    {
+      fData[0] = aValue;
+      fData[1] = aValue;
+      fData[2] = aValue;
+
+      fData[3] = aValue;
+      fData[4] = aValue;
+      fData[5] = aValue;
+
+      fData[6] = aValue;
+      fData[7] = aValue;
+      fData[8] = aValue;
+
+      return *this;
     }
 
     inline KThreeMatrix::KThreeMatrix( const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY, const double& aYZ, const double& aZX, const double& aZY, const double& aZZ )
@@ -221,6 +268,37 @@ namespace KGeoBag
         {
             return KThreeMatrix( 0., 0., 0., 0., 0., 0., 0., 0., 0. );
         }
+    }
+    inline KThreeMatrix KThreeMatrix::Transpose() const
+    {
+      return KThreeMatrix(fData[0],fData[3],fData[6],fData[1],fData[4],fData[7],fData[2],fData[5],fData[8]);
+    }
+    inline KThreeMatrix KThreeMatrix::Multiply(const KThreeMatrix& b) const
+    {
+      const KThreeMatrix& a = *this;
+      return KThreeMatrix(a[0]*b[0] + a[1]*b[3] + a[2]*b[6],
+                a[0]*b[1] + a[1]*b[4] + a[2]*b[7],
+                a[0]*b[2] + a[1]*b[5] + a[2]*b[8],
+                a[3]*b[0] + a[4]*b[3] + a[5]*b[6],
+                a[3]*b[1] + a[4]*b[4] + a[5]*b[7],
+                a[3]*b[2] + a[4]*b[5] + a[5]*b[8],
+                a[6]*b[0] + a[7]*b[3] + a[8]*b[6],
+                a[6]*b[1] + a[7]*b[4] + a[8]*b[7],
+                a[6]*b[2] + a[7]*b[5] + a[8]*b[8]);
+    }
+    inline KThreeMatrix KThreeMatrix::MultiplyTranspose(const KThreeMatrix& b) const
+    {
+      // return a x b^{T}
+      const KThreeMatrix& a = *this;
+      return KThreeMatrix(a[0]*b[0] + a[1]*b[1] + a[2]*b[2],
+                a[0]*b[3] + a[1]*b[4] + a[2]*b[5],
+                a[0]*b[6] + a[1]*b[7] + a[2]*b[8],
+                a[3]*b[0] + a[4]*b[1] + a[5]*b[2],
+                a[3]*b[3] + a[4]*b[4] + a[5]*b[5],
+                a[3]*b[6] + a[4]*b[7] + a[5]*b[8],
+                a[6]*b[0] + a[7]*b[1] + a[8]*b[2],
+                a[6]*b[3] + a[7]*b[4] + a[8]*b[5],
+                a[6]*b[6] + a[7]*b[7] + a[8]*b[8]);
     }
     inline double KThreeMatrix::Determinant() const
     {

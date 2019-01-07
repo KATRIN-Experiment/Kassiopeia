@@ -1,6 +1,8 @@
 #ifndef KGAREA_HH_
 #define KGAREA_HH_
 
+#include "KGBoundary.hh"
+
 #include "KTwoVector.hh"
 #include "KThreeVector.hh"
 #include "KTransformation.hh"
@@ -14,16 +16,12 @@ using katrin::KTagged;
 #include "KConst.h"
 using katrin::KConst;
 
-#include "KSmartPointer.h"
-using katrin::KSmartPointer;
-
 #include <cmath>
 
 namespace KGeoBag
 {
-
     class KGArea :
-        public KTagged
+        public KGBoundary
     {
     	public:
     		class Visitor {

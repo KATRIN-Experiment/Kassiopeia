@@ -260,7 +260,6 @@ class KFMScalarMomentLocalToLocalConverter: public KFMNodeActor< KFMNode<ObjectT
                     //compute the down conversion of this node's local coefficients to it's children
                     //by pointwise multiply and sum
 
-                    std::complex<double> zero(0,0);
                     unsigned int tsi = 0;
                     for(int j=0; j <= fDegree; j++)
                     {

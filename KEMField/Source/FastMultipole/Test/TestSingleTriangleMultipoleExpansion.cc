@@ -24,7 +24,7 @@
 #include "KFMPoint.hh"
 #include "KFMPointCloud.hh"
 
-#include "KEMThreeVector.hh"
+#include "KThreeVector_KEMField.hh"
 
 #include "KVMPathIntegral.hh"
 #include "KVMLineIntegral.hh"

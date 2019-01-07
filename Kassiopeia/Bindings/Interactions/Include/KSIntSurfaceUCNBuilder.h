@@ -18,14 +18,24 @@ namespace katrin
             aContainer->CopyTo( fObject, &KNamed::SetName );
             return true;
         }
-        if( aContainer->GetName() == "transmission_probability" )
+        if( aContainer->GetName() == "eta" )
         {
-            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetProbability );
+            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetEta );
             return true;
         }
-        if( aContainer->GetName() == "spin_flip_probability" )
+        if( aContainer->GetName() == "alpha" )
         {
-            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetSpinFlipProbability );
+            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetAlpha );
+            return true;
+        }
+        if( aContainer->GetName() == "real_optical_potential" )
+        {
+            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetRealOpticalPotential );
+            return true;
+        }
+        if( aContainer->GetName() == "correlation_length" )
+        {
+            aContainer->CopyTo( fObject, &KSIntSurfaceUCN::SetCorrelationLength );
             return true;
         }
         return false;

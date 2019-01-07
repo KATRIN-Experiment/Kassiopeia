@@ -116,7 +116,7 @@ namespace KGeoBag
             bool ChordsIntersect( double theta1min, double theta1max, double theta2min, double theta2max );
             bool LengthsIntersect( double x1min, double x1max, double x2min, double x2max );
 
-            KSmartPointer< KGPortHousing > fPortHousing;
+            std::shared_ptr< KGPortHousing > fPortHousing;
     };
 }
 

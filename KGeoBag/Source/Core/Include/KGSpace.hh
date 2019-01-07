@@ -108,15 +108,15 @@ namespace KGeoBag
             //*********
 
         public:
-            void Volume( const KSmartPointer< KGVolume >& anVolume );
-            const KSmartPointer< KGVolume >& Volume() const;
+            void Volume( const std::shared_ptr< KGVolume >& anVolume );
+            const std::shared_ptr< KGVolume >& Volume() const;
 
             bool Outside( const KThreeVector& aPoint ) const;
             KThreeVector Point( const KThreeVector& aPoint ) const;
             KThreeVector Normal( const KThreeVector& aPoint ) const;
 
         private:
-            KSmartPointer< KGVolume > fVolume;
+            std::shared_ptr< KGVolume > fVolume;
     };
 
 }

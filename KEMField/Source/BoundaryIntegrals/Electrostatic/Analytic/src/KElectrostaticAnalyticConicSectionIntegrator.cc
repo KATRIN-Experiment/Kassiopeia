@@ -114,7 +114,7 @@ double KElectrostaticAnalyticConicSectionIntegrator::Potential(const KConicSecti
 }
 
 
-KEMThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,const KPosition& P) const
 {
 	static const double ln4=1.386294361119890;
 
@@ -205,7 +205,7 @@ KEMThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const
 	double Er = 1./(KEMConstants::Pi*KEMConstants::Eps0)*q[0];
 	double Ez = 1./(KEMConstants::Pi*KEMConstants::Eps0)*q[1];
 
-	KEMThreeVector field;
+	KThreeVector field;
 	field[2] = Ez;
 
 	if (par[1]<1.e-14)

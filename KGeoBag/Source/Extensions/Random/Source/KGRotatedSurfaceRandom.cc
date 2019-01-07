@@ -5,7 +5,7 @@ namespace KGeoBag
   void KGRotatedSurfaceRandom::VisitWrappedSurface(KGRotatedSurface* rotatedSurface)
   {
     KThreeVector random;
-    KSmartPointer<KGRotatedObject> rotatedObject = rotatedSurface->GetObject();
+    std::shared_ptr<KGRotatedObject> rotatedObject = rotatedSurface->GetObject();
 
     double area = rotatedObject->Area();
     double sample = Uniform(0.,area);

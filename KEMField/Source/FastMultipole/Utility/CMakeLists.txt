@@ -42,18 +42,18 @@ set (KFM_UTIL_LIBS
         KEMIO
 )
 
-if(@PROJECT_NAME@_USE_OPENCL)
+if(${PROJECT_NAME}_USE_OPENCL)
   list (APPEND KFM_UTIL_LIBS KEMOpenCLPlugin ${OPENCL_LIBRARIES})
   add_cflag (KEMFIELD_USE_OPENCL)
-endif(@PROJECT_NAME@_USE_OPENCL)
+endif(${PROJECT_NAME}_USE_OPENCL)
 
-if (@PROJECT_NAME@_USE_VTK)
+if (${PROJECT_NAME}_USE_VTK)
     list (APPEND KFM_UTIL_LIBS KEMVTKPlugin)
     add_cflag (KEMFIELD_USE_VTK)
-endif (@PROJECT_NAME@_USE_VTK)
+endif (${PROJECT_NAME}_USE_VTK)
 
 add_library (KFMUtility SHARED ${KFM_UTIL_SOURCEFILES})
-target_link_libraries (KFMUtility ${KFM_UTIL_LIBS})
+target_link_libraries (KFMUtility ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${KFM_UTIL_LIBS})
 
 kasper_install_headers (${KFM_UTIL_HEADERFILES})
 kasper_install_libraries (KFMUtility)

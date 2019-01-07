@@ -15,11 +15,12 @@ if( Kassiopeia_USE_ROOT )
     	KSWriteROOT.h
     	KSWriteROOTCondition.h
     	KSWriteROOTConditionOutput.h
+        KSWriteROOTConditionPeriodic.h
         KSWriteROOTConditionTerminator.h
         KSWriteROOTConditionStep.h
     )
 endif( Kassiopeia_USE_ROOT )
-set( WRITERS_HEADER_PATH 
+set( WRITERS_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${WRITERS_HEADER_BASENAMES} )
@@ -44,7 +45,7 @@ if( Kassiopeia_USE_ROOT )
     	KSWriteROOTCondition.cxx
     )
 endif( Kassiopeia_USE_ROOT )
-set( WRITERS_SOURCE_PATH 
+set( WRITERS_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${WRITERS_SOURCE_BASENAMES} )
@@ -53,7 +54,7 @@ endforeach( BASENAME )
 
 if( Kassiopeia_USE_VTK )
 	if( VTK_MAJOR_VERSION GREATER 5 )
-		set_property( SOURCE ${WRITERS_SOURCE_FILENAMES} APPEND PROPERTY 
+		set_property( SOURCE ${WRITERS_SOURCE_FILENAMES} APPEND PROPERTY
 	COMPILE_DEFINITIONS VTK6 )
 	endif()
 endif( Kassiopeia_USE_VTK )
@@ -61,7 +62,7 @@ endif( Kassiopeia_USE_VTK )
 # data files
 set( WRITERS_DATA_BASENAMES
 )
-set( WRITERS_DATA_PATH 
+set( WRITERS_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${WRITERS_DATA_BASENAMES} )

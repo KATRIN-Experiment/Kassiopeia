@@ -62,7 +62,7 @@ namespace katrin
         TQObject::Connect("TCanvas", "Closed()", "TApplication", fApplication, "Terminate()");
         TQObject::Connect("TPad", "Closed()", "TApplication", fApplication, "Terminate()");
 
-        fCanvas = new TCanvas( fName.c_str(), fName.c_str() , 10, 10, fCanvasWidth, fCanvasHeight);
+        fCanvas = new TCanvas( GetName().c_str(), GetName().c_str() , 10, 10, fCanvasWidth, fCanvasHeight);
 
         double tXMin(std::numeric_limits<double>::max());
         double tXMax(-1.0*std::numeric_limits<double>::max());

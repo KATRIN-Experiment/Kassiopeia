@@ -63,7 +63,7 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential_nNodes( const do
 	return (0.25*oneOverEps0*sum*data[6]);
 }
 
-KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNodes( const double* data, const KPosition& P,
+KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNodes( const double* data, const KPosition& P,
 		const unsigned short halfNoNodes, const double* nodes, const double* weights ) const
 {
 	const double lineCenter[3] = {
@@ -125,10 +125,10 @@ KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNod
 		EField[l] = prefac * sum[l];
 	}
 
-	return KEMThreeVector( EField[0], EField[1], EField[2] );
+	return KThreeVector( EField[0], EField[1], EField[2] );
 }
 
-std::pair<KEMThreeVector,double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential_nNodes( const double* data, const KPosition& P,
+std::pair<KThreeVector,double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential_nNodes( const double* data, const KPosition& P,
 		const unsigned short halfNoNodes, const double* nodes, const double* weights ) const
 {
 	const double lineCenter[3] = {
@@ -195,7 +195,7 @@ std::pair<KEMThreeVector,double> KElectrostaticQuadratureLineSegmentIntegrator::
 		EField[l] = prefac * sumField[l];
 	}
 	Phi = prefac * sumPhi;
-	return std::make_pair( KEMThreeVector(EField[0], EField[1], EField[2]), Phi );
+	return std::make_pair( KThreeVector(EField[0], EField[1], EField[2]), Phi );
 }
 
 double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegment* source,const KPosition& P) const
@@ -243,7 +243,7 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegme
 }
 
 
-KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
+KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
 {
 	// save geometry info on triangle into array, same convention as OpenCL implementation
 
@@ -287,7 +287,7 @@ KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(cons
 	return KElectrostaticAnalyticLineSegmentIntegrator::ElectricField( source, P );
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential(const KLineSegment* source, const KPosition& P) const
+std::pair<KThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential(const KLineSegment* source, const KPosition& P) const
 {
 	// save geometry info on triangle into array, same convention as OpenCL implementation
 
@@ -339,19 +339,19 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KSymmetryG
 	return potential;
 }
 
-KEMThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const
+KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const
 {
-	KEMThreeVector electricField(0.,0.,0.);
+	KThreeVector electricField(0.,0.,0.);
 	for (KSymmetryGroup<KLineSegment>::ShapeCIt it=source->begin();it!=source->end();++it)
 		electricField += ElectricField(*it,P);
 	return electricField;
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const
+std::pair<KThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const
 {
-	std::pair<KEMThreeVector, double> fieldAndPotential;
+	std::pair<KThreeVector, double> fieldAndPotential;
     double potential( 0. );
-    KEMThreeVector electricField( 0., 0., 0. );
+    KThreeVector electricField( 0., 0., 0. );
 
     for( KSymmetryGroup<KLineSegment>::ShapeCIt it=source->begin(); it!=source->end(); ++it ) {
     	fieldAndPotential = ElectricFieldAndPotential( *it, P );

@@ -190,7 +190,7 @@ namespace katrin
       KGExtrudedObject* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer<KGExtrudedObject> smartPtr(object);
+      std::shared_ptr<KGExtrudedObject> smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }
@@ -219,7 +219,7 @@ namespace katrin
       KGExtrudedObject* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer<KGExtrudedObject> smartPtr(object);
+      std::shared_ptr<KGExtrudedObject> smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }

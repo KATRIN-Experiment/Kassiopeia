@@ -5,6 +5,8 @@
 #include "KGPlanarClosedPath.hh"
 #include "KGShapeMessage.hh"
 
+#include <memory>
+
 namespace KGeoBag
 {
 
@@ -42,7 +44,7 @@ namespace KGeoBag
                     fFlattenedMeshPower( aCopy.fFlattenedMeshPower )
             {
             }
-            KGFlattenedClosedPathSurface( const KSmartPointer< XPathType >& aPath ) :
+            KGFlattenedClosedPathSurface( const std::shared_ptr< XPathType >& aPath ) :
                     KGArea(),
                     fPath( aPath ),
                     fZ( 0. ),
@@ -56,11 +58,11 @@ namespace KGeoBag
             }
 
         public:
-            KSmartPointer< XPathType >& Path()
+            std::shared_ptr< XPathType >& Path()
             {
                 return fPath;
             }
-            const KSmartPointer< XPathType >& Path() const
+            const std::shared_ptr< XPathType >& Path() const
             {
                 return fPath;
             }
@@ -106,7 +108,7 @@ namespace KGeoBag
             }
 
         protected:
-            mutable KSmartPointer< XPathType > fPath;
+            mutable std::shared_ptr< XPathType > fPath;
             mutable double fZ;
             mutable double fSign;
             mutable unsigned int fFlattenedMeshCount;

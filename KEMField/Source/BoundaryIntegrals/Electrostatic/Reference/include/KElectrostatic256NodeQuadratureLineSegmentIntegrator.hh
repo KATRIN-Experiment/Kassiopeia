@@ -20,12 +20,12 @@ namespace KEMField
     ~KElectrostatic256NodeQuadratureLineSegmentIntegrator() {}
 
     double Potential(const KLineSegment* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const;
 
     double Potential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const;
   };
 
 

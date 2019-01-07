@@ -175,7 +175,7 @@ void KElectricFastMultipoleFieldSolver::InitializeCore( KSurfaceContainer& conta
         return fFastMultipoleFieldSolver->Potential( P );
     }
 
-    KEMThreeVector KElectricFastMultipoleFieldSolver::ElectricFieldCore( const KPosition& P ) const
+    KThreeVector KElectricFastMultipoleFieldSolver::ElectricFieldCore( const KPosition& P ) const
     {
         if( fUseOpenCL )
         {

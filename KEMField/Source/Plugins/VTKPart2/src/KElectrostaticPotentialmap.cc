@@ -9,7 +9,6 @@
 
 #include "KFile.h"
 #include "KEMFileInterface.hh"
-#include "KEMVectorConverters.hh"
 
 #include "KEMCout.hh"
 #include "KEMSimpleException.hh"
@@ -71,7 +70,7 @@ bool KPotentialMapVTK::GetPotential( const KPosition& aSamplePoint, const double
     return false;
 }
 
-bool KPotentialMapVTK::GetField( const KPosition& aSamplePoint, const double& /*aSampleTime*/, KEMThreeVector& aField ) const
+bool KPotentialMapVTK::GetField( const KPosition& aSamplePoint, const double& /*aSampleTime*/, KThreeVector& aField ) const
 {
     //fieldmsg_debug( "sampling electric field at point " << aSamplePoint << eom);
 
@@ -109,16 +108,16 @@ bool KLinearInterpolationPotentialMapVTK::GetValue( const string& array, const K
             { 0, 1, 1 },  // c011
             { 1, 1, 1 },  // c111
         };
-    static KEMThreeVector vertices[8];
+    static KThreeVector vertices[8];
     static double values[3][8];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
+    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
     for ( int i = 0; i < 8; i++ )
     {
         // first compute the coordinates of the surrounding mesh points ...
-        KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+        KThreeVector point = start_point + KThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
         vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
@@ -247,16 +246,16 @@ bool KCubicInterpolationPotentialMapVTK::GetValue( const string& array, const KP
         {  2,  2,  1 },
         {  2,  2,  2 },
     };
-    static KEMThreeVector vertices[64];
+    static KThreeVector vertices[64];
     static double values[3][64];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-        KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
+        KThreeVector start_point = KThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
         for ( int i = 0; i < 64; i++ )
         {
             // first compute the coordinates of the surrounding mesh points ...
-            KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+            KThreeVector point = start_point + KThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
             vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
@@ -325,9 +324,9 @@ double KElectrostaticPotentialmap::PotentialCore( const KPosition& P) const
     return tPotential;
 }
 
-KEMThreeVector KElectrostaticPotentialmap::ElectricFieldCore( const KPosition& P) const
+KThreeVector KElectrostaticPotentialmap::ElectricFieldCore( const KPosition& P) const
 {
-    KEMThreeVector tField;
+    KThreeVector tField;
     tField.SetComponents(0.,0.,0.);
     double aRandomTime = 0;
     if (! fPotentialMap->GetField( P, aRandomTime, tField ))
@@ -369,13 +368,13 @@ void KElectrostaticPotentialmap::InitializeCore()
     switch ( fInterpolation )
     {
     case 0:
-        fPotentialMap = new KPotentialMapVTK( filename );
+        fPotentialMap = std::make_shared< KPotentialMapVTK >( filename );
         break;
     case 1:
-        fPotentialMap = new KLinearInterpolationPotentialMapVTK( filename );
+        fPotentialMap = std::make_shared< KLinearInterpolationPotentialMapVTK >( filename );
         break;
     case 3:
-        fPotentialMap = new KCubicInterpolationPotentialMapVTK( filename );
+        fPotentialMap = std::make_shared< KCubicInterpolationPotentialMapVTK >( filename );
         break;
     default:
         throw KEMSimpleException( "interpolation mode " + std::to_string(fInterpolation) + " is not implemented");
@@ -414,7 +413,7 @@ bool KElectrostaticPotentialmapCalculator::CheckPosition( const KPosition& aPosi
     for ( auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt )
     {
         const KGeoBag::KGSpace *tSpace = (*tSpaceIt);
-        if ( tSpace->Outside( KEM2KThreeVector(aPosition) ) == false )
+        if ( tSpace->Outside( aPosition ) == false )
             return true;
     }
     return false;
@@ -451,8 +450,8 @@ void KElectrostaticPotentialmapCalculator::Prepare()
         return;
     }
 
-    KEMThreeVector tGridDims = KEMThreeVector( 1 + fLength[0]/fSpacing, 1 + fLength[1]/fSpacing, 1 + fLength[2]/fSpacing );
-    KEMThreeVector tGridOrigin = fCenter - 0.5*fLength;
+    KThreeVector tGridDims = KThreeVector( 1 + fLength[0]/fSpacing, 1 + fLength[1]/fSpacing, 1 + fLength[2]/fSpacing );
+    KThreeVector tGridOrigin = fCenter - 0.5*fLength;
 
     if ((ceil(tGridDims[0]) <= 0) || (ceil(tGridDims[1]) <= 0) || (ceil(tGridDims[2]) <= 0))
     {
@@ -585,7 +584,7 @@ void KElectrostaticPotentialmapCalculator::Execute()
 
         if (! tHasValue)
         {
-            tPotential = fElectricField->Potential(KEMThreeVector(tPoint));
+            tPotential = fElectricField->Potential(KThreeVector(tPoint));
         }
 
         fPotentialData->SetTuple1(i, tPotential);
@@ -620,7 +619,7 @@ void KElectrostaticPotentialmapCalculator::Execute()
             continue;
 
         bool tHasValue = false;
-        KEMThreeVector tField;
+        KThreeVector tField;
 
         if (fMirrorX || fMirrorY || fMirrorZ)
         {

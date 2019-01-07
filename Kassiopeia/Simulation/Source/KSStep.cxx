@@ -16,6 +16,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( 0 ),
             fDiscreteEnergyChange( 0. ),
             fDiscreteMomentumChange( 0. ),
+            fNumberOfTurns( 0 ),
             fModifierName( "" ),
             fModifierFlag( false ),
             fTerminatorName( "" ),
@@ -55,6 +56,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( aCopy.fDiscreteSecondaries ),
             fDiscreteEnergyChange( aCopy.fDiscreteSecondaries ),
             fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange ),
+            fNumberOfTurns( aCopy.fNumberOfTurns ),
             fModifierName( aCopy.fModifierName ),
             fModifierFlag( aCopy.fModifierFlag ),
             fTerminatorName( aCopy.fTerminatorName ),
@@ -94,6 +96,7 @@ namespace Kassiopeia
         fDiscreteSecondaries = aCopy.fDiscreteSecondaries;
         fDiscreteEnergyChange = aCopy.fDiscreteEnergyChange;
         fDiscreteMomentumChange = aCopy.fDiscreteMomentumChange;
+        fNumberOfTurns = aCopy.fNumberOfTurns;
         fModifierName = aCopy.fModifierName;
         fModifierFlag = aCopy.fModifierFlag;
         fTerminatorName = aCopy.fTerminatorName;
@@ -140,6 +143,7 @@ namespace Kassiopeia
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteSecondaries, "discrete_secondaries" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteEnergyChange, "discrete_energy_change" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetDiscreteMomentumChange, "discrete_momentum_change" ) +
+        KSDictionary< KSStep >::AddComponent( &KSStep::GetNumberOfTurns, "number_of_turns" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetModifierName, "modifier_name" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetModifierFlag, "modifier_flag" ) +
         KSDictionary< KSStep >::AddComponent( &KSStep::GetTerminatorName, "terminator_name" ) +

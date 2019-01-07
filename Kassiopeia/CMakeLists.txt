@@ -7,12 +7,12 @@
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 if(POLICY CMP0053)
-    cmake_policy(SET CMP0053 OLD)
+    cmake_policy(SET CMP0053 NEW)
 endif()
 
 # Kassiopeia version
 set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 5 )
+set( MODULE_VERSION_MINOR 6 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
@@ -38,7 +38,7 @@ kasper_module_paths( Kassiopeia )
 # module debugging
 kasper_module_debug()
 if( Kassiopeia_ENABLE_DEBUG )
-    dd_cflag( Kassiopeia_ENABLE_DEBUG )
+    add_cflag( Kassiopeia_ENABLE_DEBUG )
 endif()
 
 # external dependencies: boost

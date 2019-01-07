@@ -10,7 +10,7 @@
 #include <deque>
 #include <map>
 #include <vector>
-#include <KVariant.h>
+#include "KVariant.h"
 
 namespace katrin {
 

@@ -23,12 +23,12 @@ void KIntegratingMagnetostaticFieldSolver::InitializeCore(
                     fIntegrator);
 }
 
-KEMThreeVector KIntegratingMagnetostaticFieldSolver::MagneticPotentialCore(
+KThreeVector KIntegratingMagnetostaticFieldSolver::MagneticPotentialCore(
         const KPosition& P) const {
     return fIntegratingFieldSolver->VectorPotential( P );
 }
 
-KEMThreeVector KIntegratingMagnetostaticFieldSolver::MagneticFieldCore(
+KThreeVector KIntegratingMagnetostaticFieldSolver::MagneticFieldCore(
         const KPosition& P) const {
     return fIntegratingFieldSolver->MagneticField( P );
 }

@@ -6,6 +6,8 @@
 #define KVariant_h__
 
 #include <string>
+#include <vector>
+#include <map>
 #include <iostream>
 #include <sstream>
 #include "KException.h"
@@ -60,7 +62,6 @@ class KVariant {
     inline void Assign(const KVariant& Value) ;
   public:
     template<typename T> inline T As(void) const ;
-    inline KVariant Or(const KVariant& DefaultValue) const;
     inline operator bool() const ;
     inline operator int() const ;
     inline operator unsigned int() const ;
@@ -80,11 +81,14 @@ class KVariant {
     inline bool IsString(void) const;
     inline bool IsUnknown(void) const;
     bool AsBool(void) const ;
-    long long AsLong(void) const ;
-    double AsDouble(void) const ;
-    std::string AsString(void) const;
-    KUnknown& AsUnknown(void) ;
-    const KUnknown& AsUnknown(void) const ;
+    long long AsLong(void) const;
+    double AsDouble(void) const;
+    std::string AsString(int precision=-1) const;
+    KUnknown& AsUnknown(void);
+    const KUnknown& AsUnknown(void) const;
+  public:
+    inline KVariant Or(const KVariant& DefaultValue) const;
+    std::map<int, KVariant> SplitBy(const std::string& Separator, std::vector<KVariant> DefaultValueList={}) const;
   private:
     enum TValueType { 
 	Type_Void, Type_Bool, Type_Long, Type_Double, Type_String, Type_Unknown
@@ -366,16 +370,6 @@ inline T KVariant::As(void) const
     return katrin::KVariantDecoder<T>::As(*this);
 }
 
-inline KVariant KVariant::Or(const KVariant& DefaultValue) const
-{
-    if (fType == Type_Void) {
-        return DefaultValue;
-    }
-    else {
-        return *this;
-    }
-}
-
 KVariant::operator bool() const 
 {
     return As<bool>();
@@ -461,6 +455,17 @@ bool KVariant::IsUnknown(void) const
     return (fType == Type_Unknown);
 }
     
+
+inline KVariant KVariant::Or(const KVariant& DefaultValue) const
+{
+    if (fType == Type_Void) {
+        return DefaultValue;
+    }
+    else {
+        return *this;
+    }
+}
+
 
 
 inline std::ostream& operator<<(std::ostream& os, const KVariant& Value) 

@@ -296,6 +296,7 @@ class Iterator:
             raise AttributeError("TFile '%s' has no tree named '%s'" % (self.file.GetName(), treename))
 
         self.tree = tree
+        self.leaves = {}
         for i in range(foliage.GetEntries()):
             leaf = foliage.At(i)
             name = leaf.GetName()

@@ -970,7 +970,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI: public KElectrostaticBoundaryInteg
                 }
                 else
                 {
-                    KEMThreeVector field;
+                    KThreeVector field;
                     fFastFieldSolver.ElectricField(fSurfaceContainer.at(id)->GetShape()->Centroid(),field);
                     ret_val = field.Dot(fSurfaceContainer.at(id)->GetShape()->Normal());
                 }

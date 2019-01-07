@@ -26,14 +26,14 @@ namespace KEMField
     return KDirection(fXAxis.Dot(d),fYAxis.Dot(d),fZAxis.Dot(d));
   }
 
-  KEMThreeVector KEMCoordinateSystem::ToLocal(const KEMThreeVector& v) const
+  KThreeVector KEMCoordinateSystem::ToLocal(const KThreeVector& v) const
   {
-    return KEMThreeVector(fXAxis.Dot(v),fYAxis.Dot(v),fZAxis.Dot(v));
+    return KThreeVector(fXAxis.Dot(v),fYAxis.Dot(v),fZAxis.Dot(v));
   }
 
   KGradient KEMCoordinateSystem::ToLocal(const KGradient& g) const
   {
-    KEMThreeMatrix transform(fXAxis[0],fXAxis[1],fXAxis[2],
+    KThreeMatrix transform(fXAxis[0],fXAxis[1],fXAxis[2],
 			     fYAxis[0],fYAxis[1],fYAxis[2],
 			     fZAxis[0],fZAxis[1],fZAxis[2]);
 
@@ -58,16 +58,16 @@ namespace KEMField
 		      fXAxis[2]*p[0] + fYAxis[2]*p[1] + fZAxis[2]*p[2]);
   }
 
-  KEMThreeVector KEMCoordinateSystem::ToGlobal(const KEMThreeVector& v) const
+  KThreeVector KEMCoordinateSystem::ToGlobal(const KThreeVector& v) const
   {
-    return KEMThreeVector(fXAxis[0]*v[0] + fYAxis[0]*v[1] + fZAxis[0]*v[2],
+    return KThreeVector(fXAxis[0]*v[0] + fYAxis[0]*v[1] + fZAxis[0]*v[2],
 			  fXAxis[1]*v[0] + fYAxis[1]*v[1] + fZAxis[1]*v[2],
 			  fXAxis[2]*v[0] + fYAxis[2]*v[1] + fZAxis[2]*v[2]);
   }
 
   KGradient KEMCoordinateSystem::ToGlobal(const KGradient& g) const
   {
-    KEMThreeMatrix transform(fXAxis[0],fYAxis[0],fZAxis[0],
+    KThreeMatrix transform(fXAxis[0],fYAxis[0],fZAxis[0],
 			     fXAxis[1],fYAxis[1],fZAxis[1],
 			     fXAxis[2],fYAxis[2],fZAxis[2]);
 

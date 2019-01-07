@@ -4,11 +4,12 @@
 #include <vector>
 #include <cmath>
 
+#include "KGBoundary.hh"
 #include "KGCoordinateTransform.hh"
 
 namespace KGeoBag
 {
-  class KGBeam
+  class KGBeam : public KGBoundary
   {
     /*
       A class describing a straight beam-like object.  The ends of the beam do

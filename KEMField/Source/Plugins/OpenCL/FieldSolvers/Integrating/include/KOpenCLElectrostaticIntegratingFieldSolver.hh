@@ -40,14 +40,14 @@ namespace KEMField
     void AssignBuffers() const;
 
     double Potential(const KPosition& aPosition) const;
-    KEMThreeVector ElectricField(const KPosition& aPosition) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& aPosition) const;
+    KThreeVector ElectricField(const KPosition& aPosition) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential(const KPosition& aPosition) const;
 
     ////////////////////////////////////////////////////////////////////////////
     //sub-set potential/field calls
     double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
-    KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+    KThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
 
     //these methods allow us to dispatch a calculation to the GPU and retrieve the values later
     //this is useful so that we can do other work while waiting for the results
@@ -55,8 +55,8 @@ namespace KEMField
     void DispatchElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
     void DispatchElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
     double RetrievePotential() const;
-    KEMThreeVector RetrieveElectricField() const;
-    std::pair<KEMThreeVector,double> RetrieveElectricFieldAndPotential() const;
+    KThreeVector RetrieveElectricField() const;
+    std::pair<KThreeVector,double> RetrieveElectricFieldAndPotential() const;
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -111,8 +111,8 @@ namespace KEMField
     mutable unsigned int fCachedNDummy;
     mutable unsigned int fCachedNWorkgroups;
     mutable double fCachedSubsetPotential;
-    mutable KEMThreeVector fCachedSubsetField;
-    mutable std::pair<KEMThreeVector,double> fCachedSubsetFieldAndPotential;
+    mutable KThreeVector fCachedSubsetField;
+    mutable std::pair<KThreeVector,double> fCachedSubsetFieldAndPotential;
 
     mutable unsigned int fCachedSubsetSize;
     mutable const unsigned int* fCachedSurfaceIndexSet;
@@ -453,7 +453,7 @@ namespace KEMField
   }
 
   template <class Integrator>
-  KEMThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricField(const KPosition& aPosition) const
+  KThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricField(const KPosition& aPosition) const
   {
     CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
 
@@ -470,7 +470,7 @@ namespace KEMField
     			   *fGlobalRange,
     			   *fLocalRange);
 
-    KEMThreeVector eField(0.,0.,0.);
+    KThreeVector eField(0.,0.,0.);
 
     KOpenCLInterface::GetInstance()->GetQueue().
       enqueueReadBuffer(*fBufferElectricField,
@@ -496,7 +496,7 @@ namespace KEMField
   }
 
   template <class Integrator>
-  std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricFieldAndPotential(const KPosition& aPosition) const
+  std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricFieldAndPotential(const KPosition& aPosition) const
   {
     CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
 
@@ -513,7 +513,7 @@ namespace KEMField
     			   *fGlobalRange,
     			   *fLocalRange);
 
-    KEMThreeVector eField(0.,0.,0.);
+    KThreeVector eField(0.,0.,0.);
     CL_TYPE potential = 0.;
 
     KOpenCLInterface::GetInstance()->GetQueue().
@@ -623,7 +623,7 @@ namespace KEMField
     }
 
     template <class Integrator>
-    KEMThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
+    KThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
     {
         CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
 
@@ -665,7 +665,7 @@ namespace KEMField
 		                         global,
 		                         local);
 
-            KEMThreeVector eField(0.,0.,0.);
+            KThreeVector eField(0.,0.,0.);
             CL_TYPE potential = 0.;
 
             cl::Event event;
@@ -704,7 +704,7 @@ namespace KEMField
     }
 
     template <class Integrator>
-    std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
+    std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
     {
         CL_TYPE P[3] = {aPosition[0],aPosition[1],aPosition[2]};
 
@@ -746,7 +746,7 @@ namespace KEMField
 		                         global,
 		                         local);
 
-            KEMThreeVector eField(0.,0.,0.);
+            KThreeVector eField(0.,0.,0.);
             CL_TYPE potential = 0.;
 
             cl::Event event;
@@ -1025,11 +1025,11 @@ namespace KEMField
     }
 
     template <class Integrator>
-    KEMThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::RetrieveElectricField() const
+    KThreeVector KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::RetrieveElectricField() const
     {
         if(fCallDevice)
         {
-            KEMThreeVector eField(0.,0.,0.);
+            KThreeVector eField(0.,0.,0.);
 
             cl::Event event;
             KOpenCLInterface::GetInstance()->GetQueue().
@@ -1066,11 +1066,11 @@ namespace KEMField
     }
 
     template <class Integrator>
-    std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::RetrieveElectricFieldAndPotential() const
+    std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator,ElectrostaticOpenCL>::RetrieveElectricFieldAndPotential() const
     {
         if(fCallDevice)
         {
-            KEMThreeVector eField(0.,0.,0.);
+            KThreeVector eField(0.,0.,0.);
             CL_TYPE potential = 0.;
 
             cl::Event event;

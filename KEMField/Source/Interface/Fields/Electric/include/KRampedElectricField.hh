@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KRAMPEDELECTRICFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KRAMPEDELECTRICFIELD_HH_
+#ifndef KRAMPEDELECTRICFIELD_HH_
+#define KRAMPEDELECTRICFIELD_HH_
 
 #include "KElectricField.hh"
 #include "KField.h"
@@ -28,7 +28,7 @@ public:
 
 private:
     virtual double PotentialCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    virtual KEMThreeVector ElectricFieldCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
+    virtual KThreeVector ElectricFieldCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
 
 public:
     double GetModulationFactor( const double& aTime ) const;
@@ -50,4 +50,4 @@ public:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KRAMPEDELECTRICFIELD_HH_ */
+#endif /* KRAMPEDELECTRICFIELD_HH_ */

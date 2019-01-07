@@ -161,6 +161,10 @@ namespace Kassiopeia
         navmsg_debug( "  final particle electric field: <" << fNavigationParticle->GetElectricField().X() << "," << fNavigationParticle->GetElectricField().Y() << "," << fNavigationParticle->GetElectricField().Z() << ">" << eom )
         navmsg_debug( "  final particle magnetic field: <" << fNavigationParticle->GetMagneticField().X() << "," << fNavigationParticle->GetMagneticField().Y() << "," << fNavigationParticle->GetMagneticField().Z() << ">" << eom )
         navmsg_debug( "  final particle angle to magnetic field: <" << fNavigationParticle->GetPolarAngleToB() << ">" << eom )
+        navmsg_debug( "  final particle spin: " << fNavigationParticle->GetSpin() << eom )
+        navmsg_debug( "  final particle spin0: <" << fNavigationParticle->GetSpin0() << ">" << eom )
+        navmsg_debug( "  final particle aligned spin: <" << fNavigationParticle->GetAlignedSpin() << ">" << eom )
+        navmsg_debug( "  final particle spin angle: <" << fNavigationParticle->GetSpinAngle() << ">" << eom )
 
         return;
     }
@@ -200,13 +204,17 @@ namespace Kassiopeia
         navmsg_debug( "  final particle electric field: <" << fFinalParticle->GetElectricField().X() << "," << fFinalParticle->GetElectricField().Y() << "," << fFinalParticle->GetElectricField().Z() << ">" << eom )
         navmsg_debug( "  final particle magnetic field: <" << fFinalParticle->GetMagneticField().X() << "," << fFinalParticle->GetMagneticField().Y() << "," << fFinalParticle->GetMagneticField().Z() << ">" << eom )
         navmsg_debug( "  final particle angle to magnetic field: <" << fFinalParticle->GetPolarAngleToB() << ">" << eom )
+        navmsg_debug( "  final particle spin: " << fFinalParticle->GetSpin() << eom )
+        navmsg_debug( "  final particle spin0: <" << fFinalParticle->GetSpin0() << ">" << eom )
+        navmsg_debug( "  final particle aligned spin: <" << fFinalParticle->GetAlignedSpin() << ">" << eom )
+        navmsg_debug( "  final particle spin angle: <" << fFinalParticle->GetSpinAngle() << ">" << eom )
 
         return;
     }
 
     void KSRootSpaceNavigator::FinalizeNavigation()
     {
-    	FinalizeNavigation( *fFinalParticle );
+        FinalizeNavigation( *fFinalParticle );
         return;
     }
 

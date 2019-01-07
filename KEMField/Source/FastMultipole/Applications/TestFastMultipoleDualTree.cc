@@ -7,6 +7,7 @@
 #include <sstream>
 #include <fstream>
 
+#include "KThreeVector_KEMField.hh"
 #include "KGBox.hh"
 #include "KGRectangle.hh"
 #include "KGRotatedObject.hh"
@@ -20,7 +21,6 @@
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
 
-#include "KEMThreeVector.hh"
 #include "KEMFileInterface.hh"
 #include "KDataDisplay.hh"
 
@@ -139,8 +139,8 @@ double FieldDifference(double *x, double* /*par*/)
 
     KPosition position(point);
 
-    KEMThreeVector fmm_field = fast_solver->ElectricField(position);
-    KEMThreeVector direct_field = direct_solver->ElectricField(position);
+    KThreeVector fmm_field = fast_solver->ElectricField(position);
+    KThreeVector direct_field = direct_solver->ElectricField(position);
     double del = 0;
     del += (fmm_field[0] - direct_field[0])*(fmm_field[0] - direct_field[0]);
     del += (fmm_field[1] - direct_field[1])*(fmm_field[1] - direct_field[1]);
@@ -419,10 +419,10 @@ int main(int argc, char** argv)
     //compute the positions of the evaluation points
     double length_a = 3.0;
     double length_b = 3.0;
-    KEMThreeVector direction_a(1.0, 0.0, 0.0);
-    KEMThreeVector direction_b(0.0, 1.0, 0.0);
-    KEMThreeVector p0(-1.5, -1.5, 0.0);
-    KEMThreeVector point;
+    KThreeVector direction_a(1.0, 0.0, 0.0);
+    KThreeVector direction_b(0.0, 1.0, 0.0);
+    KThreeVector p0(-1.5, -1.5, 0.0);
+    KThreeVector point;
     for(unsigned int i=0; i<NEvaluations; i++)
     {
         for(unsigned int j=0; j<NEvaluations; j++)
@@ -457,7 +457,7 @@ int main(int argc, char** argv)
         {
             KPosition position;
             position = p0 + i*(length_a/NEvaluations)*direction_a + j*(length_b/NEvaluations)*direction_b;
-            KEMThreeVector field = fast_solver->ElectricField(position);
+            KThreeVector field = fast_solver->ElectricField(position);
             fmm_field_x.AddNextValue(field[0]);
             fmm_field_y.AddNextValue(field[1]);
             fmm_field_z.AddNextValue(field[2]);
@@ -495,7 +495,7 @@ int main(int argc, char** argv)
         {
             KPosition position;
             position = p0 + i*(length_a/NEvaluations)*direction_a + j*(length_b/NEvaluations)*direction_b;
-            KEMThreeVector field = direct_solver->ElectricField(position);
+            KThreeVector field = direct_solver->ElectricField(position);
             direct_field_x.AddNextValue(field[0]);
             direct_field_y.AddNextValue(field[1]);
             direct_field_z.AddNextValue(field[2]);

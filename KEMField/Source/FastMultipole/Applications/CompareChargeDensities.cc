@@ -342,7 +342,7 @@ int main(int argc, char* argv[])
 
 
 
-        std::vector< KEMThreeVector > random_points;
+        std::vector< KThreeVector > random_points;
 
         for(unsigned int i=0; i<100; i++)
         {
@@ -367,7 +367,7 @@ int main(int argc, char* argv[])
                 z = len*(gsl_rng_uniform(fR));
             #endif
 
-            random_points.push_back( KEMThreeVector(x,y,z) );
+            random_points.push_back( KThreeVector(x,y,z) );
         }
 
         double l2_pot_diff = 0.0;

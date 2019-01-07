@@ -470,6 +470,14 @@ namespace Kassiopeia
             mutable double fAlignedSpin;
             mutable double fSpinAngle;
 
+            //clock time (units are seconds)
+
+        public:
+            const double& GetClockTime() const;
+
+        protected:
+            mutable double fClockTime;
+
     };
 
     typedef std::deque< KSParticle* > KSParticleQueue;

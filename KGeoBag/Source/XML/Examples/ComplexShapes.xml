@@ -97,6 +97,47 @@
       </rotated_object>
     </rotated_surface>
 
+    <linear_wire_grid_surface name="example_linear_wire_grid_surface">
+        <linear_wire_grid
+            radius="1."
+            pitch="0.05"
+            diameter="0.01"
+            longitudinal_mesh_count="20"
+            longitudinal_mesh_power="2"
+            add_outer_circle="true">
+        </linear_wire_grid>
+    </linear_wire_grid_surface>
+
+    <quadratic_wire_grid_surface name="example_quadratic_wire_grid_surface">
+        <quadratic_wire_grid
+            radius="1."
+            pitch="0.05"
+            diameter="0.01"
+            mesh_count_per_pitch="2"
+            add_outer_circle="true">
+        </quadratic_wire_grid>
+    </quadratic_wire_grid_surface>
+
+    <circle_wire_surface name="example_circle_wire_surface">
+        <circle_wire
+            radius="1"
+            diameter=".005"
+            mesh_count="120">
+        </circle_wire>
+    </circle_wire_surface>
+
+    <circular_wire_pins_surface name="example_circular_wire_pins_surface">
+        <circular_wire_pins
+            inner_radius="1."
+            outer_radius="1.25"
+            diameter="0.005"
+            n_pins="8"
+            rotation_angle="30"
+            mesh_count="25"
+            mesh_power="2">
+        </circular_wire_pins>
+    </circular_wire_pins_surface>
+
     <!-- complex spaces -->
 
     <port_housing_space name="example_port_housing_space">

@@ -26,7 +26,7 @@ namespace katrin
             KElementCIt It = fElements->find( aToken->GetValue() );
             if( It == fElements->end() )
             {
-                initmsg( eError ) << "nothing registered for element <" << aToken->GetValue() << "> in element <" << fName << ">" << ret;
+                initmsg( eError ) << "nothing registered for element <" << aToken->GetValue() << "> in element <" << GetName() << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
                 return;
             }
@@ -63,7 +63,7 @@ namespace katrin
             KAttributeCIt It = fAttributes->find( aToken->GetValue() );
             if( It == fAttributes->end() )
             {
-                initmsg( eError ) << "nothing registered for attribute <" << aToken->GetValue() << "> in element <" << fName << ">" << ret;
+                initmsg( eError ) << "nothing registered for attribute <" << aToken->GetValue() << "> in element <" << GetName() << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
                 return;
             }
@@ -92,7 +92,7 @@ namespace katrin
             //add attribute to this element
             if( AddAttribute( fChildAttribute ) == false )
             {
-                initmsg( eError ) << "element <" << fName << "> could not process attribute <" << fChildAttribute->GetName() << ">" << ret;
+                initmsg( eError ) << "element <" << GetName() << "> could not process attribute <" << fChildAttribute->GetName() << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
             }
 
@@ -139,7 +139,7 @@ namespace katrin
             //add value to this element
             if( SetValue( aToken ) == false )
             {
-                initmsg( eError ) << "element <" << fName << "> could not process value <" << aToken->GetValue() << ">" << ret;
+                initmsg( eError ) << "element <" << GetName() << "> could not process value <" << aToken->GetValue() << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
                 return;
             }
@@ -166,7 +166,7 @@ namespace katrin
             //add child element to this element
             if( AddElement( fChildElement ) == false )
             {
-                initmsg( eError ) << "element <" << fName << "> could not process element <" << aToken->GetValue() << ">" << ret;
+                initmsg( eError ) << "element <" << GetName() << "> could not process element <" << aToken->GetValue() << ">" << ret;
                 initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
                 return;
             }
@@ -190,7 +190,7 @@ namespace katrin
     {
         if( fElementDepth == 0 && fAttributeDepth == 0 )
         {
-            initmsg( eError ) << "element <" << fName << "> encountered an error <" << aToken->GetValue() << ">" << ret;
+            initmsg( eError ) << "element <" << GetName() << "> encountered an error <" << aToken->GetValue() << ">" << ret;
             initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
             return;
         }

@@ -1,12 +1,12 @@
 /*
- * KTimer.hh
+ * KIterativeSolverTimer.hh
  *
  *  Created on: 17 Aug 2015
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_LINEARALGEBRA_VISITORS_INCLUDE_KITERATIVESOLVERTIMER_HH_
-#define KEMFIELD_SOURCE_2_0_LINEARALGEBRA_VISITORS_INCLUDE_KITERATIVESOLVERTIMER_HH_
+#ifndef KITERATIVESOLVERTIMER_HH_
+#define KITERATIVESOLVERTIMER_HH_
 
 #include "KIterativeSolver.hh"
 #include "KFMMessaging.hh"
@@ -50,4 +50,4 @@ void KIterativeSolverTimer<ValueType>::Finalize(KIterativeSolver<ValueType>&)
 
 }
 
-#endif /* KEMFIELD_SOURCE_2_0_LINEARALGEBRA_VISITORS_INCLUDE_KITERATIVESOLVERTIMER_HH_ */
+#endif /* KITERATIVESOLVERTIMER_HH_ */

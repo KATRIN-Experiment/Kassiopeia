@@ -67,18 +67,22 @@ namespace Kassiopeia
                     KThreeVector LocalZ = tParticle->GetMagneticField() / tParticle->GetMagneticField().Magnitude();
                     KThreeVector LocalX  ( LocalZ.Z() - LocalZ.Y(), LocalZ.X() - LocalZ.Z(), LocalZ.Y() - LocalZ.X() );
                     LocalX = LocalX / LocalX.Magnitude();
-
-                    //std::cout << "B: " << tParticle->GetMagneticField() << "\t\tZ(b): " << LocalZ << "\t\tX(b): " << LocalX << "\n";
+                    KThreeVector LocalY = LocalZ.Cross( LocalX );
 
                     tParticle->SetAlignedSpin( tSpin.Dot( LocalZ ) / tSpin.Magnitude() );
                     if ( std::isnan( tParticle->GetAlignedSpin() ) )
                     {
                         tParticle->SetAlignedSpin( 1. );
-                        //std::cout << "*fixed NaN m (in GSC); B: " << tParticle->GetMagneticField() << "\n";
                     }
                     if (tParticle->GetAlignedSpin() < 0.99999 && tParticle->GetAlignedSpin() > -0.99999 )
                     {
-                        tParticle->SetSpinAngle( acos( tSpin.Dot( LocalX ) / tSpin.Magnitude() / sqrt( 1 - tParticle->GetAlignedSpin() * tParticle->GetAlignedSpin() ) ) );
+                        if ( tSpin.Dot( LocalY ) > 0. ){
+                            tParticle->SetSpinAngle( acos( tSpin.Dot( LocalX ) / tSpin.Magnitude() / sqrt( 1 - tParticle->GetAlignedSpin() * tParticle->GetAlignedSpin() ) ) );
+                        }
+                        else
+                        {
+                            tParticle->SetSpinAngle( KConst::Pi() + acos( tSpin.Dot( LocalX ) / tSpin.Magnitude() / sqrt( 1 - tParticle->GetAlignedSpin() * tParticle->GetAlignedSpin() ) ) );
+                        }
                     }
                     else
                     {

@@ -9,7 +9,8 @@
 #define KELECTRICFIELD_HH_
 
 #include <string>
-#include "KEMThreeVector.hh"
+
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField
 {
@@ -29,11 +30,11 @@ public:
         return PotentialCore(P,time);
     }
 
-    KEMThreeVector ElectricField(const KPosition& P, const double& time) const {
+    KThreeVector ElectricField(const KPosition& P, const double& time) const {
         return ElectricFieldCore(P,time);
     }
 
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& P, const double& time) const
+    std::pair<KThreeVector,double> ElectricFieldAndPotential(const KPosition& P, const double& time) const
     {
         return ElectricFieldAndPotentialCore(P,time);
     }
@@ -52,10 +53,10 @@ private:
 
     virtual double PotentialCore( const KPosition& P,const double& time) const = 0;
 
-    virtual KEMThreeVector ElectricFieldCore(
+    virtual KThreeVector ElectricFieldCore(
             const KPosition& P,const double& time) const = 0;
 
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P, const double& time) const
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P, const double& time) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -64,9 +65,9 @@ private:
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P,time);
-        KEMThreeVector field = ElectricFieldCore(P, time);
+        KThreeVector field = ElectricFieldCore(P, time);
 
-        return std::pair<KEMThreeVector,double>(field,potential);
+        return std::pair<KThreeVector,double>(field,potential);
     }
 
     virtual void InitializeCore() {}

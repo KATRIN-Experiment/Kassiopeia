@@ -255,6 +255,26 @@ public:
         return 2.0146503577 * AtomicMassUnit_eV();
     }
 
+   constexpr static double M_D_kg()
+    {
+        return 2.0141017778 * AtomicMassUnit_kg();
+    } //!< deuterium atom mass in kg
+
+    constexpr static double M_D_eV()
+    {
+        return 2.0141017778 * AtomicMassUnit_eV();
+    } //!< deuterium atom mass in eV/c^2
+
+    constexpr static double M_D2_kg()
+    {
+        return 4.0282035556 * AtomicMassUnit_kg();
+    } //!< deuterium molecule mass in kg
+
+    constexpr static double M_D2_eV()
+    {
+        return 4.0282035556 * AtomicMassUnit_eV();
+    } //!< deuterium molecule mass in eV/c^2
+
     constexpr static double M_T_kg()
     {
         return 3.0160495 * AtomicMassUnit_kg();
@@ -310,7 +330,7 @@ public:
 
     constexpr static double BindingEnergy_H2()
     {
-      return 15.43; //eV
+      return 15.42593; //eV
       //Value from NIST Chemistry WebBook: http://webbook.nist.gov/cgi/cbook.cgi?ID=C1333740&Mask=20
     }
 
@@ -319,11 +339,22 @@ public:
       return 24.587387; //eV
       //Value from NIST Basic Atomic Spectroscopic Data Handbook: http://physics.nist.gov/PhysRefData/Handbook/Tables/heliumtable1.htm
     }
+    
+    constexpr static double BindingEnergy_H2O()
+    {
+        return 12.621; //eV
+        //Value from NIST Chemistry WebBook: https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Units=SI&Mask=20#Ion-Energetics
+    }
 
     constexpr static double Viscosity()
     {
         return 2.425E-6;
     } //!< tritium viscosity coefficient at T=30K [Pa s] (cite? Sharipov?)
+
+    constexpr static double DeuteriumViscosity()
+    {   
+        return 2.084E-6;
+    } //!< deuterium viscosity coefficient at T=30K [Pa s] (https://doi.org/10.1063/1.555778, The Viscosity of Normal Deuterium in the Limit of Zero Density, Journal of Physical and Chemical Reference Data 16, 189 (1987)
 
     //Silicon properties
     constexpr static double M_Si()

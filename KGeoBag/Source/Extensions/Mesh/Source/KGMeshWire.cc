@@ -40,7 +40,7 @@ namespace KGeoBag
 
 
         //here we fudge things by making
-        //the assumption that the diameter is neglible
+        //the assumption that the diameter is negligible
         //compared to the length of the wire
         //(true nearest distance should be to a cylinder, rather than a line segment)
 

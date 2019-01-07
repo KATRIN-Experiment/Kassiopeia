@@ -9,7 +9,6 @@
 
 #include "KFile.h"
 #include "KEMFileInterface.hh"
-#include "KEMVectorConverters.hh"
 
 #include "KEMCout.hh"
 #include "KEMSimpleException.hh"
@@ -58,7 +57,7 @@ bool KMagfieldMapVTK::GetValue( const string& array, const KPosition& aSamplePoi
     return true;
 }
 
-bool KMagfieldMapVTK::GetField( const KPosition& aSamplePoint, const double& /*aSampleTime*/, KEMThreeVector& aField ) const
+bool KMagfieldMapVTK::GetField( const KPosition& aSamplePoint, const double& /*aSampleTime*/, KThreeVector& aField ) const
 {
     //fieldmsg_debug( "sampling magnetic field at point " << aSamplePoint << eom);
 
@@ -66,6 +65,19 @@ bool KMagfieldMapVTK::GetField( const KPosition& aSamplePoint, const double& /*a
     if ( GetValue( "magnetic field", aSamplePoint, value ) )
     {
         aField.SetComponents( value );
+        return true;
+    }
+    return false;
+}
+
+bool KMagfieldMapVTK::GetGradient( const KPosition& aSamplePoint, const double& /*aSampleTime*/, KGradient& aGradient ) const
+{
+    //fieldmsg_debug( "sampling magnetic gradient at point " << aSamplePoint << eom);
+
+    double value[9];
+    if ( GetValue( "magnetic gradient", aSamplePoint, value ) )
+    {
+        aGradient.SetComponents( value );
         return true;
     }
     return false;
@@ -96,16 +108,16 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue( const string& array, const KP
             { 0, 1, 1 },  // c011
             { 1, 1, 1 },  // c111
         };
-    static KEMThreeVector vertices[8];
-    static double values[3][8];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
+    static KThreeVector vertices[8];
+    static double values[9][8];  // always allocate for matrices even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
+    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
     for ( int i = 0; i < 8; i++ )
     {
         // first compute the coordinates of the surrounding mesh points ...
-        KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+        KThreeVector point = start_point + KThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
         vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
@@ -234,16 +246,16 @@ bool KCubicInterpolationMagfieldMapVTK::GetValue( const string& array, const KPo
         {  2,  2,  1 },
         {  2,  2,  2 },
     };
-    static KEMThreeVector vertices[64];
-    static double values[3][64];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
+    static KThreeVector vertices[64];
+    static double values[9][64];  // always allocate for matrices even if we have scalars (to be safe) - note that array ordering is swapped
 
     double *spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-        KEMThreeVector start_point = KEMThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
+        KThreeVector start_point = KThreeVector(floor(aSamplePoint.X()/spacing[0])*spacing[0], floor(aSamplePoint.Y()/spacing[1])*spacing[1], floor(aSamplePoint.Z()/spacing[2])*spacing[2]);
         for ( int i = 0; i < 64; i++ )
         {
             // first compute the coordinates of the surrounding mesh points ...
-            KEMThreeVector point = start_point + KEMThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
+            KThreeVector point = start_point + KThreeVector(map[i][0]*spacing[0], map[i][1]*spacing[1], map[i][2]*spacing[2] );
             vtkIdType corner = fImageData->FindPoint( (double*)(point.Components()) );
         if (corner < 0)
             return false;
@@ -302,16 +314,16 @@ KMagnetostaticFieldmap::~KMagnetostaticFieldmap()
 {
 }
 
-KEMThreeVector KMagnetostaticFieldmap::MagneticPotentialCore( const KPosition& /*P*/) const
+KThreeVector KMagnetostaticFieldmap::MagneticPotentialCore( const KPosition& /*P*/) const
 {
-    KEMThreeVector tPotential;
+    KThreeVector tPotential;
     tPotential.SetComponents(0.,0.,0.);
     return tPotential;
 }
 
-KEMThreeVector KMagnetostaticFieldmap::MagneticFieldCore( const KPosition& P) const
+KThreeVector KMagnetostaticFieldmap::MagneticFieldCore( const KPosition& P) const
 {
-    KEMThreeVector tField;
+    KThreeVector tField;
     tField.SetComponents(0.,0.,0.);
     double aRandomTime = 0;
     if (! fFieldMap->GetField( P, aRandomTime, tField ))
@@ -320,9 +332,13 @@ KEMThreeVector KMagnetostaticFieldmap::MagneticFieldCore( const KPosition& P) co
     return tField;
 }
 
-KGradient KMagnetostaticFieldmap::MagneticGradientCore( const KPosition& /*P*/) const
+KGradient KMagnetostaticFieldmap::MagneticGradientCore( const KPosition& P) const
 {
     KGradient tGradient(KGradient::sZero);
+    double aRandomTime = 0;
+    if (! fFieldMap->GetGradient( P, aRandomTime, tGradient ))
+        cout << "WARNING: could not compute magnetic gradient at sample point " << P << endl;
+
     return tGradient;
 }
 
@@ -359,13 +375,13 @@ void KMagnetostaticFieldmap::InitializeCore()
     switch ( fInterpolation )
     {
     case 0:
-        fFieldMap = new KMagfieldMapVTK( filename );
+        fFieldMap = std::make_shared< KMagfieldMapVTK >( filename );
         break;
     case 1:
-        fFieldMap = new KLinearInterpolationMagfieldMapVTK( filename );
+        fFieldMap = std::make_shared< KLinearInterpolationMagfieldMapVTK >( filename );
         break;
     case 3:
-        fFieldMap = new KCubicInterpolationMagfieldMapVTK( filename );
+        fFieldMap = std::make_shared< KCubicInterpolationMagfieldMapVTK >( filename );
         break;
     default:
         throw KEMSimpleException( "interpolation mode " + std::to_string(fInterpolation) + " is not implemented");
@@ -404,7 +420,7 @@ bool KMagnetostaticFieldmapCalculator::CheckPosition( const KPosition& aPosition
     for ( auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt )
     {
         const KGeoBag::KGSpace *tSpace = (*tSpaceIt);
-        if ( tSpace->Outside( KEM2KThreeVector(aPosition) ) == false )
+        if ( tSpace->Outside( aPosition ) == false )
             return true;
     }
     return false;
@@ -441,8 +457,8 @@ void KMagnetostaticFieldmapCalculator::Prepare()
         return;
     }
 
-    KEMThreeVector tGridDims = KEMThreeVector( 1 + fLength[0]/fSpacing, 1 + fLength[1]/fSpacing, 1 + fLength[2]/fSpacing );
-    KEMThreeVector tGridOrigin = fCenter - 0.5*fLength;
+    KThreeVector tGridDims = KThreeVector( 1 + fLength[0]/fSpacing, 1 + fLength[1]/fSpacing, 1 + fLength[2]/fSpacing );
+    KThreeVector tGridOrigin = fCenter - 0.5*fLength;
 
     if ((ceil(tGridDims[0]) <= 0) || (ceil(tGridDims[1]) <= 0) || (ceil(tGridDims[2]) <= 0))
     {
@@ -541,7 +557,7 @@ void KMagnetostaticFieldmapCalculator::Execute()
             continue;
 
         bool tHasValue = false;
-        KEMThreeVector tField;
+        KThreeVector tField;
 
         if (fMirrorX || fMirrorY || fMirrorZ)
         {

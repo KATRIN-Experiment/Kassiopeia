@@ -5,7 +5,7 @@
 #include <string>
 #include <cmath>
 
-#include "KEMThreeVector.hh"
+#include "../../include/KThreeVector_KEMField.hh"
 
 namespace KEMField{
 
@@ -59,10 +59,10 @@ class KVMSpaceTriangle
 
         //descriptor variables
         //indexing is: [0] = x, [1] = y, [2] = z
-        KEMThreeVector fP; //corner point
-        KEMThreeVector fN1; //1st basis vector
-        KEMThreeVector fN2; //2nd basis vector (non-orthogonal)
-        KEMThreeVector fN3; //normal vector
+        KThreeVector fP; //corner point
+        KThreeVector fN1; //1st basis vector
+        KThreeVector fN2; //2nd basis vector (non-orthogonal)
+        KThreeVector fN3; //normal vector
         double fL1; //length of side along N1
         double fL2; //length of side along N2
         double fSinTheta;

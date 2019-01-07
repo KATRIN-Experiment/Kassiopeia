@@ -7,6 +7,7 @@
 #include <sstream>
 #include <fstream>
 
+#include "KThreeVector_KEMField.hh"
 
 
 #include "KGBox.hh"
@@ -22,7 +23,6 @@
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
 
-#include "KEMThreeVector.hh"
 #include "KEMFileInterface.hh"
 #include "KDataDisplay.hh"
 
@@ -463,21 +463,21 @@ int main(int argc, char** argv)
     double length_b = world_length/2.0 - 0.001*world_length;
     KFMPoint<3> center = world->GetCenter();
 
-    KEMThreeVector direction_a;
-    KEMThreeVector direction_b;
-    KEMThreeVector direction_c;
+    KThreeVector direction_a;
+    KThreeVector direction_b;
+    KThreeVector direction_c;
 
-    KEMThreeVector p0(center[0], center[1], center[2]);
-    KEMThreeVector point;
+    KThreeVector p0(center[0], center[1], center[2]);
+    KThreeVector point;
 
     unsigned int n_points = 0;
-    KEMThreeVector* points;
+    KThreeVector* points;
 
     switch( mode )
     {
         case 0: //x-axis
             n_points = n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<n_evaluations; i++)
@@ -491,7 +491,7 @@ int main(int argc, char** argv)
         break;
         case 1: //y-axis
             n_points = n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 1.0; direction_a[2] = 0.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<n_evaluations; i++)
@@ -505,7 +505,7 @@ int main(int argc, char** argv)
         break;
         case 2: //z-axis
             n_points = n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 0.0; direction_a[2] = 1.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<n_evaluations; i++)
@@ -519,7 +519,7 @@ int main(int argc, char** argv)
         break;
         case 3: //y-z plane
             n_points = n_evaluations*n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 1.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 0.0; direction_b[2] = 1.0;
             p0 = p0 - length_a*direction_a;
@@ -538,7 +538,7 @@ int main(int argc, char** argv)
         break;
         case 4: //x-z plane
             n_points = n_evaluations*n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 0.0; direction_b[2] = 1.0;
             p0 = p0 - length_a*direction_a;
@@ -557,7 +557,7 @@ int main(int argc, char** argv)
         break;
         case 5: //x-y plane
             n_points = n_evaluations*n_evaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 1.0; direction_b[2] = 0.0;
             p0 = p0 - length_a*direction_a;
@@ -606,7 +606,7 @@ int main(int argc, char** argv)
     //evaluate multipole potential
     for(unsigned int i=0; i<n_points; i++)
     {
-        KEMThreeVector field = fast_solver->ElectricField(points[i]);
+        KThreeVector field = fast_solver->ElectricField(points[i]);
         fmm_field_x.AddNextValue(field[0]);
         fmm_field_y.AddNextValue(field[1]);
         fmm_field_z.AddNextValue(field[2]);
@@ -640,7 +640,7 @@ int main(int argc, char** argv)
     //evaluate direct field
     for(unsigned int i=0; i<n_points; i++)
     {
-        KEMThreeVector field = direct_solver->ElectricField(points[i]);
+        KThreeVector field = direct_solver->ElectricField(points[i]);
         direct_field_x.AddNextValue(field[0]);
         direct_field_y.AddNextValue(field[1]);
         direct_field_z.AddNextValue(field[2]);

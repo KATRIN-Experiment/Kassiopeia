@@ -13,18 +13,15 @@ namespace KGeoBag
     class KGAxialMeshRing;
 
     class KGDiscreteRotationalMesher :
-    public KGExtendedSurface< KGAxialMesh >::Visitor,
-    public KGExtendedSpace< KGAxialMesh >::Visitor,
-    virtual public KGConicalWireArrayDiscreteRotationalMesher
+
+    public KGSurface::Visitor,
+	public KGSpace::Visitor,
+	public KGVisitor
+
     {
         public:
-            using KGDiscreteRotationalMesherBase::VisitExtendedSurface;
-            using KGDiscreteRotationalMesherBase::VisitExtendedSpace;
-
-            using KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface;
-
-      void VisitExtendedSurface( KGExtendedSurface< KGAxialMesh >* aSurface );
-      void VisitExtendedSpace( KGExtendedSpace< KGAxialMesh >* aSpace );
+    	virtual void VisitSurface( KGSurface* aSurface );
+        virtual void VisitSpace( KGSpace* aSpace );
 
         public:
             KGDiscreteRotationalMesher();
@@ -33,11 +30,17 @@ namespace KGeoBag
       void SetAxialAngle(double d) { fAxialAngle = d; }
       void SetAxialCount(unsigned int i) { fAxialCount = i; }
 
+
     private:
+      void MeshAxialSurface( KGExtendedSurface< KGAxialMesh >* aSurface );
+      void MeshAxialSpace( KGExtendedSpace< KGAxialMesh >* aSpace );
       void AddAxialMeshElement(KGAxialMeshElement* e);
 
       void AddAxialMeshLoop(KGAxialMeshLoop* l);
       void AddAxialMeshRing(KGAxialMeshRing* r);
+
+      KGDiscreteRotationalMeshElementVector* fCurrentElements;
+
 
       double fAxialAngle;
       unsigned int fAxialCount;

@@ -79,7 +79,7 @@ double KIntegratingElectrostaticFieldSolver::PotentialCore( const KPosition& P )
 	return fIntegratingFieldSolver->Potential( P );
 }
 
-KEMThreeVector KIntegratingElectrostaticFieldSolver::ElectricFieldCore( const KPosition& P ) const
+KThreeVector KIntegratingElectrostaticFieldSolver::ElectricFieldCore( const KPosition& P ) const
 {
 	if( fUseOpenCL )
 	{

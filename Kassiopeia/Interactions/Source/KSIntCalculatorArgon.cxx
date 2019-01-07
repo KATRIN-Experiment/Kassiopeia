@@ -936,7 +936,7 @@ bool KSIntCalculatorArgonTotalCrossSectionReader::Read()
     fData->clear();
 
     int pos;
-    double value, secondValue;
+    double value, secondValue=0;
     bool secondValueReaded = false;
     char c;
     while( (*fStream) >> c )

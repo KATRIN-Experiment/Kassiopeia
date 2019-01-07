@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICSUPERPOSITIONFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICSUPERPOSITIONFIELD_HH_
+#ifndef KMAGNETICSUPERPOSITIONFIELD_HH_
+#define KMAGNETICSUPERPOSITIONFIELD_HH_
 
 #include "KMagneticField.hh"
 #include <vector>
@@ -20,8 +20,8 @@ public:
     KMagneticSuperpositionField();
     virtual ~KMagneticSuperpositionField();
 
-    KEMThreeVector MagneticPotentialCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KEMThreeVector MagneticFieldCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector MagneticPotentialCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector MagneticFieldCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
     KGradient MagneticGradientCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
 
     void SetEnhancements( std::vector< double > aEnhancementVector );
@@ -34,12 +34,12 @@ public:
 private:
     void InitializeCore();
 
-    KEMThreeVector CalculateCachedPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KEMThreeVector CalculateCachedField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateCachedPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateCachedField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
     KGradient CalculateCachedGradient( const KPosition& aSamplePoint, const double& aSampleTime ) const;
 
-    KEMThreeVector CalculateDirectPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KEMThreeVector CalculateDirectField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateDirectPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateDirectField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
     KGradient CalculateDirectGradient( const KPosition& aSamplePoint, const double& aSampleTime ) const;
 
     bool AreAllFieldsStatic();
@@ -50,11 +50,11 @@ private:
 
     bool fUseCaching;
     bool fCachingBlock;
-    mutable std::map < KPosition, std::vector<KEMThreeVector> > fPotentialCache;
-    mutable std::map < KPosition, std::vector<KEMThreeVector> > fFieldCache;
+    mutable std::map < KPosition, std::vector<KThreeVector> > fPotentialCache;
+    mutable std::map < KPosition, std::vector<KThreeVector> > fFieldCache;
     mutable std::map < KPosition, std::vector<KGradient> > fGradientCache;
 };
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICSUPERPOSITIONFIELD_HH_ */
+#endif /* KMAGNETICSUPERPOSITIONFIELD_HH_ */

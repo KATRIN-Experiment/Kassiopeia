@@ -10,7 +10,7 @@
 
 #include "KElectromagnetContainer.hh"
 #include "KToolbox.h"
-#include "KElectrostaticBoundaryFieldWithKGeoBag.hh"
+#include "KGElectrostaticBoundaryField.hh"
 #include "KElectricZHFieldSolver.hh"
 #include "KSMainMessage.h"
 #include "KConst.h"
@@ -78,8 +78,8 @@ int main( int anArgc, char** anArgv )
 //    TGraph tMagStrengthGraph;
 
 
-    KElectrostaticBoundaryFieldWithKGeoBag* tElField =
-            KToolbox::GetInstance().Get<KElectrostaticBoundaryFieldWithKGeoBag>( tElFieldName );
+    KGElectrostaticBoundaryField* tElField =
+            KToolbox::GetInstance().Get<KGElectrostaticBoundaryField>( tElFieldName );
     tElField->Initialize();
 
 //    KStaticElectromagnetField* tMagField =

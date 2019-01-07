@@ -8,6 +8,9 @@
 #include "KOpenCLAction.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
 namespace KEMField
 {
   template <typename ValueType>
@@ -95,7 +98,7 @@ namespace KEMField
   KRobinHood_OpenCL<ValueType>::KRobinHood_OpenCL(const Matrix& A, Vector& x, const Vector& b) : KOpenCLAction((dynamic_cast<const KOpenCLAction&>(A)).GetData()), fA(A), fX(x), fB(b), fInitializeVectorApproximationKernel(NULL), fFindResidualKernel(NULL), fFindResidualNormKernel(NULL), fCompleteResidualNormalizationKernel(NULL), fIdentifyLargestResidualElementKernel(NULL), fCompleteLargestResidualIdentificationKernel(NULL), fComputeCorrectionKernel(NULL), fUpdateSolutionApproximationKernel(NULL), fUpdateVectorApproximationKernel(NULL), fBufferResidual(NULL), fBufferB_iterative(NULL), fBufferCorrection(NULL), fBufferPartialMaxResidualIndex(NULL), fBufferMaxResidualIndex(NULL), fBufferPartialResidualNorm(NULL), fBufferResidualNorm(NULL), fBufferNWarps(NULL), fBufferCounter(NULL), fCLResidual(NULL), fCLB_iterative(NULL), fCLCorrection(NULL), fCLPartialMaxResidualIndex(NULL), fCLMaxResidualIndex(NULL), fCLPartialResidualNorm(NULL), fCLResidualNorm(NULL), fCLNWarps(NULL), fCLCounter(NULL), fReadResidual(false)
   {
       std::stringstream options;
-      options << " -DKEMFIELD_OCLFASTDIELECTRICS=" << KEMFIELD_FASTDIELECTRICS_VALUE; /* variable defined via cmake */
+      options << " -DKEMFIELD_OCLNEUMANNCHECKMETHOD=" << TOSTRING(KEMFIELD_FASTDIELECTRICS_VALUE); /* variable defined via cmake */
       fOpenCLFlags = options.str();
 
       KOpenCLAction::Initialize();
@@ -243,8 +246,13 @@ namespace KEMField
 
     fCLNWarps = new cl_int[1];
     fCLNWarps[0] = fData.GetNBufferedElements()/fNLocal;
-    fCLCounter = new cl_int[1];
-    fCLCounter[0] = fData.GetNBufferedElements();
+
+    fCLCounter = new cl_int[fData.GetNBufferedElements()+2];
+    for (unsigned int i=0;i<fData.GetNBufferedElements();i++)
+      fCLCounter[i] = 0;
+    fCLCounter[fData.GetNBufferedElements()] = 1;
+    // static value for AccuracyCheckIncrement, adapted from KEMField1
+    fCLCounter[fData.GetNBufferedElements()+1] = Dimension()/100;
 
     fCLResidual = new CL_TYPE[fData.GetNBufferedElements()];
     fCLCorrection = new CL_TYPE[1];
@@ -299,7 +307,7 @@ namespace KEMField
     fBufferCounter =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_WRITE,
-		     sizeof(cl_int));
+		     sizeof(cl_int)*(fData.GetNBufferedElements()+2));
 
     // Copy lists to the memory buffers
     KOpenCLInterface::GetInstance()->
@@ -354,7 +362,7 @@ namespace KEMField
       GetQueue().enqueueWriteBuffer(*fBufferCounter,
 				    CL_TRUE,
 				    0,
-				    sizeof(cl_int),
+				    sizeof(cl_int)*(fData.GetNBufferedElements()+2),
 				    fCLCounter);
 
     fGlobalRange = new cl::NDRange(fData.GetNBufferedElements());

@@ -87,7 +87,7 @@ double KElectrostatic256NodeQuadratureLineSegmentIntegrator::Potential( const KL
 	return Phi;
 }
 
-KEMThreeVector KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricField( const KLineSegment* source, const KPosition& P ) const
+KThreeVector KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricField( const KLineSegment* source, const KPosition& P ) const
 {
 	const double data[7] = {
 			source->GetP0().X(),
@@ -174,10 +174,10 @@ KEMThreeVector KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricFie
 		}
 	}
 
-	return KEMThreeVector(EField[0], EField[1], EField[2]);
+	return KThreeVector(EField[0], EField[1], EField[2]);
 }
 
-std::pair<KEMThreeVector,double> KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const
+std::pair<KThreeVector,double> KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const
 {
 	const double data[7] = {
 			source->GetP0().X(),
@@ -270,7 +270,7 @@ std::pair<KEMThreeVector,double> KElectrostatic256NodeQuadratureLineSegmentInteg
 		Phi = prefac * sumPhi;
 	}
 
-	return std::make_pair( KEMThreeVector(EField[0], EField[1], EField[2]), Phi );
+	return std::make_pair( KThreeVector(EField[0], EField[1], EField[2]), Phi );
 }
 
 double KElectrostatic256NodeQuadratureLineSegmentIntegrator::Potential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const
@@ -281,19 +281,19 @@ double KElectrostatic256NodeQuadratureLineSegmentIntegrator::Potential(const KSy
 	return potential;
 }
 
-KEMThreeVector KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const
+KThreeVector KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const
 {
-	KEMThreeVector electricField(0.,0.,0.);
+	KThreeVector electricField(0.,0.,0.);
 	for (KSymmetryGroup<KLineSegment>::ShapeCIt it=source->begin();it!=source->end();++it)
 		electricField += ElectricField(*it,P);
 	return electricField;
 }
 
-std::pair<KEMThreeVector, double> KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const
+std::pair<KThreeVector, double> KElectrostatic256NodeQuadratureLineSegmentIntegrator::ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const
 {
-	std::pair<KEMThreeVector, double> fieldAndPotential;
+	std::pair<KThreeVector, double> fieldAndPotential;
     double potential( 0. );
-    KEMThreeVector electricField( 0., 0., 0. );
+    KThreeVector electricField( 0., 0., 0. );
 
     for( KSymmetryGroup<KLineSegment>::ShapeCIt it=source->begin(); it!=source->end(); ++it ) {
     	fieldAndPotential = ElectricFieldAndPotential( *it, P );

@@ -3,11 +3,12 @@
 
 #include <vector>
 
+#include "KGBoundary.hh"
 #include "KGCoordinateTransform.hh"
 
 namespace KGeoBag
 {
-  class KGPortHousing
+  class KGPortHousing : public KGBoundary
   {
   public:
     KGPortHousing() : fCoordTransform(NULL) {}

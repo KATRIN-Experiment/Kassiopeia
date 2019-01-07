@@ -53,7 +53,7 @@ public:
       * @return
      */
     template<class XIntegrandType>
-    XFloatT Integrate(XIntegrandType& func);
+    XFloatT Integrate(XIntegrandType&& func);
 
     /**
      * Perform the integration.
@@ -62,7 +62,7 @@ public:
       * @return
      */
     template<class XIntegrandType>
-    XFloatT Integrate(XIntegrandType& func, XFloatT xStart, XFloatT xEnd);
+    XFloatT Integrate(XIntegrandType&& func, XFloatT xStart, XFloatT xEnd);
 
     /**
      * Set the integration limits.
@@ -113,13 +113,13 @@ protected:
     void Reset();
 
     template<class XIntegrandType>
-    XFloatT NextTrapezoid(XIntegrandType& integrand);
+    XFloatT NextTrapezoid(XIntegrandType&& integrand);
     template<class XIntegrandType>
-    XFloatT QTrap(XIntegrandType& integrand);
+    XFloatT QTrap(XIntegrandType&& integrand);
     template<class XIntegrandType>
-    XFloatT QSimp(XIntegrandType& integrand);
+    XFloatT QSimp(XIntegrandType&& integrand);
     template<class XIntegrandType>
-    XFloatT QRomb(XIntegrandType& integrand, const uint32_t K = 5);
+    XFloatT QRomb(XIntegrandType&& integrand, const uint32_t K = 5);
 
     XFloatT fXStart;
     XFloatT fXEnd;
@@ -178,7 +178,7 @@ inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::fourthRoot(uint32_t A
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::NextTrapezoid(XIntegrandType& integrand) {
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::NextTrapezoid(XIntegrandType&& integrand) {
 
     ++fIteration;
     if (fIteration == 1) {
@@ -262,7 +262,7 @@ inline uint32_t KMathIntegrator<XFloatT, XSamplingPolicy>::SetMaxSteps(int32_t m
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType&& integrand)
 {
     Reset();
 
@@ -287,7 +287,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType& integrand, XFloatT xStart, XFloatT xEnd)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandType&& integrand, XFloatT xStart, XFloatT xEnd)
 {
     SetRange(xStart, xEnd);
     return Integrate(integrand);
@@ -295,7 +295,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::Integrate(XIntegrandTy
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QTrap(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QTrap(XIntegrandType&& integrand)
 {
     /*Returns the integral of the function or functor func from a to b. The constants EPS can be
      set to the desired fractional accuracy and JMAX so that 2 to the power JMAX-1 is the maximum
@@ -321,7 +321,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QTrap(XIntegrandType& 
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QSimp(XIntegrandType& integrand)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QSimp(XIntegrandType&& integrand)
 {
     /*Returns the integral of the function or functor func from a to b. The constants EPS can be
      set to the desired fractional accuracy and JMAX so that 2 to the power JMAX-1 is the maximum
@@ -360,7 +360,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QSimp(XIntegrandType& 
 
 template<class XFloatT, class XSamplingPolicy>
 template<class XIntegrandType>
-inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QRomb(XIntegrandType& integrand, const uint32_t K)
+inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QRomb(XIntegrandType&& integrand, const uint32_t K)
 {
     /*Returns the integral of the function or functor func from a to b. Integration is performed by
      Romberg’s method of order 2K, where, e.g., K=2 is Simpson’s rule.*/
@@ -470,29 +470,21 @@ namespace policies {
 
 struct PlainSumming
 {
-    template<class XFloatT, class XIntegrandType>
-    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
+    template<class Float, class XIntegrandType, class Sum = Float>
+    static Float SumSamplingPoints(uint32_t n, Float xStart, Float del, XIntegrandType&& integrand)
     {
-        XFloatT sum = 0.0;
-        for (uint32_t j = 0; j < n; j++) {
-            const XFloatT x = xStart + (XFloatT) j * del;
-            sum += integrand(x);
-        }
+        Sum sum = 0.0;
+        for (uint32_t j = 0; j < n; ++j) sum += integrand(xStart + j * del);
         return sum;
     }
 };
 
 struct KahanSumming
 {
-    template<class XFloatT, class XIntegrandType>
-    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
+    template<class Float, class XIntegrandType>
+    static Float SumSamplingPoints(uint32_t n, Float xStart, Float del, XIntegrandType&& integrand)
     {
-        KMathKahanSum<XFloatT> sum;
-        for (uint32_t j = 0; j < n; j++) {
-            const XFloatT x = xStart + (XFloatT) j * del;
-            sum += integrand(x);
-        }
-        return sum;
+  		return PlainSumming::SumSamplingPoints<Float, XIntegrandType, KMathKahanSum<Float>>(n, xStart, del, std::forward<XIntegrandType>(integrand));
     }
 };
 

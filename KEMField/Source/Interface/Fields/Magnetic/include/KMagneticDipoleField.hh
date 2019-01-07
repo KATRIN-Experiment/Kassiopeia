@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICDIPOLEFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICDIPOLEFIELD_HH_
+#ifndef KMAGNETICDIPOLEFIELD_HH_
+#define KMAGNETICDIPOLEFIELD_HH_
 
 #include "KMagnetostaticField.hh"
 
@@ -17,8 +17,8 @@ public:
     KMagneticDipoleField();
     virtual ~KMagneticDipoleField();
 private:
-    KEMThreeVector MagneticPotentialCore( const KPosition& aSamplePoint ) const;
-    KEMThreeVector MagneticFieldCore( const KPosition& aSamplePoint ) const;
+    KThreeVector MagneticPotentialCore( const KPosition& aSamplePoint ) const;
+    KThreeVector MagneticFieldCore( const KPosition& aSamplePoint ) const;
     KGradient MagneticGradientCore( const KPosition& aSamplePoint) const;
 
 public:
@@ -32,4 +32,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETICDIPOLEFIELD_HH_ */
+#endif /* KMAGNETICDIPOLEFIELD_HH_ */

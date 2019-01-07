@@ -217,7 +217,7 @@ namespace katrin
     {
       KGPortHousing* object = NULL;
       anElement->ReleaseTo(object);
-      KSmartPointer< KGPortHousing > smartPtr(object);
+      std::shared_ptr< KGPortHousing > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }
@@ -245,7 +245,7 @@ namespace katrin
     {
       KGPortHousing* object = NULL;
       anElement->ReleaseTo(object);
-      KSmartPointer< KGPortHousing > smartPtr(object);
+      std::shared_ptr< KGPortHousing > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }

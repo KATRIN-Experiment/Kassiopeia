@@ -5,7 +5,7 @@
 #include <limits>
 #include <cmath>
 
-#include "KEMThreeVector.hh"
+#include "../../include/KThreeVector_KEMField.hh"
 
 
 
@@ -59,9 +59,9 @@ class KVMSpaceRectangle
         void SetLengthSide2(double len){fL2 = len;};
 
         //indexing is: [0] = x, [1] = y, [2] = z
-        KEMThreeVector fP; //corner point
-        KEMThreeVector fN1; //1st basis vector
-        KEMThreeVector fN2; //2nd basis vector
+        KThreeVector fP; //corner point
+        KThreeVector fN1; //1st basis vector
+        KThreeVector fN2; //2nd basis vector
         double fL1; //length of side along N1
         double fL2; //length of side along N2
 

@@ -90,6 +90,10 @@ namespace Kassiopeia
             modmsg_debug( "  modifier particle electric field: <" << fModifierParticle->GetElectricField().X() << "," << fModifierParticle->GetElectricField().Y() << "," << fModifierParticle->GetElectricField().Z() << ">" << eom )
             modmsg_debug( "  modifier particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
             modmsg_debug( "  modifier particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
+            modmsg_debug( "  modifier particle spin: " << fModifierParticle->GetSpin() << eom )
+            modmsg_debug( "  modifier particle spin0: <" << fModifierParticle->GetSpin0() << ">" << eom )
+            modmsg_debug( "  modifier particle aligned spin: <" << fModifierParticle->GetAlignedSpin() << ">" << eom )
+            modmsg_debug( "  modifier particle spin angle: <" << fModifierParticle->GetSpinAngle() << ">" << eom )
 
             return false; //changes to inital particle state disabled
         }
@@ -122,6 +126,10 @@ namespace Kassiopeia
         modmsg_debug( "  modifier particle electric field: <" << fModifierParticle->GetElectricField().X() << "," << fModifierParticle->GetElectricField().Y() << "," << fModifierParticle->GetElectricField().Z() << ">" << eom )
         modmsg_debug( "  modifier particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
         modmsg_debug( "  modifier particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
+        modmsg_debug( "  modifier particle spin: " << fModifierParticle->GetSpin() << eom )
+        modmsg_debug( "  modifier particle spin0: <" << fModifierParticle->GetSpin0() << ">" << eom )
+        modmsg_debug( "  modifier particle aligned spin: <" << fModifierParticle->GetAlignedSpin() << ">" << eom )
+        modmsg_debug( "  modifier particle spin angle: <" << fModifierParticle->GetSpinAngle() << ">" << eom )
 
         return false; //changes to initial particle state disabled
     }
@@ -152,6 +160,10 @@ namespace Kassiopeia
         modmsg_debug( "  final particle electric field: <" << fModifierParticle->GetElectricField().X() << "," << fModifierParticle->GetElectricField().Y() << "," << fModifierParticle->GetElectricField().Z() << ">" << eom )
         modmsg_debug( "  final particle magnetic field: <" << fModifierParticle->GetMagneticField().X() << "," << fModifierParticle->GetMagneticField().Y() << "," << fModifierParticle->GetMagneticField().Z() << ">" << eom )
         modmsg_debug( "  final particle angle to magnetic field: <" << fModifierParticle->GetPolarAngleToB() << ">" << eom )
+        modmsg_debug( "  final particle spin: " << fModifierParticle->GetSpin() << eom )
+        modmsg_debug( "  final particle spin0: <" << fModifierParticle->GetSpin0() << ">" << eom )
+        modmsg_debug( "  final particle aligned spin: <" << fModifierParticle->GetAlignedSpin() << ">" << eom )
+        modmsg_debug( "  final particle spin angle: <" << fModifierParticle->GetSpinAngle() << ">" << eom )
 
         return hasChangedState;
     }

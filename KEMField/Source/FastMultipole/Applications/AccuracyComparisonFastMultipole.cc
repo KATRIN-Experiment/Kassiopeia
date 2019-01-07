@@ -591,21 +591,21 @@ int main(int argc, char* argv[])
     double length_c = world_length/2.0 - 0.001*world_length;
     KFMPoint<3> center = world->GetCenter();
 
-    KEMThreeVector direction_a;
-    KEMThreeVector direction_b;
-    KEMThreeVector direction_c;
+    KThreeVector direction_a;
+    KThreeVector direction_b;
+    KThreeVector direction_c;
 
-    KEMThreeVector p0(center[0], center[1], center[2]);
-    KEMThreeVector point;
+    KThreeVector p0(center[0], center[1], center[2]);
+    KThreeVector point;
 
     unsigned int n_points = 0;
-    KEMThreeVector* points = NULL;
+    KThreeVector* points = NULL;
 
     switch( mode )
     {
         case 0:
             n_points = NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 1.0; direction_b[2] = 0.0;
             direction_c[0] = 0.0; direction_c[1] = 0.0; direction_c[2] = 1.0;
@@ -634,7 +634,7 @@ int main(int argc, char* argv[])
         break;
         case 1:
             n_points = NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<NEvaluations; i++)
@@ -648,7 +648,7 @@ int main(int argc, char* argv[])
         break;
         case 2:
             n_points = NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 1.0; direction_a[2] = 0.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<NEvaluations; i++)
@@ -662,7 +662,7 @@ int main(int argc, char* argv[])
         break;
         case 3:
             n_points = NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 0.0; direction_a[2] = 1.0;
             p0 = p0 - length_a*direction_a;
             for(unsigned int i=0; i<NEvaluations; i++)
@@ -676,7 +676,7 @@ int main(int argc, char* argv[])
         break;
         case 4:
             n_points = NEvaluations*NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 0.0; direction_a[1] = 1.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 0.0; direction_b[2] = 1.0;
             p0 = p0 - length_a*direction_a;
@@ -695,7 +695,7 @@ int main(int argc, char* argv[])
         break;
         case 5:
             n_points = NEvaluations*NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 0.0; direction_b[2] = 1.0;
             p0 = p0 - length_a*direction_a;
@@ -714,7 +714,7 @@ int main(int argc, char* argv[])
         break;
         case 6:
             n_points = NEvaluations*NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 1.0; direction_b[2] = 0.0;
             p0 = p0 - length_a*direction_a;
@@ -733,7 +733,7 @@ int main(int argc, char* argv[])
         break;
         case 7:
             n_points = NEvaluations*NEvaluations*NEvaluations;
-            points = new KEMThreeVector[n_points];
+            points = new KThreeVector[n_points];
             direction_a[0] = 1.0; direction_a[1] = 0.0; direction_a[2] = 0.0;
             direction_b[0] = 0.0; direction_b[1] = 1.0; direction_b[2] = 0.0;
             direction_c[0] = 0.0; direction_c[1] = 0.0; direction_c[2] = 1.0;
@@ -788,7 +788,7 @@ int main(int argc, char* argv[])
     //evaluate multipole potential
     for(unsigned int i=0; i<n_points; i++)
     {
-        KEMThreeVector field = fast_solver->ElectricField(points[i]);
+        KThreeVector field = fast_solver->ElectricField(points[i]);
         //std::cout<<"field = "<<field[0]<<", "<<field[1]<<", "<<field[2]<<std::endl;
         fmm_field_x.AddNextValue(field[0]);
         fmm_field_y.AddNextValue(field[1]);
@@ -823,7 +823,7 @@ int main(int argc, char* argv[])
     //evaluate direct field
     for(unsigned int i=0; i<n_points; i++)
     {
-        KEMThreeVector field = direct_solver->ElectricField(points[i]);
+        KThreeVector field = direct_solver->ElectricField(points[i]);
         direct_field_x.AddNextValue(field[0]);
         direct_field_y.AddNextValue(field[1]);
         direct_field_z.AddNextValue(field[2]);

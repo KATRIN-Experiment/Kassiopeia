@@ -21,18 +21,18 @@ namespace KEMField
 
     double Potential_nNodes( const double* data, const KPosition& P,
   		  const unsigned short halfNoNodes, const double* nodes, const double* weights ) const;
-    KEMThreeVector ElectricField_nNodes( const double* data, const KPosition& P,
+    KThreeVector ElectricField_nNodes( const double* data, const KPosition& P,
   		  const unsigned short halfNoNodes, const double* nodes, const double* weights ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential_nNodes(const double* data, const KPosition& P,
+    std::pair<KThreeVector,double> ElectricFieldAndPotential_nNodes(const double* data, const KPosition& P,
   		  const unsigned short halfNoNodes, const double* nodes, const double* weights ) const;
 
     double Potential(const KLineSegment* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P ) const;
 
     double Potential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KLineSegment>* source, const KPosition& P ) const;
 
   private:
 

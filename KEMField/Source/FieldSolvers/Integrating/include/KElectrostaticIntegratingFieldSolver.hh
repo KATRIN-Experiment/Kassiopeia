@@ -20,17 +20,17 @@ public:
 	virtual void Initialize() {}
 
 	double Potential(const KPosition& P) const;
-	KEMThreeVector ElectricField(const KPosition& P) const;
-	std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const;
+	KThreeVector ElectricField(const KPosition& P) const;
+	std::pair<KThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const;
 
 	// functions without Kahan summation
 	double PotentialNoKahanSum(const KPosition& P) const;
-	KEMThreeVector ElectricFieldNoKahanSum(const KPosition& P) const;
-	std::pair<KEMThreeVector,double> ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const;
+	KThreeVector ElectricFieldNoKahanSum(const KPosition& P) const;
+	std::pair<KThreeVector,double> ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const;
 
 	double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
-	KEMThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
-	std::pair<KEMThreeVector,double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+	KThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+	std::pair<KThreeVector,double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
 
 protected:
 	const KSurfaceContainer& fContainer;
@@ -99,11 +99,11 @@ private:
 		}
 
 		void SetPosition(const KPosition& p) const { fP = p; }
-		KEMThreeVector& GetNormalizedElectricField() const { return fElectricField;}
+		KThreeVector& GetNormalizedElectricField() const { return fElectricField;}
 
 	private:
 		mutable KPosition fP;
-		mutable KEMThreeVector fElectricField;
+		mutable KThreeVector fElectricField;
 		Integrator& fIntegrator;
 	};
 
@@ -134,11 +134,11 @@ private:
 		}
 
 		void SetPosition(const KPosition& p) const { fP = p; }
-		std::pair<KEMThreeVector,double>& GetNormalizedElectricFieldAndPotential() const { return fElectricFieldAndPotential;}
+		std::pair<KThreeVector,double>& GetNormalizedElectricFieldAndPotential() const { return fElectricFieldAndPotential;}
 
 	private:
 		mutable KPosition fP;
-		mutable std::pair<KEMThreeVector,double> fElectricFieldAndPotential;
+		mutable std::pair<KThreeVector,double> fElectricFieldAndPotential;
 		Integrator& fIntegrator;
 	};
 
@@ -183,14 +183,14 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template <class Integrator>
-KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const KPosition& P) const
+KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricField.SetPosition(P);
-	KEMThreeVector sum(0.,0.,0.);
-	KEMThreeVector c(0.,0.,0.);
-	KEMThreeVector y(0.,0.,0.);
-	KEMThreeVector t(0.,0.,0.);
+	KThreeVector sum(0.,0.,0.);
+	KThreeVector c(0.,0.,0.);
+	KThreeVector y(0.,0.,0.);
+	KThreeVector t(0.,0.,0.);
 	KSurfaceContainer::iterator it;
 	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
 	{
@@ -204,15 +204,15 @@ KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::E
 }
 
 template <class Integrator>
-std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const KPosition& P) const
+std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-	KEMThreeVector sumField(0.,0.,0.);
-	KEMThreeVector cField(0.,0.,0.);
-	KEMThreeVector yField(0.,0.,0.);
-	KEMThreeVector tField(0.,0.,0.);
+	KThreeVector sumField(0.,0.,0.);
+	KThreeVector cField(0.,0.,0.);
+	KThreeVector yField(0.,0.,0.);
+	KThreeVector tField(0.,0.,0.);
 
 	double sumPot = 0.;
 	double cPot = 0.;
@@ -220,7 +220,7 @@ std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, Electrostat
 	double tPot = 0.;
 
 	KSurfaceContainer::iterator it;
-	std::pair<KEMThreeVector,double> itFieldAndPot;
+	std::pair<KThreeVector,double> itFieldAndPot;
 	double itBasisValue = 0.;
 
 	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
@@ -259,11 +259,11 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template <class Integrator>
-KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldNoKahanSum(const KPosition& P) const
+KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldNoKahanSum(const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricField.SetPosition(P);
-	KEMThreeVector sum(0.,0.,0.);
+	KThreeVector sum(0.,0.,0.);
 	KSurfaceContainer::iterator it;
 	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
 	{
@@ -274,16 +274,16 @@ KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::E
 }
 
 template <class Integrator>
-std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const
+std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-	KEMThreeVector sumField(0.,0.,0.);
+	KThreeVector sumField(0.,0.,0.);
 	double sumPot = 0.;
 
 	KSurfaceContainer::iterator it;
-	std::pair<KEMThreeVector,double> itFieldAndPot;
+	std::pair<KThreeVector,double> itFieldAndPot;
 	double itBasisValue = 0.;
 
 	for (it=fContainer.begin<Basis>();it!=fContainer.end<Basis>();++it)
@@ -322,14 +322,14 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template <class Integrator>
-KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
+KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricField.SetPosition(P);
-	KEMThreeVector sum(0.,0.,0.);
-	KEMThreeVector c(0.,0.,0.);
-	KEMThreeVector y(0.,0.,0.);
-	KEMThreeVector t(0.,0.,0.);
+	KThreeVector sum(0.,0.,0.);
+	KThreeVector c(0.,0.,0.);
+	KThreeVector y(0.,0.,0.);
+	KThreeVector t(0.,0.,0.);
 	unsigned int id;
 	for(unsigned int i=0; i<SetSize; ++i)
 	{
@@ -344,15 +344,15 @@ KEMThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::E
 }
 
 template <class Integrator>
-std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
+std::pair<KThreeVector,double> KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
 {
 	// Kahan Sum to mitigate rounding error
 	fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-	KEMThreeVector sumField(0.,0.,0.);
-	KEMThreeVector cField(0.,0.,0.);
-	KEMThreeVector yField(0.,0.,0.);
-	KEMThreeVector tField(0.,0.,0.);
+	KThreeVector sumField(0.,0.,0.);
+	KThreeVector cField(0.,0.,0.);
+	KThreeVector yField(0.,0.,0.);
+	KThreeVector tField(0.,0.,0.);
 
 	double sumPot = 0.;
 	double cPot = 0.;
@@ -360,7 +360,7 @@ std::pair<KEMThreeVector,double> KIntegratingFieldSolver<Integrator, Electrostat
 	double tPot = 0.;
 
 	KSurfaceContainer::iterator it;
-	std::pair<KEMThreeVector,double> itFieldAndPot;
+	std::pair<KThreeVector,double> itFieldAndPot;
 	double itBasisValue = 0.;
 
 	unsigned int id;

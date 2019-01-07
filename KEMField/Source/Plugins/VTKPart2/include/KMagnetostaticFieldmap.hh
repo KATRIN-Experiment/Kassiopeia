@@ -5,15 +5,15 @@
  *      Author: Jan Behrens
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KMAGNETOSTATICPOTENTIALMAP_HH_
-#define KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KMAGNETOSTATICPOTENTIALMAP_HH_
+#ifndef KMAGNETOSTATICPOTENTIALMAP_HH_
+#define KMAGNETOSTATICPOTENTIALMAP_HH_
 
 /**
  * (Note: this text refers to electric maps, but magnetic maps are similar.)
  *
  * This implements a simplistic potential map interface into Kassiopeia.
  *
- * It is inteded to provide a simple method to speed up tracking,
+ * It is intended to provide a simple method to speed up tracking,
  * without the need to take care about lots of parameters.
  * A much more advanced method would be FFTM/FMM, which is also
  * available in the current version of Kassiopeia.
@@ -126,16 +126,16 @@
 
 #include "KMagnetostaticField.hh"
 #include <string>
+#include <memory>
 
 #include "KMPIEnvironment.hh"
-#include "KEMThreeVector.hh"
-
 #include "KGCore.hh"
 
 #include <vtkSmartPointer.h>
 #include <vtkImageData.h>
 #include <vtkIntArray.h>
 #include <vtkDoubleArray.h>
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField {
 
@@ -149,7 +149,8 @@ namespace KEMField {
             virtual bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
 
         public:
-            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KEMThreeVector& aField ) const;
+            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField ) const;
+            virtual bool GetGradient( const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient ) const;
 
         protected:
             vtkImageData *fImageData;
@@ -197,8 +198,8 @@ namespace KEMField {
             void SetInterpolation( const std::string& aMode );
 
         private:
-            virtual KEMThreeVector MagneticPotentialCore(const KPosition& P) const;
-            virtual KEMThreeVector MagneticFieldCore(const KPosition& P) const;
+            virtual KThreeVector MagneticPotentialCore(const KPosition& P) const;
+            virtual KThreeVector MagneticFieldCore(const KPosition& P) const;
             virtual KGradient MagneticGradientCore(const KPosition& P) const;
             virtual void InitializeCore();
 
@@ -206,7 +207,7 @@ namespace KEMField {
             std::string fDirectory;
             std::string fFile;
             int fInterpolation;
-            KSmartPointer<KMagfieldMapVTK> fFieldMap;
+            std::shared_ptr<KMagfieldMapVTK> fFieldMap;
     };
 
     ////////////////////////////////////////////////////////////////////
@@ -230,7 +231,7 @@ namespace KEMField {
             {
                 fCenter = aCenter;
             }
-            void SetLength( KEMThreeVector aLength )
+            void SetLength( KThreeVector aLength )
             {
                 fLength = aLength;
             }
@@ -294,7 +295,7 @@ namespace KEMField {
             std::string fFile;
             std::string fName;
             KPosition fCenter;
-            KEMThreeVector fLength;
+            KThreeVector fLength;
             bool fMirrorX, fMirrorY, fMirrorZ;
             double fSpacing;
             KMagnetostaticField *fMagneticField;
@@ -307,4 +308,4 @@ namespace KEMField {
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KMAGNETOSTATICPOTENTIALMAP_HH_ */
+#endif /* KMAGNETOSTATICPOTENTIALMAP_HH_ */

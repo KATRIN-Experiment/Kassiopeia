@@ -120,7 +120,7 @@ inline double operator*( const KGPoint<NDIM>& aLeft, const KGPoint<NDIM>& aRight
 }
 
 template<size_t NDIM>
-inline KGPoint<NDIM>  operator*( register double aScalar, const KGPoint<NDIM>& aVector )
+inline KGPoint<NDIM>  operator*( double aScalar, const KGPoint<NDIM>& aVector )
 {
     KGPoint<NDIM>  aResult( aVector );
     for (size_t i=0; i<NDIM; i++)
@@ -129,7 +129,7 @@ inline KGPoint<NDIM>  operator*( register double aScalar, const KGPoint<NDIM>& a
 }
 
 template<size_t NDIM>
-inline KGPoint<NDIM> operator*( const KGPoint<NDIM>& aVector, register double aScalar )
+inline KGPoint<NDIM> operator*( const KGPoint<NDIM>& aVector, double aScalar )
 {
     KGPoint<NDIM>  aResult( aVector );
     for (size_t i=0; i<NDIM; i++)
@@ -138,7 +138,7 @@ inline KGPoint<NDIM> operator*( const KGPoint<NDIM>& aVector, register double aS
 }
 
 template<size_t NDIM>
-inline KGPoint<NDIM>& operator*=( KGPoint<NDIM>& aVector, register double aScalar )
+inline KGPoint<NDIM>& operator*=( KGPoint<NDIM>& aVector, double aScalar )
 {
     for (size_t i=0; i<NDIM; i++)
         aVector[i] *= aScalar;
@@ -146,7 +146,7 @@ inline KGPoint<NDIM>& operator*=( KGPoint<NDIM>& aVector, register double aScala
 }
 
 template<size_t NDIM>
-inline KGPoint<NDIM> operator/( const KGPoint<NDIM>& aVector, register double aScalar )
+inline KGPoint<NDIM> operator/( const KGPoint<NDIM>& aVector, double aScalar )
 {
     KGPoint<NDIM>  aResult( aVector );
     for (size_t i=0; i<NDIM; i++)
@@ -155,7 +155,7 @@ inline KGPoint<NDIM> operator/( const KGPoint<NDIM>& aVector, register double aS
 }
 
 template<size_t NDIM>
-inline KGPoint<NDIM>& operator/=( KGPoint<NDIM>& aVector, register double aScalar )
+inline KGPoint<NDIM>& operator/=( KGPoint<NDIM>& aVector, double aScalar )
 {
     for (size_t i=0; i<NDIM; i++)
         aVector[i] /= aScalar;

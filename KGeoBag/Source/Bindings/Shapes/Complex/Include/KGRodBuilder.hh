@@ -98,7 +98,7 @@ namespace katrin
       KGRod* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer< KGRod > smartPtr(object);
+      std::shared_ptr< KGRod > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }
@@ -127,7 +127,7 @@ namespace katrin
       KGRod* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer< KGRod > smartPtr(object);
+      std::shared_ptr< KGRod > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }

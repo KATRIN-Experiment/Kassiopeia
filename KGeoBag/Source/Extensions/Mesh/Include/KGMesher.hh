@@ -12,6 +12,10 @@
 #include "KGPortHousingSurfaceMesher.hh"
 #include "KGRodSurfaceMesher.hh"
 #include "KGRotatedSurfaceMesher.hh"
+#include "KGLinearWireGridMesher.hh"
+#include "KGQuadraticWireGridMesher.hh"
+#include "KGCircleWireMesher.hh"
+#include "KGCircularWirePinsMesher.hh"
 
 #include "KGFlattenedCircleSurfaceMesher.hh"
 #include "KGFlattenedPolyLoopSurfaceMesher.hh"
@@ -57,6 +61,10 @@ namespace KGeoBag
         virtual public KGRotatedPolyLineSurfaceMesher,
         virtual public KGRotatedCircleSurfaceMesher,
         virtual public KGRotatedPolyLoopSurfaceMesher,
+        virtual public KGLinearWireGridMesher,
+        virtual public KGQuadraticWireGridMesher,
+        virtual public KGCircleWireMesher,
+        virtual public KGCircularWirePinsMesher,
         virtual public KGShellLineSegmentSurfaceMesher,
         virtual public KGShellArcSegmentSurfaceMesher,
         virtual public KGShellPolyLineSurfaceMesher,
@@ -88,6 +96,10 @@ namespace KGeoBag
             using KGConicalWireArrayMesher::VisitWrappedSurface;
             using KGPortHousingSurfaceMesher::VisitWrappedSurface;
             using KGConicSectPortHousingSurfaceMesher::VisitWrappedSurface;
+            using KGLinearWireGridMesher::VisitWrappedSurface;
+            using KGQuadraticWireGridMesher::VisitWrappedSurface;
+            using KGCircleWireMesher::VisitWrappedSurface;
+            using KGCircularWirePinsMesher::VisitWrappedSurface;
 
             using KGFlattenedCircleSurfaceMesher::VisitFlattenedClosedPathSurface;
             using KGFlattenedPolyLoopSurfaceMesher::VisitFlattenedClosedPathSurface;

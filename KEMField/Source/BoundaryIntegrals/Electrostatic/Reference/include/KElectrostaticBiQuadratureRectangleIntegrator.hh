@@ -21,12 +21,12 @@ namespace KEMField
     ~KElectrostaticBiQuadratureRectangleIntegrator() {}
 
     double Potential(const KRectangle* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KRectangle* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KRectangle* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P ) const;
 
     double Potential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KRectangle>* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KRectangle>* source, const KPosition& P ) const;
 
   private:
     static double rectQuadGaussLegendreVarN(double (*f)(double),double a,double b,unsigned int n);

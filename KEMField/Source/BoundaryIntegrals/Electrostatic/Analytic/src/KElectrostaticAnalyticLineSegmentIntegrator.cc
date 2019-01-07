@@ -51,7 +51,7 @@ double KElectrostaticAnalyticLineSegmentIntegrator::Potential(const KLineSegment
 }
 
 
-KEMThreeVector KElectrostaticAnalyticLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
 {
 	double L = (source->GetP1()-source->GetP0()).Magnitude();
 	double Da = (source->GetP0()-P).Magnitude();

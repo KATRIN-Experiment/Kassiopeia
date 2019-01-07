@@ -5,6 +5,8 @@ set( INTERACTIONS_HEADER_BASENAMES
     KSIntScattering.h
 
     KSIntSpinFlip.h
+    KSIntSpinFlipPulse.h
+    KSIntSpinRotateYPulse.h
 
     KSIntDecay.h
     KSIntDecayCalculator.h
@@ -57,6 +59,8 @@ set( INTERACTIONS_SOURCE_BASENAMES
     KSIntScattering.cxx
 
     KSIntSpinFlip.cxx
+    KSIntSpinFlipPulse.cxx
+    KSIntSpinRotateYPulse.cxx
 
     KSIntDecay.cxx
     KSIntDecayCalculator.cxx

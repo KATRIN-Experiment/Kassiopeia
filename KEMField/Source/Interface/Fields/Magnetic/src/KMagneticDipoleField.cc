@@ -22,14 +22,14 @@ KMagneticDipoleField::~KMagneticDipoleField()
  *  The magnetic potential of a dipole at the origin can be written as
  *  A(r) = (m x r)/(|r|^3).
  */
-KEMThreeVector KMagneticDipoleField::MagneticPotentialCore(const KPosition& aSamplePoint) const {
+KThreeVector KMagneticDipoleField::MagneticPotentialCore(const KPosition& aSamplePoint) const {
     KPosition r = aSamplePoint-fLocation;
     double distance = r.Magnitude();
     return fMoment.Cross(r)/(distance * distance * distance);
 }
 
-KEMThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSamplePoint) const {
-    KEMThreeVector aPoint = aSamplePoint - fLocation;
+KThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSamplePoint) const {
+    KThreeVector aPoint = aSamplePoint - fLocation;
     double aPointMag = aPoint.Magnitude();
     double aPointMag2 = aPointMag * aPointMag;
     double aPointMag3 = aPointMag * aPointMag2;
@@ -40,7 +40,7 @@ KEMThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSampleP
 }
 
 KGradient KMagneticDipoleField::MagneticGradientCore(const KPosition& aSamplePoint) const {
-    KEMThreeVector aPoint = aSamplePoint - fLocation;
+    KThreeVector aPoint = aSamplePoint - fLocation;
     double aPointMag = aPoint.Magnitude();
     double aPointMag2 = aPointMag * aPointMag;
     double aPointMag3 = aPointMag * aPointMag2;

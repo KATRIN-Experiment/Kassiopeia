@@ -4,9 +4,9 @@
 #include <iostream>
 #include <sstream>
 
-#include "KSurfaceID.hh"
-#include "KSurfacePrimitive.hh"
-#include "KSurfaceVisitors.hh"
+#include "../../../Surfaces/include/KSurfaceID.hh"
+#include "../../../Surfaces/include/KSurfacePrimitive.hh"
+#include "../../../Surfaces/include/KSurfaceVisitors.hh"
 
 namespace KEMField
 {
@@ -108,7 +108,7 @@ namespace KEMField
   }
 }
 
-#include "KSurfaceAction.hh"
+#include "../../../Surfaces/include/KSurfaceAction.hh"
 
 namespace KEMField
 {

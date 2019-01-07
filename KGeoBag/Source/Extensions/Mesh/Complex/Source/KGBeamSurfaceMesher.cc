@@ -10,7 +10,7 @@ namespace KGeoBag
 
     void KGBeamSurfaceMesher::VisitWrappedSurface( KGBeamSurface* beamSurface )
     {
-        KSmartPointer < KGBeam > beam = beamSurface->GetObject();
+        std::shared_ptr < KGBeam > beam = beamSurface->GetObject();
 
         KThreeVector p1, p2, p3, p4;
         KThreeVector n12, n14, n23, n34;

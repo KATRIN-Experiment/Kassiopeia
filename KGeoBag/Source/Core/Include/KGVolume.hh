@@ -4,6 +4,7 @@
 #include "KGArea.hh"
 
 #include <set>
+#include <memory>
 
 namespace KGeoBag
 {
@@ -20,7 +21,7 @@ namespace KGeoBag
     		};
 
         public:
-            typedef KSmartPointer< KGArea > BoundaryPointer;
+            typedef std::shared_ptr< KGBoundary > BoundaryPointer;
             typedef std::vector< BoundaryPointer > BoundaryContainer;
             typedef BoundaryContainer::iterator BoundaryIt;
             typedef BoundaryContainer::const_iterator BoundaryCIt;

@@ -110,12 +110,12 @@ void KElectricZHFieldSolver::InitializeCore( KSurfaceContainer& container )
         return fZonalHarmonicFieldSolver->Potential( P );
     }
 
-    KEMThreeVector KElectricZHFieldSolver::ElectricFieldCore( const KPosition& P ) const
+    KThreeVector KElectricZHFieldSolver::ElectricFieldCore( const KPosition& P ) const
     {
         return fZonalHarmonicFieldSolver->ElectricField( P );
     }
 
-    std::pair<KEMThreeVector,double>
+    std::pair<KThreeVector,double>
     KElectricZHFieldSolver::ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         return fZonalHarmonicFieldSolver->ElectricFieldAndPotential(P);

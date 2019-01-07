@@ -10,7 +10,7 @@
 #include <map>
 #include <algorithm>
 #include <cctype>
-#include <KVariant.h>
+#include "KVariant.h"
 #include "KArgumentList.h"
 
 

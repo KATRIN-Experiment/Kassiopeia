@@ -116,7 +116,7 @@ namespace KGeoBag
     {
         if( fWriteEnabled == true )
         {
-            string tFileName = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fName + string( ".vtp" );
+            string tFileName = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
 
             vismsg( eNormal ) << "vtk distance tester <" << GetName() << "> is writing <" << fPolyData->GetNumberOfCells() << "> cells to file <" << tFileName << ">" << eom;
 

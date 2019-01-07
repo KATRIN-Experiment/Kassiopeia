@@ -31,18 +31,18 @@ namespace KEMField
 
     double Potential_RectNP( const double* data, const KPosition& P,
     		const unsigned short noPoints, double* Q, const double* weights ) const;
-    KEMThreeVector ElectricField_RectNP( const double* data, const KPosition& P,
+    KThreeVector ElectricField_RectNP( const double* data, const KPosition& P,
     		const unsigned short noPoints, double* Q, const double* weights ) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential_RectNP( const double* source, const KPosition& P,
+    std::pair<KThreeVector, double> ElectricFieldAndPotential_RectNP( const double* source, const KPosition& P,
     		const unsigned short noPoints, double* Q, const double* weights) const;
 
     double Potential( const KRectangle* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRectangle* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P ) const;
+    KThreeVector ElectricField( const KRectangle* source, const KPosition& P ) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P ) const;
 
     double Potential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KRectangle>* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KRectangle>* source, const KPosition& P ) const;
 
   private:
 

@@ -33,7 +33,7 @@ STATICINT sKSRootConstant =
         // electric fields
         KSRootBuilder::ComplexElement< KElectrostaticConstantField >( "ksfield_electric_constant" ) +
         KSRootBuilder::ComplexElement< KElectricQuadrupoleField >( "ksfield_electric_quadrupole" ) +
-        KSRootBuilder::ComplexElement< KElectrostaticBoundaryFieldWithKGeoBag >( "ksfield_electrostatic" ) +
+        KSRootBuilder::ComplexElement< KGElectrostaticBoundaryField >( "ksfield_electrostatic" ) +
         KSRootBuilder::ComplexElement< KRampedElectricField >( "ksfield_electric_ramped" ) +
         KSRootBuilder::ComplexElement< KRampedElectric2Field >( "ksfield_electric_ramped_2fields") +
 #ifdef Kassiopeia_USE_VTK
@@ -51,6 +51,6 @@ STATICINT sKSRootConstant =
         KSRootBuilder::ComplexElement< KMagnetostaticFieldmap >( "ksfield_magnetic_fieldmap" ) +
         KSRootBuilder::ComplexElement< KMagnetostaticFieldmapCalculator >( "ksfield_magnetic_fieldmap_calculator" ) +
 #endif
-        KSRootBuilder::ComplexElement< KStaticElectromagnetFieldWithKGeoBag >( "ksfield_electromagnet");
+        KSRootBuilder::ComplexElement< KGStaticElectromagnetField >( "ksfield_electromagnet");
 
 } /* namespace katrin */

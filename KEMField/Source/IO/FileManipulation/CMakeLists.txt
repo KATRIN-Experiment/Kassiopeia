@@ -5,7 +5,7 @@ set(KEMField_SPARSE_MATRIX_BUFFER "32" CACHE STRING "Buffer size (MB) used for s
 mark_as_advanced(FORCE KEMField_SPARSE_MATRIX_BUFFER)
 add_cflag(KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB=${KEMField_SPARSE_MATRIX_BUFFER})
 
-set(KEMField_CACHE_DIR "${@PROJECT_NAME@_CACHE_INSTALL_DIR}" CACHE STRING "KEMField caching directory.")
+set(KEMField_CACHE_DIR "${${PROJECT_NAME}_CACHE_INSTALL_DIR}" CACHE STRING "KEMField caching directory.")
 mark_as_advanced(FORCE KEMField_CACHE_DIR)
 
 

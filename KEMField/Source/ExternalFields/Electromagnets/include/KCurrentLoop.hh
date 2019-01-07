@@ -1,8 +1,7 @@
 #ifndef KCURRENTLOOP_H
 #define KCURRENTLOOP_H
 
-#include "KEMThreeVector.hh"
-
+#include "KThreeVector_KEMField.hh"
 #include "KElectromagnet.hh"
 
 namespace KEMField

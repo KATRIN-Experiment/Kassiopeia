@@ -12,14 +12,14 @@ namespace KEMField
       KElectrostaticField(),
       fField() {}
 
-    KElectrostaticConstantField(const KEMThreeVector& field) :
+    KElectrostaticConstantField(const KThreeVector& field) :
       KElectrostaticField(),
       fField(field) {}
 
     virtual ~KElectrostaticConstantField() {}
 
-    void SetField(KEMThreeVector field) { fField = field; }
-    KEMThreeVector GetField() {return fField;}
+    void SetField(KThreeVector field) { fField = field; }
+    KThreeVector GetField() {return fField;}
 
     static std::string Name() { return "ElectrostaticConstantFieldSolver"; }
 
@@ -28,13 +28,13 @@ private:
     	return fField.Dot(P);
     }
 
-    virtual KEMThreeVector ElectricFieldCore(const KPosition&) const {
+    virtual KThreeVector ElectricFieldCore(const KPosition&) const {
     	return fField;
     }
 
   protected:
 
-    KEMThreeVector fField;
+    KThreeVector fField;
   };
 
 }

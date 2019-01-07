@@ -8,6 +8,7 @@
 #include "KGShapeMessage.hh"
 
 #include <iomanip>
+#include <memory>
 
 namespace KGeoBag
 {
@@ -50,7 +51,7 @@ namespace KGeoBag
                     fFlattenedMeshPower( aCopy.fFlattenedMeshPower )
             {
             }
-            KGRotatedOpenPathSpace( const KSmartPointer< XPathType >& aPath ) :
+            KGRotatedOpenPathSpace( const std::shared_ptr< XPathType >& aPath ) :
                     KGVolume(),
                     fPath( aPath ),
                     fTopPath( new KGPlanarCircle() ),
@@ -66,20 +67,20 @@ namespace KGeoBag
             }
 
         public:
-            KSmartPointer< XPathType >& Path()
+            std::shared_ptr< XPathType >& Path()
             {
                 return fPath;
             }
-            const KSmartPointer< XPathType >& Path() const
+            const std::shared_ptr< XPathType >& Path() const
             {
                 return fPath;
             }
 
-            const KSmartPointer< KGPlanarCircle >& StartPath() const
+            const std::shared_ptr< KGPlanarCircle >& StartPath() const
             {
                 return fTopPath;
             }
-            const KSmartPointer< KGPlanarCircle >& EndPath() const
+            const std::shared_ptr< KGPlanarCircle >& EndPath() const
             {
                 return fBottomPath;
             }
@@ -125,9 +126,9 @@ namespace KGeoBag
             }
 
         protected:
-            mutable KSmartPointer< XPathType > fPath;
-            mutable KSmartPointer< KGPlanarCircle > fTopPath;
-            mutable KSmartPointer< KGPlanarCircle > fBottomPath;
+            mutable std::shared_ptr< XPathType > fPath;
+            mutable std::shared_ptr< KGPlanarCircle > fTopPath;
+            mutable std::shared_ptr< KGPlanarCircle > fBottomPath;
             mutable double fSign;
             mutable unsigned int fRotatedMeshCount;
             mutable unsigned int fFlattenedMeshCount;
@@ -141,7 +142,7 @@ namespace KGeoBag
                 fTopPath->Radius( fPath->Start().Y() );
                 fTopPath->MeshCount( fRotatedMeshCount );
 
-                KGFlattenedCircleSurface* tTop = new KGFlattenedCircleSurface( fTopPath );
+                auto tTop = std::make_shared<KGFlattenedCircleSurface>( fTopPath );
                 tTop->Sign( 1. );
                 tTop->Z( fPath->Start().X() );
                 tTop->FlattenedMeshCount( fFlattenedMeshCount );
@@ -149,7 +150,7 @@ namespace KGeoBag
                 tTop->SetName( "top" );
                 aBoundaryContainer.push_back( tTop );
 
-                KGRotatedPathSurface< XPathType >* tJacket = new KGRotatedPathSurface< XPathType >( fPath );
+                auto tJacket = std::make_shared<KGRotatedPathSurface< XPathType >>( fPath );
                 tJacket->RotatedMeshCount( fRotatedMeshCount );
                 tJacket->SetName( "jacket" );
                 aBoundaryContainer.push_back( tJacket );
@@ -159,7 +160,7 @@ namespace KGeoBag
                 fBottomPath->Radius( fPath->End().Y() );
                 fBottomPath->MeshCount( fRotatedMeshCount );
 
-                KGFlattenedCircleSurface* tBottom = new KGFlattenedCircleSurface( fBottomPath );
+                auto tBottom = std::make_shared<KGFlattenedCircleSurface>( fBottomPath );
                 tBottom->Sign( -1. );
                 tBottom->Z( fPath->End().X() );
                 tBottom->FlattenedMeshCount( fFlattenedMeshCount );

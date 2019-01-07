@@ -39,6 +39,7 @@ namespace Kassiopeia
         {
             trajmsg( eError ) << "<" << GetName() << "> cannot calculate trajectory with no trajectory set" << eom;
         }
+
         fTrajectory->CalculateTrajectory( anInitialParticle, aFinalParticle, aCenter, aRadius, aTimeStep );
         return;
     }
@@ -120,6 +121,10 @@ namespace Kassiopeia
         trajmsg_debug( "  trajectory particle electric field: <" << fTrajectoryParticle->GetElectricField().X() << "," << fTrajectoryParticle->GetElectricField().Y() << "," << fTrajectoryParticle->GetElectricField().Z() << ">" << eom );
         trajmsg_debug( "  trajectory particle magnetic field: <" << fTrajectoryParticle->GetMagneticField().X() << "," << fTrajectoryParticle->GetMagneticField().Y() << "," << fTrajectoryParticle->GetMagneticField().Z() << ">" << eom );
         trajmsg_debug( "  trajectory particle angle to magnetic field: <" << fTrajectoryParticle->GetPolarAngleToB() << ">" << eom );
+        trajmsg_debug( "  trajectory particle spin: " << fTrajectoryParticle->GetSpin() << eom );
+        trajmsg_debug( "  trajectory particle spin0: <" << fTrajectoryParticle->GetSpin0() << ">" << eom );
+        trajmsg_debug( "  trajectory particle aligned spin: <" << fTrajectoryParticle->GetAlignedSpin() << ">" << eom );
+        trajmsg_debug( "  trajectory particle spin angle: <" << fTrajectoryParticle->GetSpinAngle() << ">" << eom );
 
         if( !( fTrajectoryParticle->GetPosition() == fTrajectoryParticle->GetPosition() ) )
         {
@@ -188,6 +193,10 @@ namespace Kassiopeia
         trajmsg_debug( "  final particle electric field: <" << fFinalParticle->GetElectricField().X() << "," << fFinalParticle->GetElectricField().Y() << "," << fFinalParticle->GetElectricField().Z() << ">" << eom );
         trajmsg_debug( "  final particle magnetic field: <" << fFinalParticle->GetMagneticField().X() << "," << fFinalParticle->GetMagneticField().Y() << "," << fFinalParticle->GetMagneticField().Z() << ">" << eom );
         trajmsg_debug( "  final particle angle to magnetic field: <" << fFinalParticle->GetPolarAngleToB() << ">" << eom );
+        trajmsg_debug( "  final particle spin: " << fFinalParticle->GetSpin() << eom );
+        trajmsg_debug( "  final particle spin0: <" << fFinalParticle->GetSpin0() << ">" << eom );
+        trajmsg_debug( "  final particle aligned spin: <" << fFinalParticle->GetAlignedSpin() << ">" << eom );
+        trajmsg_debug( "  final particle spin angle: <" << fFinalParticle->GetSpinAngle() << ">" << eom );
 
         return;
     }

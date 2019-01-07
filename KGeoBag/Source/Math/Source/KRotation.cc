@@ -52,6 +52,7 @@ namespace KGeoBag
 
         return;
     }
+
     void KRotation::SetAxisAngle( const KThreeVector& tAxis, const double& anAngle )
     {
         double tSine = sin( anAngle );
@@ -72,6 +73,11 @@ namespace KGeoBag
 
         return;
     }
+    void KRotation::SetAxisAngleInDegrees( const KThreeVector& tAxis, const double& anAngle )
+    {
+        SetAxisAngle( tAxis, KConst::Pi() / 180. * anAngle );
+    }
+
     void KRotation::SetEulerAngles( const double& anAlpha, const double& aBeta, const double& aGamma )
     {
         double tSineAlpha = sin( anAlpha );
@@ -95,36 +101,61 @@ namespace KGeoBag
 
         return;
     }
+    void KRotation::SetEulerAnglesInDegrees( const double& anAlpha, const double& aBeta, const double& aGamma )
+    {
+        SetEulerAngles( KConst::Pi() / 180. * anAlpha, KConst::Pi() / 180. * aBeta, KConst::Pi() / 180. * aGamma );
+    }
+
     void KRotation::SetEulerAngles( const vector<double>& anArray )
     {
         assert(anArray.size() == 3);
         SetEulerAngles( anArray[0], anArray[1], anArray[2] );
     }
+    void KRotation::SetEulerAnglesInDegrees( const vector<double>& anArray )
+    {
+        assert(anArray.size() == 3);
+        SetEulerAnglesInDegrees( anArray[0], anArray[1], anArray[2] );
+    }
 
     void KRotation::SetEulerZYZAngles( const double& anAlpha, const double& aBeta, const double& aGamma )
-        {
-    		// Euler Rotation in z,y',z'' convention
-            double tSineAlpha = sin( anAlpha );
-            double tCosineAlpha = cos( anAlpha );
-            double tSineBeta = sin( aBeta );
-            double tCosineBeta = cos( aBeta );
-            double tSineGamma = sin( aGamma );
-            double tCosineGamma = cos( aGamma );
+    {
+		// Euler Rotation in z,y',z'' convention
+        double tSineAlpha = sin( anAlpha );
+        double tCosineAlpha = cos( anAlpha );
+        double tSineBeta = sin( aBeta );
+        double tCosineBeta = cos( aBeta );
+        double tSineGamma = sin( aGamma );
+        double tCosineGamma = cos( aGamma );
 
-            fData[0] = - tSineAlpha * tSineGamma + tCosineAlpha * tCosineBeta * tCosineGamma;
-            fData[1] = - tSineAlpha * tCosineGamma - tCosineAlpha * tCosineBeta * tSineGamma;
-            fData[2] = tCosineAlpha * tSineBeta;
+        fData[0] = - tSineAlpha * tSineGamma + tCosineAlpha * tCosineBeta * tCosineGamma;
+        fData[1] = - tSineAlpha * tCosineGamma - tCosineAlpha * tCosineBeta * tSineGamma;
+        fData[2] = tCosineAlpha * tSineBeta;
 
-            fData[3] = tCosineAlpha * tSineGamma + tSineAlpha * tCosineBeta * tCosineGamma;
-            fData[4] = tCosineAlpha * tCosineGamma - tSineAlpha * tCosineBeta * tSineGamma;
-            fData[5] = tSineAlpha * tSineBeta;
+        fData[3] = tCosineAlpha * tSineGamma + tSineAlpha * tCosineBeta * tCosineGamma;
+        fData[4] = tCosineAlpha * tCosineGamma - tSineAlpha * tCosineBeta * tSineGamma;
+        fData[5] = tSineAlpha * tSineBeta;
 
-            fData[6] = - tSineBeta * tCosineGamma;
-            fData[7] =  tSineBeta * tSineGamma;
-            fData[8] = tCosineBeta;
+        fData[6] = - tSineBeta * tCosineGamma;
+        fData[7] =  tSineBeta * tSineGamma;
+        fData[8] = tCosineBeta;
 
-            return;
-        }
+        return;
+    }
+    void KRotation::SetEulerZYZAnglesInDegrees( const double& anAlpha, const double& aBeta, const double& aGamma )
+    {
+        SetEulerZYZAngles( KConst::Pi() / 180. * anAlpha, KConst::Pi() / 180. * aBeta, KConst::Pi() / 180. * aGamma );
+    }
+
+    void KRotation::SetEulerZYZAngles( const vector<double>& anArray )
+    {
+        assert(anArray.size() == 3);
+        SetEulerZYZAngles( anArray[0], anArray[1], anArray[2] );
+    }
+    void KRotation::SetEulerZYZAnglesInDegrees( const vector<double>& anArray )
+    {
+        assert(anArray.size() == 3);
+        SetEulerZYZAnglesInDegrees( anArray[0], anArray[1], anArray[2] );
+    }
 
     void KRotation::SetRotatedFrame( const KThreeVector& x, const KThreeVector& y, const KThreeVector& z )
     {

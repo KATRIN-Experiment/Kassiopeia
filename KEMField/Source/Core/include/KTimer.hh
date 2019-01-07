@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KTIMER_HH_
-#define KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KTIMER_HH_
+#ifndef KTIMER_HH_
+#define KTIMER_HH_
 
 #include <time.h>
 
@@ -33,4 +33,4 @@ private:
 
 } /* namespace Kassiopeia */
 
-#endif /* KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KTIMER_HH_ */
+#endif /* KTIMER_HH_ */

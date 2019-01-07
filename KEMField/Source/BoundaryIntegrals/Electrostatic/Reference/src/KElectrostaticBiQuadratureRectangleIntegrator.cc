@@ -10,7 +10,7 @@ unsigned int gReIntNodes = 32;
 
 double reAcommon, reBcommon;
 
-KEMThreeVector reP, reP0, gReN1, gReN2;
+KThreeVector reP, reP0, gReN1, gReN2;
 double gReX;
 
 
@@ -31,7 +31,7 @@ double KElectrostaticBiQuadratureRectangleIntegrator::rectF2( double y )
 double KElectrostaticBiQuadratureRectangleIntegrator::rectF( double x, double y )
 {
 	double R,R3;
-	KEMThreeVector Q,QP;
+	KThreeVector Q,QP;
 	Q = reP0 + x*gReN1 + y*gReN2;
 	QP=reP-Q;
 	R=QP.Magnitude();
@@ -87,7 +87,7 @@ double KElectrostaticBiQuadratureRectangleIntegrator::Potential(const KRectangle
 	return rectQuadGaussLegendreVarN( &KElectrostaticBiQuadratureRectangleIntegrator::rectF1, 0., source->GetA(), gReIntNodes );
 }
 
-KEMThreeVector KElectrostaticBiQuadratureRectangleIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
+KThreeVector KElectrostaticBiQuadratureRectangleIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
 {
 	double EField[3];
 
@@ -103,10 +103,10 @@ KEMThreeVector KElectrostaticBiQuadratureRectangleIntegrator::ElectricField(cons
 		EField[j] = rectQuadGaussLegendreVarN( &KElectrostaticBiQuadratureRectangleIntegrator::rectF1, 0., source->GetA(), gReIntNodes );
 	}
 
-	return KEMThreeVector( EField[0], EField[1], EField[2] );
+	return KThreeVector( EField[0], EField[1], EField[2] );
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticBiQuadratureRectangleIntegrator::ElectricFieldAndPotential(const KRectangle* source, const KPosition& P) const
+std::pair<KThreeVector, double> KElectrostaticBiQuadratureRectangleIntegrator::ElectricFieldAndPotential(const KRectangle* source, const KPosition& P) const
 {
 	return std::make_pair( ElectricField(source, P), Potential(source, P) );
 }
@@ -119,19 +119,19 @@ double KElectrostaticBiQuadratureRectangleIntegrator::Potential(const KSymmetryG
 	return potential;
 }
 
-KEMThreeVector KElectrostaticBiQuadratureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
+KThreeVector KElectrostaticBiQuadratureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
 {
-	KEMThreeVector electricField(0.,0.,0.);
+	KThreeVector electricField(0.,0.,0.);
 	for (KSymmetryGroup<KRectangle>::ShapeCIt it=source->begin();it!=source->end();++it)
 		electricField += ElectricField(*it,P);
 	return electricField;
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticBiQuadratureRectangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
+std::pair<KThreeVector, double> KElectrostaticBiQuadratureRectangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
 {
-	std::pair<KEMThreeVector, double> fieldAndPotential;
+	std::pair<KThreeVector, double> fieldAndPotential;
     double potential( 0. );
-    KEMThreeVector electricField( 0., 0., 0. );
+    KThreeVector electricField( 0., 0., 0. );
 
     for( KSymmetryGroup<KRectangle>::ShapeCIt it=source->begin(); it!=source->end(); ++it ) {
     	fieldAndPotential = ElectricFieldAndPotential( *it, P );

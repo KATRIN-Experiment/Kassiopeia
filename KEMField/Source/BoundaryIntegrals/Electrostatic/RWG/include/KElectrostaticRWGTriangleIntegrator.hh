@@ -22,12 +22,12 @@ public:
     ~KElectrostaticRWGTriangleIntegrator() {}
 
     double Potential(const KTriangle* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KTriangle* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KTriangle* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KTriangle* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KTriangle* source, const KPosition& P ) const;
 
     double Potential(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const;
-    KEMThreeVector ElectricField(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const;
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KTriangle>* source, const KPosition& P ) const;
+    KThreeVector ElectricField(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential( const KSymmetryGroup<KTriangle>* source, const KPosition& P ) const;
 
 private:
     double LogArgTaylor( const double sMin, const double dist ) const;
@@ -35,10 +35,10 @@ private:
     double IqLPotential( const double* data, const double* P,
     		const unsigned short countCross, const unsigned short lineIndex, const double dist ) const;
 
-    KEMThreeVector IqLField( const double* data, const double* P,
+    KThreeVector IqLField( const double* data, const double* P,
     		const unsigned short countCross, const unsigned short lineIndex, const double dist ) const;
 
-    std::pair<KEMThreeVector, double> IqLFieldAndPotential( const double* data, const double* P,
+    std::pair<KThreeVector, double> IqLFieldAndPotential( const double* data, const double* P,
     		const unsigned short countCross, const unsigned short lineIndex, const double dist ) const;
 
 

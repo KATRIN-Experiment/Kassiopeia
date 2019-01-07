@@ -3,6 +3,7 @@ set( CORE_HEADER_FILES
     Include/KGCoreMessage.hh
     Include/KGCore.hh
     Include/KGVisitor.hh
+    Include/KGBoundary.hh
     Include/KGArea.hh
     Include/KGVolume.hh
     Include/KGSurface.hh
@@ -19,6 +20,7 @@ set( CORE_HEADER_FILES
 set( CORE_SOURCE_FILES
     Source/KGCoreMessage.cc
     Source/KGVisitor.cc
+    Source/KGBoundary.cc
     Source/KGArea.cc
     Source/KGVolume.cc
     Source/KGSurface.cc

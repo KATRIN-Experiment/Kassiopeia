@@ -452,10 +452,6 @@ KG2DArc::NearestIntersection( const KG2DArc* arc, int& flag, std::vector<KTwoVec
     double r = arc->GetRadius();
     KTwoVector del = c - fCenter;
     double d = del.Magnitude();
-//    bool same_ori = false;                //TODO: WHAT IS THIS CODE FOR?
-//    if( arc->IsCCW() && fIsCCW ){same_ori = true;}
-//    if( !arc->IsCCW() && !fIsCCW ){same_ori = true;}
-
 
     if(d > r + fRadius)
     {

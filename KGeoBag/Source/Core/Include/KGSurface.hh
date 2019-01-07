@@ -97,15 +97,15 @@ namespace KGeoBag
             //*********
 
         public:
-            void Area( const KSmartPointer< KGArea >& anArea );
-            const KSmartPointer< KGArea >& Area() const;
+            void Area( const std::shared_ptr< KGArea >& anArea );
+            const std::shared_ptr< KGArea >& Area() const;
 
             bool Above( const KThreeVector& aPoint ) const;
             KThreeVector Point( const KThreeVector& aPoint ) const;
             KThreeVector Normal( const KThreeVector& aPoint ) const;
 
         private:
-            KSmartPointer< KGArea > fArea;
+            std::shared_ptr< KGArea > fArea;
     };
 
 }

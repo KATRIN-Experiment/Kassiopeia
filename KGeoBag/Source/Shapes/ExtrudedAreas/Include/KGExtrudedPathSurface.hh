@@ -5,6 +5,8 @@
 #include "KGPlanarPath.hh"
 #include "KGShapeMessage.hh"
 
+#include <memory>
+
 namespace KGeoBag
 {
 
@@ -44,7 +46,7 @@ namespace KGeoBag
                     fExtrudedMeshPower( aCopy.fExtrudedMeshPower )
             {
             }
-            KGExtrudedPathSurface( const KSmartPointer< XPathType >& aPath ) :
+            KGExtrudedPathSurface( const std::shared_ptr< XPathType >& aPath ) :
                     KGArea(),
                     fPath( aPath ),
                     fSign( 1. ),
@@ -59,11 +61,11 @@ namespace KGeoBag
             }
 
         public:
-            KSmartPointer< XPathType >& Path()
+            std::shared_ptr< XPathType >& Path()
             {
                 return fPath;
             }
-            const KSmartPointer< XPathType >& Path() const
+            const std::shared_ptr< XPathType >& Path() const
             {
                 return fPath;
             }
@@ -119,7 +121,7 @@ namespace KGeoBag
             }
 
         protected:
-            mutable KSmartPointer< XPathType > fPath;
+            mutable std::shared_ptr< XPathType > fPath;
             mutable double fSign;
             mutable double fZMin;
             mutable double fZMax;

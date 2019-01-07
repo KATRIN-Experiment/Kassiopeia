@@ -38,6 +38,7 @@ namespace Kassiopeia
             K_REFS( unsigned int, DiscreteSecondaries )
             K_REFS( double, DiscreteEnergyChange )
             K_REFS( double, DiscreteMomentumChange )
+            K_REFS( unsigned int, NumberOfTurns )
     };
 
 }

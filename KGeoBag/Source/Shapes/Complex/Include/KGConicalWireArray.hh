@@ -6,9 +6,11 @@
 #include <cmath>
 #include <string>
 
+#include "KGBoundary.hh"
+
 namespace KGeoBag
 {
-  class KGConicalWireArray
+  class KGConicalWireArray : public KGBoundary
   {
     /*
       A class describing a wire array with a conic section profile

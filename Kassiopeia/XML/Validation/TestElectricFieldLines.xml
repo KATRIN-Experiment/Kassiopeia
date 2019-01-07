@@ -124,15 +124,17 @@
         surfaces="world/platecap/#"
         symmetry="none"
     >
-        <robin_hood_numeric_bem_solver
+        <robin_hood_bem_solver
             tolerance="1.e-6"
             check_sub_interval="100"
             display_interval="1"
             cache_matrix_elements="false"
             use_opencl="false"
+            integrator="numeric"
         />
-        <numeric_integrating_field_solver
+        <integrating_field_solver
             use_opencl="true"
+            integrator="numeric"
         />
     </ksfield_electrostatic>
 

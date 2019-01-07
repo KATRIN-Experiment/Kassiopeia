@@ -44,8 +44,8 @@ public KSurfaceOrderingPredicate<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangl
         //the ordering operator
         virtual bool operator() (int i,int j)
         {
-            KEMThreeVector center_i = fSurfaceContainer[i]->GetShape()->Centroid();
-            KEMThreeVector center_j = fSurfaceContainer[j]->GetShape()->Centroid();
+            KThreeVector center_i = fSurfaceContainer[i]->GetShape()->Centroid();
+            KThreeVector center_j = fSurfaceContainer[j]->GetShape()->Centroid();
 
 
         }

@@ -20,7 +20,7 @@ namespace KEMField
     ~KElectrostaticAnalyticRectangleIntegrator() {}
 
     double Potential( const KRectangle* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRectangle* source, const KPosition& P ) const;
+    KThreeVector ElectricField( const KRectangle* source, const KPosition& P ) const;
     using KElectrostaticElementIntegrator<KRectangle>::Potential;
     using KElectrostaticElementIntegrator<KRectangle>::ElectricField;
 

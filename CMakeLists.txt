@@ -151,6 +151,6 @@ endif()
 
 install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR} )
 
-configure_file( Kommon/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
-configure_file( Kommon/create_kasper_user_directory.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
+configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
+configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
 install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh DESTINATION ${BIN_INSTALL_DIR} )

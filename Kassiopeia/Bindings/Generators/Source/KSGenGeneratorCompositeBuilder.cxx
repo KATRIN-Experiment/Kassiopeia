@@ -21,6 +21,7 @@
 #include "KSGenDirectionSphericalCompositeBuilder.h"
 #include "KSGenDirectionSurfaceCompositeBuilder.h"
 #include "KSGenSpinCompositeBuilder.h"
+#include "KSGenSpinRelativeCompositeBuilder.h"
 #include "KSGenPositionMaskBuilder.h"
 #include "KSGenTimeCompositeBuilder.h"
 #include "KSGenValueFixBuilder.h"
@@ -76,6 +77,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenDirectionSphericalComposite >( "direction_spherical_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenDirectionSurfaceComposite >( "direction_surface_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenSpinComposite >( "spin_composite" ) +
+        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenSpinRelativeComposite >( "spin_relative_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenTimeComposite >( "time_composite" )+
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenValueFix >( "pid_fix" )+
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenValueGauss >( "pid_gauss" )+

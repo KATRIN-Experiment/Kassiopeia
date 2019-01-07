@@ -3,7 +3,7 @@
 
 #include "KInitializationMessage.hh"
 
-#include <KStringUtils.h>
+#include "KStringUtils.h"
 #include <string>
 #include <sstream>
 

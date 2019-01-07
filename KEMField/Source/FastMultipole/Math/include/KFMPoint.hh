@@ -197,7 +197,7 @@ inline double operator*( const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRig
 }
 
 template<unsigned int NDIM>
-inline KFMPoint<NDIM>  operator*( register double aScalar, const KFMPoint<NDIM>& aVector )
+inline KFMPoint<NDIM>  operator*( double aScalar, const KFMPoint<NDIM>& aVector )
 {
     KFMPoint<NDIM>  aResult( aVector );
     for(unsigned int i=0; i<NDIM; i++)
@@ -208,7 +208,7 @@ inline KFMPoint<NDIM>  operator*( register double aScalar, const KFMPoint<NDIM>&
 }
 
 template<unsigned int NDIM>
-inline KFMPoint<NDIM> operator*( const KFMPoint<NDIM>& aVector, register double aScalar )
+inline KFMPoint<NDIM> operator*( const KFMPoint<NDIM>& aVector, double aScalar )
 {
     KFMPoint<NDIM>  aResult( aVector );
     for(unsigned int i=0; i<NDIM; i++)
@@ -219,7 +219,7 @@ inline KFMPoint<NDIM> operator*( const KFMPoint<NDIM>& aVector, register double 
 }
 
 template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator*=( KFMPoint<NDIM>& aVector, register double aScalar )
+inline KFMPoint<NDIM>& operator*=( KFMPoint<NDIM>& aVector, double aScalar )
 {
     for(unsigned int i=0; i<NDIM; i++)
     {
@@ -229,7 +229,7 @@ inline KFMPoint<NDIM>& operator*=( KFMPoint<NDIM>& aVector, register double aSca
 }
 
 template<unsigned int NDIM>
-inline KFMPoint<NDIM> operator/( const KFMPoint<NDIM>& aVector, register double aScalar )
+inline KFMPoint<NDIM> operator/( const KFMPoint<NDIM>& aVector, double aScalar )
 {
     KFMPoint<NDIM>  aResult( aVector );
     for(unsigned int i=0; i<NDIM; i++)
@@ -240,7 +240,7 @@ inline KFMPoint<NDIM> operator/( const KFMPoint<NDIM>& aVector, register double 
 }
 
 template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator/=( KFMPoint<NDIM>& aVector, register double aScalar )
+inline KFMPoint<NDIM>& operator/=( KFMPoint<NDIM>& aVector, double aScalar )
 {
     for(unsigned int i=0; i<NDIM; i++)
     {

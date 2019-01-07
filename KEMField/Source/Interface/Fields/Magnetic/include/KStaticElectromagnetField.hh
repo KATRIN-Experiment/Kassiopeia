@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KSTATICELECTROMAGNETFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KSTATICELECTROMAGNETFIELD_HH_
+#ifndef KSTATICELECTROMAGNETFIELD_HH_
+#define KSTATICELECTROMAGNETFIELD_HH_
 
 #include "KMagnetostaticField.hh"
 #include "KMagneticFieldSolver.hh"
@@ -33,10 +33,10 @@ protected:
     void InitializeCore();
     void CheckSolverExistance() const;
 
-    KEMThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const;
-    KEMThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const;
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint) const;
-    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const;
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const;
 
 private:
     KSmartPointer<KElectromagnetContainer> fContainer;
@@ -48,4 +48,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KSTATICELECTROMAGNETFIELD_HH_ */
+#endif /* KSTATICELECTROMAGNETFIELD_HH_ */
