@@ -99,7 +99,7 @@ namespace katrin
     {
       KGComplexAnnulus* object = NULL;
       anElement->ReleaseTo(object);
-      KSmartPointer< KGComplexAnnulus > smartPtr(object);
+      std::shared_ptr< KGComplexAnnulus > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }

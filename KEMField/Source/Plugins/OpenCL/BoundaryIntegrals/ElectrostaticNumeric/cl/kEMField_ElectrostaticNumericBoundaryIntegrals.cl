@@ -457,18 +457,21 @@ CL_TYPE BI_BoundaryIntegral(int iBoundary,
 #ifdef NEUMANNBOUNDARY
   else // NEUMANN
   {
-    eField = EBI_EField(P_target,shapeType_source,data_source);
     BI_Centroid(&P_source[0],shapeType_source,data_source);
     BI_Normal(&N_target[0],shapeType_target,data_target);
-
-    val = eField.x*N_target[0] + eField.y*N_target[1] + eField.z*N_target[2];
     dist2 = ((P_target[0]-P_source[0])*(P_target[0]-P_source[0]) +
 	     (P_target[1]-P_source[1])*(P_target[1]-P_source[1]) +
 	     (P_target[2]-P_source[2])*(P_target[2]-P_source[2]));
-    if (dist2<1.e-24)
-    {
-      val = val*((1. + boundaryData[iBoundary*BOUNDARYSIZE])/
-		 (1. - boundaryData[iBoundary*BOUNDARYSIZE]));
+
+    if( dist2 >= 1.e-24) {
+      eField = EBI_EField(P_target,shapeType_source,data_source);
+      val = eField.x*N_target[0] + eField.y*N_target[1] + eField.z*N_target[2];
+    } else {
+      // For planar Neumann elements (here: triangles and rectangles) the following formula
+      // is valid and incorporates already the electric field 1./(2.*Eps0).
+      // In case of conical (axially symmetric) Neumann elements this formula has to be modified.
+      // Ferenc Glueck and Daniel Hilk, March 27th 2018
+      val = ((1. + boundaryData[iBoundary*BOUNDARYSIZE])/(1. - boundaryData[iBoundary*BOUNDARYSIZE]))/(2.*M_EPS0);
     }
   }
 #endif

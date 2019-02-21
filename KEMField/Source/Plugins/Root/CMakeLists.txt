@@ -1,7 +1,7 @@
 # CMakeLists for KEMField/Plugins/Root
 # Author: T.J. Corona
 
-if (@PROJECT_NAME@_USE_ROOT)
+if (${PROJECT_NAME}_USE_ROOT)
   kasper_external_include_directories (${ROOT_INCLUDE_DIRS})
   add_cflag (KEMFIELD_USE_ROOT)
 
@@ -10,7 +10,7 @@ if (@PROJECT_NAME@_USE_ROOT)
   set (KEMROOT_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMElectricFieldPointsRootFile.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMRootFieldCanvas.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMRootSVDSolver.hh  
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMRootSVDSolver.hh
   )
 
   set (KEMROOT_SOURCEFILES
@@ -21,10 +21,9 @@ if (@PROJECT_NAME@_USE_ROOT)
 
   add_library (KEMRootPlugin SHARED ${KEMROOT_SOURCEFILES})
   target_link_libraries (KEMRootPlugin KEMVisualization
-    KEMMath KEMCore ${Kommon_LIBRARIES} ${GSL_LIBRARIES}
-    ${ROOT_LIBRARIES} )
+    KEMMath KEMCore ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${GSL_LIBRARIES} ${ROOT_LIBRARIES} )
 
   kasper_install_headers (${KEMROOT_HEADERFILES})
   kasper_install_libraries (KEMRootPlugin)
 
-endif (@PROJECT_NAME@_USE_ROOT)
+endif (${PROJECT_NAME}_USE_ROOT)

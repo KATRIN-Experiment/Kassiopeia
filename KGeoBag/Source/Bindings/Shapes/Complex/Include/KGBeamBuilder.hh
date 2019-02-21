@@ -120,7 +120,7 @@ namespace katrin
         KGBeam* object = NULL;
         anElement->ReleaseTo(object);
         object->Initialize();
-        KSmartPointer< KGBeam > smartPtr(object);
+        std::shared_ptr< KGBeam > smartPtr(object);
         fObject->SetObject(smartPtr);
         return true;
     }
@@ -149,7 +149,7 @@ namespace katrin
         KGBeam* object = NULL;
         anElement->ReleaseTo(object);
         object->Initialize();
-        KSmartPointer< KGBeam > smartPtr(object);
+        std::shared_ptr< KGBeam > smartPtr(object);
         fObject->SetObject(smartPtr);
         return true;
     }

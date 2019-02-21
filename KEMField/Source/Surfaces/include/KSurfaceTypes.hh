@@ -78,19 +78,19 @@ namespace KEMField
   typedef NoDuplicates<KShapeTypes_>::Result KShapeTypes;
 }
 
-#include "KSurfaceVisitors.hh"
+#include "../../../Surfaces/include/KSurfaceVisitors.hh"
 
-#include "KElectrostaticBasis.hh"
-#include "KMagnetostaticBasis.hh"
-#include "KElectromagneticBasis.hh"
+#include "../../../Surfaces/include/KElectrostaticBasis.hh"
+#include "../../../Surfaces/include/KMagnetostaticBasis.hh"
+#include "../../../Surfaces/include/KElectromagneticBasis.hh"
 
-#include "KBoundary.hh"
+#include "../../../Surfaces/include/KBoundary.hh"
 
-#include "KTriangle.hh"
-#include "KRectangle.hh"
-#include "KLineSegment.hh"
-#include "KConicSection.hh"
-#include "KRing.hh"
-#include "KSymmetryGroup.hh"
+#include "../../../Surfaces/include/KTriangle.hh"
+#include "../../../Surfaces/include/KRectangle.hh"
+#include "../../../Surfaces/include/KLineSegment.hh"
+#include "../../../Surfaces/include/KConicSection.hh"
+#include "../../../Surfaces/include/KRing.hh"
+#include "../../../Surfaces/include/KSymmetryGroup.hh"
 
 #endif /* KSURFACETYPES_DEF */

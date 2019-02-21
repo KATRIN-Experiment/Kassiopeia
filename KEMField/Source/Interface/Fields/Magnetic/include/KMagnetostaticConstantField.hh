@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICCONSTANTFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICCONSTANTFIELD_HH_
+#ifndef KMAGNETOSTATICCONSTANTFIELD_HH_
+#define KMAGNETOSTATICCONSTANTFIELD_HH_
 
 #include "KMagnetostaticField.hh"
 
@@ -19,7 +19,7 @@ public:
         KMagnetostaticField(),
         fFieldVector() {}
 
-    KMagnetostaticConstantField( const KEMThreeVector& aField ) :
+    KMagnetostaticConstantField( const KThreeVector& aField ) :
         KMagnetostaticField(),
         fFieldVector(aField) {}
 
@@ -28,29 +28,29 @@ public:
 private:
     /** We choose A(r) = 1/2 * B x r as the magnetic potential.
      * This is a viable choice for Coulomb gauge.*/
-    virtual KEMThreeVector MagneticPotentialCore(const KPosition& P) const {
+    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const {
         return 0.5 * fFieldVector.Cross(P);
     }
-    virtual KEMThreeVector MagneticFieldCore(const KPosition& /*P*/) const {
+    virtual KThreeVector MagneticFieldCore(const KPosition& /*P*/) const {
         return fFieldVector;
     }
     virtual KGradient MagneticGradientCore(const KPosition& /*P*/) const {
-        return KEMThreeMatrix::sZero;
+        return KThreeMatrix::sZero;
     }
 
 public:
-    void SetField( const KEMThreeVector& aFieldVector ) {
+    void SetField( const KThreeVector& aFieldVector ) {
         fFieldVector = aFieldVector;
     }
 
-    KEMThreeVector GetField() const {
+    KThreeVector GetField() const {
         return fFieldVector;
     }
 
 private:
-    KEMThreeVector fFieldVector;
+    KThreeVector fFieldVector;
 };
 
 } /* namespace KEMFIELD */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_MAGNETIC_INCLUDE_KMAGNETOSTATICCONSTANTFIELD_HH_ */
+#endif /* KMAGNETOSTATICCONSTANTFIELD_HH_ */

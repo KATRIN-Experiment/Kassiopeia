@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KApplicationRunner.h"
-#include <KNamedBuilder.h>
+#include "KNamedBuilder.h"
 #include "KToolbox.h"
 
 namespace katrin{

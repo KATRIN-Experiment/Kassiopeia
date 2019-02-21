@@ -8,6 +8,9 @@
 
 #include "KMPIInterface.hh"
 
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
 namespace KEMField
 {
   template <typename ValueType>
@@ -141,7 +144,7 @@ namespace KEMField
   {
     InitializeMPIStructs(Type2Type<ValueType>());
     std::stringstream options;
-    options << " -DKEMFIELD_OCLFASTDIELECTRICS=" << KEMFIELD_FASTDIELECTRICS_VALUE;
+    options << " -DKEMFIELD_OCLNEUMANNCHECKMETHOD=" << TOSTRING(KEMFIELD_FASTDIELECTRICS_VALUE);
     fOpenCLFlags = options.str();
 
     KOpenCLAction::Initialize();
@@ -302,8 +305,13 @@ namespace KEMField
 
     fCLNWarps = new cl_int[1];
     fCLNWarps[0] = fNWorkgroups;
-    fCLCounter = new cl_int[1];
-    fCLCounter[0] = fData.GetNBufferedElements();
+
+    fCLCounter = new cl_int[fData.GetNBufferedElements()+2];
+    for (unsigned int i=0;i<fData.GetNBufferedElements();i++)
+      fCLCounter[i] = 0;
+    fCLCounter[fData.GetNBufferedElements()] = 1;
+    // static value for AccuracyCheckIncrement, adapted from KEMField1
+    fCLCounter[fData.GetNBufferedElements()+1] = Dimension()/100;
 
     fCLResidual = new CL_TYPE[fData.GetNBufferedElements()];
     fCLCorrection = new CL_TYPE[1];
@@ -379,7 +387,7 @@ namespace KEMField
     fBufferCounter =
       new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
 		     CL_MEM_READ_WRITE,
-		     sizeof(cl_int));
+		     sizeof(cl_int)*(fData.GetNBufferedElements()+2));
 
     // Copy lists to the memory buffers
     KOpenCLInterface::GetInstance()->
@@ -434,7 +442,7 @@ namespace KEMField
       GetQueue().enqueueWriteBuffer(*fBufferCounter,
 				    CL_TRUE,
 				    0,
-				    sizeof(cl_int),
+				    sizeof(cl_int)*(fData.GetNBufferedElements()+2),
 				    fCLCounter);
 
     fInitializeVectorApproximationKernel->setArg(0,*container.GetBoundaryInfo());

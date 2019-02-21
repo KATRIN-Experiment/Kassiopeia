@@ -1,8 +1,8 @@
 #ifndef KSurfaceOrderingPredicate_HH__
 #define KSurfaceOrderingPredicate_HH__
 
-#include "KSurfaceVisitors.hh"
-#include "KSurfaceContainer.hh"
+#include "../../../Surfaces/include/KSurfaceContainer.hh"
+#include "../../../Surfaces/include/KSurfaceVisitors.hh"
 
 namespace KEMField
 {

@@ -9,9 +9,10 @@
 #define KEMELECTRICFIELDPOINTSROOTFILE_HH_
 
 #include <string>
+
+#include "KThreeVector_KEMField.hh"
 #include "TFile.h"
 #include "TTree.h"
-#include "KEMThreeVector.hh"
 
 namespace KEMField {
 

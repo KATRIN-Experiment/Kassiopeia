@@ -6,7 +6,7 @@
 
 namespace KEMField
 {
-  KEMThreeVector KCoilIntegrator::VectorPotential(const KCoil& coil,const KPosition& P) const
+  KThreeVector KCoilIntegrator::VectorPotential(const KCoil& coil,const KPosition& P) const
   {
     static double (*f[1])(const double*,double*) = {&KSolenoidIntegrator::A_theta};
     static KGaussianQuadrature Quad;
@@ -37,10 +37,10 @@ namespace KEMField
     double cos = p[0]/par[1];
     double sin = p[1]/par[1];
 
-    return coil.GetCoordinateSystem().ToGlobal(KEMThreeVector(-sin*a_theta,cos*a_theta,0.));
+    return coil.GetCoordinateSystem().ToGlobal(KThreeVector(-sin*a_theta,cos*a_theta,0.));
   }
 
-  KEMThreeVector KCoilIntegrator::MagneticField(const KCoil& coil, const KPosition& P) const
+  KThreeVector KCoilIntegrator::MagneticField(const KCoil& coil, const KPosition& P) const
   {
     static double (*f[2])(const double*,double*)
       = {&KSolenoidIntegrator::B_r,&KSolenoidIntegrator::B_z};
@@ -95,6 +95,6 @@ namespace KEMField
     double cosine = p[0]/par[1];
     double sine   = p[1]/par[1];
 
-    return coil.GetCoordinateSystem().ToGlobal(KEMThreeVector(cosine*b_r,sine*b_r,b_z));
+    return coil.GetCoordinateSystem().ToGlobal(KThreeVector(cosine*b_r,sine*b_r,b_z));
   }
 }

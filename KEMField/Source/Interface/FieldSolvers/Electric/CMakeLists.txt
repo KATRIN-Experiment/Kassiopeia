@@ -43,24 +43,24 @@ set (FIELDSOLVER_ELECTRIC_LINK_LIBRARIES
     KEMFieldExceptions
 )
 
-if (@PROJECT_NAME@_USE_OPENCL)
+if (${PROJECT_NAME}_USE_OPENCL)
     kasper_external_include_directories( ${OPENCL_INCLUDE_DIRS} )
     list (APPEND FIELDSOLVER_ELECTRIC_LINK_LIBRARIES
         KEMOpenCLPlugin
     )
-endif (@PROJECT_NAME@_USE_OPENCL)
+endif (${PROJECT_NAME}_USE_OPENCL)
 
-if (@PROJECT_NAME@_USE_MPI)
+if (${PROJECT_NAME}_USE_MPI)
     list (APPEND FIELDSOLVER_ELECTRIC_LINK_LIBRARIES
         KEMCore #for MPIInterface.hh
     )
-endif(@PROJECT_NAME@_USE_MPI)
+endif(${PROJECT_NAME}_USE_MPI)
 
-if (@PROJECT_NAME@_USE_VTK)
+if (${PROJECT_NAME}_USE_VTK)
     list (APPEND FIELDSOLVER_ELECTRIC_LINK_LIBRARIES
 	KEMVTKPlugin
     )
-endif (@PROJECT_NAME@_USE_VTK)
+endif (${PROJECT_NAME}_USE_VTK)
 
 # library
 kasper_internal_include_directories( ${FIELDSOLVER_ELECTRIC_HEADER_PATH} )

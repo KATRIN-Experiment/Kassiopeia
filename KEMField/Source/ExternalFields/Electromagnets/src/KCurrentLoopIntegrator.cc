@@ -7,7 +7,7 @@
 
 namespace KEMField
 {
-  KEMThreeVector KCurrentLoopIntegrator::VectorPotential(const KCurrentLoop& currentLoop, const KPosition& P) const
+  KThreeVector KCurrentLoopIntegrator::VectorPotential(const KCurrentLoop& currentLoop, const KPosition& P) const
   {
     static KCompleteEllipticIntegral1stKind K_elliptic;
     static KEllipticEMinusKOverkSquared EK_elliptic;
@@ -34,10 +34,10 @@ namespace KEMField
       sine   = p[1]/r;
     }
 
-    return currentLoop.GetCoordinateSystem().ToGlobal(KEMThreeVector(-sine*A_theta,cosine*A_theta,0.));
+    return currentLoop.GetCoordinateSystem().ToGlobal(KThreeVector(-sine*A_theta,cosine*A_theta,0.));
   }
 
-  KEMThreeVector KCurrentLoopIntegrator::MagneticField(const KCurrentLoop& currentLoop, const KPosition& P) const
+  KThreeVector KCurrentLoopIntegrator::MagneticField(const KCurrentLoop& currentLoop, const KPosition& P) const
   {
     static KCompleteEllipticIntegral1stKind K_elliptic;
     static KCompleteEllipticIntegral2ndKind E_elliptic;
@@ -73,6 +73,6 @@ namespace KEMField
       sine   = p[1]/r;
     }
 
-    return currentLoop.GetCoordinateSystem().ToGlobal(KEMThreeVector(cosine*B_r,sine*B_r,B_z));
+    return currentLoop.GetCoordinateSystem().ToGlobal(KThreeVector(cosine*B_r,sine*B_r,B_z));
   }
 }

@@ -91,7 +91,7 @@ double KElectrostaticAnalyticTriangleIntegrator::Potential(const KTriangle* sour
 	return I/(4.*M_PI*KEMConstants::Eps0);
 }
 
-KEMThreeVector KElectrostaticAnalyticTriangleIntegrator
+KThreeVector KElectrostaticAnalyticTriangleIntegrator
 ::ElectricField(const KTriangle* source,
 		const KPosition& P) const
 {
@@ -102,8 +102,8 @@ KEMThreeVector KElectrostaticAnalyticTriangleIntegrator
 	double b_loc[2];
 	double u_loc[2];
 	double z_sign;
-	KEMThreeVector local_field;
-	KEMThreeVector field;
+	KThreeVector local_field;
+	KThreeVector field;
 
 	double dist = (source->Centroid()-P).Magnitude();
 

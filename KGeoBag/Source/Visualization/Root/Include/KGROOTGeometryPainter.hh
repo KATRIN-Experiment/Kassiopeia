@@ -389,8 +389,8 @@ namespace KGeoBag
             void ClosedPointsToMainPortMesh(const double* PointA, const double* PointB, const double aRadius, PortMesh& aMesh);
             void ClosedPointsToSubPortMesh(const KGPortHousing::CircularPort* aCircularPort, PortMesh& aMesh);
             void ClosedPointsToBeamMesh(const vector<vector<double>> aStartCoord, const vector<vector<double>> aEndCoord, BeamMesh& aMesh);
-            void ClosedPointsToFlatMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh);
-            void ClosedPointsToRingMesh(const KSmartPointer<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh);
+            void ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh);
+            void ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh);
 
 
 

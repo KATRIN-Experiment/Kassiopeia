@@ -6,7 +6,7 @@ namespace KGeoBag
 {
     void KGRotatedSurfaceMesher::VisitWrappedSurface( KGWrappedSurface< KGRotatedObject >* rotatedSurface )
     {
-        KSmartPointer< KGRotatedObject > rotatedObject = rotatedSurface->GetObject();
+        std::shared_ptr< KGRotatedObject > rotatedObject = rotatedSurface->GetObject();
 
         double length = 0.;
 

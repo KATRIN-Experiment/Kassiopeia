@@ -5,8 +5,8 @@
  *      Author: gosda
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KELECTROSTATICBOUNDARYFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KELECTROSTATICBOUNDARYFIELD_HH_
+#ifndef KELECTROSTATICBOUNDARYFIELD_HH_
+#define KELECTROSTATICBOUNDARYFIELD_HH_
 
 #include "KElectrostaticField.hh"
 #include "KChargeDensitySolver.hh"
@@ -67,8 +67,8 @@ protected:
 	virtual void InitializeCore();
 
 	virtual double PotentialCore(const KPosition& P) const;
-	virtual KEMThreeVector ElectricFieldCore(const KPosition& P) const;
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const;
+	virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const;
 
 private:
 	void VisitorPreprocessing();
@@ -89,4 +89,4 @@ private:
 
 } //KEMField
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KELECTROSTATICBOUNDARYFIELD_HH_ */
+#endif /* KELECTROSTATICBOUNDARYFIELD_HH_ */

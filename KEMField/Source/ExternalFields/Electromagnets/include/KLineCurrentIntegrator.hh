@@ -11,9 +11,9 @@ namespace KEMField
     KLineCurrentIntegrator() {}
     virtual ~KLineCurrentIntegrator() {}
 
-    KEMThreeVector VectorPotential(const KLineCurrent& lineCurrent,
+    KThreeVector VectorPotential(const KLineCurrent& lineCurrent,
 				 const KPosition& P) const;
-    KEMThreeVector MagneticField(const KLineCurrent& lineCurrent,
+    KThreeVector MagneticField(const KLineCurrent& lineCurrent,
 			       const KPosition& P) const;
   };
 }

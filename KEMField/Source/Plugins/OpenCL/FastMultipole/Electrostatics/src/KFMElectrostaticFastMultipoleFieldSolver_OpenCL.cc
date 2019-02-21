@@ -72,14 +72,14 @@ KFMElectrostaticFastMultipoleFieldSolver_OpenCL::Potential(const KPosition& P) c
     }
 }
 
-KEMThreeVector
+KThreeVector
 KFMElectrostaticFastMultipoleFieldSolver_OpenCL::ElectricField(const KPosition& P) const
 {
     SetPoint(P);
 
     if(!fFallback)
     {
-        KEMThreeVector f;
+        KThreeVector f;
         double fast_f[3];
         if(fSubsetSize != 0){fDirectFieldSolver->DispatchElectricField(fDirectCallIDs, fSubsetSize, P); }
         fFastFieldSolver.ElectricField(P, fast_f);

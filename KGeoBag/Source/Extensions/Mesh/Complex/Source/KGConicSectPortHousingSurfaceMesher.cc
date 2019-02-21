@@ -804,8 +804,6 @@ namespace KGeoBag
       dz.empty();
       dz.resize( 2 * paraxialPort->GetCylDisc() );
       DiscretizeInterval( 2. * (paraxialPort->GetSymmetricLength() - paraxialPort->GetAsymmetricLength() / 2.), 2 * paraxialPort->GetCylDisc(), 1.25, dz );
-
-//      double theta = 0; // TODO: WHAT IS THIS VARIABLE FOR?
  
       double z = z_high[ 0 ];
       double z_last = z_high[ 0 ];
@@ -824,8 +822,6 @@ namespace KGeoBag
 
 	for( int j = 1; j <= paraxialPort->GetPolySub(); j++ )
 	{
-//	  theta = fmod( paraxialPort->GetBoxTheta() + 2. * M_PI * ((double) i) / paraxialPort->GetPolySub(), 2. * M_PI ); // TODO: WHAT IS THIS VARIABLE FOR?
-
 	  Circle_coord( (j - 1) % paraxialPort->GetPolySub(), paraxialPort->GetRSub(), p0 );
 	  p0[ 2 ] = z_last;
 

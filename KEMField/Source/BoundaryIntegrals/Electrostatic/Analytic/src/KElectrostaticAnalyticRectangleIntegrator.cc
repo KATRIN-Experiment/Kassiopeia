@@ -25,7 +25,7 @@ namespace KEMField
 double KElectrostaticAnalyticRectangleIntegrator::Potential(const KRectangle* source,
 		const KPosition& P) const
 {
-	KEMThreeVector p = P - source->GetP0();
+	KThreeVector p = P - source->GetP0();
 	double uP = p.Dot(source->GetN1());
 	double vP = p.Dot(source->GetN2());
 	double w = p.Dot(source->GetN3());
@@ -44,10 +44,10 @@ double KElectrostaticAnalyticRectangleIntegrator::Potential(const KRectangle* so
 	return I/(4.*M_PI*KEMConstants::Eps0);
 }
 
-KEMThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRectangle* source,
+KThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRectangle* source,
 		const KPosition& P) const
 {
-	KEMThreeVector p = P - source->GetP0();
+	KThreeVector p = P - source->GetP0();
 	double uP = p.Dot(source->GetN1());
 	double vP = p.Dot(source->GetN2());
 	double w = p.Dot(source->GetN3());
@@ -60,7 +60,7 @@ KEMThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KR
 
 	double prefac = 1./(4.*KEMConstants::Pi*KEMConstants::Eps0);
 
-	KEMThreeVector field_local(0.,0.,0.);
+	KThreeVector field_local(0.,0.,0.);
 
 	field_local[0] = prefac*EFieldLocalXY(xmin,xmax,ymin,ymax,w);
 	field_local[1] = prefac*EFieldLocalXY(ymin,ymax,xmin,xmax,w);
@@ -95,7 +95,7 @@ KEMThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KR
 			field_local[2] =prefac*sign_z*fabs(EFieldLocalZ(xmin,xmax,ymax,ymin,w));
 	}
 
-	KEMThreeVector field(0.,0.,0.);
+	KThreeVector field(0.,0.,0.);
 
 	for (unsigned int i=0;i<3;i++)
 		field[i] = (source->GetN1()[i]*field_local[0] +

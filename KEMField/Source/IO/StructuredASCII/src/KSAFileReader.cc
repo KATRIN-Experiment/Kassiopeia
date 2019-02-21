@@ -1,12 +1,12 @@
+#include <iostream>
+#include <assert.h>
 #include "KSAFileReader.hh"
 
-
-#include <iostream>
-
-#include <assert.h>
+#ifndef __has_cpp_attribute
+#   define __has_cpp_attribute(x) 0  // compatibility with antediluvian compilers
+#endif
 
 namespace KEMField{
-
 
 KSAFileReader::KSAFileReader():fIsOpen(false),fUseDecompression(false)
 {
@@ -206,13 +206,13 @@ void KSAFileReader::ExtractData()
                 switch (ret)
                 {
                     case Z_NEED_DICT: ret = Z_DATA_ERROR;     /* and fall through, use attribute [[fallthrough]] for newer compilers */
-						#if defined(__GNUC__) && (__GNUC__ >= 7)
-							[[fallthrough]];
-						#endif
+                        #if __has_cpp_attribute(fallthrough)
+                        [[fallthrough]];
+                        #endif	
                     case Z_DATA_ERROR:
-						#if defined(__GNUC__) && (__GNUC__ >= 7)
-							[[fallthrough]];
-						#endif
+                        #if __has_cpp_attribute(fallthrough)
+                        [[fallthrough]];
+                        #endif	
                     case Z_MEM_ERROR: (void)inflateEnd(&fZStream); fIsFinished = true; break;
                 };
 

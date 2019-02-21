@@ -36,11 +36,11 @@
 #include <vtkXMLPPolyDataWriter.h>
 #include <vtkActor.h>
 
+#include "KThreeVector_KEMField.hh"
 #include "KTypeManipulation.hh"
 
 #include "KSurfaceContainer.hh"
 
-#include "KEMThreeVector.hh"
 
 namespace KEMField
 {
@@ -151,8 +151,8 @@ namespace KEMField
     void AddIfNeumannBoundary(Int2Type<true>);
 
 
-    double TriangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2);
-    double RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2, KEMThreeVector P3);
+    double TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2);
+    double RectangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2, KThreeVector P3);
 
     vtkSmartPointer<vtkPoints>    fPoints;
     vtkSmartPointer<vtkCellArray> fCells;
@@ -268,21 +268,21 @@ namespace KEMField
 
       double length = (s->at(i)->GetP0()-s->at(i)->GetP1()).Magnitude();
 
-      KEMThreeVector tmp1,tmp2;
+      KThreeVector tmp1,tmp2;
       for (unsigned int m=0;m<3;m++)
       {
 	tmp1[m] = (s->at(i)->GetP1()[m]-s->at(i)->GetP0()[m])/length;
 	tmp2[m] = (s->at(i)->GetP1()[(m+1)%3]-s->at(i)->GetP0()[(m+1)%3])/length;
       }
 
-      KEMThreeVector norm1,norm2;
+      KThreeVector norm1,norm2;
       for (unsigned int m=0;m<3;m++)
 	norm1[m] = tmp1[(m+1)%3]*tmp2[(m+2)%3]-tmp1[(m+2)%3]*tmp2[(m+1)%3];
       for (unsigned int m=0;m<3;m++)
 	norm2[m] = (tmp1[(m+1)%3]*norm1[(m+2)%3] -
 		    tmp1[(m+2)%3]*norm1[(m+1)%3]);
 
-      KEMThreeVector p0,p1,p2,p3;
+      KThreeVector p0,p1,p2,p3;
 
       for (unsigned int k=0;k<fLineSegmentPolyApprox;k++)
       {
@@ -338,7 +338,7 @@ namespace KEMField
       z[1] = s->at(i)->GetP1()[2];
       r[1] = sqrt(s->at(i)->GetP1()[0]*s->at(i)->GetP1()[0]+s->at(i)->GetP1()[1]*s->at(i)->GetP1()[1]);
 
-      KEMThreeVector p[2][2];
+      KThreeVector p[2][2];
 
       for (unsigned int k=0;k<fArcPolyApprox;k++)
       {
@@ -439,21 +439,21 @@ namespace KEMField
 
     double length = (s->GetP0()-s->GetP1()).Magnitude();
 
-    KEMThreeVector tmp1,tmp2;
+    KThreeVector tmp1,tmp2;
     for (unsigned int m=0;m<3;m++)
     {
       tmp1[m] = (s->GetP1()[m]-s->GetP0()[m])/length;
       tmp2[m] = (s->GetP1()[(m+1)%3]-s->GetP0()[(m+1)%3])/length;
     }
 
-    KEMThreeVector norm1,norm2;
+    KThreeVector norm1,norm2;
     for (unsigned int m=0;m<3;m++)
       norm1[m] = tmp1[(m+1)%3]*tmp2[(m+2)%3]-tmp1[(m+2)%3]*tmp2[(m+1)%3];
     for (unsigned int m=0;m<3;m++)
       norm2[m] = (tmp1[(m+1)%3]*norm1[(m+2)%3] -
 		  tmp1[(m+2)%3]*norm1[(m+1)%3]);
 
-    KEMThreeVector p0,p1,p2,p3;
+    KThreeVector p0,p1,p2,p3;
 
     for (unsigned int k=0;k<fLineSegmentPolyApprox;k++)
     {
@@ -507,7 +507,7 @@ namespace KEMField
     z[1] = s->GetP1()[2];
     r[1] = sqrt(s->GetP1()[0]*s->GetP1()[0]+s->GetP1()[1]*s->GetP1()[1]);
 
-    KEMThreeVector p[2][2];
+    KThreeVector p[2][2];
 
     for (unsigned int k=0;k<fArcPolyApprox;k++)
     {
@@ -585,7 +585,7 @@ namespace KEMField
   }
 
 
-    double KEMVTKViewer::TriangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2)
+    double KEMVTKViewer::TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2)
     {
         double a, b, c, max;
         double delx, dely, delz;
@@ -608,37 +608,37 @@ namespace KEMField
 
         c = std::sqrt( delx * delx + dely * dely + delz * delz );
 
-        KEMThreeVector PA;
-        KEMThreeVector PB;
-        KEMThreeVector PC;
-        KEMThreeVector V;
-        KEMThreeVector X;
-        KEMThreeVector Y;
-        KEMThreeVector Q;
-        KEMThreeVector SUB;
+        KThreeVector PA;
+        KThreeVector PB;
+        KThreeVector PC;
+        KThreeVector V;
+        KThreeVector X;
+        KThreeVector Y;
+        KThreeVector Q;
+        KThreeVector SUB;
 
         //find the longest side:
         if( a > b )
         {
             max = a;
-            PA = KEMThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
-            PB = KEMThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
-            PC = KEMThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
+            PA = KThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
+            PB = KThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
+            PC = KThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
         }
         else
         {
             max = b;
-            PA = KEMThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
-            PB = KEMThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
-            PC = KEMThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
+            PA = KThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
+            PB = KThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
+            PC = KThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
         }
 
         if( c > max )
         {
             max = c;
-            PA = KEMThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
-            PB = KEMThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
-            PC = KEMThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
+            PA = KThreeVector( P0[ 0 ], P0[ 1 ], P0[ 2 ] );
+            PB = KThreeVector( P1[ 0 ], P1[ 1 ], P1[ 2 ] );
+            PC = KThreeVector( P2[ 0 ], P2[ 1 ], P2[ 2 ] );
         }
 
         //the line pointing along v is the y-axis
@@ -664,10 +664,10 @@ namespace KEMField
     }
 
 
-    double KEMVTKViewer::RectangleAspectRatio(KEMThreeVector P0, KEMThreeVector P1, KEMThreeVector P2,  KEMThreeVector P3)
+    double KEMVTKViewer::RectangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2,  KThreeVector P3)
     {
         //figure out which vertices make the sides
-        KEMThreeVector p[4];
+        KThreeVector p[4];
         p[0] = P0;
         p[1] = P1;
         p[2] = P2;

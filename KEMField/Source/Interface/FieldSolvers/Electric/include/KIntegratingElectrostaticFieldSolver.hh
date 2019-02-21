@@ -8,8 +8,8 @@
  *      Imported from KSFieldElectrostatic
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_
+#ifndef KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_
+#define KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_
 
 #include "KElectricFieldSolver.hh"
 #include "KElectrostaticBoundaryIntegratorPolicy.hh"
@@ -41,7 +41,7 @@ private:
 	void InitializeCore( KSurfaceContainer& container );
 
 	double PotentialCore( const KPosition& P ) const;
-	KEMThreeVector ElectricFieldCore( const KPosition& P ) const;
+	KThreeVector ElectricFieldCore( const KPosition& P ) const;
 
 	KElectrostaticBoundaryIntegrator* fIntegrator;
 	KEBIPolicy fIntegratorPolicy;
@@ -57,4 +57,4 @@ bool fUseOpenCL;
 
 } //KEMField
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_ */
+#endif /* KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_ */

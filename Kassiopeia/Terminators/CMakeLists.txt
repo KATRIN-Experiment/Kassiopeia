@@ -12,6 +12,8 @@ set( TERMINATORS_HEADER_BASENAMES
     KSTermMinLongEnergy.h
     KSTermMaxLongEnergy.h
     KSTermMaxTime.h
+    KSTermMaxTotalTime.h
+    KSTermMaxStepTime.h
     KSTermMaxLength.h
     KSTermMaxSteps.h
     KSTermTrapped.h
@@ -42,6 +44,8 @@ set( TERMINATORS_SOURCE_BASENAMES
     KSTermMinLongEnergy.cxx
     KSTermMaxLongEnergy.cxx
     KSTermMaxTime.cxx
+    KSTermMaxTotalTime.cxx
+    KSTermMaxStepTime.cxx
     KSTermMaxLength.cxx
     KSTermMaxSteps.cxx
     KSTermTrapped.cxx

@@ -16,6 +16,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( 0 ),
             fDiscreteEnergyChange( 0. ),
             fDiscreteMomentumChange( 0. ),
+            fNumberOfTurns( 0 ),
             fGeneratorFlag( false ),
             fGeneratorName( "" ),
             fGeneratorPrimaries( 0 ),
@@ -41,6 +42,7 @@ namespace Kassiopeia
             fDiscreteSecondaries( aCopy.fDiscreteSecondaries ),
             fDiscreteEnergyChange( aCopy.fDiscreteSecondaries ),
             fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange ),
+            fNumberOfTurns( aCopy.fNumberOfTurns ),
             fGeneratorFlag( aCopy.fGeneratorFlag ),
             fGeneratorName( aCopy.fGeneratorName ),
             fGeneratorPrimaries( aCopy.fGeneratorPrimaries ),
@@ -66,6 +68,7 @@ namespace Kassiopeia
         fDiscreteSecondaries = aCopy.fDiscreteSecondaries;
         fDiscreteEnergyChange = aCopy.fDiscreteEnergyChange;
         fDiscreteMomentumChange = aCopy.fDiscreteMomentumChange;
+        fNumberOfTurns = aCopy.fNumberOfTurns;
         fGeneratorFlag = aCopy.fGeneratorFlag;
         fGeneratorName = aCopy.fGeneratorName;
         fGeneratorPrimaries = aCopy.fGeneratorPrimaries;
@@ -98,6 +101,7 @@ namespace Kassiopeia
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetDiscreteSecondaries, "discrete_secondaries" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetDiscreteEnergyChange, "discrete_energy_change" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetDiscreteMomentumChange, "discrete_momentum_change" ) +
+        KSDictionary< KSEvent >::AddComponent( &KSEvent::GetNumberOfTurns, "number_of_turns" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetGeneratorFlag, "generator_flag" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetGeneratorName, "generator_name" ) +
         KSDictionary< KSEvent >::AddComponent( &KSEvent::GetGeneratorPrimaries, "generator_primaries" ) +

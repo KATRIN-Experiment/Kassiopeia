@@ -7,8 +7,8 @@
 #ifndef KOMMON_CORE_UTILITY_KMATHREGULAFALSI_H_
 #define KOMMON_CORE_UTILITY_KMATHREGULAFALSI_H_
 
-#include <KNumeric.h>
-#include <KException.h>
+#include "KNumeric.h"
+#include "KException.h"
 
 #include <functional>
 #include <utility>

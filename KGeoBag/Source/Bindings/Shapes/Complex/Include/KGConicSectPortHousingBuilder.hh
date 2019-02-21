@@ -212,7 +212,7 @@ namespace katrin
     {
         KGConicSectPortHousing* object = NULL;
         anElement->ReleaseTo(object);
-        KSmartPointer< KGConicSectPortHousing > smartPtr(object);
+        std::shared_ptr< KGConicSectPortHousing > smartPtr(object);
         fObject->SetObject(smartPtr);
         return true;
     }
@@ -240,7 +240,7 @@ namespace katrin
     {
         KGConicSectPortHousing* object = NULL;
         anElement->ReleaseTo(object);
-        KSmartPointer< KGConicSectPortHousing > smartPtr(object);
+        std::shared_ptr< KGConicSectPortHousing > smartPtr(object);
         fObject->SetObject(smartPtr);
         return true;
     }

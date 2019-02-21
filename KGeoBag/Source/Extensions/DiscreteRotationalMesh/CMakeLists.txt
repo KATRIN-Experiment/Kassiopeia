@@ -1,5 +1,6 @@
 # headers
 set( DISCRETEROTATIONALMESH_HEADER_FILES
+	Include/KGDiscreteRotationalAreaMesher.hh
 	Include/KGDiscreteRotationalMeshMessage.hh
 	Include/KGDiscreteRotationalMeshElement.hh
 	Include/KGDiscreteRotationalMesh.hh

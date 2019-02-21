@@ -16,8 +16,5 @@ namespace KGeoBag
         fData[1] = 0.;
         fData[2] = 0.;
     }
-    KThreeVector::~KThreeVector()
-    {
-    }
 
 }

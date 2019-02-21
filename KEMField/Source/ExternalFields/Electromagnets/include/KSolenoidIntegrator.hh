@@ -13,8 +13,8 @@ namespace KEMField
 
     friend class KCoilIntegrator;
 
-    KEMThreeVector VectorPotential(const KSolenoid& solenoid, const KPosition& P) const;
-    KEMThreeVector MagneticField(const KSolenoid& solenoid, const KPosition& P) const;
+    KThreeVector VectorPotential(const KSolenoid& solenoid, const KPosition& P) const;
+    KThreeVector MagneticField(const KSolenoid& solenoid, const KPosition& P) const;
 
   protected:
     static double A_theta(const double *p, double *par);

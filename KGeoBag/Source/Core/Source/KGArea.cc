@@ -2,13 +2,12 @@
 
 namespace KGeoBag
 {
-
     KGArea::KGArea() :
             fInitialized( false )
     {
     }
     KGArea::KGArea( const KGArea& aCopy ) :
-            KTagged(),
+            KGBoundary(),
             fInitialized( aCopy.fInitialized )
     {
     }

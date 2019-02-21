@@ -315,7 +315,7 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             }
             else
             {
-                KEMThreeVector field;
+                KThreeVector field;
                 fFastFieldSolver.ElectricField(target->GetShape()->Centroid(),field);
                 ret_val = field.Dot(target->GetShape()->Normal());
             }
@@ -351,7 +351,7 @@ class KFMElectrostaticBoundaryIntegrator: public KElectrostaticBoundaryIntegrato
             }
             else
             {
-                KEMThreeVector field;
+                KThreeVector field;
                 fFastFieldSolver.ElectricField(target->GetShape()->Centroid(),field);
                 ret_val = field.Dot(target->GetShape()->Normal());
             }

@@ -2,7 +2,7 @@
 
 <messages>
 
-	<file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
+	<file path="[log_path]" base="TestDiscRotFieldLog.txt"/>
 
 	<message key="k_file" terminal="normal" log="warning"/>
 	<message key="k_initialization" terminal="normal" log="warning"/>
@@ -11,6 +11,7 @@
 	<message key="kg_shape" terminal="normal" log="warning"/>
     <message key="kg_mesh" terminal="normal" log="warning"/>
     <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+    <message key="kg_drmesh" terminal="normal" log="warning"/>
 
 	<message key="ks_object" terminal="debug" log="normal"/>
     <message key="ks_operator" terminal="debug" log="normal"/>
@@ -20,7 +21,6 @@
 	<message key="ks_interaction" terminal="debug" log="normal"/>
 	<message key="ks_terminator" terminal="debug" log="normal"/>
 	<message key="ks_writer" terminal="debug" log="normal"/>
-	<message key="ks_navigation" terminal="debug" log="normal"/>
 	<message key="ks_main" terminal="debug" log="normal"/>
 	<message key="ks_run" terminal="debug" log="normal"/>
 	<message key="ks_event" terminal="debug" log="normal"/>
@@ -40,7 +40,8 @@
     <tag name="electrode_tag" name="endcap_electrode_tag">
         <rotated_poly_line_surface name="endcap_electrode_surface" rotated_mesh_count="128">
             <poly_line>
-                <start_line x1="3.350e-3" y1="0.0" x2="3.636e-3" y2="2.000e-3" line_mesh_count="20" line_mesh_power="1."/>
+                <start_point x="3.350e-3" y="0.0"/>
+                <next_line x="3.636e-3" y="2.000e-3" line_mesh_count="20" line_mesh_power="1."/>
                 <next_line x="4.384e-3" y="4.000e-3" line_mesh_count="10" line_mesh_power="1."/>
                 <next_line x="5.406e-3" y="6.000e-3" line_mesh_count="50" line_mesh_power="1."/>
             </poly_line>
@@ -50,7 +51,8 @@
     <tag name="electrode_tag" name="ring_electrode_tag">
         <rotated_poly_line_surface name="ring_electrode_surface" rotated_mesh_count="128">
             <poly_line>
-                <start_line x1="4.000e-3" y1="7.379e-3" x2="3.000e-3" y2="6.360e-3" line_mesh_count="200" line_mesh_power="1."/>
+                <start_point x="4.000e-3" y="7.379e-3"/>
+                <next_line x="3.000e-3" y="6.360e-3" line_mesh_count="200" line_mesh_power="1."/>
                 <next_line x="2.000e-3" y="5.518e-3" line_mesh_count="100" line_mesh_power="1."/>
                 <next_line x="1.000e-3" y="4.944e-3" line_mesh_count="50" line_mesh_power="1."/>
                 <next_line x="0.000e-3" y="4.738e-3" line_mesh_count="50" line_mesh_power="1."/>
@@ -110,22 +112,13 @@
 </geometry>
 
 <kassiopeia>
-    <electrostatic_field_solver
+    <ksfield_electrostatic
         name="kemfield_e"
+        directory="[KEMFIELD_CACHE]"
+        file="TestDiscRotField_electrodes.kbd"
         surfaces="world/@electrode_tag"
         symmetry="discrete_axial"
     >
-
-	<!--
-	<precomputed_geometry
-	    hash="58380375a2948d7f46f6e80d59ab5da6"
-	    />
-	-->
-
-	<!--
-	    <gaussian_elimination_bem_solver/>
-	-->
-
         <robin_hood_bem_solver
             tolerance="1.e-8"
             check_sub_interval="100"
@@ -133,55 +126,34 @@
             write_interval="0"
 	        plot_interval="0"
 	        use_opencl="false"
+            integrator="numeric"
         />
-
-	<!--
 	    <integrating_field_solver
-	    use_opencl="false"
+	       use_opencl="false"
+	       integrator="numeric"
         />
-	-->
+    </ksfield_electrostatic>
 
-        <zonal_harmonic_field_solver
-            number_of_bifurcations="1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="true"
-            central_sourcepoint_spacing="1.e-4"
-            central_sourcepoint_start="-50.e-3"
-            central_sourcepoint_end="50.e-3"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-1.e-1"
-            remote_sourcepoint_end="1.e-1"
-        />
-    </electrostatic_field_solver>
-
-    <electromagnet_field_solver
+    <ksfield_electromagnet
         name="kemfield_b"
+        directory="[KEMFIELD_CACHE]"
+        file="TestDiscRotField_magnets.kbd"
+        system="world"
+        spaces="world/@magnet_tag"
 	>
-
-	<!--
-	    <integrating_field_solver
-	    use_opencl="false"
-        />
-	-->
-
       <zonal_harmonic_field_solver
-	  number_of_bifurcations="1"
-	  convergence_ratio=".99"
-	  convergence_parameter="1.e-15"
-	  proximity_to_sourcepoint="1.e-12"
-	  number_of_central_coefficients="500"
-	  use_fractional_central_sourcepoint_spacing="false"
-	  central_sourcepoint_spacing="1.e-4"
-	  central_sourcepoint_start="-50.e-3"
-	  central_sourcepoint_end="50.e-3"
-	  number_of_remote_coefficients="200"
-	  remote_sourcepoint_start="-1.e-1"
-	  remote_sourcepoint_end="1.e-1"
+    	  number_of_bifurcations="1"
+    	  convergence_ratio=".99"
+    	  convergence_parameter="1.e-15"
+    	  proximity_to_sourcepoint="1.e-12"
+    	  number_of_central_coefficients="500"
+    	  use_fractional_central_sourcepoint_spacing="false"
+    	  central_sourcepoint_spacing="1.e-4"
+    	  central_sourcepoint_start="-50.e-3"
+    	  central_sourcepoint_end="50.e-3"
+    	  number_of_remote_coefficients="200"
+    	  remote_sourcepoint_start="-1.e-1"
+    	  remote_sourcepoint_end="1.e-1"
 	  />
-    </electromagnet_field_solver>
-
-    <magnetic_field_constant name="constant_b" field="0. 0. 5.872"/>
+    </ksfield_electromagnet>
 </kassiopeia>

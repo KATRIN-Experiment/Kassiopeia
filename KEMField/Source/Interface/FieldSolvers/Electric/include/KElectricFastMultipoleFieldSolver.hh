@@ -5,8 +5,8 @@
  *      Author: gosda
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_
+#ifndef KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_
+#define KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_
 
 #include "KElectricFieldSolver.hh"
 
@@ -31,7 +31,7 @@ public:
 	void InitializeCore( KSurfaceContainer& container );
 
 	double PotentialCore( const KPosition& P ) const;
-	KEMThreeVector ElectricFieldCore( const KPosition& P ) const;
+	KThreeVector ElectricFieldCore( const KPosition& P ) const;
 
 	void SetIntegratorPolicy(const KEBIPolicy& policy) {
 		fIntegratorPolicy = policy;
@@ -58,4 +58,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_ */
+#endif /* KELECTRICFASTMULTIPOLEFIELDSOLVER_HH_ */

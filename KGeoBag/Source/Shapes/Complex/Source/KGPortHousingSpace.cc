@@ -11,7 +11,7 @@ namespace KGeoBag
   {
     fObject->Initialize();
 
-    KGPortHousingSurface* tSurface = new KGPortHousingSurface(fObject);
+    auto tSurface = std::make_shared<KGPortHousingSurface>(fObject);
     aBoundaryContainer.push_back( tSurface );
 
     double normal_local[3] = {0.,0.,1.};
@@ -21,7 +21,7 @@ namespace KGeoBag
     n = n.Unit();
 
     {
-      KGDisk* disk = new KGDisk();
+      auto disk = std::make_shared<KGDisk>();
       disk->SetP0(KThreeVector(fObject->GetAMain(0),
 			       fObject->GetAMain(1),
 			       fObject->GetAMain(2)));
@@ -31,7 +31,7 @@ namespace KGeoBag
     }
 
     {
-      KGDisk* disk = new KGDisk();
+      auto disk = std::make_shared<KGDisk>();
       disk->SetP0(KThreeVector(fObject->GetBMain(0),
 			       fObject->GetBMain(1),
 			       fObject->GetBMain(2)));
@@ -57,13 +57,13 @@ namespace KGeoBag
 			r->GetASub(1) - .5*b,
 			r->GetASub(2));
 
-	KGRectangle* rect = new KGRectangle(a,b,p0,n1,n2);
+    auto rect = std::make_shared<KGRectangle>(a,b,p0,n1,n2);
 	aBoundaryContainer.push_back(rect);
       }
       else if (const KGPortHousing::CircularPort* c =
 	       dynamic_cast<const KGPortHousing::CircularPort*>(p))
       {
-	KGDisk* disk = new KGDisk();
+	auto disk = std::make_shared<KGDisk>();
 	disk->SetP0(KThreeVector(c->GetASub(0),
 				 c->GetASub(1),
 				 c->GetASub(2)));

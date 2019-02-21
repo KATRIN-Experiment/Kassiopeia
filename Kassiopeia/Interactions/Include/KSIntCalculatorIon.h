@@ -21,12 +21,13 @@ namespace Kassiopeia
             void CalculateCrossSection( const KSParticle& aParticle, double& aCrossSection );
             void ExecuteInteraction( const KSParticle& anIncomingIon, KSParticle& anOutgoingIon, KSParticleQueue& aSecondaries );
 	    void CalculateEnergyDifferentialCrossSection( const double anIncomingIonMass, const double anIncomingIonEnergy,const double aSecondaryElectronEnergy,double &aCrossSection);
-	    
+	    void CalculateAngleDifferentialCrossSection( const double aSecondaryElectronAngle,double &aCrossSection);
+        
         protected:
+        
 	    double Hplus_H2_crossSection(double aEnergy);
 	    double H2plus_H2_crossSection(double aEnergy);
 	    double H3plus_H2_crossSection(double aEnergy);
-	    double Hminus_H2_crossSection(double aEnergy);
 
 	    double f1(double x,double c1,double c2);
 	    double f2(double x,double c1,double c2,double c3,double c4);
@@ -35,10 +36,16 @@ namespace Kassiopeia
 	    double sigma2(double E1,double a1,double a2,double a3,double a4,double a5,double a6);
 	    double sigma6(double E1,double a1,double a2,double a3,double a4,double a5,double a6);
 	    double sigma10(double E1,double a1,double a2,double a3,double a4,double a5,double a6,double a7,double a8);
-	    double sigma11(double E1,double a1,double a2,double a3,double a4,double a5,double a6,double a7,double a8,double a9,double a10);
 	    double E_1(double E,double E_threshold);
 
+        double Hplus_H2O_crossSection(double aEnergy);
+        
+        double sigmatot(double aEnergy, double A, double B, double C, double D);
+        double sigmalow(double x, double C, double D);
+        double sigmahigh(double x, double A, double B);
+            
 	    void CalculateSecondaryElectronEnergy( const double anIncomingIonMass, const double anIncomingIonEnergy,double& aSecondaryElectronEnergy);
+        void CalculateSecondaryElectronAngle( double& aSecondaryElectronEnergy);
 	    //For debugging purposes, moved to public:
 	    //void CalculateEnergyDifferentialCrossSection( const double anIncomingIonMass, const double anIncomingIonEnergy,const double aSecondaryElectronEnergy,double &aCrossSection);
 

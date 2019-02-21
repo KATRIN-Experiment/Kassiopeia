@@ -11,11 +11,11 @@ set (INTERFACE_BOUNDARY_INTEGRAL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSparseBoundaryIntegralMatrix_CompressedRow.hh
 )
 
-  if (@PROJECT_NAME@_USE_MPI)
+  if (${PROJECT_NAME}_USE_MPI)
      list (APPEND INTERFACE_BOUNDARY_INTEGRAL_HEADERFILES
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticBoundaryIntegrator_MPI.hh
 	  )
-  endif (@PROJECT_NAME@_USE_MPI)
+  endif (${PROJECT_NAME}_USE_MPI)
 
 ##################################################
 

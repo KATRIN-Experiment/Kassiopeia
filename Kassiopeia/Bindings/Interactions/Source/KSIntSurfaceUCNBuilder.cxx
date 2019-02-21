@@ -14,8 +14,10 @@ namespace katrin
 
     STATICINT sKSIntSurfaceUCNStructure =
             KSIntSurfaceUCNBuilder::Attribute< string >( "name" ) +
-            KSIntSurfaceUCNBuilder::Attribute< double >( "spin_flip_probability" )  +
-            KSIntSurfaceUCNBuilder::Attribute< double >( "transmission_probability" );
+            KSIntSurfaceUCNBuilder::Attribute< double >( "eta" )  +
+            KSIntSurfaceUCNBuilder::Attribute< double >( "alpha" ) +
+            KSIntSurfaceUCNBuilder::Attribute< double >( "real_optical_potential" ) +
+            KSIntSurfaceUCNBuilder::Attribute< double >( "correlation_length" );
 
     STATICINT sKSIntSurfaceUCNElement =
             KSRootBuilder::ComplexElement< KSIntSurfaceUCN >( "ksint_surface_UCN" );

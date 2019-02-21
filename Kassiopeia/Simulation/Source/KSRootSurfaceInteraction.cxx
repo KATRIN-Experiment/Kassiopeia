@@ -112,6 +112,10 @@ namespace Kassiopeia
             intmsg_debug( "  interaction particle electric field: <" << fInteractionParticle->GetElectricField().X() << "," << fInteractionParticle->GetElectricField().Y() << "," << fInteractionParticle->GetElectricField().Z() << ">" << eom );
             intmsg_debug( "  interaction particle magnetic field: <" << fInteractionParticle->GetMagneticField().X() << "," << fInteractionParticle->GetMagneticField().Y() << "," << fInteractionParticle->GetMagneticField().Z() << ">" << eom );
             intmsg_debug( "  interaction particle angle to magnetic field: <" << fInteractionParticle->GetPolarAngleToB() << ">" << eom );
+            intmsg_debug( "  interaction particle spin: " << fInteractionParticle->GetSpin() << eom );
+            intmsg_debug( "  interaction particle spin0: <" << fInteractionParticle->GetSpin0() << ">" << eom );
+            intmsg_debug( "  interaction particle aligned spin: <" << fInteractionParticle->GetAlignedSpin() << ">" << eom );
+            intmsg_debug( "  interaction particle spin angle: <" << fInteractionParticle->GetSpinAngle() << ">" << eom );
 
             return;
         }
@@ -149,6 +153,10 @@ namespace Kassiopeia
         intmsg_debug( "  interaction particle electric field: <" << fInteractionParticle->GetElectricField().X() << "," << fInteractionParticle->GetElectricField().Y() << "," << fInteractionParticle->GetElectricField().Z() << ">" << eom );
         intmsg_debug( "  interaction particle magnetic field: <" << fInteractionParticle->GetMagneticField().X() << "," << fInteractionParticle->GetMagneticField().Y() << "," << fInteractionParticle->GetMagneticField().Z() << ">" << eom );
         intmsg_debug( "  interaction particle angle to magnetic field: <" << fInteractionParticle->GetPolarAngleToB() << ">" << eom );
+        intmsg_debug( "  interaction particle spin: " << fInteractionParticle->GetSpin() << eom );
+        intmsg_debug( "  interaction particle spin0: <" << fInteractionParticle->GetSpin0() << ">" << eom );
+        intmsg_debug( "  interaction particle aligned spin: <" << fInteractionParticle->GetAlignedSpin() << ">" << eom );
+        intmsg_debug( "  interaction particle spin angle: <" << fInteractionParticle->GetSpinAngle() << ">" << eom );
 
         return;
     }

@@ -1,5 +1,6 @@
-#include "KTriangle.hh"
-#include "KSurfaceVisitors.hh"
+#include "../../../Surfaces/include/KTriangle.hh"
+
+#include "../../../Surfaces/include/KSurfaceVisitors.hh"
 
 namespace KEMField
 {

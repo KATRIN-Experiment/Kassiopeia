@@ -21,6 +21,7 @@ namespace katrin
         KProcessor(),
         fElementState( eElementInactive ),
         fAttributeState( eAttributeInactive ),
+        fOptionalFlag(false),
         fNames(),
         fPaths(),
         fBases(),
@@ -88,6 +89,11 @@ namespace katrin
                 fAttributeState = eBase;
                 return;
             }
+            if( aToken->GetValue() == "optional" )
+            {
+                fAttributeState = eOptionalFlag;
+                return;
+            }
 
             initmsg( eError ) << "got unknown attribute <" << aToken->GetValue() << ">" << ret;
             initmsg( eError ) << "in path <" << aToken->GetPath() << "in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
@@ -107,6 +113,7 @@ namespace katrin
 
         if( fElementState == eActive )
         {
+
             if( fAttributeState == eName )
             {
                 fNames.push_back( aToken->GetValue() );
@@ -124,6 +131,13 @@ namespace katrin
             if( fAttributeState == eBase )
             {
                 fBases.push_back( aToken->GetValue() );
+                fAttributeState = eAttributeComplete;
+                return;
+            }
+
+            if( fAttributeState == eOptionalFlag )
+            {
+                fOptionalFlag = aToken->GetValue<bool>();
                 fAttributeState = eAttributeComplete;
                 return;
             }
@@ -212,72 +226,80 @@ namespace katrin
             for( const string& base : fBases )
                 aFile->AddToBases( base );
 
-            if( aFile->Open( KFile::eRead ) == false )
+            bool HasFile = aFile->Open( KFile::eRead );
+            if( HasFile == false )
             {
                 delete aFile;
 
-                vector<string>::const_iterator It;
+                if (fOptionalFlag == false)
+                {
+                    vector<string>::const_iterator It;
 
-                initmsg( eError ) << "unable to open file with names <";
-                It = fNames.begin();
-                while( It != fNames.end() )
-                {
-                    initmsg << *It;
-                    It++;
-                    if( It != fNames.end() )
+                    initmsg( eError ) << "unable to open file with names <";
+                    It = fNames.begin();
+                    while( It != fNames.end() )
                     {
-                        initmsg << ",";
+                        initmsg << *It;
+                        It++;
+                        if( It != fNames.end() )
+                        {
+                            initmsg << ",";
+                        }
                     }
-                }
-                initmsg << "> and paths <";
-                It = fPaths.begin();
-                while( It != fPaths.end() )
-                {
-                    initmsg << *It;
-                    It++;
-                    if( It != fPaths.end() )
+                    initmsg << "> and paths <";
+                    It = fPaths.begin();
+                    while( It != fPaths.end() )
                     {
-                        initmsg << ",";
+                        initmsg << *It;
+                        It++;
+                        if( It != fPaths.end() )
+                        {
+                            initmsg << ",";
+                        }
                     }
-                }
-                initmsg << "> and bases <";
-                It = fBases.begin();
-                while( It != fBases.end() )
-                {
-                    initmsg << *It;
-                    It++;
-                    if( It != fBases.end() )
+                    initmsg << "> and bases <";
+                    It = fBases.begin();
+                    while( It != fBases.end() )
                     {
-                        initmsg << ",";
+                        initmsg << *It;
+                        It++;
+                        if( It != fBases.end() )
+                        {
+                            initmsg << ",";
+                        }
                     }
+                    initmsg << ">" << eom;
                 }
-                initmsg << ">" << eom;
             }
 
             fElementState = eElementInactive;
+            fOptionalFlag = false;
             fNames.clear();
             fPaths.clear();
             fBases.clear();
 
-            std::string tFileName = aFile->GetName();
-            if ( std::find( fIncludedPaths.begin(), fIncludedPaths.end(), tFileName ) != fIncludedPaths.end() )
+            if( HasFile == true )
             {
-                initmsg( eWarning ) << "skipping file <" << tFileName << "> since it was already included" << eom;
+                std::string tFileName = aFile->GetName();
+                if ( std::find( fIncludedPaths.begin(), fIncludedPaths.end(), tFileName ) != fIncludedPaths.end() )
+                {
+                    initmsg( eWarning ) << "skipping file <" << tFileName << "> since it was already included" << eom;
+                }
+                else
+                {
+                    initmsg( eInfo ) << "including file <" << tFileName << ">" << eom;
+                    fIncludedPaths.push_back( tFileName );
+
+                    KXMLTokenizer* aNewTokenizer = new KXMLTokenizer();
+                    aNewTokenizer->InsertBefore( GetFirstParent() );
+                    aNewTokenizer->ProcessFile( aFile );
+                    aNewTokenizer->Remove();
+
+                    delete aNewTokenizer;
+                }
+
+                delete aFile;
             }
-            else
-            {
-                initmsg( eInfo ) << "including file <" << tFileName << ">" << eom;
-                fIncludedPaths.push_back( tFileName );
-
-                KXMLTokenizer* aNewTokenizer = new KXMLTokenizer();
-                aNewTokenizer->InsertBefore( GetFirstParent() );
-                aNewTokenizer->ProcessFile( aFile );
-                aNewTokenizer->Remove();
-
-                delete aNewTokenizer;
-            }
-
-            delete aFile;
         }
 
         return;

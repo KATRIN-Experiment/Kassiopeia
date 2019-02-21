@@ -4,7 +4,7 @@
 #include <cmath>
 #include <string>
 
-#include "KEMThreeVector.hh"
+#include "../../include/KThreeVector_KEMField.hh"
 
 
 namespace KEMField{
@@ -48,9 +48,9 @@ class KVMSpaceLineSegment
         void SetPoint1(const double* point); //start point
         void SetPoint2(const double* point); //end point
 
-        KEMThreeVector fP1; //start point
-        KEMThreeVector fP2; //end point
-        KEMThreeVector fN; //unit vector
+        KThreeVector fP1; //start point
+        KThreeVector fP2; //end point
+        KThreeVector fN; //unit vector
         double fL; //length
 
 };

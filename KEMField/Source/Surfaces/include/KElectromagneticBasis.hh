@@ -4,7 +4,7 @@
 #include <string>
 #include <complex>
 
-#include "KBasis.hh"
+#include "../../../Surfaces/include/KBasis.hh"
 
 namespace KEMField
 {

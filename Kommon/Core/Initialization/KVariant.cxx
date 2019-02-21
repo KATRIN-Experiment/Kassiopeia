@@ -118,7 +118,7 @@ double KVariant::AsDouble(void) const
         << "bad type to convert to int: \"" << AsString() << "\"";
 }
 
-std::string KVariant::AsString(void) const
+std::string KVariant::AsString(int precision) const
 {
     if (fType == Type_String) {
 	return *fPrimitive.fStringValue;
@@ -135,7 +135,14 @@ std::string KVariant::AsString(void) const
 	os << fPrimitive.fLongValue;
     }
     else if (fType == Type_Double) {
-	os << fPrimitive.fDoubleValue;
+        if (precision > 0) {
+            auto prev_precision  = os.precision(precision);
+            os << fPrimitive.fDoubleValue;
+            os.precision(prev_precision);
+        }
+        else {
+            os << fPrimitive.fDoubleValue;
+        }
     }
     else {
 	os << "Unknown@" << this;
@@ -168,4 +175,27 @@ const KUnknown& KVariant::AsUnknown(void) const
     }
     
     return *fPrimitive.fUnknownValue;
+}
+
+std::map<int, KVariant> KVariant::SplitBy(const std::string& Separator, std::vector<KVariant> DefaultValueList) const
+{
+    map<int, KVariant> Result;
+    for (unsigned i = 0; i < DefaultValueList.size(); i++) {
+        Result[i] = DefaultValueList[i];
+    }
+    
+    std::string str = this->As<std::string>();
+    for (unsigned i = 0; ! str.empty(); i++) {
+        auto pos = str.find(Separator);
+        std::string v = str.substr(0, pos);
+        if (! v.empty()) {
+            Result[i] = KVariant(v);
+        }
+        if (pos == string::npos) {
+            break;
+        }
+        str = str.substr(pos + Separator.size());
+    }
+    
+    return Result;
 }

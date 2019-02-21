@@ -518,9 +518,6 @@ class KFMScalarMomentRemoteToLocalConverter: public KFMNodeActor< KFMNode<Object
                 fDFTCalc->ExecuteOperation();
             }
 
-            //pointwise multiply the multipoles with the (DFT'd) response functions and sum
-            std::complex<double> zero(0,0);
-
             //since the local coefficients with k < 0 are conjuates of the k > 0 coefficients
             //we only need to compute values of k <= 0, this saves about a factor of two computation
             unsigned int tsi;

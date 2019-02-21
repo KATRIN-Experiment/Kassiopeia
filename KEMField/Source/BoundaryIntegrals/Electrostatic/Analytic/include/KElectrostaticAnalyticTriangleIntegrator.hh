@@ -22,7 +22,7 @@ namespace KEMField
 
 
     double Potential( const KTriangle* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KTriangle* source, const KPosition& P ) const;
+    KThreeVector ElectricField( const KTriangle* source, const KPosition& P ) const;
     using KElectrostaticElementIntegrator<KTriangle>::Potential;
     using KElectrostaticElementIntegrator<KTriangle>::ElectricField;
   private:

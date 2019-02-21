@@ -5,8 +5,8 @@
  *      Author: gosda
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICZHFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICZHFIELDSOLVER_HH_
+#ifndef KELECTRICZHFIELDSOLVER_HH_
+#define KELECTRICZHFIELDSOLVER_HH_
 
 #include "KElectricFieldSolver.hh"
 
@@ -38,8 +38,8 @@ private:
 	void InitializeCore( KSurfaceContainer& container );
 
 	double PotentialCore( const KPosition& P ) const;
-	KEMThreeVector ElectricFieldCore( const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const;
+	KThreeVector ElectricFieldCore( const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const;
 
 	KEBIPolicy fIntegratorPolicy;
 	KElectrostaticBoundaryIntegrator fIntegrator;
@@ -50,4 +50,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_ELECTRIC_INCLUDE_KELECTRICZHFIELDSOLVER_HH_ */
+#endif /* KELECTRICZHFIELDSOLVER_HH_ */

@@ -41,8 +41,7 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkXMLUnstructuredGridWriter.h>
 
-
-#include "KEMThreeVector.hh"
+#include "KThreeVector_KEMField.hh"
 
 #include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticTree.hh"

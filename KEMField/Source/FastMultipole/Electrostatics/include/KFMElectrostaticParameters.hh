@@ -1,6 +1,7 @@
 #ifndef KFMElectrostaticParameters_HH__
 #define KFMElectrostaticParameters_HH__
 
+#include "KThreeVector_KEMField.hh"
 #include "KFMSubdivisionStrategy.hh"
 
 /*
@@ -16,7 +17,6 @@
 *
 */
 
-#include "KEMThreeVector.hh"
 
 namespace KEMField
 {

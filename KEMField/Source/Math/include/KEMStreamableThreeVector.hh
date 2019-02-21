@@ -8,9 +8,8 @@
 #ifndef KEMSTREAMABLETHREEVECTOR_HH_
 #define KEMSTREAMABLETHREEVECTOR_HH_
 
-#include "KEMThreeVector.hh"
-
 #include <iostream>
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField {
 class KEMStreamableThreeVector {
@@ -20,13 +19,13 @@ public:
 		fData[1] = 0;
 		fData[2] = 0;
 	}
-	explicit KEMStreamableThreeVector(const KEMThreeVector& vec) {
+	explicit KEMStreamableThreeVector(const KThreeVector& vec) {
 		fData[0] = vec.X();
 		fData[1] = vec.Y();
 		fData[2] = vec.Z();
 	}
 
-	KEMThreeVector GetThreeVector() {
+	KThreeVector GetThreeVector() {
 		return fData;
 	}
 
@@ -46,7 +45,7 @@ public:
 	}
 
 private:
-	KEMThreeVector fData;
+	KThreeVector fData;
 };
 
 

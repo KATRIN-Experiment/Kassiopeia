@@ -38,7 +38,7 @@ namespace katrin
         gStyle->SetTitleAlign( 23 );
         gStyle->SetTitleSize( 0.08 , "t" );
 
-        fPad = new TPad( fName.c_str() , fName.c_str(), fxlow, fylow, fxup, fyup );
+        fPad = new TPad( GetName().c_str() , GetName().c_str(), fxlow, fylow, fxup, fyup );
 
         double tXMin(std::numeric_limits<double>::max());
         double tXMax(-1.0*std::numeric_limits<double>::max());

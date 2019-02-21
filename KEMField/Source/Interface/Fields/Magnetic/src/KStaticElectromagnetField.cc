@@ -25,12 +25,12 @@ KStaticElectromagnetField::~KStaticElectromagnetField()
 {
 }
 
-KEMThreeVector KStaticElectromagnetField::MagneticPotentialCore(
+KThreeVector KStaticElectromagnetField::MagneticPotentialCore(
         const KPosition& aSamplePoint) const {
     return fFieldSolver->MagneticPotential(aSamplePoint);
 }
 
-KEMThreeVector KStaticElectromagnetField::MagneticFieldCore(
+KThreeVector KStaticElectromagnetField::MagneticFieldCore(
         const KPosition& aSamplePoint) const {
     return fFieldSolver->MagneticField(aSamplePoint);
 }
@@ -40,7 +40,7 @@ KGradient KStaticElectromagnetField::MagneticGradientCore(
     return fFieldSolver->MagneticGradient(aSamplePoint);
 }
 
-std::pair<KEMThreeVector, KGradient>
+std::pair<KThreeVector, KGradient>
 KStaticElectromagnetField::MagneticFieldAndGradientCore(const KPosition& P) const
 {
     return fFieldSolver->MagneticFieldAndGradient(P);

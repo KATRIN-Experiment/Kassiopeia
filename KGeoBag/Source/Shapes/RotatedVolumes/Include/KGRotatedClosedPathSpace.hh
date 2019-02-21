@@ -37,7 +37,7 @@ namespace KGeoBag
                     fRotatedMeshCount( aCopy.fRotatedMeshCount )
             {
             }
-            KGRotatedClosedPathSpace( const KSmartPointer< XPathType >& aPath ) :
+            KGRotatedClosedPathSpace( const std::shared_ptr< XPathType >& aPath ) :
                     KGVolume(),
                     fPath( aPath ),
                     fRotatedMeshCount( 64 )
@@ -48,11 +48,11 @@ namespace KGeoBag
             }
 
         public:
-            KSmartPointer< XPathType > Path()
+            std::shared_ptr< XPathType > Path()
             {
                 return fPath;
             }
-            const KSmartPointer< XPathType > Path() const
+            const std::shared_ptr< XPathType > Path() const
             {
                 return fPath;
             }
@@ -68,13 +68,13 @@ namespace KGeoBag
             }
 
         protected:
-            mutable KSmartPointer< XPathType > fPath;
+            mutable std::shared_ptr< XPathType > fPath;
             mutable unsigned int fRotatedMeshCount;
 
         public:
             virtual void VolumeInitialize( BoundaryContainer& aBoundaryContainer ) const
             {
-                KGRotatedPathSurface< XPathType >* tJacket = new KGRotatedPathSurface< XPathType >( fPath );
+                auto tJacket = std::make_shared<KGRotatedPathSurface< XPathType >>( fPath );
                 tJacket->RotatedMeshCount( fRotatedMeshCount );
                 tJacket->SetName( "jacket" );
                 aBoundaryContainer.push_back( tJacket );

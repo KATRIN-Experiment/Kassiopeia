@@ -48,9 +48,9 @@ namespace KEMField
     template <class SourceShape>
     double Potential(const SourceShape*, const KPosition&) const;
     template <class SourceShape>
-    KEMThreeVector ElectricField(const SourceShape*, const KPosition&) const;
+    KThreeVector ElectricField(const SourceShape*, const KPosition&) const;
     template <class SourceShape>
-    std::pair<KEMThreeVector, double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
+    std::pair<KThreeVector, double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
 
     std::string OpenCLFile() const { return "kEMField_ElectrostaticRWGBoundaryIntegrals.cl"; }
 
@@ -157,7 +157,7 @@ namespace KEMField
   }
 
   template <class SourceShape>
-  KEMThreeVector KOpenCLElectrostaticRWGBoundaryIntegrator::ElectricField(const SourceShape* source, const KPosition& aPosition) const
+  KThreeVector KOpenCLElectrostaticRWGBoundaryIntegrator::ElectricField(const SourceShape* source, const KPosition& aPosition) const
   {
     StreamSourceToBuffer(source);
 
@@ -188,11 +188,11 @@ namespace KEMField
 			sizeof(CL_TYPE4),
 			&eField);
 
-    return KEMThreeVector(eField.s[0],eField.s[1],eField.s[2]);
+    return KThreeVector(eField.s[0],eField.s[1],eField.s[2]);
   }
 
   template <class SourceShape>
-  std::pair<KEMThreeVector, double> KOpenCLElectrostaticRWGBoundaryIntegrator::ElectricFieldAndPotential(const SourceShape* source, const KPosition& aPosition) const
+  std::pair<KThreeVector, double> KOpenCLElectrostaticRWGBoundaryIntegrator::ElectricFieldAndPotential(const SourceShape* source, const KPosition& aPosition) const
   {
     StreamSourceToBuffer(source);
 
@@ -223,7 +223,7 @@ namespace KEMField
 			sizeof(CL_TYPE4),
 			&eFieldAndPhi);
 
-    return std::make_pair( KEMThreeVector(eFieldAndPhi.s[0],eFieldAndPhi.s[1],eFieldAndPhi.s[2]), eFieldAndPhi.s[3] );
+    return std::make_pair( KThreeVector(eFieldAndPhi.s[0],eFieldAndPhi.s[1],eFieldAndPhi.s[2]), eFieldAndPhi.s[3] );
   }
 
   template <class SourceShape>
@@ -235,13 +235,18 @@ namespace KEMField
     }
     else
     {
-      KEMThreeVector field = this->ElectricField(&source,
-					       fTarget->GetShape()->Centroid());
-      fValue = field.Dot(fTarget->GetShape()->Normal());
-      double dist = (source.Centroid() -
-		       fTarget->GetShape()->Centroid()).Magnitude();
-      if (dist<1.e-12)
-	fValue *= fBoundaryVisitor.Prefactor();
+      double dist = (source.Centroid() - fTarget->GetShape()->Centroid()).Magnitude();
+
+      if( dist>=1.e-12 ) {
+        KThreeVector field = this->ElectricField(&source,fTarget->GetShape()->Centroid());
+        fValue = field.Dot(fTarget->GetShape()->Normal());
+      } else {
+        // For planar Neumann elements (here: triangles and rectangles) the following formula
+        // is valid and incorporates already the electric field 1./(2.*Eps0).
+        // In case of conical (axialsymmetric) Neumann elements this formula has to be modified.
+        // Ferenc Glueck and Daniel Hilk, March 27th 2018
+        fValue = fBoundaryVisitor.Prefactor()/(2.*KEMConstants::Eps0);
+      }
     }
   }
 }

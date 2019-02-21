@@ -27,24 +27,24 @@ KRampedMagneticField* KInducedAzimuthalElectricField::GetRampedMagneticField() c
 
 double KInducedAzimuthalElectricField::PotentialCore(
         const KPosition& P, const double& time) const {
-    KEMThreeVector electricField = ElectricFieldCore( P, time );
+    KThreeVector electricField = ElectricFieldCore( P, time );
     return -1. * electricField.Dot( P );
 }
 
-KEMThreeVector KInducedAzimuthalElectricField::ElectricFieldCore(
+KThreeVector KInducedAzimuthalElectricField::ElectricFieldCore(
         const KPosition& P, const double& time) const {
     double tRadius = P.Perp();
     if (tRadius > 0.)
     {
-        KEMThreeVector tAziDirection = 1. / tRadius * KEMThreeVector( -P.Y(), P.X(), 0. );
+        KThreeVector tAziDirection = 1. / tRadius * KThreeVector( -P.Y(), P.X(), 0. );
 
-        KEMThreeVector tMagneticField = fMagneticField->MagneticField( P, time);
+        KThreeVector tMagneticField = fMagneticField->MagneticField( P, time);
         double Modulation = fMagneticField->GetDerivModulationFactor( time );
         return  tAziDirection * (tMagneticField.Z() * (-tRadius / 2.)) * (Modulation * fMagneticField->GetTimeScalingFactor());
     }
     else
     {
-        return KEMThreeVector(0.,0.,0.);
+        return KThreeVector(0.,0.,0.);
     }
 
 }

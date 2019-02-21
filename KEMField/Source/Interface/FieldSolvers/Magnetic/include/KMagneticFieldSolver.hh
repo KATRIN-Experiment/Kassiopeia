@@ -5,12 +5,12 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KMAGNETICFIELDSOLVER_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KMAGNETICFIELDSOLVER_HH_
+#ifndef KMAGNETICFIELDSOLVER_HH_
+#define KMAGNETICFIELDSOLVER_HH_
 
+#include "KThreeMatrix_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 #include "KElectromagnetContainer.hh"
-#include "KEMThreeVector.hh"
-#include "KEMThreeMatrix.hh"
 
 namespace KEMField {
 
@@ -27,11 +27,11 @@ public:
         }
     }
 
-    KEMThreeVector MagneticPotential ( const KPosition& P ) const {
+    KThreeVector MagneticPotential ( const KPosition& P ) const {
         return MagneticPotentialCore(P);
     }
 
-    KEMThreeVector MagneticField (const KPosition& P ) const {
+    KThreeVector MagneticField (const KPosition& P ) const {
         return MagneticFieldCore(P);
     }
 
@@ -39,7 +39,7 @@ public:
         return MagneticGradientCore(P);
     }
 
-    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient( const KPosition& P ) const {
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradient( const KPosition& P ) const {
         return MagneticFieldAndGradientCore(P);
     }
 
@@ -47,11 +47,11 @@ private:
 
     virtual void InitializeCore(KElectromagnetContainer& container ) = 0;
 
-    virtual KEMThreeVector MagneticPotentialCore ( const KPosition& P ) const = 0;
-    virtual KEMThreeVector MagneticFieldCore (const KPosition& P ) const = 0;
+    virtual KThreeVector MagneticPotentialCore ( const KPosition& P ) const = 0;
+    virtual KThreeVector MagneticFieldCore (const KPosition& P ) const = 0;
     virtual KGradient MagneticGradientCore (const KPosition& P ) const = 0;
 
-    virtual std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore( const KPosition& P ) const {
+    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore( const KPosition& P ) const {
         return std::make_pair(MagneticFieldCore(P),MagneticGradientCore(P));
     }
 
@@ -64,4 +64,4 @@ private:
 
 
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDSOLVERS_MAGNETIC_INCLUDE_KMAGNETICFIELDSOLVER_HH_ */
+#endif /* KMAGNETICFIELDSOLVER_HH_ */

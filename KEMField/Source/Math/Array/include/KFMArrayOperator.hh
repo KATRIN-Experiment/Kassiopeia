@@ -76,9 +76,7 @@ class KFMArrayOperator
         static void
         ZeroArray(KFMArrayWrapper<T,NDIM>* arr)
         {
-            T* ptr = arr->GetData();
-            unsigned int n_bytes = (arr->GetArraySize() )*( sizeof(T) );
-            std::memset(ptr, 0, n_bytes);
+            ResetArray(arr, static_cast<T>(0));
         }
 
 

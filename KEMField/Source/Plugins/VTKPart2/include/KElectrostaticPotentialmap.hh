@@ -5,13 +5,13 @@
  *      Author: Jan Behrens
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KELECTROSTATICPOTENTIALMAP_HH_
-#define KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KELECTROSTATICPOTENTIALMAP_HH_
+#ifndef KELECTROSTATICPOTENTIALMAP_HH_
+#define KELECTROSTATICPOTENTIALMAP_HH_
 
 /**
  * This implements a simplistic potential map interface into Kassiopeia.
  *
- * It is inteded to provide a simple method to speed up tracking,
+ * It is intended to provide a simple method to speed up tracking,
  * without the need to take care about lots of parameters.
  * A much more advanced method would be FFTM/FMM, which is also
  * available in the current version of Kassiopeia.
@@ -124,16 +124,16 @@
 
 #include "KElectrostaticField.hh"
 #include <string>
+#include <memory>
 
 #include "KMPIEnvironment.hh"
-#include "KEMThreeVector.hh"
-
 #include "KGCore.hh"
 
 #include <vtkSmartPointer.h>
 #include <vtkImageData.h>
 #include <vtkIntArray.h>
 #include <vtkDoubleArray.h>
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField {
 
@@ -148,7 +148,7 @@ namespace KEMField {
 
         public:
             virtual bool GetPotential( const KPosition& aSamplePoint, const double& aSampleTime, double& aPotential ) const;
-            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KEMThreeVector& aField ) const;
+            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField ) const;
 
         protected:
             vtkImageData *fImageData;
@@ -197,14 +197,14 @@ namespace KEMField {
 
         private:
             virtual double PotentialCore(const KPosition& P ) const;
-            virtual KEMThreeVector ElectricFieldCore(const KPosition& P) const;
+            virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
             virtual void InitializeCore();
 
         private:
             std::string fDirectory;
             std::string fFile;
             int fInterpolation;
-            KSmartPointer<KPotentialMapVTK> fPotentialMap;
+            std::shared_ptr<KPotentialMapVTK> fPotentialMap;
     };
 
     ////////////////////////////////////////////////////////////////////
@@ -228,7 +228,7 @@ namespace KEMField {
             {
                 fCenter = aCenter;
             }
-            void SetLength( KEMThreeVector aLength )
+            void SetLength( KThreeVector aLength )
             {
                 fLength = aLength;
             }
@@ -292,7 +292,7 @@ namespace KEMField {
             std::string fFile;
             std::string fName;
             KPosition fCenter;
-            KEMThreeVector fLength;
+            KThreeVector fLength;
             bool fMirrorX, fMirrorY, fMirrorZ;
             double fSpacing;
             KElectrostaticField *fElectricField;
@@ -306,4 +306,4 @@ namespace KEMField {
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_PLUGINS_VTK_INCLUDE_KELECTROSTATICPOTENTIALMAP_HH_ */
+#endif /* KELECTROSTATICPOTENTIALMAP_HH_ */

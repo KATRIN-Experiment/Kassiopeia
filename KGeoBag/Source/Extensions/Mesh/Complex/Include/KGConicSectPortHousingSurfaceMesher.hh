@@ -110,7 +110,7 @@ namespace KGeoBag
 
             bool LengthsIntersect( double x1min, double x1max, double x2min, double x2max );
 
-            KSmartPointer< KGConicSectPortHousing > fConicSectPortHousing;
+            std::shared_ptr< KGConicSectPortHousing > fConicSectPortHousing;
     };
 }
 

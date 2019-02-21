@@ -32,12 +32,14 @@ namespace Kassiopeia
 
     void KSGenValueAngleCosine::DiceValue( vector< double >& aDicedValues )
     {
-        double tSinThetaMin = sin( (KConst::Pi() / 180.) * fAngleMin );
-        double tSinThetaMax = sin( (KConst::Pi() / 180.) * fAngleMax );
-
-        double tSinTheta = KRandom::GetInstance().Uniform( tSinThetaMin, tSinThetaMax );
-        double tAngle = acos( sqrt( 1. - tSinTheta*tSinTheta ) );
-
+        
+        double tsinThetaSquaredMin = pow(sin( (KConst::Pi() / 180.) * fAngleMin ),2);
+        double tsinThetaSquaredMax = pow(sin( (KConst::Pi() / 180.) * fAngleMax ),2);
+        
+        //Random generation follows Eq. 12 from J. Greenwood, Vacuum, 67 (2002), pp. 217-222
+        double tsinThetaSquared = KRandom::GetInstance().Uniform( tsinThetaSquaredMin, tsinThetaSquaredMax );
+        double tAngle = asin( sqrt(tsinThetaSquared) );
+        
         aDicedValues.push_back( (180.0 / KConst::Pi()) * tAngle );
 
         return;

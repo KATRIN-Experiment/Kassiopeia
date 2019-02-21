@@ -21,6 +21,10 @@ set( MESH_HEADER_FILES
     Complex/Include/KGConicSectPortHousingSurfaceMesher.hh
     Complex/Include/KGRodSurfaceMesher.hh
     Complex/Include/KGBeamSurfaceMesher.hh
+    Complex/Include/KGLinearWireGridMesher.hh
+    Complex/Include/KGQuadraticWireGridMesher.hh
+    Complex/Include/KGCircleWireMesher.hh
+    Complex/Include/KGCircularWirePinsMesher.hh
 
     Simple/Include/KGSimpleMesher.hh
     Simple/Include/KGFlattenedCircleSurfaceMesher.hh
@@ -87,6 +91,10 @@ set( MESH_SOURCE_FILES
     Complex/Source/KGConicSectPortHousingSurfaceMesher.cc
     Complex/Source/KGRodSurfaceMesher.cc
     Complex/Source/KGBeamSurfaceMesher.cc
+    Complex/Source/KGLinearWireGridMesher.cc
+    Complex/Source/KGQuadraticWireGridMesher.cc
+    Complex/Source/KGCircleWireMesher.cc
+    Complex/Source/KGCircularWirePinsMesher.cc
 
     Simple/Source/KGSimpleMesher.cc
     Simple/Source/KGFlattenedCircleSurfaceMesher.cc

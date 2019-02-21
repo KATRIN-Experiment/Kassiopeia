@@ -6,9 +6,11 @@
 #include <cmath>
 #include <string>
 
+#include "KGBoundary.hh"
+
 namespace KGeoBag
 {
-  class KGRod
+  class KGRod : public KGBoundary
   {
     /*
       A class describing a rod.  The rod can be bent into arbitrary shapes, as

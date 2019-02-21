@@ -31,9 +31,9 @@ namespace KEMField
     return fIntegratingFieldSolver.Potential(P);
   }
 
-  KEMThreeVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const KPosition& P) const
+  KThreeVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const KPosition& P) const
   {
-    KEMThreeVector E;
+    KThreeVector E;
 
     if (UseCentralExpansion(P))
       if (CentralExpansionField(P,E))
@@ -56,9 +56,9 @@ namespace KEMField
     return fIntegratingFieldSolver.ElectricField(P);
   }
 
-  std::pair<KEMThreeVector,double> KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const KPosition& P) const
+  std::pair<KThreeVector,double> KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const KPosition& P) const
   {
-    KEMThreeVector E;
+    KThreeVector E;
     double phi = 0;
 
     if (UseCentralExpansion(P))
@@ -186,7 +186,7 @@ namespace KEMField
     return true;
   }
 
-  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionField(const KPosition& P, KEMThreeVector& electricField) const
+  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionField(const KPosition& P, KThreeVector& electricField) const
   {
     if (fContainer.GetCentralSourcePoints().empty())
     {
@@ -312,7 +312,7 @@ namespace KEMField
     return true;
   }
 
-  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionFieldAndPotential(const KPosition& P,KEMThreeVector& electricField,double& potential) const
+  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionFieldAndPotential(const KPosition& P,KThreeVector& electricField,double& potential) const
   {
     if (fContainer.GetCentralSourcePoints().empty())
     {
@@ -545,7 +545,7 @@ namespace KEMField
   }
 
 
-  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionField(const KPosition& P, KEMThreeVector& electricField) const
+  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionField(const KPosition& P, KThreeVector& electricField) const
   {
     if (fContainer.GetRemoteSourcePoints().empty())
     {
@@ -667,7 +667,7 @@ namespace KEMField
     return true;
   }
 
-  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionFieldAndPotential(const KPosition& P, KEMThreeVector& electricField, double& potential) const
+  bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionFieldAndPotential(const KPosition& P, KThreeVector& electricField, double& potential) const
   {
     if (fContainer.GetRemoteSourcePoints().empty())
     {

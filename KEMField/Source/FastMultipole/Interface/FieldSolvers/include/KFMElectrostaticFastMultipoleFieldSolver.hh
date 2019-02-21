@@ -34,7 +34,7 @@ class KFMElectrostaticFastMultipoleFieldSolver
 
         //computes the potential and field at a given point
         double Potential(const KPosition& P) const;
-        KEMThreeVector ElectricField(const KPosition& P) const;
+        KThreeVector ElectricField(const KPosition& P) const;
 
         //for debugging and information purposes
         int GetSubsetSize(const KPosition& P) const {SetPoint(P); return fSubsetSize;};

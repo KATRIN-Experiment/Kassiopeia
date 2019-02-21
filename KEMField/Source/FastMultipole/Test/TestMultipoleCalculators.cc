@@ -12,7 +12,7 @@
 #include "KFMPoint.hh"
 #include "KFMPointCloud.hh"
 
-#include "KEMThreeVector.hh"
+#include "KThreeVector_KEMField.hh"
 
 #include "KVMPathIntegral.hh"
 #include "KVMLineIntegral.hh"
@@ -93,15 +93,15 @@ void GenerateTriangle(gsl_rng* rng, double r, double& a, double& b, double* p0, 
 
     //now make sure that it is an acute triangle
 
-    KEMThreeVector v0(p0[0], p0[1], p0[2]);
-    KEMThreeVector v1(p1[0], p1[1], p1[2]);
-    KEMThreeVector v2(p2[0], p2[1], p2[2]);
-    KEMThreeVector vn1 = (v1 - v0);
+    KThreeVector v0(p0[0], p0[1], p0[2]);
+    KThreeVector v1(p1[0], p1[1], p1[2]);
+    KThreeVector v2(p2[0], p2[1], p2[2]);
+    KThreeVector vn1 = (v1 - v0);
     a = vn1.Magnitude();
     vn1 = vn1.Unit();
     n1[0] = vn1.X(); n1[1] = vn1.Y(); n1[2] = vn1.Z();
 
-    KEMThreeVector vn2 = (v2 - v0);
+    KThreeVector vn2 = (v2 - v0);
     b = vn2.Magnitude();
     vn2 = vn2.Unit();
     n2[0] = vn2.X(); n2[1] = vn2.Y(); n2[2] = vn2.Z();
@@ -159,9 +159,9 @@ void GenerateRectangle(gsl_rng* rng, double r, double& a, double& b, double* p0,
     n4[2] = r*(z/norm);
 
     //take cross product with first direction so we know we have perpendicular vectors
-    KEMThreeVector v1(n1[0], n1[1], n1[2]);
-    KEMThreeVector v4(n4[0], n4[1], n4[2]);
-    KEMThreeVector v2 = v1.Cross(v4);
+    KThreeVector v1(n1[0], n1[1], n1[2]);
+    KThreeVector v4(n4[0], n4[1], n4[2]);
+    KThreeVector v2 = v1.Cross(v4);
     v2 = v2.Unit();
     n2[0] = v2[0];
     n2[1] = v2[1];
@@ -234,6 +234,7 @@ int main(int argc, char* argv[])
     unsigned int samples = 10;
     (void) samples; //remove unused var warning when GSL is not available
     unsigned int oclforce = 0;
+    (void) oclforce;
     unsigned int degree = 3;
 
     static struct option longOptions[] =
@@ -313,12 +314,12 @@ int main(int argc, char* argv[])
         double z_offset = 1.1;
 
         //triangle descriptors
-        KEMThreeVector v1(-1.,0.,0.);
-        KEMThreeVector v2(0.5, std::sqrt(3.)/2.0, z_offset) ;
-        KEMThreeVector v3(0.5, -1.0*std::sqrt(3.0)/2.0, z_offset);
+        KThreeVector v1(-1.,0.,0.);
+        KThreeVector v2(0.5, std::sqrt(3.)/2.0, z_offset) ;
+        KThreeVector v3(0.5, -1.0*std::sqrt(3.0)/2.0, z_offset);
 
-        KEMThreeVector axis1 = (v2 - v1).Unit();
-        KEMThreeVector axis2 = (v3 - v1).Unit();
+        KThreeVector axis1 = (v2 - v1).Unit();
+        KThreeVector axis2 = (v3 - v1).Unit();
         axis1 = axis1.Unit();
         axis2 = axis2.Unit();
         double Tsize = 1;
@@ -327,8 +328,8 @@ int main(int argc, char* argv[])
         double TriA = Tsize*(v2 - v1).Magnitude();//1.732038; //length of side 1
         double TriB = Tsize*(v3 - v1).Magnitude();//1.732038; //lenght of side 2
         double TriP[3] = {0.0,0.0,0.};//{v1.X(), v1.Y(), v1.Z()};// {Tsize,0,z_offset}; //corner1
-        KEMThreeVector TriP2;//corner2
-        KEMThreeVector TriP3; //corner3
+        KThreeVector TriP2;//corner2
+        KThreeVector TriP3; //corner3
         TriP2.SetComponents(TriP[0], TriP[1], TriP[2]);
         TriP2 += TriA*axis1;
         TriP3.SetComponents(TriP[0], TriP[1], TriP[2]);
@@ -347,7 +348,7 @@ int main(int argc, char* argv[])
         double WireLength = 1.1010101;
     //    double WireDiameter = 0.01;
         double WireStartPoint[3] = {0,0,0};
-        KEMThreeVector dir(1.,2.,3.); dir = dir.Unit();
+        KThreeVector dir(1.,2.,3.); dir = dir.Unit();
         double WireDirection[3] = {dir[0], dir[1], dir[2]};
         double WireEndPoint[3] = {WireStartPoint[0]+WireLength*WireDirection[0],
                                     WireStartPoint[1]+WireLength*WireDirection[1],
@@ -382,7 +383,7 @@ int main(int argc, char* argv[])
 
 
         double origin[3];
-        KEMThreeVector origin_vec(0.,0.,-1.0);
+        KThreeVector origin_vec(0.,0.,-1.0);
         origin_vec = origin_vec.Unit();
         double mag = 1.0;
         origin_vec *= mag;

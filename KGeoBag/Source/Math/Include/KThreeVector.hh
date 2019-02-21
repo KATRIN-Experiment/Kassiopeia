@@ -3,9 +3,9 @@
 
 #include "KTwoVector.hh"
 
-#include <KConst.h>
+#include "KConst.h"
 using katrin::KConst;
-#include <KHash.h>
+#include "KHash.h"
 
 #include <istream>
 using std::istream;
@@ -34,7 +34,9 @@ namespace KGeoBag
 
         public:
             KThreeVector();
-            ~KThreeVector();
+            virtual ~KThreeVector() = default;
+
+            static std::string Name() { return "KThreeVector"; }
 
             //assignment
 
@@ -100,6 +102,10 @@ namespace KGeoBag
     double AzimuthalAngle() const;
     double PolarAngleInDegrees() const;
     double AzimuthalAngleInDegrees() const;
+    KThreeVector Abs() const;
+    KThreeVector Pow( const double& anExponent = 2 ) const;
+    KThreeVector Sqr() const;
+    KThreeVector Sqrt() const;
     KThreeVector Unit() const;
     KThreeVector Orthogonal() const;
     KThreeVector Cross( const KThreeVector& aVector ) const;
@@ -325,6 +331,22 @@ inline double KThreeVector::AzimuthalAngleInDegrees() const
     return AzimuthalAngle() * 180. / KConst::Pi();
 }
 
+inline KThreeVector KThreeVector::Abs() const
+{
+    return KThreeVector( std::fabs(fData[ 0 ]), std::fabs(fData[ 1 ]), std::fabs(fData[ 2 ]) );
+}
+inline KThreeVector KThreeVector::Pow( const double& anExponent ) const
+{
+    return KThreeVector( std::pow(fData[ 0 ], anExponent), std::pow(fData[ 1 ], anExponent), std::pow(fData[ 2 ], anExponent) );
+}
+inline KThreeVector KThreeVector::Sqr() const
+{
+    return KThreeVector( fData[ 0 ]*fData[ 0 ], fData[ 1 ]*fData[ 1 ], fData[ 2 ]*fData[ 2 ] );
+}
+inline KThreeVector KThreeVector::Sqrt() const
+{
+    return KThreeVector( std::sqrt(fData[ 0 ]), std::sqrt(fData[ 1 ]), std::sqrt(fData[ 2 ]) );
+}
 inline KThreeVector KThreeVector::Unit() const
 {
     const double tMagnitude = Magnitude();

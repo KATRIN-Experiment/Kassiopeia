@@ -6,9 +6,11 @@
 #include <cmath>
 #include <string>
 
+#include "KGBoundary.hh"
+
 namespace KGeoBag
 {
-  class KGExtrudedObject
+  class KGExtrudedObject : public KGBoundary
   {
   public:
     KGExtrudedObject() : fZMin(0.),

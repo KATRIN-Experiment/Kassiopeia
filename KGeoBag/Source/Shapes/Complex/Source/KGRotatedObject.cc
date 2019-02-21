@@ -515,18 +515,14 @@ namespace KGeoBag
   bool KGRotatedObject::Arc::ContainsPoint(const double* P) const
   {
     double zmax = fP2[0];
-//    double rmax = fP2[1]; //TODO: WHAT IS THIS VARIABLE FOR?
     double zmin = fP1[0];
-//    double rmin = fP1[1]; //TODO: WHAT IS THIS VARIABLE FOR?
 
     bool arcOpensUp = (fPhiBoundary>0 && fPhiBoundary < M_PI);
 
     if (zmax<zmin)
     {
       zmax = zmin;
-//      rmax = rmin; /TODO: WHAT IS THIS VARIABLE FOR?
       zmin = fP2[0];
-//      rmin = fP2[1]; /TODO: WHAT IS THIS VARIABLE FOR?
     }
 
     if (P[2] < zmin || P[2] > zmax)

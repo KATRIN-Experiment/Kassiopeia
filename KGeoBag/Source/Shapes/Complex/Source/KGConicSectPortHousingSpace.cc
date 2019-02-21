@@ -10,12 +10,11 @@ namespace KGeoBag
   {
     fObject->Initialize();
 
-    KGConicSectPortHousingSurface* tSurface =
-      new KGConicSectPortHousingSurface(fObject);
+    auto tSurface = std::make_shared<KGConicSectPortHousingSurface>(fObject);
     aBoundaryContainer.push_back( tSurface );
 
     {
-      KGDisk* disk = new KGDisk();
+      auto disk = std::make_shared<KGDisk>();
       disk->SetP0(KThreeVector(0.,0.,fObject->GetZAMain()));
       disk->SetNormal(KThreeVector(0.,0.,-1.));
       disk->SetRadius(fObject->GetRAMain());
@@ -23,7 +22,7 @@ namespace KGeoBag
     }
 
     {
-      KGDisk* disk = new KGDisk();
+      auto disk = std::make_shared<KGDisk>();
       disk->SetP0(KThreeVector(0.,0.,fObject->GetZBMain()));
       disk->SetNormal(KThreeVector(0.,0.,1.));
       disk->SetRadius(fObject->GetRBMain());
@@ -37,28 +36,28 @@ namespace KGeoBag
       if (const KGConicSectPortHousing::OrthogonalPort* o =
 	  dynamic_cast<const KGConicSectPortHousing::OrthogonalPort*>(p))
       {
-	KGDisk* disk = new KGDisk();
-	disk->SetP0(KThreeVector(o->GetASub(0),
-				 o->GetASub(1),
-				 o->GetASub(2)));
-	double normal_local[3] = {0.,0.,1.};
-	double normal_global[3];
-	o->GetCoordinateTransform()->ConvertToGlobalCoords(normal_local,normal_global,true);
-	KThreeVector n(normal_global[0],normal_global[1],normal_global[2]);
-	disk->SetNormal(n.Unit());
-	disk->SetRadius(o->GetRSub());
-	aBoundaryContainer.push_back(disk);
+        auto disk = std::make_shared<KGDisk>();
+        disk->SetP0(KThreeVector(o->GetASub(0),
+        			 o->GetASub(1),
+        			 o->GetASub(2)));
+        double normal_local[3] = {0.,0.,1.};
+        double normal_global[3];
+        o->GetCoordinateTransform()->ConvertToGlobalCoords(normal_local,normal_global,true);
+        KThreeVector n(normal_global[0],normal_global[1],normal_global[2]);
+        disk->SetNormal(n.Unit());
+        disk->SetRadius(o->GetRSub());
+        aBoundaryContainer.push_back(disk);
       }
       else if (const KGConicSectPortHousing::ParaxialPort* c =
 	       dynamic_cast<const KGConicSectPortHousing::ParaxialPort*>(p))
       {
-	KGDisk* disk = new KGDisk();
-	disk->SetP0(KThreeVector(c->GetASub(0),
-				 c->GetASub(1),
-				 c->GetASub(2)));
-	disk->SetNormal(KThreeVector(0.,0.,(c->IsUpstream() ? -1. : 1.)));
-	disk->SetRadius(c->GetRSub());
-	aBoundaryContainer.push_back(disk);
+        auto disk = std::make_shared<KGDisk>();
+        disk->SetP0(KThreeVector(c->GetASub(0),
+        			 c->GetASub(1),
+        			 c->GetASub(2)));
+        disk->SetNormal(KThreeVector(0.,0.,(c->IsUpstream() ? -1. : 1.)));
+        disk->SetRadius(c->GetRSub());
+        aBoundaryContainer.push_back(disk);
       }
     }
 

@@ -62,12 +62,12 @@ double KElectrostaticBoundaryField::PotentialCore(
 	return fFieldSolver->Potential(P);
 }
 
-KEMThreeVector KElectrostaticBoundaryField::ElectricFieldCore(
+KThreeVector KElectrostaticBoundaryField::ElectricFieldCore(
 		const KPosition& P) const {
 	return fFieldSolver->ElectricField(P);
 }
 
-std::pair<KEMThreeVector,double>
+std::pair<KThreeVector,double>
 KElectrostaticBoundaryField::ElectricFieldAndPotentialCore(const KPosition& P) const
 {
     return fFieldSolver->ElectricFieldAndPotential(P);

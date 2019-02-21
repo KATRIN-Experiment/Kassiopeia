@@ -29,14 +29,14 @@ set (LINEARALGEBRASOLVERS_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KSVDSolver.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KProjectionSolver.hh
 )
-  if (@PROJECT_NAME@_USE_MPI)
+  if (${PROJECT_NAME}_USE_MPI)
      list (APPEND LINEARALGEBRASOLVERS_HEADERFILES
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KGaussSeidel_MPI.hh
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KRobinHood_MPI.hh
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KGeneralizedMinimalResidual_MPI.hh
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KPreconditionedGeneralizedMinimalResidual_MPI.hh
     )
-  endif (@PROJECT_NAME@_USE_MPI)
+  endif (${PROJECT_NAME}_USE_MPI)
   
 set( LINEARALGEBRASOLVERS_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KKrylovSolverConfiguration.cc

@@ -372,7 +372,7 @@ double KElectrostaticCubatureRectangleIntegrator::Potential_RectNP( const double
 	return (prefac*finalSum);
 }
 
-KEMThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP( const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights ) const
+KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP( const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights ) const
 {
 	const double area = data[0] * data[1];
 	const double prefac = area * KEMConstants::OneOverFourPiEps0;
@@ -430,10 +430,10 @@ KEMThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP( 
 		finalSum[i] = prefac * finalSum[i];
 	}
 
-	return KEMThreeVector( finalSum[0], finalSum[1], finalSum[2] );
+	return KThreeVector( finalSum[0], finalSum[1], finalSum[2] );
 }
 
-std::pair<KEMThreeVector,double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential_RectNP( const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights ) const
+std::pair<KThreeVector,double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential_RectNP( const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights ) const
 {
 	const double area = data[0] * data[1];
 	const double prefac = area * KEMConstants::OneOverFourPiEps0;
@@ -493,7 +493,7 @@ std::pair<KEMThreeVector,double> KElectrostaticCubatureRectangleIntegrator::Elec
 		finalSum[i] = prefac*finalSum[i];
 	}
 
-	return std::make_pair( KEMThreeVector(finalSum[0],finalSum[1],finalSum[2]), finalSum[3] );
+	return std::make_pair( KThreeVector(finalSum[0],finalSum[1],finalSum[2]), finalSum[3] );
 }
 
 double KElectrostaticCubatureRectangleIntegrator::Potential(const KRectangle* source, const KPosition& P) const
@@ -556,7 +556,7 @@ double KElectrostaticCubatureRectangleIntegrator::Potential(const KRectangle* so
 	return KElectrostaticRWGRectangleIntegrator::Potential( source, P );
 }
 
-KEMThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
+KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
 {
 	// save geometry info on rectangle into array, same convention as OpenCL implementation
 
@@ -616,7 +616,7 @@ KEMThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KR
 	return KElectrostaticRWGRectangleIntegrator::ElectricField( source, P );
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KRectangle* source, const KPosition& P) const
+std::pair<KThreeVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KRectangle* source, const KPosition& P) const
 {
 	// save geometry info on rectangle into array, same convention as OpenCL implementation
 
@@ -684,19 +684,19 @@ double KElectrostaticCubatureRectangleIntegrator::Potential(const KSymmetryGroup
 	return potential;
 }
 
-KEMThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
+KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
 {
-	KEMThreeVector electricField(0.,0.,0.);
+	KThreeVector electricField(0.,0.,0.);
 	for (KSymmetryGroup<KRectangle>::ShapeCIt it=source->begin();it!=source->end();++it)
 		electricField += ElectricField(*it,P);
 	return electricField;
 }
 
-std::pair<KEMThreeVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
+std::pair<KThreeVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const
 {
-	std::pair<KEMThreeVector, double> fieldAndPotential;
+	std::pair<KThreeVector, double> fieldAndPotential;
 	double potential( 0. );
-	KEMThreeVector electricField( 0., 0., 0. );
+	KThreeVector electricField( 0., 0., 0. );
 
 	for( KSymmetryGroup<KRectangle>::ShapeCIt it=source->begin(); it!=source->end(); ++it ) {
 		fieldAndPotential = ElectricFieldAndPotential( *it, P );

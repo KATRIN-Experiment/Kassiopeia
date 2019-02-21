@@ -48,7 +48,7 @@ namespace KGeoBag
                     fFlattenedMeshPower( aCopy.fFlattenedMeshPower )
             {
             }
-            KGExtrudedClosedPathSpace( const KSmartPointer< XPathType >& aPath ) :
+            KGExtrudedClosedPathSpace( const std::shared_ptr< XPathType >& aPath ) :
                     KGVolume(),
                     fPath( aPath ),
                     fZMin( 0. ),
@@ -64,11 +64,11 @@ namespace KGeoBag
             }
 
         public:
-            KSmartPointer< XPathType >& Path()
+            std::shared_ptr< XPathType >& Path()
             {
                 return fPath;
             }
-            const KSmartPointer< XPathType >& Path() const
+            const std::shared_ptr< XPathType >& Path() const
             {
                 return fPath;
             }
@@ -134,7 +134,7 @@ namespace KGeoBag
             }
 
         protected:
-            mutable KSmartPointer< XPathType > fPath;
+            mutable std::shared_ptr< XPathType > fPath;
             mutable double fZMin;
             mutable double fZMax;
             mutable unsigned int fExtrudedMeshCount;
@@ -145,19 +145,19 @@ namespace KGeoBag
         public:
             virtual void VolumeInitialize( BoundaryContainer& aBoundaryContainer ) const
             {
-                KGFlattenedClosedPathSurface< XPathType >* tTop = new KGFlattenedClosedPathSurface< XPathType >( fPath );
+                auto tTop = std::make_shared<KGFlattenedClosedPathSurface< XPathType >>( fPath );
                 tTop->Z( fZMax );
                 tTop->FlattenedMeshCount( fFlattenedMeshCount );
                 tTop->FlattenedMeshPower( fFlattenedMeshPower );
                 tTop->SetName( "top" );
                 aBoundaryContainer.push_back( tTop );
 
-                KGExtrudedPathSurface< XPathType >* tJacket = new KGExtrudedPathSurface< XPathType >( fPath );
+                auto tJacket = std::make_shared<KGExtrudedPathSurface< XPathType >>( fPath );
                 tJacket->ExtrudedMeshCount( fExtrudedMeshCount );
                 tJacket->SetName( "jacket" );
                 aBoundaryContainer.push_back( tJacket );
 
-                KGFlattenedClosedPathSurface< XPathType >* tBottom = new KGFlattenedClosedPathSurface< XPathType >( fPath );
+                auto tBottom = std::make_shared<KGFlattenedClosedPathSurface< XPathType >>( fPath );
                 tBottom->Z( fZMin );
                 tBottom->FlattenedMeshCount( fFlattenedMeshCount );
                 tBottom->FlattenedMeshPower( fFlattenedMeshPower );

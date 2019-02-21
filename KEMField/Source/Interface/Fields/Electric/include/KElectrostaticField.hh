@@ -21,7 +21,7 @@ namespace KEMField
 
     using KElectricField::ElectricField; // don't hide time specifying ElectricField call with the overload below
 
-    KEMThreeVector ElectricField(const KPosition& P ) const {
+    KThreeVector ElectricField(const KPosition& P ) const {
     	return ElectricFieldCore(P);
     }
 
@@ -32,21 +32,21 @@ namespace KEMField
     	return PotentialCore(P);
     }
 
-    virtual KEMThreeVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const
+    virtual KThreeVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const
     {
     	return ElectricFieldCore(P);
     }
 
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P, const double& /*time*/) const
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P, const double& /*time*/) const
     {
         return ElectricFieldAndPotentialCore(P);
     }
 
     virtual double PotentialCore(const KPosition& P) const = 0;
 
-    virtual KEMThreeVector ElectricFieldCore(const KPosition&) const = 0;
+    virtual KThreeVector ElectricFieldCore(const KPosition&) const = 0;
 
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -55,9 +55,9 @@ namespace KEMField
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P);
-        KEMThreeVector field = ElectricFieldCore(P);
+        KThreeVector field = ElectricFieldCore(P);
 
-        return std::pair<KEMThreeVector,double>(field,potential);
+        return std::pair<KThreeVector,double>(field,potential);
     }
 
 

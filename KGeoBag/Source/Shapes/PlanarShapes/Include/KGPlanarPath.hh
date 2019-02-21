@@ -3,9 +3,6 @@
 
 #include "KTwoVector.hh"
 
-#include "KSmartPointer.h"
-using katrin::KSmartPointer;
-
 #include <deque>
 using std::deque;
 

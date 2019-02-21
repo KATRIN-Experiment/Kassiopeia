@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "KSurface.hh"
+#include "../../../Surfaces/include/KSurface.hh"
 #include "KSmartPointer.hh"
 
 namespace KEMField

@@ -175,8 +175,6 @@ KG2DLineSegment::NearestIntersection( const KTwoVector& aStart, const KTwoVector
     double p4dist = (anEnd - fP1)*fUnit;
     double p3dist = (aStart - fP1)*fUnit;
 
-//    bool isRight = false; // TODO: WHAT IS THIS CODE FOR?
-//    if(p4dist > p3dist){isRight = true;}
 
     double overlap[2];
     int overlap_status;

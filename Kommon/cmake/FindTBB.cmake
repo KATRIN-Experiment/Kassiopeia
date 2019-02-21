@@ -41,7 +41,7 @@
 #   which compiler to use (detected automatically on Windows)
 
 # This module respects
-# TBB_INSTALL_DIR or $ENV{TBB21_INSTALL_DIR} or $ENV{TBB_INSTALL_DIR}
+# TBB_INSTALL_DIR or $ENV{TBB21_INSTALL_DIR} or $ENV{TBB_INSTALL_DIR} or $ENV{TBBROOT}
 
 # This module defines
 # TBB_INCLUDE_DIRS, where to find task_scheduler_init.h, etc.
@@ -134,6 +134,9 @@ if (TBB_INSTALL_DIR)
 endif (TBB_INSTALL_DIR)
 # second: use environment variable
 if (NOT _TBB_INSTALL_DIR)
+    if (NOT "$ENV{TBBROOT}" STREQUAL "")
+        set (_TBB_INSTALL_DIR $ENV{TBBROOT})
+    endif (NOT "$ENV{TBBROOT}" STREQUAL "")
     if (NOT "$ENV{TBB_INSTALL_DIR}" STREQUAL "")
         set (_TBB_INSTALL_DIR $ENV{TBB_INSTALL_DIR})
     endif (NOT "$ENV{TBB_INSTALL_DIR}" STREQUAL "")
@@ -157,7 +160,7 @@ endif (NOT _TBB_INSTALL_DIR)
 # sanity check
 if (NOT _TBB_INSTALL_DIR)
     message ("ERROR: Unable to find Intel TBB install directory. ${_TBB_INSTALL_DIR}")
-else (NOT _TBB_INSTALL_DIR)
+endif (NOT _TBB_INSTALL_DIR)
 # finally: set the cached CMake variable TBB_INSTALL_DIR
 if (NOT TBB_INSTALL_DIR)
     set (TBB_INSTALL_DIR ${_TBB_INSTALL_DIR} CACHE PATH "Intel TBB install directory")
@@ -260,20 +263,22 @@ if (TBB_INCLUDE_DIR)
         # Jiri: Self-built TBB stores the debug libraries in a separate directory.
         set (TBB_DEBUG_LIBRARY_DIRS ${TBB_LIBRARY_DEBUG_DIR} CACHE PATH "TBB debug library directory" FORCE)
         mark_as_advanced(TBB_INCLUDE_DIRS TBB_LIBRARY_DIRS TBB_DEBUG_LIBRARY_DIRS TBB_LIBRARIES TBB_DEBUG_LIBRARIES)
-        # message(STATUS "Found Intel TBB")
+        message(STATUS "Found Intel TBB include: ${TBB_INCLUDE_DIRS}")
+        message(STATUS "Found Intel TBB lib: ${TBB_LIBRARY_DIRS}")
     endif (TBB_LIBRARY)
 endif (TBB_INCLUDE_DIR)
 
 if (NOT TBB_FOUND)
     message("ERROR: Intel TBB NOT found!")
+	if (NOT TBB_INSTALL_DIR)
+    	message(STATUS "You may wish to define TBB_INSTALL_DIR")
+	endif (NOT TBB_INSTALL_DIR)
     message(STATUS "Looked for Threading Building Blocks in ${_TBB_INSTALL_DIR}")
     # do only throw fatal, if this pkg is REQUIRED
     if (TBB_FIND_REQUIRED)
         message(FATAL_ERROR "Could NOT find TBB library.")
     endif (TBB_FIND_REQUIRED)
 endif (NOT TBB_FOUND)
-
-endif (NOT _TBB_INSTALL_DIR)
 
 if (TBB_FOUND)
     set(TBB_INTERFACE_VERSION 0)

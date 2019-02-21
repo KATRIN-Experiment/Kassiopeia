@@ -44,14 +44,14 @@ set (KFMELECTROSTATICS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticNodeWorkScoreCalculator.cc
 )
 
-  if (@PROJECT_NAME@_USE_MPI)
+  if (${PROJECT_NAME}_USE_MPI)
      list (APPEND KFMELECTROSTATICS_HEADERFILES
           ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeBuilder_MPI.hh
 	  )
      list (APPEND KFMELECTROSTATICS_SOURCEFILES
           ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticTreeBuilder_MPI.cc
 	  )
-  endif (@PROJECT_NAME@_USE_MPI)
+  endif (${PROJECT_NAME}_USE_MPI)
 
 ##################################################
 

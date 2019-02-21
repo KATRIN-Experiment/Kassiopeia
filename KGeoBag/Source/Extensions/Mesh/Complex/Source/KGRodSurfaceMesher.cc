@@ -11,7 +11,7 @@ namespace KGeoBag
 {
     void KGRodSurfaceMesher::VisitWrappedSurface( KGWrappedSurface< KGRod >* rodSurface )
     {
-        KSmartPointer< KGRod > rod = rodSurface->GetObject();
+        std::shared_ptr< KGRod > rod = rodSurface->GetObject();
 
         // First, we compute the total length of the rod
         double total_length = 0;

@@ -21,7 +21,7 @@ namespace KEMField
     ~KElectrostaticAnalyticRingIntegrator() {}
 
     double Potential( const KRing* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRing* source, const KPosition& P ) const;
+    KThreeVector ElectricField( const KRing* source, const KPosition& P ) const;
     using KElectrostaticElementIntegrator<KRing>::Potential;
     using KElectrostaticElementIntegrator<KRing>::ElectricField;
 

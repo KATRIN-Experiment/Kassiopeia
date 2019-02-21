@@ -1,9 +1,8 @@
 #ifndef KRING_DEF
 #define KRING_DEF
 
-#include "KShape.hh"
-
-#include "KSymmetryGroup.hh"
+#include "../../../Surfaces/include/KShape.hh"
+#include "../../../Surfaces/include/KSymmetryGroup.hh"
 
 namespace KEMField
 {

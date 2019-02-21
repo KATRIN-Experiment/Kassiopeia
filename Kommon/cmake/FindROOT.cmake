@@ -326,7 +326,7 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
             DEPENDS ${headerfiles} ${linkdefs} )
     else()
         add_custom_command(OUTPUT ${dictionary}
-            COMMAND LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR} ROOTSYS=${ROOTSYS}
+            COMMAND LD_LIBRARY_PATH=${ROOT_LIBRARY_DIR}:$ENV{LD_LIBRARY_PATH} ROOTSYS=${ROOTSYS}
             ${ROOT_CINT_EXECUTABLE} -cint -f ${dictionary} -c -p -DHAVE_CONFIG_H ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs} 
             DEPENDS ${headerfiles} ${linkdefs} )
     endif()  

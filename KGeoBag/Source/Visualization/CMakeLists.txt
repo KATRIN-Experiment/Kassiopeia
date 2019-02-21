@@ -105,7 +105,7 @@ if( KGeoBag_USE_ROOT )
 	)
 
 	# external
-	find_package( ROOT 5.24.0 REQUIRED )
+#	find_package( ROOT 5.24.0 REQUIRED )
 	kasper_external_include_directories(
 		${ROOT_INCLUDE_DIR}
 	)

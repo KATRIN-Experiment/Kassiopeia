@@ -34,7 +34,7 @@ class KFMElectrostaticFastMultipoleMultipleTreeFieldSolver
 
         //computes the potential and field at a given point
         double Potential(const KPosition& P) const;
-        KEMThreeVector ElectricField(const KPosition& P) const;
+        KThreeVector ElectricField(const KPosition& P) const;
 
     protected:
 
@@ -69,9 +69,9 @@ class KFMElectrostaticFastMultipoleMultipleTreeFieldSolver
         mutable std::vector< double > fFastPotential;
         mutable std::vector< double > fDirectPotential;
         mutable std::vector< double > fTotalPotential;
-        mutable std::vector< KEMThreeVector > fFastField;
-        mutable std::vector< KEMThreeVector > fDirectField;
-        mutable std::vector< KEMThreeVector > fTotalField;
+        mutable std::vector< KThreeVector > fFastField;
+        mutable std::vector< KThreeVector > fDirectField;
+        mutable std::vector< KThreeVector > fTotalField;
 
 };
 

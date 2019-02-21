@@ -145,6 +145,10 @@ namespace Kassiopeia
                                                               tSysIt != fElementsystems.end();
                                                               ++tSysIt )
         {
+            if ((tSysIt->second)==NULL) {
+                genmsg( eError ) << "Mesh has not been defined for all surfaces specified in KSGenPositionMeshSurfaceRandom" << eom;
+            }
+            
             for( KGeoBag::KGMeshElementCIt tElementIt = tSysIt->second->begin();
                                           tElementIt != tSysIt->second->end();
                                           ++tElementIt )

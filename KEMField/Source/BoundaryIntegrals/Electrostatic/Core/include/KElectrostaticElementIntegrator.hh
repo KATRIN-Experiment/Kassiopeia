@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_BOUNDARYINTEGRALS_ELECTROSTATIC_INCLUDE_KELECTROSTATICELEMENTINTEGRATOR_HH_
-#define KEMFIELD_SOURCE_2_0_BOUNDARYINTEGRALS_ELECTROSTATIC_INCLUDE_KELECTROSTATICELEMENTINTEGRATOR_HH_
+#ifndef KELECTROSTATICELEMENTINTEGRATOR_HH_
+#define KELECTROSTATICELEMENTINTEGRATOR_HH_
 
 
 namespace KEMField {
@@ -17,12 +17,12 @@ class KElectrostaticElementIntegrator
 public:
     virtual ~KElectrostaticElementIntegrator(){};
     virtual double Potential( const Shape* source, const KPosition& P ) const = 0;
-    virtual KEMThreeVector ElectricField( const Shape* source, const KPosition& P) const = 0;
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const Shape* source, const KPosition& P) const;
+    virtual KThreeVector ElectricField( const Shape* source, const KPosition& P) const = 0;
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotential( const Shape* source, const KPosition& P) const;
 
     virtual double Potential( const KSymmetryGroup<Shape>* source, const KPosition& P ) const;
-    virtual KEMThreeVector ElectricField( const KSymmetryGroup<Shape>* source, const KPosition& P ) const;
-    virtual std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KSymmetryGroup<Shape>* source, const KPosition& P) const;
+    virtual KThreeVector ElectricField( const KSymmetryGroup<Shape>* source, const KPosition& P ) const;
+    virtual std::pair<KThreeVector,double> ElectricFieldAndPotential( const KSymmetryGroup<Shape>* source, const KPosition& P) const;
 private:
     typedef typename KSymmetryGroup<Shape>::ShapeCIt ShapeGroupCIt;
 };
@@ -32,7 +32,7 @@ private:
 
 
 template<class Shape>
-inline std::pair<KEMThreeVector, double> KElectrostaticElementIntegrator<
+inline std::pair<KThreeVector, double> KElectrostaticElementIntegrator<
 Shape>::ElectricFieldAndPotential(const Shape* source,
         const KPosition& P) const
 {
@@ -50,23 +50,23 @@ inline double KElectrostaticElementIntegrator<Shape>::Potential(
 }
 
 template<class Shape>
-inline KEMThreeVector KElectrostaticElementIntegrator<Shape>::ElectricField(
+inline KThreeVector KElectrostaticElementIntegrator<Shape>::ElectricField(
         const KSymmetryGroup<Shape>* source, const KPosition& P) const
 {
-    KEMThreeVector electricField(0.,0.,0.);
+    KThreeVector electricField(0.,0.,0.);
     for ( ShapeGroupCIt it=source->begin();it!=source->end();++it)
         electricField += ElectricField(*it,P);
     return electricField;
 }
 
 template<class Shape>
-inline std::pair<KEMThreeVector, double> KElectrostaticElementIntegrator<
+inline std::pair<KThreeVector, double> KElectrostaticElementIntegrator<
 Shape>::ElectricFieldAndPotential(
         const KSymmetryGroup<Shape>* source, const KPosition& P) const
 {
-    std::pair<KEMThreeVector, double> fieldAndPotential;
+    std::pair<KThreeVector, double> fieldAndPotential;
     double potential( 0. );
-    KEMThreeVector electricField( 0., 0., 0. );
+    KThreeVector electricField( 0., 0., 0. );
 
     for( ShapeGroupCIt it=source->begin(); it!=source->end(); ++it )
     {
@@ -80,4 +80,4 @@ Shape>::ElectricFieldAndPotential(
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_BOUNDARYINTEGRALS_ELECTROSTATIC_INCLUDE_KELECTROSTATICELEMENTINTEGRATOR_HH_ */
+#endif /* KELECTROSTATICELEMENTINTEGRATOR_HH_ */

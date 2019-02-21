@@ -9,7 +9,7 @@
 #ifndef KSTRINGUTILS_H_
 #define KSTRINGUTILS_H_
 
-#include <KRandom.h>
+#include "KRandom.h"
 
 #include <vector>
 #include <list>
@@ -40,6 +40,9 @@ public:
     static bool IsNumeric(const char& character);
     static bool IsNumeric(const std::string& string);
 
+    template< typename TargetT >
+    static bool Convert(const std::string& string, TargetT& result);
+
     template<typename Range1T, typename Range2T>
     static bool Equals(const Range1T &, const Range2T &);
 
@@ -57,6 +60,10 @@ public:
 
     template<typename Range1T, typename Range2T>
     static bool IContainsOneOf(const Range1T &, std::initializer_list<Range2T>);
+
+    static std::string Trim(const std::string& input);
+    static std::string TrimLeft(const std::string& input);
+    static std::string TrimRight(const std::string& input);
 
     template <class SequenceT, class SeparatorT>
     static std::ostream& Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator);
@@ -111,6 +118,18 @@ inline bool KStringUtils::IsNumeric(const std::string& string)
     }
 }
 
+template< typename TargetT >
+inline bool KStringUtils::Convert(const std::string& string, TargetT& result)
+{
+    try {
+        result = boost::lexical_cast<TargetT>(string);
+        return true;
+    }
+    catch (boost::bad_lexical_cast&) {
+        return false;
+    }
+}
+
 template<typename Range1T, typename Range2T>
 inline bool KStringUtils::Equals(const Range1T& r1, const Range2T& r2)
 {
@@ -151,6 +170,21 @@ inline bool KStringUtils::IContainsOneOf(const Range1T& r1, std::initializer_lis
         if (boost::icontains(r1, r2))
             return true;
     return false;
+}
+
+inline std::string KStringUtils::Trim(const std::string& input)
+{
+    return boost::algorithm::trim_copy(input);
+}
+
+inline std::string KStringUtils::TrimLeft(const std::string& input)
+{
+    return boost::algorithm::trim_left_copy(input);
+}
+
+inline std::string KStringUtils::TrimRight(const std::string& input)
+{
+    return boost::algorithm::trim_right_copy(input);
 }
 
 template <class SequenceT, class SeparatorT>

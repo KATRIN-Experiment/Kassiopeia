@@ -126,6 +126,10 @@ namespace Kassiopeia
             termmsg_debug( "  terminator particle electric field: <" << fTerminatorParticle->GetElectricField().X() << "," << fTerminatorParticle->GetElectricField().Y() << "," << fTerminatorParticle->GetElectricField().Z() << ">" << eom )
             termmsg_debug( "  terminator particle magnetic field: <" << fTerminatorParticle->GetMagneticField().X() << "," << fTerminatorParticle->GetMagneticField().Y() << "," << fTerminatorParticle->GetMagneticField().Z() << ">" << eom )
             termmsg_debug( "  terminator particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB() << ">" << eom )
+            termmsg_debug( "  terminator particle spin: " << fTerminatorParticle->GetSpin() << eom )
+            termmsg_debug( "  terminator particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom )
+            termmsg_debug( "  terminator particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom )
+            termmsg_debug( "  terminator particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom )
 
             return;
         }
@@ -154,6 +158,10 @@ namespace Kassiopeia
         termmsg_debug( "  terminator particle electric field: <" << fTerminatorParticle->GetElectricField().X() << "," << fTerminatorParticle->GetElectricField().Y() << "," << fTerminatorParticle->GetElectricField().Z() << ">" << eom )
         termmsg_debug( "  terminator particle magnetic field: <" << fTerminatorParticle->GetMagneticField().X() << "," << fTerminatorParticle->GetMagneticField().Y() << "," << fTerminatorParticle->GetMagneticField().Z() << ">" << eom )
         termmsg_debug( "  terminator particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB() << ">" << eom )
+        termmsg_debug( "  terminator particle spin: " << fTerminatorParticle->GetSpin() << eom )
+        termmsg_debug( "  terminator particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom )
+        termmsg_debug( "  terminator particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom )
+        termmsg_debug( "  terminator particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom )
 
         return;
     }
@@ -192,6 +200,10 @@ namespace Kassiopeia
         termmsg_debug( "  final particle electric field: <" << fTerminatorParticle->GetElectricField().X() << "," << fTerminatorParticle->GetElectricField().Y() << "," << fTerminatorParticle->GetElectricField().Z() << ">" << eom )
         termmsg_debug( "  final particle magnetic field: <" << fTerminatorParticle->GetMagneticField().X() << "," << fTerminatorParticle->GetMagneticField().Y() << "," << fTerminatorParticle->GetMagneticField().Z() << ">" << eom )
         termmsg_debug( "  final particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB() << ">" << eom )
+        termmsg_debug( "  final particle spin: " << fTerminatorParticle->GetSpin() << eom )
+        termmsg_debug( "  final particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom )
+        termmsg_debug( "  final particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom )
+        termmsg_debug( "  final particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom )
 
         return;
     }

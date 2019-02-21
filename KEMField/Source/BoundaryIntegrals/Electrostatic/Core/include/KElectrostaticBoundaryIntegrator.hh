@@ -60,12 +60,12 @@ namespace KEMField
     void SetTriangleIntegrator( KSmartPointer<KElectrostaticElementIntegrator<KTriangle> > triangleIntegrator );
 
     double Potential( const KTriangle* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KTriangle* source, const KPosition& P) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KTriangle* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KTriangle* source, const KPosition& P) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KTriangle* source, const KPosition& P) const;
 
     double Potential( const KTriangleGroup* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KTriangleGroup* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KTriangleGroup* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KTriangleGroup* source, const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KTriangleGroup* source, const KPosition& P) const;
 
   private:
     KSmartPointer<KElectrostaticElementIntegrator<KTriangle> > fTriangleIntegrator;
@@ -77,12 +77,12 @@ namespace KEMField
     void SetRectangleIntegrator( KSmartPointer<KElectrostaticElementIntegrator<KRectangle> > RectangleIntegrator );
 
     double Potential( const KRectangle* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRectangle* source, const KPosition& P) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KRectangle* source, const KPosition& P) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KRectangle* source, const KPosition& P) const;
 
     double Potential( const KRectangleGroup* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRectangleGroup* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KRectangleGroup* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KRectangleGroup* source, const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KRectangleGroup* source, const KPosition& P) const;
 
   private:
     KSmartPointer<KElectrostaticElementIntegrator<KRectangle> > fRectangleIntegrator;
@@ -94,12 +94,12 @@ namespace KEMField
     void SetLineSegmentIntegrator( KSmartPointer<KElectrostaticElementIntegrator<KLineSegment> > LineSegmentIntegrator );
 
     double Potential( const KLineSegment* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KLineSegment* source, const KPosition& P) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KLineSegment* source, const KPosition& P) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KLineSegment* source, const KPosition& P) const;
 
     double Potential( const KLineSegmentGroup* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KLineSegmentGroup* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KLineSegmentGroup* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KLineSegmentGroup* source, const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KLineSegmentGroup* source, const KPosition& P) const;
 
   private:
     KSmartPointer<KElectrostaticElementIntegrator<KLineSegment> > fLineSegmentIntegrator;
@@ -111,12 +111,12 @@ namespace KEMField
     void SetConicSectionIntegrator( KSmartPointer<KElectrostaticElementIntegrator<KConicSection> > ConicSectionIntegrator );
 
     double Potential( const KConicSection* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KConicSection* source, const KPosition& P) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KConicSection* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KConicSection* source, const KPosition& P) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KConicSection* source, const KPosition& P) const;
 
     double Potential( const KConicSectionGroup* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KConicSectionGroup* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KConicSectionGroup* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KConicSectionGroup* source, const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KConicSectionGroup* source, const KPosition& P) const;
 
   private:
     KSmartPointer<KElectrostaticElementIntegrator<KConicSection> > fConicSectionIntegrator;
@@ -128,12 +128,12 @@ namespace KEMField
     void SetRingIntegrator( KSmartPointer<KElectrostaticElementIntegrator<KRing> > RingIntegrator );
 
     double Potential( const KRing* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRing* source, const KPosition& P) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KRing* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KRing* source, const KPosition& P) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KRing* source, const KPosition& P) const;
 
     double Potential( const KRingGroup* source, const KPosition& P ) const;
-    KEMThreeVector ElectricField( const KRingGroup* source, const KPosition& P ) const;
-    std::pair<KEMThreeVector,double> ElectricFieldAndPotential( const KRingGroup* source, const KPosition& P) const;
+    KThreeVector ElectricField( const KRingGroup* source, const KPosition& P ) const;
+    std::pair<KThreeVector,double> ElectricFieldAndPotential( const KRingGroup* source, const KPosition& P) const;
 
   private:
     KSmartPointer<KElectrostaticElementIntegrator<KRing> > fRingIntegrator;
@@ -221,13 +221,18 @@ namespace KEMField
     }
     else
     {
-      KEMThreeVector field = this->ElectricField(&source,
-					       fTarget->GetShape()->Centroid());
-      fValue = field.Dot(fTarget->GetShape()->Normal());
-      double dist = (source.Centroid() -
-		       fTarget->GetShape()->Centroid()).Magnitude();
-      if (dist<1.e-12)
-	fValue *= fBoundaryVisitor.Prefactor();
+      double dist = (source.Centroid() - fTarget->GetShape()->Centroid()).Magnitude();
+
+      if( dist>=1.e-12 ) {
+          KThreeVector field = this->ElectricField(&source,fTarget->GetShape()->Centroid());
+          fValue = field.Dot(fTarget->GetShape()->Normal());
+      } else {
+          // For planar Neumann elements (here: triangles and rectangles) the following formula
+          // is valid and incorporates already the electric field 1./(2.*Eps0).
+          // In case of conical (axialsymmetric) Neumann elements this formula has to be modified.
+          // Ferenc Glueck and Daniel Hilk, March 27th 2018
+          fValue = fBoundaryVisitor.Prefactor()/(2.*KEMConstants::Eps0);
+      }
     }
   }
 }

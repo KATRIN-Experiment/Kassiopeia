@@ -124,6 +124,10 @@ namespace Kassiopeia
         navmsg_debug( "  final particle electric field: <" << fFinalParticle->GetElectricField().X() << "," << fFinalParticle->GetElectricField().Y() << "," << fFinalParticle->GetElectricField().Z() << ">" << eom );
         navmsg_debug( "  final particle magnetic field: <" << fFinalParticle->GetMagneticField().X() << "," << fFinalParticle->GetMagneticField().Y() << "," << fFinalParticle->GetMagneticField().Z() << ">" << eom );
         navmsg_debug( "  final particle angle to magnetic field: <" << fFinalParticle->GetPolarAngleToB() << ">" << eom );
+        navmsg_debug( "  final particle spin: " << fFinalParticle->GetSpin() << eom );
+        navmsg_debug( "  final particle spin0: <" << fFinalParticle->GetSpin0() << ">" << eom );
+        navmsg_debug( "  final particle aligned spin: <" << fFinalParticle->GetAlignedSpin() << ">" << eom );
+        navmsg_debug( "  final particle spin angle: <" << fFinalParticle->GetSpinAngle() << ">" << eom );
 
         return;
     }

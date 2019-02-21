@@ -2,8 +2,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "KEMThreeVector.hh"
-
+#include "KThreeVector_KEMField.hh"
 #include "KVMPathIntegral.hh"
 #include "KVMLineIntegral.hh"
 #include "KVMSurfaceIntegral.hh"
@@ -60,11 +59,11 @@ class FieldTestCase
             range[2] = dom[2] - fOrigin.Z();
         }
 
-        void SetOrigin(KEMThreeVector origin){fOrigin = origin;};
+        void SetOrigin(KThreeVector origin){fOrigin = origin;};
 
     private:
 
-        KEMThreeVector fOrigin;
+        KThreeVector fOrigin;
 
 };
 
@@ -75,11 +74,11 @@ int main(int /*argc*/, char** /*argv[]*/)
     double z_offset = 0.0;
 
     //triangle descriptors
-    KEMThreeVector v1(1.,0.,0.);
-    KEMThreeVector v2(-0.5, std::sqrt(3.)/2.0, z_offset);
-    KEMThreeVector v3(-0.5, -1.0*std::sqrt(3.0)/2.0, z_offset);
-    KEMThreeVector axis1 = (v2 - v1).Unit();
-    KEMThreeVector axis2 = (v3 - v1).Unit();
+    KThreeVector v1(1.,0.,0.);
+    KThreeVector v2(-0.5, std::sqrt(3.)/2.0, z_offset);
+    KThreeVector v3(-0.5, -1.0*std::sqrt(3.0)/2.0, z_offset);
+    KThreeVector axis1 = (v2 - v1).Unit();
+    KThreeVector axis2 = (v3 - v1).Unit();
     axis1 = axis1.Unit();
     axis2 = axis2.Unit();
     double Tsize = 1;
@@ -88,8 +87,8 @@ int main(int /*argc*/, char** /*argv[]*/)
     double TriA = Tsize*(v2 - v1).Magnitude();//1.732038; //length of side 1
     double TriB = Tsize*(v3 - v1).Magnitude();//1.732038; //lenght of side 2
     double TriP[3] = {Tsize,0,z_offset}; //corner1
-    KEMThreeVector TriP2;//corner2
-    KEMThreeVector TriP3; //corner3
+    KThreeVector TriP2;//corner2
+    KThreeVector TriP3; //corner3
     TriP2.SetComponents(TriP[0], TriP[1], TriP[2]);
     TriP2 += TriA*axis1;
     TriP3.SetComponents(TriP[0], TriP[1], TriP[2]);
@@ -108,7 +107,7 @@ int main(int /*argc*/, char** /*argv[]*/)
     double WireLength = 1.1010101;
     //double WireDiameter = 0.01;
     double WireStartPoint[3] = {0,0,0};
-    KEMThreeVector dir(1.,2.,3.); dir = dir.Unit();
+    KThreeVector dir(1.,2.,3.); dir = dir.Unit();
     double WireDirection[3] = {dir[0], dir[1], dir[2]};
     double WireEndPoint[3] = {WireStartPoint[0]+WireLength*WireDirection[0],
                                 WireStartPoint[1]+WireLength*WireDirection[1],
@@ -133,7 +132,7 @@ int main(int /*argc*/, char** /*argv[]*/)
     FieldTestCase testcase;
 
     //set some internal variables
-    KEMThreeVector o(0.,0.,0.);
+    KThreeVector o(0.,0.,0.);
     testcase.SetOrigin(o);
 
     //all functions that we wish to integrate over must take as an argument

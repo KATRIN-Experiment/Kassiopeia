@@ -9,6 +9,7 @@
 #include "KChargeDensitySolver.hh"
 #include "KGaussianEliminationChargeDensitySolver.hh"
 
+using namespace KGeoBag;
 using namespace KEMField;
 
 int main(int /*argc*/, char** /*args*/) {

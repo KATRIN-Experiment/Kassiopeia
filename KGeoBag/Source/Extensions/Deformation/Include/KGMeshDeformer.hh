@@ -34,7 +34,7 @@ namespace KGeoBag
     void AddDeformed(KGMeshTriangle* t);
     void AddDeformed(KGMeshWire* w);
 
-    KSmartPointer<KGDeformation> fDeformation;
+    std::shared_ptr<KGDeformation> fDeformation;
     KGMeshElementVector fDeformedVector;
   };
 }

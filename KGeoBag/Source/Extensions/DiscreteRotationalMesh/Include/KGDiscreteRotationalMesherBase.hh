@@ -9,9 +9,7 @@ namespace KGeoBag
 {
 
     class KGDiscreteRotationalMesherBase :
-        public KGVisitor,
-        public KGExtendedSurface< KGDiscreteRotationalMesh >::Visitor,
-        public KGExtendedSpace< KGDiscreteRotationalMesh >::Visitor
+    	public KGVisitor
     {
         protected:
             KGDiscreteRotationalMesherBase();
@@ -20,8 +18,8 @@ namespace KGeoBag
             virtual ~KGDiscreteRotationalMesherBase();
 
         public:
-            virtual void VisitExtendedSurface( KGExtendedSurface< KGDiscreteRotationalMesh >* aSurface );
-            virtual void VisitExtendedSpace( KGExtendedSpace< KGDiscreteRotationalMesh >* aSpace );
+            void SetMeshElementOutput(KGDiscreteRotationalMeshElementVector* aMeshElementVector );
+            KGDiscreteRotationalMeshElementVector* GetCurrentElements() const {return fCurrentElements;}
 
         protected:
             KGDiscreteRotationalMeshElementVector* fCurrentElements;

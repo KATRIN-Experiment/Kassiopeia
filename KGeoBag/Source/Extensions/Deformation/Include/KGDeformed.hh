@@ -1,8 +1,6 @@
 #ifndef KGDEFORMED_HH_
 #define KGDEFORMED_HH_
 
-#include "KSmartPointer.h"
-
 #include "KGCore.hh"
 #include "KGDeformation.hh"
 
@@ -11,7 +9,7 @@ namespace KGeoBag
   class KGDeformedObject
   {
   public:
-    typedef KSmartPointer<KGDeformation> KGDeformationPtr;
+    typedef std::shared_ptr<KGDeformation> KGDeformationPtr;
 
     KGDeformedObject(KGSurface*) {}
     KGDeformedObject(KGSpace*) {}
@@ -25,7 +23,7 @@ namespace KGeoBag
 
   private:
     KGDeformationPtr fDeformation;
-  };    
+  };
 
   class KGDeformed
   {

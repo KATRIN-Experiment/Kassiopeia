@@ -25,13 +25,13 @@ namespace KGeoBag
   public:
     KGWrappedSpace();
     KGWrappedSpace(XObject* anObject);
-    KGWrappedSpace(const KSmartPointer<XObject>& anObject);
+    KGWrappedSpace(const std::shared_ptr<XObject>& anObject);
     KGWrappedSpace(const KGWrappedSpace& aCopy);
     virtual ~KGWrappedSpace();
 
   public:
-    void SetObject(KSmartPointer<XObject> anObject);
-    KSmartPointer<XObject> GetObject() const;
+    void SetObject(std::shared_ptr<XObject> anObject);
+    std::shared_ptr<XObject> GetObject() const;
 
   public:
     virtual void VolumeInitialize(BoundaryContainer& aBoundaryContainer) const;
@@ -41,7 +41,7 @@ namespace KGeoBag
     virtual KThreeVector VolumeNormal(const KThreeVector& aPoint) const;
 
   protected:
-    KSmartPointer<XObject> fObject;
+    std::shared_ptr<XObject> fObject;
   };
 
   template<class XObject>
@@ -57,7 +57,7 @@ namespace KGeoBag
   }
 
   template<class XObject>
-  KGWrappedSpace<XObject>::KGWrappedSpace(const KSmartPointer<XObject>& anObject) : KGVolume()
+  KGWrappedSpace<XObject>::KGWrappedSpace(const std::shared_ptr<XObject>& anObject) : KGVolume()
   {
     fObject = anObject;
   }
@@ -75,14 +75,14 @@ namespace KGeoBag
   }
 
   template<class XObject>
-  void KGWrappedSpace<XObject>::SetObject(KSmartPointer<XObject> anObject)
+  void KGWrappedSpace<XObject>::SetObject(std::shared_ptr<XObject> anObject)
   {
     fObject = anObject;
     return;
   }
 
   template<class XObject>
-  KSmartPointer<XObject> KGWrappedSpace<XObject>::GetObject() const
+  std::shared_ptr<XObject> KGWrappedSpace<XObject>::GetObject() const
   {
     return fObject;
   }
@@ -91,8 +91,7 @@ namespace KGeoBag
   void KGWrappedSpace<XObject>::VolumeInitialize(BoundaryContainer& aBoundaryContainer) const
   {
     fObject->Initialize();
-    KGWrappedSurface<XObject>* tSurface =
-      new KGWrappedSurface<XObject>(fObject);
+    auto tSurface = std::shared_ptr<KGBoundary>(fObject);
     aBoundaryContainer.push_back(tSurface);
     return;
   }

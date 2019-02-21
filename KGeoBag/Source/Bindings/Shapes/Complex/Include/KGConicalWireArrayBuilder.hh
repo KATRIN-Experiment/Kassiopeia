@@ -85,7 +85,7 @@ namespace katrin
       KGConicalWireArray* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer< KGConicalWireArray > smartPtr(object);
+      std::shared_ptr< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }
@@ -114,7 +114,7 @@ namespace katrin
       KGConicalWireArray* object = NULL;
       anElement->ReleaseTo(object);
       object->Initialize();
-      KSmartPointer< KGConicalWireArray > smartPtr(object);
+      std::shared_ptr< KGConicalWireArray > smartPtr(object);
       fObject->SetObject(smartPtr);
       return true;
     }

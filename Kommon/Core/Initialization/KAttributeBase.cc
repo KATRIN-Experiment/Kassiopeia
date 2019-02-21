@@ -17,7 +17,7 @@ namespace katrin
         //add value to this element
         if( SetValue( aToken ) == false )
         {
-            initmsg( eError ) << "element <" << fName << "> could not process value <" << aToken->GetValue() << ">" << ret;
+            initmsg( eError ) << "element <" << GetName() << "> could not process value <" << aToken->GetValue() << ">" << ret;
             initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
             return;
         }
@@ -26,7 +26,7 @@ namespace katrin
     }
     void KAttributeBase::ProcessToken( KErrorToken* aToken )
     {
-        initmsg( eError ) << "element <" << fName << "> encountered an error <" << aToken->GetValue() << ">" << ret;
+        initmsg( eError ) << "element <" << GetName() << "> encountered an error <" << aToken->GetValue() << ">" << ret;
         initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << eom;
         return;
     }

@@ -98,6 +98,7 @@ namespace Kassiopeia
         double tInterpolatedMomentumMagnitude = tInitialMomentumMagnitude + tFraction * (tFinalMomentumMagnitude - tInitialMomentumMagnitude);
 
         // does not interpolate spin
+        trajmsg( eWarning ) << "Fast interpolation does not interpolate spins." << eom;
 
         anIntermediateParticle = 0.;
         anIntermediateParticle[ 0 ] = tInterpolatedTime;
@@ -145,6 +146,7 @@ namespace Kassiopeia
         double tInterpolatedMomentumMagnitude = tInitialMomentumMagnitude + tFraction * (tFinalMomentumMagnitude - tInitialMomentumMagnitude);
 
         // does not interpolate spin
+        trajmsg( eWarning ) << "Fast interpolation does not interpolate spins." << eom;
 
         anIntermediateParticle = 0.;
         anIntermediateParticle[ 0 ] = tInterpolatedTime;

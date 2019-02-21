@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KINDUCEDAZIMUTHALELECTRICFIELD_HH_
-#define KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KINDUCEDAZIMUTHALELECTRICFIELD_HH_
+#ifndef KINDUCEDAZIMUTHALELECTRICFIELD_HH_
+#define KINDUCEDAZIMUTHALELECTRICFIELD_HH_
 
 #include "KElectricField.hh"
 
@@ -24,7 +24,7 @@ public:
 
 private:
     double PotentialCore( const KPosition& P,const double& time) const;
-    KEMThreeVector ElectricFieldCore( const KPosition& P, const double& time) const;
+    KThreeVector ElectricFieldCore( const KPosition& P, const double& time) const;
     virtual void InitializeCore();
 
     void CheckMagneticField() const;
@@ -34,4 +34,4 @@ private:
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_FIELDS_ELECTRIC_INCLUDE_KINDUCEDAZIMUTHALELECTRICFIELD_HH_ */
+#endif /* KINDUCEDAZIMUTHALELECTRICFIELD_HH_ */

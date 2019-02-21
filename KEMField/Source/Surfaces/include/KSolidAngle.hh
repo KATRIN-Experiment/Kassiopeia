@@ -1,11 +1,12 @@
 #ifndef KSOLIDANGLE_H_
 #define KSOLIDANGLE_H_
 
-#include "KSurface.hh"
-#include "KEMThreeVector.hh"
 #include "KEMConstants.hh"
 
 #include <cmath>
+
+#include "KSurface.hh"
+#include "KThreeVector_KEMField.hh"
 
 #define POW2(x) ((x)*(x))
 
@@ -17,7 +18,7 @@ namespace KEMField
  *
  * @brief A class for computing solid angles from Euler-Eriksson's formula as described in paper PIER 63, 243-278, 2006
  *
- * @author D. Hilk
+ * @author Daniel Hilk
  */
 
 class KSolidAngle
@@ -32,7 +33,7 @@ public:
 	double SolidAngleRectangleAsArray( const double* data, const double* P ) const;
 
 private:
-    const double fMinDistance = 1.e-15; /* for check if field point is on surface */
+    const double fMinDistance = 1.e-12; /* for check if field point is on surface */
 };
 
 

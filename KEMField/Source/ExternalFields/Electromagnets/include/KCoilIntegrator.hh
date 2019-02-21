@@ -11,8 +11,8 @@ namespace KEMField
     KCoilIntegrator() {}
     virtual ~KCoilIntegrator() {}
 
-    KEMThreeVector VectorPotential(const KCoil& coil, const KPosition& P) const;
-    KEMThreeVector MagneticField(const KCoil& coil, const KPosition& P) const;
+    KThreeVector VectorPotential(const KCoil& coil, const KPosition& P) const;
+    KThreeVector MagneticField(const KCoil& coil, const KPosition& P) const;
   };
 }
 

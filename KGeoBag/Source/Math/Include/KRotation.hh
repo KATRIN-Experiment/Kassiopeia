@@ -21,9 +21,15 @@ namespace KGeoBag
 
             void SetIdentity();
             void SetAxisAngle( const KThreeVector& anAxis, const double& anAngle );
+            void SetAxisAngleInDegrees( const KThreeVector& anAxis, const double& anAngle );
             void SetEulerAngles( const double& anAlpha, const double& aBeta, const double& aGamma );
+            void SetEulerAnglesInDegrees( const double& anAlpha, const double& aBeta, const double& aGamma );
             void SetEulerAngles( const vector<double>& anArray );
+            void SetEulerAnglesInDegrees( const vector<double>& anArray );
             void SetEulerZYZAngles( const double& anAlpha, const double& aBeta, const double& aGamma );
+            void SetEulerZYZAnglesInDegrees( const double& anAlpha, const double& aBeta, const double& aGamma );
+            void SetEulerZYZAngles( const vector<double>& anArray );
+            void SetEulerZYZAnglesInDegrees( const vector<double>& anArray );
             void SetRotatedFrame( const KThreeVector& x, const KThreeVector& y, const KThreeVector& z );
     };
 

@@ -3,9 +3,9 @@
 
 #include <vector>
 
+#include "../../../Surfaces/include/KShape.hh"
 #include "KEMConstants.hh"
 
-#include "KShape.hh"
 #include "KEMTransformation.hh"
 
 namespace KEMField
@@ -64,8 +64,8 @@ namespace KEMField
 
     ShapePolicy* NewElement();
 
-    void AddReflectionThroughPlane(const KEMThreeVector& planePosition, const KEMThreeVector& planeNormal);
-    void AddRotationsAboutAxis(const KEMThreeVector& axisPosition, const KEMThreeVector& axisDirection, unsigned int nRepeatedElements);
+    void AddReflectionThroughPlane(const KThreeVector& planePosition, const KThreeVector& planeNormal);
+    void AddRotationsAboutAxis(const KThreeVector& axisPosition, const KThreeVector& axisDirection, unsigned int nRepeatedElements);
 
     unsigned int NumberOfReflections() const { return fNReflections; }
     unsigned int NumberOfRotatedElements() const { return fNRotations; }
@@ -151,7 +151,7 @@ namespace KEMField
   }
 
   template <class ShapePolicy>
-  void KSymmetryGroup<ShapePolicy>::AddReflectionThroughPlane(const KEMThreeVector& planePosition, const KEMThreeVector& planeNormal)
+  void KSymmetryGroup<ShapePolicy>::AddReflectionThroughPlane(const KThreeVector& planePosition, const KThreeVector& planeNormal)
   {
     fNReflections++;
 
@@ -169,7 +169,7 @@ namespace KEMField
   }
 
   template <class ShapePolicy>
-  void KSymmetryGroup<ShapePolicy>::AddRotationsAboutAxis(const KEMThreeVector& axisPosition, const KEMThreeVector& axisDirection, unsigned int nRepeatedElements)
+  void KSymmetryGroup<ShapePolicy>::AddRotationsAboutAxis(const KThreeVector& axisPosition, const KThreeVector& axisDirection, unsigned int nRepeatedElements)
   {
     if (fNRotations)
       fOther = true;

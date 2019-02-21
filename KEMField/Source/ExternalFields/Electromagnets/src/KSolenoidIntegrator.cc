@@ -7,7 +7,7 @@
 
 namespace KEMField
 {
-  KEMThreeVector KSolenoidIntegrator::VectorPotential(const KSolenoid& solenoid, const KPosition& P) const
+  KThreeVector KSolenoidIntegrator::VectorPotential(const KSolenoid& solenoid, const KPosition& P) const
   {
     KPosition localP = solenoid.GetCoordinateSystem().ToLocal(P);
     double p[1] = {solenoid.GetP0()[0]};
@@ -27,10 +27,10 @@ namespace KEMField
       sine   = localP[1]/par[1];
     }
 
-    return solenoid.GetCoordinateSystem().ToGlobal(KEMThreeVector(-sine*a_theta,cosine*a_theta,0.));
+    return solenoid.GetCoordinateSystem().ToGlobal(KThreeVector(-sine*a_theta,cosine*a_theta,0.));
   }
 
-  KEMThreeVector KSolenoidIntegrator::MagneticField(const KSolenoid& solenoid, const KPosition& P) const
+  KThreeVector KSolenoidIntegrator::MagneticField(const KSolenoid& solenoid, const KPosition& P) const
   {
     KPosition localP = solenoid.GetCoordinateSystem().ToLocal(P);
     double p[1] = {solenoid.GetP0()[0]};
@@ -53,7 +53,7 @@ namespace KEMField
       sine   = localP[1]/par[1];
     }
 
-    return solenoid.GetCoordinateSystem().ToGlobal(KEMThreeVector(cosine*b_r,sine*b_r,b_z));
+    return solenoid.GetCoordinateSystem().ToGlobal(KThreeVector(cosine*b_r,sine*b_r,b_z));
   }
 
   double KSolenoidIntegrator::A_theta(const double *p, double *par)

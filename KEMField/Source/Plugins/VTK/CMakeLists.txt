@@ -1,7 +1,7 @@
 # CMakeLists for KEMField/Plugins/VTK
 # Author: T.J. Corona
 
-if (@PROJECT_NAME@_USE_VTK)
+if (${PROJECT_NAME}_USE_VTK)
   add_cflag (KEMFIELD_USE_VTK)
 
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -37,6 +37,8 @@ if (@PROJECT_NAME@_USE_VTK)
     KEMVisualization
     KFMCore
     KFMElectrostatics
+    ${Kommon_LIBRARIES}
+    ${KGeoBag_LIBRARIES}
     ${GSL_LIBRARIES}
     ${OPENCL_LIBRARIES}
     ${VTK_LIBRARIES}
@@ -48,4 +50,4 @@ if (@PROJECT_NAME@_USE_VTK)
   kasper_install_headers (${VTKPLUGIN_HEADERFILES})
   kasper_install_libraries (KEMVTKPlugin)
 
-endif (@PROJECT_NAME@_USE_VTK)
+endif (${PROJECT_NAME}_USE_VTK)

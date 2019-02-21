@@ -146,7 +146,7 @@ namespace Kassiopeia
         }
 
         aParticle.RecalculateMagneticField();
-        aParticle.RecalculateSpinBody();
+        aParticle.RecalculateSpinGlobal();
 
         if( GetAlignedSpin() != aParticle.GetAlignedSpin() )
         {
@@ -157,7 +157,9 @@ namespace Kassiopeia
 
         if( GetSpinAngle() != aParticle.GetSpinAngle() )
         {
-            fData[ 9 ] = std::fmod( fSpinAngle, 2*KConst::Pi() );
+            fSpinAngle = aParticle.GetSpinAngle();
+
+            fData[ 9 ] = std::fmod( fSpinAngle, 2.*KConst::Pi() );
         }
 
         FixSpin();
@@ -180,7 +182,7 @@ namespace Kassiopeia
         aParticle.SetTime( GetTime() );
 
         aParticle.SetAlignedSpin( GetAlignedSpin() );
-        aParticle.SetSpinAngle( std::fmod( GetSpinAngle(), 2*KConst::Pi() ) );
+        aParticle.SetSpinAngle( std::fmod( GetSpinAngle(), 2.*KConst::Pi() ) );
 
         if( fGetMagneticFieldPtr == &KSTrajAdiabaticSpinParticle::DoNothing )
         {

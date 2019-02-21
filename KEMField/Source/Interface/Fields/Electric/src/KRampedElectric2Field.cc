@@ -41,11 +41,11 @@ double KRampedElectric2Field::PotentialCore( const KPosition &aSamplePoint, cons
     // fieldmsg_debug( "Ramped electric field <" << GetName() << "> returns U=" << aTarget << " at t=" << aSampleTime << eom );
 }
 
-KEMThreeVector KRampedElectric2Field::ElectricFieldCore( const KPosition &aSamplePoint, const double &aSampleTime) const
+KThreeVector KRampedElectric2Field::ElectricFieldCore( const KPosition &aSamplePoint, const double &aSampleTime) const
 {
-    KEMThreeVector field1 =
+    KThreeVector field1 =
             fRootElectricField1->ElectricField( aSamplePoint, aSampleTime );
-    KEMThreeVector field2 =
+    KThreeVector field2 =
             fRootElectricField2->ElectricField( aSamplePoint, aSampleTime );
 
     double Modulation = GetModulationFactor( aSampleTime );

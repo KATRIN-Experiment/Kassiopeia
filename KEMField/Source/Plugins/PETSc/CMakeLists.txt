@@ -1,14 +1,14 @@
 # CMakeLists for KEMField/Plugins/PETSc
 # T.J. Corona
 
-cmake_dependent_option (@PROJECT_NAME@_USE_PETSc "Use PETSc for charge density computation" OFF @PROJECT_NAME@_USE_MPI OFF)
+cmake_dependent_option (${PROJECT_NAME}_USE_PETSc "Use PETSc for charge density computation" OFF ${PROJECT_NAME}_USE_MPI OFF)
 
-if (NOT @PROJECT_NAME@_USE_MPI)
-  set (@PROJECT_NAME@_USE_PETSc OFF)
-  set (@PROJECT_NAME@_USE_PETSc ${@PROJECT_NAME@_USE_PETSc} PARENT_SCOPE)
-endif (NOT @PROJECT_NAME@_USE_MPI)
+if (NOT ${PROJECT_NAME}_USE_MPI)
+  set (${PROJECT_NAME}_USE_PETSc OFF)
+  set (${PROJECT_NAME}_USE_PETSc ${${PROJECT_NAME}_USE_PETSc} PARENT_SCOPE)
+endif (NOT ${PROJECT_NAME}_USE_MPI)
 
-if (@PROJECT_NAME@_USE_PETSc)
+if (${PROJECT_NAME}_USE_PETSc)
 
   find_package (PETSc REQUIRED)
   kasper_external_include_directories (${PETSC_INCLUDES})
@@ -34,5 +34,4 @@ if (@PROJECT_NAME@_USE_PETSc)
   kasper_install_headers (${PETSCPLUGIN_HEADERFILES})
   kasper_install_libraries (KEMPETScPlugin)
 
-endif (@PROJECT_NAME@_USE_PETSc)
-
+endif (${PROJECT_NAME}_USE_PETSc)

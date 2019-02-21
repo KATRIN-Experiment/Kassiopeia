@@ -1,9 +1,8 @@
 #ifndef KELECTROMAGNETZONALHARMONICFIELDSOLVER_DEF
 #define KELECTROMAGNETZONALHARMONICFIELDSOLVER_DEF
 
-#include "KEMThreeVector.hh"
-#include "KEMThreeMatrix.hh"
-
+#include "KThreeMatrix_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 #include "KZonalHarmonicComputer.hh"
 
 #include "KElectromagnetIntegratingFieldSolver.hh"
@@ -31,23 +30,23 @@ namespace KEMField
 
     virtual ~KZonalHarmonicFieldSolver() {}
 
-    KEMThreeVector VectorPotential(const KPosition& P) const;
-    KEMThreeVector MagneticField(const KPosition& P) const;
+    KThreeVector VectorPotential(const KPosition& P) const;
+    KThreeVector MagneticField(const KPosition& P) const;
     KGradient MagneticFieldGradient(const KPosition& P) const;
-    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const;
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const;
 
   private:
 
     KZHLegendreCoefficients* fZHCoeffSingleton;
 
     bool CentralExpansionMagneticField(const KPosition& P,
-			    KEMThreeVector& B) const;
+			    KThreeVector& B) const;
     bool CentralExpansionVectorPotential(const KPosition& P,
-                KEMThreeVector& A) const;
+                KThreeVector& A) const;
     bool RemoteExpansionMagneticField(const KPosition& P,
-			   KEMThreeVector& B) const;
+			   KThreeVector& B) const;
     bool RemoteExpansionVectorPotential(const KPosition& P,
-               KEMThreeVector& A) const;
+               KThreeVector& A) const;
     bool CentralGradientExpansion(const KPosition& P,
 				  KGradient& g) const;
     bool RemoteGradientExpansion(const KPosition& P,
@@ -58,10 +57,10 @@ namespace KEMField
 				 KGradient& g) const;
     bool CentralMagneticFieldAndGradientExpansion(const KPosition& P,
                   KGradient& g,
-                  KEMThreeVector& B) const;
+                  KThreeVector& B) const;
     bool RemoteMagneticFieldAndGradientExpansion(const KPosition& P,
                   KGradient& g,
-                  KEMThreeVector& B) const;
+                  KThreeVector& B) const;
 
     KIntegratingFieldSolver<Integrator> fIntegratingFieldSolver;
 
@@ -69,7 +68,7 @@ namespace KEMField
     {
     public:
       VectorPotentialAccumulator(const KPosition& P) : fP(P) {}
-      KEMThreeVector operator()(KEMThreeVector vectorPotential,
+      KThreeVector operator()(KThreeVector vectorPotential,
 			      KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
       {
 	return vectorPotential + c->VectorPotential(fP);
@@ -83,7 +82,7 @@ namespace KEMField
     {
     public:
       MagneticFieldAccumulator(const KPosition& P) : fP(P) {}
-      KEMThreeVector operator()(KEMThreeVector magneticField,
+      KThreeVector operator()(KThreeVector magneticField,
 			      KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
       {
 	return magneticField + c->MagneticField(fP);
@@ -97,7 +96,7 @@ namespace KEMField
     {
     public:
       MagneticFieldGradientAccumulator(const KPosition& P) : fP(P) {}
-      KEMThreeMatrix operator()(KEMThreeMatrix magneticFieldGradient,
+      KThreeMatrix operator()(KThreeMatrix magneticFieldGradient,
 			   KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
       {
 	return magneticFieldGradient + c->MagneticFieldGradient(fP);
@@ -111,10 +110,10 @@ namespace KEMField
     {
     public:
       MagneticFieldAndGradientAccumulator(const KPosition& P) : fP(P) {}
-      std::pair<KEMThreeVector,KEMThreeMatrix> operator()(std::pair<KEMThreeVector,KEMThreeMatrix> fieldandgradient,
+      std::pair<KThreeVector,KThreeMatrix> operator()(std::pair<KThreeVector,KThreeMatrix> fieldandgradient,
                KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
       {
-          std::pair<KEMThreeVector, KEMThreeMatrix> pair = c->MagneticFieldAndGradient(fP);
+          std::pair<KThreeVector, KThreeMatrix> pair = c->MagneticFieldAndGradient(fP);
           return std::make_pair(fieldandgradient.first + pair.first, fieldandgradient.second + pair.second );
       }
 

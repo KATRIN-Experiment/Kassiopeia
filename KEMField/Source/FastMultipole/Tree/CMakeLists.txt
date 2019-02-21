@@ -49,11 +49,11 @@ set (TREE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMWorkLoadBalanceWeights.hh
 )
 
-if (@PROJECT_NAME@_USE_MPI)
+if (${PROJECT_NAME}_USE_MPI)
   list (APPEND TREE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMCubicSpaceTreeStaticLoadBalancer.hh
     )
-endif (@PROJECT_NAME@_USE_MPI)
+endif (${PROJECT_NAME}_USE_MPI)
 
 
 set (TREE_SOURCEFILES

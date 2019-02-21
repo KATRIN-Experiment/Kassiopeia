@@ -19,7 +19,7 @@ namespace katrin
 
 // forward declarations
 namespace policies {
-struct ThreadedPlainSumming;
+struct ThreadedSumming;
 struct ThreadedKahanSumming;
 }
 
@@ -27,72 +27,44 @@ struct ThreadedKahanSumming;
  * A parallel version of KMathIntegrator's summing policy, using Intel's Thread Building Blocks
  * library to parallelize the iterative evaluation of the sampling points.
  */
-template<class XFloatT>
-using KMathIntegratorThreaded = KMathIntegrator<XFloatT, policies::ThreadedPlainSumming>;
-template<class XFloatT>
-using KMathIntegrator2DThreaded = KMathIntegrator2D<XFloatT, policies::ThreadedPlainSumming>;
+template<class Float>
+using KMathIntegratorThreaded = KMathIntegrator<Float, policies::ThreadedSumming>;
+template<class Float>
+using KMathIntegrator2DThreaded = KMathIntegrator2D<Float, policies::ThreadedSumming>;
 
 namespace policies {
 
-struct ThreadedPlainSumming
-{
-    template<class XFloatT, class XIntegrandType>
-    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
-    {
-        // don't parallelize for only n <= 2 sampling points
-        if (n <= 2) {
-            XFloatT sum = 0.0;
-            for (uint32_t j = 0; j < n; j++) {
-                const XFloatT x = xStart + (XFloatT) j * del;
-                sum += integrand(x);
-            }
-            return sum;
-        }
+  struct ThreadedSumming
+  {
+      template<class Float, class XIntegrandType, class Sum = Float>
+      static Float SumSamplingPoints(uint32_t n, Float xStart, Float del, XIntegrandType&& integrand)
+      {
+          // don't parallelize for only n <= 2 sampling points
+          if (n < 3) {
 
-        return tbb::parallel_reduce(
-        tbb::blocked_range<uint32_t>( 0, n ),
-            0.0,
-            [&](const tbb::blocked_range<uint32_t>& r, XFloatT value)->XFloatT {
-                for (uint32_t j = r.begin(); j != r.end(); ++j) {
-                    const XFloatT x = xStart + (XFloatT) j * del;
-                    value += integrand(x);
-                }
-                return value;
-            },
-            std::plus<XFloatT>()
-        );
-    }
-};
+              Sum sum = 0.0;
+              for (uint32_t j = 0; j < n; ++j) sum += integrand(xStart + j * del);
+              return sum;
 
-struct ThreadedKahanSumming : KahanSumming
-{
-    template<class XFloatT, class XIntegrandType>
-    XFloatT SumSamplingPoints(uint32_t n, const XFloatT& xStart, const XFloatT& del, XIntegrandType& integrand) const
-    {
-        // don't parallelize for only n <= 2 sampling points
-        if (n <= 2) {
-            KMathKahanSum<XFloatT> sum;
-            for (uint32_t j = 0; j < n; j++) {
-                const XFloatT x = xStart + (XFloatT) j * del;
-                sum += integrand(x);
-            }
-            return sum;
-        }
-
-        return tbb::parallel_reduce(
-        tbb::blocked_range<uint32_t>( 0, n ),
-            KMathKahanSum<XFloatT>(),
-            [&](const tbb::blocked_range<uint32_t>& r, KMathKahanSum<XFloatT> value)->KMathKahanSum<XFloatT> {
-                for (uint32_t j = r.begin(); j != r.end(); ++j) {
-                    const XFloatT x = xStart + (XFloatT) j * del;
-                    value += integrand(x);
-                }
-                return value;
-            },
-            std::plus<KMathKahanSum<XFloatT>>()
-        );
-    }
-};
+          }
+          else return tbb::parallel_reduce(tbb::blocked_range<uint32_t>( 0, n ), 0.,
+              [&](const tbb::blocked_range<uint32_t>& range, Sum value){
+                  for (uint32_t j = range.begin(); j != range.end(); ++j) value += integrand(xStart + j * del);
+                  return value;
+              },
+              std::plus<Float>()
+          );
+      }
+  };
+  
+  struct ThreadedKahanSumming : KahanSumming
+  {
+      template<class Float, class XIntegrandType>
+      static Float SumSamplingPoints(uint32_t n, Float xStart, Float del, XIntegrandType&& integrand)
+      {
+  		return ThreadedSumming::SumSamplingPoints<Float, XIntegrandType, KMathKahanSum<Float>>(n, xStart, del, std::forward<XIntegrandType>(integrand));
+      }
+  };
 
 }
 

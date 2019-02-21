@@ -14,12 +14,12 @@ set( VTK-PART2_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KVTKViewerAsBoundaryFieldVisitor.hh
 )
 
-if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
+if( ${PROJECT_NAME}_USE_VTK )
     list( APPEND VTK-PART2_HEADERFILES
         ${CMAKE_CURRENT_SOURCE_DIR}/include/KElectrostaticPotentialmap.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/include/KMagnetostaticFieldmap.hh
     )
-endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
+endif( ${PROJECT_NAME}_USE_VTK )
 
 #source files
 
@@ -27,12 +27,12 @@ set( VTK-PART2_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KVTKViewerAsBoundaryFieldVisitor.cc
 )
 
-if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
+if( ${PROJECT_NAME}_USE_VTK )
     list( APPEND VTK-PART2_SOURCEFILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KElectrostaticPotentialmap.cc
         ${CMAKE_CURRENT_SOURCE_DIR}/src/KMagnetostaticFieldmap.cc
     )
-endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG)
+endif( ${PROJECT_NAME}_USE_VTK )
 
 #link libraries
 
@@ -40,23 +40,21 @@ set( VTK-PART2_LINK_LIBRARIES
     KEMFieldsElectric
     KEMFieldsMagnetic
 )
-if( @PROJECT_NAME@_USE_VTK )
+if( ${PROJECT_NAME}_USE_VTK )
       list( APPEND VTK-PART2_LINK_LIBRARIES
         KEMVTKPlugin
 
       )
-endif( @PROJECT_NAME@_USE_VTK )
+endif( ${PROJECT_NAME}_USE_VTK )
 
-if( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG )
+if( ${PROJECT_NAME}_USE_VTK )
       list( APPEND VTK-PART2_LINK_LIBRARIES
-          ${KGEOBAG_LIBRARIES}
-	  KGeoBagMath
-	  KGeoBagCore
-	  Kommon
-          ${VTK_LIBRARIES}
+        ${Kommon_LIBRARIES}
+        ${KGeoBag_LIBRARIES}
+        ${VTK_LIBRARIES}
 
       )
-endif( @PROJECT_NAME@_USE_VTK AND @PROJECT_NAME@_USE_KGEOBAG )
+endif( ${PROJECT_NAME}_USE_VTK )
 
 add_library (KEMVTKPart2 SHARED
   ${VTK-PART2_SOURCEFILES}

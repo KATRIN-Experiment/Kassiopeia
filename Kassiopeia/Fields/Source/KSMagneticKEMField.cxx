@@ -7,7 +7,6 @@
 
 #include "KSMagneticKEMField.h"
 #include "KMagneticField.hh"
-#include "KEMVectorConverters.hh"
 
 using namespace KEMField;
 
@@ -27,7 +26,7 @@ KSMagneticKEMField::KSMagneticKEMField(const KSMagneticKEMField& aCopy) :
 KSMagneticKEMField::KSMagneticKEMField(KEMField::KMagneticField* field) :
         KSComponent(),fField(field)
 {
-    fName = field->Name();
+    SetName(field->Name());
 }
 
 
@@ -50,26 +49,23 @@ const KEMField::KMagneticField* KSMagneticKEMField::getMagneticField() {
 
 void KSMagneticKEMField::CalculatePotential(const KThreeVector& aSamplePoint,
         const double& aSampleTime, KThreeVector& aPotential) {
-    KEMThreeVector potential = fField->MagneticPotential(K2KEMThreeVector(aSamplePoint),aSampleTime);
-    aPotential = KEM2KThreeVector(potential);
+    aPotential = fField->MagneticPotential(aSamplePoint,aSampleTime);
 }
 
 void KSMagneticKEMField::CalculateField(const KThreeVector& aSamplePoint,
         const double& aSampleTime, KThreeVector& aField) {
-    KEMThreeVector field = fField->MagneticField(K2KEMThreeVector(aSamplePoint),aSampleTime);
-    aField = KEM2KThreeVector(field);
+    aField = fField->MagneticField(aSamplePoint,aSampleTime);
 }
 
 void KSMagneticKEMField::CalculateGradient(const KThreeVector& aSamplePoint,
         const double& aSampleTime, KThreeMatrix& aGradient) {
-    KGradient gradient  = fField->MagneticGradient(K2KEMThreeVector(aSamplePoint),aSampleTime);
-    aGradient = KEM2KThreeMatrix(gradient);
+    aGradient  = fField->MagneticGradient(aSamplePoint,aSampleTime);
 }
 
 void KSMagneticKEMField::CalculateFieldAndGradient( const KThreeVector& aSamplePoint,
         const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient)
 {
-    std::pair<KEMThreeVector, KGradient> field_gradient_pair = fField->MagneticFieldAndGradient(K2KEMThreeVector(aSamplePoint),aSampleTime);
+    std::pair<KThreeVector, KGradient> field_gradient_pair = fField->MagneticFieldAndGradient(aSamplePoint,aSampleTime);
     aField = field_gradient_pair.first;
     aGradient = field_gradient_pair.second;
 }

@@ -38,7 +38,7 @@ double KElectrostaticAnalyticRingIntegrator::Potential(const KRing* source,const
 }
 
 
-KEMThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source,const KPosition& P) const
 {
 	double par[7];
 
@@ -50,7 +50,7 @@ KEMThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* 
 
 	double c = 1./(par[3]*2.*KEMConstants::Pi*KEMConstants::Pi*KEMConstants::Eps0);
 
-	KEMThreeVector field;
+	KThreeVector field;
 
 	field[2] = c*EFieldZFromChargedRing(P,par);
 	double Er = c*EFieldRFromChargedRing(P,par);

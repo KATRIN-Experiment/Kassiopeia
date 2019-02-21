@@ -27,7 +27,7 @@ namespace KGeoBag
 
         //surgery
         KThreeVector tStartApex;
-        if( aRotatedPolyLineSpace->StartPath().Null() == false )
+        if( aRotatedPolyLineSpace->StartPath() )
         {
             //create start circle points
             ClosedPoints tStartCirclePoints;
@@ -52,7 +52,7 @@ namespace KGeoBag
         }
 
         KThreeVector tEndApex;
-        if( aRotatedPolyLineSpace->EndPath().Null() == false )
+        if( aRotatedPolyLineSpace->EndPath() )
         {
             //create end circle points
             ClosedPoints tEndCirclePoints;

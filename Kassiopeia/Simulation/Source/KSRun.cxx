@@ -17,7 +17,8 @@ namespace Kassiopeia
             fContinuousMomentumChange( 0. ),
             fDiscreteSecondaries( 0 ),
             fDiscreteEnergyChange( 0. ),
-            fDiscreteMomentumChange( 0. )
+            fDiscreteMomentumChange( 0. ),
+            fNumberOfTurns( 0 )
     {
     }
     KSRun::KSRun( const KSRun& aCopy ) :
@@ -33,7 +34,8 @@ namespace Kassiopeia
             fContinuousMomentumChange( aCopy.fContinuousMomentumChange ),
             fDiscreteSecondaries( aCopy.fDiscreteSecondaries ),
             fDiscreteEnergyChange( aCopy.fDiscreteSecondaries ),
-            fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange )
+            fDiscreteMomentumChange( aCopy.fDiscreteMomentumChange ),
+            fNumberOfTurns( aCopy.fNumberOfTurns )
     {
     }
     KSRun& KSRun::operator=( const KSRun& aCopy )
@@ -50,6 +52,7 @@ namespace Kassiopeia
         fDiscreteSecondaries = aCopy.fDiscreteSecondaries;
         fDiscreteEnergyChange = aCopy.fDiscreteEnergyChange;
         fDiscreteMomentumChange = aCopy.fDiscreteMomentumChange;
+        fNumberOfTurns = aCopy.fNumberOfTurns;
         return *this;
     }
     KSRun* KSRun::Clone() const
@@ -72,7 +75,8 @@ namespace Kassiopeia
         KSDictionary< KSRun >::AddComponent( &KSRun::GetContinuousMomentumChange, "continuous_momentum_change" ) +
         KSDictionary< KSRun >::AddComponent( &KSRun::GetDiscreteSecondaries, "discrete_secondaries" ) +
         KSDictionary< KSRun >::AddComponent( &KSRun::GetDiscreteEnergyChange, "discrete_energy_change" ) +
-        KSDictionary< KSRun >::AddComponent( &KSRun::GetDiscreteMomentumChange, "discrete_momentum_change" );
+        KSDictionary< KSRun >::AddComponent( &KSRun::GetDiscreteMomentumChange, "discrete_momentum_change" ) +
+        KSDictionary< KSRun >::AddComponent( &KSRun::GetNumberOfTurns, "number_of_turns" );
 
 
 }

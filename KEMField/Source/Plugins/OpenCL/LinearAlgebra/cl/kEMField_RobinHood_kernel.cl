@@ -8,12 +8,11 @@
 //______________________________________________________________________________
 
 int RH_BoundaryRatioExceeded(int iElement,
-			     __global const int* boundaryInfo,
-			     __global const int* counter)
+                 __global const int* boundaryInfo,
+                 __global const int* counter)
 {
   int return_val = 0;
 
-#if KEMFIELD_OCLFASTDIELECTRICS==1
 #ifdef NEUMANNBOUNDARY
   int iBoundary = BI_GetBoundaryForElement(iElement,boundaryInfo);
 
@@ -31,17 +30,16 @@ int RH_BoundaryRatioExceeded(int iElement,
     CL_TYPE ratio_geometric = 0.;
 
     ratio_called = (convert_float(counter[iBoundary])/
-		    convert_float(counter[BI_GetNumBoundaries(boundaryInfo)]));
+            convert_float(counter[BI_GetNumBoundaries(boundaryInfo)]));
 
     ratio_geometric =(convert_float(BI_GetBoundarySize(iBoundary,boundaryInfo))/
-		      convert_float(BI_GetNumElements(boundaryInfo)));
+              convert_float(BI_GetNumElements(boundaryInfo)));
 
     // this all must be negated if the residual is being checked!
     if (ratio_called>ratio_geometric && counter[BI_GetNumBoundaries(boundaryInfo)]%counter[BI_GetNumBoundaries(boundaryInfo)+1]!=0)
       return_val = 1;
   }
 #endif
-#endif /* KEMFIELD_OCLDIELECTRICS */
 
   return return_val;
 }
@@ -86,12 +84,22 @@ __kernel void FindResidual(__global CL_TYPE* b_diff,
 
   if (b_iterative[iElement]<1.e10)
   {
-#if KEMFIELD_OCLFASTDIELECTRICS==1
+#ifdef NEUMANNBOUNDARY
+#if KEMFIELD_OCLNEUMANNCHECKMETHOD==1
+     // Decrease checked accuracy of Neumann elements by 1/20 (idea by Ferenc Glueck)
+     int iBoundary = BI_GetBoundaryForElement(iElement,boundaryInfo);
+     if (BI_GetBoundaryType(iBoundary,boundaryInfo) == NEUMANNBOUNDARY)
+       b_diff[iElement] = 0.05 * (U_Target - b_iterative[iElement]);
+     else
+#endif /* KEMFIELD_OCLNEUMANNCHECKMETHOD==1 */
+#if KEMFIELD_OCLNEUMANNCHECKMETHOD==2
+     // Counter technique with the function RH_BoundaryRatioExceeded (by T.J. Corona)
      if (RH_BoundaryRatioExceeded(iElement,boundaryInfo,counter))
        b_diff[iElement] = 0.;
      else
-#endif /* KEMFIELD_OCLFASTDIELECTRICS */
-      b_diff[iElement] = U_Target - b_iterative[iElement];
+#endif /* KEMFIELD_OCLNEUMANNCHECKMETHOD==2 */
+#endif
+       b_diff[iElement] = U_Target - b_iterative[iElement];
   }
   else
     b_diff[iElement] = 0.;

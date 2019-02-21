@@ -1,4 +1,4 @@
-# CMakeLists for KEMField/Surfaces
+# CMakeLists for KEMField/Geometry/Surfaces
 # Author: T.J. Corona
 
 kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -44,7 +44,7 @@ set (SURFACES_SOURCEFILES
 ##################################################
 
 add_library (KEMSurfaces SHARED ${SURFACES_SOURCEFILES})
-target_link_libraries (KEMSurfaces KEMCore KEMMath KEMIO)
+target_link_libraries (KEMSurfaces KEMCore KEMMath KEMIO ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES})
 
 kasper_install_headers (${SURFACES_HEADERFILES})
 kasper_install_libraries (KEMSurfaces)

@@ -170,7 +170,7 @@ namespace katrin
         KGRotatedObject* object = NULL;
         anElement->ReleaseTo(object);
         object->Initialize();
-        KSmartPointer<KGRotatedObject> smartPtr(object);
+        std::shared_ptr<KGRotatedObject> smartPtr(object);
         fObject->SetObject(smartPtr);
       return true;
     }
@@ -199,7 +199,7 @@ namespace katrin
         KGRotatedObject* object = NULL;
         anElement->ReleaseTo(object);
         object->Initialize();
-        KSmartPointer<KGRotatedObject> smartPtr(object);
+        std::shared_ptr<KGRotatedObject> smartPtr(object);
         fObject->SetObject(smartPtr);
         return true;
     }

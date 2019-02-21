@@ -36,9 +36,11 @@ namespace katrin
 
             typedef enum
             {
-                eAttributeInactive, eName, ePath, eBase, eAttributeComplete
+                eAttributeInactive, eName, ePath, eBase, eOptionalFlag, eAttributeComplete
             } AttributeState;
             AttributeState fAttributeState;
+
+            bool fOptionalFlag;
 
             std::vector< std::string > fNames;
             std::vector< std::string > fPaths;

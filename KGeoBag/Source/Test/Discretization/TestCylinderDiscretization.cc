@@ -62,7 +62,7 @@ int main(int /*argc*/, char** /*argv*/)
 
   surface->MakeExtension<KGDeformed>();
   surface->AsExtension<KGDeformed>()->
-    SetDeformation(KSmartPointer<KGDeformation>(deformation));
+    SetDeformation(std::shared_ptr<KGDeformation>(deformation));
 
   // Construct the discretizer
   KGCylinderMesher* cylinderDisc = new KGCylinderMesher();

@@ -1,37 +1,26 @@
 # CMakeLists for KEMField/Core
-# Author: T.J. Corona
+# Author: T.J. Corona, D. Hilk
 
-option (@PROJECT_NAME@_SILENT "Disable all messaging" OFF)
-if (@PROJECT_NAME@_SILENT)
-  add_cflag (KEMFIELD_SILENT)
-endif (@PROJECT_NAME@_SILENT)
+# Bindings need to be linked against KGeoBag, Kommon and KMessage
 
-cmake_dependent_option (@PROJECT_NAME@_USE_KOMMON "Use KOMMON" ON
-  "BUILD_KOMMON" OFF)
-if (NOT BUILD_KOMMON)
-  set (@PROJECT_NAME@_USE_KOMMON OFF)
-  set (@PROJECT_NAME@_USE_KOMMON ${@PROJECT_NAME@_USE_KOMMON} PARENT_SCOPE)
-  set (@PROJECT_NAME@_USE_KMESSAGE OFF)
-  set (@PROJECT_NAME@_USE_KMESSAGE ${@PROJECT_NAME@_USE_KMESSAGE} PARENT_SCOPE)
-  set (Kommon_LIBRARIES "")
-else()
-  kasper_require_cpp11()
-endif()
+#option (${PROJECT_NAME}_SILENT "Disable all messaging" OFF)
+#if (${PROJECT_NAME}_SILENT)
+#  add_cflag (KEMFIELD_SILENT)
+#endif (${PROJECT_NAME}_SILENT)
 
-cmake_dependent_option (@PROJECT_NAME@_USE_KMESSAGE "Use KMessage" ON
-  "@PROJECT_NAME@_USE_KOMMON;NOT @PROJECT_NAME@_SILENT" OFF)
+kasper_require_cpp11()
+kasper_find_module(Kommon)
+add_cflag (KEMFIELD_USE_KOMMON)
 
-if (@PROJECT_NAME@_USE_KOMMON)
-  kasper_find_module(Kommon)
-  add_cflag (KEMFIELD_USE_KOMMON)
-endif (@PROJECT_NAME@_USE_KOMMON)
+#cmake_dependent_option (${PROJECT_NAME}_USE_KMESSAGE "Use KMessage" ON "NOT ${PROJECT_NAME}_SILENT" OFF)
 
-if (@PROJECT_NAME@_USE_KMESSAGE)
+
+#if (${PROJECT_NAME}_USE_KMESSAGE)
   add_cflag (KEMFIELD_USE_KMESSAGE)
-endif (@PROJECT_NAME@_USE_KMESSAGE)
+#endif (${PROJECT_NAME}_USE_KMESSAGE)
 
-option (@PROJECT_NAME@_USE_MPI "Use MPI to accelerate calculations using multiple processors" OFF)
-if (@PROJECT_NAME@_USE_MPI)
+option (${PROJECT_NAME}_USE_MPI "Use MPI to accelerate calculations using multiple processors" OFF)
+if (${PROJECT_NAME}_USE_MPI)
   find_package(MPI)
   if (MPI_CXX_FOUND)
     if (MPI_CXX_COMPILER)  # MPICH2 style
@@ -61,16 +50,16 @@ if (@PROJECT_NAME@_USE_MPI)
   set (CMAKE_SHARED_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_EXECUTABLE_SUFFIX ${CMAKE_EXECUTABLE_SUFFIX} PARENT_SCOPE)
 
-#  set( @PROJECT_NAME@_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
-    set( @PROJECT_NAME@_USE_ROOT ${KASPER_USE_ROOT} )
+#  set( ${PROJECT_NAME}_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
+    set( ${PROJECT_NAME}_USE_ROOT ${KASPER_USE_ROOT} )
 
-endif (@PROJECT_NAME@_USE_MPI)
+endif (${PROJECT_NAME}_USE_MPI)
 
-option(@PROJECT_NAME@_USE_REALTIME_CLOCK "Use real time clock for timing applications." OFF)
-mark_as_advanced(FORCE @PROJECT_NAME@_USE_REALTIME_CLOCK)
-if (@PROJECT_NAME@_USE_REALTIME_CLOCK)
+option(${PROJECT_NAME}_USE_REALTIME_CLOCK "Use real time clock for timing applications." OFF)
+mark_as_advanced(FORCE ${PROJECT_NAME}_USE_REALTIME_CLOCK)
+if (${PROJECT_NAME}_USE_REALTIME_CLOCK)
   add_cflag (KEMFIELD_USE_REALTIME_CLOCK)
-endif (@PROJECT_NAME@_USE_REALTIME_CLOCK)
+endif (${PROJECT_NAME}_USE_REALTIME_CLOCK)
 
 kasper_internal_include_directories (${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -100,31 +89,29 @@ set (KEMCORE_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KTimer.cc
   )
 
-if (@PROJECT_NAME@_USE_MPI)
+if (${PROJECT_NAME}_USE_MPI)
   list (APPEND KEMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KMPIInterface.hh
     )
   list (APPEND KEMCORE_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KMPIInterface.cc
     )
-endif (@PROJECT_NAME@_USE_MPI)
+endif (${PROJECT_NAME}_USE_MPI)
 
-if (@PROJECT_NAME@_USE_KMESSAGE)
+#if (${PROJECT_NAME}_USE_KMESSAGE)
   list (APPEND KEMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KMessageInterface.hh
     )
   list (APPEND KEMCORE_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KMessageInterface.cc
     )
-
-endif (@PROJECT_NAME@_USE_KMESSAGE)
+#endif (${PROJECT_NAME}_USE_KMESSAGE)
 
 add_library (KEMCore SHARED ${KEMCORE_SOURCEFILES})
 target_link_libraries (KEMCore ${Kommon_LIBRARIES})
 
 add_executable( KSmartPointer_test test/KSmartPointer_test.cc )
-  target_link_libraries( KSmartPointer_test 
-    KEMCore
+  target_link_libraries( KSmartPointer_test KEMCore
   )
   
   kasper_install_executables( KSmartPointer_test )

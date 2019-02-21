@@ -28,7 +28,7 @@ double KElectricQuadrupoleField::PotentialCore( const KPosition& aSamplePoint) c
 	KPosition FieldPoint = aSamplePoint - fLocation;
 	return (fStrength / (2. * fCharacteristic * fCharacteristic)) * (FieldPoint[2] * FieldPoint[2] - (1. / 2.) * FieldPoint[0] * FieldPoint[0] - (1. / 2.) * FieldPoint[1] * FieldPoint[1]);
 }
-KEMThreeVector KElectricQuadrupoleField::ElectricFieldCore( const KPosition& aSamplePoint) const
+KThreeVector KElectricQuadrupoleField::ElectricFieldCore( const KPosition& aSamplePoint) const
 {
 	// thread-safe
 	KPosition FieldPoint = aSamplePoint - fLocation;

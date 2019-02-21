@@ -8,8 +8,8 @@
 #ifndef KMAGNETICFIELD_HH_
 #define KMAGNETICFIELD_HH_
 
-#include "KEMThreeVector.hh"
-#include "KEMThreeMatrix.hh"
+#include "KThreeMatrix_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 
 namespace KEMField
 {
@@ -25,11 +25,11 @@ public:
     // the virtual methods that have to be implemented by subclasses
     // are named ...Core
 
-	KEMThreeVector MagneticPotential(const KPosition& P, const double& time) const {
+	KThreeVector MagneticPotential(const KPosition& P, const double& time) const {
 		return MagneticPotentialCore(P,time);
 	}
 
-	KEMThreeVector MagneticField(const KPosition& P, const double& time) const {
+	KThreeVector MagneticField(const KPosition& P, const double& time) const {
 		return MagneticFieldCore(P,time);
 	}
 
@@ -37,7 +37,7 @@ public:
 		return MagneticGradientCore(P,time);
 	}
 
-    std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P, const double& time) const
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P, const double& time) const
     {
         return MagneticFieldAndGradientCore(P,time);
     }
@@ -55,23 +55,23 @@ public:
 
 protected:
 
-	virtual KEMThreeVector MagneticPotentialCore(
+	virtual KThreeVector MagneticPotentialCore(
 			const KPosition& P, const double& time) const = 0;
 
-	virtual KEMThreeVector MagneticFieldCore(
+	virtual KThreeVector MagneticFieldCore(
 			const KPosition& P, const double& time) const = 0;
 
 	virtual KGradient MagneticGradientCore(
 			const KPosition& P, const double& time) const = 0;
 
-    virtual std::pair<KEMThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P, const double& time) const
+    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P, const double& time) const
     {
         //default behavior is to simply call the field and gradient separately
         //this function may be overloaded to perform a more efficient combined calculation
-        KEMThreeVector field = MagneticFieldCore(P,time);
+        KThreeVector field = MagneticFieldCore(P,time);
         KGradient grad = MagneticGradientCore(P,time);
 
-        return std::pair<KEMThreeVector, KGradient>(field,grad);
+        return std::pair<KThreeVector, KGradient>(field,grad);
     }
 
 	virtual void InitializeCore() {}

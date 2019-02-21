@@ -1,4 +1,4 @@
-set(KSNAV_CACHE_DIR "${@PROJECT_NAME@_CACHE_INSTALL_DIR}" CACHE STRING "Kassiopeia navigator cache directory")
+set(KSNAV_CACHE_DIR "${${PROJECT_NAME}_CACHE_INSTALL_DIR}" CACHE STRING "Kassiopeia navigator cache directory")
 mark_as_advanced(FORCE KSNAV_CACHE_DIR)
 
 

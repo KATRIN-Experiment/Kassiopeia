@@ -1,9 +1,9 @@
 #ifndef KEMTRANSFORMATION_DEF
 #define KEMTRANSFORMATION_DEF
 
+#include "KThreeVector_KEMField.hh"
 #include "KTransitiveStreamer.hh"
 
-#include "KEMThreeVector.hh"
 
 namespace KEMField
 {

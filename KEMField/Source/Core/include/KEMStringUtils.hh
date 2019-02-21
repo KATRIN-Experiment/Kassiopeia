@@ -5,8 +5,8 @@
  *      Author: wolfgang
  */
 
-#ifndef KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KEMSTRINGUTILS_HH_
-#define KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KEMSTRINGUTILS_HH_
+#ifndef KEMSTRINGUTILS_HH_
+#define KEMSTRINGUTILS_HH_
 
 #include <string>
 
@@ -16,4 +16,4 @@ bool endsWith(std::string aString, std::string ending);
 
 } /* namespace KEMField */
 
-#endif /* KEMFIELD_SOURCE_2_0_CORE_INCLUDE_KEMSTRINGUTILS_HH_ */
+#endif /* KEMSTRINGUTILS_HH_ */

@@ -1,0 +1,93 @@
+<geometry>
+
+    <tag name="electrode_tag">
+        <rotated_poly_line_surface name="rotated_poly_line_surface" rotated_mesh_count="8">
+            <poly_line>
+                <start_point x="-1." y="0.2"/>
+                <next_line x="1." y="0.2" line_mesh_count="24" line_mesh_power="2."/> 
+                <!--next_line x="2." y="0.2" line_mesh_count="4" line_mesh_power="1."/--> 
+            </poly_line>
+        </rotated_poly_line_surface>
+    </tag>
+
+    <tag name="electrode_tag">
+        <conical_wire_array_surface name="wire_surface">
+            <conical_wire_array
+                radius1="{0.05}"
+                radius2="{0.05}"
+                z1="{-1.}"
+                z2="{1.}"
+                wire_count="{24.}"
+                theta_start="{0.}"
+                diameter="{5.e-4}"
+                longitudinal_mesh_count="{64}"
+                longitudinal_mesh_power="{2.}">
+            </conical_wire_array>
+        </conical_wire_array_surface>
+    </tag>
+
+    <!-- assembly -->
+
+    <space name="world">
+        <surface name="cylinder" node="rotated_poly_line_surface"/>
+        <surface name="wire" node="wire_surface"/>
+    </space>
+
+
+    <electrostatic_dirichlet
+        surfaces="world/cylinder"
+        value="{-18.4e3}"
+    />
+    <electrostatic_dirichlet
+        surfaces="world/wire"
+        value="{-18.6e3}"
+    />
+
+
+    <!-- mesh -->
+
+    <!--mesh name="world_mesh" surfaces="world/#"/-->
+
+    <!-- axial mesh -->
+
+    <axial_mesh name="world_axial_mesh" surfaces="world/cylinder"/>
+    <discrete_rotational_mesh name="world_dr_mesh" surfaces="world/cylinder" count="20"/>
+    <discrete_rotational_mesh name="world_dr_mesh" surfaces="world/wire"/>
+
+
+    <cylinder_space name="world_space" z1="-50" z2="50" r="20"/>
+
+    <space name="globalworld" node="world_space">
+        <surface name="myCylinder" node="world/cylinder"/>
+        <surface name="myWire" node="world/wire"/>
+    </space>
+
+</geometry>
+ 
+<kemfield>
+
+    <!-- fields -->
+
+    <electrostatic_field
+        name="kemfield_e"
+        file="ElectricFields_DiscreteAxial.kbd"
+        system="globalworld"
+        surfaces="globalworld/myCylinder"
+        surfaces="globalworld/myWire"
+        symmetry="discrete_axial"
+    >
+        <robin_hood_bem_solver
+            tolerance="1.e-8"
+            check_sub_interval="1"
+            display_interval="1"
+            cache_matrix_elements="true"
+            integrator="numeric"
+            use_opencl="false"
+        />
+        <integrating_field_solver
+            use_opencl="false"
+            integrator="numeric"
+        />
+    </electrostatic_field>
+
+</kemfield>

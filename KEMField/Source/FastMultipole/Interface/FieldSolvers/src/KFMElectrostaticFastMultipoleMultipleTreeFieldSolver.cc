@@ -47,9 +47,9 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTr
     fFastPotential.push_back(0.0);
     fDirectPotential.push_back(0.0);
     fTotalPotential.push_back(0.0);
-    fFastField.push_back(KEMThreeVector());
-    fDirectField.push_back(KEMThreeVector());
-    fTotalField.push_back(KEMThreeVector());
+    fFastField.push_back(KThreeVector());
+    fDirectField.push_back(KThreeVector());
+    fTotalField.push_back(KThreeVector());
 }
 
 
@@ -105,7 +105,7 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::Potential(const KPosition&
 
 }
 
-KEMThreeVector
+KThreeVector
 KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::ElectricField(const KPosition& P) const
 {
     //weighted average of different tree fields
@@ -159,7 +159,7 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::ElectricField(const KPosit
         }
     }
 
-    KEMThreeVector val;
+    KThreeVector val;
     val[0] = numer_x/denom;
     val[1] = numer_y/denom;
     val[2] = numer_z/denom;

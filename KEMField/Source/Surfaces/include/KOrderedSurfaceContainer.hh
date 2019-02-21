@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <vector>
 
-#include "KSurfaceContainer.hh"
-#include "KSurfaceOrderingPredicate.hh"
+#include "../../../Surfaces/include/KSurfaceContainer.hh"
+#include "../../../Surfaces/include/KSurfaceOrderingPredicate.hh"
 
 namespace KEMField
 {

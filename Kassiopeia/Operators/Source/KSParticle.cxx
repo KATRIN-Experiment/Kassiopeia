@@ -2,9 +2,10 @@
 #include "KSOperatorsMessage.h"
 #include "KSDictionary.h"
 
-#include <KConst.h>
+#include "KConst.h"
 #include <cmath>
 #include <math.h>
+#include <ctime>
 
 using namespace std;
 using namespace katrin;
@@ -503,7 +504,6 @@ namespace Kassiopeia
     void KSParticle::SetMagneticFieldCalculator( KSMagneticField* aMagFieldCalculator )
     {
         fMagneticFieldCalculator = aMagFieldCalculator;
-        //RecalculateSpinBody();
         return;
     }
     KSMagneticField* KSParticle::GetMagneticFieldCalculator() const
@@ -1252,10 +1252,9 @@ namespace Kassiopeia
 
     void KSParticle::RecalculateSpinGlobal() const
     {
-        //std::cout << "RECALCULATING SPIN (global):\n\tInitial:\tm: " << fAlignedSpin << "\tphi: " << fSpinAngle << "\n";
-
         KThreeVector e3 = GetMagneticField() / GetMagneticField().Magnitude(); // = b
-        KThreeVector E1 ( e3.Z() - e3.Y(), e3.X() - e3.Z(), e3.Y() - e3.X() );
+        // KThreeVector E1 ( e3.Z() - e3.Y(), e3.X() - e3.Z(), e3.Y() - e3.X() );
+        KThreeVector E1 ( e3.Z() , 0. , -e3.X() );
         KThreeVector e1 = E1 / E1.Magnitude();
         KThreeVector e2 = e3.Cross( e1 );
 
@@ -1263,9 +1262,6 @@ namespace Kassiopeia
         fSpin0 = fVelocity.Dot( fSpin ) / KConst::C();
 
         NormalizeSpin();
-
-        //std::cout << "\tFinal:\t\tspin0: " << fSpin0 << "\tspin: " << fSpin << "\n";
-
     }
 
 ///////
@@ -1612,16 +1608,12 @@ namespace Kassiopeia
     {
         (this->*fGetMagneticFieldAction)();
 
-        //RecalculateSpinBody();
-
         return fMagneticField;
     }
 
     void KSParticle::SetMagneticField( const KThreeVector& aMagneticField )
     {
         fMagneticField = aMagneticField;
-
-        //RecalculateSpinBody();
 
         oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticField" << ret );
         oprmsg_debug( "[" << fMagneticField[0] << ", " << fMagneticField[1] << ", " << fMagneticField[2] << "]" << eom );
@@ -1646,8 +1638,6 @@ namespace Kassiopeia
             fMagneticFieldCalculator->CalculateField( GetPosition(), GetTime(), fMagneticField );
             fGetMagneticFieldAction = &KSParticle::DoNothing;
         }
-
-        //RecalculateSpinBody();
 
         return;
     }
@@ -1697,8 +1687,6 @@ namespace Kassiopeia
 
         oprmsg_debug( "KSParticle: [" << this << "] setting fMagneticGradient" << eom );
         oprmsg_debug( "[" << fMagneticGradient << "]" << eom );
-
-        //RecalculateSpinBody();
 
         return;
     }
@@ -2214,29 +2202,48 @@ namespace Kassiopeia
 
     void KSParticle::RecalculateSpinBody() const
     {
-        //std::cout << "RECALCULATING SPIN (body):\n\tInitial:\tspin0:\t" << fSpin0 << "\tspin: " << fSpin << "\n";
 
         KThreeVector LocalZ = fMagneticField / fMagneticField.Magnitude();
-        KThreeVector LocalX  ( LocalZ.Z() - LocalZ.Y(), LocalZ.X() - LocalZ.Z(), LocalZ.Y() - LocalZ.X() );
+        KThreeVector LocalX  ( LocalZ.Z() , 0. , -LocalZ.X() );
         LocalX = LocalX / LocalX.Magnitude();
         fAlignedSpin =  fSpin.Dot( LocalZ ) / fSpin.Magnitude();
         if ( std::isnan( fAlignedSpin ) )
         {
             fAlignedSpin = 1.;
-            //std::cout << "*fixed NaN m (in KSP); B: " << fMagneticField << "\n";
         }
         if (fAlignedSpin < 0.99999 && fAlignedSpin > -0.99999 )
         {
-            //std::cout << fSpin.Dot( LocalX );
             fSpinAngle = acos( fSpin.Dot( LocalX ) / fSpin.Magnitude() / sqrt( 1 - fAlignedSpin * fAlignedSpin ) );
         }
         else
         {
-            fSpinAngle = 0;
+
+            KThreeVector LocalY = LocalZ.Cross( LocalX );
+            if (fAlignedSpin < 0.99999 && fAlignedSpin > -0.99999 )
+            {
+                if ( fSpin.Dot( LocalY ) > 0. ){
+                    fSpinAngle =  acos( fSpin.Dot( LocalX ) / fSpin.Magnitude() / sqrt( 1 - GetAlignedSpin() * GetAlignedSpin() ) );
+                }
+                else
+                {
+                    fSpinAngle = 2*KConst::Pi() - acos( fSpin.Dot( LocalX ) / fSpin.Magnitude() / sqrt( 1 - GetAlignedSpin() * GetAlignedSpin() ) );
+                }
+            }
+            else
+            {
+                fSpinAngle = 0;
+            }
+
         }
 
-        //std::cout << "\tFinal:\t\tm: " << fAlignedSpin << "\tphi: " << fSpinAngle << "\n";
     }
+
+    const double& KSParticle::GetClockTime() const
+    {
+        fClockTime = std::clock() / (double)CLOCKS_PER_SEC;
+        return fClockTime;
+    }
+
 
     STATICINT sKSParticleDict =
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetParentRunId, "parent_run_id" ) +
@@ -2252,6 +2259,7 @@ namespace Kassiopeia
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMainQuantumNumber, "n" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetSecondQuantumNumber, "l" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetTime, "time" ) +
+            KSDictionary< KSParticle >::AddComponent( &KSParticle::GetClockTime, "clock_time" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetLength, "length" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetPosition, "position" ) +
             KSDictionary< KSParticle >::AddComponent( &KSParticle::GetMomentum, "momentum" ) +

@@ -4,6 +4,8 @@
 #include <memory>
 #include <utility>
 
+#pragma message "KSmartPointer is deprecated! Use std::shared_ptr or std::unique_ptr instead."
+
 namespace katrin
 {
 
