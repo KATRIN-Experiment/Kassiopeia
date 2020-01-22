@@ -36,7 +36,7 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
         devices.push_back( KOpenCLInterface::GetInstance()->GetDevice() );
         program.build(devices,options.str().c_str());
     }
-    catch (cl::Error error)
+    catch (cl::Error &error)
     {
         std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
         std::stringstream s;
@@ -75,7 +75,7 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
     {
         kernel = new cl::Kernel(program, KernelName.c_str(), &err_code);
     }
-    catch(cl::Error error)
+    catch(cl::Error &error)
     {
         std::cout<<"Kernel construction failed with error code: "<<error.what()<<": "<<error.err()<<std::endl;
         std::exit(1);

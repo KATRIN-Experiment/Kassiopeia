@@ -326,7 +326,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fM2LCoeffBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, m2l_size*sizeof(CL_TYPE2));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -348,7 +348,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             this->fNormalizationCoeffBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, norm_size*sizeof(CL_TYPE2));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -371,7 +371,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             this->fWorkspaceBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, workspace_size*sizeof(CL_TYPE2));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -388,7 +388,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fReversedIndexArrayBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (this->fTotalSpatialSize)*sizeof(unsigned int));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -442,7 +442,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                 fSourceScaleFactorBufferCL
                 = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
                 }
-                catch (cl::Error error)
+                catch (cl::Error &error)
                 {
                     std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                     std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -453,7 +453,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
                 fTargetScaleFactorBufferCL
                 = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, sf_size*sizeof(CL_TYPE));
                 }
-                catch (cl::Error error)
+                catch (cl::Error &error)
                 {
                     std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                     std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -484,7 +484,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fPrimaryLocalCoeffBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_WRITE, primary_size*sizeof(CL_TYPE2));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -500,7 +500,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fNodeIDListBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (this->fTotalSpatialSize)*sizeof(unsigned int));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
@@ -514,7 +514,7 @@ public KFMReducedScalarMomentRemoteToLocalConverter<ObjectTypeList, SourceScalar
             fBlockSetIDListBufferCL
             = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(), CL_MEM_READ_ONLY, (this->fTotalSpatialSize)*sizeof(unsigned int));
             }
-            catch (cl::Error error)
+            catch (cl::Error &error)
             {
                 std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
                 std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl;
