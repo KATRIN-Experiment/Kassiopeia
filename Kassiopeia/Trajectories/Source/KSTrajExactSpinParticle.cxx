@@ -57,6 +57,38 @@ namespace Kassiopeia
             fGetElectricPotentialPtr( &KSTrajExactSpinParticle::RecalculateElectricPotential )
     {
     }
+    KSTrajExactSpinParticle::KSTrajExactSpinParticle( const KSTrajExactSpinParticle& aParticle ) :
+            KSMathArray<12>( aParticle ),
+            fTime( aParticle.fTime ),
+            fLength( aParticle.fLength ),
+            fPosition( aParticle.fPosition ),
+            fMomentum( aParticle.fMomentum ),
+            fVelocity( aParticle.fVelocity ),
+            fSpin0( aParticle.fSpin0 ),
+            fSpin( aParticle.fSpin ),
+            fLorentzFactor( aParticle.fLorentzFactor ),
+            fKineticEnergy( aParticle.fKineticEnergy ),
+
+            fMagneticField( aParticle.fMagneticField ),
+            fElectricField( aParticle.fElectricField ),
+            fMagneticGradient( aParticle.fMagneticGradient ),
+            fElectricPotential( aParticle.fElectricPotential ),
+
+            fGuidingCenter( aParticle.fGuidingCenter ),
+            fLongMomentum( aParticle.fLongMomentum ),
+            fTransMomentum( aParticle.fTransMomentum ),
+            fLongVelocity( aParticle.fLongVelocity ),
+            fTransVelocity( aParticle.fTransVelocity ),
+            fCyclotronFrequency( aParticle.fCyclotronFrequency ),
+            fSpinPrecessionFrequency( aParticle.fSpinPrecessionFrequency ),
+            fOrbitalMagneticMoment( aParticle.fOrbitalMagneticMoment ),
+
+            fGetMagneticFieldPtr( aParticle.fGetMagneticFieldPtr ),
+            fGetElectricFieldPtr( aParticle.fGetElectricFieldPtr ),
+            fGetMagneticGradientPtr( aParticle.fGetMagneticGradientPtr ),
+            fGetElectricPotentialPtr( aParticle.fGetElectricPotentialPtr )
+    {
+    }
     KSTrajExactSpinParticle::~KSTrajExactSpinParticle()
     {
     }

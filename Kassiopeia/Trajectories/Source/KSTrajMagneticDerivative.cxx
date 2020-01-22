@@ -6,6 +6,10 @@ namespace Kassiopeia
     KSTrajMagneticDerivative::KSTrajMagneticDerivative()
     {
     }
+    KSTrajMagneticDerivative::KSTrajMagneticDerivative( const KSTrajMagneticDerivative& anOperand ) :
+        KSMathArray<5>( anOperand )
+    {
+    }
     KSTrajMagneticDerivative::~KSTrajMagneticDerivative()
     {
     }

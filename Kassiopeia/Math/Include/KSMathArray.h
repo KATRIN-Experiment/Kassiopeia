@@ -135,6 +135,13 @@ namespace Kassiopeia
             {
                 (*this) = (0.);
             }
+            KSMathArray( const KSMathArray& anOperand )
+            {
+                for( int Index = 0; Index < sDimension; Index++ )
+                {
+                    fData[Index] = anOperand.fData[Index];
+                }
+            }
             virtual ~KSMathArray()
             {
             }

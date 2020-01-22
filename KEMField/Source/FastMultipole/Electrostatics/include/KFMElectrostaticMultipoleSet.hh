@@ -25,6 +25,11 @@ class KFMElectrostaticMultipoleSet: public KFMScalarMultipoleExpansion
         KFMElectrostaticMultipoleSet();
         virtual ~KFMElectrostaticMultipoleSet();
         KFMElectrostaticMultipoleSet(const KFMElectrostaticMultipoleSet &copyObject):KFMScalarMultipoleExpansion(copyObject){;};
+        KFMElectrostaticMultipoleSet& operator=(const KFMElectrostaticMultipoleSet &copyObject)
+        {
+            KFMScalarMultipoleExpansion::operator=(copyObject);
+            return *this;
+        };
 
         virtual std::string ClassName() const;
 

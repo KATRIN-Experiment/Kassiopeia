@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajAdiabaticError();
+            KSTrajAdiabaticError( const KSTrajAdiabaticError& anOperand );
             virtual ~KSTrajAdiabaticError();
 
             //**********

@@ -13,6 +13,11 @@ namespace Kassiopeia
     {
     }
 
+    KSTrajExactSpinError::KSTrajExactSpinError( const KSTrajExactSpinError& anOperand ) :
+        KSMathArray< 12 >( anOperand )
+    {
+    }
+
     KSTrajExactSpinError::~KSTrajExactSpinError()
     {
     }

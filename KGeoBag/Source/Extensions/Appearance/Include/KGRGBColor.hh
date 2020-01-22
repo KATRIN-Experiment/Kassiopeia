@@ -21,6 +21,18 @@ namespace KGeoBag
             KGRGBColor( int aRed, int aGreen, int aBlue );
             virtual ~KGRGBColor();
 
+            //assignment
+            inline KGRGBColor& operator=(const KGRGBColor& c)
+            {
+                if(&c != this)
+                {
+                    fRed = c.fRed;
+                    fGreen = c.fGreen;
+                    fBlue = c.fBlue;
+                }
+                return *this;
+            }
+
             void SetRed( const unsigned char& aRed );
             const unsigned char& GetRed() const;
 

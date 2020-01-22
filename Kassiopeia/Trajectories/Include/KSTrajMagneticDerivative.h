@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajMagneticDerivative();
+            KSTrajMagneticDerivative( const KSTrajMagneticDerivative& anOperand );
             virtual ~KSTrajMagneticDerivative();
 
             //**********

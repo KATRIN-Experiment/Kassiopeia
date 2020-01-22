@@ -25,6 +25,11 @@ class KFMElectrostaticLocalCoefficientSet: public KFMScalarMultipoleExpansion
         KFMElectrostaticLocalCoefficientSet();
         virtual ~KFMElectrostaticLocalCoefficientSet();
         KFMElectrostaticLocalCoefficientSet(const KFMElectrostaticLocalCoefficientSet &copyObject):KFMScalarMultipoleExpansion(copyObject){;};
+        KFMElectrostaticLocalCoefficientSet& operator=(const KFMElectrostaticLocalCoefficientSet &copyObject)
+        {
+            KFMScalarMultipoleExpansion::operator=(copyObject);
+            return *this;
+        };
 
         virtual std::string ClassName() const;
 

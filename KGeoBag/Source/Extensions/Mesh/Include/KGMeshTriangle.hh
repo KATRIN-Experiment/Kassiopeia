@@ -13,6 +13,7 @@ namespace KGeoBag
         public:
             KGMeshTriangle( const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1, const KThreeVector& n2 );
             KGMeshTriangle( const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& p2 );
+            KGMeshTriangle( const KGMeshTriangle& t );
             virtual ~KGMeshTriangle();
 
             double Area() const;

@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajElectricError();
+            KSTrajElectricError( const KSTrajElectricError& anOperand );
             virtual ~KSTrajElectricError();
 
             //**********

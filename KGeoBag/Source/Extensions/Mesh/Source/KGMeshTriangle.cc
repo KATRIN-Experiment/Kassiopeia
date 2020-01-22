@@ -29,6 +29,15 @@ namespace KGeoBag
         fB = fN2.Magnitude();
         fN2 = fN2.Unit();
     }
+    KGMeshTriangle::KGMeshTriangle( const KGMeshTriangle& t ) :
+            KGMeshElement( t ),
+            fA( t.fA ),
+            fB( t.fB ),
+            fP0( t.fP0 ),
+            fN1( t.fN1 ),
+            fN2( t.fN2 )
+    {
+    }
     KGMeshTriangle::~KGMeshTriangle()
     {
     }

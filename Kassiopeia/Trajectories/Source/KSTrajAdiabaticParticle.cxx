@@ -60,7 +60,46 @@ namespace Kassiopeia
             fGetElectricPotentialPtr( &KSTrajAdiabaticParticle::RecalculateElectricPotential ),
             fGetElectricPotentialRPPtr( &KSTrajAdiabaticParticle::RecalculateElectricPotentialRP ),
             fGetElectricFieldAndPotentialPtr( &KSTrajAdiabaticParticle::RecalculateElectricFieldAndPotential )
+    {
+    }
+    KSTrajAdiabaticParticle::KSTrajAdiabaticParticle( const KSTrajAdiabaticParticle& aParticle) :
+            KSMathArray<8>( aParticle ),
+            fTime( aParticle.fTime ),
+            fLength( aParticle.fLength ),
+            fPosition( aParticle.fPosition ),
+            fMomentum( aParticle.fMomentum ),
+            fVelocity( aParticle.fVelocity ),
+            fLorentzFactor( aParticle.fLorentzFactor ),
+            fKineticEnergy( aParticle.fKineticEnergy ),
 
+            fMagneticField( aParticle.fMagneticField ),
+            fElectricField( aParticle.fElectricField ),
+            fMagneticGradient( aParticle.fMagneticGradient ),
+            fElectricPotential( aParticle.fElectricPotential ),
+            fElectricPotentialRP( aParticle.fElectricPotentialRP ),
+
+            fGuidingCenter( aParticle.fGuidingCenter ),
+            fLongMomentum( aParticle.fLongMomentum ),
+            fTransMomentum( aParticle.fTransMomentum ),
+            fLongVelocity( aParticle.fLongVelocity ),
+            fTransVelocity( aParticle.fTransVelocity ),
+            fCyclotronFrequency( aParticle.fCyclotronFrequency ),
+            fOrbitalMagneticMoment( aParticle.fOrbitalMagneticMoment ),
+
+            fAlpha( aParticle.fAlpha ),
+            fBeta( aParticle.fBeta ),
+            fLastTime( aParticle.fLastTime ),
+            fLastPosition( aParticle.fLastPosition ),
+            fLastMomentum( aParticle.fLastMomentum ),
+            fPhase( aParticle.fPhase ),
+
+            fGetMagneticFieldPtr( aParticle.fGetMagneticFieldPtr ),
+            fGetElectricFieldPtr( aParticle.fGetElectricFieldPtr ),
+            fGetMagneticGradientPtr( aParticle.fGetMagneticGradientPtr ),
+            fGetMagneticFieldAndGradientPtr( aParticle.fGetMagneticFieldAndGradientPtr ),
+            fGetElectricPotentialPtr( aParticle.fGetElectricPotentialPtr ),
+            fGetElectricPotentialRPPtr( aParticle.fGetElectricPotentialRPPtr ),
+            fGetElectricFieldAndPotentialPtr( aParticle.fGetElectricFieldAndPotentialPtr )
     {
     }
     KSTrajAdiabaticParticle::~KSTrajAdiabaticParticle()

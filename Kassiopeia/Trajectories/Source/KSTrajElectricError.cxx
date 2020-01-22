@@ -12,6 +12,11 @@ namespace Kassiopeia
     {
     }
 
+    KSTrajElectricError::KSTrajElectricError( const KSTrajElectricError& anOperand ) :
+         KSMathArray< 5 >( anOperand )
+    {
+    }
+
     KSTrajElectricError::~KSTrajElectricError()
     {
     }

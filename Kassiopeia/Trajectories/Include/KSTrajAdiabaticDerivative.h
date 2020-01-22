@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajAdiabaticDerivative();
+            KSTrajAdiabaticDerivative( const KSTrajAdiabaticDerivative& anOperand );
             virtual ~KSTrajAdiabaticDerivative();
 
             //**********

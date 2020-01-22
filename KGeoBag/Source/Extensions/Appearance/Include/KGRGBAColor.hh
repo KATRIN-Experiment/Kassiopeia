@@ -15,6 +15,17 @@ namespace KGeoBag
             KGRGBAColor( int aRed, int aGreen, int aBlue, int anOpacity );
             virtual ~KGRGBAColor();
 
+            //assignment
+            inline KGRGBAColor& operator=(const KGRGBAColor& c)
+            {
+                if(&c != this)
+                {
+                    KGRGBColor::operator=( c );
+                    fOpacity = c.fOpacity;
+                }
+                return *this;
+            }
+
             void SetOpacity( const unsigned char& anOpacity );
             const unsigned char& GetOpacity() const;
 

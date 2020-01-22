@@ -11,6 +11,11 @@ namespace Kassiopeia
     {
     }
 
+    KSTrajAdiabaticSpinError::KSTrajAdiabaticSpinError( const KSTrajAdiabaticSpinError& anOperand ) :
+        KSMathArray< 10 >( anOperand )
+    {
+    }
+
     KSTrajAdiabaticSpinError::~KSTrajAdiabaticSpinError()
     {
     }

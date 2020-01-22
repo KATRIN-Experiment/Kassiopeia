@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajExactTrappedError();
+            KSTrajExactTrappedError( const KSTrajExactTrappedError& anOperand );
             ~KSTrajExactTrappedError();
 
             //**********
