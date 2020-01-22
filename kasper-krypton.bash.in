@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function _kafit_krypton_auto()
+{
+    local curr_arg;
+    curr_arg=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W 'DrawData drawdata DrawResponse drawresponse DrawRP drawrp DrawMF drawmf Test test Fit fit DrawFitResult drawfitresult DrawResidual drawresidual FitSummary fitsummary --mode= --num= --ringselection=\" --fitrange=\" --batch= --auto= --average= --relative= --input= --output= true false uniform ring pixel' -- $curr_arg ) )
+}
+complete -o nospace -F  _kafit_krypton_auto  kafit-krypton
+
