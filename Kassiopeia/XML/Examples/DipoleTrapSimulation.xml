@@ -252,7 +252,7 @@
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="DipoleTrapSimulation.root"/>
+    <kswrite_root name="write_root" path="[output_path]" base="DipoleTrapSimulation.root"/>
 
     <!-- output -->
 

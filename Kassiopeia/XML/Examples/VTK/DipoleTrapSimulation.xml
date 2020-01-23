@@ -254,8 +254,8 @@
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="DipoleTrapSimulation.root"/>
-    <kswrite_vtk name="write_vtk" base="DipoleTrapSimulation"/>
+    <kswrite_root name="write_root" path="[output_path]" base="DipoleTrapSimulation.root"/>
+    <kswrite_vtk name="write_vtk" path="[output_path]" base="DipoleTrapSimulation"/>
 
     <!-- output -->
 
