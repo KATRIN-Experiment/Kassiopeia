@@ -367,11 +367,13 @@
 >
     <vtk_geometry_painter
         name="geometry_painter"
+        path="[output_path]"
         file="DipoleTrapGeometry.vtp"
         surfaces="world/dipole_trap/#"
     />
     <vtk_track_painter
         name="track_painter"
+        path="[output_path]"
         file="DipoleTrapSimulation.root"
         point_object="component_step_world"
         point_variable="position"
@@ -380,6 +382,7 @@
     />
     <vtk_track_terminator_painter
         name="terminator_painter"
+        path="[output_path]"
         file="DipoleTrapSimulation.root"
         point_object="component_track_world"
         point_variable="final_position"
