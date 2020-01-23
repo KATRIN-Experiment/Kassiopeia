@@ -423,6 +423,7 @@
 >
     <vtk_geometry_painter
         name="geometry_painter"
+        path="[output_path]"
         surfaces="world/quadrupole_trap/#"
     />
     <vtk_track_painter

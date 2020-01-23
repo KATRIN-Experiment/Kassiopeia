@@ -255,6 +255,7 @@
 >
     <vtk_geometry_painter 
         name="geometry_painter"
+        path="[output_path]"
         spaces="world/cell"
         surfaces="world/cell/target"
     />
