@@ -517,7 +517,7 @@ namespace Kassiopeia
 
     void KSWriteROOT::ExecuteRun()
     {
-        wtrmsg_debug( "ROOT writer <" << fName << "> is filling a run" << eom );
+        wtrmsg_debug( "ROOT writer <" << GetName() << "> is filling a run" << eom );
 
         if ( fEventIndex != 0 )
         {
@@ -563,7 +563,7 @@ namespace Kassiopeia
     }
     void KSWriteROOT::ExecuteEvent()
     {
-        wtrmsg_debug( "ROOT writer <" << fName << "> is filling an event" << eom );
+        wtrmsg_debug( "ROOT writer <" << GetName() << "> is filling an event" << eom );
 
         if ( fTrackIndex != 0 )
         {
@@ -604,7 +604,7 @@ namespace Kassiopeia
     }
     void KSWriteROOT::ExecuteTrack()
     {
-        wtrmsg_debug( "ROOT writer <" << fName << "> is filling a track" << eom );
+        wtrmsg_debug( "ROOT writer <" << GetName() << "> is filling a track" << eom );
 
         if ( fStepIndex != 0 )
         {
@@ -642,7 +642,7 @@ namespace Kassiopeia
     {
         if ( fStepIterationIndex % fStepIteration != 0 )
         {
-            wtrmsg_debug( "ROOT writer <" << fName << "> is skipping a step because of step iteration value <"<<fStepIteration<<">" << eom );
+            wtrmsg_debug( "ROOT writer <" << GetName() << "> is skipping a step because of step iteration value <"<<fStepIteration<<">" << eom );
             fStepIterationIndex++;
             return;
         }
@@ -662,7 +662,7 @@ namespace Kassiopeia
 
         if( fStepComponent == true )
         {
-            wtrmsg_debug( "ROOT writer <" << fName << "> is filling a step" << eom );
+            wtrmsg_debug( "ROOT writer <" << GetName() << "> is filling a step" << eom );
 
             if ( tWriteCondition == true )
             {

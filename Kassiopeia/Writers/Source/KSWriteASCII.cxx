@@ -478,7 +478,7 @@ namespace Kassiopeia
 
     void KSWriteASCII::ExecuteRun()
     {
-        wtrmsg_debug( "ASCII writer <" << fName << "> is filling a run" << eom );
+        wtrmsg_debug( "ASCII writer <" << GetName() << "> is filling a run" << eom );
 
         if ( fEventIndex != 0 )
             fRunLastEventIndex = fEventIndex - 1;
@@ -502,7 +502,7 @@ namespace Kassiopeia
 
     void KSWriteASCII::ExecuteEvent()
     {
-        wtrmsg_debug( "ASCII writer <" << fName << "> is filling an event" << eom );
+        wtrmsg_debug( "ASCII writer <" << GetName() << "> is filling an event" << eom );
 
         if ( fTrackIndex != 0 )
             fEventLastTrackIndex = fTrackIndex - 1;
@@ -522,7 +522,7 @@ namespace Kassiopeia
     }
     void KSWriteASCII::ExecuteTrack()
     {
-        wtrmsg_debug( "ASCII writer <" << fName << "> is filling a track" << eom );
+        wtrmsg_debug( "ASCII writer <" << GetName() << "> is filling a track" << eom );
 
         if ( fStepIndex != 0 )
             fTrackLastStepIndex = fStepIndex - 1;
@@ -568,14 +568,14 @@ namespace Kassiopeia
     {
         if ( fStepIterationIndex % fStepIteration != 0 )
         {
-            wtrmsg_debug( "ASCII writer <" << fName << "> is skipping a step because of step iteration value <"<<fStepIteration<<">" << eom );
+            wtrmsg_debug( "ASCII writer <" << GetName() << "> is skipping a step because of step iteration value <"<<fStepIteration<<">" << eom );
             fStepIterationIndex++;
             return;
         }
         fTextFile->File()->put('\n');
         if( fStepComponent == true )
         {
-            wtrmsg_debug( "ASCII writer <" << fName << "> is filling a step" << eom );
+            wtrmsg_debug( "ASCII writer <" << GetName() << "> is filling a step" << eom );
 
             for( ComponentIt tIt = fActiveStepComponents.begin(); tIt != fActiveStepComponents.end(); tIt++ )
                 tIt->second->Fill();

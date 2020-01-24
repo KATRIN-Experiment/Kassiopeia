@@ -70,18 +70,18 @@ namespace Kassiopeia
 
     void KSWriteVTK::ExecuteRun()
     {
-        wtrmsg_debug( "VTK writer <" << fName << "> is filling a run" << eom );
+        wtrmsg_debug( "VTK writer <" << GetName() << "> is filling a run" << eom );
         return;
     }
     void KSWriteVTK::ExecuteEvent()
     {
-        wtrmsg_debug( "VTK writer <" << fName << "> is filling an event" << eom );
+        wtrmsg_debug( "VTK writer <" << GetName() << "> is filling an event" << eom );
         BreakTrack();
         return;
     }
     void KSWriteVTK::ExecuteTrack()
     {
-        wtrmsg_debug( "VTK writer <" << fName << "> is filling a track" << eom );
+        wtrmsg_debug( "VTK writer <" << GetName() << "> is filling a track" << eom );
         BreakStep();
         FillTrack();
         return;
