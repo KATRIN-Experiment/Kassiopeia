@@ -234,7 +234,7 @@ namespace KEMField
       devices.push_back(KOpenCLInterface::GetInstance()->GetDevice());
       program.build(devices,GetOpenCLFlags().c_str());
     }
-    catch (cl::Error error)
+    catch (cl::Error &error)
     {
       std::cout<<__FILE__<<":"<<__LINE__<<std::endl;
       std::cout<<"There was an error compiling the kernels.  Here is the information from the OpenCL C++ API:"<<std::endl;

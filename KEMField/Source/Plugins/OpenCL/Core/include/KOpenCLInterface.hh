@@ -74,7 +74,7 @@
 #endif
 
 #ifdef USE_CL_ERROR_TRY_CATCH
-#define CL_ERROR_CATCH  catch (cl::Error error) \
+#define CL_ERROR_CATCH  catch (cl::Error &error) \
                         { \
                             std::cout<<"OpenCL Exception caught: "<<std::endl;\
                             std::cout<<__FILE__<<":"<<__LINE__<<std::endl; \
