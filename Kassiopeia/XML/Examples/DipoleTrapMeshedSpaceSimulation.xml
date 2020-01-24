@@ -5,76 +5,76 @@
 
     <file path="[log_path]" base="DipoleTrapMeshedLog.txt"/>
 
-	<message key="k_file" terminal="normal" log="warning"/>
-	<message key="k_initialization" terminal="normal" log="warning"/>
+    <message key="k_file" terminal="normal" log="warning"/>
+    <message key="k_initialization" terminal="normal" log="warning"/>
 
     <message key="kg_core" terminal="normal" log="warning"/>
-	<message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_shape" terminal="normal" log="warning"/>
     <message key="kg_mesh" terminal="normal" log="warning"/>
     <message key="kg_axial_mesh" terminal="normal" log="warning"/>
 
-	<message key="ks_object" terminal="normal" log="normal"/>
+    <message key="ks_object" terminal="normal" log="normal"/>
     <message key="ks_operator" terminal="normal" log="normal"/>
-	<message key="ks_field" terminal="normal" log="normal"/>
-	<message key="ks_geometry" terminal="normal" log="normal"/>
+    <message key="ks_field" terminal="normal" log="normal"/>
+    <message key="ks_geometry" terminal="normal" log="normal"/>
     <message key="ks_generator" terminal="normal" log="normal"/>
-	<message key="ks_trajectory" terminal="normal" log="normal"/>
-	<message key="ks_interaction" terminal="normal" log="normal"/>
+    <message key="ks_trajectory" terminal="normal" log="normal"/>
+    <message key="ks_interaction" terminal="normal" log="normal"/>
     <message key="ks_navigator" terminal="normal" log="normal"/>
-	<message key="ks_terminator" terminal="normal" log="normal"/>
-	<message key="ks_writer" terminal="normal" log="normal"/>
-	<message key="ks_main" terminal="normal" log="normal"/>
-	<message key="ks_run" terminal="normal" log="normal"/>
-	<message key="ks_event" terminal="normal" log="normal"/>
-	<message key="ks_track" terminal="normal" log="normal"/>
-	<message key="ks_step" terminal="normal" log="normal"/>
+    <message key="ks_terminator" terminal="normal" log="normal"/>
+    <message key="ks_writer" terminal="normal" log="normal"/>
+    <message key="ks_main" terminal="normal" log="normal"/>
+    <message key="ks_run" terminal="normal" log="normal"/>
+    <message key="ks_event" terminal="normal" log="normal"/>
+    <message key="ks_track" terminal="normal" log="normal"/>
+    <message key="ks_step" terminal="normal" log="normal"/>
 
 </messages>
 
 
 <geometry>
 
-	<!-- world -->
+    <!-- world -->
 
-	<cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
+    <cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
 
-	<!-- solenoid -->
+    <!-- solenoid -->
 
     <tag name="magnet_tag">
         <cylinder_tube_space
-        	name="solenoid_space"
-        	z1="-1.e-2"
-        	z2="1.e-2"
-        	r1="0.5e-2"
-        	r2="1.5e-2"
-        	radial_mesh_count="30"
+            name="solenoid_space"
+            z1="-1.e-2"
+            z2="1.e-2"
+            r1="0.5e-2"
+            r2="1.5e-2"
+            radial_mesh_count="30"
         />
     </tag>
 
     <!-- ring -->
 
     <tag name="electrode_tag">
-    	<cylinder_surface
-    		name="ring_surface"
-    		z1="-2.0e-2"
-    		z2="2.0e-2"
-    		r="2.5e-1"
-    		longitudinal_mesh_count="200"
+        <cylinder_surface
+            name="ring_surface"
+            z1="-2.0e-2"
+            z2="2.0e-2"
+            r="2.5e-1"
+            longitudinal_mesh_count="200"
             longitudinal_mesh_power="3."
             axial_mesh_count="128"
         />
     </tag>
 
-	<!-- guard surface -->
-	<!-- this surface is to keep particle from getting too close to the electrode -->
-	<!-- if they are too close the field calculation will fail -->
+    <!-- guard surface -->
+    <!-- this surface is to keep particle from getting too close to the electrode -->
+    <!-- if they are too close the field calculation will fail -->
     <tag name="guard_tag">
-    	<cylinder_surface
-    		name="guard_surface"
-    		z1="-0.5"
-    		z2="0.5"
-    		r="0.21"
-    		longitudinal_mesh_count="200"
+        <cylinder_surface
+            name="guard_surface"
+            z1="-0.5"
+            z2="0.5"
+            r="0.21"
+            longitudinal_mesh_count="200"
             longitudinal_mesh_power="1."
             axial_mesh_count="128"
         />
@@ -84,12 +84,12 @@
     <!-- tube -->
 
     <tag name="electrode_tag">
-    	<cylinder_surface
-    		name="tube_surface"
-        	z1="-1.e-2"
-        	z2="1.e-2"
-        	r="0.5e-2"
-    		longitudinal_mesh_count="200"
+        <cylinder_surface
+            name="tube_surface"
+            z1="-1.e-2"
+            z2="1.e-2"
+            r="0.5e-2"
+            longitudinal_mesh_count="200"
             longitudinal_mesh_power="3."
             axial_mesh_count="128"
         />
@@ -106,12 +106,12 @@
         <disk_surface name="center_surface" radial_mesh_count="32" radial_mesh_power="1" axial_mesh_count="32" r="2.5e-1" z="0.0"/>
     </tag>
 
-	<!-- intermediate z-coordinate surfaces -->
-	<tag name="intermediate_z_tag">
+    <!-- intermediate z-coordinate surfaces -->
+    <tag name="intermediate_z_tag">
         <disk_surface name="intermediate_z_surface" radial_mesh_count="32" radial_mesh_power="1" axial_mesh_count="32" r="2.5e-1" z="0.0"/>
-	</tag>
+    </tag>
 
-	<!-- azimuthal surfaces intersection testing -->
+    <!-- azimuthal surfaces intersection testing -->
     <extruded_line_segment_surface name="azimuthal_surface" zmin="-0.5" zmax="0.5" extruded_mesh_count="64" extruded_mesh_power="1">
         <line_segment x1="0." y1="0." x2="0.5" y2="0.0" line_mesh_count="64" line_mesh_power="1"/>
     </extruded_line_segment_surface>
@@ -119,44 +119,44 @@
     <!-- assembly -->
 
     <space name="dipole_trap_assembly">
-    	<surface name="ring" node="ring_surface"/>
+        <surface name="ring" node="ring_surface"/>
         <surface name="center" node="center_surface"/>
-		<loop variable="i" start="0" end="10" step="1">
-		<surface name="intermediate_z[i]" node="intermediate_z_surface">
-    		<transformation displacement="0. 0. {-0.5 + [i]*(0.4/10.)}"/>
-		</surface>
-    	</loop>
-		<loop variable="i" start="10" end="20" step="1">
-		<surface name="intermediate_z[i]" node="intermediate_z_surface">
-    		<transformation displacement="0. 0. {0.1 + ([i]-10)*(0.4/10.)}"/>
-		</surface>
-    	</loop>
-		<loop variable="i" start="0" end="20" step="1">
-		<surface name="azimuthal[i]" node="azimuthal_surface">
-    		<transformation rotation_euler="0. 0. {[i]*(360.0/20.)}"/>
-		</surface>
-    	</loop>
-    	<space name="downstream_solenoid" node="solenoid_space">
-    		<transformation displacement="0. 0. -0.5"/>
-    	</space>
-    	<surface name="downstream_tube" node="tube_surface">
-    		<transformation displacement="0. 0. -0.5"/>
-    	</surface>
-    	<surface name="upstream_target" node="target_surface">
-    		<transformation displacement="0. 0. -0.48"/>
-    	</surface>
-    	<space name="upstream_solenoid" node="solenoid_space">
-    		<transformation displacement="0. 0. 0.5"/>
-    	</space>
-    	<surface name="upstream_tube" node="tube_surface">
-    		<transformation displacement="0. 0. 0.5"/>
-    	</surface>
-    	<surface name="downstream_target" node="target_surface">
-    		<transformation displacement="0. 0. 0.48"/>
-    	</surface>
-		<surface name="guard" node="guard_surface">
-			<transformation displacement="0. 0. 0.0"/>
-		</surface>
+        <loop variable="i" start="0" end="10" step="1">
+        <surface name="intermediate_z[i]" node="intermediate_z_surface">
+            <transformation displacement="0. 0. {-0.5 + [i]*(0.4/10.)}"/>
+        </surface>
+        </loop>
+        <loop variable="i" start="10" end="20" step="1">
+        <surface name="intermediate_z[i]" node="intermediate_z_surface">
+            <transformation displacement="0. 0. {0.1 + ([i]-10)*(0.4/10.)}"/>
+        </surface>
+        </loop>
+        <loop variable="i" start="0" end="20" step="1">
+        <surface name="azimuthal[i]" node="azimuthal_surface">
+            <transformation rotation_euler="0. 0. {[i]*(360.0/20.)}"/>
+        </surface>
+        </loop>
+        <space name="downstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. -0.5"/>
+        </space>
+        <surface name="downstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. -0.5"/>
+        </surface>
+        <surface name="upstream_target" node="target_surface">
+            <transformation displacement="0. 0. -0.48"/>
+        </surface>
+        <space name="upstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. 0.5"/>
+        </space>
+        <surface name="upstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. 0.5"/>
+        </surface>
+        <surface name="downstream_target" node="target_surface">
+            <transformation displacement="0. 0. 0.48"/>
+        </surface>
+        <surface name="guard" node="guard_surface">
+            <transformation displacement="0. 0. 0.0"/>
+        </surface>
     </space>
 
     <space name="world" node="world_space">
@@ -188,7 +188,7 @@
 
 <kassiopeia>
 
-	<!-- magnetic fields -->
+    <!-- magnetic fields -->
 
     <ksfield_electromagnet
         name="field_electromagnet"
@@ -245,13 +245,13 @@
     </ksfield_electrostatic>
 
     <ksfield_electric_constant
-    	name="field_constant"
-    	field="0. 0. 0."
-	/>
+        name="field_constant"
+        field="0. 0. 0."
+    />
 
-	<!-- generators -->
+    <!-- generators -->
 
-	<ksgen_generator_composite name="generator_uniform" pid="11">
+    <ksgen_generator_composite name="generator_uniform" pid="11">
         <energy_composite>
             <energy_fix value="1."/>
         </energy_composite>
@@ -271,10 +271,10 @@
 
     <!-- trajectories-->
 
-	<!-- specify the name of trajectory type to be used for tracking -->
-	<define name="trajectory_name" value="trajectory_adiabatic"/>
+    <!-- specify the name of trajectory type to be used for tracking -->
+    <define name="trajectory_name" value="trajectory_adiabatic"/>
 
-	<!-- exact trajectory -->
+    <!-- exact trajectory -->
     <kstraj_trajectory_exact name="trajectory_exact" piecewise_tolerance="1e-12" max_segments="64">
         <interpolator_crk name="interpolator_crk"/>
         <integrator_rkdp853 name="integrator_rkdp853"/>
@@ -401,16 +401,16 @@
         <geo_surface name="surface_electrode_ring" surfaces="world/dipole_trap/ring">
             <command parent="root_terminator" field="add_terminator" child="term_ring"/>
         </geo_surface>
-		<loop variable="i" start="0" end="20" step="1">
+        <loop variable="i" start="0" end="20" step="1">
          <geo_surface name="surface_intermediate_z[i]" surfaces="world/dipole_trap/intermediate_z[i]"/>
-    	</loop>
-		<loop variable="i" start="0" end="20" step="1">
+        </loop>
+        <loop variable="i" start="0" end="20" step="1">
          <geo_surface name="surface_azimuthal[i]" surfaces="world/dipole_trap/azimuthal[i]"/>
-    	</loop>
+        </loop>
     </ksgeo_space>
 
-	<!-- meshed space navigator must be specified after structure so it can construct the octree -->
-	<!-- Note: if you see multiple intersections detected in the same place, you may need to increase your tolerances -->
+    <!-- meshed space navigator must be specified after structure so it can construct the octree -->
+    <!-- Note: if you see multiple intersections detected in the same place, you may need to increase your tolerances -->
     <ksnav_meshed_space
         name="nav_meshed_space"
         octree_file="dipole_octree.kbd"
