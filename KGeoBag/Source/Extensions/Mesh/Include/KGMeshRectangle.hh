@@ -13,6 +13,7 @@ namespace KGeoBag
         public:
             KGMeshRectangle( const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1, const KThreeVector& n2 );
             KGMeshRectangle( const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& /*p2*/, const KThreeVector& p3 );
+            KGMeshRectangle( const KGMeshRectangle& r );
             virtual ~KGMeshRectangle();
 
             double Area() const;

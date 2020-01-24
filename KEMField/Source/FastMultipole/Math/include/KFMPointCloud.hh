@@ -37,6 +37,15 @@ class KFMPointCloud
             }
         }
 
+        KFMPointCloud& operator=(const KFMPointCloud& copyObject)
+        {
+            if(&copyObject != this)
+            {
+                fPoints = copyObject.fPoints;
+            }
+            return *this;
+        }
+
         unsigned int GetNPoints() const
         {
             return fPoints.size();

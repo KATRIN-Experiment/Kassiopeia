@@ -6,6 +6,10 @@ namespace Kassiopeia
     KSTrajElectricDerivative::KSTrajElectricDerivative()
     {
     }
+    KSTrajElectricDerivative::KSTrajElectricDerivative( const KSTrajElectricDerivative& anOperand ) :
+        KSMathArray<5>( anOperand )
+    {
+    }
     KSTrajElectricDerivative::~KSTrajElectricDerivative()
     {
     }

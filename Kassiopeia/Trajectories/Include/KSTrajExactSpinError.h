@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajExactSpinError();
+            KSTrajExactSpinError( const KSTrajExactSpinError& anOperand );
             ~KSTrajExactSpinError();
 
             //**********

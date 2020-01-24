@@ -14,6 +14,10 @@ namespace Kassiopeia
             fPhaseError( 0. )
     {
     }
+    KSTrajAdiabaticError::KSTrajAdiabaticError( const KSTrajAdiabaticError& anOperand ) :
+        KSMathArray< 8 >( anOperand )
+    {
+    }
     KSTrajAdiabaticError::~KSTrajAdiabaticError()
     {
     }

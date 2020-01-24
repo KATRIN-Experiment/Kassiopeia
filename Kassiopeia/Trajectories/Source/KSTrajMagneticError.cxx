@@ -12,6 +12,11 @@ namespace Kassiopeia
     {
     }
 
+    KSTrajMagneticError::KSTrajMagneticError( const KSTrajMagneticError& anOperand ) :
+         KSMathArray< 5 >( anOperand )
+    {
+    }
+
     KSTrajMagneticError::~KSTrajMagneticError()
     {
     }

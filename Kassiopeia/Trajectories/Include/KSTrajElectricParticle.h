@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajElectricParticle();
+            KSTrajElectricParticle( const KSTrajElectricParticle& aParticle );
             ~KSTrajElectricParticle();
 
             //**********

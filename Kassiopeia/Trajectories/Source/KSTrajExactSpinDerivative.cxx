@@ -6,6 +6,10 @@ namespace Kassiopeia
     KSTrajExactSpinDerivative::KSTrajExactSpinDerivative()
     {
     }
+    KSTrajExactSpinDerivative::KSTrajExactSpinDerivative( const KSTrajExactSpinDerivative& anOperand ) :
+        KSMathArray<12>( anOperand )
+    {
+    }
     KSTrajExactSpinDerivative::~KSTrajExactSpinDerivative()
     {
     }

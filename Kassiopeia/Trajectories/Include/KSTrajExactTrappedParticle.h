@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajExactTrappedParticle();
+            KSTrajExactTrappedParticle( const KSTrajExactTrappedParticle& anOperand );
             ~KSTrajExactTrappedParticle();
 
             //**********

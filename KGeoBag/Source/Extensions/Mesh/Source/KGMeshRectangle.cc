@@ -29,6 +29,15 @@ namespace KGeoBag
         fB = fN2.Magnitude();
         fN2 = fN2.Unit();
     }
+    KGMeshRectangle::KGMeshRectangle( const KGMeshRectangle& r ) :
+            KGMeshElement( r ),
+            fA( r.fA ),
+            fB( r.fB ),
+            fP0( r.fP0 ),
+            fN1( r.fN1 ),
+            fN2( r.fN2 )
+    {
+    }
     KGMeshRectangle::~KGMeshRectangle()
     {
     }

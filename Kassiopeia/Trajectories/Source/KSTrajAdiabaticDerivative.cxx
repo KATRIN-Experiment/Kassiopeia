@@ -6,6 +6,10 @@ namespace Kassiopeia
     KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative()
     {
     }
+    KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative( const KSTrajAdiabaticDerivative& anOperand ) :
+        KSMathArray<8>( anOperand )
+    {
+    }
     KSTrajAdiabaticDerivative::~KSTrajAdiabaticDerivative()
     {
     }

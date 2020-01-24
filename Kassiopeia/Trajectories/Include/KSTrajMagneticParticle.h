@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajMagneticParticle();
+            KSTrajMagneticParticle( const KSTrajMagneticParticle& aParticle );
             ~KSTrajMagneticParticle();
 
             //**********

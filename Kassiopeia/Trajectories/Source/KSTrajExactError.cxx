@@ -11,6 +11,11 @@ namespace Kassiopeia
     {
     }
 
+    KSTrajExactError::KSTrajExactError( const KSTrajExactError& anOperand ) :
+        KSMathArray< 8 >( anOperand )
+    {
+    }
+
     KSTrajExactError::~KSTrajExactError()
     {
     }

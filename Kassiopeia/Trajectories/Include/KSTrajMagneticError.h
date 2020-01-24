@@ -14,6 +14,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajMagneticError();
+            KSTrajMagneticError( const KSTrajMagneticError& anOperand );
             virtual ~KSTrajMagneticError();
 
             //**********

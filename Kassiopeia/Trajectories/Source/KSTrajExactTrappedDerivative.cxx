@@ -6,6 +6,10 @@ namespace Kassiopeia
     KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative()
     {
     }
+    KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative( const KSTrajExactTrappedDerivative& anOperand ) :
+        KSMathArray<8>( anOperand )
+    {
+    }
     KSTrajExactTrappedDerivative::~KSTrajExactTrappedDerivative()
     {
     }

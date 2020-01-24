@@ -12,6 +12,7 @@ namespace Kassiopeia
     {
         public:
             KSTrajAdiabaticSpinParticle();
+            KSTrajAdiabaticSpinParticle( const KSTrajAdiabaticSpinParticle& aParticle );
             ~KSTrajAdiabaticSpinParticle();
 
             //**********
