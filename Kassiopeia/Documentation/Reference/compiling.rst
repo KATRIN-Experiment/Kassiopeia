@@ -226,25 +226,25 @@ settings require additional libraries or special hardware in order to operate.
 
 The use of some external libraries, (e.g. ROOT_ and VTK_) is collectively toggled
 for all sub-modules at once. The *Kassiopeia* simulation software can link against
-these libraries using the *Kasper* flags outlined in the table below:
+these libraries using the *KASPER* flags outlined in the table below:
 
 +---------------------------------------------------------------------------------------------------------+
 | Collective options                                                                                      |
 +--------------------+---------------------------------------+--------------------------------------------+
 | CMake option name  | Required software                     | Description                                |
 +====================+=======================================+============================================+
-| Kasper_USE_BOOST   | Boost_ developer libraries            | Build Boost dependent extensions.          |
+| KASPER_USE_BOOST   | Boost_ developer libraries            | Build Boost dependent extensions.          |
 +--------------------+---------------------------------------+--------------------------------------------+
-| Kasper_USE_GSL     |  The GNU scientific library (GSL_)    | Build GSL dependent extensions             |
+| KASPER_USE_GSL     |  The GNU scientific library (GSL_)    | Build GSL dependent extensions             |
 +--------------------+---------------------------------------+--------------------------------------------+
-| Kasper_USE_ROOT    | The CERN ROOT_ libraries              | Build ROOT dependent extensions.           |
+| KASPER_USE_ROOT    | The CERN ROOT_ libraries              | Build ROOT dependent extensions.           |
 +--------------------+---------------------------------------+--------------------------------------------+
-| Kasper_USE_TBB     |  Intel (TBB_) thread building blocks  | Build TBB_ based parallel processing tools.|
+| KASPER_USE_TBB     |  Intel (TBB_) thread building blocks  | Build TBB_ based parallel processing tools.|
 +--------------------+---------------------------------------+--------------------------------------------+
-| Kasper_USE_VTK     |  Kitware's visualization toolkit VTK_ | Build advanced tools for visualization.    |
+| KASPER_USE_VTK     |  Kitware's visualization toolkit VTK_ | Build advanced tools for visualization.    |
 +--------------------+---------------------------------------+--------------------------------------------+
 
-By default, the ``Kasper_USE_ROOT`` and ``Kasper_USE_GSL`` flags are turned on,
+By default, the ``KASPER_USE_ROOT`` and ``KASPER_USE_GSL`` flags are turned on,
 reflecting their importance for the default configuration of *Kassiopeia*.
 
 Toggling of additional optional dependencies is very granular and may be enabled/disabled
