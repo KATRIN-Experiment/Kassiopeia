@@ -129,11 +129,25 @@ namespace Kassiopeia
 
             if( fOutFile.length() > 0 )
             {
-                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fOutFile;
+                if( !fPath.empty() )
+                {
+                    tFile = string( fPath ) + string( "/" ) + fOutFile;
+                }
+                else
+                {
+                    tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + fOutFile;
+                }
             }
             else
             {
-                tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+                if( !fPath.empty() )
+                {
+                    tFile = string( fPath ) + string( "/" ) + GetName() + string( ".vtp" );
+                }
+                else
+                {
+                    tFile = string( OUTPUT_DEFAULT_DIR ) + string( "/" ) + GetName() + string( ".vtp" );
+                }
             }
 
             vismsg( eNormal ) << "vtk track terminator painter <" << GetName() << "> is writing <" << fData->GetNumberOfCells() << "> cells to file <" << tFile << ">" << eom;
