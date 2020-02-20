@@ -26,6 +26,7 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenEnergyRadonEvent.h
     KSGenEnergyLeadEvent.h
     KSGenEnergyBetaDecay.h
+    KSGenEnergyBetaRecoil.h
     KSGenEnergyRydberg.h
     KSGenNComposite.h
     KSGenLComposite.h
@@ -104,6 +105,7 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenEnergyRadonEvent.cxx
     KSGenEnergyLeadEvent.cxx
     KSGenEnergyBetaDecay.cxx
+    KSGenEnergyBetaRecoil.cxx
     KSGenEnergyRydberg.cxx
     KSGenNComposite.cxx
     KSGenLComposite.cxx

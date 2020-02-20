@@ -40,6 +40,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenEnergyRadonEventBuilder.h
     Generators/Include/KSGenEnergyLeadEventBuilder.h
     Generators/Include/KSGenEnergyBetaDecayBuilder.h
+    Generators/Include/KSGenEnergyBetaRecoilBuilder.h
     Generators/Include/KSGenEnergyRydbergBuilder.h
     Generators/Include/KSGenNCompositeBuilder.h
     Generators/Include/KSGenLCompositeBuilder.h
@@ -260,6 +261,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenEnergyRadonEventBuilder.cxx
     Generators/Source/KSGenEnergyLeadEventBuilder.cxx
     Generators/Source/KSGenEnergyBetaDecayBuilder.cxx
+    Generators/Source/KSGenEnergyBetaRecoilBuilder.cxx
     Generators/Source/KSGenEnergyRydbergBuilder.cxx
     Generators/Source/KSGenNCompositeBuilder.cxx
     Generators/Source/KSGenLCompositeBuilder.cxx
