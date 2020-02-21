@@ -258,7 +258,10 @@ void KFMElectrostaticRemoteToRemoteConverter_OpenCL::Prepare()
     //send the node multipole moments to the device
     unsigned int size = fNMultipoleNodes*fStride;
 
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wignored-attributes"
     std::vector< std::complex<CL_TYPE> > moments;
+    #pragma GCC diagnostic pop
     moments.resize(size);
 
     //now distribute the primary node moments
@@ -269,7 +272,10 @@ void KFMElectrostaticRemoteToRemoteConverter_OpenCL::Prepare()
 
         if(set != NULL)
         {
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wignored-attributes"
             std::complex<CL_TYPE> temp;
+            #pragma GCC diagnostic pop
             //we use raw ptr for speed
             double* rmoments = &( (*(set->GetRealMoments()))[0] );
             double* imoments = &( (*(set->GetImaginaryMoments()))[0] );
@@ -296,7 +302,10 @@ void KFMElectrostaticRemoteToRemoteConverter_OpenCL::Finalize()
     //read the node multipole coefficients back from the device
     unsigned int size = fNMultipoleNodes*fStride;
 
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wignored-attributes"
     std::vector< std::complex<CL_TYPE> > moments;
+    #pragma GCC diagnostic pop
     moments.resize(size);
 
     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fNodeMomentBufferCL, CL_TRUE, 0, size*sizeof(CL_TYPE2), &(moments[0]) );

@@ -35,8 +35,10 @@ namespace KEMField
     virtual void AssignBuffers() const;
 
     mutable cl_short fShapeInfo;
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wignored-attributes"
     mutable std::vector<CL_TYPE> fShapeData;
-
+    #pragma GCC diagnostic pop
     mutable std::string fOpenCLFlags;
 
     mutable cl::Buffer *fBufferP;

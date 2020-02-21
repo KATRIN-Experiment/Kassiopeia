@@ -182,6 +182,8 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::ConstructOpenCLKernels()
 void
 KFMElectrostaticMultipoleBatchCalculator_OpenCL::BuildBuffers()
 {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Waligned-new="
     //origin data
     fIntermediateOriginData = new CL_TYPE4[fNMaxItems];
 
@@ -333,6 +335,7 @@ KFMElectrostaticMultipoleBatchCalculator_OpenCL::BuildBuffers()
     }
     CL_ERROR_CATCH
 
+    #pragma GCC diagnostic pop
 }
 
 

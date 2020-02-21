@@ -78,11 +78,14 @@ namespace KEMField
     unsigned int fBoundarySize;
     unsigned int fBasisSize;
 
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wignored-attributes"
     std::vector<cl_short>  fShapeInfo;
     std::vector<CL_TYPE>   fShapeData;
     std::vector<cl_int>    fBoundaryInfo;
     std::vector<CL_TYPE>   fBoundaryData;
     std::vector<CL_TYPE>   fBasisData;
+    #pragma GCC diagnostic pop
 
     cl::Buffer* fBufferShapeInfo;
     cl::Buffer* fBufferShapeData;
