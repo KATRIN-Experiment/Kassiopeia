@@ -131,12 +131,8 @@ namespace Kassiopeia
         fEMax = GetRecoilEnergyMax();
         fPMax = GetRecoilEnergyProbabilityMax(fEMax);
 
-        genmsg( eNormal ) << ret << "KSGenEnergyBetaRecoil::InitializeComponent E max " << fEMax << ", g max " << fPMax << eom;
-
         if ( fMaxEnergy == -1. )
             fMaxEnergy = fEMax;
-
-        genmsg( eNormal ) << ret << "KSGenEnergyBetaRecoil::InitializeComponent E range " << fMinEnergy << " -- " << fMaxEnergy << eom;
 
         return;
     }
