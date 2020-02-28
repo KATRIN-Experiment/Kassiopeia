@@ -224,8 +224,11 @@ class KFMElectrostaticBatchedRemoteToLocalConverter_OpenCL: public KFMNodeActor<
         unsigned int fNZeroComplexArrayLocal;
 
         //scale factor buffers for scale invariant kernels
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wignored-attributes"
         std::vector< CL_TYPE > fSourceScaleFactorArray;
         std::vector< CL_TYPE > fTargetScaleFactorArray;
+        #pragma GCC diagnostic pop
         cl::Buffer* fSourceScaleFactorBufferCL;
         cl::Buffer* fTargetScaleFactorBufferCL;
 

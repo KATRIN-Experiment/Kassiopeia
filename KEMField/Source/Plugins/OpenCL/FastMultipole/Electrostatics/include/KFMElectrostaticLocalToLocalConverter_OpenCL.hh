@@ -105,8 +105,11 @@ class KFMElectrostaticLocalToLocalConverter_OpenCL: public KFMNodeActor< KFMElec
 
         //scale factor buffers for scale invariant kernels
         double fWorldLength;
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wignored-attributes"
         std::vector< CL_TYPE > fSourceScaleFactorArray;
         std::vector< CL_TYPE > fTargetScaleFactorArray;
+        #pragma GCC diagnostic pop
         cl::Buffer* fSourceScaleFactorBufferCL;
         cl::Buffer* fTargetScaleFactorBufferCL;
 
