@@ -1,6 +1,7 @@
 #include "KSGenGeneratorCompositeBuilder.h"
 #include "KSGenEnergyCompositeBuilder.h"
 #include "KSGenEnergyBetaDecayBuilder.h"
+#include "KSGenEnergyBetaRecoilBuilder.h"
 #include "KSGenEnergyKryptonEventBuilder.h"
 #include "KSGenEnergyRadonEventBuilder.h"
 #include "KSGenEnergyLeadEventBuilder.h"
@@ -56,6 +57,7 @@ namespace katrin
         KSGenGeneratorCompositeBuilder::Attribute< string >( "string_id" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyComposite >( "energy_composite" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyBetaDecay >( "energy_beta_decay" ) +
+        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyBetaRecoil >( "energy_beta_recoil" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyKryptonEvent >( "energy_krypton_event" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyRadonEvent >( "energy_radon_event" ) +
         KSGenGeneratorCompositeBuilder::ComplexElement< KSGenEnergyLeadEvent >( "energy_lead_event" ) +
