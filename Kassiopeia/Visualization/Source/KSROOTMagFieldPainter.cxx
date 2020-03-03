@@ -146,7 +146,7 @@ namespace Kassiopeia
 						}
 					}
 					else{
-						vismsg ( eError ) << "do not know what to plot" << eom;
+						vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
 					}
 				}
 			}
@@ -270,7 +270,7 @@ namespace Kassiopeia
 						}
 					}
 					else{
-						vismsg ( eError ) << "do not know what to plot" << eom;
+						vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
 					}
 				}
 			}
@@ -400,7 +400,7 @@ namespace Kassiopeia
 					}
 				}
 				else {
-					vismsg( eError ) << "do not know what to plot" << eom;
+					vismsg( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
 				}
 			}
 		}
@@ -414,8 +414,6 @@ namespace Kassiopeia
 		KSMagneticField* tMagField = getMagneticField( fMagneticFieldName );
 		if ( tMagField == NULL)
 			vismsg(eError) << "No magnetic Field!" << eom;
-		if ( fPlot!="magnetic_field_abs" && fPlot!="magnetic_field_x" && fPlot!="magnetic_field_x_abs"&& fPlot!="magnetic_field_y" && fPlot!="magnetic_field_y_abs" && fPlot!="magnetic_field_z" && fPlot!="magnetic_field_z_abs" && fPlot!="magnetic_potential_abs" && fPlot!="magnetic_gradient_z" && fPlot!="magnetic_gradient_z_abs" && fPlot!="magnetic_gradient_x" && fPlot!="magnetic_gradient_x_abs" && fPlot!="magnetic_gradient_y" && fPlot!="magnetic_gradient_y_abs" )
-			vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
 		vismsg(eNormal) << "Initialize magnetic field (again)" << eom;
 		tMagField->Initialize();
 
