@@ -6,7 +6,7 @@
 #include "KSGenValueGaussBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
 #include "KSGenValueHistogramBuilder.h"
 #endif
@@ -48,7 +48,7 @@ namespace katrin
     STATICINT sToolboxKSGenMomentumRectangularComposite =
         KSRootBuilder::ComplexElement< KSGenMomentumRectangularComposite >( "ksgen_momentum_rectangular_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
     STATICINT sKSGenPositionRectangularCompositeStructureROOT =
             KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueFormula >( "x_formula" ) +
             KSGenMomentumRectangularCompositeBuilder::ComplexElement< KSGenValueHistogram >( "x_histogram" ) +
