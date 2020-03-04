@@ -48,6 +48,7 @@ LABEL maintainer=wdconinc@gmail.com
 COPY --from=build /usr/local /usr/local
 RUN echo "/usr/local/lib64" > /etc/ld.so.conf.d/local-x86_64.conf \
  && ldconfig
+RUN strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
 
 WORKDIR /usr/local
 
