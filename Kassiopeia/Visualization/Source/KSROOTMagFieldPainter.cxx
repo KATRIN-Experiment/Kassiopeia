@@ -114,6 +114,9 @@ namespace Kassiopeia
 								Map->SetBinContent(i+1,fRsteps-j+1, tGradient );
 								Map->SetBinContent(i+1,fRsteps+j+1, tGradient );
 							}
+		                                        else{
+		                                                vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
+		                                        }
 						}
 						else if( fGradNumerical==false){
 //							calculate gradient matrix
@@ -143,6 +146,9 @@ namespace Kassiopeia
 								Map->SetBinContent(i+1,fRsteps-j+1, fabs(tGradB.X()) );
 								Map->SetBinContent(i+1,fRsteps+j+1, fabs(tGradB.X()) );
 							}
+		                                        else{
+		                                                vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
+		                                        }
 						}
 					}
 					else{
@@ -237,6 +243,9 @@ namespace Kassiopeia
 								Double_t tGradient = fabs((tMagneticField_y.Magnitude()-tMagneticField.Magnitude())/tDeltaR);
 								Map->SetBinContent(i+1,fRsteps+j+1, tGradient );
 							}
+		                                        else{
+		                                                vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
+		                                        }
 						}
 						else if( fGradNumerical==false){
 //							calculate gradient matrix
@@ -267,11 +276,14 @@ namespace Kassiopeia
 							else if( fPlot=="magnetic_gradient_y_abs" ){
 								Map->SetBinContent(i+1,fRsteps+j+1, fabs(tGradB.Y()) );
 							}
+		                                        else{
+		                                                vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
+		                                        }
 						}
 					}
-					else{
-						vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
-					}
+                                        else{
+                                                vismsg ( eError ) << "do not know what to plot, plot=<"<<fPlot<<"> is not defined in KSROOTMagFieldPainter" << eom;
+                                        }
 				}
 			}
 		}
