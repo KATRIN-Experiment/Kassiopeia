@@ -52,8 +52,9 @@ RUN strip --remove-section=.note.ABI-tag /usr/lib64/libQt5Core.so.5
 
 WORKDIR /usr/local
 
-RUN echo '#!/bin/bash' >  /usr/local/bin/entrypoint.sh && \
-    echo 'exec "$@"'   >> /usr/local/bin/entrypoint.sh && \
+RUN echo '#!/bin/bash'                         >  /usr/local/bin/entrypoint.sh && \
+    echo '. /usr/local/bin/kasperenv.sh `pwd`' >> /usr/local/bin/entrypoint.sh && \
+    echo 'exec "$@"'                           >> /usr/local/bin/entrypoint.sh && \
     chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
