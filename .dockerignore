@@ -1,0 +1,10 @@
+.git
+.gitignore
+.cache
+.project
+.settings
+.cproject
+build
+install
+Dockerfile
+.dockerignore

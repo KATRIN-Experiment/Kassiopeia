@@ -1,0 +1,13 @@
+binutils
+cmake
+make
+gcc
+gcc-c++
+gsl-devel
+boost-devel
+zlib-devel
+libxml2-devel
+tbb-devel
+vtk-devel
+ocl-icd-devel
+root-core
