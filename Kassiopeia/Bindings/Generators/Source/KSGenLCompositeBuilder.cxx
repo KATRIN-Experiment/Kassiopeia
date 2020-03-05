@@ -6,7 +6,7 @@
 #include "KSGenValueGaussBuilder.h"
 #include "KSRootBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
 #endif
 
@@ -33,7 +33,7 @@ namespace katrin
     STATICINT sKSGenLComposite =
         KSRootBuilder::ComplexElement< KSGenLComposite >( "ksgen_l_composite" );
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
     STATICINT sKSGenLCompositeStructureROOT =
             KSGenLCompositeBuilder::ComplexElement< KSGenValueFormula >( "l_formula" );
 #endif

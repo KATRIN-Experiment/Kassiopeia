@@ -7,7 +7,7 @@
 #include "KSGenValueUniformBuilder.h"
 #include "KSGenValueGaussBuilder.h"
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
 #include "KSGenValueFormulaBuilder.h"
 #endif
 
@@ -39,7 +39,7 @@ namespace katrin
 		KSGenPositionFluxTubeBuilder::ComplexElement< KSGenValueUniform >( "z_uniform" ) +
 		KSGenPositionFluxTubeBuilder::ComplexElement< KSGenValueGauss >( "z_gauss" );
 
-#ifdef KASSIOPEIA_USE_ROOT
+#ifdef Kassiopeia_USE_ROOT
     STATICINT sKSGenPositionFluxTubeStructureROOT =
     		KSGenPositionFluxTubeBuilder::ComplexElement< KSGenValueFormula >( "r_formula" ) +
     		KSGenPositionFluxTubeBuilder::ComplexElement< KSGenValueFormula >( "z_formula" );
