@@ -95,6 +95,32 @@ Kassiopeia: Simulation of electric and magnetic fields and particle tracking
 
 
 --------------------------------------------------
+ Docker container
+--------------------------------------------------
+
+    1. A Docker container with Kasper is available at
+        https://hub.docker.com/r/katrinexperiment/kassiopeia
+    2. This Docker container can be used with Docker
+       (with superuser privileges).
+        A. Pull the container to your system with
+            > sudo docker pull katrinexperiment/kassiopeia
+        B. Open a shell inside the container with
+            > sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
+    3. The Docker container can also be used with Singularity
+       (as a regular user).
+        A. Pull the container to your system with
+            > singularity pull docker://katrinexperiment/kassiopeia
+        B. Open a shell inside the container with
+            > singularity shell docker://katrinexperiment/kassiopeia
+           or (if a local copy is available already)
+            > singularity shell kassiopeia-latest.sif
+    4. Build the container locally with
+        > sudo docker build -t katrinexperiment/kassiopeia .
+       and upload the local container to Docker Hub with
+        > sudo docker push katrinexperiment/kassiopeia
+
+
+--------------------------------------------------
  Documentation
 --------------------------------------------------
 
