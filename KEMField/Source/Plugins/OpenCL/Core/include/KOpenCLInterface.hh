@@ -52,6 +52,7 @@
 #define CL_TYPE4 cl_float4
 #define CL_TYPE8 cl_float8
 #define CL_TYPE16 cl_float16
+#pragma GCC diagnostic ignored "-Wnarrowing"
 #endif
 
 #include <vector>
