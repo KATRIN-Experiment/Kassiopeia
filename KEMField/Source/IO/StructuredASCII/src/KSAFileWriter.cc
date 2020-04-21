@@ -4,10 +4,6 @@
 
 #include <assert.h>
 
-#ifndef KEMFIELD_USE_ZLIB
-#include "miniz.c"
-#endif
-
 namespace KEMField{
 
 KSAFileWriter::KSAFileWriter():
