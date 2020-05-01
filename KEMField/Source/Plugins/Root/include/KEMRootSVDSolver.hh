@@ -6,12 +6,10 @@
 
 namespace KEMField
 {
-  template <typename ValueType>
-  class KEMRootSVDSolver;
+template<typename ValueType> class KEMRootSVDSolver;
 
-  template <>
-  class KEMRootSVDSolver<double>
-  {
+template<> class KEMRootSVDSolver<double>
+{
   public:
     typedef double ValueType;
     typedef KMatrix<ValueType> Matrix;
@@ -20,12 +18,15 @@ namespace KEMField
     KEMRootSVDSolver() : fTolerance(1.e-14) {}
     virtual ~KEMRootSVDSolver() {}
 
-    bool Solve(const Matrix& A,Vector& x, const Vector& b) const;
-    void SetTolerance(double tol) { fTolerance = tol; }
+    bool Solve(const Matrix& A, Vector& x, const Vector& b) const;
+    void SetTolerance(double tol)
+    {
+        fTolerance = tol;
+    }
 
   private:
     double fTolerance;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif

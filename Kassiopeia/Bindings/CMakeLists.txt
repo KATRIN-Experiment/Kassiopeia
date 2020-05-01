@@ -206,6 +206,7 @@ if( Kassiopeia_USE_ROOT )
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_HEADER_FILES
+            Visualization/Include/KSVTKGeneratorPainterBuilder.h
             Visualization/Include/KSVTKTrackPainterBuilder.h
             Visualization/Include/KSVTKTrackTerminatorPainterBuilder.h
         )
@@ -426,6 +427,7 @@ if( Kassiopeia_USE_ROOT )
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_SOURCE_FILES
+            Visualization/Source/KSVTKGeneratorPainterBuilder.cxx
             Visualization/Source/KSVTKTrackPainterBuilder.cxx
             Visualization/Source/KSVTKTrackTerminatorPainterBuilder.cxx
         )

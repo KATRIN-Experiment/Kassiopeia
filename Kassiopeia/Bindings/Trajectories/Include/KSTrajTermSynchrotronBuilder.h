@@ -8,28 +8,24 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajTermSynchrotron > KSTrajTermSynchrotronBuilder;
+typedef KComplexElement<KSTrajTermSynchrotron> KSTrajTermSynchrotronBuilder;
 
-    template< >
-    inline bool KSTrajTermSynchrotronBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "enhancement" )
-        {
-            aContainer->CopyTo( fObject, &KSTrajTermSynchrotron::SetEnhancement );
-            return true;
-        }
-        if( aContainer->GetName() == "old_methode" )
-        {
-            aContainer->CopyTo( fObject, &KSTrajTermSynchrotron::SetOldMethode );
-            return true;
-        }
-        return false;
+template<> inline bool KSTrajTermSynchrotronBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "enhancement") {
+        aContainer->CopyTo(fObject, &KSTrajTermSynchrotron::SetEnhancement);
+        return true;
+    }
+    if (aContainer->GetName() == "old_methode") {
+        aContainer->CopyTo(fObject, &KSTrajTermSynchrotron::SetOldMethode);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 #endif

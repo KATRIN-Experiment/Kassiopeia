@@ -2,6 +2,7 @@
 #define KFMGaussLegendreQuadratureTableCalculator_HH__
 
 #include "KFMLinearAlgebraDefinitions.hh"
+
 #include <vector>
 
 namespace KEMField
@@ -34,33 +35,37 @@ namespace KEMField
 
 class KFMGaussLegendreQuadratureTableCalculator
 {
-    public:
-        KFMGaussLegendreQuadratureTableCalculator();
-        virtual ~KFMGaussLegendreQuadratureTableCalculator();
+  public:
+    KFMGaussLegendreQuadratureTableCalculator();
+    virtual ~KFMGaussLegendreQuadratureTableCalculator();
 
-        void SetNTerms(unsigned int n);
+    void SetNTerms(unsigned int n);
 
-        void Initialize();
+    void Initialize();
 
-        void GetWeights(std::vector<double>* w) const {*w = fWeights;};
-        void GetAbscissa(std::vector<double>* x) const {*x = fAbscissa;};
+    void GetWeights(std::vector<double>* w) const
+    {
+        *w = fWeights;
+    };
+    void GetAbscissa(std::vector<double>* x) const
+    {
+        *x = fAbscissa;
+    };
 
-    private:
+  private:
+    double Beta(unsigned int i);
 
-        double Beta(unsigned int i);
+    unsigned int fN;  //number terms in weight
+    kfm_matrix* fJ;   //symmetric matrix to be decomposed
 
-        unsigned int fN; //number terms in weight
-        kfm_matrix* fJ; //symmetric matrix to be decomposed
+    kfm_vector* fLambda;       //vector of the eigenvalues
+    kfm_matrix* fQ;            //matrix of eigenvectors
+    kfm_matrix* fQ_transpose;  //transpose of fQ
 
-        kfm_vector* fLambda; //vector of the eigenvalues
-        kfm_matrix* fQ; //matrix of eigenvectors
-        kfm_matrix* fQ_transpose; //transpose of fQ
-
-        std::vector<double> fWeights;
-        std::vector<double> fAbscissa;
-
+    std::vector<double> fWeights;
+    std::vector<double> fAbscissa;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KFMGaussLegendreQuadratureTableCalculator_H__ */

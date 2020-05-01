@@ -1,13 +1,14 @@
 #ifndef KSAAssociatedReferencePODInputNode_HH__
 #define KSAAssociatedReferencePODInputNode_HH__
 
-#include "KSAPODInputNode.hh"
 #include "KSACallbackTypes.hh"
+#include "KSAPODInputNode.hh"
 
-#define AddKSAInputFor(class,var,type) \
-  node->AddChild(new KSAAssociatedReferencePODInputNode< class, type, &class::Set ## var>(std::string(#var), this) )
+#define AddKSAInputFor(class, var, type)                                                                               \
+    node->AddChild(new KSAAssociatedReferencePODInputNode<class, type, &class ::Set##var>(std::string(#var), this))
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -24,32 +25,31 @@ namespace KEMField{
 */
 
 
-
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType&) >
-class KSAAssociatedReferencePODInputNode: public KSAPODInputNode<SetType>
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType&)>
+class KSAAssociatedReferencePODInputNode : public KSAPODInputNode<SetType>
 {
-    public:
+  public:
+    KSAAssociatedReferencePODInputNode(std::string name, CallType* call_ptr) : KSAPODInputNode<SetType>(name)
+    {
+        fCallPtr = call_ptr;
+    };
 
-        KSAAssociatedReferencePODInputNode(std::string name, CallType* call_ptr):KSAPODInputNode< SetType >(name)
-        {
-            fCallPtr = call_ptr;
-        };
+    ~KSAAssociatedReferencePODInputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedReferencePODInputNode(){;};
+    void FinalizeObject() override
+    {
+        fCallback(fCallPtr, this->fValue);
+    }
 
-        void FinalizeObject()
-        {
-            fCallback(fCallPtr, this->fValue);
-        }
-
-    protected:
-
-        CallType* fCallPtr;
-        KSAPassByConstantReferenceSet< CallType, SetType, memberFunction > fCallback;
-
+  protected:
+    CallType* fCallPtr;
+    KSAPassByConstantReferenceSet<CallType, SetType, memberFunction> fCallback;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KSAAssociatedReferencePODInputNode_H__ */

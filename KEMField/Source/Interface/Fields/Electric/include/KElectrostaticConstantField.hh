@@ -5,38 +5,39 @@
 
 namespace KEMField
 {
-  class KElectrostaticConstantField : public KElectrostaticField
-  {
+
+class KElectrostaticConstantField : public KElectrostaticField
+{
   public:
-    KElectrostaticConstantField() :
-      KElectrostaticField(),
-      fField() {}
+    KElectrostaticConstantField();
+    KElectrostaticConstantField(const KThreeVector& field);
+    ~KElectrostaticConstantField() override{};
 
-    KElectrostaticConstantField(const KThreeVector& field) :
-      KElectrostaticField(),
-      fField(field) {}
-
-    virtual ~KElectrostaticConstantField() {}
-
-    void SetField(KThreeVector field) { fField = field; }
-    KThreeVector GetField() {return fField;}
-
-    static std::string Name() { return "ElectrostaticConstantFieldSolver"; }
-
-private:
-    virtual double PotentialCore(const KPosition& P) const {
-    	return fField.Dot(P);
+    static std::string Name()
+    {
+        return "ElectrostaticConstantFieldSolver";
     }
 
-    virtual KThreeVector ElectricFieldCore(const KPosition&) const {
-    	return fField;
-    }
+  private:
+    double PotentialCore(const KPosition& aSamplePoint) const override;
+    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
+
+  public:
+    void SetField(KThreeVector aField);
+    KThreeVector GetField() const;
+
+    void SetLocation(const KPosition& aLocation);
+    KThreeVector GetLocation() const;
+
+    void SetPotentialOffset(const double& aPotential);
+    const double& GetPotentialOffset() const;
 
   protected:
-
     KThreeVector fField;
-  };
+    KThreeVector fLocation;
+    double fPotentialOffset;
+};
 
-}
+}  // namespace KEMField
 
 #endif /* KELECTROSTATICCONSTANTFIELD_DEF */

@@ -11,90 +11,162 @@
 
 #include "KRandom.h"
 
-#include <vector>
-#include <list>
-#include <deque>
-#include <set>
-#include <string>
-#include <iostream>
-#include <iomanip>
-#include <map>
-#include <iterator>
-#include <type_traits>
 #include <array>
-
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
+#include <deque>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <list>
+#include <map>
+#include <set>
+#include <string>
+#include <type_traits>
+#include <vector>
 
-namespace katrin {
+namespace katrin
+{
 
 /**
  * Contains static functions for joining, exploding and serializing string sequences.
  */
 class KStringUtils
 {
-public:
+  public:
     KStringUtils() = delete;
 
     static bool IsNumeric(const char& character);
     static bool IsNumeric(const std::string& string);
 
-    template< typename TargetT >
-    static bool Convert(const std::string& string, TargetT& result);
+    //    static bool MatchWildcardString(std::string pattern, std::string input);
+
+    template<typename TargetT> static bool Convert(const std::string& string, TargetT& result);
+
+    template<typename Range1T, typename Range2T> static bool Equals(const Range1T&, const Range2T&);
+
+    template<typename Range1T, typename Range2T> static bool IEquals(const Range1T&, const Range2T&);
+
+    template<typename Range1T, typename Range2T> static bool Contains(const Range1T&, const Range2T&);
 
     template<typename Range1T, typename Range2T>
-    static bool Equals(const Range1T &, const Range2T &);
+    static bool ContainsOneOf(const Range1T&, std::initializer_list<Range2T>);
+
+    template<typename Range1T, typename Range2T> static bool IContains(const Range1T&, const Range2T&);
 
     template<typename Range1T, typename Range2T>
-    static bool IEquals(const Range1T &, const Range2T &);
+    static bool IContainsOneOf(const Range1T&, std::initializer_list<Range2T>);
 
-    template<typename Range1T, typename Range2T>
-    static bool Contains(const Range1T &, const Range2T &);
+    template<typename Range1T, typename Range2T> static size_t Distance(const Range1T&, const Range2T&);
 
-    template<typename Range1T, typename Range2T>
-    static bool ContainsOneOf(const Range1T &, std::initializer_list<Range2T>);
+    template<typename Range1T, typename Range2T> static size_t IDistance(const Range1T&, const Range2T&);
 
-    template<typename Range1T, typename Range2T>
-    static bool IContains(const Range1T &, const Range2T &);
+    template<typename Range1T, typename Range2T> static float Similarity(const Range1T&, const Range2T&);
 
-    template<typename Range1T, typename Range2T>
-    static bool IContainsOneOf(const Range1T &, std::initializer_list<Range2T>);
+    template<typename Range1T, typename Range2T> static float ISimilarity(const Range1T&, const Range2T&);
 
     static std::string Trim(const std::string& input);
     static std::string TrimLeft(const std::string& input);
     static std::string TrimRight(const std::string& input);
 
-    template <class SequenceT, class SeparatorT>
+    template<class SequenceT, class SeparatorT>
     static std::ostream& Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator);
 
-    template <class SequenceT, class SeparatorT>
+    template<class SequenceT, class SeparatorT>
     static std::string Join(const SequenceT& sequence, const SeparatorT& separator, int precision = -1);
 
-    template <class KeyT, class ValueT>
-    static std::ostream& Join(std::ostream& stream, const std::map<KeyT, ValueT>& map);
+    template<class KeyT, class ValueT, class SeparatorT>
+    static std::ostream& Join(std::ostream& stream, const std::map<KeyT, ValueT>& map, const SeparatorT& separator);
 
-    template <class MapT>
-    static std::string Join(const MapT& map);
+    template<class KeyT, class ValueT, class SeparatorT>
+    static std::string Join(const std::map<KeyT, ValueT>& map, const SeparatorT& separator, int precision = -1);
 
-    template <class OutputT = std::string>
+    template<class OutputT = std::string>
     static int Split(const std::string& input, const std::string& delimiters, std::vector<OutputT>& output);
 
-    template <class OutputT = std::string>
+    template<class OutputT = std::string>
     static std::vector<OutputT> Split(const std::string& input, const std::string& delimiters);
 
-    template <class OutputT = std::string>
+    template<class OutputT = std::string>
     static int SplitBySingleDelim(const std::string& input, const std::string& delimiter, std::vector<OutputT>& output);
 
-    template <class OutputT = std::string>
+    template<class OutputT = std::string>
     static std::vector<OutputT> SplitBySingleDelim(const std::string& input, const std::string& delimiter);
 
-    template <class NumberT>
-    static std::string GroupDigits(NumberT input, const std::string& sep = ",");
+    template<class NumberT> static std::string GroupDigits(NumberT input, const std::string& sep = ",");
     static std::string GroupDigits(std::string input, const std::string& sep = ",");
 
     static std::string RandomAlphaNum(size_t length);
+
+  private:
+    template<typename Range1T, typename Range2T> static size_t LevenshteinDistance(const Range1T&, const Range2T&);
 };
+
+template<typename Range1T, typename Range2T>
+size_t KStringUtils::LevenshteinDistance(const Range1T& r1, const Range2T& r2)
+{
+    /* Excerpt from https://en.wikipedia.org/wiki/Levenshtein_distance
+ *
+ *  function LevenshteinDistance(char s[0..m-1], char t[0..n-1]):
+ *      // create two work vectors of integer distances
+ *      declare int v0[n + 1]
+ *      declare int v1[n + 1]
+ *
+ *      // initialize v0 (the previous row of distances)
+ *      // this row is A[0][i]: edit distance for an empty s
+ *      // the distance is just the number of characters to delete from t
+ *      for i from 0 to n:
+ *          v0[i] = i
+ *
+ *      for i from 0 to m-1:
+ *          // calculate v1 (current row distances) from the previous row v0
+ *
+ *          // first element of v1 is A[i+1][0]
+ *          //   edit distance is delete (i+1) chars from s to match empty t
+ *          v1[0] = i + 1
+ *
+ *          // use formula to fill in the rest of the row
+ *          for j from 0 to n-1:
+ *              // calculating costs for A[i+1][j+1]
+ *              deletionCost := v0[j + 1] + 1
+ *              insertionCost := v1[j] + 1
+ *              if s[i] = t[j]:
+ *                  substitutionCost := v0[j]
+ *              else:
+ *                  substitutionCost := v0[j] + 1;
+ *
+ *              v1[j + 1] := minimum(deletionCost, insertionCost, substitutionCost)
+ *
+ *          // copy v1 (current row) to v0 (previous row) for next iteration
+ *          // since data in v1 is always invalidated, a swap without copy could be more efficient
+ *          swap v0 with v1
+ *      // after the last swap, the results of v1 are now in v0
+ *      return v0[n]
+ */
+
+    const size_t m = std::end(r1) - std::begin(r1);  // instead of std::size(s1)
+    const size_t n = std::end(r2) - std::begin(r2);  // instead of std::size(s2)
+    std::vector<size_t> v0(n + 1);
+    std::vector<size_t> v1(n + 1);
+
+    for (size_t i = 0; i <= n; i++)
+        v0[i] = i;
+
+    for (size_t i = 0; i < m; i++) {
+        v1[0] = i + 1;
+
+        for (size_t j = 0; j < n; j++) {
+            const size_t del = v0[j + 1] + 1;
+            const size_t ins = v1[j] + 1;
+            const size_t sub = (r1[i] == r2[j]) ? v0[j] : (v0[j] + 1);
+            v1[j + 1] = std::min({del, ins, sub});
+        }
+        v0.swap(v1);
+    }
+
+    return v0[n];
+}
 
 inline bool KStringUtils::IsNumeric(const char& character)
 {
@@ -118,8 +190,7 @@ inline bool KStringUtils::IsNumeric(const std::string& string)
     }
 }
 
-template< typename TargetT >
-inline bool KStringUtils::Convert(const std::string& string, TargetT& result)
+template<typename TargetT> inline bool KStringUtils::Convert(const std::string& string, TargetT& result)
 {
     try {
         result = boost::lexical_cast<TargetT>(string);
@@ -130,20 +201,17 @@ inline bool KStringUtils::Convert(const std::string& string, TargetT& result)
     }
 }
 
-template<typename Range1T, typename Range2T>
-inline bool KStringUtils::Equals(const Range1T& r1, const Range2T& r2)
+template<typename Range1T, typename Range2T> inline bool KStringUtils::Equals(const Range1T& r1, const Range2T& r2)
 {
     return boost::equals(r1, r2);
 }
 
-template<typename Range1T, typename Range2T>
-inline bool KStringUtils::IEquals(const Range1T& r1, const Range2T& r2)
+template<typename Range1T, typename Range2T> inline bool KStringUtils::IEquals(const Range1T& r1, const Range2T& r2)
 {
     return boost::iequals(r1, r2);
 }
 
-template<typename Range1T, typename Range2T>
-inline bool KStringUtils::Contains(const Range1T& r1, const Range2T& r2)
+template<typename Range1T, typename Range2T> inline bool KStringUtils::Contains(const Range1T& r1, const Range2T& r2)
 {
     return boost::contains(r1, r2);
 }
@@ -157,8 +225,7 @@ inline bool KStringUtils::ContainsOneOf(const Range1T& r1, std::initializer_list
     return false;
 }
 
-template<typename Range1T, typename Range2T>
-inline bool KStringUtils::IContains(const Range1T& r1, const Range2T& r2)
+template<typename Range1T, typename Range2T> inline bool KStringUtils::IContains(const Range1T& r1, const Range2T& r2)
 {
     return boost::icontains(r1, r2);
 }
@@ -170,6 +237,35 @@ inline bool KStringUtils::IContainsOneOf(const Range1T& r1, std::initializer_lis
         if (boost::icontains(r1, r2))
             return true;
     return false;
+}
+
+template<typename Range1T, typename Range2T> inline size_t KStringUtils::Distance(const Range1T& r1, const Range2T& r2)
+{
+    return LevenshteinDistance(r1, r2);
+}
+
+template<typename Range1T, typename Range2T> inline size_t KStringUtils::IDistance(const Range1T& r1, const Range2T& r2)
+{
+    return LevenshteinDistance(boost::to_upper_copy(r1), boost::to_upper_copy(r2));
+}
+
+template<typename Range1T, typename Range2T> inline float KStringUtils::Similarity(const Range1T& r1, const Range2T& r2)
+{
+    if (boost::equals(r1, r2))
+        return 1.0;
+    if (boost::empty(r1) || boost::empty(r2))
+        return 0.0;
+    return 1.0 / Distance(r1, r2);
+}
+
+template<typename Range1T, typename Range2T>
+inline float KStringUtils::ISimilarity(const Range1T& r1, const Range2T& r2)
+{
+    if (boost::iequals(r1, r2))
+        return 1.0;
+    if (boost::empty(r1) || boost::empty(r2))
+        return 0.0;
+    return 1.0 / IDistance(r1, r2);
 }
 
 inline std::string KStringUtils::Trim(const std::string& input)
@@ -187,30 +283,26 @@ inline std::string KStringUtils::TrimRight(const std::string& input)
     return boost::algorithm::trim_right_copy(input);
 }
 
-template <class SequenceT, class SeparatorT>
+template<class SequenceT, class SeparatorT>
 inline std::ostream& KStringUtils::Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator)
 {
-    typedef typename boost::range_const_iterator<SequenceT>::type InputIteratorT;
-
     // Parse input
-    InputIteratorT itBegin = boost::begin(sequence);
-    InputIteratorT itEnd = boost::end(sequence);
+    auto itBegin = std::begin(sequence);
+    auto itEnd = std::end(sequence);
 
     // Append first element
-    if(itBegin!=itEnd) {
+    if (itBegin != itEnd) {
         stream << *itBegin;
         ++itBegin;
     }
-
-    for(;itBegin!=itEnd; ++itBegin) {
+    for (; itBegin != itEnd; ++itBegin) {
         stream << boost::as_literal(separator);
         stream << *itBegin;
     }
-
     return stream;
 }
 
-template <class SequenceT, class SeparatorT>
+template<class SequenceT, class SeparatorT>
 inline std::string KStringUtils::Join(const SequenceT& sequence, const SeparatorT& separator, int precision)
 {
     std::ostringstream result;
@@ -220,28 +312,37 @@ inline std::string KStringUtils::Join(const SequenceT& sequence, const Separator
     return result.str();
 }
 
-template <class KeyT, class ValueT>
-inline std::ostream& KStringUtils::Join(std::ostream& stream, const std::map<KeyT, ValueT>& map)
+template<class KeyT, class ValueT, class SeparatorT>
+inline std::ostream& KStringUtils::Join(std::ostream& stream, const std::map<KeyT, ValueT>& map,
+                                        const SeparatorT& separator)
 {
-    typename std::map<KeyT, ValueT>::const_iterator it = map.begin();
-    if (it != map.end()) {
-        stream << "[" << it->first << "] " << it->second;
-        it++;
+    // Parse input
+    auto itBegin = std::begin(map);
+    auto itEnd = std::end(map);
+
+    // Append first element
+    if (itBegin != itEnd) {
+        stream << "[" << itBegin->first << "] " << itBegin->second;
+        itBegin++;
     }
-    for (; it != map.end(); ++it)
-        stream << "\n[" << it->first << "] " << it->second;
+    for (; itBegin != itEnd; ++itBegin) {
+        stream << boost::as_literal(separator);
+        stream << "[" << itBegin->first << "] " << itBegin->second;
+    }
     return stream;
 }
 
-template <class MapT>
-inline std::string KStringUtils::Join(const MapT& map)
+template<class KeyT, class ValueT, class SeparatorT>
+inline std::string KStringUtils::Join(const std::map<KeyT, ValueT>& map, const SeparatorT& separator, int precision)
 {
     std::ostringstream result;
-    Join(result, map);
+    if (precision >= 0)
+        result.precision(precision);
+    Join(result, map, separator);
     return result.str();
 }
 
-template <class OutputT>
+template<class OutputT>
 inline int KStringUtils::Split(const std::string& input, const std::string& delimiters, std::vector<OutputT>& output)
 {
     std::vector<std::string> tokens;
@@ -253,7 +354,8 @@ inline int KStringUtils::Split(const std::string& input, const std::string& deli
         boost::trim(token);
         if (boost::is_floating_point<OutputT>::value)
             boost::replace_all(token, ",", ".");
-        if (token.empty()) continue;
+        if (token.empty())
+            continue;
         try {
             output.push_back(boost::lexical_cast<OutputT>(token));
         }
@@ -270,7 +372,7 @@ inline int KStringUtils::Split(const std::string& input, const std::string& deli
     return returnValue;
 }
 
-template <class OutputT>
+template<class OutputT>
 inline std::vector<OutputT> KStringUtils::Split(const std::string& input, const std::string& delimiters)
 {
     std::vector<OutputT> result;
@@ -278,16 +380,17 @@ inline std::vector<OutputT> KStringUtils::Split(const std::string& input, const 
     return result;
 }
 
-template <class OutputT>
-inline int KStringUtils::SplitBySingleDelim(const std::string& input, const std::string& delimiter, std::vector<OutputT>& output)
+template<class OutputT>
+inline int KStringUtils::SplitBySingleDelim(const std::string& input, const std::string& delimiter,
+                                            std::vector<OutputT>& output)
 {
     std::vector<std::string> tokens;
-    std::back_insert_iterator<std::vector<std::string> > tokenIt = std::back_inserter(tokens);
+    std::back_insert_iterator<std::vector<std::string>> tokenIt = std::back_inserter(tokens);
 
     using namespace boost::algorithm;
     typedef split_iterator<std::string::const_iterator> It;
 
-    for (It iter = make_split_iterator(input, first_finder(delimiter, is_equal())); iter!=It(); ++iter) {
+    for (It iter = make_split_iterator(input, first_finder(delimiter, is_equal())); iter != It(); ++iter) {
         *(tokenIt++) = boost::copy_range<std::string>(*iter);
     }
 
@@ -298,7 +401,8 @@ inline int KStringUtils::SplitBySingleDelim(const std::string& input, const std:
         boost::trim(token);
         if (boost::is_floating_point<OutputT>::value)
             boost::replace_all(token, ",", ".");
-        if (token.empty()) continue;
+        if (token.empty())
+            continue;
         try {
             output.push_back(boost::lexical_cast<OutputT>(token));
         }
@@ -315,7 +419,7 @@ inline int KStringUtils::SplitBySingleDelim(const std::string& input, const std:
     return returnValue;
 }
 
-template <class OutputT>
+template<class OutputT>
 inline std::vector<OutputT> KStringUtils::SplitBySingleDelim(const std::string& input, const std::string& delimiter)
 {
     std::vector<OutputT> result;
@@ -323,8 +427,7 @@ inline std::vector<OutputT> KStringUtils::SplitBySingleDelim(const std::string& 
     return result;
 }
 
-template <class NumberT>
-inline std::string KStringUtils::GroupDigits(NumberT input, const std::string& sep)
+template<class NumberT> inline std::string KStringUtils::GroupDigits(NumberT input, const std::string& sep)
 {
     return GroupDigits(boost::lexical_cast<std::string>(input), sep);
 }
@@ -347,25 +450,25 @@ inline std::string KStringUtils::GroupDigits(std::string str, const std::string&
 
 inline std::string KStringUtils::RandomAlphaNum(size_t length)
 {
-    static const std::string alphanums =
-        "0123456789"
-        "abcdefghijklmnopqrstuvwxyz"
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static const std::string alphanums = "0123456789"
+                                         "abcdefghijklmnopqrstuvwxyz"
+                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     std::string result;
     result.reserve(length);
     while (length--)
-        result += alphanums[ KRandom::GetInstance().Uniform<size_t>(0, alphanums.length()-1) ];
+        result += alphanums[KRandom::GetInstance().Uniform<size_t>(0, alphanums.length() - 1)];
 
     return result;
 }
 
-}
+}  // namespace katrin
 
-namespace std {
 
-template <class ValueT>
-inline std::ostream& operator<< (std::ostream& os, const std::vector<ValueT>& v)
+namespace std
+{
+
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::vector<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -376,8 +479,7 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<ValueT>& v)
     return os;
 }
 
-template <class ValueT>
-inline std::ostream& operator<< (std::ostream& os, const std::deque<ValueT>& v)
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::deque<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -388,8 +490,7 @@ inline std::ostream& operator<< (std::ostream& os, const std::deque<ValueT>& v)
     return os;
 }
 
-template <class ValueT>
-inline std::ostream& operator<< (std::ostream& os, const std::list<ValueT>& v)
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::list<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -400,8 +501,7 @@ inline std::ostream& operator<< (std::ostream& os, const std::list<ValueT>& v)
     return os;
 }
 
-template <class ValueT>
-inline std::ostream& operator<< (std::ostream& os, const std::set<ValueT>& v)
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::set<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -412,20 +512,18 @@ inline std::ostream& operator<< (std::ostream& os, const std::set<ValueT>& v)
     return os;
 }
 
-template <class KeyT, class ValueT>
-inline std::ostream& operator<< (std::ostream& os, const std::map<KeyT, ValueT>& v)
+template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::map<KeyT, ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
         os << "(";
-        katrin::KStringUtils::Join(os, v);
+        katrin::KStringUtils::Join(os, v, ", ");
         os << ")";
     }
     return os;
 }
 
-template <class T>
-inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::matrix<T>& matrix)
+template<class T> inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::matrix<T>& matrix)
 {
     typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
 
@@ -442,8 +540,8 @@ inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::
     return os;
 }
 
-template <class T, class U>
-inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::triangular_matrix<T, U>& matrix)
+template<class T, class U>
+inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::triangular_matrix<T, U>& matrix)
 {
     typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
 
@@ -460,10 +558,9 @@ inline std::ostream& operator<< (std::ostream& os, const boost::numeric::ublas::
     return os;
 }
 
-template <class InputT>
-inline std::ostream& operator<< (std::ostream& os, const std::vector<std::vector<InputT> >& matrix)
+template<class InputT> inline std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<InputT>>& matrix)
 {
-    typedef typename std::vector<std::vector<InputT> >::size_type size_type;
+    typedef typename std::vector<std::vector<InputT>>::size_type size_type;
 
     const size_type nRows = matrix.size();
     const size_type nCols = (matrix.empty()) ? 0 : matrix.front().size();
@@ -484,8 +581,8 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<std::vector
     return os;
 }
 
-template <class InputT, std::size_t S>
-inline std::ostream& operator<< (std::ostream& os, const std::array<InputT, S>& arr)
+template<class InputT, std::size_t S>
+inline std::ostream& operator<<(std::ostream& os, const std::array<InputT, S>& arr)
 {
     os << "[" << arr.size() << "]";
     if (!arr.empty()) {
@@ -496,6 +593,6 @@ inline std::ostream& operator<< (std::ostream& os, const std::array<InputT, S>& 
     return os;
 }
 
-}
+}  // namespace std
 
 #endif /* KSTRINGUTILS_H_ */

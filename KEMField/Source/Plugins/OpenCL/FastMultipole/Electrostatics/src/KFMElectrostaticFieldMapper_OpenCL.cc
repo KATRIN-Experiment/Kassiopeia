@@ -6,9 +6,9 @@
 // #include "KFMReducedScalarMomentRemoteToLocalConverter_OpenCL.hh"
 // #include "KFMScalarMomentLocalToLocalConverter_OpenCL.hh"
 
-#include "KFMNodeFlagValueInspector.hh"
 #include "KFMEmptyIdentitySetRemover.hh"
 #include "KFMLeafConditionActor.hh"
+#include "KFMNodeFlagValueInspector.hh"
 
 namespace KEMField
 {
@@ -50,7 +50,9 @@ KFMElectrostaticFieldMapper_OpenCL::KFMElectrostaticFieldMapper_OpenCL()
 
     fM2MConverter = new KFMElectrostaticRemoteToRemoteConverter_OpenCL();
     // fM2LConverter = new KFMElectrostaticRemoteToLocalConverter_OpenCL();
-    fM2LConverterInterface = new KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter_OpenCL>();
+    fM2LConverterInterface = new KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects,
+                                                                    KFMELECTROSTATICS_DIM,
+                                                                    KFMElectrostaticRemoteToLocalConverter_OpenCL>();
     fL2LConverter = new KFMElectrostaticLocalToLocalConverter_OpenCL();
 };
 
@@ -67,78 +69,75 @@ KFMElectrostaticFieldMapper_OpenCL::~KFMElectrostaticFieldMapper_OpenCL()
     delete fL2LConverter;
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::SetTree(KFMElectrostaticTree* tree)
+void KFMElectrostaticFieldMapper_OpenCL::SetTree(KFMElectrostaticTree* tree)
 {
     fTree = tree;
     SetParameters(tree->GetParameters());
     KFMCube<KFMELECTROSTATICS_DIM>* world_cube;
-    world_cube =  KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM> >::GetNodeObject(tree->GetRootNode());
+    world_cube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM>>::GetNodeObject(
+        tree->GetRootNode());
     fWorldLength = world_cube->GetLength();
 };
 
 //set parameters
-void
-KFMElectrostaticFieldMapper_OpenCL::SetParameters(KFMElectrostaticParameters params)
+void KFMElectrostaticFieldMapper_OpenCL::SetParameters(KFMElectrostaticParameters params)
 {
     fDegree = params.degree;
-    fNTerms = (fDegree + 1)*(fDegree + 1);
+    fNTerms = (fDegree + 1) * (fDegree + 1);
     fTopLevelDivisions = params.top_level_divisions;
     fDivisions = params.divisions;
     fZeroMaskSize = params.zeromask;
     fMaximumTreeDepth = params.maximum_tree_depth;
     fVerbosity = params.verbosity;
 
-    if(fVerbosity > 2)
-    {
+    if (fVerbosity > 2) {
         //print the parameters
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: top level divisions set to "<<params.top_level_divisions<<kfmendl;
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: divisions set to "<<params.divisions<<kfmendl;
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: degree set to "<<params.degree<<kfmendl;
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: zero mask size set to "<<params.zeromask<<kfmendl;
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::SetParameters: max tree depth set to "<<params.maximum_tree_depth<<kfmendl;
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::SetParameters: top level divisions set to "
+               << params.top_level_divisions << kfmendl;
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::SetParameters: divisions set to " << params.divisions << kfmendl;
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::SetParameters: degree set to " << params.degree << kfmendl;
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::SetParameters: zero mask size set to " << params.zeromask
+               << kfmendl;
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::SetParameters: max tree depth set to "
+               << params.maximum_tree_depth << kfmendl;
     }
 }
 
 
-void
-KFMElectrostaticFieldMapper_OpenCL::Initialize()
+void KFMElectrostaticFieldMapper_OpenCL::Initialize()
 {
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the element multipole moment batch calculator. ";
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the element multipole moment batch calculator. ";
     }
 
     fBatchCalc->SetDegree(fDegree);
     fBatchCalc->SetElectrostaticElementContainer(fContainer);
     fBatchCalc->Initialize();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"Done."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout << "Done." << kfmendl;
     }
 
     fLocalCoeffInitializer->SetNumberOfTermsInSeries(fNTerms);
     fMultipoleInitializer->SetNumberOfTermsInSeries(fNTerms);
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the multipole to multipole translator. ";
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the multipole to multipole translator. ";
     }
 
     fM2MConverter->SetNumberOfTermsInSeries(fNTerms);
     fM2MConverter->SetDivisions(fDivisions);
     fM2MConverter->Initialize();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"Done."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout << "Done." << kfmendl;
     }
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the multipole to local translator. ";
+    if (fVerbosity > 2) {
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the multipole to local translator. ";
     }
 
     // fM2LConverter->SetLength(fWorldLength);
@@ -158,29 +157,25 @@ KFMElectrostaticFieldMapper_OpenCL::Initialize()
     fM2LConverterInterface->GetTreeM2LConverter()->SetTopLevelDivisions(fTopLevelDivisions);
     fM2LConverterInterface->Initialize();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"Done."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout << "Done." << kfmendl;
     }
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the local to local translator. ";
+    if (fVerbosity > 2) {
+        kfmout << "KFMElectrostaticFieldMapper_OpenCL::Initialize: Initializing the local to local translator. ";
     }
 
     fL2LConverter->SetNumberOfTermsInSeries(fNTerms);
     fL2LConverter->SetDivisions(fDivisions);
     fL2LConverter->Initialize();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"Done."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout << "Done." << kfmendl;
     }
 }
 
 
-void
-KFMElectrostaticFieldMapper_OpenCL::MapField()
+void KFMElectrostaticFieldMapper_OpenCL::MapField()
 {
     AssociateElementsAndNodes();
     InitializeMultipoleMoments();
@@ -190,24 +185,23 @@ KFMElectrostaticFieldMapper_OpenCL::MapField()
     CleanUp();
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::AssociateElementsAndNodes()
+void KFMElectrostaticFieldMapper_OpenCL::AssociateElementsAndNodes()
 {
     fElementNodeAssociator->Clear();
     fTree->ApplyRecursiveAction(fElementNodeAssociator);
 
-    fMultipoleDistributor->SetElementIDList( fElementNodeAssociator->GetElementIDList() );
-    fMultipoleDistributor->SetNodeList( fElementNodeAssociator->GetNodeList() );
-    fMultipoleDistributor->SetOriginList( fElementNodeAssociator->GetOriginList() );
+    fMultipoleDistributor->SetElementIDList(fElementNodeAssociator->GetElementIDList());
+    fMultipoleDistributor->SetNodeList(fElementNodeAssociator->GetNodeList());
+    fMultipoleDistributor->SetOriginList(fElementNodeAssociator->GetOriginList());
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::AssociateElementsAndNodes: Done making element to node association. "<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::AssociateElementsAndNodes: Done making element to node association. "
+            << kfmendl;
     }
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::InitializeMultipoleMoments()
+void KFMElectrostaticFieldMapper_OpenCL::InitializeMultipoleMoments()
 {
     //remove any pre-existing multipole expansions
     KFMNodeObjectRemover<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet> remover;
@@ -219,7 +213,7 @@ KFMElectrostaticFieldMapper_OpenCL::InitializeMultipoleMoments()
     multipole_flag_condition.SetFlagValue(1);
 
     //now we constuct the conditional actor
-    KFMConditionalActor< KFMElectrostaticNode > conditional_actor;
+    KFMConditionalActor<KFMElectrostaticNode> conditional_actor;
 
     conditional_actor.SetInspectingActor(&multipole_flag_condition);
     conditional_actor.SetOperationalActor(fMultipoleInitializer);
@@ -228,29 +222,29 @@ KFMElectrostaticFieldMapper_OpenCL::InitializeMultipoleMoments()
     fTree->ApplyRecursiveAction(&conditional_actor);
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments()
+void KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments()
 {
     //compute the individual multipole moments of each node due to owned electrodes
     fMultipoleDistributor->ProcessAndDistributeMoments();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done processing and distributing boundary element moments."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done processing and distributing boundary element moments."
+            << kfmendl;
     }
 
     //now we perform the upward pass to collect child nodes' moments into their parents' moments
-    fTree->ApplyRecursiveAction(fM2MConverter, false); //false indicates this visitation proceeds from child to parent
+    fTree->ApplyRecursiveAction(fM2MConverter, false);  //false indicates this visitation proceeds from child to parent
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done performing the multipole to multipole (M2M) translations."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::ComputeMultipoleMoments: Done performing the multipole to multipole (M2M) translations."
+            << kfmendl;
     }
 }
 
 
-void
-KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients() //full initialization for all nodes
+void KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients()  //full initialization for all nodes
 {
     //delete all pre-existing local coefficient expansions
     KFMNodeObjectRemover<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet> remover;
@@ -259,14 +253,14 @@ KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients() //full initial
     //initialize all of local coefficient expansions for every node
     fTree->ApplyCorecursiveAction(fLocalCoeffInitializer);
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients: Done initializing local coefficient expansions."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::InitializeLocalCoefficients: Done initializing local coefficient expansions."
+            << kfmendl;
     }
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients()
+void KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients()
 {
     // //compute the local coefficients due to neighbors at the same tree level
     // fM2LConverter->Prepare();
@@ -279,32 +273,32 @@ KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients()
 
     //compute the local coefficients due to neighbors at the same tree level
     fM2LConverterInterface->Prepare();
-    do
-    {
+    do {
         fTree->ApplyCorecursiveAction(fM2LConverterInterface);
-    }
-    while( !(fM2LConverterInterface->IsFinished()) );
+    } while (!(fM2LConverterInterface->IsFinished()));
     fM2LConverterInterface->Finalize();
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the multipole to local (M2L) translations."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the multipole to local (M2L) translations."
+            << kfmendl;
     }
 
     //now form the downward distributions of the local coefficients
     fTree->ApplyRecursiveAction(fL2LConverter);
 
-    if(fVerbosity > 2)
-    {
-        kfmout<<"KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the local to local (L2L) translations."<<kfmendl;
+    if (fVerbosity > 2) {
+        kfmout
+            << "KFMElectrostaticFieldMapper_OpenCL::ComputeLocalCoefficients: Done performing the local to local (L2L) translations."
+            << kfmendl;
     }
 }
 
-void
-KFMElectrostaticFieldMapper_OpenCL::CleanUp()
+void KFMElectrostaticFieldMapper_OpenCL::CleanUp()
 {
     //reset the node's ptr to the element container to null, since we will delete it
-    KFMNodeObjectNullifier<KFMElectrostaticNodeObjects, KFMElectrostaticElementContainerBase<3,1> > elementContainerNullifier;
+    KFMNodeObjectNullifier<KFMElectrostaticNodeObjects, KFMElectrostaticElementContainerBase<3, 1>>
+        elementContainerNullifier;
     fTree->ApplyCorecursiveAction(&elementContainerNullifier);
 
     //now we can clean up the node objects
@@ -327,4 +321,4 @@ KFMElectrostaticFieldMapper_OpenCL::CleanUp()
 }
 
 
-}
+}  // namespace KEMField

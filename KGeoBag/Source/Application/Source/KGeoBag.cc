@@ -1,70 +1,36 @@
 #include "KGCoreMessage.hh"
 #include "KGInterfaceBuilder.hh"
-
-#include "KMessage.h"
-#include "KTextFile.h"
-#include "KCommandLineTokenizer.hh"
+#include "KXMLInitializer.hh"
 #include "KXMLTokenizer.hh"
-#include "KVariableProcessor.hh"
-#include "KIncludeProcessor.hh"
-#include "KLoopProcessor.hh"
-#include "KConditionProcessor.hh"
-#include "KElementProcessor.hh"
-#include "KTagProcessor.hh"
-
-#ifdef KGEOBAG_USE_ROOT
-#include "KFormulaProcessor.hh"
-#endif
 
 using namespace KGeoBag;
 using namespace katrin;
 using namespace std;
 
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
-    if( argc < 3 )
-    {
+    if (argc < 3) {
         cout << "usage: ./KGeoBag <config_file_name.xml> -r <NAME=VALUE> <NAME=VALUE> ..." << endl;
         return -1;
     }
 
-    KCommandLineTokenizer tCommandLine;
-    tCommandLine.ProcessCommandLine( argc, argv );
+    auto& tXML = KXMLInitializer::GetInstance();
+    auto* tTokenizer = tXML.Configure(argc, argv, false);  // process files below
 
-    KXMLTokenizer tTokenizer;
-    KVariableProcessor tVariableProcessor( tCommandLine.GetVariables() );
-    KIncludeProcessor tIncludeProcessor;
-    KLoopProcessor tLoopProcessor;
-    KConditionProcessor tConditionProcessor;
-    KTagProcessor tTagProcessor;
-    KElementProcessor tElementProcessor;
+    //tXML.DumpConfiguration();
 
-    tVariableProcessor.InsertAfter( &tTokenizer );
-    tIncludeProcessor.InsertAfter( &tVariableProcessor );
+    coremsg(eNormal) << "starting..." << eom;
 
-#ifdef KGEOBAG_USE_ROOT
-	KFormulaProcessor tFormulaProcessor;
-	tFormulaProcessor.InsertAfter( &tVariableProcessor );
-	tIncludeProcessor.InsertAfter( &tFormulaProcessor );
-#endif
+    for (auto tFilename : tXML.GetArguments().ParameterList()) {
 
-    tLoopProcessor.InsertAfter( &tIncludeProcessor );
-    tConditionProcessor.InsertAfter( &tLoopProcessor );
-    tTagProcessor.InsertAfter( &tConditionProcessor );
-    tElementProcessor.InsertAfter( &tTagProcessor );
-
-    coremsg( eNormal ) << "starting..." << eom;
-
-    KTextFile* tFile;
-    for( vector< string >::const_iterator tIter = tCommandLine.GetFiles().begin(); tIter != tCommandLine.GetFiles().end(); tIter++ )
-    {
-        tFile = new KTextFile();
-        tFile->AddToNames( *tIter );
-        tTokenizer.ProcessFile( tFile );
+        coremsg(eInfo) << "processing file <" << tFilename << "> ..." << eom;
+        auto* tFile = new KTextFile();
+        tFile->AddToNames(tFilename);
+        tTokenizer->ProcessFile(tFile);
         delete tFile;
     }
 
-    coremsg( eNormal ) << "...finished" << eom;
+    coremsg(eNormal) << "...finished" << eom;
 
     return 0;
 }

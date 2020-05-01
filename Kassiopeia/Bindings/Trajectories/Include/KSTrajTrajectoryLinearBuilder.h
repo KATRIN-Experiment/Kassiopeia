@@ -8,24 +8,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajTrajectoryLinear > KSTrajTrajectoryLinearBuilder;
+typedef KComplexElement<KSTrajTrajectoryLinear> KSTrajTrajectoryLinearBuilder;
 
-    template< >
-    inline bool KSTrajTrajectoryLinearBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "length" )
-        {
-            aContainer->CopyTo( fObject, &KSTrajTrajectoryLinear::SetLength );
-            return true;
-        }
-        return false;
+template<> inline bool KSTrajTrajectoryLinearBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "length") {
+        aContainer->CopyTo(fObject, &KSTrajTrajectoryLinear::SetLength);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

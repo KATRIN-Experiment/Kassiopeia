@@ -10,17 +10,16 @@ using std::vector;
 namespace Kassiopeia
 {
 
-    class KSGenSpecial :
-        public KSComponentTemplate< KSGenSpecial >
-    {
-        public:
-            KSGenSpecial();
-            virtual ~KSGenSpecial();
+class KSGenSpecial : public KSComponentTemplate<KSGenSpecial>
+{
+  public:
+    KSGenSpecial();
+    ~KSGenSpecial() override;
 
-        public:
-            virtual void DiceSpecial( KSParticleQueue* aPrimaries ) = 0;
-    };
+  public:
+    virtual void DiceSpecial(KSParticleQueue* aPrimaries) = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

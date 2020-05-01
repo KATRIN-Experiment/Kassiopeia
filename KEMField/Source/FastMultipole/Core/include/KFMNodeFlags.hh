@@ -16,34 +16,34 @@ namespace KEMField
 *
 */
 
-template<unsigned int NFLAGS>
-class KFMNodeFlags
+template<unsigned int NFLAGS> class KFMNodeFlags
 {
-    public:
-        KFMNodeFlags()
-        {
-            for(unsigned int i=0; i<NFLAGS; i++){fFlags[i] = 0;};
+  public:
+    KFMNodeFlags()
+    {
+        for (unsigned int i = 0; i < NFLAGS; i++) {
+            fFlags[i] = 0;
         };
+    };
 
-        virtual ~KFMNodeFlags(){};
+    virtual ~KFMNodeFlags(){};
 
-        void SetFlag(unsigned int flag_index, char flag_value)
-        {
-            fFlags[flag_index] = flag_value;
-        }
+    void SetFlag(unsigned int flag_index, char flag_value)
+    {
+        fFlags[flag_index] = flag_value;
+    }
 
-        char GetFlag(unsigned int flag_index) const
-        {
-            return fFlags[flag_index];
-        }
+    char GetFlag(unsigned int flag_index) const
+    {
+        return fFlags[flag_index];
+    }
 
-    protected:
-        /* data */
+  protected:
+    /* data */
 
-        char fFlags[NFLAGS];
-
+    char fFlags[NFLAGS];
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMNodeFlags_H__ */

@@ -41,7 +41,7 @@ if (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
   add_cflag (KEMFIELD_OPENCL_FFT_CONST_MEM)
 endif (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
 
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_1 "Use internally packaged OpenCL 1.1 headers" ON
+cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_1 "Use internally packaged OpenCL 1.1 headers" OFF
   ${PROJECT_NAME}_USE_OPENCL OFF)
 mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
 if (${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
@@ -110,7 +110,7 @@ if (${PROJECT_NAME}_USE_OPENCL)
       -I${OPENCL_INCLUDE_DIRS}
       ${${PROJECT_NAME}_OPENCL_CFLAGS}
       ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
-      -L${OPENCL_LIBDIR} ${OPENCL_LIB_FLAG}
+      ${OPENCL_LIBRARIES}
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
   endif (APPLE)

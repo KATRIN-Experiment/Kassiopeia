@@ -9,17 +9,16 @@ using std::vector;
 namespace Kassiopeia
 {
 
-    class KSGenValue :
-        public KSComponentTemplate< KSGenValue >
-    {
-        public:
-            KSGenValue();
-            virtual ~KSGenValue();
+class KSGenValue : public KSComponentTemplate<KSGenValue>
+{
+  public:
+    KSGenValue();
+    ~KSGenValue() override;
 
-        public:
-            virtual void DiceValue( std::vector< double >& aDicedValue ) = 0;
-    };
+  public:
+    virtual void DiceValue(std::vector<double>& aDicedValue) = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

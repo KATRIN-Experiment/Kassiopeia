@@ -7,27 +7,25 @@
 
 #include "KKrylovSolverConfiguration.hh"
 
-#include <limits.h>
-namespace KEMField {
+#include <climits>
+namespace KEMField
+{
 
 KKrylovSolverConfiguration::KKrylovSolverConfiguration() :
-				fSolverName("gmres"),
-				fTolerance(0.1),
-				fMaxIterations(UINT_MAX),
-				fIterationsBetweenRestart(UINT_MAX),
-				fUseCheckpoints(false),
-				fStepsBetweenCheckpoints(1),
-				fUseDisplay(false),
-				fUsePlot(false),
-				fUseTimer(false),
-				fTimeLimitSeconds(3e10), //seconds
-				fStepsBetweenTimeChecks(1)
+    fSolverName("gmres"),
+    fTolerance(0.1),
+    fMaxIterations(UINT_MAX),
+    fIterationsBetweenRestart(UINT_MAX),
+    fUseCheckpoints(false),
+    fStepsBetweenCheckpoints(1),
+    fUseDisplay(false),
+    fUsePlot(false),
+    fUseTimer(false),
+    fTimeLimitSeconds(3e10),  //seconds
+    fStepsBetweenTimeChecks(1)
 
-{
-}
+{}
 
-KKrylovSolverConfiguration::~KKrylovSolverConfiguration()
-{
-}
+KKrylovSolverConfiguration::~KKrylovSolverConfiguration() {}
 
 } /* namespace KEMField */

@@ -9,50 +9,55 @@
 #define KMAGNETICSUPERPOSITIONFIELD_HH_
 
 #include "KMagneticField.hh"
-#include <vector>
-#include <map>
 
-namespace KEMField {
+#include <map>
+#include <vector>
+
+namespace KEMField
+{
 
 class KMagneticSuperpositionField : public KMagneticField
 {
-public:
+  public:
     KMagneticSuperpositionField();
-    virtual ~KMagneticSuperpositionField();
+    ~KMagneticSuperpositionField() override;
 
-    KThreeVector MagneticPotentialCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KThreeVector MagneticFieldCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KGradient MagneticGradientCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
-    void SetEnhancements( std::vector< double > aEnhancementVector );
-    std::vector< double > GetEnhancements();
+    void SetEnhancements(std::vector<double> aEnhancementVector);
+    std::vector<double> GetEnhancements();
 
-    void AddMagneticField( KMagneticField* aField, double aEnhancement = 1.0 );
+    void AddMagneticField(KMagneticField* aField, double aEnhancement = 1.0);
 
-    void SetUseCaching( bool useCaching ) {fUseCaching = useCaching;}
+    void SetUseCaching(bool useCaching)
+    {
+        fUseCaching = useCaching;
+    }
 
-private:
-    void InitializeCore();
+  private:
+    void InitializeCore() override;
 
-    KThreeVector CalculateCachedPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KThreeVector CalculateCachedField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KGradient CalculateCachedGradient( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateCachedPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KThreeVector CalculateCachedField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KGradient CalculateCachedGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
 
-    KThreeVector CalculateDirectPotential( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KThreeVector CalculateDirectField( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    KGradient CalculateDirectGradient( const KPosition& aSamplePoint, const double& aSampleTime ) const;
+    KThreeVector CalculateDirectPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KThreeVector CalculateDirectField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KGradient CalculateDirectGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
 
     bool AreAllFieldsStatic();
     void CheckAndPrintCachingDisabledWarning() const;
 
-    std::vector< KMagneticField* > fMagneticFields;
-    std::vector< double > fEnhancements;
+    std::vector<KMagneticField*> fMagneticFields;
+    std::vector<double> fEnhancements;
 
     bool fUseCaching;
     bool fCachingBlock;
-    mutable std::map < KPosition, std::vector<KThreeVector> > fPotentialCache;
-    mutable std::map < KPosition, std::vector<KThreeVector> > fFieldCache;
-    mutable std::map < KPosition, std::vector<KGradient> > fGradientCache;
+    mutable std::map<KPosition, std::vector<KThreeVector>> fPotentialCache;
+    mutable std::map<KPosition, std::vector<KThreeVector>> fFieldCache;
+    mutable std::map<KPosition, std::vector<KGradient>> fGradientCache;
 };
 
 } /* namespace KEMField */

@@ -8,32 +8,35 @@
 #ifndef KCHARGEDENSITYSOLVER_HH_
 #define KCHARGEDENSITYSOLVER_HH_
 
-#include "KThreeVector_KEMField.hh"
 #include "KSurfaceContainer.hh"
+#include "KThreeVector_KEMField.hh"
 
 using namespace KGeoBag;
 
-namespace KEMField{
+namespace KEMField
+{
 
 class KChargeDensitySolver
 {
-public:
+  public:
     KChargeDensitySolver() : fInitialized(false) {}
     virtual ~KChargeDensitySolver() {}
 
-    void Initialize( KSurfaceContainer& container) {
-        if(!fInitialized) {
+    void Initialize(KSurfaceContainer& container)
+    {
+        if (!fInitialized) {
             InitializeCore(container);
             fInitialized = true;
         }
     }
 
-    void SetHashProperties( unsigned int maskedBits, double hashThreshold);
-protected:
+    void SetHashProperties(unsigned int maskedBits, double hashThreshold);
+
+  protected:
     virtual bool FindSolution(double threshold, KSurfaceContainer& container);
     void SaveSolution(double threshold, KSurfaceContainer& container);
 
-private:
+  private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
 
     unsigned int fHashMaskedBits;
@@ -41,6 +44,6 @@ private:
     bool fInitialized;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KCHARGEDENSITYSOLVER_HH_ */

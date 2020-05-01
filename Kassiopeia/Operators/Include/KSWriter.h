@@ -6,20 +6,19 @@
 namespace Kassiopeia
 {
 
-    class KSWriter :
-        public KSComponentTemplate< KSWriter >
-    {
-        public:
-            KSWriter();
-            virtual ~KSWriter();
+class KSWriter : public KSComponentTemplate<KSWriter>
+{
+  public:
+    KSWriter();
+    ~KSWriter() override;
 
-        public:
-            virtual void ExecuteRun() = 0;
-            virtual void ExecuteEvent() = 0;
-            virtual void ExecuteTrack() = 0;
-            virtual void ExecuteStep() = 0;
-    };
+  public:
+    virtual void ExecuteRun() = 0;
+    virtual void ExecuteEvent() = 0;
+    virtual void ExecuteTrack() = 0;
+    virtual void ExecuteStep() = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

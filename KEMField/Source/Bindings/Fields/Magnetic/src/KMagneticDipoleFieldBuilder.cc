@@ -12,19 +12,16 @@
 using namespace KEMField;
 using namespace std;
 
-namespace katrin {
-
-template< >
-KMagneticDipoleFieldBuilder::~KComplexElement()
+namespace katrin
 {
-}
+
+template<> KMagneticDipoleFieldBuilder::~KComplexElement() {}
 
 STATICINT sKMagneticDipoleFieldStructure =
-    KMagneticDipoleFieldBuilder::Attribute< string >( "name" ) +
-    KMagneticDipoleFieldBuilder::Attribute< KEMStreamableThreeVector >( "location" ) +
-    KMagneticDipoleFieldBuilder::Attribute< KEMStreamableThreeVector >( "moment" );
+    KMagneticDipoleFieldBuilder::Attribute<string>("name") +
+    KMagneticDipoleFieldBuilder::Attribute<KEMStreamableThreeVector>("location") +
+    KMagneticDipoleFieldBuilder::Attribute<KEMStreamableThreeVector>("moment");
 
-STATICINT sKMagneticDipoleField =
-        KEMToolboxBuilder::ComplexElement< KMagneticDipoleField >( "magnetic_dipole_field" );
+STATICINT sKMagneticDipoleField = KEMToolboxBuilder::ComplexElement<KMagneticDipoleField>("magnetic_dipole_field");
 
 } /* namespace katrin */

@@ -16,32 +16,53 @@ namespace katrin
     The Kahan summation algorithm reduces the numerical error obtained with standard
     sequential sum.
 */
-template<class FloatT = double>
-class KMathKahanSum
+template<class FloatT = double> class KMathKahanSum
 {
-public:
-    KMathKahanSum(FloatT initialValue = 0.0) : fSum(0.0), fCompensation(0.0) { Add(initialValue); }
-    virtual ~KMathKahanSum() { }
+  public:
+    KMathKahanSum(FloatT initialValue = 0.0) : fSum(0.0), fCompensation(0.0)
+    {
+        Add(initialValue);
+    }
+    virtual ~KMathKahanSum() {}
 
     KMathKahanSum& Add(FloatT summand);
-    KMathKahanSum& Subtract(FloatT summand) { return Add(-summand); }
-    FloatT Result() const { return fSum; }
+    KMathKahanSum& Subtract(FloatT summand)
+    {
+        return Add(-summand);
+    }
+    FloatT Result() const
+    {
+        return fSum;
+    }
 
-    KMathKahanSum& operator+= (FloatT summand) { return Add(summand); }
-    KMathKahanSum& operator-= (FloatT summand) { return Subtract(summand); }
-//    KMathKahanSum& operator() (FloatT summand) { return Add(summand); }
-    operator FloatT() const { return Result(); }
+    KMathKahanSum& operator+=(FloatT summand)
+    {
+        return Add(summand);
+    }
+    KMathKahanSum& operator-=(FloatT summand)
+    {
+        return Subtract(summand);
+    }
+    //    KMathKahanSum& operator() (FloatT summand) { return Add(summand); }
+    operator FloatT() const
+    {
+        return Result();
+    }
 
-    KMathKahanSum& Reset(FloatT initialValue = 0.0) { fSum = fCompensation = 0.0; return Add(initialValue); }
+    KMathKahanSum& Reset(FloatT initialValue = 0.0)
+    {
+        fSum = fCompensation = 0.0;
+        return Add(initialValue);
+    }
 
-protected:
+  protected:
     FloatT fSum;
     FloatT fCompensation;
 };
 
 #if _MSC_VER > 1400
-# pragma float_control(push)
-# pragma float_control(precise, on)
+#pragma float_control(push)
+#pragma float_control(precise, on)
 #endif
 
 
@@ -50,9 +71,9 @@ protected:
 template<class FloatT>
 inline KMathKahanSum<FloatT>&
 #if KAHANSUM_GCC_VERSION > 40305
-__attribute__((__optimize__("no-associative-math")))
+    __attribute__((__optimize__("no-associative-math")))
 #endif
-KMathKahanSum<FloatT>::Add(FloatT summand)
+    KMathKahanSum<FloatT>::Add(FloatT summand)
 {
     const FloatT myTmp1 = summand - fCompensation;
     const FloatT myTmp2 = fSum + myTmp1;
@@ -62,27 +83,29 @@ KMathKahanSum<FloatT>::Add(FloatT summand)
 }
 
 #if _MSC_VER > 1400
-# pragma float_control(pop)
+#pragma float_control(pop)
 #endif
 
 template<class FloatT>
-inline KMathKahanSum<FloatT> operator+ (const KMathKahanSum<FloatT>& s1, const KMathKahanSum<FloatT>& s2) {
-    return KMathKahanSum<FloatT>( s1 ).Add( s2.Result() );
+inline KMathKahanSum<FloatT> operator+(const KMathKahanSum<FloatT>& s1, const KMathKahanSum<FloatT>& s2)
+{
+    return KMathKahanSum<FloatT>(s1).Add(s2.Result());
+}
+
+template<class FloatT> inline KMathKahanSum<FloatT> operator+(const KMathKahanSum<FloatT>& s1, FloatT s2)
+{
+    return KMathKahanSum<FloatT>(s1).Add(s2);
 }
 
 template<class FloatT>
-inline KMathKahanSum<FloatT> operator+ (const KMathKahanSum<FloatT>& s1, FloatT s2) {
-    return KMathKahanSum<FloatT>( s1 ).Add( s2 );
+inline KMathKahanSum<FloatT> operator-(const KMathKahanSum<FloatT>& s1, const KMathKahanSum<FloatT>& s2)
+{
+    return KMathKahanSum<FloatT>(s1).Subtract(s2.Result());
 }
 
-template<class FloatT>
-inline KMathKahanSum<FloatT> operator- (const KMathKahanSum<FloatT>& s1, const KMathKahanSum<FloatT>& s2) {
-    return KMathKahanSum<FloatT>( s1 ).Subtract( s2.Result() );
-}
-
-template<class FloatT>
-inline KMathKahanSum<FloatT> operator- (const KMathKahanSum<FloatT>& s1, FloatT s2) {
-    return KMathKahanSum<FloatT>( s1 ).Subtract( s2 );
+template<class FloatT> inline KMathKahanSum<FloatT> operator-(const KMathKahanSum<FloatT>& s1, FloatT s2)
+{
+    return KMathKahanSum<FloatT>(s1).Subtract(s2);
 }
 
 } /* namespace katrin */

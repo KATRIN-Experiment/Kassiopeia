@@ -5,24 +5,22 @@
 
 namespace Kassiopeia
 {
-    class KSRun;
+class KSRun;
 
-    class KSRunModifier:
-            public KSComponentTemplate< KSRunModifier >
-    {
-        public:
-            KSRunModifier();
-            virtual ~KSRunModifier();
+class KSRunModifier : public KSComponentTemplate<KSRunModifier>
+{
+  public:
+    KSRunModifier();
+    ~KSRunModifier() override;
 
-        public:
+  public:
+    //returns true if any of the state variables of anRun are changed
+    virtual bool ExecutePreRunModification(KSRun& aRun) = 0;
 
-            //returns true if any of the state variables of anRun are changed
-            virtual bool ExecutePreRunModification( KSRun& aRun ) = 0;
+    //returns true if any of the state variables of anRun are changed
+    virtual bool ExecutePostRunModification(KSRun& aRun) = 0;
+};
 
-            //returns true if any of the state variables of anRun are changed
-            virtual bool ExecutePostRunModification( KSRun& aRun ) = 0;
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

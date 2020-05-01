@@ -3,7 +3,8 @@
 
 #include "KFMArrayOperator.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,33 +20,58 @@ namespace KEMField{
 */
 
 
-template<typename T, unsigned int NDIM>
-class KFMBinaryArrayOperator: public KFMArrayOperator<T,NDIM>
+template<typename T, unsigned int NDIM> class KFMBinaryArrayOperator : public KFMArrayOperator<T, NDIM>
 {
-    public:
-        KFMBinaryArrayOperator():fFirstInput(NULL),fSecondInput(NULL),fOutput(NULL){;};
-        virtual ~KFMBinaryArrayOperator(){;};
+  public:
+    KFMBinaryArrayOperator() : fFirstInput(nullptr), fSecondInput(nullptr), fOutput(nullptr)
+    {
+        ;
+    };
+    ~KFMBinaryArrayOperator() override
+    {
+        ;
+    };
 
-        virtual void SetFirstInput(KFMArrayWrapper<T,NDIM>* in){fFirstInput = in;};
-        virtual void SetSecondInput(KFMArrayWrapper<T,NDIM>* in){fSecondInput = in;};
-        virtual void SetOutput(KFMArrayWrapper<T,NDIM>* out){fOutput = out;};
+    virtual void SetFirstInput(KFMArrayWrapper<T, NDIM>* in)
+    {
+        fFirstInput = in;
+    };
+    virtual void SetSecondInput(KFMArrayWrapper<T, NDIM>* in)
+    {
+        fSecondInput = in;
+    };
+    virtual void SetOutput(KFMArrayWrapper<T, NDIM>* out)
+    {
+        fOutput = out;
+    };
 
-        virtual KFMArrayWrapper<T,NDIM>* GetFirstInput(){return fFirstInput;};
-        virtual KFMArrayWrapper<T,NDIM>* GetSecondInput(){return fSecondInput;};
-        virtual KFMArrayWrapper<T,NDIM>* GetOutput(){return fOutput;};
+    virtual KFMArrayWrapper<T, NDIM>* GetFirstInput()
+    {
+        return fFirstInput;
+    };
+    virtual KFMArrayWrapper<T, NDIM>* GetSecondInput()
+    {
+        return fSecondInput;
+    };
+    virtual KFMArrayWrapper<T, NDIM>* GetOutput()
+    {
+        return fOutput;
+    };
 
-        virtual void Initialize(){;};
+    void Initialize() override
+    {
+        ;
+    };
 
-        virtual void ExecuteOperation() = 0;
+    void ExecuteOperation() override = 0;
 
-    protected:
-
-        KFMArrayWrapper<T,NDIM>* fFirstInput;
-        KFMArrayWrapper<T,NDIM>* fSecondInput;
-        KFMArrayWrapper<T,NDIM>* fOutput;
+  protected:
+    KFMArrayWrapper<T, NDIM>* fFirstInput;
+    KFMArrayWrapper<T, NDIM>* fSecondInput;
+    KFMArrayWrapper<T, NDIM>* fOutput;
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* __KFMBinaryArrayOperator_H__ */

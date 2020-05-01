@@ -12,7 +12,8 @@
 #include "KMagneticSuperpositionField.hh"
 #include "KToolbox.h"
 
-namespace katrin {
+namespace katrin
+{
 
 struct KMagneticSuperpositionFieldEntry
 {
@@ -20,62 +21,51 @@ struct KMagneticSuperpositionFieldEntry
     double fEnhancement;
 };
 
-typedef KComplexElement< KMagneticSuperpositionFieldEntry > KMagneticSuperpositionFieldEntryBuilder;
+typedef KComplexElement<KMagneticSuperpositionFieldEntry> KMagneticSuperpositionFieldEntryBuilder;
 
-template< >
-inline bool KMagneticSuperpositionFieldEntryBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KMagneticSuperpositionFieldEntryBuilder::AddAttribute(KContainer* aContainer)
 {
-    if( aContainer->GetName() == "name" )
-    {
-        aContainer->CopyTo( fObject->fName );
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject->fName);
         return true;
     }
-    if( aContainer->GetName() == "enhancement" )
-    {
-        aContainer->CopyTo( fObject->fEnhancement );
+    if (aContainer->GetName() == "enhancement") {
+        aContainer->CopyTo(fObject->fEnhancement);
         return true;
     }
     return false;
 }
 
-typedef KComplexElement< KEMField::KMagneticSuperpositionField > KMagneticSuperpositionFieldBuilder;
+typedef KComplexElement<KEMField::KMagneticSuperpositionField> KMagneticSuperpositionFieldBuilder;
 
-template< >
-inline bool KMagneticSuperpositionFieldBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContainer* aContainer)
 {
-    if( aContainer->GetName() == "name" )
-    {
+    if (aContainer->GetName() == "name") {
         std::string name;
         aContainer->CopyTo(name);
         this->SetName(name);
         fObject->SetName(name);
     }
-    else if( aContainer->GetName() == "use_caching" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KMagneticSuperpositionField::SetUseCaching );
+    else if (aContainer->GetName() == "use_caching") {
+        aContainer->CopyTo(fObject, &KEMField::KMagneticSuperpositionField::SetUseCaching);
     }
-    else return false;
+    else
+        return false;
     return true;
 }
 
-template< >
-inline bool KMagneticSuperpositionFieldBuilder::AddElement( KContainer* aContainer )
+template<> inline bool KMagneticSuperpositionFieldBuilder::AddElement(KContainer* aContainer)
 {
-    if( aContainer->Is< KMagneticSuperpositionFieldEntry >() )
-    {
-        KMagneticSuperpositionFieldEntry* tNewField =
-                aContainer->AsPointer< KMagneticSuperpositionFieldEntry >();
+    if (aContainer->Is<KMagneticSuperpositionFieldEntry>()) {
+        auto* tNewField = aContainer->AsPointer<KMagneticSuperpositionFieldEntry>();
 
-        KEMField::KMagneticField* tMagneticField =
-                katrin::KToolbox::GetInstance().Get< KEMField::KMagneticField >(
-                        tNewField->fName );
+        auto* tMagneticField = katrin::KToolbox::GetInstance().Get<KEMField::KMagneticField>(tNewField->fName);
 
-        fObject->AddMagneticField( tMagneticField, tNewField->fEnhancement );
+        fObject->AddMagneticField(tMagneticField, tNewField->fEnhancement);
         return true;
     }
     return false;
 }
-
 
 
 } /* namespace katrin */

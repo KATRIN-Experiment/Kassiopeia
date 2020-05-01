@@ -10,29 +10,36 @@
 
 #include "KSMagneticField.h"
 
-namespace KEMField {            // forward declaration has to be in namespace
-    class KMagneticField;
-} //KEMField
+namespace KEMField  // forward declaration has to be in namespace
+{
+class KMagneticField;
+}  // namespace KEMField
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
-class KSMagneticKEMField: public KSMagneticField {
-public:
+class KSMagneticKEMField : public KSMagneticField
+{
+  public:
     KSMagneticKEMField();
     KSMagneticKEMField(const KSMagneticKEMField& aCopy);
     KSMagneticKEMField(KEMField::KMagneticField* field);
-    KSMagneticKEMField* Clone() const;
-    virtual ~KSMagneticKEMField();
+    KSMagneticKEMField* Clone() const override;
+    ~KSMagneticKEMField() override;
 
     void SetMagneticField(KEMField::KMagneticField* field);
-    const KEMField::KMagneticField* getMagneticField();
-    virtual void CalculatePotential( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aPotential);
-    virtual void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField);
-    virtual void CalculateGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeMatrix& aGradient);
-    virtual void CalculateFieldAndGradient( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField, KThreeMatrix& aGradient);
-private:
-    void InitializeComponent();
-    void DeinitializeComponent();
+    const KEMField::KMagneticField* GetMagneticField();
+    void CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
+                            KThreeVector& aPotential) override;
+    void CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField) override;
+    void CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
+                           KThreeMatrix& aGradient) override;
+    void CalculateFieldAndGradient(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField,
+                                   KThreeMatrix& aGradient) override;
+
+  private:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
     KEMField::KMagneticField* fField;
 };

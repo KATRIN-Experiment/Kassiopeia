@@ -2,12 +2,12 @@
 #define KFMSpecialNodeSetCreator_HH__
 
 
-#include <vector>
-#include <map>
-
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
 #include "KFMSpecialNodeSet.hh"
+
+#include <map>
+#include <vector>
 
 namespace KEMField
 {
@@ -25,28 +25,28 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList>
-class KFMSpecialNodeSetCreator: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMSpecialNodeSetCreator : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMSpecialNodeSetCreator(){};
-        virtual ~KFMSpecialNodeSetCreator(){};
+  public:
+    KFMSpecialNodeSetCreator(){};
+    virtual ~KFMSpecialNodeSetCreator(){};
 
-        void SetSpecialNodeSet(KFMSpecialNodeSet<ObjectTypeList>* node_set){fNodeSet = node_set;};
+    void SetSpecialNodeSet(KFMSpecialNodeSet<ObjectTypeList>* node_set)
+    {
+        fNodeSet = node_set;
+    };
 
-        virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                fNodeSet->AddNode(node);
-            }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            fNodeSet->AddNode(node);
         }
+    }
 
-    protected:
-
-        KFMSpecialNodeSet<ObjectTypeList>* fNodeSet;
+  protected:
+    KFMSpecialNodeSet<ObjectTypeList>* fNodeSet;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KFMSpecialNodeSetCreator_H__ */

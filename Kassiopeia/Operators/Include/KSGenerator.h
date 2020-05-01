@@ -7,17 +7,16 @@
 namespace Kassiopeia
 {
 
-    class KSGenerator :
-        public KSComponentTemplate< KSGenerator >
-    {
-        public:
-            KSGenerator();
-            virtual ~KSGenerator();
+class KSGenerator : public KSComponentTemplate<KSGenerator>
+{
+  public:
+    KSGenerator();
+    ~KSGenerator() override;
 
-        public:
-            virtual void ExecuteGeneration( KSParticleQueue& aPrimaries ) = 0;
-    };
+  public:
+    virtual void ExecuteGeneration(KSParticleQueue& aPrimaries) = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

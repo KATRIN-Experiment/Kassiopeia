@@ -2,75 +2,73 @@
 #define Kassiopeia_KSTrajElectricError_h_
 
 #include "KSMathArray.h"
-
 #include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 
-    class KSTrajElectricError :
-        public KSMathArray< 5 >
-    {
-        public:
-            KSTrajElectricError();
-            KSTrajElectricError( const KSTrajElectricError& anOperand );
-            virtual ~KSTrajElectricError();
+class KSTrajElectricError : public KSMathArray<5>
+{
+  public:
+    KSTrajElectricError();
+    KSTrajElectricError(const KSTrajElectricError& anOperand);
+    virtual ~KSTrajElectricError();
 
-            //**********
-            //assignment
-            //**********
+    //**********
+    //assignment
+    //**********
 
-        public:
-            KSTrajElectricError& operator=( const double& anOperand );
+  public:
+    KSTrajElectricError& operator=(const double& anOperand);
 
-            KSTrajElectricError& operator=( const KSMathArray< 5 >& anOperand );
+    KSTrajElectricError& operator=(const KSMathArray<5>& anOperand);
 
-            template< class XLeft, class XOperation, class XRight >
-            KSTrajElectricError& operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand );
+    template<class XLeft, class XOperation, class XRight>
+    KSTrajElectricError& operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand);
 
-            KSTrajElectricError& operator=( const KSTrajElectricError& anOperand );
+    KSTrajElectricError& operator=(const KSTrajElectricError& anOperand);
 
-            //*********
-            //variables
-            //*********
+    //*********
+    //variables
+    //*********
 
-        public:
-            const double& GetTimeError() const;
-            const double& GetLengthError() const;
-            const KThreeVector& GetPositionError() const;
+  public:
+    const double& GetTimeError() const;
+    const double& GetLengthError() const;
+    const KThreeVector& GetPositionError() const;
 
-        protected:
-            mutable double fTimeError;
-            mutable double fLengthError;
-            mutable KThreeVector fPositionError;
-    };
+  protected:
+    mutable double fTimeError;
+    mutable double fLengthError;
+    mutable KThreeVector fPositionError;
+};
 
-    inline KSTrajElectricError& KSTrajElectricError::operator=( const double& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    inline KSTrajElectricError& KSTrajElectricError::operator=( const KSMathArray< 5 >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    template< class XLeft, class XOperation, class XRight >
-    inline KSTrajElectricError& KSTrajElectricError::operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    inline KSTrajElectricError& KSTrajElectricError::operator=( const KSTrajElectricError& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
+inline KSTrajElectricError& KSTrajElectricError::operator=(const double& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
 }
+
+inline KSTrajElectricError& KSTrajElectricError::operator=(const KSMathArray<5>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+template<class XLeft, class XOperation, class XRight>
+inline KSTrajElectricError& KSTrajElectricError::operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+inline KSTrajElectricError& KSTrajElectricError::operator=(const KSTrajElectricError& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+}  // namespace Kassiopeia
 
 #endif

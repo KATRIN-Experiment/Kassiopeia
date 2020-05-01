@@ -9,23 +9,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSRootSurfaceInteraction > KSRootSurfaceInteractionBuilder;
+typedef KComplexElement<KSRootSurfaceInteraction> KSRootSurfaceInteractionBuilder;
 
-    template< >
-    inline bool KSRootSurfaceInteractionBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "set_surface_interaction" )
-        {
-            fObject->SetSurfaceInteraction( KToolbox::GetInstance().Get< KSSurfaceInteraction >( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSRootSurfaceInteractionBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "set_surface_interaction") {
+        fObject->SetSurfaceInteraction(
+            KToolbox::GetInstance().Get<KSSurfaceInteraction>(aContainer->AsReference<std::string>()));
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 #endif

@@ -124,187 +124,192 @@
  *
  */
 
-#include "KMagnetostaticField.hh"
-#include <string>
-#include <memory>
-
-#include "KMPIEnvironment.hh"
 #include "KGCore.hh"
-
-#include <vtkSmartPointer.h>
-#include <vtkImageData.h>
-#include <vtkIntArray.h>
-#include <vtkDoubleArray.h>
+#include "KMPIEnvironment.hh"
+#include "KMagnetostaticField.hh"
 #include "KThreeVector_KEMField.hh"
 
-namespace KEMField {
+#include <memory>
+#include <string>
+#include <vtkDoubleArray.h>
+#include <vtkImageData.h>
+#include <vtkIntArray.h>
+#include <vtkSmartPointer.h>
 
-    class KMagfieldMapVTK
+namespace KEMField
+{
+
+class KMagfieldMapVTK
+{
+  public:
+    KMagfieldMapVTK(const std::string& aFilename);
+    virtual ~KMagfieldMapVTK();
+
+  protected:
+    virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+
+  public:
+    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField) const;
+    virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient) const;
+
+  protected:
+    vtkImageData* fImageData;
+};
+
+class KLinearInterpolationMagfieldMapVTK : public KMagfieldMapVTK
+{
+  public:
+    KLinearInterpolationMagfieldMapVTK(const std::string& aFilename);
+    virtual ~KLinearInterpolationMagfieldMapVTK();
+
+  public:
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+};
+
+class KCubicInterpolationMagfieldMapVTK : public KMagfieldMapVTK
+{
+  public:
+    KCubicInterpolationMagfieldMapVTK(const std::string& aFilename);
+    virtual ~KCubicInterpolationMagfieldMapVTK();
+
+  public:
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+
+  protected:
+    static double _cubicInterpolate(double p[], double x);
+    static double _bicubicInterpolate(double p[], double x, double y);
+    static double _tricubicInterpolate(double p[], double x, double y, double z);
+};
+
+////////////////////////////////////////////////////////////////////
+
+class KMagnetostaticFieldmap : public KMagnetostaticField
+{
+  public:
+    KMagnetostaticFieldmap();
+    virtual ~KMagnetostaticFieldmap();
+
+  public:
+    void SetDirectory(const std::string& aDirectory);
+    void SetFile(const std::string& aFile);
+    void SetInterpolation(const std::string& aMode);
+
+  private:
+    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const;
+    virtual KThreeVector MagneticFieldCore(const KPosition& P) const;
+    virtual KGradient MagneticGradientCore(const KPosition& P) const;
+    virtual void InitializeCore();
+
+  private:
+    std::string fDirectory;
+    std::string fFile;
+    int fInterpolation;
+    std::shared_ptr<KMagfieldMapVTK> fFieldMap;
+};
+
+////////////////////////////////////////////////////////////////////
+
+class KMagnetostaticFieldmapCalculator
+{
+  public:
+    KMagnetostaticFieldmapCalculator();
+    virtual ~KMagnetostaticFieldmapCalculator();
+
+  public:
+    void SetDirectory(std::string& aName)
     {
-        public:
-            KMagfieldMapVTK( const std::string& aFilename );
-            virtual ~KMagfieldMapVTK();
-
-        protected:
-            virtual bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-
-        public:
-            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField ) const;
-            virtual bool GetGradient( const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient ) const;
-
-        protected:
-            vtkImageData *fImageData;
-    };
-
-    class KLinearInterpolationMagfieldMapVTK :
-        public KMagfieldMapVTK
+        fDirectory = aName;
+    }
+    void SetFile(std::string& aName)
     {
-        public:
-            KLinearInterpolationMagfieldMapVTK( const std::string& aFilename );
-            virtual ~KLinearInterpolationMagfieldMapVTK();
-
-        public:
-            bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-    };
-
-    class KCubicInterpolationMagfieldMapVTK :
-        public KMagfieldMapVTK
+        fFile = aName;
+    }
+    void SetForceUpdate(bool aFlag)
     {
-        public:
-            KCubicInterpolationMagfieldMapVTK( const std::string& aFilename );
-            virtual ~KCubicInterpolationMagfieldMapVTK();
-
-        public:
-            bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-
-        protected:
-            static double _cubicInterpolate (double p[], double x);
-            static double _bicubicInterpolate (double p[], double x, double y);
-            static double _tricubicInterpolate (double p[], double x, double y, double z);
-    };
-
-    ////////////////////////////////////////////////////////////////////
-
-    class KMagnetostaticFieldmap :
-        public KMagnetostaticField
+        fForceUpdate = aFlag;
+    }
+    void SetCenter(KPosition aCenter)
     {
-        public:
-            KMagnetostaticFieldmap();
-            virtual ~KMagnetostaticFieldmap();
-
-        public:
-            void SetDirectory( const std::string& aDirectory );
-            void SetFile( const std::string& aFile );
-            void SetInterpolation( const std::string& aMode );
-
-        private:
-            virtual KThreeVector MagneticPotentialCore(const KPosition& P) const;
-            virtual KThreeVector MagneticFieldCore(const KPosition& P) const;
-            virtual KGradient MagneticGradientCore(const KPosition& P) const;
-            virtual void InitializeCore();
-
-        private:
-            std::string fDirectory;
-            std::string fFile;
-            int fInterpolation;
-            std::shared_ptr<KMagfieldMapVTK> fFieldMap;
-    };
-
-    ////////////////////////////////////////////////////////////////////
-
-    class KMagnetostaticFieldmapCalculator
+        fCenter = aCenter;
+    }
+    void SetLength(KThreeVector aLength)
     {
-        public:
-            KMagnetostaticFieldmapCalculator();
-            virtual ~KMagnetostaticFieldmapCalculator();
+        fLength = aLength;
+    }
+    void SetMirrorX(bool aFlag)
+    {
+        fMirrorX = aFlag;
+    }
+    void SetMirrorY(bool aFlag)
+    {
+        fMirrorY = aFlag;
+    }
+    void SetMirrorZ(bool aFlag)
+    {
+        fMirrorZ = aFlag;
+    }
+    void SetSpacing(double aSpacing)
+    {
+        fSpacing = aSpacing;
+    }
+    void AddMagneticField(KMagnetostaticField* aField)
+    {
+        fMagneticFields[aField->GetName()] = aField;
+    }
+    void SetName(std::string aName)
+    {
+        fName = aName;
+    }
+    std::string Name()
+    {
+        return fName;
+    }
 
-        public:
-            void SetDirectory( std::string &aName )
-            {
-                fDirectory = aName;
-            }
-            void SetFile( std::string &aName )
-            {
-                fFile = aName;
-            }
-            void SetCenter( KPosition aCenter )
-            {
-                fCenter = aCenter;
-            }
-            void SetLength( KThreeVector aLength )
-            {
-                fLength = aLength;
-            }
-            void SetMirrorX( bool aFlag )
-            {
-                fMirrorX = aFlag;
-            }
-            void SetMirrorY( bool aFlag )
-            {
-                fMirrorY = aFlag;
-            }
-            void SetMirrorZ( bool aFlag )
-            {
-                fMirrorZ = aFlag;
-            }
-            void SetSpacing( double aSpacing )
-            {
-                fSpacing = aSpacing;
-            }
-            void SetMagneticField( KMagnetostaticField* aField )
-            {
-                fMagneticField = aField;
-            }
-            void SetName( std::string aName)
-            {
-                fName = aName;
-            }
-            std::string Name(){return fName;}
+  public:
+    void AddSpace(const KGeoBag::KGSpace* aSpace)
+    {
+        fSpaces.push_back(aSpace);
+    }
 
-        public:
-            void AddSpace( const KGeoBag::KGSpace* aSpace )
-            {
-                fSpaces.push_back(aSpace);
+    void RemoveSpace(const KGeoBag::KGSpace* aSpace)
+    {
+        for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt) {
+            if ((*tSpaceIt) == aSpace) {
+                fSpaces.erase(tSpaceIt);
+                return;
             }
+        }
+    }
 
-            void RemoveSpace( const KGeoBag::KGSpace* aSpace )
-            {
-                for( auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt )
-                {
-                    if((*tSpaceIt) == aSpace)
-                    {
-                        fSpaces.erase(tSpaceIt);
-                        return;
-                    }
-                }
-            }
+  public:
+    bool CheckPosition(const KPosition& aPosition) const;
 
-        public:
-            bool CheckPosition( const KPosition& aPosition ) const;
+  public:
+    void Prepare();
+    void Execute();
+    void Finish();
 
-        public:
-            void Prepare();
-            void Execute();
-            void Finish();
+  public:
+    void Initialize();
 
-        public:
-            void Initialize();
+  private:
+    bool fSkipExecution;
+    std::string fOutputFilename;
+    std::string fDirectory;
+    std::string fFile;
+    std::string fName;
+    bool fForceUpdate;
+    KPosition fCenter;
+    KThreeVector fLength;
+    bool fMirrorX, fMirrorY, fMirrorZ;
+    double fSpacing;
+    std::map<std::string, KMagnetostaticField*> fMagneticFields;
+    std::vector<const KGeoBag::KGSpace*> fSpaces;
 
-        private:
-            std::string fDirectory;
-            std::string fFile;
-            std::string fName;
-            KPosition fCenter;
-            KThreeVector fLength;
-            bool fMirrorX, fMirrorY, fMirrorZ;
-            double fSpacing;
-            KMagnetostaticField *fMagneticField;
-            std::vector< const KGeoBag::KGSpace* > fSpaces;
-
-            vtkSmartPointer<vtkImageData> fGrid;
-            vtkSmartPointer<vtkIntArray> fValidityData;
-            vtkSmartPointer<vtkDoubleArray> fFieldData;
-    };
+    vtkSmartPointer<vtkImageData> fGrid;
+    vtkSmartPointer<vtkIntArray> fValidityData;
+    vtkSmartPointer<vtkDoubleArray> fFieldData;
+};
 
 } /* namespace KEMField */
 

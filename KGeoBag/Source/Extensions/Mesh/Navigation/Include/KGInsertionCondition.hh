@@ -1,12 +1,12 @@
 #ifndef KGInsertionCondition_HH__
 #define KGInsertionCondition_HH__
 
-#include <cstddef>
-#include <cmath>
-
+#include "KGBoundaryCalculator.hh"
 #include "KGCube.hh"
 #include "KGNavigableMeshElement.hh"
-#include "KGBoundaryCalculator.hh"
+
+#include <cmath>
+#include <cstddef>
 
 
 namespace KGeoBag
@@ -28,25 +28,21 @@ namespace KGeoBag
 
 class KGInsertionCondition
 {
-    public:
+  public:
+    KGInsertionCondition(){};
+    virtual ~KGInsertionCondition(){};
 
-        KGInsertionCondition(){};
-        virtual ~KGInsertionCondition(){};
+    virtual bool ElementIntersectsCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
+    virtual bool ElementEnclosedByCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
 
-        virtual bool ElementIntersectsCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
-        virtual bool ElementEnclosedByCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
-
-    private:
-
-        bool LineSegmentIntersectsCube(KThreeVector start, KThreeVector end, const KGCube<KGMESH_DIM>* cube) const;
+  private:
+    bool LineSegmentIntersectsCube(KThreeVector start, KThreeVector end, const KGCube<KGMESH_DIM>* cube) const;
 
 
-        mutable KGBoundaryCalculator<KGMESH_DIM> fBoundaryCalculator;
-
+    mutable KGBoundaryCalculator<KGMESH_DIM> fBoundaryCalculator;
 };
 
 
-
-}
+}  // namespace KGeoBag
 
 #endif /* KGInsertionCondition_H__ */

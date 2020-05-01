@@ -1,10 +1,11 @@
 #ifndef KSAAssociatedValuePODInputNode_HH__
 #define KSAAssociatedValuePODInputNode_HH__
 
-#include "KSAPODInputNode.hh"
 #include "KSACallbackTypes.hh"
+#include "KSAPODInputNode.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -21,32 +22,31 @@ namespace KEMField{
 */
 
 
-
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(SetType) >
-class KSAAssociatedValuePODInputNode: public KSAPODInputNode<SetType>
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(SetType)>
+class KSAAssociatedValuePODInputNode : public KSAPODInputNode<SetType>
 {
-    public:
+  public:
+    KSAAssociatedValuePODInputNode(std::string name, CallType* call_ptr) : KSAPODInputNode<SetType>(name)
+    {
+        fCallPtr = call_ptr;
+    };
 
-        KSAAssociatedValuePODInputNode(std::string name, CallType* call_ptr):KSAPODInputNode< SetType >(name)
-        {
-            fCallPtr = call_ptr;
-        };
+    virtual ~KSAAssociatedValuePODInputNode()
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedValuePODInputNode(){;};
+    void FinalizeObject()
+    {
+        fCallback(fCallPtr, this->fValue);
+    }
 
-        void FinalizeObject()
-        {
-            fCallback(fCallPtr, this->fValue);
-        }
-
-    protected:
-
-        CallType* fCallPtr;
-        KSAPassByValueSet< CallType, SetType, memberFunction > fCallback;
-
+  protected:
+    CallType* fCallPtr;
+    KSAPassByValueSet<CallType, SetType, memberFunction> fCallback;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KSAAssociatedValuePODInputNode_H__ */

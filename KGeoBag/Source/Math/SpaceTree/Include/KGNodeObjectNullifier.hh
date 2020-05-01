@@ -6,11 +6,8 @@
 #include "KGObjectRetriever.hh"
 
 
-
 namespace KGeoBag
 {
-
-
 
 
 /*
@@ -26,24 +23,24 @@ namespace KGeoBag
 *
 */
 
-template<typename ObjectTypeList, typename TypeToRemove >
-class KGNodeObjectNullifier: public KGNodeActor< KGNode<ObjectTypeList> >
+template<typename ObjectTypeList, typename TypeToRemove>
+class KGNodeObjectNullifier : public KGNodeActor<KGNode<ObjectTypeList>>
 {
-    public:
-        KGNodeObjectNullifier(){};
-        virtual ~KGNodeObjectNullifier(){};
+  public:
+    KGNodeObjectNullifier(){};
+    ~KGNodeObjectNullifier() override{};
 
-        virtual void ApplyAction( KGNode<ObjectTypeList>* node)
-        {
-            //does not delete the object, just sets the pointer to null, this is useful
-            //when many nodes point to the same object, which has just been deleted
-            KGObjectRetriever<ObjectTypeList, TypeToRemove >::SetNodeObject(NULL, node);
-        }
+    void ApplyAction(KGNode<ObjectTypeList>* node) override
+    {
+        //does not delete the object, just sets the pointer to null, this is useful
+        //when many nodes point to the same object, which has just been deleted
+        KGObjectRetriever<ObjectTypeList, TypeToRemove>::SetNodeObject(nullptr, node);
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGNodeObjectNullifier_H__ */

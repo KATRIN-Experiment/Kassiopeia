@@ -3,12 +3,8 @@
 namespace KGeoBag
 {
 
-    KGAxialMeshElement::KGAxialMeshElement()
-    {
-    }
+KGAxialMeshElement::KGAxialMeshElement() {}
 
-    KGAxialMeshElement::~KGAxialMeshElement()
-    {
-    }
+KGAxialMeshElement::~KGAxialMeshElement() {}
 
-}
+}  // namespace KGeoBag

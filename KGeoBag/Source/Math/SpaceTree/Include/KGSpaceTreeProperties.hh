@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /**
 *
@@ -18,81 +19,101 @@ namespace KGeoBag{
 *
 */
 
-template< unsigned int NDIM >
-class KGSpaceTreeProperties
+template<unsigned int NDIM> class KGSpaceTreeProperties
 {
-    public:
-
-        KGSpaceTreeProperties():fMaxTreeDepth(0),fCurrentMaxUniqueID(0),fTreeID("")
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fDimSize[i] = 0;
-            };
+  public:
+    KGSpaceTreeProperties() : fMaxTreeDepth(0), fCurrentMaxUniqueID(0), fTreeID("")
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fDimSize[i] = 0;
         };
+    };
 
-        virtual ~KGSpaceTreeProperties(){};
+    virtual ~KGSpaceTreeProperties(){};
 
-    public:
+  public:
+    //unique id for the entire tree
+    void SetTreeID(std::string tree_id)
+    {
+        fTreeID = tree_id;
+    };
+    std::string GetTreeID() const
+    {
+        return fTreeID;
+    };
 
-        //unique id for the entire tree
-        void SetTreeID(std::string tree_id){fTreeID = tree_id;};
-        std::string GetTreeID() const {return fTreeID;};
+    //max depth of the tree
+    void SetMaxTreeDepth(unsigned int depth)
+    {
+        fMaxTreeDepth = depth;
+    };
+    unsigned int GetMaxTreeDepth() const
+    {
+        return fMaxTreeDepth;
+    };
 
-        //max depth of the tree
-        void SetMaxTreeDepth(unsigned int depth){fMaxTreeDepth = depth;};
-        unsigned int GetMaxTreeDepth() const {return fMaxTreeDepth;};
+    //nodes which are less than or equal this number of nodes away are considered neighbors
+    void SetNeighborOrder(unsigned int cn_order)
+    {
+        fNeighborOrder = cn_order;
+    };
+    unsigned int GetNeighborOrder() const
+    {
+        return fNeighborOrder;
+    };
 
-        //nodes which are less than or equal this number of nodes away are considered neighbors
-        void SetNeighborOrder(unsigned int cn_order){fNeighborOrder = cn_order;};
-        unsigned int GetNeighborOrder() const {return fNeighborOrder;};
+    //get the number of dimension of the divisions of the tree
+    unsigned int GetNDimensions() const
+    {
+        return NDIM;
+    };
 
-        //get the number of dimension of the divisions of the tree
-        unsigned int GetNDimensions() const {return NDIM;};
+    //get/set the size of each dimension
+    unsigned int GetDimension(unsigned int dim_index) const
+    {
+        return fDimSize[dim_index];
+    }
 
-        //get/set the size of each dimension
-        unsigned int GetDimension(unsigned int dim_index) const
-        {
-            return fDimSize[dim_index];
+    const unsigned int* GetDimensions() const
+    {
+        return fDimSize;
+    };
+    void GetDimensions(unsigned int* dim_size) const
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            dim_size[i] = fDimSize[i];
         }
+    }
 
-        const unsigned int* GetDimensions() const {return fDimSize;};
-        void GetDimensions(unsigned int* dim_size) const
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                dim_size[i] = fDimSize[i];
-            }
+    void SetDimensions(const unsigned int* dim_size)
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fDimSize[i] = dim_size[i];
         }
+    }
 
-        void SetDimensions(const unsigned int* dim_size)
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fDimSize[i] = dim_size[i];
-            }
-        }
+    int RegisterNode()
+    {
+        int id = fCurrentMaxUniqueID;
+        fCurrentMaxUniqueID++;
+        return id;
+    }
 
-        int RegisterNode()
-        {
-            int id = fCurrentMaxUniqueID;
-            fCurrentMaxUniqueID++;
-            return id;
-        }
+    unsigned int GetNNodes() const
+    {
+        return fCurrentMaxUniqueID;
+    };
 
-        unsigned int GetNNodes() const {return fCurrentMaxUniqueID;};
-
-    private:
-
-        unsigned int fDimSize[NDIM]; //the number divisions in each dimension of the sub-division
-        unsigned int fNeighborOrder;
-        unsigned int fMaxTreeDepth;
-        unsigned int fCurrentMaxUniqueID;
-        std::string fTreeID; //the id pertaining to the entire tree
+  private:
+    unsigned int fDimSize[NDIM];  //the number divisions in each dimension of the sub-division
+    unsigned int fNeighborOrder;
+    unsigned int fMaxTreeDepth;
+    unsigned int fCurrentMaxUniqueID;
+    std::string fTreeID;  //the id pertaining to the entire tree
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGSpaceTreeProperties_H__ */

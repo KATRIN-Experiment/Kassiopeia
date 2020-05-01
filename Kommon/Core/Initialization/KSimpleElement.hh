@@ -6,97 +6,79 @@
 namespace katrin
 {
 
-    template< class XType >
-    class KSimpleElement :
-        public KElementBase
-    {
-        public:
-            KSimpleElement( KElementBase* aParentElement = NULL );
-            virtual ~KSimpleElement();
+template<class XType> class KSimpleElement : public KElementBase
+{
+  public:
+    KSimpleElement(KElementBase* aParentElement = nullptr);
+    ~KSimpleElement() override;
 
-            virtual bool Begin();
-            virtual bool AddAttribute( KContainer* aToken );
-            virtual bool Body();
-            virtual bool AddElement( KContainer* anElement );
-            virtual bool SetValue( KToken* aToken );
-            virtual bool End();
+    bool Begin() override;
+    bool AddAttribute(KContainer* aToken) override;
+    bool Body() override;
+    bool AddElement(KContainer* anElement) override;
+    bool SetValue(KToken* aToken) override;
+    bool End() override;
 
-            static KElementBase* Create( KElementBase* aParentElement );
+    static KElementBase* Create(KElementBase* aParentElement);
 
-        protected:
-            XType* fObject;
-            static KAttributeMap* sAttributes;
-            static KElementMap* sElements;
-    };
+  protected:
+    XType* fObject;
+    static KAttributeMap* sAttributes;
+    static KElementMap* sElements;
+};
 
-    template< class XType >
-    KSimpleElement< XType >::KSimpleElement( KElementBase* aParentElement ) :
-        fObject( NULL )
-    {
-        fParentElement = aParentElement;
+template<class XType> KSimpleElement<XType>::KSimpleElement(KElementBase* aParentElement) : fObject(nullptr)
+{
+    fParentElement = aParentElement;
 
-        if( sElements == NULL )
-        {
-            sElements = new KElementMap();
-        }
-        fElements = sElements;
-
-        if( sAttributes == NULL )
-        {
-            sAttributes = new KAttributeMap();
-        }
-        fAttributes = sAttributes;
+    if (sElements == nullptr) {
+        sElements = new KElementMap();
     }
-    template< class XType >
-    KSimpleElement< XType >::~KSimpleElement()
-    {
-    }
+    fElements = sElements;
 
-    template< class XType >
-    bool KSimpleElement< XType >::Begin()
-    {
-        fObject = new XType();
-        Set( fObject );
-        return true;
+    if (sAttributes == nullptr) {
+        sAttributes = new KAttributeMap();
     }
-    template< class XType >
-    bool KSimpleElement< XType >::AddAttribute( KContainer* )
-    {
-        return false;
-    }
-    template< class XType >
-    bool KSimpleElement< XType >::Body()
-    {
-        return true;
-    }
-    template< class XType >
-    bool KSimpleElement< XType >::AddElement( KContainer* )
-    {
-        return false;
-    }
-    template< class XType >
-    bool KSimpleElement< XType >::SetValue( KToken* aToken )
-    {
-        (*fObject) = aToken->GetValue< XType >();
-        return true;
-    }
-    template< class XType >
-    bool KSimpleElement< XType >::End()
-    {
-        return true;
-    }
-
-    template< class XType >
-    KElementBase* KSimpleElement< XType >::Create( KElementBase* aParentElement )
-    {
-        return new KSimpleElement< XType >( aParentElement );
-    }
-
-    template< class XType >
-    KAttributeMap* KSimpleElement< XType >::sAttributes = NULL;
-
-    template< class XType >
-    KElementMap* KSimpleElement< XType >::sElements = NULL;
+    fAttributes = sAttributes;
 }
+template<class XType> KSimpleElement<XType>::~KSimpleElement() {}
+
+template<class XType> bool KSimpleElement<XType>::Begin()
+{
+    fObject = new XType();
+    Set(fObject);
+    return true;
+}
+template<class XType> bool KSimpleElement<XType>::AddAttribute(KContainer*)
+{
+    return false;
+}
+template<class XType> bool KSimpleElement<XType>::Body()
+{
+    return true;
+}
+template<class XType> bool KSimpleElement<XType>::AddElement(KContainer*)
+{
+    return false;
+}
+template<class XType> bool KSimpleElement<XType>::SetValue(KToken* aToken)
+{
+    (*fObject) = aToken->GetValue<XType>();
+    return true;
+}
+template<class XType> bool KSimpleElement<XType>::End()
+{
+    return true;
+}
+
+template<class XType> KElementBase* KSimpleElement<XType>::Create(KElementBase* aParentElement)
+{
+    return new KSimpleElement<XType>(aParentElement);
+}
+
+template<class XType> KAttributeMap* KSimpleElement<XType>::sAttributes = nullptr;
+
+template<class XType> KElementMap* KSimpleElement<XType>::sElements = nullptr;
+}  // namespace katrin
 
 #endif

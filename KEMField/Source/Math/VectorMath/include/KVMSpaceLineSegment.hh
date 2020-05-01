@@ -1,13 +1,14 @@
 #ifndef KVMSpaceLineSegment_H
 #define KVMSpaceLineSegment_H
 
+#include "../../include/KThreeVector_KEMField.hh"
+
 #include <cmath>
 #include <string>
 
-#include "../../include/KThreeVector_KEMField.hh"
 
-
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -25,34 +26,47 @@ namespace KEMField{
 
 class KVMSpaceLineSegment
 {
-    public:
-        KVMSpaceLineSegment();
-        ~KVMSpaceLineSegment(){;};
+  public:
+    KVMSpaceLineSegment();
+    ~KVMSpaceLineSegment()
+    {
+        ;
+    };
 
-        void SetAll(const double* point1, const double* point2);
-        void SetVertices(const double* point1, const double* point2);
-        void GetVertices(double* point1, double* point2) const;
+    void SetAll(const double* point1, const double* point2);
+    void SetVertices(const double* point1, const double* point2);
+    void GetVertices(double* point1, double* point2) const;
 
-        double GetPoint1(int i) const {return fP1[i];};
-        double GetPoint2(int i) const {return fP2[i];};
-        double GetLength() const {return fL;};
-        double GetUnitVector(int i) const {return fN[i];};
+    double GetPoint1(int i) const
+    {
+        return fP1[i];
+    };
+    double GetPoint2(int i) const
+    {
+        return fP2[i];
+    };
+    double GetLength() const
+    {
+        return fL;
+    };
+    double GetUnitVector(int i) const
+    {
+        return fN[i];
+    };
 
-        inline KVMSpaceLineSegment(const KVMSpaceLineSegment& copyObject);
-        inline KVMSpaceLineSegment& operator=(const KVMSpaceLineSegment& rhs);
+    inline KVMSpaceLineSegment(const KVMSpaceLineSegment& copyObject);
+    inline KVMSpaceLineSegment& operator=(const KVMSpaceLineSegment& rhs);
 
-    protected:
+  protected:
+    void InitializeParameters();
 
-        void InitializeParameters();
+    void SetPoint1(const double* point);  //start point
+    void SetPoint2(const double* point);  //end point
 
-        void SetPoint1(const double* point); //start point
-        void SetPoint2(const double* point); //end point
-
-        KThreeVector fP1; //start point
-        KThreeVector fP2; //end point
-        KThreeVector fN; //unit vector
-        double fL; //length
-
+    KThreeVector fP1;  //start point
+    KThreeVector fP2;  //end point
+    KThreeVector fN;   //unit vector
+    double fL;         //length
 };
 
 inline KVMSpaceLineSegment::KVMSpaceLineSegment(const KVMSpaceLineSegment& copyObject)
@@ -64,8 +78,7 @@ inline KVMSpaceLineSegment::KVMSpaceLineSegment(const KVMSpaceLineSegment& copyO
 
 inline KVMSpaceLineSegment& KVMSpaceLineSegment::operator=(const KVMSpaceLineSegment& rhs)
 {
-    if(this != &rhs)
-    {
+    if (this != &rhs) {
         fP1 = rhs.fP1;
         fP2 = rhs.fP2;
         InitializeParameters();
@@ -74,6 +87,6 @@ inline KVMSpaceLineSegment& KVMSpaceLineSegment::operator=(const KVMSpaceLineSeg
 }
 
 
-}
+}  // namespace KEMField
 
 #endif /* KVMSpaceLineSegment_H */

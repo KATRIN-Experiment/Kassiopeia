@@ -1,10 +1,10 @@
 #ifndef KELECTROMAGNETICBASIS_DEF
 #define KELECTROMAGNETICBASIS_DEF
 
-#include <string>
-#include <complex>
-
 #include "../../../Surfaces/include/KBasis.hh"
+
+#include <complex>
+#include <string>
 
 namespace KEMField
 {
@@ -20,32 +20,33 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KElectromagneticBasis : public KBasisType<std::complex<double>,4>
-  {
+class KElectromagneticBasis : public KBasisType<std::complex<double>, 4>
+{
   public:
-    KElectromagneticBasis() : KBasisType<std::complex<double>,4>() {}
-    virtual ~KElectromagneticBasis() {}
+    KElectromagneticBasis() : KBasisType<std::complex<double>, 4>() {}
+    ~KElectromagneticBasis() override {}
 
-    static std::string Name() { return "ElectromagneticBasis"; }
-  };
+    static std::string Name()
+    {
+        return "ElectromagneticBasis";
+    }
+};
 
-  template <typename Stream>
-  Stream& operator>>(Stream& s,KElectromagneticBasis& b)
-  {
+template<typename Stream> Stream& operator>>(Stream& s, KElectromagneticBasis& b)
+{
     s.PreStreamInAction(b);
-    s >> static_cast<KBasisType<std::complex<double>,4>&>(b);
+    s >> static_cast<KBasisType<std::complex<double>, 4>&>(b);
     s.PostStreamInAction(b);
     return s;
-  }
+}
 
-  template <typename Stream>
-  Stream& operator<<(Stream& s,const KElectromagneticBasis& b)
-  {
+template<typename Stream> Stream& operator<<(Stream& s, const KElectromagneticBasis& b)
+{
     s.PreStreamOutAction(b);
-    s << static_cast<const KBasisType<std::complex<double>,4>&>(b);
+    s << static_cast<const KBasisType<std::complex<double>, 4>&>(b);
     s.PostStreamOutAction(b);
     return s;
-  }
 }
+}  // namespace KEMField
 
 #endif /* KELECTROMAGNETICBASIS_DEF */

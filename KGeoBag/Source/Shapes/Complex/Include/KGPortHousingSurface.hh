@@ -1,14 +1,13 @@
 #ifndef KGPORTHOUSINGSURFACE_HH_
 #define KGPORTHOUSINGSURFACE_HH_
 
-#include "KGWrappedSurface.hh"
-
 #include "KGPortHousing.hh"
+#include "KGWrappedSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSurface< KGPortHousing > KGPortHousingSurface;
+typedef KGWrappedSurface<KGPortHousing> KGPortHousingSurface;
 
 }
 

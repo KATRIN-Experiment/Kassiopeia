@@ -8,43 +8,47 @@
 #ifndef KELECTRICFIELDSOLVER_HH_
 #define KELECTRICFIELDSOLVER_HH_
 
-#include "KThreeVector_KEMField.hh"
 #include "KSurfaceContainer.hh"
+#include "KThreeVector_KEMField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KElectricFieldSolver
 {
-public:
-    KElectricFieldSolver() :fInitialized(false) {}
+  public:
+    KElectricFieldSolver() : fInitialized(false) {}
     virtual ~KElectricFieldSolver() {}
 
-    void Initialize( KSurfaceContainer& container) {
-        if(!fInitialized) {
+    void Initialize(KSurfaceContainer& container)
+    {
+        if (!fInitialized) {
             InitializeCore(container);
             fInitialized = true;
         }
     }
 
-    double Potential(const KPosition& P) const {
+    double Potential(const KPosition& P) const
+    {
         return PotentialCore(P);
     }
 
-    KThreeVector ElectricField(const KPosition& P) const {
+    KThreeVector ElectricField(const KPosition& P) const
+    {
         return ElectricFieldCore(P);
     }
 
-    std::pair<KThreeVector,double> ElectricFieldAndPotential(const KPosition& P) const
+    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P) const
     {
         return ElectricFieldAndPotentialCore(P);
     }
 
-private:
+  private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
-    virtual double PotentialCore(const KPosition& P ) const = 0;
-    virtual KThreeVector ElectricFieldCore( const KPosition& P) const = 0;
+    virtual double PotentialCore(const KPosition& P) const = 0;
+    virtual KThreeVector ElectricFieldCore(const KPosition& P) const = 0;
 
-    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -55,12 +59,12 @@ private:
         double potential = PotentialCore(P);
         KThreeVector field = ElectricFieldCore(P);
 
-        return std::pair<KThreeVector,double>(field,potential);
+        return std::pair<KThreeVector, double>(field, potential);
     };
 
     bool fInitialized;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KELECTRICFIELDSOLVER_HH_ */

@@ -3,28 +3,28 @@
 namespace KGeoBag
 {
 
-    KGExtrudedPolyLoopSurfaceMesher::KGExtrudedPolyLoopSurfaceMesher() :
-            KGSimpleMesher()
-    {
-    }
-    KGExtrudedPolyLoopSurfaceMesher::~KGExtrudedPolyLoopSurfaceMesher()
-    {
-    }
+KGExtrudedPolyLoopSurfaceMesher::KGExtrudedPolyLoopSurfaceMesher() : KGSimpleMesher() {}
+KGExtrudedPolyLoopSurfaceMesher::~KGExtrudedPolyLoopSurfaceMesher() {}
 
-    void KGExtrudedPolyLoopSurfaceMesher::VisitExtrudedPathSurface( KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface )
-    {
-        //create poly loop points
-        ClosedPoints tPolyLoopPoints;
-        PolyLoopToClosedPoints( aExtrudedPolyLoopSurface->Path().operator ->(), tPolyLoopPoints );
+void KGExtrudedPolyLoopSurfaceMesher::VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface)
+{
+    //create poly loop points
+    ClosedPoints tPolyLoopPoints;
+    PolyLoopToClosedPoints(aExtrudedPolyLoopSurface->Path().operator->(), tPolyLoopPoints);
 
-        //create rotated points
-        TubeMesh tMeshPoints;
-        ClosedPointsExtrudedToTubeMesh( tPolyLoopPoints, aExtrudedPolyLoopSurface->ZMin(), aExtrudedPolyLoopSurface->ZMax(), aExtrudedPolyLoopSurface->ExtrudedMeshCount(), aExtrudedPolyLoopSurface->ExtrudedMeshPower(), tMeshPoints );
+    //create rotated points
+    TubeMesh tMeshPoints;
+    ClosedPointsExtrudedToTubeMesh(tPolyLoopPoints,
+                                   aExtrudedPolyLoopSurface->ZMin(),
+                                   aExtrudedPolyLoopSurface->ZMax(),
+                                   aExtrudedPolyLoopSurface->ExtrudedMeshCount(),
+                                   aExtrudedPolyLoopSurface->ExtrudedMeshPower(),
+                                   tMeshPoints);
 
-        //create mesh
-        TubeMeshToTriangles( tMeshPoints );
+    //create mesh
+    TubeMeshToTriangles(tMeshPoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

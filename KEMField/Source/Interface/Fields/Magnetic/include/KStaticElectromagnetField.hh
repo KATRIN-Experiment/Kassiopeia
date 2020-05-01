@@ -8,37 +8,38 @@
 #ifndef KSTATICELECTROMAGNETFIELD_HH_
 #define KSTATICELECTROMAGNETFIELD_HH_
 
-#include "KMagnetostaticField.hh"
 #include "KMagneticFieldSolver.hh"
+#include "KMagnetostaticField.hh"
 #include "KSmartPointer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KStaticElectromagnetField: public KMagnetostaticField {
-public:
+class KStaticElectromagnetField : public KMagnetostaticField
+{
+  public:
     KStaticElectromagnetField();
-    virtual ~KStaticElectromagnetField();
+    ~KStaticElectromagnetField() override;
 
-    void SetDirectory( const std::string& aDirectory );
-    void SetFile (const std::string& aFile );
+    void SetDirectory(const std::string& aDirectory);
+    void SetFile(const std::string& aFile);
 
-    void SetFieldSolver( KSmartPointer<KMagneticFieldSolver> solver);
+    void SetFieldSolver(KSmartPointer<KMagneticFieldSolver> solver);
     KSmartPointer<KMagneticFieldSolver> GetFieldSolver();
 
     void SetContainer(KSmartPointer<KElectromagnetContainer> aContainer);
     KSmartPointer<KElectromagnetContainer> GetContainer() const;
 
-protected:
-
-    void InitializeCore();
+  protected:
+    void InitializeCore() override;
     void CheckSolverExistance() const;
 
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const;
-    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const;
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const;
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
 
-private:
+  private:
     KSmartPointer<KElectromagnetContainer> fContainer;
     KSmartPointer<KMagneticFieldSolver> fFieldSolver;
 

@@ -7,57 +7,54 @@ using namespace Kassiopeia;
 
 int main()
 {
-    katrin::KMessageTable::GetInstance().SetTerminalVerbosity( eDebug );
-    katrin::KMessageTable::GetInstance().SetLogVerbosity( eDebug );
+    katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
+    katrin::KMessageTable::GetInstance().SetLogVerbosity(eDebug);
 
-    KRootFile* tRootFile = KRootFile::CreateOutputRootFile( "QuadrupoleTrapSimulation.root" );
+    KRootFile* tRootFile = KRootFile::CreateOutputRootFile("QuadrupoleTrapSimulation.root");
 
     KSReadFileROOT tReader;
-    tReader.OpenFile( tRootFile );
+    tReader.OpenFile(tRootFile);
 
     KSReadRunROOT& tRunReader = tReader.GetRun();
     KSReadEventROOT& tEventReader = tReader.GetEvent();
     KSReadTrackROOT& tTrackReader = tReader.GetTrack();
-    KSReadStepROOT& tStepReader= tReader.GetStep();
+    KSReadStepROOT& tStepReader = tReader.GetStep();
 
-//    KSReadObjectROOT& tWorld = tStepReader.Get( "component_step_world" );
-//    KSDouble& tLength = tWorld.Get< KSDouble >( "time" );
+    //    KSReadObjectROOT& tWorld = tStepReader.Get( "component_step_world" );
+    //    KSDouble& tLength = tWorld.Get< KSDouble >( "time" );
 
-    KSReadObjectROOT& tCell = tStepReader.GetObject( "component_step_cell" );
-    KSDouble& tMoment = tCell.Get< KSDouble >( "orbital_magnetic_moment" );
+    KSReadObjectROOT& tCell = tStepReader.GetObject("component_step_cell");
+    auto& tMoment = tCell.Get<KSDouble>("orbital_magnetic_moment");
     KSDouble tMinMoment;
     KSDouble tMaxMoment;
     double tDeviation;
 
-    for( tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++ )
-    {
-		for( tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++ )
-		{
-			for( tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++ )
-			{
-				tMinMoment = numeric_limits< double >::max();
-				tMaxMoment = numeric_limits< double >::min();
-				for( tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex(); tStepReader++ )
-				{
-					if( tCell.Valid() )
-					{
-						if( tMoment.Value() > tMaxMoment.Value() )
-						{
-							tMaxMoment = tMoment;
-						}
+    for (tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++) {
+        for (tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex();
+             tEventReader++) {
+            for (tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex();
+                 tTrackReader++) {
+                tMinMoment = numeric_limits<double>::max();
+                tMaxMoment = numeric_limits<double>::min();
+                for (tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex();
+                     tStepReader++) {
+                    if (tCell.Valid()) {
+                        if (tMoment.Value() > tMaxMoment.Value()) {
+                            tMaxMoment = tMoment;
+                        }
 
-						if( tMoment.Value() < tMinMoment.Value() )
-						{
-							tMinMoment = tMoment;
-						}
-					}
-				}
+                        if (tMoment.Value() < tMinMoment.Value()) {
+                            tMinMoment = tMoment;
+                        }
+                    }
+                }
 
-				tDeviation = 2.0 * ((tMaxMoment.Value() - tMinMoment.Value()) / (tMaxMoment.Value() + tMinMoment.Value()));
+                tDeviation =
+                    2.0 * ((tMaxMoment.Value() - tMinMoment.Value()) / (tMaxMoment.Value() + tMinMoment.Value()));
 
-				cout << "extrema for track <" << tDeviation << ">" << endl;
-			}
-		}
+                cout << "extrema for track <" << tDeviation << ">" << endl;
+            }
+        }
     }
 
 

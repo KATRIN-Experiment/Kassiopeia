@@ -6,36 +6,34 @@
 namespace KEMField
 {
 
-  class KVisitorBase
-  {
+class KVisitorBase
+{
   public:
     virtual ~KVisitorBase() {}
 
     virtual void Visit(KEmptyType&) {}
-  };
+};
 
-  template <class Policy, class Base=KVisitorBase>
-  class KVisitorType : public Base
-  {
+template<class Policy, class Base = KVisitorBase> class KVisitorType : public Base
+{
   public:
     using Base::Visit;
 
-    virtual ~KVisitorType() {}
+    ~KVisitorType() override {}
 
     virtual void Visit(Policy&) = 0;
-  };
+};
 
-  template <class Policy, class Base>
-  class KNonVisitorType : public Base
-  {
+template<class Policy, class Base> class KNonVisitorType : public Base
+{
   public:
     using Base::Visit;
 
     KNonVisitorType() {}
-      virtual ~KNonVisitorType() {}
+    ~KNonVisitorType() override {}
 
-    virtual void Visit(Policy&) {}
-  };
+    void Visit(Policy&) override {}
+};
 
 /**
 * @class KSelectiveVisitor
@@ -45,21 +43,20 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Visitor, class VisitedList>
-  class KSelectiveVisitor :
-    public KGenLinearHierarchy<typename RemoveTypelist<typename Visitor::AcceptedTypes,VisitedList>::Result,KNonVisitorType,Visitor>
-  {
+template<class Visitor, class VisitedList>
+class KSelectiveVisitor :
+    public KGenLinearHierarchy<typename RemoveTypelist<typename Visitor::AcceptedTypes, VisitedList>::Result,
+                               KNonVisitorType, Visitor>
+{
   public:
-    virtual ~KSelectiveVisitor() {}
-  };
+    ~KSelectiveVisitor() override {}
+};
 
-  template <class Visitor>
-  class KSelectiveVisitor<Visitor,typename Visitor::AcceptedTypes> :
-    public Visitor
-  {
+template<class Visitor> class KSelectiveVisitor<Visitor, typename Visitor::AcceptedTypes> : public Visitor
+{
   public:
-    virtual ~KSelectiveVisitor() {}
-  };
-}
+    ~KSelectiveVisitor() override {}
+};
+}  // namespace KEMField
 
 #endif /* KTYPELISTVISITOR_DEF */

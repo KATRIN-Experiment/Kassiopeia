@@ -4,6 +4,7 @@ set( UTILITY_HEADER_BASENAMES
     KSMutex.h
     KSCondition.h
     KSCyclicIterator.h
+    KSException.h
     KSExpression.h
     KSList.h
     KSUtilityMessage.h

@@ -8,27 +8,30 @@
 #ifndef KEXPLICITSUPERPOSITIONCACHEDCHARGEDENSITYSOLVER_HH_
 #define KEXPLICITSUPERPOSITIONCACHEDCHARGEDENSITYSOLVER_HH_
 
-#include "KExplicitSuperpositionSolutionComponent.hh"
 #include "KChargeDensitySolver.hh"
-#include <vector>
+#include "KExplicitSuperpositionSolutionComponent.hh"
+
 #include <string>
+#include <vector>
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KExplicitSuperpositionCachedChargeDensitySolver : public KChargeDensitySolver {
-public:
+class KExplicitSuperpositionCachedChargeDensitySolver : public KChargeDensitySolver
+{
+  public:
     KExplicitSuperpositionCachedChargeDensitySolver();
-    virtual ~KExplicitSuperpositionCachedChargeDensitySolver();
+    ~KExplicitSuperpositionCachedChargeDensitySolver() override;
 
-    void SetName( std::string s )
+    void SetName(std::string s)
     {
         fName = s;
     }
 
-private:
-    void InitializeCore( KSurfaceContainer& container );
+  private:
+    void InitializeCore(KSurfaceContainer& container) override;
 
-public:
+  public:
     void AddSolutionComponent(KExplicitSuperpositionSolutionComponent* component)
     {
         fNames.push_back(component->name);
@@ -36,12 +39,11 @@ public:
         fHashLabels.push_back(component->hash);
     }
 
-private:
-
+  private:
     std::string fName;
-    std::vector< std::string > fNames;
-    std::vector< double > fScaleFactors;
-    std::vector< std::string> fHashLabels;
+    std::vector<std::string> fNames;
+    std::vector<double> fScaleFactors;
+    std::vector<std::string> fHashLabels;
 };
 
 } /* namespace KEMField */

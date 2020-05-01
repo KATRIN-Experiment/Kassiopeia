@@ -6,11 +6,8 @@
 #include "KFMObjectRetriever.hh"
 
 
-
 namespace KEMField
 {
-
-
 
 
 /*
@@ -26,28 +23,27 @@ namespace KEMField
 *
 */
 
-template<typename ObjectTypeList, typename TypeToRemove >
-class KFMNodeObjectRemover: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, typename TypeToRemove>
+class KFMNodeObjectRemover : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeObjectRemover(){};
-        virtual ~KFMNodeObjectRemover(){};
+  public:
+    KFMNodeObjectRemover(){};
+    ~KFMNodeObjectRemover() override{};
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            TypeToRemove* remove_this_object = KFMObjectRetriever<ObjectTypeList, TypeToRemove>::GetNodeObject(node);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        TypeToRemove* remove_this_object = KFMObjectRetriever<ObjectTypeList, TypeToRemove>::GetNodeObject(node);
 
-            if(remove_this_object != NULL)
-            {
-                delete remove_this_object;
-                KFMObjectRetriever<ObjectTypeList, TypeToRemove >::SetNodeObject(NULL, node);
-            }
+        if (remove_this_object != nullptr) {
+            delete remove_this_object;
+            KFMObjectRetriever<ObjectTypeList, TypeToRemove>::SetNodeObject(nullptr, node);
         }
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMNodeObjectRemover_H__ */

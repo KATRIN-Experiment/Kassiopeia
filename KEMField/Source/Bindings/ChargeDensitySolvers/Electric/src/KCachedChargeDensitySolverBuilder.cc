@@ -14,22 +14,18 @@
 
 using namespace KEMField;
 
-namespace katrin {
-
-template< >
-KCachedChargeDensitySolverBuilder::~KComplexElement()
+namespace katrin
 {
-}
 
-STATICINT sKCachedChargeDensitySolverStructure =
-		KCachedChargeDensitySolverBuilder::Attribute< string >( "name" ) +
-		KCachedChargeDensitySolverBuilder::Attribute< string >( "hash" );
+template<> KCachedChargeDensitySolverBuilder::~KComplexElement() {}
+
+STATICINT sKCachedChargeDensitySolverStructure = KCachedChargeDensitySolverBuilder::Attribute<string>("name") +
+                                                 KCachedChargeDensitySolverBuilder::Attribute<string>("hash");
 
 STATICINT sKElectrostaticBoundaryField =
-KElectrostaticBoundaryFieldBuilder::ComplexElement< KCachedChargeDensitySolver >( "cached_bem_solver" ) +
-KElectrostaticBoundaryFieldBuilder::ComplexElement< KCachedChargeDensitySolver >( "cached_charge_density_solver" ) ;
-}
-
+    KElectrostaticBoundaryFieldBuilder::ComplexElement<KCachedChargeDensitySolver>("cached_bem_solver") +
+    KElectrostaticBoundaryFieldBuilder::ComplexElement<KCachedChargeDensitySolver>("cached_charge_density_solver");
+}  // namespace katrin
 
 
 #endif /* SRC_KCACHEDCHARGEDENSITYSOLVERBUILDER_CC_ */

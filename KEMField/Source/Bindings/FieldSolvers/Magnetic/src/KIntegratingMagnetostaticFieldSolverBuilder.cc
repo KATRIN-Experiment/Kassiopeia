@@ -10,14 +10,12 @@
 #include "KStaticElectromagnetFieldBuilder.hh"
 
 using namespace KEMField;
-namespace katrin {
-
-template< >
-KIntegratingMagnetostaticFieldSolverBuilder::~KComplexElement()
+namespace katrin
 {
-}
+
+template<> KIntegratingMagnetostaticFieldSolverBuilder::~KComplexElement() {}
 
 STATICINT sKStaticElectromagnetFieldStructure =
-        KStaticElectromagnetFieldBuilder::ComplexElement< KIntegratingMagnetostaticFieldSolver >("integrating_field_solver");
+    KStaticElectromagnetFieldBuilder::ComplexElement<KIntegratingMagnetostaticFieldSolver>("integrating_field_solver");
 
 } /* namespace katrin */

@@ -11,17 +11,16 @@
 
 using namespace KEMField;
 
-namespace katrin {
-
-template< >
-KIntegratingElectrostaticFieldSolverBuilder::~KComplexElement()
+namespace katrin
 {
-}
+
+template<> KIntegratingElectrostaticFieldSolverBuilder::~KComplexElement() {}
 
 STATICINT sKIntegratingElectrostaticFieldSolverStructure =
-		KIntegratingElectrostaticFieldSolverBuilder::Attribute<std::string >( "integrator") +
-		KIntegratingElectrostaticFieldSolverBuilder::Attribute< bool >( "use_opencl" );
+    KIntegratingElectrostaticFieldSolverBuilder::Attribute<std::string>("integrator") +
+    KIntegratingElectrostaticFieldSolverBuilder::Attribute<bool>("use_opencl");
 
 STATICINT sKElectrostaticBoundaryField =
-KElectrostaticBoundaryFieldBuilder::ComplexElement< KIntegratingElectrostaticFieldSolver >( "integrating_field_solver" );
-} // katrin
+    KElectrostaticBoundaryFieldBuilder::ComplexElement<KIntegratingElectrostaticFieldSolver>(
+        "integrating_field_solver");
+}  // namespace katrin

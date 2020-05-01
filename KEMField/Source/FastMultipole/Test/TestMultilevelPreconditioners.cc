@@ -1,29 +1,25 @@
-#include <getopt.h>
-#include <cstdlib>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <fstream>
-
-#include "KThreeVector_KEMField.hh"
-#include "KGBox.hh"
-#include "KGRectangle.hh"
-#include "KGRotatedObject.hh"
-#include "KGMesher.hh"
-
+#include "KEMFileInterface.hh"
+#include "KElectrostaticIntegratingFieldSolver.hh"
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
-
-#include "KTypelist.hh"
-#include "KSurfaceTypes.hh"
+#include "KGBox.hh"
+#include "KGMesher.hh"
+#include "KGRectangle.hh"
+#include "KGRotatedObject.hh"
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
+#include "KSurfaceTypes.hh"
+#include "KThreeVector_KEMField.hh"
+#include "KTypelist.hh"
 
-#include "KEMFileInterface.hh"
-
-#include "KElectrostaticIntegratingFieldSolver.hh"
+#include <cstdlib>
+#include <fstream>
+#include <getopt.h>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
@@ -33,329 +29,342 @@
 #include "KFMNamedScalarDataCollection.hh"
 
 #ifdef KEMFIELD_USE_ROOT
-#include "TCanvas.h"
 #include "TApplication.h"
-#include "TStyle.h"
+#include "TCanvas.h"
 #include "TColor.h"
 #include "TGraph.h"
 #include "TGraph2D.h"
+#include "TStyle.h"
 #endif
 
-#include "KMPIEnvironment.hh"
-#include "KFMElectrostaticTypes.hh"
-#include "KKrylovSolverFactory.hh"
-#include "KImplicitKrylovPreconditioner.hh"
-#include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
+#include "KBoundaryIntegralVector.hh"
+#include "KFMElectrostaticTypes.hh"
+#include "KImplicitKrylovPreconditioner.hh"
+#include "KKrylovSolverFactory.hh"
+#include "KMPIEnvironment.hh"
 
 
 using namespace KGeoBag;
 using namespace KEMField;
 
-class FastMultipoleOptionLoader {
-public:
-	FastMultipoleOptionLoader() : fGeometry(0) {}
-	KSurfaceContainer* getGeometryFromOptions(int argc, char** argv);
-	unsigned int getGeometryNumber() {return fGeometry;}
-private:
-	unsigned int fGeometry;
+class FastMultipoleOptionLoader
+{
+  public:
+    FastMultipoleOptionLoader() : fGeometry(0) {}
+    KSurfaceContainer* getGeometryFromOptions(int argc, char** argv);
+    unsigned int getGeometryNumber()
+    {
+        return fGeometry;
+    }
+
+  private:
+    unsigned int fGeometry;
 };
 
 
-KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, char** argv) {
+KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, char** argv)
+{
 #if KEMFIELD_USE_MPI
-	KMPIInterface::GetInstance()->Initialize(&argc,&argv);
+    KMPIInterface::GetInstance()->Initialize(&argc, &argv);
 #endif
 
-	std::string usage =
-			"\n"
-			"Usage: TestMultileverPreconditioner <options>\n"
-			"\n"
-			"This program computes the solution of a simple dirichlet problem and compares the fast multipole field with parameters set in C++ to the direct solver. \n"
-			"\tAvailable options:\n"
-			"\t -h, --help               (shows this message and exits)\n"
-			"\t -c  --config             (full path to configuration file)\n"
-			"\t -s, --scale              (scale of geometry discretization)\n"
-			"\t -g, --geometry           (0: Single sphere, \n"
-			"\t                           1: Single cube, \n"
-			"\t                           2: Cube and sphere \n"
-			"\t                           3: Spherical capacitor \n"
-			"\t -n, --n-evaluations      (number of evaluations in field map along each dimension) \n"
-			"\t -m, --mode               (0: evaluate points along x axis \n"
-			"\t                           1: evaluate points along y axis \n"
-			"\t                           2: evaluate points along z axis \n"
-			"\t                           3: evaluate points in y-z plane \n"
-			"\t                           4: evaluate points in x-z plane \n"
-			"\t                           5: evaluate points in x-y plane \n"
-			;
+    std::string usage =
+        "\n"
+        "Usage: TestMultileverPreconditioner <options>\n"
+        "\n"
+        "This program computes the solution of a simple dirichlet problem and compares the fast multipole field with parameters set in C++ to the direct solver. \n"
+        "\tAvailable options:\n"
+        "\t -h, --help               (shows this message and exits)\n"
+        "\t -c  --config             (full path to configuration file)\n"
+        "\t -s, --scale              (scale of geometry discretization)\n"
+        "\t -g, --geometry           (0: Single sphere, \n"
+        "\t                           1: Single cube, \n"
+        "\t                           2: Cube and sphere \n"
+        "\t                           3: Spherical capacitor \n"
+        "\t -n, --n-evaluations      (number of evaluations in field map along each dimension) \n"
+        "\t -m, --mode               (0: evaluate points along x axis \n"
+        "\t                           1: evaluate points along y axis \n"
+        "\t                           2: evaluate points along z axis \n"
+        "\t                           3: evaluate points in y-z plane \n"
+        "\t                           4: evaluate points in x-z plane \n"
+        "\t                           5: evaluate points in x-y plane \n";
 
-	std::string config_file;
-	unsigned int scale = 20;
-	// unsigned int n_evaluations = 50;
-	// unsigned int mode = 2;
+    std::string config_file;
+    unsigned int scale = 20;
+    // unsigned int n_evaluations = 50;
+    // unsigned int mode = 2;
 
-	static struct option longOptions[] =
-	{
-			{"help", no_argument, 0, 'h'},
-			{"config", required_argument, 0, 'c'},
-			{"scale", required_argument, 0, 's'},
-			{"geometry", required_argument, 0, 'g'},
-			{"n-evaluations", required_argument, 0, 'n'},
-			{"mode", required_argument, 0, 'm'}
-	};
+    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
+                                          {"config", required_argument, 0, 'c'},
+                                          {"scale", required_argument, 0, 's'},
+                                          {"geometry", required_argument, 0, 'g'},
+                                          {"n-evaluations", required_argument, 0, 'n'},
+                                          {"mode", required_argument, 0, 'm'}};
 
-	static const char *optString = "hc:s:g:n:m:";
+    static const char* optString = "hc:s:g:n:m:";
 
-	while(1)
-	{
-		char optId = getopt_long(argc, argv,optString, longOptions, NULL);
-		if(optId == -1) break;
-		switch(optId)
-		{
-		case('h'): // help
-        		MPI_SINGLE_PROCESS
-				{
-			std::cout<<usage<<std::endl;
-				}
+    while (1) {
+        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+        if (optId == -1)
+            break;
+        switch (optId) {
+            case ('h'):  // help
+                MPI_SINGLE_PROCESS
+                {
+                    std::cout << usage << std::endl;
+                }
 #ifdef KEMFIELD_USE_MPI
-		KMPIInterface::GetInstance()->Finalize();
+                KMPIInterface::GetInstance()->Finalize();
 #endif
-		return 0;
-		case('c'):
-        		config_file = std::string(optarg);
-		break;
-		case('s'):
-        		scale = atoi(optarg);
-		break;
-		case('g'):
-        		fGeometry = atoi(optarg);
-		break;
-		// case('n'):
-		// n_evaluations = atoi(optarg);
-		// break;
-		// case('m'):
-		// mode = atoi(optarg);
-		// break;
-		default:
-			MPI_SINGLE_PROCESS
-			{
-				std::cout<<usage<<std::endl;
-			}
+                return 0;
+            case ('c'):
+                config_file = std::string(optarg);
+                break;
+            case ('s'):
+                scale = atoi(optarg);
+                break;
+            case ('g'):
+                fGeometry = atoi(optarg);
+                break;
+            // case('n'):
+            // n_evaluations = atoi(optarg);
+            // break;
+            // case('m'):
+            // mode = atoi(optarg);
+            // break;
+            default:
+                MPI_SINGLE_PROCESS
+                {
+                    std::cout << usage << std::endl;
+                }
 #ifdef KEMFIELD_USE_MPI
-			KMPIInterface::GetInstance()->Finalize();
+                KMPIInterface::GetInstance()->Finalize();
 #endif
-			std::exit(1);
-		}
-	}
+                std::exit(1);
+        }
+    }
 
-	KSurfaceContainer* surfaceContainer = new KSurfaceContainer;
+    KSurfaceContainer* surfaceContainer = new KSurfaceContainer;
 
-	if(fGeometry == 0 || fGeometry == 2)
-	{
+    if (fGeometry == 0 || fGeometry == 2) {
 
-		// Construct the shape
-		double p1[2],p2[2];
-		double radius = 1.;
-		KGRotatedObject* hemi1 = new KGRotatedObject(scale,20);
-		p1[0] = -1.; p1[1] = 0.;
-		p2[0] = 0.; p2[1] = 1.;
-		hemi1->AddArc(p2,p1,radius,true);
+        // Construct the shape
+        double p1[2], p2[2];
+        double radius = 1.;
+        KGRotatedObject* hemi1 = new KGRotatedObject(scale, 20);
+        p1[0] = -1.;
+        p1[1] = 0.;
+        p2[0] = 0.;
+        p2[1] = 1.;
+        hemi1->AddArc(p2, p1, radius, true);
 
-		KGRotatedObject* hemi2 = new KGRotatedObject(scale,20);
-		p2[0] = 1.; p2[1] = 0.;
-		p1[0] = 0.; p1[1] = 1.;
-		hemi2->AddArc(p1,p2,radius,false);
+        KGRotatedObject* hemi2 = new KGRotatedObject(scale, 20);
+        p2[0] = 1.;
+        p2[1] = 0.;
+        p1[0] = 0.;
+        p1[1] = 1.;
+        hemi2->AddArc(p1, p2, radius, false);
 
-		// Construct shape placement
-		KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
-		KGSurface* hemisphere1 = new KGSurface(h1);
-		hemisphere1->SetName( "hemisphere1" );
-		hemisphere1->MakeExtension<KGMesh>();
-		hemisphere1->MakeExtension<KGElectrostaticDirichlet>();
-		hemisphere1->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
+        // Construct shape placement
+        KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
+        KGSurface* hemisphere1 = new KGSurface(h1);
+        hemisphere1->SetName("hemisphere1");
+        hemisphere1->MakeExtension<KGMesh>();
+        hemisphere1->MakeExtension<KGElectrostaticDirichlet>();
+        hemisphere1->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
-		KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
-		KGSurface* hemisphere2 = new KGSurface(h2);
-		hemisphere2->SetName( "hemisphere2" );
-		hemisphere2->MakeExtension<KGMesh>();
-		hemisphere2->MakeExtension<KGElectrostaticDirichlet>();
-		hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
+        KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
+        KGSurface* hemisphere2 = new KGSurface(h2);
+        hemisphere2->SetName("hemisphere2");
+        hemisphere2->MakeExtension<KGMesh>();
+        hemisphere2->MakeExtension<KGElectrostaticDirichlet>();
+        hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
-		// Mesh the elements
-		KGMesher* mesher = new KGMesher();
-		hemisphere1->AcceptNode(mesher);
-		hemisphere2->AcceptNode(mesher);
+        // Mesh the elements
+        KGMesher* mesher = new KGMesher();
+        hemisphere1->AcceptNode(mesher);
+        hemisphere2->AcceptNode(mesher);
 
-		KGBEMMeshConverter geometryConverter(*surfaceContainer);
-		geometryConverter.SetMinimumArea(1.e-12);
-		hemisphere1->AcceptNode(&geometryConverter);
-		hemisphere2->AcceptNode(&geometryConverter);
+        KGBEMMeshConverter geometryConverter(*surfaceContainer);
+        geometryConverter.SetMinimumArea(1.e-12);
+        hemisphere1->AcceptNode(&geometryConverter);
+        hemisphere2->AcceptNode(&geometryConverter);
+    }
 
-	}
+    if (fGeometry == 1 || fGeometry == 2) {
 
-	if(fGeometry == 1 || fGeometry == 2)
-	{
+        // Construct the shape
+        KGBox* box = new KGBox();
+        int meshCount = scale;
 
-		// Construct the shape
-		KGBox* box = new KGBox();
-		int meshCount = scale;
+        box->SetX0(-.5);
+        box->SetX1(.5);
+        box->SetXMeshCount(meshCount);
+        box->SetXMeshPower(3);
 
-		box->SetX0(-.5);
-		box->SetX1(.5);
-		box->SetXMeshCount(meshCount);
-		box->SetXMeshPower(3);
+        box->SetY0(-.5);
+        box->SetY1(.5);
+        box->SetYMeshCount(meshCount);
+        box->SetYMeshPower(3);
 
-		box->SetY0(-.5);
-		box->SetY1(.5);
-		box->SetYMeshCount(meshCount);
-		box->SetYMeshPower(3);
+        box->SetZ0(-.5);
+        box->SetZ1(.5);
+        box->SetZMeshCount(meshCount);
+        box->SetZMeshPower(3);
 
-		box->SetZ0(-.5);
-		box->SetZ1(.5);
-		box->SetZMeshCount(meshCount);
-		box->SetZMeshPower(3);
+        KGSurface* cube = new KGSurface(box);
+        cube->SetName("box");
+        cube->MakeExtension<KGMesh>();
+        cube->MakeExtension<KGElectrostaticDirichlet>();
+        cube->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.0);
 
-		KGSurface* cube = new KGSurface(box);
-		cube->SetName("box");
-		cube->MakeExtension<KGMesh>();
-		cube->MakeExtension<KGElectrostaticDirichlet>();
-		cube->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.0);
+        // Mesh the elements
+        KGMesher* mesher = new KGMesher();
+        cube->AcceptNode(mesher);
 
-		// Mesh the elements
-		KGMesher* mesher = new KGMesher();
-		cube->AcceptNode(mesher);
-
-		KGBEMMeshConverter geometryConverter(*surfaceContainer);
-		cube->AcceptNode(&geometryConverter);
-	}
-
-
-	if(fGeometry == 3)
-	{
-
-		double radius1 = 1.;
-		double radius2 = 2.;
-		double radius3 = 3.;
-
-		double potential1 = 1.;
-		double potential2;
-		potential2 = 0.;
-		double permittivity1 = 2.;
-		double permittivity2 = 3.;
+        KGBEMMeshConverter geometryConverter(*surfaceContainer);
+        cube->AcceptNode(&geometryConverter);
+    }
 
 
-		// Construct the shapes
-		double p1[2],p2[2];
-		double radius = radius1;
+    if (fGeometry == 3) {
 
-		KGRotatedObject* innerhemi1 = new KGRotatedObject(scale*10,10);
-		p1[0] = -radius; p1[1] = 0.;
-		p2[0] = 0.; p2[1] = radius;
-		innerhemi1->AddArc(p2,p1,radius,true);
+        double radius1 = 1.;
+        double radius2 = 2.;
+        double radius3 = 3.;
 
-		KGRotatedObject* innerhemi2 = new KGRotatedObject(scale*10,10);
-		p2[0] = radius; p2[1] = 0.;
-		p1[0] = 0.; p1[1] = radius;
-		innerhemi2->AddArc(p1,p2,radius,false);
+        double potential1 = 1.;
+        double potential2;
+        potential2 = 0.;
+        double permittivity1 = 2.;
+        double permittivity2 = 3.;
 
-		radius = radius2;
 
-		KGRotatedObject* middlehemi1 = new KGRotatedObject(20*scale,10);
-		p1[0] = -radius; p1[1] = 0.;
-		p2[0] = 0.; p2[1] = radius;
-		middlehemi1->AddArc(p2,p1,radius,true);
+        // Construct the shapes
+        double p1[2], p2[2];
+        double radius = radius1;
 
-		KGRotatedObject* middlehemi2 = new KGRotatedObject(20*scale,10);
-		p2[0] = radius; p2[1] = 0.;
-		p1[0] = 0.; p1[1] = radius;
-		middlehemi2->AddArc(p1,p2,radius,false);
+        KGRotatedObject* innerhemi1 = new KGRotatedObject(scale * 10, 10);
+        p1[0] = -radius;
+        p1[1] = 0.;
+        p2[0] = 0.;
+        p2[1] = radius;
+        innerhemi1->AddArc(p2, p1, radius, true);
 
-		radius = radius3;
+        KGRotatedObject* innerhemi2 = new KGRotatedObject(scale * 10, 10);
+        p2[0] = radius;
+        p2[1] = 0.;
+        p1[0] = 0.;
+        p1[1] = radius;
+        innerhemi2->AddArc(p1, p2, radius, false);
 
-		KGRotatedObject* outerhemi1 = new KGRotatedObject(30*scale,10);
-		p1[0] = -radius; p1[1] = 0.;
-		p2[0] = 0.; p2[1] = radius;
-		outerhemi1->AddArc(p2,p1,radius,true);
+        radius = radius2;
 
-		KGRotatedObject* outerhemi2 = new KGRotatedObject(30*scale,10);
-		p2[0] = radius; p2[1] = 0.;
-		p1[0] = 0.; p1[1] = radius;
-		outerhemi2->AddArc(p1,p2,radius,false);
+        KGRotatedObject* middlehemi1 = new KGRotatedObject(20 * scale, 10);
+        p1[0] = -radius;
+        p1[1] = 0.;
+        p2[0] = 0.;
+        p2[1] = radius;
+        middlehemi1->AddArc(p2, p1, radius, true);
 
-		// Construct shape placement
-		KGRotatedSurface* ih1 = new KGRotatedSurface(innerhemi1);
-		KGSurface* innerhemisphere1 = new KGSurface(ih1);
-		innerhemisphere1->SetName( "innerhemisphere1" );
-		innerhemisphere1->MakeExtension<KGMesh>();
-		innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
+        KGRotatedObject* middlehemi2 = new KGRotatedObject(20 * scale, 10);
+        p2[0] = radius;
+        p2[1] = 0.;
+        p1[0] = 0.;
+        p1[1] = radius;
+        middlehemi2->AddArc(p1, p2, radius, false);
 
-		KGRotatedSurface* ih2 = new KGRotatedSurface(innerhemi2);
-		KGSurface* innerhemisphere2 = new KGSurface(ih2);
-		innerhemisphere2->SetName( "innerhemisphere2" );
-		innerhemisphere2->MakeExtension<KGMesh>();
-		innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
+        radius = radius3;
 
-		KGRotatedSurface* mh1 = new KGRotatedSurface(middlehemi1);
-		KGSurface* middlehemisphere1 = new KGSurface(mh1);
-		middlehemisphere1->SetName( "middlehemisphere1" );
-		middlehemisphere1->MakeExtension<KGMesh>();
-		middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2/permittivity1);
+        KGRotatedObject* outerhemi1 = new KGRotatedObject(30 * scale, 10);
+        p1[0] = -radius;
+        p1[1] = 0.;
+        p2[0] = 0.;
+        p2[1] = radius;
+        outerhemi1->AddArc(p2, p1, radius, true);
 
-		KGRotatedSurface* mh2 = new KGRotatedSurface(middlehemi2);
-		KGSurface* middlehemisphere2 = new KGSurface(mh2);
-		middlehemisphere2->SetName( "middlehemisphere2" );
-		middlehemisphere2->MakeExtension<KGMesh>();
-		middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1/permittivity2);
+        KGRotatedObject* outerhemi2 = new KGRotatedObject(30 * scale, 10);
+        p2[0] = radius;
+        p2[1] = 0.;
+        p1[0] = 0.;
+        p1[1] = radius;
+        outerhemi2->AddArc(p1, p2, radius, false);
 
-		KGRotatedSurface* oh1 = new KGRotatedSurface(outerhemi1);
-		KGSurface* outerhemisphere1 = new KGSurface(oh1);
-		outerhemisphere1->SetName( "outerhemisphere1" );
-		outerhemisphere1->MakeExtension<KGMesh>();
-		outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-		KGRotatedSurface* oh2 = new KGRotatedSurface(outerhemi2);
-		KGSurface* outerhemisphere2 = new KGSurface(oh2);
-		outerhemisphere2->SetName( "outerhemisphere2" );
-		outerhemisphere2->MakeExtension<KGMesh>();
-		outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
+        // Construct shape placement
+        KGRotatedSurface* ih1 = new KGRotatedSurface(innerhemi1);
+        KGSurface* innerhemisphere1 = new KGSurface(ih1);
+        innerhemisphere1->SetName("innerhemisphere1");
+        innerhemisphere1->MakeExtension<KGMesh>();
+        innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-		// Mesh the elements
-		KGMesher* mesher = new KGMesher();
-		innerhemisphere1->AcceptNode(mesher);
-		innerhemisphere2->AcceptNode(mesher);
-		middlehemisphere1->AcceptNode(mesher);
-		middlehemisphere2->AcceptNode(mesher);
-		outerhemisphere1->AcceptNode(mesher);
-		outerhemisphere2->AcceptNode(mesher);
+        KGRotatedSurface* ih2 = new KGRotatedSurface(innerhemi2);
+        KGSurface* innerhemisphere2 = new KGSurface(ih2);
+        innerhemisphere2->SetName("innerhemisphere2");
+        innerhemisphere2->MakeExtension<KGMesh>();
+        innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-		KGBEMMeshConverter geometryConverter(*surfaceContainer);
-		geometryConverter.SetMinimumArea(1.e-12);
-		innerhemisphere1->AcceptNode(&geometryConverter);
-		innerhemisphere2->AcceptNode(&geometryConverter);
-		middlehemisphere1->AcceptNode(&geometryConverter);
-		middlehemisphere2->AcceptNode(&geometryConverter);
-		outerhemisphere1->AcceptNode(&geometryConverter);
-		outerhemisphere2->AcceptNode(&geometryConverter);
+        KGRotatedSurface* mh1 = new KGRotatedSurface(middlehemi1);
+        KGSurface* middlehemisphere1 = new KGSurface(mh1);
+        middlehemisphere1->SetName("middlehemisphere1");
+        middlehemisphere1->MakeExtension<KGMesh>();
+        middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2 /
+                                                                                          permittivity1);
 
-	}
+        KGRotatedSurface* mh2 = new KGRotatedSurface(middlehemi2);
+        KGSurface* middlehemisphere2 = new KGSurface(mh2);
+        middlehemisphere2->SetName("middlehemisphere2");
+        middlehemisphere2->MakeExtension<KGMesh>();
+        middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
+                                                                                          permittivity2);
 
-	MPI_SINGLE_PROCESS
-	{
-		KEMField::cout<<"Number of elements in BEM problem = "<< surfaceContainer->size()<<KEMField::endl;
-	}
-	return surfaceContainer;
+        KGRotatedSurface* oh1 = new KGRotatedSurface(outerhemi1);
+        KGSurface* outerhemisphere1 = new KGSurface(oh1);
+        outerhemisphere1->SetName("outerhemisphere1");
+        outerhemisphere1->MakeExtension<KGMesh>();
+        outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
+        KGRotatedSurface* oh2 = new KGRotatedSurface(outerhemi2);
+        KGSurface* outerhemisphere2 = new KGSurface(oh2);
+        outerhemisphere2->SetName("outerhemisphere2");
+        outerhemisphere2->MakeExtension<KGMesh>();
+        outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
 
+        // Mesh the elements
+        KGMesher* mesher = new KGMesher();
+        innerhemisphere1->AcceptNode(mesher);
+        innerhemisphere2->AcceptNode(mesher);
+        middlehemisphere1->AcceptNode(mesher);
+        middlehemisphere2->AcceptNode(mesher);
+        outerhemisphere1->AcceptNode(mesher);
+        outerhemisphere2->AcceptNode(mesher);
+
+        KGBEMMeshConverter geometryConverter(*surfaceContainer);
+        geometryConverter.SetMinimumArea(1.e-12);
+        innerhemisphere1->AcceptNode(&geometryConverter);
+        innerhemisphere2->AcceptNode(&geometryConverter);
+        middlehemisphere1->AcceptNode(&geometryConverter);
+        middlehemisphere2->AcceptNode(&geometryConverter);
+        outerhemisphere1->AcceptNode(&geometryConverter);
+        outerhemisphere2->AcceptNode(&geometryConverter);
+    }
+
+    MPI_SINGLE_PROCESS
+    {
+        KEMField::cout << "Number of elements in BEM problem = " << surfaceContainer->size() << KEMField::endl;
+    }
+    return surfaceContainer;
 }
 
 int main(int argc, char** argv)
 {
-	unsigned int maxIter = 500;
-	unsigned int maxPreconIter = 5;
-	double solverTolerance = 1e-6;
-	double preconTolerance = 1e-5;
+    unsigned int maxIter = 500;
+    unsigned int maxPreconIter = 5;
+    double solverTolerance = 1e-6;
+    double preconTolerance = 1e-5;
 
 
-	FastMultipoleOptionLoader loader;
-	KSurfaceContainer* surfaceContainer = loader.getGeometryFromOptions(argc, argv);
+    FastMultipoleOptionLoader loader;
+    KSurfaceContainer* surfaceContainer = loader.getGeometryFromOptions(argc, argv);
 
     KFMElectrostaticParameters solver_params;
     solver_params.degree = 5;
@@ -392,37 +401,33 @@ int main(int argc, char** argv)
 
     namespace KET = KFMElectrostaticTypes;
 
-    KET::FastMultipoleEBI* fm_integrator = new KET::FastMultipoleEBI(
-    		KEBIFactory::MakeDefaultForFFTM(),
-			*surfaceContainer);
+    KET::FastMultipoleEBI* fm_integrator =
+        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     fm_integrator->Initialize(solver_params);
 
 
-    KET::FastMultipoleEBI* precon_1_fm_integrator = new KET::FastMultipoleEBI(
-    		KEBIFactory::MakeDefaultForFFTM(),
-			*surfaceContainer);
+    KET::FastMultipoleEBI* precon_1_fm_integrator =
+        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     precon_1_fm_integrator->Initialize(precon_1_params, fm_integrator->GetTree());
 
-    KET::FastMultipoleEBI* precon_2_fm_integrator = new KET::FastMultipoleEBI(
-    		KEBIFactory::MakeDefaultForFFTM(),
-    		*surfaceContainer);
+    KET::FastMultipoleEBI* precon_2_fm_integrator =
+        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     precon_2_fm_integrator->Initialize(precon_2_params, fm_integrator->GetTree());
 
     KET::FastMultipoleSparseMatrix sparseA(*surfaceContainer, *fm_integrator);
     KET::FastMultipoleDenseMatrix denseA(*fm_integrator);
-    KEMField::KSmartPointer<KSquareMatrix<KET::ValueType> > fmA(
-    		new KET::FastMultipoleMatrix(denseA, sparseA));
+    KEMField::KSmartPointer<KSquareMatrix<KET::ValueType>> fmA(new KET::FastMultipoleMatrix(denseA, sparseA));
 
     KET::FastMultipoleDenseMatrix precon_1_denseA(*precon_1_fm_integrator);
     KEMField::KSmartPointer<KET::FastMultipoleMatrix> precon_1_fmA(
-    		new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
+        new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
 
     KET::FastMultipoleDenseMatrix precon_2_denseA(*precon_1_fm_integrator);
     KEMField::KSmartPointer<KET::FastMultipoleMatrix> precon_2_fmA(
-    		new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
+        new KET::FastMultipoleMatrix(precon_1_denseA, sparseA));
 
-    KBoundaryIntegralSolutionVector< KET::FastMultipoleEBI > fmx(*surfaceContainer, *fm_integrator);
-    KBoundaryIntegralVector< KET::FastMultipoleEBI > fmb(*surfaceContainer, *fm_integrator);
+    KBoundaryIntegralSolutionVector<KET::FastMultipoleEBI> fmx(*surfaceContainer, *fm_integrator);
+    KBoundaryIntegralVector<KET::FastMultipoleEBI> fmb(*surfaceContainer, *fm_integrator);
 
     KKrylovSolverConfiguration precon_two_config;
     precon_two_config.SetSolverName("gmres");
@@ -431,8 +436,8 @@ int main(int argc, char** argv)
     precon_two_config.SetUseDisplay(true);
     precon_two_config.SetDisplayName("Preconditioner2: ");
 
-    KEMField::KSmartPointer<KPreconditioner<KET::ValueType> > precon2 =
-    		KBuildKrylovPreconditioner<KET::ValueType>(precon_two_config,precon_2_fmA);
+    KEMField::KSmartPointer<KPreconditioner<KET::ValueType>> precon2 =
+        KBuildKrylovPreconditioner<KET::ValueType>(precon_two_config, precon_2_fmA);
 
 
     KKrylovSolverConfiguration precon_one_config;
@@ -442,8 +447,8 @@ int main(int argc, char** argv)
     precon_one_config.SetUseDisplay(true);
     precon_one_config.SetDisplayName("Preconditioner1: ");
 
-    KEMField::KSmartPointer<KPreconditioner<KET::ValueType> > precon1 =
-    		KBuildKrylovPreconditioner<KET::ValueType>(precon_one_config,precon_1_fmA,precon2);
+    KEMField::KSmartPointer<KPreconditioner<KET::ValueType>> precon1 =
+        KBuildKrylovPreconditioner<KET::ValueType>(precon_one_config, precon_1_fmA, precon2);
 
     KKrylovSolverConfiguration solver_config;
     solver_config.SetSolverName("gmres");
@@ -453,70 +458,62 @@ int main(int argc, char** argv)
     solver_config.SetUseDisplay(true);
     solver_config.SetDisplayName("GMRES: ");
 
-    KEMField::KSmartPointer<KIterativeKrylovSolver<KET::ValueType> > solver =
-    		KBuildKrylovSolver<KET::ValueType>(solver_config,fmA,precon1);
+    KEMField::KSmartPointer<KIterativeKrylovSolver<KET::ValueType>> solver =
+        KBuildKrylovSolver<KET::ValueType>(solver_config, fmA, precon1);
 
-    solver->Solve(fmx,fmb);
+    solver->Solve(fmx, fmb);
     double residualNorm = solver->ResidualNorm();
 
     MPI_SINGLE_PROCESS
     {
-        std::cout<<"Done charge density solving."<<std::endl;
-        std::cout<<"Residual norm is: " << residualNorm << std::endl;
+        std::cout << "Done charge density solving." << std::endl;
+        std::cout << "Residual norm is: " << residualNorm << std::endl;
     }
 
-    if(loader.getGeometryNumber() == 1)
-    {
+    if (loader.getGeometryNumber() == 1) {
         double Q = 0.;
-        unsigned int i=0;
-        for (KSurfaceContainer::iterator it=surfaceContainer->begin();
-         it!=surfaceContainer->end();it++)
-        {
-          Q += (dynamic_cast<KRectangle*>(*it)->Area() *
-            dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
-          i++;
+        unsigned int i = 0;
+        for (KSurfaceContainer::iterator it = surfaceContainer->begin(); it != surfaceContainer->end(); it++) {
+            Q += (dynamic_cast<KRectangle*>(*it)->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
+            i++;
         }
-        std::cout<<""<<std::endl;
-        double C = Q/(4.*M_PI*KEMConstants::Eps0);
+        std::cout << "" << std::endl;
+        double C = Q / (4. * M_PI * KEMConstants::Eps0);
         double C_Read = 0.6606785;
         double C_Read_err = 0.0000006;
         MPI_SINGLE_PROCESS
         {
-            std::cout<<std::setprecision(7)<<"Capacitance:    "<<C<<std::endl;
-            std::cout.setf( std::ios::fixed, std:: ios::floatfield );
-            std::cout<<std::setprecision(7)<<"Accepted value: "<<C_Read<<" +\\- "<<C_Read_err<<std::endl;
-            std::cout<<"Accuracy:       "<<(fabs(C-C_Read)/C_Read)*100<<" %"<<std::endl;
+            std::cout << std::setprecision(7) << "Capacitance:    " << C << std::endl;
+            std::cout.setf(std::ios::fixed, std::ios::floatfield);
+            std::cout << std::setprecision(7) << "Accepted value: " << C_Read << " +\\- " << C_Read_err << std::endl;
+            std::cout << "Accuracy:       " << (fabs(C - C_Read) / C_Read) * 100 << " %" << std::endl;
         }
     }
 
 
-    if(loader.getGeometryNumber() == 0)
-    {
+    if (loader.getGeometryNumber() == 0) {
         double Q = 0.;
-        unsigned int i=0;
-        for (KSurfaceContainer::iterator it=surfaceContainer->begin();
-         it!=surfaceContainer->end();it++)
-        {
-          Q += (dynamic_cast<KTriangle*>(*it)->Area() *
-            dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
-          i++;
+        unsigned int i = 0;
+        for (KSurfaceContainer::iterator it = surfaceContainer->begin(); it != surfaceContainer->end(); it++) {
+            Q += (dynamic_cast<KTriangle*>(*it)->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
+            i++;
         }
-        std::cout<<""<<std::endl;
-        double C = Q/(4.*M_PI*KEMConstants::Eps0);
+        std::cout << "" << std::endl;
+        double C = Q / (4. * M_PI * KEMConstants::Eps0);
         double C_Read = -1.0;
         double C_Read_err = 0.000000;
         MPI_SINGLE_PROCESS
         {
-            std::cout<<std::setprecision(7)<<"Capacitance:    "<<C<<std::endl;
-            std::cout.setf( std::ios::fixed, std:: ios::floatfield );
-            std::cout<<std::setprecision(7)<<"Accepted value: "<<C_Read<<" +\\- "<<C_Read_err<<std::endl;
-            std::cout<<"Accuracy:       "<<(fabs(C-C_Read)/C_Read)*100<<" %"<<std::endl;
+            std::cout << std::setprecision(7) << "Capacitance:    " << C << std::endl;
+            std::cout.setf(std::ios::fixed, std::ios::floatfield);
+            std::cout << std::setprecision(7) << "Accepted value: " << C_Read << " +\\- " << C_Read_err << std::endl;
+            std::cout << "Accuracy:       " << (fabs(C - C_Read) / C_Read) * 100 << " %" << std::endl;
         }
     }
 
 
-//    (void) mode;
-//    (void) n_evaluations;
+    //    (void) mode;
+    //    (void) n_evaluations;
     //
     // MPI_SINGLE_PROCESS
     // {
@@ -1003,9 +1000,9 @@ int main(int argc, char** argv)
     //
     // }//end mpi single process
 
-    #if KEMFIELD_USE_MPI
+#if KEMFIELD_USE_MPI
     KMPIInterface::GetInstance()->Finalize();
-    #endif
+#endif
 
     return 0;
 }

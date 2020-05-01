@@ -12,7 +12,7 @@ endif()
 
 # Kassiopeia version
 set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 6 )
+set( MODULE_VERSION_MINOR 7 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
@@ -22,7 +22,6 @@ project( Kassiopeia )
 include( KasperDefaults )
 
 # require c++11
-kasper_require_cpp11()
 
 # module options
 # build in boost functionality [utilities]
@@ -131,6 +130,7 @@ add_subdirectory( Visualization )
 add_subdirectory( Bindings )
 add_subdirectory( Python )
 add_subdirectory( Applications/Simulation )
+add_subdirectory( Applications/FieldCalculation )
 
 
 add_subdirectory( Applications/Validation )

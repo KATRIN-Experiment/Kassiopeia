@@ -6,400 +6,326 @@
 namespace katrin
 {
 
-    class KContainer :
-        public KNamed
+class KContainer : public KNamed
+{
+  private:
+    class KHolder
     {
-        private:
-            class KHolder
-            {
-                public:
-                    KHolder();
-                    virtual ~KHolder();
+      public:
+        KHolder();
+        virtual ~KHolder();
 
-                public:
-                    virtual void Type() = 0;
-                    virtual void Clear() = 0;
-            };
-
-            template< class XType >
-            class KHolderPrototype :
-                public KHolder
-            {
-                public:
-                    KHolderPrototype( XType* anObject );
-                    virtual ~KHolderPrototype();
-
-                public:
-                    virtual void Type();
-                    virtual void Clear();
-
-                private:
-                    XType* fObject;
-            };
-
-        public:
-            KContainer();
-            virtual ~KContainer();
-
-            bool Empty() const;
-
-            template< class XTargetType >
-            void Set( XTargetType* aTarget );
-
-            template< class XTargetType >
-            bool Is();
-
-            template< class XTargetType >
-            XTargetType& AsReference();
-            template< class XTargetType >
-            XTargetType* AsPointer();
-
-            template< class XTargetType >
-            operator XTargetType();
-
-            template< class XTargetType >
-            void CopyTo( XTargetType& aTarget );
-
-            template< class XTargetType >
-            void CopyTo( void (*aTarget)( XTargetType& ) );
-            template< class XTargetType >
-            void CopyTo( void (*aTarget)( const XTargetType& ) );
-
-            template< class XObjectType, class XMemberType, class XTargetType >
-            void CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType ) );
-            template< class XObjectType, class XMemberType, class XTargetType >
-            void CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType& ) );
-            template< class XObjectType, class XMemberType, class XTargetType >
-            void CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( const XTargetType& ) );
-
-            KContainer* ReleaseToNewContainer();
-
-            template< class XTargetType >
-            void ReleaseTo( XTargetType*& aTarget );
-
-            template< class XTargetType >
-            void ReleaseTo( void (*aTarget)( XTargetType* ) );
-            template< class XTargetType >
-            void ReleaseTo( void (*aTarget)( const XTargetType* ) );
-
-            template< class XObjectType, class XMemberType, class XTargetType >
-            void ReleaseTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType* ) );
-            template< class XObjectType, class XMemberType, class XTargetType >
-            void ReleaseTo( XObjectType* aBearer, void (XMemberType::*aMember)( const XTargetType* ) );
-
-        private:
-            KHolder* fHolder;
+      public:
+        virtual void Type() = 0;
+        virtual void Clear() = 0;
     };
 
-    inline KContainer::KHolder::KHolder()
+    template<class XType> class KHolderPrototype : public KHolder
     {
-    }
-    inline KContainer::KHolder::~KHolder()
-    {
-    }
+      public:
+        KHolderPrototype(XType* anObject);
+        ~KHolderPrototype() override;
 
-    template< class XType >
-    inline KContainer::KHolderPrototype< XType >::KHolderPrototype( XType* anObject ) :
-        fObject( anObject )
-    {
-    }
-    template< class XType >
-    inline KContainer::KHolderPrototype< XType >::~KHolderPrototype()
-    {
-        if( fObject != NULL )
-        {
-            delete fObject;
-            fObject = NULL;
-        }
-    }
-    template< class XType >
-    inline void KContainer::KHolderPrototype< XType >::Type()
-    {
-        throw fObject;
-        return;
-    }
-    template< class XType >
-    inline void KContainer::KHolderPrototype< XType >::Clear()
-    {
-        fObject = NULL;
-        return;
-    }
+      public:
+        void Type() override;
+        void Clear() override;
 
-    template< class XTargetType >
-    inline void KContainer::Set( XTargetType* aType )
-    {
-        if( fHolder != NULL )
-        {
-            delete fHolder;
-            fHolder = NULL;
-        }
-        KHolderPrototype< XTargetType >* tTypedHolder = new KHolderPrototype< XTargetType >( aType );
-        fHolder = tTypedHolder;
-    }
+      private:
+        XType* fObject;
+    };
 
-    template< class XTargetType >
-    inline bool KContainer::Is()
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* )
-        {
-            return true;
-        }
-        catch( ... )
-        {
-            return false;
-        }
+  public:
+    KContainer();
+    ~KContainer() override;
+
+    bool Empty() const;
+
+    template<class XTargetType> void Set(XTargetType* aTarget);
+
+    template<class XTargetType> bool Is();
+
+    template<class XTargetType> XTargetType& AsReference();
+    template<class XTargetType> XTargetType* AsPointer();
+
+    template<class XTargetType> operator XTargetType();
+
+    template<class XTargetType> void CopyTo(XTargetType& aTarget);
+
+    template<class XTargetType> void CopyTo(void (*aTarget)(XTargetType&));
+    template<class XTargetType> void CopyTo(void (*aTarget)(const XTargetType&));
+
+    template<class XObjectType, class XMemberType, class XTargetType>
+    void CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType));
+    template<class XObjectType, class XMemberType, class XTargetType>
+    void CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType&));
+    template<class XObjectType, class XMemberType, class XTargetType>
+    void CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType&));
+
+    KContainer* ReleaseToNewContainer();
+
+    template<class XTargetType> void ReleaseTo(XTargetType*& aTarget);
+
+    template<class XTargetType> void ReleaseTo(void (*aTarget)(XTargetType*));
+    template<class XTargetType> void ReleaseTo(void (*aTarget)(const XTargetType*));
+
+    template<class XObjectType, class XMemberType, class XTargetType>
+    void ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType*));
+    template<class XObjectType, class XMemberType, class XTargetType>
+    void ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType*));
+
+  private:
+    KHolder* fHolder;
+};
+
+inline KContainer::KHolder::KHolder() {}
+inline KContainer::KHolder::~KHolder() {}
+
+template<class XType> inline KContainer::KHolderPrototype<XType>::KHolderPrototype(XType* anObject) : fObject(anObject)
+{}
+template<class XType> inline KContainer::KHolderPrototype<XType>::~KHolderPrototype()
+{
+    if (fObject != nullptr) {
+        delete fObject;
+        fObject = nullptr;
+    }
+}
+template<class XType> inline void KContainer::KHolderPrototype<XType>::Type()
+{
+    throw fObject;
+    return;
+}
+template<class XType> inline void KContainer::KHolderPrototype<XType>::Clear()
+{
+    fObject = nullptr;
+    return;
+}
+
+template<class XTargetType> inline void KContainer::Set(XTargetType* aType)
+{
+    if (fHolder != nullptr) {
+        delete fHolder;
+        fHolder = nullptr;
+    }
+    auto* tTypedHolder = new KHolderPrototype<XTargetType>(aType);
+    fHolder = tTypedHolder;
+}
+
+template<class XTargetType> inline bool KContainer::Is()
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType*) {
+        return true;
+    }
+    catch (...) {
         return false;
     }
-
-    template< class XTargetType >
-    inline XTargetType& KContainer::AsReference()
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            return *tObject;
-        }
-        catch(...) {}
-
-        XTargetType* tTarget = NULL;
-        return *tTarget;
-    }
-    template< class XTargetType >
-    inline XTargetType* KContainer::AsPointer()
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            return tObject;
-        }
-        catch(...){}
-
-        XTargetType* tTarget = NULL;
-        return tTarget;
-    }
-
-    template< class XTargetType >
-    inline KContainer::operator XTargetType()
-    {
-        return AsReference< XTargetType >();
-    }
-
-    template< class XTargetType >
-    inline void KContainer::CopyTo( XTargetType& aTarget )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            aTarget = *tObject;
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
-    template< class XTargetType >
-    inline void KContainer::CopyTo( void (*aTarget)( XTargetType& ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            (*aTarget)( *tObject );
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-    template< class XTargetType >
-    inline void KContainer::CopyTo( void (*aTarget)( const XTargetType& ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            (*aTarget)( *tObject );
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
-    template< class XObjectType, class XMemberType, class XTargetType >
-    inline void KContainer::CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            (aBearer->*aMember)( *tObject );
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-    template< class XObjectType, class XMemberType, class XTargetType >
-    inline void KContainer::CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType& ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            (aBearer->*aMember)( *tObject );
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-    template< class XObjectType, class XMemberType, class XTargetType >
-    inline void KContainer::CopyTo( XObjectType* aBearer, void (XMemberType::*aMember)( const XTargetType& ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            (aBearer->*aMember)( *tObject );
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
-    inline KContainer* KContainer::ReleaseToNewContainer(){
-        KContainer* newContainer = new KContainer();
-        newContainer->fHolder = fHolder;
-        fHolder = NULL;
-        return newContainer;
-    }
-
-
-    template< class XTargetType >
-    inline void KContainer::ReleaseTo( XTargetType*& aTarget )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject )
-        {
-            aTarget = tObject;
-            fHolder->Clear();
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
-    template< class XTargetType >
-    inline void KContainer::ReleaseTo( void (*aTarget)( XTargetType* ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject  )
-        {
-            (*aTarget)( tObject );
-            fHolder->Clear();
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-    template< class XTargetType >
-    inline void KContainer::ReleaseTo( void (*aTarget)( const XTargetType* ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject  )
-        {
-            (*aTarget)( tObject );
-            fHolder->Clear();
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
-    template< class XObjectType, class XMemberType, class XTargetType >
-    inline void KContainer::ReleaseTo( XObjectType* aBearer, void (XMemberType::*aMember)( XTargetType* ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject  )
-        {
-            (aBearer->*aMember)( tObject );
-            fHolder->Clear();
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-    template< class XObjectType, class XMemberType, class XTargetType >
-    inline void KContainer::ReleaseTo( XObjectType* aBearer, void (XMemberType::*aMember)( const XTargetType* ) )
-    {
-        try
-        {
-            fHolder->Type();
-        }
-        catch( XTargetType* tObject  )
-        {
-            (aBearer->*aMember)( tObject );
-            fHolder->Clear();
-            return;
-        }
-        catch( ... )
-        {
-            return;
-        }
-    }
-
+    return false;
 }
+
+template<class XTargetType> inline XTargetType& KContainer::AsReference()
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        return *tObject;
+    }
+    catch (...) {
+    }
+
+    XTargetType* tTarget = nullptr;
+    return *tTarget;
+}
+template<class XTargetType> inline XTargetType* KContainer::AsPointer()
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        return tObject;
+    }
+    catch (...) {
+    }
+
+    XTargetType* tTarget = nullptr;
+    return tTarget;
+}
+
+template<class XTargetType> inline KContainer::operator XTargetType()
+{
+    return AsReference<XTargetType>();
+}
+
+template<class XTargetType> inline void KContainer::CopyTo(XTargetType& aTarget)
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        aTarget = *tObject;
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(XTargetType&))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (*aTarget)(*tObject);
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+template<class XTargetType> inline void KContainer::CopyTo(void (*aTarget)(const XTargetType&))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (*aTarget)(*tObject);
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+template<class XObjectType, class XMemberType, class XTargetType>
+inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (aBearer->*aMember)(*tObject);
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+template<class XObjectType, class XMemberType, class XTargetType>
+inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType&))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (aBearer->*aMember)(*tObject);
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+template<class XObjectType, class XMemberType, class XTargetType>
+inline void KContainer::CopyTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType&))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (aBearer->*aMember)(*tObject);
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+inline KContainer* KContainer::ReleaseToNewContainer()
+{
+    auto* newContainer = new KContainer();
+    newContainer->fHolder = fHolder;
+    fHolder = nullptr;
+    return newContainer;
+}
+
+
+template<class XTargetType> inline void KContainer::ReleaseTo(XTargetType*& aTarget)
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        aTarget = tObject;
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(XTargetType*))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (*aTarget)(tObject);
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+template<class XTargetType> inline void KContainer::ReleaseTo(void (*aTarget)(const XTargetType*))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (*aTarget)(tObject);
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+template<class XObjectType, class XMemberType, class XTargetType>
+inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(XTargetType*))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (aBearer->*aMember)(tObject);
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+template<class XObjectType, class XMemberType, class XTargetType>
+inline void KContainer::ReleaseTo(XObjectType* aBearer, void (XMemberType::*aMember)(const XTargetType*))
+{
+    try {
+        fHolder->Type();
+    }
+    catch (XTargetType* tObject) {
+        (aBearer->*aMember)(tObject);
+        fHolder->Clear();
+        return;
+    }
+    catch (...) {
+        return;
+    }
+}
+
+}  // namespace katrin
 
 #endif

@@ -1,9 +1,9 @@
 #ifndef KGEmptyIdentitySetRemover_HH__
 #define KGEmptyIdentitySetRemover_HH__
 
-#include "KGNode.hh"
-#include "KGIdentitySet.hh"
 #include "KGExternalIdentitySet.hh"
+#include "KGIdentitySet.hh"
+#include "KGNode.hh"
 #include "KGNodeActor.hh"
 #include "KGObjectRetriever.hh"
 
@@ -23,46 +23,39 @@ namespace KGeoBag
 *
 */
 
-template< typename ObjectTypeList >
-class KGEmptyIdentitySetRemover: public KGNodeActor< KGNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KGEmptyIdentitySetRemover : public KGNodeActor<KGNode<ObjectTypeList>>
 {
-    public:
-        KGEmptyIdentitySetRemover(){};
-        virtual ~KGEmptyIdentitySetRemover(){};
+  public:
+    KGEmptyIdentitySetRemover(){};
+    virtual ~KGEmptyIdentitySetRemover(){};
 
 
-        virtual void ApplyAction( KGNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KGIdentitySet* set = KGObjectRetriever<ObjectTypeList, KGIdentitySet>::GetNodeObject(node);
+    virtual void ApplyAction(KGNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            KGIdentitySet* set = KGObjectRetriever<ObjectTypeList, KGIdentitySet>::GetNodeObject(node);
 
-                if(set != NULL)
-                {
-                    if(set->GetSize() == 0)
-                    {
-                        delete set;
-                        KGObjectRetriever<ObjectTypeList, KGIdentitySet>::SetNodeObject(NULL, node);
-                    }
+            if (set != NULL) {
+                if (set->GetSize() == 0) {
+                    delete set;
+                    KGObjectRetriever<ObjectTypeList, KGIdentitySet>::SetNodeObject(NULL, node);
                 }
+            }
 
-                KGExternalIdentitySet* eset = KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::GetNodeObject(node);
+            KGExternalIdentitySet* eset = KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::GetNodeObject(node);
 
-                if(eset != NULL)
-                {
-                    if(eset->GetSize() == 0)
-                    {
-                        delete eset;
-                        KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::SetNodeObject(NULL, node);
-                    }
+            if (eset != NULL) {
+                if (eset->GetSize() == 0) {
+                    delete eset;
+                    KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::SetNodeObject(NULL, node);
                 }
-
             }
         }
+    }
 
-    private:
+  private:
 };
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGEmptyIdentitySetRemover_H__ */

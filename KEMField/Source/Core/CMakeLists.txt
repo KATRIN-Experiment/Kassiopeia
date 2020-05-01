@@ -8,7 +8,6 @@
 #  add_cflag (KEMFIELD_SILENT)
 #endif (${PROJECT_NAME}_SILENT)
 
-kasper_require_cpp11()
 kasper_find_module(Kommon)
 add_cflag (KEMFIELD_USE_KOMMON)
 

@@ -8,96 +8,86 @@
 #ifndef KEMTOOLBOX_HH_
 #define KEMTOOLBOX_HH_
 
+#include "KKeyNotFoundException.hh"
 #include "KSingleton.h"
-#include <string>
+#include "KSmartPointerRelease.hh"
+
 #include <map>
+#include <string>
 #include <vector>
 
-#include "KSmartPointerRelease.hh"
-#include "KKeyNotFoundException.hh"
-
-namespace KEMField {
-
-class KEMToolbox: public katrin::KSingleton<KEMToolbox>
+namespace KEMField
 {
-	friend class KSingleton<KEMToolbox>; // allow calling the constructor
 
-public:
-	/*
+class KEMToolbox : public katrin::KSingleton<KEMToolbox>
+{
+    friend class KSingleton<KEMToolbox>;  // allow calling the constructor
+
+  public:
+    /*
 	 * KEMToolbox assumes ownership of the object.
 	 */
-	template< class Object >
-	void Add(std::string name, Object* ptr);
+    template<class Object> void Add(std::string name, Object* ptr);
 
-	/*
+    /*
 	 * KEMToolbox keeps ownership of the object.
 	 */
-	template< class Object >
-	Object* Get(std::string name);
+    template<class Object> Object* Get(std::string name);
 
-	/*
+    /*
 	 * KEMToolbox keeps ownership of all objects.
 	 */
-	template< class Object >
-	std::vector< std::pair<std::string,Object* > >GetAll();
+    template<class Object> std::vector<std::pair<std::string, Object*>> GetAll();
 
-	/*
+    /*
 	 * KEMToolbox creates own KContainer and releases the object from the given one.
 	 */
-	void AddContainer( katrin::KContainer& container,std::string name );
+    void AddContainer(katrin::KContainer& container, std::string name);
 
-	void DeleteAll();
+    void DeleteAll();
 
-protected:
+  protected:
+    KEMToolbox() {}
+    ~KEMToolbox() override {}
 
-	KEMToolbox() {}
-	virtual ~KEMToolbox() {}
+  private:
+    bool checkKeyIsFree(std::string name);
+    KSmartPointer<katrin::KContainer> GetContainer(std::string name);
 
-private:
-	bool checkKeyIsFree(std::string name);
-	KSmartPointer<katrin::KContainer> GetContainer(std::string name);
+    typedef std::pair<std::string, KSmartPointer<katrin::KContainer>> NameAndContainer;
 
-	typedef std::pair<std::string,KSmartPointer<katrin::KContainer> >
-	NameAndContainer;
+    typedef std::map<std::string, KSmartPointer<katrin::KContainer>> ContainerMap;
 
-	typedef std::map<std::string,KSmartPointer<katrin::KContainer> >
-	ContainerMap;
-
-	ContainerMap fObjects;
-
+    ContainerMap fObjects;
 };
 
-template< class Object >
-void KEMToolbox::Add(std::string name, Object* ptr)
+template<class Object> void KEMToolbox::Add(std::string name, Object* ptr)
 {
-	KSmartPointer<katrin::KContainer> container = new katrin::KContainer();
-	container->Set(ptr);
-	checkKeyIsFree(name);
-	fObjects.insert(NameAndContainer(name,container));
+    KSmartPointer<katrin::KContainer> container = new katrin::KContainer();
+    container->Set(ptr);
+    checkKeyIsFree(name);
+    fObjects.insert(NameAndContainer(name, container));
 }
 
-template< class Object >
-Object* KEMToolbox::Get(std::string name)
+template<class Object> Object* KEMToolbox::Get(std::string name)
 {
-	KSmartPointer<katrin::KContainer> container = GetContainer(name);
-	Object* object = container->AsPointer<Object>();
-	if(!object)
-		throw KKeyNotFoundException("KEMToolbox",name,KKeyNotFoundException::wrongType);
-	return object;
+    KSmartPointer<katrin::KContainer> container = GetContainer(name);
+    Object* object = container->AsPointer<Object>();
+    if (!object)
+        throw KKeyNotFoundException("KEMToolbox", name, KKeyNotFoundException::wrongType);
+    return object;
 }
 
-template< class Object >
-std::vector< std::pair<std::string,Object* > > KEMToolbox::GetAll()
+template<class Object> std::vector<std::pair<std::string, Object*>> KEMToolbox::GetAll()
 {
-    std::vector< std::pair<std::string,Object* > >list;
-    for ( auto entry : fObjects )
-    {
+    std::vector<std::pair<std::string, Object*>> list;
+    for (auto entry : fObjects) {
         Object* candidate = entry.second->AsPointer<Object>();
-        if(candidate)
-            list.push_back( std::make_pair(entry.first,candidate) );
+        if (candidate)
+            list.push_back(std::make_pair(entry.first, candidate));
     }
     return list;
 }
 
-} //KEMField
+}  // namespace KEMField
 #endif /* KEMTOOLBOX_HH_ */

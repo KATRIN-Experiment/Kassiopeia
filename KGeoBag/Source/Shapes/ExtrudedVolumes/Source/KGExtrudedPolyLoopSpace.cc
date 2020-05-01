@@ -3,14 +3,8 @@
 namespace KGeoBag
 {
 
-    template< >
-    KGExtrudedPolyLoopSpace::Visitor::Visitor()
-    {
-    }
+template<> KGExtrudedPolyLoopSpace::Visitor::Visitor() {}
 
-    template< >
-    KGExtrudedPolyLoopSpace::Visitor::~Visitor()
-    {
-    }
+template<> KGExtrudedPolyLoopSpace::Visitor::~Visitor() {}
 
-}
+}  // namespace KGeoBag

@@ -23,29 +23,30 @@ namespace KEMField
 *
 */
 
-class KFMElectrostaticMultipoleBatchCalculatorBase: public KFMElementMomentBatchCalculator
+class KFMElectrostaticMultipoleBatchCalculatorBase : public KFMElementMomentBatchCalculator
 {
-    public:
+  public:
+    KFMElectrostaticMultipoleBatchCalculatorBase() : KFMElementMomentBatchCalculator()
+    {
+        fContainer = nullptr;
+    }
 
-        KFMElectrostaticMultipoleBatchCalculatorBase():KFMElementMomentBatchCalculator()
-        {
-            fContainer = NULL;
-        }
+    ~KFMElectrostaticMultipoleBatchCalculatorBase() override
+    {
+        ;
+    };
 
-        virtual ~KFMElectrostaticMultipoleBatchCalculatorBase(){;};
+    void SetElectrostaticElementContainer(const KFMElectrostaticElementContainerBase<3, 1>* container)
+    {
+        fContainer = container;
+    }
 
-        void SetElectrostaticElementContainer(const KFMElectrostaticElementContainerBase<3,1>* container)
-        {
-            fContainer = container;
-        }
-
-    protected:
-
-        const KFMElectrostaticElementContainerBase<3,1>* fContainer;
+  protected:
+    const KFMElectrostaticElementContainerBase<3, 1>* fContainer;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticMultipoleBatchCalculatorBase_H__ */

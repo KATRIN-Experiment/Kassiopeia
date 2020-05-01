@@ -1,22 +1,21 @@
 #ifndef KZHCOEFFICIENTGENERATOR_H
 #define KZHCOEFFICIENTGENERATOR_H
 
-#include <vector>
-
 #include "KEMCoordinateSystem.hh"
+
+#include <vector>
 
 namespace KEMField
 {
-  template <class Element>
-  class KZHCoefficientGenerator;
+template<class Element> class KZHCoefficientGenerator;
 
-  class KZHCoefficientGeneratorElement
-  {
+class KZHCoefficientGeneratorElement
+{
   public:
     KZHCoefficientGeneratorElement() {}
     virtual ~KZHCoefficientGeneratorElement() {}
 
-    bool IsCoaxial(const KEMCoordinateSystem& coordinateSystem, double coaxialityTolerance ) const;
+    bool IsCoaxial(const KEMCoordinateSystem& coordinateSystem, double coaxialityTolerance) const;
 
     double AxialOffset(const KEMCoordinateSystem& coordinateSystem) const;
 
@@ -24,17 +23,13 @@ namespace KEMField
 
     virtual double Prefactor() const = 0;
 
-    virtual void ComputeCentralCoefficients(double,
-					    double,
-					    std::vector<double>&) const = 0;
-    virtual void ComputeRemoteCoefficients(double,
-					   double,
-					   std::vector<double>&) const = 0;
+    virtual void ComputeCentralCoefficients(double, double, std::vector<double>&) const = 0;
+    virtual void ComputeRemoteCoefficients(double, double, std::vector<double>&) const = 0;
 
-    virtual double ComputeRho(double,bool) const = 0;
+    virtual double ComputeRho(double, bool) const = 0;
 
-    virtual void GetExtrema(double&,double&) const = 0;
-  };
-}
+    virtual void GetExtrema(double&, double&) const = 0;
+};
+}  // namespace KEMField
 
 #endif /* KZHCOEFFICIENTGENERATOR */

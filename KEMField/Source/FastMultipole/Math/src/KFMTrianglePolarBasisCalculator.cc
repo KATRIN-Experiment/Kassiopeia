@@ -1,17 +1,23 @@
 #include "KFMTrianglePolarBasisCalculator.hh"
 
 
-namespace KEMField{
+namespace KEMField
+{
 
 
-KFMTrianglePolarBasisCalculator::KFMTrianglePolarBasisCalculator(){;}
+KFMTrianglePolarBasisCalculator::KFMTrianglePolarBasisCalculator()
+{
+    ;
+}
 
 
-KFMTrianglePolarBasisCalculator::~KFMTrianglePolarBasisCalculator(){;}
+KFMTrianglePolarBasisCalculator::~KFMTrianglePolarBasisCalculator()
+{
+    ;
+}
 
 
-void
-KFMTrianglePolarBasisCalculator::Convert(const KFMPointCloud<3>* vertices, KFMTrianglePolarBasis& basis)
+void KFMTrianglePolarBasisCalculator::Convert(const KFMPointCloud<3>* vertices, KFMTrianglePolarBasis& basis)
 {
     SetPointCloud(vertices);
     ConstructBasis();
@@ -34,31 +40,26 @@ KFMTrianglePolarBasisCalculator::Convert(const KFMPointCloud<3>* vertices, KFMTr
     basis.e2x = fZ[0];
     basis.e2y = fZ[1];
     basis.e2z = fZ[2];
-
 }
 
 
-void
-KFMTrianglePolarBasisCalculator::SetPointCloud(const KFMPointCloud<3>* vertices)
+void KFMTrianglePolarBasisCalculator::SetPointCloud(const KFMPointCloud<3>* vertices)
 {
-    for(unsigned int i=0; i<3; i++)
-    {
-        for(unsigned int j=0; j<3; j++)
-        {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             fP[i][j] = vertices->GetPoint(i)[j];
         }
     }
 }
 
 
-void
-KFMTrianglePolarBasisCalculator::ConstructBasis()
+void KFMTrianglePolarBasisCalculator::ConstructBasis()
 {
     //vectors along triangle sides
     Subtract(fP[1], fP[0], fN0_1);
     Subtract(fP[2], fP[0], fN0_2);
     Cross(fN0_1, fN0_2, fNPerp);
-    fArea = 0.5*Magnitude(fNPerp);
+    fArea = 0.5 * Magnitude(fNPerp);
     Normalize(fNPerp);
 
     //have to construct the x, y and z-axes
@@ -70,19 +71,19 @@ KFMTrianglePolarBasisCalculator::ConstructBasis()
     Normalize(fY);
 
     //q is closest point to fP[0] on line connecting fP[1] to fP[2]
-    double t = ( Dot(fP[0], v) - Dot(fP[1], v) )/( Dot(v,v) );
-    ScalarMultiply(t,v);
+    double t = (Dot(fP[0], v) - Dot(fP[1], v)) / (Dot(v, v));
+    ScalarMultiply(t, v);
     Add(fP[1], v, fQ);
 
     //the line going from fP[0] to fQ is the x-axis
     Subtract(fQ, fP[0], fX);
     //gram-schmidt out any y-axis component in the x-axis
-    double proj = Dot(fX,fY);
+    double proj = Dot(fX, fY);
     double sub[3];
     SetEqual(fY, sub);
     ScalarMultiply(proj, sub);
     Subtract(fX, sub, fX);
-    fH = Magnitude(fX); //compute triangle height along x
+    fH = Magnitude(fX);  //compute triangle height along x
     Normalize(fX);
 
 
@@ -93,22 +94,20 @@ KFMTrianglePolarBasisCalculator::ConstructBasis()
     //now we need to find the angles from the x-axis
     double temp[3];
     Subtract(fP[1], fP[0], temp);
-    double PAy = Dot(temp,fY);
+    double PAy = Dot(temp, fY);
 
     Subtract(fP[1], fP[0], temp);
-    double PAx = Dot(temp,fX);
+    double PAx = Dot(temp, fX);
 
     Subtract(fP[2], fP[0], temp);
-    double PBy = Dot(temp,fY);
+    double PBy = Dot(temp, fY);
 
     Subtract(fP[2], fP[0], temp);
-    double PBx = Dot(temp,fX);
+    double PBx = Dot(temp, fX);
 
     fPhi1 = std::atan2(PAy, PAx);
     fPhi2 = std::atan2(PBy, PBx);
 }
 
 
-
-
-}//end of KEMField namespace
+}  // namespace KEMField

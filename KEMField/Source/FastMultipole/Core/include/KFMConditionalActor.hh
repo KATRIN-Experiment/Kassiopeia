@@ -1,8 +1,8 @@
 #ifndef KFMConditionalActor_HH__
 #define KFMConditionalActor_HH__
 
-#include "KFMNodeActor.hh"
 #include "KFMInspectingActor.hh"
+#include "KFMNodeActor.hh"
 
 namespace KEMField
 {
@@ -20,53 +20,55 @@ namespace KEMField
 *
 */
 
-template<typename NodeType>
-class KFMConditionalActor: public KFMNodeActor<NodeType>
+template<typename NodeType> class KFMConditionalActor : public KFMNodeActor<NodeType>
 {
-    public:
-        KFMConditionalActor(){;};
-        virtual ~KFMConditionalActor(){;};
+  public:
+    KFMConditionalActor()
+    {
+        ;
+    };
+    ~KFMConditionalActor() override
+    {
+        ;
+    };
 
 
-        //this visitor should not modify the state of the node
-        //just determine if it satisfies a certain condition
-        void SetInspectingActor(KFMInspectingActor<NodeType>* inspectActor)
+    //this visitor should not modify the state of the node
+    //just determine if it satisfies a certain condition
+    void SetInspectingActor(KFMInspectingActor<NodeType>* inspectActor)
+    {
+        if (inspectActor != nullptr)  //avoid a disaster
         {
-            if(inspectActor != NULL)//avoid a disaster
-            {
-                fInspectingActor = inspectActor;
-            }
+            fInspectingActor = inspectActor;
         }
+    }
 
 
-        //this visitor performs some sort of action on the node
-        //if the inspecting visitor is satisfied
-        void SetOperationalActor(KFMNodeActor<NodeType>* opActor)
+    //this visitor performs some sort of action on the node
+    //if the inspecting visitor is satisfied
+    void SetOperationalActor(KFMNodeActor<NodeType>* opActor)
+    {
+        if (opActor != this && opActor != nullptr)  //avoid a disaster
         {
-            if(opActor != this && opActor != NULL)//avoid a disaster
-            {
-                fOperationalActor = opActor;
-            }
+            fOperationalActor = opActor;
         }
+    }
 
 
-        virtual void ApplyAction(NodeType* node)
-        {
-            if( fInspectingActor->ConditionIsSatisfied(node) )
-            {
-                fOperationalActor->ApplyAction(node);
-            }
+    void ApplyAction(NodeType* node) override
+    {
+        if (fInspectingActor->ConditionIsSatisfied(node)) {
+            fOperationalActor->ApplyAction(node);
         }
+    }
 
 
-    private:
-
-        KFMNodeActor<NodeType>* fOperationalActor;
-        KFMInspectingActor<NodeType>* fInspectingActor;
-
+  private:
+    KFMNodeActor<NodeType>* fOperationalActor;
+    KFMInspectingActor<NodeType>* fInspectingActor;
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMConditionalActor_H__ */

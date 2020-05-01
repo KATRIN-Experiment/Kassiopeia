@@ -4,7 +4,8 @@
 
 #include "KFMResponseKernel.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,28 +20,33 @@ namespace KEMField{
 *
 */
 
-class KFMResponseKernelM2L: public KFMResponseKernel
+class KFMResponseKernelM2L : public KFMResponseKernel
 {
-    public:
-        KFMResponseKernelM2L():KFMResponseKernel(){;};
-        virtual ~KFMResponseKernelM2L(){;};
+  public:
+    KFMResponseKernelM2L() : KFMResponseKernel()
+    {
+        ;
+    };
+    virtual ~KFMResponseKernelM2L()
+    {
+        ;
+    };
 
-        virtual void Initialize();
+    virtual void Initialize();
 
-        virtual int GetTargetIndex(int j, int k) const;
-        virtual int GetSourceIndex(int /*j*/, int /*k*/, int n, int m) const;
-        virtual bool IsPhysical(int j, int k, int n, int m) const;
+    virtual int GetTargetIndex(int j, int k) const;
+    virtual int GetSourceIndex(int /*j*/, int /*k*/, int n, int m) const;
+    virtual bool IsPhysical(int j, int k, int n, int m) const;
 
-        virtual std::complex<double> GetNormalizationCoeff(int j, int k, int n, int m) const;
-        virtual std::complex<double> GetResponseFunction(int j, int k, int n, int m) const;
+    virtual std::complex<double> GetNormalizationCoeff(int j, int k, int n, int m) const;
+    virtual std::complex<double> GetResponseFunction(int j, int k, int n, int m) const;
 
-        virtual std::complex<double> GetIndependentResponseFunction(int response_index) const;
+    virtual std::complex<double> GetIndependentResponseFunction(int response_index) const;
 
-    protected:
-
+  protected:
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMResponseKernelM2L_H__ */

@@ -1,14 +1,13 @@
 #ifndef KGCONICALWIREARRAYSPACE_HH_
 #define KGCONICALWIREARRAYSPACE_HH_
 
-#include "KGWrappedSpace.hh"
-
 #include "KGConicalWireArray.hh"
+#include "KGWrappedSpace.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSpace< KGConicalWireArray > KGConicalWireArraySpace;
+typedef KGWrappedSpace<KGConicalWireArray> KGConicalWireArraySpace;
 
 }
 

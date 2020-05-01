@@ -1,14 +1,13 @@
 #ifndef KGEXTRUDEDSURFACE_HH_
 #define KGEXTRUDEDSURFACE_HH_
 
-#include "KGWrappedSurface.hh"
-
 #include "KGExtrudedObject.hh"
+#include "KGWrappedSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSurface< KGExtrudedObject > KGExtrudedSurface;
+typedef KGWrappedSurface<KGExtrudedObject> KGExtrudedSurface;
 
 }
 

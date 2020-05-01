@@ -1,8 +1,8 @@
 #ifndef KFMLevelConditionActor_HH__
 #define KFMLevelConditionActor_HH__
 
-#include "KFMNode.hh"
 #include "KFMInspectingActor.hh"
+#include "KFMNode.hh"
 
 namespace KEMField
 {
@@ -20,56 +20,69 @@ namespace KEMField
 *
 */
 
-template<typename NodeType>
-class KFMLevelConditionActor: public KFMInspectingActor<NodeType>
+template<typename NodeType> class KFMLevelConditionActor : public KFMInspectingActor<NodeType>
 {
-    public:
-        KFMLevelConditionActor(){fLevel = 0; fSwitch = 0;};
-        virtual ~KFMLevelConditionActor(){};
+  public:
+    KFMLevelConditionActor()
+    {
+        fLevel = 0;
+        fSwitch = 0;
+    };
+    virtual ~KFMLevelConditionActor(){};
 
-        void SetLevel(unsigned int l){fLevel = l;};
+    void SetLevel(unsigned int l)
+    {
+        fLevel = l;
+    };
 
-        void SetEqualOrGreaterThan(){fSwitch = 0;};
-        void SetEqualOrLessThan(){fSwitch = 1;};
-        void SetGreaterThan(){fSwitch = 2;};
-        void SetLessThan(){fSwitch = 3;};
+    void SetEqualOrGreaterThan()
+    {
+        fSwitch = 0;
+    };
+    void SetEqualOrLessThan()
+    {
+        fSwitch = 1;
+    };
+    void SetGreaterThan()
+    {
+        fSwitch = 2;
+    };
+    void SetLessThan()
+    {
+        fSwitch = 3;
+    };
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(NodeType* node)
-        {
-            switch(fSwitch)
-            {
-                case 0:
-                    return (node->GetLevel() >= fLevel);
+    //needs to answer this question about whether this node statisfies a condition
+    virtual bool ConditionIsSatisfied(NodeType* node)
+    {
+        switch (fSwitch) {
+            case 0:
+                return (node->GetLevel() >= fLevel);
                 break;
-                case 1:
-                    return (node->GetLevel() <= fLevel);
+            case 1:
+                return (node->GetLevel() <= fLevel);
                 break;
-                case 2:
-                    return (node->GetLevel() > fLevel);
+            case 2:
+                return (node->GetLevel() > fLevel);
                 break;
-                case 3:
-                    return (node->GetLevel() < fLevel);
+            case 3:
+                return (node->GetLevel() < fLevel);
                 break;
-                default:
-                    return false;
+            default:
+                return false;
                 break;
-            }
-
-            return false;
-
         }
 
-
-    private:
-
-        unsigned int fLevel;
-        unsigned int fSwitch;
+        return false;
+    }
 
 
+  private:
+    unsigned int fLevel;
+    unsigned int fSwitch;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMLevelConditionActor_H__ */

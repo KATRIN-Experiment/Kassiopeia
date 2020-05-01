@@ -5,15 +5,15 @@
 
 namespace KEMField
 {
-  class KCoilIntegrator
-  {
+class KCoilIntegrator
+{
   public:
     KCoilIntegrator() {}
     virtual ~KCoilIntegrator() {}
 
     KThreeVector VectorPotential(const KCoil& coil, const KPosition& P) const;
     KThreeVector MagneticField(const KCoil& coil, const KPosition& P) const;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KCOILINTEGRATOR */

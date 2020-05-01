@@ -7,7 +7,7 @@ namespace KGeoBag
 KGNavigableMeshElement::KGNavigableMeshElement()
 {
     fType = -1;
-    fMeshElement = NULL;
+    fMeshElement = nullptr;
     fID = -1;
 }
 
@@ -39,10 +39,9 @@ short KGNavigableMeshElement::GetMeshElementType()
     return fType;
 }
 
-const KGMeshElement*
-KGNavigableMeshElement::GetMeshElement() const
+const KGMeshElement* KGNavigableMeshElement::GetMeshElement() const
 {
     return fMeshElement;
 }
 
-}//end of KGeoBag
+}  // namespace KGeoBag

@@ -74,6 +74,8 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     set(VTK_FIND_QUIETLY TRUE)
 
     add_custom_target(reference)
+    add_custom_target(doc)
+    add_dependencies(doc reference)
 
 else()
     set(STANDALONE false)
@@ -87,20 +89,77 @@ set(CMAKE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
 set(MODULE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/modules)
 set_property(GLOBAL PROPERTY MODULE_TARGETS)
 
-if( MODULE_VERSION )
-    set( ${PROJECT_NAME}_VERSION_MAJOR ${MODULE_VERSION_MAJOR} )
-    set( ${PROJECT_NAME}_VERSION_MINOR ${MODULE_VERSION_MINOR} )
-    set( ${PROJECT_NAME}_VERSION_PATCH ${MODULE_VERSION_PATCH} )
-    set( ${PROJECT_NAME}_VERSION ${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH} )
-    math( EXPR ${PROJECT_NAME}_VERSION_NUMERICAL "10000*${MODULE_VERSION_MAJOR}+100*${MODULE_VERSION_MINOR}+${MODULE_VERSION_PATCH}" )
+macro(kasper_set_version_numbers VERSION_VAR)
+    if( NOT ${VERSION_VAR}_MINOR )
+        set(${VERSION_VAR}_MINOR 0)
+    endif()
+    if( NOT ${VERSION_VAR}_PATCH )
+        set(${VERSION_VAR}_PATCH 0)
+    endif()
+    if( NOT ${VERSION_VAR})
+        set( ${VERSION_VAR} "${${VERSION_VAR}_MAJOR}.${${VERSION_VAR}_MINOR}.${${VERSION_VAR}_PATCH}" )
+    endif()
+
+    if( (${${VERSION_VAR}_MINOR} GREATER 99) OR (${${VERSION_VAR}_PATCH} GREATER 99) )
+        message(FATAL_ERROR "Invalid version number defined for project ${PROJECT_NAME}!")
+    endif()
+    math( EXPR ${VERSION_VAR}_NUMERICAL "(${${VERSION_VAR}_MAJOR} * 10000) + (${${VERSION_VAR}_MINOR} * 100) + ${${VERSION_VAR}_PATCH}" )
+
+    set( ${PROJECT_NAME}_VERSION_MAJOR ${${VERSION_VAR}_MAJOR} )
+    set( ${PROJECT_NAME}_VERSION_MINOR ${${VERSION_VAR}_MINOR} )
+    set( ${PROJECT_NAME}_VERSION_PATCH ${${VERSION_VAR}_PATCH} )
+    set( ${PROJECT_NAME}_VERSION_NUMERICAL ${${VERSION_VAR}_NUMERICAL} )
+    set( ${PROJECT_NAME}_VERSION ${${VERSION_VAR}} )
 
     add_definitions( -D${PROJECT_NAME}_VERSION_MAJOR=${${PROJECT_NAME}_VERSION_MAJOR} )
     add_definitions( -D${PROJECT_NAME}_VERSION_MINOR=${${PROJECT_NAME}_VERSION_MINOR} )
     add_definitions( -D${PROJECT_NAME}_VERSION_PATCH=${${PROJECT_NAME}_VERSION_PATCH} )
-    add_definitions( -D${PROJECT_NAME}_VERSION="${${PROJECT_NAME}_VERSION}" )
     add_definitions( -D${PROJECT_NAME}_VERSION_NUMERICAL=${${PROJECT_NAME}_VERSION_NUMERICAL} )
+    add_definitions( -D${PROJECT_NAME}_VERSION="${${PROJECT_NAME}_VERSION}" )
+endmacro()
 
-    message(STATUS "Kasper module enabled: ${PROJECT_NAME} v${${PROJECT_NAME}_VERSION}" )
+if( ${PROJECT_NAME} STREQUAL Kasper )
+    kasper_set_version_numbers(KASPER_VERSION)
+    message(STATUS "Building Kasper v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
+
+    # git revision (if available)
+    set(KASPER_GIT_REVISION "n/a")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/.git/index")
+        set_property(GLOBAL APPEND
+            PROPERTY CMAKE_CONFIGURE_DEPENDS
+            "${CMAKE_SOURCE_DIR}/.git/index")
+
+        execute_process(
+            COMMAND git rev-parse --abbrev-ref HEAD
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE KASPER_GIT_BRANCH
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        execute_process(
+            COMMAND git rev-parse --short HEAD
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE KASPER_GIT_COMMIT
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        execute_process(
+            COMMAND git log -1 --format=%cd
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE KASPER_GIT_TIMESTAMP
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        set(KASPER_GIT_REVISION "${KASPER_GIT_BRANCH}+${KASPER_GIT_COMMIT}")
+        message(STATUS "Git revision is ${KASPER_GIT_REVISION} (last commit: ${KASPER_GIT_TIMESTAMP})" )
+    endif()
+
+    # build timestamp -- will be refreshed after updating git (see lines above)
+    string( TIMESTAMP KASPER_BUILD_TIMESTAMP UTC )
+
+    # build system (something like 'linux/GNU/8.2.1')
+    set(KASPER_BUILD_SYSTEM "${CMAKE_SYSTEM_NAME}/${CMAKE_CXX_COMPILER_ID}/${CMAKE_CXX_COMPILER_VERSION}")
+
+else()
+    kasper_set_version_numbers(MODULE_VERSION)
+    message(STATUS "Kasper module enabled: ${PROJECT_NAME} v${${PROJECT_NAME}_VERSION} (${${PROJECT_NAME}_VERSION_NUMERICAL})" )
 endif()
 
 find_package (Doxygen)
@@ -262,6 +321,14 @@ macro(kasper_install_executables)
     install(TARGETS ${ARGN} EXPORT KasperTargets DESTINATION ${${PROJECT_NAME}_BIN_INSTALL_DIR})
 endmacro()
 
+macro(kasper_install_script)
+    install(
+        FILES ${ARGN}
+        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+        DESTINATION ${${PROJECT_NAME}_BIN_INSTALL_DIR}
+    )
+endmacro()
+
 macro(kasper_install_data)
     install(FILES ${ARGN} DESTINATION ${${PROJECT_NAME}_DATA_INSTALL_DIR})
 endmacro()
@@ -277,7 +344,6 @@ endmacro()
 macro(kasper_install_files DEST_DIR)
     install(FILES ${ARGN} DESTINATION ${DEST_DIR})
 endmacro()
-
 
 macro(kasper_install_module)
 
@@ -435,6 +501,11 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             COMMENT "Generating API documentation with Doxygen for ${PROJECT_NAME}"
             VERBATIM
         )
+        add_custom_command(TARGET reference-${PROJECT_NAME} POST_BUILD
+            COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}.html
+            DEPENDS ${REF_BUILD_DIR}/html/index.html
+            COMMENT "Updating documentation symlinks for ${PROJECT_NAME}"
+        )
         add_dependencies(reference reference-${PROJECT_NAME})
     endif(DOXYGEN_FOUND)
 endmacro()
@@ -583,33 +654,8 @@ macro (add_cflag CFLAG)
     set (CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} PARENT_SCOPE)
 endmacro()
 
-macro(kasper_find_boost BVERSION)
-    CMAKE_PARSE_ARGUMENTS(ARG "REQUIRED" "" "COMPONENTS" ${ARGN})
-    if(ARG_REQUIRED)
-        set(ARG_REQUIRED "REQUIRED")
-    else()
-        set(ARG_REQUIRED )
-    endif()
-
-    find_package(Boost ${BVERSION} ${ARG_REQUIRED} COMPONENTS ${ARG_COMPONENTS})
-
-    # circumvent a C++11 boost bug in the filesystem library
-    if (Boost_VERSION LESS 105100)
-        add_definitions( -DBOOST_NO_SCOPED_ENUMS )
-    elseif (Boost_VERSION LESS 105700)
-        add_definitions( -DBOOST_NO_CXX11_SCOPED_ENUMS )
-    endif()
-
-    if (Boost_DIR MATCHES "NOTFOUND" AND Boost_FOUND)
-        unset(Boost_DIR CACHE)
-    endif()
-
-    kasper_external_include_directories( ${Boost_INCLUDE_DIRS} )
-endmacro()
-
 macro(kasper_find_vtk)
     # VTK versions below 6.0.1 do not compile with c++11 support
-    set(VTK_USE_FILE ON)
     find_package( VTK REQUIRED NO_MODULE )
     include(${VTK_USE_FILE})
 
@@ -622,4 +668,12 @@ macro(kasper_find_vtk)
     endif()
 
     kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
+
+    # VTK_INCLUDE_DIRS is sometimes incorrect (e.g. on Kalinka)
+    if(EXISTS "/usr/include/vtk")
+        kasper_external_include_directories( /usr/include/vtk )
+    endif()
+    if(EXISTS "/usr/local/include/vtk")
+        kasper_external_include_directories( /usr/local/include/vtk )
+    endif()
 endmacro()

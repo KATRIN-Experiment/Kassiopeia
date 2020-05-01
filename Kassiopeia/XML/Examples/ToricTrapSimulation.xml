@@ -28,7 +28,7 @@
     <message key="ks_run" terminal="normal" log="normal"/>
     <message key="ks_event" terminal="normal" log="normal"/>
     <message key="ks_track" terminal="normal" log="normal"/>
-    <message key="ks_step" terminal="debug" log="normal"/>
+    <message key="ks_step" terminal="normal" log="normal"/>
 
 </messages>
 
@@ -337,7 +337,7 @@
     <ks_simulation
         run="1"
         seed="51385"
-        events="1"
+        events="[events:1]"
         magnetic_field="field_electromagnet"
         electric_field="field_constant"
         space="space_world"

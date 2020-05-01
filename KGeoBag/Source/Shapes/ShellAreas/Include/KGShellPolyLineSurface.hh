@@ -1,13 +1,13 @@
 #ifndef KGSHELLPOLYLINESURFACE_HH_
 #define KGSHELLPOLYLINESURFACE_HH_
 
-#include "KGShellPathSurface.hh"
 #include "KGPlanarPolyLine.hh"
+#include "KGShellPathSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGShellPathSurface< KGPlanarPolyLine > KGShellPolyLineSurface;
+typedef KGShellPathSurface<KGPlanarPolyLine> KGShellPolyLineSurface;
 
 }
 

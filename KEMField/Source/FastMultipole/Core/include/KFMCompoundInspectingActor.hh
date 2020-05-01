@@ -2,6 +2,7 @@
 #define __KFMCompoundInspectingActor_H__
 
 #include "KFMInspectingActor.hh"
+
 #include <vector>
 
 namespace KEMField
@@ -20,83 +21,72 @@ namespace KEMField
 */
 
 
-template<typename NodeType>
-class KFMCompoundInspectingActor: public KFMInspectingActor<NodeType>
+template<typename NodeType> class KFMCompoundInspectingActor : public KFMInspectingActor<NodeType>
 {
-    public:
+  public:
+    KFMCompoundInspectingActor()
+    {
+        fAndOr = true;
+    };
 
-        KFMCompoundInspectingActor()
-        {
-            fAndOr = true;
-        };
+    ~KFMCompoundInspectingActor() override{};
 
-        virtual ~KFMCompoundInspectingActor(){};
+    void AddInspectingActor(KFMInspectingActor<NodeType>* actor)
+    {
+        if (actor != this) {
+            fInspectingActors.push_back(actor);
+        }
+    };
 
-        void AddInspectingActor( KFMInspectingActor<NodeType>* actor)
-        {
-            if(actor != this)
-            {
-                fInspectingActors.push_back(actor);
-            }
-        };
+    void UseAndCondition()
+    {
+        fAndOr = true;
+    };
+    void UseOrCondition()
+    {
+        fAndOr = false;
+    };
 
-        void UseAndCondition(){fAndOr = true;};
-        void UseOrCondition(){fAndOr = false;};
+    //needs to answer this question about whether this node statisfies a condition
+    bool ConditionIsSatisfied(NodeType* node) override
+    {
+        bool result = fAndOr;
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(NodeType* node)
-        {
-            bool result = fAndOr;
-
-            for(unsigned int i=0; i<fInspectingActors.size(); i++)
-            {
-                if(fAndOr)
-                {
-                    //use and condition
-                    if(result && fInspectingActors[i]->ConditionIsSatisfied(node))
-                    {
-                        result = true;
-                    }
-                    else
-                    {
-                        result = false;
-                    }
+        for (unsigned int i = 0; i < fInspectingActors.size(); i++) {
+            if (fAndOr) {
+                //use and condition
+                if (result && fInspectingActors[i]->ConditionIsSatisfied(node)) {
+                    result = true;
                 }
-                else
-                {
-                    //use or condition
-                    if(result || fInspectingActors[i]->ConditionIsSatisfied(node))
-                    {
-                        result = true;
-                    }
-                    else
-                    {
-                        result = false;
-                    }
+                else {
+                    result = false;
                 }
             }
-
-            if(fInspectingActors.size() != 0 )
-            {
-                return result;
-            }
-            else
-            {
-                return false;
+            else {
+                //use or condition
+                if (result || fInspectingActors[i]->ConditionIsSatisfied(node)) {
+                    result = true;
+                }
+                else {
+                    result = false;
+                }
             }
         }
 
-    private:
+        if (fInspectingActors.size() != 0) {
+            return result;
+        }
+        else {
+            return false;
+        }
+    }
 
-        bool fAndOr; //true = and, false = or;
-        std::vector< KFMInspectingActor<NodeType>* > fInspectingActors;
-
+  private:
+    bool fAndOr;  //true = and, false = or;
+    std::vector<KFMInspectingActor<NodeType>*> fInspectingActors;
 };
 
 
-
-
-
-}
+}  // namespace KEMField
 
 #endif /* __KFMCompoundInspectingActor_H__ */

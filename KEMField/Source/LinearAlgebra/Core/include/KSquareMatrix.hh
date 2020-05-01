@@ -5,18 +5,20 @@
 
 namespace KEMField
 {
-  template <typename ValueType>
-  class KSquareMatrix : public KMatrix<ValueType>
-  {
+template<typename ValueType> class KSquareMatrix : public KMatrix<ValueType>
+{
   public:
     KSquareMatrix() : KMatrix<ValueType>() {}
-    virtual ~KSquareMatrix() {}
+    ~KSquareMatrix() override {}
 
     virtual unsigned int Dimension() const = 0;
-    virtual const ValueType& operator()(unsigned int,unsigned int) const = 0;
+    const ValueType& operator()(unsigned int, unsigned int) const override = 0;
 
-    unsigned int Dimension(unsigned int) const { return Dimension(); }
-  };
-}
+    unsigned int Dimension(unsigned int) const override
+    {
+        return Dimension();
+    }
+};
+}  // namespace KEMField
 
 #endif /* KSQUAREMATRIX_DEF */

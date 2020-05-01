@@ -7,7 +7,7 @@
 namespace KGeoBag
 {
 
-    typedef KGFlattenedClosedPathSurface< KGPlanarPolyLoop > KGFlattenedPolyLoopSurface;
+typedef KGFlattenedClosedPathSurface<KGPlanarPolyLoop> KGFlattenedPolyLoopSurface;
 
 }
 

@@ -10,13 +10,15 @@
 #include "KSElectricField.h"
 #include "KSMagneticField.h"
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
 KSElectricField* getElectricField(std::string name);
 KSMagneticField* getMagneticField(std::string name);
 
-std::vector< KSMagneticField* > getAllMagneticFields();
+std::vector<KSElectricField*> getAllElectricFields();
+std::vector<KSMagneticField*> getAllMagneticFields();
 
-} //Kassiopeia
+}  // namespace Kassiopeia
 
 #endif /* KSFIELD_FINDER_H_ */

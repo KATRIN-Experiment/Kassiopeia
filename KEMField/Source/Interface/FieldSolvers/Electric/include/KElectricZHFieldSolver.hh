@@ -9,43 +9,45 @@
 #define KELECTRICZHFIELDSOLVER_HH_
 
 #include "KElectricFieldSolver.hh"
-
+#include "KElectrostaticBoundaryIntegratorPolicy.hh"
 #include "KElectrostaticZonalHarmonicFieldSolver.hh"
 #include "KZonalHarmonicContainer.hh"
 #include "KZonalHarmonicParameters.hh"
-#include "KElectrostaticBoundaryIntegratorPolicy.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KElectricZHFieldSolver : public KElectricFieldSolver
 {
-public:
-	KElectricZHFieldSolver();
-	virtual ~KElectricZHFieldSolver();
+  public:
+    KElectricZHFieldSolver();
+    ~KElectricZHFieldSolver() override;
 
-	bool UseCentralExpansion( const KPosition& P );
-	bool UseRemoteExpansion( const KPosition& P );
+    bool UseCentralExpansion(const KPosition& P);
+    bool UseRemoteExpansion(const KPosition& P);
 
-	void SetIntegratorPolicy(const KEBIPolicy& policy){
-		fIntegratorPolicy = policy;
-	}
+    void SetIntegratorPolicy(const KEBIPolicy& policy)
+    {
+        fIntegratorPolicy = policy;
+    }
 
-	KZonalHarmonicParameters* GetParameters()
-	{
-		return fParameters;
-	}
-private:
-	void InitializeCore( KSurfaceContainer& container );
+    KZonalHarmonicParameters* GetParameters()
+    {
+        return fParameters;
+    }
 
-	double PotentialCore( const KPosition& P ) const;
-	KThreeVector ElectricFieldCore( const KPosition& P ) const;
-    std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const;
+  private:
+    void InitializeCore(KSurfaceContainer& container) override;
 
-	KEBIPolicy fIntegratorPolicy;
-	KElectrostaticBoundaryIntegrator fIntegrator;
-	KZonalHarmonicContainer< KElectrostaticBasis >* fZHContainer;
-	KZonalHarmonicFieldSolver< KElectrostaticBasis >* fZonalHarmonicFieldSolver;
-	KZonalHarmonicParameters* fParameters;
+    double PotentialCore(const KPosition& P) const override;
+    KThreeVector ElectricFieldCore(const KPosition& P) const override;
+    std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const override;
+
+    KEBIPolicy fIntegratorPolicy;
+    KElectrostaticBoundaryIntegrator fIntegrator;
+    KZonalHarmonicContainer<KElectrostaticBasis>* fZHContainer;
+    KZonalHarmonicFieldSolver<KElectrostaticBasis>* fZonalHarmonicFieldSolver;
+    KZonalHarmonicParameters* fParameters;
 };
 
 } /* namespace KEMField */

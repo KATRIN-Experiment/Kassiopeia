@@ -8,24 +8,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTermMaxLength > KSTermMaxLengthBuilder;
+typedef KComplexElement<KSTermMaxLength> KSTermMaxLengthBuilder;
 
-    template< >
-    inline bool KSTermMaxLengthBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "length" )
-        {
-            aContainer->CopyTo( fObject, &KSTermMaxLength::SetLength );
-            return true;
-        }
-        return false;
+template<> inline bool KSTermMaxLengthBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "length") {
+        aContainer->CopyTo(fObject, &KSTermMaxLength::SetLength);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

@@ -3,24 +3,20 @@
 namespace KGeoBag
 {
 
-    KGRotatedArcSegmentSurfaceAxialMesher::KGRotatedArcSegmentSurfaceAxialMesher() :
-            KGSimpleAxialMesher()
-    {
-    }
-    KGRotatedArcSegmentSurfaceAxialMesher::~KGRotatedArcSegmentSurfaceAxialMesher()
-    {
-    }
+KGRotatedArcSegmentSurfaceAxialMesher::KGRotatedArcSegmentSurfaceAxialMesher() : KGSimpleAxialMesher() {}
+KGRotatedArcSegmentSurfaceAxialMesher::~KGRotatedArcSegmentSurfaceAxialMesher() {}
 
-    void KGRotatedArcSegmentSurfaceAxialMesher::VisitRotatedPathSurface( KGRotatedArcSegmentSurface* aRotatedArcSegmentSurface )
-    {
-        //create arc segment points
-        OpenPoints tArcSegmentPoints;
-        ArcSegmentToOpenPoints( aRotatedArcSegmentSurface->Path().operator ->(), tArcSegmentPoints );
+void KGRotatedArcSegmentSurfaceAxialMesher::VisitRotatedPathSurface(
+    KGRotatedArcSegmentSurface* aRotatedArcSegmentSurface)
+{
+    //create arc segment points
+    OpenPoints tArcSegmentPoints;
+    ArcSegmentToOpenPoints(aRotatedArcSegmentSurface->Path().operator->(), tArcSegmentPoints);
 
-        //create loops
-        OpenPointsToLoops( tArcSegmentPoints );
+    //create loops
+    OpenPointsToLoops(tArcSegmentPoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

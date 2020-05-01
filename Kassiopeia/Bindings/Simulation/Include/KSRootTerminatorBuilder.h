@@ -9,24 +9,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSRootTerminator > KSRootTerminatorBuilder;
+typedef KComplexElement<KSRootTerminator> KSRootTerminatorBuilder;
 
-    template< >
-    inline bool KSRootTerminatorBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "add_terminator" )
-        {
-            fObject->AddTerminator( KToolbox::GetInstance().Get< KSTerminator >( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSRootTerminatorBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "add_terminator") {
+        fObject->AddTerminator(KToolbox::GetInstance().Get<KSTerminator>(aContainer->AsReference<std::string>()));
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

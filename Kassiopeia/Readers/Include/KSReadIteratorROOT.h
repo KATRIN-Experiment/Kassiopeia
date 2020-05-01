@@ -5,76 +5,75 @@
 
 namespace Kassiopeia
 {
-    class KSReadIteratorROOT :
-        public KSReadIterator,
-        public KSBoolSet,
-        public KSUCharSet,
-        public KSCharSet,
-        public KSUShortSet,
-        public KSShortSet,
-        public KSUIntSet,
-        public KSIntSet,
-        public KSULongSet,
-        public KSLongSet,
-        public KSFloatSet,
-        public KSDoubleSet,
-        public KSThreeVectorSet,
-        public KSTwoVectorSet,
-        public KSStringSet
-    {
-        private:
-            typedef map< std::string, KSReadObjectROOT* > ObjectMap;
-            typedef ObjectMap::iterator ObjectIt;
-            typedef ObjectMap::const_iterator ObjectCIt;
-            typedef ObjectMap::value_type ObjectEntry;
+class KSReadIteratorROOT :
+    public KSReadIterator,
+    public KSBoolSet,
+    public KSUCharSet,
+    public KSCharSet,
+    public KSUShortSet,
+    public KSShortSet,
+    public KSUIntSet,
+    public KSIntSet,
+    public KSULongSet,
+    public KSLongSet,
+    public KSFloatSet,
+    public KSDoubleSet,
+    public KSThreeVectorSet,
+    public KSTwoVectorSet,
+    public KSStringSet
+{
+  private:
+    typedef map<std::string, KSReadObjectROOT*> ObjectMap;
+    typedef ObjectMap::iterator ObjectIt;
+    typedef ObjectMap::const_iterator ObjectCIt;
+    typedef ObjectMap::value_type ObjectEntry;
 
-        public:
-            KSReadIteratorROOT( TFile* aFile, TTree* aKeyTree, TTree* aDataTree );
-            virtual ~KSReadIteratorROOT();
+  public:
+    KSReadIteratorROOT(TFile* aFile, TTree* aKeyTree, TTree* aDataTree);
+    ~KSReadIteratorROOT() override;
 
-            //*********
-            //traversal
-            //*********
+    //*********
+    //traversal
+    //*********
 
-        public:
-            void operator<<( const unsigned int& aValue );
-            void operator++( int );
-            void operator--( int );
+  public:
+    void operator<<(const unsigned int& aValue) override;
+    void operator++(int) override;
+    void operator--(int) override;
 
-            //**********
-            //comparison
-            //**********
+    //**********
+    //comparison
+    //**********
 
-        public:
-            bool Valid() const;
-            unsigned int Index() const;
-            bool operator<( const unsigned int& aValue ) const;
-            bool operator<=( const unsigned int& aValue ) const;
-            bool operator>( const unsigned int& aValue ) const;
-            bool operator>=( const unsigned int& aValue  ) const;
-            bool operator==( const unsigned int& aValue ) const;
-            bool operator!=( const unsigned int& aValue ) const;
+  public:
+    bool Valid() const override;
+    unsigned int Index() const override;
+    bool operator<(const unsigned int& aValue) const override;
+    bool operator<=(const unsigned int& aValue) const override;
+    bool operator>(const unsigned int& aValue) const override;
+    bool operator>=(const unsigned int& aValue) const override;
+    bool operator==(const unsigned int& aValue) const override;
+    bool operator!=(const unsigned int& aValue) const override;
 
-            //*******
-            //content
-            //*******
+    //*******
+    //content
+    //*******
 
-        public:
-            bool HasObject( const std::string& aLabel );
-            KSReadObjectROOT& GetObject( const std::string& aLabel );
-            const KSReadObjectROOT& GetObject( const std::string& aLabel ) const;
+  public:
+    bool HasObject(const std::string& aLabel);
+    KSReadObjectROOT& GetObject(const std::string& aLabel);
+    const KSReadObjectROOT& GetObject(const std::string& aLabel) const;
 
-        protected:
-            TTree* fData;
-            bool fValid;
-            unsigned int fIndex;
-            unsigned int fFirstIndex;
-            unsigned int fLastIndex;
-            ObjectMap fObjects;
-    };
+  protected:
+    TTree* fData;
+    bool fValid;
+    unsigned int fIndex;
+    unsigned int fFirstIndex;
+    unsigned int fLastIndex;
+    ObjectMap fObjects;
+};
 
 
-
-}
+}  // namespace Kassiopeia
 
 #endif

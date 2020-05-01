@@ -9,7 +9,8 @@
 #ifndef KNONCOPYABLE_H_
 #define KNONCOPYABLE_H_
 
-namespace katrin {
+namespace katrin
+{
 
 namespace noncopyable_  // protection from unintended ADL
 {
@@ -18,16 +19,16 @@ namespace noncopyable_  // protection from unintended ADL
  */
 class KNonCopyable
 {
-protected:
-    constexpr KNonCopyable() { }
-    ~KNonCopyable() { }
+  protected:
+    constexpr KNonCopyable() {}
+    ~KNonCopyable() {}
 
     KNonCopyable(const KNonCopyable&) = delete;
     const KNonCopyable& operator=(const KNonCopyable&) = delete;
 };
-}
+}  // namespace noncopyable_
 
 typedef noncopyable_::KNonCopyable KNonCopyable;
-}
+}  // namespace katrin
 
 #endif /* KNONCOPYABLE_H_ */

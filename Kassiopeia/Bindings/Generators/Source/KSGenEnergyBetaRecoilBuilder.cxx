@@ -3,6 +3,7 @@
 //
 
 #include "KSGenEnergyBetaRecoilBuilder.h"
+
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
@@ -11,17 +12,12 @@ using namespace std;
 namespace katrin
 {
 
-    template< >
-    KSGenEnergyBetaRecoilBuilder::~KComplexElement()
-    {
-    }
+template<> KSGenEnergyBetaRecoilBuilder::~KComplexElement() {}
 
-    STATICINT sKSGenEnergyBetaRecoilStructure =
-            KSGenEnergyBetaRecoilBuilder::Attribute< string >( "name" ) +
-            KSGenEnergyBetaRecoilBuilder::Attribute< double >( "min_energy" ) +
-            KSGenEnergyBetaRecoilBuilder::Attribute< double >( "max_energy" );
+STATICINT sKSGenEnergyBetaRecoilStructure = KSGenEnergyBetaRecoilBuilder::Attribute<string>("name") +
+                                            KSGenEnergyBetaRecoilBuilder::Attribute<double>("min_energy") +
+                                            KSGenEnergyBetaRecoilBuilder::Attribute<double>("max_energy");
 
-    STATICINT sKSGenEnergyBetaRecoil =
-            KSRootBuilder::ComplexElement< KSGenEnergyBetaRecoil >( "ksgen_energy_beta_recoil" );
+STATICINT sKSGenEnergyBetaRecoil = KSRootBuilder::ComplexElement<KSGenEnergyBetaRecoil>("ksgen_energy_beta_recoil");
 
-}
+}  // namespace katrin

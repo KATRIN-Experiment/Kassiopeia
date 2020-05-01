@@ -4,8 +4,7 @@
 
 using namespace KEMField;
 
-bool
-KVMCompactCurve::PointInDomain(const KVMFixedArray<double, KVMCurveDDim >* in) const
+bool KVMCompactCurve::PointInDomain(const KVMFixedArray<double, KVMCurveDDim>* in) const
 {
     //default is to just check if we are in the domain bounding
     //box but the user can override this if they have a non-rectangular
@@ -14,19 +13,16 @@ KVMCompactCurve::PointInDomain(const KVMFixedArray<double, KVMCurveDDim >* in) c
     return InBoundingBox(in);
 }
 
-bool
-KVMCompactCurve::Evaluate(const KVMFixedArray<double, KVMCurveDDim >* in,
-KVMFixedArray<double, KVMCurveRDim >* out) const
+bool KVMCompactCurve::Evaluate(const KVMFixedArray<double, KVMCurveDDim>* in,
+                               KVMFixedArray<double, KVMCurveRDim>* out) const
 {
-    if(PointInDomain(in))
-    {
-        (*out)[0] = x( (*in)[0] );
-        (*out)[1] = y( (*in)[0] );
-        (*out)[2] = z( (*in)[0] );
+    if (PointInDomain(in)) {
+        (*out)[0] = x((*in)[0]);
+        (*out)[1] = y((*in)[0]);
+        (*out)[2] = z((*in)[0]);
         return true;
     }
-    else
-    {
+    else {
         (*out)[0] = std::numeric_limits<double>::quiet_NaN();
         (*out)[1] = std::numeric_limits<double>::quiet_NaN();
         (*out)[2] = std::numeric_limits<double>::quiet_NaN();
@@ -34,18 +30,16 @@ KVMFixedArray<double, KVMCurveRDim >* out) const
     }
 }
 
-bool KVMCompactCurve::Jacobian(const KVMFixedArray<double, KVMCurveDDim >* in,
-KVMFixedArray< KVMFixedArray<double, KVMCurveRDim>,  KVMCurveDDim>* jacobian) const
+bool KVMCompactCurve::Jacobian(const KVMFixedArray<double, KVMCurveDDim>* in,
+                               KVMFixedArray<KVMFixedArray<double, KVMCurveRDim>, KVMCurveDDim>* jacobian) const
 {
-    if(PointInDomain(in))
-    {
+    if (PointInDomain(in)) {
         (*jacobian)[0][0] = dxdu((*in)[0]);
         (*jacobian)[0][1] = dydu((*in)[0]);
         (*jacobian)[0][2] = dzdu((*in)[0]);
         return true;
     }
-    else
-    {
+    else {
         (*jacobian)[0][0] = std::numeric_limits<double>::quiet_NaN();
         (*jacobian)[0][1] = std::numeric_limits<double>::quiet_NaN();
         (*jacobian)[0][2] = std::numeric_limits<double>::quiet_NaN();

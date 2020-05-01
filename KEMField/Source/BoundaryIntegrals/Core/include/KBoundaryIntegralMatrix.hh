@@ -2,48 +2,50 @@
 #define KBOUNDARYINTEGRALMATRIX_DEF
 
 #include "KDataDisplay.hh"
-
+#include "KMessageInterface.hh"
+#include "KSquareMatrix.hh"
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
-
-#include "KSquareMatrix.hh"
 
 #define KEM_USE_CACHING true
 
 namespace KEMField
 {
-  template <class Integrator, bool enableCaching=false>
-  class KBoundaryIntegralMatrix :
-    public KSquareMatrix<typename Integrator::Basis::ValueType>
-  {
+template<class Integrator, bool enableCaching = false>
+class KBoundaryIntegralMatrix : public KSquareMatrix<typename Integrator::Basis::ValueType>
+{
   public:
     typedef typename Integrator::Basis::ValueType ValueType;
 
-    KBoundaryIntegralMatrix(const KSurfaceContainer& c,Integrator& integrator);
+    KBoundaryIntegralMatrix(const KSurfaceContainer& c, Integrator& integrator);
 
-    ~KBoundaryIntegralMatrix() {}
+    ~KBoundaryIntegralMatrix() override {}
 
-    unsigned int Dimension() const { return fDimension; }
-
-    virtual const ValueType& operator()(unsigned int i,unsigned int j) const
+    unsigned int Dimension() const override
     {
-      if (enableCaching)
-      {
-	if (fValueIsCached[i*fDimension+j])
-	  return fCachedValue[i*fDimension+j];
-      }
+        return fDimension;
+    }
 
-      static ValueType value;
+    const ValueType& operator()(unsigned int i, unsigned int j) const override
+    {
+        if (enableCaching) {
+            if (fValueIsCached[i * fDimension + j])
+                return fCachedValue[i * fDimension + j];
+        }
 
-      value = fIntegrator.BoundaryIntegral(fContainer.at(j/Integrator::Basis::Dimension),j%Integrator::Basis::Dimension,fContainer.at(i/Integrator::Basis::Dimension),i%Integrator::Basis::Dimension);
+        static ValueType value;
 
-      if (enableCaching)
-      {
-	fValueIsCached[i*fDimension+j] = true;
-	fCachedValue[i*fDimension+j] = value;
-      }
+        value = fIntegrator.BoundaryIntegral(fContainer.at(j / Integrator::Basis::Dimension),
+                                             j % Integrator::Basis::Dimension,
+                                             fContainer.at(i / Integrator::Basis::Dimension),
+                                             i % Integrator::Basis::Dimension);
 
-      return value;
+        if (enableCaching) {
+            fValueIsCached[i * fDimension + j] = true;
+            fCachedValue[i * fDimension + j] = value;
+        }
+
+        return value;
     }
 
   protected:
@@ -53,26 +55,34 @@ namespace KEMField
 
     mutable std::vector<bool> fValueIsCached;
     mutable std::vector<ValueType> fCachedValue;
-  };
+};
 
-  template <class Integrator, bool enableCaching>
-  KBoundaryIntegralMatrix<Integrator,enableCaching>::
-  KBoundaryIntegralMatrix(const KSurfaceContainer& c,Integrator& integrator) :
+template<class Integrator, bool enableCaching>
+KBoundaryIntegralMatrix<Integrator, enableCaching>::KBoundaryIntegralMatrix(const KSurfaceContainer& c,
+                                                                            Integrator& integrator) :
     KSquareMatrix<ValueType>(),
     fContainer(c),
-    fDimension(c.size()*Integrator::Basis::Dimension),
+    fDimension(c.size() * Integrator::Basis::Dimension),
     fIntegrator(integrator)
-  {
-    if (enableCaching)
-    {
-      unsigned int basisDim2 = Integrator::Basis::Dimension;
-      basisDim2*=basisDim2;
+{
+    if (enableCaching) {
+        unsigned int basisDim2 = Integrator::Basis::Dimension;
+        basisDim2 *= basisDim2;
 
-      fValueIsCached.resize(c.size()*c.size()*basisDim2,false);
-      fCachedValue.resize(c.size()*c.size()*basisDim2);
+        unsigned int num_elements = c.size() * c.size();
+
+        if (num_elements > 16384)  // this would use about 2 GiB of RAM
+        {
+            KDataDisplay<KMessage_KEMField> kem_cout;
+            kem_cout.GetStream().SetSeverity(katrin::eWarning);
+            kem_cout << "Resizing matrix cache to " << num_elements << " elements" << KEMField::endl;
+        }
+
+        fValueIsCached.resize(num_elements * basisDim2, false);
+        fCachedValue.resize(num_elements * basisDim2);
     }
-  }
-
 }
+
+}  // namespace KEMField
 
 #endif /* KVBOUNDARYINTEGRALMATRIX_DEF */

@@ -22,27 +22,39 @@ namespace KEMField
 
 class KFMNodeIdentityListRange
 {
-    public:
-        KFMNodeIdentityListRange():fStartIndex(0),fLength(0){};
-        virtual ~KFMNodeIdentityListRange(){};
+  public:
+    KFMNodeIdentityListRange() : fStartIndex(0), fLength(0){};
+    virtual ~KFMNodeIdentityListRange(){};
 
-        void SetStartIndex(unsigned int i) {fStartIndex = i;};
-        void SetLength(unsigned int i) {fLength = i;};
+    void SetStartIndex(unsigned int i)
+    {
+        fStartIndex = i;
+    };
+    void SetLength(unsigned int i)
+    {
+        fLength = i;
+    };
 
-        unsigned int GetStartIndex() const {return fStartIndex;};
-        unsigned int GetStopIndex() const {return fStartIndex + fLength;};
-        unsigned int GetLength() const {return fLength;};
+    unsigned int GetStartIndex() const
+    {
+        return fStartIndex;
+    };
+    unsigned int GetStopIndex() const
+    {
+        return fStartIndex + fLength;
+    };
+    unsigned int GetLength() const
+    {
+        return fLength;
+    };
 
-    private:
-
-        unsigned int fStartIndex;
-        unsigned int fLength;
-
+  private:
+    unsigned int fStartIndex;
+    unsigned int fLength;
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KFMNodeIdentityListRange_H__ */

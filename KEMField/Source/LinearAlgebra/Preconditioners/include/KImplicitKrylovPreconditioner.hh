@@ -1,23 +1,19 @@
 #ifndef __KImplicitKrylovPreconditioner_H__
 #define __KImplicitKrylovPreconditioner_H__
 
-#include <cmath>
-#include <iostream>
 #include "KFMMessaging.hh"
-
-#include "KSmartPointer.hh"
-
+#include "KIterativeKrylovSolver.hh"
+#include "KKrylovSolverFactory.hh"
 #include "KMatrix.hh"
-#include "KVector.hh"
-
-#include "KSquareMatrix.hh"
+#include "KPreconditioner.hh"
 #include "KSimpleMatrix.hh"
 #include "KSimpleVector.hh"
+#include "KSmartPointer.hh"
+#include "KSquareMatrix.hh"
+#include "KVector.hh"
 
-#include "KPreconditioner.hh"
-#include "KIterativeKrylovSolver.hh"
-
-#include "KKrylovSolverFactory.hh"
+#include <cmath>
+#include <iostream>
 
 namespace KEMField
 {
@@ -34,76 +30,81 @@ namespace KEMField
  *
  */
 
-template <typename ValueType>
-class KImplicitKrylovPreconditioner: public KPreconditioner< ValueType >
+template<typename ValueType> class KImplicitKrylovPreconditioner : public KPreconditioner<ValueType>
 {
-public:
+  public:
+    KImplicitKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType>> solver) : fZero(0.), fSolver(solver)
+    {}
 
-	KImplicitKrylovPreconditioner( KSmartPointer<KIterativeKrylovSolver<ValueType> > solver) :
-		fZero(0.),
-		fSolver(solver)
-	{
-	}
+    ~KImplicitKrylovPreconditioner() override {}
 
-	virtual ~KImplicitKrylovPreconditioner() {}
+    std::string Name() override
+    {
+        return std::string("implicit_krylov");
+    }
 
-	virtual std::string Name(){ return std::string("implicit_krylov"); }
+    KSmartPointer<KIterativeKrylovSolver<ValueType>> GetSolver()
+    {
+        return fSolver;
+    }
 
-	KSmartPointer< KIterativeKrylovSolver<ValueType> > GetSolver(){return fSolver;}
+    void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+        y.Fill(0.);
+        fSolver->Solve(y, x);
+    }
 
-	virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
-	{
-		y.Fill(0.);
-		fSolver->Solve(y, x);
-	}
+    void MultiplyTranspose(const KVector<ValueType>& /*x*/, KVector<ValueType>& /*y*/) const override
+    {
+        //this function must be present, but its not defined
+        kfmout << "KImplicitKrylovPreconditioner::MultiplyTranspose: Fatal error, this function is not implemented."
+               << kfmendl;
+        kfmexit(1);
+    }
 
-	virtual void MultiplyTranspose(const KVector<ValueType>& /*x*/, KVector<ValueType>& /*y*/) const
-	{
-		//this function must be present, but its not defined
-		kfmout<<"KImplicitKrylovPreconditioner::MultiplyTranspose: Fatal error, this function is not implemented."<<kfmendl;
-		kfmexit(1);
-	}
+    //while the matrix defining the preconditioner is fixed
+    //because we must implicity solve for the inverse action of this matrix
+    //we consider this to be a non-stationary preconditioner
+    bool IsStationary() override
+    {
+        return false;
+    };
 
-	//while the matrix defining the preconditioner is fixed
-	//because we must implicity solve for the inverse action of this matrix
-	//we consider this to be a non-stationary preconditioner
-	virtual bool IsStationary(){return false;};
+    unsigned int Dimension() const override
+    {
+        return fSolver->Dimension();
+    };
 
-	virtual unsigned int Dimension() const {return fSolver->Dimension();} ;
+    const ValueType& operator()(unsigned int /*i*/, unsigned int /*j*/) const override
+    {
+        //This function always returns zero as an implicit (non-stationary)
+        //preconditioner cannot easily compute fixed matrix elements of the inverse action
+        return fZero;
+    }
 
-	virtual const ValueType& operator()(unsigned int /*i*/, unsigned int /*j*/) const
-	{
-		//This function always returns zero as an implicit (non-stationary)
-		//preconditioner cannot easily compute fixed matrix elements of the inverse action
-		return fZero;
-	}
+  protected:
+    ValueType fZero;
 
-protected:
-
-	ValueType fZero;
-
-	KSmartPointer<KIterativeKrylovSolver<ValueType> > fSolver;
-
+    KSmartPointer<KIterativeKrylovSolver<ValueType>> fSolver;
 };
 
 template<typename ValueType>
-KSmartPointer< KPreconditioner<ValueType> >
-KBuildKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType> > solver){
-	return new KImplicitKrylovPreconditioner<ValueType>(solver);
+KSmartPointer<KPreconditioner<ValueType>>
+KBuildKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType>> solver)
+{
+    return new KImplicitKrylovPreconditioner<ValueType>(solver);
 }
 
 template<typename ValueType>
-KSmartPointer< KPreconditioner<ValueType> >
-KBuildKrylovPreconditioner(
-		const KKrylovSolverConfiguration& config,
-		KSmartPointer<const KSquareMatrix<ValueType> > matrix,
-		KSmartPointer<const KSquareMatrix<ValueType> > preconditioner = NULL)
+KSmartPointer<KPreconditioner<ValueType>>
+KBuildKrylovPreconditioner(const KKrylovSolverConfiguration& config,
+                           KSmartPointer<const KSquareMatrix<ValueType>> matrix,
+                           KSmartPointer<const KSquareMatrix<ValueType>> preconditioner = nullptr)
 {
-	KSmartPointer< KIterativeKrylovSolver<ValueType > > solver =
-			KBuildKrylovSolver(config,matrix,preconditioner);
-	return KBuildKrylovPreconditioner<ValueType>(solver);
+    KSmartPointer<KIterativeKrylovSolver<ValueType>> solver = KBuildKrylovSolver(config, matrix, preconditioner);
+    return KBuildKrylovPreconditioner<ValueType>(solver);
 }
 
-}
+}  // namespace KEMField
 
 #endif /* __KImplicitKrylovPreconditioner_H__ */

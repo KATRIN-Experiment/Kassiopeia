@@ -2,7 +2,6 @@
 #define KFMMomentTransformerTypes_HH__
 
 #include "KFMMomentTransformer.hh"
-
 #include "KFMResponseKernel_3DLaplaceL2L.hh"
 #include "KFMResponseKernel_3DLaplaceM2L.hh"
 #include "KFMResponseKernel_3DLaplaceM2M.hh"
@@ -26,6 +25,6 @@ typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2M> KFMMomentTransforme
 typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2L> KFMMomentTransformer_3DLaplaceM2L;
 typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceL2L> KFMMomentTransformer_3DLaplaceL2L;
 
-}
+}  // namespace KEMField
 
 #endif /* KFMMomentTransformerTypes_H__ */

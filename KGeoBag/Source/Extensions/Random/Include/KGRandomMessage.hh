@@ -10,17 +10,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( KGeoBag, randommsg )
+KMESSAGE_DECLARE(KGeoBag, randommsg)
 
 #ifdef KGeoBag_ENABLE_DEBUG
 
-#define randommsg_debug( xCONTENT )\
-    metricsmsg( eDebug ) << xCONTENT;
+#define randommsg_debug(xCONTENT) metricsmsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef randommsg_debug
-#define randommsg_debug( xCONTENT )
+#define randommsg_debug(xCONTENT)
 #endif
 
 #endif /* KGRANDOMMESSAGE_HH_ */

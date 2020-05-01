@@ -10,14 +10,14 @@
 namespace KEMField
 {
 #ifdef KEMFIELD_SILENT
-  extern KDataDisplay<KNullStream> cout;
+extern KDataDisplay<KNullStream> cout;
 #else
 #ifdef KEMFIELD_USE_KMESSAGE
-  extern KDataDisplay<KMessage_KEMField> cout;
+extern KDataDisplay<KMessage_KEMField> cout;
 #else
-  extern KDataDisplay<std::ostream> cout;
+extern KDataDisplay<std::ostream> cout;
 #endif
 #endif
-}
+}  // namespace KEMField
 
 #endif /* KEMCOUT_DEF */

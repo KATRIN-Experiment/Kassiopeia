@@ -5,7 +5,8 @@
 #include "KSACallbackTypes.hh"
 #include "KSAPODOutputNode.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -22,27 +23,28 @@ namespace KEMField{
 */
 
 
-template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType* ) const >
-class KSAAssociatedPassedPointerPODOutputNode: public KSAPODOutputNode< ReturnType >
+template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType*) const>
+class KSAAssociatedPassedPointerPODOutputNode : public KSAPODOutputNode<ReturnType>
 {
-    public:
+  public:
+    KSAAssociatedPassedPointerPODOutputNode(std::string name, const CallType* call_ptr) :
+        KSAPODOutputNode<ReturnType>(name)
+    {
+        KSAConstantReturnByPassedPointerGet<CallType, ReturnType, memberFunction> callback;
+        ReturnType val;
+        callback(call_ptr, &val);
+        KSAPODOutputNode<ReturnType>::SetValue(&val);
+    }
 
-        KSAAssociatedPassedPointerPODOutputNode(std::string name, const CallType* call_ptr):KSAPODOutputNode< ReturnType >( name )
-        {
-            KSAConstantReturnByPassedPointerGet< CallType, ReturnType, memberFunction > callback;
-            ReturnType val;
-            callback(call_ptr, &val);
-            KSAPODOutputNode< ReturnType >::SetValue(&val);
-        }
+    ~KSAAssociatedPassedPointerPODOutputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPassedPointerPODOutputNode(){;};
-
-    protected:
-
+  protected:
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPassedPointerPODOutputNode_H__ */

@@ -4,10 +4,9 @@
 namespace katrin
 {
 
-    class KTypeNull
-    {
-    };
+class KTypeNull
+{};
 
-}
+}  // namespace katrin
 
 #endif

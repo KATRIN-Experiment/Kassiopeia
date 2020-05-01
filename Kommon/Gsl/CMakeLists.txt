@@ -7,12 +7,14 @@ kasper_internal_include_directories(
 set(KOMMON_GSL_HEADER_FILES
     Utility/KMathPolynomialSolver.h
     Utility/KMathBracketingSolver.h
+    Utility/KGslErrorHandler.h
 )
 
 # sources
 set( KOMMON_GSL_SOURCE_FILES
     Utility/KMathPolynomialSolver.cxx
     Utility/KMathBracketingSolver.cxx
+    Utility/KGslErrorHandler.cxx
 )
 
 

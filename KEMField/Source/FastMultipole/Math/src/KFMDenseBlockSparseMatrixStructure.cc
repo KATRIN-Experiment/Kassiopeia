@@ -1,5 +1,6 @@
-#include "KFMMessaging.hh"
 #include "KFMDenseBlockSparseMatrixStructure.hh"
+
+#include "KFMMessaging.hh"
 
 namespace KEMField
 {
@@ -42,11 +43,9 @@ KFMDenseBlockSparseMatrixStructure::KFMDenseBlockSparseMatrixStructure()
 
 KFMDenseBlockSparseMatrixStructure::~KFMDenseBlockSparseMatrixStructure(){};
 
-void
-KFMDenseBlockSparseMatrixStructure::Initialize()
+void KFMDenseBlockSparseMatrixStructure::Initialize()
 {
-    if(!fInitialized)
-    {
+    if (!fInitialized) {
         fNTotalNonZeroElements = 0;
         fLargestBlockSize = 0;
         fBufferMaxBlocks = 0;
@@ -55,10 +54,11 @@ KFMDenseBlockSparseMatrixStructure::Initialize()
         fBufferMaxElements = 0;
 
         fNBlocks = fRowSizes.size();
-        if(fColumnSizes.size() != fNBlocks)
-        {
+        if (fColumnSizes.size() != fNBlocks) {
             //abort error
-            kfmout<<"KFMDenseBlockSparseMatrixStructure::Initialize: Error! Column size and row size list are not the same length."<<kfmendl;
+            kfmout
+                << "KFMDenseBlockSparseMatrixStructure::Initialize: Error! Column size and row size list are not the same length."
+                << kfmendl;
             kfmexit(1);
         }
 
@@ -72,35 +72,47 @@ KFMDenseBlockSparseMatrixStructure::Initialize()
         fLargestColumnSize = 0;
 
         bool abort = false;
-        for(size_t n=0; n<fNBlocks; n++)
-        {
-            fNElements[n] = fRowSizes[n]*fColumnSizes[n];
+        for (size_t n = 0; n < fNBlocks; n++) {
+            fNElements[n] = fRowSizes[n] * fColumnSizes[n];
             fNTotalNonZeroElements += fNElements[n];
             fTotalNColumnIndices += fColumnSizes[n];
             fTotalNRowIndices += fRowSizes[n];
-            if(fNElements[n] > fLargestBlockSize){fLargestBlockSize = fNElements[n];};
-            if(fRowSizes[n] > fLargestRowSize){fLargestRowSize = fRowSizes[n];};
-            if(fColumnSizes[n] > fLargestColumnSize){fLargestColumnSize = fColumnSizes[n];};
-            if(fMaxRowWidth < fColumnSizes[n])
-            {
+            if (fNElements[n] > fLargestBlockSize) {
+                fLargestBlockSize = fNElements[n];
+            };
+            if (fRowSizes[n] > fLargestRowSize) {
+                fLargestRowSize = fRowSizes[n];
+            };
+            if (fColumnSizes[n] > fLargestColumnSize) {
+                fLargestColumnSize = fColumnSizes[n];
+            };
+            if (fMaxRowWidth < fColumnSizes[n]) {
                 fMaxRowWidth = fColumnSizes[n];
-                if(fMaxRowWidth > fMaxAllowableRowWidth)
-                {
+                if (fMaxRowWidth > fMaxAllowableRowWidth) {
                     //abort error
-                    kfmout<<"KFMDenseBlockSparseMatrixStructure::Initialize: Error! Sparse matrix block width of "<<fMaxRowWidth<<" is larger than max allowable width of "<<fMaxAllowableRowWidth<<kfmendl;
+                    kfmout << "KFMDenseBlockSparseMatrixStructure::Initialize: Error! Sparse matrix block width of "
+                           << fMaxRowWidth << " is larger than max allowable width of " << fMaxAllowableRowWidth
+                           << kfmendl;
                     kfmexit(1);
                 }
             };
 
-            if(fMaxMatrixElementBufferSize <= fNElements[n]){abort = true;};
-            if(fMaxIndexBufferSize <= fRowSizes[n]){abort = true;};
-            if(fMaxIndexBufferSize <= fColumnSizes[n]){abort = true;};
+            if (fMaxMatrixElementBufferSize <= fNElements[n]) {
+                abort = true;
+            };
+            if (fMaxIndexBufferSize <= fRowSizes[n]) {
+                abort = true;
+            };
+            if (fMaxIndexBufferSize <= fColumnSizes[n]) {
+                abort = true;
+            };
         }
 
-        if(abort)
-        {
+        if (abort) {
             //abort error
-            kfmout<<"KFMDenseBlockSparseMatrixStructure::Initialize: Error! Sparse matrix block size is larger than available buffer space."<<kfmendl;
+            kfmout
+                << "KFMDenseBlockSparseMatrixStructure::Initialize: Error! Sparse matrix block size is larger than available buffer space."
+                << kfmendl;
             kfmexit(1);
         }
 
@@ -113,15 +125,19 @@ KFMDenseBlockSparseMatrixStructure::Initialize()
         fNBuffers = 0;
         fBufferStartBlocks.push_back(0);
 
-        for(size_t n=0; n<fNBlocks; n++)
-        {
+        for (size_t n = 0; n < fNBlocks; n++) {
             rebuffer = false;
-            if(fMaxMatrixElementBufferSize <= mx_element_offset + fNElements[n]){rebuffer = true;};
-            if(fMaxIndexBufferSize <= row_index_offset + fRowSizes[n]){rebuffer = true;};
-            if(fMaxIndexBufferSize <= col_index_offset + fColumnSizes[n]){rebuffer = true;};
+            if (fMaxMatrixElementBufferSize <= mx_element_offset + fNElements[n]) {
+                rebuffer = true;
+            };
+            if (fMaxIndexBufferSize <= row_index_offset + fRowSizes[n]) {
+                rebuffer = true;
+            };
+            if (fMaxIndexBufferSize <= col_index_offset + fColumnSizes[n]) {
+                rebuffer = true;
+            };
 
-            if(rebuffer)
-            {
+            if (rebuffer) {
                 fBufferStartBlocks.push_back(n);
                 fMatrixElementBufferSize.push_back(mx_element_offset);
                 fRowIndexBufferSize.push_back(row_index_offset);
@@ -152,24 +168,28 @@ KFMDenseBlockSparseMatrixStructure::Initialize()
         fNBlocksInBuffer.push_back(n_blocks_in_buffer);
         fNBuffers++;
 
-        for(size_t i=0; i<fRowIndexBufferSize.size(); i++)
-        {
-            if(fBufferMaxRowIndices < fRowIndexBufferSize[i]){fBufferMaxRowIndices = fRowIndexBufferSize[i]; };
+        for (size_t i = 0; i < fRowIndexBufferSize.size(); i++) {
+            if (fBufferMaxRowIndices < fRowIndexBufferSize[i]) {
+                fBufferMaxRowIndices = fRowIndexBufferSize[i];
+            };
         }
 
-        for(size_t i=0; i<fColumnIndexBufferSize.size(); i++)
-        {
-            if(fBufferMaxColumnIndices < fColumnIndexBufferSize[i]){fBufferMaxColumnIndices = fColumnIndexBufferSize[i]; };
+        for (size_t i = 0; i < fColumnIndexBufferSize.size(); i++) {
+            if (fBufferMaxColumnIndices < fColumnIndexBufferSize[i]) {
+                fBufferMaxColumnIndices = fColumnIndexBufferSize[i];
+            };
         }
 
-        for(size_t i=0; i<fNBlocksInBuffer.size(); i++)
-        {
-            if(fBufferMaxBlocks < fNBlocksInBuffer[i]){fBufferMaxBlocks = fNBlocksInBuffer[i];};
+        for (size_t i = 0; i < fNBlocksInBuffer.size(); i++) {
+            if (fBufferMaxBlocks < fNBlocksInBuffer[i]) {
+                fBufferMaxBlocks = fNBlocksInBuffer[i];
+            };
         }
 
-        for(size_t i=0; i<fMatrixElementBufferSize.size(); i++)
-        {
-            if(fBufferMaxElements < fMatrixElementBufferSize[i]){fBufferMaxElements = fMatrixElementBufferSize[i];};
+        for (size_t i = 0; i < fMatrixElementBufferSize.size(); i++) {
+            if (fBufferMaxElements < fMatrixElementBufferSize[i]) {
+                fBufferMaxElements = fMatrixElementBufferSize[i];
+            };
         }
 
 
@@ -177,48 +197,104 @@ KFMDenseBlockSparseMatrixStructure::Initialize()
     }
 }
 
-void
-KFMDenseBlockSparseMatrixStructure::DefineOutputNode(KSAOutputNode* node) const
+void KFMDenseBlockSparseMatrixStructure::DefineOutputNode(KSAOutputNode* node) const
 {
-    if(node != NULL)
-    {
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMDenseBlockSparseMatrixStructure, std::string, &KFMDenseBlockSparseMatrixStructure::GetUniqueID >( std::string("UniqueID"), this) );
+    if (node != nullptr) {
+        node->AddChild(new KSAAssociatedValuePODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                           std::string,
+                                                           &KFMDenseBlockSparseMatrixStructure::GetUniqueID>(
+            std::string("UniqueID"),
+            this));
 
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::GetDimension >( std::string("Dimension"), this) );
+        node->AddChild(new KSAAssociatedValuePODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                           size_t,
+                                                           &KFMDenseBlockSparseMatrixStructure::GetDimension>(
+            std::string("Dimension"),
+            this));
 
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::GetMaxMatrixElementBufferSize >( std::string("MaxMatrixElementBufferSize"), this) );
+        node->AddChild(
+            new KSAAssociatedValuePODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                size_t,
+                                                &KFMDenseBlockSparseMatrixStructure::GetMaxMatrixElementBufferSize>(
+                std::string("MaxMatrixElementBufferSize"),
+                this));
 
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::GetMaxIndexBufferSize >( std::string("MaxIndexBufferSize"), this) );
+        node->AddChild(new KSAAssociatedValuePODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                           size_t,
+                                                           &KFMDenseBlockSparseMatrixStructure::GetMaxIndexBufferSize>(
+            std::string("MaxIndexBufferSize"),
+            this));
 
-        node->AddChild(new KSAAssociatedValuePODOutputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::GetMaxAllowableRowWidth >( std::string("MaxAllowableRowWidth"), this) );
+        node->AddChild(
+            new KSAAssociatedValuePODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                size_t,
+                                                &KFMDenseBlockSparseMatrixStructure::GetMaxAllowableRowWidth>(
+                std::string("MaxAllowableRowWidth"),
+                this));
 
-        node->AddChild( new KSAAssociatedPointerPODOutputNode< KFMDenseBlockSparseMatrixStructure, std::vector< size_t >, &KFMDenseBlockSparseMatrixStructure::GetRowSizes >(std::string("RowSizes"), this) );
+        node->AddChild(new KSAAssociatedPointerPODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                             std::vector<size_t>,
+                                                             &KFMDenseBlockSparseMatrixStructure::GetRowSizes>(
+            std::string("RowSizes"),
+            this));
 
-        node->AddChild( new KSAAssociatedPointerPODOutputNode< KFMDenseBlockSparseMatrixStructure, std::vector< size_t >, &KFMDenseBlockSparseMatrixStructure::GetColumnSizes >(std::string("ColumnSizes"), this) );
+        node->AddChild(new KSAAssociatedPointerPODOutputNode<KFMDenseBlockSparseMatrixStructure,
+                                                             std::vector<size_t>,
+                                                             &KFMDenseBlockSparseMatrixStructure::GetColumnSizes>(
+            std::string("ColumnSizes"),
+            this));
     }
 }
 
-void
-KFMDenseBlockSparseMatrixStructure::DefineInputNode(KSAInputNode* node)
+void KFMDenseBlockSparseMatrixStructure::DefineInputNode(KSAInputNode* node)
 {
-    if(node != NULL)
-    {
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMDenseBlockSparseMatrixStructure, std::string, &KFMDenseBlockSparseMatrixStructure::SetUniqueID >( std::string("UniqueID"), this) );
+    if (node != nullptr) {
+        node->AddChild(new KSAAssociatedReferencePODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                              std::string,
+                                                              &KFMDenseBlockSparseMatrixStructure::SetUniqueID>(
+            std::string("UniqueID"),
+            this));
 
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::SetDimension >( std::string("Dimension"), this) );
+        node->AddChild(new KSAAssociatedReferencePODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                              size_t,
+                                                              &KFMDenseBlockSparseMatrixStructure::SetDimension>(
+            std::string("Dimension"),
+            this));
 
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::SetMaxMatrixElementBufferSize >( std::string("MaxMatrixElementBufferSize"), this) );
+        node->AddChild(
+            new KSAAssociatedReferencePODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                   size_t,
+                                                   &KFMDenseBlockSparseMatrixStructure::SetMaxMatrixElementBufferSize>(
+                std::string("MaxMatrixElementBufferSize"),
+                this));
 
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::SetMaxIndexBufferSize >( std::string("MaxIndexBufferSize"), this) );
+        node->AddChild(
+            new KSAAssociatedReferencePODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                   size_t,
+                                                   &KFMDenseBlockSparseMatrixStructure::SetMaxIndexBufferSize>(
+                std::string("MaxIndexBufferSize"),
+                this));
 
-        node->AddChild(new KSAAssociatedReferencePODInputNode< KFMDenseBlockSparseMatrixStructure, size_t, &KFMDenseBlockSparseMatrixStructure::SetMaxAllowableRowWidth >( std::string("MaxAllowableRowWidth"), this) );
+        node->AddChild(
+            new KSAAssociatedReferencePODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                   size_t,
+                                                   &KFMDenseBlockSparseMatrixStructure::SetMaxAllowableRowWidth>(
+                std::string("MaxAllowableRowWidth"),
+                this));
 
-        node->AddChild( new KSAAssociatedPointerPODInputNode< KFMDenseBlockSparseMatrixStructure, std::vector< size_t >, &KFMDenseBlockSparseMatrixStructure::SetRowsSizes >(std::string("RowSizes"), this) );
+        node->AddChild(new KSAAssociatedPointerPODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                            std::vector<size_t>,
+                                                            &KFMDenseBlockSparseMatrixStructure::SetRowsSizes>(
+            std::string("RowSizes"),
+            this));
 
-        node->AddChild( new KSAAssociatedPointerPODInputNode< KFMDenseBlockSparseMatrixStructure, std::vector< size_t >, &KFMDenseBlockSparseMatrixStructure::SetColumnSizes >(std::string("ColumnSizes"), this) );
+        node->AddChild(new KSAAssociatedPointerPODInputNode<KFMDenseBlockSparseMatrixStructure,
+                                                            std::vector<size_t>,
+                                                            &KFMDenseBlockSparseMatrixStructure::SetColumnSizes>(
+            std::string("ColumnSizes"),
+            this));
     }
 }
 
 
-
-}//end of namespace
+}  // namespace KEMField

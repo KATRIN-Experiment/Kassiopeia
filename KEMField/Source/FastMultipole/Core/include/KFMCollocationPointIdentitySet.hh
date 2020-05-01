@@ -20,22 +20,24 @@ namespace KEMField
 */
 
 
-
-class KFMCollocationPointIdentitySet: public KFMIdentitySet
+class KFMCollocationPointIdentitySet : public KFMIdentitySet
 {
-    public:
-        KFMCollocationPointIdentitySet():KFMIdentitySet(){};
-        virtual ~KFMCollocationPointIdentitySet(){};
+  public:
+    KFMCollocationPointIdentitySet() : KFMIdentitySet(){};
+    ~KFMCollocationPointIdentitySet() override{};
 
-         //IO
-        virtual std::string ClassName() {return std::string("KFMCollocationPointIdentitySet");};
+    //IO
+    std::string ClassName() override
+    {
+        return std::string("KFMCollocationPointIdentitySet");
+    };
 
-    private:
+  private:
 };
 
 DefineKSAClassName(KFMCollocationPointIdentitySet);
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMCollocationPointIdentitySet_H__ */

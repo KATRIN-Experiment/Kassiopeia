@@ -4,14 +4,14 @@ namespace KEMField
 {
 
 
-KFMLinearSystemSolver::KFMLinearSystemSolver(unsigned int dim):fDim(dim)
+KFMLinearSystemSolver::KFMLinearSystemSolver(unsigned int dim) : fDim(dim)
 {
     fA = kfm_matrix_alloc(fDim, fDim);
     fU = kfm_matrix_alloc(fDim, fDim);
     fX = kfm_vector_alloc(fDim);
     fB = kfm_vector_alloc(fDim);
 
-    fV = kfm_matrix_alloc(fDim,fDim);
+    fV = kfm_matrix_alloc(fDim, fDim);
     fS = kfm_vector_alloc(fDim);
     fWork = kfm_vector_alloc(fDim);
 
@@ -33,16 +33,13 @@ KFMLinearSystemSolver::~KFMLinearSystemSolver()
 }
 
 
-void
-KFMLinearSystemSolver::SetMatrix(const double* mx) //expects row major ordering, and an array of size fDim*fDim
+void KFMLinearSystemSolver::SetMatrix(const double* mx)  //expects row major ordering, and an array of size fDim*fDim
 {
     unsigned int index[2];
     unsigned int offset;
-    for(unsigned int row=0; row<fDim; row++)
-    {
+    for (unsigned int row = 0; row < fDim; row++) {
         index[0] = row;
-        for(unsigned int col=0; col<fDim; col++)
-        {
+        for (unsigned int col = 0; col < fDim; col++) {
             index[1] = col;
             offset = KFMArrayMath::OffsetFromRowMajorIndex<2>(fDimSize, index);
             kfm_matrix_set(fA, row, col, mx[offset]);
@@ -50,44 +47,36 @@ KFMLinearSystemSolver::SetMatrix(const double* mx) //expects row major ordering,
     }
 }
 
-void
-KFMLinearSystemSolver::SetMatrixElement(unsigned int row, unsigned int col, const double& val)
+void KFMLinearSystemSolver::SetMatrixElement(unsigned int row, unsigned int col, const double& val)
 {
     kfm_matrix_set(fA, row, col, val);
 }
 
-void
-KFMLinearSystemSolver::SetBVector(const double* vec)
+void KFMLinearSystemSolver::SetBVector(const double* vec)
 {
-    for(unsigned int i=0; i<fDim; i++)
-    {
+    for (unsigned int i = 0; i < fDim; i++) {
         kfm_vector_set(fB, i, vec[i]);
     }
 }
 
-void
-KFMLinearSystemSolver::SetBVectorElement(unsigned int index, const double& val)
+void KFMLinearSystemSolver::SetBVectorElement(unsigned int index, const double& val)
 {
     kfm_vector_set(fB, index, val);
 }
 
-void
-KFMLinearSystemSolver::Reset()
+void KFMLinearSystemSolver::Reset()
 {
-    for(unsigned int row=0; row<fDim; row++)
-    {
+    for (unsigned int row = 0; row < fDim; row++) {
         kfm_vector_set(fB, row, 0.);
         kfm_vector_set(fX, row, 0.);
-        for(unsigned int col=0; col<fDim; col++)
-        {
+        for (unsigned int col = 0; col < fDim; col++) {
             kfm_matrix_set(fA, row, col, 0.);
         }
     }
 }
 
 
-void
-KFMLinearSystemSolver::Solve()
+void KFMLinearSystemSolver::Solve()
 {
     //SVD decompose and solve...this is much more robust than LU decomp
     kfm_matrix_svd(fA, fU, fS, fV);
@@ -95,21 +84,17 @@ KFMLinearSystemSolver::Solve()
 }
 
 
-void
-KFMLinearSystemSolver::GetXVector(double* vec) const
+void KFMLinearSystemSolver::GetXVector(double* vec) const
 {
-    for(unsigned int i=0; i<fDim; i++)
-    {
-       vec[i] = kfm_vector_get(fX, i);
+    for (unsigned int i = 0; i < fDim; i++) {
+        vec[i] = kfm_vector_get(fX, i);
     }
 }
 
-double
-KFMLinearSystemSolver::GetXVectorElement(unsigned int i) const
+double KFMLinearSystemSolver::GetXVectorElement(unsigned int i) const
 {
     return kfm_vector_get(fX, i);
 }
 
 
-
-}
+}  // namespace KEMField

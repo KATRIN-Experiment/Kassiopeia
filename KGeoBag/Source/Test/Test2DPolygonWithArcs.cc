@@ -1,23 +1,22 @@
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
-
-#include "TRandom3.h"
-#include "TCanvas.h"
-#include "TH2D.h"
-#include "TApplication.h"
-#include "TStyle.h"
-#include "TColor.h"
-#include "TLine.h"
-#include "TMath.h"
-#include "KTwoVector.h"
-#include "KThreeVector.h"
-
 #include "KG2DLineSegment.hh"
 #include "KG2DPolygon.hh"
 #include "KG2DPolygonWithArcs.hh"
+#include "KThreeVector.h"
+#include "KTwoVector.h"
+#include "TApplication.h"
+#include "TCanvas.h"
+#include "TColor.h"
+#include "TH2D.h"
+#include "TLine.h"
+#include "TMath.h"
+#include "TRandom3.h"
+#include "TStyle.h"
+
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace KGeoBag;
 
@@ -93,32 +92,30 @@ int main(Int_t argc, char* argv[])
 
     polygon->SetDescriptors(&vx_desc);
 
-    std::cout<<"Polygon has "<<vertices.size()<<" vertices."<<std::endl;
+    std::cout << "Polygon has " << vertices.size() << " vertices." << std::endl;
 
     Bool_t isSimple = polygon->IsSimple();
 
-    if(isSimple)
-    {
-        std::cout<<"Polygon is simple."<<std::endl;
+    if (isSimple) {
+        std::cout << "Polygon is simple." << std::endl;
     }
-    else
-    {
-        std::cout<<"Polygon is not simple."<<std::endl;
+    else {
+        std::cout << "Polygon is not simple." << std::endl;
     }
 
 
     //ROOT stuff for plots
-    TApplication* App = new TApplication("ERR",&argc,argv);
+    TApplication* App = new TApplication("ERR", &argc, argv);
 
     Double_t limx = 10;
     Double_t limy = 20;
 
 
-    TH2D* back = new TH2D("test","test", 800, -1*limx, limx, 800, -1, limy);
-    TH2D* inside = new TH2D("inside","inside", 800, -1*limx, limx, 800, -1, limy);
-    TH2D* intersect = new TH2D("inter","inter", 800, -1*limx, limx, 800, -1, limy);
+    TH2D* back = new TH2D("test", "test", 800, -1 * limx, limx, 800, -1, limy);
+    TH2D* inside = new TH2D("inside", "inside", 800, -1 * limx, limx, 800, -1, limy);
+    TH2D* intersect = new TH2D("inter", "inter", 800, -1 * limx, limx, 800, -1, limy);
 
-    TCanvas* canvas = new TCanvas("Polygon","Polygon Test", 50, 50, 600, 600);
+    TCanvas* canvas = new TCanvas("Polygon", "Polygon Test", 50, 50, 600, 600);
     canvas->SetFillColor(0);
     canvas->SetBorderSize(0);
     canvas->SetRightMargin(0.2);
@@ -126,20 +123,16 @@ int main(Int_t argc, char* argv[])
     Double_t x;
     Double_t y;
     katrin::KTwoVector temp;
-    for(Int_t xbin = 0; xbin< 800; xbin++)
-    {
-        for(Int_t ybin=0; ybin < 800; ybin++)
-        {
+    for (Int_t xbin = 0; xbin < 800; xbin++) {
+        for (Int_t ybin = 0; ybin < 800; ybin++) {
             x = back->GetXaxis()->GetBinCenter(xbin);
             y = back->GetYaxis()->GetBinCenter(ybin);
-            temp = katrin::KTwoVector(x,y);
-            if(polygon->IsInside(temp))
-            {
-                back->Fill(x,y,0.1);
+            temp = katrin::KTwoVector(x, y);
+            if (polygon->IsInside(temp)) {
+                back->Fill(x, y, 0.1);
             }
-            else
-            {
-                back->Fill(x,y,10);
+            else {
+                back->Fill(x, y, 10);
             }
         }
     }
@@ -149,15 +142,13 @@ int main(Int_t argc, char* argv[])
     //now lets test some points to see if the in/out routine works
     UInt_t NPoints = 100000;
     TRandom3* rand = new TRandom3(0);
-    for(UInt_t i=0; i<NPoints; i++)
-    {
-        x = rand->Uniform(-1.0*limx, limx);
+    for (UInt_t i = 0; i < NPoints; i++) {
+        x = rand->Uniform(-1.0 * limx, limx);
         y = rand->Uniform(-1.0, limy);
-        temp = katrin::KTwoVector(x,y);
+        temp = katrin::KTwoVector(x, y);
 
-        if(polygon->IsInside(temp))
-        {
-            inside->Fill(x,y);
+        if (polygon->IsInside(temp)) {
+            inside->Fill(x, y);
         }
     }
     inside->SetMarkerColor(kBlack);
@@ -168,34 +159,31 @@ int main(Int_t argc, char* argv[])
     katrin::KTwoVector temp1;
     katrin::KTwoVector temp2;
     TLine** l = new TLine*[NNearestPoints];
-    for(UInt_t i=0; i<NNearestPoints; i++)
-    {
-        x = rand->Uniform(-1.0*limx, limx);
+    for (UInt_t i = 0; i < NNearestPoints; i++) {
+        x = rand->Uniform(-1.0 * limx, limx);
         y = rand->Uniform(-1.0, limy);
-        temp1 = katrin::KTwoVector(x,y);
+        temp1 = katrin::KTwoVector(x, y);
         polygon->NearestPoint(temp1, temp2);
-        l[i] = new TLine(x,y, temp2.X(), temp2.Y());
+        l[i] = new TLine(x, y, temp2.X(), temp2.Y());
         l[i]->SetLineColor(kYellow);
         l[i]->Draw("SAME");
     }
 
 
-
     //now lets test some lines to see if the intersection routine works
     Int_t NLines = 100000;
-    Double_t x1,y1,x2,y2;
-//    katrin::KTwoVector temp1;
-//    katrin::KTwoVector temp2;
+    Double_t x1, y1, x2, y2;
+    //    katrin::KTwoVector temp1;
+    //    katrin::KTwoVector temp2;
     TLine** moreLines = new TLine*[NLines];
-    for(UInt_t i=0; i<NLines; i++)
-    {
-        x1 = rand->Uniform(-1.0*limx, limx);
+    for (UInt_t i = 0; i < NLines; i++) {
+        x1 = rand->Uniform(-1.0 * limx, limx);
         y1 = rand->Uniform(-1.0, limy);
-        x2 = rand->Uniform(-1.0*limx, limx);
+        x2 = rand->Uniform(-1.0 * limx, limx);
         y2 = rand->Uniform(-1.0, limy);
 
-        temp1 = katrin::KTwoVector(x1,y1);
-        temp2 = katrin::KTwoVector(x2,y2);
+        temp1 = katrin::KTwoVector(x1, y1);
+        temp2 = katrin::KTwoVector(x2, y2);
         katrin::KTwoVector inter;
         katrin::KTwoVector nearest;
 
@@ -203,27 +191,23 @@ int main(Int_t argc, char* argv[])
         Bool_t result = false;
         polygon->NearestIntersection(temp1, temp2, result, inter);
 
-        if(result == true)
-        {
-            moreLines[i] = new TLine(temp1.X(),temp1.Y(),temp2.X(), temp2.Y());
+        if (result == true) {
+            moreLines[i] = new TLine(temp1.X(), temp1.Y(), temp2.X(), temp2.Y());
             moreLines[i]->SetLineColor(2);
             intersect->Fill(inter.X(), inter.Y());
             polygon->NearestPoint(inter, nearest);
             //moreLines[i]->Draw("SAME");
-
         }
-        else
-        {
-            moreLines[i] = new TLine(temp1.X(),temp1.Y(),temp2.X(), temp2.Y());
+        else {
+            moreLines[i] = new TLine(temp1.X(), temp1.Y(), temp2.X(), temp2.Y());
             moreLines[i]->SetLineColor(4);
             //moreLines[i]->Draw("SAME");
         }
-      }
+    }
 
     intersect->SetMarkerColor(kGreen);
     intersect->SetMarkerStyle(kCircle);
     intersect->Draw("SAME");
 
     App->Run();
-
 }

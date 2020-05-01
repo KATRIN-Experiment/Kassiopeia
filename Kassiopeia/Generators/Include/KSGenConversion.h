@@ -27,44 +27,42 @@
 
 namespace Kassiopeia
 {
-    using std::vector;
+using std::vector;
 
-    class KSGenConversion
+class KSGenConversion
+{
+
+  public:
+    KSGenConversion();
+    ~KSGenConversion();
+
+    bool Initialize(int isotope);
+
+    void CreateCE(std::vector<int>& vacancy, std::vector<double>& energy);
+    void SetForceCreation(bool asetting)
     {
+        fForceCreation = asetting;
+    }
+    void SetIsotope(int isotope)
+    {
+        fIsotope = isotope;
+    }
 
-        public:
-            KSGenConversion();
-            ~KSGenConversion();
+  protected:
+    bool ReadData();
+    katrin::KTextFile* fDataFile;
 
-            bool Initialize( int isotope );
+    bool fForceCreation;
 
-            void CreateCE( std::vector< int >& vacancy, std::vector< double >& energy );
-            void SetForceCreation( bool asetting )
-            {
-                fForceCreation = asetting;
-            }
-            void SetIsotope( int isotope )
-            {
-                fIsotope = isotope;
-            }
+    int fIsotope;
+    int DoDoubleConversion;
 
-        protected:
+    std::vector<std::vector<int>> fShell;
+    std::vector<std::vector<int>> fDoubleConv;
+    std::vector<std::vector<double>> fConvE;
+    std::vector<std::vector<double>> fConvProb;
+    std::vector<std::vector<double>> fConvProbNorm;
+};
 
-            bool ReadData();
-            katrin::KTextFile* fDataFile;
-
-            bool fForceCreation;
-
-            int fIsotope;
-            int DoDoubleConversion;
-
-            std::vector< std::vector< int > > fShell;
-            std::vector< std::vector< int > > fDoubleConv;
-            std::vector< std::vector< double > > fConvE;
-            std::vector< std::vector< double > > fConvProb;
-            std::vector< std::vector< double > > fConvProbNorm;
-
-    };
-
-} //namespace kassiopeia
-#endif // KSGenConversion_H_
+}  // namespace Kassiopeia
+#endif  // KSGenConversion_H_

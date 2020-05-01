@@ -2,14 +2,13 @@
 #define KFMNearbyElementCounter_HH__
 
 
-#include <vector>
-
+#include "KFMCubicSpaceNodeNeighborFinder.hh"
+#include "KFMIdentitySet.hh"
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
-#include "KFMIdentitySet.hh"
 
-#include "KFMCubicSpaceNodeNeighborFinder.hh"
+#include <vector>
 
 namespace KEMField
 {
@@ -28,45 +27,48 @@ namespace KEMField
 */
 
 template<typename ObjectTypeList, unsigned int NDIM>
-class KFMNearbyElementCounter: public KFMNodeActor< KFMNode<ObjectTypeList> >
+class KFMNearbyElementCounter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNearbyElementCounter(){};
-        virtual ~KFMNearbyElementCounter(){};
+  public:
+    KFMNearbyElementCounter(){};
+    virtual ~KFMNearbyElementCounter(){};
 
-        void SetNeighborOrder(int order){fOrder = std::fabs(order);};
+    void SetNeighborOrder(int order)
+    {
+        fOrder = std::fabs(order);
+    };
 
-        virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
-        {
-            fNumberOfNearbyElements = 0;
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        fNumberOfNearbyElements = 0;
 
-            if(node != NULL)
-            {
-                KFMCubicSpaceNodeNeighborFinder<NDIM, ObjectTypeList>::GetAllNeighbors(node, fOrder, &fNeighbors);
+        if (node != NULL) {
+            KFMCubicSpaceNodeNeighborFinder<NDIM, ObjectTypeList>::GetAllNeighbors(node, fOrder, &fNeighbors);
 
-                for(unsigned int i=0; i<fNeighbors.size(); i++)
-                {
-                    KFMIdentitySet* id_set = KFMObjectRetriever<ObjectTypeList , KFMIdentitySet >::GetNodeObject(fNeighbors[i]);
-                    if(id_set != NULL)
-                    {
-                        fNumberOfNearbyElements += id_set->GetSize();
-                    }
+            for (unsigned int i = 0; i < fNeighbors.size(); i++) {
+                KFMIdentitySet* id_set =
+                    KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(fNeighbors[i]);
+                if (id_set != nullptr) {
+                    fNumberOfNearbyElements += id_set->GetSize();
                 }
             }
         }
+    }
 
-        unsigned int GetNumberOfNearbyElements(){return fNumberOfNearbyElements;};
+    unsigned int GetNumberOfNearbyElements()
+    {
+        return fNumberOfNearbyElements;
+    };
 
-    private:
+  private:
+    unsigned int fOrder;
+    std::vector<KFMNode<ObjectTypeList>*> fNeighbors;
 
-        unsigned int fOrder;
-        std::vector< KFMNode<ObjectTypeList>* > fNeighbors;
-
-        unsigned int fNumberOfNearbyElements;
+    unsigned int fNumberOfNearbyElements;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMNearbyElementCounter_H__ */

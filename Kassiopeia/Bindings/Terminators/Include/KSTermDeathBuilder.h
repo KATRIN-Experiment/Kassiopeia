@@ -8,19 +8,17 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTermDeath > KSTermDeathBuilder;
+typedef KComplexElement<KSTermDeath> KSTermDeathBuilder;
 
-    template< >
-    inline bool KSTermDeathBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        return false;
+template<> inline bool KSTermDeathBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

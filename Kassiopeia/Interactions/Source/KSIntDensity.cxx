@@ -3,11 +3,7 @@
 namespace Kassiopeia
 {
 
-	KSIntDensity::KSIntDensity()
-    {
-    }
-	KSIntDensity::~KSIntDensity()
-    {
-    }
+KSIntDensity::KSIntDensity() {}
+KSIntDensity::~KSIntDensity() {}
 
-}
+}  // namespace Kassiopeia

@@ -2,7 +2,6 @@
 #define KFMMatrixVectorOperations_HH__
 
 
-
 /*
 *
 *@file KFMMatrixVectorOperations.hh
@@ -30,7 +29,7 @@ void kfm_vector_outer_product(const kfm_vector* a, const kfm_vector* b, kfm_matr
 
 void kfm_sparse_matrix_vector_product(const kfm_sparse_matrix* m, const kfm_vector* in, kfm_vector* out);
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMMatrixVectorOperations_H__ */

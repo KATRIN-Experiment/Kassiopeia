@@ -6,10 +6,6 @@ namespace KEMField
 {
 
 
-KOrderedSurfaceContainer::KOrderedSurfaceContainer(const KSurfaceContainer& container) :
-fSurfaceContainer(container)
-{
+KOrderedSurfaceContainer::KOrderedSurfaceContainer(const KSurfaceContainer& container) : fSurfaceContainer(container) {}
 
-}
-
-}//end namespace
+}  // namespace KEMField

@@ -19,69 +19,101 @@ namespace KEMField
 *
 */
 
-class KFMWorkLoadBalanceWeights: public KSAInputOutputObject
+class KFMWorkLoadBalanceWeights : public KSAInputOutputObject
 {
-    public:
+  public:
+    KFMWorkLoadBalanceWeights()
+    {
+        fDivisions = 0;
+        fZeroMaskSize = 0;
+        fRamMatrixVectorProductWeight = 0;
+        fDiskMatrixVectorProductWeight = 0;
+        fFFTWeight = 0;
+    }
 
-        KFMWorkLoadBalanceWeights()
-        {
-            fDivisions = 0;
-            fZeroMaskSize = 0;
-            fRamMatrixVectorProductWeight = 0;
-            fDiskMatrixVectorProductWeight = 0;
-            fFFTWeight = 0;
-        }
+    ~KFMWorkLoadBalanceWeights() override
+    {
+        ;
+    };
 
-        virtual ~KFMWorkLoadBalanceWeights(){;};
+    unsigned int GetDivisions() const
+    {
+        return fDivisions;
+    };
+    void SetDivisions(const unsigned int& d)
+    {
+        fDivisions = d;
+    };
 
-        unsigned int GetDivisions() const {return fDivisions;};
-        void SetDivisions(const unsigned int& d){fDivisions = d;};
+    unsigned int GetZeroMaskSize() const
+    {
+        return fZeroMaskSize;
+    };
+    void SetZeroMaskSize(const unsigned int& z)
+    {
+        fZeroMaskSize = z;
+    };
 
-        unsigned int GetZeroMaskSize() const {return fZeroMaskSize;};
-        void SetZeroMaskSize(const unsigned int& z){fZeroMaskSize = z;};
+    double GetDiskMatrixVectorProductWeight() const
+    {
+        return fDiskMatrixVectorProductWeight;
+    };
+    void SetDiskMatrixVectorProductWeight(const double& d)
+    {
+        fDiskMatrixVectorProductWeight = d;
+    };
 
-        double GetDiskMatrixVectorProductWeight() const {return fDiskMatrixVectorProductWeight;};
-        void SetDiskMatrixVectorProductWeight(const double& d){fDiskMatrixVectorProductWeight = d;};
+    double GetRamMatrixVectorProductWeight() const
+    {
+        return fRamMatrixVectorProductWeight;
+    };
+    void SetRamMatrixVectorProductWeight(const double& d)
+    {
+        fRamMatrixVectorProductWeight = d;
+    };
 
-        double GetRamMatrixVectorProductWeight() const {return fRamMatrixVectorProductWeight;};
-        void SetRamMatrixVectorProductWeight(const double& d){fRamMatrixVectorProductWeight = d;};
+    double GetFFTWeight() const
+    {
+        return fFFTWeight;
+    };
+    void SetFFTWeight(const double& d)
+    {
+        fFFTWeight = d;
+    };
 
-        double GetFFTWeight() const {return fFFTWeight;};
-        void SetFFTWeight(const double& d){fFFTWeight = d;};
+    void DefineOutputNode(KSAOutputNode* node) const override
+    {
+        AddKSAOutputFor(KFMWorkLoadBalanceWeights, Divisions, unsigned int);
+        AddKSAOutputFor(KFMWorkLoadBalanceWeights, ZeroMaskSize, unsigned int);
+        AddKSAOutputFor(KFMWorkLoadBalanceWeights, DiskMatrixVectorProductWeight, double);
+        AddKSAOutputFor(KFMWorkLoadBalanceWeights, RamMatrixVectorProductWeight, double);
+        AddKSAOutputFor(KFMWorkLoadBalanceWeights, FFTWeight, double);
+    }
 
-        void DefineOutputNode(KSAOutputNode* node) const
-        {
-            AddKSAOutputFor(KFMWorkLoadBalanceWeights,Divisions,unsigned int);
-            AddKSAOutputFor(KFMWorkLoadBalanceWeights,ZeroMaskSize,unsigned int);
-            AddKSAOutputFor(KFMWorkLoadBalanceWeights,DiskMatrixVectorProductWeight,double);
-            AddKSAOutputFor(KFMWorkLoadBalanceWeights,RamMatrixVectorProductWeight,double);
-            AddKSAOutputFor(KFMWorkLoadBalanceWeights,FFTWeight,double);
-        }
+    void DefineInputNode(KSAInputNode* node) override
+    {
+        AddKSAInputFor(KFMWorkLoadBalanceWeights, Divisions, unsigned int);
+        AddKSAInputFor(KFMWorkLoadBalanceWeights, ZeroMaskSize, unsigned int);
+        AddKSAInputFor(KFMWorkLoadBalanceWeights, DiskMatrixVectorProductWeight, double);
+        AddKSAInputFor(KFMWorkLoadBalanceWeights, RamMatrixVectorProductWeight, double);
+        AddKSAInputFor(KFMWorkLoadBalanceWeights, FFTWeight, double);
+    }
 
-        void DefineInputNode(KSAInputNode* node)
-        {
-            AddKSAInputFor(KFMWorkLoadBalanceWeights,Divisions,unsigned int);
-            AddKSAInputFor(KFMWorkLoadBalanceWeights,ZeroMaskSize,unsigned int);
-            AddKSAInputFor(KFMWorkLoadBalanceWeights,DiskMatrixVectorProductWeight,double);
-            AddKSAInputFor(KFMWorkLoadBalanceWeights,RamMatrixVectorProductWeight,double);
-            AddKSAInputFor(KFMWorkLoadBalanceWeights,FFTWeight,double);
-        }
+    virtual std::string ClassName() const
+    {
+        return std::string("KFMWorkLoadBalanceWeights");
+    };
 
-        virtual std::string ClassName() const {return std::string("KFMWorkLoadBalanceWeights");};
-
-    protected:
-
-        unsigned int fDivisions;
-        unsigned int fZeroMaskSize;
-        double fRamMatrixVectorProductWeight;
-        double fDiskMatrixVectorProductWeight;
-        double fFFTWeight;
-
-
+  protected:
+    unsigned int fDivisions;
+    unsigned int fZeroMaskSize;
+    double fRamMatrixVectorProductWeight;
+    double fDiskMatrixVectorProductWeight;
+    double fFFTWeight;
 };
 
-DefineKSAClassName( KFMWorkLoadBalanceWeights );
+DefineKSAClassName(KFMWorkLoadBalanceWeights);
 
-}
+}  // namespace KEMField
 
 #endif /* KFMWorkLoadBalanceWeights_HH__ */

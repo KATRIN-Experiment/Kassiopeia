@@ -8,36 +8,36 @@
 #ifndef KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
 #define KZONALHARMONICMAGNETOSTATICFIELDSOLVER_HH_
 
-#include "KMagneticFieldSolver.hh"
-
 #include "KElectromagnetZonalHarmonicFieldSolver.hh"
+#include "KMagneticFieldSolver.hh"
 #include "KZonalHarmonicContainer.hh"
 #include "KZonalHarmonicParameters.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
 {
-public:
+  public:
     KZonalHarmonicMagnetostaticFieldSolver();
-    virtual ~KZonalHarmonicMagnetostaticFieldSolver();
+    ~KZonalHarmonicMagnetostaticFieldSolver() override;
 
-    void InitializeCore( KElectromagnetContainer& container );
+    void InitializeCore(KElectromagnetContainer& container) override;
 
-    KThreeVector MagneticPotentialCore( const KPosition& P ) const;
-    KThreeVector MagneticFieldCore( const KPosition& P ) const;
-    KGradient MagneticGradientCore( const KPosition& P ) const;
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore( const KPosition& P ) const;
+    KThreeVector MagneticPotentialCore(const KPosition& P) const override;
+    KThreeVector MagneticFieldCore(const KPosition& P) const override;
+    KGradient MagneticGradientCore(const KPosition& P) const override;
+    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
 
     KZonalHarmonicParameters* GetParameters()
     {
         return fParameters;
     }
 
-private:
+  private:
     KElectromagnetIntegrator fIntegrator;
-    KZonalHarmonicContainer< KMagnetostaticBasis >* fZHContainer;
-    KZonalHarmonicFieldSolver< KMagnetostaticBasis >* fZonalHarmonicFieldSolver;
+    KZonalHarmonicContainer<KMagnetostaticBasis>* fZHContainer;
+    KZonalHarmonicFieldSolver<KMagnetostaticBasis>* fZonalHarmonicFieldSolver;
     KZonalHarmonicParameters* fParameters;
 };
 

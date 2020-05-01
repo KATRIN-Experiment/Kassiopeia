@@ -1,32 +1,25 @@
 #ifndef KGeoBag_KGQuadraticWireGridMesher_hh_
 #define KGeoBag_KGQuadraticWireGridMesher_hh_
 
-#include "KGQuadraticWireGridSurface.hh"
-
 #include "KGComplexMesher.hh"
+#include "KGQuadraticWireGridSurface.hh"
 
 namespace KGeoBag
 {
-  class KGQuadraticWireGridMesher :
-    virtual public KGComplexMesher,
-    public KGWrappedSurface<KGQuadraticWireGrid>::Visitor
-  {
+class KGQuadraticWireGridMesher : virtual public KGComplexMesher, public KGWrappedSurface<KGQuadraticWireGrid>::Visitor
+{
   public:
-    using KGMesherBase::VisitExtendedSurface;
     using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGQuadraticWireGridMesher()
-    {
-    }
-    virtual ~KGQuadraticWireGridMesher()
-    {
-    }
+    KGQuadraticWireGridMesher() {}
+    ~KGQuadraticWireGridMesher() override {}
 
   protected:
-    void VisitWrappedSurface(KGWrappedSurface< KGQuadraticWireGrid >* quadraticWireGridSurface);
-  };
+    void VisitWrappedSurface(KGWrappedSurface<KGQuadraticWireGrid>* quadraticWireGridSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

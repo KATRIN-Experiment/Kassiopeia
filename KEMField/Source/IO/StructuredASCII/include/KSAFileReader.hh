@@ -2,21 +2,22 @@
 #define KSAFileReader_HH__
 
 
-#include <string>
-#include <fstream>
-#include <queue>
-
 #include "KSADefinitions.hh"
 
+#include <fstream>
+#include <queue>
+#include <string>
+
 #ifndef KEMFIELD_USE_ZLIB
-    #include "miniz.hh"
+#include "miniz.hh"
 #else
-    #include "zlib.h"
+#include "zlib.h"
 #endif
 
 #define EXPAN 64
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -33,50 +34,48 @@ namespace KEMField{
 
 class KSAFileReader
 {
-    public:
-        KSAFileReader();
-        virtual ~KSAFileReader();
+  public:
+    KSAFileReader();
+    virtual ~KSAFileReader();
 
-        void SetFileName(std::string filename);
-        bool Open();
-        void Close();
+    void SetFileName(std::string filename);
+    bool Open();
+    void Close();
 
-        bool GetLine(std::string& line);
+    bool GetLine(std::string& line);
 
-    protected:
+  protected:
+    void ExtractData();
+    void ExtractLines();
+    std::string StripWhiteSpace();
 
-        void ExtractData();
-        void ExtractLines();
-        std::string StripWhiteSpace();
+    bool fIsOpen;
+    bool fIsFinished;
+    std::string fFileName;
+    std::string fLine;
+    std::string fLineBuffer;
+    std::ifstream fFileStream;
 
-        bool fIsOpen;
-        bool fIsFinished;
-        std::string fFileName;
-        std::string fLine;
-        std::string fLineBuffer;
-        std::ifstream fFileStream;
-
-        bool fUseDecompression;
-        z_stream fZStream;
+    bool fUseDecompression;
+    z_stream fZStream;
 
 
-        unsigned char* in_buffer; //[READ_CHUNK];
-        unsigned char* out_buffer; //[EXPAN*READ_CHUNK];
+    unsigned char* in_buffer;   //[READ_CHUNK];
+    unsigned char* out_buffer;  //[EXPAN*READ_CHUNK];
 
-        int fUsedSpace;
+    int fUsedSpace;
 
-        //temporary storage buffers
-        std::vector< unsigned char > fInputBuffer;
-        std::vector< unsigned char > fOutputBuffer;
-        std::vector< unsigned char > fLineStagingBuffer;
+    //temporary storage buffers
+    std::vector<unsigned char> fInputBuffer;
+    std::vector<unsigned char> fOutputBuffer;
+    std::vector<unsigned char> fLineStagingBuffer;
 
-        std::queue< std::string > fLineQueue;
+    std::queue<std::string> fLineQueue;
 
-        int e_count;
-
+    int e_count;
 };
 
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAFileReader_H__ */

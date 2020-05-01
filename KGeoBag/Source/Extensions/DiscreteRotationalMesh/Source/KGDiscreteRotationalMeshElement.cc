@@ -3,11 +3,7 @@
 namespace KGeoBag
 {
 
-    KGDiscreteRotationalMeshElement::KGDiscreteRotationalMeshElement()
-    {
-    }
-    KGDiscreteRotationalMeshElement::~KGDiscreteRotationalMeshElement()
-    {
-    }
+KGDiscreteRotationalMeshElement::KGDiscreteRotationalMeshElement() {}
+KGDiscreteRotationalMeshElement::~KGDiscreteRotationalMeshElement() {}
 
-}
+}  // namespace KGeoBag

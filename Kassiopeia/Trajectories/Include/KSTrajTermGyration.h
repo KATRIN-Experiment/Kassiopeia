@@ -7,20 +7,27 @@
 namespace Kassiopeia
 {
 
-    class KSTrajTermGyration :
-        public KSComponentTemplate< KSTrajTermGyration >,
-        public KSTrajAdiabaticDifferentiator
+class KSTrajTermGyration : public KSComponentTemplate<KSTrajTermGyration>, public KSTrajAdiabaticDifferentiator
+{
+  public:
+    KSTrajTermGyration();
+    KSTrajTermGyration(const KSTrajTermGyration& aCopy);
+    KSTrajTermGyration* Clone() const override;
+    ~KSTrajTermGyration() override;
+
+  public:
+    void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
+                       KSTrajAdiabaticDerivative& aDerivative) const override;
+
+    const double& GetPhaseVelocity() const
     {
-        public:
-            KSTrajTermGyration();
-            KSTrajTermGyration( const KSTrajTermGyration& aCopy );
-            KSTrajTermGyration* Clone() const;
-            virtual ~KSTrajTermGyration();
+        return fPhaseVelocity;
+    }
 
-        public:
-            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
-    };
+  private:
+    mutable double fPhaseVelocity;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

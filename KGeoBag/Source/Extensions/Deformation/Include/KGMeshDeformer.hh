@@ -2,31 +2,29 @@
 #define KGMESHDEFORMER_DEF
 
 #include "KGCore.hh"
-
 #include "KGDeformation.hh"
-
 #include "KGDeformed.hh"
 #include "KGMesh.hh"
 
 namespace KGeoBag
 {
-  class KGMeshElement;
-  class KGMeshRectangle;
-  class KGMeshTriangle;
-  class KGMeshWire;
+class KGMeshElement;
+class KGMeshRectangle;
+class KGMeshTriangle;
+class KGMeshWire;
 
-  class KGMeshDeformer :
+class KGMeshDeformer :
     public KGVisitor,
-    public KGExtendedSpace< KGDeformed >::Visitor,
-    public KGExtendedSurface< KGMesh >::Visitor
-  {
+    public KGExtendedSpace<KGDeformed>::Visitor,
+    public KGExtendedSurface<KGMesh>::Visitor
+{
   public:
     KGMeshDeformer() {}
-    virtual ~KGMeshDeformer() {}
+    ~KGMeshDeformer() override {}
 
     void VisitSurface(KGSurface*) {}
-    void VisitExtendedSpace( KGExtendedSpace< KGDeformed >* deformedSpace );
-    void VisitExtendedSurface( KGExtendedSurface< KGMesh >* meshSurface );
+    void VisitExtendedSpace(KGExtendedSpace<KGDeformed>* deformedSpace) override;
+    void VisitExtendedSurface(KGExtendedSurface<KGMesh>* meshSurface) override;
 
   private:
     void AddDeformed(KGMeshElement* e);
@@ -36,7 +34,7 @@ namespace KGeoBag
 
     std::shared_ptr<KGDeformation> fDeformation;
     KGMeshElementVector fDeformedVector;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif /* KGMESHDEFORMER_DEF */

@@ -1,13 +1,19 @@
 #include "KFMResponseKernel.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
-KFMResponseKernel::KFMResponseKernel(){;};
+KFMResponseKernel::KFMResponseKernel()
+{
+    ;
+};
 
-KFMResponseKernel::~KFMResponseKernel(){;};
+KFMResponseKernel::~KFMResponseKernel()
+{
+    ;
+};
 
-void
-KFMResponseKernel::SetSourceOrigin(double* origin)
+void KFMResponseKernel::SetSourceOrigin(double* origin)
 {
     fSourceOrigin[0] = origin[0];
     fSourceOrigin[1] = origin[1];
@@ -18,8 +24,7 @@ KFMResponseKernel::SetSourceOrigin(double* origin)
     fDel[2] = fSourceOrigin[2] - fTargetOrigin[2];
 }
 
-void
-KFMResponseKernel::SetTargetOrigin(double* origin)
+void KFMResponseKernel::SetTargetOrigin(double* origin)
 {
     fTargetOrigin[0] = origin[0];
     fTargetOrigin[1] = origin[1];
@@ -31,10 +36,9 @@ KFMResponseKernel::SetTargetOrigin(double* origin)
 }
 
 
-void
-KFMResponseKernel::SetDegree(int l_max)
+void KFMResponseKernel::SetDegree(int l_max)
 {
     fDegree = std::fabs(l_max);
 }
 
-}
+}  // namespace KEMField

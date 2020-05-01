@@ -1,8 +1,8 @@
 #ifndef KFMDenseBoundaryIntegralMatrix_HH__
 #define KFMDenseBoundaryIntegralMatrix_HH__
 
-#include "KSortedSurfaceContainer.hh"
 #include "KBoundaryIntegralMatrix.hh"
+#include "KSortedSurfaceContainer.hh"
 
 namespace KEMField
 {
@@ -22,98 +22,88 @@ namespace KEMField
 
 
 template<typename FastMultipoleIntegrator>
-class KFMDenseBoundaryIntegralMatrix: public KSquareMatrix< typename FastMultipoleIntegrator::Basis::ValueType >
+class KFMDenseBoundaryIntegralMatrix : public KSquareMatrix<typename FastMultipoleIntegrator::Basis::ValueType>
 {
-    public:
+  public:
+    typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
 
-        typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
-
-        /**
+    /**
          * leave memory management of the FastMultipoleIntegrator to caller
          */
-        KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator):
-            fIntegrator(&integrator,true)
-        {
-            fDimension = fIntegrator->Dimension();
-            fZero = 0.0;
-        };
+    KFMDenseBoundaryIntegralMatrix(FastMultipoleIntegrator& integrator) : fIntegrator(&integrator, true)
+    {
+        fDimension = fIntegrator->Dimension();
+        fZero = 0.0;
+    };
 
-        /**
+    /**
          * let smart pointer solve the memory management of FastMultipoleIntegrator
          */
-        KFMDenseBoundaryIntegralMatrix(KSmartPointer<FastMultipoleIntegrator> integrator) :
-        	fIntegrator(integrator)
-        {
-        	fDimension = fIntegrator->Dimension();
-        	fZero = 0.0;
-        }
+    KFMDenseBoundaryIntegralMatrix(KSmartPointer<FastMultipoleIntegrator> integrator) : fIntegrator(integrator)
+    {
+        fDimension = fIntegrator->Dimension();
+        fZero = 0.0;
+    }
 
-        virtual ~KFMDenseBoundaryIntegralMatrix(){}
+    ~KFMDenseBoundaryIntegralMatrix() override {}
 
-        virtual unsigned int Dimension() const {return fDimension;};
+    unsigned int Dimension() const override
+    {
+        return fDimension;
+    };
 
-        virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
-        {
-            #ifdef KEMFIELD_USE_MPI
-            if(KMPIInterface::GetInstance()->SplitMode())
-            {
-                if( KMPIInterface::GetInstance()->IsEvenGroupMember() )
-                {
-                    //uses the fast multipole integrator to compute the
-                    //action of the system matrix on the vector x
-                    this->fIntegrator->Update(x);
-                    for(unsigned int i=0; i<fDimension; i++)
-                    {
-                        //note we do not use the source index here, only the target index
-                        y[i] = this->fIntegrator->BoundaryIntegral(i);
-                    }
-                }
-            }
-            else
-            {
+    void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+#ifdef KEMFIELD_USE_MPI
+        if (KMPIInterface::GetInstance()->SplitMode()) {
+            if (KMPIInterface::GetInstance()->IsEvenGroupMember()) {
                 //uses the fast multipole integrator to compute the
                 //action of the system matrix on the vector x
                 this->fIntegrator->Update(x);
-                for(unsigned int i=0; i<fDimension; i++)
-                {
+                for (unsigned int i = 0; i < fDimension; i++) {
                     //note we do not use the source index here, only the target index
                     y[i] = this->fIntegrator->BoundaryIntegral(i);
                 }
             }
-            #else
+        }
+        else {
             //uses the fast multipole integrator to compute the
             //action of the system matrix on the vector x
             this->fIntegrator->Update(x);
-
-            for(unsigned int i=0; i<fDimension; i++)
-            {
+            for (unsigned int i = 0; i < fDimension; i++) {
                 //note we do not use the source index here, only the target index
                 y[i] = this->fIntegrator->BoundaryIntegral(i);
             }
-            #endif
         }
+#else
+        //uses the fast multipole integrator to compute the
+        //action of the system matrix on the vector x
+        this->fIntegrator->Update(x);
 
-        //following function must be defined but it is not implemented
-        virtual const ValueType& operator()(unsigned int sourceIndex, unsigned int targetIndex) const
-        {
-            fTemp = fIntegrator->BoundaryIntegral(sourceIndex, targetIndex);
-            return fTemp;
+        for (unsigned int i = 0; i < fDimension; i++) {
+            //note we do not use the source index here, only the target index
+            y[i] = this->fIntegrator->BoundaryIntegral(i);
         }
+#endif
+    }
+
+    //following function must be defined but it is not implemented
+    const ValueType& operator()(unsigned int sourceIndex, unsigned int targetIndex) const override
+    {
+        fTemp = fIntegrator->BoundaryIntegral(sourceIndex, targetIndex);
+        return fTemp;
+    }
 
 
-    protected:
-
-        //data
-        const KSmartPointer<FastMultipoleIntegrator> fIntegrator;
-        unsigned int fDimension;
-        ValueType fZero;
-        mutable ValueType fTemp;
-
+  protected:
+    //data
+    const KSmartPointer<FastMultipoleIntegrator> fIntegrator;
+    unsigned int fDimension;
+    ValueType fZero;
+    mutable ValueType fTemp;
 };
 
 
-
-
-}
+}  // namespace KEMField
 
 #endif /* KFMDenseBoundaryIntegralMatrix_H__ */

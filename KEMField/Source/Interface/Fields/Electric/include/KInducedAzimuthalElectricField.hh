@@ -10,22 +10,24 @@
 
 #include "KElectricField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KRampedMagneticField;
 
-class KInducedAzimuthalElectricField : public KElectricField {
-public:
+class KInducedAzimuthalElectricField : public KElectricField
+{
+  public:
     KInducedAzimuthalElectricField();
 
     void SetMagneticField(KRampedMagneticField* field);
     KRampedMagneticField* GetRampedMagneticField() const;
 
 
-private:
-    double PotentialCore( const KPosition& P,const double& time) const;
-    KThreeVector ElectricFieldCore( const KPosition& P, const double& time) const;
-    virtual void InitializeCore();
+  private:
+    double PotentialCore(const KPosition& P, const double& time) const override;
+    KThreeVector ElectricFieldCore(const KPosition& P, const double& time) const override;
+    void InitializeCore() override;
 
     void CheckMagneticField() const;
 

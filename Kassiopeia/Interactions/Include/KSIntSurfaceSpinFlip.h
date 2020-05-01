@@ -1,33 +1,30 @@
 #ifndef Kassiopeia_KSIntSurfaceSpinFlip_h_
 #define Kassiopeia_KSIntSurfaceSpinFlip_h_
 
-#include "KSSurfaceInteraction.h"
-
 #include "KField.h"
+#include "KSSurfaceInteraction.h"
 
 namespace Kassiopeia
 {
 
-    class KSStep;
+class KSStep;
 
-    class KSIntSurfaceSpinFlip :
-        public KSComponentTemplate< KSIntSurfaceSpinFlip, KSSurfaceInteraction >
-    {
-        public:
-            KSIntSurfaceSpinFlip();
-            KSIntSurfaceSpinFlip( const KSIntSurfaceSpinFlip& aCopy );
-            KSIntSurfaceSpinFlip* Clone() const;
-            virtual ~KSIntSurfaceSpinFlip();
+class KSIntSurfaceSpinFlip : public KSComponentTemplate<KSIntSurfaceSpinFlip, KSSurfaceInteraction>
+{
+  public:
+    KSIntSurfaceSpinFlip();
+    KSIntSurfaceSpinFlip(const KSIntSurfaceSpinFlip& aCopy);
+    KSIntSurfaceSpinFlip* Clone() const override;
+    ~KSIntSurfaceSpinFlip() override;
 
-        public:
-            void ExecuteInteraction( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries );
+  public:
+    void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aSecondaries) override;
 
-        public:
+  public:
+    K_SET_GET(double, Probability)
+};
 
-            K_SET_GET( double, Probability )
-
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

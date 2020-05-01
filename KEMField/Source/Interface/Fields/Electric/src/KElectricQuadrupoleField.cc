@@ -7,57 +7,58 @@
 
 #include "KElectricQuadrupoleField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 KElectricQuadrupoleField::KElectricQuadrupoleField() :
-        		fLocation( 0., 0., 0. ),
-				fStrength( 0. ),
-				fLength( 0. ),
-				fRadius( 0. ),
-				fCharacteristic( 0. )
+    fLocation(0., 0., 0.),
+    fStrength(0.),
+    fLength(0.),
+    fRadius(0.),
+    fCharacteristic(0.)
+{}
+
+KElectricQuadrupoleField::~KElectricQuadrupoleField() {}
+
+double KElectricQuadrupoleField::PotentialCore(const KPosition& aSamplePoint) const
 {
+    // thread-safe
+    KPosition FieldPoint = aSamplePoint - fLocation;
+    return (fStrength / (2. * fCharacteristic * fCharacteristic)) *
+           (FieldPoint[2] * FieldPoint[2] - (1. / 2.) * FieldPoint[0] * FieldPoint[0] -
+            (1. / 2.) * FieldPoint[1] * FieldPoint[1]);
+}
+KThreeVector KElectricQuadrupoleField::ElectricFieldCore(const KPosition& aSamplePoint) const
+{
+    // thread-safe
+    KPosition FieldPoint = aSamplePoint - fLocation;
+    KPosition AxialPart = FieldPoint[2] * KPosition(0., 0., 1.);
+    KPosition RadialPart = FieldPoint - AxialPart;
+    return (fStrength / (2. * fCharacteristic * fCharacteristic)) * RadialPart -
+           (fStrength / (fCharacteristic * fCharacteristic)) * AxialPart;
 }
 
-KElectricQuadrupoleField::~KElectricQuadrupoleField()
+void KElectricQuadrupoleField::SetLocation(const KPosition& aLocation)
 {
+    fLocation = aLocation;
+    return;
 }
-
-double KElectricQuadrupoleField::PotentialCore( const KPosition& aSamplePoint) const
+void KElectricQuadrupoleField::SetStrength(const double& aStrength)
 {
-	// thread-safe
-	KPosition FieldPoint = aSamplePoint - fLocation;
-	return (fStrength / (2. * fCharacteristic * fCharacteristic)) * (FieldPoint[2] * FieldPoint[2] - (1. / 2.) * FieldPoint[0] * FieldPoint[0] - (1. / 2.) * FieldPoint[1] * FieldPoint[1]);
+    fStrength = aStrength;
+    return;
 }
-KThreeVector KElectricQuadrupoleField::ElectricFieldCore( const KPosition& aSamplePoint) const
+void KElectricQuadrupoleField::SetLength(const double& aLength)
 {
-	// thread-safe
-	KPosition FieldPoint = aSamplePoint - fLocation;
-	KPosition AxialPart = FieldPoint[2] * KPosition( 0., 0., 1. );
-	KPosition RadialPart = FieldPoint - AxialPart;
-	return (fStrength / (2. * fCharacteristic * fCharacteristic)) * RadialPart - (fStrength / (fCharacteristic * fCharacteristic)) * AxialPart;
+    fLength = aLength;
+    fCharacteristic = sqrt((1. / 2.) * (fLength * fLength + (1. / 2.) * fRadius * fRadius));
+    return;
 }
-
-void KElectricQuadrupoleField::SetLocation( const KPosition& aLocation )
+void KElectricQuadrupoleField::SetRadius(const double& aRadius)
 {
-	fLocation = aLocation;
-	return;
-}
-void KElectricQuadrupoleField::SetStrength( const double& aStrength )
-{
-	fStrength = aStrength;
-	return;
-}
-void KElectricQuadrupoleField::SetLength( const double& aLength )
-{
-	fLength = aLength;
-	fCharacteristic = sqrt( (1. / 2.) * (fLength * fLength + (1. / 2.) * fRadius * fRadius) );
-	return;
-}
-void KElectricQuadrupoleField::SetRadius( const double& aRadius )
-{
-	fRadius = aRadius;
-	fCharacteristic = sqrt( (1. / 2.) * (fLength * fLength + (1. / 2.) * fRadius * fRadius) );
-	return;
+    fRadius = aRadius;
+    fCharacteristic = sqrt((1. / 2.) * (fLength * fLength + (1. / 2.) * fRadius * fRadius));
+    return;
 }
 
 

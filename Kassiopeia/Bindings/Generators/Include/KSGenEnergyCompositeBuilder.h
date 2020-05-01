@@ -9,35 +9,30 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSGenEnergyComposite > KSGenEnergyCompositeBuilder;
+typedef KComplexElement<KSGenEnergyComposite> KSGenEnergyCompositeBuilder;
 
-    template< >
-    inline bool KSGenEnergyCompositeBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "energy" )
-        {
-            fObject->SetEnergyValue( KToolbox::GetInstance().Get< KSGenValue >( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSGenEnergyCompositeBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
-    template< >
-    inline bool KSGenEnergyCompositeBuilder::AddElement( KContainer* aContainer )
-    {
-        if( aContainer->GetName().substr( 0, 6 ) == "energy" )
-        {
-            aContainer->ReleaseTo( fObject, &KSGenEnergyComposite::SetEnergyValue );
-            return true;
-        }
-        return false;
+    if (aContainer->GetName() == "energy") {
+        fObject->SetEnergyValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        return true;
     }
-
+    return false;
 }
+
+template<> inline bool KSGenEnergyCompositeBuilder::AddElement(KContainer* aContainer)
+{
+    if (aContainer->GetName().substr(0, 6) == "energy") {
+        aContainer->ReleaseTo(fObject, &KSGenEnergyComposite::SetEnergyValue);
+        return true;
+    }
+    return false;
+}
+
+}  // namespace katrin
 
 #endif

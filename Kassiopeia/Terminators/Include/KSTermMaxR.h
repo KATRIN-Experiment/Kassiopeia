@@ -6,34 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMaxR :
-        public KSComponentTemplate< KSTermMaxR, KSTerminator >
-    {
-        public:
-            KSTermMaxR();
-            KSTermMaxR( const KSTermMaxR& aCopy );
-            KSTermMaxR* Clone() const;
-            virtual ~KSTermMaxR();
+class KSTermMaxR : public KSComponentTemplate<KSTermMaxR, KSTerminator>
+{
+  public:
+    KSTermMaxR();
+    KSTermMaxR(const KSTermMaxR& aCopy);
+    KSTermMaxR* Clone() const override;
+    ~KSTermMaxR() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMaxR( const double& aValue );
+  public:
+    void SetMaxR(const double& aValue);
 
-        private:
-            double fMaxR;
+  private:
+    double fMaxR;
+};
 
-    };
-
-    inline void KSTermMaxR::SetMaxR( const double& aValue )
-    {
-        fMaxR = aValue;
-    }
-
+inline void KSTermMaxR::SetMaxR(const double& aValue)
+{
+    fMaxR = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

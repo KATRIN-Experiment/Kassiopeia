@@ -25,201 +25,195 @@ namespace KEMField
  * k(Z) &=& \frac{2\sqrt{R \cdot r}}{S}.
  * \f}
  */
-double KElectrostaticAnalyticConicSectionIntegrator::Potential(const KConicSection* source,const KPosition& P) const
+double KElectrostaticAnalyticConicSectionIntegrator::Potential(const KConicSection* source, const KPosition& P) const
 {
-	static const double ln4=1.386294361119890;
+    static const double ln4 = 1.386294361119890;
 
-	static double (*f[1])(const double*,double*)
-    		  = {&KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing};
+    static double (*f[1])(const double*, double*) = {&KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing};
 
-	// integration parameters
-	double par[7]; // par[0]: z  par[4]: zB
-	// par[1]: r  par[5]: rB
-	// par[2]: zA par[6]: L
-	// par[3]: rA
+    // integration parameters
+    double par[7];  // par[0]: z  par[4]: zB
+    // par[1]: r  par[5]: rB
+    // par[2]: zA par[6]: L
+    // par[3]: rA
 
-	double za,ra,zb,rb,L,Da,Db,u[2],z,r,D;
-	double q,pp,a,b,pmin,pmax,h;
-	int n;
+    double za, ra, zb, rb, L, Da, Db, u[2], z, r, D;
+    double q, pp, a, b, pmin, pmax, h;
+    int n;
 
-	z  = par[0]=P[2];
-	r  = par[1]=sqrt(P[0]*P[0]+P[1]*P[1]);
-	za = par[2]=source->GetZ0();
-	ra = par[3]=source->GetR0();
-	zb = par[4]=source->GetZ1();
-	rb = par[5]=source->GetR1();
-	L  = par[6]=(source->GetP0() - source->GetP1()).Magnitude();
+    z = par[0] = P[2];
+    r = par[1] = sqrt(P[0] * P[0] + P[1] * P[1]);
+    za = par[2] = source->GetZ0();
+    ra = par[3] = source->GetR0();
+    zb = par[4] = source->GetZ1();
+    rb = par[5] = source->GetR1();
+    L = par[6] = (source->GetP0() - source->GetP1()).Magnitude();
 
-	Da = sqrt((za-z)*(za-z)+(ra-r)*(ra-r));
-	Db = sqrt((zb-z)*(zb-z)+(rb-r)*(rb-r));
-	D  = fabs(Da+Db-L)/L;
+    Da = sqrt((za - z) * (za - z) + (ra - r) * (ra - r));
+    Db = sqrt((zb - z) * (zb - z) + (rb - r) * (rb - r));
+    D = fabs(Da + Db - L) / L;
 
-	static KGaussianQuadrature Quad;
+    static KGaussianQuadrature Quad;
 
-	if(D>=5.e-2)
-		Quad(f,1,0.,L,par,20,&q);
-	else if(D>=5.e-3 && D<5.e-2)
-		Quad(f,1,0.,L,par,100,&q);
-	else if(D>=5.e-4 && D<5.e-3)
-		Quad(f,1,0.,L,par,500,&q);
-	else
-	{
-		u[0]=(zb-za)/L;
-		u[1]=(rb-ra)/L;
-		pp = (z-za)*u[0] + (r-ra)*u[1];
-		q=0.;
-		if(pp < L)
-		{
-			pmax = L;
-			pmin = pp;
-			if(pp<0.)
-				pmin=0.;
-			b = pmax;
-			a = pmin + (b-pmin)*0.3;
-			double tmp;
-			for(n=1;n<=35;n++)
-			{
-				Quad(f,1,a,b,par,50,&tmp);
-				q+=tmp;
-				if(fabs(a-pmin)/L<1.e-8) break;
-				b=a;
-				a=pmin+(b-pmin)*0.3;
-			}
-			h = fabs(a-pmin);
-			q+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-		}
-		if(pp>0.)
-		{
-			pmax = pp;
-			pmin = 0.;
-			if(pp>L)
-				pmax=L;
-			b = pmin;
-			a = pmax-(pmax-b)*0.3;
-			double tmp;
-			for(n=1;n<=35;n++)
-			{
-				Quad(f,1,b,a,par,50,&tmp);
-				q+=tmp;
-				if(fabs(pmax-a)/L<1.e-8) break;
-				b=a;
-				a=pmax-(pmax-b)*0.3;
-			}
-			h = fabs(pmax-a);
-			q+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-		}
-	}
+    if (D >= 5.e-2)
+        Quad(f, 1, 0., L, par, 20, &q);
+    else if (D >= 5.e-3 && D < 5.e-2)
+        Quad(f, 1, 0., L, par, 100, &q);
+    else if (D >= 5.e-4 && D < 5.e-3)
+        Quad(f, 1, 0., L, par, 500, &q);
+    else {
+        u[0] = (zb - za) / L;
+        u[1] = (rb - ra) / L;
+        pp = (z - za) * u[0] + (r - ra) * u[1];
+        q = 0.;
+        if (pp < L) {
+            pmax = L;
+            pmin = pp;
+            if (pp < 0.)
+                pmin = 0.;
+            b = pmax;
+            a = pmin + (b - pmin) * 0.3;
+            double tmp;
+            for (n = 1; n <= 35; n++) {
+                Quad(f, 1, a, b, par, 50, &tmp);
+                q += tmp;
+                if (fabs(a - pmin) / L < 1.e-8)
+                    break;
+                b = a;
+                a = pmin + (b - pmin) * 0.3;
+            }
+            h = fabs(a - pmin);
+            q += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+        }
+        if (pp > 0.) {
+            pmax = pp;
+            pmin = 0.;
+            if (pp > L)
+                pmax = L;
+            b = pmin;
+            a = pmax - (pmax - b) * 0.3;
+            double tmp;
+            for (n = 1; n <= 35; n++) {
+                Quad(f, 1, b, a, par, 50, &tmp);
+                q += tmp;
+                if (fabs(pmax - a) / L < 1.e-8)
+                    break;
+                b = a;
+                a = pmax - (pmax - b) * 0.3;
+            }
+            h = fabs(pmax - a);
+            q += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+        }
+    }
 
-	return 1./(KEMConstants::Pi*KEMConstants::Eps0)*q;
+    return 1. / (KEMConstants::Pi * KEMConstants::Eps0) * q;
 }
 
 
-KThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,
+                                                                         const KPosition& P) const
 {
-	static const double ln4=1.386294361119890;
+    static const double ln4 = 1.386294361119890;
 
-	static double (*f[2])(const double*,double*)
-    		  = {&KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing,
-    				  &KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing};
+    static double (*f[2])(const double*, double*) = {&KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing,
+                                                     &KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing};
 
-	// integration parameters
-	double par[7]; // par[0]: z  par[4]: zB
-	// par[1]: r  par[5]: rB
-	// par[2]: zA par[6]: L
-	// par[3]: rA
+    // integration parameters
+    double par[7];  // par[0]: z  par[4]: zB
+    // par[1]: r  par[5]: rB
+    // par[2]: zA par[6]: L
+    // par[3]: rA
 
-	double za,ra,zb,rb,L,Da,Db,u[2],z,r,D;
-	double q[2],pp,a,b,pmin,pmax,h;
-	int n;
+    double za, ra, zb, rb, L, Da, Db, u[2], z, r, D;
+    double q[2], pp, a, b, pmin, pmax, h;
+    int n;
 
-	z  = par[0]=P[2];
-	r  = par[1]=sqrt(P[0]*P[0]+P[1]*P[1]);
-	za = par[2]=source->GetZ0();
-	ra = par[3]=source->GetR0();
-	zb = par[4]=source->GetZ1();
-	rb = par[5]=source->GetR1();
-	L  = par[6]=(source->GetP0() - source->GetP1()).Magnitude();
+    z = par[0] = P[2];
+    r = par[1] = sqrt(P[0] * P[0] + P[1] * P[1]);
+    za = par[2] = source->GetZ0();
+    ra = par[3] = source->GetR0();
+    zb = par[4] = source->GetZ1();
+    rb = par[5] = source->GetR1();
+    L = par[6] = (source->GetP0() - source->GetP1()).Magnitude();
 
-	Da = sqrt((za-z)*(za-z)+(ra-r)*(ra-r));
-	Db = sqrt((zb-z)*(zb-z)+(rb-r)*(rb-r));
-	D  = fabs(Da+Db-L)/L;
+    Da = sqrt((za - z) * (za - z) + (ra - r) * (ra - r));
+    Db = sqrt((zb - z) * (zb - z) + (rb - r) * (rb - r));
+    D = fabs(Da + Db - L) / L;
 
-	static KGaussianQuadrature Quad;
+    static KGaussianQuadrature Quad;
 
-	if(D>=5.e-2)
-		Quad(f,2,0.,L,par,20,q);
-	else if(D>=5.e-3 && D<5.e-2)
-		Quad(f,2,0.,L,par,100,q);
-	else if(D>=5.e-4 && D<5.e-3)
-		Quad(f,2,0.,L,par,500,q);
-	else
-	{
-		u[0]=(zb-za)/L;
-		u[1]=(rb-ra)/L;
-		pp = (z-za)*u[0] + (r-ra)*u[1];
-		q[0] = q[1] = 0.;
-		if(pp < L)
-		{
-			pmax = L;
-			pmin = pp;
-			if(pp<0.)
-				pmin=0.;
-			b = pmax;
-			a = pmin + (b-pmin)*0.3;
-			double tmp[2];
-			for(n=1;n<=35;n++)
-			{
-				Quad(f,2,a,b,par,50,tmp);
-				q[0]+=tmp[0];q[1]+=tmp[1];
-				if(fabs(a-pmin)/L<1.e-8) break;
-				b=a;
-				a=pmin+(b-pmin)*0.3;
-			}
-			h = fabs(a-pmin);
-			q[0]+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-			q[1]+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-		}
-		if(pp>0.)
-		{
-			pmax = pp;
-			pmin = 0.;
-			if(pp>L)
-				pmax=L;
-			b = pmin;
-			a = pmax-(pmax-b)*0.3;
-			double tmp[2];
-			for(n=1;n<=35;n++)
-			{
-				Quad(f,2,b,a,par,50,tmp);
-				q[0]+=tmp[0];q[1]+=tmp[1];
-				if(fabs(pmax-a)/L<1.e-8) break;
-				b=a;
-				a=pmax-(pmax-b)*0.3;
-			}
-			h = fabs(pmax-a);
-			q[0]+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-			q[1]+=h*(ln4+log(2.*par[1]+1.e-12)+1.-log(h))/2.;
-		}
-	}
+    if (D >= 5.e-2)
+        Quad(f, 2, 0., L, par, 20, q);
+    else if (D >= 5.e-3 && D < 5.e-2)
+        Quad(f, 2, 0., L, par, 100, q);
+    else if (D >= 5.e-4 && D < 5.e-3)
+        Quad(f, 2, 0., L, par, 500, q);
+    else {
+        u[0] = (zb - za) / L;
+        u[1] = (rb - ra) / L;
+        pp = (z - za) * u[0] + (r - ra) * u[1];
+        q[0] = q[1] = 0.;
+        if (pp < L) {
+            pmax = L;
+            pmin = pp;
+            if (pp < 0.)
+                pmin = 0.;
+            b = pmax;
+            a = pmin + (b - pmin) * 0.3;
+            double tmp[2];
+            for (n = 1; n <= 35; n++) {
+                Quad(f, 2, a, b, par, 50, tmp);
+                q[0] += tmp[0];
+                q[1] += tmp[1];
+                if (fabs(a - pmin) / L < 1.e-8)
+                    break;
+                b = a;
+                a = pmin + (b - pmin) * 0.3;
+            }
+            h = fabs(a - pmin);
+            q[0] += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+            q[1] += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+        }
+        if (pp > 0.) {
+            pmax = pp;
+            pmin = 0.;
+            if (pp > L)
+                pmax = L;
+            b = pmin;
+            a = pmax - (pmax - b) * 0.3;
+            double tmp[2];
+            for (n = 1; n <= 35; n++) {
+                Quad(f, 2, b, a, par, 50, tmp);
+                q[0] += tmp[0];
+                q[1] += tmp[1];
+                if (fabs(pmax - a) / L < 1.e-8)
+                    break;
+                b = a;
+                a = pmax - (pmax - b) * 0.3;
+            }
+            h = fabs(pmax - a);
+            q[0] += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+            q[1] += h * (ln4 + log(2. * par[1] + 1.e-12) + 1. - log(h)) / 2.;
+        }
+    }
 
-	double Er = 1./(KEMConstants::Pi*KEMConstants::Eps0)*q[0];
-	double Ez = 1./(KEMConstants::Pi*KEMConstants::Eps0)*q[1];
+    double Er = 1. / (KEMConstants::Pi * KEMConstants::Eps0) * q[0];
+    double Ez = 1. / (KEMConstants::Pi * KEMConstants::Eps0) * q[1];
 
-	KThreeVector field;
-	field[2] = Ez;
+    KThreeVector field;
+    field[2] = Ez;
 
-	if (par[1]<1.e-14)
-		field[0]=field[1]=0;
-	else
-	{
-		double cosine = P[0]/par[1];
-		double sine = P[1]/par[1];
+    if (par[1] < 1.e-14)
+        field[0] = field[1] = 0;
+    else {
+        double cosine = P[0] / par[1];
+        double sine = P[1] / par[1];
 
-		field[0] = cosine*Er;
-		field[1] = sine*Er;
-	}
+        field[0] = cosine * Er;
+        field[1] = sine * Er;
+    }
 
-	return field;
+    return field;
 }
 
-}
+}  // namespace KEMField

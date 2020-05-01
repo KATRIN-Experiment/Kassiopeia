@@ -1,50 +1,55 @@
 #ifndef KGeoBag_KGDiscreteRotationalMesher_hh_
 #define KGeoBag_KGDiscreteRotationalMesher_hh_
 
-#include "KGCore.hh"
-
-#include "KGConicalWireArrayDiscreteRotationalMesher.hh"
 #include "KGAxialMesh.hh"
+#include "KGConicalWireArrayDiscreteRotationalMesher.hh"
+#include "KGCore.hh"
 
 namespace KGeoBag
 {
-    class KGAxialMeshElement;
-    class KGAxialMeshLoop;
-    class KGAxialMeshRing;
+class KGAxialMeshElement;
+class KGAxialMeshLoop;
+class KGAxialMeshRing;
 
-    class KGDiscreteRotationalMesher :
+class KGDiscreteRotationalMesher :
 
     public KGSurface::Visitor,
-	public KGSpace::Visitor,
-	public KGVisitor
+    public KGSpace::Visitor,
+    public KGVisitor
 
+{
+  public:
+    void VisitSurface(KGSurface* aSurface) override;
+    void VisitSpace(KGSpace* aSpace) override;
+
+  public:
+    KGDiscreteRotationalMesher();
+    ~KGDiscreteRotationalMesher() override;
+
+    void SetAxialAngle(double d)
     {
-        public:
-    	virtual void VisitSurface( KGSurface* aSurface );
-        virtual void VisitSpace( KGSpace* aSpace );
-
-        public:
-            KGDiscreteRotationalMesher();
-            virtual ~KGDiscreteRotationalMesher();
-
-      void SetAxialAngle(double d) { fAxialAngle = d; }
-      void SetAxialCount(unsigned int i) { fAxialCount = i; }
+        fAxialAngle = d;
+    }
+    void SetAxialCount(unsigned int i)
+    {
+        fAxialCount = i;
+    }
 
 
-    private:
-      void MeshAxialSurface( KGExtendedSurface< KGAxialMesh >* aSurface );
-      void MeshAxialSpace( KGExtendedSpace< KGAxialMesh >* aSpace );
-      void AddAxialMeshElement(KGAxialMeshElement* e);
+  private:
+    void MeshAxialSurface(KGExtendedSurface<KGAxialMesh>* aSurface);
+    void MeshAxialSpace(KGExtendedSpace<KGAxialMesh>* aSpace);
+    void AddAxialMeshElement(KGAxialMeshElement* e);
 
-      void AddAxialMeshLoop(KGAxialMeshLoop* l);
-      void AddAxialMeshRing(KGAxialMeshRing* r);
+    void AddAxialMeshLoop(KGAxialMeshLoop* l);
+    void AddAxialMeshRing(KGAxialMeshRing* r);
 
-      KGDiscreteRotationalMeshElementVector* fCurrentElements;
+    KGDiscreteRotationalMeshElementVector* fCurrentElements;
 
 
-      double fAxialAngle;
-      unsigned int fAxialCount;
-    };
-}
+    double fAxialAngle;
+    unsigned int fAxialCount;
+};
+}  // namespace KGeoBag
 
 #endif

@@ -1,13 +1,13 @@
 #ifndef KGROTATEDPOLYLOOPSURFACE_HH_
 #define KGROTATEDPOLYLOOPSURFACE_HH_
 
-#include "KGRotatedPathSurface.hh"
 #include "KGPlanarPolyLoop.hh"
+#include "KGRotatedPathSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGRotatedPathSurface< KGPlanarPolyLoop > KGRotatedPolyLoopSurface;
+typedef KGRotatedPathSurface<KGPlanarPolyLoop> KGRotatedPolyLoopSurface;
 
 }
 

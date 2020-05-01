@@ -31,25 +31,25 @@
 #define _GNUPLOT_PIPES_H_
 
 
+#include <cstdio>
+#include <cstdlib>  // for getenv()
+#include <fstream>
 #include <iostream>
+#include <list>     // for std::list
+#include <sstream>  // for std::ostringstream
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <sstream>              // for std::ostringstream
-#include <stdexcept>
-#include <cstdio>
-#include <cstdlib>              // for getenv()
-#include <list>                 // for std::list
 
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
 //defined for 32 and 64-bit environments
-#include <io.h>                // for _access(), _mktemp()
-#define GP_MAX_TMP_FILES  27   // 27 temporary files it's Microsoft restriction
+#include <io.h>              // for _access(), _mktemp()
+#define GP_MAX_TMP_FILES 27  // 27 temporary files it's Microsoft restriction
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 //all UNIX-like OSs (Linux, *BSD, MacOSX, Solaris, ...)
-#include <unistd.h>            // for access(), mkstemp()
-#define GP_MAX_TMP_FILES  64
+#include <unistd.h>  // for access(), mkstemp()
+#define GP_MAX_TMP_FILES 64
 #else
 #error unsupported or unknown operating system
 #endif
@@ -59,45 +59,43 @@
 
 class GnuplotException : public std::runtime_error
 {
-public:
-    GnuplotException(const std::string &msg) : std::runtime_error(msg) {}
+  public:
+    GnuplotException(const std::string& msg) : std::runtime_error(msg) {}
 };
-
 
 
 class Gnuplot
 {
-private:
-
+  private:
     //----------------------------------------------------------------------------------
     // member data
     ///\brief pointer to the stream that can be used to write to the pipe
-    FILE                    *gnucmd;
+    FILE* gnucmd;
     ///\brief validation of gnuplot session
-    bool                     valid;
+    bool valid;
     ///\brief true = 2d, false = 3d
-    bool                     two_dim;
+    bool two_dim;
     ///\brief number of plots in session
-    int                      nplots;
+    int nplots;
     ///\brief functions and data are displayed in a defined styles
-    std::string              pstyle;
+    std::string pstyle;
     ///\brief interpolate and approximate data in defined styles (e.g. spline)
-    std::string              smooth;
+    std::string smooth;
     ///\brief list of created tmpfiles
     std::vector<std::string> tmpfile_list;
 
     //----------------------------------------------------------------------------------
     // static data
     ///\brief number of all tmpfiles (number of tmpfiles restricted)
-    static int               tmpfile_num;
+    static int tmpfile_num;
     ///\brief name of executed GNUPlot file
-    static std::string       m_sGNUPlotFileName;
+    static std::string m_sGNUPlotFileName;
     ///\brief gnuplot path
-    static std::string       m_sGNUPlotPath;
+    static std::string m_sGNUPlotPath;
     ///\brief standart terminal, used by showonscreen
-    static std::string       terminal_std;
+    static std::string terminal_std;
 
-    static int               strm_precision;
+    static int strm_precision;
 
     //----------------------------------------------------------------------------------
     // member functions (auxiliary functions)
@@ -108,7 +106,7 @@ private:
     ///
     /// \return <-- void
     // ---------------------------------------------------
-    void           init();
+    void init();
     // ---------------------------------------------------
     ///\brief creates tmpfile and returns its name
     ///
@@ -116,7 +114,7 @@ private:
     ///
     /// \return <-- the name of the tempfile
     // ---------------------------------------------------
-    std::string    create_tmpfile(std::ofstream &tmp);
+    std::string create_tmpfile(std::ofstream& tmp);
 
     //----------------------------------------------------------------------------------
     ///\brief gnuplot path found?
@@ -125,7 +123,7 @@ private:
     ///
     /// \return <-- found the gnuplot path (yes == true, no == false)
     // ---------------------------------------------------------------------------------
-    static bool    get_program_path();
+    static bool get_program_path();
 
     // ---------------------------------------------------------------------------------
     ///\brief checks if file is available
@@ -135,7 +133,7 @@ private:
     ///
     /// \return file exists (yes == true, no == false)
     // ---------------------------------------------------------------------------------
-    bool file_available(const std::string &filename);
+    bool file_available(const std::string& filename);
 
     // ---------------------------------------------------------------------------------
     ///\brief checks if file exists
@@ -145,10 +143,9 @@ private:
     ///
     /// \return file exists (yes == true, no == false)
     // ---------------------------------------------------------------------------------
-    static bool    file_exists(const std::string &filename, int mode=0);
+    static bool file_exists(const std::string& filename, int mode = 0);
 
-public:
-
+  public:
     // ----------------------------------------------------------------------------
     /// \brief optional function: set Gnuplot path manual
     /// attention:  for windows: path with slash '/' not backslash '\'
@@ -157,7 +154,7 @@ public:
     ///
     /// \return true on success, false otherwise
     // ----------------------------------------------------------------------------
-    static bool set_GNUPlotPath(const std::string &path);
+    static bool set_GNUPlotPath(const std::string& path);
 
 
     // ----------------------------------------------------------------------------
@@ -168,9 +165,10 @@ public:
     ///
     /// \return ---
     // ----------------------------------------------------------------------------
-    static void set_terminal_std(const std::string &type);
+    static void set_terminal_std(const std::string& type);
 
-    static void wait() {
+    static void wait()
+    {
         std::cout << "Press any key to continue ..." << std::endl;
         std::cin.ignore();
     }
@@ -181,32 +179,20 @@ public:
 
 
     ///\brief set a style during construction
-    Gnuplot(const std::string &style = "points");
+    Gnuplot(const std::string& style = "points");
 
     /// plot a single std::vector at one go
-    Gnuplot(const std::vector<double> &x,
-            const std::string &title = "",
-            const std::string &style = "points",
-            const std::string &labelx = "x",
-            const std::string &labely = "y");
+    Gnuplot(const std::vector<double>& x, const std::string& title = "", const std::string& style = "points",
+            const std::string& labelx = "x", const std::string& labely = "y");
 
     /// plot pairs std::vector at one go
-    Gnuplot(const std::vector<double> &x,
-            const std::vector<double> &y,
-            const std::string &title = "",
-            const std::string &style = "points",
-            const std::string &labelx = "x",
-            const std::string &labely = "y");
+    Gnuplot(const std::vector<double>& x, const std::vector<double>& y, const std::string& title = "",
+            const std::string& style = "points", const std::string& labelx = "x", const std::string& labely = "y");
 
     /// plot triples std::vector at one go
-    Gnuplot(const std::vector<double> &x,
-            const std::vector<double> &y,
-            const std::vector<double> &z,
-            const std::string &title = "",
-            const std::string &style = "points",
-            const std::string &labelx = "x",
-            const std::string &labely = "y",
-            const std::string &labelz = "z");
+    Gnuplot(const std::vector<double>& x, const std::vector<double>& y, const std::vector<double>& z,
+            const std::string& title = "", const std::string& style = "points", const std::string& labelx = "x",
+            const std::string& labely = "y", const std::string& labelz = "z");
 
     /// destructor: needed to delete temporary files
     ~Gnuplot();
@@ -215,7 +201,7 @@ public:
     //----------------------------------------------------------------------------------
 
     /// send a command to gnuplot
-    Gnuplot& cmd(const std::string &cmdstr);
+    Gnuplot& cmd(const std::string& cmdstr);
     // -------------------------------------------------------------------------
     ///\brief Sends a command to an active gnuplot session, identical to cmd()
     /// send a command to gnuplot using the <<  operator
@@ -224,23 +210,21 @@ public:
     ///
     /// \return <-- a reference to the gnuplot object
     // -------------------------------------------------------------------------
-    Gnuplot& operator<<(const std::string &cmdstr)
+    Gnuplot& operator<<(const std::string& cmdstr)
     {
         cmd(cmdstr);
-        return(*this);
+        return (*this);
     }
-
 
 
     //--------------------------------------------------------------------------
     // show on screen or write to file
 
     /// sets terminal type to terminal_std
-    Gnuplot& showonscreen(); // window output is set by default (win/x11/aqua)
+    Gnuplot& showonscreen();  // window output is set by default (win/x11/aqua)
 
     /// Saves a gnuplot to a file named filename.  Defaults to saving pdf
-    Gnuplot& savetofigure(const std::string &filename,
-                          const std::string &terminal="ps");
+    Gnuplot& savetofigure(const std::string& filename, const std::string& terminal = "ps");
 
     //--------------------------------------------------------------------------
     // set and unset
@@ -248,13 +232,13 @@ public:
     /// set line style (some of these styles require additional information):
     ///  lines, points, linespoints, impulses, dots, steps, fsteps, histeps,
     ///  boxes, histograms, filledcurves
-    Gnuplot& set_style(const std::string &stylestr = "points");
+    Gnuplot& set_style(const std::string& stylestr = "points");
 
     /// interpolation and approximation of data, arguments:
     ///  csplines, bezier, acsplines (for data values > 0), sbezier, unique, frequency
     /// (works only with plot_x, plot_xy, plotfile_x, plotfile_xy
     /// (if smooth is set, set_style has no effekt on data plotting)
-    Gnuplot& set_smooth(const std::string &stylestr = "csplines");
+    Gnuplot& set_smooth(const std::string& stylestr = "csplines");
 
     // ----------------------------------------------------------------------
     /// \brief unset smooth
@@ -296,7 +280,7 @@ public:
     // -----------------------------------------------
     Gnuplot& set_multiplot()
     {
-        cmd("set multiplot") ;
+        cmd("set multiplot");
         return *this;
     };
 
@@ -312,7 +296,6 @@ public:
         cmd("unset multiplot");
         return *this;
     };
-
 
 
     /// set sampling rate of functions, or for interpolating data
@@ -348,7 +331,7 @@ public:
 
     /// enables/disables contour drawing for surfaces (for 3d plot)
     ///  base, surface, both
-    Gnuplot& set_contour(const std::string &position = "base");
+    Gnuplot& set_contour(const std::string& position = "base");
     // --------------------------------------------------------------------------
     /// contour is not set by default, it disables contour drawing for surfaces
     ///
@@ -392,7 +375,7 @@ public:
 
     /// switches legend on/off
     /// position: inside/outside, left/center/right, top/center/bottom, nobox/box
-    Gnuplot& set_legend(const std::string &position = "default");
+    Gnuplot& set_legend(const std::string& position = "default");
 
     // ------------------------------------------------------------------
     /// \brief  Switches legend off
@@ -415,13 +398,13 @@ public:
     ///
     /// \return <-- reference to the gnuplot object
     // -----------------------------------------------------------------------
-    Gnuplot& set_title(const std::string &title = "")
+    Gnuplot& set_title(const std::string& title = "")
     {
         std::string cmdstr;
         cmdstr = "set title \"";
-        cmdstr+=title;
-        cmdstr+="\"";
-        *this<<cmdstr;
+        cmdstr += title;
+        cmdstr += "\"";
+        *this << cmdstr;
         return *this;
     }
 
@@ -441,21 +424,18 @@ public:
 
 
     /// set x axis label
-    Gnuplot& set_ylabel(const std::string &label = "x");
+    Gnuplot& set_ylabel(const std::string& label = "x");
     /// set y axis label
-    Gnuplot& set_xlabel(const std::string &label = "y");
+    Gnuplot& set_xlabel(const std::string& label = "y");
     /// set z axis label
-    Gnuplot& set_zlabel(const std::string &label = "z");
+    Gnuplot& set_zlabel(const std::string& label = "z");
 
     /// set axis - ranges
-    Gnuplot& set_xrange(const double iFrom,
-                        const double iTo);
+    Gnuplot& set_xrange(const double iFrom, const double iTo);
     /// set y-axis - ranges
-    Gnuplot& set_yrange(const double iFrom,
-                        const double iTo);
+    Gnuplot& set_yrange(const double iFrom, const double iTo);
     /// set z-axis - ranges
-    Gnuplot& set_zrange(const double iFrom,
-                        const double iTo);
+    Gnuplot& set_zrange(const double iFrom, const double iTo);
     /// autoscale axis (set by default) of xaxis
     ///
     /// \param ---
@@ -554,58 +534,41 @@ public:
 
     /// plot a single std::vector: x
     ///   from file
-    Gnuplot& plotfile_x(const std::string &filename,
-                        const unsigned int column = 1,
-                        const std::string &title = "");
+    Gnuplot& plotfile_x(const std::string& filename, const unsigned int column = 1, const std::string& title = "");
     ///   from std::vector
-    template<typename X>
-    Gnuplot& plot_x(const X& x, const std::string &title = "");
+    template<typename X> Gnuplot& plot_x(const X& x, const std::string& title = "");
 
 
     /// plot x,y pairs: x y
     ///   from file
-    Gnuplot& plotfile_xy(const std::string &filename,
-                         const unsigned int column_x = 1,
-                         const unsigned int column_y = 2,
-                         const std::string &title = "");
+    Gnuplot& plotfile_xy(const std::string& filename, const unsigned int column_x = 1, const unsigned int column_y = 2,
+                         const std::string& title = "");
     ///   from data
     template<typename X, typename Y>
-    Gnuplot& plot_xy(const X& x, const Y& y, const std::string &title = "", int column_x = 1, int column_y = 2);
+    Gnuplot& plot_xy(const X& x, const Y& y, const std::string& title = "", int column_x = 1, int column_y = 2);
 
 
     /// plot x,y pairs with dy errorbars: x y dy
     ///   from file
-    Gnuplot& plotfile_xy_err(const std::string &filename,
-                             const unsigned int column_x  = 1,
-                             const unsigned int column_y  = 2,
-                             const unsigned int column_dy = 3,
-                             const std::string &title = "");
+    Gnuplot& plotfile_xy_err(const std::string& filename, const unsigned int column_x = 1,
+                             const unsigned int column_y = 2, const unsigned int column_dy = 3,
+                             const std::string& title = "");
     ///   from data
     template<typename X, typename Y, typename E>
-    Gnuplot& plot_xy_err(const X &x, const Y &y, const E &dy,
-                         const std::string &title = "");
+    Gnuplot& plot_xy_err(const X& x, const Y& y, const E& dy, const std::string& title = "");
 
 
     /// plot x,y,z triples: x y z
     ///   from file
-    Gnuplot& plotfile_xyz(const std::string &filename,
-                          const unsigned int column_x = 1,
-                          const unsigned int column_y = 2,
-                          const unsigned int column_z = 3,
-                          const std::string &title = "");
+    Gnuplot& plotfile_xyz(const std::string& filename, const unsigned int column_x = 1, const unsigned int column_y = 2,
+                          const unsigned int column_z = 3, const std::string& title = "");
     ///   from std::vector
     template<typename X, typename Y, typename Z>
-    Gnuplot& plot_xyz(const X &x,
-                      const Y &y,
-                      const Z &z,
-                      const std::string &title = "");
-
+    Gnuplot& plot_xyz(const X& x, const Y& y, const Z& z, const std::string& title = "");
 
 
     /// plot an equation of the form: y = ax + b, you supply a and b
-    Gnuplot& plot_slope(const double a,
-                        const double b,
-                        const std::string &title = "");
+    Gnuplot& plot_slope(const double a, const double b, const std::string& title = "");
 
 
     /// plot an equation supplied as a std::string y=f(x), write only the
@@ -621,20 +584,16 @@ public:
     ///   lgamma(x), ibeta(p,q,x), besj0(x), besj1(x), besy0(x), besy1(x),
     ///   lambertw(x)
     /// statistical fuctions: norm(x), invnorm(x)
-    Gnuplot& plot_equation(const std::string &equation,
-                           const std::string &title = "");
+    Gnuplot& plot_equation(const std::string& equation, const std::string& title = "");
 
     /// plot an equation supplied as a std::string z=f(x,y), write only the
     /// function f(x,y) not z the independent variables have to be x and y
-    Gnuplot& plot_equation3d(const std::string &equation,
-                             const std::string &title = "");
+    Gnuplot& plot_equation3d(const std::string& equation, const std::string& title = "");
 
 
     /// plot image
-    Gnuplot& plot_image(const unsigned char *ucPicBuf,
-                        const unsigned int iWidth,
-                        const unsigned int iHeight,
-                        const std::string &title = "");
+    Gnuplot& plot_image(const unsigned char* ucPicBuf, const unsigned int iWidth, const unsigned int iHeight,
+                        const std::string& title = "");
 
 
     //--------------------------------------------------------------------------
@@ -647,9 +606,10 @@ public:
     ///
     /// \return ---
     //--------------------------------------------------------------------------
-    Gnuplot& replot(void)
+    Gnuplot& replot()
     {
-        if (nplots > 0) cmd("replot");
+        if (nplots > 0)
+            cmd("replot");
         return *this;
     };
 
@@ -672,9 +632,8 @@ public:
     // -------------------------------------------------------------------
     bool is_valid()
     {
-        return(valid);
+        return (valid);
     };
-
 };
 
 
@@ -682,11 +641,9 @@ public:
 //
 /// Plots a 2d graph from a list of doubles: x
 //
-template<typename X>
-inline Gnuplot& Gnuplot::plot_x(const X& x, const std::string &title)
+template<typename X> inline Gnuplot& Gnuplot::plot_x(const X& x, const std::string& title)
 {
-    if (x.size() == 0)
-    {
+    if (x.size() == 0) {
         throw GnuplotException("std::vector too small");
         return *this;
     }
@@ -717,16 +674,14 @@ inline Gnuplot& Gnuplot::plot_x(const X& x, const std::string &title)
 /// Plots a 2d graph from a list of doubles: x y
 //
 template<typename X, typename Y>
-inline Gnuplot& Gnuplot::plot_xy(const X& x, const Y& y, const std::string &title, int column_x, int column_y)
+inline Gnuplot& Gnuplot::plot_xy(const X& x, const Y& y, const std::string& title, int column_x, int column_y)
 {
-    if (x.size() == 0 || y.size() == 0)
-    {
+    if (x.size() == 0 || y.size() == 0) {
         throw GnuplotException("std::vectors too small");
         return *this;
     }
 
-    if (x.size() != y.size())
-    {
+    if (x.size() != y.size()) {
         throw GnuplotException("Length of the std::vectors differs");
         return *this;
     }
@@ -737,7 +692,7 @@ inline Gnuplot& Gnuplot::plot_xy(const X& x, const Y& y, const std::string &titl
     if (name == "")
         return *this;
 
-    tmp.precision( Gnuplot::strm_precision );
+    tmp.precision(Gnuplot::strm_precision);
 
     //
     // write the data to file
@@ -759,19 +714,14 @@ inline Gnuplot& Gnuplot::plot_xy(const X& x, const Y& y, const std::string &titl
 /// plot x,y pairs with dy errorbars
 ///
 template<typename X, typename Y, typename E>
-inline Gnuplot& Gnuplot::plot_xy_err(const X &x,
-                              const Y &y,
-                              const E &dy,
-                              const std::string &title)
+inline Gnuplot& Gnuplot::plot_xy_err(const X& x, const Y& y, const E& dy, const std::string& title)
 {
-    if (x.size() == 0 || y.size() == 0 || dy.size() == 0)
-    {
+    if (x.size() == 0 || y.size() == 0 || dy.size() == 0) {
         throw GnuplotException("std::vectors too small");
         return *this;
     }
 
-    if (x.size() != y.size() || y.size() != dy.size())
-    {
+    if (x.size() != y.size() || y.size() != dy.size()) {
         throw GnuplotException("Length of the std::vectors differs");
         return *this;
     }
@@ -782,7 +732,7 @@ inline Gnuplot& Gnuplot::plot_xy_err(const X &x,
     if (name == "")
         return *this;
 
-    tmp.precision( Gnuplot::strm_precision );
+    tmp.precision(Gnuplot::strm_precision);
 
     //
     // write the data to file
@@ -806,19 +756,14 @@ inline Gnuplot& Gnuplot::plot_xy_err(const X &x,
 // Plots a 3d graph from a list of doubles: x y z
 //
 template<typename X, typename Y, typename Z>
-inline Gnuplot& Gnuplot::plot_xyz(const X &x,
-                           const Y &y,
-                           const Z &z,
-                           const std::string &title)
+inline Gnuplot& Gnuplot::plot_xyz(const X& x, const Y& y, const Z& z, const std::string& title)
 {
-    if (x.size() == 0 || y.size() == 0 || z.size() == 0)
-    {
+    if (x.size() == 0 || y.size() == 0 || z.size() == 0) {
         throw GnuplotException("std::vectors too small");
         return *this;
     }
 
-    if (x.size() != y.size() || x.size() != z.size())
-    {
+    if (x.size() != y.size() || x.size() != z.size()) {
         throw GnuplotException("Length of the std::vectors differs");
         return *this;
     }
@@ -829,13 +774,13 @@ inline Gnuplot& Gnuplot::plot_xyz(const X &x,
     if (name == "")
         return *this;
 
-    tmp.precision( Gnuplot::strm_precision );
+    tmp.precision(Gnuplot::strm_precision);
 
     //
     // write the data to file
     //
     for (unsigned int i = 0; i < x.size(); i++)
-        tmp << x[i] << " " << y[i] << " " << z[i] <<std::endl;
+        tmp << x[i] << " " << y[i] << " " << z[i] << std::endl;
 
     tmp.flush();
     tmp.close();
@@ -852,33 +797,29 @@ inline Gnuplot& Gnuplot::plot_xyz(const X &x,
 // A string tokenizer taken from http://www.sunsite.ualberta.ca/Documentation/
 // /Gnu/libstdc++-2.90.8/html/21_strings/stringtok_std_h.txt
 //
-template <typename Container>
-inline void stringtok (Container &container,
-                std::string const &in,
-                const char * const delimiters = " \t\n")
+template<typename Container>
+inline void stringtok(Container& container, std::string const& in, const char* const delimiters = " \t\n")
 {
     const std::string::size_type len = in.length();
     std::string::size_type i = 0;
 
-    while ( i < len )
-    {
+    while (i < len) {
         // eat leading whitespace
-        i = in.find_first_not_of (delimiters, i);
+        i = in.find_first_not_of(delimiters, i);
 
         if (i == std::string::npos)
-            return;   // nothing left but white space
+            return;  // nothing left but white space
 
         // find the end of the token
-        std::string::size_type j = in.find_first_of (delimiters, i);
+        std::string::size_type j = in.find_first_of(delimiters, i);
 
         // push token
-        if (j == std::string::npos)
-        {
-            container.push_back (in.substr(i));
+        if (j == std::string::npos) {
+            container.push_back(in.substr(i));
             return;
         }
         else
-            container.push_back (in.substr(i, j-i));
+            container.push_back(in.substr(i, j - i));
 
         // set up for next loop
         i = j + 1;

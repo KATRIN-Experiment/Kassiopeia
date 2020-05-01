@@ -2,10 +2,10 @@
 #define KOPENCLINTERFACE_DEF
 
 #ifdef KEMFIELD_USE_CL_VECTOR
-    #define __NO_STD_VECTOR // Use cl::vector instead of STL version
-    #define CL_VECTOR_TYPE cl::vector
+#define __NO_STD_VECTOR  // Use cl::vector instead of STL version
+#define CL_VECTOR_TYPE cl::vector
 #else
-    #define CL_VECTOR_TYPE std::vector
+#define CL_VECTOR_TYPE std::vector
 #endif
 
 #define __CL_ENABLE_EXCEPTIONS
@@ -41,16 +41,16 @@
 
 
 #if defined KEMFIELD_USE_DOUBLE_PRECISION
-#define CL_TYPE cl_double
-#define CL_TYPE2 cl_double2
-#define CL_TYPE4 cl_double4
-#define CL_TYPE8 cl_double8
+#define CL_TYPE   cl_double
+#define CL_TYPE2  cl_double2
+#define CL_TYPE4  cl_double4
+#define CL_TYPE8  cl_double8
 #define CL_TYPE16 cl_double16
 #else
-#define CL_TYPE cl_float
-#define CL_TYPE2 cl_float2
-#define CL_TYPE4 cl_float4
-#define CL_TYPE8 cl_float8
+#define CL_TYPE   cl_float
+#define CL_TYPE2  cl_float2
+#define CL_TYPE4  cl_float4
+#define CL_TYPE8  cl_float8
 #define CL_TYPE16 cl_float16
 #pragma GCC diagnostic ignored "-Wnarrowing"
 #endif
@@ -75,32 +75,42 @@
 #endif
 
 #ifdef USE_CL_ERROR_TRY_CATCH
-#define CL_ERROR_CATCH  catch (cl::Error &error) \
-                        { \
-                            std::cout<<"OpenCL Exception caught: "<<std::endl;\
-                            std::cout<<__FILE__<<":"<<__LINE__<<std::endl; \
-                            std::cout<<error.what()<<"("<<error.err()<<")"<<std::endl; \
-                            std::exit(1); \
-                        }
+#define CL_ERROR_CATCH                                                                                                 \
+    catch (cl::Error & error)                                                                                          \
+    {                                                                                                                  \
+        std::cout << "OpenCL Exception caught: " << std::endl;                                                         \
+        std::cout << __FILE__ << ":" << __LINE__ << std::endl;                                                         \
+        std::cout << error.what() << "(" << error.err() << ")" << std::endl;                                           \
+        std::exit(1);                                                                                                  \
+    }
 #else
 #define CL_ERROR_CATCH
 #endif
 
 
+namespace KEMField
+{
 
-namespace KEMField{
+class KOpenCLData;
 
-  class KOpenCLData;
-
-  class KOpenCLInterface
-  {
+class KOpenCLInterface
+{
   public:
     static KOpenCLInterface* GetInstance();
 
-    cl::Context            GetContext() const { return *fContext; }
-    CL_VECTOR_TYPE<cl::Device> GetDevices() const { return fDevices; }
-    cl::Device             GetDevice()  const { return fDevices[fCLDeviceID]; }
-    cl::CommandQueue&      GetQueue(int i=-1) const;
+    cl::Context GetContext() const
+    {
+        return *fContext;
+    }
+    CL_VECTOR_TYPE<cl::Device> GetDevices() const
+    {
+        return fDevices;
+    }
+    cl::Device GetDevice() const
+    {
+        return fDevices[fCLDeviceID];
+    }
+    cl::CommandQueue& GetQueue(int i = -1) const;
 
     unsigned int GetNumberOfDevices() const
     {
@@ -110,8 +120,14 @@ namespace KEMField{
 
     void SetGPU(unsigned int i);
 
-    void SetKernelPath(std::string s) { fKernelPath = s; }
-    std::string GetKernelPath() const { return fKernelPath; }
+    void SetKernelPath(std::string s)
+    {
+        fKernelPath = s;
+    }
+    std::string GetKernelPath() const
+    {
+        return fKernelPath;
+    }
 
     void SetActiveData(KOpenCLData* data);
     KOpenCLData* GetActiveData() const;
@@ -127,13 +143,13 @@ namespace KEMField{
     std::string fKernelPath;
 
     CL_VECTOR_TYPE<cl::Platform> fPlatforms;
-    CL_VECTOR_TYPE<cl::Device>   fDevices;
-    unsigned int                   fCLDeviceID;
-    cl::Context              *fContext;
-    mutable std::vector<cl::CommandQueue*>  fQueues;
-    mutable KOpenCLData *fActiveData;
-  };
+    CL_VECTOR_TYPE<cl::Device> fDevices;
+    unsigned int fCLDeviceID;
+    cl::Context* fContext;
+    mutable std::vector<cl::CommandQueue*> fQueues;
+    mutable KOpenCLData* fActiveData;
+};
 
-}
+}  // namespace KEMField
 
 #endif /* KOPENCLINTERFACE_DEF */

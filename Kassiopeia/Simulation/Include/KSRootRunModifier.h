@@ -1,65 +1,63 @@
 #ifndef Kassiopeia_KSRootRunModifier_h_
 #define Kassiopeia_KSRootRunModifier_h_
 
-#include "KSRunModifier.h"
+#include "KSEvent.h"
+#include "KSList.h"
 #include "KSParticle.h"
+#include "KSRun.h"
+#include "KSRunModifier.h"
 #include "KSStep.h"
 #include "KSTrack.h"
-#include "KSEvent.h"
-#include "KSRun.h"
-#include "KSList.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootRunModifier :
-            public KSComponentTemplate< KSRootRunModifier, KSRunModifier >
-    {
-    public:
-        KSRootRunModifier();
-        KSRootRunModifier( const KSRootRunModifier& aCopy );
-        KSRootRunModifier* Clone() const;
-        virtual ~KSRootRunModifier();
+class KSRootRunModifier : public KSComponentTemplate<KSRootRunModifier, KSRunModifier>
+{
+  public:
+    KSRootRunModifier();
+    KSRootRunModifier(const KSRootRunModifier& aCopy);
+    KSRootRunModifier* Clone() const override;
+    ~KSRootRunModifier() override;
 
-        //**********
-        // modifier
-        //**********
+    //**********
+    // modifier
+    //**********
 
-    public:
-        bool ExecutePreRunModification( KSRun& aRun );
-        bool ExecutePostRunModification( KSRun& aRun );
+  protected:
+    bool ExecutePreRunModification(KSRun& aRun) override;
+    bool ExecutePostRunModification(KSRun& aRun) override;
 
-        //***********
-        //composition
-        //***********
+    //***********
+    //composition
+    //***********
 
-    public:
-        void AddModifier( KSRunModifier* aModifier );
-        void RemoveModifier( KSRunModifier* aModifier );
+  public:
+    void AddModifier(KSRunModifier* aModifier);
+    void RemoveModifier(KSRunModifier* aModifier);
 
-    private:
-        KSList< KSRunModifier > fModifiers;
-        KSRunModifier* fModifier;
+  private:
+    KSList<KSRunModifier> fModifiers;
+    KSRunModifier* fModifier;
 
-        //******
-        //action
-        //******
+    //******
+    //action
+    //******
 
-    public:
-        void SetRun( KSRun* aRun );
+  public:
+    void SetRun(KSRun* aRun);
 
-        bool ExecutePreRunModification();
-        bool ExecutePostRunModification();
+    bool ExecutePreRunModification();
+    bool ExecutePostRunModification();
 
-        virtual void PushUpdateComponent();
-        virtual void PushDeupdateComponent();
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
 
-    private:
-
-        KSRun* fRun;
-    };
+  private:
+    KSRun* fRun;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

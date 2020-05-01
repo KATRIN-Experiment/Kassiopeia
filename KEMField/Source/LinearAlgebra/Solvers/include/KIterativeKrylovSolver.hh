@@ -1,17 +1,14 @@
 #ifndef KIterativeKrylovSolver_HH__
 #define KIterativeKrylovSolver_HH__
 
+#include "KIterativeKrylovRestartCondition.hh"
+#include "KIterativeSolver.hh"
 #include "KSmartPointer.hh"
-
 #include "KSquareMatrix.hh"
 #include "KVector.hh"
 
-#include "KIterativeSolver.hh"
-#include "KIterativeKrylovRestartCondition.hh"
-
 namespace KEMField
 {
-
 
 
 /*
@@ -26,55 +23,62 @@ namespace KEMField
 *Fri Jan 31 15:27:04 EST 2014 J. Barrett (barrettj@mit.edu) First Version
 *
 */
-template <typename ValueType>
-class KIterativeKrylovSolver : public KIterativeSolver<ValueType> {
-public:
-	KIterativeKrylovSolver() : fMaxIterations(UINT_MAX)
-	{
+template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSolver<ValueType>
+{
+  public:
+    KIterativeKrylovSolver() : fMaxIterations(UINT_MAX)
+    {
         //create a default restart condition
         fRestartCondition = new KIterativeKrylovRestartCondition();
-	}
-	virtual ~KIterativeKrylovSolver() {}
+    }
+    ~KIterativeKrylovSolver() override {}
 
-	typedef KSquareMatrix<ValueType> Matrix;
+    typedef KSquareMatrix<ValueType> Matrix;
     typedef KVector<ValueType> Vector;
 
-	void Solve( Vector& x, const Vector& b)
-	{
-		SolveCore(x,b);
-	}
+    void Solve(Vector& x, const Vector& b)
+    {
+        SolveCore(x, b);
+    }
 
-	void SetMatrix(KSmartPointer<const Matrix> A)
-	{
-		fMatrix = A;
-	}
+    void SetMatrix(KSmartPointer<const Matrix> A)
+    {
+        fMatrix = A;
+    }
 
-	void SetMaximumIterations(unsigned int i){fMaxIterations = i;}
-	void SetRestartCondition(KSmartPointer<KIterativeKrylovRestartCondition> restart)
-	{
-		fRestartCondition = restart;
-	}
+    void SetMaximumIterations(unsigned int i)
+    {
+        fMaxIterations = i;
+    }
+    void SetRestartCondition(KSmartPointer<KIterativeKrylovRestartCondition> restart)
+    {
+        fRestartCondition = restart;
+    }
 
-protected:
-	KSmartPointer<const Matrix> GetMatrix() const
-	{
-		return fMatrix;
-	}
+  protected:
+    KSmartPointer<const Matrix> GetMatrix() const
+    {
+        return fMatrix;
+    }
 
-	unsigned int GetMaximumIterations() {return fMaxIterations;}
-	KSmartPointer<KIterativeKrylovRestartCondition> GetRestartCondition(){
-		return fRestartCondition;
-	}
+    unsigned int GetMaximumIterations()
+    {
+        return fMaxIterations;
+    }
+    KSmartPointer<KIterativeKrylovRestartCondition> GetRestartCondition()
+    {
+        return fRestartCondition;
+    }
 
-private:
-	virtual void SolveCore(Vector& x,const Vector& b) = 0;
+  private:
+    virtual void SolveCore(Vector& x, const Vector& b) = 0;
 
-	unsigned int fMaxIterations;
-	KSmartPointer<KIterativeKrylovRestartCondition> fRestartCondition;
-	KSmartPointer<const Matrix> fMatrix;
+    unsigned int fMaxIterations;
+    KSmartPointer<KIterativeKrylovRestartCondition> fRestartCondition;
+    KSmartPointer<const Matrix> fMatrix;
 };
 
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* KIterativeKrylovSolver_H__ */

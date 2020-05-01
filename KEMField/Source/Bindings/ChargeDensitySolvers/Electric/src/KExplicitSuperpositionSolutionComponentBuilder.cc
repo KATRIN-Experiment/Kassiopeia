@@ -9,16 +9,14 @@
 
 using namespace std;
 
-namespace katrin {
+namespace katrin
+{
 
-template< >
- KExplicitSuperpositionSolutionComponentBuilder::~KComplexElement()
- {
- }
+template<> KExplicitSuperpositionSolutionComponentBuilder::~KComplexElement() {}
 
 STATICINT sKSExplicitSuperpositionSolutionComponentStructure =
-    KExplicitSuperpositionSolutionComponentBuilder::Attribute< string >( "name" ) +
-    KExplicitSuperpositionSolutionComponentBuilder::Attribute< double >( "scale" ) +
-    KExplicitSuperpositionSolutionComponentBuilder::Attribute< string >( "hash" );
+    KExplicitSuperpositionSolutionComponentBuilder::Attribute<string>("name") +
+    KExplicitSuperpositionSolutionComponentBuilder::Attribute<double>("scale") +
+    KExplicitSuperpositionSolutionComponentBuilder::Attribute<string>("hash");
 
 } /* namespace katrin */

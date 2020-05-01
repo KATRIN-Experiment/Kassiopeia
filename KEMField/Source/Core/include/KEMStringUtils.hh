@@ -10,7 +10,8 @@
 
 #include <string>
 
-namespace KEMField {
+namespace KEMField
+{
 
 bool endsWith(std::string aString, std::string ending);
 

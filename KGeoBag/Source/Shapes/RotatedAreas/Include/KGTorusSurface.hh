@@ -6,49 +6,47 @@
 namespace KGeoBag
 {
 
-    class KGTorusSurface :
-        public KGRotatedCircleSurface
+class KGTorusSurface : public KGRotatedCircleSurface
+{
+  public:
+    KGTorusSurface();
+    ~KGTorusSurface() override;
+
+  public:
+    void Z(const double& aZ);
+    void R(const double& anR);
+    void Radius(const double& aRadius);
+    void ToroidalMeshCount(const unsigned int& aToroidalMeshCount);
+    void AxialMeshCount(const unsigned int& anAxialMeshCount);
+
+    const double& Z() const;
+    const double& R() const;
+    const double& Radius() const;
+    const unsigned int& ToroidalMeshCount() const;
+    const unsigned int& AxialMeshCount() const;
+
+  private:
+    double fZ;
+    double fR;
+    double fRadius;
+    unsigned int fToroidalMeshCount;
+    unsigned int fAxialMeshCount;
+
+  public:
+    class Visitor
     {
-        public:
-            KGTorusSurface();
-            virtual ~KGTorusSurface();
+      public:
+        Visitor();
+        virtual ~Visitor();
 
-        public:
-            void Z( const double& aZ );
-            void R( const double& anR );
-            void Radius( const double& aRadius );
-            void ToroidalMeshCount( const unsigned int& aToroidalMeshCount );
-            void AxialMeshCount( const unsigned int& anAxialMeshCount );
-
-            const double& Z() const;
-            const double& R() const;
-            const double& Radius() const;
-            const unsigned int& ToroidalMeshCount() const;
-            const unsigned int& AxialMeshCount() const;
-
-        private:
-            double fZ;
-            double fR;
-            double fRadius;
-            unsigned int fToroidalMeshCount;
-            unsigned int fAxialMeshCount;
-
-        public:
-            class Visitor
-            {
-                public:
-                    Visitor();
-                    virtual ~Visitor();
-
-                    virtual void VisitTorusSurface( KGTorusSurface* aTorusSurface ) = 0;
-            };
-
-        public:
-            virtual void AreaInitialize() const;
-            virtual void AreaAccept( KGVisitor* aVisitor );
+        virtual void VisitTorusSurface(KGTorusSurface* aTorusSurface) = 0;
     };
 
-}
+  public:
+    void AreaInitialize() const override;
+    void AreaAccept(KGVisitor* aVisitor) override;
+};
+
+}  // namespace KGeoBag
 
 #endif
-

@@ -8,53 +8,47 @@
 #ifndef KVTKVIEWERVISITORBUILDER_HH_
 #define KVTKVIEWERVISITORBUILDER_HH_
 
-#include "KVTKViewerAsBoundaryFieldVisitor.hh"
 #include "KComplexElement.hh"
+#include "KVTKViewerAsBoundaryFieldVisitor.hh"
 
 
-namespace katrin {
-
-typedef KComplexElement<KEMField::KVTKViewerAsBoundaryFieldVisitor>
-KVTKViewerVisitorBuilder;
-
-template< >
-inline bool KVTKViewerVisitorBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "file" )
-    {
+
+typedef KComplexElement<KEMField::KVTKViewerAsBoundaryFieldVisitor> KVTKViewerVisitorBuilder;
+
+template<> inline bool KVTKViewerVisitorBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "file") {
         std::string name = "";
-        aContainer->CopyTo( name );
-        fObject->SetFile( name );
+        aContainer->CopyTo(name);
+        fObject->SetFile(name);
 
 
         return true;
     }
-    if( aContainer->GetName() == "view" )
-    {
+    if (aContainer->GetName() == "view") {
         bool choice = false;
-        aContainer->CopyTo( choice );
-        fObject->ViewGeometry( choice );
+        aContainer->CopyTo(choice);
+        fObject->ViewGeometry(choice);
         return true;
     }
-    if( aContainer->GetName() == "save" )
-    {
+    if (aContainer->GetName() == "save") {
         bool choice = false;
-        aContainer->CopyTo( choice );
-        fObject->SaveGeometry( choice );
+        aContainer->CopyTo(choice);
+        fObject->SaveGeometry(choice);
         return true;
     }
-    if( aContainer->GetName() == "preprocessing" )
-    {
+    if (aContainer->GetName() == "preprocessing") {
         bool choice = false;
-        aContainer->CopyTo( choice );
-        fObject->Preprocessing( choice );
+        aContainer->CopyTo(choice);
+        fObject->Preprocessing(choice);
         return true;
     }
-    if( aContainer->GetName() == "postprocessing" )
-    {
+    if (aContainer->GetName() == "postprocessing") {
         bool choice = false;
-        aContainer->CopyTo( choice );
-        fObject->Postprocessing( choice );
+        aContainer->CopyTo(choice);
+        fObject->Postprocessing(choice);
         return true;
     }
     return false;

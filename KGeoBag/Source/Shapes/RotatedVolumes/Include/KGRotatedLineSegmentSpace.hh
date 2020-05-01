@@ -1,13 +1,13 @@
 #ifndef KGROTATEDLINESPACE_HH_
 #define KGROTATEDLINESPACE_HH_
 
-#include "KGRotatedOpenPathSpace.hh"
 #include "KGPlanarLineSegment.hh"
+#include "KGRotatedOpenPathSpace.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGRotatedOpenPathSpace< KGPlanarLineSegment > KGRotatedLineSegmentSpace;
+typedef KGRotatedOpenPathSpace<KGPlanarLineSegment> KGRotatedLineSegmentSpace;
 
 }
 

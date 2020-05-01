@@ -6,16 +6,13 @@ endif()
 
 # KEMField version
 set(MODULE_VERSION_MAJOR 3)
-set(MODULE_VERSION_MINOR 6)
+set(MODULE_VERSION_MINOR 7)
 set(MODULE_VERSION_PATCH 0)
 set(MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}")
 
 project( KEMField )
 
 include( KasperDefaults )
-
-# require c++11
-kasper_require_cpp11()
 
 # module options
 
@@ -47,7 +44,6 @@ add_cflag (KEMFIELD_USE_KOMMON)
 # internal dependencies: kgeobag
 kasper_find_module( KGeoBag )
 add_cflag (KEMFIELD_USE_KGEOBAG)
-
 
 # Input files
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/data)

@@ -2,6 +2,7 @@
 #define KGCompoundActor_HH__
 
 #include "KGNodeActor.hh"
+
 #include <vector>
 
 namespace KGeoBag
@@ -20,42 +21,44 @@ namespace KGeoBag
 *
 */
 
-template< typename NodeType>
-class KGCompoundActor: public KGNodeActor<NodeType>
+template<typename NodeType> class KGCompoundActor : public KGNodeActor<NodeType>
 {
-    public:
-        KGCompoundActor(){;};
-        virtual ~KGCompoundActor(){;};
+  public:
+    KGCompoundActor()
+    {
+        ;
+    };
+    ~KGCompoundActor() override
+    {
+        ;
+    };
 
-        //add a visitor to the back of the list of actors
-        void AddActor(KGNodeActor<NodeType>* actor)
+    //add a visitor to the back of the list of actors
+    void AddActor(KGNodeActor<NodeType>* actor)
+    {
+        if (actor != this && actor != nullptr)  //avoid a disaster
         {
-            if(actor != this && actor != NULL)//avoid a disaster
-            {
-                fActors.push_back(actor);
-            }
-        };
-
-        void Clear()
-        {
-            fActors.clear();
+            fActors.push_back(actor);
         }
+    };
 
-        void ApplyAction(NodeType* node)
-        {
-            for(unsigned int i=0; i<fActors.size(); i++)
-            {
-                fActors[i]->ApplyAction(node);
-            }
+    void Clear()
+    {
+        fActors.clear();
+    }
+
+    void ApplyAction(NodeType* node) override
+    {
+        for (unsigned int i = 0; i < fActors.size(); i++) {
+            fActors[i]->ApplyAction(node);
         }
+    }
 
-    private:
-
-        std::vector< KGNodeActor<NodeType>* > fActors;
-
+  private:
+    std::vector<KGNodeActor<NodeType>*> fActors;
 };
 
-}// end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGCompoundActor_H__ */

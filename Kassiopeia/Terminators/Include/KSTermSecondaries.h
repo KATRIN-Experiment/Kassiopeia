@@ -6,21 +6,19 @@
 namespace Kassiopeia
 {
 
-    class KSTermSecondaries :
-        public KSComponentTemplate<  KSTermSecondaries, KSTerminator >
-    {
-        public:
-            KSTermSecondaries();
-            KSTermSecondaries( const KSTermSecondaries& aCopy );
-            KSTermSecondaries* Clone() const;
-            virtual ~KSTermSecondaries();
+class KSTermSecondaries : public KSComponentTemplate<KSTermSecondaries, KSTerminator>
+{
+  public:
+    KSTermSecondaries();
+    KSTermSecondaries(const KSTermSecondaries& aCopy);
+    KSTermSecondaries* Clone() const override;
+    ~KSTermSecondaries() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle&, KSParticle& aFinalParticle, KSParticleQueue& ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle&, KSParticle& aFinalParticle, KSParticleQueue&) const override;
+};
 
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

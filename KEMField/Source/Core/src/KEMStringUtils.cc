@@ -7,15 +7,17 @@
 
 #include "KEMStringUtils.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 bool endsWith(std::string aString, std::string ending)
 {
-	if (aString.length() >= ending.length()) {
-		return (0 == aString.compare (aString.length() - ending.length(), ending.length(), ending));
-	} else {
-		return false;
-	}
+    if (aString.length() >= ending.length()) {
+        return (0 == aString.compare(aString.length() - ending.length(), ending.length(), ending));
+    }
+    else {
+        return false;
+    }
 }
 
 } /* namespace KEMField */

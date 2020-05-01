@@ -14,38 +14,41 @@
 namespace KEMField
 {
 
-class KRampedElectricField: public KElectricField {
-public:
-    typedef enum {
-        rtLinear,           // simple linear ramping
-        rtExponential,      // exponential ramping with given time constant
-        rtSinus,            // simple sinus ramping
+class KRampedElectricField : public KElectricField
+{
+  public:
+    typedef enum
+    {
+        rtLinear,       // simple linear ramping
+        rtExponential,  // exponential ramping with given time constant
+        rtSinus,        // simple sinus ramping
     } eRampingType;
 
-public:
+  public:
     KRampedElectricField();
-    virtual ~KRampedElectricField();
+    ~KRampedElectricField() override;
 
-private:
-    virtual double PotentialCore( const KPosition& aSamplePoint, const double& aSampleTime ) const;
-    virtual KThreeVector ElectricFieldCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
+  private:
+    double PotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
-public:
-    double GetModulationFactor( const double& aTime ) const;
+  public:
+    double GetModulationFactor(const double& aTime) const;
 
-private:
-    virtual void InitializeCore();
+  private:
+    void InitializeCore() override;
 
-public:
-    ;K_SET_GET_PTR( KElectricField, RootElectricField )
-    ;K_SET_GET( eRampingType, RampingType )
-    ;K_SET_GET( int, NumCycles )
-    ;K_SET_GET( double, RampUpDelay )
-    ;K_SET_GET( double, RampDownDelay )
-    ;K_SET_GET( double, RampUpTime )
-    ;K_SET_GET( double, RampDownTime )
-    ;K_SET_GET( double, TimeConstant )
-    ;K_SET_GET( double, TimeScalingFactor )
+  public:
+    ;
+    K_SET_GET_PTR(KElectricField, RootElectricField);
+    K_SET_GET(eRampingType, RampingType);
+    K_SET_GET(int, NumCycles);
+    K_SET_GET(double, RampUpDelay);
+    K_SET_GET(double, RampDownDelay);
+    K_SET_GET(double, RampUpTime);
+    K_SET_GET(double, RampDownTime);
+    K_SET_GET(double, TimeConstant);
+    K_SET_GET(double, TimeScalingFactor)
 };
 
 } /* namespace KEMField */

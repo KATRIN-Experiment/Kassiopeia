@@ -19,29 +19,31 @@ namespace KEMField
 *
 */
 
-class KFMElectrostaticLocalCoefficientSet: public KFMScalarMultipoleExpansion
+class KFMElectrostaticLocalCoefficientSet : public KFMScalarMultipoleExpansion
 {
-    public:
-        KFMElectrostaticLocalCoefficientSet();
-        virtual ~KFMElectrostaticLocalCoefficientSet();
-        KFMElectrostaticLocalCoefficientSet(const KFMElectrostaticLocalCoefficientSet &copyObject):KFMScalarMultipoleExpansion(copyObject){;};
-        KFMElectrostaticLocalCoefficientSet& operator=(const KFMElectrostaticLocalCoefficientSet &copyObject)
-        {
-            KFMScalarMultipoleExpansion::operator=(copyObject);
-            return *this;
-        };
+  public:
+    KFMElectrostaticLocalCoefficientSet();
+    ~KFMElectrostaticLocalCoefficientSet() override;
+    KFMElectrostaticLocalCoefficientSet(const KFMElectrostaticLocalCoefficientSet& copyObject) :
+        KFMScalarMultipoleExpansion(copyObject)
+    {
+        ;
+    };
+    KFMElectrostaticLocalCoefficientSet& operator=(const KFMElectrostaticLocalCoefficientSet& copyObject)
+    {
+        KFMScalarMultipoleExpansion::operator=(copyObject);
+        return *this;
+    };
 
-        virtual std::string ClassName() const;
+    std::string ClassName() const override;
 
-        void DefineOutputNode(KSAOutputNode* node) const;
-        void DefineInputNode(KSAInputNode* node);
+    void DefineOutputNode(KSAOutputNode* node) const override;
+    void DefineInputNode(KSAInputNode* node) override;
 
-
-    private:
+  private:
 };
 
-template <typename Stream>
-Stream& operator>>(Stream& s, KFMElectrostaticLocalCoefficientSet& aData)
+template<typename Stream> Stream& operator>>(Stream& s, KFMElectrostaticLocalCoefficientSet& aData)
 {
     s.PreStreamInAction(aData);
 
@@ -54,8 +56,7 @@ Stream& operator>>(Stream& s, KFMElectrostaticLocalCoefficientSet& aData)
     r_mom->resize(size);
     i_mom->resize(size);
 
-    for(unsigned int i=0;i<size;i++)
-    {
+    for (unsigned int i = 0; i < size; i++) {
         s >> (*r_mom)[i];
         s >> (*i_mom)[i];
     }
@@ -64,8 +65,7 @@ Stream& operator>>(Stream& s, KFMElectrostaticLocalCoefficientSet& aData)
     return s;
 }
 
-template <typename Stream>
-Stream& operator<<(Stream& s, const KFMElectrostaticLocalCoefficientSet& aData)
+template<typename Stream> Stream& operator<<(Stream& s, const KFMElectrostaticLocalCoefficientSet& aData)
 {
     s.PreStreamOutAction(aData);
 
@@ -75,8 +75,7 @@ Stream& operator<<(Stream& s, const KFMElectrostaticLocalCoefficientSet& aData)
     unsigned int size = r_mom->size();
     s << size;
 
-    for(unsigned int i=0; i<size; i++)
-    {
+    for (unsigned int i = 0; i < size; i++) {
         s << (*r_mom)[i];
         s << (*i_mom)[i];
     }
@@ -87,10 +86,9 @@ Stream& operator<<(Stream& s, const KFMElectrostaticLocalCoefficientSet& aData)
 }
 
 
-
 DefineKSAClassName(KFMElectrostaticLocalCoefficientSet)
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticLocalCoefficientSet_H__ */

@@ -6,7 +6,7 @@ if( Kassiopeia_USE_ROOT )
         ROOTFileMerge
     )
     if( KASPER_USE_BOOST )
-        kasper_find_boost( 1.44.0 REQUIRED COMPONENTS program_options)
+        find_package( Boost 1.44 REQUIRED COMPONENTS program_options)
         list( APPEND APPLICATIONS_OTHER_BASENAMES
             TrackCompare
         )

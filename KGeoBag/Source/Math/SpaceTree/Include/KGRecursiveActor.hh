@@ -1,10 +1,10 @@
 #ifndef KGRecursiveActor_HH__
 #define KGRecursiveActor_HH__
 
-#include <stack>
-
 #include "KGNode.hh"
 #include "KGNodeActor.hh"
+
+#include <stack>
 
 namespace KGeoBag
 {
@@ -22,118 +22,103 @@ namespace KGeoBag
 *
 */
 
-template< typename NodeType >
-class KGRecursiveActor: public KGNodeActor<NodeType>
+template<typename NodeType> class KGRecursiveActor : public KGNodeActor<NodeType>
 {
-    public:
-       KGRecursiveActor():fOperationalActor(NULL),fVisitingOrderForward(true){};
-       virtual ~KGRecursiveActor(){};
+  public:
+    KGRecursiveActor() : fOperationalActor(nullptr), fVisitingOrderForward(true){};
+    ~KGRecursiveActor() override{};
 
-        void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    {
+        if (opActor != this && opActor != nullptr)  //avoid a disaster
         {
-            if(opActor != this && opActor != NULL)//avoid a disaster
-            {
-                fOperationalActor = opActor;
-            }
+            fOperationalActor = opActor;
         }
+    }
 
-        void VisitParentBeforeChildren(){fVisitingOrderForward = true;};
-        void VisitChildrenBeforeParent(){fVisitingOrderForward = false;};
+    void VisitParentBeforeChildren()
+    {
+        fVisitingOrderForward = true;
+    };
+    void VisitChildrenBeforeParent()
+    {
+        fVisitingOrderForward = false;
+    };
 
-        void ApplyAction(NodeType* node)
-        {
-            if(node != NULL)
-            {
+    void ApplyAction(NodeType* node) override
+    {
+        if (node != nullptr) {
 
-                //make sure the stacks are empty
-                fNodeStack = std::stack< NodeType* >();
-                fSecondaryNodeStack = std::stack< NodeType* >();
+            //make sure the stacks are empty
+            fNodeStack = std::stack<NodeType*>();
+            fSecondaryNodeStack = std::stack<NodeType*>();
 
-                //push on the first node
-                fNodeStack.push(node);
+            //push on the first node
+            fNodeStack.push(node);
 
-                if(fVisitingOrderForward)
-                {
-                    do
-                    {
-                        //perform the operational visitors action on node at the top
-                        //of the stack
-                        fOperationalActor->ApplyAction(fNodeStack.top());
+            if (fVisitingOrderForward) {
+                do {
+                    //perform the operational visitors action on node at the top
+                    //of the stack
+                    fOperationalActor->ApplyAction(fNodeStack.top());
 
-                        if(fNodeStack.top()->HasChildren())
-                        {
-                            unsigned int n_children = fNodeStack.top()->GetNChildren();
+                    if (fNodeStack.top()->HasChildren()) {
+                        unsigned int n_children = fNodeStack.top()->GetNChildren();
+                        fTempNode = fNodeStack.top();
+                        fNodeStack.pop();
+
+                        for (unsigned int i = 0; i < n_children; i++) {
+                            //assuming that the order in which we visit the children doesn't matter
+                            fNodeStack.push(fTempNode->GetChild(i));
+                        }
+                    }
+                    else {
+                        fNodeStack.pop();
+                    }
+                } while (fNodeStack.size() != 0);
+            }
+            else {
+                do {
+                    if (fNodeStack.size() != 0) {
+                        if (fNodeStack.top()->HasChildren()) {
                             fTempNode = fNodeStack.top();
+                            fSecondaryNodeStack.push(fNodeStack.top());
                             fNodeStack.pop();
 
-                            for(unsigned int i=0; i < n_children; i++)
-                            {
+                            unsigned int n_children = fTempNode->GetNChildren();
+
+                            for (unsigned int i = 0; i < n_children; i++) {
                                 //assuming that the order in which we visit the children doesn't matter
-                                fNodeStack.push( fTempNode->GetChild(i) );
+                                fNodeStack.push(fTempNode->GetChild(i));
                             }
                         }
-                        else
-                        {
+                        else {
+                            fOperationalActor->ApplyAction(fNodeStack.top());
                             fNodeStack.pop();
                         }
                     }
-                    while(fNodeStack.size() != 0 );
-                }
-                else
-                {
-                    do
-                    {
-                        if(fNodeStack.size() != 0)
-                        {
-                            if(fNodeStack.top()->HasChildren() )
-                            {
-                                fTempNode = fNodeStack.top();
-                                fSecondaryNodeStack.push(fNodeStack.top());
-                                fNodeStack.pop();
-
-                                unsigned int n_children = fTempNode->GetNChildren();
-
-                                for(unsigned int i=0; i < n_children; i++)
-                                {
-                                    //assuming that the order in which we visit the children doesn't matter
-                                    fNodeStack.push( fTempNode->GetChild(i) );
-                                }
-                            }
-                            else
-                            {
-                                fOperationalActor->ApplyAction(fNodeStack.top());
-                                fNodeStack.pop();
-                            }
-                        }
-                        else
-                        {
-                            if(fSecondaryNodeStack.size() != 0)
-                            {
-                                fOperationalActor->ApplyAction(fSecondaryNodeStack.top());
-                                fSecondaryNodeStack.pop();
-                            }
+                    else {
+                        if (fSecondaryNodeStack.size() != 0) {
+                            fOperationalActor->ApplyAction(fSecondaryNodeStack.top());
+                            fSecondaryNodeStack.pop();
                         }
                     }
-                    while(fNodeStack.size() != 0 || fSecondaryNodeStack.size() != 0 );
-                }
-
+                } while (fNodeStack.size() != 0 || fSecondaryNodeStack.size() != 0);
             }
         }
+    }
 
-    private:
+  private:
+    KGNodeActor<NodeType>* fOperationalActor;
 
-        KGNodeActor<NodeType>* fOperationalActor;
-
-        bool fVisitingOrderForward;
-        std::stack< NodeType* > fNodeStack;
-        std::stack< NodeType* > fSecondaryNodeStack;
-        NodeType* fTempNode;
-
+    bool fVisitingOrderForward;
+    std::stack<NodeType*> fNodeStack;
+    std::stack<NodeType*> fSecondaryNodeStack;
+    NodeType* fTempNode;
 };
 
 
-
-}
+}  // namespace KGeoBag
 
 
 #endif /*KGRecursiveActor_H__ */

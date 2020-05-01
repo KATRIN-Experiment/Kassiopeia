@@ -45,18 +45,20 @@
 */
 
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
-    class FBBRionization {
-        public:
-            FBBRionization(double aT, int an, int al);
-            virtual ~FBBRionization();
+class FBBRionization
+{
+  public:
+    FBBRionization(double aT, int an, int al);
+    virtual ~FBBRionization();
 
-        public:
-            double operator() (double E);
+  public:
+    double operator()(double E);
 
-        private:
-            /** \brief Photoionization cross section of a general (n,l) state of hydrogen atom.
+  private:
+    /** \brief Photoionization cross section of a general (n,l) state of hydrogen atom.
              *  n, l: principal and angular momentum quantum numbers of the initial discrete state.
              * omega: photon energy in atomic units; omega=1 corresponds to  E=27.211 eV.
              * omega has to be larger than the ionization energy of the (n,l) state;
@@ -65,9 +67,9 @@ namespace Kassiopeia {
              * Eqs. 1 and 2 from Burgess 1965 paper are used, in modified form.
              * Agrees with eq. 23 of Glukhov 2010.
              */
-            double SigmaPhotoionization(int n,int l,double E);
+    double SigmaPhotoionization(int n, int l, double E);
 
-            /** \brief Square of integral of RadialH(n,l,r)*RadialH(E,lp)*r*r*r from zero to infinity.
+    /** \brief Square of integral of RadialH(n,l,r)*RadialH(E,lp)*r*r*r from zero to infinity.
              * We use the paper : A. Burgess: Tables of hydrogenic photoionization cross-sections
              * and recombination coefficients,
              * Memoirs of the Royal Astronomical Society 69 (1965) 1,
@@ -79,41 +81,42 @@ namespace Kassiopeia {
              * If lp<0 :  returns 0.  !!!
              * Maximal value of n: nMAX (set by #define in a separate file)
              */
-            double RadInt2BoundFreeBurgess(int n, int l, double E, int sign);
+    double RadInt2BoundFreeBurgess(int n, int l, double E, int sign);
 
 
-        K_SET_GET(double, T)
-        K_SET_GET(int, n)
-        K_SET_GET(int, l)
+    K_SET_GET(double, T)
+    K_SET_GET(int, n)
+    K_SET_GET(int, l)
 
-        private:
-            double LogN[2 * nMAX + 10];
-            double LogNFactor[2 * nMAX + 10];
-            double logpi;
-            double Ehigh, Clow, Chigh;
-            double fC;
-            double fAtomic_C;
-            double fAtomic_kB;
-    };
+  private:
+    double LogN[2 * nMAX + 10];
+    double LogNFactor[2 * nMAX + 10];
+    double logpi;
+    double Ehigh, Clow, Chigh;
+    double fC;
+    double fAtomic_C;
+    double fAtomic_kB;
+};
 
 
-    class RydbergCalculator {
+class RydbergCalculator
+{
 
-    public:
-        RydbergCalculator();
-        virtual ~RydbergCalculator();
+  public:
+    RydbergCalculator();
+    virtual ~RydbergCalculator();
 
-    private:
-        double LogN[2 * nMAX + 10];
-        double LogNFactor[2 * nMAX + 10];
-        double Ehigh, Clow, Chigh;
-        double fAtomicTimeUnit;
-        double fAtomic_C;
-        double fAtomic_kB;
-        FBBRionization* fFBBRIon;
+  private:
+    double LogN[2 * nMAX + 10];
+    double LogNFactor[2 * nMAX + 10];
+    double Ehigh, Clow, Chigh;
+    double fAtomicTimeUnit;
+    double fAtomic_C;
+    double fAtomic_kB;
+    FBBRionization* fFBBRIon;
 
-    public:
-        /**
+  public:
+    /**
         * \brief This function computes the hypergeometric function by using the recurrence relation of
         * D. Hoang-Binh, Comp. Phys. Commun. 166 (2005) 191.
         * We use b-recurrence.
@@ -125,9 +128,9 @@ namespace Kassiopeia {
         * \param x
         * \param E
         */
-        double HypergeometricFHoangBinh(int a, int b, int c, double x, double &E);
+    double HypergeometricFHoangBinh(int a, int b, int c, double x, double& E);
 
-        /**
+    /**
          * \brief Square of integral of RadialH(n,l,r)*RadialH(np,lp,r)*r*r*r from zero to infinity.
          +   n,np,  l, lp=l+sign: principal and angular momentum quantum numbers.
          +   lp=l+sign; sign has to be +1 or -1
@@ -147,10 +150,10 @@ namespace Kassiopeia {
          *  \return Rate
          *
          */
-        double RadInt2Gordon(int n, int l, int np, int sign);
+    double RadInt2Gordon(int n, int l, int np, int sign);
 
 
-        /**
+    /**
          * \brief Rate of spontaneous emission from state (n,l) to state (np,l+sign) in s^-1 .
          * sign has to be either -1 or +1.
          * We use atomic units here.
@@ -160,17 +163,17 @@ namespace Kassiopeia {
          * \param np
          * \param sign
          */
-        double Psp(int n, int l, int np, int sign);
+    double Psp(int n, int l, int np, int sign);
 
-        /**
+    /**
          * \brief Rate of spontaneous emission from state (n,l) to all np<n states  with lp=l+-1 in s^-1
          *
          * \param n
          * \param l
          */
-        double Pspsum(int n, int l);
+    double Pspsum(int n, int l);
 
-        /**
+    /**
          * \brief Rate of BBR induced transition from state (n,l) to state (np,l+sign) in s^-1 .
          * sign has to be either -1 or +1.
          * n and np have to be different integers!
@@ -182,26 +185,26 @@ namespace Kassiopeia {
          * \param np
          * \param sign
          */
-        double PBBR(double T, int n, int l, int np, int sign);
+    double PBBR(double T, int n, int l, int np, int sign);
 
-        /**
+    /**
          * \brief BBR induced decay (stimulated emission) rates: we sum for all np from 1 to n-1 and all possible lp
          * \param T
          * \param n
          * \param l
          */
-        double PBBRdecay(double T, int n, int l);
+    double PBBRdecay(double T, int n, int l);
 
-        /**
+    /**
          * \brief BBR induced excitation (photon absorption) rates: we sum for all np from n+1 to npmax and all possible lp
          * \param T
          * \param n
          * \param l
          * \param npmax
          */
-        double PBBRexcitation(double T, int n, int l, int npmax);
+    double PBBRexcitation(double T, int n, int l, int npmax);
 
-        /**
+    /**
          * \brief This function computes the total spontaneous emission rate Psptotal from
          * the initial state (n,l),
          * and generates the  quantum numbers np, lp of the final state, using the
@@ -216,9 +219,9 @@ namespace Kassiopeia {
          * \param np
          * \param lp
          */
-        void SpontaneousEmissionGenerator(int n, int l, double &Psptotal, int &np, int &lp);
+    void SpontaneousEmissionGenerator(int n, int l, double& Psptotal, int& np, int& lp);
 
-        /**
+    /**
          * \brief This function computes the total BBR induced transition rate PBBRtotal from
          * the initial state (n,l),
          * and generates the  quantum numbers np, lp of the final state, using the
@@ -234,9 +237,9 @@ namespace Kassiopeia {
          * \param np
          * \param lp
          */
-        void BBRTransitionGenerator(double T, int n, int l, double &PBBRtotal, int &np, int &lp);
+    void BBRTransitionGenerator(double T, int n, int l, double& PBBRtotal, int& np, int& lp);
 
-        /** \brief BBR induced ionization rate of the (n,l) state in s^-1.
+    /** \brief BBR induced ionization rate of the (n,l) state in s^-1.
          * n, l: principal and angular momentum quantum numbers of the Rydberg state.
          * T: temperature in K.
          * The numerical integration is performed over the electron energy E (atomic units: a.u.)
@@ -253,12 +256,9 @@ namespace Kassiopeia {
          * Recommended value: Ninteg=16.
          * The integration result is accurate if it is not sensitive to the step1factor, tol and Ninteg values.
          */
-        double PBBRionization(double T, int n, int l,double step1factor,double tol,int Ninteg);
-
-    };
-
+    double PBBRionization(double T, int n, int l, double step1factor, double tol, int Ninteg);
+};
 
 
-}
-#endif //KASPER_RYDBERGFERENC_H
-
+}  // namespace Kassiopeia
+#endif  //KASPER_RYDBERGFERENC_H

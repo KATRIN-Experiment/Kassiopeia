@@ -3,24 +3,19 @@
 namespace KGeoBag
 {
 
-    KGRotatedPolyLoopSurfaceAxialMesher::KGRotatedPolyLoopSurfaceAxialMesher() :
-            KGSimpleAxialMesher()
-    {
-    }
-    KGRotatedPolyLoopSurfaceAxialMesher::~KGRotatedPolyLoopSurfaceAxialMesher()
-    {
-    }
+KGRotatedPolyLoopSurfaceAxialMesher::KGRotatedPolyLoopSurfaceAxialMesher() : KGSimpleAxialMesher() {}
+KGRotatedPolyLoopSurfaceAxialMesher::~KGRotatedPolyLoopSurfaceAxialMesher() {}
 
-    void KGRotatedPolyLoopSurfaceAxialMesher::VisitRotatedPathSurface( KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface )
-    {
-        //create poly loop points
-        ClosedPoints tPolyLoopPoints;
-        PolyLoopToClosedPoints( aRotatedPolyLoopSurface->Path().operator ->(), tPolyLoopPoints );
+void KGRotatedPolyLoopSurfaceAxialMesher::VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface)
+{
+    //create poly loop points
+    ClosedPoints tPolyLoopPoints;
+    PolyLoopToClosedPoints(aRotatedPolyLoopSurface->Path().operator->(), tPolyLoopPoints);
 
-        //create loops
-        ClosedPointsToLoops( tPolyLoopPoints );
+    //create loops
+    ClosedPointsToLoops(tPolyLoopPoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

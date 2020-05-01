@@ -8,28 +8,27 @@
 #ifndef KGCYLINDERSURFACERANDOM_HH_
 #define KGCYLINDERSURFACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGCylinderSurface.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for dicing a point on a KGCylinderSurface.
    */
-  class KGCylinderSurfaceRandom : virtual public KGShapeRandom,
-				 public KGCylinderSurface::Visitor
-  {
+class KGCylinderSurfaceRandom : virtual public KGShapeRandom, public KGCylinderSurface::Visitor
+{
   public:
-	  KGCylinderSurfaceRandom() : KGShapeRandom() {}
-    virtual ~KGCylinderSurfaceRandom() {}
+    KGCylinderSurfaceRandom() : KGShapeRandom() {}
+    ~KGCylinderSurfaceRandom() override {}
 
     /**
      * \brief Visitor function to dice the point on the KGCylinderSpace.
      *
      * \param aCylinderSpace
      */
-    virtual void VisitCylinderSurface(KGCylinderSurface* aCylinderSpace);
-  };
-}
+    void VisitCylinderSurface(KGCylinderSurface* aCylinderSpace) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGCYLINDERSURFACERANDOM_HH_ */

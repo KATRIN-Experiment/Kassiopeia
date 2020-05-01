@@ -2,27 +2,24 @@
 #define KGeoBag_KGExtrudedCircleSurfaceMesher_hh_
 
 #include "KGExtrudedCircleSurface.hh"
-
 #include "KGSimpleMesher.hh"
 
 namespace KGeoBag
 {
-    class KGExtrudedCircleSurfaceMesher :
-        virtual public KGSimpleMesher,
-        public KGExtrudedCircleSurface::Visitor
-    {
-        public:
-            using KGMesherBase::VisitExtendedSurface;
-            using KGMesherBase::VisitExtendedSpace;
+class KGExtrudedCircleSurfaceMesher : virtual public KGSimpleMesher, public KGExtrudedCircleSurface::Visitor
+{
+  public:
+    using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
-        public:
-            KGExtrudedCircleSurfaceMesher();
-            virtual ~KGExtrudedCircleSurfaceMesher();
+  public:
+    KGExtrudedCircleSurfaceMesher();
+    ~KGExtrudedCircleSurfaceMesher() override;
 
-        protected:
-            void VisitExtrudedPathSurface( KGExtrudedCircleSurface* aExtrudedCircleSurface );
-    };
+  protected:
+    void VisitExtrudedPathSurface(KGExtrudedCircleSurface* aExtrudedCircleSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

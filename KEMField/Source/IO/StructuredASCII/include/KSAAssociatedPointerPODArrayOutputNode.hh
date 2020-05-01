@@ -4,7 +4,8 @@
 #include "KSACallbackTypes.hh"
 #include "KSAPODArrayOutputNode.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -22,24 +23,25 @@ namespace KEMField{
 
 
 template<typename CallType, typename ReturnType, const ReturnType* (CallType::*memberFunction)() const>
-class KSAAssociatedPointerPODArrayOutputNode: public KSAPODArrayOutputNode< ReturnType >
+class KSAAssociatedPointerPODArrayOutputNode : public KSAPODArrayOutputNode<ReturnType>
 {
-    public:
+  public:
+    KSAAssociatedPointerPODArrayOutputNode(std::string name, unsigned int arr_size, const CallType* call_ptr) :
+        KSAPODArrayOutputNode<ReturnType>(name, arr_size)
+    {
+        KSAConstantReturnByPointerGet<CallType, ReturnType, memberFunction> callback;
+        KSAPODArrayOutputNode<ReturnType>::SetValue(callback(call_ptr));
+    }
 
-        KSAAssociatedPointerPODArrayOutputNode(std::string name, unsigned int arr_size, const CallType* call_ptr):KSAPODArrayOutputNode< ReturnType >(name, arr_size)
-        {
-            KSAConstantReturnByPointerGet< CallType, ReturnType, memberFunction > callback;
-            KSAPODArrayOutputNode< ReturnType >::SetValue(callback(call_ptr));
-        }
+    virtual ~KSAAssociatedPointerPODArrayOutputNode()
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPointerPODArrayOutputNode(){;};
-
-    protected:
-
+  protected:
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPointerPODArrayOutputNode_H__ */

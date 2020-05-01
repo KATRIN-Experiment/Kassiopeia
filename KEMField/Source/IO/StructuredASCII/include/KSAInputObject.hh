@@ -2,9 +2,8 @@
 #define KSAInputObject_HH__
 
 
-
-
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -23,21 +22,28 @@ class KSAInputNode;
 
 class KSAInputObject
 {
-    public:
-        KSAInputObject(){;};
-        virtual ~KSAInputObject(){;};
+  public:
+    KSAInputObject()
+    {
+        ;
+    };
+    virtual ~KSAInputObject()
+    {
+        ;
+    };
 
-        virtual void Initialize(){;};
+    virtual void Initialize()
+    {
+        ;
+    };
 
-        //defines the children to add to the node associated with this object
-        virtual void DefineInputNode(KSAInputNode* node) = 0;
+    //defines the children to add to the node associated with this object
+    virtual void DefineInputNode(KSAInputNode* node) = 0;
 
-    protected:
-
+  protected:
 };
 
 
-
-}
+}  // namespace KEMField
 
 #endif /* KSAInputObject_H__ */

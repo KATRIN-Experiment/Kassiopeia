@@ -5,55 +5,59 @@
 #ifndef KASPER_KSGENENERGYBETARECOIL_H
 #define KASPER_KSGENENERGYBETARECOIL_H
 
-#include "KSGenCreator.h"
 #include "KField.h"
+#include "KSGenCreator.h"
 
 namespace Kassiopeia
 {
-    class KSGenEnergyBetaRecoil:
-            public KSComponentTemplate< KSGenEnergyBetaRecoil, KSGenCreator >
-    {
-    public:
-        KSGenEnergyBetaRecoil();
-        KSGenEnergyBetaRecoil( const KSGenEnergyBetaRecoil& aCopy );
-        KSGenEnergyBetaRecoil* Clone() const;
-        virtual ~KSGenEnergyBetaRecoil();
+class KSGenEnergyBetaRecoil : public KSComponentTemplate<KSGenEnergyBetaRecoil, KSGenCreator>
+{
+  public:
+    KSGenEnergyBetaRecoil();
+    KSGenEnergyBetaRecoil(const KSGenEnergyBetaRecoil& aCopy);
+    KSGenEnergyBetaRecoil* Clone() const;
+    virtual ~KSGenEnergyBetaRecoil();
 
-        //******
-        //action
-        //******
+    //******
+    //action
+    //******
 
-    public:
-        void Dice( KSParticleQueue* aPrimaries );
+  public:
+    void Dice(KSParticleQueue* aPrimaries);
 
-        //*************
-        //configuration
-        //*************
+    //*************
+    //configuration
+    //*************
 
-    public:
-        double g(double E);
-        double g1(double E);
-        double g2(double E);
-        double GetRecoilEnergyMax();
-        double GetRecoilEnergyProbabilityMax(double Emax);
-        double GenRecoilEnergy();
+  public:
+    double g(double E);
+    double g1(double E);
+    double g2(double E);
+    double GetRecoilEnergyMax();
+    double GetRecoilEnergyProbabilityMax(double Emax);
+    double GenRecoilEnergy();
 
-    private:
-        ;K_SET_GET( int, NMax );
-        ;K_SET_GET( double, EMax );
-        ;K_SET_GET( double, PMax );
-        ;K_SET_GET( double, MinEnergy );
-        ;K_SET_GET( double, MaxEnergy );
+  private:
+    ;
+    K_SET_GET(int, NMax);
+    ;
+    K_SET_GET(double, EMax);
+    ;
+    K_SET_GET(double, PMax);
+    ;
+    K_SET_GET(double, MinEnergy);
+    ;
+    K_SET_GET(double, MaxEnergy);
 
-        //**********
-        //initialize
-        //**********
+    //**********
+    //initialize
+    //**********
 
-    public:
-        void InitializeComponent();
-        void DeinitializeComponent();
-    };
+  public:
+    void InitializeComponent();
+    void DeinitializeComponent();
+};
 
-}
+}  // namespace Kassiopeia
 
-#endif //KASPER_KSGENENERGYBETARECOIL_H
+#endif  //KASPER_KSGENENERGYBETARECOIL_H

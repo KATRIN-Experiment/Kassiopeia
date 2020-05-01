@@ -1,17 +1,17 @@
 #ifndef __KFMScalarMomentResetter_H__
 #define __KFMScalarMomentResetter_H__
 
-#include <vector>
-#include <complex>
-#include <cmath>
-
+#include "KFMArrayFillingOperator.hh"
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
 
-#include "KFMArrayFillingOperator.hh"
+#include <cmath>
+#include <complex>
+#include <vector>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -26,36 +26,40 @@ namespace KEMField{
 *
 */
 
-template< typename ObjectTypeList, typename ScalarMomentType> //ScalarMomentType should inherit from KFMScalarMomentExpansion
-class KFMScalarMomentResetter: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList,
+         typename ScalarMomentType>  //ScalarMomentType should inherit from KFMScalarMomentExpansion
+class KFMScalarMomentResetter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMScalarMomentResetter(){;};
-        virtual ~KFMScalarMomentResetter(){;};
+  public:
+    KFMScalarMomentResetter()
+    {
+        ;
+    };
+    ~KFMScalarMomentResetter() override
+    {
+        ;
+    };
 
-        virtual void SetNumberOfTermsInSeries(unsigned int n_terms)
-        {
-            fNTerms = n_terms;
-        }
+    virtual void SetNumberOfTermsInSeries(unsigned int n_terms)
+    {
+        fNTerms = n_terms;
+    }
 
-        virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                if(KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node) != NULL)
-                {
-                    ScalarMomentType* set = KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node);
-                    set->SetNumberOfTermsInSeries(fNTerms);
-                    set->Clear();
-                }
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            if (KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node) != nullptr) {
+                ScalarMomentType* set = KFMObjectRetriever<ObjectTypeList, ScalarMomentType>::GetNodeObject(node);
+                set->SetNumberOfTermsInSeries(fNTerms);
+                set->Clear();
             }
         }
+    }
 
-    private:
-
-        unsigned int fNTerms;
+  private:
+    unsigned int fNTerms;
 };
 
-}//end of namespace
+}  // namespace KEMField
 
 #endif /* __KFMScalarMomentResetter_H__ */

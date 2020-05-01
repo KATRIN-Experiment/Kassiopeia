@@ -18,8 +18,8 @@ namespace katrin
 
 class KConsoleMuter : KNonCopyable
 {
-public:
-    KConsoleMuter() { }
+  public:
+    KConsoleMuter() {}
     KConsoleMuter(std::ostream& stream);
     KConsoleMuter(FILE* stream);
     virtual ~KConsoleMuter();
@@ -28,7 +28,7 @@ public:
     void Mute(FILE* stream);
     void UnMute();
 
-protected:
+  protected:
     std::ofstream fNullStream;
     std::vector<std::ostream*> fMutedStreams;
     std::vector<std::streambuf*> fBackupStreamBufs;
@@ -53,11 +53,11 @@ inline KConsoleMuter::~KConsoleMuter()
 inline void KConsoleMuter::Mute(std::ostream& stream)
 {
     if (!fNullStream.is_open())
-        fNullStream.open( "/dev/null", std::ofstream::app );
+        fNullStream.open("/dev/null", std::ofstream::app);
 
     fMutedStreams.push_back(&stream);
     fBackupStreamBufs.push_back(stream.rdbuf());
-    stream.rdbuf( fNullStream.rdbuf() );
+    stream.rdbuf(fNullStream.rdbuf());
 }
 
 inline void KConsoleMuter::Mute(FILE* cStream)
@@ -72,7 +72,7 @@ inline void KConsoleMuter::Mute(FILE* cStream)
 inline void KConsoleMuter::UnMute()
 {
     for (size_t i = 0; i < fMutedStreams.size(); ++i) {
-        fMutedStreams[i]->rdbuf( fBackupStreamBufs[i] );
+        fMutedStreams[i]->rdbuf(fBackupStreamBufs[i]);
     }
     fMutedStreams.clear();
     fBackupStreamBufs.clear();

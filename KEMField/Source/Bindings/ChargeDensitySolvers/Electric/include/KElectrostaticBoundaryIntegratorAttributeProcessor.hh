@@ -8,12 +8,13 @@
 #ifndef KELECTROSTATICBOUNDARYINTEGRATORATTRIBUTEPROCESSOR_HH_
 #define KELECTROSTATICBOUNDARYINTEGRATORATTRIBUTEPROCESSOR_HH_
 
-#include "KEMBindingsMessage.hh"
-#include "KElectrostaticBoundaryIntegratorPolicy.hh"
 #include "KContainer.hh"
+#include "KEMBindingsMessage.hh"
 #include "KEMSimpleException.hh"
+#include "KElectrostaticBoundaryIntegratorPolicy.hh"
 
-namespace katrin {
+namespace katrin
+{
 
 /**
  * use the string value inside the KContainer (if KContainer does not hold a
@@ -32,47 +33,43 @@ namespace katrin {
  * if( aContainer->GetName() == "integrator")
  * return AddElectrostaticIntegratorPolicy(fObject,aContainer);
  */
-template< class XType >
-bool AddElectrostaticIntegratorPolicy(XType* reciever,KContainer* aContainer)
+template<class XType> bool AddElectrostaticIntegratorPolicy(XType* reciever, KContainer* aContainer)
 {
-	std::string integratorName = aContainer->AsReference< std::string >();
-	try
-	{
-		KEMField::KEBIPolicy policy {integratorName};
-		reciever->SetIntegratorPolicy(policy);
-	}
-	catch(KEMField::KEMSimpleException& exception)
-	{
-		BINDINGMSG(eWarning) << "GaussianEliminationFieldSolver cannot use"
-				" unknown integrator type <" << integratorName << ">.";
-		return false;
-	}
-	return true;
+    std::string integratorName = aContainer->AsReference<std::string>();
+    try {
+        KEMField::KEBIPolicy policy{integratorName};
+        reciever->SetIntegratorPolicy(policy);
+    }
+    catch (KEMField::KEMSimpleException& exception) {
+        BINDINGMSG(eWarning) << "GaussianEliminationFieldSolver cannot use"
+                                " unknown integrator type <"
+                             << integratorName << ">.";
+        return false;
+    }
+    return true;
 }
 
 /**
  * same as above, but only pass the standard integrator to the reciever class
  * using XType::SetDirectIntegrator(const KElectrostaticBoundaryIntegrator&)
  */
-template< class XType >
-bool AddElectrostaticIntegrator(XType* reciever,KContainer* aContainer)
+template<class XType> bool AddElectrostaticIntegrator(XType* reciever, KContainer* aContainer)
 {
-	std::string integratorName = aContainer->AsReference< std::string >();
-	try
-	{
-		KEMField::KEBIPolicy policy {integratorName};
-		reciever->SetDirectIntegrator(policy.CreateIntegrator());
-	}
-	catch(KEMField::KEMSimpleException& exception)
-	{
-		BINDINGMSG(eWarning) << "GaussianEliminationFieldSolver cannot use"
-				" unknown integrator type <" << integratorName << ">.";
-		return false;
-	}
-	return true;
+    std::string integratorName = aContainer->AsReference<std::string>();
+    try {
+        KEMField::KEBIPolicy policy{integratorName};
+        reciever->SetDirectIntegrator(policy.CreateIntegrator());
+    }
+    catch (KEMField::KEMSimpleException& exception) {
+        BINDINGMSG(eWarning) << "GaussianEliminationFieldSolver cannot use"
+                                " unknown integrator type <"
+                             << integratorName << ">.";
+        return false;
+    }
+    return true;
 }
 
-} /* katrin */
+}  // namespace katrin
 
 
 #endif /* KELECTROSTATICBOUNDARYINTEGRATORATTRIBUTEPROCESSOR_HH_ */

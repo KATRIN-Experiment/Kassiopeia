@@ -3,19 +3,18 @@
 
 #include "KTagged.h"
 
-namespace katrin{
+namespace katrin
+{
 
-    class KApplication:
-        public KTagged
-    {
-    public:
-        KApplication();
-        KApplication( const KApplication& aCopy);
-        virtual ~KApplication();
-        virtual bool Execute() = 0;
+class KApplication : public KTagged
+{
+  public:
+    KApplication();
+    KApplication(const KApplication& aCopy);
+    ~KApplication() override;
+    virtual bool Execute() = 0;
+};
 
-    };
-
-}
+}  // namespace katrin
 
 #endif

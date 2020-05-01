@@ -1,13 +1,12 @@
 #ifndef KFMFastFourierTransform_HH__
 #define KFMFastFourierTransform_HH__
 
-#include <complex>
-
 #include "KFMArrayWrapper.hh"
-#include "KFMUnaryArrayOperator.hh"
-
 #include "KFMBitReversalPermutation.hh"
 #include "KFMFastFourierTransformUtilities.hh"
+#include "KFMUnaryArrayOperator.hh"
+
+#include <complex>
 
 namespace KEMField
 {
@@ -26,46 +25,43 @@ namespace KEMField
 */
 
 
-class KFMFastFourierTransform: public KFMUnaryArrayOperator< std::complex<double>, 1 >
+class KFMFastFourierTransform : public KFMUnaryArrayOperator<std::complex<double>, 1>
 {
-    public:
+  public:
+    KFMFastFourierTransform();
+    ~KFMFastFourierTransform() override;
 
-        KFMFastFourierTransform();
-        virtual ~KFMFastFourierTransform();
+    virtual void SetSize(unsigned int N);
 
-        virtual void SetSize(unsigned int N);
+    virtual void SetForward();
+    virtual void SetBackward();
 
-        virtual void SetForward();
-        virtual void SetBackward();
+    void Initialize() override;
 
-        virtual void Initialize();
+    void ExecuteOperation() override;
 
-        virtual void ExecuteOperation();
+  private:
+    virtual void AllocateWorkspace();
+    virtual void DealocateWorkspace();
 
-    private:
+    bool fIsValid;
+    bool fForward;
+    bool fInitialized;
+    bool fSizeIsPowerOfTwo;
+    bool fSizeIsPowerOfThree;
 
-        virtual void AllocateWorkspace();
-        virtual void DealocateWorkspace();
-
-        bool fIsValid;
-        bool fForward;
-        bool fInitialized;
-        bool fSizeIsPowerOfTwo;
-        bool fSizeIsPowerOfThree;
-
-        //auxilliary workspace needed for basic 1D transform
-        unsigned int fN;
-        unsigned int fM;
-        unsigned int* fPermutation;
-        std::complex<double>* fTwiddle;
-        std::complex<double>* fConjugateTwiddle;
-        std::complex<double>* fScale;
-        std::complex<double>* fCirculant;
-        std::complex<double>* fWorkspace;
-
+    //auxilliary workspace needed for basic 1D transform
+    unsigned int fN;
+    unsigned int fM;
+    unsigned int* fPermutation;
+    std::complex<double>* fTwiddle;
+    std::complex<double>* fConjugateTwiddle;
+    std::complex<double>* fScale;
+    std::complex<double>* fCirculant;
+    std::complex<double>* fWorkspace;
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMFastFourierTransform_H__ */

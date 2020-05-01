@@ -3,12 +3,8 @@
 namespace katrin
 {
 
-    KWindow::KWindow()
-    {
-    }
+KWindow::KWindow() {}
 
-    KWindow::~KWindow()
-    {
-    }
+KWindow::~KWindow() {}
 
-}
+}  // namespace katrin

@@ -6,21 +6,21 @@
 namespace Kassiopeia
 {
 
-    class KSMutex
-    {
-        public:
-            KSMutex();
-            virtual ~KSMutex();
+class KSMutex
+{
+  public:
+    KSMutex();
+    virtual ~KSMutex();
 
-            bool Trylock();
+    bool Trylock();
 
-            void Lock();
-            void Unlock();
+    void Lock();
+    void Unlock();
 
-        private:
-            pthread_mutex_t fMutex;
-    };
+  private:
+    pthread_mutex_t fMutex;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

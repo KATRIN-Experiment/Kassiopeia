@@ -6,23 +6,22 @@
 namespace Kassiopeia
 {
 
-    class KSReadStepROOT :
-        public KSReadIteratorROOT
-    {
-        public:
-            KSReadStepROOT( TFile* aFile );
-            virtual ~KSReadStepROOT();
+class KSReadStepROOT : public KSReadIteratorROOT
+{
+  public:
+    KSReadStepROOT(TFile* aFile);
+    ~KSReadStepROOT() override;
 
-        public:
-            unsigned int GetStepIndex() const;
+  public:
+    unsigned int GetStepIndex() const;
 
-        public:
-            KSReadStepROOT& operator= (const unsigned int& aValue);
+  public:
+    KSReadStepROOT& operator=(const unsigned int& aValue);
 
-        private:
-            unsigned int fStepIndex;
-    };
+  private:
+    unsigned int fStepIndex;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

@@ -1,14 +1,13 @@
 #ifndef Kassiopeia_KSWriteASCII_h_
 #define Kassiopeia_KSWriteASCII_h_
 
-#include "KSWriter.h"
-
 #include "KFile.h"
+#include "KSWriter.h"
 using katrin::KFile;
 
 #include "KTextFile.h"
-using katrin::KTextFile;
 using katrin::CreateOutputTextFile;
+using katrin::KTextFile;
 
 #include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
@@ -21,169 +20,166 @@ using KGeoBag::KTwoVector;
 namespace Kassiopeia
 {
 
-	class KSWriteASCII :
-	public KSComponentTemplate< KSWriteASCII, KSWriter >
-	{
-	private:
-		class Data
-		{
-		public:
-			Data( KSComponent* aComponent );
-			Data( KSComponent* aComponent, KSWriteASCII* aWriter );
-			~Data();
+class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
+{
+  private:
+    class Data
+    {
+      public:
+        Data(KSComponent* aComponent);
+        Data(KSComponent* aComponent, KSWriteASCII* aWriter);
+        ~Data();
 
-			void Start( const unsigned int& anIndex );
-			void Fill();
-			void MakeTitle( KSComponent* aComponent, int aTrack );
+        void Start(const unsigned int& anIndex);
+        void Fill();
+        void MakeTitle(KSComponent* aComponent, int aTrack);
 
-		private:
-			std::string fLabel;
-			std::string fType;
-			KSWriteASCII* fWriter;
-			unsigned int fIndex;
-			unsigned int fLength;
+      private:
+        std::string fLabel;
+        std::string fType;
+        KSWriteASCII* fWriter;
+        unsigned int fIndex;
+        unsigned int fLength;
 
-			class Objekt
-			{
-			private:
-				KSComponent* fComponent;
-				std::string fType;
-				int fPrecision;
+        class Objekt
+        {
+          private:
+            KSComponent* fComponent;
+            std::string fType;
+            int fPrecision;
 
-			public:
-				Objekt(KSComponent* aComponent, std::string aType, int Precision);
-				~Objekt();
-				std::string getValue();
-			};
+          public:
+            Objekt(KSComponent* aComponent, std::string aType, int Precision);
+            ~Objekt();
+            std::string getValue();
+        };
 
-			std::vector< KSComponent* > fComponents;
-			std::vector< Objekt* > fObjekts;
-		};
+        std::vector<KSComponent*> fComponents;
+        std::vector<Objekt*> fObjekts;
+    };
 
-		typedef std::map< KSComponent*, Data* > KSComponentMap;
-		typedef KSComponentMap::iterator ComponentIt;
-		typedef KSComponentMap::const_iterator ComponentCIt;
-		typedef KSComponentMap::value_type ComponentEntry;
+    typedef std::map<KSComponent*, Data*> KSComponentMap;
+    typedef KSComponentMap::iterator ComponentIt;
+    typedef KSComponentMap::const_iterator ComponentCIt;
+    typedef KSComponentMap::value_type ComponentEntry;
 
-	public:
-		KSWriteASCII();
-		KSWriteASCII( const KSWriteASCII& aCopy );
-		KSWriteASCII* Clone() const;
-		virtual ~KSWriteASCII();
+  public:
+    KSWriteASCII();
+    KSWriteASCII(const KSWriteASCII& aCopy);
+    KSWriteASCII* Clone() const override;
+    ~KSWriteASCII() override;
 
-	public:
-		void SetBase( const std::string& aBase );
-		void SetPath( const std::string& aPath );
-		void SetStepIteration( const unsigned int& aValue );
-		void SetPrecision( const unsigned int& aValue );
+  public:
+    void SetBase(const std::string& aBase);
+    void SetPath(const std::string& aPath);
+    void SetStepIteration(const unsigned int& aValue);
+    void SetPrecision(const unsigned int& aValue);
 
-		KTextFile* TextFile();
-		int Precision() const;
+    KTextFile* TextFile();
+    int Precision() const;
 
 
-	private:
-		std::string fBase;
-		std::string fPath;
-		unsigned int fStepIteration;
-		unsigned int fStepIterationIndex;
-		unsigned int fPrecision;
+  private:
+    std::string fBase;
+    std::string fPath;
+    unsigned int fStepIteration;
+    unsigned int fStepIterationIndex;
+    unsigned int fPrecision;
 
-	public:
-		void ExecuteRun();
-		void ExecuteEvent();
-		void ExecuteTrack();
-		void ExecuteStep();
+  public:
+    void ExecuteRun() override;
+    void ExecuteEvent() override;
+    void ExecuteTrack() override;
+    void ExecuteStep() override;
 
-		void AddRunComponent( KSComponent* aComponent );
-		void RemoveRunComponent( KSComponent* aComponent );
+    void AddRunComponent(KSComponent* aComponent);
+    void RemoveRunComponent(KSComponent* aComponent);
 
-		void AddEventComponent( KSComponent* aComponent );
-		void RemoveEventComponent( KSComponent* aComponent );
+    void AddEventComponent(KSComponent* aComponent);
+    void RemoveEventComponent(KSComponent* aComponent);
 
-		void AddTrackComponent( KSComponent* aComponent );
-		void RemoveTrackComponent( KSComponent* aComponent );
+    void AddTrackComponent(KSComponent* aComponent);
+    void RemoveTrackComponent(KSComponent* aComponent);
 
-		void AddStepComponent( KSComponent* aComponent );
-		void RemoveStepComponent( KSComponent* aComponent );
+    void AddStepComponent(KSComponent* aComponent);
+    void RemoveStepComponent(KSComponent* aComponent);
 
-	protected:
-		virtual void InitializeComponent();
-		virtual void DeinitializeComponent();
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
-	private:
+  private:
+    KTextFile* fTextFile;
 
-		KTextFile* fTextFile;
+    std::string fKey;
+    KSComponentMap fRunComponents;
+    KSComponentMap fActiveRunComponents;
+    unsigned int fRunIndex;
+    unsigned int fRunFirstEventIndex;
+    unsigned int fRunLastEventIndex;
+    unsigned int fRunFirstTrackIndex;
+    unsigned int fRunLastTrackIndex;
+    unsigned int fRunFirstStepIndex;
+    unsigned int fRunLastStepIndex;
 
-		std::string fKey;
-		KSComponentMap fRunComponents;
-		KSComponentMap fActiveRunComponents;
-		unsigned int fRunIndex;
-		unsigned int fRunFirstEventIndex;
-		unsigned int fRunLastEventIndex;
-		unsigned int fRunFirstTrackIndex;
-		unsigned int fRunLastTrackIndex;
-		unsigned int fRunFirstStepIndex;
-		unsigned int fRunLastStepIndex;
+    KSComponentMap fEventComponents;
+    KSComponentMap fActiveEventComponents;
+    unsigned int fEventIndex;
+    unsigned int fEventFirstTrackIndex;
+    unsigned int fEventLastTrackIndex;
+    unsigned int fEventFirstStepIndex;
+    unsigned int fEventLastStepIndex;
 
-		KSComponentMap fEventComponents;
-		KSComponentMap fActiveEventComponents;
-		unsigned int fEventIndex;
-		unsigned int fEventFirstTrackIndex;
-		unsigned int fEventLastTrackIndex;
-		unsigned int fEventFirstStepIndex;
-		unsigned int fEventLastStepIndex;
+    KSComponentMap fTrackComponents;
+    KSComponentMap fActiveTrackComponents;
+    unsigned int fTrackIndex;
+    unsigned int fTrackFirstStepIndex;
+    unsigned int fTrackLastStepIndex;
 
-		KSComponentMap fTrackComponents;
-		KSComponentMap fActiveTrackComponents;
-		unsigned int fTrackIndex;
-		unsigned int fTrackFirstStepIndex;
-		unsigned int fTrackLastStepIndex;
+    bool fStepComponent;
+    KSComponentMap fStepComponents;
+    KSComponentMap fActiveStepComponents;
+    unsigned int fStepIndex;
 
-		bool fStepComponent;
-		KSComponentMap fStepComponents;
-		KSComponentMap fActiveStepComponents;
-		unsigned int fStepIndex;
+    static const int fBufferSize;
+    static const int fSplitLevel;
+    static const std::string fLabel;
+};
 
-		static const int fBufferSize;
-		static const int fSplitLevel;
-		static const std::string fLabel;
-
-	};
-
-	inline void KSWriteASCII::SetBase( const std::string& aBase )
-	{
-		fBase = aBase;
-		return;
-	}
-	inline void KSWriteASCII::SetPath( const std::string& aPath )
-	{
-		fPath = aPath;
-		return;
-	}
-	inline void KSWriteASCII::SetStepIteration( const unsigned int& aValue )
-	{
-		fStepIteration = aValue;
-		return;
-	}
-
-	inline void KSWriteASCII::SetPrecision( const unsigned int& aValue )
-	{
-		fPrecision = aValue;
-		return;
-	}
-
-	inline KTextFile* KSWriteASCII::TextFile( )
-	{
-
-		return fTextFile;
-	}
-
-	inline int KSWriteASCII::Precision( ) const
-	{
-		return fPrecision;
-	}
-
+inline void KSWriteASCII::SetBase(const std::string& aBase)
+{
+    fBase = aBase;
+    return;
 }
+inline void KSWriteASCII::SetPath(const std::string& aPath)
+{
+    fPath = aPath;
+    return;
+}
+inline void KSWriteASCII::SetStepIteration(const unsigned int& aValue)
+{
+    fStepIteration = aValue;
+    return;
+}
+
+inline void KSWriteASCII::SetPrecision(const unsigned int& aValue)
+{
+    fPrecision = aValue;
+    return;
+}
+
+inline KTextFile* KSWriteASCII::TextFile()
+{
+
+    return fTextFile;
+}
+
+inline int KSWriteASCII::Precision() const
+{
+    return fPrecision;
+}
+
+}  // namespace Kassiopeia
 
 
 #endif

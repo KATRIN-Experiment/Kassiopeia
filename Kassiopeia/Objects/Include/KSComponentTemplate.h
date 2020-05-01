@@ -1,128 +1,112 @@
 #ifndef Kassiopeia_KSComponentTemplate_h_
 #define Kassiopeia_KSComponentTemplate_h_
 
+#include "KSCommandMember.h"
 #include "KSComponent.h"
 #include "KSComponentMember.h"
-#include "KSCommandMember.h"
 
 namespace Kassiopeia
 {
 
-    template< class XThisType, class XParentOne = void, class XParentTwo = void, class XParentThree = void >
-    class KSComponentTemplate;
+template<class XThisType, class XParentOne = void, class XParentTwo = void, class XParentThree = void>
+class KSComponentTemplate;
 
-    //******************
-    //1-parent component
-    //******************
+//******************
+//1-parent component
+//******************
 
-    template< class XThisType, class XFirstParentType >
-    class KSComponentTemplate< XThisType, XFirstParentType, void, void > :
-        virtual public KSComponent,
-        public XFirstParentType
+template<class XThisType, class XFirstParentType>
+class KSComponentTemplate<XThisType, XFirstParentType, void, void> : virtual public KSComponent, public XFirstParentType
+{
+  public:
+    KSComponentTemplate()
     {
-        public:
-            KSComponentTemplate()
-            {
-                Set( static_cast< XThisType* >( this ) );
-            }
-            virtual ~KSComponentTemplate()
-            {
-            }
+        Set(static_cast<XThisType*>(this));
+    }
+    ~KSComponentTemplate() override {}
 
-            //***********
-            //KSComponent
-            //***********
+    //***********
+    //KSComponent
+    //***********
 
-        public:
-            KSComponent* Component( const std::string& aField )
-            {
-                objctmsg_debug( "component <" << this->GetName() << "> building output named <" << aField << ">" << eom )
-                KSComponent* tComponent = KSDictionary< XThisType >::GetComponent( this, aField );
-                if( tComponent == NULL )
-                {
-                    return XFirstParentType::Component( aField );
-                }
-                else
-                {
-                    fChildComponents.push_back( tComponent );
-                    return tComponent;
-                }
-            }
-            KSCommand* Command( const std::string& aField, KSComponent* aChild )
-            {
-                if ( aChild == nullptr )
-                {
-                    objctmsg( eError ) << "component <" << this->GetName() << "> could not build command named <" << aField << "> (invalid child component)" << eom;
-                    return nullptr;
-                }
-
-                objctmsg_debug( "component <" << this->GetName() << "> building command named <" << aField << ">" << eom )
-                KSCommand* tCommand = KSDictionary< XThisType >::GetCommand( this, aChild, aField );
-                if( tCommand == NULL )
-                {
-                    return XFirstParentType::Command( aField, aChild );
-                }
-                else
-                {
-                    return tCommand;
-                }
-            }
-    };
-
-    //******************
-    //0-parent component
-    //******************
-
-    template< class XThisType >
-    class KSComponentTemplate< XThisType, void, void, void > :
-        virtual public KSComponent
+  public:
+    KSComponent* Component(const std::string& aField) override
     {
-        public:
-            KSComponentTemplate() :
-                    KSComponent()
-            {
-                Set( static_cast< XThisType* >( this ) );
-            }
-            virtual ~KSComponentTemplate()
-            {
-            }
+        objctmsg_debug("component <" << this->GetName() << "> building output named <" << aField << ">" << eom)
+            KSComponent* tComponent = KSDictionary<XThisType>::GetComponent(this, aField);
+        if (tComponent == nullptr) {
+            return XFirstParentType::Component(aField);
+        }
+        else {
+            fChildComponents.push_back(tComponent);
+            return tComponent;
+        }
+    }
+    KSCommand* Command(const std::string& aField, KSComponent* aChild) override
+    {
+        if (aChild == nullptr) {
+            objctmsg(eError) << "component <" << this->GetName() << "> could not build command named <" << aField
+                             << "> (invalid child component)" << eom;
+            return nullptr;
+        }
 
-            //***********
-            //KSComponent
-            //***********
+        objctmsg_debug("component <" << this->GetName() << "> building command named <" << aField << ">" << eom)
+            KSCommand* tCommand = KSDictionary<XThisType>::GetCommand(this, aChild, aField);
+        if (tCommand == nullptr) {
+            return XFirstParentType::Command(aField, aChild);
+        }
+        else {
+            return tCommand;
+        }
+    }
+};
 
-        public:
-            KSComponent* Component( const std::string& aLabel )
-            {
-                objctmsg_debug( "component <" << this->GetName() << "> building component named <" << aLabel << ">" << eom )
-                KSComponent* tComponent = KSDictionary< XThisType >::GetComponent( this, aLabel );
-                if( tComponent == NULL )
-                {
-                    objctmsg( eError ) << "component <" << this->GetName() << "> has no component named <" << aLabel << ">" << eom;
-                    return NULL;
-                }
-                else
-                {
-                    fChildComponents.push_back( tComponent );
-                    return tComponent;
-                }
-            }
-            KSCommand* Command( const std::string& aField, KSComponent* aChild )
-            {
-                objctmsg_debug( "component <" << this->GetName() << "> building command named <" << aField << ">" << eom )
-                KSCommand* tCommand = KSDictionary< XThisType >::GetCommand( this, aChild, aField );
-                if( tCommand == NULL )
-                {
-                    objctmsg( eError ) << "component <" << this->GetName() << "> has no command named <" << aField << ">" << eom;
-                    return NULL;
-                }
-                else
-                {
-                    return tCommand;
-                }
-            }
-    };
+//******************
+//0-parent component
+//******************
 
-}
+template<class XThisType> class KSComponentTemplate<XThisType, void, void, void> : virtual public KSComponent
+{
+  public:
+    KSComponentTemplate() : KSComponent()
+    {
+        Set(static_cast<XThisType*>(this));
+    }
+    ~KSComponentTemplate() override {}
+
+    //***********
+    //KSComponent
+    //***********
+
+  public:
+    KSComponent* Component(const std::string& aLabel) override
+    {
+        objctmsg_debug("component <" << this->GetName() << "> building component named <" << aLabel << ">" << eom)
+            KSComponent* tComponent = KSDictionary<XThisType>::GetComponent(this, aLabel);
+        if (tComponent == nullptr) {
+            objctmsg(eError) << "component <" << this->GetName() << "> has no component named <" << aLabel << ">"
+                             << eom;
+            return nullptr;
+        }
+        else {
+            fChildComponents.push_back(tComponent);
+            return tComponent;
+        }
+    }
+    KSCommand* Command(const std::string& aField, KSComponent* aChild) override
+    {
+        objctmsg_debug("component <" << this->GetName() << "> building command named <" << aField << ">" << eom)
+            KSCommand* tCommand = KSDictionary<XThisType>::GetCommand(this, aChild, aField);
+        if (tCommand == nullptr) {
+            objctmsg(eError) << "component <" << this->GetName() << "> has no command named <" << aField << ">" << eom;
+            return nullptr;
+        }
+        else {
+            return tCommand;
+        }
+    }
+};
+
+}  // namespace Kassiopeia
 
 #endif

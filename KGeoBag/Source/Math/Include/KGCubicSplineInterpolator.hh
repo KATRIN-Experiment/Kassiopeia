@@ -5,30 +5,31 @@
 
 namespace KGeoBag
 {
-  class KGCubicSplineInterpolator : public KGInterpolator
-  {
+class KGCubicSplineInterpolator : public KGInterpolator
+{
   public:
     KGCubicSplineInterpolator() : KGInterpolator() {}
-    virtual ~KGCubicSplineInterpolator() {}
+    ~KGCubicSplineInterpolator() override {}
 
     void Initialize(DataSet& data, double yp0, double ypn);
-    virtual void Initialize(DataSet& data)
-    { Initialize(data,1.e30,1.e30); }
+    void Initialize(DataSet& data) override
+    {
+        Initialize(data, 1.e30, 1.e30);
+    }
 
-    virtual int OutOfRange(double x) const;
+    int OutOfRange(double x) const override;
 
-    virtual double Range(unsigned int i) const;
+    double Range(unsigned int i) const override;
 
-    virtual double operator()(double x) const;
+    double operator()(double x) const override;
 
   private:
-
     //for sorting based on domain coordinate (1d)
     struct CoordinateSortingStruct
     {
         bool operator()(DataPoint a, DataPoint b)
         {
-            return (a[0]<b[0]);
+            return (a[0] < b[0]);
         };
     };
 
@@ -36,7 +37,7 @@ namespace KGeoBag
 
     DataSet fData;
     std::vector<double> fYp;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

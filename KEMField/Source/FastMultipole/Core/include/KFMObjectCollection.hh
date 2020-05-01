@@ -2,10 +2,11 @@
 #define KFMObjectCollection_HH__
 
 
-#include "KTypelist.hh"
 #include "KFMObjectHolder.hh"
+#include "KTypelist.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /*
 *
@@ -20,18 +21,17 @@ namespace KEMField{
 *
 */
 
-template< typename TypeList >
-class KFMObjectCollection: public KGenScatterHierarchy<TypeList, KFMObjectHolder >
+template<typename TypeList> class KFMObjectCollection : public KGenScatterHierarchy<TypeList, KFMObjectHolder>
 {
-    public:
-        KFMObjectCollection(){};
-        virtual ~KFMObjectCollection(){};
+  public:
+    KFMObjectCollection(){};
+    ~KFMObjectCollection() override{};
 
-    private:
+  private:
 };
 
 
-} //end of KEMField
+}  // namespace KEMField
 
 
 #endif /* KFMObjectCollection_H__ */

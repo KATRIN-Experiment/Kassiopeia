@@ -1,13 +1,12 @@
 #include "KLineCurrentIntegrator.hh"
 
 #include "KEMConstants.hh"
-
 #include "KEMCout.hh"
 
 namespace KEMField
 {
-  KThreeVector KLineCurrentIntegrator::VectorPotential(const KLineCurrent& lineCurrent,const KPosition& P) const
-  {
+KThreeVector KLineCurrentIntegrator::VectorPotential(const KLineCurrent& lineCurrent, const KPosition& P) const
+{
     KPosition p = lineCurrent.GetCoordinateSystem().ToLocal(P);
 
     double r0 = (lineCurrent.GetP0() - p).Magnitude();
@@ -15,41 +14,39 @@ namespace KEMField
     double L = (lineCurrent.GetP1() - lineCurrent.GetP0()).Magnitude();
     KDirection i = (lineCurrent.GetP1() - lineCurrent.GetP0()).Unit();
 
-    if (1.-fabs((lineCurrent.GetP0() - p).Unit().Dot(i))<1.e-8)
-      return KThreeVector(0.,0.,0.);
+    if (1. - fabs((lineCurrent.GetP0() - p).Unit().Dot(i)) < 1.e-8)
+        return KThreeVector(0., 0., 0.);
 
     double l = (lineCurrent.GetP0() - p).Dot(i);
 
-    double prefac =(KEMConstants::Mu0OverPi*lineCurrent.GetCurrent()*.25*
-		      log((L+l+r1)/(l+r0)));
-    KThreeVector A = i*prefac;
+    double prefac = (KEMConstants::Mu0OverPi * lineCurrent.GetCurrent() * .25 * log((L + l + r1) / (l + r0)));
+    KThreeVector A = i * prefac;
 
     return lineCurrent.GetCoordinateSystem().ToGlobal(A);
-  }
+}
 
-  KThreeVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurrent,const KPosition& P) const
-  {
+KThreeVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurrent, const KPosition& P) const
+{
     KPosition p = lineCurrent.GetCoordinateSystem().ToLocal(P);
 
     KPosition r0 = p - lineCurrent.GetP0();
     KPosition r1 = p - lineCurrent.GetP1();
     KDirection i = (lineCurrent.GetP1() - lineCurrent.GetP0()).Unit();
 
-    if (1.-fabs((lineCurrent.GetP0() - p).Unit().Dot(i))<1.e-8)
-      return KThreeVector(0.,0.,0.);
+    if (1. - fabs((lineCurrent.GetP0() - p).Unit().Dot(i)) < 1.e-8)
+        return KThreeVector(0., 0., 0.);
 
     double l = r0.Dot(i);
 
-    double s = sqrt(r0.MagnitudeSquared() - l*l);
+    double s = sqrt(r0.MagnitudeSquared() - l * l);
 
     double sinTheta0 = r0.Unit().Dot(i);
     double sinTheta1 = r1.Unit().Dot(i);
 
-    double prefac = (KEMConstants::Mu0OverPi*lineCurrent.GetCurrent()/(4.*s)*
-    		       (sinTheta1-sinTheta0));
-    
-    KThreeVector BField = r0.Cross(i).Unit()*prefac;
+    double prefac = (KEMConstants::Mu0OverPi * lineCurrent.GetCurrent() / (4. * s) * (sinTheta1 - sinTheta0));
+
+    KThreeVector BField = r0.Cross(i).Unit() * prefac;
 
     return lineCurrent.GetCoordinateSystem().ToGlobal(BField);
-  }
 }
+}  // namespace KEMField

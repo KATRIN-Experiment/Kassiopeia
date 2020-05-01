@@ -8,20 +8,19 @@
 #ifndef KGCONESURFACERANDOM_HH_
 #define KGCONESURFACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGConeSurface.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for dicing a point on a KGConeSurface.
    */
-  class KGConeSurfaceRandom : virtual public KGShapeRandom,
-				 public KGConeSurface::Visitor
-  {
+class KGConeSurfaceRandom : virtual public KGShapeRandom, public KGConeSurface::Visitor
+{
   public:
-	  KGConeSurfaceRandom() : KGShapeRandom() {}
-    virtual ~KGConeSurfaceRandom() {}
+    KGConeSurfaceRandom() : KGShapeRandom() {}
+    ~KGConeSurfaceRandom() override {}
 
     /**
      * \brief Visitor function for dicing a point on
@@ -29,8 +28,8 @@ namespace KGeoBag
      *
      * \param aConeSpace
      */
-    virtual void VisitConeSurface(KGConeSurface* aConeSpace);
-  };
-}
+    void VisitConeSurface(KGConeSurface* aConeSpace) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGCONESURFACERANDOM_HH_ */

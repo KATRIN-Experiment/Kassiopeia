@@ -1,149 +1,169 @@
 #ifndef KTOOLBOX_H_
 #define KTOOLBOX_H_
 
-#include "KTagged.h"
-#include "KSingleton.h"
-#include "KInitializationMessage.hh"
 #include "KContainer.hh"
 #include "KException.h"
+#include "KInitializationMessage.hh"
+#include "KSingleton.h"
+#include "KTagged.h"
 
-#include <string>
-#include <set>
 #include <map>
-#include <vector>
-#include <ostream>
 #include <memory>
+#include <ostream>
+#include <set>
+#include <string>
 #include <utility>
+#include <vector>
 
-namespace katrin {
-
-class KToolbox: public KSingleton<KToolbox>
+namespace katrin
 {
-public:
-    template< class Object = KTagged >
-    void Add(Object* ptr, const std::string& tName = "");
 
-    void AddContainer(KContainer& tContainer, std::string tName = "");
+class KToolbox : public KSingleton<KToolbox>
+{
+  public:
+    template<class Object = KTagged> void Add(Object* anObject, const std::string& aName = "");
 
-    template< class Object = KTagged >
-    Object* Get(const std::string& aName = "");
+    template<class Object = KTagged> void Replace(Object* anObject, const std::string& aName = "");
 
-    template<class Object = KTagged >
-    std::vector<Object* > GetAll(const std::string& aTag = "");
+    void AddContainer(KContainer& aContainer, const std::string& aName = "");
+
+    std::shared_ptr<KContainer> Remove(const std::string& aName = "");
+
+    template<class Object = KTagged> Object* Get(const std::string& aName = "") const;
+
+    template<class Object = KTagged> std::vector<Object*> GetAll(const std::string& aTag = "") const;
+
+    template<class Object = KTagged> std::vector<std::string> FindAll() const;
 
     void Clear();
 
-protected:
+    inline bool HasKey(const std::string& aName) const
+    {
+        return fObjects.find(aName) != fObjects.end();
+    }
+
+    inline bool HasTag(const std::string& aTag) const
+    {
+        return fTagMap.find(aTag) != fTagMap.end();
+    }
+
+  protected:
+    typedef std::shared_ptr<KContainer> ContainerPtr;
+    typedef std::map<std::string, ContainerPtr> ContainerMap;
+    typedef std::set<ContainerPtr> ContainerSet;
+    typedef std::map<std::string, std::shared_ptr<ContainerSet>> TagContainerMap;
+
     KToolbox();
-    virtual ~KToolbox();
+    ~KToolbox() override;
 
-    typedef std::map<std::string,std::shared_ptr<KContainer> > ContainerMap;
-    typedef std::set< std::shared_ptr<KContainer> > ContainerSet;
-    typedef std::map< std::string, std::shared_ptr<ContainerSet> > TagContainerMap;
+    bool CheckKeyIsFree(const std::string& aName) const;
 
-    bool CheckKeyIsFree(const std::string& name);
-
+  private:
     ContainerMap fObjects;
     TagContainerMap fTagMap;
 
     friend class KSingleton<KToolbox>;
 };
 
-template< class Object>
-inline void KToolbox::Add(Object* ptr, const std::string& tName)
+template<class Object> inline void KToolbox::Add(Object* anObject, const std::string& aName)
 {
-    KContainer* tContainer = new KContainer();
-    tContainer->Set(ptr);
+    initmsg(eDebug) << "Adding object <" << aName << "> to Toolbox" << eom;
 
-    CheckKeyIsFree(tName);
+    CheckKeyIsFree(aName);
+
+    auto* tContainer = new KContainer();
+    tContainer->Set(anObject);
 
     //tContainer is emptied in this call
-    AddContainer(*tContainer, tName);
+    AddContainer(*tContainer, aName);
 
     delete tContainer;
     return;
 }
 
-inline void KToolbox::AddContainer(KContainer& tContainer, std::string tName) {
-    std::shared_ptr<KContainer> tNewContainer(tContainer.ReleaseToNewContainer());
+template<class Object> inline void KToolbox::Replace(Object* anObject, const std::string& aName)
+{
+    if (aName == "")
+        return;
 
-    if (tName == "") {
-        if(!(tNewContainer->Is<KNamed>()))
-        {
-            initmsg(eError) << "No name provided for Object which is not KNamed. This is a Bug" << eom;
-        }
-        tName = tNewContainer->AsPointer<KNamed>()->GetName();
+    initmsg(eDebug) << "Replacing object <" << aName << "> in Toolbox" << eom;
+
+    auto entry = fObjects.find(aName);
+
+    if (entry != fObjects.end()) {
+        entry->second->Set(anObject);
+        return;
     }
 
-    CheckKeyIsFree(tName);
-    fObjects.insert(ContainerMap::value_type(tName, tNewContainer));
-
-    if ( tNewContainer->Is<KTagged>() ) {
-        for (auto tTag : tNewContainer->AsPointer<KTagged>()->GetTags()) {
-            auto entry = fTagMap.find(tTag);
-            if (entry == fTagMap.end()) {
-                std::shared_ptr<ContainerSet> tContainerSet(new ContainerSet());
-                fTagMap.insert(std::pair<std::string, std::shared_ptr<ContainerSet> >
-                                    (tTag, tContainerSet));
-                tContainerSet->insert(tNewContainer);
-            }
-            else {
-                entry->second->insert(tNewContainer);
-            }
-
-        }
-    }
+    initmsg(eError) << "No suitable Object called <" << aName << "> in Toolbox" << eom;
     return;
 }
 
-template< class Object >
-inline Object* KToolbox::Get(const std::string& aName)
+template<class Object> inline Object* KToolbox::Get(const std::string& aName) const
 {
     if (aName == "") {
-        for (const auto kvObject : fObjects){
-            if ( kvObject.second->AsPointer<Object>() ) {
+        for (const auto& kvObject : fObjects) {
+            if (kvObject.second->AsPointer<Object>()) {
                 return kvObject.second->AsPointer<Object>();
             }
         }
         return nullptr;
     }
 
+    initmsg(eDebug) << "Getting object <" << aName << "> from Toolbox" << eom;
+
     auto entry = fObjects.find(aName);
 
-    if ( (entry != fObjects.end()) && (entry->second->AsPointer<Object>()) )
+    if ((entry != fObjects.end()) && entry->second->AsPointer<Object>()) {
         return entry->second->AsPointer<Object>();
+    }
 
     initmsg(eDebug) << "No suitable Object called <" << aName << "> in Toolbox" << eom;
     return nullptr;
 }
 
-template<class Object>
-inline std::vector<Object*> KToolbox::GetAll(const std::string& aTag)
+template<class Object> inline std::vector<Object*> KToolbox::GetAll(const std::string& aTag) const
 {
     std::vector<Object*> result;
 
-    if (aTag == ""){
-        for (const auto kvObject : fObjects){
-            if ( kvObject.second->AsPointer<Object>() ) {
+    if (aTag == "") {
+        for (const auto& kvObject : fObjects) {
+            if (kvObject.second->AsPointer<Object>()) {
                 result.push_back(kvObject.second->AsPointer<Object>());
             }
         }
         return result;
     }
 
+    initmsg(eDebug) << "Getting objects tagged <" << aTag << "> from Toolbox" << eom;
+
     auto entry = fTagMap.find(aTag);
-    if (entry == fTagMap.end()) {
-        initmsg(eWarning) << "no instances of object with tag <" << aTag << ">" << eom;
+
+    if (entry != fTagMap.end()) {
+        for (const auto& tContainer : *(entry->second)) {
+            if (tContainer->AsPointer<Object>()) {
+                result.push_back(tContainer->AsPointer<Object>());
+            }
+        }
         return result;
     }
-    for( const auto tContainer : *(entry->second) ) {
-        if ( tContainer->AsPointer<Object>() ) {
-            result.push_back(tContainer->AsPointer<Object>());
+
+    initmsg(eDebug) << "No instances of object with tag <" << aTag << "> in Toolbox" << eom;
+    return result;
+}
+
+template<class Object> inline std::vector<std::string> KToolbox::FindAll() const
+{
+    std::vector<std::string> result;
+
+    for (const auto& kvObject : fObjects) {
+        if (kvObject.second->AsPointer<Object>()) {
+            result.push_back(kvObject.first);
         }
     }
     return result;
 }
 
-}
+}  // namespace katrin
 
 #endif /* KTOOLBOX_H_ */

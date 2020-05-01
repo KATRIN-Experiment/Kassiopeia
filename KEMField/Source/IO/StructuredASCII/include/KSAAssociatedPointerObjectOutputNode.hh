@@ -4,7 +4,8 @@
 #include "KSACallbackTypes.hh"
 #include "KSAObjectOutputNode.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -22,24 +23,29 @@ namespace KEMField{
 
 
 template<typename CallType, typename ReturnType, const ReturnType* (CallType::*memberFunction)() const>
-class KSAAssociatedPointerObjectOutputNode: public KSAObjectOutputNode< ReturnType, KSAIsDerivedFrom< ReturnType, KSAFixedSizeInputOutputObject >::Is >
+class KSAAssociatedPointerObjectOutputNode :
+    public KSAObjectOutputNode<ReturnType, KSAIsDerivedFrom<ReturnType, KSAFixedSizeInputOutputObject>::Is>
 {
-    public:
-        KSAAssociatedPointerObjectOutputNode(std::string name, const CallType* call_ptr):KSAObjectOutputNode< ReturnType, KSAIsDerivedFrom< ReturnType, KSAFixedSizeInputOutputObject >::Is >( name )
-        {
-            KSAConstantReturnByPointerGet< CallType, ReturnType, memberFunction > callback;
-            KSAObjectOutputNode< ReturnType, KSAIsDerivedFrom< ReturnType, KSAFixedSizeInputOutputObject >::Is  >::AttachObjectToNode(callback(call_ptr));
-        }
+  public:
+    KSAAssociatedPointerObjectOutputNode(std::string name, const CallType* call_ptr) :
+        KSAObjectOutputNode<ReturnType, KSAIsDerivedFrom<ReturnType, KSAFixedSizeInputOutputObject>::Is>(name)
+    {
+        KSAConstantReturnByPointerGet<CallType, ReturnType, memberFunction> callback;
+        KSAObjectOutputNode<ReturnType, KSAIsDerivedFrom<ReturnType, KSAFixedSizeInputOutputObject>::Is>::
+            AttachObjectToNode(callback(call_ptr));
+    }
 
-        virtual ~KSAAssociatedPointerObjectOutputNode(){;};
+    ~KSAAssociatedPointerObjectOutputNode() override
+    {
+        ;
+    };
 
 
-    protected:
-
+  protected:
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KSAAssociatedPointerObjectOutputNode_H__ */

@@ -3,17 +3,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( KGeoBag, drmeshmsg )
+KMESSAGE_DECLARE(KGeoBag, drmeshmsg)
 
 #ifdef KGeoBag_ENABLE_DEBUG
 
-#define drmeshmsg_debug( xCONTENT )\
-    drmeshmsg( eDebug ) << xCONTENT;
+#define drmeshmsg_debug(xCONTENT) drmeshmsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef drmeshmsg_debug
-#define drmeshmsg_debug( xCONTENT )
+#define drmeshmsg_debug(xCONTENT)
 #endif
 
 #endif

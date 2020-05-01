@@ -3,11 +3,7 @@
 namespace KGeoBag
 {
 
-    KGExtensibleSurface::KGExtensibleSurface()
-    {
-    }
-    KGExtensibleSurface::~KGExtensibleSurface()
-    {
-    }
+KGExtensibleSurface::KGExtensibleSurface() {}
+KGExtensibleSurface::~KGExtensibleSurface() {}
 
-}
+}  // namespace KGeoBag

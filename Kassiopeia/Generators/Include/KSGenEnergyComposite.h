@@ -7,29 +7,28 @@
 namespace Kassiopeia
 {
 
-    class KSGenEnergyComposite :
-        public KSComponentTemplate< KSGenEnergyComposite, KSGenCreator >
-    {
-        public:
-            KSGenEnergyComposite();
-            KSGenEnergyComposite( const KSGenEnergyComposite& aCopy );
-            KSGenEnergyComposite* Clone() const;
-            virtual ~KSGenEnergyComposite();
+class KSGenEnergyComposite : public KSComponentTemplate<KSGenEnergyComposite, KSGenCreator>
+{
+  public:
+    KSGenEnergyComposite();
+    KSGenEnergyComposite(const KSGenEnergyComposite& aCopy);
+    KSGenEnergyComposite* Clone() const override;
+    ~KSGenEnergyComposite() override;
 
-        public:
-            virtual void Dice( KSParticleQueue* aPrimaries );
+  public:
+    void Dice(KSParticleQueue* aPrimaries) override;
 
-        public:
-            void SetEnergyValue( KSGenValue* anEnergyValue );
-            void ClearEnergyValue( KSGenValue* anEnergyValue );
+  public:
+    void SetEnergyValue(KSGenValue* anEnergyValue);
+    void ClearEnergyValue(KSGenValue* anEnergyValue);
 
-        private:
-            KSGenValue* fEnergyValue;
+  private:
+    KSGenValue* fEnergyValue;
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
-}
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
+}  // namespace Kassiopeia
 
 #endif

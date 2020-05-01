@@ -1,15 +1,14 @@
 #ifndef KFMElectrostaticFieldMapper_SingleThread_HH__
 #define KFMElectrostaticFieldMapper_SingleThread_HH__
 
-#include "KFMObjectRetriever.hh"
-#include "KFMNodeObjectRemover.hh"
-
-#include "KFMElectrostaticNode.hh"
-#include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticElementContainer.hh"
-#include "KFMElectrostaticRegionSizeEstimator.hh"
 #include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
+#include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticRegionSizeEstimator.hh"
+#include "KFMElectrostaticTree.hh"
+#include "KFMNodeObjectRemover.hh"
+#include "KFMObjectRetriever.hh"
 
 
 /*
@@ -29,81 +28,79 @@ namespace KEMField
 {
 
 
-
 class KFMElectrostaticFieldMapper_SingleThread
 {
-    public:
+  public:
+    KFMElectrostaticFieldMapper_SingleThread();
+    virtual ~KFMElectrostaticFieldMapper_SingleThread();
 
-        KFMElectrostaticFieldMapper_SingleThread();
-        virtual ~KFMElectrostaticFieldMapper_SingleThread();
+    //extracted electrode data
+    void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3, 1>* container)
+    {
+        fContainer = container;
+    };
 
-        //extracted electrode data
-        void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
+    //access to the region tree
+    void SetTree(KFMElectrostaticTree* tree);
 
-        //access to the region tree
-        void SetTree(KFMElectrostaticTree* tree);
+    void Initialize();
 
-        void Initialize();
+    void MapField();
 
-        void MapField();
+  protected:
+    //operations
+    void SetParameters(KFMElectrostaticParameters params);
+    void AssociateElementsAndNodes();
+    void InitializeMultipoleMoments();
+    void ComputeMultipoleMoments();
+    void InitializeLocalCoefficients();
+    void ComputeLocalCoefficients();
+    void CleanUp();
 
-    protected:
+    ////////////////////////////////////////////////////////////////////////
 
-        //operations
-        void SetParameters(KFMElectrostaticParameters params);
-        void AssociateElementsAndNodes();
-        void InitializeMultipoleMoments();
-        void ComputeMultipoleMoments();
-        void InitializeLocalCoefficients();
-        void ComputeLocalCoefficients();
-        void CleanUp();
+    //data
+    int fDegree;
+    unsigned int fNTerms;
+    int fTopLevelDivisions;
+    int fDivisions;
+    int fZeroMaskSize;
+    int fMaximumTreeDepth;
+    unsigned int fVerbosity;
+    double fWorldLength;
 
-        ////////////////////////////////////////////////////////////////////////
+    //the tree object that the manager is to construct
+    KFMElectrostaticTree* fTree;
 
-        //data
-        int fDegree;
-        unsigned int fNTerms;
-        int fTopLevelDivisions;
-        int fDivisions;
-        int fZeroMaskSize;
-        int fMaximumTreeDepth;
-        unsigned int fVerbosity;
-        double fWorldLength;
+    //element node associator
+    KFMElectrostaticElementNodeAssociator* fElementNodeAssociator;
+    //the multipole calculator
+    KFMElectrostaticMultipoleBatchCalculatorBase* fBatchCalc;
+    //the element's multipole distributor
+    KFMElectrostaticElementMultipoleDistributor* fMultipoleDistributor;
 
-        //the tree object that the manager is to construct
-        KFMElectrostaticTree* fTree;
+    //the local coefficient initializer
+    KFMElectrostaticLocalCoefficientInitializer* fLocalCoeffInitializer;
 
-        //element node associator
-        KFMElectrostaticElementNodeAssociator* fElementNodeAssociator;
-        //the multipole calculator
-        KFMElectrostaticMultipoleBatchCalculatorBase* fBatchCalc;
-        //the element's multipole distributor
-        KFMElectrostaticElementMultipoleDistributor* fMultipoleDistributor;
+    //the multipole coefficient initializer
+    KFMElectrostaticMultipoleInitializer* fMultipoleInitializer;
 
-        //the local coefficient initializer
-        KFMElectrostaticLocalCoefficientInitializer* fLocalCoeffInitializer;
+    //the multipole up converter
+    KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
 
-        //the multipole coefficient initializer
-        KFMElectrostaticMultipoleInitializer* fMultipoleInitializer;
+    //the local coefficient calculator
+    //        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+    KFMElectrostaticRemoteToLocalConverterInterface* fM2LConverterInterface;
 
-        //the multipole up converter
-        KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+    //the local coefficient down converter
+    KFMElectrostaticLocalToLocalConverter* fL2LConverter;
 
-        //the local coefficient calculator
-//        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
-        KFMElectrostaticRemoteToLocalConverterInterface* fM2LConverterInterface;
-
-        //the local coefficient down converter
-        KFMElectrostaticLocalToLocalConverter* fL2LConverter;
-
-        //container to the eletrostatic elements
-        KFMElectrostaticElementContainerBase<3,1>* fContainer;
-
+    //container to the eletrostatic elements
+    KFMElectrostaticElementContainerBase<3, 1>* fContainer;
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticFieldMapper_SingleThread_H__ */

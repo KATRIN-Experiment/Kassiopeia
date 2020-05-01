@@ -9,25 +9,25 @@
 #define KEMTOOLBOXBUILDER_HH_
 
 #include "KComplexElement.hh"
-#include <iostream>
 #include "KToolbox.h"
+
+#include <iostream>
 
 namespace katrin
 {
-	class KEMRoot{};
-	typedef KComplexElement< KEMRoot > KEMToolboxBuilder;
+class KEMRoot
+{};
+typedef KComplexElement<KEMRoot> KEMToolboxBuilder;
 
-	template< >
-	inline bool KEMToolboxBuilder::AddElement( KContainer* aContainer)
-	{
-	    if( !aContainer->Empty() ) {
-	        KToolbox::GetInstance().AddContainer(*aContainer,aContainer->GetName());
-	        return true;
-	    }
-	    else return false;
-	}
-} //katrin
-
+template<> inline bool KEMToolboxBuilder::AddElement(KContainer* aContainer)
+{
+    if (!aContainer->Empty()) {
+        KToolbox::GetInstance().AddContainer(*aContainer, aContainer->GetName());
+        return true;
+    }
+    return false;
+}
+}  // namespace katrin
 
 
 #endif /* KEMTOOLBOXBUILDER_HH_ */

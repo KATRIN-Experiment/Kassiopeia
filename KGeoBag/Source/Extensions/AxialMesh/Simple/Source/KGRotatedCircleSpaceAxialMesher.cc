@@ -3,24 +3,19 @@
 namespace KGeoBag
 {
 
-    KGRotatedCircleSpaceAxialMesher::KGRotatedCircleSpaceAxialMesher() :
-            KGSimpleAxialMesher()
-    {
-    }
-    KGRotatedCircleSpaceAxialMesher::~KGRotatedCircleSpaceAxialMesher()
-    {
-    }
+KGRotatedCircleSpaceAxialMesher::KGRotatedCircleSpaceAxialMesher() : KGSimpleAxialMesher() {}
+KGRotatedCircleSpaceAxialMesher::~KGRotatedCircleSpaceAxialMesher() {}
 
-    void KGRotatedCircleSpaceAxialMesher::VisitRotatedClosedPathSpace( KGRotatedCircleSpace* aRotatedCircleSpace )
-    {
-        //create poly line points
-        ClosedPoints tCirclePoints;
-        CircleToClosedPoints( aRotatedCircleSpace->Path().operator ->(), tCirclePoints );
+void KGRotatedCircleSpaceAxialMesher::VisitRotatedClosedPathSpace(KGRotatedCircleSpace* aRotatedCircleSpace)
+{
+    //create poly line points
+    ClosedPoints tCirclePoints;
+    CircleToClosedPoints(aRotatedCircleSpace->Path().operator->(), tCirclePoints);
 
-        //create loops
-        ClosedPointsToLoops( tCirclePoints );
+    //create loops
+    ClosedPointsToLoops(tCirclePoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

@@ -6,21 +6,20 @@
 namespace KGeoBag
 {
 
-    class KGPlanarClosedPath :
-        public KGPlanarPath
-    {
-        public:
-            KGPlanarClosedPath();
-            virtual ~KGPlanarClosedPath();
+class KGPlanarClosedPath : public KGPlanarPath
+{
+  public:
+    KGPlanarClosedPath();
+    ~KGPlanarClosedPath() override;
 
-            //**********
-            //properties
-            //**********
+    //**********
+    //properties
+    //**********
 
-        public:
-            virtual const KTwoVector& Anchor() const = 0;
-    };
+  public:
+    virtual const KTwoVector& Anchor() const = 0;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

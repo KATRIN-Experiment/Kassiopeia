@@ -1,15 +1,14 @@
-#include <cstring>
-#include <cmath>
-
 #include "KFMFastFourierTransform.hh"
 
 #include "KFMBitReversalPermutation.hh"
 #include "KFMFastFourierTransformUtilities.hh"
 #include "KFMMessaging.hh"
 
+#include <cmath>
+#include <cstring>
+
 namespace KEMField
 {
-
 
 
 KFMFastFourierTransform::KFMFastFourierTransform()
@@ -22,12 +21,12 @@ KFMFastFourierTransform::KFMFastFourierTransform()
 
     fN = 0;
     fM = 0;
-    fPermutation = NULL;
-    fTwiddle = NULL;
-    fConjugateTwiddle = NULL;
-    fScale = NULL;
-    fCirculant = NULL;
-    fWorkspace = NULL;
+    fPermutation = nullptr;
+    fTwiddle = nullptr;
+    fConjugateTwiddle = nullptr;
+    fScale = nullptr;
+    fCirculant = nullptr;
+    fWorkspace = nullptr;
 }
 
 KFMFastFourierTransform::~KFMFastFourierTransform()
@@ -35,54 +34,51 @@ KFMFastFourierTransform::~KFMFastFourierTransform()
     DealocateWorkspace();
 }
 
-void
-KFMFastFourierTransform::SetSize(unsigned int N)
+void KFMFastFourierTransform::SetSize(unsigned int N)
 {
     fN = N;
     fSizeIsPowerOfTwo = KFMBitReversalPermutation::IsPowerOfTwo(N);
-    fSizeIsPowerOfThree = KFMBitReversalPermutation::IsPowerOfBase(N,3);
+    fSizeIsPowerOfThree = KFMBitReversalPermutation::IsPowerOfBase(N, 3);
     fM = KFMFastFourierTransformUtilities::ComputeBluesteinArraySize(N);
     fIsValid = false;
 }
 
-void
-KFMFastFourierTransform::SetForward(){fForward = true;}
-
-void
-KFMFastFourierTransform::SetBackward(){fForward = false;}
-
-void
-KFMFastFourierTransform::Initialize()
+void KFMFastFourierTransform::SetForward()
 {
-    if(fInput->GetArraySize() != fN || fOutput->GetArraySize() != fN)
-    {
+    fForward = true;
+}
+
+void KFMFastFourierTransform::SetBackward()
+{
+    fForward = false;
+}
+
+void KFMFastFourierTransform::Initialize()
+{
+    if (fInput->GetArraySize() != fN || fOutput->GetArraySize() != fN) {
         fIsValid = false;
     }
-    else if( !fInitialized )
-    {
+    else if (!fInitialized) {
         //initialize
         DealocateWorkspace();
         AllocateWorkspace();
 
         //compute the permutation arrays and twiddle factors
-        if(fSizeIsPowerOfTwo)
-        {
+        if (fSizeIsPowerOfTwo) {
             //use radix-2
             KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(fN, fPermutation);
             KFMFastFourierTransformUtilities::ComputeTwiddleFactors(fN, fTwiddle);
             KFMFastFourierTransformUtilities::ComputeConjugateTwiddleFactors(fN, fConjugateTwiddle);
         }
 
-        if(fSizeIsPowerOfThree)
-        {
+        if (fSizeIsPowerOfThree) {
             //use radix-3
             KFMBitReversalPermutation::ComputeBitReversedIndices(fN, 3, fPermutation);
             KFMFastFourierTransformUtilities::ComputeTwiddleFactors(fN, fTwiddle);
             KFMFastFourierTransformUtilities::ComputeConjugateTwiddleFactors(fN, fConjugateTwiddle);
         }
 
-        if(!fSizeIsPowerOfThree && !fSizeIsPowerOfTwo)
-        {
+        if (!fSizeIsPowerOfThree && !fSizeIsPowerOfTwo) {
             //use Bluestein algorithm
             KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(fM, fPermutation);
             KFMFastFourierTransformUtilities::ComputeTwiddleFactors(fM, fTwiddle);
@@ -97,69 +93,65 @@ KFMFastFourierTransform::Initialize()
 }
 
 ///Make a call to execute the FFT plan and perform the transformation
-void
-KFMFastFourierTransform::ExecuteOperation()
+void KFMFastFourierTransform::ExecuteOperation()
 {
-    if(fIsValid)
-    {
+    if (fIsValid) {
         //if input and output point to the same array, don't bother copying data over
-        if(fInput != fOutput)
-        {
+        if (fInput != fOutput) {
             //the arrays are not identical so copy the input over to the output
-            std::memcpy( (void*) fOutput->GetData(), (void*) fInput->GetData(), fN*sizeof(std::complex<double>) );
+            std::memcpy((void*) fOutput->GetData(), (void*) fInput->GetData(), fN * sizeof(std::complex<double>));
         }
 
 
-        if(!fForward) //for IDFT we conjugate first
+        if (!fForward)  //for IDFT we conjugate first
         {
             std::complex<double>* data = fOutput->GetData();
-            for(unsigned int i=0; i<fN; i++)
-            {
+            for (unsigned int i = 0; i < fN; i++) {
                 data[i] = std::conj(data[i]);
             }
         }
 
-        if(fSizeIsPowerOfTwo)
-        {
+        if (fSizeIsPowerOfTwo) {
             //use radix-2
-            KFMBitReversalPermutation::PermuteArray< std::complex<double> >(fN, fPermutation, fOutput->GetData());
+            KFMBitReversalPermutation::PermuteArray<std::complex<double>>(fN, fPermutation, fOutput->GetData());
             KFMFastFourierTransformUtilities::FFTRadixTwo_DIT(fN, fOutput->GetData(), fTwiddle);
         }
 
-        if(fSizeIsPowerOfThree)
-        {
+        if (fSizeIsPowerOfThree) {
             //use radix-3
-            KFMBitReversalPermutation::PermuteArray< std::complex<double> >(fN, fPermutation, fOutput->GetData());
+            KFMBitReversalPermutation::PermuteArray<std::complex<double>>(fN, fPermutation, fOutput->GetData());
             KFMFastFourierTransformUtilities::FFTRadixThree(fN, fOutput->GetData(), fTwiddle);
         }
 
-        if(!fSizeIsPowerOfThree && !fSizeIsPowerOfTwo)
-        {
+        if (!fSizeIsPowerOfThree && !fSizeIsPowerOfTwo) {
             //use bluestein algorithm for arbitrary N
-            KFMFastFourierTransformUtilities::FFTBluestein(fN, fM, fOutput->GetData(), fTwiddle, fConjugateTwiddle, fScale, fCirculant, fWorkspace);
+            KFMFastFourierTransformUtilities::FFTBluestein(fN,
+                                                           fM,
+                                                           fOutput->GetData(),
+                                                           fTwiddle,
+                                                           fConjugateTwiddle,
+                                                           fScale,
+                                                           fCirculant,
+                                                           fWorkspace);
         }
 
-        if(!fForward) //for IDFT we conjugate again
+        if (!fForward)  //for IDFT we conjugate again
         {
             std::complex<double>* data = fOutput->GetData();
-            for(unsigned int i=0; i<fN; i++)
-            {
+            for (unsigned int i = 0; i < fN; i++) {
                 data[i] = std::conj(data[i]);
             }
         }
     }
-    else
-    {
+    else {
         //warning
-        kfmout<<"KFMFastFourierTransform::ExecuteOperation: Warning, transform not valid. Aborting."<<kfmendl;
+        kfmout << "KFMFastFourierTransform::ExecuteOperation: Warning, transform not valid. Aborting." << kfmendl;
     }
 }
 
-void
-KFMFastFourierTransform::AllocateWorkspace()
+void KFMFastFourierTransform::AllocateWorkspace()
 {
-    if(!fSizeIsPowerOfTwo && !fSizeIsPowerOfThree)
-    {
+    if (!fSizeIsPowerOfTwo && !fSizeIsPowerOfThree) {
         //can't perform an in-place transform, need workspace
         fPermutation = new unsigned int[fM];
         fTwiddle = new std::complex<double>[fM];
@@ -168,8 +160,7 @@ KFMFastFourierTransform::AllocateWorkspace()
         fCirculant = new std::complex<double>[fM];
         fWorkspace = new std::complex<double>[fM];
     }
-    else
-    {
+    else {
         //can do an in-place transform,
         //only need space for the permutation array, and twiddle factors
         fPermutation = new unsigned int[fN];
@@ -178,15 +169,20 @@ KFMFastFourierTransform::AllocateWorkspace()
     }
 }
 
-void
-KFMFastFourierTransform::DealocateWorkspace()
+void KFMFastFourierTransform::DealocateWorkspace()
 {
-    delete[] fPermutation; fPermutation = NULL;
-    delete[] fTwiddle; fTwiddle = NULL;
-    delete[] fConjugateTwiddle; fConjugateTwiddle = NULL;
-    delete[] fScale; fScale = NULL;
-    delete[] fCirculant; fCirculant = NULL;
-    delete[] fWorkspace; fWorkspace = NULL;
+    delete[] fPermutation;
+    fPermutation = nullptr;
+    delete[] fTwiddle;
+    fTwiddle = nullptr;
+    delete[] fConjugateTwiddle;
+    fConjugateTwiddle = nullptr;
+    delete[] fScale;
+    fScale = nullptr;
+    delete[] fCirculant;
+    fCirculant = nullptr;
+    delete[] fWorkspace;
+    fWorkspace = nullptr;
 }
 
-}
+}  // namespace KEMField

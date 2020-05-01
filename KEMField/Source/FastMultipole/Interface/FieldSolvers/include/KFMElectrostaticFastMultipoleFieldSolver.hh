@@ -2,11 +2,10 @@
 #define KFMElectrostaticFastMultipoleFieldSolver_HH__
 
 #include "KElectrostaticBoundaryIntegrator.hh"
-#include "KFMElectrostaticTree.hh"
-#include "KFMElectrostaticLocalCoefficientFieldCalculator.hh"
-
-#include "KSurfaceContainer.hh"
 #include "KElectrostaticIntegratingFieldSolver.hh"
+#include "KFMElectrostaticLocalCoefficientFieldCalculator.hh"
+#include "KFMElectrostaticTree.hh"
+#include "KSurfaceContainer.hh"
 
 namespace KEMField
 {
@@ -26,60 +25,63 @@ namespace KEMField
 
 class KFMElectrostaticFastMultipoleFieldSolver
 {
-    public:
+  public:
+    KFMElectrostaticFastMultipoleFieldSolver(const KSurfaceContainer& container, KFMElectrostaticTree& tree);
 
-        KFMElectrostaticFastMultipoleFieldSolver(const KSurfaceContainer& container, KFMElectrostaticTree& tree);
+    virtual ~KFMElectrostaticFastMultipoleFieldSolver();
 
-        virtual ~KFMElectrostaticFastMultipoleFieldSolver();
+    //computes the potential and field at a given point
+    double Potential(const KPosition& P) const;
+    KThreeVector ElectricField(const KPosition& P) const;
 
-        //computes the potential and field at a given point
-        double Potential(const KPosition& P) const;
-        KThreeVector ElectricField(const KPosition& P) const;
+    //for debugging and information purposes
+    int GetSubsetSize(const KPosition& P) const
+    {
+        SetPoint(P);
+        return fSubsetSize;
+    };
+    int GetTreeLevel(const KPosition& P) const
+    {
+        SetPoint(P);
+        return fNodeList->size() - 1;
+    };
 
-        //for debugging and information purposes
-        int GetSubsetSize(const KPosition& P) const {SetPoint(P); return fSubsetSize;};
-        int GetTreeLevel(const KPosition& P) const {SetPoint(P); return fNodeList->size() - 1;};
-
-    protected:
-
-        void SetPoint(const double* p) const;
+  protected:
+    void SetPoint(const double* p) const;
 
 
     ////////////////////////////////////////////////////////////////////////////
 
-        const KSurfaceContainer& fSurfaceContainer;
+    const KSurfaceContainer& fSurfaceContainer;
 
-        KFMElectrostaticTree& fTree;
-        KFMElectrostaticNode* fRootNode;
-        KFMElectrostaticParameters fParameters;
-        bool fUseCaching;
+    KFMElectrostaticTree& fTree;
+    KFMElectrostaticNode* fRootNode;
+    KFMElectrostaticParameters fParameters;
+    bool fUseCaching;
 
-        //direct field evaluation
-        mutable KElectrostaticBoundaryIntegrator fDirectIntegrator;
-        KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator> fDirectFieldSolver;
+    //direct field evaluation
+    mutable KElectrostaticBoundaryIntegrator fDirectIntegrator;
+    KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator> fDirectFieldSolver;
 
-        //needed for field evaluation
-        mutable KFMElectrostaticLocalCoefficientFieldCalculator fFastFieldSolver;
+    //needed for field evaluation
+    mutable KFMElectrostaticLocalCoefficientFieldCalculator fFastFieldSolver;
 
-        mutable KFMElectrostaticTreeNavigator fNavigator;
-        mutable KFMPoint<3> fEvaluationPoint;
-        mutable KFMElectrostaticNode* fLeafNode;
-        mutable KFMCube<3>* fCube;
-        mutable KFMPoint<3> fExpansionOrigin;
-        mutable KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
+    mutable KFMElectrostaticTreeNavigator fNavigator;
+    mutable KFMPoint<3> fEvaluationPoint;
+    mutable KFMElectrostaticNode* fLeafNode;
+    mutable KFMCube<3>* fCube;
+    mutable KFMPoint<3> fExpansionOrigin;
+    mutable KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
 
-        mutable std::vector< KFMElectrostaticNode* >* fNodeList;
-        mutable unsigned int fSubsetSize;
-        mutable unsigned int* fDirectCallIDs;
+    mutable std::vector<KFMElectrostaticNode*>* fNodeList;
+    mutable unsigned int fSubsetSize;
+    mutable unsigned int* fDirectCallIDs;
 
-        mutable bool fFallback;
-
-
+    mutable bool fFallback;
 };
 
 
-}//end of KEMField namespace
-
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticFastMultipoleFieldSolver_H__ */

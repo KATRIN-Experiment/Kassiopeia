@@ -12,21 +12,18 @@
 using namespace KEMField;
 using namespace std;
 
-namespace katrin {
-
-template< >
-KStaticElectromagnetFieldBuilder::~KComplexElement()
+namespace katrin
 {
-}
 
-STATICINT sKStaticElectromagnetFieldStructure =
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "name" ) +
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "file" ) +
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "directory" ) +
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "system" ) +
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "surfaces" ) +
-    KStaticElectromagnetFieldBuilder::Attribute< string >( "spaces" );
+template<> KStaticElectromagnetFieldBuilder::~KComplexElement() {}
+
+STATICINT sKStaticElectromagnetFieldStructure = KStaticElectromagnetFieldBuilder::Attribute<string>("name") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<string>("file") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<string>("directory") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<string>("system") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<string>("surfaces") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<string>("spaces");
 
 STATICINT sKStaticElectromagnetField =
-    KEMToolboxBuilder::ComplexElement< KGStaticElectromagnetField >( "electromagnet_field" );
+    KEMToolboxBuilder::ComplexElement<KGStaticElectromagnetField>("electromagnet_field");
 } /* namespace katrin */

@@ -3,8 +3,8 @@
 
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
-#include "KFMObjectRetriever.hh"
 #include "KFMNodeFlags.hh"
+#include "KFMObjectRetriever.hh"
 
 namespace KEMField
 {
@@ -21,29 +21,27 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList, unsigned int NFLAGS>
-class KFMNodeFlagInitializer: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, unsigned int NFLAGS>
+class KFMNodeFlagInitializer : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeFlagInitializer(){};
-        virtual ~KFMNodeFlagInitializer(){};
+  public:
+    KFMNodeFlagInitializer(){};
+    virtual ~KFMNodeFlagInitializer(){};
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS> >::GetNodeObject(node);
-                if(flags == NULL)
-                {
-                    flags = new KFMNodeFlags<NFLAGS>();
-                    KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS> >::SetNodeObject(flags, node);
-                }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS>>::GetNodeObject(node);
+            if (flags == NULL) {
+                flags = new KFMNodeFlags<NFLAGS>();
+                KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS>>::SetNodeObject(flags, node);
             }
         }
+    }
 
-    protected:
+  protected:
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMNodeFlagInitializer_H__ */

@@ -7,7 +7,7 @@
 namespace KGeoBag
 {
 
-    typedef KGExtrudedPathSurface< KGPlanarPolyLine > KGExtrudedPolyLineSurface;
+typedef KGExtrudedPathSurface<KGPlanarPolyLine> KGExtrudedPolyLineSurface;
 
 }
 

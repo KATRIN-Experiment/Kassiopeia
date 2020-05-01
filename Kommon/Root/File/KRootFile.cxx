@@ -7,62 +7,51 @@ using namespace std;
 namespace katrin
 {
 
-    KRootFile::KRootFile() :
-        fFile( NULL )
-    {
+KRootFile::KRootFile() : fFile(nullptr) {}
+KRootFile::~KRootFile() {}
+
+bool KRootFile::OpenFileSubclass(const string& aName, const Mode& aMode)
+{
+    if (aMode == eRead) {
+        fFile = new TFile(aName.c_str(), "READ");
     }
-    KRootFile::~KRootFile()
-    {
+    if (aMode == eWrite) {
+        fFile = new TFile(aName.c_str(), "RECREATE");
+    }
+    if (aMode == eAppend) {
+        fFile = new TFile(aName.c_str(), "UPDATE");
     }
 
-    bool KRootFile::OpenFileSubclass( const string& aName, const Mode& aMode )
-    {
-        if( aMode == eRead )
-        {
-            fFile = new TFile( aName.c_str(), "READ" );
-        }
-        if( aMode == eWrite )
-        {
-            fFile = new TFile( aName.c_str(), "RECREATE" );
-        }
-        if( aMode == eAppend )
-        {
-            fFile = new TFile( aName.c_str(), "UPDATE" );
-        }
-
-        if( fFile->IsZombie() == true )
-        {
-            delete fFile;
-            fFile = NULL;
-            return false;
-        }
-
-        return true;
-    }
-    bool KRootFile::CloseFileSubclass()
-    {
-        if( fFile != NULL )
-        {
-            fFile->Close();
-            delete fFile;
-            fFile = NULL;
-
-            return true;
-        }
+    if (fFile->IsZombie() == true) {
+        delete fFile;
+        fFile = nullptr;
         return false;
     }
 
-    TFile* KRootFile::File()
-    {
-        if( fState == eOpen )
-        {
-            return fFile;
-        }
-        filemsg( eError ) << "attempting to access file pointer of unopened file " << eom;
-        return NULL;
-    }
-
+    return true;
 }
+bool KRootFile::CloseFileSubclass()
+{
+    if (fFile != nullptr) {
+        fFile->Close();
+        delete fFile;
+        fFile = nullptr;
+
+        return true;
+    }
+    return false;
+}
+
+TFile* KRootFile::File()
+{
+    if (fState == eOpen) {
+        return fFile;
+    }
+    filemsg(eError) << "attempting to access file pointer of unopened file " << eom;
+    return nullptr;
+}
+
+}  // namespace katrin
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -81,11 +70,9 @@ namespace katrin
 namespace katrin
 {
 
-    STATICINT sRootFileStructure =
-        KRootFileBuilder::Attribute< string >( "path" ) +
-        KRootFileBuilder::Attribute< string >( "default_path" ) +
-        KRootFileBuilder::Attribute< string >( "base" ) +
-        KRootFileBuilder::Attribute< string >( "default_base" ) +
-        KRootFileBuilder::Attribute< string >( "name" );
+STATICINT sRootFileStructure =
+    KRootFileBuilder::Attribute<string>("path") + KRootFileBuilder::Attribute<string>("default_path") +
+    KRootFileBuilder::Attribute<string>("base") + KRootFileBuilder::Attribute<string>("default_base") +
+    KRootFileBuilder::Attribute<string>("name");
 
 }

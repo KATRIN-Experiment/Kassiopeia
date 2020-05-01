@@ -1,52 +1,54 @@
 #ifndef KSC_KSGenPositionFluxTube_h_
 #define KSC_KSGenPositionFluxTube_h_
 
+#include "KField.h"
 #include "KSGenCreator.h"
 #include "KSGenValue.h"
-#include "KField.h"
 #include "KSMagneticField.h"
 
 namespace Kassiopeia
 {
 
-    class KSGenPositionFluxTube :
-        public KSComponentTemplate< KSGenPositionFluxTube, KSGenCreator >
-    {
-        public:
-    		KSGenPositionFluxTube();
-    		KSGenPositionFluxTube( const KSGenPositionFluxTube& aCopy );
-    		KSGenPositionFluxTube* Clone() const;
-            virtual ~KSGenPositionFluxTube();
+class KSGenPositionFluxTube : public KSComponentTemplate<KSGenPositionFluxTube, KSGenCreator>
+{
+  public:
+    KSGenPositionFluxTube();
+    KSGenPositionFluxTube(const KSGenPositionFluxTube& aCopy);
+    KSGenPositionFluxTube* Clone() const override;
+    ~KSGenPositionFluxTube() override;
 
-        public:
-            virtual void Dice( KSParticleQueue* aPrimaryList );
+  public:
+    void Dice(KSParticleQueue* aPrimaryList) override;
 
-        public:
-            void SetPhiValue( KSGenValue* aPhiValue );
-            void ClearPhiValue( KSGenValue* aPhiValue );
+  public:
+    void SetPhiValue(KSGenValue* aPhiValue);
+    void ClearPhiValue(KSGenValue* aPhiValue);
 
-            void SetZValue( KSGenValue* anZValue );
-            void ClearZValue( KSGenValue* anZValue );
+    void SetZValue(KSGenValue* anZValue);
+    void ClearZValue(KSGenValue* anZValue);
 
-            void AddMagneticField( KSMagneticField* aField );
+    void AddMagneticField(KSMagneticField* aField);
 
-        private:
-            void CalculateField( const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField );
+  private:
+    void CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField);
 
 
-        private:
-            KSGenValue* fPhiValue;
-            KSGenValue* fZValue;
-            std::vector<KSMagneticField*> fMagneticFields;
-            ;K_SET( double, Flux );
-            ;K_SET( int, NIntegrationSteps );
-            ;K_SET( bool, OnlySurface );
+  private:
+    KSGenValue* fPhiValue;
+    KSGenValue* fZValue;
+    std::vector<KSMagneticField*> fMagneticFields;
+    ;
+    K_SET(double, Flux);
+    ;
+    K_SET(int, NIntegrationSteps);
+    ;
+    K_SET(bool, OnlySurface);
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

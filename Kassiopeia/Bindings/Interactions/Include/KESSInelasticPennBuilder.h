@@ -11,46 +11,48 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KESSInelasticPenn > KESSInelasticPennBuilder;
+typedef KComplexElement<KESSInelasticPenn> KESSInelasticPennBuilder;
 
-    template< >
-    inline bool KESSInelasticPennBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
+template<> inline bool KESSInelasticPennBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
+    }
+    if (aContainer->GetName() == "PhotoAbsorption") {
+        if (aContainer->AsReference<bool>()) {
+            auto* aPhotoabsorption = new KESSPhotoAbsorbtion();
+            fObject->SetIonisationCalculator(aPhotoabsorption);
+            intmsg_debug(
+                "KESSInelasticPennBuilder::AddAttribute: added a PhotoAbsorption calculator to KESSInelasticPenn"
+                << eom);
         }
-        if( aContainer->GetName() == "PhotoAbsorption" )
-        {
-            if ( aContainer->AsReference< bool >()){
-                KESSPhotoAbsorbtion* aPhotoabsorption = new KESSPhotoAbsorbtion();
-                fObject->SetIonisationCalculator( aPhotoabsorption );
-                intmsg_debug( "KESSInelasticPennBuilder::AddAttribute: added a PhotoAbsorption calculator to KESSInelasticPenn" << eom );
-            }
-            else
-            {
-                intmsg_debug( "KESSInelasticPennBuilder::AddAttribute: PhotoAbsorption calculator is not added to KESSInelasticPenn" << eom );
-            }
-            return true;
+        else {
+            intmsg_debug(
+                "KESSInelasticPennBuilder::AddAttribute: PhotoAbsorption calculator is not added to KESSInelasticPenn"
+                << eom);
         }
-        if( aContainer->GetName() == "AugerRelaxation" )
-        {
-            if ( aContainer->AsReference< bool >()){
-                KESSRelaxation* aRelaxation = new KESSRelaxation;
-                fObject->SetRelaxationCalculator( aRelaxation );
-                intmsg_debug( "KESSInelasticPennBuilder::AddAttribute: added an AugerRelaxation calculator to KESSInelasticPenn" << eom );
-            }
-            else
-            {
-                intmsg_debug( "KESSInelasticPennBuilder::AddAttribute: AugerRelaxation calculator is not added to KESSInelasticPenn" << eom );
-            }
-            return true;
+        return true;
+    }
+    if (aContainer->GetName() == "AugerRelaxation") {
+        if (aContainer->AsReference<bool>()) {
+            auto* aRelaxation = new KESSRelaxation;
+            fObject->SetRelaxationCalculator(aRelaxation);
+            intmsg_debug(
+                "KESSInelasticPennBuilder::AddAttribute: added an AugerRelaxation calculator to KESSInelasticPenn"
+                << eom);
         }
-
-        return false;
+        else {
+            intmsg_debug(
+                "KESSInelasticPennBuilder::AddAttribute: AugerRelaxation calculator is not added to KESSInelasticPenn"
+                << eom);
+        }
+        return true;
     }
 
+    return false;
 }
 
-#endif // KESSINELASTICPENNBUILDER_H
+}  // namespace katrin
+
+#endif  // KESSINELASTICPENNBUILDER_H

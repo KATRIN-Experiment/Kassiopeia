@@ -2,8 +2,8 @@
 #define KFMElectrostaticMultipoleCalculatorBatch_HH__
 
 //core
-#include "KFMMath.hh"
 #include "KFMBasisData.hh"
+#include "KFMMath.hh"
 #include "KFMObjectContainer.hh"
 
 
@@ -16,15 +16,15 @@
 #include "KFMPointCloud.hh"
 
 //electrostatics
-#include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
 #include "KFMElectrostaticElementContainer.hh"
+#include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
 #include "KFMElectrostaticMultipoleCalculatorAnalytic.hh"
-
 #include "KFMElectrostaticMultipoleCalculatorNumeric.hh"
 
 #include <sstream>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -39,34 +39,33 @@ namespace KEMField{
 *
 */
 
-class KFMElectrostaticMultipoleBatchCalculator: public KFMElectrostaticMultipoleBatchCalculatorBase
+class KFMElectrostaticMultipoleBatchCalculator : public KFMElectrostaticMultipoleBatchCalculatorBase
 {
-    public:
-        KFMElectrostaticMultipoleBatchCalculator();
-        virtual ~KFMElectrostaticMultipoleBatchCalculator();
+  public:
+    KFMElectrostaticMultipoleBatchCalculator();
+    ~KFMElectrostaticMultipoleBatchCalculator() override;
 
-        //set the degree of the expansion
-        virtual void SetDegree(int l_max);
+    //set the degree of the expansion
+    void SetDegree(int l_max) override;
 
-        //initalize the object
-        virtual void Initialize();
+    //initalize the object
+    void Initialize() override;
 
-        //execute the operation to fill the multipole buffer
-        virtual void ComputeMoments();
+    //execute the operation to fill the multipole buffer
+    void ComputeMoments() override;
 
-    protected:
+  protected:
+    KFMElectrostaticMultipoleCalculatorAnalytic* fAnalyticCalc;
+    KFMElectrostaticMultipoleCalculatorNumeric* fNumericCalc;
 
-        KFMElectrostaticMultipoleCalculatorAnalytic* fAnalyticCalc;
-        KFMElectrostaticMultipoleCalculatorNumeric* fNumericCalc;
+    double fTargetOrigin[3];
+    KFMScalarMultipoleExpansion fTempExpansion;
 
-        double fTargetOrigin[3];
-        KFMScalarMultipoleExpansion fTempExpansion;
-
-        std::vector< std::complex<double> > fMoments;
-        std::vector< std::complex<double> > fConvertedMoments;
+    std::vector<std::complex<double>> fMoments;
+    std::vector<std::complex<double>> fConvertedMoments;
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticMultipoleCalculatorBatch_H__ */

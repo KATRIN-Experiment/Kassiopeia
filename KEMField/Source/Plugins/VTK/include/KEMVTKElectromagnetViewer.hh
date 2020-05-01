@@ -1,20 +1,18 @@
 #ifndef KEMVTKELECTROMAGNETVIEWER_DEF
 #define KEMVTKELECTROMAGNETVIEWER_DEF
 
-#include "KTypeManipulation.hh"
-
-#include "KLineCurrent.hh"
-#include "KCurrentLoop.hh"
-#include "KSolenoid.hh"
 #include "KCoil.hh"
-
-#include "KElectromagnetVisitor.hh"
+#include "KCurrentLoop.hh"
 #include "KElectromagnetContainer.hh"
+#include "KElectromagnetVisitor.hh"
+#include "KLineCurrent.hh"
+#include "KSolenoid.hh"
+#include "KTypeManipulation.hh"
 
 namespace KEMField
 {
 
-  /**
+/**
    * @class KEMVTKElectromagnetViewer
    *
    * @brief A class for rendering electromagnets with VTK. 
@@ -25,8 +23,8 @@ namespace KEMField
    * @author Stefan Groh
    */
 
-  class KEMVTKElectromagnetViewer : public KElectromagnetVisitor
-  {
+class KEMVTKElectromagnetViewer : public KElectromagnetVisitor
+{
   public:
     KEMVTKElectromagnetViewer(KElectromagnetContainer& anElectromagnetContainer);
     ~KEMVTKElectromagnetViewer() {}
@@ -36,14 +34,12 @@ namespace KEMField
     void ViewGeometry();
 
   private:
-
     void Visit(KLineCurrent&);
     void Visit(KCurrentLoop&);
     void Visit(KSolenoid&);
     void Visit(KCoil&);
+};
 
-  };
-
-}
+}  // namespace KEMField
 
 #endif /* KEMVTKELECTROMAGNETVIEWER_DEF */

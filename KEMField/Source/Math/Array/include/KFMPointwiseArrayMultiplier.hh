@@ -3,7 +3,8 @@
 
 #include "KFMBinaryArrayOperator.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,56 +20,51 @@ namespace KEMField{
 */
 
 template<typename ArrayType, unsigned int NDIM>
-class KFMPointwiseArrayMultiplier: public KFMBinaryArrayOperator< ArrayType, NDIM>
+class KFMPointwiseArrayMultiplier : public KFMBinaryArrayOperator<ArrayType, NDIM>
 {
-    public:
-        KFMPointwiseArrayMultiplier(){};
-        virtual ~KFMPointwiseArrayMultiplier(){};
+  public:
+    KFMPointwiseArrayMultiplier(){};
+    ~KFMPointwiseArrayMultiplier() override{};
 
-        virtual void Initialize(){;};
+    void Initialize() override
+    {
+        ;
+    };
 
-        virtual void ExecuteOperation()
-        {
-            if(IsInputOutputValid())
-            {
-                ArrayType* in1ptr = this->fFirstInput->GetData();
-                ArrayType* in2ptr = this->fSecondInput->GetData();
-                ArrayType* outptr = this->fOutput->GetData();
+    void ExecuteOperation() override
+    {
+        if (IsInputOutputValid()) {
+            ArrayType* in1ptr = this->fFirstInput->GetData();
+            ArrayType* in2ptr = this->fSecondInput->GetData();
+            ArrayType* outptr = this->fOutput->GetData();
 
-                unsigned int n_elem = this->fFirstInput->GetArraySize();
+            unsigned int n_elem = this->fFirstInput->GetArraySize();
 
-                for(unsigned int i=0; i < n_elem; i++)
-                {
-                    outptr[i] = (in1ptr[i])*(in2ptr[i]);
+            for (unsigned int i = 0; i < n_elem; i++) {
+                outptr[i] = (in1ptr[i]) * (in2ptr[i]);
+            }
+        }
+    }
+
+  private:
+    virtual bool IsInputOutputValid() const
+    {
+        if (this->fFirstInput && this->fSecondInput && this->fOutput) {
+            //check they have the same size/num elements
+            if (this->HaveSameNumberOfElements(this->fFirstInput, this->fOutput) &&
+                this->HaveSameNumberOfElements(this->fSecondInput, this->fOutput)) {
+                //check they have the same dimensions/shape
+                if (this->HaveSameDimensions(this->fFirstInput, this->fOutput) &&
+                    this->HaveSameDimensions(this->fSecondInput, this->fOutput)) {
+                    return true;
                 }
             }
         }
-
-    private:
-
-        virtual bool IsInputOutputValid() const
-        {
-            if(this->fFirstInput && this->fSecondInput && this->fOutput )
-            {
-                //check they have the same size/num elements
-                if( this->HaveSameNumberOfElements(this->fFirstInput, this->fOutput) &&
-                    this->HaveSameNumberOfElements(this->fSecondInput, this->fOutput)  )
-                {
-                    //check they have the same dimensions/shape
-                    if(this->HaveSameDimensions(this->fFirstInput, this->fOutput) &&
-                       this->HaveSameDimensions(this->fSecondInput, this->fOutput)  )
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-
+        return false;
+    }
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMPointwiseArrayMultiplier_H__ */

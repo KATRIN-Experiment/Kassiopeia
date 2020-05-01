@@ -12,48 +12,55 @@ using std::map;
 namespace Kassiopeia
 {
 
-    class KSParticleFactory :
-        public KSingleton< KSParticleFactory >
-    {
-        public:
-            friend class KSingleton< KSParticleFactory >;
+class KSParticleFactory : public KSingleton<KSParticleFactory>
+{
+  public:
+    friend class KSingleton<KSParticleFactory>;
 
-        private:
-            KSParticleFactory();
-            virtual ~KSParticleFactory();
+  private:
+    KSParticleFactory();
+    ~KSParticleFactory() override;
 
-        public:
-            KSParticle* Create( const long long& aPID );
-	    KSParticle* StringCreate( const std::string& aStringID );
-	    int Define( const long long& aPID, const std::string& aStringID, const std::vector<std::string> aAltStringIDs, const double& aMass, const double& aCharge, const double& aSpinMagnitude, const double& aGyromagneticRatio );
+  public:
+    KSParticle* Create(const long long& aPID);
+    KSParticleQueue Create(const long long& aPID, const size_t& aCount);
 
-            void SetSpace( KSSpace* aSpace );
-            KSSpace* GetSpace();
+    KSParticle* StringCreate(const std::string& aStringID);
+    KSParticleQueue StringCreate(const std::string& aStringID, const size_t& aCount);
 
-            void SetMagneticField( KSMagneticField* aMagneticField );
-            KSMagneticField* GetMagneticField();
+    int Define(const long long& aPID, const std::string& aStringID, const std::vector<std::string> aAltStringIDs,
+               const double& aMass, const double& aCharge, const double& aSpinMagnitude,
+               const double& aGyromagneticRatio);
 
-            void SetElectricField( KSElectricField* anElectricField );
-            KSElectricField* GetElectricField();
+    void SetSpace(KSSpace* aSpace);
+    KSSpace* GetSpace();
 
-        private:
-            typedef map< long long, KSParticle* > ParticleMap;
-            typedef ParticleMap::iterator ParticleIt;
-            typedef ParticleMap::const_iterator ParticleCIt;
-            typedef ParticleMap::value_type ParticleEntry;
+    void SetMagneticField(KSMagneticField* aMagneticField);
+    KSMagneticField* GetMagneticField();
 
-	    typedef map< std::string, KSParticle* > ParticleStringMap;
-            typedef ParticleStringMap::iterator ParticleStringIt;
-            typedef ParticleStringMap::const_iterator ParticleStringCIt;
-            typedef ParticleStringMap::value_type ParticleStringEntry;
+    void SetElectricField(KSElectricField* anElectricField);
+    KSElectricField* GetElectricField();
 
-            ParticleMap fParticles;
-	    ParticleStringMap fParticleString;
-            KSSpace* fSpace;
-            KSMagneticField* fMagneticField;
-            KSElectricField* fElectricField;
-    };
+  private:
+    typedef map<long long, KSParticle*> ParticleMap;
+    typedef ParticleMap::iterator ParticleIt;
+    typedef ParticleMap::const_iterator ParticleCIt;
+    typedef ParticleMap::value_type ParticleEntry;
 
-}
+    typedef map<std::string, KSParticle*> ParticleStringMap;
+    typedef ParticleStringMap::iterator ParticleStringIt;
+    typedef ParticleStringMap::const_iterator ParticleStringCIt;
+    typedef ParticleStringMap::value_type ParticleStringEntry;
+
+    ParticleMap fParticles;
+    ParticleStringMap fParticleString;
+    KSSpace* fSpace;
+    KSMagneticField* fMagneticField;
+    KSElectricField* fElectricField;
+
+    long fParticleIndex;
+};
+
+}  // namespace Kassiopeia
 
 #endif

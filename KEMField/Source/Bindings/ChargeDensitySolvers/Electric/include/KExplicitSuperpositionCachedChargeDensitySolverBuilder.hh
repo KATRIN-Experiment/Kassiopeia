@@ -11,28 +11,25 @@
 #include "KComplexElement.hh"
 #include "KExplicitSuperpositionCachedChargeDensitySolver.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KExplicitSuperpositionCachedChargeDensitySolver >
-KExplicitSuperpositionCachedChargeDensitySolverBuilder;
-
-template< >
-inline bool KExplicitSuperpositionCachedChargeDensitySolverBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "name" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KExplicitSuperpositionCachedChargeDensitySolver::SetName );
+
+typedef KComplexElement<KEMField::KExplicitSuperpositionCachedChargeDensitySolver>
+    KExplicitSuperpositionCachedChargeDensitySolverBuilder;
+
+template<> inline bool KExplicitSuperpositionCachedChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KEMField::KExplicitSuperpositionCachedChargeDensitySolver::SetName);
         return true;
     }
     return false;
 }
 
-template< >
-inline bool KExplicitSuperpositionCachedChargeDensitySolverBuilder::AddElement( KContainer* anElement )
+template<> inline bool KExplicitSuperpositionCachedChargeDensitySolverBuilder::AddElement(KContainer* anElement)
 {
-    if( anElement->GetName() == "component" )
-    {
-        anElement->ReleaseTo( fObject, &KEMField::KExplicitSuperpositionCachedChargeDensitySolver::AddSolutionComponent );
+    if (anElement->GetName() == "component") {
+        anElement->ReleaseTo(fObject, &KEMField::KExplicitSuperpositionCachedChargeDensitySolver::AddSolutionComponent);
         return true;
     }
     return false;

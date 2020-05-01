@@ -1,3 +1,4 @@
+home/
 /*build*
 /*Build*
 /*install*
@@ -5,11 +6,14 @@
 /IndependentKassiopeia/
 /.settings
 *~
+*.tags
 *.bak
 *.tmp
+*.log
 *.user
 *.autosave
 *.project
+*.plist
 *.cbp
 *.cproject
 *.DS_store
@@ -34,6 +38,8 @@ cmake_install.cmake
 *Config.cmake
 *ConfigVersion.cmake
 *ConfigInstalled.cmake
-home/
+*.ninja
+.ninja_*
+.clang_complete
 .idea/
 .ipynb_checkpoints/

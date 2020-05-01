@@ -13,16 +13,16 @@
 #include "KFMScalarMultipoleExpansion.hh"
 
 //math
-#include "KFMPointCloud.hh"
 #include "KFMMath.hh"
+#include "KFMPointCloud.hh"
 
 //tree
 #include "KFMSpecialNodeSet.hh"
 
 //electrostatics
-#include "KFMElectrostaticTree.hh"
-#include "KFMElectrostaticParameters.hh"
 #include "KFMElectrostaticElementContainer.hh"
+#include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticTree.hh"
 
 
 namespace KEMField
@@ -42,39 +42,40 @@ namespace KEMField
 
 class KFMElectrostaticMultipoleDistributor_OpenCL
 {
-    public:
-        KFMElectrostaticMultipoleDistributor_OpenCL();
-        virtual ~KFMElectrostaticMultipoleDistributor_OpenCL();
+  public:
+    KFMElectrostaticMultipoleDistributor_OpenCL();
+    virtual ~KFMElectrostaticMultipoleDistributor_OpenCL();
 
-        void SetNodeMomentBuffer(cl::Buffer* node_moments){fNodeMomentBufferCL = node_moments;};
-        void SetMultipoleNodeSet(KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* multipole_node_set){fMultipoleNodes = multipole_node_set;};
+    void SetNodeMomentBuffer(cl::Buffer* node_moments)
+    {
+        fNodeMomentBufferCL = node_moments;
+    };
+    void SetMultipoleNodeSet(KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* multipole_node_set)
+    {
+        fMultipoleNodes = multipole_node_set;
+    };
 
-        void SetDegree(unsigned int degree);
-        void Initialize();
-        void DistributeMoments();
+    void SetDegree(unsigned int degree);
+    void Initialize();
+    void DistributeMoments();
 
-    protected:
+  protected:
+    unsigned int fDegree;
+    unsigned int fNTerms;
+    unsigned int fStride;
+    unsigned int fNMultipoleNodes;
 
-        unsigned int fDegree;
-        unsigned int fNTerms;
-        unsigned int fStride;
-        unsigned int fNMultipoleNodes;
+    KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* fMultipoleNodes;
 
-        KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* fMultipoleNodes;
+    CL_TYPE2* fNodeMomentData;
+    cl::Buffer* fNodeMomentBufferCL;
 
-        CL_TYPE2* fNodeMomentData;
-        cl::Buffer* fNodeMomentBufferCL;
-
-        KFMElectrostaticMultipoleSet fTempMoments;
-        KFMScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet> fDistributor;
-
-
-
+    KFMElectrostaticMultipoleSet fTempMoments;
+    KFMScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet> fDistributor;
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* __KFMElectrostaticMultipoleDistributor_OpenCL_H__ */

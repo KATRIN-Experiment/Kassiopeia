@@ -5,8 +5,8 @@
 
 namespace KEMField
 {
-  class KSolenoidIntegrator
-  {
+class KSolenoidIntegrator
+{
   public:
     KSolenoidIntegrator() {}
     virtual ~KSolenoidIntegrator() {}
@@ -17,10 +17,10 @@ namespace KEMField
     KThreeVector MagneticField(const KSolenoid& solenoid, const KPosition& P) const;
 
   protected:
-    static double A_theta(const double *p, double *par);
-    static double B_r(const double *p, double *par);
-    static double B_z(const double *p, double *par);
-  };
-}
+    static double A_theta(const double* p, double* par);
+    static double B_r(const double* p, double* par);
+    static double B_z(const double* p, double* par);
+};
+}  // namespace KEMField
 
 #endif /* KSOLENOIDINTEGRATOR */

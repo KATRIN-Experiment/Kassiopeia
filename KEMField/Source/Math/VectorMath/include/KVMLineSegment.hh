@@ -4,7 +4,8 @@
 #include "KVMCompactCurve.hh"
 #include "KVMSpaceLineSegment.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -20,49 +21,49 @@ namespace KEMField{
 *
 */
 
-class KVMLineSegment: public KVMCompactCurve, public KVMSpaceLineSegment
+class KVMLineSegment : public KVMCompactCurve, public KVMSpaceLineSegment
 {
-    public:
+  public:
+    KVMLineSegment();
+    ~KVMLineSegment() override
+    {
+        ;
+    };
 
-        KVMLineSegment(); 
-        virtual ~KVMLineSegment(){;};
+    inline KVMLineSegment(const KVMLineSegment& copyObject);
 
-        inline KVMLineSegment(const KVMLineSegment &copyObject);
+    inline KVMLineSegment& operator=(const KVMSpaceLineSegment& rhs);
 
-        inline KVMLineSegment& operator=(const KVMSpaceLineSegment& rhs);
-        
-        virtual void Initialize(); 
+    void Initialize() override;
 
-    protected:
+  protected:
+    ///functions which define the curve's jacobian
+    double dxdu(const double& /*u*/) const override;
+    double dydu(const double& /*u*/) const override;
+    double dzdu(const double& /*u*/) const override;
 
-        ///functions which define the curve's jacobian
-        virtual double dxdu(const double& /*u*/) const;
-        virtual double dydu(const double& /*u*/) const;
-        virtual double dzdu(const double& /*u*/) const;
-
-        ///functions which define the curve
-        virtual double x(const double& u) const;
-        virtual double y(const double& u) const;
-        virtual double z(const double& u) const;
+    ///functions which define the curve
+    double x(const double& u) const override;
+    double y(const double& u) const override;
+    double z(const double& u) const override;
 };
 
-inline KVMLineSegment::KVMLineSegment(const KVMLineSegment &copyObject):
-KVMCompactCurve(copyObject),
-KVMSpaceLineSegment(copyObject)
+inline KVMLineSegment::KVMLineSegment(const KVMLineSegment& copyObject) :
+    KVMCompactCurve(copyObject),
+    KVMSpaceLineSegment(copyObject)
 {
     Initialize();
 }
 
 inline KVMLineSegment& KVMLineSegment::operator=(const KVMSpaceLineSegment& rhs)
 {
-    if(this != &rhs)
-    {
+    if (this != &rhs) {
         KVMSpaceLineSegment::operator=(rhs);
         Initialize();
     }
     return *this;
 }
 
-} //end of KEMField namespace
+}  // namespace KEMField
 
 #endif

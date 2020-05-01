@@ -20,23 +20,26 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  struct KSurfaceID;
-  class KBasis;
-  class KBoundary;
-  class KShape;
-  class KBasisVisitor;
-  class KBoundaryVisitor;
-  class KShapeVisitor;
+struct KSurfaceID;
+class KBasis;
+class KBoundary;
+class KShape;
+class KBasisVisitor;
+class KBoundaryVisitor;
+class KShapeVisitor;
 
-  class KSurfacePrimitive
-  {
+class KSurfacePrimitive
+{
   protected:
     KSurfacePrimitive() {}
 
   public:
     virtual ~KSurfacePrimitive() {}
 
-    static std::string Name() { return "SurfacePrimitive"; }
+    static std::string Name()
+    {
+        return "SurfacePrimitive";
+    }
 
     virtual std::string GetName() const = 0;
     virtual KSurfaceID& GetID() const = 0;
@@ -49,7 +52,7 @@ namespace KEMField
     virtual void Accept(KBasisVisitor& visitor) = 0;
     virtual void Accept(KBoundaryVisitor& visitor) = 0;
     virtual void Accept(KShapeVisitor& visitor) = 0;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KSURFACEPRIMITIVE_DEF */

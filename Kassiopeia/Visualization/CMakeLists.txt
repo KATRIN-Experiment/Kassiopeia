@@ -12,6 +12,7 @@ if( Kassiopeia_USE_ROOT )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_HEADER_BASENAMES
 	    	${VISUALIZATION_HEADER_BASENAMES}
+	    	KSVTKGeneratorPainter.h
 	    	KSVTKTrackPainter.h
 	    	KSVTKTrackTerminatorPainter.h
 	    )
@@ -40,6 +41,7 @@ if( Kassiopeia_USE_ROOT )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_SOURCE_BASENAMES
 	    	${VISUALIZATION_SOURCE_BASENAMES}
+	    	KSVTKGeneratorPainter.cxx
 	    	KSVTKTrackPainter.cxx
 	    	KSVTKTrackTerminatorPainter.cxx
 	    )

@@ -3,12 +3,8 @@
 namespace KGeoBag
 {
 
-    KGPlanarPath::KGPlanarPath()
-    {
-    }
+KGPlanarPath::KGPlanarPath() {}
 
-    KGPlanarPath::~KGPlanarPath()
-    {
-    }
+KGPlanarPath::~KGPlanarPath() {}
 
-}
+}  // namespace KGeoBag

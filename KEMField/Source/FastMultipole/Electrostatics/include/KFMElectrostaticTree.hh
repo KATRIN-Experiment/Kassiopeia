@@ -1,43 +1,42 @@
 #ifndef KFMElectrostaticTree_HH__
 #define KFMElectrostaticTree_HH__
 
-#include "KFMIdentitySetSorter.hh"
-#include "KFMExternalIdentitySetSorter.hh"
-
 #include "KFMCubicSpaceTree.hh"
 #include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KFMExternalIdentitySetSorter.hh"
+#include "KFMIdentitySetSorter.hh"
 
 
 //from kernel
-#include "KFMResponseKernel_3DLaplaceM2M.hh"
-#include "KFMResponseKernel_3DLaplaceM2L.hh"
 #include "KFMResponseKernel_3DLaplaceL2L.hh"
+#include "KFMResponseKernel_3DLaplaceM2L.hh"
+#include "KFMResponseKernel_3DLaplaceM2M.hh"
 
 //from tree
-#include "KFMNearbyElementCounter.hh"
+#include "KFMCollocationPointIdentitySetCreator.hh"
+#include "KFMCubicSpaceNodeAdjacencyProgenitor.hh"
+#include "KFMCubicSpaceTreeNavigator.hh"
+#include "KFMElementLocalInfluenceRangeCollector.hh"
+#include "KFMElementLocator.hh"
 #include "KFMElementNodeAssociator.hh"
 #include "KFMElementScalarMomentDistributor.hh"
-#include "KFMScalarMomentInitializer.hh"
-#include "KFMScalarMomentResetter.hh"
-#include "KFMScalarMomentDistributor.hh"
-#include "KFMScalarMomentRemoteToRemoteConverter.hh"
-#include "KFMScalarMomentRemoteToLocalConverter.hh"
-#include "KFMReducedScalarMomentRemoteToLocalConverter.hh"
-#include "KFMRemoteToLocalConverterInterface.hh"
-#include "KFMScalarMomentLocalToLocalConverter.hh"
-#include "KFMCubicSpaceTreeNavigator.hh"
-#include "KFMCubicSpaceNodeAdjacencyProgenitor.hh"
-#include "KFMIdentitySetMerger.hh"
 #include "KFMIdentitySetCollector.hh"
 #include "KFMIdentitySetListCreator.hh"
-#include "KFMElementLocator.hh"
-#include "KFMNodeIdentityListRange.hh"
-#include "KFMNodeIdentityListCreator.hh"
-#include "KFMNodeIdentityListRangeAssociator.hh"
+#include "KFMIdentitySetMerger.hh"
+#include "KFMNearbyElementCounter.hh"
 #include "KFMNodeFlagInitializer.hh"
-#include "KFMElementLocalInfluenceRangeCollector.hh"
-#include "KFMCollocationPointIdentitySetCreator.hh"
+#include "KFMNodeIdentityListCreator.hh"
+#include "KFMNodeIdentityListRange.hh"
+#include "KFMNodeIdentityListRangeAssociator.hh"
+#include "KFMReducedScalarMomentRemoteToLocalConverter.hh"
+#include "KFMRemoteToLocalConverterInterface.hh"
+#include "KFMScalarMomentDistributor.hh"
+#include "KFMScalarMomentInitializer.hh"
+#include "KFMScalarMomentLocalToLocalConverter.hh"
+#include "KFMScalarMomentRemoteToLocalConverter.hh"
+#include "KFMScalarMomentRemoteToRemoteConverter.hh"
+#include "KFMScalarMomentResetter.hh"
 
 #include <string>
 
@@ -50,87 +49,88 @@ namespace KEMField
 
 //we operate on the tree with the following visitors
 typedef KFMNearbyElementCounter<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-KFMElectrostaticNearbyElementCounter;
+    KFMElectrostaticNearbyElementCounter;
 
 typedef KFMElementNodeAssociator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-KFMElectrostaticElementNodeAssociator;
+    KFMElectrostaticElementNodeAssociator;
 
-typedef KFMIdentitySetListCreator< KFMElectrostaticNodeObjects >
-KFMElectrostaticIdentitySetListCreator;
+typedef KFMIdentitySetListCreator<KFMElectrostaticNodeObjects> KFMElectrostaticIdentitySetListCreator;
 
 //distributor of element moments
-typedef KFMElementScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMELECTROSTATICS_DIM>
-KFMElectrostaticElementMultipoleDistributor;
+typedef KFMElementScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                          KFMELECTROSTATICS_DIM>
+    KFMElectrostaticElementMultipoleDistributor;
 
 
 //initializers
 typedef KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>
-KFMElectrostaticMultipoleInitializer;
+    KFMElectrostaticMultipoleInitializer;
 
 typedef KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>
-KFMElectrostaticLocalCoefficientInitializer;
+    KFMElectrostaticLocalCoefficientInitializer;
 
 //resetters
 typedef KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>
-KFMElectrostaticMultipoleResetter;
+    KFMElectrostaticMultipoleResetter;
 
 typedef KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>
-KFMElectrostaticLocalCoefficientResetter;
+    KFMElectrostaticLocalCoefficientResetter;
 
 //moment converters
-typedef KFMScalarMomentRemoteToRemoteConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMResponseKernel_3DLaplaceM2M, KFMELECTROSTATICS_DIM> KFMElectrostaticRemoteToRemoteConverter;
+typedef KFMScalarMomentRemoteToRemoteConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                               KFMResponseKernel_3DLaplaceM2M, KFMELECTROSTATICS_DIM>
+    KFMElectrostaticRemoteToRemoteConverter;
 
-typedef KFMScalarMomentLocalToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceL2L, KFMELECTROSTATICS_DIM>
-KFMElectrostaticLocalToLocalConverter;
+typedef KFMScalarMomentLocalToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet,
+                                             KFMResponseKernel_3DLaplaceL2L, KFMELECTROSTATICS_DIM>
+    KFMElectrostaticLocalToLocalConverter;
 
 #ifdef USE_REDUCED_M2L
-typedef KFMReducedScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, KFMELECTROSTATICS_DIM>
-KFMElectrostaticRemoteToLocalConverter;
+typedef KFMReducedScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                                     KFMElectrostaticLocalCoefficientSet,
+                                                     KFMResponseKernel_3DLaplaceM2L, KFMELECTROSTATICS_DIM>
+    KFMElectrostaticRemoteToLocalConverter;
 #else
-typedef KFMScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L, KFMELECTROSTATICS_DIM>
-KFMElectrostaticRemoteToLocalConverter;
+typedef KFMScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                              KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L,
+                                              KFMELECTROSTATICS_DIM>
+    KFMElectrostaticRemoteToLocalConverter;
 #endif
 
 //interface to m2l converters to handle different divisions on top level
-typedef KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter> KFMElectrostaticRemoteToLocalConverterInterface;
+typedef KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM,
+                                           KFMElectrostaticRemoteToLocalConverter>
+    KFMElectrostaticRemoteToLocalConverterInterface;
 
 //navigator
-typedef KFMCubicSpaceTreeNavigator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-KFMElectrostaticTreeNavigator;
+typedef KFMCubicSpaceTreeNavigator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM> KFMElectrostaticTreeNavigator;
 
 //id set collector
-typedef KFMIdentitySetMerger< KFMElectrostaticNodeObjects >
-KFMElectrostaticNodeIdentitySetMerger;
+typedef KFMIdentitySetMerger<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentitySetMerger;
 
 //inspector to determine node primacy
 typedef KFMCubicSpaceNodeAdjacencyProgenitor<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-KFMElectrostaticAdjacencyProgenitor;
+    KFMElectrostaticAdjacencyProgenitor;
 
 
 //sorters for the identity set, and external identity set
-typedef KFMIdentitySetSorter< KFMElectrostaticNodeObjects >
-KFMElectrostaticIdentitySetSorter;
+typedef KFMIdentitySetSorter<KFMElectrostaticNodeObjects> KFMElectrostaticIdentitySetSorter;
 
-typedef KFMExternalIdentitySetSorter< KFMElectrostaticNodeObjects >
-KFMElectrostaticExternalIdentitySetSorter;
+typedef KFMExternalIdentitySetSorter<KFMElectrostaticNodeObjects> KFMElectrostaticExternalIdentitySetSorter;
 
-typedef KFMElementLocator< KFMElectrostaticNodeObjects >
-KFMElectrostaticElementLocator;
+typedef KFMElementLocator<KFMElectrostaticNodeObjects> KFMElectrostaticElementLocator;
 
-typedef KFMNodeIdentityListCreator< KFMElectrostaticNodeObjects >
-KFMElectrostaticNodeIdentityListCreator;
+typedef KFMNodeIdentityListCreator<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentityListCreator;
 
-typedef KFMNodeIdentityListRangeAssociator< KFMElectrostaticNodeObjects >
-KFMElectrostaticNodeIdentityListRangeAssociator;
+typedef KFMNodeIdentityListRangeAssociator<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentityListRangeAssociator;
 
 typedef KFMElementInfluenceRangeCollector<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>
-KFMElectrostaticElementInfluenceRangeCollector;
+    KFMElectrostaticElementInfluenceRangeCollector;
 
-typedef KFMIdentitySetCollector< KFMElectrostaticNodeObjects >
-KFMElectrostaticNodeIdentitySetCollector;
+typedef KFMIdentitySetCollector<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentitySetCollector;
 
 typedef KFMCollocationPointIdentitySetCreator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-KFMElectrostaticCollocationPointIdentitySetCreator;
+    KFMElectrostaticCollocationPointIdentitySetCreator;
 
 //the local coefficient calculator
 //KFMLocalCoefficientCalculator* fLocalCoeffCalculator;
@@ -150,32 +150,40 @@ KFMElectrostaticCollocationPointIdentitySetCreator;
 */
 
 //this is the type of tree we operate on
-class KFMElectrostaticTree: public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects >
+class KFMElectrostaticTree : public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>
 {
-    public:
-        KFMElectrostaticTree():KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects >(){;}
-        virtual ~KFMElectrostaticTree()
-        {
-        };
+  public:
+    KFMElectrostaticTree() : KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>()
+    {
+        ;
+    }
+    ~KFMElectrostaticTree() override{};
 
-        void SetParameters(KFMElectrostaticParameters params)
-        {
-            fParameters = params;
-        }
+    void SetParameters(KFMElectrostaticParameters params)
+    {
+        fParameters = params;
+    }
 
-        KFMElectrostaticParameters GetParameters(){return fParameters;};
+    KFMElectrostaticParameters GetParameters()
+    {
+        return fParameters;
+    };
 
-        std::string GetUniqueID() const {return fUniqueID;};
-        void SetUniqueID(std::string unique_id){fUniqueID = unique_id;};
+    std::string GetUniqueID() const
+    {
+        return fUniqueID;
+    };
+    void SetUniqueID(std::string unique_id)
+    {
+        fUniqueID = unique_id;
+    };
 
-    private:
-
-        KFMElectrostaticParameters fParameters;
-        std::string fUniqueID;
+  private:
+    KFMElectrostaticParameters fParameters;
+    std::string fUniqueID;
 };
 
 
-
-}
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticTree_H__ */

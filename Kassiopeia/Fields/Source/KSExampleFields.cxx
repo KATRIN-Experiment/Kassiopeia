@@ -6,6 +6,7 @@
  */
 
 #include "KSExampleFields.h"
+
 #include "KElectrostaticConstantField.hh"
 #include "KMagnetostaticConstantField.hh"
 #include "KSElectricKEMField.h"
@@ -13,27 +14,26 @@
 
 using namespace KEMField;
 
-namespace Kassiopeia {
-
-
-KSElectricField* MakeConstantElectricField(
-        KGeoBag::KThreeVector field)
+namespace Kassiopeia
 {
-    KElectrostaticConstantField* kemfield = new KElectrostaticConstantField();
+
+
+KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field)
+{
+    auto* kemfield = new KElectrostaticConstantField();
     kemfield->SetField(field);
 
-    KSElectricKEMField* kasfield = new KSElectricKEMField();
+    auto* kasfield = new KSElectricKEMField();
     kasfield->SetElectricField(kemfield);
     return kasfield;
 }
 
-KSMagneticField* MakeConstantMagneticField(
-        KGeoBag::KThreeVector field)
+KSMagneticField* MakeConstantMagneticField(KGeoBag::KThreeVector field)
 {
-    KMagnetostaticConstantField* kemfield = new KMagnetostaticConstantField();
+    auto* kemfield = new KMagnetostaticConstantField();
     kemfield->SetField(field);
 
-    KSMagneticKEMField* kasfield = new KSMagneticKEMField();
+    auto* kasfield = new KSMagneticKEMField();
     kasfield->SetMagneticField(kemfield);
     return kasfield;
 }

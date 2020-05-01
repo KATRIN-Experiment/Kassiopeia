@@ -5,52 +5,77 @@
 #ifndef KASPER_KCOMMANDLINEPARSER_H_H
 #define KASPER_KCOMMANDLINEPARSER_H_H
 
-#include "KSingleton.h"
 #include "KArgumentList.h"
-#include "KTextFile.h"
 #include "KSerializationProcessor.hh"
+#include "KSingleton.h"
+#include "KTextFile.h"
 #include "KXMLTokenizer.hh"
 
-#include <string>
-#include <vector>
 #include <map>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace katrin
 {
 
-class KXMLInitializer: public KSingleton<KXMLInitializer>
+class KXMLInitializer : public KSingleton<KXMLInitializer>
 {
-protected:
+  protected:
     KXMLInitializer();
-    virtual ~KXMLInitializer();
+    ~KXMLInitializer() override;
 
-public:
-    void SetDefaultConfigFile(const std::string& fileName) { fDefaultConfigFile = fileName; }
-    void AddDefaultIncludePath(const std::string& dirName) { fDefaultIncludePaths.push_back(dirName); }
+  public:
+    void SetDefaultConfigFile(const std::string& fileName)
+    {
+        fDefaultConfigFile = fileName;
+    }
+    void AddDefaultIncludePath(const std::string& dirName)
+    {
+        fDefaultIncludePaths.push_back(dirName);
+    }
+    void AllowConfigFileFallback(bool enabled = true)
+    {
+        fAllowConfigFileFallback = enabled;
+    }
 
-    void Configure(int argc = 0, char** argv = nullptr);
+    KArgumentList& GetArguments()
+    {
+        return fArguments;
+    }
+    int GetVerbosityLevel() const
+    {
+        return fVerbosityLevel;
+    }
 
-    void DumpConfiguration(std::ostream& strm, bool includeArguments = true);
-    KArgumentList& GetArguments() { return fArguments; }
+    KXMLTokenizer* Configure(int argc = 0, char** argv = nullptr, bool processConfig = true);
 
-protected:
+    void UpdateVariables(const KArgumentList& args);
+    void DumpConfiguration(std::ostream& strm = std::cout, bool includeArguments = true) const;
+
+  protected:
     void ParseCommandLine(int argc, char** argv);
-    std::pair<std::string, KTextFile> GetConfigFile();
-    KXMLTokenizer* SetupProcessChain(const std::map<std::string, std::string>& tVariables,
-         const std::string& tIncludepaths);
 
-    KArgumentList fArguments;
+    std::pair<std::string, KTextFile> GetConfigFile();
+
+    void SetupProcessChain(const std::map<std::string, std::string>& variables, const std::string& includepath = "");
+
+  private:
     std::unique_ptr<KSerializationProcessor> fConfigSerializer;
 
+    KXMLTokenizer* fTokenizer;
+    KArgumentList fArguments;
+    int fVerbosityLevel;
     std::string fDefaultConfigFile;
     std::vector<std::string> fDefaultIncludePaths;
+    bool fAllowConfigFileFallback;
+    bool fUsingDefaultPaths;
 
-protected:
+  protected:
     friend class KSingleton<KXMLInitializer>;
 };
 
-}
+}  // namespace katrin
 
 
-#endif //KASPER_KCOMMANDLINEPARSER_H_H
+#endif  //KASPER_KCOMMANDLINEPARSER_H_H

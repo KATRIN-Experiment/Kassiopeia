@@ -1,38 +1,36 @@
 #ifndef Kassiopeia_KSGenValueGeneralizedGauss_h_
 #define Kassiopeia_KSGenValueGeneralizedGauss_h_
 
-#include "KSGenValue.h"
-
 #include "KField.h"
 #include "KMathBracketingSolver.h"
+#include "KSGenValue.h"
 using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {
-    class KSGenValueGeneralizedGauss :
-        public KSComponentTemplate< KSGenValueGeneralizedGauss, KSGenValue >
-    {
-        public:
-            KSGenValueGeneralizedGauss();
-            KSGenValueGeneralizedGauss( const KSGenValueGeneralizedGauss& aCopy );
-            KSGenValueGeneralizedGauss* Clone() const;
-            virtual ~KSGenValueGeneralizedGauss();
+class KSGenValueGeneralizedGauss : public KSComponentTemplate<KSGenValueGeneralizedGauss, KSGenValue>
+{
+  public:
+    KSGenValueGeneralizedGauss();
+    KSGenValueGeneralizedGauss(const KSGenValueGeneralizedGauss& aCopy);
+    KSGenValueGeneralizedGauss* Clone() const override;
+    ~KSGenValueGeneralizedGauss() override;
 
-        public:
-            virtual void DiceValue( std::vector< double >& aDicedValues );
+  public:
+    void DiceValue(std::vector<double>& aDicedValues) override;
 
-        public:
-            K_SET_GET( double, ValueMin )
-            K_SET_GET( double, ValueMax )
-            K_SET_GET( double, ValueMean )
-            K_SET_GET( double, ValueSigma )
-            K_SET_GET( double, ValueSkew )
+  public:
+    K_SET_GET(double, ValueMin)
+    K_SET_GET(double, ValueMax)
+    K_SET_GET(double, ValueMean)
+    K_SET_GET(double, ValueSigma)
+    K_SET_GET(double, ValueSkew)
 
-        protected:
-            double ValueFunction( const double& aValue ) const;
-            KMathBracketingSolver fSolver;
-    };
+  protected:
+    double ValueFunction(const double& aValue) const;
+    KMathBracketingSolver fSolver;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

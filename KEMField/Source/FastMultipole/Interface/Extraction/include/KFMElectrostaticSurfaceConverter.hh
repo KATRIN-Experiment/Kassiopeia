@@ -2,21 +2,18 @@
 #define KFMElectrostaticSurfaceConverter_HH__
 
 
-#include "KSurfaceContainer.hh"
-#include "KSortedSurfaceContainer.hh"
-
 #include "KFMBasisData.hh"
-#include "KFMPointCloud.hh"
-#include "KFMIdentityPair.hh"
-#include "KFMObjectContainer.hh"
+#include "KFMElectrostaticBasisDataExtractor.hh"
 #include "KFMElectrostaticElement.hh"
 #include "KFMElectrostaticElementContainerBase.hh"
-
-#include "KFMSurfaceToPointCloudConverter.hh"
-#include "KFMPointCloudToBoundingBallConverter.hh"
-#include "KFMElectrostaticBasisDataExtractor.hh"
 #include "KFMElementAspectRatioExtractor.hh"
-
+#include "KFMIdentityPair.hh"
+#include "KFMObjectContainer.hh"
+#include "KFMPointCloud.hh"
+#include "KFMPointCloudToBoundingBallConverter.hh"
+#include "KFMSurfaceToPointCloudConverter.hh"
+#include "KSortedSurfaceContainer.hh"
+#include "KSurfaceContainer.hh"
 #include "KVector.hh"
 
 #include <iostream>
@@ -40,50 +37,45 @@ namespace KEMField
 
 class KFMElectrostaticSurfaceConverter
 {
-    public:
+  public:
+    KFMElectrostaticSurfaceConverter()
+    {
+        fSurfaceContainer = nullptr;
+        fSortedSurfaceContainer = nullptr;
+        fContainerIsSorted = false;
+        fElectrostaticElementContainer = nullptr;
+    };
 
-        KFMElectrostaticSurfaceConverter()
-        {
-            fSurfaceContainer = NULL;
-            fSortedSurfaceContainer = NULL;
-            fContainerIsSorted = false;
-            fElectrostaticElementContainer = NULL;
-        };
+    virtual ~KFMElectrostaticSurfaceConverter(){};
 
-        virtual ~KFMElectrostaticSurfaceConverter(){};
+    void SetSurfaceContainer(const KSurfaceContainer* container);
+    void SetSortedSurfaceContainer(const KSortedSurfaceContainer* container);
 
-        void SetSurfaceContainer(const KSurfaceContainer* container);
-        void SetSortedSurfaceContainer( const KSortedSurfaceContainer* container);
+    void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3, 1>* container);
 
-        void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container);
+    void Extract();
 
-        void Extract();
+    void UpdateBasisData();
 
-        void UpdateBasisData();
+    void UpdateBasisData(const KVector<double>& x);
 
-        void UpdateBasisData(const KVector<double>& x);
+  private:
+    const KSurfaceContainer* fSurfaceContainer;
+    const KSortedSurfaceContainer* fSortedSurfaceContainer;
+    bool fContainerIsSorted;
 
-    private:
+    KFMSurfaceToPointCloudConverter fPointCloudGenerator;
+    KFMPointCloudToBoundingBallConverter<3> fBoundingBallGenerator;
+    KFMElectrostaticBasisDataExtractor fBasisExtractor;
+    KFMElementAspectRatioExtractor fAspectRatioExtractor;
 
-        const KSurfaceContainer* fSurfaceContainer;
-        const KSortedSurfaceContainer* fSortedSurfaceContainer;
-        bool fContainerIsSorted;
-
-        KFMSurfaceToPointCloudConverter fPointCloudGenerator;
-        KFMPointCloudToBoundingBallConverter<3> fBoundingBallGenerator;
-        KFMElectrostaticBasisDataExtractor fBasisExtractor;
-        KFMElementAspectRatioExtractor fAspectRatioExtractor;
-
-        KFMPointCloud<3> fTempPointCloud;
-        KFMPoint<3> fCentroid;
-        KFMElectrostaticElement<3,1> fTempElement;
-        KFMElectrostaticElementContainerBase<3,1>* fElectrostaticElementContainer;
-
+    KFMPointCloud<3> fTempPointCloud;
+    KFMPoint<3> fCentroid;
+    KFMElectrostaticElement<3, 1> fTempElement;
+    KFMElectrostaticElementContainerBase<3, 1>* fElectrostaticElementContainer;
 };
 
 
-
-
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticSurfaceConverter_H__ */

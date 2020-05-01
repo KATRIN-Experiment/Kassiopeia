@@ -3,172 +3,301 @@
 //
 
 #include "KXMLInitializer.hh"
-#include "KPathResolver.h"
-#include "KVariableProcessor.hh"
-#include "KIncludeProcessor.hh"
-#include "KLoopProcessor.hh"
+
 #include "KConditionProcessor.hh"
 #include "KElementProcessor.hh"
-#include "KTagProcessor.hh"
-#include "KPrintProcessor.hh"
+#include "KIncludeProcessor.hh"
 #include "KInitializationMessage.hh"
+#include "KLoopProcessor.hh"
+#include "KPathResolver.h"
+#include "KPrintProcessor.hh"
+#include "KTagProcessor.hh"
+#include "KVariableProcessor.hh"
 
 #ifdef Kommon_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
 
+#include "KLogger.h"
+KLOGGER("kommon.init");
+
 extern char** environ;
 
 using namespace std;
 
-namespace katrin {
+namespace katrin
+{
 
 KXMLInitializer::KXMLInitializer() :
+    fConfigSerializer(),
+    fTokenizer(nullptr),
     fArguments(),
-    fConfigSerializer()
+    fVerbosityLevel(eNormal),
+    fDefaultConfigFile(),
+    fDefaultIncludePaths(),
+    fAllowConfigFileFallback(false),
+    fUsingDefaultPaths(false)
+{}
+
+KXMLInitializer::~KXMLInitializer() {}
+
+void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
-}
+    fVerbosityLevel = eNormal;  // reset
+    KArgumentList commandLineArgs;
 
-KXMLInitializer::~KXMLInitializer()
-{
-}
+    if (argc >= 1) {
 
-void KXMLInitializer::ParseCommandLine(int argc, char **argv)
-{
-    // parse command line arguments
-    KArgumentList commandLineArgs(argc, argv);
-
-    for (size_t i = 0; i<commandLineArgs.Length(); ++i) {
-        commandLineArgs.SetParameter(i, commandLineArgs.GetParameter(i));
-    }
-
-    map<string, string>::const_iterator mapIt;
-    for (mapIt = commandLineArgs.OptionTable().begin(); mapIt != commandLineArgs.OptionTable().end(); ++mapIt) {
-        string key = mapIt->first;
-        if (key.length() > 0 && key[0] == '-') {
-            if (key.length() > 1 && key[1] == '-')
-                key = key.substr(2);
-            else
-                key = key.substr(1);
+        // check for -r flag after which variables are defined
+        int lastArg = 1;  // ignore first arg (which is program name)
+        for (; lastArg < argc; lastArg++) {
+            string arg = argv[lastArg];
+            if (arg == "-r")
+                break;
         }
-        if (key.length() > 0)
-            commandLineArgs.SetOption(key, mapIt->second);
+
+        // parse command line arguments - but only up to the -r flag
+        commandLineArgs = move(KArgumentList(lastArg, argv));
+        KDEBUG("Commandline: " << commandLineArgs.CommandLine());
+
+        // parse `key=value` pairs after the -r flag
+        for (++lastArg; lastArg < argc; lastArg++) {
+            string arg = argv[lastArg];
+            auto pos = arg.find_first_of('=');
+            string key = arg.substr(0, pos);
+            if (pos == string::npos)
+                continue;
+            string value = arg.substr(pos + 1);
+
+            if (!value.empty()) {
+                //KDEBUG("adding option: " << key << " = " << value);
+                commandLineArgs.SetOption(key, value);
+            }
+        }
+
+        // parse any `-key[=value]` and `--key[=value]` options
+        for (lastArg = 1; lastArg < argc; lastArg++) {
+            string arg = argv[lastArg];
+            auto length = arg.find_first_of('=');
+            string key = arg.substr(0, length);
+            string value = "";
+            if (length != string::npos)
+                value = arg.substr(length + 1);
+
+            if (key.length() > 0 && key[0] == '-') {
+                // parse verbosity options like '-vvqv -q -vv'
+                if (key.length() >= 2 && (key[1] == 'v' || key[1] == 'q')) {
+                    int verbosity = 0;
+                    for (size_t i = 1; i < key.length(); i++) {
+                        if (key[i] == 'v')
+                            verbosity++;
+                        else if (key[i] == 'q')
+                            verbosity--;
+                        else {
+                            verbosity = 0;
+                            break;
+                        }
+                    }
+                    fVerbosityLevel += verbosity;
+                }
+
+                // treat as key=value pair
+                if (key.length() > 1 && key[1] == '-')
+                    key = key.substr(2);
+                else
+                    key = key.substr(1);
+            }
+            else
+                continue;  // ignore `key[=value]` args here
+
+            if (key.length() > 0 && value.length() > 0) {
+                //KDEBUG("adding option: " << key << " = " << value);
+                commandLineArgs.SetOption(key, value);
+            }
+        }
     }
 
-    // adding environment variables
-    for (char** env = environ; *env != 0; env++) {
-        string tEnv(*env);
-        stringstream env_stream(tEnv);
-        string tVariableName;
-        string tVariableValue;
-        getline(env_stream, tVariableName, '=');
-        getline(env_stream, tVariableValue);
-        commandLineArgs.SetOption(tVariableName, tVariableValue);
+    // add environment variables (but do not overwrite already defined keys)
+    for (char** env = environ; *env != nullptr; env++) {
+        stringstream ss(*env);
+        string key, value;
+        getline(ss, key, '=');
+        getline(ss, value);
+
+        if (key.length() > 0 && value.length() > 0) {
+            if (commandLineArgs.GetOption(key).IsVoid()) {
+                //KDEBUG("adding option: " << key << " = " << value);
+                commandLineArgs.SetOption(key, value);
+            }
+        }
     }
 
     KPathResolver pathResolver;
 
-    // some default values for missing env. variables
-    if (commandLineArgs.OptionTable().find("KASPERSYS") == commandLineArgs.OptionTable().end())
-        commandLineArgs.SetOption("KASPERSYS", pathResolver.GetDirectory(KEDirectory::Kasper));
+    // set default values for missing environment variables
+    if (commandLineArgs.GetOption("KASPERSYS").IsVoid()) {
+        string path = pathResolver.GetDirectory(KEDirectory::Kasper);
+        initmsg(eWarning) << "Using default KASPERSYS in <" << path << ">" << eom;
+        commandLineArgs.SetOption("KASPERSYS", path);
+    }
 
-    if (commandLineArgs.OptionTable().find("KEMFIELD_CACHE") == commandLineArgs.OptionTable().end())
-        commandLineArgs.SetOption("KEMFIELD_CACHE", pathResolver.GetDirectory(KEDirectory::Kasper) + "/cache/KEMField");
+    if (commandLineArgs.GetOption("KEMFIELD_CACHE").IsVoid()) {
+        string path = pathResolver.GetDirectory(KEDirectory::Kasper) + "/cache/KEMField";
+        initmsg(eWarning) << "Using default KEMFIELD_CACHE in <" << path << ">" << eom;
+        commandLineArgs.SetOption("KEMFIELD_CACHE", path);
+    }
 
     fArguments = move(commandLineArgs);
 }
 
 pair<string, KTextFile> KXMLInitializer::GetConfigFile()
 {
+    fUsingDefaultPaths = false;
     KTextFile configFile;
 
+    // use filename from cmdline option --config=FILE
     string configLocationHint = fArguments.GetOption("config");
 
-    if (configLocationHint.empty() && fArguments.Length() > 0)
+    // use filename from first cmdline argument
+    if (configLocationHint.empty() && fArguments.Length() > 0) {
         configLocationHint = fArguments.GetParameter(0).AsString();
-
-    if (!configLocationHint.empty()) {
-        if (configLocationHint.size() > 2)
-            configFile.AddToNames( configLocationHint );
-        configFile.AddToPaths( configLocationHint );
     }
 
-    if (!fDefaultConfigFile.empty())
-        configFile.SetDefaultBase( fDefaultConfigFile );
-    if (!fDefaultIncludePaths.empty())
-        configFile.SetDefaultPath( fDefaultIncludePaths.front() );
+    if (!configLocationHint.empty()) {
+        // try to determine if hint points to file or directory
+        if (KFile::Test(configLocationHint)) {
+            configFile.AddToNames(configLocationHint);
+        }
+        else {
+            // probably a directory
+            configFile.AddToPaths(configLocationHint);
+        }
+    }
+
+    if (configLocationHint.empty()) {
+        if (fAllowConfigFileFallback) {
+            if (!fDefaultConfigFile.empty())
+                configFile.SetDefaultBase(fDefaultConfigFile);
+            if (!fDefaultIncludePaths.empty())
+                configFile.SetDefaultPath(fDefaultIncludePaths.front());
+        }
+        else {
+            return pair<string, KTextFile>("", configFile);
+        }
+    }
 
     // resolve path
-    configFile.Open(KFile::eRead);
+    bool hasFile = configFile.Open(KFile::eRead);
+    if (!hasFile) {
+        initmsg(eError) << "Unable to open config file <" << configLocationHint << "> (default: <"
+                        << configFile.GetDefaultBase() << ">)" << eom;
+    }
     string configFileName = configFile.GetBase();
     string configFilePath = configFile.GetName();
     string currentConfigDir = configFile.GetPath();
+    fUsingDefaultPaths = configFile.IsUsingDefaultBase() && configFile.IsUsingDefaultPath();
     configFile.Close();
 
     if (currentConfigDir.empty())
         currentConfigDir = ".";
 
-    initmsg(eNormal) << "Parsing config file '" << configFileName << "' in directory '" << currentConfigDir << "' ..." <<ret;
-    initmsg(eNormal) << "Command line: " << fArguments.CommandLine() << eom;
+    if (fUsingDefaultPaths) {
+        initmsg(eWarning) << "Using default config file <" << configFilePath << ">" << eom;
+    }
+    else {
+        initmsg(eNormal) << "Using config file <" << configFileName << "> in directory <" << currentConfigDir << "> ..."
+                         << eom;
+    }
 
-    return pair<string, KTextFile>(currentConfigDir,configFile);
+    return pair<string, KTextFile>(currentConfigDir, configFile);
 }
 
-KXMLTokenizer* KXMLInitializer::SetupProcessChain( const map<string, string>& tVariables,
-        const string& includePath)
+void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, const string& includePath)
 {
-    KXMLTokenizer* tTokenizer = new KXMLTokenizer();
-    KVariableProcessor* tVariableProcessor = new KVariableProcessor( tVariables );
+    // BUG: should clean up dynamic memory allocations before making new ones
 
-    KIncludeProcessor* tIncludeProcessor = new KIncludeProcessor();
-    tIncludeProcessor->AddDefaultPath(includePath);
-    for (const string& path : fDefaultIncludePaths)
-        tIncludeProcessor->AddDefaultPath(path);
+    fTokenizer = new KXMLTokenizer();
 
-    KLoopProcessor* tLoopProcessor = new KLoopProcessor();
-    KConditionProcessor* tConditionProcessor = new KConditionProcessor();
-    KPrintProcessor* tPrintProcessor = new KPrintProcessor();
-    KTagProcessor* tTagProcessor = new KTagProcessor();
-    KElementProcessor* tElementProcessor = new KElementProcessor();
-    if (!fConfigSerializer)
-        fConfigSerializer.reset( new KSerializationProcessor() );
+    if (!variables.empty()) {
+        KDEBUG("Passing on " << variables.size() << " variables to processors");
+    }
+    auto* tVariableProcessor = new KVariableProcessor(variables);
+    tVariableProcessor->InsertAfter(fTokenizer);
 
-    tVariableProcessor->InsertAfter( tTokenizer );
-    tIncludeProcessor->InsertAfter( tVariableProcessor );
+    auto* tIncludeProcessor = new KIncludeProcessor();
+    if (!includePath.empty()) {
+        KDEBUG("Setting config path: " << includePath);
+        tIncludeProcessor->SetPath(includePath);
+    }
+    for (const string& path : fDefaultIncludePaths) {
+        if (fUsingDefaultPaths || fAllowConfigFileFallback) {
+            KDEBUG("Adding default config path: " << path);
+            tIncludeProcessor->AddDefaultPath(path);
+        }
+    }
+    tIncludeProcessor->InsertAfter(tVariableProcessor);
 
 #ifdef Kommon_USE_ROOT
-    KFormulaProcessor* tFormulaProcessor = new KFormulaProcessor();
-    tFormulaProcessor->InsertAfter( tVariableProcessor );
-    tIncludeProcessor->InsertAfter( tFormulaProcessor );
+    auto* tFormulaProcessor = new KFormulaProcessor();
+    tFormulaProcessor->InsertAfter(tVariableProcessor);
+    tIncludeProcessor->InsertAfter(tFormulaProcessor);
 #endif
 
-    tLoopProcessor->InsertAfter( tIncludeProcessor );
-    tConditionProcessor->InsertAfter( tLoopProcessor );
-    tPrintProcessor->InsertAfter( tConditionProcessor );
-    fConfigSerializer->InsertAfter( tPrintProcessor );
+    auto* tLoopProcessor = new KLoopProcessor();
+    tLoopProcessor->InsertAfter(tIncludeProcessor);
 
-    tTagProcessor->InsertAfter( fConfigSerializer.get() );
-    tElementProcessor->InsertAfter( tTagProcessor );
+    auto* tConditionProcessor = new KConditionProcessor();
+    tConditionProcessor->InsertAfter(tLoopProcessor);
 
-    return tTokenizer;
+    auto* tPrintProcessor = new KPrintProcessor();
+    tPrintProcessor->InsertAfter(tConditionProcessor);
+
+    if (!fConfigSerializer)
+        fConfigSerializer.reset(new KSerializationProcessor());
+    fConfigSerializer->InsertAfter(tPrintProcessor);
+
+    auto* tTagProcessor = new KTagProcessor();
+    tTagProcessor->InsertAfter(fConfigSerializer.get());
+
+    auto* tElementProcessor = new KElementProcessor();
+    tElementProcessor->InsertAfter(tTagProcessor);
 }
 
-
-
-void KXMLInitializer::Configure(int argc, char** argv)
+KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processConfig)
 {
-    initmsg_debug("Configuring kasper toolbox ..." << eom);
+    initmsg_debug("Configuring Kasper toolbox ..." << eom);
 
     ParseCommandLine(argc, argv);
+    initmsg(eNormal) << "Command line: " << fArguments.CommandLine() << eom;
 
-    pair<string, KTextFile> tConfig = GetConfigFile();
+    KDEBUG("Verbosity level is now: " << fVerbosityLevel);
+    KMessageTable::GetInstance().SetTerminalVerbosity(static_cast<KMessageSeverity>(fVerbosityLevel));
+    KMessageTable::GetInstance().SetShowShutdownMessage();
 
-    KXMLTokenizer* tokenizer = SetupProcessChain(fArguments.OptionTable(), tConfig.first);
+    pair<string, KTextFile> tConfig;
+    if (processConfig)
+        tConfig = GetConfigFile();
 
-    tokenizer->ProcessFile( &tConfig.second );
+    SetupProcessChain(fArguments.OptionTable(), tConfig.first);
+
+    if (processConfig) {
+        KDEBUG("Processing supplied config file: " << tConfig.second.GetPath());
+        fTokenizer->ProcessFile(&tConfig.second);
+    }
+
+    return fTokenizer;
 }
 
-void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments)
+void KXMLInitializer::UpdateVariables(const KArgumentList& args)
+{
+    if (fTokenizer == nullptr)
+        return;
+
+    auto* tVariableProcessor = new KVariableProcessor(args.OptionTable());
+    tVariableProcessor->InsertAfter(fTokenizer);
+}
+
+void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments) const
 {
     if (includeArguments) {
         strm << "<Arguments>" << endl;
@@ -180,4 +309,4 @@ void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments)
     }
 }
 
-}
+}  // namespace katrin

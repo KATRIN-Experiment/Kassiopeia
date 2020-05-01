@@ -4,15 +4,15 @@
 # header files
 set( FIELDS_ELECTRIC_HEADER_BASENAMES
     KBoundaryElementInfoDisplay.hh
-	KElectricField.hh
-	KElectricQuadrupoleField.hh
-	KElectrostaticField.hh
-	KElectrostaticBoundaryField.hh
-	KElectrostaticConstantField.hh
-	KElectrostaticBoundaryFieldTimer.hh
-	KInducedAzimuthalElectricField.hh
-	KRampedElectricField.hh
-	KRampedElectric2Field.hh
+    KElectricField.hh
+    KElectricQuadrupoleField.hh
+    KElectrostaticConstantField.hh
+    KElectrostaticField.hh
+    KElectrostaticBoundaryField.hh
+    KElectrostaticBoundaryFieldTimer.hh
+    KInducedAzimuthalElectricField.hh
+    KRampedElectricField.hh
+    KRampedElectric2Field.hh
 )
 
 set( FIELDS_ELECTRIC_HEADER_PATH
@@ -26,8 +26,9 @@ endforeach( BASENAME )
 set( FIELDS_ELECTRIC_SOURCE_BASENAMES
     KBoundaryElementInfoDisplay.cc
     KElectricQuadrupoleField.cc
-	KElectrostaticBoundaryField.cc
-	KElectrostaticBoundaryFieldTimer.cc
+    KElectrostaticConstantField.cc
+    KElectrostaticBoundaryField.cc
+    KElectrostaticBoundaryFieldTimer.cc
     KInducedAzimuthalElectricField.cc
     KRampedElectricField.cc
     KRampedElectric2Field.cc

@@ -1,10 +1,11 @@
 #ifndef KSAPODOutputNode_HH__
 #define KSAPODOutputNode_HH__
 
-#include "KSAPODConverter.hh"
 #include "KSAOutputNode.hh"
+#include "KSAPODConverter.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -22,53 +23,59 @@ namespace KEMField{
 
 
 //should work as long as U is a pod type of a std::vector<> of a pod type
-template < typename U >
-class KSAPODOutputNode: public KSAOutputNode
+template<typename U> class KSAPODOutputNode : public KSAOutputNode
 {
-    public:
+  public:
+    KSAPODOutputNode(std::string name) : KSAOutputNode(name)
+    {
+        fConverter = new KSAPODConverter<U>();
+        fStringValue = "INVALID";
+    };
 
+    ~KSAPODOutputNode() override
+    {
+        delete fConverter;
+    }
 
-        KSAPODOutputNode(std::string name):KSAOutputNode(name)
-        {
-            fConverter = new KSAPODConverter< U >();
-            fStringValue = "INVALID";
-        };
+    bool TagsAreSuppressed() override
+    {
+        return false;
+    };
 
-        virtual ~KSAPODOutputNode()
-        {
-            delete fConverter;
-        }
+    bool IsComposite() override
+    {
+        return false;
+    };
 
-        virtual bool TagsAreSuppressed(){return false;};
+    void SetValue(const U& val)
+    {
+        fConverter->ConvertParameterToString(fStringValue, val);
+    }
 
-        virtual bool IsComposite(){return false;};
+    void SetValue(const U* val)
+    {
+        fConverter->ConvertParameterToString(fStringValue, val);
+    }
 
-        void SetValue(const U& val)
-        {
-            fConverter->ConvertParameterToString(fStringValue, val);
-        }
+  protected:
+    std::string GetSingleLine() override
+    {
+        return fStringValue;
+    };
 
-        void SetValue(const U* val)
-        {
-            fConverter->ConvertParameterToString(fStringValue, val);
-        }
+    std::string fStringValue;
+    KSAPODConverter<U>* fConverter;
 
-    protected:
-
-        virtual std::string GetSingleLine(){return fStringValue;};
-
-        std::string fStringValue;
-        KSAPODConverter< U >* fConverter;
-
-    private:
-
-        //cannot instantiate without providing a name
-        KSAPODOutputNode(){;};
-
+  private:
+    //cannot instantiate without providing a name
+    KSAPODOutputNode()
+    {
+        ;
+    };
 };
 
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 
 #endif /* KSAPODOutputNode_H__ */

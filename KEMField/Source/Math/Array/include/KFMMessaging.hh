@@ -26,11 +26,11 @@
 */
 
 #ifdef KFM_USE_KEMCOUT
-#define kfmout KEMField::cout
+#define kfmout  KEMField::cout
 #define kfmendl KEMField::endl
 #define kfmexit std::exit
 #else
-#define kfmout std::cout
+#define kfmout  std::cout
 #define kfmendl std::endl
 #define kfmexit std::exit
 #endif

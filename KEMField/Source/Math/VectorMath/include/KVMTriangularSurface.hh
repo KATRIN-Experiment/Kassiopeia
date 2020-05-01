@@ -4,7 +4,8 @@
 #include "KVMCompactSurface.hh"
 #include "KVMSpaceTriangle.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,57 +20,55 @@ namespace KEMField{
 *
 */
 
-class KVMTriangularSurface: public KVMCompactSurface, public KVMSpaceTriangle
+class KVMTriangularSurface : public KVMCompactSurface, public KVMSpaceTriangle
 {
-    public:
+  public:
+    KVMTriangularSurface();
+    ~KVMTriangularSurface() override
+    {
+        ;
+    };
 
-        KVMTriangularSurface();
-        virtual ~KVMTriangularSurface(){;};
+    inline KVMTriangularSurface(const KVMTriangularSurface& copyObject);
 
-        inline KVMTriangularSurface(const KVMTriangularSurface& copyObject);
+    inline KVMTriangularSurface& operator=(const KVMSpaceTriangle& rhs);
 
-        inline KVMTriangularSurface& operator=(const KVMSpaceTriangle& rhs);
+    void Initialize() override;
 
-        virtual void Initialize();
+  protected:
+    //functions that define the jacobian
+    double dxdu(double /*u*/, double v) const override;
+    double dydu(double /*u*/, double v) const override;
+    double dzdu(double /*u*/, double v) const override;
+    double dxdv(double u, double /*v*/) const override;
+    double dydv(double u, double /*v*/) const override;
+    double dzdv(double u, double /*v*/) const override;
 
-    protected:
+    //functions which define the surface
+    double x(double u, double v) const override;
+    double y(double u, double v) const override;
+    double z(double u, double v) const override;
 
-        //functions that define the jacobian
-        virtual double dxdu(double /*u*/, double v) const;
-        virtual double dydu(double /*u*/, double v) const;
-        virtual double dzdu(double /*u*/, double v) const;
-        virtual double dxdv(double u, double /*v*/) const;
-        virtual double dydv(double u, double /*v*/) const;
-        virtual double dzdv(double u, double /*v*/) const;
-
-        //functions which define the surface
-        virtual double x(double u, double v) const;
-        virtual double y(double u, double v) const;
-        virtual double z(double u, double v) const;
-
-        double fLSum;
-
+    double fLSum;
 };
 
-inline KVMTriangularSurface::KVMTriangularSurface(const KVMTriangularSurface &copyObject):
-KVMCompactSurface(copyObject),
-KVMSpaceTriangle(copyObject)
+inline KVMTriangularSurface::KVMTriangularSurface(const KVMTriangularSurface& copyObject) :
+    KVMCompactSurface(copyObject),
+    KVMSpaceTriangle(copyObject)
 {
     Initialize();
 }
 
 inline KVMTriangularSurface& KVMTriangularSurface::operator=(const KVMSpaceTriangle& rhs)
 {
-    if(this != &rhs)
-    {
+    if (this != &rhs) {
         KVMSpaceTriangle::operator=(rhs);
         Initialize();
     }
     return *this;
 }
 
-} //end of KEMField namespace
-
+}  // namespace KEMField
 
 
 #endif

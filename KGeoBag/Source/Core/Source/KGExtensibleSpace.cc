@@ -3,11 +3,7 @@
 namespace KGeoBag
 {
 
-    KGExtensibleSpace::KGExtensibleSpace()
-    {
-    }
-    KGExtensibleSpace::~KGExtensibleSpace()
-    {
-    }
+KGExtensibleSpace::KGExtensibleSpace() {}
+KGExtensibleSpace::~KGExtensibleSpace() {}
 
-}
+}  // namespace KGeoBag

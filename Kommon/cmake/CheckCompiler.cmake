@@ -1,4 +1,4 @@
-# Compiler version check and C++11 support
+# Compiler version check
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(COMPILER_IS_GNU 1)
@@ -30,10 +30,6 @@ else()
     message(FATAL_ERROR "Unknown or unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
 endif()
 
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-
 macro(kasper_require_clang_version VERSION)
     if(COMPILER_IS_CLANG)
         if(COMPILER_VERSION VERSION_LESS ${VERSION})
@@ -55,23 +51,5 @@ macro(kasper_require_gcc_version VERSION)
         if(COMPILER_VERSION VERSION_LESS ${VERSION})
             message(FATAL_ERROR "GCC version >= ${VERSION} is required.")
         endif()
-    endif()
-endmacro()
-
-macro(kasper_require_cpp11)
-    if (COMPILER_IS_GNU AND NOT COMPILER_VERSION VERSION_LESS "6.0.0")
-        # do nothing, g++ 6.x has c++14 support activated by default#
-    else()
-        if(COMPILER_SUPPORTS_CXX11)
-            set( CXX11_FLAG "-std=c++11" )
-        elseif(COMPILER_SUPPORTS_CXX0X)
-            set( CXX11_FLAG "-std=c++0x" )
-        else()
-            message(FATAL_ERROR "Compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
-        endif()
-        if (NOT "${CMAKE_CXX_FLAGS}" MATCHES "\\-std\\=c\\+\\+")
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX11_FLAG}" )
-        endif()
-        SET_PROPERTY(GLOBAL PROPERTY CXX11_FLAG ${CXX11_FLAG})
     endif()
 endmacro()

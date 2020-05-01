@@ -4,13 +4,13 @@
 namespace KGeoBag
 {
 
-    class KGVisitor
-    {
-        public:
-            KGVisitor();
-            virtual ~KGVisitor();
-    };
+class KGVisitor
+{
+  public:
+    KGVisitor();
+    virtual ~KGVisitor();
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

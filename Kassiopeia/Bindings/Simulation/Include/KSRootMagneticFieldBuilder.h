@@ -2,33 +2,29 @@
 #define Kassiopeia_KSRootMagneticFieldBuilder_h_
 
 #include "KComplexElement.hh"
+#include "KSFieldFinder.h"
 #include "KSRootMagneticField.h"
 #include "KToolbox.h"
-
-#include "KSFieldFinder.h"
 
 using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSRootMagneticField > KSRootMagneticFieldBuilder;
+typedef KComplexElement<KSRootMagneticField> KSRootMagneticFieldBuilder;
 
-    template< >
-    inline bool KSRootMagneticFieldBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "add_magnetic_field" )
-        {
-            fObject->AddMagneticField( getMagneticField( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSRootMagneticFieldBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "add_magnetic_field") {
+        fObject->AddMagneticField(getMagneticField(aContainer->AsReference<std::string>()));
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

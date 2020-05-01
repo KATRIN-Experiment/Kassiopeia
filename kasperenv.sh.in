@@ -63,6 +63,7 @@ export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$(echo $PKG_CONFIG_PATH |
 export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$(echo $PYTHONPATH | sed 's/${OLD_PYTHONPATH}//g')
 export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$(echo $CMAKE_PREFIX_PATH | sed 's/${OLD_CMAKE_PREF}//g')
 
+printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]"
 printf "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m\n"
 printf "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m\n"
 

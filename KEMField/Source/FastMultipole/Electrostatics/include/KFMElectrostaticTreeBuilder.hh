@@ -2,25 +2,22 @@
 #define __KFMElectrostaticTreeBuilder_H__
 
 
-#include "KFMObjectRetriever.hh"
-#include "KFMNodeObjectRemover.hh"
-
+#include "KFMCubicSpaceBallSorter.hh"
 #include "KFMCubicSpaceTree.hh"
 #include "KFMCubicSpaceTreeProperties.hh"
-#include "KFMCubicSpaceBallSorter.hh"
+#include "KFMElectrostaticElementContainer.hh"
+#include "KFMElectrostaticElementContainerBase.hh"
+#include "KFMElectrostaticNode.hh"
+#include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticRegionSizeEstimator.hh"
+#include "KFMElectrostaticTree.hh"
 #include "KFMInsertionCondition.hh"
-
+#include "KFMNodeObjectRemover.hh"
+#include "KFMObjectRetriever.hh"
 #include "KFMSubdivisionCondition.hh"
 #include "KFMSubdivisionConditionAggressive.hh"
 #include "KFMSubdivisionConditionBalanced.hh"
 #include "KFMSubdivisionConditionGuided.hh"
-
-#include "KFMElectrostaticNode.hh"
-#include "KFMElectrostaticTree.hh"
-#include "KFMElectrostaticParameters.hh"
-#include "KFMElectrostaticElementContainerBase.hh"
-#include "KFMElectrostaticElementContainer.hh"
-#include "KFMElectrostaticRegionSizeEstimator.hh"
 
 namespace KEMField
 {
@@ -42,81 +39,78 @@ namespace KEMField
 
 class KFMElectrostaticTreeBuilder
 {
-    public:
-        KFMElectrostaticTreeBuilder()
-        {
-            fSubdivisionCondition = NULL;
-            fSubdivisionConditionIsOwned = false;
-        };
+  public:
+    KFMElectrostaticTreeBuilder()
+    {
+        fSubdivisionCondition = nullptr;
+        fSubdivisionConditionIsOwned = false;
+    };
 
-        virtual ~KFMElectrostaticTreeBuilder()
-        {
-            if(fSubdivisionConditionIsOwned)
-            {
-                delete fSubdivisionCondition;
-            }
-        };
-
-        //extracted electrode data
-        void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,KFMELECTROSTATICS_BASIS>* container);
-        KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,KFMELECTROSTATICS_BASIS>* GetElectrostaticElementContainer();
-
-        //access to the region tree, tree builder does not own the tree!
-        void SetTree(KFMElectrostaticTree* tree);
-        KFMElectrostaticTree* GetTree();
-
-        void SetSubdivisionCondition( KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* subdiv)
-        {
-            if(subdiv != NULL)
-            {
-                fSubdivisionCondition = subdiv;
-                fSubdivisionConditionIsOwned = false;
-            }
+    virtual ~KFMElectrostaticTreeBuilder()
+    {
+        if (fSubdivisionConditionIsOwned) {
+            delete fSubdivisionCondition;
         }
+    };
+
+    //extracted electrode data
+    void SetElectrostaticElementContainer(
+        KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>* container);
+    KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>*
+    GetElectrostaticElementContainer();
+
+    //access to the region tree, tree builder does not own the tree!
+    void SetTree(KFMElectrostaticTree* tree);
+    KFMElectrostaticTree* GetTree();
+
+    void SetSubdivisionCondition(KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* subdiv)
+    {
+        if (subdiv != nullptr) {
+            fSubdivisionCondition = subdiv;
+            fSubdivisionConditionIsOwned = false;
+        }
+    }
 
 
-        //build up the tree using these functions
-        //typically these are applied in the same order as they are listed here
-        void ConstructRootNode();
-        void PerformSpatialSubdivision();
-        void FlagNonZeroMultipoleNodes();
-        void PerformAdjacencySubdivision();
-        void FlagPrimaryNodes();
-        void CollectDirectCallIdentities();
-        void CollectDirectCallIdentitiesForPrimaryNodes();
+    //build up the tree using these functions
+    //typically these are applied in the same order as they are listed here
+    void ConstructRootNode();
+    void PerformSpatialSubdivision();
+    void FlagNonZeroMultipoleNodes();
+    void PerformAdjacencySubdivision();
+    void FlagPrimaryNodes();
+    void CollectDirectCallIdentities();
+    void CollectDirectCallIdentitiesForPrimaryNodes();
 
-    protected:
+  protected:
+    /* data */
+    int fDegree;
+    unsigned int fNTerms;
+    int fTopLevelDivisions;
+    int fDivisions;
+    int fZeroMaskSize;
+    int fMaximumTreeDepth;
+    double fInsertionRatio;
+    unsigned int fVerbosity;
+    double fRegionSizeFactor;
 
-        /* data */
-        int fDegree;
-        unsigned int fNTerms;
-        int fTopLevelDivisions;
-        int fDivisions;
-        int fZeroMaskSize;
-        int fMaximumTreeDepth;
-        double fInsertionRatio;
-        unsigned int fVerbosity;
-        double fRegionSizeFactor;
+    bool fUseRegionEstimation;
+    KFMPoint<3> fWorldCenter;
+    double fWorldLength;
 
-        bool fUseRegionEstimation;
-        KFMPoint<3> fWorldCenter;
-        double fWorldLength;
+    //the tree object that the manager is to construct
+    KFMElectrostaticTree* fTree;
 
-        //the tree object that the manager is to construct
-        KFMElectrostaticTree* fTree;
+    //subdivision condition
+    KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* fSubdivisionCondition;
+    bool fSubdivisionConditionIsOwned;
 
-        //subdivision condition
-        KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* fSubdivisionCondition;
-        bool fSubdivisionConditionIsOwned;
-
-        //manager does not own this object!
-        //container to the eletrostatic elements
-        KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>* fContainer;
+    //manager does not own this object!
+    //container to the eletrostatic elements
+    KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>* fContainer;
 };
 
 
-
-
-}
+}  // namespace KEMField
 
 #endif /* __KFMElectrostaticTreeBuilder_H__ */

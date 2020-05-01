@@ -7,7 +7,8 @@
 #include "KVMSurfaceIntegral.hh"
 
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -22,27 +23,23 @@ namespace KEMField{
 *
 */
 
-class KVMFluxIntegral: public KVMSurfaceIntegral<1>
+class KVMFluxIntegral : public KVMSurfaceIntegral<1>
 {
-    public:
-        KVMFluxIntegral();
-        virtual ~KVMFluxIntegral();
+  public:
+    KVMFluxIntegral();
+    ~KVMFluxIntegral() override;
 
-        virtual void SetField(const KVMField* aField);
+    void SetField(const KVMField* aField) override;
 
-    private:
+  private:
+    void Integrand(const double* point, double* result) const override;
 
-        virtual void Integrand(const double* point, double* result) const;
-
-        mutable KVMFixedArray<double, KVMSurfaceRDim> fV;
-        mutable KVMFixedArray<double, KVMSurfaceRDim> fN;
-
-
+    mutable KVMFixedArray<double, KVMSurfaceRDim> fV;
+    mutable KVMFixedArray<double, KVMSurfaceRDim> fN;
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KVMFluxIntegral_H */

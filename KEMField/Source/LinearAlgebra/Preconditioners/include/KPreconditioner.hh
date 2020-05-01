@@ -2,6 +2,7 @@
 #define KPreconditioner_HH__
 
 #include "KSquareMatrix.hh"
+
 #include <string>
 
 namespace KEMField
@@ -25,20 +26,18 @@ namespace KEMField
 *
 */
 
-template<typename ValueType>
-class KPreconditioner: public KSquareMatrix<ValueType >
+template<typename ValueType> class KPreconditioner : public KSquareMatrix<ValueType>
 {
-    public:
-        KPreconditioner():KSquareMatrix<ValueType>(){};
-        virtual ~KPreconditioner(){}
+  public:
+    KPreconditioner() : KSquareMatrix<ValueType>(){};
+    ~KPreconditioner() override {}
 
     virtual std::string Name() = 0;
 
     virtual bool IsStationary() = 0;
-
 };
 
 
-}//end of namespace
+}  // namespace KEMField
 
 #endif /* KPreconditioner_H__ */

@@ -1,12 +1,13 @@
 #ifndef KFMComplexSphericalHarmonicExpansionRotator_HH__
 #define KFMComplexSphericalHarmonicExpansionRotator_HH__
 
-#include <complex>
-
 #include "KFMRealSphericalHarmonicExpansionRotator.hh"
 
+#include <complex>
 
-namespace KEMField{
+
+namespace KEMField
+{
 
 /**
 *
@@ -24,44 +25,39 @@ namespace KEMField{
 
 class KFMComplexSphericalHarmonicExpansionRotator
 {
-    public:
-        KFMComplexSphericalHarmonicExpansionRotator();
-        virtual ~KFMComplexSphericalHarmonicExpansionRotator();
+  public:
+    KFMComplexSphericalHarmonicExpansionRotator();
+    virtual ~KFMComplexSphericalHarmonicExpansionRotator();
 
-        //required for initialization
-        void SetDegree(int l_max);
-        void SetJMatrices(const std::vector<kfm_matrix* >* j_matrix);
-        bool IsValid();
-
-
-        //single rotation about z axis
-        void SetSingleZRotationAngle(double alpha);
-
-        //follows the Z, Y', Z'' convention
-        void SetEulerAngles(double alpha, double beta, double gamma);
-
-        void SetMoments(const std::vector< std::complex<double> >* mom);
-        void Rotate();
-        void GetRotatedMoments(std::vector< std::complex<double> >* mom);
-
-    protected:
-
-        int fDegree;
-        unsigned int fSize;
-        KFMRealSphericalHarmonicExpansionRotator* fRealRotator;
-
-        std::vector<double> fRealMoments;
-        std::vector<double> fRotatedRealMoments;
-
-        double* fNormalizationCoefficients;
-        double* fInverseNormalizationCoefficients;
+    //required for initialization
+    void SetDegree(int l_max);
+    void SetJMatrices(const std::vector<kfm_matrix*>* j_matrix);
+    bool IsValid();
 
 
+    //single rotation about z axis
+    void SetSingleZRotationAngle(double alpha);
+
+    //follows the Z, Y', Z'' convention
+    void SetEulerAngles(double alpha, double beta, double gamma);
+
+    void SetMoments(const std::vector<std::complex<double>>* mom);
+    void Rotate();
+    void GetRotatedMoments(std::vector<std::complex<double>>* mom);
+
+  protected:
+    int fDegree;
+    unsigned int fSize;
+    KFMRealSphericalHarmonicExpansionRotator* fRealRotator;
+
+    std::vector<double> fRealMoments;
+    std::vector<double> fRotatedRealMoments;
+
+    double* fNormalizationCoefficients;
+    double* fInverseNormalizationCoefficients;
 };
 
 
-
-
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* __KFMComplexSphericalHarmonicExpansionRotator_H__ */

@@ -6,24 +6,23 @@
 namespace katrin
 {
 
-    class KWindow;
+class KWindow;
 
-    class KPainter :
-        public KNamed
-    {
-        public:
-            KPainter();
-            virtual ~KPainter();
+class KPainter : public KNamed
+{
+  public:
+    KPainter();
+    ~KPainter() override;
 
-        public:
-            virtual void Render() = 0;
-            virtual void Display() = 0;
-            virtual void Write() = 0;
+  public:
+    virtual void Render() = 0;
+    virtual void Display() = 0;
+    virtual void Write() = 0;
 
-            virtual void SetWindow( KWindow* aWindow ) = 0;
-            virtual void ClearWindow( KWindow* aWindow ) = 0;
-    };
+    virtual void SetWindow(KWindow* aWindow) = 0;
+    virtual void ClearWindow(KWindow* aWindow) = 0;
+};
 
-}
+}  // namespace katrin
 
 #endif

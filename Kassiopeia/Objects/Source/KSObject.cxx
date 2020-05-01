@@ -3,18 +3,8 @@
 namespace Kassiopeia
 {
 
-    KSObject::KSObject() :
-            KTagged(),
-            fHolder( NULL )
-    {
-    }
-    KSObject::KSObject( const KSObject& aCopy ) :
-            KTagged( aCopy ),
-            fHolder( NULL )
-    {
-    }
-    KSObject::~KSObject()
-    {
-    }
+KSObject::KSObject() : KTagged(), fHolder(nullptr) {}
+KSObject::KSObject(const KSObject& aCopy) : KTagged(aCopy), fHolder(nullptr) {}
+KSObject::~KSObject() {}
 
-}
+}  // namespace Kassiopeia

@@ -5,21 +5,19 @@
 
 namespace KGeoBag
 {
-  class KGAnalyticIntersector
-  {
+class KGAnalyticIntersector
+{
   public:
     KGAnalyticIntersector() {}
     virtual ~KGAnalyticIntersector() {}
 
-    virtual bool Intersection(KThreeVector& aStart,
-			      KThreeVector& anEnd,
-			      KThreeVector& aResult) const = 0;
+    virtual bool Intersection(KThreeVector& aStart, KThreeVector& anEnd, KThreeVector& aResult) const = 0;
 
   protected:
-  };
+};
 
-  class KGIntersectableSurface
-  {
+class KGIntersectableSurface
+{
   public:
     KGIntersectableSurface();
     virtual ~KGIntersectableSurface();
@@ -27,26 +25,23 @@ namespace KGeoBag
     void SetIntersector(KGAnalyticIntersector* intersector);
     void SetSurface(const KGSurface& surface);
 
-    bool Intersection(const KThreeVector& aStart,
-		      const KThreeVector& anEnd,
-		      KThreeVector& aResult) const;
+    bool Intersection(const KThreeVector& aStart, const KThreeVector& anEnd, KThreeVector& aResult) const;
 
   private:
-    bool NumericIntersection(const KThreeVector& aLocalStart,
-			     const KThreeVector& aLocalEnd,
-			     KThreeVector& aLocalResult) const;
+    bool NumericIntersection(const KThreeVector& aLocalStart, const KThreeVector& aLocalEnd,
+                             KThreeVector& aLocalResult) const;
 
     const KGSurface* fSurface;
 
     KGAnalyticIntersector* fIntersector;
-  };
+};
 
-  class KGIntersectable
-  {
+class KGIntersectable
+{
   public:
     typedef KGIntersectableSurface Surface;
-  };
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

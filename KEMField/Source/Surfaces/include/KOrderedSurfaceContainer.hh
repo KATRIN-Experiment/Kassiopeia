@@ -1,11 +1,11 @@
 #ifndef KOrderedSurfaceContainer_DEF
 #define KOrderedSurfaceContainer_DEF
 
-#include <algorithm>
-#include <vector>
-
 #include "../../../Surfaces/include/KSurfaceContainer.hh"
 #include "../../../Surfaces/include/KSurfaceOrderingPredicate.hh"
+
+#include <algorithm>
+#include <vector>
 
 namespace KEMField
 {
@@ -30,53 +30,61 @@ namespace KEMField
 
 class KOrderedSurfaceContainer
 {
-    public:
-
-        KOrderedSurfaceContainer(const KSurfaceContainer& surfaceContainer, KSurfaceOrderingPredicate* predicate):
-            fSurfaceContainer(surfaceContainer),
-            fSortingPredicate(predicate)
-        {
-            fSortingPredicate->SetSurfaceContainer(fSurfaceContainer);
-            fSortingPredicate->Initialize();
-
-            //initialize the sorted index array to be the identity map
-            unsigned int size = fSurfaceContainer.size();
-            fSortedToOriginal.resize(size);
-            for(unsigned int i=0; i<size; i++){fSortedToOriginal[i] = i;};
-
-            //now resort the index map according to the sorting predicate using std::sort
-            std::sort( fSortedToOriginal.begin(), fSortedToOriginal.end(), *fSortingPredicate);
-
-        }
-        virtual ~KOrderedSurfaceContainer(){};
-
-        static std::string Name()
-        {
-            return "OrderedSurfaceContainer";
-        }
-
-        const KSurfaceContainer& GetSurfaceContainer() const { return fSurfaceContainer; }
-
-        KSurfacePrimitive* operator[] (unsigned int) const;
-        inline KSurfacePrimitive* at(unsigned int i) const { return operator[](i); }
-        unsigned int size() const {return fSurfaceContainer.size(); };
-
-    protected:
-
-        const KSurfaceContainer& fSurfaceContainer;
-        KSurfaceOrderingPredicate* fSortingPredicate;
-
-        //two vectors of unsigned int's used for bidirectional look up
-        std::vector<unsigned int> fSortedToOriginal;
-        std::vector<unsigned int> fOriginalToSorted;
-    };
-
-    inline KSurfacePrimitive* KOrderedSurfaceContainer::operator[] (unsigned int i) const
+  public:
+    KOrderedSurfaceContainer(const KSurfaceContainer& surfaceContainer, KSurfaceOrderingPredicate* predicate) :
+        fSurfaceContainer(surfaceContainer),
+        fSortingPredicate(predicate)
     {
-        return fSurfaceContainer[ fSortedToOriginal[i] ];
+        fSortingPredicate->SetSurfaceContainer(fSurfaceContainer);
+        fSortingPredicate->Initialize();
+
+        //initialize the sorted index array to be the identity map
+        unsigned int size = fSurfaceContainer.size();
+        fSortedToOriginal.resize(size);
+        for (unsigned int i = 0; i < size; i++) {
+            fSortedToOriginal[i] = i;
+        };
+
+        //now resort the index map according to the sorting predicate using std::sort
+        std::sort(fSortedToOriginal.begin(), fSortedToOriginal.end(), *fSortingPredicate);
+    }
+    virtual ~KOrderedSurfaceContainer(){};
+
+    static std::string Name()
+    {
+        return "OrderedSurfaceContainer";
     }
 
+    const KSurfaceContainer& GetSurfaceContainer() const
+    {
+        return fSurfaceContainer;
+    }
 
-} //end namespace
+    KSurfacePrimitive* operator[](unsigned int) const;
+    inline KSurfacePrimitive* at(unsigned int i) const
+    {
+        return operator[](i);
+    }
+    unsigned int size() const
+    {
+        return fSurfaceContainer.size();
+    };
+
+  protected:
+    const KSurfaceContainer& fSurfaceContainer;
+    KSurfaceOrderingPredicate* fSortingPredicate;
+
+    //two vectors of unsigned int's used for bidirectional look up
+    std::vector<unsigned int> fSortedToOriginal;
+    std::vector<unsigned int> fOriginalToSorted;
+};
+
+inline KSurfacePrimitive* KOrderedSurfaceContainer::operator[](unsigned int i) const
+{
+    return fSurfaceContainer[fSortedToOriginal[i]];
+}
+
+
+}  // namespace KEMField
 
 #endif /* KOrderedSurfaceContainer_DEF */

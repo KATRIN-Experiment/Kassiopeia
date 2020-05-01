@@ -7,52 +7,53 @@
 namespace Kassiopeia
 {
 
-    class KSGenPositionRectangularComposite :
-        public KSComponentTemplate< KSGenPositionRectangularComposite, KSGenCreator >
+class KSGenPositionRectangularComposite : public KSComponentTemplate<KSGenPositionRectangularComposite, KSGenCreator>
+{
+  public:
+    KSGenPositionRectangularComposite();
+    KSGenPositionRectangularComposite(const KSGenPositionRectangularComposite& aCopy);
+    KSGenPositionRectangularComposite* Clone() const override;
+    ~KSGenPositionRectangularComposite() override;
+
+  public:
+    void Dice(KSParticleQueue* aPrimaryList) override;
+
+  public:
+    void SetXValue(KSGenValue* anXValue);
+    void ClearXValue(KSGenValue* anXValue);
+
+    void SetYValue(KSGenValue* aYValue);
+    void ClearYValue(KSGenValue* aYValue);
+
+    void SetZValue(KSGenValue* anZValue);
+    void ClearZValue(KSGenValue* anZValue);
+
+    void SetOrigin(const KThreeVector& anOrigin);
+    void SetXAxis(const KThreeVector& anXAxis);
+    void SetYAxis(const KThreeVector& anYAxis);
+    void SetZAxis(const KThreeVector& anZAxis);
+
+    typedef enum
     {
-        public:
-            KSGenPositionRectangularComposite();
-            KSGenPositionRectangularComposite( const KSGenPositionRectangularComposite& aCopy );
-            KSGenPositionRectangularComposite* Clone() const;
-            virtual ~KSGenPositionRectangularComposite();
+        eX,
+        eY,
+        eZ
+    } CoordinateType;
 
-        public:
-            virtual void Dice( KSParticleQueue* aPrimaryList );
+  private:
+    KThreeVector fOrigin;
+    KThreeVector fXAxis;
+    KThreeVector fYAxis;
+    KThreeVector fZAxis;
 
-        public:
-            void SetXValue( KSGenValue* anXValue );
-            void ClearXValue( KSGenValue* anXValue );
+    std::map<CoordinateType, int> fCoordinateMap;
+    std::vector<std::pair<CoordinateType, KSGenValue*>> fValues;
 
-            void SetYValue( KSGenValue* aYValue );
-            void ClearYValue( KSGenValue* aYValue );
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-            void SetZValue( KSGenValue* anZValue );
-            void ClearZValue( KSGenValue* anZValue );
-
-            void SetOrigin( const KThreeVector& anOrigin );
-            void SetXAxis( const KThreeVector& anXAxis );
-            void SetYAxis( const KThreeVector& anYAxis );
-            void SetZAxis( const KThreeVector& anZAxis );
-
-            typedef enum
-            {
-                eX, eY, eZ
-            } CoordinateType;
-
-        private:
-            KThreeVector fOrigin;
-            KThreeVector fXAxis;
-            KThreeVector fYAxis;
-            KThreeVector fZAxis;
-
-            std::map<CoordinateType, int> fCoordinateMap;
-            std::vector<std::pair<CoordinateType,KSGenValue*> > fValues;
-
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

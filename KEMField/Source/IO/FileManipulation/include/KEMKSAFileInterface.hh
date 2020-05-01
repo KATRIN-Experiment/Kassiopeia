@@ -1,9 +1,8 @@
 #ifndef __KEMKSAFileInterface_H__
 #define __KEMKSAFileInterface_H__
 
-#include "KEMFileInterface.hh"
 #include "KEMFile.hh"
-
+#include "KEMFileInterface.hh"
 #include "KSAInputNode.hh"
 #include "KSAOutputNode.hh"
 
@@ -25,20 +24,19 @@ namespace KEMField
 
 class KEMKSAFileInterface
 {
-    public:
-        KEMKSAFileInterface(){};
-        virtual ~KEMKSAFileInterface(){};
+  public:
+    KEMKSAFileInterface(){};
+    virtual ~KEMKSAFileInterface(){};
 
-        static void ReadKSAFile(KSAInputNode* node, string file_name, bool& result);
-        static void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite = false);
+    static void ReadKSAFile(KSAInputNode* node, string file_name, bool& result);
+    static void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite = false);
 
-    protected:
-        /* data */
+  protected:
+    /* data */
 };
 
 
-}
-
+}  // namespace KEMField
 
 
 #endif /* __KEMKSAFileInterface_H__ */

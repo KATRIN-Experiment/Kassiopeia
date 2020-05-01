@@ -1,8 +1,8 @@
 #ifndef KOPENCLACTION_DEF
 #define KOPENCLACTION_DEF
 
-#include "KFundamentalTypes.hh"
 #include "KFundamentalTypeCounter.hh"
+#include "KFundamentalTypes.hh"
 #include "KOpenCLData.hh"
 #include "KOpenCLInterface.hh"
 
@@ -24,10 +24,10 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KOpenCLAction
-  {
+class KOpenCLAction
+{
   public:
-    KOpenCLAction(KOpenCLData& data,bool enabled = true);
+    KOpenCLAction(KOpenCLData& data, bool enabled = true);
     virtual ~KOpenCLAction() {}
 
     virtual void Initialize();
@@ -35,18 +35,30 @@ namespace KEMField
     virtual void ConstructOpenCLKernels() const = 0;
     virtual void AssignBuffers() const = 0;
 
-    virtual std::string GetOpenCLFlags() const { return std::string(""); }
+    virtual std::string GetOpenCLFlags() const
+    {
+        return std::string("");
+    }
 
-    KOpenCLData& GetData() const { return fData; }
+    KOpenCLData& GetData() const
+    {
+        return fData;
+    }
 
-    void Enabled(bool b) { fEnabled = b; }
-    bool Enabled() const { return fEnabled; }
+    void Enabled(bool b)
+    {
+        fEnabled = b;
+    }
+    bool Enabled() const
+    {
+        return fEnabled;
+    }
 
   protected:
     KOpenCLData& fData;
 
     bool fEnabled;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KOPENCLACTION_DEF */

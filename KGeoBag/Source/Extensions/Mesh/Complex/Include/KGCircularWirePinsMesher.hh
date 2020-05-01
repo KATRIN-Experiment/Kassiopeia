@@ -6,26 +6,20 @@
 
 namespace KGeoBag
 {
-  class KGCircularWirePinsMesher :
-    virtual public KGComplexMesher,
-    public KGWrappedSurface<KGCircularWirePins>::Visitor
-  {
+class KGCircularWirePinsMesher : virtual public KGComplexMesher, public KGWrappedSurface<KGCircularWirePins>::Visitor
+{
   public:
-    using KGMesherBase::VisitExtendedSurface;
     using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGCircularWirePinsMesher()
-    {
-    }
-    virtual ~KGCircularWirePinsMesher()
-    {
-    }
+    KGCircularWirePinsMesher() {}
+    ~KGCircularWirePinsMesher() override {}
 
   protected:
-    void VisitWrappedSurface(KGWrappedSurface< KGCircularWirePins >* circularWirePinsSurface);
-  };
+    void VisitWrappedSurface(KGWrappedSurface<KGCircularWirePins>* circularWirePinsSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

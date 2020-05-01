@@ -9,24 +9,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSIntSpinFlipPulse > KSIntSpinFlipPulseBuilder;
+typedef KComplexElement<KSIntSpinFlipPulse> KSIntSpinFlipPulseBuilder;
 
-    template< >
-    inline bool KSIntSpinFlipPulseBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "time" )
-        {
-            aContainer->CopyTo( fObject, &KSIntSpinFlipPulse::SetTime );
-            return true;
-        }
-        return false;
+template<> inline bool KSIntSpinFlipPulseBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "time") {
+        aContainer->CopyTo(fObject, &KSIntSpinFlipPulse::SetTime);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

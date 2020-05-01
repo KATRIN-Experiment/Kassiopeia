@@ -7,21 +7,17 @@
 namespace Kassiopeia
 {
 
-    class KSSurfaceInteraction :
-        public KSComponentTemplate< KSSurfaceInteraction >
-    {
-        public:
-        	KSSurfaceInteraction();
-            virtual ~KSSurfaceInteraction();
+class KSSurfaceInteraction : public KSComponentTemplate<KSSurfaceInteraction>
+{
+  public:
+    KSSurfaceInteraction();
+    ~KSSurfaceInteraction() override;
 
-        public:
-            virtual void ExecuteInteraction(
-                const KSParticle& anInitialParticle,
-                KSParticle& aFinalParticle,
-                KSParticleQueue& aSecondaries
-            ) = 0;
-    };
+  public:
+    virtual void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                                    KSParticleQueue& aSecondaries) = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

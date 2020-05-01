@@ -1,8 +1,8 @@
 #ifndef Kommon_KXMLTokenizer_hh_
 #define Kommon_KXMLTokenizer_hh_
 
-#include "KProcessor.hh"
 #include "KFile.h"
+#include "KProcessor.hh"
 #include "KTextFile.h"
 
 #include <stack>
@@ -11,120 +11,140 @@
 namespace katrin
 {
 
-    //this is a shitty xml lexer.
-    class KXMLTokenizer :
-        public KProcessor
+//this is a shitty xml lexer.
+class KXMLTokenizer : public KProcessor
+{
+  public:
+    KXMLTokenizer();
+    ~KXMLTokenizer() override;
+
+    //**********
+    //processing
+    //**********
+
+  public:
+    void ProcessFile(KTextFile* aFile);
+
+    const std::string& GetPath() const
     {
-        public:
-            KXMLTokenizer();
-            virtual ~KXMLTokenizer();
+        return fPath;
+    }
+    const std::string& GetName() const
+    {
+        return fName;
+    }
+    int GetLine() const
+    {
+        return fLine;
+    }
+    int GetColumn() const
+    {
+        return fColumn;
+    }
+    char GetChar() const
+    {
+        return fChar;
+    }
 
-            //**********
-            //processing
-            //**********
+    //*******
+    //queuing
+    //*******
 
-        public:
-            void ProcessFile( KTextFile* aFile );
+  private:
+    void Increment();
+    bool AtEnd();
+    bool AtOneOf(const std::string& aSet);
+    bool AtExactly(const std::string& aString);
 
-            //*******
-            //queuing
-            //*******
+    KTextFile* fFile;
+    std::string fPath;
+    std::string fName;
+    int fLine;
+    int fColumn;
+    char fChar;
 
-        private:
-            void Increment();
-            bool AtEnd();
-            bool AtOneOf( const std::string& aSet );
-            bool AtExactly( const std::string& aString );
+    //*******
+    //parsing
+    //*******
 
-            KTextFile* fFile;
-            std::string fPath;
-            std::string fName;
-            int fLine;
-            int fColumn;
-            char fChar;
+  private:
+    void ParseBegin();
+    void ParseBeginFile();
+    void ParseElementBeginName();
+    void ParseElementHeader();
+    void ParseElementData();
+    void ParseElementEndName();
+    void ParseAttributeName();
+    void ParseAttributeValue();
+    void ParseEndFile();
+    void ParseEnd();
+    void ParseComment();
 
-            //*******
-            //parsing
-            //*******
+    void (KXMLTokenizer::*fState)();
+    void (KXMLTokenizer::*fInitialState)();
+    void (KXMLTokenizer::*fFinalState)();
 
-        private:
-            void ParseBegin();
-            void ParseBeginFile();
-            void ParseElementBeginName();
-            void ParseElementHeader();
-            void ParseElementData();
-            void ParseElementEndName();
-            void ParseAttributeName();
-            void ParseAttributeValue();
-            void ParseEndFile();
-            void ParseEnd();
-            void ParseComment();
+    int fNestedCommentCounter;
 
-            void (KXMLTokenizer::*fState)();
-            void (KXMLTokenizer::*fInitialState)();
-            void (KXMLTokenizer::*fFinalState)();
+    //********
+    //shipping
+    //********
 
-            int fNestedCommentCounter;
+  private:
+    std::string Trim(const std::string& aBuffer);
+    std::string fBuffer;
+    std::string fCommentBuffer;
+    std::stack<std::string> fNames;
+    KBeginParsingToken* fBeginParsing;
+    KBeginFileToken* fBeginFile;
+    KBeginElementToken* fBeginElement;
+    KBeginAttributeToken* fBeginAttribute;
+    KAttributeDataToken* fAttributeData;
+    KEndAttributeToken* fEndAttribute;
+    KMidElementToken* fMidElement;
+    KElementDataToken* fElementData;
+    KEndElementToken* fEndElement;
+    KEndFileToken* fEndFile;
+    KEndParsingToken* fEndParsing;
+    KCommentToken* fComment;
+    KErrorToken* fError;
 
-            //********
-            //shipping
-            //********
+    //**************
+    //character sets
+    //**************
 
-        private:
-            std::string Trim( const std::string& aBuffer );
-            std::string fBuffer;
-            std::string fCommentBuffer;
-            std::stack< std::string > fNames;
-            KBeginParsingToken* fBeginParsing;
-            KBeginFileToken* fBeginFile;
-            KBeginElementToken* fBeginElement;
-            KBeginAttributeToken* fBeginAttribute;
-            KAttributeDataToken* fAttributeData;
-            KEndAttributeToken* fEndAttribute;
-            KMidElementToken* fMidElement;
-            KElementDataToken* fElementData;
-            KEndElementToken* fEndElement;
-            KEndFileToken* fEndFile;
-            KEndParsingToken* fEndParsing;
-            KCommentToken* fComment;
-            KErrorToken* fError;
+  private:
+    static const std::string fSpace;
+    static const std::string fTab;
+    static const std::string fNewLine;
+    static const std::string fCarriageReturn;
 
-            //**************
-            //character sets
-            //**************
+    static const std::string fLowerCase;
+    static const std::string fUpperCase;
+    static const std::string fNumerals;
 
-        private:
-            static const std::string fSpace;
-            static const std::string fTab;
-            static const std::string fNewLine;
-            static const std::string fCarriageReturn;
+    static const std::string fLeftBraces;
+    static const std::string fOperators;
+    static const std::string fRightBraces;
 
-            static const std::string fLowerCase;
-            static const std::string fUpperCase;
-            static const std::string fNumerals;
+    static const std::string fLeftAngle;
+    static const std::string fRightAngle;
+    static const std::string fLeftAngleSlash;
+    static const std::string fRightSlashAngle;
+    static const std::string fEqual;
+    static const std::string fQuote;
+    static const std::string fCommentStart;
+    static const std::string fCommentEnd;
 
-            static const std::string fLeftBraces;
-            static const std::string fOperators;
-            static const std::string fRightBraces;
+    static const std::string fParameterLeftBrace;
+    static const std::string fParameterRightBrace;
 
-            static const std::string fLeftAngle;
-            static const std::string fRightAngle;
-            static const std::string fLeftAngleSlash;
-            static const std::string fRightSlashAngle;
-            static const std::string fEqual;
-            static const std::string fQuote;
-            static const std::string fCommentStart;
-            static const std::string fCommentEnd;
+    static const std::string fWhiteSpaceChars;
+    static const std::string fNameStartChars;
+    static const std::string fNameChars;
+    static const std::string fValueChars;
+};
 
-            static const std::string fParameterLeftBrace;
-            static const std::string fParameterRightBrace;
-
-            static const std::string fWhiteSpaceChars;
-            static const std::string fNameStartChars;
-            static const std::string fNameChars;
-            static const std::string fValueChars;
-    };
-
-}
+}  // namespace katrin
 
 #endif

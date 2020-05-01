@@ -1,9 +1,9 @@
 #ifndef KFMPointCloud_HH__
 #define KFMPointCloud_HH__
 
-#include <vector>
-
 #include "KFMPoint.hh"
+
+#include <vector>
 
 namespace KEMField
 {
@@ -22,97 +22,93 @@ namespace KEMField
 */
 
 
-template<unsigned int NDIM>
-class KFMPointCloud
+template<unsigned int NDIM> class KFMPointCloud
 {
-    public:
-        KFMPointCloud(){};
-        virtual ~KFMPointCloud(){};
+  public:
+    KFMPointCloud(){};
+    virtual ~KFMPointCloud(){};
 
-        KFMPointCloud(const KFMPointCloud& copyObject)
-        {
-            for(unsigned int i=0; i<copyObject.fPoints.size(); i++)
-            {
-                fPoints.push_back(copyObject.fPoints[i]);
-            }
+    KFMPointCloud(const KFMPointCloud& copyObject)
+    {
+        for (unsigned int i = 0; i < copyObject.fPoints.size(); i++) {
+            fPoints.push_back(copyObject.fPoints[i]);
         }
+    }
 
-        KFMPointCloud& operator=(const KFMPointCloud& copyObject)
-        {
-            if(&copyObject != this)
-            {
-                fPoints = copyObject.fPoints;
-            }
-            return *this;
+    KFMPointCloud& operator=(const KFMPointCloud& copyObject)
+    {
+        if (&copyObject != this) {
+            fPoints = copyObject.fPoints;
         }
+        return *this;
+    }
 
-        unsigned int GetNPoints() const
-        {
-            return fPoints.size();
+    unsigned int GetNPoints() const
+    {
+        return fPoints.size();
+    }
+
+    void AddPoint(const KFMPoint<NDIM>& point)
+    {
+        fPoints.push_back(point);
+    }
+
+    void Clear()
+    {
+        fPoints.clear();
+    }
+
+    KFMPoint<NDIM> GetPoint(unsigned int i) const
+    {
+        return fPoints[i];
+    };  //no check performed
+
+    KFMPoint<NDIM> GetCentroid() const
+    {
+        KFMPoint<NDIM> centroid;
+        for (unsigned int i = 0; i < fPoints.size(); i++) {
+            centroid += fPoints[i];
         }
+        double fac = 1.0 / ((double) fPoints.size());
+        centroid *= fac;
+        return centroid;
+    };
 
-        void AddPoint(const KFMPoint<NDIM>& point)
-        {
-            fPoints.push_back(point);
+    double GetRadiusAboutCentroid() const
+    {
+        KFMPoint<NDIM> centroid = GetCentroid();
+        double max_radius = 0.0;
+        for (unsigned int i = 0; i < fPoints.size(); i++) {
+            double r = (centroid - fPoints[i]).Magnitude();
+            if (r > max_radius) {
+                max_radius = r;
+            };
         }
+        return max_radius;
+    };
 
-        void Clear()
-        {
-            fPoints.clear();
-        }
+    void SetPoints(const std::vector<KFMPoint<NDIM>>* points)
+    {
+        fPoints = *points;
+    }
 
-        KFMPoint<NDIM> GetPoint(unsigned int i) const {return fPoints[i];}; //no check performed
+    void GetPoints(std::vector<KFMPoint<NDIM>>* points) const
+    {
+        *points = fPoints;
+    }
 
-        KFMPoint<NDIM> GetCentroid() const
-        {
-            KFMPoint<NDIM> centroid;
-            for(unsigned int i=0; i<fPoints.size(); i++)
-            {
-                centroid += fPoints[i];
-            }
-            double fac = 1.0/((double)fPoints.size());
-            centroid *= fac;
-            return centroid;
-        };
-
-        double GetRadiusAboutCentroid() const
-        {
-            KFMPoint<NDIM> centroid = GetCentroid();
-            double max_radius = 0.0;
-            for(unsigned int i=0; i<fPoints.size(); i++)
-            {
-                double r = (centroid - fPoints[i]).Magnitude();
-                if(r > max_radius){max_radius = r;};
-            }
-            return max_radius;
-        };
-
-        void SetPoints(const std::vector< KFMPoint<NDIM> >* points)
-        {
-            fPoints = *points;
-        }
-
-        void GetPoints( std::vector< KFMPoint<NDIM> >* points) const
-        {
-            *points = fPoints;
-        }
-
-        std::vector< KFMPoint<NDIM> >* GetPoints()
-        {
-            return &fPoints;
-        }
+    std::vector<KFMPoint<NDIM>>* GetPoints()
+    {
+        return &fPoints;
+    }
 
 
-    private:
-
-        std::vector< KFMPoint<NDIM> > fPoints;
-
-
+  private:
+    std::vector<KFMPoint<NDIM>> fPoints;
 };
 
 
-}//end of KEMField
-
+}  // namespace KEMField
 
 
 #endif /* KFMPointCloud_H__ */

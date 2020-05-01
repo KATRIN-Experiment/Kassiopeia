@@ -8,32 +8,27 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajTermPropagation > KSTrajTermPropagationBuilder;
+typedef KComplexElement<KSTrajTermPropagation> KSTrajTermPropagationBuilder;
 
-    template< >
-    inline bool KSTrajTermPropagationBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
+template<> inline bool KSTrajTermPropagationBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
+    }
+    if (aContainer->GetName() == "direction") {
+        if (aContainer->AsReference<std::string>() == "forward") {
+            fObject->SetDirection(KSTrajTermPropagation::eForward);
             return true;
         }
-        if( aContainer->GetName() == "direction" )
-        {
-            if( aContainer->AsReference< std::string >() == "forward" )
-            {
-                fObject->SetDirection( KSTrajTermPropagation::eForward );
-                return true;
-            }
-            if( aContainer->AsReference< std::string >() == "backward" )
-            {
-                fObject->SetDirection( KSTrajTermPropagation::eBackward );
-                return true;
-            }
-            return false;
+        if (aContainer->AsReference<std::string>() == "backward") {
+            fObject->SetDirection(KSTrajTermPropagation::eBackward);
+            return true;
         }
         return false;
     }
-
+    return false;
 }
+
+}  // namespace katrin
 #endif

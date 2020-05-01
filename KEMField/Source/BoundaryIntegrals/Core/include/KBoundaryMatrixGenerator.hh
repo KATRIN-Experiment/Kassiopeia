@@ -12,19 +12,17 @@
 #include "KSquareMatrix.hh"
 #include "KSurfaceContainer.hh"
 
-namespace KEMField {
-
-template< typename ValueType >
-class KBoundaryMatrixGenerator
+namespace KEMField
 {
 
-public:
-	KBoundaryMatrixGenerator() {}
-	virtual ~KBoundaryMatrixGenerator() {}
+template<typename ValueType> class KBoundaryMatrixGenerator
+{
 
-	virtual KSmartPointer<KSquareMatrix<ValueType> > Build(const KSurfaceContainer& container) const
-	= 0;
+  public:
+    KBoundaryMatrixGenerator() {}
+    virtual ~KBoundaryMatrixGenerator() {}
 
+    virtual KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const = 0;
 };
 
 } /* namespace KEMField */

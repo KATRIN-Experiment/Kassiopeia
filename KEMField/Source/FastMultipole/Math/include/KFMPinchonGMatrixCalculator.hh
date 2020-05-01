@@ -1,12 +1,14 @@
 #ifndef KFMPinchonGMatrixCalculator_HH__
 #define KFMPinchonGMatrixCalculator_HH__
 
-#include <cmath>
-#include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
+#include "KFMVectorOperations.hh"
 
-namespace KEMField{
+#include <cmath>
+
+namespace KEMField
+{
 
 /**
 *
@@ -36,45 +38,58 @@ namespace KEMField{
 
 class KFMPinchonGMatrixCalculator
 {
-    public:
-        KFMPinchonGMatrixCalculator();
-        virtual ~KFMPinchonGMatrixCalculator();
+  public:
+    KFMPinchonGMatrixCalculator();
+    virtual ~KFMPinchonGMatrixCalculator();
 
-        //specify the degree (size) of the matrix
-        void SetDegree(int l)
-        {
-            fDegree = (unsigned int)std::fabs(l);
-        };
+    //specify the degree (size) of the matrix
+    void SetDegree(int l)
+    {
+        fDegree = (unsigned int) std::fabs(l);
+    };
 
-        //specify the type of matrix to produce
-        void SetAsX(){fMatrixType = 0;}; //this is a (2l+3)x(2l+1) matrix
-        void SetAsY(){fMatrixType = 1;}; //this is a (2l+3)x(2l+1) matrix
-        void SetAsZ(){fMatrixType = 2;}; //this is a (2l+3)x(2l+1) matrix
-        void SetAsZHat(){fMatrixType = 3;}; //this is a (2l+1)x(2l+1) matrix
-        void SetAsZHatInverse(){fMatrixType = 4;}; //this is a (2l+1)x(2l+1) matrix
+    //specify the type of matrix to produce
+    void SetAsX()
+    {
+        fMatrixType = 0;
+    };  //this is a (2l+3)x(2l+1) matrix
+    void SetAsY()
+    {
+        fMatrixType = 1;
+    };  //this is a (2l+3)x(2l+1) matrix
+    void SetAsZ()
+    {
+        fMatrixType = 2;
+    };  //this is a (2l+3)x(2l+1) matrix
+    void SetAsZHat()
+    {
+        fMatrixType = 3;
+    };  //this is a (2l+1)x(2l+1) matrix
+    void SetAsZHatInverse()
+    {
+        fMatrixType = 4;
+    };  //this is a (2l+1)x(2l+1) matrix
 
-        //returns true if successful, if not successful it is likely the given
-        //matrix was the incorrect size
-        bool ComputeMatrix(kfm_matrix* G) const;
+    //returns true if successful, if not successful it is likely the given
+    //matrix was the incorrect size
+    bool ComputeMatrix(kfm_matrix* G) const;
 
-    protected:
+  protected:
+    bool ComputeGX(kfm_matrix* G) const;
+    bool ComputeGY(kfm_matrix* G) const;
+    bool ComputeGZ(kfm_matrix* G) const;
+    bool ComputeGZHat(kfm_matrix* G) const;
+    bool ComputeGZHatInverse(kfm_matrix* G) const;
 
-        bool ComputeGX(kfm_matrix* G) const;
-        bool ComputeGY(kfm_matrix* G) const;
-        bool ComputeGZ(kfm_matrix* G) const;
-        bool ComputeGZHat(kfm_matrix* G) const;
-        bool ComputeGZHatInverse(kfm_matrix* G) const;
-
-        bool CheckMatrixDim(const kfm_matrix* G) const;
-        bool CheckHatMatrixDim(const kfm_matrix* G) const;
+    bool CheckMatrixDim(const kfm_matrix* G) const;
+    bool CheckHatMatrixDim(const kfm_matrix* G) const;
 
 
-        unsigned int fDegree;
-        int fMatrixType;
-
+    unsigned int fDegree;
+    int fMatrixType;
 };
 
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* __KFMPinchonGMatrixCalculator_H__ */

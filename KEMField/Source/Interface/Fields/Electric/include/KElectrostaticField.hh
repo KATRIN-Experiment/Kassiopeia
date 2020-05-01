@@ -5,39 +5,44 @@
 
 namespace KEMField
 {
-  class KElectrostaticField : public KElectricField
-  {
+class KElectrostaticField : public KElectricField
+{
   public:
     KElectrostaticField() {}
-    virtual ~KElectrostaticField() {}
+    ~KElectrostaticField() override {}
 
-    static std::string Name() { return "ElectrostaticField"; }
-
-    using KElectricField::Potential; // don't hide time specifying Potential call with the overload below
-
-    double Potential(const KPosition& P) const {
-    	return PotentialCore(P);
+    static std::string Name()
+    {
+        return "ElectrostaticField";
     }
 
-    using KElectricField::ElectricField; // don't hide time specifying ElectricField call with the overload below
+    using KElectricField::Potential;  // don't hide time specifying Potential call with the overload below
 
-    KThreeVector ElectricField(const KPosition& P ) const {
-    	return ElectricFieldCore(P);
+    double Potential(const KPosition& P) const
+    {
+        return PotentialCore(P);
+    }
+
+    using KElectricField::ElectricField;  // don't hide time specifying ElectricField call with the overload below
+
+    KThreeVector ElectricField(const KPosition& P) const
+    {
+        return ElectricFieldCore(P);
     }
 
   private:
-
-    virtual double PotentialCore(const KPosition& P, const double& /*time*/) const
+    double PotentialCore(const KPosition& P, const double& /*time*/) const override
     {
-    	return PotentialCore(P);
+        return PotentialCore(P);
     }
 
-    virtual KThreeVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const
+    KThreeVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const override
     {
-    	return ElectricFieldCore(P);
+        return ElectricFieldCore(P);
     }
 
-    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P, const double& /*time*/) const
+    std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P,
+                                                                  const double& /*time*/) const override
     {
         return ElectricFieldAndPotentialCore(P);
     }
@@ -46,7 +51,7 @@ namespace KEMField
 
     virtual KThreeVector ElectricFieldCore(const KPosition&) const = 0;
 
-    virtual std::pair<KThreeVector,double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -57,12 +62,10 @@ namespace KEMField
         double potential = PotentialCore(P);
         KThreeVector field = ElectricFieldCore(P);
 
-        return std::pair<KThreeVector,double>(field,potential);
+        return std::pair<KThreeVector, double>(field, potential);
     }
+};
 
-
-  };
-
-}
+}  // namespace KEMField
 
 #endif /* KELECTROSTATICFIELD_DEF */

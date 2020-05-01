@@ -532,7 +532,7 @@
         name="pmt_simulation"
         run="1"
         seed="12345"
-        events="1"
+        events="[events:1]"
         electric_field="kemfield_e"
         space="space_world"
         generator="photoelectron_single"

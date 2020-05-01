@@ -19,35 +19,35 @@
 namespace KGeoBag
 {
 
-    //allocation/deallocation
-    kg_vector* kg_vector_alloc(unsigned int n);
-    kg_vector* kg_vector_calloc(unsigned int n);
-    void kg_vector_free(kg_vector* v);
+//allocation/deallocation
+kg_vector* kg_vector_alloc(unsigned int n);
+kg_vector* kg_vector_calloc(unsigned int n);
+void kg_vector_free(kg_vector* v);
 
-    //access
-    double kg_vector_get(const kg_vector* v, unsigned int i);
-    void kg_vector_set(kg_vector* v, unsigned int i, double x);
-    void kg_vector_set_zero(kg_vector* v);
-    void kg_vector_set(const kg_vector* src, kg_vector* dest);
+//access
+double kg_vector_get(const kg_vector* v, unsigned int i);
+void kg_vector_set(kg_vector* v, unsigned int i, double x);
+void kg_vector_set_zero(kg_vector* v);
+void kg_vector_set(const kg_vector* src, kg_vector* dest);
 
-    //operations
-    void kg_vector_scale(kg_vector* a, double scale_factor);
+//operations
+void kg_vector_scale(kg_vector* a, double scale_factor);
 
-    double kg_vector_inner_product(const kg_vector* a, const kg_vector* b);
+double kg_vector_inner_product(const kg_vector* a, const kg_vector* b);
 
-    //only applicable to vectors of length 3, but no check is performed
-    void kg_vector_cross_product(const kg_vector* a, const kg_vector* b, kg_vector* c);
+//only applicable to vectors of length 3, but no check is performed
+void kg_vector_cross_product(const kg_vector* a, const kg_vector* b, kg_vector* c);
 
-    double kg_vector_norm(const kg_vector* a);
-    void kg_vector_normalize(kg_vector* a);
+double kg_vector_norm(const kg_vector* a);
+void kg_vector_normalize(kg_vector* a);
 
-    void kg_vector_sub(const kg_vector* a, const kg_vector* b, kg_vector* c);
-    void kg_vector_add(const kg_vector* a, const kg_vector* b, kg_vector* c);
+void kg_vector_sub(const kg_vector* a, const kg_vector* b, kg_vector* c);
+void kg_vector_add(const kg_vector* a, const kg_vector* b, kg_vector* c);
 
-    void kg_vector_sub(kg_vector* a, const kg_vector* b);
-    void kg_vector_add(kg_vector* a, const kg_vector* b);
+void kg_vector_sub(kg_vector* a, const kg_vector* b);
+void kg_vector_add(kg_vector* a, const kg_vector* b);
 
-}
+}  // namespace KGeoBag
 
 
 #endif /* KGVectorOperations_H__ */

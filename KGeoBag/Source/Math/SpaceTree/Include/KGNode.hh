@@ -1,10 +1,10 @@
 #ifndef KGNode_HH__
 #define KGNode_HH__
 
+#include "KGObjectCollection.hh"
+
 #include <cstddef>
 #include <vector>
-
-#include "KGObjectCollection.hh"
 
 
 namespace KGeoBag
@@ -24,134 +24,138 @@ namespace KGeoBag
 */
 
 
-template<typename ObjectTypeList>
-class KGNode: public KGObjectCollection<ObjectTypeList>
+template<typename ObjectTypeList> class KGNode : public KGObjectCollection<ObjectTypeList>
 {
-    public:
+  public:
+    KGNode() : fParent(nullptr), fStorageIndex(0), fID(-1){};
 
-        KGNode():fParent(NULL),fStorageIndex(0),fID(-1){};
-
-        virtual ~KGNode()
-        {
-            DeleteChildren();
-        };
+    ~KGNode() override
+    {
+        DeleteChildren();
+    };
 
 
-        //the level from the root node
-        virtual unsigned int GetLevel()
-        {
-            if(fParent != NULL)
-            {
-                return fParent->GetLevel() + 1;
-            }
-            else
-            {
-                return 0;
-            }
+    //the level from the root node
+    virtual unsigned int GetLevel()
+    {
+        if (fParent != nullptr) {
+            return fParent->GetLevel() + 1;
         }
-
-        //parent node
-        virtual KGNode<ObjectTypeList>* GetParent(){return fParent;};
-        virtual void SetParent(KGNode<ObjectTypeList>* parent){fParent = parent;};
-
-        //unique ID information
-        int GetID() const {return fID;};
-        void SetID(const int& id){fID = id;};
-
-        //storage index in parent's list of children
-        unsigned int GetIndex() const {return fStorageIndex;};
-        void SetIndex(unsigned int si){fStorageIndex = si;};
-
-        //child management
-        virtual bool HasChildren() const
-        {
-            if(fChildren.size() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        else {
+            return 0;
         }
+    }
 
+    //parent node
+    virtual KGNode<ObjectTypeList>* GetParent()
+    {
+        return fParent;
+    };
+    virtual void SetParent(KGNode<ObjectTypeList>* parent)
+    {
+        fParent = parent;
+    };
 
-        unsigned int GetNChildren() const{ return fChildren.size(); }
+    //unique ID information
+    int GetID() const
+    {
+        return fID;
+    };
+    void SetID(const int& id)
+    {
+        fID = id;
+    };
 
-        virtual void AddChild(KGNode<ObjectTypeList>* child)
-        {
-            if(child != NULL && child != this) //avoid disaster
-            {
-                child->SetIndex(fChildren.size());
-                child->SetParent(this);
-                fChildren.push_back(child);
-            }
+    //storage index in parent's list of children
+    unsigned int GetIndex() const
+    {
+        return fStorageIndex;
+    };
+    void SetIndex(unsigned int si)
+    {
+        fStorageIndex = si;
+    };
+
+    //child management
+    virtual bool HasChildren() const
+    {
+        if (fChildren.size() != 0) {
+            return true;
         }
-
-
-        virtual void DeleteChildren()
-        {
-            for(unsigned int i=0; i<fChildren.size(); i++)
-            {
-                delete fChildren[i];
-            }
-            fChildren.clear();
+        else {
+            return false;
         }
+    }
 
 
-        virtual KGNode<ObjectTypeList>* GetChild(unsigned int storage_index)
+    unsigned int GetNChildren() const
+    {
+        return fChildren.size();
+    }
+
+    virtual void AddChild(KGNode<ObjectTypeList>* child)
+    {
+        if (child != nullptr && child != this)  //avoid disaster
         {
-            if(storage_index < fChildren.size() )
-            {
-                return fChildren[storage_index];
-            }
-            else
-            {
-                return NULL;
-            }
+            child->SetIndex(fChildren.size());
+            child->SetParent(this);
+            fChildren.push_back(child);
         }
+    }
 
-        virtual void SetChild(KGNode<ObjectTypeList>* child, unsigned int storage_index)
-        {
-            if( storage_index < fChildren.size() )
-            {
-                fChildren[storage_index] = child;
-                fChildren[storage_index]->SetIndex(storage_index);
-                fChildren[storage_index]->SetParent(this);
-            }
-            else
-            {
-                fChildren.resize(storage_index + 1, NULL);
-                fChildren[storage_index] = child;
-                fChildren[storage_index]->SetIndex(storage_index);
-                fChildren[storage_index]->SetParent(this);
-            }
+
+    virtual void DeleteChildren()
+    {
+        for (unsigned int i = 0; i < fChildren.size(); i++) {
+            delete fChildren[i];
         }
+        fChildren.clear();
+    }
 
 
-    protected:
+    virtual KGNode<ObjectTypeList>* GetChild(unsigned int storage_index)
+    {
+        if (storage_index < fChildren.size()) {
+            return fChildren[storage_index];
+        }
+        else {
+            return nullptr;
+        }
+    }
+
+    virtual void SetChild(KGNode<ObjectTypeList>* child, unsigned int storage_index)
+    {
+        if (storage_index < fChildren.size()) {
+            fChildren[storage_index] = child;
+            fChildren[storage_index]->SetIndex(storage_index);
+            fChildren[storage_index]->SetParent(this);
+        }
+        else {
+            fChildren.resize(storage_index + 1, nullptr);
+            fChildren[storage_index] = child;
+            fChildren[storage_index]->SetIndex(storage_index);
+            fChildren[storage_index]->SetParent(this);
+        }
+    }
 
 
-        //pointer to parent node
-        KGNode<ObjectTypeList>* fParent;
+  protected:
+    //pointer to parent node
+    KGNode<ObjectTypeList>* fParent;
 
-        //need this to keep track of this nodes position in the parents
-        //list of children, this could be calculated on the fly, but
-        //that might be expensive
-        unsigned int fStorageIndex;
+    //need this to keep track of this nodes position in the parents
+    //list of children, this could be calculated on the fly, but
+    //that might be expensive
+    unsigned int fStorageIndex;
 
-        //unique id
-        int fID;
+    //unique id
+    int fID;
 
-        //pointers to child nodes
-        std::vector< KGNode<ObjectTypeList>* > fChildren;
-
+    //pointers to child nodes
+    std::vector<KGNode<ObjectTypeList>*> fChildren;
 };
 
 
-
-
-
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGNode_H__ */

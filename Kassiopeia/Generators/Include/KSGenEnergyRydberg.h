@@ -5,40 +5,41 @@
 #ifndef KASPER_KSGENENERGYRYDBERG_H
 #define KASPER_KSGENENERGYRYDBERG_H
 
-#include "KSGenCreator.h"
 #include "KField.h"
+#include "KSGenCreator.h"
 
 namespace Kassiopeia
 {
-class KSGenEnergyRydberg:
-    public KSComponentTemplate< KSGenEnergyRydberg, KSGenCreator >
+class KSGenEnergyRydberg : public KSComponentTemplate<KSGenEnergyRydberg, KSGenCreator>
 {
-public:
+  public:
     KSGenEnergyRydberg();
-    KSGenEnergyRydberg( const KSGenEnergyRydberg& aCopy );
-    KSGenEnergyRydberg* Clone() const;
-    virtual ~KSGenEnergyRydberg();
+    KSGenEnergyRydberg(const KSGenEnergyRydberg& aCopy);
+    KSGenEnergyRydberg* Clone() const override;
+    ~KSGenEnergyRydberg() override;
 
     //******
     //action
     //******
 
-public:
-    void Dice( KSParticleQueue* aPrimaries );
+  public:
+    void Dice(KSParticleQueue* aPrimaries) override;
 
-private:
-    ;K_SET_GET( double, DepositedEnergy );
-    ;K_SET_GET( double, IonizationEnergy );
+  private:
+    ;
+    K_SET_GET(double, DepositedEnergy);
+    ;
+    K_SET_GET(double, IonizationEnergy);
 
     //**********
     //initialize
     //**********
 
-public:
-    void InitializeComponent();
-    void DeinitializeComponent();
+  public:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 };
 
-}
+}  // namespace Kassiopeia
 
-#endif //KASPER_KSGENENERGYRYDBERG_H
+#endif  //KASPER_KSGENENERGYRYDBERG_H

@@ -20,67 +20,68 @@ namespace KEMField
 *
 */
 
-template<typename ValueType>
-class KJacobiPreconditioner: public KPreconditioner< ValueType >
+template<typename ValueType> class KJacobiPreconditioner : public KPreconditioner<ValueType>
 {
-    public:
+  public:
+    KJacobiPreconditioner(const KSquareMatrix<ValueType>& A) : fDimension(A.Dimension()), fZero(0)
+    {
+        fInverseDiagonal.resize(fDimension);
 
-        KJacobiPreconditioner(const KSquareMatrix<ValueType>& A):
-            fDimension(A.Dimension()),
-            fZero(0)
-        {
-            fInverseDiagonal.resize(fDimension);
+        //compute the inverse of the diagonal
+        for (unsigned int i = 0; i < fDimension; i++) {
+            fInverseDiagonal[i] = 1.0 / A(i, i);
+        }
+    };
 
-            //compute the inverse of the diagonal
-            for(unsigned int i=0; i<fDimension; i++)
-            {
-                fInverseDiagonal[i] = 1.0/A(i,i);
-            }
+    ~KJacobiPreconditioner() override{};
+
+    std::string Name() override
+    {
+        return std::string("jacobi");
+    };
+
+    void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+        for (unsigned int i = 0; i < fDimension; i++) {
+            y[i] = fInverseDiagonal(i) * x(i);
+        }
+    }
+
+    void MultiplyTranspose(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+        //copy x into y
+        for (unsigned int i = 0; i < fDimension; i++) {
+            y[i] = fInverseDiagonal(i) * x(i);
+        }
+    }
+
+    bool IsStationary() override
+    {
+        return true;
+    };
+
+    unsigned int Dimension() const override
+    {
+        return fDimension;
+    };
+
+    const ValueType& operator()(unsigned int i, unsigned int j) const override
+    {
+        if (i == j) {
+            return fInverseDiagonal(i);
         };
 
-        virtual ~KJacobiPreconditioner(){};
+        return fZero;
+    }
 
-        virtual std::string Name(){ return std::string("jacobi"); };
-
-        virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
-        {
-            for(unsigned int i=0; i<fDimension; i++)
-            {
-                y[i] = fInverseDiagonal(i)*x(i);
-            }
-        }
-
-        virtual void MultiplyTranspose(const KVector<ValueType>& x, KVector<ValueType>& y) const
-        {
-            //copy x into y
-            for(unsigned int i=0; i<fDimension; i++)
-            {
-                y[i] = fInverseDiagonal(i)*x(i);
-            }
-        }
-
-        virtual bool IsStationary(){return true;};
-
-        virtual unsigned int Dimension() const {return fDimension;} ;
-
-        virtual const ValueType& operator()(unsigned int i, unsigned int j) const
-        {
-            if(i == j){return fInverseDiagonal(i);};
-
-            return fZero;
-        }
-
-    protected:
-
-        unsigned int fDimension;
-        KSimpleVector<ValueType> fInverseDiagonal;
-        ValueType fZero;
-
+  protected:
+    unsigned int fDimension;
+    KSimpleVector<ValueType> fInverseDiagonal;
+    ValueType fZero;
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KJacobiPreconditioner_H__ */

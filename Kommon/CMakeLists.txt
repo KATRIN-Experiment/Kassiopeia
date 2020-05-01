@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # Kommon version
 set( MODULE_VERSION_MAJOR 1 )
-set( MODULE_VERSION_MINOR 3 )
+set( MODULE_VERSION_MINOR 4 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
@@ -12,10 +12,6 @@ project( Kommon )
 #set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${PROJECT_SOURCE_DIR}/GoogleTest/cmake )
 include( KasperDefaults )
 
-# compiler requirements
-kasper_require_cpp11()
-kasper_require_gcc_version(4.6)
-kasper_require_clang_version(3.0)
 
 # paths
 kasper_module_paths( Kommon )
@@ -44,6 +40,15 @@ if(Kommon_USE_Log4CXX)
         list(APPEND EXTERNAL_LIBRARIES ${LOG4CXX_LIBRARY} )
 endif()
 
+option( KLogger_THROW_EXCEPTIONS "Throw exception when using KERROR/KFATAL macros." OFF )
+if( KLogger_THROW_EXCEPTIONS )
+        set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
+            "KLOGGER_THROW_EXCEPTIONS"
+        )
+endif()
+mark_as_advanced( CLEAR KLogger_THROW_EXCEPTIONS )
+
+
 # to be populated by subdirectories
 set(KOMMON_HEADER_FILES)
 set(KOMMON_SOURCE_FILES)
@@ -57,6 +62,7 @@ if( KASPER_USE_BOOST )
     find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
     kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
     list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
+    add_compile_definitions( KASPER_USE_BOOST )
     add_subdirectory( Boost )
 endif()
 
@@ -65,6 +71,7 @@ if( KASPER_USE_ROOT )
     kasper_external_include_directories( ${ROOT_INCLUDE_DIR} )
     add_definitions( -DKommon_USE_ROOT )
     list(APPEND EXTERNAL_LIBRARIES ${ROOT_LIBRARIES} )
+    add_compile_definitions( KASPER_USE_ROOT )
     add_subdirectory( Root )
 endif()
 
@@ -72,12 +79,14 @@ if( KASPER_USE_GSL )
     find_package( GSL REQUIRED )
     kasper_external_include_directories( ${GSL_INCLUDE_DIRS} )
     list(APPEND EXTERNAL_LIBRARIES ${GSL_LIBRARIES} )
+    add_compile_definitions( KASPER_USE_GSL )
     add_subdirectory( Gsl )
 endif()
 
 if( KASPER_USE_TBB )
     find_package( TBB REQUIRED )
     kasper_external_include_directories( ${TBB_INCLUDE_DIR} )
+    add_compile_definitions( KASPER_USE_TBB )
     add_subdirectory( TBB )
 endif()
 

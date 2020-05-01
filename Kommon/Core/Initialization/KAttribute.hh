@@ -5,48 +5,40 @@
 
 namespace katrin
 {
-    template< class XType >
-    class KAttribute :
-        public KAttributeBase
-    {
-        public:
-            KAttribute( KElementBase* aParentElement = NULL );
-            virtual ~KAttribute();
+template<class XType> class KAttribute : public KAttributeBase
+{
+  public:
+    KAttribute(KElementBase* aParentElement = nullptr);
+    ~KAttribute() override;
 
-            virtual bool SetValue( KToken* aToken );
+    bool SetValue(KToken* aToken) override;
 
-            static KAttributeBase* Create( KElementBase* aParentElement );
+    static KAttributeBase* Create(KElementBase* aParentElement);
 
-        private:
-            XType* fObject;
-    };
+  private:
+    XType* fObject;
+};
 
-    template< class XType >
-    KAttribute< XType >::KAttribute( KElementBase* aParentElement )
-    {
-        fParentElement = aParentElement;
+template<class XType> KAttribute<XType>::KAttribute(KElementBase* aParentElement)
+{
+    fParentElement = aParentElement;
 
-        fObject = new XType();
-        Set( fObject );
-    }
-    template< class XType >
-    KAttribute< XType >::~KAttribute()
-    {
-    }
-
-    template< class XType >
-    bool KAttribute< XType >::SetValue( KToken* aToken )
-    {
-        (*fObject) = aToken->GetValue< XType >();
-        return true;
-    }
-
-    template< class XType >
-    KAttributeBase* KAttribute< XType >::Create( KElementBase* aParentElement )
-    {
-        return new KAttribute< XType >( aParentElement );
-    }
-
+    fObject = new XType();
+    Set(fObject);
 }
+template<class XType> KAttribute<XType>::~KAttribute() {}
+
+template<class XType> bool KAttribute<XType>::SetValue(KToken* aToken)
+{
+    (*fObject) = aToken->GetValue<XType>();
+    return true;
+}
+
+template<class XType> KAttributeBase* KAttribute<XType>::Create(KElementBase* aParentElement)
+{
+    return new KAttribute<XType>(aParentElement);
+}
+
+}  // namespace katrin
 
 #endif

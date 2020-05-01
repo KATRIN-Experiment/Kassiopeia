@@ -8,18 +8,16 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajIntegratorRKDP54 > KSTrajIntegratorRKDP54Builder;
+typedef KComplexElement<KSTrajIntegratorRKDP54> KSTrajIntegratorRKDP54Builder;
 
-    template< >
-    inline bool KSTrajIntegratorRKDP54Builder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        return false;
+template<> inline bool KSTrajIntegratorRKDP54Builder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    return false;
 }
+
+}  // namespace katrin
 #endif

@@ -3,17 +3,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( KGeoBag, vismsg )
+KMESSAGE_DECLARE(KGeoBag, vismsg)
 
 #ifdef KGeoBag_ENABLE_DEBUG
 
-#define vismsg_debug( xCONTENT )\
-    vismsg( eDebug ) << xCONTENT;
+#define vismsg_debug(xCONTENT) vismsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef vismsg_debug
-#define vismsg_debug( xCONTENT )
+#define vismsg_debug(xCONTENT)
 #endif
 
 #endif

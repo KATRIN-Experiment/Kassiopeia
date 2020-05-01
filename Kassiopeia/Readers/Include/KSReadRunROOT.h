@@ -6,36 +6,35 @@
 namespace Kassiopeia
 {
 
-    class KSReadRunROOT :
-        public KSReadIteratorROOT
-    {
-        public:
-            KSReadRunROOT( TFile* aFile );
-            virtual ~KSReadRunROOT();
+class KSReadRunROOT : public KSReadIteratorROOT
+{
+  public:
+    KSReadRunROOT(TFile* aFile);
+    ~KSReadRunROOT() override;
 
-        public:
-            unsigned int GetRunIndex() const;
-            unsigned int GetLastRunIndex() const;
-            unsigned int GetFirstEventIndex() const;
-            unsigned int GetLastEventIndex() const;
-            unsigned int GetFirstTrackIndex() const;
-            unsigned int GetLastTrackIndex() const;
-            unsigned int GetFirstStepIndex() const;
-            unsigned int GetLastStepIndex() const;
+  public:
+    unsigned int GetRunIndex() const;
+    unsigned int GetLastRunIndex() const;
+    unsigned int GetFirstEventIndex() const;
+    unsigned int GetLastEventIndex() const;
+    unsigned int GetFirstTrackIndex() const;
+    unsigned int GetLastTrackIndex() const;
+    unsigned int GetFirstStepIndex() const;
+    unsigned int GetLastStepIndex() const;
 
-        public:
-            KSReadRunROOT& operator= (const unsigned int& aValue);
+  public:
+    KSReadRunROOT& operator=(const unsigned int& aValue);
 
-        private:
-            unsigned int fRunIndex;
-            unsigned int fFirstEventIndex;
-            unsigned int fLastEventIndex;
-            unsigned int fFirstTrackIndex;
-            unsigned int fLastTrackIndex;
-            unsigned int fFirstStepIndex;
-            unsigned int fLastStepIndex;
-    };
+  private:
+    unsigned int fRunIndex;
+    unsigned int fFirstEventIndex;
+    unsigned int fLastEventIndex;
+    unsigned int fFirstTrackIndex;
+    unsigned int fLastTrackIndex;
+    unsigned int fFirstStepIndex;
+    unsigned int fLastStepIndex;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

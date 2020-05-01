@@ -20,22 +20,24 @@ namespace KEMField
 */
 
 
-
-class KFMExternalIdentitySet: public KFMIdentitySet
+class KFMExternalIdentitySet : public KFMIdentitySet
 {
-    public:
-        KFMExternalIdentitySet():KFMIdentitySet(){};
-        virtual ~KFMExternalIdentitySet(){};
+  public:
+    KFMExternalIdentitySet() : KFMIdentitySet(){};
+    ~KFMExternalIdentitySet() override{};
 
-         //IO
-        virtual std::string ClassName() {return std::string("KFMExternalIdentitySet");};
+    //IO
+    std::string ClassName() override
+    {
+        return std::string("KFMExternalIdentitySet");
+    };
 
-    private:
+  private:
 };
 
 DefineKSAClassName(KFMExternalIdentitySet)
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMExternalIdentitySet_H__ */

@@ -2,14 +2,8 @@
 
 namespace KGeoBag
 {
-    template<>
-    KGRotatedLineSegmentSurface::Visitor::Visitor()
-    {
-    }
+template<> KGRotatedLineSegmentSurface::Visitor::Visitor() {}
 
-    template<>
-    KGRotatedLineSegmentSurface::Visitor::~Visitor()
-    {
-    }
+template<> KGRotatedLineSegmentSurface::Visitor::~Visitor() {}
 
-}
+}  // namespace KGeoBag

@@ -3,8 +3,8 @@
 
 namespace KGeoBag
 {
-  class KGLinearCongruentialGenerator
-  {
+class KGLinearCongruentialGenerator
+{
   public:
     KGLinearCongruentialGenerator();
     virtual ~KGLinearCongruentialGenerator() {}
@@ -16,7 +16,7 @@ namespace KGeoBag
     unsigned int fMultiplier;
     unsigned int fIncrement;
     mutable unsigned int fValue;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

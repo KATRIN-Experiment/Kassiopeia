@@ -9,36 +9,34 @@
 #define KMAGNETICDIPOLEFIELDBUILDER_HH_
 
 #include "KComplexElement.hh"
-#include "KMagneticDipoleField.hh"
 #include "KEMStreamableThreeVector.hh"
+#include "KMagneticDipoleField.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KMagneticDipoleField > KMagneticDipoleFieldBuilder;
-
-template< >
-inline bool KMagneticDipoleFieldBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "name" )
-    {
+
+typedef KComplexElement<KEMField::KMagneticDipoleField> KMagneticDipoleFieldBuilder;
+
+template<> inline bool KMagneticDipoleFieldBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
         std::string name;
         aContainer->CopyTo(name);
         this->SetName(name);
         fObject->SetName(name);
     }
-    else if( aContainer->GetName() == "location" )
-    {
+    else if (aContainer->GetName() == "location") {
         KEMField::KEMStreamableThreeVector vec;
         aContainer->CopyTo(vec);
         fObject->SetLocation(vec.GetThreeVector());
     }
-    else if( aContainer->GetName() == "moment" )
-    {
+    else if (aContainer->GetName() == "moment") {
         KEMField::KEMStreamableThreeVector vec;
         aContainer->CopyTo(vec);
         fObject->SetMoment(vec.GetThreeVector());
     }
-    else return false;
+    else
+        return false;
 
     return true;
 }

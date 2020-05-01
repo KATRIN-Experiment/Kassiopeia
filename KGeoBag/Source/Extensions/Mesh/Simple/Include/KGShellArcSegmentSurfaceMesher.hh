@@ -2,27 +2,24 @@
 #define KGeoBag_KGShellArcSegmentSurfaceMesher_hh_
 
 #include "KGShellArcSegmentSurface.hh"
-
 #include "KGSimpleMesher.hh"
 
 namespace KGeoBag
 {
-    class KGShellArcSegmentSurfaceMesher :
-        virtual public KGSimpleMesher,
-        public KGShellArcSegmentSurface::Visitor
-    {
-        public:
-            using KGMesherBase::VisitExtendedSurface;
-            using KGMesherBase::VisitExtendedSpace;
+class KGShellArcSegmentSurfaceMesher : virtual public KGSimpleMesher, public KGShellArcSegmentSurface::Visitor
+{
+  public:
+    using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
-        public:
-            KGShellArcSegmentSurfaceMesher();
-            virtual ~KGShellArcSegmentSurfaceMesher();
+  public:
+    KGShellArcSegmentSurfaceMesher();
+    ~KGShellArcSegmentSurfaceMesher() override;
 
-        protected:
-            void VisitShellPathSurface( KGShellArcSegmentSurface* aShellArcSegmentSurface );
-    };
+  protected:
+    void VisitShellPathSurface(KGShellArcSegmentSurface* aShellArcSegmentSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

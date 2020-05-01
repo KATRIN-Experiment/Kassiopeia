@@ -5,14 +5,14 @@
 
 namespace KGeoBag
 {
-  class KGDeformation
-  {
+class KGDeformation
+{
   public:
     KGDeformation() {}
     virtual ~KGDeformation() {}
 
     virtual void Apply(KThreeVector& point) const = 0;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

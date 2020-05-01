@@ -429,7 +429,7 @@
     <ks_simulation
         run="1"
         seed="51385"
-        events="1"
+        events="[events:1]"
         magnetic_field="field_electromagnet"
         electric_field="field_electrostatic"
         space="space_world"

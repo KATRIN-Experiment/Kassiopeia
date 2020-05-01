@@ -3,7 +3,8 @@
 
 #include "KSAInputOutputObject.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,25 +20,30 @@ namespace KEMField{
 */
 
 
-class KSAFixedSizeInputOutputObject: public KSAInputOutputObject
+class KSAFixedSizeInputOutputObject : public KSAInputOutputObject
 {
-    public:
-        KSAFixedSizeInputOutputObject(){;};
-        virtual ~KSAFixedSizeInputOutputObject(){;};
+  public:
+    KSAFixedSizeInputOutputObject()
+    {
+        ;
+    };
+    ~KSAFixedSizeInputOutputObject() override
+    {
+        ;
+    };
 
-        //we probably ought to add a function which declares the size (number of items) in this classes
+    //we probably ought to add a function which declares the size (number of items) in this classes
 
-//        //inherits these functions, which are overloaded in the derived class
-//        virtual void Initialize(){;};
-//        virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
-//        virtual void DefineInputNode(KSAInputNode* node) = 0;
+    //        //inherits these functions, which are overloaded in the derived class
+    //        virtual void Initialize(){;};
+    //        virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
+    //        virtual void DefineInputNode(KSAInputNode* node) = 0;
 
-    protected:
-
+  protected:
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KSAFixedSizeInputOutputObject_H__ */

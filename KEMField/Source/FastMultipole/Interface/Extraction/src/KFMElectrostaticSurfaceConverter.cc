@@ -16,54 +16,48 @@ void KFMElectrostaticSurfaceConverter::SetSortedSurfaceContainer(const KSortedSu
 }
 
 
-void KFMElectrostaticSurfaceConverter::SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container)
+void KFMElectrostaticSurfaceConverter::SetElectrostaticElementContainer(
+    KFMElectrostaticElementContainerBase<3, 1>* container)
 {
     fElectrostaticElementContainer = container;
 }
 
 
-void
-KFMElectrostaticSurfaceConverter::Extract()
+void KFMElectrostaticSurfaceConverter::Extract()
 {
     fElectrostaticElementContainer->Clear();
 
     unsigned int n_elements;
 
-    if(fContainerIsSorted)
-    {
+    if (fContainerIsSorted) {
         n_elements = fSortedSurfaceContainer->size();
     }
-    else
-    {
+    else {
         n_elements = fSurfaceContainer->size();
     }
 
     int count = 0;
-    for(unsigned int i=0; i<n_elements; i++)
-    {
-        if(fContainerIsSorted)
-        {
+    for (unsigned int i = 0; i < n_elements; i++) {
+        if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(i)->Accept(fPointCloudGenerator);
             fSortedSurfaceContainer->at(i)->Accept(fAspectRatioExtractor);
         }
-        else
-        {
+        else {
             fSurfaceContainer->at(i)->Accept(fPointCloudGenerator);
             fSurfaceContainer->at(i)->Accept(fAspectRatioExtractor);
         }
 
 
-        if( fPointCloudGenerator.IsRecognizedType() ) //surface is a triange/rectangle/wire
+        if (fPointCloudGenerator.IsRecognizedType())  //surface is a triange/rectangle/wire
         {
             fTempPointCloud = fPointCloudGenerator.GetPointCloud();
 
-            if( fTempPointCloud.GetNPoints() != 0 )
-            {
+            if (fTempPointCloud.GetNPoints() != 0) {
                 //set the aspect_ratio
                 fTempElement.SetAspectRatio(fAspectRatioExtractor.GetAspectRatio());
 
                 //set the point cloud data
-                fTempElement.SetPointCloud( fTempPointCloud );
+                fTempElement.SetPointCloud(fTempPointCloud);
 
                 //compute and set the bounding ball
                 KFMBall<3> bball = fBoundingBallGenerator.Convert(&fTempPointCloud);
@@ -72,16 +66,14 @@ KFMElectrostaticSurfaceConverter::Extract()
                 // bball.SetCenter(fTempPointCloud.GetCentroid());
                 // bball.SetRadius(fTempPointCloud.GetRadiusAboutCentroid());
 
-                fTempElement.SetBoundingBall( bball );
+                fTempElement.SetBoundingBall(bball);
 
                 //extract the element centroid
                 KPosition centroid;
-                if(fContainerIsSorted)
-                {
+                if (fContainerIsSorted) {
                     centroid = fSortedSurfaceContainer->at(i)->GetShape()->Centroid();
                 }
-                else
-                {
+                else {
                     centroid = fSurfaceContainer->at(i)->GetShape()->Centroid();
                 }
 
@@ -93,13 +85,11 @@ KFMElectrostaticSurfaceConverter::Extract()
 
                 //extract the basis data
                 double area = 0.0;
-                if(fContainerIsSorted)
-                {
+                if (fContainerIsSorted) {
                     fSortedSurfaceContainer->at(i)->Accept(fBasisExtractor);
                     area = fSortedSurfaceContainer->at(i)->GetShape()->Area();
                 }
-                else
-                {
+                else {
                     fSurfaceContainer->at(i)->Accept(fBasisExtractor);
                     area = fSurfaceContainer->at(i)->GetShape()->Area();
                 }
@@ -108,12 +98,12 @@ KFMElectrostaticSurfaceConverter::Extract()
                 //we only store the total charge of an element, and recompute the charge
                 //density during the multipole calculation
                 KFMBasisData<1> basis = fBasisExtractor.GetBasisData();
-                basis[0] = area*basis[0];
+                basis[0] = area * basis[0];
 
                 fTempElement.SetBasisData(basis);
 
                 //set the reference ID
-                fTempElement.SetIdentityPair( KFMIdentityPair(count, i) );
+                fTempElement.SetIdentityPair(KFMIdentityPair(count, i));
 
                 fElectrostaticElementContainer->AddElectrostaticElement(fTempElement);
             }
@@ -123,45 +113,39 @@ KFMElectrostaticSurfaceConverter::Extract()
     }
 }
 
-void
-KFMElectrostaticSurfaceConverter::UpdateBasisData()
+void KFMElectrostaticSurfaceConverter::UpdateBasisData()
 {
     unsigned int n_elements = fElectrostaticElementContainer->GetNElements();
 
-    for(unsigned int i=0; i<n_elements; i++)
-    {
+    for (unsigned int i = 0; i < n_elements; i++) {
         //retrieve the elements index in the surface container
         //unsigned int id = i;fElectrostaticElementContainer->GetIdentityPair(i)->GetMappedID();
 
         //extract the basis data
         double area = 0.0;
-        if(fContainerIsSorted)
-        {
+        if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(i)->Accept(fBasisExtractor);
             area = fSortedSurfaceContainer->at(i)->GetShape()->Area();
         }
-        else
-        {
+        else {
             fSurfaceContainer->at(i)->Accept(fBasisExtractor);
             area = fSurfaceContainer->at(i)->GetShape()->Area();
         }
         KFMBasisData<1> basis = fBasisExtractor.GetBasisData();
         KFMBasisData<1>* basis_ptr = fElectrostaticElementContainer->GetBasisData(i);
-        (*basis_ptr)[0] = area*basis[0];
+        (*basis_ptr)[0] = area * basis[0];
     }
 }
 
 
-void
-KFMElectrostaticSurfaceConverter::UpdateBasisData(const KVector<double>& x)
+void KFMElectrostaticSurfaceConverter::UpdateBasisData(const KVector<double>& x)
 {
     //we expect the update vector to be the charge densities
     //we then convert this to total charge
 
     unsigned int n_elements = fElectrostaticElementContainer->GetNElements();
 
-    for(unsigned int i=0; i<n_elements; i++)
-    {
+    for (unsigned int i = 0; i < n_elements; i++) {
         //retrieve the elements index in the surface container
         //unsigned int id = i;fElectrostaticElementContainer->GetIdentityPair(i)->GetMappedID();
 
@@ -169,22 +153,18 @@ KFMElectrostaticSurfaceConverter::UpdateBasisData(const KVector<double>& x)
 
         //extract the basis data
         double area = 0.0;
-        if(fContainerIsSorted)
-        {
+        if (fContainerIsSorted) {
             area = fSortedSurfaceContainer->at(i)->GetShape()->Area();
         }
-        else
-        {
+        else {
             area = fSurfaceContainer->at(i)->GetShape()->Area();
         }
 
         double cd = x(i);
         KFMBasisData<1>* basis_ptr = fElectrostaticElementContainer->GetBasisData(i);
-        (*basis_ptr)[0] = area*cd;
+        (*basis_ptr)[0] = area * cd;
     }
-
 }
 
 
-
-}//end of KEMField
+}  // namespace KEMField

@@ -4,15 +4,13 @@
 #include "KFMElectrostaticMultipoleCalculator.hh"
 
 //vector math includes
-#include "KVMPathIntegral.hh"
-#include "KVMSurfaceIntegral.hh"
-
 #include "KVMField.hh"
 #include "KVMFieldWrapper.hh"
-
 #include "KVMLineSegment.hh"
-#include "KVMTriangularSurface.hh"
+#include "KVMPathIntegral.hh"
 #include "KVMRectangularSurface.hh"
+#include "KVMSurfaceIntegral.hh"
+#include "KVMTriangularSurface.hh"
 
 
 namespace KEMField
@@ -31,51 +29,49 @@ namespace KEMField
 *
 */
 
-class KFMElectrostaticMultipoleCalculatorNumeric: public KFMElectrostaticMultipoleCalculator
+class KFMElectrostaticMultipoleCalculatorNumeric : public KFMElectrostaticMultipoleCalculator
 {
-    public:
-        KFMElectrostaticMultipoleCalculatorNumeric();
-        virtual ~KFMElectrostaticMultipoleCalculatorNumeric();
+  public:
+    KFMElectrostaticMultipoleCalculatorNumeric();
+    ~KFMElectrostaticMultipoleCalculatorNumeric() override;
 
-        virtual void SetDegree(int l_max);
+    void SetDegree(int l_max) override;
 
-        virtual void SetNumberOfQuadratureTerms(unsigned int n);
+    virtual void SetNumberOfQuadratureTerms(unsigned int n);
 
-        //constructs unscaled multipole expansion, assuming constant charge density
-        //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
-        virtual bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
+    //constructs unscaled multipole expansion, assuming constant charge density
+    //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
+    bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices,
+                            KFMScalarMultipoleExpansion* moments) const override;
 
-    private:
+  private:
+    unsigned int fSize;
 
-        unsigned int fSize;
+    virtual void RegularSolidHarmonic(const double* point, double* result) const;
 
-        virtual void RegularSolidHarmonic(const double* point, double* result) const;
+    KVMPathIntegral<2>* fNumInt1D;
+    KVMSurfaceIntegral<2>* fNumInt2D;
 
-        KVMPathIntegral<2>* fNumInt1D;
-        KVMSurfaceIntegral<2>* fNumInt2D;
+    KVMFieldWrapper<KFMElectrostaticMultipoleCalculatorNumeric,
+                    &KFMElectrostaticMultipoleCalculatorNumeric::RegularSolidHarmonic>* fSolidHarmonicWrapper;
 
-        KVMFieldWrapper< KFMElectrostaticMultipoleCalculatorNumeric,
-                        &KFMElectrostaticMultipoleCalculatorNumeric::RegularSolidHarmonic >* fSolidHarmonicWrapper;
+    //internal state to compute solid harmonic
+    mutable double fOrigin[3];
+    mutable double fDel[3];
+    mutable double fL;
+    mutable double fM;
 
-        //internal state to compute solid harmonic
-        mutable double fOrigin[3];
-        mutable double fDel[3];
-        mutable double fL;
-        mutable double fM;
+    mutable std::vector<std::complex<double>> fMoments;
 
-        mutable std::vector< std::complex<double> > fMoments;
+    mutable KVMLineSegment* fLine;
+    mutable KVMTriangularSurface* fTriangle;
+    mutable KVMRectangularSurface* fRectangle;
 
-        mutable KVMLineSegment* fLine;
-        mutable KVMTriangularSurface* fTriangle;
-        mutable KVMRectangularSurface* fRectangle;
-
-        mutable std::complex<double>* fSolidHarmonics;
-
-
+    mutable std::complex<double>* fSolidHarmonics;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticMultipoleCalculatorNumeric_H__ */

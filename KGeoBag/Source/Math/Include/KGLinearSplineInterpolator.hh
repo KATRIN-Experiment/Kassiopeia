@@ -1,41 +1,40 @@
 #ifndef KGLINEARSPLINEINTERPOLATOR_HH_
 #define KGLINEARSPLINEINTERPOLATOR_HH_
 
-#include <vector>
-
 #include "KGInterpolator.hh"
+
+#include <vector>
 
 namespace KGeoBag
 {
-  class KGLinearSplineInterpolator : public KGInterpolator
-  {
+class KGLinearSplineInterpolator : public KGInterpolator
+{
   public:
     KGLinearSplineInterpolator() : KGInterpolator() {}
-    virtual ~KGLinearSplineInterpolator() {}
+    ~KGLinearSplineInterpolator() override {}
 
-    virtual void Initialize(DataSet& data);
+    void Initialize(DataSet& data) override;
 
-    virtual int OutOfRange(double x) const;
+    int OutOfRange(double x) const override;
 
-    virtual double Range(unsigned int i) const;
+    double Range(unsigned int i) const override;
 
-    virtual double operator()(double x) const;
+    double operator()(double x) const override;
 
   private:
-
     //for sorting based on domain coordinate (1d)
     struct CoordinateSortingStruct
     {
         bool operator()(DataPoint a, DataPoint b)
         {
-            return (a[0]<b[0]);
+            return (a[0] < b[0]);
         };
     };
 
     CoordinateSortingStruct fSortingOp;
 
     DataSet fData;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

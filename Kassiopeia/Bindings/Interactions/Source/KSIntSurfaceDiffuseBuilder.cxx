@@ -1,4 +1,5 @@
 #include "KSIntSurfaceDiffuseBuilder.h"
+
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
@@ -7,19 +8,14 @@ using namespace std;
 namespace katrin
 {
 
-    template< >
-    KSIntSurfaceDiffuseBuilder::~KComplexElement()
-    {
-    }
+template<> KSIntSurfaceDiffuseBuilder::~KComplexElement() {}
 
-    STATICINT sKSIntSurfaceDiffuseStructure =
-            KSIntSurfaceDiffuseBuilder::Attribute< string >( "name" ) +
-            KSIntSurfaceDiffuseBuilder::Attribute< double >( "reflection_loss" ) +
-            KSIntSurfaceDiffuseBuilder::Attribute< double >( "transmission_loss" ) +
-            KSIntSurfaceDiffuseBuilder::Attribute< double >( "reflection_loss_fraction" ) +
-            KSIntSurfaceDiffuseBuilder::Attribute< double >( "transmission_loss_fraction" ) +
-            KSIntSurfaceDiffuseBuilder::Attribute< double >( "probability" );
+STATICINT sKSIntSurfaceDiffuseStructure = KSIntSurfaceDiffuseBuilder::Attribute<string>("name") +
+                                          KSIntSurfaceDiffuseBuilder::Attribute<double>("reflection_loss") +
+                                          KSIntSurfaceDiffuseBuilder::Attribute<double>("transmission_loss") +
+                                          KSIntSurfaceDiffuseBuilder::Attribute<double>("reflection_loss_fraction") +
+                                          KSIntSurfaceDiffuseBuilder::Attribute<double>("transmission_loss_fraction") +
+                                          KSIntSurfaceDiffuseBuilder::Attribute<double>("probability");
 
-    STATICINT sKSIntSurfaceDiffuseElement =
-            KSRootBuilder::ComplexElement< KSIntSurfaceDiffuse >( "ksint_surface_diffuse" );
-}
+STATICINT sKSIntSurfaceDiffuseElement = KSRootBuilder::ComplexElement<KSIntSurfaceDiffuse>("ksint_surface_diffuse");
+}  // namespace katrin

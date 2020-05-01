@@ -1,12 +1,12 @@
 #ifndef KSURFACE_DEF
 #define KSURFACE_DEF
 
-#include <iostream>
-#include <sstream>
-
 #include "../../../Surfaces/include/KSurfaceID.hh"
 #include "../../../Surfaces/include/KSurfacePrimitive.hh"
 #include "../../../Surfaces/include/KSurfaceVisitors.hh"
+
+#include <iostream>
+#include <sstream>
 
 namespace KEMField
 {
@@ -27,102 +27,125 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class BasisPolicy,
-	    class BoundaryPolicy,
-	    class ShapePolicy>
-  class KSurface : public KSurfacePrimitive,
-		   public BasisPolicy,
-		   public KBoundaryType<BasisPolicy,BoundaryPolicy>,
-		   public ShapePolicy
-  {
+template<class BasisPolicy, class BoundaryPolicy, class ShapePolicy>
+class KSurface :
+    public KSurfacePrimitive,
+    public BasisPolicy,
+    public KBoundaryType<BasisPolicy, BoundaryPolicy>,
+    public ShapePolicy
+{
   public:
     typedef BasisPolicy Basis;
-    typedef KBoundaryType<BasisPolicy,BoundaryPolicy> Boundary;
+    typedef KBoundaryType<BasisPolicy, BoundaryPolicy> Boundary;
     typedef ShapePolicy Shape;
 
-    KSurface() : KSurfacePrimitive(),Basis(),Boundary(),Shape() {}
-    KSurface(const Basis& basis,const Boundary& boundary,const Shape& shape) :
-      KSurfacePrimitive(),Basis(basis), Boundary(boundary), Shape(shape) {}
-    ~KSurface() {}
+    KSurface() : KSurfacePrimitive(), Basis(), Boundary(), Shape() {}
+    KSurface(const Basis& basis, const Boundary& boundary, const Shape& shape) :
+        KSurfacePrimitive(),
+        Basis(basis),
+        Boundary(boundary),
+        Shape(shape)
+    {}
+    ~KSurface() override {}
 
-    KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy>* Clone() const
-    { return new KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy>(*this); }
+    KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>* Clone() const override
+    {
+        return new KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>(*this);
+    }
 
-    Basis* GetBasis() { return this; }
-    Boundary* GetBoundary() { return this; }
-    Shape* GetShape() { return this; }
+    Basis* GetBasis() override
+    {
+        return this;
+    }
+    Boundary* GetBoundary() override
+    {
+        return this;
+    }
+    Shape* GetShape() override
+    {
+        return this;
+    }
 
-    std::string GetName() const { return Name(); }
-    KSurfaceID& GetID() const { return ID(); }
+    std::string GetName() const override
+    {
+        return Name();
+    }
+    KSurfaceID& GetID() const override
+    {
+        return ID();
+    }
 
     static std::string Name()
     {
-      std::stringstream s;
-      s<<Basis::Name()<<"_"<<Boundary::Name()<<"_"<<Shape::Name();
-      return s.str();
+        std::stringstream s;
+        s << Basis::Name() << "_" << Boundary::Name() << "_" << Shape::Name();
+        return s.str();
     }
 
-    static KSurfaceID& ID() { return fID; }
+    static KSurfaceID& ID()
+    {
+        return fID;
+    }
 
-    void Accept(KBasisVisitor& visitor) { visitor.Visit(*this); }
-    void Accept(KBoundaryVisitor& visitor) { visitor.Visit(*this); }
-    void Accept(KShapeVisitor& visitor) { visitor.Visit(*this); }
+    void Accept(KBasisVisitor& visitor) override
+    {
+        visitor.Visit(*this);
+    }
+    void Accept(KBoundaryVisitor& visitor) override
+    {
+        visitor.Visit(*this);
+    }
+    void Accept(KShapeVisitor& visitor) override
+    {
+        visitor.Visit(*this);
+    }
 
   private:
     static KSurfaceID fID;
-  };
+};
 
-  template <typename BasisPolicy,
-	    typename BoundaryPolicy,
-	    typename ShapePolicy>
-  KSurfaceID KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy>::fID = KSurfaceID(IndexOf<KBasisTypes,BasisPolicy>::value,IndexOf<KBoundaryTypes,BoundaryPolicy>::value,IndexOf<KShapeTypes,ShapePolicy>::value);
+template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy>
+KSurfaceID
+    KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>::fID = KSurfaceID(IndexOf<KBasisTypes, BasisPolicy>::value,
+                                                                         IndexOf<KBoundaryTypes, BoundaryPolicy>::value,
+                                                                         IndexOf<KShapeTypes, ShapePolicy>::value);
 
-  template <typename BasisPolicy,
-	    typename BoundaryPolicy,
-	    typename ShapePolicy,
-  	    typename Stream>
-  Stream& operator>>(Stream& s,KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy>& e)
-  {
-    typedef KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy> Surface;
+template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy, typename Stream>
+Stream& operator>>(Stream& s, KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>& e)
+{
+    typedef KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy> Surface;
     s.PreStreamInAction(e);
-    s >> static_cast<typename Surface::Shape&>(e)
-      >> static_cast<typename Surface::Boundary&>(e)
-      >> static_cast<typename Surface::Basis&>(e);
+    s >> static_cast<typename Surface::Shape&>(e) >> static_cast<typename Surface::Boundary&>(e) >>
+        static_cast<typename Surface::Basis&>(e);
     s.PostStreamInAction(e);
     return s;
-  }
+}
 
-  template <typename BasisPolicy,
-	    typename BoundaryPolicy,
-	    typename ShapePolicy,
-  	    typename Stream>
-  Stream& operator<<(Stream& s,const KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy>& e)
-  {
-    typedef KSurface<BasisPolicy,BoundaryPolicy,ShapePolicy> Surface;
+template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy, typename Stream>
+Stream& operator<<(Stream& s, const KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>& e)
+{
+    typedef KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy> Surface;
     s.PreStreamOutAction(e);
-    s << static_cast<const typename Surface::Shape&>(e)
-      << static_cast<const typename Surface::Boundary&>(e)
+    s << static_cast<const typename Surface::Shape&>(e) << static_cast<const typename Surface::Boundary&>(e)
       << static_cast<const typename Surface::Basis&>(e);
     s.PostStreamOutAction(e);
     return s;
-  }
 }
+}  // namespace KEMField
 
 #include "../../../Surfaces/include/KSurfaceAction.hh"
 
 namespace KEMField
 {
-  template <typename Stream>
-  Stream& operator>>(Stream& s,KSurfacePrimitive& sP)
-  {
-    return KSurfaceStreamer<Stream,false>::StreamSurface(s,sP);
-  }
-
-  template <typename Stream>
-  Stream& operator<<(Stream& s,const KSurfacePrimitive& sP)
-  {
-    return KSurfaceStreamer<Stream,true>::StreamSurface(s,sP);
-  }
+template<typename Stream> Stream& operator>>(Stream& s, KSurfacePrimitive& sP)
+{
+    return KSurfaceStreamer<Stream, false>::StreamSurface(s, sP);
 }
+
+template<typename Stream> Stream& operator<<(Stream& s, const KSurfacePrimitive& sP)
+{
+    return KSurfaceStreamer<Stream, true>::StreamSurface(s, sP);
+}
+}  // namespace KEMField
 
 #endif /* KSURFACE_DEF */

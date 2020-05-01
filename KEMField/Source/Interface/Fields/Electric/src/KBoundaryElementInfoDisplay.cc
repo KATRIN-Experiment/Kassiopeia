@@ -6,20 +6,19 @@
  */
 
 #include "KBoundaryElementInfoDisplay.hh"
-#include "KSurfaceContainer.hh"
-#include "KEMCout.hh"
 
-namespace KEMField {
+#include "KEMCout.hh"
+#include "KSurfaceContainer.hh"
+
+namespace KEMField
+{
 
 KBoundaryElementInfoDisplay::KBoundaryElementInfoDisplay()
 {
     Preprocessing(true);
 }
 
-KBoundaryElementInfoDisplay::~KBoundaryElementInfoDisplay()
-{
-
-}
+KBoundaryElementInfoDisplay::~KBoundaryElementInfoDisplay() {}
 
 void KBoundaryElementInfoDisplay::PreVisit(KElectrostaticBoundaryField& field)
 {

@@ -1,8 +1,8 @@
 #ifndef KFMEmptyIdentitySetRemover_HH__
 #define KFMEmptyIdentitySetRemover_HH__
 
-#include "KFMNode.hh"
 #include "KFMIdentitySet.hh"
+#include "KFMNode.hh"
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
 
@@ -22,34 +22,30 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList >
-class KFMEmptyIdentitySetRemover: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMEmptyIdentitySetRemover : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMEmptyIdentitySetRemover(){};
-        virtual ~KFMEmptyIdentitySetRemover(){};
+  public:
+    KFMEmptyIdentitySetRemover(){};
+    ~KFMEmptyIdentitySetRemover() override{};
 
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
 
-                if(set != NULL)
-                {
-                    if(set->GetSize() == 0)
-                    {
-                        delete set;
-                        KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::SetNodeObject(NULL, node);
-                    }
+            if (set != nullptr) {
+                if (set->GetSize() == 0) {
+                    delete set;
+                    KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::SetNodeObject(nullptr, node);
                 }
             }
         }
+    }
 
-    private:
+  private:
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KFMEmptyIdentitySetRemover_H__ */

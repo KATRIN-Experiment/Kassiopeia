@@ -16,11 +16,11 @@ namespace Kassiopeia
 /////////////////////////////////////
 
 class KSIntCalculatorTritiumElasticBase :
-    public KSComponentTemplate< KSIntCalculatorTritiumElasticBase, KSIntCalculatorHydrogenElasticBase >
+    public KSComponentTemplate<KSIntCalculatorTritiumElasticBase, KSIntCalculatorHydrogenElasticBase>
 {
-public:
-    KSIntCalculatorTritiumElasticBase() { }
-    virtual ~KSIntCalculatorTritiumElasticBase() { }
+  public:
+    KSIntCalculatorTritiumElasticBase() {}
+    ~KSIntCalculatorTritiumElasticBase() override {}
 };
 
 /////////////////////////////////
@@ -28,30 +28,34 @@ public:
 /////////////////////////////////
 
 class KSIntCalculatorTritiumElastic :
-    public KSComponentTemplate< KSIntCalculatorTritiumElastic, KSIntCalculatorTritiumElasticBase >
+    public KSComponentTemplate<KSIntCalculatorTritiumElastic, KSIntCalculatorTritiumElasticBase>
 {
-public:
-    KSIntCalculatorTritiumElastic() { }
-    KSIntCalculatorTritiumElastic* Clone() const { return new KSIntCalculatorTritiumElastic( *this ); }
-    virtual ~KSIntCalculatorTritiumElastic() { }
+  public:
+    KSIntCalculatorTritiumElastic() {}
+    KSIntCalculatorTritiumElastic* Clone() const override
+    {
+        return new KSIntCalculatorTritiumElastic(*this);
+    }
+    ~KSIntCalculatorTritiumElastic() override {}
 
-public:
-    virtual void CalculateCrossSection( const double anEnergy, double& aCrossSection );
-    virtual void CalculateEloss( const double anEnergy, const double aTheta, double& anEloss );
-
+  public:
+    void CalculateCrossSection(const double anEnergy, double& aCrossSection) override;
+    void CalculateEloss(const double anEnergy, const double aTheta, double& anEloss) override;
 };
 
 /////////////////////////////////
 /////       Vibration       /////
 /////////////////////////////////
 
-class KSIntCalculatorTritiumVib :
-    public KSComponentTemplate< KSIntCalculatorTritiumVib, KSIntCalculatorHydrogenVib >
+class KSIntCalculatorTritiumVib : public KSComponentTemplate<KSIntCalculatorTritiumVib, KSIntCalculatorHydrogenVib>
 {
-public:
-    KSIntCalculatorTritiumVib() { }
-    KSIntCalculatorTritiumVib* Clone() const { return new KSIntCalculatorTritiumVib( *this ); }
-    virtual ~KSIntCalculatorTritiumVib() { }
+  public:
+    KSIntCalculatorTritiumVib() {}
+    KSIntCalculatorTritiumVib* Clone() const override
+    {
+        return new KSIntCalculatorTritiumVib(*this);
+    }
+    ~KSIntCalculatorTritiumVib() override {}
 };
 
 /////////////////////////////////
@@ -59,12 +63,15 @@ public:
 /////////////////////////////////
 
 class KSIntCalculatorTritiumRot02 :
-    public KSComponentTemplate< KSIntCalculatorTritiumRot02, KSIntCalculatorHydrogenRot02 >
+    public KSComponentTemplate<KSIntCalculatorTritiumRot02, KSIntCalculatorHydrogenRot02>
 {
-public:
-    KSIntCalculatorTritiumRot02() { }
-    KSIntCalculatorTritiumRot02* Clone() const { return new KSIntCalculatorTritiumRot02( *this ); }
-    virtual ~KSIntCalculatorTritiumRot02() { }
+  public:
+    KSIntCalculatorTritiumRot02() {}
+    KSIntCalculatorTritiumRot02* Clone() const override
+    {
+        return new KSIntCalculatorTritiumRot02(*this);
+    }
+    ~KSIntCalculatorTritiumRot02() override {}
 };
 
 /////////////////////////////////
@@ -72,12 +79,15 @@ public:
 /////////////////////////////////
 
 class KSIntCalculatorTritiumRot13 :
-    public KSComponentTemplate< KSIntCalculatorTritiumRot13, KSIntCalculatorHydrogenRot13 >
+    public KSComponentTemplate<KSIntCalculatorTritiumRot13, KSIntCalculatorHydrogenRot13>
 {
-public:
-    KSIntCalculatorTritiumRot13() { }
-    KSIntCalculatorTritiumRot13* Clone() const { return new KSIntCalculatorTritiumRot13( *this ); }
-    virtual ~KSIntCalculatorTritiumRot13() { }
+  public:
+    KSIntCalculatorTritiumRot13() {}
+    KSIntCalculatorTritiumRot13* Clone() const override
+    {
+        return new KSIntCalculatorTritiumRot13(*this);
+    }
+    ~KSIntCalculatorTritiumRot13() override {}
 };
 
 /////////////////////////////////
@@ -85,12 +95,15 @@ public:
 /////////////////////////////////
 
 class KSIntCalculatorTritiumRot20 :
-    public KSComponentTemplate< KSIntCalculatorTritiumRot20, KSIntCalculatorHydrogenRot20 >
+    public KSComponentTemplate<KSIntCalculatorTritiumRot20, KSIntCalculatorHydrogenRot20>
 {
-public:
-    KSIntCalculatorTritiumRot20() { }
-    KSIntCalculatorTritiumRot20* Clone() const { return new KSIntCalculatorTritiumRot20( *this ); }
-    virtual ~KSIntCalculatorTritiumRot20() { }
+  public:
+    KSIntCalculatorTritiumRot20() {}
+    KSIntCalculatorTritiumRot20* Clone() const override
+    {
+        return new KSIntCalculatorTritiumRot20(*this);
+    }
+    ~KSIntCalculatorTritiumRot20() override {}
 };
 
 } /* namespace Kassiopeia */

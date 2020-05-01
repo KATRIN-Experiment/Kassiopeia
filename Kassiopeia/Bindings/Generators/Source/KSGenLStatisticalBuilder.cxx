@@ -3,20 +3,18 @@
 //
 
 #include "KSGenLStatisticalBuilder.h"
+
 #include "KSRootBuilder.h"
 
 using namespace Kassiopeia;
 using namespace std;
 
-namespace katrin {
+namespace katrin
+{
 
-    template<>
-    KSGenLStatisticalBuilder::~KComplexElement() {
-    }
+template<> KSGenLStatisticalBuilder::~KComplexElement() {}
 
-    STATICINT sKSGenLStatisticalStructure =
-            KSGenLStatisticalBuilder::Attribute<string>("name");
+STATICINT sKSGenLStatisticalStructure = KSGenLStatisticalBuilder::Attribute<string>("name");
 
-    STATICINT sKSGenLStatistical =
-            KSRootBuilder::ComplexElement<KSGenLStatistical>("ksgen_l_statistical");
-}
+STATICINT sKSGenLStatistical = KSRootBuilder::ComplexElement<KSGenLStatistical>("ksgen_l_statistical");
+}  // namespace katrin

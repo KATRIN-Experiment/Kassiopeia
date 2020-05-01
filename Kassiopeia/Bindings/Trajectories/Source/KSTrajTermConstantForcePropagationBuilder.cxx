@@ -1,5 +1,6 @@
-#include "KSRootBuilder.h"
 #include "KSTrajTermConstantForcePropagationBuilder.h"
+
+#include "KSRootBuilder.h"
 
 
 using namespace Kassiopeia;
@@ -8,16 +9,13 @@ using namespace std;
 namespace katrin
 {
 
-    template< >
-    KSTrajTermConstantForcePropagationBuilder::~KComplexElement()
-    {
-    }
+template<> KSTrajTermConstantForcePropagationBuilder::~KComplexElement() {}
 
-    STATICINT sKSTrajTermConstantForcePropagationStructure =
-        KSTrajTermConstantForcePropagationBuilder::Attribute< string >( "name" ) +
-        KSTrajTermConstantForcePropagationBuilder::Attribute< KThreeVector >( "force" );
+STATICINT sKSTrajTermConstantForcePropagationStructure =
+    KSTrajTermConstantForcePropagationBuilder::Attribute<string>("name") +
+    KSTrajTermConstantForcePropagationBuilder::Attribute<KThreeVector>("force");
 
-    STATICINT sToolboxKSTrajTermConstantForcePropagation =
-        KSRootBuilder::ComplexElement< KSTrajTermConstantForcePropagation >( "kstraj_term_constant_force_propagation" );
+STATICINT sToolboxKSTrajTermConstantForcePropagation =
+    KSRootBuilder::ComplexElement<KSTrajTermConstantForcePropagation>("kstraj_term_constant_force_propagation");
 
-}
+}  // namespace katrin

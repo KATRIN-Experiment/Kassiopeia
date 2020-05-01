@@ -1,14 +1,15 @@
 #ifndef KFMRealSphericalHarmonicExpansionRotator_HH__
 #define KFMRealSphericalHarmonicExpansionRotator_HH__
 
-#include <vector>
-#include <cmath>
-
-#include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
+#include "KFMVectorOperations.hh"
 
-namespace KEMField{
+#include <cmath>
+#include <vector>
+
+namespace KEMField
+{
 
 /**
 *
@@ -38,55 +39,51 @@ namespace KEMField{
 
 class KFMRealSphericalHarmonicExpansionRotator
 {
-    public:
-        KFMRealSphericalHarmonicExpansionRotator();
-        virtual ~KFMRealSphericalHarmonicExpansionRotator();
+  public:
+    KFMRealSphericalHarmonicExpansionRotator();
+    virtual ~KFMRealSphericalHarmonicExpansionRotator();
 
-        //required for initialization
-        void SetDegree(int l_max);
-        void SetJMatrices(const std::vector<kfm_matrix* >* j_matrix);
-        bool IsValid();
+    //required for initialization
+    void SetDegree(int l_max);
+    void SetJMatrices(const std::vector<kfm_matrix*>* j_matrix);
+    bool IsValid();
 
-        ///single rotation about z axis by angle alpha
-        void SetSingleZRotationAngle(double alpha);
+    ///single rotation about z axis by angle alpha
+    void SetSingleZRotationAngle(double alpha);
 
-        ///follows the Z, Y', Z'' convention
-        ///alpha rotation matrix is applied first
-        ///then beta, followed by gamma last
-        void SetEulerAngles(double alpha, double beta, double gamma);
+    ///follows the Z, Y', Z'' convention
+    ///alpha rotation matrix is applied first
+    ///then beta, followed by gamma last
+    void SetEulerAngles(double alpha, double beta, double gamma);
 
-        void SetMoments(const std::vector< double >* mom);
-        void Rotate();
-        void GetRotatedMoments(std::vector< double >* mom);
+    void SetMoments(const std::vector<double>* mom);
+    void Rotate();
+    void GetRotatedMoments(std::vector<double>* mom);
 
-    protected:
+  protected:
+    void DeallocateMomentSpace();
+    void AllocateMomentSpace();
+    void ApplyXMatrixA(int l, kfm_vector* in, kfm_vector* out);
+    void ApplyXMatrixB(int l, kfm_vector* in, kfm_vector* out);
+    void ApplyXMatrixC(int l, kfm_vector* in, kfm_vector* out);
 
-        void DeallocateMomentSpace();
-        void AllocateMomentSpace();
-        void ApplyXMatrixA(int l, kfm_vector* in, kfm_vector* out);
-        void ApplyXMatrixB(int l, kfm_vector* in, kfm_vector* out);
-        void ApplyXMatrixC(int l, kfm_vector* in, kfm_vector* out);
-
-        int fDegree;
-        unsigned int fSize;
-        bool fSingleRot;
-        double a, b, c;
-        std::vector<double> sin_vec_a;
-        std::vector<double> cos_vec_a;
-        std::vector<double> sin_vec_b;
-        std::vector<double> cos_vec_b;
-        std::vector<double> sin_vec_c;
-        std::vector<double> cos_vec_c;
-        const std::vector< kfm_matrix* >* fJMatrix;
-        std::vector< kfm_vector* > fMoments;
-        std::vector< kfm_vector* > fRotatedMoments;
-        std::vector< kfm_vector* > fTemp;
-
-
-
+    int fDegree;
+    unsigned int fSize;
+    bool fSingleRot;
+    double a, b, c;
+    std::vector<double> sin_vec_a;
+    std::vector<double> cos_vec_a;
+    std::vector<double> sin_vec_b;
+    std::vector<double> cos_vec_b;
+    std::vector<double> sin_vec_c;
+    std::vector<double> cos_vec_c;
+    const std::vector<kfm_matrix*>* fJMatrix;
+    std::vector<kfm_vector*> fMoments;
+    std::vector<kfm_vector*> fRotatedMoments;
+    std::vector<kfm_vector*> fTemp;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMRealSphericalHarmonicExpansionRotator_H__ */

@@ -1,96 +1,79 @@
 #ifndef KSURFACETYPES_DEF
 #define KSURFACETYPES_DEF
 
-#include <complex>
-
 #include "KTypelist.hh"
 
-namespace KEMField
-{
-  class KElectrostaticBasis;
-  class KMagnetostaticBasis;
-  class KElectromagneticBasis;
-
-  // A list of all of the basis types
-  typedef KTYPELIST_3( KElectrostaticBasis,
-		       KMagnetostaticBasis,
-		       KElectromagneticBasis) KBasisTypes_;
-}
+#include <complex>
 
 namespace KEMField
 {
-  struct KDirichletBoundary;
-  struct KNeumannBoundary;
-  struct KCauchyBoundary;
-  struct KRobinBoundary;
-  struct KIsolatedBoundary;
+class KElectrostaticBasis;
+class KMagnetostaticBasis;
+class KElectromagneticBasis;
 
-  // A list of all of the boundary types
-  typedef KTYPELIST_5( KDirichletBoundary,
-		       KNeumannBoundary,
-		       KCauchyBoundary,
-		       KRobinBoundary,
-		       KIsolatedBoundary) KBoundaryTypes_;
-}
+// A list of all of the basis types
+typedef KTYPELIST_3(KElectrostaticBasis, KMagnetostaticBasis, KElectromagneticBasis) KBasisTypes_;
+}  // namespace KEMField
 
 namespace KEMField
 {
-  class KTriangle;
-  class KRectangle;
-  class KLineSegment;
-  class KConicSection;
-  class KRing;
-  template <class ShapePolicy>
-  class KSymmetryGroup;
+struct KDirichletBoundary;
+struct KNeumannBoundary;
+struct KCauchyBoundary;
+struct KRobinBoundary;
+struct KIsolatedBoundary;
 
-  typedef KSymmetryGroup<KTriangle> KTriangleGroup;
-  typedef KSymmetryGroup<KRectangle> KRectangleGroup;
-  typedef KSymmetryGroup<KLineSegment> KLineSegmentGroup;
-  typedef KSymmetryGroup<KConicSection> KConicSectionGroup;
-  typedef KSymmetryGroup<KRing> KRingGroup;
+// A list of all of the boundary types
+typedef KTYPELIST_5(KDirichletBoundary, KNeumannBoundary, KCauchyBoundary, KRobinBoundary,
+                    KIsolatedBoundary) KBoundaryTypes_;
+}  // namespace KEMField
 
-  // A list of all of the shape types
-  typedef KTYPELIST_10( KTriangle,
-			KRectangle,
-			KLineSegment,
-			KConicSection,
-			KRing,
-			KRectangleGroup,
-			KLineSegmentGroup,
-			KTriangleGroup,
-			KConicSectionGroup,
-			KRingGroup) KShapeTypes_;
-}
+namespace KEMField
+{
+class KTriangle;
+class KRectangle;
+class KLineSegment;
+class KConicSection;
+class KRing;
+template<class ShapePolicy> class KSymmetryGroup;
+
+typedef KSymmetryGroup<KTriangle> KTriangleGroup;
+typedef KSymmetryGroup<KRectangle> KRectangleGroup;
+typedef KSymmetryGroup<KLineSegment> KLineSegmentGroup;
+typedef KSymmetryGroup<KConicSection> KConicSectionGroup;
+typedef KSymmetryGroup<KRing> KRingGroup;
+
+// A list of all of the shape types
+typedef KTYPELIST_10(KTriangle, KRectangle, KLineSegment, KConicSection, KRing, KRectangleGroup, KLineSegmentGroup,
+                     KTriangleGroup, KConicSectionGroup, KRingGroup) KShapeTypes_;
+}  // namespace KEMField
 
 namespace KEMField
 {
 /**
 * KBasisTypes is a typelist of all available basis types.
 */
-  typedef NoDuplicates<KBasisTypes_>::Result KBasisTypes;
+typedef NoDuplicates<KBasisTypes_>::Result KBasisTypes;
 /**
 * KBoundaryTypes is a typelist of all available boundary types.
 */
-  typedef NoDuplicates<KBoundaryTypes_>::Result KBoundaryTypes;
+typedef NoDuplicates<KBoundaryTypes_>::Result KBoundaryTypes;
 /**
 * KShapeTypes is a typelist of all available shape types.
 */
-  typedef NoDuplicates<KShapeTypes_>::Result KShapeTypes;
-}
-
-#include "../../../Surfaces/include/KSurfaceVisitors.hh"
-
-#include "../../../Surfaces/include/KElectrostaticBasis.hh"
-#include "../../../Surfaces/include/KMagnetostaticBasis.hh"
-#include "../../../Surfaces/include/KElectromagneticBasis.hh"
+typedef NoDuplicates<KShapeTypes_>::Result KShapeTypes;
+}  // namespace KEMField
 
 #include "../../../Surfaces/include/KBoundary.hh"
-
-#include "../../../Surfaces/include/KTriangle.hh"
-#include "../../../Surfaces/include/KRectangle.hh"
-#include "../../../Surfaces/include/KLineSegment.hh"
 #include "../../../Surfaces/include/KConicSection.hh"
+#include "../../../Surfaces/include/KElectromagneticBasis.hh"
+#include "../../../Surfaces/include/KElectrostaticBasis.hh"
+#include "../../../Surfaces/include/KLineSegment.hh"
+#include "../../../Surfaces/include/KMagnetostaticBasis.hh"
+#include "../../../Surfaces/include/KRectangle.hh"
 #include "../../../Surfaces/include/KRing.hh"
+#include "../../../Surfaces/include/KSurfaceVisitors.hh"
 #include "../../../Surfaces/include/KSymmetryGroup.hh"
+#include "../../../Surfaces/include/KTriangle.hh"
 
 #endif /* KSURFACETYPES_DEF */

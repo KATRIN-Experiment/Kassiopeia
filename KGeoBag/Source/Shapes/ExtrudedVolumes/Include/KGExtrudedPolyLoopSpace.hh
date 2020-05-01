@@ -7,7 +7,7 @@
 namespace KGeoBag
 {
 
-    typedef KGExtrudedClosedPathSpace< KGPlanarPolyLoop > KGExtrudedPolyLoopSpace;
+typedef KGExtrudedClosedPathSpace<KGPlanarPolyLoop> KGExtrudedPolyLoopSpace;
 
 }
 

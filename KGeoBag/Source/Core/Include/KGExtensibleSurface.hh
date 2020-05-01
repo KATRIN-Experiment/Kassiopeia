@@ -5,30 +5,30 @@
 namespace KGeoBag
 {
 
-    class KGExtensibleSurface
-    {
-        protected:
-            KGExtensibleSurface();
+class KGExtensibleSurface
+{
+  protected:
+    KGExtensibleSurface();
 
-        public:
-            virtual ~KGExtensibleSurface();
+  public:
+    virtual ~KGExtensibleSurface();
 
-        public:
-            //********
-            //clonable
-            //********
+  public:
+    //********
+    //clonable
+    //********
 
-        public:
-            virtual KGExtensibleSurface* Clone( KGSurface* aParent = NULL ) const = 0;
+  public:
+    virtual KGExtensibleSurface* Clone(KGSurface* aParent = nullptr) const = 0;
 
-            //*********
-            //visitable
-            //*********
+    //*********
+    //visitable
+    //*********
 
-        public:
-            virtual void Accept( KGVisitor* aVisitor ) = 0;
-    };
+  public:
+    virtual void Accept(KGVisitor* aVisitor) = 0;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

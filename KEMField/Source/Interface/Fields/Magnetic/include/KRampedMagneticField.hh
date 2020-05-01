@@ -10,113 +10,138 @@
 
 #include "KMagneticField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KRampedMagneticField : public KMagneticField {
-public:
-    enum RampingType {
-        rtLinear,           // simple linear ramping
-        rtExponential,      // exponential ramping with given time constant
-        rtInversion,        // ramping to inverted magnetic field using single exponential ramping
-        rtInversion2,       // ramping to inverted magnetic field using exponential ramping with two time constants
-        rtFlipBox          // ramping to inverted magnetic field using double exponential ramping (ramp to zero in between)
+class KRampedMagneticField : public KMagneticField
+{
+  public:
+    enum RampingType
+    {
+        rtLinear,       // simple linear ramping
+        rtExponential,  // exponential ramping with given time constant
+        rtInversion,    // ramping to inverted magnetic field using single exponential ramping
+        rtInversion2,   // ramping to inverted magnetic field using exponential ramping with two time constants
+        rtFlipBox       // ramping to inverted magnetic field using double exponential ramping (ramp to zero in between)
     };
 
-public:
+  public:
     KRampedMagneticField();
-    virtual ~KRampedMagneticField();
+    ~KRampedMagneticField() override;
 
-public:
-    KThreeVector MagneticPotentialCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
-    KThreeVector MagneticFieldCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
-    KGradient MagneticGradientCore( const KPosition& aSamplePoint, const double& aSampleTime) const;
+  public:
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
-public:
-    double GetModulationFactor( const double& aTime ) const;
-    double GetDerivModulationFactor( const double& aTime ) const;
+  public:
+    double GetModulationFactor(const double& aTime) const;
+    double GetDerivModulationFactor(const double& aTime) const;
 
-protected:
-    void InitializeCore();
+  protected:
+    void InitializeCore() override;
 
-public:
-    void SetMagneticField( KMagneticField* magneticField ) {
+  public:
+    void SetMagneticField(KMagneticField* magneticField)
+    {
         fRootMagneticField = magneticField;
     }
-    const KMagneticField* GetMagneticField() const {return fRootMagneticField;}
+    const KMagneticField* GetMagneticField() const
+    {
+        return fRootMagneticField;
+    }
 
-    int GetNumCycles() const {
+    int GetNumCycles() const
+    {
         return fNumCycles;
     }
 
-    void SetNumCycles(int numCycles) {
+    void SetNumCycles(int numCycles)
+    {
         fNumCycles = numCycles;
     }
 
-    double GetRampDownDelay() const {
+    double GetRampDownDelay() const
+    {
         return fRampDownDelay;
     }
 
-    void SetRampDownDelay(double rampDownDelay) {
+    void SetRampDownDelay(double rampDownDelay)
+    {
         fRampDownDelay = rampDownDelay;
     }
 
-    double GetRampDownTime() const {
+    double GetRampDownTime() const
+    {
         return fRampDownTime;
     }
 
-    void SetRampDownTime(double rampDownTime) {
+    void SetRampDownTime(double rampDownTime)
+    {
         fRampDownTime = rampDownTime;
     }
 
-    RampingType GetRampingType() const {
+    RampingType GetRampingType() const
+    {
         return fRampingType;
     }
 
-    void SetRampingType(RampingType rampingType) {
+    void SetRampingType(RampingType rampingType)
+    {
         fRampingType = rampingType;
     }
 
-    double GetRampUpDelay() const {
+    double GetRampUpDelay() const
+    {
         return fRampUpDelay;
     }
 
-    void SetRampUpDelay(double rampUpDelay) {
+    void SetRampUpDelay(double rampUpDelay)
+    {
         fRampUpDelay = rampUpDelay;
     }
 
-    double GetRampUpTime() const {
+    double GetRampUpTime() const
+    {
         return fRampUpTime;
     }
 
-    void SetRampUpTime(double rampUpTime) {
+    void SetRampUpTime(double rampUpTime)
+    {
         fRampUpTime = rampUpTime;
     }
 
-    double GetTimeConstant() const {
+    double GetTimeConstant() const
+    {
         return fTimeConstant;
     }
 
-    void SetTimeConstant(double timeConstant) {
+    void SetTimeConstant(double timeConstant)
+    {
         fTimeConstant = timeConstant;
     }
 
-    double GetTimeConstant2() const {
+    double GetTimeConstant2() const
+    {
         return fTimeConstant2;
     }
 
-    void SetTimeConstant2(double timeConstant2) {
+    void SetTimeConstant2(double timeConstant2)
+    {
         fTimeConstant2 = timeConstant2;
     }
 
-    double GetTimeScalingFactor() const {
+    double GetTimeScalingFactor() const
+    {
         return fTimeScalingFactor;
     }
 
-    void SetTimeScalingFactor(double timeScalingFactor) {
+    void SetTimeScalingFactor(double timeScalingFactor)
+    {
         fTimeScalingFactor = timeScalingFactor;
     }
 
-private:
+  private:
     KMagneticField* fRootMagneticField;
     RampingType fRampingType;
     int fNumCycles;
@@ -127,7 +152,6 @@ private:
     double fTimeConstant;
     double fTimeConstant2;
     double fTimeScalingFactor;
-
 };
 
 } /* namespace KEMField */

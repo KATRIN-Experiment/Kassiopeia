@@ -6,16 +6,16 @@
 namespace KGeoBag
 {
 
-  class KGRadialDeformation : public KGDeformation
-  {
+class KGRadialDeformation : public KGDeformation
+{
   public:
     KGRadialDeformation() {}
-    virtual ~KGRadialDeformation() {}
+    ~KGRadialDeformation() override {}
 
-    void Apply(KThreeVector& point) const;
+    void Apply(KThreeVector& point) const override;
 
-    virtual double RadialScale(double theta,double z) const = 0;
-  };
-}
+    virtual double RadialScale(double theta, double z) const = 0;
+};
+}  // namespace KGeoBag
 
 #endif

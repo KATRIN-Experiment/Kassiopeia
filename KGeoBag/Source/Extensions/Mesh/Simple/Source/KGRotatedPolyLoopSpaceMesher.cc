@@ -3,28 +3,23 @@
 namespace KGeoBag
 {
 
-    KGRotatedPolyLoopSpaceMesher::KGRotatedPolyLoopSpaceMesher() :
-            KGSimpleMesher()
-    {
-    }
-    KGRotatedPolyLoopSpaceMesher::~KGRotatedPolyLoopSpaceMesher()
-    {
-    }
+KGRotatedPolyLoopSpaceMesher::KGRotatedPolyLoopSpaceMesher() : KGSimpleMesher() {}
+KGRotatedPolyLoopSpaceMesher::~KGRotatedPolyLoopSpaceMesher() {}
 
-    void KGRotatedPolyLoopSpaceMesher::VisitRotatedClosedPathSpace( KGRotatedPolyLoopSpace* aRotatedPolyLoopSpace )
-    {
-        //create poly line points
-        ClosedPoints tPolyLoopPoints;
-        PolyLoopToClosedPoints( aRotatedPolyLoopSpace->Path().operator ->(), tPolyLoopPoints );
+void KGRotatedPolyLoopSpaceMesher::VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* aRotatedPolyLoopSpace)
+{
+    //create poly line points
+    ClosedPoints tPolyLoopPoints;
+    PolyLoopToClosedPoints(aRotatedPolyLoopSpace->Path().operator->(), tPolyLoopPoints);
 
-        //create rotated points
-        TorusMesh tMeshPoints;
-        ClosedPointsRotatedToTorusMesh( tPolyLoopPoints, aRotatedPolyLoopSpace->RotatedMeshCount(), tMeshPoints );
+    //create rotated points
+    TorusMesh tMeshPoints;
+    ClosedPointsRotatedToTorusMesh(tPolyLoopPoints, aRotatedPolyLoopSpace->RotatedMeshCount(), tMeshPoints);
 
-        //create mesh
-        TorusMeshToTriangles( tMeshPoints );
+    //create mesh
+    TorusMeshToTriangles(tMeshPoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

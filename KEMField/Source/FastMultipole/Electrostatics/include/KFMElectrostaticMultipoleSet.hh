@@ -19,29 +19,33 @@ namespace KEMField
 *
 */
 
-class KFMElectrostaticMultipoleSet: public KFMScalarMultipoleExpansion
+class KFMElectrostaticMultipoleSet : public KFMScalarMultipoleExpansion
 {
-    public:
-        KFMElectrostaticMultipoleSet();
-        virtual ~KFMElectrostaticMultipoleSet();
-        KFMElectrostaticMultipoleSet(const KFMElectrostaticMultipoleSet &copyObject):KFMScalarMultipoleExpansion(copyObject){;};
-        KFMElectrostaticMultipoleSet& operator=(const KFMElectrostaticMultipoleSet &copyObject)
-        {
-            KFMScalarMultipoleExpansion::operator=(copyObject);
-            return *this;
-        };
+  public:
+    KFMElectrostaticMultipoleSet();
+    ~KFMElectrostaticMultipoleSet() override;
+    KFMElectrostaticMultipoleSet(const KFMElectrostaticMultipoleSet& copyObject) :
+        KFMScalarMultipoleExpansion(copyObject)
+    {
+        ;
+    };
+    KFMElectrostaticMultipoleSet& operator=(const KFMElectrostaticMultipoleSet& copyObject)
+    {
+        KFMScalarMultipoleExpansion::operator=(copyObject);
+        return *this;
+    };
 
-        virtual std::string ClassName() const;
+    std::string ClassName() const override;
 
-        void DefineOutputNode(KSAOutputNode* node) const;
-        void DefineInputNode(KSAInputNode* node);
+    void DefineOutputNode(KSAOutputNode* node) const override;
+    void DefineInputNode(KSAInputNode* node) override;
 
-    private:
+  private:
 };
 
 DefineKSAClassName(KFMElectrostaticMultipoleSet)
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticMultipoleSet_H__ */

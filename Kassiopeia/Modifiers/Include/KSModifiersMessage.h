@@ -3,17 +3,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( Kassiopeia, modmsg )
+KMESSAGE_DECLARE(Kassiopeia, modmsg)
 
 #ifdef Kassiopeia_ENABLE_DEBUG
 
-#define modmsg_debug( xCONTENT )\
-		modmsg( eDebug ) << xCONTENT;
+#define modmsg_debug(xCONTENT) modmsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef modmsg_debug
-#define modmsg_debug( xCONTENT )
+#define modmsg_debug(xCONTENT)
 #endif
 
 #endif

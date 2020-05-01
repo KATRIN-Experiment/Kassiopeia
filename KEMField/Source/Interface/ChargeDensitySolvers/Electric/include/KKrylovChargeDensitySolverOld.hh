@@ -10,25 +10,28 @@
 
 #include "KChargeDensitySolver.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration;
 class KFMElectrostaticFastMultipoleBoundaryValueSolver;
 
-class KKrylovChargeDensitySolverOld : public KChargeDensitySolver {
-public:
-	KKrylovChargeDensitySolverOld();
-	virtual ~KKrylovChargeDensitySolverOld();
+class KKrylovChargeDensitySolverOld : public KChargeDensitySolver
+{
+  public:
+    KKrylovChargeDensitySolverOld();
+    ~KKrylovChargeDensitySolverOld() override;
 
-	KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration*
-	GetSolverConfig() {return fKrylovConfig;}
+    KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration* GetSolverConfig()
+    {
+        return fKrylovConfig;
+    }
 
-private:
-	virtual void InitializeCore(KSurfaceContainer& container);
+  private:
+    void InitializeCore(KSurfaceContainer& container) override;
 
-	KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration*
-	fKrylovConfig;
-	KFMElectrostaticFastMultipoleBoundaryValueSolver* fSolver;
+    KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration* fKrylovConfig;
+    KFMElectrostaticFastMultipoleBoundaryValueSolver* fSolver;
 };
 
 } /* namespace KEMField */

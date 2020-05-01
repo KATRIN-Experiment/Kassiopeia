@@ -1,8 +1,9 @@
+#include "KElectrostaticAnalyticRingIntegrator.hh"
+
 #include "KEllipticIntegrals.hh"
 #include "KGaussianQuadrature.hh"
 
 #include <iomanip>
-#include "KElectrostaticAnalyticRingIntegrator.hh"
 
 namespace KEMField
 {
@@ -22,50 +23,49 @@ namespace KEMField
  * k &=& \frac{2\sqrt{Rr}}{S}.
  * \f}
  */
-double KElectrostaticAnalyticRingIntegrator::Potential(const KRing* source,const KPosition& P) const
+double KElectrostaticAnalyticRingIntegrator::Potential(const KRing* source, const KPosition& P) const
 {
-	double par[7];
+    double par[7];
 
-	par[0] = P[2];
-	par[1] = sqrt((P[0]*P[0])+(P[1]*P[1]));
-	par[2] = par[4] = source->GetZ();
-	par[3] = par[5] = source->GetR();
-	par[6] = 1.;
+    par[0] = P[2];
+    par[1] = sqrt((P[0] * P[0]) + (P[1] * P[1]));
+    par[2] = par[4] = source->GetZ();
+    par[3] = par[5] = source->GetR();
+    par[6] = 1.;
 
-	double c = 1./(par[3]*2.*KEMConstants::Pi*KEMConstants::Pi*KEMConstants::Eps0);
+    double c = 1. / (par[3] * 2. * KEMConstants::Pi * KEMConstants::Pi * KEMConstants::Eps0);
 
-	return c*PotentialFromChargedRing(P,par);
+    return c * PotentialFromChargedRing(P, par);
 }
 
 
-KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source, const KPosition& P) const
 {
-	double par[7];
+    double par[7];
 
-	par[0] = P[2];
-	par[1] = sqrt((P[0]*P[0])+(P[1]*P[1]));
-	par[2] = par[4] = source->GetZ();
-	par[3] = par[5] = source->GetR();
-	par[6] = 1.;
+    par[0] = P[2];
+    par[1] = sqrt((P[0] * P[0]) + (P[1] * P[1]));
+    par[2] = par[4] = source->GetZ();
+    par[3] = par[5] = source->GetR();
+    par[6] = 1.;
 
-	double c = 1./(par[3]*2.*KEMConstants::Pi*KEMConstants::Pi*KEMConstants::Eps0);
+    double c = 1. / (par[3] * 2. * KEMConstants::Pi * KEMConstants::Pi * KEMConstants::Eps0);
 
-	KThreeVector field;
+    KThreeVector field;
 
-	field[2] = c*EFieldZFromChargedRing(P,par);
-	double Er = c*EFieldRFromChargedRing(P,par);
+    field[2] = c * EFieldZFromChargedRing(P, par);
+    double Er = c * EFieldRFromChargedRing(P, par);
 
-	if (par[1]<1.e-14)
-		field[0]=field[1]=0;
-	else
-	{
-		double cosine = P[0]/par[1];
-		double sine = P[1]/par[1];
+    if (par[1] < 1.e-14)
+        field[0] = field[1] = 0;
+    else {
+        double cosine = P[0] / par[1];
+        double sine = P[1] / par[1];
 
-		field[0] = cosine*Er;
-		field[1] = sine*Er;
-	}
-	return field;
+        field[0] = cosine * Er;
+        field[1] = sine * Er;
+    }
+    return field;
 }
 
 /**
@@ -94,24 +94,24 @@ KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* so
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const double *P,double *par)
+double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const double* P, double* par)
 {
-	static KCompleteEllipticIntegral1stKind K_elliptic;
+    static KCompleteEllipticIntegral1stKind K_elliptic;
 
-	double Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
-	double R = par[3]+P[0]/par[6]*(par[5]-par[3]);
+    double Z = par[2] + P[0] / par[6] * (par[4] - par[2]);
+    double R = par[3] + P[0] / par[6] * (par[5] - par[3]);
 
-	double dz = par[0]-Z;
-	double dr = par[1]-R;
-	double sumr = R+par[1];
+    double dz = par[0] - Z;
+    double dr = par[1] - R;
+    double sumr = R + par[1];
 
-	double eta = (dr*dr+dz*dz)/(sumr*sumr+dz*dz);
-	double k = (eta > 1. ? 0. : sqrt(1.-eta));
-	double K = K_elliptic(k);
+    double eta = (dr * dr + dz * dz) / (sumr * sumr + dz * dz);
+    double k = (eta > 1. ? 0. : sqrt(1. - eta));
+    double K = K_elliptic(k);
 
-	double S = sqrt(sumr*sumr+dz*dz);
+    double S = sqrt(sumr * sumr + dz * dz);
 
-	return R*K/S;
+    return R * K / S;
 }
 
 /**
@@ -140,25 +140,25 @@ double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const doub
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double *P,double *par)
+double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double* P, double* par)
 {
-	static KCompleteEllipticIntegral2ndKind E_elliptic;
-	static KEllipticEMinusKOverkSquared EK_elliptic;
+    static KCompleteEllipticIntegral2ndKind E_elliptic;
+    static KEllipticEMinusKOverkSquared EK_elliptic;
 
-	double Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
-	double R = par[3]+P[0]/par[6]*(par[5]-par[3]);
+    double Z = par[2] + P[0] / par[6] * (par[4] - par[2]);
+    double R = par[3] + P[0] / par[6] * (par[5] - par[3]);
 
-	double dz = par[0]-Z;
-	double dr = par[1]-R;
-	double sumr = R+par[1];
+    double dz = par[0] - Z;
+    double dr = par[1] - R;
+    double sumr = R + par[1];
 
-	double eta = (dr*dr+dz*dz)/(sumr*sumr+dz*dz);
-	double k = sqrt(1.-eta);
-	double E = E_elliptic(k);
-	double S = sqrt(sumr*sumr+dz*dz);
-	double EK = EK_elliptic(k);
+    double eta = (dr * dr + dz * dz) / (sumr * sumr + dz * dz);
+    double k = sqrt(1. - eta);
+    double E = E_elliptic(k);
+    double S = sqrt(sumr * sumr + dz * dz);
+    double EK = EK_elliptic(k);
 
-	return R/(S*S*S)*(-2.*R*EK+dr/eta*E);
+    return R / (S * S * S) * (-2. * R * EK + dr / eta * E);
 }
 
 /**
@@ -189,22 +189,22 @@ double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing(const double *P,double *par)
+double KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing(const double* P, double* par)
 {
-	static KCompleteEllipticIntegral2ndKind E_elliptic;
-	double Z = par[2]+P[0]/par[6]*(par[4]-par[2]);
-	double R = par[3]+P[0]/par[6]*(par[5]-par[3]);
+    static KCompleteEllipticIntegral2ndKind E_elliptic;
+    double Z = par[2] + P[0] / par[6] * (par[4] - par[2]);
+    double R = par[3] + P[0] / par[6] * (par[5] - par[3]);
 
-	double dz = par[0]-Z;
-	double dr = par[1]-R;
-	double sumr = R+par[1];
+    double dz = par[0] - Z;
+    double dr = par[1] - R;
+    double sumr = R + par[1];
 
-	double eta = (dr*dr+dz*dz)/(sumr*sumr+dz*dz);
-	double k = sqrt(1.-eta);
-	double E = E_elliptic(k);
-	double S = sqrt(sumr*sumr+dz*dz);
+    double eta = (dr * dr + dz * dz) / (sumr * sumr + dz * dz);
+    double k = sqrt(1. - eta);
+    double E = E_elliptic(k);
+    double S = sqrt(sumr * sumr + dz * dz);
 
-	return dz/(S*S*S)*E/eta*R;
+    return dz / (S * S * S) * E / eta * R;
 }
 
-}
+}  // namespace KEMField

@@ -5,24 +5,33 @@
 
 namespace KGeoBag
 {
-  class KGTrigonometricInterpolator : public KGInterpolator
-  {
+class KGTrigonometricInterpolator : public KGInterpolator
+{
   public:
     KGTrigonometricInterpolator();
-    virtual ~KGTrigonometricInterpolator() {}
+    ~KGTrigonometricInterpolator() override {}
 
-    virtual void Initialize(DataSet&);
+    void Initialize(DataSet&) override;
 
-    virtual int OutOfRange(double x) const;
+    int OutOfRange(double x) const override;
 
-    virtual double Range(unsigned int i) const;
+    double Range(unsigned int i) const override;
 
-    virtual double operator()(double x) const;
+    double operator()(double x) const override;
 
-    void SetOrder(unsigned int order) { fOrder = order; }
+    void SetOrder(unsigned int order)
+    {
+        fOrder = order;
+    }
 
-    void GetACoefficients(std::vector<double>& vec){vec = fA;};
-    void GetBCoefficients(std::vector<double>& vec){vec = fB;};
+    void GetACoefficients(std::vector<double>& vec)
+    {
+        vec = fA;
+    };
+    void GetBCoefficients(std::vector<double>& vec)
+    {
+        vec = fB;
+    };
 
   private:
     unsigned int fOrder;
@@ -32,7 +41,7 @@ namespace KGeoBag
 
     double fXMin;
     double fXMax;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

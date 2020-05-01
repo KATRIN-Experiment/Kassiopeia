@@ -12,18 +12,16 @@
 using namespace KEMField;
 using namespace std;
 
-namespace katrin {
+namespace katrin
+{
 
-template< >
-    KInducedAzimuthalElectricFieldBuilder::~KComplexElement()
-    {
-    }
+template<> KInducedAzimuthalElectricFieldBuilder::~KComplexElement() {}
 
-    STATICINT sKInducedAzimuthalElectricFieldStructure =
-        KInducedAzimuthalElectricFieldBuilder::Attribute< string >( "name" ) +
-        KInducedAzimuthalElectricFieldBuilder::Attribute< string >( "root_field" );
+STATICINT sKInducedAzimuthalElectricFieldStructure =
+    KInducedAzimuthalElectricFieldBuilder::Attribute<string>("name") +
+    KInducedAzimuthalElectricFieldBuilder::Attribute<string>("root_field");
 
-    STATICINT sKInducedAzimuthalElectricField =
-        KEMToolboxBuilder::ComplexElement< KInducedAzimuthalElectricField >( "induced_azimuthal_electric_field" );
+STATICINT sKInducedAzimuthalElectricField =
+    KEMToolboxBuilder::ComplexElement<KInducedAzimuthalElectricField>("induced_azimuthal_electric_field");
 
 } /* namespace katrin */

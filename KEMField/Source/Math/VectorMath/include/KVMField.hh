@@ -1,7 +1,8 @@
 #ifndef KVMVectorField_H
 #define KVMVectorField_H
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -22,19 +23,25 @@ namespace KEMField{
 
 class KVMField
 {
-    public:
-        KVMField(){;};
-        virtual ~KVMField(){;};
+  public:
+    KVMField()
+    {
+        ;
+    };
+    virtual ~KVMField()
+    {
+        ;
+    };
 
-        virtual unsigned int GetNDimDomain() const = 0;
-        virtual unsigned int GetNDimRange() const = 0;
+    virtual unsigned int GetNDimDomain() const = 0;
+    virtual unsigned int GetNDimRange() const = 0;
 
-        virtual void Evaluate(const double* in, double* out) const = 0;
+    virtual void Evaluate(const double* in, double* out) const = 0;
 
-    private:
+  private:
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* KVMVectorField_H */

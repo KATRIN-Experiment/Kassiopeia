@@ -9,32 +9,32 @@
 namespace katrin
 {
 
-    class KTagProcessor :
-        public KProcessor
+class KTagProcessor : public KProcessor
+{
+  public:
+    KTagProcessor();
+    ~KTagProcessor() override;
+
+    void ProcessToken(KBeginElementToken* aToken) override;
+    void ProcessToken(KBeginAttributeToken* aToken) override;
+    void ProcessToken(KAttributeDataToken* aToken) override;
+    void ProcessToken(KEndAttributeToken* aToken) override;
+    void ProcessToken(KMidElementToken* aToken) override;
+    void ProcessToken(KEndElementToken* aToken) override;
+
+  private:
+    typedef enum
     {
-        public:
-            KTagProcessor();
-            virtual ~KTagProcessor();
+        eInactive,
+        eActive
+    } State;
+    State fState;
 
-            virtual void ProcessToken( KBeginElementToken* aToken );
-            virtual void ProcessToken( KBeginAttributeToken* aToken );
-            virtual void ProcessToken( KAttributeDataToken* aToken );
-            virtual void ProcessToken( KEndAttributeToken* aToken );
-            virtual void ProcessToken( KMidElementToken* aToken );
-            virtual void ProcessToken( KEndElementToken* aToken );
+    std::vector<std::string> fTags;
+    std::vector<std::string>::iterator fTagIt;
+    std::stack<std::vector<std::string>> fTagStack;
+};
 
-        private:
-            typedef enum
-            {
-                eInactive, eActive
-            } State;
-            State fState;
-
-            std::vector< std::string > fTags;
-            std::vector< std::string >::iterator fTagIt;
-            std::stack< std::vector< std::string > > fTagStack;
-    };
-
-}
+}  // namespace katrin
 
 #endif

@@ -2,18 +2,18 @@
 #define KFMElectrostaticMultipoleCalculatorAnalytic_HH__
 
 #include "KFMElectrostaticMultipoleCalculator.hh"
-
 #include "KFMLinearAlgebraDefinitions.hh"
 
 //spherical multipole includes
-#include "KFMMomentTransformerTypes.hh"
-#include "KFMScalarMultipoleExpansion.hh"
-#include "KFMPinchonJMatrixCalculator.hh"
 #include "KFMComplexSphericalHarmonicExpansionRotator.hh"
-#include "KFMTrianglePolarBasisCalculator.hh"
+#include "KFMMomentTransformerTypes.hh"
+#include "KFMPinchonJMatrixCalculator.hh"
 #include "KFMPoint.hh"
+#include "KFMScalarMultipoleExpansion.hh"
+#include "KFMTrianglePolarBasisCalculator.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -28,110 +28,118 @@ namespace KEMField{
 *
 */
 
-class KFMElectrostaticMultipoleCalculatorAnalytic: public KFMElectrostaticMultipoleCalculator
+class KFMElectrostaticMultipoleCalculatorAnalytic : public KFMElectrostaticMultipoleCalculator
 {
-    public:
-        KFMElectrostaticMultipoleCalculatorAnalytic();
-        virtual ~KFMElectrostaticMultipoleCalculatorAnalytic();
+  public:
+    KFMElectrostaticMultipoleCalculatorAnalytic();
+    ~KFMElectrostaticMultipoleCalculatorAnalytic() override;
 
-        virtual void SetDegree(int l_max);
+    void SetDegree(int l_max) override;
 
-        //constructs unscaled multipole expansion, assuming constant charge density
-        //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
-        virtual bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
+    //constructs unscaled multipole expansion, assuming constant charge density
+    //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
+    bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices,
+                            KFMScalarMultipoleExpansion* moments) const override;
 
-        //M2M translation rule
-        void TranslateMoments(const double* del, std::vector< std::complex<double> >& source_moments, std::vector< std::complex<double> >& target_moments) const;
+    //M2M translation rule
+    void TranslateMoments(const double* del, std::vector<std::complex<double>>& source_moments,
+                          std::vector<std::complex<double>>& target_moments) const;
 
-        void TranslateMomentsFast(const double* del, std::vector< std::complex<double> >& source_moments, std::vector< std::complex<double> >& target_moments) const;
+    void TranslateMomentsFast(const double* del, std::vector<std::complex<double>>& source_moments,
+                              std::vector<std::complex<double>>& target_moments) const;
 
-        //M2M translation rule along z-axis
-        void TranslateMomentsAlongZ(std::vector< std::complex<double> >& source_moments, std::vector< std::complex<double> >& target_moments) const;
+    //M2M translation rule along z-axis
+    void TranslateMomentsAlongZ(std::vector<std::complex<double>>& source_moments,
+                                std::vector<std::complex<double>>& target_moments) const;
 
-    protected:
+  protected:
+    unsigned int fSize;
 
-        unsigned int fSize;
+    void ComputeTriangleMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+                                KFMScalarMultipoleExpansion* moments) const;
+    void ComputeTriangleMomentsSlow(double* target_origin, const KFMPointCloud<3>* vertices,
+                                    KFMScalarMultipoleExpansion* moments) const;
 
-        void ComputeTriangleMoments(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
-        void ComputeTriangleMomentsSlow(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
+    void ComputeRectangleMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+                                 KFMScalarMultipoleExpansion* moments) const;
+    void ComputeWireMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+                            KFMScalarMultipoleExpansion* moments) const;
 
-        void ComputeRectangleMoments(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
-        void ComputeWireMoments(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const;
-
-        void ComputeTriangleMomentAnalyticTerms(double area, double h, double lower_angle, double upper_angle, std::vector< std::complex<double> >* moments) const;
-
-
-        void ComputeSolidHarmonics(const double* del) const;
-
-        //coordinate basis and model for the triangle computation
-        KFMTrianglePolarBasisCalculator* fTriangleBasisCalculator;
-
-        static const double fMinSinPolarAngle;
-
-        //coordinate axes of triangle specific coordinate system
-        mutable kfm_vector* fX;
-        mutable kfm_vector* fY;
-        mutable kfm_vector* fZ;
-        mutable kfm_vector* fDelNorm;
-        mutable kfm_vector* fTempV;
+    void ComputeTriangleMomentAnalyticTerms(double area, double h, double lower_angle, double upper_angle,
+                                            std::vector<std::complex<double>>* moments) const;
 
 
-        mutable kfm_vector* fCannonicalX;
-        mutable kfm_vector* fCannonicalY;
-        mutable kfm_vector* fCannonicalZ;
-        mutable kfm_vector* fRotAxis;
+    void ComputeSolidHarmonics(const double* del) const;
+
+    //coordinate basis and model for the triangle computation
+    KFMTrianglePolarBasisCalculator* fTriangleBasisCalculator;
+
+    static const double fMinSinPolarAngle;
+
+    //coordinate axes of triangle specific coordinate system
+    mutable kfm_vector* fX;
+    mutable kfm_vector* fY;
+    mutable kfm_vector* fZ;
+    mutable kfm_vector* fDelNorm;
+    mutable kfm_vector* fTempV;
 
 
-        //rotation matrices
-        mutable kfm_matrix* fT0;
-        mutable kfm_matrix* fT1;
-        mutable kfm_matrix* fT2;
-        mutable kfm_matrix* fR;
-        mutable kfm_matrix* fTempM;
+    mutable kfm_vector* fCannonicalX;
+    mutable kfm_vector* fCannonicalY;
+    mutable kfm_vector* fCannonicalZ;
+    mutable kfm_vector* fRotAxis;
 
 
-        //euler angles
-        mutable double fAlpha;
-        mutable double fBeta;
-        mutable double fGamma;
+    //rotation matrices
+    mutable kfm_matrix* fT0;
+    mutable kfm_matrix* fT1;
+    mutable kfm_matrix* fT2;
+    mutable kfm_matrix* fR;
+    mutable kfm_matrix* fTempM;
 
 
-        //internal members needed for computing multipole moments
-        KFMPinchonJMatrixCalculator* fJCalc;
-        KFMComplexSphericalHarmonicExpansionRotator* fRotator;
-        std::vector<kfm_matrix*> fJMatrix;
+    //euler angles
+    mutable double fAlpha;
+    mutable double fBeta;
+    mutable double fGamma;
 
-        //needed for rectange computation (split into two triangles)
-        mutable KFMPointCloud<3> fTriangleA;
-        mutable KFMPointCloud<3> fTriangleB;
-        mutable KFMScalarMultipoleExpansion fTempMomentsA;
-        mutable KFMScalarMultipoleExpansion fTempMomentsB;
-        mutable std::vector< std::complex<double> > fMomentsA;
-        mutable std::vector< std::complex<double> > fMomentsB;
-        mutable std::vector< std::complex<double> > fMomentsC;
 
-        //space reserved for ComputeTriangleMoments
-        mutable double* fCheb1Arr;
-        mutable double* fCheb2Arr;
-        mutable double* fPlmZeroArr;
-        mutable double* fNormArr;
-        mutable double* fPlmArr;
-        mutable double* fCosMPhiArr;
-        mutable double* fSinMPhiArr;
-        mutable double* fScratch;
+    //internal members needed for computing multipole moments
+    KFMPinchonJMatrixCalculator* fJCalc;
+    KFMComplexSphericalHarmonicExpansionRotator* fRotator;
+    std::vector<kfm_matrix*> fJMatrix;
 
-        //this is for moment to moment translation/transformation
-        //space for precomputing the a_coefficient values
-        double* fACoefficient;
+    //needed for rectange computation (split into two triangles)
+    mutable KFMPointCloud<3> fTriangleA;
+    mutable KFMPointCloud<3> fTriangleB;
+    mutable KFMScalarMultipoleExpansion fTempMomentsA;
+    mutable KFMScalarMultipoleExpansion fTempMomentsB;
+    mutable std::vector<std::complex<double>> fMomentsA;
+    mutable std::vector<std::complex<double>> fMomentsB;
+    mutable std::vector<std::complex<double>> fMomentsC;
 
-        //space for precomputing the solid harmonics
-        mutable double fDel[3];
-        mutable double fDelMag;
-        mutable std::complex<double>* fSolidHarmonics;
-        mutable double* fAxialSphericalHarmonics;
+    //space reserved for ComputeTriangleMoments
+    mutable double* fCheb1Arr;
+    mutable double* fCheb2Arr;
+    mutable double* fPlmZeroArr;
+    mutable double* fNormArr;
+    mutable double* fPlmArr;
+    mutable double* fCosMPhiArr;
+    mutable double* fSinMPhiArr;
+    mutable double* fScratch;
+
+    //this is for moment to moment translation/transformation
+    //space for precomputing the a_coefficient values
+    double* fACoefficient;
+
+    //space for precomputing the solid harmonics
+    mutable double fDel[3];
+    mutable double fDelMag;
+    mutable std::complex<double>* fSolidHarmonics;
+    mutable double* fAxialSphericalHarmonics;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMElectrostaticMultipoleCalculatorAnalytic_H__ */

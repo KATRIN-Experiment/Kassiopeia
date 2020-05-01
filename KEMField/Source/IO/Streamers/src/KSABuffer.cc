@@ -2,7 +2,6 @@
 
 namespace KEMField
 {
-  char KSABuffer::fDataSeparator = ' ';
-  std::string KSABuffer::fObjectSeparator = "\n";
-}
-
+char KSABuffer::fDataSeparator = ' ';
+std::string KSABuffer::fObjectSeparator = "\n";
+}  // namespace KEMField

@@ -11,7 +11,8 @@
 #include "KPreconditioner.hh"
 #include "KSmartPointer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 /**
  *  Matrix Preconditioner allows any KSquareMatrix to be used as KPreconditioner.
@@ -19,43 +20,52 @@ namespace KEMField {
  *  with default values.
  */
 
-template< typename ValueType>
-class KMatrixPreconditioner : public KPreconditioner<ValueType> {
-public:
-	explicit KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType> > matrix);
-	virtual ~KMatrixPreconditioner(){}
+template<typename ValueType> class KMatrixPreconditioner : public KPreconditioner<ValueType>
+{
+  public:
+    explicit KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType>> matrix);
+    ~KMatrixPreconditioner() override {}
 
-	virtual std::string Name() {return "Created from unnamed matrix";}
+    std::string Name() override
+    {
+        return "Created from unnamed matrix";
+    }
 
-	virtual bool IsStationary() { return false;}
+    bool IsStationary() override
+    {
+        return false;
+    }
 
-	//from KSquareMatrix
-	virtual unsigned int Dimension() const {
-		return fMatrix->Dimension();
-	}
+    //from KSquareMatrix
+    unsigned int Dimension() const override
+    {
+        return fMatrix->Dimension();
+    }
 
-	virtual const ValueType& operator()(unsigned int i, unsigned int j) const {
-		return fMatrix->operator()(i,j);
-	}
+    const ValueType& operator()(unsigned int i, unsigned int j) const override
+    {
+        return fMatrix->operator()(i, j);
+    }
 
-	//from KMatrix
-	virtual void Multiply(const KVector<ValueType>& x,
-			KVector<ValueType>& y) const {
-		fMatrix->Multiply(x,y);
-	}
+    //from KMatrix
+    void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+        fMatrix->Multiply(x, y);
+    }
 
-	virtual void MultiplyTranspose(const KVector<ValueType>& x,
-			KVector<ValueType>& y) const {
-		fMatrix->MultiplyTranspose(x,y);
-	}
+    void MultiplyTranspose(const KVector<ValueType>& x, KVector<ValueType>& y) const override
+    {
+        fMatrix->MultiplyTranspose(x, y);
+    }
 
-private:
-	KSmartPointer<const KSquareMatrix<ValueType> > fMatrix;
+  private:
+    KSmartPointer<const KSquareMatrix<ValueType>> fMatrix;
 };
 
 template<typename ValueType>
-KMatrixPreconditioner<ValueType>::KMatrixPreconditioner(
-		KSmartPointer<const KSquareMatrix<ValueType> > matrix) : fMatrix(matrix) {}
+KMatrixPreconditioner<ValueType>::KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType>> matrix) :
+    fMatrix(matrix)
+{}
 
 } /* namespace KEMField */
 

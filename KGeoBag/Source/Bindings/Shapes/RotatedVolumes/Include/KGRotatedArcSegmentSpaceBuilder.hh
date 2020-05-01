@@ -7,45 +7,38 @@
 namespace katrin
 {
 
-    typedef KComplexElement< KGRotatedArcSegmentSpace > KGRotatedArcSegmentSpaceBuilder;
+typedef KComplexElement<KGRotatedArcSegmentSpace> KGRotatedArcSegmentSpaceBuilder;
 
-    template< >
-    inline bool KGRotatedArcSegmentSpaceBuilder::AddAttribute( KContainer* anAttribute )
-    {
-        if( anAttribute->GetName() == "name" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::SetName );
-            return true;
-        }
-        if( anAttribute->GetName() == "rotated_mesh_count" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::RotatedMeshCount );
-            return true;
-        }
-        if( anAttribute->GetName() == "flattened_mesh_count" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::FlattenedMeshCount );
-            return true;
-        }
-        if( anAttribute->GetName() == "flattened_mesh_power" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedArcSegmentSpace::FlattenedMeshPower );
-            return true;
-        }
-        return false;
+template<> inline bool KGRotatedArcSegmentSpaceBuilder::AddAttribute(KContainer* anAttribute)
+{
+    if (anAttribute->GetName() == "name") {
+        anAttribute->CopyTo(fObject, &KGRotatedArcSegmentSpace::SetName);
+        return true;
     }
-
-    template< >
-    inline bool KGRotatedArcSegmentSpaceBuilder::AddElement( KContainer* anElement )
-    {
-        if( anElement->GetName() == "arc_segment" )
-        {
-            anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarArcSegment::CopyFrom );
-            return true;
-        }
-        return false;
+    if (anAttribute->GetName() == "rotated_mesh_count") {
+        anAttribute->CopyTo(fObject, &KGRotatedArcSegmentSpace::RotatedMeshCount);
+        return true;
     }
-
+    if (anAttribute->GetName() == "flattened_mesh_count") {
+        anAttribute->CopyTo(fObject, &KGRotatedArcSegmentSpace::FlattenedMeshCount);
+        return true;
+    }
+    if (anAttribute->GetName() == "flattened_mesh_power") {
+        anAttribute->CopyTo(fObject, &KGRotatedArcSegmentSpace::FlattenedMeshPower);
+        return true;
+    }
+    return false;
 }
+
+template<> inline bool KGRotatedArcSegmentSpaceBuilder::AddElement(KContainer* anElement)
+{
+    if (anElement->GetName() == "arc_segment") {
+        anElement->CopyTo(fObject->Path().operator->(), &KGPlanarArcSegment::CopyFrom);
+        return true;
+    }
+    return false;
+}
+
+}  // namespace katrin
 
 #endif

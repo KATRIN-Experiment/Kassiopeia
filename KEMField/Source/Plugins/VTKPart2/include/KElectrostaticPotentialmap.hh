@@ -123,186 +123,191 @@
  */
 
 #include "KElectrostaticField.hh"
-#include <string>
-#include <memory>
-
-#include "KMPIEnvironment.hh"
 #include "KGCore.hh"
-
-#include <vtkSmartPointer.h>
-#include <vtkImageData.h>
-#include <vtkIntArray.h>
-#include <vtkDoubleArray.h>
+#include "KMPIEnvironment.hh"
 #include "KThreeVector_KEMField.hh"
 
-namespace KEMField {
+#include <memory>
+#include <string>
+#include <vtkDoubleArray.h>
+#include <vtkImageData.h>
+#include <vtkIntArray.h>
+#include <vtkSmartPointer.h>
 
-    class KPotentialMapVTK
+namespace KEMField
+{
+
+class KPotentialMapVTK
+{
+  public:
+    KPotentialMapVTK(const std::string& aFilename);
+    virtual ~KPotentialMapVTK();
+
+  protected:
+    virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+
+  public:
+    virtual bool GetPotential(const KPosition& aSamplePoint, const double& aSampleTime, double& aPotential) const;
+    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField) const;
+
+  protected:
+    vtkImageData* fImageData;
+};
+
+class KLinearInterpolationPotentialMapVTK : public KPotentialMapVTK
+{
+  public:
+    KLinearInterpolationPotentialMapVTK(const std::string& aFilename);
+    virtual ~KLinearInterpolationPotentialMapVTK();
+
+  public:
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+};
+
+class KCubicInterpolationPotentialMapVTK : public KPotentialMapVTK
+{
+  public:
+    KCubicInterpolationPotentialMapVTK(const std::string& aFilename);
+    virtual ~KCubicInterpolationPotentialMapVTK();
+
+  public:
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+
+  protected:
+    static double _cubicInterpolate(double p[], double x);
+    static double _bicubicInterpolate(double p[], double x, double y);
+    static double _tricubicInterpolate(double p[], double x, double y, double z);
+};
+
+////////////////////////////////////////////////////////////////////
+
+class KElectrostaticPotentialmap : public KElectrostaticField
+{
+  public:
+    KElectrostaticPotentialmap();
+    virtual ~KElectrostaticPotentialmap();
+
+  public:
+    void SetDirectory(const std::string& aDirectory);
+    void SetFile(const std::string& aFile);
+    void SetInterpolation(const std::string& aMode);
+
+  private:
+    virtual double PotentialCore(const KPosition& P) const;
+    virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
+    virtual void InitializeCore();
+
+  private:
+    std::string fDirectory;
+    std::string fFile;
+    int fInterpolation;
+    std::shared_ptr<KPotentialMapVTK> fPotentialMap;
+};
+
+////////////////////////////////////////////////////////////////////
+
+class KElectrostaticPotentialmapCalculator
+{
+  public:
+    KElectrostaticPotentialmapCalculator();
+    virtual ~KElectrostaticPotentialmapCalculator();
+
+  public:
+    void SetDirectory(std::string& aName)
     {
-        public:
-            KPotentialMapVTK( const std::string& aFilename );
-            virtual ~KPotentialMapVTK();
-
-        protected:
-            virtual bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-
-        public:
-            virtual bool GetPotential( const KPosition& aSamplePoint, const double& aSampleTime, double& aPotential ) const;
-            virtual bool GetField( const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField ) const;
-
-        protected:
-            vtkImageData *fImageData;
-    };
-
-    class KLinearInterpolationPotentialMapVTK :
-        public KPotentialMapVTK
+        fDirectory = aName;
+    }
+    void SetFile(std::string& aName)
     {
-        public:
-            KLinearInterpolationPotentialMapVTK( const std::string& aFilename );
-            virtual ~KLinearInterpolationPotentialMapVTK();
-
-        public:
-            bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-    };
-
-    class KCubicInterpolationPotentialMapVTK :
-        public KPotentialMapVTK
+        fFile = aName;
+    }
+    void SetForceUpdate(bool aFlag)
     {
-        public:
-            KCubicInterpolationPotentialMapVTK( const std::string& aFilename );
-            virtual ~KCubicInterpolationPotentialMapVTK();
-
-        public:
-            bool GetValue( const std::string& array, const KPosition& aSamplePoint, double *aValue ) const;
-
-        protected:
-            static double _cubicInterpolate (double p[], double x);
-            static double _bicubicInterpolate (double p[], double x, double y);
-            static double _tricubicInterpolate (double p[], double x, double y, double z);
-    };
-
-    ////////////////////////////////////////////////////////////////////
-
-    class KElectrostaticPotentialmap :
-        public KElectrostaticField
+        fForceUpdate = aFlag;
+    }
+    void SetCenter(KPosition aCenter)
     {
-        public:
-            KElectrostaticPotentialmap();
-            virtual ~KElectrostaticPotentialmap();
-
-        public:
-            void SetDirectory( const std::string& aDirectory );
-            void SetFile( const std::string& aFile );
-            void SetInterpolation( const std::string& aMode );
-
-        private:
-            virtual double PotentialCore(const KPosition& P ) const;
-            virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
-            virtual void InitializeCore();
-
-        private:
-            std::string fDirectory;
-            std::string fFile;
-            int fInterpolation;
-            std::shared_ptr<KPotentialMapVTK> fPotentialMap;
-    };
-
-    ////////////////////////////////////////////////////////////////////
-
-    class KElectrostaticPotentialmapCalculator
+        fCenter = aCenter;
+    }
+    void SetLength(KThreeVector aLength)
     {
-        public:
-            KElectrostaticPotentialmapCalculator();
-            virtual ~KElectrostaticPotentialmapCalculator();
+        fLength = aLength;
+    }
+    void SetMirrorX(bool aFlag)
+    {
+        fMirrorX = aFlag;
+    }
+    void SetMirrorY(bool aFlag)
+    {
+        fMirrorY = aFlag;
+    }
+    void SetMirrorZ(bool aFlag)
+    {
+        fMirrorZ = aFlag;
+    }
+    void SetSpacing(double aSpacing)
+    {
+        fSpacing = aSpacing;
+    }
+    void AddElectricField(KElectrostaticField* aField)
+    {
+        fElectricFields[aField->GetName()] = aField;
+    }
+    void SetName(std::string aName)
+    {
+        fName = aName;
+    }
+    std::string Name()
+    {
+        return fName;
+    }
 
-        public:
-            void SetDirectory( std::string &aName )
-            {
-                fDirectory = aName;
-            }
-            void SetFile( std::string &aName )
-            {
-                fFile = aName;
-            }
-            void SetCenter( KPosition aCenter )
-            {
-                fCenter = aCenter;
-            }
-            void SetLength( KThreeVector aLength )
-            {
-                fLength = aLength;
-            }
-            void SetMirrorX( bool aFlag )
-            {
-                fMirrorX = aFlag;
-            }
-            void SetMirrorY( bool aFlag )
-            {
-                fMirrorY = aFlag;
-            }
-            void SetMirrorZ( bool aFlag )
-            {
-                fMirrorZ = aFlag;
-            }
-            void SetSpacing( double aSpacing )
-            {
-                fSpacing = aSpacing;
-            }
-            void SetElectricField( KElectrostaticField* aField )
-            {
-                fElectricField = aField;
-            }
-            void SetName( std::string aName)
-            {
-                fName = aName;
-            }
-            std::string Name(){return fName;}
+  public:
+    void AddSpace(const KGeoBag::KGSpace* aSpace)
+    {
+        fSpaces.push_back(aSpace);
+    }
 
-        public:
-            void AddSpace( const KGeoBag::KGSpace* aSpace )
-            {
-                fSpaces.push_back(aSpace);
+    void RemoveSpace(const KGeoBag::KGSpace* aSpace)
+    {
+        for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt) {
+            if ((*tSpaceIt) == aSpace) {
+                fSpaces.erase(tSpaceIt);
+                return;
             }
+        }
+    }
 
-            void RemoveSpace( const KGeoBag::KGSpace* aSpace )
-            {
-                for( auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt )
-                {
-                    if((*tSpaceIt) == aSpace)
-                    {
-                        fSpaces.erase(tSpaceIt);
-                        return;
-                    }
-                }
-            }
+  public:
+    bool CheckPosition(const KPosition& aPosition) const;
 
-        public:
-            bool CheckPosition( const KPosition& aPosition ) const;
+  public:
+    void Prepare();
+    void Execute();
+    void Finish();
 
-        public:
-            void Prepare();
-            void Execute();
-            void Finish();
+  public:
+    void Initialize();
 
-        public:
-            void Initialize();
+  private:
+    bool fSkipExecution;
+    std::string fOutputFilename;
+    std::string fDirectory;
+    std::string fFile;
+    std::string fName;
+    bool fForceUpdate;
+    KPosition fCenter;
+    KThreeVector fLength;
+    bool fMirrorX, fMirrorY, fMirrorZ;
+    double fSpacing;
+    std::map<std::string, KElectrostaticField*> fElectricFields;
+    std::vector<const KGeoBag::KGSpace*> fSpaces;
 
-        private:
-            std::string fDirectory;
-            std::string fFile;
-            std::string fName;
-            KPosition fCenter;
-            KThreeVector fLength;
-            bool fMirrorX, fMirrorY, fMirrorZ;
-            double fSpacing;
-            KElectrostaticField *fElectricField;
-            std::vector< const KGeoBag::KGSpace* > fSpaces;
-
-            vtkSmartPointer<vtkImageData> fGrid;
-            vtkSmartPointer<vtkIntArray> fValidityData;
-            vtkSmartPointer<vtkDoubleArray> fPotentialData;
-            vtkSmartPointer<vtkDoubleArray> fFieldData;
-    };
+    vtkSmartPointer<vtkImageData> fGrid;
+    vtkSmartPointer<vtkIntArray> fValidityData;
+    vtkSmartPointer<vtkDoubleArray> fPotentialData;
+    vtkSmartPointer<vtkDoubleArray> fFieldData;
+};
 
 } /* namespace KEMField */
 

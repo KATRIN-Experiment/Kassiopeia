@@ -1,23 +1,23 @@
 #ifndef KGRANDOMPOINTGENERATOR_DEF
 #define KGRANDOMPOINTGENERATOR_DEF
 
-#include "KGGenericSpaceRandom.hh"
-#include "KGGenericSurfaceRandom.hh"
-#include "KGRotatedSurfaceRandom.hh"
-#include "KGBoxSurfaceRandom.hh"
 #include "KGBoxSpaceRandom.hh"
-#include "KGDiskSurfaceRandom.hh"
-#include "KGCylinderSpaceRandom.hh"
-#include "KGCylinderSurfaceRandom.hh"
+#include "KGBoxSurfaceRandom.hh"
 #include "KGConeSpaceRandom.hh"
 #include "KGConeSurfaceRandom.hh"
 #include "KGCutConeSpaceRandom.hh"
 #include "KGCutConeSurfaceRandom.hh"
 #include "KGCutConeTubeSpaceRandom.hh"
+#include "KGCylinderSpaceRandom.hh"
+#include "KGCylinderSurfaceRandom.hh"
+#include "KGDiskSurfaceRandom.hh"
+#include "KGGenericSpaceRandom.hh"
+#include "KGGenericSurfaceRandom.hh"
+#include "KGRotatedSurfaceRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Main class for dicing random points
    * inside spaces and on surfaces.
    *
@@ -26,10 +26,10 @@ namespace KGeoBag
    * The other classes implements specialized functions for these
    * calculations.
    */
-  class KGRandomPointGenerator:
-	public KGGenericSpaceRandom,
-	public KGGenericSurfaceRandom,
-	// -------------------------------
+class KGRandomPointGenerator :
+    public KGGenericSpaceRandom,
+    public KGGenericSurfaceRandom,
+    // -------------------------------
     public KGRotatedSurfaceRandom,
     // -------------------------------
     public KGBoxSurfaceRandom,
@@ -46,12 +46,12 @@ namespace KGeoBag
     public KGCutConeSpaceRandom,
     public KGCutConeSurfaceRandom,
     // -------------------------------
-	public KGCutConeTubeSpaceRandom
-  {
+    public KGCutConeTubeSpaceRandom
+{
   public:
     KGRandomPointGenerator() {}
-    virtual ~KGRandomPointGenerator() {}
-  };
-}
+    ~KGRandomPointGenerator() override {}
+};
+}  // namespace KGeoBag
 
 #endif /* KGRANDOMPOINTGENERATOR_DEF */

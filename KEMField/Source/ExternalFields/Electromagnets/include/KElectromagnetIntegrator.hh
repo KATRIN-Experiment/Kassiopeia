@@ -1,38 +1,38 @@
 #ifndef KELECTROMAGNETINTEGRATOR_DEF
 #define KELECTROMAGNETINTEGRATOR_DEF
 
-#include "KLineCurrentIntegrator.hh"
-#include "KCurrentLoopIntegrator.hh"
-#include "KSolenoidIntegrator.hh"
 #include "KCoilIntegrator.hh"
+#include "KCurrentLoopIntegrator.hh"
+#include "KLineCurrentIntegrator.hh"
+#include "KSolenoidIntegrator.hh"
 
 namespace KEMField
 {
-  class ElectromagnetSingleThread;
+class ElectromagnetSingleThread;
 
-  class KElectromagnetIntegrator :
+class KElectromagnetIntegrator :
     public KLineCurrentIntegrator,
     public KCurrentLoopIntegrator,
     public KSolenoidIntegrator,
     public KCoilIntegrator
-  {
+{
   public:
-    using KLineCurrentIntegrator::VectorPotential;
-    using KCurrentLoopIntegrator::VectorPotential;
-    using KSolenoidIntegrator::VectorPotential;
-    using KCoilIntegrator::VectorPotential;
-    using KLineCurrentIntegrator::MagneticField;
-    using KCurrentLoopIntegrator::MagneticField;
-    using KSolenoidIntegrator::MagneticField;
     using KCoilIntegrator::MagneticField;
+    using KCoilIntegrator::VectorPotential;
+    using KCurrentLoopIntegrator::MagneticField;
+    using KCurrentLoopIntegrator::VectorPotential;
+    using KLineCurrentIntegrator::MagneticField;
+    using KLineCurrentIntegrator::VectorPotential;
+    using KSolenoidIntegrator::MagneticField;
+    using KSolenoidIntegrator::VectorPotential;
 
     // for selection of the correct field solver template and possibly elsewhere
     typedef ElectromagnetSingleThread Kind;
 
     KElectromagnetIntegrator() {}
-    virtual ~KElectromagnetIntegrator() {}
-  };
+    ~KElectromagnetIntegrator() override {}
+};
 
-}
+}  // namespace KEMField
 
 #endif /* KELECTROMAGNETINTEGRATOR_DEF */

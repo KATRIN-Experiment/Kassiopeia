@@ -8,38 +8,40 @@
 #ifndef KGSTATICELECTROMAGNETFIELD_HH_
 #define KGSTATICELECTROMAGNETFIELD_HH_
 
+#include "KGCore.hh"
+#include "KGElectromagnetConverter.hh"
 #include "KStaticElectromagnetField.hh"
+
 #include <string>
 #include <vector>
 
-#include "KGElectromagnetConverter.hh"
-#include "KGCore.hh"
+namespace KEMField
+{
 
-namespace KEMField {
-
-class KGStaticElectromagnetField: public KStaticElectromagnetField {
-public:
+class KGStaticElectromagnetField : public KStaticElectromagnetField
+{
+  public:
     KGStaticElectromagnetField();
-    virtual ~KGStaticElectromagnetField();
+    ~KGStaticElectromagnetField() override;
 
-    void SetSystem( KGeoBag::KGSpace* aSystem );
-    void AddSurface( KGeoBag::KGSurface* aSurface );
-    void AddSpace( KGeoBag::KGSpace* aSpace );
+    void SetSystem(KGeoBag::KGSpace* aSystem);
+    void AddSurface(KGeoBag::KGSurface* aSurface);
+    void AddSpace(KGeoBag::KGSpace* aSpace);
 
     KSmartPointer<KGeoBag::KGElectromagnetConverter> GetConverter();
 
-private:
-    void InitializeCore();
+  private:
+    void InitializeCore() override;
 
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const;
-    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const;
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
     void ConfigureSurfaceContainer();
 
     KGeoBag::KGSpace* fSystem;
-    std::vector< KGeoBag::KGSurface* > fSurfaces;
-    std::vector< KGeoBag::KGSpace* > fSpaces;
+    std::vector<KGeoBag::KGSurface*> fSurfaces;
+    std::vector<KGeoBag::KGSpace*> fSpaces;
 
     KSmartPointer<KGeoBag::KGElectromagnetConverter> fConverter;
 };

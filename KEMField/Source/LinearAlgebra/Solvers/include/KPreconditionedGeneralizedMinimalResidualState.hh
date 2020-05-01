@@ -4,14 +4,14 @@
 #include "KGeneralizedMinimalResidualState.hh"
 
 #ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY if (KMPIInterface::GetInstance()->GetProcess()==0)
-    #endif
+#include "KMPIInterface.hh"
+#ifndef MPI_ROOT_PROCESS_ONLY
+#define MPI_ROOT_PROCESS_ONLY if (KMPIInterface::GetInstance()->GetProcess() == 0)
+#endif
 #else
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY
-    #endif
+#ifndef MPI_ROOT_PROCESS_ONLY
+#define MPI_ROOT_PROCESS_ONLY
+#endif
 #endif
 
 namespace KEMField
@@ -29,63 +29,71 @@ namespace KEMField
 *
 */
 
-template< typename ValueType >
-class KPreconditionedGeneralizedMinimalResidualState: public KGeneralizedMinimalResidualState<ValueType>
+template<typename ValueType>
+class KPreconditionedGeneralizedMinimalResidualState : public KGeneralizedMinimalResidualState<ValueType>
 {
-    public:
+  public:
+    typedef KSimpleVector<ValueType> KSimpleVectorType;
 
-        typedef KSimpleVector<ValueType> KSimpleVectorType;
+    KPreconditionedGeneralizedMinimalResidualState() : KGeneralizedMinimalResidualState<ValueType>(){};
+    ~KPreconditionedGeneralizedMinimalResidualState() override{};
 
-        KPreconditionedGeneralizedMinimalResidualState():KGeneralizedMinimalResidualState<ValueType>(){};
-        virtual ~KPreconditionedGeneralizedMinimalResidualState(){};
+    static std::string Name()
+    {
+        return std::string("pgmres");
+    }
+    std::string NameLabel()
+    {
+        return std::string("pgmres");
+    }
 
-        static std::string Name() { return std::string("pgmres"); }
-        std::string NameLabel() { return std::string("pgmres"); }
+    const std::vector<KSimpleVector<ValueType>>* GetPreconditionedKrylovSpaceBasis() const
+    {
+        return &fZ;
+    };
 
-        const std::vector< KSimpleVector<ValueType> >* GetPreconditionedKrylovSpaceBasis() const {return &fZ;};
+    void GetPreconditionedKrylovSpaceBasis(std::vector<KSimpleVector<ValueType>>* h) const
+    {
+        h->clear();
+        unsigned int s = fZ.size();
+        h->resize(s);
 
-        void GetPreconditionedKrylovSpaceBasis(std::vector< KSimpleVector<ValueType> >* h) const
-        {
-            h->clear();
-            unsigned int s = fZ.size();
-            h->resize(s);
-
-            for(unsigned int i=0; i<s; i++)
-            {
-                unsigned int t = (fZ.at(i)).size();
-                (*h)[i].resize(t);
-                for(unsigned int j = 0; j<t; j++)
-                {
-                    (*h)[i][j] = fZ[i](j);
-                }
+        for (unsigned int i = 0; i < s; i++) {
+            unsigned int t = (fZ.at(i)).size();
+            (*h)[i].resize(t);
+            for (unsigned int j = 0; j < t; j++) {
+                (*h)[i][j] = fZ[i](j);
             }
         }
+    }
 
 
-        void SetPreconditionedKrylovSpaceBasis(const std::vector< KSimpleVector<ValueType> >* z)
-        {
-            if(fZ.size() != 0){for(unsigned int i=0; i<fZ.size(); i++){fZ[i].clear();};};
-            fZ.clear();
-
-            unsigned int s = z->size();
-            fZ.resize(s);
-
-            for(unsigned int i=0; i<s; i++)
-            {
-                unsigned int t = (z->at(i)).size();
-                fZ[i].resize(t);
-                for(unsigned int j = 0; j<t; j++)
-                {
-                    fZ[i][j] = (z->at(i))(j);
-                }
-            }
+    void SetPreconditionedKrylovSpaceBasis(const std::vector<KSimpleVector<ValueType>>* z)
+    {
+        if (fZ.size() != 0) {
+            for (unsigned int i = 0; i < fZ.size(); i++) {
+                fZ[i].clear();
+            };
         };
+        fZ.clear();
 
-        virtual void SynchronizeData()
-        {
+        unsigned int s = z->size();
+        fZ.resize(s);
 
-            KGeneralizedMinimalResidualState<ValueType>::SynchronizeData();
-/*
+        for (unsigned int i = 0; i < s; i++) {
+            unsigned int t = (z->at(i)).size();
+            fZ[i].resize(t);
+            for (unsigned int j = 0; j < t; j++) {
+                fZ[i][j] = (z->at(i))(j);
+            }
+        }
+    };
+
+    void SynchronizeData() override
+    {
+
+        KGeneralizedMinimalResidualState<ValueType>::SynchronizeData();
+        /*
             //now broadcast the data to all of the other processes
             //IMPORTANT!! THIS ONLY WORKS FOR ValueType == double
             //Other types are not yet implemented for MPI version of this code
@@ -126,35 +134,31 @@ class KPreconditionedGeneralizedMinimalResidualState: public KGeneralizedMinimal
 
             #endif
 */
-        }
+    }
 
-    protected:
-
-        //the preconditioned krylov subspace basis vectors
-        std::vector< KSimpleVector<ValueType> > fZ;
+  protected:
+    //the preconditioned krylov subspace basis vectors
+    std::vector<KSimpleVector<ValueType>> fZ;
 };
 
 
-
-template <typename ValueType, typename Stream>
+template<typename ValueType, typename Stream>
 Stream& operator>>(Stream& s, KPreconditionedGeneralizedMinimalResidualState<ValueType>& aData)
 {
     s.PreStreamInAction(aData);
 
-    KGeneralizedMinimalResidualState<ValueType>* base = static_cast< KGeneralizedMinimalResidualState<ValueType>* >(&(aData));
+    auto* base = static_cast<KGeneralizedMinimalResidualState<ValueType>*>(&(aData));
     s >> *base;
 
-    std::vector< KSimpleVector<ValueType> > z;
+    std::vector<KSimpleVector<ValueType>> z;
     unsigned int z_row_size;
 
     s >> z_row_size;
     z.resize(z_row_size);
-    for(unsigned int i=0; i<z_row_size; i++)
-    {
+    for (unsigned int i = 0; i < z_row_size; i++) {
         unsigned int z_col_size;
         s >> z_col_size;
-        for(unsigned int j=0; j<z_col_size; j++)
-        {
+        for (unsigned int j = 0; j < z_col_size; j++) {
             ValueType temp;
             s >> temp;
             z[i].push_back(temp);
@@ -168,24 +172,22 @@ Stream& operator>>(Stream& s, KPreconditionedGeneralizedMinimalResidualState<Val
 }
 
 
-template <typename ValueType, typename Stream>
+template<typename ValueType, typename Stream>
 Stream& operator<<(Stream& s, const KPreconditionedGeneralizedMinimalResidualState<ValueType>& aData)
 {
     s.PreStreamOutAction(aData);
 
-    s << static_cast< const KGeneralizedMinimalResidualState<ValueType>& >(aData);
+    s << static_cast<const KGeneralizedMinimalResidualState<ValueType>&>(aData);
 
-    const std::vector< KSimpleVector<ValueType> >* z = aData.GetPreconditionedKrylovSpaceBasis();
+    const std::vector<KSimpleVector<ValueType>>* z = aData.GetPreconditionedKrylovSpaceBasis();
     unsigned int z_row_size = z->size();
     s << z_row_size;
 
-    for(unsigned int i=0; i<z_row_size; i++)
-    {
+    for (unsigned int i = 0; i < z_row_size; i++) {
         unsigned int z_col_size = (z->at(i)).size();
         s << z_col_size;
         const KSimpleVector<ValueType>* temp = &(z->at(i));
-        for(unsigned int j=0; j<z_col_size; j++)
-        {
+        for (unsigned int j = 0; j < z_col_size; j++) {
             s << (*temp)(j);
         }
     }
@@ -196,9 +198,6 @@ Stream& operator<<(Stream& s, const KPreconditionedGeneralizedMinimalResidualSta
 }
 
 
-
-
-
-}
+}  // namespace KEMField
 
 #endif /* __KPreconditionedGeneralizedMinimalResidualState_H__ */

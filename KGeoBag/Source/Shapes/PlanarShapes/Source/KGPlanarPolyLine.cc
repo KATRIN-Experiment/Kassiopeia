@@ -1,364 +1,306 @@
 #include "KGPlanarPolyLine.hh"
+
 #include "KGShapeMessage.hh"
 
 namespace KGeoBag
 {
 
-    KGPlanarPolyLine::KGPlanarPolyLine() :
-            fElements(),
-            fLength( 0. ),
-            fCentroid( 0., 0. ),
-            fStart( 0., 0. ),
-            fEnd( 0., 0. ),
-            fInitialized( false )
-    {
-    }
-    KGPlanarPolyLine::KGPlanarPolyLine( const KGPlanarPolyLine& aCopy ) :
-            fElements(),
-            fLength( aCopy.fLength ),
-            fCentroid( aCopy.fCentroid ),
-            fStart( aCopy.fStart ),
-            fEnd( aCopy.fEnd ),
-            fInitialized( aCopy.fInitialized )
-    {
-        const KGPlanarOpenPath* tElement;
-        const KGPlanarLineSegment* tLineSegment;
-        const KGPlanarArcSegment* tArcSegment;
-        for( CIt tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++ )
-        {
-            tElement = *tIt;
+KGPlanarPolyLine::KGPlanarPolyLine() :
+    fElements(),
+    fLength(0.),
+    fCentroid(0., 0.),
+    fStart(0., 0.),
+    fEnd(0., 0.),
+    fInitialized(false)
+{}
+KGPlanarPolyLine::KGPlanarPolyLine(const KGPlanarPolyLine& aCopy) :
+    fElements(),
+    fLength(aCopy.fLength),
+    fCentroid(aCopy.fCentroid),
+    fStart(aCopy.fStart),
+    fEnd(aCopy.fEnd),
+    fInitialized(aCopy.fInitialized)
+{
+    const KGPlanarOpenPath* tElement;
+    const KGPlanarLineSegment* tLineSegment;
+    const KGPlanarArcSegment* tArcSegment;
+    for (auto tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++) {
+        tElement = *tIt;
 
-            tLineSegment = dynamic_cast< const KGPlanarLineSegment* >( tElement );
-            if( tLineSegment != NULL )
-            {
-                fElements.push_back( new KGPlanarLineSegment( *tLineSegment ) );
-                continue;
-            }
-
-            tArcSegment = dynamic_cast< const KGPlanarArcSegment* >( tElement );
-            if( tArcSegment != NULL )
-            {
-                fElements.push_back( new KGPlanarArcSegment( *tArcSegment ) );
-                continue;
-            }
-        }
-    }
-    KGPlanarPolyLine::~KGPlanarPolyLine()
-    {
-        shapemsg_debug( "destroying a planar poly line" << eom );
-
-        const KGPlanarOpenPath* tElement;
-        for( It tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
-        {
-            tElement = *tIt;
-            delete tElement;
-        }
-    }
-
-    KGPlanarPolyLine* KGPlanarPolyLine::Clone() const
-    {
-        return new KGPlanarPolyLine( *this );
-    }
-    void KGPlanarPolyLine::CopyFrom( const KGPlanarPolyLine& aCopy )
-    {
-        fLength = aCopy.fLength;
-        fCentroid = aCopy.fCentroid;
-        fStart = aCopy.fStart;
-        fEnd = aCopy.fEnd;
-        fInitialized = aCopy.fInitialized;
-
-        const KGPlanarOpenPath* tElement;
-        for( It tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
-        {
-            tElement = *tIt;
-            delete tElement;
-        }
-        fElements.clear();
-
-        const KGPlanarLineSegment* tLineSegment;
-        const KGPlanarArcSegment* tArcSegment;
-        for( CIt tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++ )
-        {
-            tElement = *tIt;
-
-            tLineSegment = dynamic_cast< const KGPlanarLineSegment* >( tElement );
-            if( tLineSegment != NULL )
-            {
-                fElements.push_back( new KGPlanarLineSegment( *tLineSegment ) );
-                continue;
-            }
-
-            tArcSegment = dynamic_cast< const KGPlanarArcSegment* >( tElement );
-            if( tArcSegment != NULL )
-            {
-                fElements.push_back( new KGPlanarArcSegment( *tArcSegment ) );
-                continue;
-            }
+        tLineSegment = dynamic_cast<const KGPlanarLineSegment*>(tElement);
+        if (tLineSegment != nullptr) {
+            fElements.push_back(new KGPlanarLineSegment(*tLineSegment));
+            continue;
         }
 
-        return;
-    }
-
-    void KGPlanarPolyLine::StartPoint( const KTwoVector& aPoint )
-    {
-        shapemsg_debug( "adding first point to a planar poly line" << eom );
-        fInitialized = false;
-
-        const KGPlanarOpenPath* tElement;
-        for( It tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
-        {
-            tElement = *tIt;
-            delete tElement;
+        tArcSegment = dynamic_cast<const KGPlanarArcSegment*>(tElement);
+        if (tArcSegment != nullptr) {
+            fElements.push_back(new KGPlanarArcSegment(*tArcSegment));
+            continue;
         }
-        fElements.clear();
-        fStart = aPoint;
-        fEnd = aPoint;
-
-        return;
     }
-    void KGPlanarPolyLine::NextLine( const KTwoVector& aVertex, const unsigned int aCount, const double aPower )
-    {
-        shapemsg_debug( "adding next line to a planar poly line" << eom );
-        fInitialized = false;
+}
+KGPlanarPolyLine::~KGPlanarPolyLine()
+{
+    shapemsg_debug("destroying a planar poly line" << eom);
 
-        fElements.push_back( new KGPlanarLineSegment( fEnd, aVertex, aCount, aPower ) );
-        fEnd = aVertex;
-
-        return;
+    const KGPlanarOpenPath* tElement;
+    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
+        tElement = *tIt;
+        delete tElement;
     }
-    void KGPlanarPolyLine::NextArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount )
-    {
-        shapemsg_debug( "adding next arc to a planar poly line" << eom );
-        fInitialized = false;
+}
 
-        fElements.push_back( new KGPlanarArcSegment( fEnd, aVertex, aRadius, aLeft, aLong, aCount ) );
-        fEnd = aVertex;
+KGPlanarPolyLine* KGPlanarPolyLine::Clone() const
+{
+    return new KGPlanarPolyLine(*this);
+}
+void KGPlanarPolyLine::CopyFrom(const KGPlanarPolyLine& aCopy)
+{
+    fLength = aCopy.fLength;
+    fCentroid = aCopy.fCentroid;
+    fStart = aCopy.fStart;
+    fEnd = aCopy.fEnd;
+    fInitialized = aCopy.fInitialized;
 
-        return;
+    const KGPlanarOpenPath* tElement;
+    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
+        tElement = *tIt;
+        delete tElement;
     }
-    void KGPlanarPolyLine::PreviousLine( const KTwoVector& aVertex, const unsigned int aCount, const double aPower )
-    {
-        shapemsg_debug( "adding previous line to a planar poly line" << eom );
-        fInitialized = false;
+    fElements.clear();
 
-        fElements.push_back( new KGPlanarLineSegment( aVertex, fStart, aCount, aPower ) );
-        fStart = aVertex;
+    const KGPlanarLineSegment* tLineSegment;
+    const KGPlanarArcSegment* tArcSegment;
+    for (auto tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++) {
+        tElement = *tIt;
 
-        return;
-    }
-    void KGPlanarPolyLine::PreviousArc( const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong, const unsigned int aCount )
-    {
-        shapemsg_debug( "adding previous arc to a planar poly line" << eom );
-        fInitialized = false;
-
-        fElements.push_back( new KGPlanarArcSegment( aVertex, fStart, aRadius, aLeft, aLong, aCount ) );
-        fStart = aVertex;
-
-        return;
-    }
-
-    const KGPlanarPolyLine::Set& KGPlanarPolyLine::Elements() const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
+        tLineSegment = dynamic_cast<const KGPlanarLineSegment*>(tElement);
+        if (tLineSegment != nullptr) {
+            fElements.push_back(new KGPlanarLineSegment(*tLineSegment));
+            continue;
         }
 
-        return fElements;
+        tArcSegment = dynamic_cast<const KGPlanarArcSegment*>(tElement);
+        if (tArcSegment != nullptr) {
+            fElements.push_back(new KGPlanarArcSegment(*tArcSegment));
+            continue;
+        }
     }
 
-    const double& KGPlanarPolyLine::Length() const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
+    return;
+}
 
-        return fLength;
+void KGPlanarPolyLine::StartPoint(const KTwoVector& aPoint)
+{
+    shapemsg_debug("adding first point to a planar poly line" << eom);
+    fInitialized = false;
+
+    const KGPlanarOpenPath* tElement;
+    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
+        tElement = *tIt;
+        delete tElement;
     }
-    const KTwoVector& KGPlanarPolyLine::Centroid() const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
+    fElements.clear();
+    fStart = aPoint;
+    fEnd = aPoint;
 
-        return fCentroid;
+    return;
+}
+void KGPlanarPolyLine::NextLine(const KTwoVector& aVertex, const unsigned int aCount, const double aPower)
+{
+    shapemsg_debug("adding next line to a planar poly line" << eom);
+    fInitialized = false;
+
+    fElements.push_back(new KGPlanarLineSegment(fEnd, aVertex, aCount, aPower));
+    fEnd = aVertex;
+
+    return;
+}
+void KGPlanarPolyLine::NextArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft, const bool& aLong,
+                               const unsigned int aCount)
+{
+    shapemsg_debug("adding next arc to a planar poly line" << eom);
+    fInitialized = false;
+
+    fElements.push_back(new KGPlanarArcSegment(fEnd, aVertex, aRadius, aLeft, aLong, aCount));
+    fEnd = aVertex;
+
+    return;
+}
+void KGPlanarPolyLine::PreviousLine(const KTwoVector& aVertex, const unsigned int aCount, const double aPower)
+{
+    shapemsg_debug("adding previous line to a planar poly line" << eom);
+    fInitialized = false;
+
+    fElements.push_back(new KGPlanarLineSegment(aVertex, fStart, aCount, aPower));
+    fStart = aVertex;
+
+    return;
+}
+void KGPlanarPolyLine::PreviousArc(const KTwoVector& aVertex, const double& aRadius, const bool& aLeft,
+                                   const bool& aLong, const unsigned int aCount)
+{
+    shapemsg_debug("adding previous arc to a planar poly line" << eom);
+    fInitialized = false;
+
+    fElements.push_back(new KGPlanarArcSegment(aVertex, fStart, aRadius, aLeft, aLong, aCount));
+    fStart = aVertex;
+
+    return;
+}
+
+const KGPlanarPolyLine::Set& KGPlanarPolyLine::Elements() const
+{
+    if (fInitialized == false) {
+        Initialize();
     }
-    const KTwoVector& KGPlanarPolyLine::Start() const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
 
+    return fElements;
+}
+
+const double& KGPlanarPolyLine::Length() const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    return fLength;
+}
+const KTwoVector& KGPlanarPolyLine::Centroid() const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    return fCentroid;
+}
+const KTwoVector& KGPlanarPolyLine::Start() const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    return fStart;
+}
+const KTwoVector& KGPlanarPolyLine::End() const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    return fEnd;
+}
+
+KTwoVector KGPlanarPolyLine::At(const double& aLength) const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    double tLength = aLength;
+
+    if (tLength < 0.) {
         return fStart;
     }
-    const KTwoVector& KGPlanarPolyLine::End() const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
-
+    if (tLength > fLength) {
         return fEnd;
     }
 
-    KTwoVector KGPlanarPolyLine::At( const double& aLength ) const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
+    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
+        if ((*tIt)->Length() > tLength) {
+            return (*tIt)->At(tLength);
         }
+        tLength -= (*tIt)->Length();
+    }
+    return fEnd;
+}
 
-        double tLength = aLength;
-
-        if( tLength < 0. )
-        {
-            return fStart;
-        }
-        if( tLength > fLength )
-        {
-            return fEnd;
-        }
-
-        for( CIt tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
-        {
-            if( (*tIt)->Length() > tLength )
-            {
-                return (*tIt)->At( tLength );
-            }
-            tLength -= (*tIt)->Length();
-        }
-        return fEnd;
+KTwoVector KGPlanarPolyLine::Point(const KTwoVector& aQuery) const
+{
+    if (fInitialized == false) {
+        Initialize();
     }
 
-    KTwoVector KGPlanarPolyLine::Point( const KTwoVector& aQuery ) const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
+    KTwoVector tCurrentPoint;
+    double tCurrentDistance;
+
+    KTwoVector tNearestPoint;
+    double tNearestDistance;
+
+    auto tIt = fElements.begin();
+
+    tNearestPoint = (*tIt)->Point(aQuery);
+    tNearestDistance = (tNearestPoint - aQuery).Magnitude();
+    tIt++;
+
+    while (tIt != fElements.end()) {
+        tCurrentPoint = (*tIt)->Point(aQuery);
+        tCurrentDistance = (tCurrentPoint - aQuery).Magnitude();
+
+        if (tCurrentDistance < tNearestDistance) {
+            tNearestPoint = tCurrentPoint;
+            tNearestDistance = tCurrentDistance;
         }
 
-        KTwoVector tCurrentPoint;
-        double tCurrentDistance;
-
-        KTwoVector tNearestPoint;
-        double tNearestDistance;
-
-        CIt tIt = fElements.begin();
-
-        tNearestPoint = (*tIt)->Point( aQuery );
-        tNearestDistance = (tNearestPoint - aQuery).Magnitude();
         tIt++;
-
-        while( tIt != fElements.end() )
-        {
-            tCurrentPoint = (*tIt)->Point( aQuery );
-            tCurrentDistance = (tCurrentPoint - aQuery).Magnitude();
-
-            if( tCurrentDistance < tNearestDistance )
-            {
-                tNearestPoint = tCurrentPoint;
-                tNearestDistance = tCurrentDistance;
-            }
-
-            tIt++;
-        }
-
-        return tNearestPoint;
     }
-    KTwoVector KGPlanarPolyLine::Normal( const KTwoVector& aQuery ) const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
 
-        KTwoVector tFirstPoint;
-        KTwoVector tFirstNormal;
-        double tFirstDistance;
+    return tNearestPoint;
+}
+KTwoVector KGPlanarPolyLine::Normal(const KTwoVector& aQuery) const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
 
-        KTwoVector tSecondPoint;
-        KTwoVector tSecondNormal;
-        double tSecondDistance;
+    KTwoVector tFirstPoint;
+    KTwoVector tFirstNormal;
+    double tFirstDistance;
 
-        KTwoVector tAveragePoint;
-        KTwoVector tAverageNormal;
-        double tAverageDistance;
+    KTwoVector tSecondPoint;
+    KTwoVector tSecondNormal;
+    double tSecondDistance;
 
-        KTwoVector tNearestPoint;
-        KTwoVector tNearestNormal;
-        double tNearestDistance;
+    KTwoVector tAveragePoint;
+    KTwoVector tAverageNormal;
+    double tAverageDistance;
 
-        CIt tIt = fElements.begin();
+    KTwoVector tNearestPoint;
+    KTwoVector tNearestNormal;
+    double tNearestDistance;
 
-        tFirstPoint = (*tIt)->Point( aQuery );
-        tFirstNormal = (*tIt)->Normal( aQuery );
-        tFirstDistance = (aQuery - tFirstPoint).Magnitude();
+    auto tIt = fElements.begin();
 
-        tNearestPoint = tFirstPoint;
-        tNearestNormal = tFirstNormal;
-        tNearestDistance = tFirstDistance;
+    tFirstPoint = (*tIt)->Point(aQuery);
+    tFirstNormal = (*tIt)->Normal(aQuery);
+    tFirstDistance = (aQuery - tFirstPoint).Magnitude();
 
-        tIt++;
+    tNearestPoint = tFirstPoint;
+    tNearestNormal = tFirstNormal;
+    tNearestDistance = tFirstDistance;
 
-        for( ; tIt != fElements.end(); tIt++ )
-        {
-            tSecondPoint = (*tIt)->Point( aQuery );
-            tSecondNormal = (*tIt)->Normal( aQuery );
-            tSecondDistance = (aQuery - tSecondPoint).Magnitude();
+    tIt++;
 
-            tAveragePoint = .5 * (tFirstPoint + tSecondPoint);
-            tAverageNormal = (tFirstNormal + tSecondNormal).Unit();
-            tAverageDistance = .5 * (tFirstDistance + tSecondDistance);
+    for (; tIt != fElements.end(); tIt++) {
+        tSecondPoint = (*tIt)->Point(aQuery);
+        tSecondNormal = (*tIt)->Normal(aQuery);
+        tSecondDistance = (aQuery - tSecondPoint).Magnitude();
 
-            if( ((tFirstPoint - tSecondPoint).Magnitude() / (tAveragePoint).Magnitude()) < 1.e-12 )
-            {
-                if( (fabs( tAverageDistance - tNearestDistance ) / tNearestDistance) < 1.e-12 )
-                {
-                    tNearestPoint = tAveragePoint;
-                    if( tAverageNormal.Dot( aQuery - tAveragePoint ) > 0. )
-                    {
-                        tNearestNormal = 1. * (aQuery - tAveragePoint).Unit();
-                    }
-                    else
-                    {
-                        tNearestNormal = -1. * (aQuery - tAveragePoint).Unit();
-                    }
-                    tNearestDistance = tAverageDistance;
+        tAveragePoint = .5 * (tFirstPoint + tSecondPoint);
+        tAverageNormal = (tFirstNormal + tSecondNormal).Unit();
+        tAverageDistance = .5 * (tFirstDistance + tSecondDistance);
 
-                    tFirstPoint = tSecondPoint;
-                    tFirstNormal = tSecondNormal;
-                    tFirstDistance = tSecondDistance;
-                    continue;
+        if (((tFirstPoint - tSecondPoint).Magnitude() / (tAveragePoint).Magnitude()) < 1.e-12) {
+            if ((fabs(tAverageDistance - tNearestDistance) / tNearestDistance) < 1.e-12) {
+                tNearestPoint = tAveragePoint;
+                if (tAverageNormal.Dot(aQuery - tAveragePoint) > 0.) {
+                    tNearestNormal = 1. * (aQuery - tAveragePoint).Unit();
                 }
-
-                if( tAverageDistance < tNearestDistance )
-                {
-                    tNearestPoint = tAveragePoint;
-                    if( tAverageNormal.Dot( aQuery - tAveragePoint ) > 0. )
-                    {
-                        tNearestNormal = 1. * (aQuery - tAveragePoint).Unit();
-                    }
-                    else
-                    {
-                        tNearestNormal = -1. * (aQuery - tAveragePoint).Unit();
-                    }
-                    tNearestDistance = tAverageDistance;
-
-                    tFirstPoint = tSecondPoint;
-                    tFirstNormal = tSecondNormal;
-                    tFirstDistance = tSecondDistance;
-                    continue;
+                else {
+                    tNearestNormal = -1. * (aQuery - tAveragePoint).Unit();
                 }
-            }
-
-            if( tSecondDistance < tNearestDistance )
-            {
-                tNearestPoint = tSecondPoint;
-                tNearestNormal = tSecondNormal;
-                tNearestDistance = tSecondDistance;
+                tNearestDistance = tAverageDistance;
 
                 tFirstPoint = tSecondPoint;
                 tFirstNormal = tSecondNormal;
@@ -366,49 +308,74 @@ namespace KGeoBag
                 continue;
             }
 
+            if (tAverageDistance < tNearestDistance) {
+                tNearestPoint = tAveragePoint;
+                if (tAverageNormal.Dot(aQuery - tAveragePoint) > 0.) {
+                    tNearestNormal = 1. * (aQuery - tAveragePoint).Unit();
+                }
+                else {
+                    tNearestNormal = -1. * (aQuery - tAveragePoint).Unit();
+                }
+                tNearestDistance = tAverageDistance;
+
+                tFirstPoint = tSecondPoint;
+                tFirstNormal = tSecondNormal;
+                tFirstDistance = tSecondDistance;
+                continue;
+            }
+        }
+
+        if (tSecondDistance < tNearestDistance) {
+            tNearestPoint = tSecondPoint;
+            tNearestNormal = tSecondNormal;
+            tNearestDistance = tSecondDistance;
+
             tFirstPoint = tSecondPoint;
             tFirstNormal = tSecondNormal;
             tFirstDistance = tSecondDistance;
+            continue;
         }
 
-        return tNearestNormal;
-    }
-    bool KGPlanarPolyLine::Above( const KTwoVector& aQuery ) const
-    {
-        if( fInitialized == false )
-        {
-            Initialize();
-        }
-
-        KTwoVector tPoint = Point( aQuery );
-        KTwoVector tNormal = Normal( aQuery );
-
-        if( tNormal.Dot( aQuery - tPoint ) > 0. )
-        {
-            return true;
-        }
-
-        return false;
+        tFirstPoint = tSecondPoint;
+        tFirstNormal = tSecondNormal;
+        tFirstDistance = tSecondDistance;
     }
 
-    void KGPlanarPolyLine::Initialize() const
-    {
-        shapemsg_debug( "initializing a planar poly line" << eom );
-
-        fLength = 0.;
-        fCentroid.X() = 0;
-        fCentroid.Y() = 0;
-
-        for( CIt tIt = fElements.begin(); tIt != fElements.end(); tIt++ )
-        {
-            fLength += (*tIt)->Length();
-            fCentroid += (*tIt)->Length() * (*tIt)->Centroid();
-        }
-        fCentroid /= fLength;
-
-        fInitialized = true;
-
-        return;
-    }
-
+    return tNearestNormal;
 }
+bool KGPlanarPolyLine::Above(const KTwoVector& aQuery) const
+{
+    if (fInitialized == false) {
+        Initialize();
+    }
+
+    KTwoVector tPoint = Point(aQuery);
+    KTwoVector tNormal = Normal(aQuery);
+
+    if (tNormal.Dot(aQuery - tPoint) > 0.) {
+        return true;
+    }
+
+    return false;
+}
+
+void KGPlanarPolyLine::Initialize() const
+{
+    shapemsg_debug("initializing a planar poly line" << eom);
+
+    fLength = 0.;
+    fCentroid.X() = 0;
+    fCentroid.Y() = 0;
+
+    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
+        fLength += (*tIt)->Length();
+        fCentroid += (*tIt)->Length() * (*tIt)->Centroid();
+    }
+    fCentroid /= fLength;
+
+    fInitialized = true;
+
+    return;
+}
+
+}  // namespace KGeoBag

@@ -14,21 +14,18 @@
 namespace katrin
 {
 
-typedef KComplexElement<KEMField::KElectrostaticBoundaryFieldTimer>
-KElectrostaticBoundaryFieldTimerBuilder;
+typedef KComplexElement<KEMField::KElectrostaticBoundaryFieldTimer> KElectrostaticBoundaryFieldTimerBuilder;
 
-template< >
-bool KElectrostaticBoundaryFieldTimerBuilder::AddAttribute(KContainer*)
+template<> bool KElectrostaticBoundaryFieldTimerBuilder::AddAttribute(KContainer*)
 {
     return false;
 }
 
-template< >
-bool KElectrostaticBoundaryFieldTimerBuilder::AddElement(KContainer*)
+template<> bool KElectrostaticBoundaryFieldTimerBuilder::AddElement(KContainer*)
 {
     return false;
 }
 
-} /* namespace KEMField */
+}  // namespace katrin
 
 #endif /* KELECTROSTATICBOUNDARYFIELDTIMERBUILDER_HH_ */

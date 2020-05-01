@@ -13,15 +13,13 @@ TRandom* gRandom = &katrin::KTRandom::GetInstance();
 namespace katrin
 {
 
-KTRandom::KTRandom() :
-        fGenerator( KRandom::GetInstance() )
+KTRandom::KTRandom() : fGenerator(KRandom::GetInstance())
 {
     SetName("KTRandom");
     SetTitle("Random number generator: KATRIN's Mersenne Twistor");
 }
 
-KTRandom::~KTRandom()
-{ }
+KTRandom::~KTRandom() {}
 
 UInt_t KTRandom::GetSeed() const
 {
@@ -33,13 +31,13 @@ Double_t KTRandom::Rndm(Int_t)
     return fGenerator.Uniform(0.0, 1.0, false, false);
 }
 
-void KTRandom::RndmArray(Int_t n, Float_t *array)
+void KTRandom::RndmArray(Int_t n, Float_t* array)
 {
     for (UInt_t i = 0; i < (UInt_t) n; ++i)
         *(array + i) = fGenerator.Uniform(0.0, 1.0, false, true);
 }
 
-void KTRandom::RndmArray(Int_t n, double *array)
+void KTRandom::RndmArray(Int_t n, double* array)
 {
     for (UInt_t i = 0; i < (UInt_t) n; ++i)
         *(array + i) = fGenerator.Uniform(0.0, 1.0, false, true);

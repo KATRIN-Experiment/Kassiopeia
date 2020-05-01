@@ -1,66 +1,66 @@
 #ifndef Kassiopeia_KSRootTerminator_h_
 #define Kassiopeia_KSRootTerminator_h_
 
-#include "KSTerminator.h"
-#include "KSStep.h"
 #include "KSList.h"
+#include "KSStep.h"
+#include "KSTerminator.h"
 
 namespace Kassiopeia
 {
 
-    class KSTrack;
+class KSTrack;
 
-    class KSRootTerminator :
-        public KSComponentTemplate< KSRootTerminator, KSTerminator >
-    {
-        public:
-            KSRootTerminator();
-            KSRootTerminator( const KSRootTerminator& aCopy );
-            KSRootTerminator* Clone() const;
-            virtual ~KSRootTerminator();
+class KSRootTerminator : public KSComponentTemplate<KSRootTerminator, KSTerminator>
+{
+  public:
+    KSRootTerminator();
+    KSRootTerminator(const KSRootTerminator& aCopy);
+    KSRootTerminator* Clone() const override;
+    ~KSRootTerminator() override;
 
-            //**********
-            //terminator
-            //**********
+    //**********
+    //terminator
+    //**********
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue ) const;
+  protected:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aQueue) const override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void AddTerminator( KSTerminator* aTerminator );
-            void RemoveTerminator( KSTerminator* aTerminator );
+  public:
+    void AddTerminator(KSTerminator* aTerminator);
+    void RemoveTerminator(KSTerminator* aTerminator);
 
-        private:
-            KSList< KSTerminator > fTerminators;
-            KSTerminator* fTerminator;
+  private:
+    KSList<KSTerminator> fTerminators;
+    KSTerminator* fTerminator;
 
-            //******
-            //action
-            //******
+    //******
+    //action
+    //******
 
-        public:
-            void SetStep( KSStep* aStep );
+  public:
+    void SetStep(KSStep* aStep);
 
-            void CalculateTermination();
-            void ExecuteTermination();
+    void CalculateTermination();
+    void ExecuteTermination();
 
-            virtual void PushUpdateComponent();
-            virtual void PushDeupdateComponent();
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
 
-        private:
-            KSStep* fStep;
-            const KSParticle* fInitialParticle;
-            KSParticle* fTerminatorParticle;
-            KSParticle* fFinalParticle;
-            KSParticleQueue* fParticleQueue;
-    };
+  private:
+    KSStep* fStep;
+    const KSParticle* fInitialParticle;
+    KSParticle* fTerminatorParticle;
+    KSParticle* fFinalParticle;
+    KSParticleQueue* fParticleQueue;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

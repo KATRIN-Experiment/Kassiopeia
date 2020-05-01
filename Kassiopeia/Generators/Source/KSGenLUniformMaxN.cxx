@@ -3,29 +3,32 @@
 //
 
 #include "KSGenLUniformMaxN.h"
+
 #include "KRandom.h"
 using katrin::KRandom;
 
-namespace Kassiopeia {
-    KSGenLUniformMaxN::KSGenLUniformMaxN() { }
+namespace Kassiopeia
+{
+KSGenLUniformMaxN::KSGenLUniformMaxN() {}
 
-    KSGenLUniformMaxN::KSGenLUniformMaxN(const KSGenLUniformMaxN& /*aCopy*/) : KSComponent() { }
+KSGenLUniformMaxN::KSGenLUniformMaxN(const KSGenLUniformMaxN& /*aCopy*/) : KSComponent() {}
 
-    KSGenLUniformMaxN *KSGenLUniformMaxN::Clone() const {
-        return new KSGenLUniformMaxN(*this);
-    }
+KSGenLUniformMaxN* KSGenLUniformMaxN::Clone() const
+{
+    return new KSGenLUniformMaxN(*this);
+}
 
-    KSGenLUniformMaxN::~KSGenLUniformMaxN() { }
+KSGenLUniformMaxN::~KSGenLUniformMaxN() {}
 
-    void KSGenLUniformMaxN::InitializeComponent() { }
+void KSGenLUniformMaxN::InitializeComponent() {}
 
-    void KSGenLUniformMaxN::DeinitializeComponent() { }
+void KSGenLUniformMaxN::DeinitializeComponent() {}
 
-    void KSGenLUniformMaxN::Dice(KSParticleQueue* aPrimaries) {
+void KSGenLUniformMaxN::Dice(KSParticleQueue* aPrimaries)
+{
 
-        for(KSParticleIt p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
-            (*p)->SetSecondQuantumNumber(KRandom::GetInstance().Uniform(0,(*p)->GetMainQuantumNumber()-1) );
-        }
-
+    for (auto p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
+        (*p)->SetSecondQuantumNumber(KRandom::GetInstance().Uniform(0, (*p)->GetMainQuantumNumber() - 1));
     }
 }
+}  // namespace Kassiopeia

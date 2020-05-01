@@ -8,26 +8,25 @@
 #ifndef KOPENCLELECTROSTATICBOUNDARYINTEGRATORCONFIG_HH_
 #define KOPENCLELECTROSTATICBOUNDARYINTEGRATORCONFIG_HH_
 
-#include <string>
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 
-namespace KEMField {
+#include <string>
+
+namespace KEMField
+{
 
 struct KOpenCLElectrostaticBoundaryIntegratorConfig
 {
-	KOpenCLElectrostaticBoundaryIntegratorConfig() :
-		fCPUIntegrator(KEBIFactory::MakeDefault())
-	{
-	}
+    KOpenCLElectrostaticBoundaryIntegratorConfig() : fCPUIntegrator(KEBIFactory::MakeDefault()) {}
 
-	std::string fOpenCLSourceFile;
-	std::string fOpenCLKernelFile;
-	std::string fOpenCLFlags;
-	KElectrostaticBoundaryIntegrator fCPUIntegrator;
+    std::string fOpenCLSourceFile;
+    std::string fOpenCLKernelFile;
+    std::string fOpenCLFlags;
+    KElectrostaticBoundaryIntegrator fCPUIntegrator;
 };
 
 using KoclEBIConfig = KOpenCLElectrostaticBoundaryIntegratorConfig;
 
-} /* KEMField */
+}  // namespace KEMField
 
 #endif /* KOPENCLELECTROSTATICBOUNDARYINTEGRATORCONFIG_HH_ */

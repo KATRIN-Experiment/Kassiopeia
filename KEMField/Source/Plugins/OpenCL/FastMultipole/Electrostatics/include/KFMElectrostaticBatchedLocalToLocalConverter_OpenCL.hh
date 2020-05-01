@@ -2,18 +2,18 @@
 #define __KFMElectrostaticBatchedLocalToLocalConverter_OpenCL_H__
 
 
-#include <vector>
 #include <complex>
+#include <vector>
 
 //core
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
 
 //kernel
-#include "KFMKernelResponseArray.hh"
 #include "KFMKernelExpansion.hh"
-#include "KFMScaleInvariantKernelExpansion.hh"
+#include "KFMKernelResponseArray.hh"
 #include "KFMKernelResponseArrayTypes.hh"
+#include "KFMScaleInvariantKernelExpansion.hh"
 
 //core (opencl)
 #include "KOpenCLInterface.hh"
@@ -27,8 +27,8 @@
 
 //electrostatics
 #include "KFMElectrostaticNode.hh"
-#include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticTree.hh"
 
 namespace KEMField
 {
@@ -45,115 +45,116 @@ namespace KEMField
 *
 */
 
-class KFMElectrostaticBatchedLocalToLocalConverter_OpenCL: public KFMNodeActor< KFMElectrostaticNode >
+class KFMElectrostaticBatchedLocalToLocalConverter_OpenCL : public KFMNodeActor<KFMElectrostaticNode>
 {
-    public:
-        KFMElectrostaticBatchedLocalToLocalConverter_OpenCL();
-        virtual ~KFMElectrostaticBatchedLocalToLocalConverter_OpenCL();
+  public:
+    KFMElectrostaticBatchedLocalToLocalConverter_OpenCL();
+    virtual ~KFMElectrostaticBatchedLocalToLocalConverter_OpenCL();
 
-        void SetParameters(KFMElectrostaticParameters params);
-        void SetTree(KFMElectrostaticTree* tree);
+    void SetParameters(KFMElectrostaticParameters params);
+    void SetTree(KFMElectrostaticTree* tree);
 
-        void SetNodeMomentBuffer(cl::Buffer* node_moments){fNodeMomentBufferCL = node_moments;};
-        void SetPrimaryNodeSet(KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* primary_node_set);
+    void SetNodeMomentBuffer(cl::Buffer* node_moments)
+    {
+        fNodeMomentBufferCL = node_moments;
+    };
+    void SetPrimaryNodeSet(KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* primary_node_set);
 
-        void Prepare();
-        void Finalize();
+    void Prepare();
+    void Finalize();
 
-        ////////////////////////////////////////////////////////////////////////
-        void Initialize();
+    ////////////////////////////////////////////////////////////////////////
+    void Initialize();
 
-        ////////////////////////////////////////////////////////////////////////
-        virtual void ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node);
+    ////////////////////////////////////////////////////////////////////////
+    virtual void ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node);
 
-    protected:
+  protected:
+    void BufferNode(KFMNode<KFMElectrostaticNodeObjects>* node);
+    void ExecuteBufferedAction();
+    void ClearBuffers();
 
-        void BufferNode(KFMNode<KFMElectrostaticNodeObjects>* node);
-        void ExecuteBufferedAction();
-        void ClearBuffers();
+    void BuildBuffers();
+    void AssignBuffers();
 
-        void BuildBuffers();
-        void AssignBuffers();
+    void ConstructTransformKernel();
 
-        void ConstructTransformKernel();
+    ////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
+    KFMElectrostaticTree* fTree;
 
-        KFMElectrostaticTree* fTree;
+    //parameters extracted from tree
+    unsigned int fDegree;
+    unsigned int fNTerms;
+    unsigned int fStride;
+    unsigned int fDivisions;
+    //needed when computing scale factors
+    unsigned int fTopLevelDivisions;
+    unsigned int fLowerLevelDivisions;
 
-        //parameters extracted from tree
-        unsigned int fDegree;
-        unsigned int fNTerms;
-        unsigned int fStride;
-        unsigned int fDivisions;
-        //needed when computing scale factors
-        unsigned int fTopLevelDivisions;
-        unsigned int fLowerLevelDivisions;
+    unsigned int fZeroMaskSize;
+    unsigned int fMaxTreeDepth;
 
-        unsigned int fZeroMaskSize;
-        unsigned int fMaxTreeDepth;
+    //buffering
+    int fCachedNodeLevel;
+    unsigned int fNMaxBufferedNodes;
+    unsigned int fNMaxParentNodes;
+    unsigned int fNBufferedNodes;
+    std::vector<unsigned int> fNodeIDBuffer;
+    std::vector<unsigned int> fBlockSetIDBuffer;
+    std::vector<unsigned int> fParentIDBuffer;
 
-        //buffering
-        int fCachedNodeLevel;
-        unsigned int fNMaxBufferedNodes;
-        unsigned int fNMaxParentNodes;
-        unsigned int fNBufferedNodes;
-        std::vector<unsigned int> fNodeIDBuffer;
-        std::vector<unsigned int> fBlockSetIDBuffer;
-        std::vector<unsigned int> fParentIDBuffer;
+    mutable cl::Kernel* fTransformKernel;
+    unsigned int fNTransformLocal;
 
-        mutable cl::Kernel* fTransformKernel;
-        unsigned int fNTransformLocal;
+    //need a buffer to store the L2L response functions on the GPU
+    cl::Buffer* fL2LCoeffBufferCL;
 
-        //need a buffer to store the L2L response functions on the GPU
-        cl::Buffer* fL2LCoeffBufferCL;
+    //scale factor buffers for scale invariant kernels
+    double fWorldLength;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+    std::vector<CL_TYPE> fSourceScaleFactorArray;
+    std::vector<CL_TYPE> fTargetScaleFactorArray;
+#pragma GCC diagnostic pop
+    cl::Buffer* fSourceScaleFactorBufferCL;
+    cl::Buffer* fTargetScaleFactorBufferCL;
 
-        //scale factor buffers for scale invariant kernels
-        double fWorldLength;
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wignored-attributes"
-        std::vector< CL_TYPE > fSourceScaleFactorArray;
-        std::vector< CL_TYPE > fTargetScaleFactorArray;
-        #pragma GCC diagnostic pop
-        cl::Buffer* fSourceScaleFactorBufferCL;
-        cl::Buffer* fTargetScaleFactorBufferCL;
+    //ptr to external buffer which stores all local moments
+    cl::Buffer* fNodeMomentBufferCL;
 
-        //ptr to external buffer which stores all local moments
-        cl::Buffer* fNodeMomentBufferCL;
+    //buffer for the primary node id's
+    cl::Buffer* fNodeIDBufferCL;
 
-        //buffer for the primary node id's
-        cl::Buffer* fNodeIDBufferCL;
+    //buffer for the block set id's
+    cl::Buffer* fBlockSetIDListBufferCL;
 
-        //buffer for the block set id's
-        cl::Buffer* fBlockSetIDListBufferCL;
+    //buffer for the parent node id's
+    cl::Buffer* fParentIDBufferCL;
 
-        //buffer for the parent node id's
-        cl::Buffer* fParentIDBufferCL;
+    unsigned int fNPrimaryNodes;
+    KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* fPrimaryNodes;
 
-        unsigned int fNPrimaryNodes;
-        KFMSpecialNodeSet<KFMElectrostaticNodeObjects>* fPrimaryNodes;
+    //space to cache the ids of the child multipole nodes for each parent that needs processing
+    //these are indexed by multipole node id
+    std::vector<std::vector<unsigned int>> fCachedPrimaryNodeIDLists;
+    std::vector<std::vector<unsigned int>> fCachedBlockSetIDLists;
 
-        //space to cache the ids of the child multipole nodes for each parent that needs processing
-        //these are indexed by multipole node id
-        std::vector< std::vector<unsigned int> > fCachedPrimaryNodeIDLists;
-        std::vector< std::vector<unsigned int> > fCachedBlockSetIDLists;
+    //L2L response calculator and data
+    KFMKernelResponseArray_3DLaplaceL2L* fKernelResponse;
+    KFMScaleInvariantKernelExpansion<KFMELECTROSTATICS_DIM>* fScaleInvariantKernel;
+    std::vector<std::complex<double>> fRawL2LCoeff;
+    KFMArrayWrapper<std::complex<double>, KFMELECTROSTATICS_DIM + 2>* fL2LCoeff;
 
-        //L2L response calculator and data
-        KFMKernelResponseArray_3DLaplaceL2L* fKernelResponse;
-        KFMScaleInvariantKernelExpansion<KFMELECTROSTATICS_DIM>* fScaleInvariantKernel;
-        std::vector< std::complex<double> > fRawL2LCoeff;
-        KFMArrayWrapper<std::complex<double>,  KFMELECTROSTATICS_DIM + 2>* fL2LCoeff;
+    //limits, and size
+    int fLowerLimits[KFMELECTROSTATICS_DIM + 2];
+    int fUpperLimits[KFMELECTROSTATICS_DIM + 2];
+    unsigned int fDimensionSize[KFMELECTROSTATICS_DIM + 2];
+    unsigned int fTotalSpatialSize;
 
-        //limits, and size
-        int fLowerLimits[KFMELECTROSTATICS_DIM + 2];
-        int fUpperLimits[KFMELECTROSTATICS_DIM + 2];
-        unsigned int fDimensionSize[KFMELECTROSTATICS_DIM + 2];
-        unsigned int fTotalSpatialSize;
-
-////////////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////////////////////////////////////////////////////////////
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMElectrostaticBatchedLocalToLocalConverter_OpenCL_H__ */

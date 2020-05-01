@@ -6,8 +6,8 @@
 
 namespace KEMField
 {
-  class KPETScInterface
-  {
+class KPETScInterface
+{
   public:
     static KPETScInterface* GetInstance();
 
@@ -19,9 +19,8 @@ namespace KEMField
     virtual ~KPETScInterface();
 
     static KPETScInterface* fPETScInterface;
+};
 
-  };
-
-}
+}  // namespace KEMField
 
 #endif /* KPETSCINTERFACE_DEF */

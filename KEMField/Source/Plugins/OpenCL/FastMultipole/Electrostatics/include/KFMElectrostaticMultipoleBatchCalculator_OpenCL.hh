@@ -11,17 +11,17 @@
 #include "KFMScalarMultipoleExpansion.hh"
 
 //math
-#include "KFMPointCloud.hh"
-#include "KFMMath.hh"
 #include "KFMGaussLegendreQuadratureTableCalculator.hh"
+#include "KFMMath.hh"
+#include "KFMPointCloud.hh"
 
 //electrostatics
 #include "KFMElectrostaticElementContainer.hh"
 #include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
-
 #include "KFMElectrostaticMultipoleCalculatorAnalytic.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -36,93 +36,94 @@ namespace KEMField{
 *
 */
 
-class KFMElectrostaticMultipoleBatchCalculator_OpenCL: public KFMElectrostaticMultipoleBatchCalculatorBase
+class KFMElectrostaticMultipoleBatchCalculator_OpenCL : public KFMElectrostaticMultipoleBatchCalculatorBase
 {
-    public:
-        KFMElectrostaticMultipoleBatchCalculator_OpenCL();
-        virtual ~KFMElectrostaticMultipoleBatchCalculator_OpenCL();
+  public:
+    KFMElectrostaticMultipoleBatchCalculator_OpenCL();
+    virtual ~KFMElectrostaticMultipoleBatchCalculator_OpenCL();
 
-        virtual void SetDegree(int degree);
+    virtual void SetDegree(int degree);
 
-        virtual void Initialize();
+    virtual void Initialize();
 
-        //execute the operation to fill the multipole buffer
-        virtual void ComputeMoments();
+    //execute the operation to fill the multipole buffer
+    virtual void ComputeMoments();
 
-        std::string GetOpenCLFlags() const {return fOpenCLFlags;};
+    std::string GetOpenCLFlags() const
+    {
+        return fOpenCLFlags;
+    };
 
-    protected:
+  protected:
+    void ConstructOpenCLKernels();
+    void BuildBuffers();
+    void AssignBuffers();
+    void FillTemporaryBuffers();
 
-        void ConstructOpenCLKernels();
-        void BuildBuffers();
-        void AssignBuffers();
-        void FillTemporaryBuffers();
+    KFMElectrostaticMultipoleCalculatorAnalytic* fAnalyticCalc;
 
-        KFMElectrostaticMultipoleCalculatorAnalytic* fAnalyticCalc;
+    ////////////////////////////////////////////////////////////////////////
 
-        ////////////////////////////////////////////////////////////////////////
+    //inherited from base
+    //long fMaxBufferSizeInBytes;
+    //bool fInitialized;
+    //int fDegree;
+    //int fDim;
+    //unsigned int fNMaxItems;
+    //unsigned int fStride;
+    //unsigned int fValidSize;
+    //int* fIDBuffer;//size = fNMaxItems
+    //double* fOriginBuffer;   //size = fDim*fNMaxItems
+    //double* fMomentBuffer; //size = 2*fNMaxItems*fStride
 
-        //inherited from base
-        //long fMaxBufferSizeInBytes;
-        //bool fInitialized;
-        //int fDegree;
-        //int fDim;
-        //unsigned int fNMaxItems;
-        //unsigned int fStride;
-        //unsigned int fValidSize;
-        //int* fIDBuffer;//size = fNMaxItems
-        //double* fOriginBuffer;   //size = fDim*fNMaxItems
-        //double* fMomentBuffer; //size = 2*fNMaxItems*fStride
+    int fComplexStride;
+    int fJSize;
 
-        int fComplexStride;
-        int fJSize;
+    ////////////////////////////////////////////////////////////////////////
 
-        ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    KFMGaussLegendreQuadratureTableCalculator fQuadratureTableCalc;
+    std::vector<double> fAbscissaVector;
+    std::vector<double> fWeightsVector;
 
-        ////////////////////////////////////////////////////////////////////////
-        KFMGaussLegendreQuadratureTableCalculator fQuadratureTableCalc;
-        std::vector< double > fAbscissaVector;
-        std::vector< double > fWeightsVector;
+    CL_TYPE* fAbscissa;
+    CL_TYPE* fWeights;
+    cl::Buffer* fAbscissaBufferCL;
+    cl::Buffer* fWeightsBufferCL;
 
-        CL_TYPE* fAbscissa;
-        CL_TYPE* fWeights;
-        cl::Buffer* fAbscissaBufferCL;
-        cl::Buffer* fWeightsBufferCL;
+    ////////////////////////////////////////////////////////////////////////
 
-        ////////////////////////////////////////////////////////////////////////
+    std::string fOpenCLFlags;
 
-        std::string fOpenCLFlags;
+    CL_TYPE* fJMatrix;
+    CL_TYPE* fAxialPlm;
+    CL_TYPE* fEquatorialPlm;
+    CL_TYPE* fACoefficient;
 
-        CL_TYPE* fJMatrix;
-        CL_TYPE* fAxialPlm;
-        CL_TYPE* fEquatorialPlm;
-        CL_TYPE* fACoefficient;
+    CL_TYPE* fBasisData;
+    CL_TYPE4* fIntermediateOriginData;
+    CL_TYPE16* fVertexData;
+    CL_TYPE2* fIntermediateMomentData;
 
-        CL_TYPE* fBasisData;
-        CL_TYPE4* fIntermediateOriginData;
-        CL_TYPE16* fVertexData;
-        CL_TYPE2* fIntermediateMomentData;
+    mutable cl::Kernel* fMultipoleKernel;
 
-        mutable cl::Kernel* fMultipoleKernel;
+    cl::Buffer* fOriginBufferCL;      //expansion origin associated with each element (double)
+    cl::Buffer* fVertexDataBufferCL;  //the positions of the vertices of each element (double)
+    cl::Buffer* fBasisDataBufferCL;   //the basis data associated with each element (double)
+    cl::Buffer* fMomentBufferCL;      //the moments of each element (double)
 
-        cl::Buffer* fOriginBufferCL; //expansion origin associated with each element (double)
-        cl::Buffer* fVertexDataBufferCL; //the positions of the vertices of each element (double)
-        cl::Buffer* fBasisDataBufferCL; //the basis data associated with each element (double)
-        cl::Buffer* fMomentBufferCL; //the moments of each element (double)
+    cl::Buffer* fACoefficientBufferCL;   //normalization coefficients A(n,m) (double)
+    cl::Buffer* fEquatorialPlmBufferCL;  //the associated legendre polynomials evaluated at zero (double)
+    cl::Buffer* fAxialPlmBufferCL;       //the associated legendre polynomials evaluated at one (double)
+    cl::Buffer* fJMatrixBufferCL;        //the pinchon j-matrices (double)
 
-        cl::Buffer* fACoefficientBufferCL; //normalization coefficients A(n,m) (double)
-        cl::Buffer* fEquatorialPlmBufferCL; //the associated legendre polynomials evaluated at zero (double)
-        cl::Buffer* fAxialPlmBufferCL; //the associated legendre polynomials evaluated at one (double)
-        cl::Buffer* fJMatrixBufferCL; //the pinchon j-matrices (double)
+    unsigned int fNLocal;
+    unsigned int fNMaxWorkgroups;
 
-        unsigned int fNLocal;
-        unsigned int fNMaxWorkgroups;
-
-        ////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////////////////////////////////////////////////////
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticMultipoleCalculatorBatch_H__ */

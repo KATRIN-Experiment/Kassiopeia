@@ -3,32 +3,35 @@
 //
 
 #include "KSGenLStatistical.h"
+
 #include "KRandom.h"
 using katrin::KRandom;
 
-namespace Kassiopeia {
-    KSGenLStatistical::KSGenLStatistical() { }
+namespace Kassiopeia
+{
+KSGenLStatistical::KSGenLStatistical() {}
 
-    KSGenLStatistical::KSGenLStatistical(const KSGenLStatistical& /*aCopy*/) : KSComponent() { }
+KSGenLStatistical::KSGenLStatistical(const KSGenLStatistical& /*aCopy*/) : KSComponent() {}
 
-    KSGenLStatistical *KSGenLStatistical::Clone() const {
-        return new KSGenLStatistical(*this);
-    }
+KSGenLStatistical* KSGenLStatistical::Clone() const
+{
+    return new KSGenLStatistical(*this);
+}
 
-    KSGenLStatistical::~KSGenLStatistical() { }
+KSGenLStatistical::~KSGenLStatistical() {}
 
-    void KSGenLStatistical::InitializeComponent() { }
+void KSGenLStatistical::InitializeComponent() {}
 
-    void KSGenLStatistical::DeinitializeComponent() { }
+void KSGenLStatistical::DeinitializeComponent() {}
 
-    void KSGenLStatistical::Dice(KSParticleQueue* aPrimaries) {
+void KSGenLStatistical::Dice(KSParticleQueue* aPrimaries)
+{
 
-        for(KSParticleIt p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
-            int n = (*p)->GetMainQuantumNumber();
-            int l = std::floor(std::sqrt(KRandom::GetInstance().Uniform(1,n*n))-1);
+    for (auto p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
+        int n = (*p)->GetMainQuantumNumber();
+        int l = std::floor(std::sqrt(KRandom::GetInstance().Uniform(1, n * n)) - 1);
 
-            (*p)->SetSecondQuantumNumber(l);
-        }
-
+        (*p)->SetSecondQuantumNumber(l);
     }
 }
+}  // namespace Kassiopeia

@@ -7,7 +7,7 @@
 namespace KGeoBag
 {
 
-    typedef KGExtrudedPathSurface< KGPlanarCircle > KGExtrudedCircleSurface;
+typedef KGExtrudedPathSurface<KGPlanarCircle> KGExtrudedCircleSurface;
 
 }
 

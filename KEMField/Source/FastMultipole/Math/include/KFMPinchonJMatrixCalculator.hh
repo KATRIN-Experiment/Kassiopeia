@@ -1,16 +1,16 @@
 #ifndef KFMPinchonJMatrixCalculator_HH__
 #define KFMPinchonJMatrixCalculator_HH__
 
-#include <vector>
-#include <cmath>
-
-#include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
-
 #include "KFMPinchonGMatrixCalculator.hh"
+#include "KFMVectorOperations.hh"
 
-namespace KEMField{
+#include <cmath>
+#include <vector>
+
+namespace KEMField
+{
 
 
 /**
@@ -42,40 +42,37 @@ namespace KEMField{
 
 class KFMPinchonJMatrixCalculator
 {
-    public:
-        KFMPinchonJMatrixCalculator();
-        virtual ~KFMPinchonJMatrixCalculator();
+  public:
+    KFMPinchonJMatrixCalculator();
+    virtual ~KFMPinchonJMatrixCalculator();
 
-        void SetDegree(int l_max)
-        {
-            fDegree = (unsigned int)std::fabs(l_max);
-        }
+    void SetDegree(int l_max)
+    {
+        fDegree = (unsigned int) std::fabs(l_max);
+    }
 
-        ///this function will allocate space for all the matrices needed for fDegree
-        void AllocateMatrices(std::vector< kfm_matrix* >* matrices);
+    ///this function will allocate space for all the matrices needed for fDegree
+    void AllocateMatrices(std::vector<kfm_matrix*>* matrices);
 
-        ///this function will deallocate all the matrices in the given vector
-        void DeallocateMatrices(std::vector< kfm_matrix* >* matrices);
+    ///this function will deallocate all the matrices in the given vector
+    void DeallocateMatrices(std::vector<kfm_matrix*>* matrices);
 
-        ///this functions takes an pointer to a vector of pointers of kfm_matrix
-        ///the matrices must be allocated before calling this function
-        ///if they are not allocated (with proper size) then this function will fail
-        ///and return false
-        bool ComputeMatrices(std::vector< kfm_matrix* >* matrices);
+    ///this functions takes an pointer to a vector of pointers of kfm_matrix
+    ///the matrices must be allocated before calling this function
+    ///if they are not allocated (with proper size) then this function will fail
+    ///and return false
+    bool ComputeMatrices(std::vector<kfm_matrix*>* matrices);
 
-    protected:
+  protected:
+    void ComputeJMatrixFromPrevious(unsigned int target_degree, kfm_matrix* prev, kfm_matrix* target);
 
-        void ComputeJMatrixFromPrevious(unsigned int target_degree, kfm_matrix* prev, kfm_matrix* target);
+    bool CheckMatrixSizes(std::vector<kfm_matrix*>* matrices);
 
-        bool CheckMatrixSizes(std::vector< kfm_matrix* >* matrices);
-
-        unsigned int fDegree;
-        KFMPinchonGMatrixCalculator* fGCalc;
-
-
+    unsigned int fDegree;
+    KFMPinchonGMatrixCalculator* fGCalc;
 };
 
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* __KFMPinchonJMatrixCalculator_H__ */

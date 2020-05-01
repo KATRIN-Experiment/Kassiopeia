@@ -8,43 +8,38 @@
 #ifndef KELECTROSTATICPOTENTIALMAPBUILDER_HH_
 #define KELECTROSTATICPOTENTIALMAPBUILDER_HH_
 
-#include "KEMBindingsMessage.hh"
 #include "KComplexElement.hh"
+#include "KEMBindingsMessage.hh"
 #include "KEMStreamableThreeVector.hh"
 #include "KToolbox.h"
 
 #ifdef KEMFIELD_USE_VTK
 #include "KElectrostaticPotentialmap.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KElectrostaticPotentialmap >
-KElectrostaticPotentialmapBuilder;
-
-template< >
-inline bool KElectrostaticPotentialmapBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "name" )
-    {
+
+typedef KComplexElement<KEMField::KElectrostaticPotentialmap> KElectrostaticPotentialmapBuilder;
+
+template<> inline bool KElectrostaticPotentialmapBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
         std::string name;
         aContainer->CopyTo(name);
         this->SetName(name);
         fObject->SetName(name);
         return true;
     }
-    if( aContainer->GetName() == "directory" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmap::SetDirectory );
+    if (aContainer->GetName() == "directory") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmap::SetDirectory);
         return true;
     }
-    if( aContainer->GetName() == "file" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmap::SetFile );
+    if (aContainer->GetName() == "file") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmap::SetFile);
         return true;
     }
-    if( aContainer->GetName() == "interpolation" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmap::SetInterpolation );
+    if (aContainer->GetName() == "interpolation") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmap::SetInterpolation);
         return true;
     }
     return false;
@@ -52,109 +47,96 @@ inline bool KElectrostaticPotentialmapBuilder::AddAttribute( KContainer* aContai
 
 ////////////////////////////////////////////////////////////////////
 
-typedef KComplexElement< KEMField::KElectrostaticPotentialmapCalculator >
-KElectrostaticPotentialmapCalculatorBuilder;
+typedef KComplexElement<KEMField::KElectrostaticPotentialmapCalculator> KElectrostaticPotentialmapCalculatorBuilder;
 
-template< >
-inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute(KContainer* aContainer)
 {
-    if (aContainer->GetName() == "name" )
-    {
+    if (aContainer->GetName() == "name") {
         std::string name;
         aContainer->CopyTo(name);
         this->SetName(name);
         return true;
     }
-    if( aContainer->GetName() == "directory" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetDirectory );
+    if (aContainer->GetName() == "directory") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetDirectory);
         return true;
     }
-    if( aContainer->GetName() == "file" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetFile );
+    if (aContainer->GetName() == "file") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetFile);
         return true;
     }
-    if( aContainer->GetName() == "center" )
-    {
+    if (aContainer->GetName() == "force_update") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetForceUpdate);
+        return true;
+    }
+    if (aContainer->GetName() == "center") {
         KEMField::KEMStreamableThreeVector center;
         aContainer->CopyTo(center);
         fObject->SetCenter(center.GetThreeVector());
         return true;
     }
-    if( aContainer->GetName() == "length" )
-    {
+    if (aContainer->GetName() == "length") {
         KEMField::KEMStreamableThreeVector length;
         aContainer->CopyTo(length);
         fObject->SetLength(length.GetThreeVector());
         return true;
     }
-    if( aContainer->GetName() == "mirror_x" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorX );
+    if (aContainer->GetName() == "mirror_x") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorX);
         return true;
     }
-    if( aContainer->GetName() == "mirror_y" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorY );
+    if (aContainer->GetName() == "mirror_y") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorY);
         return true;
     }
-    if( aContainer->GetName() == "mirror_z" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorZ );
+    if (aContainer->GetName() == "mirror_z") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetMirrorZ);
         return true;
     }
-    if( aContainer->GetName() == "spacing" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetSpacing );
+    if (aContainer->GetName() == "spacing") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetSpacing);
         return true;
     }
-    if( aContainer->GetName() == "spaces" )
-    {
-        std::vector< KGeoBag::KGSpace* > tSpaces =
-                KGeoBag::KGInterface::GetInstance()->RetrieveSpaces( aContainer->AsReference< std::string >() );
-        std::vector< KGeoBag::KGSpace* >::const_iterator tSpaceIt;
+    if (aContainer->GetName() == "spaces") {
+        std::vector<KGeoBag::KGSpace*> tSpaces =
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+        std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
-        if( tSpaces.size() == 0 )
-        {
-            BINDINGMSG( eWarning ) << "no spaces found for specifier <" << aContainer->AsReference< std::string >() << ">" << eom;
+        if (tSpaces.size() == 0) {
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
+                                 << eom;
             return false;
         }
 
-        for( tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++ )
-        {
+        for (tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++) {
             tSpace = *tSpaceIt;
-            fObject->AddSpace( tSpace );
+            fObject->AddSpace(tSpace);
         }
         return true;
     }
-    if( aContainer->GetName() == "field" )
-    {
+    if (aContainer->GetName() == "field") {
         std::string fieldName;
         aContainer->CopyTo(fieldName);
         KEMField::KElectrostaticField* field =
-                katrin::KToolbox::GetInstance().Get<KEMField::KElectrostaticField>(fieldName);
-        fObject->SetElectricField(field);
+            katrin::KToolbox::GetInstance().Get<KEMField::KElectrostaticField>(fieldName);
+        fObject->AddElectricField(field);
         return true;
     }
     return false;
 }
 
-template< >
-inline bool KElectrostaticPotentialmapCalculatorBuilder::AddElement( KContainer* aContainer )
+template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddElement(KContainer* aContainer)
 {
-    if(aContainer->Is<KEMField::KElectrostaticField>())
-    {
-        aContainer->ReleaseTo(fObject,&KEMField::KElectrostaticPotentialmapCalculator
-                ::SetElectricField);
+    if (aContainer->Is<KEMField::KElectrostaticField>()) {
+        aContainer->ReleaseTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::AddElectricField);
         return true;
     }
     return false;
 }
 
-template< >
-inline bool KElectrostaticPotentialmapCalculatorBuilder::End(){
+template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::End()
+{
     fObject->Initialize();
     return true;
 }
@@ -165,54 +147,53 @@ inline bool KElectrostaticPotentialmapCalculatorBuilder::End(){
 
 // dummy for bindings when potentialmap is not available
 #include "KElectrostaticField.hh"
+
 #include <limits>
 
 namespace KEMField
 {
-    class KElectrostaticPotentialmap : public KElectrostaticField
+class KElectrostaticPotentialmap : public KElectrostaticField
+{
+    double PotentialCore(const KPosition& /*P*/) const override
     {
-        virtual double PotentialCore(const KPosition& /*P*/) const{
-            return std::numeric_limits<double>::quiet_NaN();
-        }
-        virtual KThreeVector ElectricFieldCore(const KPosition& /*P*/) const {
-            double nan = std::numeric_limits<double>::quiet_NaN();
-            return KThreeVector(nan,nan,nan);
-        }
-    };
-    class KElectrostaticPotentialmapCalculator{};
-}
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+    KThreeVector ElectricFieldCore(const KPosition& /*P*/) const override
+    {
+        double nan = std::numeric_limits<double>::quiet_NaN();
+        return KThreeVector(nan, nan, nan);
+    }
+};
+class KElectrostaticPotentialmapCalculator
+{};
+}  // namespace KEMField
 
 namespace katrin
 {
 
-typedef KComplexElement< KEMField::KElectrostaticPotentialmap >
-KElectrostaticPotentialmapBuilder;
+typedef KComplexElement<KEMField::KElectrostaticPotentialmap> KElectrostaticPotentialmapBuilder;
 
-template< >
-inline bool KElectrostaticPotentialmapBuilder::AddAttribute( KContainer* /*aContainer*/ )
+template<> inline bool KElectrostaticPotentialmapBuilder::AddAttribute(KContainer* /*aContainer*/)
 {
     return true;
 }
 
-template< >
-inline bool KElectrostaticPotentialmapBuilder::End(){
-    BINDINGMSG( eWarning )  << "KEMField is installed without VTK. Potentialmap is not supported!" << eom;
+template<> inline bool KElectrostaticPotentialmapBuilder::End()
+{
+    BINDINGMSG(eWarning) << "KEMField is installed without VTK. Potentialmap is not supported!" << eom;
     return true;
-
 }
 
-typedef KComplexElement< KEMField::KElectrostaticPotentialmapCalculator >
-KElectrostaticPotentialmapCalculatorBuilder;
+typedef KComplexElement<KEMField::KElectrostaticPotentialmapCalculator> KElectrostaticPotentialmapCalculatorBuilder;
 
-template< >
-inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute( KContainer* /*aContainer*/ )
+template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute(KContainer* /*aContainer*/)
 {
     return true;
 }
 
-template< >
-inline bool KElectrostaticPotentialmapCalculatorBuilder::End(){
-    BINDINGMSG( eWarning )  << "KEMField is installed without VTK. Potentialmap is not supported!" << eom;
+template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::End()
+{
+    BINDINGMSG(eWarning) << "KEMField is installed without VTK. Potentialmap is not supported!" << eom;
     return true;
 }
 

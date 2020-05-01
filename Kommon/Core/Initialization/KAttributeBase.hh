@@ -7,28 +7,25 @@
 namespace katrin
 {
 
-    class KElementBase;
+class KElementBase;
 
-    class KAttributeBase :
-        public KContainer,
-        public KProcessor
-    {
-        public:
-            KAttributeBase();
-            virtual ~KAttributeBase();
+class KAttributeBase : public KContainer, public KProcessor
+{
+  public:
+    KAttributeBase();
+    ~KAttributeBase() override;
 
-        public:
-            virtual void ProcessToken( KAttributeDataToken* aToken );
-            virtual void ProcessToken( KErrorToken* aToken );
+  public:
+    void ProcessToken(KAttributeDataToken* aToken) override;
+    void ProcessToken(KErrorToken* aToken) override;
 
-        public:
-            virtual bool SetValue( KToken* aValue ) = 0;
+  public:
+    virtual bool SetValue(KToken* aValue) = 0;
 
-        protected:
-            KElementBase* fParentElement;
-    };
-}
-
+  protected:
+    KElementBase* fParentElement;
+};
+}  // namespace katrin
 
 
 #endif

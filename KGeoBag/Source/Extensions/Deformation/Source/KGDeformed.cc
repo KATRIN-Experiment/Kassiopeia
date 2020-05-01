@@ -2,13 +2,13 @@
 
 namespace KGeoBag
 {
-  void KGDeformedObject::SetDeformation(std::shared_ptr<KGDeformation> deformation)
-  {
+void KGDeformedObject::SetDeformation(std::shared_ptr<KGDeformation> deformation)
+{
     fDeformation = deformation;
-  }
-
-  std::shared_ptr<KGDeformation> KGDeformedObject::GetDeformation() const
-  {
-    return fDeformation;
-  }
 }
+
+std::shared_ptr<KGDeformation> KGDeformedObject::GetDeformation() const
+{
+    return fDeformation;
+}
+}  // namespace KGeoBag

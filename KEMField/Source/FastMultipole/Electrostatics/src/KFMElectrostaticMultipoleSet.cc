@@ -4,22 +4,23 @@
 namespace KEMField
 {
 
-KFMElectrostaticMultipoleSet::KFMElectrostaticMultipoleSet(){}
+KFMElectrostaticMultipoleSet::KFMElectrostaticMultipoleSet() {}
 
-KFMElectrostaticMultipoleSet::~KFMElectrostaticMultipoleSet(){}
+KFMElectrostaticMultipoleSet::~KFMElectrostaticMultipoleSet() {}
 
-std::string KFMElectrostaticMultipoleSet::ClassName() const {return std::string("KFMElectrostaticMultipoleSet");}
+std::string KFMElectrostaticMultipoleSet::ClassName() const
+{
+    return std::string("KFMElectrostaticMultipoleSet");
+}
 
-void
-KFMElectrostaticMultipoleSet::DefineOutputNode(KSAOutputNode* node) const
+void KFMElectrostaticMultipoleSet::DefineOutputNode(KSAOutputNode* node) const
 {
     KFMScalarMultipoleExpansion::DefineOutputNode(node);
 }
 
-void
-KFMElectrostaticMultipoleSet::DefineInputNode(KSAInputNode* node)
+void KFMElectrostaticMultipoleSet::DefineInputNode(KSAInputNode* node)
 {
     KFMScalarMultipoleExpansion::DefineInputNode(node);
 }
 
-}
+}  // namespace KEMField

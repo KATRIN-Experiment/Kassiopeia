@@ -2,10 +2,10 @@
 #define KFMNamedScalarData_HH__
 
 
-#include <vector>
-#include <string>
-
 #include "KSAStructuredASCIIHeaders.hh"
+
+#include <string>
+#include <vector>
 
 namespace KEMField
 {
@@ -23,50 +23,76 @@ namespace KEMField
 *
 */
 
-class KFMNamedScalarData: public KSAInputOutputObject
+class KFMNamedScalarData : public KSAInputOutputObject
 {
-    public:
+  public:
+    KFMNamedScalarData() : fName(""){};
 
-        KFMNamedScalarData():fName(""){};
+    KFMNamedScalarData(const KFMNamedScalarData& rhs) : KSAInputOutputObject()
+    {
+        fName = rhs.fName;
+        fData = rhs.fData;
+    }
 
-        KFMNamedScalarData(const KFMNamedScalarData& rhs):
-        KSAInputOutputObject()
-        {
-            fName = rhs.fName;
-            fData = rhs.fData;
-        }
+    ~KFMNamedScalarData() override{};
 
-        virtual ~KFMNamedScalarData(){};
+    unsigned int GetSize() const
+    {
+        return fData.size();
+    };
 
-        unsigned int GetSize() const {return fData.size();};
+    std::string GetName() const
+    {
+        return fName;
+    };
+    void SetName(const std::string& name)
+    {
+        fName = name;
+    };
 
-        std::string GetName() const {return fName;};
-        void SetName( const std::string& name){fName = name;};
+    void AddNextValue(double value)
+    {
+        fData.push_back(value);
+    };
+    unsigned int GetNValues() const
+    {
+        return fData.size();
+    };
 
-        void AddNextValue(double value){fData.push_back(value);};
-        unsigned int GetNValues() const {return fData.size();};
+    double GetValue(unsigned int i) const
+    {
+        return fData[i];
+    };
+    void SetValue(unsigned int i, double data)
+    {
+        fData[i] = data;
+    };
 
-        double GetValue(unsigned int i) const {return fData[i];};
-        void SetValue(unsigned int i, double data){fData[i] = data;};
+    void GetData(std::vector<double>* data) const
+    {
+        *data = fData;
+    };
+    void SetData(const std::vector<double>* data)
+    {
+        fData = *data;
+    };
 
-        void GetData(std::vector<double>* data) const {*data = fData;};
-        void SetData(const std::vector<double>* data) {fData = *data;};
+    void DefineOutputNode(KSAOutputNode* node) const override;
+    void DefineInputNode(KSAInputNode* node) override;
+    virtual const char* ClassName() const
+    {
+        return "KFMNamedScalarData";
+    };
 
-        virtual void DefineOutputNode(KSAOutputNode* node) const;
-        virtual void DefineInputNode(KSAInputNode* node);
-        virtual const char* ClassName() const { return "KFMNamedScalarData"; };
-
-    private:
-
-        std::string fName;
-        std::vector< double > fData;
-
+  private:
+    std::string fName;
+    std::vector<double> fData;
 };
 
 
-DefineKSAClassName( KFMNamedScalarData )
+DefineKSAClassName(KFMNamedScalarData)
 
 
-}//end namespace
+}  // namespace KEMField
 
 #endif /* KFMNamedScalarData_H__ */

@@ -1,8 +1,8 @@
 #ifndef KGLeafConditionActor_HH__
 #define KGLeafConditionActor_HH__
 
-#include "KGNode.hh"
 #include "KGInspectingActor.hh"
+#include "KGNode.hh"
 
 namespace KGeoBag
 {
@@ -20,37 +20,41 @@ namespace KGeoBag
 *
 */
 
-template<typename NodeType>
-class KGLeafConditionActor: public KGInspectingActor<NodeType>
+template<typename NodeType> class KGLeafConditionActor : public KGInspectingActor<NodeType>
 {
-    public:
-        KGLeafConditionActor(){fSwitch = true;};
-        virtual ~KGLeafConditionActor(){};
+  public:
+    KGLeafConditionActor()
+    {
+        fSwitch = true;
+    };
+    virtual ~KGLeafConditionActor(){};
 
-        void SetTrueOnLeafNodes(){fSwitch = true;}
-        void SetFalseOnLeafNodes(){fSwitch = false;};
+    void SetTrueOnLeafNodes()
+    {
+        fSwitch = true;
+    }
+    void SetFalseOnLeafNodes()
+    {
+        fSwitch = false;
+    };
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(NodeType* node)
-        {
-            if( node->HasChildren() )
-            {
-                return !fSwitch;
-            }
-            else
-            {
-                return fSwitch;
-            }
+    //needs to answer this question about whether this node statisfies a condition
+    virtual bool ConditionIsSatisfied(NodeType* node)
+    {
+        if (node->HasChildren()) {
+            return !fSwitch;
         }
+        else {
+            return fSwitch;
+        }
+    }
 
 
-    private:
-
-        bool fSwitch;
-
+  private:
+    bool fSwitch;
 };
 
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGLeafConditionActor_H__ */

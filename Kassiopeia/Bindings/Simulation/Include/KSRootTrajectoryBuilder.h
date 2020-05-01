@@ -9,24 +9,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSRootTrajectory > KSRootTrajectoryBuilder;
+typedef KComplexElement<KSRootTrajectory> KSRootTrajectoryBuilder;
 
-    template< >
-    inline bool KSRootTrajectoryBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "set_trajectory" )
-        {
-            fObject->SetTrajectory( KToolbox::GetInstance().Get< KSTrajectory >( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSRootTrajectoryBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "set_trajectory") {
+        fObject->SetTrajectory(KToolbox::GetInstance().Get<KSTrajectory>(aContainer->AsReference<std::string>()));
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

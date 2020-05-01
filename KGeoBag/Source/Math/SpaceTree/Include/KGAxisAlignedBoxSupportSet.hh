@@ -2,8 +2,10 @@
 #define KGAxisAlignedBoxSupportSet_HH__
 
 
-#include "KGPoint.hh"
 #include "KGAxisAlignedBox.hh"
+#include "KGPoint.hh"
+
+#include <vector>
 
 namespace KGeoBag
 {
@@ -21,128 +23,130 @@ namespace KGeoBag
 *
 */
 
-template<size_t NDIM>
-class KGAxisAlignedBoxSupportSet
+template<size_t NDIM> class KGAxisAlignedBoxSupportSet
 {
-    public:
-        KGAxisAlignedBoxSupportSet(){;};
-        virtual ~KGAxisAlignedBoxSupportSet(){;};
+  public:
+    KGAxisAlignedBoxSupportSet()
+    {
+        ;
+    };
+    virtual ~KGAxisAlignedBoxSupportSet()
+    {
+        ;
+    };
 
-        size_t GetNSupportPoints()
-        {
-            if(fAllPoints.size() <= 1)
-            {
-                return fAllPoints.size();
-            }
-            else
-            {
-                return 2;
-            }
-        };
+    size_t GetNSupportPoints()
+    {
+        if (fAllPoints.size() <= 1) {
+            return fAllPoints.size();
+        }
+        else {
+            return 2;
+        }
+    };
 
-        size_t GetNPoints(){return fAllPoints.size();};
+    size_t GetNPoints()
+    {
+        return fAllPoints.size();
+    };
 
-        bool AddPoint(const KGPoint<NDIM>& point)
-        {
-            if(fAllPoints.size() == 0)
-            {
-                for(size_t i=0; i<NDIM; i++)
-                {
-                    fLength[i] = 0;
-                }
-
-                fCurrentMinimalBoundingBox.SetCenter(point);
-                fCurrentMinimalBoundingBox.SetLength(fLength); //no extent
-
-                for(size_t i=0; i<NDIM; i++)
-                {
-                    fLowerLimits[i] = point[i];
-                    fUpperLimits[i] = point[i];
-                }
-
-                fAllPoints.push_back(point);
-                return true;
+    bool AddPoint(const KGPoint<NDIM>& point)
+    {
+        if (fAllPoints.size() == 0) {
+            for (size_t i = 0; i < NDIM; i++) {
+                fLength[i] = 0;
             }
 
+            fCurrentMinimalBoundingBox.SetCenter(point);
+            fCurrentMinimalBoundingBox.SetLength(fLength);  //no extent
 
-            //check if this point is inside our minimum bounding box
-            if(fCurrentMinimalBoundingBox.PointIsInside(point))
-            {
-                //it is inside the current bounding box, so we
-                //only need to update the list of all points
-                fAllPoints.push_back(point);
-                return true;
+            for (size_t i = 0; i < NDIM; i++) {
+                fLowerLimits[i] = point[i];
+                fUpperLimits[i] = point[i];
             }
 
-
-            bool update;
-            for(size_t i=0; i<NDIM; i++)
-            {
-                update = false;
-
-                if(point[i] < fLowerLimits[i]){fLowerLimits[i] = point[i]; update = true;};
-                if(point[i] > fUpperLimits[i]){fUpperLimits[i] = point[i]; update = true;};
-
-                if(update)
-                {
-                    fCenter[i] = (fLowerLimits[i] + fUpperLimits[i])/2.0;
-                    fLength[i] = (fUpperLimits[i] - fLowerLimits[i]);
-                }
-            }
-
-            fCurrentMinimalBoundingBox.SetCenter(fCenter);
-            fCurrentMinimalBoundingBox.SetLength(fLength);
-
+            fAllPoints.push_back(point);
             return true;
         }
 
-        void GetAllPoints( std::vector< KGPoint<NDIM> >* points) const
-        {
+
+        //check if this point is inside our minimum bounding box
+        if (fCurrentMinimalBoundingBox.PointIsInside(point)) {
+            //it is inside the current bounding box, so we
+            //only need to update the list of all points
+            fAllPoints.push_back(point);
+            return true;
+        }
+
+
+        bool update;
+        for (size_t i = 0; i < NDIM; i++) {
+            update = false;
+
+            if (point[i] < fLowerLimits[i]) {
+                fLowerLimits[i] = point[i];
+                update = true;
+            };
+            if (point[i] > fUpperLimits[i]) {
+                fUpperLimits[i] = point[i];
+                update = true;
+            };
+
+            if (update) {
+                fCenter[i] = (fLowerLimits[i] + fUpperLimits[i]) / 2.0;
+                fLength[i] = (fUpperLimits[i] - fLowerLimits[i]);
+            }
+        }
+
+        fCurrentMinimalBoundingBox.SetCenter(fCenter);
+        fCurrentMinimalBoundingBox.SetLength(fLength);
+
+        return true;
+    }
+
+    void GetAllPoints(std::vector<KGPoint<NDIM>>* points) const
+    {
+        *points = fAllPoints;
+    }
+
+    void GetSupportPoints(std::vector<KGPoint<NDIM>>* points) const
+    {
+        if (fAllPoints.size() <= 1) {
             *points = fAllPoints;
         }
-
-        void GetSupportPoints( std::vector< KGPoint<NDIM> >* points) const
-        {
-            if(fAllPoints.size() <= 1)
-            {
-                *points = fAllPoints;
-            }
-            else
-            {
-                points->clear();
-                points->push_back(fLowerLimits);
-                points->push_back(fUpperLimits);
-            }
+        else {
+            points->clear();
+            points->push_back(fLowerLimits);
+            points->push_back(fUpperLimits);
         }
+    }
 
-        void Clear()
-        {
-            fAllPoints.clear();
-        }
+    void Clear()
+    {
+        fAllPoints.clear();
+    }
 
 
-        KGAxisAlignedBox<NDIM> GetMinimalBoundingBox() const
-        {
-            return fCurrentMinimalBoundingBox;
-        }
+    KGAxisAlignedBox<NDIM> GetMinimalBoundingBox() const
+    {
+        return fCurrentMinimalBoundingBox;
+    }
 
-    private:
+  private:
+    //the two support points
+    KGPoint<NDIM> fLowerLimits;
+    KGPoint<NDIM> fUpperLimits;
 
-        //the two support points
-        KGPoint<NDIM> fLowerLimits;
-        KGPoint<NDIM> fUpperLimits;
+    KGAxisAlignedBox<NDIM> fCurrentMinimalBoundingBox;
 
-        KGAxisAlignedBox<NDIM> fCurrentMinimalBoundingBox;
+    std::vector<KGPoint<NDIM>> fAllPoints;
 
-        std::vector< KGPoint<NDIM> > fAllPoints;
-
-        //scratch space
-        double fCenter[NDIM];
-        double fLength[NDIM];
-
+    //scratch space
+    double fCenter[NDIM];
+    double fLength[NDIM];
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGAxisAlignedBoxSupportSet_H__ */

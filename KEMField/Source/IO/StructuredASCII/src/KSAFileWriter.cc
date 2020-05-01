@@ -1,15 +1,12 @@
 #include "KSAFileWriter.hh"
 
+#include <cassert>
 #include <iostream>
 
-#include <assert.h>
+namespace KEMField
+{
 
-namespace KEMField{
-
-KSAFileWriter::KSAFileWriter():
-fIsOpen(false),
-fUseCompression(false),
-fCompressionLevel(9)
+KSAFileWriter::KSAFileWriter() : fIsOpen(false), fUseCompression(false), fCompressionLevel(9)
 {
     fUsedSpace = 0;
     in_buffer = new unsigned char[WRITE_CHUNK];
@@ -26,39 +23,35 @@ KSAFileWriter::~KSAFileWriter()
 void KSAFileWriter::SetFileName(std::string filename)
 {
     fFileName = filename;
-    if(std::string::npos != filename.find(std::string(".ksa")))
-    {
-        fUseCompression = false; //plain text
+    if (std::string::npos != filename.find(std::string(".ksa"))) {
+        fUseCompression = false;  //plain text
     }
-    else if(std::string::npos != filename.find(std::string(".zksa")))
-    {
+    else if (std::string::npos != filename.find(std::string(".zksa"))) {
         //if we used the special extention we'll compress things
-        fUseCompression = true; //compressed text
+        fUseCompression = true;  //compressed text
     }
-    else
-    {
+    else {
         //default
-        fUseCompression = false; //plain text
+        fUseCompression = false;  //plain text
     }
 }
 
 
-bool
-KSAFileWriter::Open()
+bool KSAFileWriter::Open()
 {
-    if(fUseCompression)
-    {
+    if (fUseCompression) {
         int ret;
         /* allocate deflate state */
         fZStream.zalloc = Z_NULL;
         fZStream.zfree = Z_NULL;
         fZStream.opaque = Z_NULL;
         ret = deflateInit(&fZStream, fCompressionLevel);
-        if(ret != Z_OK){return false;};
+        if (ret != Z_OK) {
+            return false;
+        };
         fUsedSpace = 0;
 
-        if(fIsOpen)
-        {
+        if (fIsOpen) {
             fFileStream.close();
         }
 
@@ -66,10 +59,8 @@ KSAFileWriter::Open()
         //append mode not available for compressed files
         //possibily could add this feature in future
     }
-    else
-    {
-        if(fIsOpen)
-        {
+    else {
+        if (fIsOpen) {
             fFileStream.close();
         }
 
@@ -81,17 +72,14 @@ KSAFileWriter::Open()
     return fIsOpen;
 }
 
-void
-KSAFileWriter::AddToFile(const std::string& data)
+void KSAFileWriter::AddToFile(const std::string& data)
 {
 
-    if(fUseCompression)
-    {
+    if (fUseCompression) {
         int size = data.size();
         int ret, flush, have;
 
-        if(size >= WRITE_CHUNK)
-        {
+        if (size >= WRITE_CHUNK) {
             //do no add this line to the file until we flush the input buffer
 
             //tell the z_stream how much we want to compress from the in_buffer
@@ -101,22 +89,22 @@ KSAFileWriter::AddToFile(const std::string& data)
 
             /* run deflate() on input until output buffer not full, finish
                compression if all of source has been read in */
-            do
-            {
+            do {
                 fZStream.avail_out = WRITE_CHUNK;
                 fZStream.next_out = out_buffer;
 
-                ret = deflate(&fZStream, flush);    /* no bad return value */
-                (void)ret;
+                ret = deflate(&fZStream, flush); /* no bad return value */
+                (void) ret;
 
-                assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
+                assert(ret != Z_STREAM_ERROR); /* state not clobbered */
                 have = WRITE_CHUNK - fZStream.avail_out;
 
                 fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
-                if(have == 0){break;};
-            }
-            while (fZStream.avail_out == 0);
-            assert(fZStream.avail_in == 0);     /* all input will be used */
+                if (have == 0) {
+                    break;
+                };
+            } while (fZStream.avail_out == 0);
+            assert(fZStream.avail_in == 0); /* all input will be used */
 
             //reset the used space to zero
             fUsedSpace = 0;
@@ -126,15 +114,12 @@ KSAFileWriter::AddToFile(const std::string& data)
             int amount = 0;
             int total = 0;
 
-            do
-            {
-                if( (size - total) > WRITE_CHUNK )
-                {
+            do {
+                if ((size - total) > WRITE_CHUNK) {
                     amount = WRITE_CHUNK;
                     fUsedSpace = WRITE_CHUNK;
                 }
-                else
-                {
+                else {
                     amount = size - total;
                     fUsedSpace = amount;
                 }
@@ -142,7 +127,7 @@ KSAFileWriter::AddToFile(const std::string& data)
                 total += amount;
 
                 //stash a piece this line in the input buffer
-                data.copy( reinterpret_cast<char*>( &(in_buffer[0]) ), amount, position);
+                data.copy(reinterpret_cast<char*>(&(in_buffer[0])), amount, position);
                 position += amount;
 
                 //tell the z_stream how much we want to compress from the in_buffer
@@ -152,27 +137,22 @@ KSAFileWriter::AddToFile(const std::string& data)
 
                 /* run deflate() on input until output buffer not full, finish
                    compression if all of source has been read in */
-                do
-                {
+                do {
                     fZStream.avail_out = WRITE_CHUNK;
                     fZStream.next_out = out_buffer;
-                    ret = deflate(&fZStream, flush);    /* no bad return value */
-                    assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
+                    ret = deflate(&fZStream, flush); /* no bad return value */
+                    assert(ret != Z_STREAM_ERROR);   /* state not clobbered */
                     have = WRITE_CHUNK - fZStream.avail_out;
                     fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
-                }
-                while (fZStream.avail_out == 0);
-                assert(fZStream.avail_in == 0);     /* all input will be used */
+                } while (fZStream.avail_out == 0);
+                assert(fZStream.avail_in == 0); /* all input will be used */
 
                 //reset the used space to zero
                 fUsedSpace = 0;
 
-            }
-            while( total < size );
-
+            } while (total < size);
         }
-        else if( fUsedSpace + size >= WRITE_CHUNK)
-        {
+        else if (fUsedSpace + size >= WRITE_CHUNK) {
             //do no add this line to the file until we flush the input buffer
 
             //tell the z_stream how much we want to compress from the in_buffer
@@ -182,53 +162,45 @@ KSAFileWriter::AddToFile(const std::string& data)
 
             /* run deflate() on input until output buffer not full, finish
                compression if all of source has been read in */
-            do
-            {
+            do {
                 fZStream.avail_out = WRITE_CHUNK;
                 fZStream.next_out = out_buffer;
 
-                ret = deflate(&fZStream, flush);    /* no bad return value */
-                (void)ret;
+                ret = deflate(&fZStream, flush); /* no bad return value */
+                (void) ret;
 
-                assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
+                assert(ret != Z_STREAM_ERROR); /* state not clobbered */
                 have = WRITE_CHUNK - fZStream.avail_out;
                 fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
-            }
-            while (fZStream.avail_out == 0);
-            assert(fZStream.avail_in == 0);     /* all input will be used */
+            } while (fZStream.avail_out == 0);
+            assert(fZStream.avail_in == 0); /* all input will be used */
 
             //reset the used space to zero
             fUsedSpace = 0;
 
             //stash this line in the input buffer
-            data.copy( reinterpret_cast<char*>(&(in_buffer[fUsedSpace]) ), size, 0);
+            data.copy(reinterpret_cast<char*>(&(in_buffer[fUsedSpace])), size, 0);
             fUsedSpace = fUsedSpace + size;
         }
-        else
-        {
+        else {
             //stash this line in the input buffer
-            data.copy( reinterpret_cast<char*>( &(in_buffer[fUsedSpace]) ), size, 0);
+            data.copy(reinterpret_cast<char*>(&(in_buffer[fUsedSpace])), size, 0);
             fUsedSpace = fUsedSpace + size;
         }
-
     }
-    else
-    {
-        if(fFileStream.good())
-        {
+    else {
+        if (fFileStream.good()) {
             fFileStream << data;
         }
     }
 }
 
-void
-KSAFileWriter::Close()
+void KSAFileWriter::Close()
 {
 
     int ret, flush, have;
 
-    if(fUseCompression)
-    {
+    if (fUseCompression) {
         //finalize the compression
 
         //tell the z_stream how much we want to compress from the in_buffer
@@ -239,37 +211,32 @@ KSAFileWriter::Close()
         /* run deflate() on input until output buffer not full, finish
            compression if all of source has been read in */
 
-        do
-        {
+        do {
             fZStream.avail_out = WRITE_CHUNK;
             fZStream.next_out = out_buffer;
 
-            ret = deflate(&fZStream, flush);    /* no bad return value */
-            assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
-            (void)ret;
+            ret = deflate(&fZStream, flush); /* no bad return value */
+            assert(ret != Z_STREAM_ERROR);   /* state not clobbered */
+            (void) ret;
 
             have = WRITE_CHUNK - fZStream.avail_out;
             fFileStream.write(reinterpret_cast<const char*>(out_buffer), have);
-        }
-        while (fZStream.avail_out == 0);
-        assert(fZStream.avail_in == 0);     /* all input will be used */
+        } while (fZStream.avail_out == 0);
+        assert(fZStream.avail_in == 0); /* all input will be used */
 
         //reset the used space to zero
         fUsedSpace = 0;
 
         /* clean up and return */
-        (void)deflateEnd(&fZStream);
+        (void) deflateEnd(&fZStream);
 
-        if(fIsOpen)
-        {
+        if (fIsOpen) {
             fFileStream.flush();
             fFileStream.close();
         }
     }
-    else
-    {
-        if(fIsOpen)
-        {
+    else {
+        if (fIsOpen) {
             fFileStream.flush();
             fFileStream.close();
         }
@@ -277,6 +244,4 @@ KSAFileWriter::Close()
 }
 
 
-
-
-}
+}  // namespace KEMField

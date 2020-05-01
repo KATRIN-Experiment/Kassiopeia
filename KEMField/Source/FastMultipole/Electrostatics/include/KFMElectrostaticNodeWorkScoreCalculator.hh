@@ -3,11 +3,10 @@
 
 #include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticTree.hh"
-#include "KFMNodeFlagValueInspector.hh"
-
 #include "KFMNodeActor.hh"
-#include "KFMRecursiveActor.hh"
+#include "KFMNodeFlagValueInspector.hh"
 #include "KFMObjectRetriever.hh"
+#include "KFMRecursiveActor.hh"
 
 namespace KEMField
 {
@@ -26,141 +25,171 @@ namespace KEMField
 */
 
 
-class KFMElectrostaticNodeWorkScoreCalculator: public KFMNodeActor< KFMNode<KFMElectrostaticNodeObjects> >
+class KFMElectrostaticNodeWorkScoreCalculator : public KFMNodeActor<KFMNode<KFMElectrostaticNodeObjects>>
 {
-    public:
+  public:
+    KFMElectrostaticNodeWorkScoreCalculator();
+    ~KFMElectrostaticNodeWorkScoreCalculator() override;
 
-        KFMElectrostaticNodeWorkScoreCalculator();
-        virtual ~KFMElectrostaticNodeWorkScoreCalculator();
+    void SetNTerms(unsigned int n_terms)
+    {
+        fNTerms = n_terms;
+    };
+    void SetDivisions(unsigned int div)
+    {
+        fDivisions = div;
+    };
+    void SetZeroMaskSize(unsigned int zmask)
+    {
+        fZeroMaskSize = zmask;
+    };
 
-        void SetNTerms(unsigned int n_terms){fNTerms = n_terms;};
-        void SetDivisions(unsigned int div){fDivisions = div;};
-        void SetZeroMaskSize(unsigned int zmask){fZeroMaskSize = zmask;};
+    void SetFFTWeight(double fft_weight)
+    {
+        fGamma = fft_weight;
+    };
+    void SetSparseMatrixWeight(double mx_weight)
+    {
+        fTheta = mx_weight;
+    };
 
-        void SetFFTWeight(double fft_weight){fGamma = fft_weight;};
-        void SetSparseMatrixWeight(double mx_weight){fTheta = mx_weight;};
+    void ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node) override;
 
-        virtual void ApplyAction( KFMNode< KFMElectrostaticNodeObjects >* node);
+    double GetNodeScore() const
+    {
+        return fNodeScore;
+    };
 
-        double GetNodeScore() const {return fNodeScore;};
-
-    private:
-
-        //internal class which does the actual work and accumulates the necessary data
-        class SingleNodeActor: public KFMNodeActor< KFMNode<KFMElectrostaticNodeObjects> >
+  private:
+    //internal class which does the actual work and accumulates the necessary data
+    class SingleNodeActor : public KFMNodeActor<KFMNode<KFMElectrostaticNodeObjects>>
+    {
+      public:
+        SingleNodeActor()
         {
-            public:
-                SingleNodeActor()
-                {
-                    fNMultipoleNodes = 0;
-                    fNonLeafMultipoleNodes = 0;
-                    fNPrimaryNodes = 0;
-                    fNSources = 0;
-                    fNCollocationPoints = 0;
-                    fNSparseMatrixElements = 0;
+            fNMultipoleNodes = 0;
+            fNonLeafMultipoleNodes = 0;
+            fNPrimaryNodes = 0;
+            fNSources = 0;
+            fNCollocationPoints = 0;
+            fNSparseMatrixElements = 0;
 
-                    fMultipoleFlagCondition.SetFlagIndex(1);
-                    fMultipoleFlagCondition.SetFlagValue(1);
+            fMultipoleFlagCondition.SetFlagIndex(1);
+            fMultipoleFlagCondition.SetFlagValue(1);
 
-                    fLocalCoeffFlagCondition.SetFlagIndex(0);
-                    fLocalCoeffFlagCondition.SetFlagValue(1);
-                };
-                virtual ~SingleNodeActor(){;};
+            fLocalCoeffFlagCondition.SetFlagIndex(0);
+            fLocalCoeffFlagCondition.SetFlagValue(1);
+        };
+        ~SingleNodeActor() override
+        {
+            ;
+        };
 
-                void Reset()
-                {
-                    fNMultipoleNodes = 0;
-                    fNonLeafMultipoleNodes = 0;
-                    fNPrimaryNodes = 0;
-                    fNSources = 0;
-                    fNCollocationPoints = 0;
-                    fNSparseMatrixElements = 0;
-                }
+        void Reset()
+        {
+            fNMultipoleNodes = 0;
+            fNonLeafMultipoleNodes = 0;
+            fNPrimaryNodes = 0;
+            fNSources = 0;
+            fNCollocationPoints = 0;
+            fNSparseMatrixElements = 0;
+        }
 
-                virtual void ApplyAction( KFMNode< KFMElectrostaticNodeObjects >* node)
-                {
-                    if(node != NULL)
-                    {
+        void ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node) override
+        {
+            if (node != nullptr) {
 
-                        if( fMultipoleFlagCondition.ConditionIsSatisfied( node ) )
-                        {
-                            fNMultipoleNodes += 1;
-                            if( !(node->HasChildren() ) )
-                            {
-                                fNonLeafMultipoleNodes += 1;
-                            }
-                        }
-
-                        if( fLocalCoeffFlagCondition.ConditionIsSatisfied( node ) )
-                        {
-                            fNPrimaryNodes += 1;
-                        }
-
-                        KFMIdentitySet* id_set = KFMObjectRetriever< KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(node);
-                        if( id_set != NULL )
-                        {
-                            fNSources += id_set->GetSize();
-                            //collocation point id lists have not yet been filled, but this is a reasonable proxy
-                            fNSparseMatrixElements += (id_set->GetSize())*(id_set->GetSize());
-                            fNCollocationPoints += id_set->GetSize();
-                        }
+                if (fMultipoleFlagCondition.ConditionIsSatisfied(node)) {
+                    fNMultipoleNodes += 1;
+                    if (!(node->HasChildren())) {
+                        fNonLeafMultipoleNodes += 1;
                     }
                 }
 
-                double GetNMultipoleNodes(){return fNMultipoleNodes;};
-                double GetNonLeafMultipoleNodes(){return fNonLeafMultipoleNodes;};
-                double GetNPrimaryNodes(){return fNPrimaryNodes;};
-                double GetNSources(){return fNSources;};
-                double GetNCollocationPoints(){return fNCollocationPoints;};
-                double GetNSparseMatrixElements(){return fNSparseMatrixElements;};
+                if (fLocalCoeffFlagCondition.ConditionIsSatisfied(node)) {
+                    fNPrimaryNodes += 1;
+                }
 
-            private:
+                KFMIdentitySet* id_set =
+                    KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(node);
+                if (id_set != nullptr) {
+                    fNSources += id_set->GetSize();
+                    //collocation point id lists have not yet been filled, but this is a reasonable proxy
+                    fNSparseMatrixElements += (id_set->GetSize()) * (id_set->GetSize());
+                    fNCollocationPoints += id_set->GetSize();
+                }
+            }
+        }
 
-                double fNMultipoleNodes;
-                double fNonLeafMultipoleNodes;
-                double fNPrimaryNodes;
-                double fNSources;
-                double fNCollocationPoints;
-                double fNSparseMatrixElements;
-
-                //condition for a node to have a multipole/local coeff expansion
-                KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fMultipoleFlagCondition;
-                KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fLocalCoeffFlagCondition;
-
+        double GetNMultipoleNodes()
+        {
+            return fNMultipoleNodes;
+        };
+        double GetNonLeafMultipoleNodes()
+        {
+            return fNonLeafMultipoleNodes;
+        };
+        double GetNPrimaryNodes()
+        {
+            return fNPrimaryNodes;
+        };
+        double GetNSources()
+        {
+            return fNSources;
+        };
+        double GetNCollocationPoints()
+        {
+            return fNCollocationPoints;
+        };
+        double GetNSparseMatrixElements()
+        {
+            return fNSparseMatrixElements;
         };
 
-        void CalculateFinalScore();
-
-        //utility
-        KFMRecursiveActor< KFMNode< KFMElectrostaticNodeObjects > > fRecursiveActor;
-        SingleNodeActor fSingleNodeActor;
-
-        //data used to calculate the score
-        unsigned int fNTerms;
-        unsigned int fDivisions;
-        unsigned int fZeroMaskSize;
-
+      private:
         double fNMultipoleNodes;
         double fNonLeafMultipoleNodes;
         double fNPrimaryNodes;
         double fNSources;
         double fNCollocationPoints;
         double fNSparseMatrixElements;
-        double fNodeScore;
+
+        //condition for a node to have a multipole/local coeff expansion
+        KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fMultipoleFlagCondition;
+        KFMNodeFlagValueInspector<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_FLAGS> fLocalCoeffFlagCondition;
+    };
+
+    void CalculateFinalScore();
+
+    //utility
+    KFMRecursiveActor<KFMNode<KFMElectrostaticNodeObjects>> fRecursiveActor;
+    SingleNodeActor fSingleNodeActor;
+
+    //data used to calculate the score
+    unsigned int fNTerms;
+    unsigned int fDivisions;
+    unsigned int fZeroMaskSize;
+
+    double fNMultipoleNodes;
+    double fNonLeafMultipoleNodes;
+    double fNPrimaryNodes;
+    double fNSources;
+    double fNCollocationPoints;
+    double fNSparseMatrixElements;
+    double fNodeScore;
 
 
-        //weights for scoring
-        double fAlpha; //weight for source multipole calcution (unused)
-        double fBeta; //weight for m2m transform (unused)
-        double fGamma; //weight for m2l transform
-        double fDelta; //weight for l2l transform (unused)
-        double fEpsilon; //weight for local coeff to field evaluation (unused)
-        double fTheta; //weight for sparse matrix evalution
+    //weights for scoring
+    double fAlpha;    //weight for source multipole calcution (unused)
+    double fBeta;     //weight for m2m transform (unused)
+    double fGamma;    //weight for m2l transform
+    double fDelta;    //weight for l2l transform (unused)
+    double fEpsilon;  //weight for local coeff to field evaluation (unused)
+    double fTheta;    //weight for sparse matrix evalution
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticNodeWorkScoreCalculator_H__ */

@@ -9,24 +9,16 @@
 
 using namespace std;
 
-namespace KEMField {
-
-KEMSimpleException::KEMSimpleException(
-		string information) :
-				fInformation(information)
+namespace KEMField
 {
-}
 
-KEMSimpleException::~KEMSimpleException() noexcept 
-{
-}
+KEMSimpleException::KEMSimpleException(string information) : fInformation(information) {}
+
+KEMSimpleException::~KEMSimpleException() noexcept {}
 
 const char* KEMSimpleException::what() const noexcept
 {
-	return fInformation.c_str();
+    return fInformation.c_str();
 }
 
-}//KEMField
-
-
-
+}  // namespace KEMField
