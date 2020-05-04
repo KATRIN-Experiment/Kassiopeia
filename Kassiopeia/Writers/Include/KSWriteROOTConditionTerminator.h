@@ -5,40 +5,31 @@
 #ifndef KASPER_KSWRITEROOTCONDITIONTERMINATOR_H
 #define KASPER_KSWRITEROOTCONDITIONTERMINATOR_H
 
+#include "KField.h"
 #include "KSComponent.h"
 #include "KSWriteROOTCondition.h"
-#include "KField.h"
 
 namespace Kassiopeia
 {
 
 
-class KSWriteROOTConditionTerminator :
-    public KSComponentTemplate< KSWriteROOTConditionTerminator, KSWriteROOTCondition >
+class KSWriteROOTConditionTerminator : public KSComponentTemplate<KSWriteROOTConditionTerminator, KSWriteROOTCondition>
 {
-public:
-    KSWriteROOTConditionTerminator() :
-        fComponent( 0 ),
-        fValue( 0 ),
-        fMatchTerminator( std::string("") )
-    {
-    }
-    KSWriteROOTConditionTerminator( const KSWriteROOTConditionTerminator& aCopy ) :
+  public:
+    KSWriteROOTConditionTerminator() : fComponent(nullptr), fValue(nullptr), fMatchTerminator(std::string("")) {}
+    KSWriteROOTConditionTerminator(const KSWriteROOTConditionTerminator& aCopy) :
         KSComponent(aCopy),
-        fComponent( aCopy.fComponent ),
-        fValue( aCopy.fValue ),
-        fMatchTerminator( aCopy.fMatchTerminator )
+        fComponent(aCopy.fComponent),
+        fValue(aCopy.fValue),
+        fMatchTerminator(aCopy.fMatchTerminator)
+    {}
+    KSWriteROOTConditionTerminator* Clone() const override
     {
+        return new KSWriteROOTConditionTerminator(*this);
     }
-    KSWriteROOTConditionTerminator* Clone() const
-    {
-        return new KSWriteROOTConditionTerminator( *this );
-    }
-    virtual ~KSWriteROOTConditionTerminator()
-    {
-    }
+    ~KSWriteROOTConditionTerminator() override {}
 
-    void CalculateWriteCondition( bool& aFlag )
+    void CalculateWriteCondition(bool& aFlag) override
     {
         aFlag = (fValue->compare(fMatchTerminator) == 0);
 
@@ -46,14 +37,16 @@ public:
     }
 
 
-protected:
-    ;K_SET_GET_PTR(KSComponent, Component);
-    ;K_SET_GET_PTR( std::string, Value );
-    ;K_SET_GET( std::string, MatchTerminator );
-
+  protected:
+    ;
+    K_SET_GET_PTR(KSComponent, Component);
+    ;
+    K_SET_GET_PTR(std::string, Value);
+    ;
+    K_SET_GET(std::string, MatchTerminator);
 };
 
-}
+}  // namespace Kassiopeia
 
 
-#endif //KASPER_KSWRITEROOTCONDITIONTERMINATOR_H
+#endif  //KASPER_KSWRITEROOTCONDITIONTERMINATOR_H

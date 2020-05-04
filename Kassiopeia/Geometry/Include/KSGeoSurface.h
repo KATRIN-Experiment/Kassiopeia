@@ -1,54 +1,52 @@
 #ifndef Kassiopeia_KSGeoSurface_h_
 #define Kassiopeia_KSGeoSurface_h_
 
-#include "KSSurface.h"
-
 #include "KGCore.hh"
+#include "KSSurface.h"
 using namespace KGeoBag;
 
 namespace Kassiopeia
 {
 
-    class KSGeoSpace;
+class KSGeoSpace;
 
-    class KSGeoSurface :
-        public KSComponentTemplate< KSGeoSurface, KSSurface >
-    {
-        public:
-            friend class KSGeoSpace;
+class KSGeoSurface : public KSComponentTemplate<KSGeoSurface, KSSurface>
+{
+  public:
+    friend class KSGeoSpace;
 
-        public:
-            KSGeoSurface();
-            KSGeoSurface( const KSGeoSurface& aCopy );
-            KSGeoSurface* Clone() const;
-            virtual ~KSGeoSurface();
+  public:
+    KSGeoSurface();
+    KSGeoSurface(const KSGeoSurface& aCopy);
+    KSGeoSurface* Clone() const override;
+    ~KSGeoSurface() override;
 
-        public:
-            void On() const;
-            void Off() const;
+  public:
+    void On() const override;
+    void Off() const override;
 
-            KThreeVector Point( const KThreeVector& aPoint ) const;
-            KThreeVector Normal( const KThreeVector& aPoint ) const;
+    KThreeVector Point(const KThreeVector& aPoint) const override;
+    KThreeVector Normal(const KThreeVector& aPoint) const override;
 
-        public:
-            void AddContent( KGSurface* aSurface );
-            void RemoveContent( KGSurface* aSurface );
-            std::vector< KGSurface* > GetContent();
+  public:
+    void AddContent(KGSurface* aSurface);
+    void RemoveContent(KGSurface* aSurface);
+    std::vector<KGSurface*> GetContent();
 
-            void AddCommand( KSCommand* anCommand );
-            void RemoveCommand( KSCommand* anCommand );
+    void AddCommand(KSCommand* anCommand);
+    void RemoveCommand(KSCommand* anCommand);
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
-        private:
-            KSGeoSpace* fParent;
+  private:
+    KSGeoSpace* fParent;
 
-            mutable std::vector< KGSurface* > fContents;
-            mutable std::vector< KSCommand* > fCommands;
-    };
+    mutable std::vector<KGSurface*> fContents;
+    mutable std::vector<KSCommand*> fCommands;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

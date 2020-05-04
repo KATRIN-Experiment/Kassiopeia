@@ -2,39 +2,29 @@
 #define Kassiopeia_KSSpaceInteraction_h_
 
 #include "KSComponentTemplate.h"
-#include "KSTrajectory.h"
 #include "KSParticle.h"
+#include "KSTrajectory.h"
 
 namespace Kassiopeia
 {
 
-    class KSSpaceInteraction :
-        public KSComponentTemplate< KSSpaceInteraction >
-    {
-        public:
-            KSSpaceInteraction();
-            virtual ~KSSpaceInteraction();
+class KSSpaceInteraction : public KSComponentTemplate<KSSpaceInteraction>
+{
+  public:
+    KSSpaceInteraction();
+    ~KSSpaceInteraction() override;
 
-        public:
-            virtual void CalculateInteraction(
-                const KSTrajectory& aTrajectory,
-                const KSParticle& aTrajectoryInitialParticle,
-                const KSParticle& aTrajectoryFinalParticle,
-                const KThreeVector& aTrajectoryCenter,
-                const double& aTrajectoryRadius,
-                const double& aTrajectoryTimeStep,
-                KSParticle& anInteractionParticle,
-                double& anInteractionStep,
-                bool& anInteractionFlag
-            ) = 0;
+  public:
+    virtual void CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
+                                      const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
+                                      const double& aTrajectoryRadius, const double& aTrajectoryTimeStep,
+                                      KSParticle& anInteractionParticle, double& anInteractionStep,
+                                      bool& anInteractionFlag) = 0;
 
-            virtual void ExecuteInteraction(
-                const KSParticle& anInitialParticle,
-                KSParticle& aFinalParticle,
-                KSParticleQueue& aSecondaries
-            ) const = 0;
-    };
+    virtual void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                                    KSParticleQueue& aSecondaries) const = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

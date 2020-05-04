@@ -26,8 +26,8 @@
  - differential cross section for elastic scattering in m^2/steradian
  */
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -35,17 +35,17 @@
 namespace Kassiopeia
 {
 
-    class ElasticFerencCalculator
-    {
+class ElasticFerencCalculator
+{
 
-        public:
-            //!constructor.
-            ElasticFerencCalculator();
+  public:
+    //!constructor.
+    ElasticFerencCalculator();
 
-            //!destructor.
-            ~ElasticFerencCalculator();
+    //!destructor.
+    ~ElasticFerencCalculator();
 
-            /*!
+    /*!
              \brief elastric cross section in m^2
 
              This function computes the total elastic cross section of
@@ -56,14 +56,14 @@ namespace Kassiopeia
 
              */
 
-            double sigmaeltot( double anE );
-            double sigmael( double anE );
-            double sigmavib( double anE );
-            double sigmarot02( double anE );
-            double sigmarot13( double anE );
-            double sigmarot20( double anE );
+    double sigmaeltot(double anE);
+    double sigmael(double anE);
+    double sigmavib(double anE);
+    double sigmarot02(double anE);
+    double sigmarot13(double anE);
+    double sigmarot20(double anE);
 
-            /*!
+    /*!
              \brief energy loss and scattering angle for elastic scattering
 
              This subroutine generates  energy loss and polar scatt. angle according to
@@ -73,10 +73,10 @@ namespace Kassiopeia
              \param Eloss  returns energy loss in eV
              \param Theta  returns change of polar angle in radian
              */
-            void randomel( double anE, double& Eloss, double& Theta );
+    void randomel(double anE, double& Eloss, double& Theta);
 
-        protected:
-            /*!
+  protected:
+    /*!
              \brief differential cross section for elastic scattering in m^2/steradian
 
              This subroutine computes the differential cross section
@@ -88,8 +88,7 @@ namespace Kassiopeia
 
              \return differential cross section for elastic scattering in m^2/steradian
              */
-            double DiffXSecEl( double anE, double cosTheta );
-
-    };
-}
-#endif //ElasticFerencCalculator_h
+    double DiffXSecEl(double anE, double cosTheta);
+};
+}  // namespace Kassiopeia
+#endif  //ElasticFerencCalculator_h

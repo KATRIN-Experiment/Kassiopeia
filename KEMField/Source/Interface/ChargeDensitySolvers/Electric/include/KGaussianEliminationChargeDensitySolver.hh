@@ -11,22 +11,23 @@
 #include "KChargeDensitySolver.hh"
 #include "KElectrostaticBoundaryIntegratorPolicy.hh"
 
-namespace KEMField {
-
-class KGaussianEliminationChargeDensitySolver :
-    public KChargeDensitySolver
+namespace KEMField
 {
-    public:
-        KGaussianEliminationChargeDensitySolver();
-        virtual ~KGaussianEliminationChargeDensitySolver();
 
-        virtual void InitializeCore( KSurfaceContainer& container );
+class KGaussianEliminationChargeDensitySolver : public KChargeDensitySolver
+{
+  public:
+    KGaussianEliminationChargeDensitySolver();
+    ~KGaussianEliminationChargeDensitySolver() override;
 
-        void SetIntegratorPolicy(const KEBIPolicy& integrator);
-    private:
-        KEBIPolicy fIntegratorPolicy;
+    void InitializeCore(KSurfaceContainer& container) override;
+
+    void SetIntegratorPolicy(const KEBIPolicy& integrator);
+
+  private:
+    KEBIPolicy fIntegratorPolicy;
 };
 
-} // KEMField
+}  // namespace KEMField
 
 #endif /* KGAUSSIANELIMINATIONCHARGEDENSITYSOLVER_HH_ */

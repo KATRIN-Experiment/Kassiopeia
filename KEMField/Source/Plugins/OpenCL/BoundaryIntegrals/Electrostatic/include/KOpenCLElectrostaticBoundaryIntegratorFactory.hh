@@ -8,35 +8,31 @@
 #ifndef KOPENCLELECTROSTATICBOUNDARYINTEGRATORFACTORY_HH_
 #define KOPENCLELECTROSTATICBOUNDARYINTEGRATORFACTORY_HH_
 
-#include <string>
 #include "KOpenCLElectrostaticBoundaryIntegrator.hh"
 
-namespace KEMField {
+#include <string>
+
+namespace KEMField
+{
 
 class KOpenCLElectrostaticBoundaryIntegratorFactory
 {
-public:
+  public:
+    static KOpenCLElectrostaticBoundaryIntegrator MakeDefault(KOpenCLSurfaceContainer& container);
 
-	static KOpenCLElectrostaticBoundaryIntegrator
-	MakeDefault(KOpenCLSurfaceContainer& container);
+    static KOpenCLElectrostaticBoundaryIntegrator MakeAnalytic(KOpenCLSurfaceContainer& container);
 
-	static KOpenCLElectrostaticBoundaryIntegrator
-	MakeAnalytic(KOpenCLSurfaceContainer& container);
+    static KOpenCLElectrostaticBoundaryIntegrator MakeNumeric(KOpenCLSurfaceContainer& container);
 
-	static KOpenCLElectrostaticBoundaryIntegrator
-	MakeNumeric(KOpenCLSurfaceContainer& container);
+    static KOpenCLElectrostaticBoundaryIntegrator MakeRWG(KOpenCLSurfaceContainer& container);
 
-	static KOpenCLElectrostaticBoundaryIntegrator
-	MakeRWG(KOpenCLSurfaceContainer& container);
+    static KOpenCLElectrostaticBoundaryIntegrator Make(const std::string& name, KOpenCLSurfaceContainer& container);
 
-	static KOpenCLElectrostaticBoundaryIntegrator
-	Make(const std::string& name,KOpenCLSurfaceContainer& container);
-
-	static KoclEBIConfig MakeDefaultConfig();
-	static KoclEBIConfig MakeAnalyticConfig();
-	static KoclEBIConfig MakeNumericConfig();
-	static KoclEBIConfig MakeRWGConfig();
-	static KoclEBIConfig MakeConfig(const std::string& name);
+    static KoclEBIConfig MakeDefaultConfig();
+    static KoclEBIConfig MakeAnalyticConfig();
+    static KoclEBIConfig MakeNumericConfig();
+    static KoclEBIConfig MakeRWGConfig();
+    static KoclEBIConfig MakeConfig(const std::string& name);
 };
 
 using KoclEBIFactory = KOpenCLElectrostaticBoundaryIntegratorFactory;

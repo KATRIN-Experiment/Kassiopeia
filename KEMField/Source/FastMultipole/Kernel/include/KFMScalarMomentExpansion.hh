@@ -2,10 +2,11 @@
 #define KFMScalarMomentExpansion_H
 
 #include <cmath>
-#include <vector>
 #include <complex>
+#include <vector>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -22,22 +23,28 @@ namespace KEMField{
 
 class KFMScalarMomentExpansion
 {
-    public:
-        KFMScalarMomentExpansion(){;};
-        virtual ~KFMScalarMomentExpansion(){;};
+  public:
+    KFMScalarMomentExpansion()
+    {
+        ;
+    };
+    virtual ~KFMScalarMomentExpansion()
+    {
+        ;
+    };
 
-        virtual void Clear() = 0;
+    virtual void Clear() = 0;
 
-        virtual void SetNumberOfTermsInSeries(unsigned int n_terms) = 0;
-        virtual unsigned int GetNumberOfTermsInSeries() const = 0;
+    virtual void SetNumberOfTermsInSeries(unsigned int n_terms) = 0;
+    virtual unsigned int GetNumberOfTermsInSeries() const = 0;
 
-        virtual void SetMoments(const std::vector< std::complex<double> >* mom) = 0;
-        virtual void GetMoments(std::vector< std::complex<double> >* mom) const = 0;
+    virtual void SetMoments(const std::vector<std::complex<double>>* mom) = 0;
+    virtual void GetMoments(std::vector<std::complex<double>>* mom) const = 0;
 
 
-    protected:
+  protected:
 };
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* KFMScalarMomentExpansion_H */

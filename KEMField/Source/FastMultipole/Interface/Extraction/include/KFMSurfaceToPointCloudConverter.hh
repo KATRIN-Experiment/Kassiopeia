@@ -22,38 +22,77 @@ namespace KEMField
 */
 
 
-class KFMSurfaceToPointCloudConverter:
-public KSelectiveVisitor<KShapeVisitor,KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
+class KFMSurfaceToPointCloudConverter :
+    public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
 {
-    public:
+  public:
+    KFMSurfaceToPointCloudConverter(){};
+    ~KFMSurfaceToPointCloudConverter() override
+    {
+        ;
+    };
 
-        KFMSurfaceToPointCloudConverter(){};
-        ~KFMSurfaceToPointCloudConverter(){;};
+    void Visit(KTriangle& t) override;
+    void Visit(KRectangle& r) override;
+    void Visit(KLineSegment& l) override;
+    void Visit(KConicSection& c) override
+    {
+        (void) c;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KRing& r) override
+    {
+        (void) r;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KSymmetryGroup<KTriangle>& t) override
+    {
+        (void) t;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KSymmetryGroup<KRectangle>& r) override
+    {
+        (void) r;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KSymmetryGroup<KLineSegment>& l) override
+    {
+        (void) l;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KSymmetryGroup<KConicSection>& c) override
+    {
+        (void) c;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
+    void Visit(KSymmetryGroup<KRing>& r) override
+    {
+        (void) r;
+        fIsRecognized = false;
+        fCurrentPointCloud.Clear();
+    };
 
-        void Visit(KTriangle& t);
-        void Visit(KRectangle& r);
-        void Visit(KLineSegment& l);
-        void Visit(KConicSection& c){(void)c; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KRing& r){(void)r; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KSymmetryGroup<KTriangle>& t){(void)t; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KSymmetryGroup<KRectangle>& r){(void)r; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KSymmetryGroup<KLineSegment>& l){(void)l; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KSymmetryGroup<KConicSection>& c){(void)c; fIsRecognized = false; fCurrentPointCloud.Clear();};
-        void Visit(KSymmetryGroup<KRing>& r){(void)r; fIsRecognized = false; fCurrentPointCloud.Clear();};
+    bool IsRecognizedType() const
+    {
+        return fIsRecognized;
+    };
+    KFMPointCloud<3> GetPointCloud() const
+    {
+        return fCurrentPointCloud;
+    };
 
-        bool IsRecognizedType() const {return fIsRecognized;};
-        KFMPointCloud<3> GetPointCloud() const {return fCurrentPointCloud;};
-
-    private:
-
-        bool fIsRecognized;
-        KFMPointCloud<3> fCurrentPointCloud;
-
+  private:
+    bool fIsRecognized;
+    KFMPointCloud<3> fCurrentPointCloud;
 };
 
 
-
-
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMSurfaceToPointCloudConverter_H__ */

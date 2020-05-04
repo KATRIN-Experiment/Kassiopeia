@@ -7,20 +7,20 @@ using std::vector;
 namespace KGeoBag
 {
 
-    class KGAxialMeshElement
-    {
-        public:
-            KGAxialMeshElement();
-            virtual ~KGAxialMeshElement();
+class KGAxialMeshElement
+{
+  public:
+    KGAxialMeshElement();
+    virtual ~KGAxialMeshElement();
 
-            virtual double Area() const = 0;
-            virtual double Aspect() const = 0;
-    };
+    virtual double Area() const = 0;
+    virtual double Aspect() const = 0;
+};
 
-    typedef vector< KGAxialMeshElement* > KGAxialMeshElementVector;
-    typedef vector< KGAxialMeshElement* >::iterator KGAxialMeshElementIt;
-    typedef vector< KGAxialMeshElement* >::const_iterator KGAxialMeshElementCIt;
+typedef vector<KGAxialMeshElement*> KGAxialMeshElementVector;
+typedef vector<KGAxialMeshElement*>::iterator KGAxialMeshElementIt;
+typedef vector<KGAxialMeshElement*>::const_iterator KGAxialMeshElementCIt;
 
-}
+}  // namespace KGeoBag
 
 #endif

@@ -22,26 +22,24 @@ namespace KGeoBag
 *
 */
 
-template< typename ObjectTypeList>
-class KGIdentitySetSorter: public KGNodeActor< KGNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KGIdentitySetSorter : public KGNodeActor<KGNode<ObjectTypeList>>
 {
-    public:
-        KGIdentitySetSorter(){};
-        virtual ~KGIdentitySetSorter(){};
+  public:
+    KGIdentitySetSorter(){};
+    virtual ~KGIdentitySetSorter(){};
 
-        virtual void ApplyAction( KGNode<ObjectTypeList>* node)
-        {
-            KGIdentitySet* set = KGObjectRetriever<ObjectTypeList, KGIdentitySet>::GetNodeObject(node);
-            if(set != NULL)
-            {
-                set->Sort();
-            }
+    virtual void ApplyAction(KGNode<ObjectTypeList>* node)
+    {
+        KGIdentitySet* set = KGObjectRetriever<ObjectTypeList, KGIdentitySet>::GetNodeObject(node);
+        if (set != NULL) {
+            set->Sort();
         }
+    }
 
-    private:
+  private:
 };
 
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGIdentitySetSorter_H__ */

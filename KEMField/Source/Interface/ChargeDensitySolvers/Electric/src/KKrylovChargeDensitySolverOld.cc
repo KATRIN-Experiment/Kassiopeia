@@ -6,45 +6,44 @@
  */
 
 #include "KKrylovChargeDensitySolverOld.hh"
-#include "KFMMessaging.hh"
+
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolver.hh"
 #include "KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration.hh"
+#include "KFMMessaging.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 KKrylovChargeDensitySolverOld::KKrylovChargeDensitySolverOld() :
-				fKrylovConfig(new KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration()),
-				fSolver(new KFMElectrostaticFastMultipoleBoundaryValueSolver())
-{
-};
+    fKrylovConfig(new KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration()),
+    fSolver(new KFMElectrostaticFastMultipoleBoundaryValueSolver()){};
 
 KKrylovChargeDensitySolverOld::~KKrylovChargeDensitySolverOld()
 {
-	delete fSolver;
-	delete fKrylovConfig;
+    delete fSolver;
+    delete fKrylovConfig;
 }
 
-void KKrylovChargeDensitySolverOld::InitializeCore( KSurfaceContainer& surfaceContainer )
+void KKrylovChargeDensitySolverOld::InitializeCore(KSurfaceContainer& surfaceContainer)
 {
-	if(fKrylovConfig->GetFFTMParams() == NULL) {
-		kfmout << "ABORTING no multiplication method set for"
-				" krylov bem solver" << kfmendl;
-		kfmexit(1);
-	}
-	fSolver->SetSolverElectrostaticParameters(*fKrylovConfig->GetFFTMParams());
-	fSolver->SetConfigurationObject(fKrylovConfig);
-	if(fKrylovConfig->GetPreconditionerFFTMParams() != NULL)
-		fSolver->SetPreconditionerElectrostaticParameters(
-				*fKrylovConfig->GetPreconditionerFFTMParams());
+    if (fKrylovConfig->GetFFTMParams() == nullptr) {
+        kfmout << "ABORTING no multiplication method set for"
+                  " krylov bem solver"
+               << kfmendl;
+        kfmexit(1);
+    }
+    fSolver->SetSolverElectrostaticParameters(*fKrylovConfig->GetFFTMParams());
+    fSolver->SetConfigurationObject(fKrylovConfig);
+    if (fKrylovConfig->GetPreconditionerFFTMParams() != nullptr)
+        fSolver->SetPreconditionerElectrostaticParameters(*fKrylovConfig->GetPreconditionerFFTMParams());
 
-	kfmout << fSolver->GetParameterInformation() << kfmendl;
+    kfmout << fSolver->GetParameterInformation() << kfmendl;
 
-	if( !FindSolution( fSolver->GetTolerance(), surfaceContainer ) )
-	{
-		//solve the boundary value problem
-		fSolver->Solve(surfaceContainer);
-		SaveSolution( fSolver->GetResidualNorm(), surfaceContainer );
-	}
+    if (!FindSolution(fSolver->GetTolerance(), surfaceContainer)) {
+        //solve the boundary value problem
+        fSolver->Solve(surfaceContainer);
+        SaveSolution(fSolver->GetResidualNorm(), surfaceContainer);
+    }
 }
 
 

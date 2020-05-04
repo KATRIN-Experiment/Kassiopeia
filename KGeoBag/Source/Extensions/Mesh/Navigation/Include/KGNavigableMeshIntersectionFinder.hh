@@ -1,27 +1,24 @@
 #ifndef KGNavigableMeshIntersectionFinder_H__
 #define KGNavigableMeshIntersectionFinder_H__
 
-#include <vector>
-#include <complex>
-#include <stack>
-#include <cmath>
-#include <cstdlib>
-#include <utility>
-#include <algorithm>
-#include <set>
-
 #include "KGArrayMath.hh"
-
-#include "KGCube.hh"
-#include "KGPoint.hh"
-#include "KGIdentitySet.hh"
-
-#include "KGNavigableMeshElement.hh"
-#include "KGMeshNavigationNode.hh"
-#include "KGNavigableMeshTree.hh"
-#include "KGNavigableMeshElementContainer.hh"
-
 #include "KGBoundaryCalculator.hh"
+#include "KGCube.hh"
+#include "KGIdentitySet.hh"
+#include "KGMeshNavigationNode.hh"
+#include "KGNavigableMeshElement.hh"
+#include "KGNavigableMeshElementContainer.hh"
+#include "KGNavigableMeshTree.hh"
+#include "KGPoint.hh"
+
+#include <algorithm>
+#include <cmath>
+#include <complex>
+#include <cstdlib>
+#include <set>
+#include <stack>
+#include <utility>
+#include <vector>
 
 
 namespace KGeoBag
@@ -42,63 +39,66 @@ namespace KGeoBag
 */
 
 
-class KGNavigableMeshIntersectionFinder: public KGNodeActor< KGMeshNavigationNode >
+class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNode>
 {
-    public:
-        KGNavigableMeshIntersectionFinder();
-        virtual ~KGNavigableMeshIntersectionFinder();
+  public:
+    KGNavigableMeshIntersectionFinder();
+    ~KGNavigableMeshIntersectionFinder() override;
 
-        void SetMeshElementContainer(KGNavigableMeshElementContainer* container){fContainer = container;};
+    void SetMeshElementContainer(KGNavigableMeshElementContainer* container)
+    {
+        fContainer = container;
+    };
 
-        void NearestPointOnLineSegment(const KThreeVector& aPoint, KThreeVector& aNearest, double& t) const;
-        double LineSegmentDistanceToPoint(const KThreeVector& aPoint) const;
-        bool LineSegmentIntersectsCube(const KGCube<KGMESH_DIM>* cube, double& distance) const;
+    void NearestPointOnLineSegment(const KThreeVector& aPoint, KThreeVector& aNearest, double& t) const;
+    double LineSegmentDistanceToPoint(const KThreeVector& aPoint) const;
+    bool LineSegmentIntersectsCube(const KGCube<KGMESH_DIM>* cube, double& distance) const;
 
-        void SetLineSegment(const KThreeVector& start, const KThreeVector& end);
-        bool HasIntersectionWithMesh() const;
-        unsigned int GetNIntersections() const {return fIntersections.size();};
-        void GetIntersections( std::vector< KThreeVector >* intersections) const;
-        void GetIntersectedMeshElements( std::vector< const KGNavigableMeshElement* >* intersected_mesh_elements) const;
+    void SetLineSegment(const KThreeVector& start, const KThreeVector& end);
+    bool HasIntersectionWithMesh() const;
+    unsigned int GetNIntersections() const
+    {
+        return fIntersections.size();
+    };
+    void GetIntersections(std::vector<KThreeVector>* intersections) const;
+    void GetIntersectedMeshElements(std::vector<const KGNavigableMeshElement*>* intersected_mesh_elements) const;
 
-        virtual void ApplyAction(KGMeshNavigationNode* node);
+    void ApplyAction(KGMeshNavigationNode* node) override;
 
-    private:
-
-        struct ChildDistanceOrder
+  private:
+    struct ChildDistanceOrder
+    {
+        bool operator()(std::pair<KGMeshNavigationNode*, double> a, std::pair<KGMeshNavigationNode*, double> b)
         {
-            bool operator() (std::pair< KGMeshNavigationNode*, double > a, std::pair< KGMeshNavigationNode*, double > b)
-            {
-                return (a.second > b.second ); //this will sort them from farthest to nearest
+            return (a.second > b.second);  //this will sort them from farthest to nearest
+        }
+    };
 
-            }
-        };
+    //mesh element container
+    KGNavigableMeshElementContainer* fContainer;
 
-        //mesh element container
-        KGNavigableMeshElementContainer* fContainer;
+    //parameters of the line segment
+    KThreeVector fStartPoint;
+    KThreeVector fEndPoint;
+    KThreeVector fDirection;
+    double fLength;
 
-        //parameters of the line segment
-        KThreeVector fStartPoint;
-        KThreeVector fEndPoint;
-        KThreeVector fDirection;
-        double fLength;
+    //needed for recursive access to tree
+    std::stack<KGMeshNavigationNode*> fNodeStack;
+    KGMeshNavigationNode* fTempNode;
 
-        //needed for recursive access to tree
-        std::stack< KGMeshNavigationNode* > fNodeStack;
-        KGMeshNavigationNode* fTempNode;
+    ChildDistanceOrder fOrderingPredicate;
+    std::vector<std::pair<KGMeshNavigationNode*, double>> fOrderedChildren;
 
-        ChildDistanceOrder fOrderingPredicate;
-        std::vector< std::pair< KGMeshNavigationNode*, double > > fOrderedChildren;
+    //intersection data
+    bool fHaveIntersection;
+    std::vector<KThreeVector> fIntersections;
+    std::vector<const KGNavigableMeshElement*> fIntersectedElements;
 
-        //intersection data
-        bool fHaveIntersection;
-        std::vector< KThreeVector > fIntersections;
-        std::vector< const KGNavigableMeshElement* > fIntersectedElements;
-
-        std::set< const KGNavigableMeshElement* > fCheckedElements;
-
+    std::set<const KGNavigableMeshElement*> fCheckedElements;
 };
 
 
-}
+}  // namespace KGeoBag
 
 #endif /* end of include guard: KGNavigableMeshIntersectionFinder_H__ */

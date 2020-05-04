@@ -1,27 +1,24 @@
-#include <vector>
+#include "KBoundaryIntegralMatrix.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
+#include "KSurface.hh"
+#include "KSurfaceContainer.hh"
+#include "KSurfaceTypes.hh"
+
+#include <cmath>
+#include <gsl/gsl_rng.h>
+#include <iomanip>
 #include <iostream>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <cmath>
-#include <iomanip>
-
-#include <gsl/gsl_rng.h>
-
-#include "KSurfaceTypes.hh"
-#include "KSurface.hh"
-
-#include "KElectrostaticBoundaryIntegratorFactory.hh"
-
-#include "KSurfaceContainer.hh"
-#include "KBoundaryIntegralMatrix.hh"
+#include <vector>
 
 #ifdef KEMFIELD_USE_OPENCL
-#include "KOpenCLSurfaceContainer.hh"
-#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #include "KOpenCLBoundaryIntegralMatrix.hh"
-#include "KOpenCLBoundaryIntegralVector.hh"
 #include "KOpenCLBoundaryIntegralSolutionVector.hh"
+#include "KOpenCLBoundaryIntegralVector.hh"
+#include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
+#include "KOpenCLSurfaceContainer.hh"
 #include "KRobinHood_OpenCL.hh"
 #ifdef KEMFIELD_USE_MPI
 #include "KRobinHood_MPI_OpenCL.hh"
@@ -221,33 +218,30 @@ int main(int /*argc*/, char** /*argv*/)
         std::cout<<"A2("<<i<<","<<j<<"): "<<A2(i,j)<<std::endl;
     */
 
-        KSurface <KElectrostaticBasis,
-        KDirichletBoundary,
-        KLineSegment> *w = new KSurface<KElectrostaticBasis,
-                                        KDirichletBoundary,
-                                        KLineSegment>();
+    KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>* w =
+        new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
 
-        w->SetP0(KThreeVector(-0.457222, 0.0504778, -0.51175));
-        w->SetP1(KThreeVector(-0.463342, 0.0511534, -0.515712));
-        w->SetDiameter(0.0003);
-        w->SetBoundaryValue(-900);
+    w->SetP0(KThreeVector(-0.457222, 0.0504778, -0.51175));
+    w->SetP1(KThreeVector(-0.463342, 0.0511534, -0.515712));
+    w->SetDiameter(0.0003);
+    w->SetBoundaryValue(-900);
 
-        KSurfaceContainer surfaceContainer;
-        surfaceContainer.push_back(w);
-        
-	KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
-        KOpenCLElectrostaticBoundaryIntegrator integrator{KoclEBIFactory::MakeDefault(oclSurfaceContainer)};
-	KBoundaryIntegralMatrix <KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(oclSurfaceContainer, integrator);
-        KBoundaryIntegralVector <KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(oclSurfaceContainer, integrator);
-        KBoundaryIntegralSolutionVector <KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(oclSurfaceContainer, integrator);
-        
-	KElectrostaticBoundaryIntegrator integrator2{KEBIFactory::MakeDefault()};
-        KBoundaryIntegralMatrix <KElectrostaticBoundaryIntegrator> A2(surfaceContainer, integrator2);
-        KBoundaryIntegralSolutionVector <KElectrostaticBoundaryIntegrator> x2(surfaceContainer, integrator2);
-        KBoundaryIntegralVector <KElectrostaticBoundaryIntegrator> b2(surfaceContainer, integrator2);
-	oclSurfaceContainer.ConstructOpenCLObjects();
+    KSurfaceContainer surfaceContainer;
+    surfaceContainer.push_back(w);
 
-        std::cout << "Test: " << A(0, 0) << std::endl;
+    KOpenCLSurfaceContainer oclSurfaceContainer(surfaceContainer);
+    KOpenCLElectrostaticBoundaryIntegrator integrator{KoclEBIFactory::MakeDefault(oclSurfaceContainer)};
+    KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> A(oclSurfaceContainer, integrator);
+    KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> b(oclSurfaceContainer, integrator);
+    KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(oclSurfaceContainer, integrator);
+
+    KElectrostaticBoundaryIntegrator integrator2{KEBIFactory::MakeDefault()};
+    KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A2(surfaceContainer, integrator2);
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x2(surfaceContainer, integrator2);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b2(surfaceContainer, integrator2);
+    oclSurfaceContainer.ConstructOpenCLObjects();
+
+    std::cout << "Test: " << A(0, 0) << std::endl;
 
     return 0;
 }

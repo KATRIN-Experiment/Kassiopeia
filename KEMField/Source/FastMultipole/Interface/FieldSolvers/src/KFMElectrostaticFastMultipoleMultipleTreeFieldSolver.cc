@@ -1,4 +1,5 @@
 #include "KFMElectrostaticFastMultipoleMultipleTreeFieldSolver.hh"
+
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 
 #include <cmath>
@@ -6,25 +7,24 @@
 namespace KEMField
 {
 
-KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::KFMElectrostaticFastMultipoleMultipleTreeFieldSolver(const KSurfaceContainer& container):
-fSurfaceContainer(container),
-fDirectIntegrator(KEBIFactory::MakeDefault()),
-fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
-fFastFieldSolver()
+KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::KFMElectrostaticFastMultipoleMultipleTreeFieldSolver(
+    const KSurfaceContainer& container) :
+    fSurfaceContainer(container),
+    fDirectIntegrator(KEBIFactory::MakeDefault()),
+    fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
+    fFastFieldSolver()
 {
     fNTrees = 0;
 }
 
 KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::~KFMElectrostaticFastMultipoleMultipleTreeFieldSolver()
 {
-    for(unsigned int i=0; i<fNavigatorVector.size(); i++)
-    {
+    for (unsigned int i = 0; i < fNavigatorVector.size(); i++) {
         delete fNavigatorVector[i];
     }
 }
 
-void
-KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTree* tree)
+void KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTree* tree)
 {
     fNTrees++;
     fTreeVector.push_back(tree);
@@ -39,7 +39,7 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTr
 
     fLeafNodeVector.push_back(NULL);
     fCubeVector.push_back(NULL);
-    fExpansionOriginVector.push_back( KFMPoint<3>() );
+    fExpansionOriginVector.push_back(KFMPoint<3>());
     fLocalCoeffVector.push_back(NULL);
     fDirectCallIDSetVector.push_back(NULL);
     fUseageIndicatorVector.push_back(false);
@@ -53,8 +53,7 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::AddTree(KFMElectrostaticTr
 }
 
 
-double
-KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::Potential(const KPosition& P) const
+double KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::Potential(const KPosition& P) const
 {
     //weighted average of different tree potentials
 
@@ -63,50 +62,42 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::Potential(const KPosition&
     double numer = 0.0;
     double denom = 0.0;
 
-    for(unsigned int i=0; i<fNTrees; i++)
-    {
-        if(fUseageIndicatorVector[i])
-        {
-            double L2 = (fCubeVector[i]->GetLength())/2.0;
+    for (unsigned int i = 0; i < fNTrees; i++) {
+        if (fUseageIndicatorVector[i]) {
+            double L2 = (fCubeVector[i]->GetLength()) / 2.0;
             KPosition origin(fExpansionOriginVector[i]);
             KPosition del = P - origin;
 
-            double wx = (1.0 - std::fabs(del[0])/(L2)) + 1e-9;
-            double wy = (1.0 - std::fabs(del[1])/(L2)) + 1e-9;
-            double wz = (1.0 - std::fabs(del[2])/(L2)) + 1e-9;
-            double inv = 1.0/wx + 1.0/wy + 1.0/wz;
-            double weight = 1.0/inv;
+            double wx = (1.0 - std::fabs(del[0]) / (L2)) + 1e-9;
+            double wy = (1.0 - std::fabs(del[1]) / (L2)) + 1e-9;
+            double wz = (1.0 - std::fabs(del[2]) / (L2)) + 1e-9;
+            double inv = 1.0 / wx + 1.0 / wy + 1.0 / wz;
+            double weight = 1.0 / inv;
 
             fFastFieldSolver.SetExpansionOrigin(fExpansionOriginVector[i]);
             fFastFieldSolver.SetLocalCoefficients(fLocalCoeffVector[i]);
             fFastPotential[i] = fFastFieldSolver.Potential(P);
 
-            if(fDirectCallIDSetVector[i] != NULL)
-            {
-                if(fDirectCallIDSetVector[i]->GetSize() != 0)
-                {
+            if (fDirectCallIDSetVector[i] != NULL) {
+                if (fDirectCallIDSetVector[i]->GetSize() != 0) {
                     fDirectPotential[i] = fDirectFieldSolver.Potential(fDirectCallIDSetVector[i]->GetRawIDList(), P);
                     fTotalPotential[i] = fFastPotential[i] + fDirectPotential[i];
                 }
-                else
-                {
+                else {
                     fTotalPotential[i] = fFastPotential[i];
                 }
             }
-            else
-            {
+            else {
                 fTotalPotential[i] = fFastPotential[i];
             }
-            numer += weight*fTotalPotential[i];
+            numer += weight * fTotalPotential[i];
             denom += weight;
         }
     }
-    return numer/denom;
-
+    return numer / denom;
 }
 
-KThreeVector
-KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::ElectricField(const KPosition& P) const
+KThreeVector KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::ElectricField(const KPosition& P) const
 {
     //weighted average of different tree fields
 
@@ -117,85 +108,80 @@ KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::ElectricField(const KPosit
     double numer_z = 0.0;
     double denom = 0.0;
 
-    for(unsigned int i=0; i<fNTrees; i++)
-    {
-        if(fUseageIndicatorVector[i])
-        {
-            double L2 = (fCubeVector[i]->GetLength())/2.0;
+    for (unsigned int i = 0; i < fNTrees; i++) {
+        if (fUseageIndicatorVector[i]) {
+            double L2 = (fCubeVector[i]->GetLength()) / 2.0;
             KPosition origin(fExpansionOriginVector[i]);
             KPosition del = P - origin;
 
-            double wx = (1.0 - std::fabs(del[0])/(L2)) + 1e-9;
-            double wy = (1.0 - std::fabs(del[1])/(L2)) + 1e-9;
-            double wz = (1.0 - std::fabs(del[2])/(L2)) + 1e-9;
-            double inv = 1.0/wx + 1.0/wy + 1.0/wz;
-            double weight = 1.0/inv;
+            double wx = (1.0 - std::fabs(del[0]) / (L2)) + 1e-9;
+            double wy = (1.0 - std::fabs(del[1]) / (L2)) + 1e-9;
+            double wz = (1.0 - std::fabs(del[2]) / (L2)) + 1e-9;
+            double inv = 1.0 / wx + 1.0 / wy + 1.0 / wz;
+            double weight = 1.0 / inv;
 
             fFastFieldSolver.SetExpansionOrigin(fExpansionOriginVector[i]);
             fFastFieldSolver.SetLocalCoefficients(fLocalCoeffVector[i]);
             fFastFieldSolver.ElectricField(P, fFastField[i]);
 
-            if(fDirectCallIDSetVector[i] != NULL)
-            {
-                if(fDirectCallIDSetVector[i]->GetSize() != 0)
-                {
+            if (fDirectCallIDSetVector[i] != NULL) {
+                if (fDirectCallIDSetVector[i]->GetSize() != 0) {
                     fDirectField[i] = fDirectFieldSolver.ElectricField(fDirectCallIDSetVector[i]->GetRawIDList(), P);
                     fTotalField[i] = fFastField[i] + fDirectField[i];
                 }
-                else
-                {
+                else {
                     fTotalField[i] = fFastField[i];
                 }
             }
-            else
-            {
+            else {
                 fTotalField[i] = fFastField[i];
             }
 
-            numer_x += weight*fTotalField[i][0];
-            numer_y += weight*fTotalField[i][1];
-            numer_z += weight*fTotalField[i][2];
+            numer_x += weight * fTotalField[i][0];
+            numer_y += weight * fTotalField[i][1];
+            numer_z += weight * fTotalField[i][2];
             denom += weight;
         }
     }
 
     KThreeVector val;
-    val[0] = numer_x/denom;
-    val[1] = numer_y/denom;
-    val[2] = numer_z/denom;
+    val[0] = numer_x / denom;
+    val[1] = numer_y / denom;
+    val[2] = numer_z / denom;
     return val;
 }
 
 
-void
-KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::SetPoint(const double* p) const
+void KFMElectrostaticFastMultipoleMultipleTreeFieldSolver::SetPoint(const double* p) const
 {
 
     //no caching, must locate point across all trees
     fEvaluationPoint = KFMPoint<3>(p);
 
-    for(unsigned int i = 0; i<fNTrees; i++)
-    {
-        fNavigatorVector[i]->SetPoint( &fEvaluationPoint );
-        fNavigatorVector[i]->ApplyAction( fRootNodeVector[i] );
+    for (unsigned int i = 0; i < fNTrees; i++) {
+        fNavigatorVector[i]->SetPoint(&fEvaluationPoint);
+        fNavigatorVector[i]->ApplyAction(fRootNodeVector[i]);
         fUseageIndicatorVector[i] = fNavigatorVector[i]->Found();
 
-        if(fUseageIndicatorVector[i])
-        {
+        if (fUseageIndicatorVector[i]) {
             fLeafNodeVector[i] = fNavigatorVector[i]->GetLeafNode();
-            fCubeVector[i] =  KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<3> >::GetNodeObject(fLeafNodeVector[i]);
-            fLocalCoeffVector[i] = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet >::GetNodeObject(fLeafNodeVector[i]);
+            fCubeVector[i] =
+                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<3>>::GetNodeObject(fLeafNodeVector[i]);
+            fLocalCoeffVector[i] =
+                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>::GetNodeObject(
+                    fLeafNodeVector[i]);
 
-            if(fLocalCoeffVector[i] == NULL || fCubeVector[i] == NULL)
-            {
-                kfmout<<"KFMElectrostaticFastMultipoleFieldSolver::SetPoint: Warning, tree node located for point: ("<<p[0]<<", "<<p[1]<<", "<<p[2]<<") has incomplete data!"<<kfmendl;
+            if (fLocalCoeffVector[i] == NULL || fCubeVector[i] == NULL) {
+                kfmout << "KFMElectrostaticFastMultipoleFieldSolver::SetPoint: Warning, tree node located for point: ("
+                       << p[0] << ", " << p[1] << ", " << p[2] << ") has incomplete data!" << kfmendl;
             }
 
-            fDirectCallIDSetVector[i] = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet >::GetNodeObject(fLeafNodeVector[i]);
+            fDirectCallIDSetVector[i] =
+                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMExternalIdentitySet>::GetNodeObject(
+                    fLeafNodeVector[i]);
             fExpansionOriginVector[i] = fCubeVector[i]->GetCenter();
         }
-
     }
 }
 
-}//end of KEMField namespace
+}  // namespace KEMField

@@ -3,7 +3,8 @@
 
 #include <cstddef>
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /**
 *
@@ -20,26 +21,24 @@ namespace KGeoBag{
 */
 
 
-template<typename T>
-class KGObjectHolder
+template<typename T> class KGObjectHolder
 {
-    public:
+  public:
+    KGObjectHolder() : fObject(nullptr)
+    {
+        ;
+    };
 
-        KGObjectHolder():fObject(NULL){;};
+    virtual ~KGObjectHolder()
+    {
+        delete fObject;
+    };
 
-        virtual ~KGObjectHolder()
-        {
-            delete fObject;
-        };
-
-        T* fObject;
-
+    T* fObject;
 };
 
 
-
-}//end of KGeoBag
-
+}  // namespace KGeoBag
 
 
 #endif /* KGObjectHolder_H__ */

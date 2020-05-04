@@ -12,22 +12,19 @@
 using namespace KEMField;
 using namespace std;
 
-namespace katrin {
-
-template< >
-KElectricQuadrupoleFieldBuilder::~KComplexElement()
+namespace katrin
 {
-}
+
+template<> KElectricQuadrupoleFieldBuilder::~KComplexElement() {}
 
 STATICINT sKElectricQuadrupoleFieldStructure =
-		KElectricQuadrupoleFieldBuilder::Attribute< string >( "name" ) +
-		KElectricQuadrupoleFieldBuilder::Attribute< KEMStreamableThreeVector >( "location" ) +
-		KElectricQuadrupoleFieldBuilder::Attribute< double >( "strength" ) +
-		KElectricQuadrupoleFieldBuilder::Attribute< double >( "length" ) +
-		KElectricQuadrupoleFieldBuilder::Attribute< double >( "radius" );
+    KElectricQuadrupoleFieldBuilder::Attribute<string>("name") +
+    KElectricQuadrupoleFieldBuilder::Attribute<KEMStreamableThreeVector>("location") +
+    KElectricQuadrupoleFieldBuilder::Attribute<double>("strength") +
+    KElectricQuadrupoleFieldBuilder::Attribute<double>("length") +
+    KElectricQuadrupoleFieldBuilder::Attribute<double>("radius");
 
-STATICINT sKToolboxStructure =
-        KEMToolboxBuilder::ComplexElement< KElectricQuadrupoleField >( "electric_quadrupole_field");
+STATICINT sKToolboxStructure = KEMToolboxBuilder::ComplexElement<KElectricQuadrupoleField>("electric_quadrupole_field");
 
 
 } /* namespace katrin */

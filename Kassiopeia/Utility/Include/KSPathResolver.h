@@ -5,27 +5,29 @@
 #ifndef KASPER_KSPATHRESOLVER_H
 #define KASPER_KSPATHRESOLVER_H
 
-#include <string>
 #include "KFile.h"
+
+#include <string>
 #include <sys/stat.h>
 
 #ifndef KASPER_INSTALL_DIR
 #define KASPER_DIR "."
 #else
-#define KASPER_DIR AS_STRING( KASPER_INSTALL_DIR )
+#define KASPER_DIR AS_STRING(KASPER_INSTALL_DIR)
 #endif
 
 
-namespace Kassiopeia{
+namespace Kassiopeia
+{
 
 class KSPathResolver
 {
 
-protected:
+  protected:
     KSPathResolver(){};
     virtual ~KSPathResolver(){};
 
-public:
+  public:
     enum class EDirectory
     {
         Undefined,
@@ -35,9 +37,9 @@ public:
         Scratch
     };
 
-public:
+  public:
     static std::string GetDirectory(EDirectory directory);
-    static std::string ResolvePath(const std::string &filename, EDirectory directory = EDirectory::Undefined);
+    static std::string ResolvePath(const std::string& filename, EDirectory directory = EDirectory::Undefined);
 };
 
 inline std::string KSPathResolver::GetDirectory(EDirectory directory)
@@ -45,37 +47,37 @@ inline std::string KSPathResolver::GetDirectory(EDirectory directory)
     switch (directory) {
 
 #ifdef CONFIG_INSTALL_DIR
-        case EDirectory::Config :
-            return AS_STRING( CONFIG_INSTALL_DIR );
+        case EDirectory::Config:
+            return AS_STRING(CONFIG_INSTALL_DIR);
 #endif
 
 #ifdef DATA_INSTALL_DIR
-        case EDirectory::Data :
-            return AS_STRING( DATA_INSTALL_DIR );
+        case EDirectory::Data:
+            return AS_STRING(DATA_INSTALL_DIR);
 #endif
 
 #ifdef SCRATCH_INSTALL_DIR
-        case EDirectory::Scratch :
-            return AS_STRING( SCRATCH_INSTALL_DIR );
+        case EDirectory::Scratch:
+            return AS_STRING(SCRATCH_INSTALL_DIR);
 #endif
 
-        default : {
+        default: {
             switch (directory) {
-                case EDirectory::Kasper :
+                case EDirectory::Kasper:
                     return KASPER_DIR;
-                default :
+                default:
                     return "";
             }
         }
     }
 }
 
-inline std::string KSPathResolver::ResolvePath(const std::string &filename, EDirectory directory)
+inline std::string KSPathResolver::ResolvePath(const std::string& filename, EDirectory directory)
 {
     std::string path = GetDirectory(directory);
 
     if (!filename.empty()) {
-        if (&path.back() == (char *) '/')
+        if (&path.back() == (char*) '/')
             path += filename;
         else {
             path += "/";
@@ -104,7 +106,7 @@ inline std::string KSPathResolver::ResolvePath(const std::string &filename, EDir
     return "";
 }
 
-}
+}  // namespace Kassiopeia
 
 
-#endif //KASPER_KSPATHRESOLVER_H
+#endif  //KASPER_KSPATHRESOLVER_H

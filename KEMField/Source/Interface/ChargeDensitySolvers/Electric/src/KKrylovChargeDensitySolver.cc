@@ -6,37 +6,36 @@
  */
 
 #include "KKrylovChargeDensitySolver.hh"
-#include "KElectrostaticBoundaryIntegratorFactory.hh"
-#include "KBoundaryMatrixGenerator.hh"
-#include "KBoundaryIntegralVector.hh"
-#include "KBoundaryIntegralSolutionVector.hh"
 
+#include "KBoundaryIntegralSolutionVector.hh"
+#include "KBoundaryIntegralVector.hh"
+#include "KBoundaryMatrixGenerator.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KKrylovSolverFactory.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-KKrylovChargeDensitySolver::KKrylovChargeDensitySolver() {
-	fKrylovConfig.SetDisplayName("Solver: ");
+KKrylovChargeDensitySolver::KKrylovChargeDensitySolver()
+{
+    fKrylovConfig.SetDisplayName("Solver: ");
 }
 
-KKrylovChargeDensitySolver::~KKrylovChargeDensitySolver() { }
+KKrylovChargeDensitySolver::~KKrylovChargeDensitySolver() {}
 
-void KKrylovChargeDensitySolver::SetMatrixGenerator(
-		KSmartPointer<MatrixGenerator> matrixGen)
+void KKrylovChargeDensitySolver::SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen)
 {
-	fMatrixGenerator = matrixGen;
+    fMatrixGenerator = matrixGen;
 }
 
-KSmartPointer<const KKrylovChargeDensitySolver::MatrixGenerator>
-KKrylovChargeDensitySolver::GetMatrixGenerator() const
+KSmartPointer<const KKrylovChargeDensitySolver::MatrixGenerator> KKrylovChargeDensitySolver::GetMatrixGenerator() const
 {
-	return fMatrixGenerator;
+    return fMatrixGenerator;
 }
 
-void KKrylovChargeDensitySolver::SetPreconditionerGenerator(
-		KSmartPointer<MatrixGenerator> preconGen)
+void KKrylovChargeDensitySolver::SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen)
 {
-	fPreconditionerGenerator = preconGen;
+    fPreconditionerGenerator = preconGen;
 }
 
 void KKrylovChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
@@ -45,29 +44,27 @@ void KKrylovChargeDensitySolver::ComputeSolution(KSurfaceContainer& container)
      * ValueType per surface element and that these are arranged in the same order
      * as in the KSurface container. */
 
-	// The integration method should not matter, as we are only using the vectors
-	// Therefore, using simply default.
+    // The integration method should not matter, as we are only using the vectors
+    // Therefore, using simply default.
     KElectrostaticBoundaryIntegrator integrator{KEBIFactory::MakeDefault()};
 
-        KSmartPointer<KSquareMatrix<ValueType> > A = fMatrixGenerator->Build(container);
-        KSmartPointer<KSquareMatrix<ValueType> > P;
-        if(fPreconditionerGenerator.Is())
-            P = fPreconditionerGenerator->Build(container);
+    KSmartPointer<KSquareMatrix<ValueType>> A = fMatrixGenerator->Build(container);
+    KSmartPointer<KSquareMatrix<ValueType>> P;
+    if (fPreconditionerGenerator.Is())
+        P = fPreconditionerGenerator->Build(container);
 
-        KBoundaryIntegralSolutionVector< KElectrostaticBoundaryIntegrator > x( container, integrator );
-        KBoundaryIntegralVector< KElectrostaticBoundaryIntegrator > b( container, integrator );
+    KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(container, integrator);
+    KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(container, integrator);
 
-        KSmartPointer< KIterativeKrylovSolver<ValueType> > solver =
-                KBuildKrylovSolver<ValueType>(fKrylovConfig,A,P);
-        solver->Solve(x,b);
-        SaveSolution(solver->ResidualNorm(), container);
+    KSmartPointer<KIterativeKrylovSolver<ValueType>> solver = KBuildKrylovSolver<ValueType>(fKrylovConfig, A, P);
+    solver->Solve(x, b);
+    SaveSolution(solver->ResidualNorm(), container);
 }
 
 void KKrylovChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
-	if(!FindSolution(fKrylovConfig.GetTolerance(),container))
-	    ComputeSolution(container);
-
+    if (!FindSolution(fKrylovConfig.GetTolerance(), container))
+        ComputeSolution(container);
 }
 
 } /* namespace KEMField */

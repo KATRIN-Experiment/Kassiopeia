@@ -5,9 +5,9 @@
 namespace KGeoBag
 {
 
-  KGCircularWirePins* KGCircularWirePins::Clone() const
-  {
-    KGCircularWirePins* w = new KGCircularWirePins();
+KGCircularWirePins* KGCircularWirePins::Clone() const
+{
+    auto* w = new KGCircularWirePins();
 
     w->fR1 = fR1;
     w->fR2 = fR2;
@@ -18,41 +18,41 @@ namespace KGeoBag
     w->fNDiscPower = fNDiscPower;
 
     return w;
-  }
+}
 
-  double KGCircularWirePins::GetLength() const
-  {
-      // TODO
-      return 0.;
-  }
-
-
-  double KGCircularWirePins::Area() const
-  {
+double KGCircularWirePins::GetLength() const
+{
     // TODO
     return 0.;
-  }
+}
 
-  double KGCircularWirePins::Volume() const
-  {
+
+double KGCircularWirePins::Area() const
+{
     // TODO
     return 0.;
-  }
+}
 
-  bool KGCircularWirePins::ContainsPoint(const double* P) const
-  {
-	// TODO
+double KGCircularWirePins::Volume() const
+{
+    // TODO
+    return 0.;
+}
+
+bool KGCircularWirePins::ContainsPoint(const double* P) const
+{
+    // TODO
     (void) P;
     return true;
-  }
+}
 
-  double KGCircularWirePins::DistanceTo(const double* P,double* P_in,double* P_norm) const
-  {
-	// TODO
+double KGCircularWirePins::DistanceTo(const double* P, double* P_in, double* P_norm) const
+{
+    // TODO
     (void) P;
     (void) P_in;
     (void) P_norm;
     return 0.;
-  }
-
 }
+
+}  // namespace KGeoBag

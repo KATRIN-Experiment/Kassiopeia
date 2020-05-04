@@ -1,8 +1,8 @@
 #ifndef KGObjectRetriever_HH__
 #define KGObjectRetriever_HH__
 
-#include "KGTypelist.hh"
 #include "KGNode.hh"
+#include "KGTypelist.hh"
 
 namespace KGeoBag
 {
@@ -20,33 +20,32 @@ namespace KGeoBag
 *
 */
 
-template< typename ObjectTypeList, typename ObjectType>
-class KGObjectRetriever
+template<typename ObjectTypeList, typename ObjectType> class KGObjectRetriever
 {
-    public:
-        KGObjectRetriever(){};
-        virtual ~KGObjectRetriever(){};
+  public:
+    KGObjectRetriever(){};
+    virtual ~KGObjectRetriever(){};
 
-        static ObjectType* GetNodeObject(KGNode<ObjectTypeList>* node)
-        {
-            return static_cast< KGObjectHolder<ObjectType>* >(node)->fObject;
-        }
+    static ObjectType* GetNodeObject(KGNode<ObjectTypeList>* node)
+    {
+        return static_cast<KGObjectHolder<ObjectType>*>(node)->fObject;
+    }
 
-        static const ObjectType* GetNodeObject(const KGNode<ObjectTypeList>* node)
-        {
-            return static_cast< KGObjectHolder<ObjectType>* >(node)->fObject;
-        }
+    static const ObjectType* GetNodeObject(const KGNode<ObjectTypeList>* node)
+    {
+        return static_cast<KGObjectHolder<ObjectType>*>(node)->fObject;
+    }
 
-        static void SetNodeObject(ObjectType* obj_ptr, KGNode<ObjectTypeList>* node)
-        {
-            static_cast< KGObjectHolder<ObjectType>* >(node)->fObject = obj_ptr;
-        }
+    static void SetNodeObject(ObjectType* obj_ptr, KGNode<ObjectTypeList>* node)
+    {
+        static_cast<KGObjectHolder<ObjectType>*>(node)->fObject = obj_ptr;
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGObjectRetriever_H__ */

@@ -41,44 +41,43 @@
  (Assev et al) and calculated values (3.456E-22 m-2)
  */
 
-#include <iostream>
-#include <cmath>
-#include <vector>
-
+#include "KTextFile.h"
 #include "Rtypes.h"
 #include "TLorentzVector.h"
-#include "TVector3.h"
 #include "TMath.h"
-#include "KTextFile.h"
+#include "TVector3.h"
+
+#include <cmath>
+#include <iostream>
+#include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////
 
 namespace Kassiopeia
 {
-    class InelasticFerencCalculator
-    {
-        public:
+class InelasticFerencCalculator
+{
+  public:
+    // constructor
+    InelasticFerencCalculator();
 
-            // constructor
-            InelasticFerencCalculator();
+    //!destructor.
+    virtual ~InelasticFerencCalculator();
 
-            //!destructor.
-            virtual ~InelasticFerencCalculator();
-
-            /*!
+    /*!
              \brief set the molecule type for which calculations will be performed
 
              \param aMolecule std::string name of a registered molecule type
              */
-            virtual void setmolecule( const std::string& aMolecule );
+    virtual void setmolecule(const std::string& aMolecule);
 
-            /*!
+    /*!
              \brief returns the Ionization Energy of a secondary electron (a dice is thrown (weighted with the cross sections) to determine the shell from which the secondary electron is emmitted)
              Ionization Energy computed in function: sigmaion
              */
-            virtual double GetIonizationEnergy();
+    virtual double GetIonizationEnergy();
 
-            /*!
+    /*!
              \brief electronic excitation cross section in m^2
 
              This function computes the electronic excitation cross section of
@@ -86,9 +85,9 @@ namespace Kassiopeia
              \param anE incident electron energy in eV,
              \return  electronic excitation cross section in m^2
              */
-            virtual double sigmaexc( double anE );
+    virtual double sigmaexc(double anE);
 
-            /*!
+    /*!
              \brief energy loss and scattering angle for electronic excitation scattering
 
              This subroutine generates  energy loss and polar scatt. angle according to
@@ -98,9 +97,9 @@ namespace Kassiopeia
              \param   Eloss returns energy loss in eV
              \param   Theta returns change of polar angle in radian
              */
-            virtual void randomexc( double anE, double& Eloss, double& Theta );
+    virtual void randomexc(double anE, double& Eloss, double& Theta);
 
-            /*!
+    /*!
              \brief ionization cross section in  m^2
 
              This function computes the total ionization cross section of
@@ -116,9 +115,9 @@ namespace Kassiopeia
              \param anE incident electron energy in eV,
              \return  ionization cross section
              */
-            virtual double sigmaion( double anE );
+    virtual double sigmaion(double anE);
 
-            /*!
+    /*!
              \brief energy loss and scattering angle for ionization scattering
 
              This subroutine generates  energy loss and polar scatt. angle according to
@@ -131,33 +130,30 @@ namespace Kassiopeia
 
 
              */
-            virtual void randomion( double anE, double& Eloss, double& Theta );
+    virtual void randomion(double anE, double& Eloss, double& Theta);
 
-        protected:
-            inline double Lagrange( Int_t n, double *xn, double *fn, double x )
-            {
-                double f, a[100], b[100], aa, bb;
-                f = 0.;
-                for( Int_t j = 0; j < n; j++ )
-                {
-                    for( Int_t i = 0; i < n; i++ )
-                    {
-                        a[i] = x - xn[i];
-                        b[i] = xn[j] - xn[i];
-                    }
-                    a[j] = b[j] = aa = bb = 1.;
-
-                    for( Int_t i = 0; i < n; i++ )
-                    {
-                        aa = aa * a[i];
-                        bb = bb * b[i];
-                    }
-                    f += fn[j] * aa / bb;
-                }
-                return f;
+  protected:
+    inline double Lagrange(Int_t n, double* xn, double* fn, double x)
+    {
+        double f, a[100], b[100], aa, bb;
+        f = 0.;
+        for (Int_t j = 0; j < n; j++) {
+            for (Int_t i = 0; i < n; i++) {
+                a[i] = x - xn[i];
+                b[i] = xn[j] - xn[i];
             }
+            a[j] = b[j] = aa = bb = 1.;
 
-            /*!
+            for (Int_t i = 0; i < n; i++) {
+                aa = aa * a[i];
+                bb = bb * b[i];
+            }
+            f += fn[j] * aa / bb;
+        }
+        return f;
+    }
+
+    /*!
              \brief  total inelastic cross section
 
 
@@ -167,9 +163,9 @@ namespace Kassiopeia
 
              \param anE incident electron energy in eV,
              */
-            double sigmainel( double anE );
+    double sigmainel(double anE);
 
-            /*!
+    /*!
              \brief differential cross section of excitation electron scattering
 
              This subroutine computes the differential cross section
@@ -181,9 +177,9 @@ namespace Kassiopeia
 
              \return  differential cross section of excitation electron scattering in m^2/steradian
              */
-            double DiffXSecExc( double anE, double cosTheta );
+    double DiffXSecExc(double anE, double cosTheta);
 
-            /*!
+    /*!
              \brief differential cross section  of  inelastic electron scattering
 
 
@@ -196,11 +192,11 @@ namespace Kassiopeia
              \param anE electron kinetic energy in eV
              \param cosTheta cos(Theta), where Theta is the polar scatt. angle
              */
-            double DiffXSecInel( double anE, double cosTheta );
+    double DiffXSecInel(double anE, double cosTheta);
 
-            double sumexc( double K );
+    double sumexc(double K);
 
-            /*!
+    /*!
              \brief sigmaexc electronic excitation cross section to the B and C states
 
              This function computes the sigmaexc electronic excitation
@@ -210,9 +206,9 @@ namespace Kassiopeia
              \param anE incident electron energy in eV,
 
              */
-            double sigmaBC( double anE );
+    double sigmaBC(double anE);
 
-            /*!
+    /*!
              \brief sigmadiss10 electronic
              dissociative excitation
 
@@ -223,9 +219,9 @@ namespace Kassiopeia
              \param anE  incident electron energy in eV,
 
              */
-            double sigmadiss10( double anE );
+    double sigmadiss10(double anE);
 
-            /*!
+    /*!
              \brief sigmadiss15 electronic dissociative excitation
              cross section
 
@@ -234,9 +230,9 @@ namespace Kassiopeia
 
              \param anE incident electron energy in eV
              */
-            double sigmadiss15( double anE );
+    double sigmadiss15(double anE);
 
-            /*!
+    /*!
              \brief secondary electron energy W
 
              This subroutine generates secondary electron energy W
@@ -246,22 +242,22 @@ namespace Kassiopeia
              \param E  incident electron energy in eV
              \param W  returns secondary electron energy
              */
-            void gensecelen( double E, double& W );
+    void gensecelen(double E, double& W);
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-            // the following functions and methods are intended for generalizing the cross sections.
-            bool ReadData();
-            bool FindMinimum(); //determines fminimum;
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // the following functions and methods are intended for generalizing the cross sections.
+    bool ReadData();
+    bool FindMinimum();  //determines fminimum;
 
-            katrin::KTextFile* fDataFile;
+    katrin::KTextFile* fDataFile;
 
-            std::vector< double > fBindingEnergy; // binding energy
-            std::vector< double > fOrbitalEnergy; // orbital kinetic energy;
-            std::vector< int > fNOccupation; //orbital occupation number
+    std::vector<double> fBindingEnergy;  // binding energy
+    std::vector<double> fOrbitalEnergy;  // orbital kinetic energy;
+    std::vector<int> fNOccupation;       //orbital occupation number
 
-            double fIonizationEnergy;
-            std::string fMoleculeType;
-            int fMinimum; //position of orbital with minimal energy.
-    };
-}
-#endif //InelasticFerencCalculator_h
+    double fIonizationEnergy;
+    std::string fMoleculeType;
+    int fMinimum;  //position of orbital with minimal energy.
+};
+}  // namespace Kassiopeia
+#endif  //InelasticFerencCalculator_h

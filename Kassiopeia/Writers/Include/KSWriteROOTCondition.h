@@ -6,18 +6,17 @@
 namespace Kassiopeia
 {
 
-    class KSWriteROOTCondition:
-        public KSComponentTemplate< KSWriteROOTCondition >
-    {
-        public:
-            KSWriteROOTCondition();
-            virtual ~KSWriteROOTCondition();
+class KSWriteROOTCondition : public KSComponentTemplate<KSWriteROOTCondition>
+{
+  public:
+    KSWriteROOTCondition();
+    ~KSWriteROOTCondition() override;
 
-        public:
-            virtual void CalculateWriteCondition( bool& aFlag ) = 0;
-    };
+  public:
+    virtual void CalculateWriteCondition(bool& aFlag) = 0;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

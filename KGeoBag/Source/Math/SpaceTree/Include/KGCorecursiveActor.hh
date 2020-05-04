@@ -1,9 +1,9 @@
 #ifndef KGCorecursiveActor_HH__
 #define KGCorecursiveActor_HH__
 
-#include <queue>
-
 #include "KGNodeActor.hh"
+
+#include <queue>
 
 
 namespace KGeoBag
@@ -23,58 +23,50 @@ namespace KGeoBag
 *
 */
 
-template< typename NodeType>
-class KGCorecursiveActor: public KGNodeActor<NodeType>
+template<typename NodeType> class KGCorecursiveActor : public KGNodeActor<NodeType>
 {
-    public:
-        KGCorecursiveActor():fOperationalActor(NULL){};
-        virtual ~KGCorecursiveActor(){};
+  public:
+    KGCorecursiveActor() : fOperationalActor(nullptr){};
+    ~KGCorecursiveActor() override{};
 
-        void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    {
+        if (opActor != this && opActor != nullptr)  //avoid a disaster
         {
-            if(opActor != this && opActor != NULL)//avoid a disaster
-            {
-                fOperationalActor = opActor;
-            }
+            fOperationalActor = opActor;
         }
+    }
 
-        //corecursively apply the operational visitor to every node
-        //below this one
-        void ApplyAction(NodeType* node)
-        {
-            if(node != NULL)
-            {
-                fNodeQueue = std::queue< NodeType* >();
-                fNodeQueue.push(node);
-                do
-                {
-                    fOperationalActor->ApplyAction(fNodeQueue.front());
+    //corecursively apply the operational visitor to every node
+    //below this one
+    void ApplyAction(NodeType* node) override
+    {
+        if (node != nullptr) {
+            fNodeQueue = std::queue<NodeType*>();
+            fNodeQueue.push(node);
+            do {
+                fOperationalActor->ApplyAction(fNodeQueue.front());
 
-                    if(fNodeQueue.front()->HasChildren())
-                    {
-                        fTempNode = fNodeQueue.front();
-                        unsigned int n_children = fTempNode->GetNChildren();
-                        for(unsigned int i=0; i < n_children; i++)
-                        {
-                            fNodeQueue.push( fTempNode->GetChild(i) );
-                        }
+                if (fNodeQueue.front()->HasChildren()) {
+                    fTempNode = fNodeQueue.front();
+                    unsigned int n_children = fTempNode->GetNChildren();
+                    for (unsigned int i = 0; i < n_children; i++) {
+                        fNodeQueue.push(fTempNode->GetChild(i));
                     }
-                    fNodeQueue.pop();
                 }
-                while(fNodeQueue.size() != 0 );
-            }
+                fNodeQueue.pop();
+            } while (fNodeQueue.size() != 0);
         }
+    }
 
-    private:
-
-        KGNodeActor<NodeType>* fOperationalActor;
-        std::queue< NodeType* > fNodeQueue;
-        NodeType* fTempNode;
-
+  private:
+    KGNodeActor<NodeType>* fOperationalActor;
+    std::queue<NodeType*> fNodeQueue;
+    NodeType* fTempNode;
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGCorecursiveActor_H__ */

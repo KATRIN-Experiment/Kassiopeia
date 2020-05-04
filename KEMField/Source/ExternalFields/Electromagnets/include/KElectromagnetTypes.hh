@@ -5,26 +5,22 @@
 
 namespace KEMField
 {
-  class KLineCurrent;
-  class KCoil;
-  class KSolenoid;
-  class KCurrentLoop;
+class KLineCurrent;
+class KCoil;
+class KSolenoid;
+class KCurrentLoop;
 
-  // A list of all of the electromagnet types
-  typedef KTYPELIST_4( KLineCurrent,
-		       KCoil,
-		       KSolenoid,
-		       KCurrentLoop) KElectromagnetTypes_;
+// A list of all of the electromagnet types
+typedef KTYPELIST_4(KLineCurrent, KCoil, KSolenoid, KCurrentLoop) KElectromagnetTypes_;
 
-  typedef NoDuplicates<KElectromagnetTypes_>::Result KElectromagnetTypes;
-}
+typedef NoDuplicates<KElectromagnetTypes_>::Result KElectromagnetTypes;
+}  // namespace KEMField
 
-#include "KElectromagnetVisitor.hh"
-
-#include "KLineCurrent.hh"
-#include "KCurrentLoop.hh"
-#include "KSolenoid.hh"
 #include "KCoil.hh"
+#include "KCurrentLoop.hh"
+#include "KElectromagnetVisitor.hh"
+#include "KLineCurrent.hh"
+#include "KSolenoid.hh"
 
 
 #endif /* KELECTROMAGNETTYPES_DEF */

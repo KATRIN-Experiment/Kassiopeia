@@ -1,69 +1,64 @@
 #ifndef Kassiopeia_KSRootTrajectory_h_
 #define Kassiopeia_KSRootTrajectory_h_
 
-#include "KSTrajectory.h"
 #include "KSStep.h"
+#include "KSTrajectory.h"
 
 namespace Kassiopeia
 {
 
-    class KSStep;
+class KSStep;
 
-    class KSRootTrajectory :
-        public KSComponentTemplate< KSRootTrajectory, KSTrajectory >
-    {
-        public:
-            KSRootTrajectory();
-            KSRootTrajectory( const KSRootTrajectory& aCopy );
-            KSRootTrajectory* Clone() const;
-            virtual ~KSRootTrajectory();
+class KSRootTrajectory : public KSComponentTemplate<KSRootTrajectory, KSTrajectory>
+{
+  public:
+    KSRootTrajectory();
+    KSRootTrajectory(const KSRootTrajectory& aCopy);
+    KSRootTrajectory* Clone() const override;
+    ~KSRootTrajectory() override;
 
-            //**********
-            //trajectory
-            //**********
+    void Reset() override;
 
-        public:
+    //**********
+    //trajectory
+    //**********
 
-            virtual void Reset()
-            {
-                if(fTrajectory != NULL){ fTrajectory->Reset(); }
-                fFailureFlag = false;
-            };
-            void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
+  protected:
+    void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter,
+                             double& aRadius, double& aTimeStep) override;
 
-            bool Check() const {return fFailureFlag;};
+    void ExecuteTrajectory(const double& aTimeStep, KSParticle& anIntermediateParticle) const override;
+    void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle,
+                                         std::vector<KSParticle>* intermediateParticleStates) const override;
 
-            void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
-            void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates ) const;
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void SetTrajectory( KSTrajectory* aTrajectory );
-            void ClearTrajectory( KSTrajectory* aTrajectory );
+  public:
+    void SetTrajectory(KSTrajectory* aTrajectory);
+    void ClearTrajectory(KSTrajectory* aTrajectory);
 
-        private:
-            KSTrajectory* fTrajectory;
+  private:
+    KSTrajectory* fTrajectory;
 
-            //******
-            //action
-            //******
+    //******
+    //action
+    //******
 
-        public:
-            void SetStep( KSStep* anStep );
+  public:
+    void SetStep(KSStep* anStep);
 
-            void CalculateTrajectory();
-            void ExecuteTrajectory();
+    void CalculateTrajectory();
+    void ExecuteTrajectory();
 
-        private:
-            KSStep* fStep;
-            const KSParticle* fTerminatorParticle;
-            KSParticle* fTrajectoryParticle;
-            KSParticle* fFinalParticle;
-            bool fFailureFlag;
-    };
+  private:
+    KSStep* fStep;
+    const KSParticle* fTerminatorParticle;
+    KSParticle* fTrajectoryParticle;
+    KSParticle* fFinalParticle;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

@@ -12,31 +12,31 @@
 
 #include "KChargeDensitySolver.hh"
 
-namespace KEMField {
-
-class KCachedChargeDensitySolver :
-		public KChargeDensitySolver
+namespace KEMField
 {
-public:
-	KCachedChargeDensitySolver();
-	virtual ~KCachedChargeDensitySolver();
 
-	void SetName( std::string s )
-	{
-		fName = s;
-	}
-	void SetHash( std::string s )
-	{
-		fHash = s;
-	}
+class KCachedChargeDensitySolver : public KChargeDensitySolver
+{
+  public:
+    KCachedChargeDensitySolver();
+    ~KCachedChargeDensitySolver() override;
 
-private:
-    virtual void InitializeCore( KSurfaceContainer& container );
+    void SetName(std::string s)
+    {
+        fName = s;
+    }
+    void SetHash(std::string s)
+    {
+        fHash = s;
+    }
 
-	std::string fName;
-	std::string fHash;
+  private:
+    void InitializeCore(KSurfaceContainer& container) override;
+
+    std::string fName;
+    std::string fHash;
 };
 
-} // KEMField
+}  // namespace KEMField
 
 #endif /* KCACHEDCHARGEDENSITYSOLVER_HH_ */

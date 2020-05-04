@@ -1,94 +1,171 @@
-# - Try to find OpenCL
-# This module tries to find an OpenCL implementation on your system. It supports
-# AMD / ATI, Apple and NVIDIA implementations, but should work, too.
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file Copyright.txt or https://cmake.org/licensing for details.
+
+#.rst:
+# FindOpenCL
+# ----------
 #
-# To set manually the paths, define these environment variables:
-# OpenCL_INCPATH    - Include path (e.g. OpenCL_INCPATH=/opt/cuda/4.0/cuda/include)
-# OpenCL_LIBPATH    - Library path (e.h. OpenCL_LIBPATH=/usr/lib64/nvidia)
+# Try to find OpenCL
 #
-# Once done this will define
-#  OPENCL_FOUND        - system has an OpenCL library
-#  OPENCL_INCLUDE_DIRS  - the OpenCL include directory
-#  OPENCL_LIBRARIES    - link these to use OpenCL
-#  OPENCL_LIB_FLAG compiler flag naming library
+# IMPORTED Targets
+# ^^^^^^^^^^^^^^^^
 #
-# WIN32 should work, but is untested
+# This module defines :prop_tgt:`IMPORTED` target ``OpenCL::OpenCL``, if
+# OpenCL has been found.
+#
+# Result Variables
+# ^^^^^^^^^^^^^^^^
+#
+# This module defines the following variables::
+#
+#   OpenCL_FOUND          - True if OpenCL was found
+#   OpenCL_INCLUDE_DIRS   - include directories for OpenCL
+#   OpenCL_LIBRARIES      - link against this library to use OpenCL
+#   OpenCL_VERSION_STRING - Highest supported OpenCL version (eg. 1.2)
+#   OpenCL_VERSION_MAJOR  - The major version of the OpenCL implementation
+#   OpenCL_VERSION_MINOR  - The minor version of the OpenCL implementation
+#
+# The module will also define two cache variables::
+#
+#   OpenCL_INCLUDE_DIR    - the OpenCL include directory
+#   OpenCL_LIBRARY        - the path to the OpenCL library
+#
 
-FIND_PACKAGE(PackageHandleStandardArgs)
+function(_FIND_OPENCL_VERSION)
+  include(CheckSymbolExists)
+  include(CMakePushCheckState)
+  set(CMAKE_REQUIRED_QUIET ${OpenCL_FIND_QUIETLY})
 
-SET (OPENCL_VERSION_STRING "0.1.0")
-SET (OPENCL_VERSION_MAJOR 0)
-SET (OPENCL_VERSION_MINOR 1)
-SET (OPENCL_VERSION_PATCH 0)
+  CMAKE_PUSH_CHECK_STATE()
+  foreach(VERSION "2_2" "2_1" "2_0" "1_2" "1_1" "1_0")
+    set(CMAKE_REQUIRED_INCLUDES "${OpenCL_INCLUDE_DIR}")
 
-IF (APPLE)
+    if(APPLE)
+      CHECK_SYMBOL_EXISTS(
+        CL_VERSION_${VERSION}
+        "${OpenCL_INCLUDE_DIR}/Headers/cl.h"
+        OPENCL_VERSION_${VERSION})
+    else()
+      CHECK_SYMBOL_EXISTS(
+        CL_VERSION_${VERSION}
+        "${OpenCL_INCLUDE_DIR}/CL/cl.h"
+        OPENCL_VERSION_${VERSION})
+    endif()
 
-	FIND_LIBRARY(OPENCL_LIBRARIES OpenCL DOC "OpenCL lib for OSX")
-	FIND_PATH(OPENCL_INCLUDE_DIRS OpenCL/cl.h DOC "Include for OpenCL on OSX")
-	FIND_PATH(_OPENCL_CPP_INCLUDE_DIRS OpenCL/cl.hpp DOC "Include for OpenCL CPP bindings on OSX")
+    if(OPENCL_VERSION_${VERSION})
+      string(REPLACE "_" "." VERSION "${VERSION}")
+      set(OpenCL_VERSION_STRING ${VERSION} PARENT_SCOPE)
+      string(REGEX MATCHALL "[0-9]+" version_components "${VERSION}")
+      list(GET version_components 0 major_version)
+      list(GET version_components 1 minor_version)
+      set(OpenCL_VERSION_MAJOR ${major_version} PARENT_SCOPE)
+      set(OpenCL_VERSION_MINOR ${minor_version} PARENT_SCOPE)
+      break()
+    endif()
+  endforeach()
+  CMAKE_POP_CHECK_STATE()
+endfunction()
 
-ELSE (APPLE)
+find_path(OpenCL_INCLUDE_DIR
+  NAMES
+    CL/cl.h OpenCL/cl.h
+  PATHS
+    ENV "PROGRAMFILES(X86)"
+    ENV AMDAPPSDKROOT
+    ENV INTELOCLSDKROOT
+    ENV NVSDKCOMPUTE_ROOT
+    ENV CUDA_PATH
+    ENV ATISTREAMSDKROOT
+    ENV OCL_ROOT
+  PATH_SUFFIXES
+    include
+    OpenCL/common/inc
+    "AMD APP/include")
 
-	#Unix style platforms, no windows support
+_FIND_OPENCL_VERSION()
 
-    #set the library flag to the compiler to the default value
-    set(OPENCL_LIBRARY_NAME "OpenCL" CACHE STRING "Name of the OpenCL library.")
-    #leave the option to set the name of the library directly
-    #because some systems use a different name, such as 'intelocl'
-    mark_as_advanced(OPENCL_LIBRARY_NAME)
+if(WIN32)
+  if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    find_library(OpenCL_LIBRARY
+      NAMES OpenCL
+      PATHS
+        ENV "PROGRAMFILES(X86)"
+        ENV AMDAPPSDKROOT
+        ENV INTELOCLSDKROOT
+        ENV CUDA_PATH
+        ENV NVSDKCOMPUTE_ROOT
+        ENV ATISTREAMSDKROOT
+        ENV OCL_ROOT
+      PATH_SUFFIXES
+        "AMD APP/lib/x86"
+        lib/x86
+        lib/Win32
+        OpenCL/common/lib/Win32)
+  elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    find_library(OpenCL_LIBRARY
+      NAMES OpenCL
+      PATHS
+        ENV "PROGRAMFILES(X86)"
+        ENV AMDAPPSDKROOT
+        ENV INTELOCLSDKROOT
+        ENV CUDA_PATH
+        ENV NVSDKCOMPUTE_ROOT
+        ENV ATISTREAMSDKROOT
+        ENV OCL_ROOT
+      PATH_SUFFIXES
+        "AMD APP/lib/x86_64"
+        lib/x86_64
+        lib/x64
+        OpenCL/common/lib/x64)
+  endif()
+else()
+  if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    find_library(OpenCL_LIBRARY
+      NAMES OpenCL
+      PATHS
+        ENV AMDAPPSDKROOT
+        ENV CUDA_PATH
+      PATH_SUFFIXES
+        lib/x86
+        lib)
+  elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    find_library(OpenCL_LIBRARY
+      NAMES OpenCL
+      PATHS
+        ENV AMDAPPSDKROOT
+        ENV CUDA_PATH
+      PATH_SUFFIXES
+        lib/x86_64
+        lib/x64
+        lib
+        lib64)
+  endif()
+endif()
 
-    #force cmake to search for the library every time
-    set (OPENCL_LIBRARIES "OPENCL_LIBRARY-NOTFOUND")
+set(OpenCL_LIBRARIES ${OpenCL_LIBRARY})
+set(OpenCL_INCLUDE_DIRS ${OpenCL_INCLUDE_DIR})
 
-	FIND_LIBRARY(OPENCL_LIBRARIES ${OPENCL_LIBRARY_NAME}
-		PATHS ENV LD_LIBRARY_PATH ENV OpenCL_LIBPATH ENV OPENCL_LIB_PATH
-	)
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+find_package_handle_standard_args(
+  OpenCL
+  FOUND_VAR OpenCL_FOUND
+  REQUIRED_VARS OpenCL_LIBRARY OpenCL_INCLUDE_DIR
+  VERSION_VAR OpenCL_VERSION_STRING)
 
-    message(STATUS "Looking for an OpenCL library named: ${OPENCL_LIBRARY_NAME}")
+mark_as_advanced(
+  OpenCL_INCLUDE_DIR
+  OpenCL_LIBRARY)
 
-	GET_FILENAME_COMPONENT(OPENCL_LIB_DIR ${OPENCL_LIBRARIES} PATH)
-	GET_FILENAME_COMPONENT(_OPENCL_INC_CAND ${OPENCL_LIB_DIR}/../../include ABSOLUTE)
-
-    message(STATUS "Expecting OpenCL library in: ${OPENCL_LIB_DIR}")
-    message(STATUS "OpenCL libary found is: ${OPENCL_LIBRARIES}")
-
-    #if the system has an environmental variable called OPENCL_INCLUDE
-    #which is the compiler flag for the include files, we strip the leading -I
-    #to get the include path
-    string(REPLACE "-I" "" OPENCL_INCLUDE_FLAG_DIR "$ENV{OPENCL_INCLUDE}")
-    message(STATUS "Found compiler flag to OpenCL include directory: " ${OPENCL_INCLUDE_FLAG_DIR})
-
-	# The AMD SDK currently does not place its headers
-	# in /usr/include, therefore also search relative
-	# to the library
-	FIND_PATH( OPENCL_INCLUDE_DIRS CL/cl.h
-        PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include"
-        ENV OpenCL_INCPATH ${OPENCL_INCLUDE_FLAG_DIR}
-        )
-	FIND_PATH( _OPENCL_CPP_INCLUDE_DIRS CL/cl.hpp
-        PATHS ${_OPENCL_INC_CAND} "/usr/local/cuda/include" "/opt/AMDAPP/include"
-        ENV OpenCL_INCPATH ENV ${OPENCL_INCLUDE_FLAG_DIR}
-        )
-
-    message(STATUS "Expecting OpenCL headers in: " ${OPENCL_INCLUDE_DIRS})
-
-    set(OPENCL_LIB_FLAG "-l${OPENCL_LIBRARY_NAME}")
-
-    message(STATUS "opencl library is: ${OPENCL_LIBRARIES}")
-
-
-ENDIF (APPLE)
-
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(${OPENCL_LIBRARY_NAME} DEFAULT_MSG OPENCL_LIBRARIES OPENCL_INCLUDE_DIRS)
-
-IF(_OPENCL_CPP_INCLUDE_DIRS)
-	SET( OPENCL_HAS_CPP_BINDINGS TRUE )
-	LIST( APPEND OPENCL_INCLUDE_DIRS ${_OPENCL_CPP_INCLUDE_DIRS} )
-	# This is often the same, so clean up
-	LIST( REMOVE_DUPLICATES OPENCL_INCLUDE_DIRS )
-ENDIF(_OPENCL_CPP_INCLUDE_DIRS)
-
-
-MARK_AS_ADVANCED(
-  OPENCL_INCLUDE_DIRS
-)
+if(OpenCL_FOUND AND NOT TARGET OpenCL::OpenCL)
+  if(OpenCL_LIBRARY MATCHES "/([^/]+)\\.framework$")
+    add_library(OpenCL::OpenCL INTERFACE IMPORTED)
+    set_target_properties(OpenCL::OpenCL PROPERTIES
+      INTERFACE_LINK_LIBRARIES "${OpenCL_LIBRARY}")
+  else()
+    add_library(OpenCL::OpenCL UNKNOWN IMPORTED)
+    set_target_properties(OpenCL::OpenCL PROPERTIES
+      IMPORTED_LOCATION "${OpenCL_LIBRARY}")
+  endif()
+  set_target_properties(OpenCL::OpenCL PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${OpenCL_INCLUDE_DIRS}")
+endif()

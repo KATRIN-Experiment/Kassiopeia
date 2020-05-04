@@ -3,7 +3,8 @@
 
 #include "KFMArrayOperator.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,31 +20,49 @@ namespace KEMField{
 */
 
 
-template<typename ArrayType, unsigned int NDIM>
-class KFMUnaryArrayOperator: public KFMArrayOperator<ArrayType, NDIM>
+template<typename ArrayType, unsigned int NDIM> class KFMUnaryArrayOperator : public KFMArrayOperator<ArrayType, NDIM>
 {
-    public:
-        KFMUnaryArrayOperator():fInput(NULL),fOutput(NULL){;};
-        virtual ~KFMUnaryArrayOperator(){;};
+  public:
+    KFMUnaryArrayOperator() : fInput(nullptr), fOutput(nullptr)
+    {
+        ;
+    };
+    ~KFMUnaryArrayOperator() override
+    {
+        ;
+    };
 
-        virtual void SetInput(KFMArrayWrapper<ArrayType, NDIM>* in){fInput = in;};
-        virtual void SetOutput(KFMArrayWrapper<ArrayType, NDIM>* out){fOutput = out;};
+    virtual void SetInput(KFMArrayWrapper<ArrayType, NDIM>* in)
+    {
+        fInput = in;
+    };
+    virtual void SetOutput(KFMArrayWrapper<ArrayType, NDIM>* out)
+    {
+        fOutput = out;
+    };
 
-        virtual KFMArrayWrapper<ArrayType,NDIM>* GetInput(){return fInput;};
-        virtual KFMArrayWrapper<ArrayType,NDIM>* GetOutput(){return fOutput;};
+    virtual KFMArrayWrapper<ArrayType, NDIM>* GetInput()
+    {
+        return fInput;
+    };
+    virtual KFMArrayWrapper<ArrayType, NDIM>* GetOutput()
+    {
+        return fOutput;
+    };
 
-        virtual void Initialize(){;};
+    void Initialize() override
+    {
+        ;
+    };
 
-        virtual void ExecuteOperation() = 0;
+    void ExecuteOperation() override = 0;
 
-    protected:
-
-        KFMArrayWrapper<ArrayType, NDIM>* fInput;
-        KFMArrayWrapper<ArrayType, NDIM>* fOutput;
-
+  protected:
+    KFMArrayWrapper<ArrayType, NDIM>* fInput;
+    KFMArrayWrapper<ArrayType, NDIM>* fOutput;
 };
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 
 #endif /* __KFMUnaryArrayOperator_H__ */

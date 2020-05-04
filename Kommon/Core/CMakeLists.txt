@@ -1,10 +1,13 @@
 # include directories
 kasper_internal_include_directories(
+    Binning/include
     Functions
     Geometry
     Logging
     File
     Initialization
+    Maths
+    Random
     Typelists
     Units
     Utility
@@ -46,15 +49,23 @@ set(KOMMON_CORE_HEADER_FILES
     Initialization/KElementProcessor.hh
     Initialization/KVariant.h
     Initialization/KArgumentList.h
+    Random/KNamedRandomGenerator.h
+    Random/KNamedRandomPrototype.h
+    Random/KRandomBuilder.h
+    Random/KNamedRandomGeneratorBuilder.h
+    Random/KRandom.h
+    Random/KRandomPrototype.h
     Initialization/KXMLInitializer.hh
     Utility/Gnuplot.hpp
+    Utility/KAlgorithm.h
     Utility/KException.h
-    Utility/KRandom.h
-    Utility/KRandomBuilder.h
+    Utility/KCast.h
     Utility/KConst.h
     Utility/KConsoleMuter.h
     Utility/KHash.h
+    Utility/OstreamJoiner.h
     Utility/KHistogram.h
+    Utility/KMakeArray.h
     Utility/KMathConvolution.h
     Utility/KMathGamma.h
     Utility/KMathKahanSum.h
@@ -71,10 +82,10 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/KField.h
     Utility/KInitializer.h
     Utility/KSingleton.h
-    Utility/KSmartPointer.h
     Utility/KTypeTraits.h
     Utility/KMessage.h
     Utility/KUtilityMessage.h
+    Utility/KVariadicOperations.h
     Utility/KNamed.h
     Utility/KTagged.h
     Utility/KWindow.h
@@ -91,6 +102,7 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/KProgressDisplay.h
     Utility/PositiveValue.h
     Utility/Printable.h
+    Utility/SimplyPrintableCollection.h
     Logging/KLogger.h
 )
 
@@ -123,7 +135,8 @@ set(KOMMON_CORE_SOURCE_FILES
     Units/KDimensions.cxx
     Units/KUnits.cxx
     Utility/Gnuplot.cpp
-    Utility/KRandomBuilder.cxx
+    Random/KRandomBuilder.cxx
+    Random/KNamedRandomGeneratorBuilder.cxx
     Utility/KMessage.cxx
     Utility/KUtilityMessage.cxx
     Utility/KNamed.cxx
@@ -141,7 +154,7 @@ set(KOMMON_CORE_SOURCE_FILES
     Logging/KLogger.cxx
 )
 
-set_source_files_properties(Initialization/KVariant.cxx PROPERTIES COMPILE_FLAGS -D__GLIBCXX_USE_CXX11_ABI=0)
+set_source_files_properties(Initialization/KVariant.cxx PROPERTIES COMPILE_DEFINITIONS __GLIBCXX_USE_CXX11_ABI=0)
 
 if( LOG4CXX_FOUND )
     if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE MATCHES "DEBUG" OR CMAKE_BUILD_TYPE MATCHES "RELWITHDEBINFO" )
@@ -157,3 +170,6 @@ endif()
 # propagate path variable to parent scope
 kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_CORE_HEADER_FILES} )
 kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_CORE_SOURCE_FILES} )
+
+add_subdirectory(Binning)
+add_subdirectory(Maths)

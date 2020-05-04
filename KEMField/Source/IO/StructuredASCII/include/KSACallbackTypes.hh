@@ -2,10 +2,11 @@
 #define KSACallbackTypes_HH__
 
 
-#define CALL_MEMBER_FN(object_ptr, ptrToMember)  (object_ptr->*(ptrToMember))
+#define CALL_MEMBER_FN(object_ptr, ptrToMember) (object_ptr->*(ptrToMember))
 
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,7 +20,6 @@ namespace KEMField{
 *Sun Dec 23 14:00:39 EST 2012 J. Barrett (barrettj@mit.edu) First Version
 *
 */
-
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ struct KSAConstantReturnByPointerGet
     };
 };
 
-template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType& ) const>
+template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType&) const>
 struct KSAConstantReturnByPassedReferenceGet
 {
     void operator()(const CallType* ptr, ReturnType& val_ref)
@@ -57,7 +57,7 @@ struct KSAConstantReturnByPassedReferenceGet
     };
 };
 
-template< typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType* ) const>
+template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType*) const>
 struct KSAConstantReturnByPassedPointerGet
 {
     void operator()(const CallType* ptr, ReturnType* val_ptr)
@@ -72,8 +72,7 @@ struct KSAConstantReturnByPassedPointerGet
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(SetType) >
-struct KSAPassByValueSet
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(SetType)> struct KSAPassByValueSet
 {
     void operator()(CallType* ptr, SetType val)
     {
@@ -82,8 +81,7 @@ struct KSAPassByValueSet
 };
 
 
-
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType&) >
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType&)>
 struct KSAPassByConstantReferenceSet
 {
     void operator()(CallType* ptr, const SetType& val)
@@ -93,7 +91,7 @@ struct KSAPassByConstantReferenceSet
 };
 
 
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*) >
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*)>
 struct KSAPassByConstantPointerSet
 {
     void operator()(CallType* ptr, const SetType* val)
@@ -103,7 +101,6 @@ struct KSAPassByConstantPointerSet
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSACallbackTypes_H__ */

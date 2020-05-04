@@ -8,7 +8,7 @@
 namespace KGeoBag
 {
 
-    typedef KGWrappedSurface< KGCircularWirePins > KGCircularWirePinsSurface;
+typedef KGWrappedSurface<KGCircularWirePins> KGCircularWirePinsSurface;
 
 }
 

@@ -3,24 +3,24 @@
 
 namespace KGeoBag
 {
-    class KGVisitor;
+class KGVisitor;
 
-    class KGArea;
-    class KGVolume;
+class KGArea;
+class KGVolume;
 
-    class KGSurface;
-    class KGExtensibleSurface;
-    template< class XExtension >
-    class KGExtendedSurface;
+class KGSurface;
+class KGExtensibleSurface;
+template<class XExtension> class KGExtendedSurface;
 
-    class KGSpace;
-    class KGExtensibleSpace;
-    template< class XExtension >
-    class KGExtendedSpace;
+class KGSpace;
+class KGExtensibleSpace;
+template<class XExtension> class KGExtendedSpace;
 
-    class KGInterface;
-}
+class KGInterface;
+}  // namespace KGeoBag
 
+/// NOTE: the include order matters in this case
+// clang-format off
 #include "KGArea.hh"
 #include "KGVolume.hh"
 
@@ -38,5 +38,6 @@ namespace KGeoBag
 #include "KGExtendedSpaceFunctions.hh"
 
 #include "KGInterface.hh"
+// clang-format on
 
 #endif

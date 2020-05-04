@@ -1,16 +1,16 @@
 #ifndef KSAOutputNode_HH__
 #define KSAOutputNode_HH__
 
-#include <vector>
-
 #include "KSAObject.hh"
+
 #include <vector>
 
-#define KSANODE_MOVE_DOWNWARD -1 //indicates we need to decend to a child node
-#define KSANODE_MOVE_UPWARD 1 //indicates we need to ascend to parent
-#define KSANODE_STAY 0 //indicates we need to stay on the current node
+#define KSANODE_MOVE_DOWNWARD -1  //indicates we need to decend to a child node
+#define KSANODE_MOVE_UPWARD   1   //indicates we need to ascend to parent
+#define KSANODE_STAY          0   //indicates we need to stay on the current node
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -26,133 +26,129 @@ namespace KEMField{
 *
 */
 
-class KSAOutputNode: public KSAObject
+class KSAOutputNode : public KSAObject
 {
-    public:
+  public:
+    KSAOutputNode(std::string name) : KSAObject(name), fStatus(KSANODE_STAY), fSingle(0), fIndex(0), fNextNode(nullptr)
+    {
+        fChildren.clear();
+    };
 
-        KSAOutputNode(std::string name):
-        KSAObject(name),
-        fStatus(KSANODE_STAY),
-        fSingle(0),
-        fIndex(0),
-        fNextNode(NULL)
-        {
-            fChildren.clear();
-        };
+    KSAOutputNode() : KSAObject(), fStatus(KSANODE_STAY), fSingle(0), fIndex(0), fNextNode(nullptr)
+    {
+        fChildren.clear();
+    };
 
-        KSAOutputNode():
-        KSAObject(),
-        fStatus(KSANODE_STAY),
-        fSingle(0),
-        fIndex(0),
-        fNextNode(NULL)
-        {
-            fChildren.clear();
-        };
-
-        virtual ~KSAOutputNode()
-        {
-            for(unsigned int i = 0; i<fChildren.size(); i++)
-            {
-                delete fChildren[i];
-		        fChildren[i] = NULL;
-            }
-
-            fChildren.clear();
-        };
-
-        virtual void Initialize(){;};
-
-        virtual bool TagsAreSuppressed(){return false;};
-
-        virtual bool IsComposite(){return false;};
-
-        virtual void AddChild(KSAOutputNode* child){fChildren.push_back(child);};
-
-        //next node will be set to NULL if the visitor traversing the tree
-        //needs to move back to the parent, or stay on the current node
-        virtual int GetNextNode(KSAOutputNode*& next_node)
-        {
-            next_node = fNextNode;
-            return fStatus;
+    ~KSAOutputNode() override
+    {
+        for (unsigned int i = 0; i < fChildren.size(); i++) {
+            delete fChildren[i];
+            fChildren[i] = nullptr;
         }
 
-        virtual void Reset()
-        {
-            fIndex = 0;
-            fStatus = KSANODE_STAY;
-            fSingle = 0;
-            fNextNode = NULL;
-            for(unsigned int i = 0; i<fChildren.size(); i++)
-            {
-                delete fChildren[i];
-            }
+        fChildren.clear();
+    };
 
-            fChildren.clear();
+    virtual void Initialize()
+    {
+        ;
+    };
+
+    virtual bool TagsAreSuppressed()
+    {
+        return false;
+    };
+
+    virtual bool IsComposite()
+    {
+        return false;
+    };
+
+    virtual void AddChild(KSAOutputNode* child)
+    {
+        fChildren.push_back(child);
+    };
+
+    //next node will be set to NULL if the visitor traversing the tree
+    //needs to move back to the parent, or stay on the current node
+    virtual int GetNextNode(KSAOutputNode*& next_node)
+    {
+        next_node = fNextNode;
+        return fStatus;
+    }
+
+    virtual void Reset()
+    {
+        fIndex = 0;
+        fStatus = KSANODE_STAY;
+        fSingle = 0;
+        fNextNode = nullptr;
+        for (unsigned int i = 0; i < fChildren.size(); i++) {
+            delete fChildren[i];
         }
 
-        virtual bool HasChildren() const
-        {
-            if( fChildren.size() == 0 ){return false;};
-            return true;
+        fChildren.clear();
+    }
+
+    virtual bool HasChildren() const
+    {
+        if (fChildren.size() == 0) {
+            return false;
         };
+        return true;
+    };
 
-        virtual void GetLine(std::string& line)
-        {
-            if(fChildren.size() != 0)
-            {
-                //this iterates over all the children of a composite node
- 	        if( fIndex >=0 && fIndex < ((int)fChildren.size()) )
-                {
-                    //open the next node
-                    line = fChildren[fIndex]->GetStartTag() + std::string(LINE_DELIM);
-                    fStatus = KSANODE_MOVE_DOWNWARD;
-                    fNextNode = fChildren[fIndex];
-                    fIndex++;
-                }
-                else
-                {
-                    line = GetStopTag() + std::string(LINE_DELIM); //close out the current node
-                    fStatus = KSANODE_MOVE_UPWARD;
-                    fNextNode = NULL; //next node is parent
-                }
+    virtual void GetLine(std::string& line)
+    {
+        if (fChildren.size() != 0) {
+            //this iterates over all the children of a composite node
+            if (fIndex >= 0 && fIndex < ((int) fChildren.size())) {
+                //open the next node
+                line = fChildren[fIndex]->GetStartTag() + std::string(LINE_DELIM);
+                fStatus = KSANODE_MOVE_DOWNWARD;
+                fNextNode = fChildren[fIndex];
+                fIndex++;
             }
-            else
-            {
-                //this is here specifically for POD and non-composite types that
-                //can be stringified into a single line without child nodes
-                if(fSingle == 0)
-                {
-                    line = GetSingleLine() + std::string(LINE_DELIM);
-                    fStatus = KSANODE_STAY;
-                    fNextNode = NULL;
-                    fSingle = 1;
-                }
-                else
-                {
-                    line = GetStopTag() + std::string(LINE_DELIM);
-                    fStatus = KSANODE_MOVE_UPWARD;
-                    fNextNode = NULL; //next node is parent
-                }
-
+            else {
+                line = GetStopTag() + std::string(LINE_DELIM);  //close out the current node
+                fStatus = KSANODE_MOVE_UPWARD;
+                fNextNode = nullptr;  //next node is parent
             }
         }
+        else {
+            //this is here specifically for POD and non-composite types that
+            //can be stringified into a single line without child nodes
+            if (fSingle == 0) {
+                line = GetSingleLine() + std::string(LINE_DELIM);
+                fStatus = KSANODE_STAY;
+                fNextNode = nullptr;
+                fSingle = 1;
+            }
+            else {
+                line = GetStopTag() + std::string(LINE_DELIM);
+                fStatus = KSANODE_MOVE_UPWARD;
+                fNextNode = nullptr;  //next node is parent
+            }
+        }
+    }
 
 
-    protected:
+  protected:
+    //must defined in a POD node, in composite nodes it is never called
+    virtual std::string GetSingleLine()
+    {
+        return std::string("INVALID");
+    };
 
-        //must defined in a POD node, in composite nodes it is never called
-        virtual std::string GetSingleLine(){return std::string("INVALID");};
-
-        int fStatus;
-        int fSingle;
-        int fIndex;
-        KSAOutputNode* fNextNode;
-        std::vector< KSAOutputNode* > fChildren;
+    int fStatus;
+    int fSingle;
+    int fIndex;
+    KSAOutputNode* fNextNode;
+    std::vector<KSAOutputNode*> fChildren;
 };
 
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 
 #endif /* KSAOutputNode_H__ */

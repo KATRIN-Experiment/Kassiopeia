@@ -6,68 +6,95 @@
 
 namespace KEMField
 {
-  class KRing : public KShape
-  {
+class KRing : public KShape
+{
   public:
     friend class KSymmetryGroup<KRing>;
 
   protected:
-
-    KRing() : fP(0.,0.,0.) {}
-    ~KRing() {}
+    KRing() : fP(0., 0., 0.) {}
+    ~KRing() override {}
 
   public:
-
-    static std::string Name() { return "Ring"; }
+    static std::string Name()
+    {
+        return "Ring";
+    }
 
     void SetValues(const KPosition& p);
 
-    void SetValues(const double& r,
-    		   const double& z);
+    void SetValues(const double& r, const double& z);
 
-    double Area() const;
-    const KPosition Centroid() const { return fP; }
+    double Area() const override;
+    const KPosition Centroid() const override
+    {
+        return fP;
+    }
 
-    double DistanceTo(const KPosition& aPoint, KPosition& nearestPoint);
+    double DistanceTo(const KPosition& aPoint, KPosition& nearestPoint) override;
 
-    const KDirection Normal() const;
+    const KDirection Normal() const override;
 
-    void SetR(double d)         { fP[0] = d; }
-    void SetZ(double d)         { fP[2] = d; }
-    void SetP(const KPosition& p) { fP = p; }
+    void SetR(double d)
+    {
+        fP[0] = d;
+    }
+    void SetZ(double d)
+    {
+        fP[2] = d;
+    }
+    void SetP(const KPosition& p)
+    {
+        fP = p;
+    }
 
-    const double&   GetR() const { return fP[0]; }
-    const double&   GetZ() const { return fP[2]; }
-    const KPosition&  GetP() const { return fP; }
+    const double& GetR() const
+    {
+        return fP[0];
+    }
+    const double& GetZ() const
+    {
+        return fP[2];
+    }
+    const KPosition& GetP() const
+    {
+        return fP;
+    }
 
-    void GetR(double& r) const { r = fP[0]; }
-    void GetZ(double& z) const { z = fP[2]; }
-    void GetP(KPosition& p) const { p = fP; }
+    void GetR(double& r) const
+    {
+        r = fP[0];
+    }
+    void GetZ(double& z) const
+    {
+        z = fP[2];
+    }
+    void GetP(KPosition& p) const
+    {
+        p = fP;
+    }
 
   protected:
+    KPosition fP;
+};
 
-    KPosition  fP;
-  };
-
-  template <typename Stream>
-  Stream& operator>>(Stream& s,KRing& r)
-  {
+template<typename Stream> Stream& operator>>(Stream& s, KRing& r)
+{
     s.PreStreamInAction(r);
     KPosition p;
     s >> p;
     r.SetValues(p);
     s.PostStreamInAction(r);
     return s;
-  }
+}
 
-  template <typename Stream>
-  Stream& operator<<(Stream& s,const KRing& r)
-  {
+template<typename Stream> Stream& operator<<(Stream& s, const KRing& r)
+{
     s.PreStreamOutAction(r);
     s << r.GetP();
     s.PostStreamOutAction(r);
     return s;
-  }
 }
+}  // namespace KEMField
 
 #endif /* KRING_DEF */

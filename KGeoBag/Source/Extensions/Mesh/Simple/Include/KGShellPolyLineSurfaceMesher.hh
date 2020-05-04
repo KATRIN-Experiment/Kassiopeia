@@ -2,27 +2,24 @@
 #define KGeoBag_KGShellPolyLineSurfaceMesher_hh_
 
 #include "KGShellPolyLineSurface.hh"
-
 #include "KGSimpleMesher.hh"
 
 namespace KGeoBag
 {
-    class KGShellPolyLineSurfaceMesher :
-        virtual public KGSimpleMesher,
-        public KGShellPolyLineSurface::Visitor
-    {
-        public:
-            using KGMesherBase::VisitExtendedSurface;
-            using KGMesherBase::VisitExtendedSpace;
+class KGShellPolyLineSurfaceMesher : virtual public KGSimpleMesher, public KGShellPolyLineSurface::Visitor
+{
+  public:
+    using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
-        public:
-            KGShellPolyLineSurfaceMesher();
-            virtual ~KGShellPolyLineSurfaceMesher();
+  public:
+    KGShellPolyLineSurfaceMesher();
+    ~KGShellPolyLineSurfaceMesher() override;
 
-        protected:
-            void VisitShellPathSurface( KGShellPolyLineSurface* aShellPolyLineSurface );
-    };
+  protected:
+    void VisitShellPathSurface(KGShellPolyLineSurface* aShellPolyLineSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

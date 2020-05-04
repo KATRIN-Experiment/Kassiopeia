@@ -5,10 +5,11 @@
 #include "KSACallbackTypes.hh"
 #include "KSAPODOutputNode.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
-#define AddKSAOutputForPointer(class,var,type) \
-  node->AddChild(new KSAAssociatedPointerPODOutputNode<class, type, &class::Get ## var>( std::string(#var), this) )
+#define AddKSAOutputForPointer(class, var, type)                                                                       \
+    node->AddChild(new KSAAssociatedPointerPODOutputNode<class, type, &class ::Get##var>(std::string(#var), this))
 
 /**
 *
@@ -25,24 +26,24 @@ namespace KEMField{
 
 
 template<typename CallType, typename ReturnType, const ReturnType* (CallType::*memberFunction)() const>
-class KSAAssociatedPointerPODOutputNode: public KSAPODOutputNode< ReturnType >
+class KSAAssociatedPointerPODOutputNode : public KSAPODOutputNode<ReturnType>
 {
-    public:
+  public:
+    KSAAssociatedPointerPODOutputNode(std::string name, const CallType* call_ptr) : KSAPODOutputNode<ReturnType>(name)
+    {
+        KSAConstantReturnByPointerGet<CallType, ReturnType, memberFunction> callback;
+        KSAPODOutputNode<ReturnType>::SetValue(callback(call_ptr));
+    }
 
-        KSAAssociatedPointerPODOutputNode(std::string name, const CallType* call_ptr):KSAPODOutputNode< ReturnType >( name )
-        {
-            KSAConstantReturnByPointerGet< CallType, ReturnType, memberFunction > callback;
-            KSAPODOutputNode< ReturnType >::SetValue(callback(call_ptr));
-        }
+    ~KSAAssociatedPointerPODOutputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPointerPODOutputNode(){;};
-
-    protected:
-
+  protected:
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPointerPODOutputNode_H__ */

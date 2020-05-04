@@ -1,9 +1,9 @@
 #ifndef KFMIdentitySetCollector_HH__
 #define KFMIdentitySetCollector_HH__
 
+#include "KFMIdentitySet.hh"
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
-#include "KFMIdentitySet.hh"
 
 namespace KEMField
 {
@@ -21,41 +21,41 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList >
-class KFMIdentitySetCollector: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMIdentitySetCollector : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
+  public:
+    KFMIdentitySetCollector()
+    {
+        fRawIDSets.clear();
+    };
 
-        KFMIdentitySetCollector()
-        {
-            fRawIDSets.clear();
-        };
+    virtual ~KFMIdentitySetCollector(){};
 
-        virtual ~KFMIdentitySetCollector(){};
+    void Clear()
+    {
+        fRawIDSets.clear();
+    };
 
-        void Clear(){fRawIDSets.clear();};
+    const std::vector<const std::vector<unsigned int>*>* GetRawIDSetList() const
+    {
+        return &fRawIDSets;
+    };
 
-        const std::vector< const std::vector<unsigned int>* >* GetRawIDSetList() const {return &fRawIDSets;};
-
-        virtual void ApplyAction( KFMNode< ObjectTypeList >* node)
-        {
-            if(node != NULL)
-            {
-                KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
-                if(set != NULL)
-                {
-                    fRawIDSets.push_back(set->GetRawIDList() );
-                }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
+            if (set != nullptr) {
+                fRawIDSets.push_back(set->GetRawIDList());
             }
         }
+    }
 
-    private:
-
-        std::vector< const std::vector<unsigned int>* > fRawIDSets;
-
+  private:
+    std::vector<const std::vector<unsigned int>*> fRawIDSets;
 };
 
 
-}//end KEMField namespace
+}  // namespace KEMField
 
 #endif /* KFMIdentitySetCollector_H__ */

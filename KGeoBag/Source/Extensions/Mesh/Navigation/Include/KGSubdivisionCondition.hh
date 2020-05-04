@@ -2,15 +2,12 @@
 #define KGSubdivisionCondition_HH__
 
 #include "KGCube.hh"
-#include "KGPoint.hh"
-
-
-#include "KGMeshNavigationNode.hh"
-#include "KGInsertionCondition.hh"
-
-#include "KGInspectingActor.hh"
-#include "KGObjectRetriever.hh"
 #include "KGIdentitySet.hh"
+#include "KGInsertionCondition.hh"
+#include "KGInspectingActor.hh"
+#include "KGMeshNavigationNode.hh"
+#include "KGObjectRetriever.hh"
+#include "KGPoint.hh"
 #include "KGSpaceTreeProperties.hh"
 
 namespace KGeoBag
@@ -29,39 +26,39 @@ namespace KGeoBag
 *
 */
 
-class KGSubdivisionCondition: public KGInspectingActor< KGMeshNavigationNode >
+class KGSubdivisionCondition : public KGInspectingActor<KGMeshNavigationNode>
 {
-    public:
+  public:
+    KGSubdivisionCondition(unsigned int n_allowed = 1) : fNAllowedElements(n_allowed), fContainer(nullptr){};
+    ~KGSubdivisionCondition() override{};
 
-        KGSubdivisionCondition(unsigned int n_allowed = 1):fNAllowedElements(n_allowed),fContainer(NULL){};
-        virtual ~KGSubdivisionCondition(){};
+    void SetMeshElementContainer(KGNavigableMeshElementContainer* container)
+    {
+        fContainer = container;
+    };
 
-        void SetMeshElementContainer(KGNavigableMeshElementContainer* container){fContainer = container;};
+    void SetNAllowedElements(unsigned int n_allowed)
+    {
+        fNAllowedElements = n_allowed;
+    };
 
-        void SetNAllowedElements(unsigned int n_allowed){fNAllowedElements = n_allowed;};
+    bool ConditionIsSatisfied(KGMeshNavigationNode* node) override;
 
-        virtual bool ConditionIsSatisfied(KGMeshNavigationNode* node);
+  private:
+    unsigned int fNAllowedElements;
 
-    private:
+    KGNavigableMeshElementContainer* fContainer;
+    KGInsertionCondition fCondition;
 
-        unsigned int fNAllowedElements;
-
-        KGNavigableMeshElementContainer* fContainer;
-        KGInsertionCondition fCondition;
-
-        const unsigned int* fDimSize;
-        KGPoint<KGMESH_DIM> fLowerCorner;
-        KGPoint<KGMESH_DIM> fCenter;
-        std::vector< KGCube<KGMESH_DIM> > fCubeScratch;
-        double fLength;
-
-
-
+    const unsigned int* fDimSize;
+    KGPoint<KGMESH_DIM> fLowerCorner;
+    KGPoint<KGMESH_DIM> fCenter;
+    std::vector<KGCube<KGMESH_DIM>> fCubeScratch;
+    double fLength;
 };
 
 
-
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGSubdivisionCondition_H__ */

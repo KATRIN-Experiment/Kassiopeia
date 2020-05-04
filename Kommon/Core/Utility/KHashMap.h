@@ -8,13 +8,13 @@
 #ifndef KHASHMAP_H_
 #define KHASHMAP_H_
 
-#include "KLogger.h"
 #include "KException.h"
 #include "KHash.h"
+#include "KLogger.h"
 #include "KTypeTraits.h"
 
-#include <cstdlib>
 #include <algorithm>
+#include <cstdlib>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -31,12 +31,11 @@ namespace katrin
  * @tparam Result The type of the value. Any copy-constructable type will do.
  * @see http://www.boost.org/doc/libs/1_51_0/doc/html/boost/unordered_map.html
  */
-template< class Input, class Result, class Hash = std::hash<Input> >
-class KHashMap
+template<class Input, class Result, class Hash = std::hash<Input>> class KHashMap
 {
-public:
-    KHashMap( size_t maxCacheSize = 8192, double maxLoadFactor = 2.0 );
-    virtual ~KHashMap() { }
+  public:
+    KHashMap(size_t maxCacheSize = 8192, double maxLoadFactor = 2.0);
+    virtual ~KHashMap() {}
 
     typedef Input CacheKey;
 
@@ -45,14 +44,14 @@ public:
      * After maxSize is reached, the underlying map is purged.
      * @param maxSize
      */
-    void SetMaxSize( size_t maxSize );
+    void SetMaxSize(size_t maxSize);
     size_t Size() const;
 
     /**
      * Set the maximum load factor (values per hash index within the map).
      * @param factor
      */
-    void SetMaxLoadFactor( double factor );
+    void SetMaxLoadFactor(double factor);
     double LoadFactor() const;
 
     /**
@@ -64,7 +63,7 @@ public:
      * Reduce randomly picked elements until only newSize elements are left.
      * @param newSize
      */
-    void Reduce( size_t newSize );
+    void Reduce(size_t newSize);
 
     /**
      * Store a new value.
@@ -72,14 +71,14 @@ public:
      * @param result
      * @return A reference to the new value.
      */
-    const Result& Store( const Input& key, const Result& result );
+    const Result& Store(const Input& key, const Result& result);
 
     /**
      * Check if a value exists in the map.
      * @param key
      * @return
      */
-    bool Has( const Input& key ) const;
+    bool Has(const Input& key) const;
 
     /**
      * Try to retrieve a stored value (exception safe).
@@ -87,7 +86,7 @@ public:
      * @param[out] result A reference where to store the value.
      * @return True if the value existed.
      */
-    bool Get( const Input& input, Result& result ) const;
+    bool Get(const Input& input, Result& result) const;
 
     /**
      * Retrieve a stored value;
@@ -95,7 +94,7 @@ public:
      * @throw KException If the requested key doesn't exist.
      * @return
      */
-    const Result& Get( const Input& key ) const ;
+    const Result& Get(const Input& key) const;
 
     /**
      * Get the current efficiency (number of read over number of write accesses).
@@ -115,10 +114,10 @@ public:
      * @param reportFreq
      * @param cacheName
      */
-    void EnableReporting( uint32_t reportFreq = 1000, const std::string& cacheName = "" );
+    void EnableReporting(uint32_t reportFreq = 1000, const std::string& cacheName = "");
 
-private:
-    typedef std::unordered_map< Input, Result, Hash> CacheMap;
+  private:
+    typedef std::unordered_map<Input, Result, Hash> CacheMap;
     typedef typename CacheMap::iterator CacheMapIterator;
     typedef typename CacheMap::const_iterator CacheMapConstIterator;
 
@@ -132,94 +131,91 @@ private:
     uint32_t fReportingFrequency;
 };
 
-template< class Input, class Result, class Hash >
-inline KHashMap< Input, Result, Hash >::KHashMap( size_t maxCacheSize, double maxLoadFactor ) :
-        fHashMap(),
-        fMaxCacheSize( maxCacheSize ),
-        fNRead( 0 ),
-        fNWrite( 0 ),
-        fReportingFrequency( 0 )
+template<class Input, class Result, class Hash>
+inline KHashMap<Input, Result, Hash>::KHashMap(size_t maxCacheSize, double maxLoadFactor) :
+    fHashMap(),
+    fMaxCacheSize(maxCacheSize),
+    fNRead(0),
+    fNWrite(0),
+    fReportingFrequency(0)
 {
-    fHashMap.max_load_factor( maxLoadFactor );
-//    fCache->rehash(fMaxCacheSize);
+    fHashMap.max_load_factor(maxLoadFactor);
+    //    fCache->rehash(fMaxCacheSize);
 }
 
-template< class Input, class Result, class Hash >
-inline size_t KHashMap< Input, Result, Hash >::Size() const
+template<class Input, class Result, class Hash> inline size_t KHashMap<Input, Result, Hash>::Size() const
 {
     return fHashMap.size();
 }
 
-template< class Input, class Result, class Hash >
-inline double KHashMap< Input, Result, Hash >::LoadFactor() const
+template<class Input, class Result, class Hash> inline double KHashMap<Input, Result, Hash>::LoadFactor() const
 {
     return fHashMap.load_factor();
 }
 
-template< class Input, class Result, class Hash >
-inline void KHashMap< Input, Result, Hash >::SetMaxLoadFactor( double factor )
+template<class Input, class Result, class Hash>
+inline void KHashMap<Input, Result, Hash>::SetMaxLoadFactor(double factor)
 {
-    fHashMap.max_load_factor( factor );
+    fHashMap.max_load_factor(factor);
 }
 
-template< class Input, class Result, class Hash >
-inline void KHashMap< Input, Result, Hash >::SetMaxSize( size_t maxSize )
+template<class Input, class Result, class Hash> inline void KHashMap<Input, Result, Hash>::SetMaxSize(size_t maxSize)
 {
     fMaxCacheSize = maxSize;
-    if( fHashMap.size() >= fMaxCacheSize )
+    if (fHashMap.size() >= fMaxCacheSize)
         Clear();
 }
 
-template< class Input, class Result, class Hash >
-inline void KHashMap< Input, Result, Hash >::Clear()
+template<class Input, class Result, class Hash> inline void KHashMap<Input, Result, Hash>::Clear()
 {
     fHashMap.clear();
     fNRead = 0;
     fNWrite = 0;
 }
 
-template< class Input, class Result, class Hash >
-inline void KHashMap< Input, Result, Hash >::Reduce(size_t newSize)
+template<class Input, class Result, class Hash> inline void KHashMap<Input, Result, Hash>::Reduce(size_t newSize)
 {
     if (newSize == 0) {
         fHashMap.clear();
         return;
     }
 
-    CacheMapIterator it = fHashMap.begin();
+    auto it = fHashMap.begin();
     while (fHashMap.size() > newSize && it != fHashMap.end()) {
         it = fHashMap.erase(it);
     }
 }
 
-template< class Input, class Result, class Hash >
-inline const Result& KHashMap< Input, Result, Hash >::Store( const Input& input, const Result& result )
+template<class Input, class Result, class Hash>
+inline const Result& KHashMap<Input, Result, Hash>::Store(const Input& input, const Result& result)
 {
     ++fNWrite;
-    if( fHashMap.size() >= fMaxCacheSize )
-        Reduce( fMaxCacheSize / 2 );
+    if (fHashMap.size() >= fMaxCacheSize)
+        Reduce(fMaxCacheSize / 2);
 
-    std::pair<CacheMapIterator, bool> insertion = fHashMap.insert( std::make_pair(input, result) );
+    std::pair<CacheMapIterator, bool> insertion = fHashMap.insert(std::make_pair(input, result));
     if (!insertion.second)
         insertion.first->second = result;
 
-    KLOGGER( logger, "common.valuecache" );
-    if( fReportingFrequency > 0 && fNWrite % fReportingFrequency == 0 )
-        KDEBUG( logger, "VCache [" << fCacheName << "] Size: " << Size() << ", Efficiency: " << Efficiency() << ", Memory: " << Memory() << ", Avg. Load Factor: " << fHashMap.load_factor() << ", Max. Load Factor: " << fHashMap.max_load_factor() );
+    KLOGGER(logger, "common.valuecache");
+    if (fReportingFrequency > 0 && fNWrite % fReportingFrequency == 0)
+        KDEBUG(logger,
+               "VCache [" << fCacheName << "] Size: " << Size() << ", Efficiency: " << Efficiency()
+                          << ", Memory: " << Memory() << ", Avg. Load Factor: " << fHashMap.load_factor()
+                          << ", Max. Load Factor: " << fHashMap.max_load_factor());
 
     return insertion.first->second;
 }
 
-template< class Input, class Result, class Hash >
-inline bool KHashMap< Input, Result, Hash >::Has( const Input& input ) const
+template<class Input, class Result, class Hash> inline bool KHashMap<Input, Result, Hash>::Has(const Input& input) const
 {
-    return fHashMap.find( input ) != fHashMap.end();
+    return fHashMap.find(input) != fHashMap.end();
 }
 
-template< class Input, class Result, class Hash >
-inline bool KHashMap< Input, Result, Hash >::Get( const Input& input, Result& result ) const
+template<class Input, class Result, class Hash>
+inline bool KHashMap<Input, Result, Hash>::Get(const Input& input, Result& result) const
 {
-    CacheMapConstIterator it = fHashMap.find( input );
+    auto it = fHashMap.find(input);
 
     ++fNRead;
 
@@ -229,21 +225,19 @@ inline bool KHashMap< Input, Result, Hash >::Get( const Input& input, Result& re
     //            << ", Avg. Load Factor: " << fHashMap.load_factor() << ", Max. Load Factor: " << fHashMap.max_load_factor() );
     //    }
 
-    if( it != fHashMap.end() )
-    {
+    if (it != fHashMap.end()) {
         result = it->second;
         return true;
     }
-    else
-    {
+    else {
         return false;
     }
 }
 
-template< class Input, class Result, class Hash >
-inline const Result& KHashMap< Input, Result, Hash >::Get( const Input& input ) const 
+template<class Input, class Result, class Hash>
+inline const Result& KHashMap<Input, Result, Hash>::Get(const Input& input) const
 {
-    CacheMapConstIterator it = fHashMap.find( input );
+    auto it = fHashMap.find(input);
 
     if (it == fHashMap.end())
         throw KException() << "Unknown hash map key.";
@@ -251,20 +245,18 @@ inline const Result& KHashMap< Input, Result, Hash >::Get( const Input& input ) 
     return it->second;
 }
 
-template< class Input, class Result, class Hash >
-inline double KHashMap< Input, Result, Hash >::Efficiency() const
+template<class Input, class Result, class Hash> inline double KHashMap<Input, Result, Hash>::Efficiency() const
 {
     return (fNWrite == 0) ? 0.0 : (double) fNRead / (double) fNWrite;
 }
 
-template< class Input, class Result, class Hash >
-inline uint64_t KHashMap< Input, Result, Hash >::Memory() const
+template<class Input, class Result, class Hash> inline uint64_t KHashMap<Input, Result, Hash>::Memory() const
 {
     return sizeof(typename CacheMap::value_type) * fHashMap.size();
 }
 
-template< class Input, class Result, class Hash >
-void KHashMap< Input, Result, Hash >::EnableReporting( uint32_t reportFreq, const std::string& cacheName )
+template<class Input, class Result, class Hash>
+void KHashMap<Input, Result, Hash>::EnableReporting(uint32_t reportFreq, const std::string& cacheName)
 {
     fReportingFrequency = reportFreq;
     fCacheName = cacheName;

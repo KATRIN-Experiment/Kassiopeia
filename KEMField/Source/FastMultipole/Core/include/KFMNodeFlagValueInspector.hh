@@ -1,12 +1,10 @@
 #ifndef __KFMNodeFlagValueInspector_H__
 #define __KFMNodeFlagValueInspector_H__
 
-#include "KFMNode.hh"
 #include "KFMInspectingActor.hh"
-#include "KFMObjectRetriever.hh"
+#include "KFMNode.hh"
 #include "KFMNodeFlags.hh"
-
-
+#include "KFMObjectRetriever.hh"
 
 
 namespace KEMField
@@ -24,47 +22,48 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList, unsigned int NFLAGS>
-class KFMNodeFlagValueInspector: public KFMInspectingActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, unsigned int NFLAGS>
+class KFMNodeFlagValueInspector : public KFMInspectingActor<KFMNode<ObjectTypeList>>
 {
-    public:
+  public:
+    KFMNodeFlagValueInspector()
+    {
+        fFlagIndex = 0;
+        fValue = 0;
+    };
 
-        KFMNodeFlagValueInspector()
-        {
-            fFlagIndex = 0;
-            fValue = 0;
-        };
+    ~KFMNodeFlagValueInspector() override{};
 
-        virtual ~KFMNodeFlagValueInspector(){};
+    void SetFlagIndex(unsigned int flag_index)
+    {
+        fFlagIndex = flag_index;
+    };
+    void SetFlagValue(char value)
+    {
+        fValue = value;
+    };
 
-        void SetFlagIndex(unsigned int flag_index){fFlagIndex = flag_index;};
-        void SetFlagValue(char value){fValue = value;};
-
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS> >::GetNodeObject(node);
-                if(flags != NULL)
-                {
-                    if(flags->GetFlag(fFlagIndex) == fValue){return true;};
-                }
+    //needs to answer this question about whether this node statisfies a condition
+    bool ConditionIsSatisfied(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS>>::GetNodeObject(node);
+            if (flags != nullptr) {
+                if (flags->GetFlag(fFlagIndex) == fValue) {
+                    return true;
+                };
             }
-
-            return false;
-
         }
 
-
-    protected:
-
-        unsigned int fFlagIndex;
-        char fValue;
+        return false;
+    }
 
 
+  protected:
+    unsigned int fFlagIndex;
+    char fValue;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMNodeFlagValueInspector_H__ */

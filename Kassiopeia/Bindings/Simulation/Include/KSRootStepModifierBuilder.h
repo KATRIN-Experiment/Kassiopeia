@@ -8,23 +8,20 @@
 using namespace Kassiopeia;
 namespace katrin
 {
-    typedef KComplexElement< KSRootStepModifier > KSRootStepModifierBuilder;
+typedef KComplexElement<KSRootStepModifier> KSRootStepModifierBuilder;
 
-    template< >
-    inline bool KSRootStepModifierBuilder::AddAttribute(KContainer *aContainer)
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "add_modifier" )
-        {
-            fObject->AddModifier( KToolbox::GetInstance().Get< KSStepModifier >( aContainer->AsReference< std::string >() ) );
-            return true;
-        }
-        return false;
+template<> inline bool KSRootStepModifierBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
+    if (aContainer->GetName() == "add_modifier") {
+        fObject->AddModifier(KToolbox::GetInstance().Get<KSStepModifier>(aContainer->AsReference<std::string>()));
+        return true;
+    }
+    return false;
 }
+}  // namespace katrin
 
-#endif //Kassiopeia_KSRootStepModifierBuilder_h_
+#endif  //Kassiopeia_KSRootStepModifierBuilder_h_

@@ -6,43 +6,43 @@
  */
 
 #include "KKrylovPreconditionerGenerator.hh"
+
 #include "KImplicitKrylovPreconditioner.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-KKrylovPreconditionerGenerator::KKrylovPreconditionerGenerator() {
-	fKrylovConfig.SetDisplayName("Preconditioner: ");
+KKrylovPreconditionerGenerator::KKrylovPreconditionerGenerator()
+{
+    fKrylovConfig.SetDisplayName("Preconditioner: ");
 }
 
 KKrylovPreconditionerGenerator::~KKrylovPreconditionerGenerator() {}
 
-void KKrylovPreconditionerGenerator::SetMatrixGenerator(
-		KSmartPointer<MatrixGenerator> matrixGen)
+void KKrylovPreconditionerGenerator::SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen)
 {
-	fMatrixGenerator = matrixGen;
+    fMatrixGenerator = matrixGen;
 }
 
 KSmartPointer<const KKrylovPreconditionerGenerator::MatrixGenerator>
 KKrylovPreconditionerGenerator::GetMatrixGenerator() const
 {
-	return fMatrixGenerator;
+    return fMatrixGenerator;
 }
 
-void KKrylovPreconditionerGenerator::SetPreconditionerGenerator(
-		KSmartPointer<MatrixGenerator> preconGen)
+void KKrylovPreconditionerGenerator::SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen)
 {
-	fPreconditionerGenerator = preconGen;
+    fPreconditionerGenerator = preconGen;
 }
 
-KSmartPointer<KSquareMatrix<KKrylovPreconditionerGenerator::ValueType> >
-KKrylovPreconditionerGenerator::Build( const KSurfaceContainer& container) const
+KSmartPointer<KSquareMatrix<KKrylovPreconditionerGenerator::ValueType>>
+KKrylovPreconditionerGenerator::Build(const KSurfaceContainer& container) const
 {
-	KSmartPointer<KSquareMatrix<ValueType> > A =
-		fMatrixGenerator->Build(container);
-	KSmartPointer<KSquareMatrix<ValueType> > P;
-	if(fPreconditionerGenerator.Is())
-		P = fPreconditionerGenerator->Build(container);
-	return KBuildKrylovPreconditioner<ValueType>(fKrylovConfig,A,P);
+    KSmartPointer<KSquareMatrix<ValueType>> A = fMatrixGenerator->Build(container);
+    KSmartPointer<KSquareMatrix<ValueType>> P;
+    if (fPreconditionerGenerator.Is())
+        P = fPreconditionerGenerator->Build(container);
+    return KBuildKrylovPreconditioner<ValueType>(fKrylovConfig, A, P);
 }
 
 } /* namespace KEMField */

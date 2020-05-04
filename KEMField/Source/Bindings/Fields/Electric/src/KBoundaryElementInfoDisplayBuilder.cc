@@ -14,11 +14,9 @@ using namespace KEMField;
 namespace katrin
 {
 
-template< >
-KBoundaryElementInfoDisplayBuilder::~KComplexElement(){}
+template<> KBoundaryElementInfoDisplayBuilder::~KComplexElement() {}
 
 STATICINT sKElectrostaticBoundaryField =
-        KElectrostaticBoundaryFieldBuilder::ComplexElement<KBoundaryElementInfoDisplay>
-        ( "boundary_element_info" );
+    KElectrostaticBoundaryFieldBuilder::ComplexElement<KBoundaryElementInfoDisplay>("boundary_element_info");
 
 } /* namespace katrin */

@@ -20,53 +20,47 @@ namespace KEMField
 */
 
 
-template <typename ValueType>
-class KIterationTerminator: public KIterativeSolver<ValueType>::Visitor
+template<typename ValueType> class KIterationTerminator : public KIterativeSolver<ValueType>::Visitor
 {
-    public:
+  public:
+    KIterationTerminator() : KIterativeSolver<ValueType>::Visitor(), fMaxIterations(UINT_MAX){};
 
-        KIterationTerminator():
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxIterations(UINT_MAX){};
+    KIterationTerminator(unsigned int max_iter) : KIterativeSolver<ValueType>::Visitor(), fMaxIterations(max_iter){};
 
-        KIterationTerminator(unsigned int max_iter):
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxIterations(max_iter){};
+    KIterationTerminator(unsigned int max_iter, unsigned int interval) :
+        KIterativeSolver<ValueType>::Visitor(),
+        fMaxIterations(max_iter)
+    {
+        this->fInterval = interval;
+    };
 
-        KIterationTerminator(unsigned int max_iter, unsigned int interval):
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxIterations(max_iter)
-        {
-            this->fInterval = interval;
-        };
+    virtual ~KIterationTerminator(){};
 
-        virtual ~KIterationTerminator(){};
+    void SetMaximumIterations(unsigned int max_iter)
+    {
+        fMaxIterations = max_iter;
+    };
 
-        void SetMaximumIterations(unsigned int max_iter)
-        {
-            fMaxIterations = max_iter;
-        };
+    virtual void Initialize(KIterativeSolver<ValueType>&)
+    {
+        ;
+    };
 
-        virtual void Initialize(KIterativeSolver<ValueType>&){;};
-
-        virtual void Visit(KIterativeSolver<ValueType>& solver)
-        {
-            unsigned int iter = solver.GetIteration();
-            if(iter >= fMaxIterations)
-            {
-                this->fTerminate = true;
-            }
+    virtual void Visit(KIterativeSolver<ValueType>& solver)
+    {
+        unsigned int iter = solver.GetIteration();
+        if (iter >= fMaxIterations) {
+            this->fTerminate = true;
         }
+    }
 
-        virtual void Finalize(KIterativeSolver<ValueType>&){};
+    virtual void Finalize(KIterativeSolver<ValueType>&){};
 
-    protected:
-
-        unsigned int fMaxIterations;
-
+  protected:
+    unsigned int fMaxIterations;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KIterationTerminator_H__ */

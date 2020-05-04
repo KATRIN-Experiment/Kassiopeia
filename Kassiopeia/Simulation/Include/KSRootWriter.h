@@ -1,43 +1,41 @@
 #ifndef KSROOTQUANTITY_H_
 #define KSROOTQUANTITY_H_
 
-#include "KSWriter.h"
-
 #include "KSList.h"
+#include "KSWriter.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootWriter :
-        public KSComponentTemplate< KSRootWriter, KSWriter >
-    {
-        public:
-            KSRootWriter();
-            KSRootWriter( const KSRootWriter& aCopy );
-            KSRootWriter* Clone() const;
-            virtual ~KSRootWriter();
+class KSRootWriter : public KSComponentTemplate<KSRootWriter, KSWriter>
+{
+  public:
+    KSRootWriter();
+    KSRootWriter(const KSRootWriter& aCopy);
+    KSRootWriter* Clone() const override;
+    ~KSRootWriter() override;
 
-            //******
-            //writer
-            //******
+    //******
+    //writer
+    //******
 
-        public:
-            void ExecuteRun();
-            void ExecuteEvent();
-            void ExecuteTrack();
-            void ExecuteStep();
+  public:
+    void ExecuteRun() override;
+    void ExecuteEvent() override;
+    void ExecuteTrack() override;
+    void ExecuteStep() override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void AddWriter( KSWriter* aWriter );
-            void RemoveWriter( KSWriter* aWriter );
+  public:
+    void AddWriter(KSWriter* aWriter);
+    void RemoveWriter(KSWriter* aWriter);
 
-        private:
-            KSList< KSWriter > fWriters;
-    };
-}
+  private:
+    KSList<KSWriter> fWriters;
+};
+}  // namespace Kassiopeia
 
 #endif

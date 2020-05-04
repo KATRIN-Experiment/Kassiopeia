@@ -3,11 +3,7 @@
 namespace Kassiopeia
 {
 
-    KSGenerator::KSGenerator()
-    {
-    }
-    KSGenerator::~KSGenerator()
-    {
-    }
+KSGenerator::KSGenerator() {}
+KSGenerator::~KSGenerator() {}
 
-}
+}  // namespace Kassiopeia

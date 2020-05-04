@@ -17,20 +17,19 @@ namespace KEMField
 *
 */
 
-template<typename NodeType>
-class KFMInspectingActor
+template<typename NodeType> class KFMInspectingActor
 {
-    public:
-        KFMInspectingActor(){};
-        virtual ~KFMInspectingActor(){};
+  public:
+    KFMInspectingActor(){};
+    virtual ~KFMInspectingActor(){};
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(NodeType* node) = 0;
+    //needs to answer this question about whether this node statisfies a condition
+    virtual bool ConditionIsSatisfied(NodeType* node) = 0;
 
-    private:
+  private:
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMInspectingActor_H__ */

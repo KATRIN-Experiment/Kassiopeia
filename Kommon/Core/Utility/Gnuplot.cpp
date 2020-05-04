@@ -17,7 +17,7 @@ std::string Gnuplot::m_sGNUPlotPath = "/usr/local/bin/";
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
 std::string Gnuplot::terminal_std = "windows";
-#elif ( defined(unix) || defined(__unix) || defined(__unix__) ) && !defined(__APPLE__)
+#elif (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__)
 std::string Gnuplot::terminal_std = "wxt";
 #elif defined(__APPLE__)
 std::string Gnuplot::terminal_std = "x11";
@@ -29,8 +29,7 @@ int Gnuplot::strm_precision = 12;
 //
 // constructor: set a style during construction
 //
-Gnuplot::Gnuplot(const std::string &style)
-    :gnucmd(NULL) ,valid(false) ,two_dim(false) ,nplots(0)
+Gnuplot::Gnuplot(const std::string& style) : gnucmd(nullptr), valid(false), two_dim(false), nplots(0)
 
 {
     init();
@@ -41,12 +40,12 @@ Gnuplot::Gnuplot(const std::string &style)
 //
 // constructor: open a new session, plot a signal (x)
 //
-Gnuplot::Gnuplot(const std::vector<double> &x,
-                        const std::string &title,
-                        const std::string &style,
-                        const std::string &labelx,
-                        const std::string &labely)
-    :gnucmd(NULL) ,valid(false) ,two_dim(false) ,nplots(0)
+Gnuplot::Gnuplot(const std::vector<double>& x, const std::string& title, const std::string& style,
+                 const std::string& labelx, const std::string& labely) :
+    gnucmd(nullptr),
+    valid(false),
+    two_dim(false),
+    nplots(0)
 {
     init();
 
@@ -54,7 +53,7 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
     set_xlabel(labelx);
     set_ylabel(labely);
 
-    plot_x(x,title);
+    plot_x(x, title);
 }
 
 
@@ -62,13 +61,12 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
 //
 // constructor: open a new session, plot a signal (x,y)
 //
-Gnuplot::Gnuplot(const std::vector<double> &x,
-                        const std::vector<double> &y,
-                        const std::string &title,
-                        const std::string &style,
-                        const std::string &labelx,
-                        const std::string &labely)
-    :gnucmd(NULL) ,valid(false) ,two_dim(false) ,nplots(0)
+Gnuplot::Gnuplot(const std::vector<double>& x, const std::vector<double>& y, const std::string& title,
+                 const std::string& style, const std::string& labelx, const std::string& labely) :
+    gnucmd(nullptr),
+    valid(false),
+    two_dim(false),
+    nplots(0)
 {
     init();
 
@@ -76,7 +74,7 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
     set_xlabel(labelx);
     set_ylabel(labely);
 
-    plot_xy(x,y,title);
+    plot_xy(x, y, title);
 }
 
 
@@ -84,15 +82,13 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
 //
 // constructor: open a new session, plot a signal (x,y,z)
 //
-Gnuplot::Gnuplot(const std::vector<double> &x,
-                        const std::vector<double> &y,
-                        const std::vector<double> &z,
-                        const std::string &title,
-                        const std::string &style,
-                        const std::string &labelx,
-                        const std::string &labely,
-                        const std::string &labelz)
-    :gnucmd(NULL) ,valid(false) ,two_dim(false) ,nplots(0)
+Gnuplot::Gnuplot(const std::vector<double>& x, const std::vector<double>& y, const std::vector<double>& z,
+                 const std::string& title, const std::string& style, const std::string& labelx,
+                 const std::string& labely, const std::string& labelz) :
+    gnucmd(nullptr),
+    valid(false),
+    two_dim(false),
+    nplots(0)
 {
     init();
 
@@ -101,7 +97,7 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
     set_ylabel(labely);
     set_zlabel(labelz);
 
-    plot_xyz(x,y,z,title);
+    plot_xyz(x, y, z, title);
 }
 
 
@@ -110,23 +106,22 @@ Gnuplot::Gnuplot(const std::vector<double> &x,
 // define static member function: set Gnuplot path manual
 //   for windows: path with slash '/' not backslash '\'
 //
-bool Gnuplot::set_GNUPlotPath(const std::string &path)
+bool Gnuplot::set_GNUPlotPath(const std::string& path)
 {
 
     std::string tmp = path + "/" + Gnuplot::m_sGNUPlotFileName;
 
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-    if ( Gnuplot::file_exists(tmp,0) ) // check existence
+    if (Gnuplot::file_exists(tmp, 0))  // check existence
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    if ( Gnuplot::file_exists(tmp,1) ) // check existence and execution permission
+    if (Gnuplot::file_exists(tmp, 1))  // check existence and execution permission
 #endif
     {
         Gnuplot::m_sGNUPlotPath = path;
         return true;
     }
-    else
-    {
+    else {
         Gnuplot::m_sGNUPlotPath.clear();
         return false;
     }
@@ -138,11 +133,10 @@ bool Gnuplot::set_GNUPlotPath(const std::string &path)
 // define static member function: set standart terminal, used by showonscreen
 //  defaults: Windows - win, Linux - x11, Mac - aqua
 //
-void Gnuplot::set_terminal_std(const std::string &type)
+void Gnuplot::set_terminal_std(const std::string& type)
 {
 #if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    if (type.find("x11") != std::string::npos && getenv("DISPLAY") == NULL)
-    {
+    if (type.find("x11") != std::string::npos && getenv("DISPLAY") == nullptr) {
         throw GnuplotException("Can't find DISPLAY variable");
     }
 #endif
@@ -159,7 +153,7 @@ void Gnuplot::set_terminal_std(const std::string &type)
 //
 Gnuplot::~Gnuplot()
 {
-//  remove_tmpfiles();
+    //  remove_tmpfiles();
 
     // A stream opened by popen() should be closed by pclose()
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
@@ -177,7 +171,7 @@ Gnuplot::~Gnuplot()
 //
 Gnuplot& Gnuplot::reset_plot()
 {
-//  remove_tmpfiles();
+    //  remove_tmpfiles();
 
     nplots = 0;
 
@@ -191,7 +185,7 @@ Gnuplot& Gnuplot::reset_plot()
 //
 Gnuplot& Gnuplot::reset_all()
 {
-//  remove_tmpfiles();
+    //  remove_tmpfiles();
 
     nplots = 0;
     cmd("reset");
@@ -208,41 +202,36 @@ Gnuplot& Gnuplot::reset_all()
 //
 // Change the plotting style of a gnuplot session
 //
-Gnuplot& Gnuplot::set_style(const std::string &stylestr)
+Gnuplot& Gnuplot::set_style(const std::string& stylestr)
 {
-    if (stylestr.find("lines")          == std::string::npos  &&
-            stylestr.find("points")         == std::string::npos  &&
-            stylestr.find("linespoints")    == std::string::npos  &&
-            stylestr.find("impulses")       == std::string::npos  &&
-            stylestr.find("dots")           == std::string::npos  &&
-            stylestr.find("steps")          == std::string::npos  &&
-            stylestr.find("fsteps")         == std::string::npos  &&
-            stylestr.find("histeps")        == std::string::npos  &&
-            stylestr.find("boxes")          == std::string::npos  &&  // 1-4 columns of data are required
-            stylestr.find("filledcurves")   == std::string::npos  &&
-            stylestr.find("histograms")     == std::string::npos  )   //only for one data column
-//        stylestr.find("labels")         == std::string::npos  &&  // 3 columns of data are required
-//        stylestr.find("xerrorbars")     == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("xerrorlines")    == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("errorbars")      == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("errorlines")     == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("yerrorbars")     == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("yerrorlines")    == std::string::npos  &&  // 3-4 columns of data are required
-//        stylestr.find("boxerrorbars")   == std::string::npos  &&  // 3-5 columns of data are required
-//        stylestr.find("xyerrorbars")    == std::string::npos  &&  // 4,6,7 columns of data are required
-//        stylestr.find("xyerrorlines")   == std::string::npos  &&  // 4,6,7 columns of data are required
-//        stylestr.find("boxxyerrorbars") == std::string::npos  &&  // 4,6,7 columns of data are required
-//        stylestr.find("financebars")    == std::string::npos  &&  // 5 columns of data are required
-//        stylestr.find("candlesticks")   == std::string::npos  &&  // 5 columns of data are required
-//        stylestr.find("vectors")        == std::string::npos  &&
-//        stylestr.find("image")          == std::string::npos  &&
-//        stylestr.find("rgbimage")       == std::string::npos  &&
-//        stylestr.find("pm3d")           == std::string::npos  )
+    if (stylestr.find("lines") == std::string::npos && stylestr.find("points") == std::string::npos &&
+        stylestr.find("linespoints") == std::string::npos && stylestr.find("impulses") == std::string::npos &&
+        stylestr.find("dots") == std::string::npos && stylestr.find("steps") == std::string::npos &&
+        stylestr.find("fsteps") == std::string::npos && stylestr.find("histeps") == std::string::npos &&
+        stylestr.find("boxes") == std::string::npos &&  // 1-4 columns of data are required
+        stylestr.find("filledcurves") == std::string::npos &&
+        stylestr.find("histograms") == std::string::npos)  //only for one data column
+    //        stylestr.find("labels")         == std::string::npos  &&  // 3 columns of data are required
+    //        stylestr.find("xerrorbars")     == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("xerrorlines")    == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("errorbars")      == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("errorlines")     == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("yerrorbars")     == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("yerrorlines")    == std::string::npos  &&  // 3-4 columns of data are required
+    //        stylestr.find("boxerrorbars")   == std::string::npos  &&  // 3-5 columns of data are required
+    //        stylestr.find("xyerrorbars")    == std::string::npos  &&  // 4,6,7 columns of data are required
+    //        stylestr.find("xyerrorlines")   == std::string::npos  &&  // 4,6,7 columns of data are required
+    //        stylestr.find("boxxyerrorbars") == std::string::npos  &&  // 4,6,7 columns of data are required
+    //        stylestr.find("financebars")    == std::string::npos  &&  // 5 columns of data are required
+    //        stylestr.find("candlesticks")   == std::string::npos  &&  // 5 columns of data are required
+    //        stylestr.find("vectors")        == std::string::npos  &&
+    //        stylestr.find("image")          == std::string::npos  &&
+    //        stylestr.find("rgbimage")       == std::string::npos  &&
+    //        stylestr.find("pm3d")           == std::string::npos  )
     {
         pstyle = std::string("points");
     }
-    else
-    {
+    else {
         pstyle = stylestr;
     }
 
@@ -254,19 +243,14 @@ Gnuplot& Gnuplot::set_style(const std::string &stylestr)
 //
 // smooth: interpolation and approximation of data
 //
-Gnuplot& Gnuplot::set_smooth(const std::string &stylestr)
+Gnuplot& Gnuplot::set_smooth(const std::string& stylestr)
 {
-    if (stylestr.find("unique")    == std::string::npos  &&
-            stylestr.find("frequency") == std::string::npos  &&
-            stylestr.find("csplines")  == std::string::npos  &&
-            stylestr.find("acsplines") == std::string::npos  &&
-            stylestr.find("bezier")    == std::string::npos  &&
-            stylestr.find("sbezier")   == std::string::npos  )
-    {
+    if (stylestr.find("unique") == std::string::npos && stylestr.find("frequency") == std::string::npos &&
+        stylestr.find("csplines") == std::string::npos && stylestr.find("acsplines") == std::string::npos &&
+        stylestr.find("bezier") == std::string::npos && stylestr.find("sbezier") == std::string::npos) {
         smooth = "";
     }
-    else
-    {
+    else {
         smooth = stylestr;
     }
 
@@ -290,14 +274,13 @@ Gnuplot& Gnuplot::showonscreen()
 //
 // saves a gnuplot session to a postscript file
 //
-Gnuplot& Gnuplot::savetofigure(const std::string &filename,
-                               const std::string &terminal)
+Gnuplot& Gnuplot::savetofigure(const std::string& filename, const std::string& terminal)
 {
     std::ostringstream cmdstr;
     cmdstr << "set terminal " << terminal;
-    cmd(cmdstr.str() );
+    cmd(cmdstr.str());
 
-    cmdstr.str("");     // Clear cmdstr
+    cmdstr.str("");  // Clear cmdstr
     cmdstr << "set output \"" << filename << "\"";
     cmd(cmdstr.str());
 
@@ -308,7 +291,7 @@ Gnuplot& Gnuplot::savetofigure(const std::string &filename,
 //
 // Switches legend on
 //
-Gnuplot& Gnuplot::set_legend(const std::string &position)
+Gnuplot& Gnuplot::set_legend(const std::string& position)
 {
     std::ostringstream cmdstr;
     cmdstr << "set key " << position;
@@ -406,16 +389,13 @@ Gnuplot& Gnuplot::set_isosamples(const int isolines)
 // enables contour drawing for surfaces set contour {base | surface | both}
 //
 
-Gnuplot& Gnuplot::set_contour(const std::string &position)
+Gnuplot& Gnuplot::set_contour(const std::string& position)
 {
-    if (position.find("base")    == std::string::npos  &&
-            position.find("surface") == std::string::npos  &&
-            position.find("both")    == std::string::npos  )
-    {
+    if (position.find("base") == std::string::npos && position.find("surface") == std::string::npos &&
+        position.find("both") == std::string::npos) {
         cmd("set contour base");
     }
-    else
-    {
+    else {
         cmd("set contour " + position);
     }
 
@@ -427,7 +407,7 @@ Gnuplot& Gnuplot::set_contour(const std::string &position)
 // set labels
 //
 // set the xlabel
-Gnuplot& Gnuplot::set_xlabel(const std::string &label)
+Gnuplot& Gnuplot::set_xlabel(const std::string& label)
 {
     std::ostringstream cmdstr;
 
@@ -440,7 +420,7 @@ Gnuplot& Gnuplot::set_xlabel(const std::string &label)
 //------------------------------------------------------------------------------
 // set the ylabel
 //
-Gnuplot& Gnuplot::set_ylabel(const std::string &label)
+Gnuplot& Gnuplot::set_ylabel(const std::string& label)
 {
     std::ostringstream cmdstr;
 
@@ -453,7 +433,7 @@ Gnuplot& Gnuplot::set_ylabel(const std::string &label)
 //------------------------------------------------------------------------------
 // set the zlabel
 //
-Gnuplot& Gnuplot::set_zlabel(const std::string &label)
+Gnuplot& Gnuplot::set_zlabel(const std::string& label)
 {
     std::ostringstream cmdstr;
 
@@ -468,8 +448,7 @@ Gnuplot& Gnuplot::set_zlabel(const std::string &label)
 // set range
 //
 // set the xrange
-Gnuplot& Gnuplot::set_xrange(const double iFrom,
-                             const double iTo)
+Gnuplot& Gnuplot::set_xrange(const double iFrom, const double iTo)
 {
     std::ostringstream cmdstr;
 
@@ -482,8 +461,7 @@ Gnuplot& Gnuplot::set_xrange(const double iFrom,
 //------------------------------------------------------------------------------
 // set the yrange
 //
-Gnuplot& Gnuplot::set_yrange(const double iFrom,
-                             const double iTo)
+Gnuplot& Gnuplot::set_yrange(const double iFrom, const double iTo)
 {
     std::ostringstream cmdstr;
 
@@ -496,8 +474,7 @@ Gnuplot& Gnuplot::set_yrange(const double iFrom,
 //------------------------------------------------------------------------------
 // set the zrange
 //
-Gnuplot& Gnuplot::set_zrange(const double iFrom,
-                             const double iTo)
+Gnuplot& Gnuplot::set_zrange(const double iFrom, const double iTo)
 {
     std::ostringstream cmdstr;
 
@@ -511,8 +488,7 @@ Gnuplot& Gnuplot::set_zrange(const double iFrom,
 //
 // set the palette range
 //
-Gnuplot& Gnuplot::set_cbrange(const double iFrom,
-                              const double iTo)
+Gnuplot& Gnuplot::set_cbrange(const double iFrom, const double iTo)
 {
     std::ostringstream cmdstr;
 
@@ -527,15 +503,13 @@ Gnuplot& Gnuplot::set_cbrange(const double iFrom,
 // Plots a linear equation y=ax+b (where you supply the
 // slope a and intercept b)
 //
-Gnuplot& Gnuplot::plot_slope(const double a,
-                             const double b,
-                             const std::string &title)
+Gnuplot& Gnuplot::plot_slope(const double a, const double b, const std::string& title)
 {
     std::ostringstream cmdstr;
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
@@ -561,14 +535,13 @@ Gnuplot& Gnuplot::plot_slope(const double a,
 //
 // Plot an equation supplied as a std::string y=f(x) (only f(x) expected)
 //
-Gnuplot& Gnuplot::plot_equation(const std::string &equation,
-                                const std::string &title)
+Gnuplot& Gnuplot::plot_equation(const std::string& equation, const std::string& title)
 {
     std::ostringstream cmdstr;
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
@@ -594,14 +567,13 @@ Gnuplot& Gnuplot::plot_equation(const std::string &equation,
 //
 // plot an equation supplied as a std::string y=(x)
 //
-Gnuplot& Gnuplot::plot_equation3d(const std::string &equation,
-                                  const std::string &title)
+Gnuplot& Gnuplot::plot_equation3d(const std::string& equation, const std::string& title)
 {
     std::ostringstream cmdstr;
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == false)
+    if (nplots > 0 && two_dim == false)
         cmdstr << "replot ";
     else
         cmdstr << "splot ";
@@ -628,9 +600,7 @@ Gnuplot& Gnuplot::plot_equation3d(const std::string &equation,
 //
 // Plots a 2d graph from a list of doubles (x) saved in a file
 //
-Gnuplot& Gnuplot::plotfile_x(const std::string &filename,
-                             const unsigned int column,
-                             const std::string &title)
+Gnuplot& Gnuplot::plotfile_x(const std::string& filename, const unsigned int column, const std::string& title)
 {
     //
     // check if file exists
@@ -642,7 +612,7 @@ Gnuplot& Gnuplot::plotfile_x(const std::string &filename,
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
@@ -654,7 +624,7 @@ Gnuplot& Gnuplot::plotfile_x(const std::string &filename,
     else
         cmdstr << " title \"" << title << "\" ";
 
-    if(smooth == "")
+    if (smooth == "")
         cmdstr << "with " << pstyle;
     else
         cmdstr << "smooth " << smooth;
@@ -662,21 +632,18 @@ Gnuplot& Gnuplot::plotfile_x(const std::string &filename,
     //
     // Do the actual plot
     //
-    cmd(cmdstr.str()); //nplots++; two_dim = true;  already in cmd();
+    cmd(cmdstr.str());  //nplots++; two_dim = true;  already in cmd();
 
     return *this;
 }
-
 
 
 //------------------------------------------------------------------------------
 //
 // Plots a 2d graph from a list of doubles (x y) saved in a file
 //
-Gnuplot& Gnuplot::plotfile_xy(const std::string &filename,
-                              const unsigned int column_x,
-                              const unsigned int column_y,
-                              const std::string &title)
+Gnuplot& Gnuplot::plotfile_xy(const std::string& filename, const unsigned int column_x, const unsigned int column_y,
+                              const std::string& title)
 {
     //
     // check if file exists
@@ -688,7 +655,7 @@ Gnuplot& Gnuplot::plotfile_xy(const std::string &filename,
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
@@ -700,7 +667,7 @@ Gnuplot& Gnuplot::plotfile_xy(const std::string &filename,
     else
         cmdstr << " title \"" << title << "\" ";
 
-    if(smooth == "")
+    if (smooth == "")
         cmdstr << "with " << pstyle;
     else
         cmdstr << "smooth " << smooth;
@@ -718,11 +685,8 @@ Gnuplot& Gnuplot::plotfile_xy(const std::string &filename,
 //
 // Plots a 2d graph with errorbars from a list of doubles (x y dy) in a file
 //
-Gnuplot& Gnuplot::plotfile_xy_err(const std::string &filename,
-                                  const unsigned int column_x,
-                                  const unsigned int column_y,
-                                  const unsigned int column_dy,
-                                  const std::string &title)
+Gnuplot& Gnuplot::plotfile_xy_err(const std::string& filename, const unsigned int column_x, const unsigned int column_y,
+                                  const unsigned int column_dy, const std::string& title)
 {
     //
     // check if file exists
@@ -733,14 +697,12 @@ Gnuplot& Gnuplot::plotfile_xy_err(const std::string &filename,
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
 
-    cmdstr << "\"" << filename << "\" using "
-           << column_x << ":" << column_y << ":" << column_dy
-           << " with errorbars ";
+    cmdstr << "\"" << filename << "\" using " << column_x << ":" << column_y << ":" << column_dy << " with errorbars ";
 
     if (title == "")
         cmdstr << " notitle ";
@@ -760,11 +722,8 @@ Gnuplot& Gnuplot::plotfile_xy_err(const std::string &filename,
 //
 // Plots a 3d graph from a list of doubles (x y z) saved in a file
 //
-Gnuplot& Gnuplot::plotfile_xyz(const std::string &filename,
-                               const unsigned int column_x,
-                               const unsigned int column_y,
-                               const unsigned int column_z,
-                               const std::string &title)
+Gnuplot& Gnuplot::plotfile_xyz(const std::string& filename, const unsigned int column_x, const unsigned int column_y,
+                               const unsigned int column_z, const std::string& title)
 {
     //
     // check if file exists
@@ -775,13 +734,12 @@ Gnuplot& Gnuplot::plotfile_xyz(const std::string &filename,
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == false)
+    if (nplots > 0 && two_dim == false)
         cmdstr << "replot ";
     else
         cmdstr << "splot ";
 
-    cmdstr << "\"" << filename << "\" using " << column_x << ":" << column_y
-           << ":" << column_z;
+    cmdstr << "\"" << filename << "\" using " << column_x << ":" << column_y << ":" << column_z;
 
     if (title == "")
         cmdstr << " notitle with " << pstyle;
@@ -797,15 +755,12 @@ Gnuplot& Gnuplot::plotfile_xyz(const std::string &filename,
 }
 
 
-
 //------------------------------------------------------------------------------
 //
 /// *  note that this function is not valid for versions of GNUPlot below 4.2
 //
-Gnuplot& Gnuplot::plot_image(const unsigned char * ucPicBuf,
-                             const unsigned int iWidth,
-                             const unsigned int iHeight,
-                             const std::string &title)
+Gnuplot& Gnuplot::plot_image(const unsigned char* ucPicBuf, const unsigned int iWidth, const unsigned int iHeight,
+                             const std::string& title)
 {
     std::ofstream tmp;
     std::string name = create_tmpfile(tmp);
@@ -816,12 +771,9 @@ Gnuplot& Gnuplot::plot_image(const unsigned char * ucPicBuf,
     // write the data to file
     //
     int iIndex = 0;
-    for(unsigned int iRow = 0; iRow < iHeight; iRow++)
-    {
-        for(unsigned int iColumn = 0; iColumn < iWidth; iColumn++)
-        {
-            tmp << iColumn << " " << iRow  << " "
-                << static_cast<float>(ucPicBuf[iIndex++]) << std::endl;
+    for (unsigned int iRow = 0; iRow < iHeight; iRow++) {
+        for (unsigned int iColumn = 0; iColumn < iWidth; iColumn++) {
+            tmp << iColumn << " " << iRow << " " << static_cast<float>(ucPicBuf[iIndex++]) << std::endl;
         }
     }
 
@@ -833,7 +785,7 @@ Gnuplot& Gnuplot::plot_image(const unsigned char * ucPicBuf,
     //
     // command to be sent to gnuplot
     //
-    if (nplots > 0  &&  two_dim == true)
+    if (nplots > 0 && two_dim == true)
         cmdstr << "replot ";
     else
         cmdstr << "plot ";
@@ -852,15 +804,13 @@ Gnuplot& Gnuplot::plot_image(const unsigned char * ucPicBuf,
 }
 
 
-
 //------------------------------------------------------------------------------
 //
 // Sends a command to an active gnuplot session
 //
-Gnuplot& Gnuplot::cmd(const std::string &cmdstr)
+Gnuplot& Gnuplot::cmd(const std::string& cmdstr)
 {
-    if( !(valid) )
-    {
+    if (!(valid)) {
         return *this;
     }
 
@@ -870,7 +820,7 @@ Gnuplot& Gnuplot::cmd(const std::string &cmdstr)
     // The function begins copying from the address specified (str) until it
     // reaches the terminating null character ('\0'). This final
     // null-character is not copied to the stream.
-    fputs( (cmdstr+"\n").c_str(), gnucmd );
+    fputs((cmdstr + "\n").c_str(), gnucmd);
 
     // int fflush ( FILE * stream );
     // If the given stream was open for writing and the last i/o operation was
@@ -880,24 +830,20 @@ Gnuplot& Gnuplot::cmd(const std::string &cmdstr)
     fflush(gnucmd);
 
 
-    if( cmdstr.find("replot") != std::string::npos )
-    {
+    if (cmdstr.find("replot") != std::string::npos) {
         return *this;
     }
-    else if( cmdstr.find("splot") != std::string::npos )
-    {
+    else if (cmdstr.find("splot") != std::string::npos) {
         two_dim = false;
         nplots++;
     }
-    else if( cmdstr.find("plot") != std::string::npos )
-    {
+    else if (cmdstr.find("plot") != std::string::npos) {
         two_dim = true;
         nplots++;
     }
 
     return *this;
 }
-
 
 
 //------------------------------------------------------------------------------
@@ -910,9 +856,8 @@ void Gnuplot::init()
     // Retrieves a C string containing the value of the environment variable
     // whose name is specified as argument.  If the requested variable is not
     // part of the environment list, the function returns a NULL pointer.
-#if ( defined(unix) || defined(__unix) || defined(__unix__) ) && !defined(__APPLE__)
-    if (getenv("DISPLAY") == NULL)
-    {
+#if (defined(unix) || defined(__unix) || defined(__unix__)) && !defined(__APPLE__)
+    if (getenv("DISPLAY") == nullptr) {
         valid = false;
         throw GnuplotException("Can't find DISPLAY variable");
     }
@@ -920,8 +865,7 @@ void Gnuplot::init()
 
 
     // if gnuplot not available
-    if (!Gnuplot::get_program_path())
-    {
+    if (!Gnuplot::get_program_path()) {
         valid = false;
         throw GnuplotException("Can't find gnuplot");
     }
@@ -930,8 +874,7 @@ void Gnuplot::init()
     //
     // open pipe
     //
-    std::string tmp = Gnuplot::m_sGNUPlotPath + "/" +
-                      Gnuplot::m_sGNUPlotFileName;
+    std::string tmp = Gnuplot::m_sGNUPlotPath + "/" + Gnuplot::m_sGNUPlotFileName;
 
     // FILE *popen(const char *command, const char *mode);
     // The popen() function shall execute the command specified by the string
@@ -939,16 +882,15 @@ void Gnuplot::init()
     // command, and return a pointer to a stream that can be used to either read
     // from or write to the pipe.
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-    gnucmd = _popen(tmp.c_str(),"w");
+    gnucmd = _popen(tmp.c_str(), "w");
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    gnucmd = popen(tmp.c_str(),"w");
+    gnucmd = popen(tmp.c_str(), "w");
 #endif
 
     // popen() shall return a pointer to an open stream that can be used to read
     // or write to the pipe.  Otherwise, it shall return a null pointer and may
     // set errno to indicate the error.
-    if (!gnucmd)
-    {
+    if (!gnucmd) {
         valid = false;
         throw GnuplotException("Couldn't open connection to gnuplot");
     }
@@ -973,13 +915,12 @@ bool Gnuplot::get_program_path()
     //
     // first look in m_sGNUPlotPath for Gnuplot
     //
-    std::string tmp = Gnuplot::m_sGNUPlotPath + "/" +
-                      Gnuplot::m_sGNUPlotFileName;
+    std::string tmp = Gnuplot::m_sGNUPlotPath + "/" + Gnuplot::m_sGNUPlotFileName;
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-    if ( Gnuplot::file_exists(tmp,0) ) // check existence
+    if (Gnuplot::file_exists(tmp, 0))  // check existence
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    if ( Gnuplot::file_exists(tmp,1) ) // check existence and execution permission
+    if (Gnuplot::file_exists(tmp, 1))  // check existence and execution permission
 #endif
     {
         return true;
@@ -989,59 +930,52 @@ bool Gnuplot::get_program_path()
     //
     // second look in PATH for Gnuplot
     //
-    char *path;
+    char* path;
     // Retrieves a C string containing the value of environment variable PATH
     path = getenv("PATH");
 
 
-    if (path == NULL)
-    {
+    if (path == nullptr) {
         throw GnuplotException("Path is not set");
         return false;
     }
-    else
-    {
+    else {
         std::list<std::string> ls;
 
         //split path (one long string) into list ls of strings
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-        stringtok(ls,path,";");
+        stringtok(ls, path, ";");
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-        stringtok(ls,path,":");
+        stringtok(ls, path, ":");
 #endif
 
         // scan list for Gnuplot program files
-        for (std::list<std::string>::const_iterator i = ls.begin();
-                i != ls.end(); ++i)
-        {
+        for (std::list<std::string>::const_iterator i = ls.begin(); i != ls.end(); ++i) {
             tmp = (*i) + "/" + Gnuplot::m_sGNUPlotFileName;
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-            if ( Gnuplot::file_exists(tmp,0) ) // check existence
+            if (Gnuplot::file_exists(tmp, 0))  // check existence
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-            if ( Gnuplot::file_exists(tmp,1) ) // check existence and execution permission
+            if (Gnuplot::file_exists(tmp, 1))  // check existence and execution permission
 #endif
             {
-                Gnuplot::m_sGNUPlotPath = *i; // set m_sGNUPlotPath
+                Gnuplot::m_sGNUPlotPath = *i;  // set m_sGNUPlotPath
                 return true;
             }
         }
 
-        tmp = "Can't find gnuplot neither in PATH nor in \"" +
-              Gnuplot::m_sGNUPlotPath + "\"";
+        tmp = "Can't find gnuplot neither in PATH nor in \"" + Gnuplot::m_sGNUPlotPath + "\"";
         throw GnuplotException(tmp);
     }
 }
-
 
 
 //------------------------------------------------------------------------------
 //
 // check if file exists
 //
-bool Gnuplot::file_exists(const std::string &filename, int mode)
+bool Gnuplot::file_exists(const std::string& filename, int mode)
 {
-    if ( mode < 0 || mode > 7)
-    {
+    if (mode < 0 || mode > 7) {
         throw std::runtime_error("In function \"Gnuplot::file_exists\": mode\
                 has to be an integer between 0 and 7");
         return false;
@@ -1065,59 +999,54 @@ bool Gnuplot::file_exists(const std::string &filename, int mode)
     {
         return true;
     }
-    else
-    {
+    else {
         return false;
     }
-
 }
 
-bool Gnuplot::file_available(const std::string &filename)
+bool Gnuplot::file_available(const std::string& filename)
 {
     std::ostringstream except;
-    if( Gnuplot::file_exists(filename,0) ) // check existence
+    if (Gnuplot::file_exists(filename, 0))  // check existence
     {
-        if( !(Gnuplot::file_exists(filename,4)) ) // check read permission
+        if (!(Gnuplot::file_exists(filename, 4)))  // check read permission
         {
             except << "No read permission for File \"" << filename << "\"";
-            throw GnuplotException( except.str() );
+            throw GnuplotException(except.str());
             return false;
         }
     }
-    else
-    {
+    else {
         except << "File \"" << filename << "\" does not exist";
-        throw GnuplotException( except.str() );
+        throw GnuplotException(except.str());
         return false;
     }
     return false;
 }
 
 
-
 //------------------------------------------------------------------------------
 //
 // Opens a temporary file
 //
-std::string Gnuplot::create_tmpfile(std::ofstream &tmp)
+std::string Gnuplot::create_tmpfile(std::ofstream& tmp)
 {
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
-    char name[] = "gnuplotiXXXXXX"; //tmp file in working directory
+    char name[] = "gnuplotiXXXXXX";  //tmp file in working directory
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
-    char name[] = "/tmp/gnuplotiXXXXXX"; // tmp file in /tmp
+    char name[] = "/tmp/gnuplotiXXXXXX";  // tmp file in /tmp
 #endif
 
     //
     // check if maximum number of temporary files reached
     //
-    if (Gnuplot::tmpfile_num == GP_MAX_TMP_FILES - 1)
-    {
+    if (Gnuplot::tmpfile_num == GP_MAX_TMP_FILES - 1) {
         std::ostringstream except;
-        except << "Maximum number of temporary files reached ("
-               << GP_MAX_TMP_FILES << "): cannot open more files" << std::endl;
+        except << "Maximum number of temporary files reached (" << GP_MAX_TMP_FILES << "): cannot open more files"
+               << std::endl;
 
-        throw GnuplotException( except.str() );
+        throw GnuplotException(except.str());
     }
 
     // int mkstemp(char *name);
@@ -1150,8 +1079,7 @@ std::string Gnuplot::create_tmpfile(std::ofstream &tmp)
 #endif
 
     tmp.open(name);
-    if (tmp.bad())
-    {
+    if (tmp.bad()) {
         std::ostringstream except;
         except << "Cannot create temporary file \"" << name << "\"";
         throw GnuplotException(except.str());
@@ -1168,13 +1096,10 @@ std::string Gnuplot::create_tmpfile(std::ofstream &tmp)
 
 void Gnuplot::remove_tmpfiles()
 {
-    if ((tmpfile_list).size() > 0)
-    {
-        for (unsigned int i = 0; i < tmpfile_list.size(); i++)
-        {
+    if ((tmpfile_list).size() > 0) {
+        for (unsigned int i = 0; i < tmpfile_list.size(); i++) {
 
-            if( remove( tmpfile_list[i].c_str() ) != 0 )
-            {
+            if (remove(tmpfile_list[i].c_str()) != 0) {
                 std::ostringstream except;
                 except << "Cannot remove temporary file \"" << tmpfile_list[i] << "\"";
                 throw GnuplotException(except.str());

@@ -1,14 +1,13 @@
 #ifndef __KFMElectrostaticBoundaryIntegratorEngine_OpenCL_H__
 #define __KFMElectrostaticBoundaryIntegratorEngine_OpenCL_H__
 
-#include "KFMObjectRetriever.hh"
-#include "KFMNodeObjectRemover.hh"
-
-#include "KFMElectrostaticNode.hh"
-#include "KFMElectrostaticTree.hh"
 #include "KFMElectrostaticElementContainer.hh"
 #include "KFMElectrostaticMultipoleBatchCalculatorBase.hh"
+#include "KFMElectrostaticNode.hh"
 #include "KFMElectrostaticParameters.hh"
+#include "KFMElectrostaticTree.hh"
+#include "KFMNodeObjectRemover.hh"
+#include "KFMObjectRetriever.hh"
 
 namespace KEMField
 {
@@ -28,121 +27,128 @@ namespace KEMField
 
 class KFMElectrostaticBoundaryIntegratorEngine_OpenCL
 {
-    public:
-        KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
-        virtual ~KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
+  public:
+    KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
+    virtual ~KFMElectrostaticBoundaryIntegratorEngine_OpenCL();
 
-        //for evaluating work load weights
-        void EvaluateWorkLoads(unsigned int divisions, unsigned int zeromask);
-        double GetDiskWeight() const {return fDiskWeight;};
-        double GetRamWeight() const {return fRamWeight;};
-        double GetFFTWeight() const {return fFFTWeight;};
+    //for evaluating work load weights
+    void EvaluateWorkLoads(unsigned int divisions, unsigned int zeromask);
+    double GetDiskWeight() const
+    {
+        return fDiskWeight;
+    };
+    double GetRamWeight() const
+    {
+        return fRamWeight;
+    };
+    double GetFFTWeight() const
+    {
+        return fFFTWeight;
+    };
 
-        //extracted electrode data
-        void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* container){fContainer = container;};
+    //extracted electrode data
+    void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3, 1>* container)
+    {
+        fContainer = container;
+    };
 
-        void SetParameters(KFMElectrostaticParameters params);
+    void SetParameters(KFMElectrostaticParameters params);
 
-        void SetTree(KFMElectrostaticTree* tree);
+    void SetTree(KFMElectrostaticTree* tree);
 
-        void InitializeMultipoleMoments();
+    void InitializeMultipoleMoments();
 
-        void InitializeLocalCoefficientsForPrimaryNodes();
+    void InitializeLocalCoefficientsForPrimaryNodes();
 
-        //dummy functions
-        void RecieveTopLevelLocalCoefficients(){};
-        void SendTopLevelLocalCoefficients(){};
+    //dummy functions
+    void RecieveTopLevelLocalCoefficients(){};
+    void SendTopLevelLocalCoefficients(){};
 
-        void Initialize();
+    void Initialize();
 
-        void MapField();
+    void MapField();
 
-        //individual operations, only to be used when the tree needs
-        //to be modified in between steps (i.e. MPI)
-        void ResetMultipoleMoments();
-        void ComputeMultipoleMoments();
-        void ResetLocalCoefficients();
-        void ComputeMultipoleToLocal();
-        void ComputeLocalToLocal();
-        void ComputeLocalCoefficients();
+    //individual operations, only to be used when the tree needs
+    //to be modified in between steps (i.e. MPI)
+    void ResetMultipoleMoments();
+    void ComputeMultipoleMoments();
+    void ResetLocalCoefficients();
+    void ComputeMultipoleToLocal();
+    void ComputeLocalToLocal();
+    void ComputeLocalCoefficients();
 
-    protected:
+  protected:
+    void AssociateElementsAndNodes();
 
-        void AssociateElementsAndNodes();
+    double ComputeDiskMatrixVectorProductWeight();
+    double ComputeRamMatrixVectorProductWeight();
+    double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
 
-        double ComputeDiskMatrixVectorProductWeight();
-        double ComputeRamMatrixVectorProductWeight();
-        double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
-
-        #ifdef KEMFIELD_USE_REALTIME_CLOCK
-        timespec diff(timespec start, timespec end)
-        {
-            timespec temp;
-            if( (end.tv_nsec-start.tv_nsec) < 0)
-            {
-                temp.tv_sec = end.tv_sec-start.tv_sec-1;
-                temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
-            }
-            else
-            {
-                temp.tv_sec = end.tv_sec-start.tv_sec;
-                temp.tv_nsec = end.tv_nsec-start.tv_nsec;
-            }
-            return temp;
+#ifdef KEMFIELD_USE_REALTIME_CLOCK
+    timespec diff(timespec start, timespec end)
+    {
+        timespec temp;
+        if ((end.tv_nsec - start.tv_nsec) < 0) {
+            temp.tv_sec = end.tv_sec - start.tv_sec - 1;
+            temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
         }
-        #endif
+        else {
+            temp.tv_sec = end.tv_sec - start.tv_sec;
+            temp.tv_nsec = end.tv_nsec - start.tv_nsec;
+        }
+        return temp;
+    }
+#endif
 
-        ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
 
-        //data
-        int fDegree;
-        unsigned int fNTerms;
-        int fDivisions;
-        int fZeroMaskSize;
-        int fMaximumTreeDepth;
-        unsigned int fVerbosity;
-        double fWorldLength;
+    //data
+    int fDegree;
+    unsigned int fNTerms;
+    int fDivisions;
+    int fZeroMaskSize;
+    int fMaximumTreeDepth;
+    unsigned int fVerbosity;
+    double fWorldLength;
 
-        double fDiskWeight;
-        double fRamWeight;
-        double fFFTWeight;
-        static const std::string fWeightFilePrefix;
+    double fDiskWeight;
+    double fRamWeight;
+    double fFFTWeight;
+    static const std::string fWeightFilePrefix;
 
-        //the tree object that the manager is to construct
-        KFMElectrostaticTree* fTree;
+    //the tree object that the manager is to construct
+    KFMElectrostaticTree* fTree;
 
-        //element node associator
-        KFMElectrostaticElementNodeAssociator* fElementNodeAssociator;
-        //the multipole calculator
-        KFMElectrostaticMultipoleBatchCalculatorBase* fBatchCalc;
-        //the element's multipole distributor
-        KFMElectrostaticElementMultipoleDistributor* fMultipoleDistributor;
+    //element node associator
+    KFMElectrostaticElementNodeAssociator* fElementNodeAssociator;
+    //the multipole calculator
+    KFMElectrostaticMultipoleBatchCalculatorBase* fBatchCalc;
+    //the element's multipole distributor
+    KFMElectrostaticElementMultipoleDistributor* fMultipoleDistributor;
 
-        //the local coefficient initializer
-        KFMElectrostaticLocalCoefficientInitializer* fLocalCoeffInitializer;
-        //the multipole coefficient initializer
-        KFMElectrostaticMultipoleInitializer* fMultipoleInitializer;
-
-
-        //local coefficient resetter
-        KFMElectrostaticLocalCoefficientResetter* fLocalCoeffResetter;
-        //multipole resetter
-        KFMElectrostaticMultipoleResetter* fMultipoleResetter;
-
-
-        //the multipole up converter
-        KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
-        //the local coefficient calculator
-        KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
-        //the local coefficient down converter
-        KFMElectrostaticLocalToLocalConverter* fL2LConverter;
-
-        //container to the eletrostatic elements
-        KFMElectrostaticElementContainerBase<3,1>* fContainer;
+    //the local coefficient initializer
+    KFMElectrostaticLocalCoefficientInitializer* fLocalCoeffInitializer;
+    //the multipole coefficient initializer
+    KFMElectrostaticMultipoleInitializer* fMultipoleInitializer;
 
 
+    //local coefficient resetter
+    KFMElectrostaticLocalCoefficientResetter* fLocalCoeffResetter;
+    //multipole resetter
+    KFMElectrostaticMultipoleResetter* fMultipoleResetter;
+
+
+    //the multipole up converter
+    KFMElectrostaticRemoteToRemoteConverter* fM2MConverter;
+    //the local coefficient calculator
+    KFMElectrostaticRemoteToLocalConverter* fM2LConverter;
+    //the local coefficient down converter
+    KFMElectrostaticLocalToLocalConverter* fL2LConverter;
+
+    //container to the eletrostatic elements
+    KFMElectrostaticElementContainerBase<3, 1>* fContainer;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMElectrostaticBoundaryIntegratorEngine_OpenCL_H__ */

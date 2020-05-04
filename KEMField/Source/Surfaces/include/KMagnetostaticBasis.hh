@@ -1,9 +1,9 @@
 #ifndef KMAGNETOSTATICBASIS_DEF
 #define KMAGNETOSTATICBASIS_DEF
 
-#include <string>
-
 #include "../../../Surfaces/include/KBasis.hh"
+
+#include <string>
 
 namespace KEMField
 {
@@ -20,32 +20,33 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KMagnetostaticBasis : public KBasisType<double,2>
-  {
+class KMagnetostaticBasis : public KBasisType<double, 2>
+{
   public:
-    KMagnetostaticBasis() : KBasisType<double,2>() {}
-    virtual ~KMagnetostaticBasis() {}
+    KMagnetostaticBasis() : KBasisType<double, 2>() {}
+    ~KMagnetostaticBasis() override {}
 
-    static std::string Name() { return "MagnetostaticBasis"; }
-  };
+    static std::string Name()
+    {
+        return "MagnetostaticBasis";
+    }
+};
 
-  template <typename Stream>
-  Stream& operator>>(Stream& s,KMagnetostaticBasis& b)
-  {
+template<typename Stream> Stream& operator>>(Stream& s, KMagnetostaticBasis& b)
+{
     s.PreStreamInAction(b);
-    s >> static_cast<KBasisType<double,2>&>(b);
+    s >> static_cast<KBasisType<double, 2>&>(b);
     s.PostStreamInAction(b);
     return s;
-  }
+}
 
-  template <typename Stream>
-  Stream& operator<<(Stream& s,const KMagnetostaticBasis& b)
-  {
+template<typename Stream> Stream& operator<<(Stream& s, const KMagnetostaticBasis& b)
+{
     s.PreStreamOutAction(b);
-    s << static_cast<const KBasisType<double,2>&>(b);
+    s << static_cast<const KBasisType<double, 2>&>(b);
     s.PostStreamOutAction(b);
     return s;
-  }
 }
+}  // namespace KEMField
 
 #endif /* KMAGNETOSTATICBASIS_DEF */

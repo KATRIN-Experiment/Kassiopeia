@@ -3,19 +3,14 @@
 namespace KGeoBag
 {
 
-    KGDiscreteRotationalMesherBase::KGDiscreteRotationalMesherBase() :
-            fCurrentElements( NULL )
-    {
-    }
-    KGDiscreteRotationalMesherBase::~KGDiscreteRotationalMesherBase()
-    {
-    }
+KGDiscreteRotationalMesherBase::KGDiscreteRotationalMesherBase() : fCurrentElements(nullptr) {}
+KGDiscreteRotationalMesherBase::~KGDiscreteRotationalMesherBase() {}
 
-    void KGDiscreteRotationalMesherBase::SetMeshElementOutput( KGDiscreteRotationalMeshElementVector* aMeshElementVector)
+void KGDiscreteRotationalMesherBase::SetMeshElementOutput(KGDiscreteRotationalMeshElementVector* aMeshElementVector)
 
-    {
-        fCurrentElements = aMeshElementVector;
-        return;
-    }
-
+{
+    fCurrentElements = aMeshElementVector;
+    return;
 }
+
+}  // namespace KGeoBag

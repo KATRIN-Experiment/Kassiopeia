@@ -7,10 +7,10 @@
 namespace KGeoBag
 {
 
-    typedef KGExtrudedPathSurface< KGPlanarPolyLoop > KGExtrudedPolyLoopSurface;
+typedef KGExtrudedPathSurface<KGPlanarPolyLoop> KGExtrudedPolyLoopSurface;
 
-    typedef KGExtrudedPathSurface< double > Fail;
+typedef KGExtrudedPathSurface<double> Fail;
 
-}
+}  // namespace KGeoBag
 
 #endif

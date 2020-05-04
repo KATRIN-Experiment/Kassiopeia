@@ -4,7 +4,8 @@
 #include "KSAInputObject.hh"
 #include "KSAOutputObject.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -20,21 +21,20 @@ namespace KEMField{
 *
 */
 
-class KSAInputOutputObject: public KSAInputObject, public KSAOutputObject
+class KSAInputOutputObject : public KSAInputObject, public KSAOutputObject
 {
-    public:
-        KSAInputOutputObject(){};
-        virtual ~KSAInputOutputObject(){};
+  public:
+    KSAInputOutputObject(){};
+    ~KSAInputOutputObject() override{};
 
-//       //inherits these functions
-//       virtual void Initialize(){;};
-//       virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
-//       virtual void DefineInputNode(KSAInputNode* node) = 0;
+    //       //inherits these functions
+    //       virtual void Initialize(){;};
+    //       virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
+    //       virtual void DefineInputNode(KSAInputNode* node) = 0;
 
-    protected:
-
+  protected:
 };
 
-}//end of kemfield
+}  // namespace KEMField
 
 #endif /* KSAInputOutputObject_H__ */

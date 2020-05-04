@@ -1,17 +1,15 @@
 #ifndef KGNavigableMeshElementSorter_HH__
 #define KGNavigableMeshElementSorter_HH__
 
-#include <cmath>
-
-#include "KGMeshNavigationNode.hh"
-
-#include "KGNodeActor.hh"
-#include "KGObjectRetriever.hh"
-#include "KGObjectContainer.hh"
 #include "KGIdentitySet.hh"
-
-#include "KGNavigableMeshElement.hh"
 #include "KGInsertionCondition.hh"
+#include "KGMeshNavigationNode.hh"
+#include "KGNavigableMeshElement.hh"
+#include "KGNodeActor.hh"
+#include "KGObjectContainer.hh"
+#include "KGObjectRetriever.hh"
+
+#include <cmath>
 
 namespace KGeoBag
 {
@@ -29,24 +27,25 @@ namespace KGeoBag
 *
 */
 
-class KGNavigableMeshElementSorter: public KGNodeActor< KGMeshNavigationNode >
+class KGNavigableMeshElementSorter : public KGNodeActor<KGMeshNavigationNode>
 {
-    public:
-        KGNavigableMeshElementSorter():fContainer(NULL){};
-        virtual ~KGNavigableMeshElementSorter(){};
+  public:
+    KGNavigableMeshElementSorter() : fContainer(nullptr){};
+    ~KGNavigableMeshElementSorter() override{};
 
-        void SetMeshElementContainer(KGNavigableMeshElementContainer* container){fContainer = container;};
+    void SetMeshElementContainer(KGNavigableMeshElementContainer* container)
+    {
+        fContainer = container;
+    };
 
-        virtual void ApplyAction( KGMeshNavigationNode* node);
+    void ApplyAction(KGMeshNavigationNode* node) override;
 
-    private:
-
-        KGNavigableMeshElementContainer* fContainer;
-        KGInsertionCondition fCondition;
-
+  private:
+    KGNavigableMeshElementContainer* fContainer;
+    KGInsertionCondition fCondition;
 };
 
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGNavigableMeshElementSorter_H__ */

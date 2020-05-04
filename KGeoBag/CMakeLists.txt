@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # KGeoBag version
 set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 6 )
+set( MODULE_VERSION_MINOR 7 )
 set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
@@ -11,7 +11,6 @@ project( KGeoBag )
 
 include( KasperDefaults )
 
-kasper_require_cpp11()
 
 # internal dependencies
 kasper_find_module( Kommon )

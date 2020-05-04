@@ -17,20 +17,19 @@ namespace KGeoBag
 *
 */
 
-template<typename NodeType>
-class KGInspectingActor
+template<typename NodeType> class KGInspectingActor
 {
-    public:
-        KGInspectingActor(){};
-        virtual ~KGInspectingActor(){};
+  public:
+    KGInspectingActor(){};
+    virtual ~KGInspectingActor(){};
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied(NodeType* node) = 0;
+    //needs to answer this question about whether this node statisfies a condition
+    virtual bool ConditionIsSatisfied(NodeType* node) = 0;
 
-    private:
+  private:
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGInspectingActor_H__ */

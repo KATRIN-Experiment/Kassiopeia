@@ -1,0 +1,22 @@
+############################################################
+#              Magnetic Field Components
+############################################################
+#   8 Fields
+#     (1) Date in decimal years
+#     (2) Declination in decimal degrees
+#     (3) Inclination in decimal degrees
+#     (4) Horintensity in nanoTesla (nT)
+#     (5) Totalintensity in nanoTesla (nT)
+#     (6) Xcomponent in nanoTesla (nT)
+#     (7) Ycomponent in nanoTesla (nT)
+#     (8) Zcomponent in nanoTesla (nT)
+# NOTE: The first row is change per year in degrees or nanoTesla (nT);
+# NOTE: The second row is uncertainty in degrees or nanoTesla (nT):
+#
+#   Magnetic Model: WMM2015 (calculator version 0.5.0.7)
+#   Elevation: 0.00000 km GPS
+#   Latitude: 49.09583 degrees, Longitude: 8.43611 degrees
+############################################################
+change/year,0.16424,0.01172,10.1,45.0,7.4,59.4,44.9
+uncertainty,0.36,0.22,133.0,152.0,138.0,89.0,165.0
+2019.16164,2.59721,64.88468,20599.6,48533.5,20578.5,933.5,43944.9

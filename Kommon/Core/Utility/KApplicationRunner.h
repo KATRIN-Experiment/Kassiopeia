@@ -2,28 +2,29 @@
 #define KAPPLICATIONRUNNER_H_
 
 #include "KApplication.h"
+
 #include <vector>
 
 using std::vector;
 
-namespace katrin{
+namespace katrin
+{
 
-    class KApplicationRunner:
-        public KApplication
-    {
-    public:
-        KApplicationRunner();
-        KApplicationRunner( const KApplicationRunner& aCopy);
-        ~KApplicationRunner();
+class KApplicationRunner : public KApplication
+{
+  public:
+    KApplicationRunner();
+    KApplicationRunner(const KApplicationRunner& aCopy);
+    ~KApplicationRunner() override;
 
-        virtual bool Execute();
-        void AddApplication( KApplication* tApplication);
+    bool Execute() override;
+    void AddApplication(KApplication* tApplication);
 
-    protected:
-        std::vector<KApplication*> fApplications;
-    };
+  protected:
+    std::vector<KApplication*> fApplications;
+};
 
-}
+}  // namespace katrin
 
 
 #endif

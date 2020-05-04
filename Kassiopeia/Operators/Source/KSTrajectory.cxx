@@ -3,13 +3,9 @@
 namespace Kassiopeia
 {
 
-    bool KSTrajectory::fAbortSignal = false;
+bool KSTrajectory::fAbortSignal = false;
 
-    KSTrajectory::KSTrajectory()
-    {
-    }
-    KSTrajectory::~KSTrajectory()
-    {
-    }
+KSTrajectory::KSTrajectory() {}
+KSTrajectory::~KSTrajectory() {}
 
-}
+}  // namespace Kassiopeia

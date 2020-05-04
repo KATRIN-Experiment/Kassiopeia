@@ -1,19 +1,26 @@
 #ifndef KEMSMARTPOINTER_DEF
 #define KEMSMARTPOINTER_DEF
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace KEMField
 {
 
-  class KReferenceCounter
-  {
+class KReferenceCounter
+{
   public:
-    void AddRef() { fCount++; }
-    int Release() { return --fCount; }
+    void AddRef()
+    {
+        fCount++;
+    }
+    int Release()
+    {
+        return --fCount;
+    }
+
   private:
     int fCount;
-  };
+};
 
 /**
 * @struct KSmartPointer
@@ -23,23 +30,22 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <typename T> class KSmartPointer
-  {
+template<typename T> class KSmartPointer
+{
   public:
-	template<typename U>
-	friend class KSmartPointer;  // for copy constructor from derived class
+    template<typename U> friend class KSmartPointer;  // for copy constructor from derived class
 
-    KSmartPointer() : fpData(0), fRef(0) 
+    KSmartPointer() : fpData(nullptr), fRef(nullptr)
     {
-      fRef = new KReferenceCounter();
-      fRef->AddRef();
+        fRef = new KReferenceCounter();
+        fRef->AddRef();
     }
-    KSmartPointer(T* pValue,bool persistent=false) : fpData(pValue), fRef(0)
+    KSmartPointer(T* pValue, bool persistent = false) : fpData(pValue), fRef(nullptr)
     {
-      fRef = new KReferenceCounter();
-      fRef->AddRef();
-      if (persistent)
-	fRef->AddRef();
+        fRef = new KReferenceCounter();
+        fRef->AddRef();
+        if (persistent)
+            fRef->AddRef();
     }
 
     /** The non template copy constructor is necessary to avoid the use
@@ -49,63 +55,66 @@ namespace KEMField
      */
     KSmartPointer(const KSmartPointer<T>& sp) : fpData(sp.fpData), fRef(sp.fRef)
     {
-      fRef->AddRef();
+        fRef->AddRef();
     }
 
-    template< typename U >
-    KSmartPointer(const KSmartPointer<U>& sp) : fpData(sp.fpData), fRef(sp.fRef)
+    template<typename U> KSmartPointer(const KSmartPointer<U>& sp) : fpData(sp.fpData), fRef(sp.fRef)
     {
-    	fRef->AddRef();
+        fRef->AddRef();
     }
 
     ~KSmartPointer()
     {
-      if(fRef->Release() == 0)
-      {
-	delete fpData;
-	delete fRef;
-      }
+        if (fRef->Release() == 0) {
+            delete fpData;
+            delete fRef;
+        }
     }
 
-    T& operator* () const
+    T& operator*() const
     {
-      return *fpData;
+        return *fpData;
     }
 
-    T* operator-> () const
+    T* operator->() const
     {
-      return fpData;
+        return fpData;
     }
 
-    bool Is() const {return fpData!= NULL; }
-
-    bool Null() const { return fpData == NULL; }
-
-    KSmartPointer<T>& operator= (const KSmartPointer<T>& sp)
+    bool Is() const
     {
-      if (this != &sp)
-      {
-	if(fRef->Release() == 0)
-	{
-	  delete fpData;
-	  delete fRef;
-	}
-
-	fpData = sp.fpData;
-	fRef = sp.fRef;
-	fRef->AddRef();
-      }
-      return *this;
+        return fpData != nullptr;
     }
+
+    bool Null() const
+    {
+        return fpData == nullptr;
+    }
+
+    KSmartPointer<T>& operator=(const KSmartPointer<T>& sp)
+    {
+        if (this != &sp) {
+            if (fRef->Release() == 0) {
+                delete fpData;
+                delete fRef;
+            }
+
+            fpData = sp.fpData;
+            fRef = sp.fRef;
+            fRef->AddRef();
+        }
+        return *this;
+    }
+
   private:
     T* fpData;
     KReferenceCounter* fRef;
-  };
+};
 
-  template< typename T>
-  bool operator!(const KSmartPointer<T>& pointer) {
+template<typename T> bool operator!(const KSmartPointer<T>& pointer)
+{
     return pointer.Null();
-  }
 }
+}  // namespace KEMField
 
 #endif /* KEMSMARTPOINTER_DEF */

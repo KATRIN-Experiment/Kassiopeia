@@ -3,7 +3,8 @@
 
 #include "KFMUnaryArrayOperator.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -19,44 +20,44 @@ namespace KEMField{
 */
 
 template<typename ArrayType, unsigned int NDIM>
-class KFMArrayScalarMultiplier: public KFMUnaryArrayOperator< ArrayType, NDIM>
+class KFMArrayScalarMultiplier : public KFMUnaryArrayOperator<ArrayType, NDIM>
 {
-    public:
-        KFMArrayScalarMultiplier(){};
-        virtual ~KFMArrayScalarMultiplier(){};
+  public:
+    KFMArrayScalarMultiplier(){};
+    ~KFMArrayScalarMultiplier() override{};
 
-        void SetScalarMultiplicationFactor(const ArrayType& fac){fScalarFactor = fac;}
+    void SetScalarMultiplicationFactor(const ArrayType& fac)
+    {
+        fScalarFactor = fac;
+    }
 
-        virtual void Initialize(){;};
+    void Initialize() override
+    {
+        ;
+    };
 
-        virtual void ExecuteOperation()
-        {
+    void ExecuteOperation() override
+    {
 
-            if(this->fInput != NULL && this->fOutput != NULL)
-            {
-                if(KFMArrayOperator<ArrayType,NDIM>::HaveSameNumberOfElements(this->fInput, this->fOutput))
-                {
-                    ArrayType* inptr = this->fInput->GetData();
-                    ArrayType* outptr = this->fOutput->GetData();
+        if (this->fInput != nullptr && this->fOutput != nullptr) {
+            if (KFMArrayOperator<ArrayType, NDIM>::HaveSameNumberOfElements(this->fInput, this->fOutput)) {
+                ArrayType* inptr = this->fInput->GetData();
+                ArrayType* outptr = this->fOutput->GetData();
 
-                    unsigned int n_elem = this->fInput->GetArraySize();
-                    for(unsigned int i=0; i < n_elem; i++)
-                    {
-                        outptr[i] = (inptr[i])*(fScalarFactor);
-                    }
+                unsigned int n_elem = this->fInput->GetArraySize();
+                for (unsigned int i = 0; i < n_elem; i++) {
+                    outptr[i] = (inptr[i]) * (fScalarFactor);
                 }
             }
-
         }
+    }
 
 
-    protected:
-
-       ArrayType fScalarFactor;
-
+  protected:
+    ArrayType fScalarFactor;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFM3DArrayScalarMultiplier_H__ */

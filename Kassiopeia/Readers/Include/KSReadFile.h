@@ -6,13 +6,13 @@
 namespace Kassiopeia
 {
 
-    class KSReadFile
-    {
-        public:
-            KSReadFile();
-            virtual ~KSReadFile();
-    };
+class KSReadFile
+{
+  public:
+    KSReadFile();
+    virtual ~KSReadFile();
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

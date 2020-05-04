@@ -1,30 +1,28 @@
 #ifndef Kassiopeia_KSGenValueList_h_
 #define Kassiopeia_KSGenValueList_h_
 
-#include "KSGenValue.h"
-
 #include "KField.h"
+#include "KSGenValue.h"
 
 namespace Kassiopeia
 {
 
-    class KSGenValueList :
-        public KSComponentTemplate< KSGenValueList, KSGenValue >
-    {
-        public:
-    		KSGenValueList();
-    		KSGenValueList( const KSGenValueList& aCopy );
-    		KSGenValueList* Clone() const;
-            virtual ~KSGenValueList();
+class KSGenValueList : public KSComponentTemplate<KSGenValueList, KSGenValue>
+{
+  public:
+    KSGenValueList();
+    KSGenValueList(const KSGenValueList& aCopy);
+    KSGenValueList* Clone() const override;
+    ~KSGenValueList() override;
 
-        public:
-            void DiceValue( std::vector< double >& aDicedValues );
-            void AddValue( double aValue );
+  public:
+    void DiceValue(std::vector<double>& aDicedValues) override;
+    void AddValue(double aValue);
 
-        public:
-            std::vector<double> fValues;
-    };
+  public:
+    std::vector<double> fValues;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

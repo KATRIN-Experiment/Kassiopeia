@@ -2,13 +2,12 @@
 #define KFMLinearSystemSolver_HH__
 
 #include "KFMArrayMath.hh"
-
-#include <vector>
-#include <cmath>
-
-#include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
+#include "KFMVectorOperations.hh"
+
+#include <cmath>
+#include <vector>
 
 namespace KEMField
 {
@@ -31,48 +30,48 @@ namespace KEMField
 
 class KFMLinearSystemSolver
 {
-    public:
+  public:
+    KFMLinearSystemSolver(unsigned int dim);
 
-        KFMLinearSystemSolver(unsigned int dim);
+    virtual ~KFMLinearSystemSolver();
 
-        virtual ~KFMLinearSystemSolver();
+    unsigned int GetDimension() const
+    {
+        return fDim;
+    };
 
-        unsigned int GetDimension() const {return fDim;};
 
+    void SetMatrix(const double* mx);
 
-        void SetMatrix(const double* mx);
+    void SetMatrixElement(unsigned int row, unsigned int col, const double& val);
 
-        void SetMatrixElement(unsigned int row, unsigned int col, const double& val);
+    void SetBVector(const double* vec);
 
-        void SetBVector(const double* vec);
+    void SetBVectorElement(unsigned int index, const double& val);
 
-        void SetBVectorElement(unsigned int index, const double& val);
+    void Reset();  //reset fA, fX, and fB to zero
 
-        void Reset(); //reset fA, fX, and fB to zero
+    void Solve();
 
-        void Solve();
+    void GetXVector(double* vec) const;
 
-        void GetXVector(double* vec) const;
+    double GetXVectorElement(unsigned int i) const;
 
-        double GetXVectorElement(unsigned int i) const;
+  private:
+    unsigned int fDim;
+    unsigned int fDimSize[2];
 
-    private:
+    kfm_matrix* fA;
+    kfm_matrix* fU;
+    kfm_vector* fX;
+    kfm_vector* fB;
 
-        unsigned int fDim;
-        unsigned int fDimSize[2];
-
-        kfm_matrix* fA;
-        kfm_matrix* fU;
-        kfm_vector* fX;
-        kfm_vector* fB;
-
-        //for SVD
-        kfm_matrix* fV;
-        kfm_vector* fS;
-        kfm_vector* fWork;
-
+    //for SVD
+    kfm_matrix* fV;
+    kfm_vector* fS;
+    kfm_vector* fWork;
 };
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMLinearSystemSolver_H__ */

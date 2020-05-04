@@ -1,20 +1,17 @@
 #ifndef KPETSCSOLVER_DEF
 #define KPETSCSOLVER_DEF
 
-#include <petscksp.h>
-
-#include <cassert>
-
+#include "KIterativeSolver.hh"
 #include "KSquareMatrix.hh"
 #include "KVector.hh"
 
-#include "KIterativeSolver.hh"
+#include <cassert>
+#include <petscksp.h>
 
 namespace KEMField
 {
-  template <typename ValueType>
-  class KPETScSolver : public KIterativeSolver<ValueType>
-  {
+template<typename ValueType> class KPETScSolver : public KIterativeSolver<ValueType>
+{
   public:
     typedef KSquareMatrix<ValueType> Matrix;
     typedef KVector<ValueType> Vector;
@@ -22,119 +19,118 @@ namespace KEMField
     KPETScSolver();
     virtual ~KPETScSolver() {}
 
-    unsigned int Dimension() const { return fDimension; }
+    unsigned int Dimension() const
+    {
+        return fDimension;
+    }
 
-    void Solve(const Matrix& A,Vector& x,const Vector& b) const;
+    void Solve(const Matrix& A, Vector& x, const Vector& b) const;
 
-    void CacheMatrixElements(bool choice) { fCacheMatrixElements = choice; }
+    void CacheMatrixElements(bool choice)
+    {
+        fCacheMatrixElements = choice;
+    }
 
   protected:
     mutable unsigned int fDimension;
 
     bool fCacheMatrixElements;
-  };
+};
 
-  PetscErrorCode KPETScMatrixMultiply(Mat A_, Vec x_, Vec y_)
-  {
+PetscErrorCode KPETScMatrixMultiply(Mat A_, Vec x_, Vec y_)
+{
     PetscErrorCode ierr;
-    PetscInt       rstart,rend,n;
-    unsigned int   i_local;
+    PetscInt rstart, rend, n;
+    unsigned int i_local;
 
     const KSquareMatrix<PetscScalar>* A;
-    MatShellGetContext(A_,&A);
+    MatShellGetContext(A_, &A);
     n = A->Dimension();
 
     VecScatter ctx;
     Vec x_gathered;
-    VecScatterCreateToAll(x_,&ctx,&x_gathered);
-    VecScatterBegin(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
-    VecScatterEnd(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
+    VecScatterCreateToAll(x_, &ctx, &x_gathered);
+    VecScatterBegin(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
+    VecScatterEnd(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
 
-    ierr = MatGetOwnershipRange(A_,&rstart,&rend);
+    ierr = MatGetOwnershipRange(A_, &rstart, &rend);
 
     const PetscScalar* x;
     PetscScalar* y;
-    VecGetArrayRead(x_gathered,&x);
-    VecGetArray(y_,&y);
+    VecGetArrayRead(x_gathered, &x);
+    VecGetArray(y_, &y);
 
     // Computes vector b in the equation A*x = b
-    for (int i=rstart;i<rend;i++)
-    {
-      i_local = i-rstart;
-      y[i_local] = 0.;
-      for (int j=0;j<n;j++)
-    	y[i_local] += A->operator()(i,j)*x[j];
+    for (int i = rstart; i < rend; i++) {
+        i_local = i - rstart;
+        y[i_local] = 0.;
+        for (int j = 0; j < n; j++)
+            y[i_local] += A->operator()(i, j) * x[j];
     }
 
-    ierr = VecRestoreArray(y_,&y);
+    ierr = VecRestoreArray(y_, &y);
 
     return ierr;
-  }
+}
 
-  PetscErrorCode KPETScMatrixMultiplyTranspose(Mat A_, Vec x_, Vec y_)
-  {
+PetscErrorCode KPETScMatrixMultiplyTranspose(Mat A_, Vec x_, Vec y_)
+{
     PetscErrorCode ierr;
-    PetscInt       rstart,rend,n;
-    unsigned int         i_local;
+    PetscInt rstart, rend, n;
+    unsigned int i_local;
 
     const KSquareMatrix<PetscScalar>* A;
-    MatShellGetContext(A_,&A);
+    MatShellGetContext(A_, &A);
     n = A->Dimension();
 
     VecScatter ctx;
     Vec x_gathered;
-    VecScatterCreateToAll(x_,&ctx,&x_gathered);
-    VecScatterBegin(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
-    VecScatterEnd(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
+    VecScatterCreateToAll(x_, &ctx, &x_gathered);
+    VecScatterBegin(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
+    VecScatterEnd(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
 
-    ierr = MatGetOwnershipRange(A_,&rstart,&rend);
+    ierr = MatGetOwnershipRange(A_, &rstart, &rend);
 
     const PetscScalar* x;
     PetscScalar* y;
-    VecGetArrayRead(x_gathered,&x);
-    VecGetArray(y_,&y);
+    VecGetArrayRead(x_gathered, &x);
+    VecGetArray(y_, &y);
 
     // Computes vector b in the equation A*x = b
-    for (int i=rstart;i<rend;i++)
-    {
-      i_local = i-rstart;
-      y[i_local] = 0.;
-      for (int j=0;j<n;j++)
-    	y[i_local] += A->operator()(j,i)*x[j];
+    for (int i = rstart; i < rend; i++) {
+        i_local = i - rstart;
+        y[i_local] = 0.;
+        for (int j = 0; j < n; j++)
+            y[i_local] += A->operator()(j, i) * x[j];
     }
 
-    ierr = VecRestoreArray(y_,&y);
+    ierr = VecRestoreArray(y_, &y);
 
     return ierr;
-  }
+}
 
-  PetscErrorCode PETScPreconditioner(PC,Vec x,Vec y)
-  {
-    VecCopy(x,y);
+PetscErrorCode PETScPreconditioner(PC, Vec x, Vec y)
+{
+    VecCopy(x, y);
     return 0;
-  }
+}
 
-  template <typename ValueType>
-  KPETScSolver<ValueType>::KPETScSolver()
-    : fDimension(0), fCacheMatrixElements(false)
-  {
-    assert (sizeof(PetscScalar) == sizeof(ValueType));
-  }
+template<typename ValueType> KPETScSolver<ValueType>::KPETScSolver() : fDimension(0), fCacheMatrixElements(false)
+{
+    assert(sizeof(PetscScalar) == sizeof(ValueType));
+}
 
-  template <typename ValueType>
-  void KPETScSolver<ValueType>::Solve(const Matrix& A,
-				      Vector& x,
-				      const Vector& b) const
-  {
+template<typename ValueType> void KPETScSolver<ValueType>::Solve(const Matrix& A, Vector& x, const Vector& b) const
+{
     fDimension = b.Dimension();
 
-    Vec            x_, b_;           /* approx solution, RHS */
-    Mat            A_;               /* linear system matrix */
-    KSP            ksp;              /* linear solver context */
-    PC             pc;               /* preconditioner context */
+    Vec x_, b_; /* approx solution, RHS */
+    Mat A_;     /* linear system matrix */
+    KSP ksp;    /* linear solver context */
+    PC pc;      /* preconditioner context */
     PetscErrorCode ierr;
-    PetscInt       n = A.Dimension(),rstart,rend,nlocal;
-    PetscScalar    element;
+    PetscInt n = A.Dimension(), rstart, rend, nlocal;
+    PetscScalar element;
 
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,21 +144,20 @@ namespace KEMField
       many elements of the vector are stored on each processor. The second
       argument to VecSetSizes() below causes PETSc to decide.
     */
-    ierr = VecCreate(PETSC_COMM_WORLD,&x_);
-    ierr = VecSetSizes(x_,PETSC_DECIDE,n);
+    ierr = VecCreate(PETSC_COMM_WORLD, &x_);
+    ierr = VecSetSizes(x_, PETSC_DECIDE, n);
     ierr = VecSetFromOptions(x_);
-    ierr = VecDuplicate(x_,&b_);
+    ierr = VecDuplicate(x_, &b_);
 
     /* Identify the starting and ending mesh points on each
        processor for the interior part of the mesh. We let PETSc decide
        above. */
 
-    ierr = VecGetOwnershipRange(x_,&rstart,&rend);
-    ierr = VecGetLocalSize(x_,&nlocal);
+    ierr = VecGetOwnershipRange(x_, &rstart, &rend);
+    ierr = VecGetLocalSize(x_, &nlocal);
 
-    if (!fCacheMatrixElements)
-    {
-      /*
+    if (!fCacheMatrixElements) {
+        /*
 	Create matrix.  When using MatCreate(), the matrix format can
 	be specified at runtime.
 
@@ -173,12 +168,12 @@ namespace KEMField
 	We pass in nlocal as the "local" size of the matrix to force it
 	to have the same parallel layout as the vector created above.
       */
-      ierr = MatCreate(PETSC_COMM_WORLD,&A_);
-      ierr = MatSetSizes(A_,nlocal,nlocal,n,n);
-      ierr = MatSetFromOptions(A_);
-      ierr = MatSetUp(A_);
+        ierr = MatCreate(PETSC_COMM_WORLD, &A_);
+        ierr = MatSetSizes(A_, nlocal, nlocal, n, n);
+        ierr = MatSetFromOptions(A_);
+        ierr = MatSetUp(A_);
 
-      /*
+        /*
 	Assemble matrix.
 
 	The linear system is distributed across the processors by
@@ -188,30 +183,27 @@ namespace KEMField
 	the part that it owns locally.
       */
 
-      for (int i=rstart;i<rend;i++)
-      {
-	for (int j=0;j<n;j++)
-	{
-	  element = A(i,j);
-	  ierr   = MatSetValues(A_,1,&i,1,&j,&element,INSERT_VALUES);
-	}
-      }
+        for (int i = rstart; i < rend; i++) {
+            for (int j = 0; j < n; j++) {
+                element = A(i, j);
+                ierr = MatSetValues(A_, 1, &i, 1, &j, &element, INSERT_VALUES);
+            }
+        }
 
-      /* Assemble the matrix */
-      ierr = MatAssemblyBegin(A_,MAT_FINAL_ASSEMBLY);
-      ierr = MatAssemblyEnd(A_,MAT_FINAL_ASSEMBLY);
+        /* Assemble the matrix */
+        ierr = MatAssemblyBegin(A_, MAT_FINAL_ASSEMBLY);
+        ierr = MatAssemblyEnd(A_, MAT_FINAL_ASSEMBLY);
     }
 
     /*
       Set initial solution and right-hand-side vector.
     */
 
-    for (int j=0;j<n;j++)
-    {
-      element = b(j);
-      ierr = VecSetValues(b_,1,&j,&element,INSERT_VALUES);
-      element = x(j);
-      ierr = VecSetValues(x_,1,&j,&element,INSERT_VALUES);
+    for (int j = 0; j < n; j++) {
+        element = b(j);
+        ierr = VecSetValues(b_, 1, &j, &element, INSERT_VALUES);
+        element = x(j);
+        ierr = VecSetValues(x_, 1, &j, &element, INSERT_VALUES);
     }
 
     VecAssemblyBegin(b_);
@@ -220,17 +212,16 @@ namespace KEMField
     VecAssemblyBegin(x_);
     VecAssemblyEnd(x_);
 
-    if (fCacheMatrixElements)
-    {
-      PetscInt local_m,local_n;
-      VecGetLocalSize(b_,&local_m);
-      VecGetLocalSize(x_,&local_n);
+    if (fCacheMatrixElements) {
+        PetscInt local_m, local_n;
+        VecGetLocalSize(b_, &local_m);
+        VecGetLocalSize(x_, &local_n);
 
-      void* matrixData = const_cast<Matrix*>(&A);
+        void* matrixData = const_cast<Matrix*>(&A);
 
-      MatCreateShell(PETSC_COMM_WORLD,local_m,local_n,n,n,matrixData,&A_);
-      MatShellSetOperation(A_,MATOP_MULT,(void(*)(void))KPETScMatrixMultiply);
-      MatShellSetOperation(A_,MATOP_MULT_TRANSPOSE,(void(*)(void))KPETScMatrixMultiplyTranspose);
+        MatCreateShell(PETSC_COMM_WORLD, local_m, local_n, n, n, matrixData, &A_);
+        MatShellSetOperation(A_, MATOP_MULT, (void (*)(void)) KPETScMatrixMultiply);
+        MatShellSetOperation(A_, MATOP_MULT_TRANSPOSE, (void (*)(void)) KPETScMatrixMultiplyTranspose);
     }
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,15 +230,15 @@ namespace KEMField
     /*
       Create linear solver context
     */
-    ierr = KSPCreate(PETSC_COMM_WORLD,&ksp);
+    ierr = KSPCreate(PETSC_COMM_WORLD, &ksp);
     //ierr = KSPSetType(ksp,KSPBICG);
-    ierr = KSPSetType(ksp,KSPGMRES);
+    ierr = KSPSetType(ksp, KSPGMRES);
 
     /*
       Set operators. Here the matrix that defines the linear system
       also serves as the preconditioning matrix.
     */
-    ierr = KSPSetOperators(ksp,A_,A_,DIFFERENT_NONZERO_PATTERN);
+    ierr = KSPSetOperators(ksp, A_, A_, DIFFERENT_NONZERO_PATTERN);
 
     /*
       Set linear solver defaults for this problem (optional).
@@ -258,8 +249,8 @@ namespace KEMField
       parameters could alternatively be specified at runtime via
       KSPSetFromOptions();
     */
-    ierr = KSPGetPC(ksp,&pc);
-    ierr = PCSetType(pc,PCNONE);
+    ierr = KSPGetPC(ksp, &pc);
+    ierr = PCSetType(pc, PCNONE);
 
 
     //enforces the absolute tolerance on the residual norm, so that the convergence condition
@@ -283,13 +274,13 @@ namespace KEMField
     /*
       Solve linear system
     */
-    ierr = KSPSolve(ksp,b_,x_);
+    ierr = KSPSolve(ksp, b_, x_);
 
     // /*
     //   View solver info; we could instead use the option -ksp_view to
     //   print this info to the screen at the conclusion of KSPSolve().
     // */
-    ierr = KSPView(ksp,PETSC_VIEWER_STDOUT_WORLD);
+    ierr = KSPView(ksp, PETSC_VIEWER_STDOUT_WORLD);
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
        Apply solution and clean up
@@ -297,17 +288,16 @@ namespace KEMField
 
     VecScatter ctx;
     Vec x_gathered;
-    VecScatterCreateToZero(x_,&ctx,&x_gathered);
-    VecScatterBegin(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
-    VecScatterEnd(ctx,x_,x_gathered,INSERT_VALUES,SCATTER_FORWARD);
+    VecScatterCreateToZero(x_, &ctx, &x_gathered);
+    VecScatterBegin(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
+    VecScatterEnd(ctx, x_, x_gathered, INSERT_VALUES, SCATTER_FORWARD);
 
-    if (KMPIInterface::GetInstance()->GetProcess()==0)
-    {
-      const PetscScalar* x_solved;
-      VecGetArrayRead(x_gathered,&x_solved);
+    if (KMPIInterface::GetInstance()->GetProcess() == 0) {
+        const PetscScalar* x_solved;
+        VecGetArrayRead(x_gathered, &x_solved);
 
-      for (int j=0;j<n;j++)
-	x[j] = x_solved[j];
+        for (int j = 0; j < n; j++)
+            x[j] = x_solved[j];
     }
 
     ierr = VecScatterDestroy(&ctx);
@@ -324,8 +314,7 @@ namespace KEMField
 
     //shut up the compiler
     (void) ierr;
-
-  }
 }
+}  // namespace KEMField
 
 #endif /* KPETSCSOLVER_DEF */

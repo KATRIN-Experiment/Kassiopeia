@@ -1,12 +1,13 @@
 #ifndef __KG2DShape_H__
 #define __KG2DShape_H__
 
-#include "KTwoVector.hh"
 #include "KTwoMatrix.hh"
+#include "KTwoVector.hh"
 
 #include <iostream>
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /**
 *
@@ -24,63 +25,68 @@ namespace KGeoBag{
 
 class KG2DShape
 {
-    public:
-        KG2DShape(){;};
-        virtual ~KG2DShape(){;};
+  public:
+    KG2DShape()
+    {
+        ;
+    };
+    virtual ~KG2DShape()
+    {
+        ;
+    };
 
-        virtual void Initialize(){;};
+    virtual void Initialize()
+    {
+        ;
+    };
 
-        //**************
-        //visitor system
-        //**************
+    //**************
+    //visitor system
+    //**************
 
-    public:
+  public:
+    //****************
+    //geometric system
+    //****************
 
-        //****************
-        //geometric system
-        //****************
-
-    public:
-        virtual void NearestDistance( const KTwoVector& aPoint, double& aDistance ) const = 0;
-        virtual KTwoVector Point( const KTwoVector& aPoint ) const = 0;
-        virtual KTwoVector Normal( const KTwoVector& aPoint ) const = 0;
-        virtual void NearestIntersection( const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult, KTwoVector& anIntersection ) const = 0;
+  public:
+    virtual void NearestDistance(const KTwoVector& aPoint, double& aDistance) const = 0;
+    virtual KTwoVector Point(const KTwoVector& aPoint) const = 0;
+    virtual KTwoVector Normal(const KTwoVector& aPoint) const = 0;
+    virtual void NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
+                                     KTwoVector& anIntersection) const = 0;
 
 
-        //these utilities probably do not belong here
-        //here they are anyways
-        static double Limit_to_0_to_2pi(double angle)
-        {
-            double val = angle;
-            if(val < 0)
-            {
-                int n = std::fabs( val/2.0*(KConst::Pi()) );
-                val += n*(2.0*KConst::Pi());
-                return val;
-            }
-
-            if( val > 2.0*KConst::Pi() )
-            {
-                int n = std::fabs( val/2.0*(KConst::Pi()) );
-                val -= n*(2.0*KConst::Pi());
-                return val;
-            }
-
+    //these utilities probably do not belong here
+    //here they are anyways
+    static double Limit_to_0_to_2pi(double angle)
+    {
+        double val = angle;
+        if (val < 0) {
+            int n = std::fabs(val / 2.0 * (katrin::KConst::Pi()));
+            val += n * (2.0 * katrin::KConst::Pi());
             return val;
         }
 
-        static KTwoVector Rotate_vector_by_angle(KTwoVector vec, double angle)
-        {
-            //expects angles in radian
-            double c = std::cos(angle);
-            double s = std::sin(angle);
-            KTwoMatrix mx(c, -1*s, s, c);
-            return mx*vec;
+        if (val > 2.0 * katrin::KConst::Pi()) {
+            int n = std::fabs(val / 2.0 * (katrin::KConst::Pi()));
+            val -= n * (2.0 * katrin::KConst::Pi());
+            return val;
         }
 
+        return val;
+    }
 
+    static KTwoVector Rotate_vector_by_angle(KTwoVector vec, double angle)
+    {
+        //expects angles in radian
+        double c = std::cos(angle);
+        double s = std::sin(angle);
+        KTwoMatrix mx(c, -1 * s, s, c);
+        return mx * vec;
+    }
 };
 
-}//end namespace
+}  // namespace KGeoBag
 
 #endif /* __KG2DShape_H__ */

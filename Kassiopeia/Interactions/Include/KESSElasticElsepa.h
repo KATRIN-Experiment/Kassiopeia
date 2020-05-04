@@ -2,40 +2,39 @@
 #define Kassiopeia_KESSElasticElsepa_h_
 
 #include "KESSScatteringCalculator.h"
+
 #include <map>
 
 namespace Kassiopeia
 {
-    class KESSElasticElsepa :
-        public KSComponentTemplate< KESSElasticElsepa, KSIntCalculator >,
-        public KESSScatteringCalculator
-    {
-        public:
-            KESSElasticElsepa();
-            KESSElasticElsepa( const KESSElasticElsepa& aCopy );
-            virtual KESSElasticElsepa* Clone() const;
-            virtual ~KESSElasticElsepa();
+class KESSElasticElsepa :
+    public KSComponentTemplate<KESSElasticElsepa, KSIntCalculator>,
+    public KESSScatteringCalculator
+{
+  public:
+    KESSElasticElsepa();
+    KESSElasticElsepa(const KESSElasticElsepa& aCopy);
+    KESSElasticElsepa* Clone() const override;
+    ~KESSElasticElsepa() override;
 
-            //***********
-            //calculator
-            //***********
+    //***********
+    //calculator
+    //***********
 
-            virtual void ExecuteInteraction( const KSParticle& anInitialParticle,
-                                             KSParticle& aFinalParticle,
-                                             KSParticleQueue& aQueue);
+    void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aQueue) override;
 
-            virtual void CalculateCrossSection( const KSParticle& aParticle,
-                                                double& aCrossSection );
+    void CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection) override;
 
 
-        private:
-            std::map< double, double > fElScMFPMap;
+  private:
+    std::map<double, double> fElScMFPMap;
 
-            //!<map contains a dictionary and a std::vector of two std::vectors containing the values
-            std::map< double, std::vector< std::vector< double > > > fElScMap;
+    //!<map contains a dictionary and a std::vector of two std::vectors containing the values
+    std::map<double, std::vector<std::vector<double>>> fElScMap;
 
-            double GetScatteringPolarAngle( const double& aKineticEnergy );
-    };
+    double GetScatteringPolarAngle(const double& aKineticEnergy);
+};
 
-}
-#endif //Kassiopeia_KESSElasticElsepa_h_
+}  // namespace Kassiopeia
+#endif  //Kassiopeia_KESSElasticElsepa_h_

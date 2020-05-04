@@ -5,7 +5,7 @@
 namespace KEMField
 {
 
-KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator():
+KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator() :
     fRecursiveActor(),
     fSingleNodeActor()
 {
@@ -33,13 +33,11 @@ KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator
     fRecursiveActor.SetOperationalActor(&fSingleNodeActor);
 };
 
-KFMElectrostaticNodeWorkScoreCalculator::~KFMElectrostaticNodeWorkScoreCalculator()
-{
+KFMElectrostaticNodeWorkScoreCalculator::~KFMElectrostaticNodeWorkScoreCalculator(){
 
 };
 
-void
-KFMElectrostaticNodeWorkScoreCalculator::ApplyAction( KFMNode< KFMElectrostaticNodeObjects >* node)
+void KFMElectrostaticNodeWorkScoreCalculator::ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node)
 {
     fNMultipoleNodes = 0;
     fNonLeafMultipoleNodes = 0;
@@ -51,8 +49,7 @@ KFMElectrostaticNodeWorkScoreCalculator::ApplyAction( KFMNode< KFMElectrostaticN
 
     fSingleNodeActor.Reset();
 
-    if(node != NULL )
-    {
+    if (node != nullptr) {
         //we need to recursively vist this node and its children
         //to calculate the number of operations required to evaluate
         //the field at all of the collocation points contained in the
@@ -68,11 +65,9 @@ KFMElectrostaticNodeWorkScoreCalculator::ApplyAction( KFMNode< KFMElectrostaticN
 
         CalculateFinalScore();
     }
-
 }
 
-void
-KFMElectrostaticNodeWorkScoreCalculator::CalculateFinalScore()
+void KFMElectrostaticNodeWorkScoreCalculator::CalculateFinalScore()
 {
     fNodeScore = 0.0;
 
@@ -81,19 +76,18 @@ KFMElectrostaticNodeWorkScoreCalculator::CalculateFinalScore()
     //(we ignore M2M and L2L and L2P for now as they are not dominant)
 
     //add cost due to the multipole calculation
-    fNodeScore += fAlpha*fNTerms*fNSources;
+    fNodeScore += fAlpha * fNTerms * fNSources;
     //add cost due to M2M translation
-    fNodeScore += fBeta*fNTerms*fNTerms*fNMultipoleNodes;
+    fNodeScore += fBeta * fNTerms * fNTerms * fNMultipoleNodes;
     //add cost due to M2L transform
-    fNodeScore += fGamma*fNTerms*fNTerms*fNonLeafMultipoleNodes;
+    fNodeScore += fGamma * fNTerms * fNTerms * fNonLeafMultipoleNodes;
     //add cost due to L2L transform
-    fNodeScore += fDelta*fNTerms*fNTerms*fNPrimaryNodes;
+    fNodeScore += fDelta * fNTerms * fNTerms * fNPrimaryNodes;
     //add cost due to local coeff field evaluation
-    fNodeScore += fEpsilon*fNTerms*fNCollocationPoints;
+    fNodeScore += fEpsilon * fNTerms * fNCollocationPoints;
     //add cost due to sparse matrix evaluation
-    fNodeScore += fTheta*fNSparseMatrixElements;
+    fNodeScore += fTheta * fNSparseMatrixElements;
 }
 
 
-
-}//end of namespace
+}  // namespace KEMField

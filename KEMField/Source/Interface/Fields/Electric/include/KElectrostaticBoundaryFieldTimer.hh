@@ -11,18 +11,20 @@
 #include "KElectrostaticBoundaryField.hh"
 #include "KTimer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KElectrostaticBoundaryFieldTimer : public KElectrostaticBoundaryField::Visitor {
-public:
+class KElectrostaticBoundaryFieldTimer : public KElectrostaticBoundaryField::Visitor
+{
+  public:
     KElectrostaticBoundaryFieldTimer();
-    virtual ~KElectrostaticBoundaryFieldTimer();
+    ~KElectrostaticBoundaryFieldTimer() override;
 
-    virtual void PreVisit( KElectrostaticBoundaryField& );
-    virtual void InBetweenVisit( KElectrostaticBoundaryField& );
-    virtual void PostVisit( KElectrostaticBoundaryField& );
+    void PreVisit(KElectrostaticBoundaryField&) override;
+    void InBetweenVisit(KElectrostaticBoundaryField&) override;
+    void PostVisit(KElectrostaticBoundaryField&) override;
 
-private:
+  private:
     KTimer fChargeDensityTimer;
     KTimer fFieldSolverTimer;
 };

@@ -2,52 +2,50 @@
 #define KGeoBag_KGAxialMesher_hh_
 
 #include "KGCore.hh"
-
-#include "KGRotatedLineSegmentSurfaceAxialMesher.hh"
-#include "KGRotatedArcSegmentSurfaceAxialMesher.hh"
-#include "KGRotatedPolyLineSurfaceAxialMesher.hh"
-#include "KGRotatedCircleSurfaceAxialMesher.hh"
-#include "KGRotatedPolyLoopSurfaceAxialMesher.hh"
-#include "KGRotatedLineSegmentSpaceAxialMesher.hh"
 #include "KGRotatedArcSegmentSpaceAxialMesher.hh"
-#include "KGRotatedPolyLineSpaceAxialMesher.hh"
+#include "KGRotatedArcSegmentSurfaceAxialMesher.hh"
 #include "KGRotatedCircleSpaceAxialMesher.hh"
+#include "KGRotatedCircleSurfaceAxialMesher.hh"
+#include "KGRotatedLineSegmentSpaceAxialMesher.hh"
+#include "KGRotatedLineSegmentSurfaceAxialMesher.hh"
+#include "KGRotatedPolyLineSpaceAxialMesher.hh"
+#include "KGRotatedPolyLineSurfaceAxialMesher.hh"
 #include "KGRotatedPolyLoopSpaceAxialMesher.hh"
+#include "KGRotatedPolyLoopSurfaceAxialMesher.hh"
 
 namespace KGeoBag
 {
-    class KGAxialMesher :
-        virtual public KGRotatedLineSegmentSurfaceAxialMesher,
-        virtual public KGRotatedArcSegmentSurfaceAxialMesher,
-        virtual public KGRotatedPolyLineSurfaceAxialMesher,
-        virtual public KGRotatedCircleSurfaceAxialMesher,
-        virtual public KGRotatedPolyLoopSurfaceAxialMesher,
-        virtual public KGRotatedLineSegmentSpaceAxialMesher,
-        virtual public KGRotatedArcSegmentSpaceAxialMesher,
-        virtual public KGRotatedPolyLineSpaceAxialMesher,
-        virtual public KGRotatedCircleSpaceAxialMesher,
-        virtual public KGRotatedPolyLoopSpaceAxialMesher
-    {
-        public:
-            using KGAxialMesherBase::VisitExtendedSurface;
-            using KGAxialMesherBase::VisitExtendedSpace;
+class KGAxialMesher :
+    virtual public KGRotatedLineSegmentSurfaceAxialMesher,
+    virtual public KGRotatedArcSegmentSurfaceAxialMesher,
+    virtual public KGRotatedPolyLineSurfaceAxialMesher,
+    virtual public KGRotatedCircleSurfaceAxialMesher,
+    virtual public KGRotatedPolyLoopSurfaceAxialMesher,
+    virtual public KGRotatedLineSegmentSpaceAxialMesher,
+    virtual public KGRotatedArcSegmentSpaceAxialMesher,
+    virtual public KGRotatedPolyLineSpaceAxialMesher,
+    virtual public KGRotatedCircleSpaceAxialMesher,
+    virtual public KGRotatedPolyLoopSpaceAxialMesher
+{
+  public:
+    using KGAxialMesherBase::VisitExtendedSpace;
+    using KGAxialMesherBase::VisitExtendedSurface;
 
-            using KGRotatedLineSegmentSurfaceAxialMesher::VisitRotatedPathSurface;
-            using KGRotatedArcSegmentSurfaceAxialMesher::VisitRotatedPathSurface;
-            using KGRotatedPolyLineSurfaceAxialMesher::VisitRotatedPathSurface;
-            using KGRotatedCircleSurfaceAxialMesher::VisitRotatedPathSurface;
-            using KGRotatedPolyLoopSurfaceAxialMesher::VisitRotatedPathSurface;
-            using KGRotatedLineSegmentSpaceAxialMesher::VisitRotatedOpenPathSpace;
-            using KGRotatedArcSegmentSpaceAxialMesher::VisitRotatedOpenPathSpace;
-            using KGRotatedPolyLineSpaceAxialMesher::VisitRotatedOpenPathSpace;
-            using KGRotatedCircleSpaceAxialMesher::VisitRotatedClosedPathSpace;
-            using KGRotatedPolyLoopSpaceAxialMesher::VisitRotatedClosedPathSpace;
+    using KGRotatedArcSegmentSpaceAxialMesher::VisitRotatedOpenPathSpace;
+    using KGRotatedArcSegmentSurfaceAxialMesher::VisitRotatedPathSurface;
+    using KGRotatedCircleSpaceAxialMesher::VisitRotatedClosedPathSpace;
+    using KGRotatedCircleSurfaceAxialMesher::VisitRotatedPathSurface;
+    using KGRotatedLineSegmentSpaceAxialMesher::VisitRotatedOpenPathSpace;
+    using KGRotatedLineSegmentSurfaceAxialMesher::VisitRotatedPathSurface;
+    using KGRotatedPolyLineSpaceAxialMesher::VisitRotatedOpenPathSpace;
+    using KGRotatedPolyLineSurfaceAxialMesher::VisitRotatedPathSurface;
+    using KGRotatedPolyLoopSpaceAxialMesher::VisitRotatedClosedPathSpace;
+    using KGRotatedPolyLoopSurfaceAxialMesher::VisitRotatedPathSurface;
 
-        public:
-            KGAxialMesher();
-            virtual ~KGAxialMesher();
-
-    };
-}
+  public:
+    KGAxialMesher();
+    ~KGAxialMesher() override;
+};
+}  // namespace KGeoBag
 
 #endif

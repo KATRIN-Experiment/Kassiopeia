@@ -6,19 +6,18 @@
 #endif
 
 #include "KElectrodeManager.hh"
+#include "KIOManager.hh"
 #include "KMath.hh"
-#include "TVector3.h"
+#include "KTBasis.hh"
 #include "KTElectrode.hh"
 #include "KTPairElectrode.hh"
 #include "KTRobinHood.hh"
-#include "KTBasis.hh"
-#include "KIOManager.hh"
-
-#include "KVMFieldWrapper.hh"
 #include "KVMElectrodeIntegrator.hh"
+#include "KVMFieldWrapper.hh"
+#include "TVector3.h"
 
-#include <complex>
 #include <cmath>
+#include <complex>
 
 namespace KEMField
 {
@@ -46,129 +45,155 @@ namespace KEMField
 
 class KTRWGFunctions
 {
-public:
-
-	//! Constructor
-	/*!
+  public:
+    //! Constructor
+    /*!
 
 		Creates frequency-dependent Green Functions evaluated over a surface.
 	 */
-	KTRWGFunctions();
+    KTRWGFunctions();
 
-	//! Constructor
-	/*!
+    //! Constructor
+    /*!
 
 		Creates frequency-dependent Green Functions evaluated over a surface.
 		/param eSource Source electrode to be integrated
 		/param pPosition Distance from point of evaluation to eSource
 		/param pSource Vertex of polygon from which gradient is computed
 	 */
-	KTRWGFunctions(KTElectrode *eSource, double* pPosition, double* pSource);
+    KTRWGFunctions(KTElectrode* eSource, double* pPosition, double* pSource);
 
-	//! Destructor
-	/*!
+    //! Destructor
+    /*!
 				Deletes factory and the static data that it stores.
 	 */
-	virtual ~KTRWGFunctions();
+    virtual ~KTRWGFunctions();
 
-	//! Clear all vectors
-	void Clear();
+    //! Clear all vectors
+    void Clear();
 
-	//! Initialize all vectors to be used in calculation
-	void InitVectors();
+    //! Initialize all vectors to be used in calculation
+    void InitVectors();
 
-	//! Sets Electrode over which computation is perfomred.
-	/*!
+    //! Sets Electrode over which computation is perfomred.
+    /*!
 	 	 /param eSource Electrode to be inserted in system
 	 */
-	void SetElectrode(KTElectrode *eSource);
+    void SetElectrode(KTElectrode* eSource);
 
-	//! Returns electrode used in calculation
-	KTElectrode* GetElectrode() {return fElectrode;}
+    //! Returns electrode used in calculation
+    KTElectrode* GetElectrode()
+    {
+        return fElectrode;
+    }
 
-	//! Sets position over which computation is performed.
-	/*!
+    //! Sets position over which computation is performed.
+    /*!
 	 	 /param pPosition Distance from point of evaluation to eSource
 	 */
-	void SetPosition(double* pPosition);
+    void SetPosition(double* pPosition);
 
-	//! Returns 3-vector for position
-	TVector3 GetPosition() {return fPosition;}
+    //! Returns 3-vector for position
+    TVector3 GetPosition()
+    {
+        return fPosition;
+    }
 
-	//! Sets source point over which computation is performed.
-	/*!
+    //! Sets source point over which computation is performed.
+    /*!
 	 	 /param pSource Vertex of polygon from which gradient is computed
 	 */
-	void SetSourcePoint(double* pSource);
+    void SetSourcePoint(double* pSource);
 
-	//! Returns 3-vector source position
-	TVector3 GetSourcePoint() {return fSourcePoint;}
+    //! Returns 3-vector source position
+    TVector3 GetSourcePoint()
+    {
+        return fSourcePoint;
+    }
 
-	//! Calculate solid angle that is used in calculation
-	void CalcSolidAngle();
+    //! Calculate solid angle that is used in calculation
+    void CalcSolidAngle();
 
-	//! Return solid angle that is used in calculation
-	double GetSolidAngle(){ return fSolidAngle;}
+    //! Return solid angle that is used in calculation
+    double GetSolidAngle()
+    {
+        return fSolidAngle;
+    }
 
-	//! Returns Euler angles for spherical polygon
-	double CalcEulerAngles(unsigned int pIndex, unsigned int qIndex);
+    //! Returns Euler angles for spherical polygon
+    double CalcEulerAngles(unsigned int pIndex, unsigned int qIndex);
 
-	//! Set accuracy scale over which expansion should stop
-	//	/param aValue Value of accuracy
-	void SetAccuracy(const double aValue) {fAccuracy = aValue;}
+    //! Set accuracy scale over which expansion should stop
+    //	/param aValue Value of accuracy
+    void SetAccuracy(const double aValue)
+    {
+        fAccuracy = aValue;
+    }
 
-	//! Return accuracy setting
-	double GetAccuracy() {return fAccuracy;}
+    //! Return accuracy setting
+    double GetAccuracy()
+    {
+        return fAccuracy;
+    }
 
-	//! Evaluate line integral of Green's function (R^q)
-	/*!
+    //! Evaluate line integral of Green's function (R^q)
+    /*!
 		/param qIndex Power of |r-r'| index
 		/param iStart Which vertex to start with
 		/param iEnd   Which vertex to end (evaluate line integral from iStart to iEnd)
 	*/
-	double FunctionIqL(int qIndex, unsigned int iStart, unsigned int iEnd);
+    double FunctionIqL(int qIndex, unsigned int iStart, unsigned int iEnd);
 
-	//! Evaluate surface integral of Green's function (R^q)
-		/*!
+    //! Evaluate surface integral of Green's function (R^q)
+    /*!
 			/param qIndex Power of |r-r'| index
 		*/
-	double FunctionIqS(int qIndex);
+    double FunctionIqS(int qIndex);
 
-	//! Return static potential limit
-	double Potential(double* pPosition, bool sym = false, double k = 0.);
+    //! Return static potential limit
+    double Potential(double* pPosition, bool sym = false, double k = 0.);
 
-	//! Return static electric field limit
-	void EField(double *pPosition,double *field,bool sym = false, double k = 0.);
+    //! Return static electric field limit
+    void EField(double* pPosition, double* field, bool sym = false, double k = 0.);
 
-	//! Return area as calculated by integral
-	double GetAreaFromIntegral();
+    //! Return area as calculated by integral
+    double GetAreaFromIntegral();
 
-	//! Return area of vector field as calculated by integral
-	std::vector<std::complex <double> > GetVectorIntegral();
+    //! Return area of vector field as calculated by integral
+    std::vector<std::complex<double>> GetVectorIntegral();
 
-	//! Store values of surface integrals
-	void SetIqS(int index, double aValue);
+    //! Store values of surface integrals
+    void SetIqS(int index, double aValue);
 
-	//! Determine if surface integral has already been computed (and return value at aValue)
-	bool GetIqS(int index, double& aValue) const;
+    //! Determine if surface integral has already been computed (and return value at aValue)
+    bool GetIqS(int index, double& aValue) const;
 
-	//! Store values of surface integrals
-	void SetIqL(int index, unsigned int iStart, unsigned int iEnd, double aValue);
+    //! Store values of surface integrals
+    void SetIqL(int index, unsigned int iStart, unsigned int iEnd, double aValue);
 
-	//! Determine if surface integral has already been computed (and return value at aValue)
-	bool GetIqL(int index, unsigned int iStart, unsigned int iEnd, double& aValue) const;
+    //! Determine if surface integral has already been computed (and return value at aValue)
+    bool GetIqL(int index, unsigned int iStart, unsigned int iEnd, double& aValue) const;
 
-	//! Get maximum number of terms in expansion
-	int GetQMax() const {return fQmax;}
+    //! Get maximum number of terms in expansion
+    int GetQMax() const
+    {
+        return fQmax;
+    }
 
-	//! Set maximum number of terms in expansion
-	void  SetQMax(const int aValue) {fQmax = aValue;}
+    //! Set maximum number of terms in expansion
+    void SetQMax(const int aValue)
+    {
+        fQmax = aValue;
+    }
 
-	//! Get distance magnitude
-	double GetDistance() {return fDeltaR.Mag();}
+    //! Get distance magnitude
+    double GetDistance()
+    {
+        return fDeltaR.Mag();
+    }
 
-	//! Perform Green Function calculation
-	/*!
+    //! Perform Green Function calculation
+    /*!
 	 	 /param k  Wavenumber (meter^-1) used for calculation
 	 	 /param iType Type of calculation
 	 	  * iType = 1    G(r,r') div(f(r') dS'
@@ -178,263 +203,294 @@ public:
 	 	  Where Grad is gradient, G(r,r') is the Green's function, f(r') is the basis function, and dS' is the surface area.
 	 	  r is the evaluation point, and r' is the dummy variable
 	 */
-	std::vector<Complex_t> CalcGreenFunction(const double k, const unsigned int iType);
+    std::vector<Complex_t> CalcGreenFunction(const double k, const unsigned int iType);
 
-	std::vector<Complex_t> GetNumericalIntegral(const double k, const unsigned int iType, bool isSmooth = false);
+    std::vector<Complex_t> GetNumericalIntegral(const double k, const unsigned int iType, bool isSmooth = false);
 
-	std::vector<Complex_t> GetSmoothIntegral(const double k, const unsigned int iType);
+    std::vector<Complex_t> GetSmoothIntegral(const double k, const unsigned int iType);
 
-protected:
+  protected:
+    //!	Functions that determine if these are induced charges/currents from magnetic or electric field components
 
-	//!	Functions that determine if these are induced charges/currents from magnetic or electric field components
+    //! Electrode used in surface integral calculation
+    KTElectrode* fElectrode;
 
-	//! Electrode used in surface integral calculation
-	KTElectrode *fElectrode;
+    //!  Number of verticies in polygon
+    unsigned int fNVerticies;
 
-	//!  Number of verticies in polygon
-	unsigned int fNVerticies;
+    //!  Maximum number of terms in expansion of R^q
+    int fQmax;
 
-	//!  Maximum number of terms in expansion of R^q
-	int fQmax;
+    //!  Minimum number of terms in expansion of R^q
+    int fQmin;
 
-	//!  Minimum number of terms in expansion of R^q
-	int fQmin;
+    //!  Position of r, where function is being evaluated
+    TVector3 fPosition;
 
-	//!  Position of r, where function is being evaluated
-	TVector3 fPosition;
+    //!  Center of surface
+    TVector3 fCenter;
 
-	//!  Center of surface
-	TVector3 fCenter;
+    //!  3-vector distance from center of electrode to evaluation point (r-r')
+    TVector3 fDeltaR;
 
-	//!  3-vector distance from center of electrode to evaluation point (r-r')
-	TVector3 fDeltaR;
+    //!  Normal vector to surface
+    TVector3 fNormal;
 
-	//!  Normal vector to surface
-	TVector3 fNormal;
+    //!  Internal vector
+    TVector3 fRho;
 
-	//!  Internal vector
-	TVector3 fRho;
+    //!  Free vertex in RWG basis
+    TVector3 fSourcePoint;
 
-	//!  Free vertex in RWG basis
-	TVector3 fSourcePoint;
+    //!  Polygon ordering of verticies
+    std::vector<unsigned int> fOrder;
 
-	//!  Polygon ordering of verticies
-	std::vector <unsigned int> fOrder;
+    //!  Polygon vertices
+    std::vector<TVector3> fVertex;
 
-	//!  Polygon vertices
-	std::vector <TVector3> fVertex;
+    //!  Vectors outward from side of polygon in the polygon plane
+    std::vector<TVector3> fOutward;
 
-	//!  Vectors outward from side of polygon in the polygon plane
-	std::vector <TVector3> fOutward ;
+    //!  Vectors along side of polygon in the polygon plane
+    std::vector<TVector3> fAlongSide;
 
-	//!  Vectors along side of polygon in the polygon plane
-	std::vector <TVector3> fAlongSide ;
+    //!  Vectors at edge of polygon in the polygon plane
+    std::vector<TVector3> fEdge;
 
-	//!  Vectors at edge of polygon in the polygon plane
-	std::vector <TVector3> fEdge ;
+    //!  Internal variable
+    std::vector<TVector3> a_n;
 
-	//!  Internal variable
-	std::vector <TVector3> a_n;
+    //!  Storing of surface and line integrals
 
-	//!  Storing of surface and line integrals
+    std::map<int, double> fIqS_Map;
+    std::map<int, double> fIqL_Map;
 
-	std::map<int,double> fIqS_Map;
-	std::map<int,double> fIqL_Map;
+    //!  Solid angle (shadow) of trangle
+    double fSolidAngle;
 
-	//!  Solid angle (shadow) of trangle
-	double fSolidAngle;
+    //! distance from triangle plane to r
+    double fH;
 
-	//! distance from triangle plane to r
-	double fH;
+    //!  Value of accuracy
+    double fAccuracy;
 
-	//!  Value of accuracy
-	double fAccuracy;
-
-    enum kGreenFunction {kNull, kScalar, kVectorField, kGradient, kCurl, kCurlScalar, kCurlVector, kCurlNormal, kCurlTangent, kSelfTerm};
+    enum kGreenFunction
+    {
+        kNull,
+        kScalar,
+        kVectorField,
+        kGradient,
+        kCurl,
+        kCurlScalar,
+        kCurlVector,
+        kCurlNormal,
+        kCurlTangent,
+        kSelfTerm
+    };
 
     KEMFieldClassDef(KEMField::KTRWGFunctions, 2);
 };
 
 class FieldNumerical
 {
-    public:
-		FieldNumerical(){isSmooth = false;};
-        virtual ~FieldNumerical(){;};
+  public:
+    FieldNumerical()
+    {
+        isSmooth = false;
+    };
+    virtual ~FieldNumerical()
+    {
+        ;
+    };
 
-    	//! Locate a vector along the surface of the electrode
-		std::vector<Complex_t> GetSurfaceVector(KTElectrode *theTarget, const double* P, unsigned int index = 0) const
-		{
-			std::vector<Complex_t> aValue(3);
+    //! Locate a vector along the surface of the electrode
+    std::vector<Complex_t> GetSurfaceVector(KTElectrode* theTarget, const double* P, unsigned int index = 0) const
+    {
+        std::vector<Complex_t> aValue(3);
 
-			double Q[3];
-			theTarget -> GetSourcePoints(index,Q);
+        double Q[3];
+        theTarget->GetSourcePoints(index, Q);
 
-			double C[3];
-			theTarget -> Centroid(C, false);
+        double C[3];
+        theTarget->Centroid(C, false);
 
-			Complex_t length = 0.;
-			for(unsigned int i = 0; i < 3; i++) {
-				aValue[i] = Q[i] - P[i];
-				length += pow(Q[i] - C[i],2.);
-			}
-			for(unsigned int i = 0; i < 3; i++) aValue[i] /= sqrt(length);
-
-			return aValue;
-		}
-
-
-		Complex_t GreenFunction(const double* in) const
-		{
-			Complex_t theResult;
-
-        	double R = dist(in);
-        	double k = fWaveNumber;
-        	Complex_t ikR (0.,k * R);
-        	theResult = (1./(4. * TMath::Pi()) * (exp(ikR)/R));
-
-        	if (isSmooth) theResult += 1./(4. * TMath::Pi()) * (-1./R + k*k*R/2.);
-
-        	return theResult;
-		}
-
-		std::vector <Complex_t> GradientGreenFunction(const double* in) const
-		{
-			std::vector <Complex_t> theResult(3);
-
-        	double r[3];
-        	radius_vec(in,r);
-
-        	double R = dist(in);
-        	double k = fWaveNumber;
-        	Complex_t ikR (0.,k * R);
-        	for(unsigned int j = 0; j < 3; j++) {
-        		theResult[j] = 1./(4. * TMath::Pi()) * (r[j] * (ikR - 1.) * exp(ikR)/pow(R,3.));
-            	if (isSmooth) theResult[j] += 1./(4. * TMath::Pi()) * (r[j]/R) * (+1./pow(R,2.) + k*k/2.);
-        	}
-        	return theResult;
-		}
-
-		//function which takes a point in 3d (x,y,z) and returns the green function e^ikr/r
-        void GetScalar(const double* in, double* out) const
-        {
-        	out[0] = real(GreenFunction(in));
-        	out[1] = imag(GreenFunction(in));
+        Complex_t length = 0.;
+        for (unsigned int i = 0; i < 3; i++) {
+            aValue[i] = Q[i] - P[i];
+            length += pow(Q[i] - C[i], 2.);
         }
+        for (unsigned int i = 0; i < 3; i++)
+            aValue[i] /= sqrt(length);
 
-        void GetVectorField(const double* in, double* out) const
-        {
-        	std::vector<Complex_t> J = GetSurfaceVector(fElectrode, in);
-        	for(unsigned int j = 0; j < 3; j++) {
-        		out[2*j]   = real(J[j] * GreenFunction(in));
-        		out[2*j+1] = imag(J[j] * GreenFunction(in));
-        	}
+        return aValue;
+    }
+
+
+    Complex_t GreenFunction(const double* in) const
+    {
+        Complex_t theResult;
+
+        double R = dist(in);
+        double k = fWaveNumber;
+        Complex_t ikR(0., k * R);
+        theResult = (1. / (4. * TMath::Pi()) * (exp(ikR) / R));
+
+        if (isSmooth)
+            theResult += 1. / (4. * TMath::Pi()) * (-1. / R + k * k * R / 2.);
+
+        return theResult;
+    }
+
+    std::vector<Complex_t> GradientGreenFunction(const double* in) const
+    {
+        std::vector<Complex_t> theResult(3);
+
+        double r[3];
+        radius_vec(in, r);
+
+        double R = dist(in);
+        double k = fWaveNumber;
+        Complex_t ikR(0., k * R);
+        for (unsigned int j = 0; j < 3; j++) {
+            theResult[j] = 1. / (4. * TMath::Pi()) * (r[j] * (ikR - 1.) * exp(ikR) / pow(R, 3.));
+            if (isSmooth)
+                theResult[j] += 1. / (4. * TMath::Pi()) * (r[j] / R) * (+1. / pow(R, 2.) + k * k / 2.);
         }
+        return theResult;
+    }
 
-        //function which takes a point in 3d (x,y,z) and returns the gradient of the green function e^ikr/r
-        void GetGradient(const double* in, double* out) const
-        {
-        	std::vector <Complex_t> G = GradientGreenFunction(in);
-        	for(unsigned int j = 0; j < 3; j++) {
-        		out[2*j]   = real(G[j]);
-        		out[2*j+1] = imag(G[j]);
-        	}
+    //function which takes a point in 3d (x,y,z) and returns the green function e^ikr/r
+    void GetScalar(const double* in, double* out) const
+    {
+        out[0] = real(GreenFunction(in));
+        out[1] = imag(GreenFunction(in));
+    }
+
+    void GetVectorField(const double* in, double* out) const
+    {
+        std::vector<Complex_t> J = GetSurfaceVector(fElectrode, in);
+        for (unsigned int j = 0; j < 3; j++) {
+            out[2 * j] = real(J[j] * GreenFunction(in));
+            out[2 * j + 1] = imag(J[j] * GreenFunction(in));
         }
+    }
 
-        void GetCurl(const double* in, double* out) const
-        {
-
-        	std::vector<Complex_t> J = GetSurfaceVector(fElectrode, in);
-
-        	std::vector<Complex_t> F(3);
-        	std::vector <Complex_t> G = GradientGreenFunction(in);
-        	F = CrossProduct < std::vector<Complex_t> > (G,J);
-           	for(unsigned int j = 0; j < 3; j++) {
-           		out[2*j]   = real(F[j]);
-            	out[2*j+1] = imag(F[j]);
-           	}
+    //function which takes a point in 3d (x,y,z) and returns the gradient of the green function e^ikr/r
+    void GetGradient(const double* in, double* out) const
+    {
+        std::vector<Complex_t> G = GradientGreenFunction(in);
+        for (unsigned int j = 0; j < 3; j++) {
+            out[2 * j] = real(G[j]);
+            out[2 * j + 1] = imag(G[j]);
         }
+    }
 
-        double dist(const double* xyz) const
-        {
-            //compute distance to origin
-            double dx,dy,dz;
-            dx = xyz[0] - fOrigin[0];
-            dy = xyz[1] - fOrigin[1];
-            dz = xyz[2] - fOrigin[2];
-            return sqrt(dx*dx + dy*dy + dz*dz);
-        };
+    void GetCurl(const double* in, double* out) const
+    {
 
-        void radius_vec(const double* dom, double* range) const
-        {
-            range[0] = dom[0] - fOrigin[0];
-            range[1] = dom[1] - fOrigin[1];
-            range[2] = dom[2] - fOrigin[2];
+        std::vector<Complex_t> J = GetSurfaceVector(fElectrode, in);
+
+        std::vector<Complex_t> F(3);
+        std::vector<Complex_t> G = GradientGreenFunction(in);
+        F = CrossProduct<std::vector<Complex_t>>(G, J);
+        for (unsigned int j = 0; j < 3; j++) {
+            out[2 * j] = real(F[j]);
+            out[2 * j + 1] = imag(F[j]);
         }
+    }
 
-        void SetOrigin(TVector3 origin){fOrigin = origin;};
+    double dist(const double* xyz) const
+    {
+        //compute distance to origin
+        double dx, dy, dz;
+        dx = xyz[0] - fOrigin[0];
+        dy = xyz[1] - fOrigin[1];
+        dz = xyz[2] - fOrigin[2];
+        return sqrt(dx * dx + dy * dy + dz * dz);
+    };
 
-        void SetWaveNumber(double k) {fWaveNumber = k;};
+    void radius_vec(const double* dom, double* range) const
+    {
+        range[0] = dom[0] - fOrigin[0];
+        range[1] = dom[1] - fOrigin[1];
+        range[2] = dom[2] - fOrigin[2];
+    }
 
-        void SetElectrode(KTElectrode *e) {fElectrode = e;};
+    void SetOrigin(TVector3 origin)
+    {
+        fOrigin = origin;
+    };
 
-        void SetSmooth(bool aValue) {isSmooth = aValue;};
+    void SetWaveNumber(double k)
+    {
+        fWaveNumber = k;
+    };
 
-        std::vector<Complex_t> GetSurfaceVector(const double* P, unsigned int index) const
-        {
-        	std::vector<Complex_t> aValue(3);
+    void SetElectrode(KTElectrode* e)
+    {
+        fElectrode = e;
+    };
 
-        	double Q[3];
-        	fElectrode -> GetSourcePoints(index,Q);
+    void SetSmooth(bool aValue)
+    {
+        isSmooth = aValue;
+    };
 
-        	double C[3];
-        	fElectrode -> Centroid(C, false);
+    std::vector<Complex_t> GetSurfaceVector(const double* P, unsigned int index) const
+    {
+        std::vector<Complex_t> aValue(3);
 
-        	Complex_t length = 0.;
-        	for(unsigned int i = 0; i < 3; i++) {
-        		aValue[i] = Q[i] - P[i];
-        		length += pow(Q[i] - C[i],2.);
-        	}
-        	for(unsigned int i = 0; i < 3; i++) aValue[i] /= 2.*sqrt(length);
+        double Q[3];
+        fElectrode->GetSourcePoints(index, Q);
 
-        	return aValue;
+        double C[3];
+        fElectrode->Centroid(C, false);
+
+        Complex_t length = 0.;
+        for (unsigned int i = 0; i < 3; i++) {
+            aValue[i] = Q[i] - P[i];
+            length += pow(Q[i] - C[i], 2.);
         }
-    	//! General cross product of A and B vectors in 3-dimensions
-    	template <typename SysVector>
-    	SysVector CrossProduct(const SysVector &A, const SysVector &B) const
-    	{
-    		const unsigned int nDim = A.size();
-    		SysVector result(nDim);
+        for (unsigned int i = 0; i < 3; i++)
+            aValue[i] /= 2. * sqrt(length);
 
-    		if (nDim != B.size() || nDim !=3) return result;
+        return aValue;
+    }
+    //! General cross product of A and B vectors in 3-dimensions
+    template<typename SysVector> SysVector CrossProduct(const SysVector& A, const SysVector& B) const
+    {
+        const unsigned int nDim = A.size();
+        SysVector result(nDim);
 
-    		for(int i = 0; i < nDim; i++){
-    			for(int j = 0; j < nDim; j++){
-    				for(int k = 0; k < nDim; k++){
-    					result[i] += LeviCivita(i,j,k) * A[j] * B[k];
-    				}
-    			}
-    		}
-    		return result;
-    	};
+        if (nDim != B.size() || nDim != 3)
+            return result;
 
-    	//! Levi-Civita function (3 dimensions only)
-    	double LeviCivita(const int i, const int j, const int k) const {
-    		double result = 0.;
-    		if ((i < 3) && (j < 3) && (k < 3))
-    		{
-    			result = (double) ((i - j) * (j - k) * (k - i));
-    			result /=2.;
-    		}
-    		return result;
-    	};
+        for (int i = 0; i < nDim; i++) {
+            for (int j = 0; j < nDim; j++) {
+                for (int k = 0; k < nDim; k++) {
+                    result[i] += LeviCivita(i, j, k) * A[j] * B[k];
+                }
+            }
+        }
+        return result;
+    };
 
-    private:
+    //! Levi-Civita function (3 dimensions only)
+    double LeviCivita(const int i, const int j, const int k) const
+    {
+        double result = 0.;
+        if ((i < 3) && (j < 3) && (k < 3)) {
+            result = (double) ((i - j) * (j - k) * (k - i));
+            result /= 2.;
+        }
+        return result;
+    };
 
-    	bool isSmooth;
-    	TVector3 fOrigin;
-        double fWaveNumber;
-        KTElectrode *fElectrode;
-
+  private:
+    bool isSmooth;
+    TVector3 fOrigin;
+    double fWaveNumber;
+    KTElectrode* fElectrode;
 };
 
 } /* namespace KEMField */

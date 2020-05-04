@@ -31,33 +31,33 @@
 namespace Kassiopeia
 {
 
-    using std::vector;
+using std::vector;
 
-	class KSGenShakeOff
-	{
+class KSGenShakeOff
+{
 
-	public:
+  public:
+    KSGenShakeOff();
+    ~KSGenShakeOff();
 
-		KSGenShakeOff();
-		~KSGenShakeOff();
+    void CreateSO(vector<int>& vacancy, std::vector<double>& energy);
+    void SetForceCreation(bool asetting)
+    {
+        fForceCreation = asetting;
+    }
 
-        void CreateSO(vector<int>& vacancy, std::vector<double>& energy);
-		void SetForceCreation(bool asetting) { fForceCreation = asetting; }
+  protected:
+    double DiceEnergy(double bindingEnergy, int vacancy);
+    std::string fFilename;
+    vector<int> fShell;
+    vector<double> fBindE;
+    vector<double> fSoProb;
+    vector<double> fSoProbNorm;
+    bool fForceCreation;
 
-	protected:
+    bool ReadData();
+    katrin::KTextFile* fDataFile;
+};
 
-		double DiceEnergy(double bindingEnergy, int vacancy);
-		std::string fFilename;
-		vector <int> fShell;
-		vector <double> fBindE;
-		vector <double> fSoProb;
-		vector <double> fSoProbNorm;
-		bool fForceCreation;
-
-		bool ReadData();
-		katrin::KTextFile* fDataFile;
-
-	};
-
-}//namespace kassiopeia
-#endif // KSGenSHAKEOFF_H_
+}  // namespace Kassiopeia
+#endif  // KSGenSHAKEOFF_H_

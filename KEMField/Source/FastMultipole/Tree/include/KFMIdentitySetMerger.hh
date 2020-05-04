@@ -1,9 +1,9 @@
 #ifndef KFMIdentitySetMerger_HH__
 #define KFMIdentitySetMerger_HH__
 
+#include "KFMIdentitySet.hh"
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
-#include "KFMIdentitySet.hh"
 
 namespace KEMField
 {
@@ -21,38 +21,39 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList >
-class KFMIdentitySetMerger: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMIdentitySetMerger : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMIdentitySetMerger()
-        {
-            fIDSet.Clear();
-        };
-        virtual ~KFMIdentitySetMerger(){};
+  public:
+    KFMIdentitySetMerger()
+    {
+        fIDSet.Clear();
+    };
+    virtual ~KFMIdentitySetMerger(){};
 
-        void Clear(){fIDSet.Clear();};
-        const KFMIdentitySet* GetIDSet(){return &fIDSet;};
+    void Clear()
+    {
+        fIDSet.Clear();
+    };
+    const KFMIdentitySet* GetIDSet()
+    {
+        return &fIDSet;
+    };
 
-        virtual void ApplyAction( KFMNode< ObjectTypeList >* node)
-        {
-            if(node != NULL)
-            {
-                KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
-                if(set != NULL)
-                {
-                    fIDSet.Merge(set);
-                }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
+            if (set != nullptr) {
+                fIDSet.Merge(set);
             }
         }
+    }
 
-    private:
-
-        KFMIdentitySet fIDSet;
-
+  private:
+    KFMIdentitySet fIDSet;
 };
 
 
-}//end KEMField namespace
+}  // namespace KEMField
 
 #endif /* KFMIdentitySetMerger_H__ */

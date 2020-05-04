@@ -10,18 +10,19 @@
 #include "KToolbox.h"
 
 using namespace Kassiopeia;
-namespace katrin {
+namespace katrin
+{
 
-    typedef KComplexElement <KSGenLUniformMaxN> KSGenLUniformMaxNBuilder;
+typedef KComplexElement<KSGenLUniformMaxN> KSGenLUniformMaxNBuilder;
 
-    template<>
-    inline bool KSGenLUniformMaxNBuilder::AddAttribute(KContainer *aContainer) {
-        if (aContainer->GetName() == "name") {
-            aContainer->CopyTo(fObject, &KNamed::SetName);
-            return true;
-        }
-        return false;
+template<> inline bool KSGenLUniformMaxNBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
+    return false;
 }
+}  // namespace katrin
 
-#endif //KASPER_KSGENLUNIFORMMAXNBUILDER_H
+#endif  //KASPER_KSGENLUNIFORMMAXNBUILDER_H

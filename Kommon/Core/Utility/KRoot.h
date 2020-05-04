@@ -6,8 +6,8 @@
 #define KASPER_KROOT_H
 
 
-#include "KComplexElement.hh"
 #include "KApplicationRunner.h"
+#include "KComplexElement.hh"
 #include "KToolbox.h"
 
 
@@ -17,14 +17,12 @@ namespace katrin
 
 typedef KComplexElement<katrin::KToolbox> KRootBuilder;
 
-template<>
-inline bool KRootBuilder::Begin()
+template<> inline bool KRootBuilder::Begin()
 {
     return true;
 }
 
-template<>
-inline bool KRootBuilder::AddElement(KContainer *aContainer)
+template<> inline bool KRootBuilder::AddElement(KContainer* aContainer)
 {
     if (aContainer->Empty()) {
         return true;
@@ -32,25 +30,22 @@ inline bool KRootBuilder::AddElement(KContainer *aContainer)
     if (aContainer->Is<KApplicationRunner>()) {
         return aContainer->AsPointer<KApplicationRunner>()->Execute();
     }
-    if( aContainer->Is< KTagged >() )
-    {
+    if (aContainer->Is<KTagged>()) {
         KToolbox::GetInstance().AddContainer(*aContainer);
         return true;
     }
-    if( aContainer->GetName() == "kemfield" )
-    {
+    if (aContainer->GetName() == "kemfield") {
         return true;
     }
 
     return false;
 }
 
-template<>
-inline bool KRootBuilder::End()
+template<> inline bool KRootBuilder::End()
 {
     return true;
 }
 
-}
+}  // namespace katrin
 
-#endif //KASPER_KROOT_H
+#endif  //KASPER_KROOT_H

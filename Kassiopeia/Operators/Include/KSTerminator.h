@@ -7,19 +7,19 @@
 namespace Kassiopeia
 {
 
-    class KSTerminator:
-        public KSComponentTemplate<  KSTerminator >
-    {
-        public:
-            KSTerminator();
-            virtual ~KSTerminator();
+class KSTerminator : public KSComponentTemplate<KSTerminator>
+{
+  public:
+    KSTerminator();
+    ~KSTerminator() override;
 
-        public:
-            virtual void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag ) = 0;
-            virtual void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue ) const = 0;
-    };
+  public:
+    virtual void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) = 0;
+    virtual void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                                    KSParticleQueue& aQueue) const = 0;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

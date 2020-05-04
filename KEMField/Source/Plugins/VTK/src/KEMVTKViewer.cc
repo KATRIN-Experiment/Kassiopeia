@@ -2,8 +2,8 @@
 
 namespace KEMField
 {
-  KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
-  {
+KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
+{
     fPoints = vtkSmartPointer<vtkPoints>::New();
 
     fCells = vtkSmartPointer<vtkCellArray>::New();
@@ -40,15 +40,14 @@ namespace KEMField
     fLineSegmentPolyApprox = 3;
     fArcPolyApprox = 128;
 
-    for (KSurfaceContainer::iterator it=aSurfaceContainer.begin(); it!=aSurfaceContainer.end();it++)
-    {
+    for (KSurfaceContainer::iterator it = aSurfaceContainer.begin(); it != aSurfaceContainer.end(); it++) {
         SetSurfacePrimitive(*it);
-        ActOnSurfaceType((*it)->GetID(),*this);
+        ActOnSurfaceType((*it)->GetID(), *this);
     }
-  }
+}
 
-  void KEMVTKViewer::GenerateGeometryFile(std::string fileName)
-  {
+void KEMVTKViewer::GenerateGeometryFile(std::string fileName)
+{
     vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
     polydata->SetPoints(fPoints);
     polydata->SetPolys(fCells);
@@ -61,8 +60,7 @@ namespace KEMField
     polydata->GetCellData()->AddArray(fPotential);
     polydata->GetCellData()->AddArray(fPermittivity);
 
-    vtkSmartPointer<vtkXMLPolyDataWriter> writer =
-      vtkSmartPointer<vtkXMLPolyDataWriter>::New();
+    vtkSmartPointer<vtkXMLPolyDataWriter> writer = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
 
     // writer->SetDataModeToAscii();
     writer->SetDataModeToBinary();
@@ -77,10 +75,10 @@ namespace KEMField
 #endif
     writer->SetFileName(fileName.c_str());
     writer->Write();
-  }
+}
 
-  void KEMVTKViewer::ViewGeometry()
-  {
+void KEMVTKViewer::ViewGeometry()
+{
     vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
     polydata->SetPoints(fPoints);
     polydata->SetPolys(fCells);
@@ -93,45 +91,39 @@ namespace KEMField
     polydata->GetCellData()->AddArray(fPotential);
     polydata->GetCellData()->AddArray(fPermittivity);
 
-    vtkSmartPointer<vtkTriangleFilter> trifilter =
-      vtkSmartPointer<vtkTriangleFilter>::New();
+    vtkSmartPointer<vtkTriangleFilter> trifilter = vtkSmartPointer<vtkTriangleFilter>::New();
 #ifdef VTK6
     trifilter->SetInputData(polydata);
 #else
     trifilter->SetInput(polydata);
 #endif
 
-    vtkSmartPointer<vtkStripper> stripper =
-      vtkSmartPointer<vtkStripper>::New();
+    vtkSmartPointer<vtkStripper> stripper = vtkSmartPointer<vtkStripper>::New();
     stripper->SetInputConnection(trifilter->GetOutputPort());
 
     // Create an actor and mapper
-    vtkSmartPointer<vtkDataSetMapper> mapper =
-      vtkSmartPointer<vtkDataSetMapper>::New();
+    vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 #ifdef VTK6
     mapper->SetInputConnection(stripper->GetOutputPort());
 #else
     mapper->SetInput(stripper->GetOutput());
 #endif
 
-    vtkSmartPointer<vtkActor> actor =
-      vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
     actor->SetMapper(mapper);
     actor->GetProperty()->SetRepresentationToWireframe();
 
     // Create a renderer, render window, and interactor
-    vtkSmartPointer<vtkRenderer> renderer =
-      vtkSmartPointer<vtkRenderer>::New();
-    vtkSmartPointer<vtkRenderWindow> renderWindow =
-      vtkSmartPointer<vtkRenderWindow>::New();
-    renderWindow->SetSize(750,750);
+    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+    vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+    renderWindow->SetSize(750, 750);
     renderWindow->AddRenderer(renderer);
     vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor =
-      vtkSmartPointer<vtkRenderWindowInteractor>::New();
+        vtkSmartPointer<vtkRenderWindowInteractor>::New();
     renderWindowInteractor->SetRenderWindow(renderWindow);
 
     renderer->AddActor(actor);
     renderWindow->Render();
     renderWindowInteractor->Start();
-  }
 }
+}  // namespace KEMField

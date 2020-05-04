@@ -7,187 +7,188 @@
 namespace Kassiopeia
 {
 
-    class KSTrajElectricParticle :
-        public KSMathArray< 5 >
-    {
-        public:
-            KSTrajElectricParticle();
-            ~KSTrajElectricParticle();
+class KSTrajElectricParticle : public KSMathArray<5>
+{
+  public:
+    KSTrajElectricParticle();
+    KSTrajElectricParticle(const KSTrajElectricParticle& aParticle);
+    ~KSTrajElectricParticle();
 
-            //**********
-            //assignment
-            //**********
+    //**********
+    //assignment
+    //**********
 
-        public:
-            void PullFrom( const KSParticle& aParticle );
-            void PushTo( KSParticle& aParticle );
+  public:
+    void PullFrom(const KSParticle& aParticle);
+    void PushTo(KSParticle& aParticle);
 
-            KSTrajElectricParticle& operator=( const double& anOperand );
+    KSTrajElectricParticle& operator=(const double& anOperand);
 
-            KSTrajElectricParticle& operator=( const KSMathArray< 5 >& anOperand );
+    KSTrajElectricParticle& operator=(const KSMathArray<5>& anOperand);
 
-            template< class XLeft, class XOperation, class XRight >
-            KSTrajElectricParticle& operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand );
+    template<class XLeft, class XOperation, class XRight>
+    KSTrajElectricParticle& operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand);
 
-            KSTrajElectricParticle& operator=( const KSTrajElectricParticle& anOperand );
+    KSTrajElectricParticle& operator=(const KSTrajElectricParticle& anOperand);
 
-            //***********
-            //calculators
-            //***********
+    //***********
+    //calculators
+    //***********
 
-        public:
-            static void SetMagneticFieldCalculator( KSMagneticField* aMagneticField );
-            static KSMagneticField* GetMagneticFieldCalculator();
+  public:
+    static void SetMagneticFieldCalculator(KSMagneticField* aMagneticField);
+    static KSMagneticField* GetMagneticFieldCalculator();
 
-            static void SetElectricFieldCalculator( KSElectricField* anElectricField );
-            static KSElectricField* GetElectricFieldCalculator();
+    static void SetElectricFieldCalculator(KSElectricField* anElectricField);
+    static KSElectricField* GetElectricFieldCalculator();
 
-            //****************
-            //static variables
-            //****************
+    //****************
+    //static variables
+    //****************
 
-        public:
-            static void SetMass( const double& aMass );
-            static const double& GetMass();
+  public:
+    static void SetMass(const double& aMass);
+    static const double& GetMass();
 
-            static void SetCharge( const double& aCharge );
-            static const double& GetCharge();
+    static void SetCharge(const double& aCharge);
+    static const double& GetCharge();
 
-            //*****************
-            //dynamic variables
-            //*****************
+    //*****************
+    //dynamic variables
+    //*****************
 
-        public:
-            const double& GetTime() const;
-            const double& GetLength() const;
-            const KThreeVector& GetPosition() const;
-            const KThreeVector& GetMomentum() const;
-            const KThreeVector& GetVelocity() const;
-            const double& GetLorentzFactor() const;
-            const double& GetKineticEnergy() const;
+  public:
+    const double& GetTime() const;
+    const double& GetLength() const;
+    const KThreeVector& GetPosition() const;
+    const KThreeVector& GetMomentum() const;
+    const KThreeVector& GetVelocity() const;
+    const double& GetLorentzFactor() const;
+    const double& GetKineticEnergy() const;
 
-            const KThreeVector& GetMagneticField() const;
-            const KThreeVector& GetElectricField() const;
-            const double& GetElectricPotential() const;
-            const KThreeMatrix& GetMagneticGradient() const;
+    const KThreeVector& GetMagneticField() const;
+    const KThreeVector& GetElectricField() const;
+    const double& GetElectricPotential() const;
+    const KThreeMatrix& GetMagneticGradient() const;
 
-            const KThreeVector& GetGuidingCenter() const;
-            const double& GetLongMomentum() const;
-            const double& GetTransMomentum() const;
-            const double& GetLongVelocity() const;
-            const double& GetTransVelocity() const;
-            const double& GetCyclotronFrequency() const;
-            const double& GetOrbitalMagneticMoment() const;
+    const KThreeVector& GetGuidingCenter() const;
+    const double& GetLongMomentum() const;
+    const double& GetTransMomentum() const;
+    const double& GetLongVelocity() const;
+    const double& GetTransVelocity() const;
+    const double& GetCyclotronFrequency() const;
+    const double& GetOrbitalMagneticMoment() const;
 
-        private:
-            static KSMagneticField* fMagneticFieldCalculator;
-            static KSElectricField* fElectricFieldCalculator;
+  private:
+    static KSMagneticField* fMagneticFieldCalculator;
+    static KSElectricField* fElectricFieldCalculator;
 
-            static double fMass;
-            static double fCharge;
+    static double fMass;
+    static double fCharge;
 
-            mutable double fTime;
-            mutable double fLength;
-            mutable KThreeVector fPosition;
-            mutable KThreeVector fMomentum;
-            mutable KThreeVector fVelocity;
-            mutable double fLorentzFactor;
-            mutable double fKineticEnergy;
+    mutable double fTime;
+    mutable double fLength;
+    mutable KThreeVector fPosition;
+    mutable KThreeVector fMomentum;
+    mutable KThreeVector fVelocity;
+    mutable double fLorentzFactor;
+    mutable double fKineticEnergy;
 
-            mutable KThreeVector fMagneticField;
-            mutable KThreeVector fElectricField;
-            mutable KThreeMatrix fMagneticGradient;
-            mutable double fElectricPotential;
+    mutable KThreeVector fMagneticField;
+    mutable KThreeVector fElectricField;
+    mutable KThreeMatrix fMagneticGradient;
+    mutable double fElectricPotential;
 
-            mutable KThreeVector fGuidingCenter;
-            mutable double fLongMomentum;
-            mutable double fTransMomentum;
-            mutable double fLongVelocity;
-            mutable double fTransVelocity;
-            mutable double fCyclotronFrequency;
-            mutable double fOrbitalMagneticMoment;
+    mutable KThreeVector fGuidingCenter;
+    mutable double fLongMomentum;
+    mutable double fTransMomentum;
+    mutable double fLongVelocity;
+    mutable double fTransVelocity;
+    mutable double fCyclotronFrequency;
+    mutable double fOrbitalMagneticMoment;
 
-            //*****
-            //cache
-            //*****
+    //*****
+    //cache
+    //*****
 
-        private:
-            void DoNothing() const;
-            void RecalculateMagneticField() const;
-            void RecalculateMagneticGradient() const;
-            void RecalculateElectricField() const;
-            void RecalculateElectricPotential() const;
+  private:
+    void DoNothing() const;
+    void RecalculateMagneticField() const;
+    void RecalculateMagneticGradient() const;
+    void RecalculateElectricField() const;
+    void RecalculateElectricPotential() const;
 
-            mutable void (KSTrajElectricParticle::*fGetMagneticFieldPtr)() const;
-            mutable void (KSTrajElectricParticle::*fGetElectricFieldPtr)() const;
-            mutable void (KSTrajElectricParticle::*fGetMagneticGradientPtr)() const;
-            mutable void (KSTrajElectricParticle::*fGetElectricPotentialPtr)() const;
-    };
+    mutable void (KSTrajElectricParticle::*fGetMagneticFieldPtr)() const;
+    mutable void (KSTrajElectricParticle::*fGetElectricFieldPtr)() const;
+    mutable void (KSTrajElectricParticle::*fGetMagneticGradientPtr)() const;
+    mutable void (KSTrajElectricParticle::*fGetElectricPotentialPtr)() const;
+};
 
-    inline KSTrajElectricParticle& KSTrajElectricParticle::operator=( const double& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
-        fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
-        fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
-        fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
-        return *this;
-    }
-
-    inline KSTrajElectricParticle& KSTrajElectricParticle::operator=( const KSMathArray< 5 >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
-        fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
-        fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
-        fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
-        return *this;
-    }
-
-    template< class XLeft, class XOperation, class XRight >
-    inline KSTrajElectricParticle& KSTrajElectricParticle::operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
-        fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
-        fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
-        fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
-        return *this;
-    }
-
-    inline KSTrajElectricParticle& KSTrajElectricParticle::operator=( const KSTrajElectricParticle& aParticle )
-    {
-        this->KSMathArray< 5 >::operator =( aParticle );
-
-        fTime = aParticle.fTime;
-        fLength = aParticle.fLength;
-        fPosition = aParticle.fPosition;
-        fMomentum = aParticle.fMomentum;
-        fVelocity = aParticle.fVelocity;
-        fLorentzFactor = aParticle.fLorentzFactor;
-        fKineticEnergy = aParticle.fKineticEnergy;
-
-        fMagneticField = aParticle.fMagneticField;
-        fElectricField = aParticle.fElectricField;
-        fMagneticGradient = aParticle.fMagneticGradient;
-        fElectricPotential = aParticle.fElectricPotential;
-
-        fGuidingCenter = aParticle.fGuidingCenter;
-        fLongMomentum = aParticle.fLongMomentum;
-        fTransMomentum = aParticle.fTransMomentum;
-        fLongVelocity = aParticle.fLongVelocity;
-        fTransVelocity = aParticle.fTransVelocity;
-        fCyclotronFrequency = aParticle.fCyclotronFrequency;
-        fOrbitalMagneticMoment = aParticle.fOrbitalMagneticMoment;
-
-        fGetMagneticFieldPtr = aParticle.fGetMagneticFieldPtr;
-        fGetElectricFieldPtr = aParticle.fGetElectricFieldPtr;
-        fGetMagneticGradientPtr = aParticle.fGetMagneticGradientPtr;
-        fGetElectricPotentialPtr = aParticle.fGetElectricPotentialPtr;
-
-        return *this;
-    }
-
+inline KSTrajElectricParticle& KSTrajElectricParticle::operator=(const double& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
+    fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
+    fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
+    fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
+    return *this;
 }
+
+inline KSTrajElectricParticle& KSTrajElectricParticle::operator=(const KSMathArray<5>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
+    fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
+    fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
+    fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
+    return *this;
+}
+
+template<class XLeft, class XOperation, class XRight>
+inline KSTrajElectricParticle&
+KSTrajElectricParticle::operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    fGetMagneticFieldPtr = &KSTrajElectricParticle::RecalculateMagneticField;
+    fGetElectricFieldPtr = &KSTrajElectricParticle::RecalculateElectricField;
+    fGetMagneticGradientPtr = &KSTrajElectricParticle::RecalculateMagneticGradient;
+    fGetElectricPotentialPtr = &KSTrajElectricParticle::RecalculateElectricPotential;
+    return *this;
+}
+
+inline KSTrajElectricParticle& KSTrajElectricParticle::operator=(const KSTrajElectricParticle& aParticle)
+{
+    this->KSMathArray<5>::operator=(aParticle);
+
+    fTime = aParticle.fTime;
+    fLength = aParticle.fLength;
+    fPosition = aParticle.fPosition;
+    fMomentum = aParticle.fMomentum;
+    fVelocity = aParticle.fVelocity;
+    fLorentzFactor = aParticle.fLorentzFactor;
+    fKineticEnergy = aParticle.fKineticEnergy;
+
+    fMagneticField = aParticle.fMagneticField;
+    fElectricField = aParticle.fElectricField;
+    fMagneticGradient = aParticle.fMagneticGradient;
+    fElectricPotential = aParticle.fElectricPotential;
+
+    fGuidingCenter = aParticle.fGuidingCenter;
+    fLongMomentum = aParticle.fLongMomentum;
+    fTransMomentum = aParticle.fTransMomentum;
+    fLongVelocity = aParticle.fLongVelocity;
+    fTransVelocity = aParticle.fTransVelocity;
+    fCyclotronFrequency = aParticle.fCyclotronFrequency;
+    fOrbitalMagneticMoment = aParticle.fOrbitalMagneticMoment;
+
+    fGetMagneticFieldPtr = aParticle.fGetMagneticFieldPtr;
+    fGetElectricFieldPtr = aParticle.fGetElectricFieldPtr;
+    fGetMagneticGradientPtr = aParticle.fGetMagneticGradientPtr;
+    fGetElectricPotentialPtr = aParticle.fGetElectricPotentialPtr;
+
+    return *this;
+}
+
+}  // namespace Kassiopeia
 
 #endif

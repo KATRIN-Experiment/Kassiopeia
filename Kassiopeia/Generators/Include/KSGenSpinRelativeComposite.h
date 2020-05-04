@@ -7,34 +7,33 @@
 namespace Kassiopeia
 {
 
-    class KSGenSpinRelativeComposite :
-        public KSComponentTemplate< KSGenSpinRelativeComposite, KSGenCreator >
-    {
-        public:
-            KSGenSpinRelativeComposite();
-            KSGenSpinRelativeComposite( const KSGenSpinRelativeComposite& aCopy );
-            KSGenSpinRelativeComposite* Clone() const;
-            virtual ~KSGenSpinRelativeComposite();
+class KSGenSpinRelativeComposite : public KSComponentTemplate<KSGenSpinRelativeComposite, KSGenCreator>
+{
+  public:
+    KSGenSpinRelativeComposite();
+    KSGenSpinRelativeComposite(const KSGenSpinRelativeComposite& aCopy);
+    KSGenSpinRelativeComposite* Clone() const override;
+    ~KSGenSpinRelativeComposite() override;
 
-        public:
-            virtual void Dice( KSParticleQueue* aParticleList );
+  public:
+    void Dice(KSParticleQueue* aParticleList) override;
 
-        public:
-            void SetThetaValue( KSGenValue* anThetaValue );
-            void ClearThetaValue( KSGenValue* anThetaValue );
+  public:
+    void SetThetaValue(KSGenValue* anThetaValue);
+    void ClearThetaValue(KSGenValue* anThetaValue);
 
-            void SetPhiValue( KSGenValue* aPhiValue );
-            void ClearPhiValue( KSGenValue* aPhiValue );
+    void SetPhiValue(KSGenValue* aPhiValue);
+    void ClearPhiValue(KSGenValue* aPhiValue);
 
-        private:
-            KSGenValue* fThetaValue;
-            KSGenValue* fPhiValue;
+  private:
+    KSGenValue* fThetaValue;
+    KSGenValue* fPhiValue;
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

@@ -3,11 +3,7 @@
 namespace Kassiopeia
 {
 
-    KSWriteROOTCondition::KSWriteROOTCondition()
-    {
-    }
-    KSWriteROOTCondition::~KSWriteROOTCondition()
-    {
-    }
+KSWriteROOTCondition::KSWriteROOTCondition() {}
+KSWriteROOTCondition::~KSWriteROOTCondition() {}
 
-}
+}  // namespace Kassiopeia

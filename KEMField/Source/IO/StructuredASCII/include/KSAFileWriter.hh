@@ -1,19 +1,20 @@
 #ifndef KSAFileWriter_HH__
 #define KSAFileWriter_HH__
 
-#include <string>
-#include <fstream>
-
 #include "KSADefinitions.hh"
 
+#include <fstream>
+#include <string>
+
 #ifndef KEMFIELD_USE_ZLIB
-    #include "miniz.hh"
+#include "miniz.hh"
 #else
-    #include "zlib.h"
+#include "zlib.h"
 #endif
 
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -30,37 +31,42 @@ namespace KEMField{
 
 class KSAFileWriter
 {
-    public:
-        KSAFileWriter();
-        virtual ~KSAFileWriter();
+  public:
+    KSAFileWriter();
+    virtual ~KSAFileWriter();
 
-        //must be called before opening the file stream
-        void SetFileName(std::string filename);
+    //must be called before opening the file stream
+    void SetFileName(std::string filename);
 
-        bool Open();
-        void AddToFile(const std::string& data);
-        void FlushStream() { fFileStream.flush(); }
-        void Close();
+    bool Open();
+    void AddToFile(const std::string& data);
+    void FlushStream()
+    {
+        fFileStream.flush();
+    }
+    void Close();
 
-        std::string GetFileName() const { return fFileName; }
+    std::string GetFileName() const
+    {
+        return fFileName;
+    }
 
-    protected:
+  protected:
+    bool fIsOpen;
 
-        bool fIsOpen;
-
-        bool fUseCompression;
-        int fCompressionLevel;
-        z_stream fZStream;
-        unsigned char* in_buffer; //[WRITE_CHUNK];
-        unsigned char* out_buffer; //[WRITE_CHUNK];
-        int fUsedSpace;
+    bool fUseCompression;
+    int fCompressionLevel;
+    z_stream fZStream;
+    unsigned char* in_buffer;   //[WRITE_CHUNK];
+    unsigned char* out_buffer;  //[WRITE_CHUNK];
+    int fUsedSpace;
 
 
-        std::string fFileName;
-        std::ofstream fFileStream;
+    std::string fFileName;
+    std::ofstream fFileStream;
 };
 
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAFileWriter_H__ */

@@ -6,34 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMinEnergy :
-        public KSComponentTemplate< KSTermMinEnergy, KSTerminator >
-    {
-        public:
-            KSTermMinEnergy();
-            KSTermMinEnergy( const KSTermMinEnergy& aCopy );
-            KSTermMinEnergy* Clone() const;
-            virtual ~KSTermMinEnergy();
+class KSTermMinEnergy : public KSComponentTemplate<KSTermMinEnergy, KSTerminator>
+{
+  public:
+    KSTermMinEnergy();
+    KSTermMinEnergy(const KSTermMinEnergy& aCopy);
+    KSTermMinEnergy* Clone() const override;
+    ~KSTermMinEnergy() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMinEnergy( const double& aValue );
+  public:
+    void SetMinEnergy(const double& aValue);
 
-        private:
-            double fMinEnergy;
+  private:
+    double fMinEnergy;
+};
 
-    };
-
-    inline void KSTermMinEnergy::SetMinEnergy( const double& aValue )
-    {
-        fMinEnergy = aValue;
-    }
-
+inline void KSTermMinEnergy::SetMinEnergy(const double& aValue)
+{
+    fMinEnergy = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

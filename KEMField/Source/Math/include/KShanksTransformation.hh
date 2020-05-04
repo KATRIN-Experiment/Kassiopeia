@@ -12,13 +12,13 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  struct KShanksTransformation
-  {
-    double operator() (double A_0,double A_1,double A_2) const
+struct KShanksTransformation
+{
+    double operator()(double A_0, double A_1, double A_2) const
     {
-      return (A_2*A_0 - A_1*A_1)/(A_2 - 2.*A_1 + A_0);
+        return (A_2 * A_0 - A_1 * A_1) / (A_2 - 2. * A_1 + A_0);
     }
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KSHANKSTRANSFORMATION_DEF */

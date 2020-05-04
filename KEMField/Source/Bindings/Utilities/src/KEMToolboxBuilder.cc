@@ -5,21 +5,18 @@
  *      Author: gosda
  */
 #include "KEMToolboxBuilder.hh"
+
 #include "KElementProcessor.hh"
 #include "KRoot.h"
 
-namespace katrin {
-
-template< >
-KEMToolboxBuilder::~KComplexElement()
+namespace katrin
 {
-}
 
-STATICINT sKEMRoot =
-        KRootBuilder::ComplexElement< KEMRoot >( "kemfield" );
+template<> KEMToolboxBuilder::~KComplexElement() {}
 
-STATICINT sKEMRootCompat =
-        KElementProcessor::ComplexElement< KEMRoot >( "kemfield" );
+STATICINT sKEMRoot = KRootBuilder::ComplexElement<KEMRoot>("kemfield");
+
+STATICINT sKEMRootCompat = KElementProcessor::ComplexElement<KEMRoot>("kemfield");
 
 
-} //katrin
+}  // namespace katrin

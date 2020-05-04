@@ -1,14 +1,13 @@
 #ifndef KGRODSPACE_HH_
 #define KGRODSPACE_HH_
 
-#include "KGWrappedSpace.hh"
-
 #include "KGRod.hh"
+#include "KGWrappedSpace.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSpace< KGRod > KGRodSpace;
+typedef KGWrappedSpace<KGRod> KGRodSpace;
 
 }
 

@@ -10,10 +10,10 @@
 
 #include "KComplexElement.hh"
 #include "KIntegratingMagnetostaticFieldSolver.hh"
-namespace katrin {
+namespace katrin
+{
 
-typedef KComplexElement< KEMField::KIntegratingMagnetostaticFieldSolver >
-KIntegratingMagnetostaticFieldSolverBuilder;
+typedef KComplexElement<KEMField::KIntegratingMagnetostaticFieldSolver> KIntegratingMagnetostaticFieldSolverBuilder;
 
 } /* namespace katrin */
 

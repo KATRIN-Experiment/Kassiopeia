@@ -3,28 +3,28 @@
 namespace KGeoBag
 {
 
-    KGShellArcSegmentSurfaceMesher::KGShellArcSegmentSurfaceMesher() :
-            KGSimpleMesher()
-    {
-    }
-    KGShellArcSegmentSurfaceMesher::~KGShellArcSegmentSurfaceMesher()
-    {
-    }
+KGShellArcSegmentSurfaceMesher::KGShellArcSegmentSurfaceMesher() : KGSimpleMesher() {}
+KGShellArcSegmentSurfaceMesher::~KGShellArcSegmentSurfaceMesher() {}
 
-    void KGShellArcSegmentSurfaceMesher::VisitShellPathSurface( KGShellArcSegmentSurface* aShellArcSegmentSurface )
-    {
-        //create arc segment points
-        OpenPoints tArcSegmentPoints;
-        ArcSegmentToOpenPoints( aShellArcSegmentSurface->Path().operator ->(), tArcSegmentPoints );
+void KGShellArcSegmentSurfaceMesher::VisitShellPathSurface(KGShellArcSegmentSurface* aShellArcSegmentSurface)
+{
+    //create arc segment points
+    OpenPoints tArcSegmentPoints;
+    ArcSegmentToOpenPoints(aShellArcSegmentSurface->Path().operator->(), tArcSegmentPoints);
 
-        //create Shell points
-        ShellMesh tMeshPoints;
-        OpenPointsRotatedToShellMesh( tArcSegmentPoints, aShellArcSegmentSurface->ShellMeshCount(), aShellArcSegmentSurface->ShellMeshPower(), tMeshPoints, aShellArcSegmentSurface->AngleStart(), aShellArcSegmentSurface->AngleStop()  );
+    //create Shell points
+    ShellMesh tMeshPoints;
+    OpenPointsRotatedToShellMesh(tArcSegmentPoints,
+                                 aShellArcSegmentSurface->ShellMeshCount(),
+                                 aShellArcSegmentSurface->ShellMeshPower(),
+                                 tMeshPoints,
+                                 aShellArcSegmentSurface->AngleStart(),
+                                 aShellArcSegmentSurface->AngleStop());
 
-        //create mesh
-        ShellMeshToTriangles( tMeshPoints );
+    //create mesh
+    ShellMeshToTriangles(tMeshPoints);
 
-        return;
-    }
-
+    return;
 }
+
+}  // namespace KGeoBag

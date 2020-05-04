@@ -40,6 +40,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenEnergyRadonEventBuilder.h
     Generators/Include/KSGenEnergyLeadEventBuilder.h
     Generators/Include/KSGenEnergyBetaDecayBuilder.h
+    Generators/Include/KSGenEnergyBetaRecoilBuilder.h
     Generators/Include/KSGenEnergyRydbergBuilder.h
     Generators/Include/KSGenNCompositeBuilder.h
     Generators/Include/KSGenLCompositeBuilder.h
@@ -205,6 +206,7 @@ if( Kassiopeia_USE_ROOT )
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_HEADER_FILES
+            Visualization/Include/KSVTKGeneratorPainterBuilder.h
             Visualization/Include/KSVTKTrackPainterBuilder.h
             Visualization/Include/KSVTKTrackTerminatorPainterBuilder.h
         )
@@ -260,6 +262,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenEnergyRadonEventBuilder.cxx
     Generators/Source/KSGenEnergyLeadEventBuilder.cxx
     Generators/Source/KSGenEnergyBetaDecayBuilder.cxx
+    Generators/Source/KSGenEnergyBetaRecoilBuilder.cxx
     Generators/Source/KSGenEnergyRydbergBuilder.cxx
     Generators/Source/KSGenNCompositeBuilder.cxx
     Generators/Source/KSGenLCompositeBuilder.cxx
@@ -424,6 +427,7 @@ if( Kassiopeia_USE_ROOT )
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_SOURCE_FILES
+            Visualization/Source/KSVTKGeneratorPainterBuilder.cxx
             Visualization/Source/KSVTKTrackPainterBuilder.cxx
             Visualization/Source/KSVTKTrackTerminatorPainterBuilder.cxx
         )

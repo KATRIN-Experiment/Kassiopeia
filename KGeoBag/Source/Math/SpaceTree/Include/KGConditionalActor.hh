@@ -1,8 +1,8 @@
 #ifndef KGConditionalActor_HH__
 #define KGConditionalActor_HH__
 
-#include "KGNodeActor.hh"
 #include "KGInspectingActor.hh"
+#include "KGNodeActor.hh"
 
 namespace KGeoBag
 {
@@ -20,53 +20,55 @@ namespace KGeoBag
 *
 */
 
-template<typename NodeType>
-class KGConditionalActor: public KGNodeActor<NodeType>
+template<typename NodeType> class KGConditionalActor : public KGNodeActor<NodeType>
 {
-    public:
-        KGConditionalActor(){;};
-        virtual ~KGConditionalActor(){;};
+  public:
+    KGConditionalActor()
+    {
+        ;
+    };
+    ~KGConditionalActor() override
+    {
+        ;
+    };
 
 
-        //this visitor should not modify the state of the node
-        //just determine if it satisfies a certain condition
-        void SetInspectingActor(KGInspectingActor<NodeType>* inspectActor)
+    //this visitor should not modify the state of the node
+    //just determine if it satisfies a certain condition
+    void SetInspectingActor(KGInspectingActor<NodeType>* inspectActor)
+    {
+        if (inspectActor != nullptr)  //avoid a disaster
         {
-            if(inspectActor != NULL)//avoid a disaster
-            {
-                fInspectingActor = inspectActor;
-            }
+            fInspectingActor = inspectActor;
         }
+    }
 
 
-        //this visitor performs some sort of action on the node
-        //if the inspecting visitor is satisfied
-        void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    //this visitor performs some sort of action on the node
+    //if the inspecting visitor is satisfied
+    void SetOperationalActor(KGNodeActor<NodeType>* opActor)
+    {
+        if (opActor != this && opActor != nullptr)  //avoid a disaster
         {
-            if(opActor != this && opActor != NULL)//avoid a disaster
-            {
-                fOperationalActor = opActor;
-            }
+            fOperationalActor = opActor;
         }
+    }
 
 
-        virtual void ApplyAction(NodeType* node)
-        {
-            if( fInspectingActor->ConditionIsSatisfied(node) )
-            {
-                fOperationalActor->ApplyAction(node);
-            }
+    void ApplyAction(NodeType* node) override
+    {
+        if (fInspectingActor->ConditionIsSatisfied(node)) {
+            fOperationalActor->ApplyAction(node);
         }
+    }
 
 
-    private:
-
-        KGNodeActor<NodeType>* fOperationalActor;
-        KGInspectingActor<NodeType>* fInspectingActor;
-
+  private:
+    KGNodeActor<NodeType>* fOperationalActor;
+    KGInspectingActor<NodeType>* fInspectingActor;
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGConditionalActor_H__ */

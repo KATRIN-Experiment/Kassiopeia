@@ -13,14 +13,13 @@ using namespace std;
 
 namespace katrin
 {
-    template<>
-    KSGenPositionSurfaceAdjustmentStepBuilder::~KComplexElement() {}
+template<> KSGenPositionSurfaceAdjustmentStepBuilder::~KComplexElement() {}
 
-    STATICINT sKSKSGenPositionSurfaceAdjustmentStepStructure =
-                    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<string>("name") +
-                    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<double>("length");
+STATICINT sKSKSGenPositionSurfaceAdjustmentStepStructure =
+    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<string>("name") +
+    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<double>("length");
 
-    STATICINT sKSGenPositionSurfaceAdjustmentStep =
-            KSRootBuilder::ComplexElement<KSGenPositionSurfaceAdjustmentStep>("ksgen_position_surface_adjustment_step");
+STATICINT sKSGenPositionSurfaceAdjustmentStep =
+    KSRootBuilder::ComplexElement<KSGenPositionSurfaceAdjustmentStep>("ksgen_position_surface_adjustment_step");
 
-}
+}  // namespace katrin

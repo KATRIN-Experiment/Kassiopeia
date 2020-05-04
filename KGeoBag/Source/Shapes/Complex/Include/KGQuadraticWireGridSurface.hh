@@ -1,14 +1,13 @@
 #ifndef KGQUADRATICWIREGRIDSURFACE_HH_
 #define KGQUADRATICWIREGRIDSURFACE_HH_
 
-#include "KGWrappedSurface.hh"
-
 #include "KGQuadraticWireGrid.hh"
+#include "KGWrappedSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSurface< KGQuadraticWireGrid > KGQuadraticWireGridSurface;
+typedef KGWrappedSurface<KGQuadraticWireGrid> KGQuadraticWireGridSurface;
 
 }
 

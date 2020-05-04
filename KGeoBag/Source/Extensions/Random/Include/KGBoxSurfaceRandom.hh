@@ -8,20 +8,19 @@
 #ifndef KGBOXSURFACERANDOM_HH_
 #define KGBOXSURFACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGBox.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for dicing a point on a KGBoxSurface.
    */
-  class KGBoxSurfaceRandom : virtual public KGShapeRandom,
-				 public KGBox::Visitor
-  {
+class KGBoxSurfaceRandom : virtual public KGShapeRandom, public KGBox::Visitor
+{
   public:
-	  KGBoxSurfaceRandom() : KGShapeRandom() {}
-    virtual ~KGBoxSurfaceRandom() {}
+    KGBoxSurfaceRandom() : KGShapeRandom() {}
+    ~KGBoxSurfaceRandom() override {}
 
     /**
      * \brief Visitor function for dicing a point on
@@ -29,8 +28,8 @@ namespace KGeoBag
      *
      * \brief aBox
      */
-    virtual void VisitBox(KGBox* aBox);
-  };
-}
+    void VisitBox(KGBox* aBox) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGBOXSURFACERANDOM_HH_ */

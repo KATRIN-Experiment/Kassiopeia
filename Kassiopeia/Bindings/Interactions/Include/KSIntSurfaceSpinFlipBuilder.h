@@ -8,24 +8,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSIntSurfaceSpinFlip > KSIntSurfaceSpinFlipBuilder;
+typedef KComplexElement<KSIntSurfaceSpinFlip> KSIntSurfaceSpinFlipBuilder;
 
-    template< >
-    inline bool KSIntSurfaceSpinFlipBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "probability" )
-        {
-            aContainer->CopyTo( fObject, &KSIntSurfaceSpinFlip::SetProbability );
-            return true;
-        }
-        return false;
+template<> inline bool KSIntSurfaceSpinFlipBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "probability") {
+        aContainer->CopyTo(fObject, &KSIntSurfaceSpinFlip::SetProbability);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

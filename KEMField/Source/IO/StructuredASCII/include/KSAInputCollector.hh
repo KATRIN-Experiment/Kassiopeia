@@ -4,9 +4,11 @@
 
 #include "KSAFileReader.hh"
 #include "KSAInputNode.hh"
+
 #include <stack>
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -24,26 +26,27 @@ namespace KEMField{
 
 class KSAInputCollector
 {
-    public:
-        KSAInputCollector();
-        virtual ~KSAInputCollector();
+  public:
+    KSAInputCollector();
+    virtual ~KSAInputCollector();
 
-        void SetFileReader(KSAFileReader* reader){fReader = reader;};
+    void SetFileReader(KSAFileReader* reader)
+    {
+        fReader = reader;
+    };
 
-        void ForwardInput(KSAInputNode* root);
+    void ForwardInput(KSAInputNode* root);
 
-    protected:
-
-        std::stack< KSAInputNode* > fNodeStack;
-        KSAInputNode* fTempNode;
-        int fStatus;
-        std::string fLine;
-        KSAFileReader* fReader;
-
+  protected:
+    std::stack<KSAInputNode*> fNodeStack;
+    KSAInputNode* fTempNode;
+    int fStatus;
+    std::string fLine;
+    KSAFileReader* fReader;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KSAInputCollector_H__ */

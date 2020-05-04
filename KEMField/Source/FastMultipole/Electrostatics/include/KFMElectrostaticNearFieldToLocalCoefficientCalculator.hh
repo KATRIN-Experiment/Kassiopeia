@@ -1,12 +1,11 @@
 #ifndef KFMElectrostaticNearFieldToLocalCoefficientCalculator_HH__
 #define KFMElectrostaticNearFieldToLocalCoefficientCalculator_HH__
 
-#include "KFMNodeActor.hh"
-#include "KFMElectrostaticLocalCoefficientSet.hh"
-
-#include "KFMElectrostaticNode.hh"
-#include "KFMElectrostaticLocalCoefficientCalculatorNumeric.hh"
 #include "KFMElectrostaticElementContainerBase.hh"
+#include "KFMElectrostaticLocalCoefficientCalculatorNumeric.hh"
+#include "KFMElectrostaticLocalCoefficientSet.hh"
+#include "KFMElectrostaticNode.hh"
+#include "KFMNodeActor.hh"
 
 namespace KEMField
 {
@@ -25,39 +24,38 @@ namespace KEMField
 */
 
 
-class KFMElectrostaticNearFieldToLocalCoefficientCalculator: public KFMNodeActor< KFMElectrostaticNode >
+class KFMElectrostaticNearFieldToLocalCoefficientCalculator : public KFMNodeActor<KFMElectrostaticNode>
 {
-    public:
-        KFMElectrostaticNearFieldToLocalCoefficientCalculator();
-        virtual ~KFMElectrostaticNearFieldToLocalCoefficientCalculator();
+  public:
+    KFMElectrostaticNearFieldToLocalCoefficientCalculator();
+    virtual ~KFMElectrostaticNearFieldToLocalCoefficientCalculator();
 
-        void SetDegree(int l_max);
-        void SetNumberOfQuadratureTerms(unsigned int n);
+    void SetDegree(int l_max);
+    void SetNumberOfQuadratureTerms(unsigned int n);
 
-        void Initialize();
+    void Initialize();
 
-        void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3,1>* elementContainer)
-        {
-            fElementContainer = elementContainer;
-        }
+    void SetElectrostaticElementContainer(KFMElectrostaticElementContainerBase<3, 1>* elementContainer)
+    {
+        fElementContainer = elementContainer;
+    }
 
-        virtual void ApplyAction(KFMElectrostaticNode* node);
+    virtual void ApplyAction(KFMElectrostaticNode* node);
 
-    private:
+  private:
+    unsigned int fDegree;
+    unsigned int fNQuadrature;
 
-        unsigned int fDegree;
-        unsigned int fNQuadrature;
+    double fConversionFactor;
 
-        double fConversionFactor;
-
-        KFMElectrostaticLocalCoefficientCalculatorNumeric* fLocalCoeffCalc;
-        KFMElectrostaticElementContainerBase<3,1>* fElementContainer;
-        mutable KFMElectrostaticLocalCoefficientSet fTempMoments;
-        std::vector< unsigned int > fElementsToRemove;
-        std::vector< unsigned int > fElementsToKeep;
+    KFMElectrostaticLocalCoefficientCalculatorNumeric* fLocalCoeffCalc;
+    KFMElectrostaticElementContainerBase<3, 1>* fElementContainer;
+    mutable KFMElectrostaticLocalCoefficientSet fTempMoments;
+    std::vector<unsigned int> fElementsToRemove;
+    std::vector<unsigned int> fElementsToKeep;
 };
 
 
-}//end of namespace
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticNearFieldToLocalCoefficientCalculator_H__ */

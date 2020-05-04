@@ -1,18 +1,19 @@
 #include "KGInsertionCondition.hh"
-#include "KGPointCloud.hh"
+
 #include "KGAxisAlignedBox.hh"
+#include "KGPointCloud.hh"
 
 namespace KGeoBag
 {
 
-bool
-KGInsertionCondition::ElementIntersectsCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const
+bool KGInsertionCondition::ElementIntersectsCube(const KGNavigableMeshElement* element,
+                                                 const KGCube<KGMESH_DIM>* cube) const
 {
-    if(element != NULL && cube !=NULL)
-    {
+    if (element != nullptr && cube != nullptr) {
         //get the cube center and nearest point on the element to the center
         KGPoint<KGMESH_DIM> center = cube->GetCenter();
-        KThreeVector nearest_point = element->GetMeshElement()->NearestPoint( KThreeVector(center[0], center[1], center[2]) );
+        KThreeVector nearest_point =
+            element->GetMeshElement()->NearestPoint(KThreeVector(center[0], center[1], center[2]));
         //the ratio of the cube's diagonal to its side length is sqrt(3/4)
         //since we use the square distance to compare, this gives us the factor of 0.75
         double dist2 = (nearest_point - KThreeVector(center)).MagnitudeSquared();
@@ -20,8 +21,7 @@ KGInsertionCondition::ElementIntersectsCube(const KGNavigableMeshElement* elemen
         //if nearest point is within cube bounding ball insert the element
         //this is not optimal, but robust
         double len = cube->GetLength();
-        if(dist2 <= 0.75*len*len )
-        {
+        if (dist2 <= 0.75 * len * len) {
             return true;
         }
 
@@ -129,48 +129,42 @@ KGInsertionCondition::ElementIntersectsCube(const KGNavigableMeshElement* elemen
 
         //element is close but has no intersection with cube
         return false;
-
     }
-    else
-    {
+    else {
         return false;
     }
 }
 
-bool
-KGInsertionCondition::ElementEnclosedByCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const
+bool KGInsertionCondition::ElementEnclosedByCube(const KGNavigableMeshElement* element,
+                                                 const KGCube<KGMESH_DIM>* cube) const
 {
-    if(element != NULL && cube !=NULL)
-    {
+    if (element != nullptr && cube != nullptr) {
         KGPointCloud<KGMESH_DIM> point_cloud = element->GetMeshElement()->GetPointCloud();
         fBoundaryCalculator.Reset();
         fBoundaryCalculator.AddPointCloud(&point_cloud);
         KGAxisAlignedBox<KGMESH_DIM> aabb = fBoundaryCalculator.GetMinimalBoundingBox();
 
-        for(unsigned int i=0; i<point_cloud.GetNPoints(); i++)
-        {
-            if(!(cube->PointIsInside(point_cloud.GetPoint(i)) ) )
-            {
+        for (unsigned int i = 0; i < point_cloud.GetNPoints(); i++) {
+            if (!(cube->PointIsInside(point_cloud.GetPoint(i)))) {
                 return false;
             }
         }
         return true;
     }
-    else
-    {
+    else {
         return false;
     }
 }
 
-bool
-KGInsertionCondition::LineSegmentIntersectsCube(KThreeVector start, KThreeVector end, const KGCube<KGMESH_DIM>* cube) const
+bool KGInsertionCondition::LineSegmentIntersectsCube(KThreeVector start, KThreeVector end,
+                                                     const KGCube<KGMESH_DIM>* cube) const
 {
     //uses 'slab clipping' to check if line segment intersects the cube
     //as specified in chapter 11.2 of Geometric Tools for Computer Graphics
     //by Schneider & Eberly
 
-    KThreeVector lower_corner( cube->GetCorner(0) );
-    KThreeVector upper_corner( cube->GetCorner(7) );
+    KThreeVector lower_corner(cube->GetCorner(0));
+    KThreeVector upper_corner(cube->GetCorner(7));
 
     KThreeVector direction = (end - start);
     double length = direction.Magnitude();
@@ -185,43 +179,65 @@ KGInsertionCondition::LineSegmentIntersectsCube(KThreeVector start, KThreeVector
     double tmp;
 
     //check x planes
-    double t0x = lower_diplacement.X()/direction.X();
-    double t1x = upper_diplacement.X()/direction.X();
+    double t0x = lower_diplacement.X() / direction.X();
+    double t1x = upper_diplacement.X() / direction.X();
     //swap if out of order
-    if(t0x > t1x){tmp = t0x; t0x = t1x; t1x = tmp;};
+    if (t0x > t1x) {
+        tmp = t0x;
+        t0x = t1x;
+        t1x = tmp;
+    };
 
     //update valid interval
-    if(t0x > t_min){t_min = t0x;};
-    if(t1x < t_max){t_max = t1x;};
+    if (t0x > t_min) {
+        t_min = t0x;
+    };
+    if (t1x < t_max) {
+        t_max = t1x;
+    };
 
     //check y planes
-    double t0y = lower_diplacement.Y()/direction.Y();
-    double t1y = upper_diplacement.Y()/direction.Y();
+    double t0y = lower_diplacement.Y() / direction.Y();
+    double t1y = upper_diplacement.Y() / direction.Y();
     //swap if out of order
-    if(t0y > t1y){tmp = t0y; t0y = t1y; t1y = tmp;};
+    if (t0y > t1y) {
+        tmp = t0y;
+        t0y = t1y;
+        t1y = tmp;
+    };
 
     //update valid interval
-    if(t0y > t_min){t_min = t0y;};
-    if(t1y < t_max){t_max = t1y;};
+    if (t0y > t_min) {
+        t_min = t0y;
+    };
+    if (t1y < t_max) {
+        t_max = t1y;
+    };
 
     //check z planes
-    double t0z = lower_diplacement.Z()/direction.Z();
-    double t1z = upper_diplacement.Z()/direction.Z();
+    double t0z = lower_diplacement.Z() / direction.Z();
+    double t1z = upper_diplacement.Z() / direction.Z();
     //swap if out of order
-    if(t0z > t1z){tmp = t0z; t0z = t1z; t1z = tmp;};
+    if (t0z > t1z) {
+        tmp = t0z;
+        t0z = t1z;
+        t1z = tmp;
+    };
 
     //update valid interval
-    if(t0z > t_min){t_min = t0z;};
-    if(t1z < t_max){t_max = t1z;};
+    if (t0z > t_min) {
+        t_min = t0z;
+    };
+    if (t1z < t_max) {
+        t_max = t1z;
+    };
 
     //interval is invalid, no intersection
-    if(t_min > t_max)
-    {
+    if (t_min > t_max) {
         return false;
     }
     return true;
 }
 
 
-
-}
+}  // namespace KGeoBag

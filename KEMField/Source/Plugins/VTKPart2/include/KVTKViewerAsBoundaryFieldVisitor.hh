@@ -10,48 +10,48 @@
 
 #include "KElectrostaticBoundaryField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KVTKViewerAsBoundaryFieldVisitor : public KElectrostaticBoundaryField::Visitor
 {
-public:
-	KVTKViewerAsBoundaryFieldVisitor();
-	virtual ~KVTKViewerAsBoundaryFieldVisitor();
+  public:
+    KVTKViewerAsBoundaryFieldVisitor();
+    ~KVTKViewerAsBoundaryFieldVisitor() override;
 
 
-	void ViewGeometry( bool choice )
-	{
-		fViewGeometry = choice;
-	}
+    void ViewGeometry(bool choice)
+    {
+        fViewGeometry = choice;
+    }
 
-	void SaveGeometry( bool choice )
-	{
-		fSaveGeometry = choice;
-	}
+    void SaveGeometry(bool choice)
+    {
+        fSaveGeometry = choice;
+    }
 
-	void SetFile( string file )
-	{
-		fFile = file;
-	}
+    void SetFile(string file)
+    {
+        fFile = file;
+    }
 
-	bool ViewGeometry() const
-	{
-		return fViewGeometry;
-	}
+    bool ViewGeometry() const
+    {
+        return fViewGeometry;
+    }
 
-	bool SaveGeometry() const
-	{
-		return fSaveGeometry;
-	}
+    bool SaveGeometry() const
+    {
+        return fSaveGeometry;
+    }
 
-	void PreVisit( KElectrostaticBoundaryField& );
-	void PostVisit( KElectrostaticBoundaryField& );
+    void PreVisit(KElectrostaticBoundaryField&) override;
+    void PostVisit(KElectrostaticBoundaryField&) override;
 
-private:
-
-	bool fViewGeometry;
-	bool fSaveGeometry;
-	std::string fFile;
+  private:
+    bool fViewGeometry;
+    bool fSaveGeometry;
+    std::string fFile;
 };
 
 } /* namespace KEMField */

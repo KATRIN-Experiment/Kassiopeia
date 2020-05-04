@@ -8,19 +8,17 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajInterpolatorHermite > KSTrajInterpolatorHermiteBuilder;
+typedef KComplexElement<KSTrajInterpolatorHermite> KSTrajInterpolatorHermiteBuilder;
 
-    template< >
-    inline bool KSTrajInterpolatorHermiteBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        return false;
+template<> inline bool KSTrajInterpolatorHermiteBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

@@ -19,33 +19,39 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList>
-class KFMNodeFinder: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMNodeFinder : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeFinder():fID(0),fNode(NULL){};
-        virtual ~KFMNodeFinder(){};
+  public:
+    KFMNodeFinder() : fID(0), fNode(NULL){};
+    virtual ~KFMNodeFinder(){};
 
-        void SetID(int id){fID = id;};
+    void SetID(int id)
+    {
+        fID = id;
+    };
 
-        KFMNode<ObjectTypeList>* GetNode(){return fNode;};
+    KFMNode<ObjectTypeList>* GetNode()
+    {
+        return fNode;
+    };
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                if(node->GetID() == fID){fNode = node;};
-            }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            if (node->GetID() == fID) {
+                fNode = node;
+            };
         }
+    }
 
 
-    protected:
-        /* data */
+  protected:
+    /* data */
 
-        int fID;
-        KFMNode<ObjectTypeList>* fNode;
+    int fID;
+    KFMNode<ObjectTypeList>* fNode;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMNodeFinder_H__ */

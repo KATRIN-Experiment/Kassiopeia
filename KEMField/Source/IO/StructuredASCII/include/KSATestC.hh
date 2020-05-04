@@ -1,14 +1,15 @@
 #ifndef KSATestC_HH__
 #define KSATestC_HH__
 
-#include <vector>
-#include <utility>
-#include <iostream>
-
-#include "KSATestA.hh"
 #include "KSAStructuredASCIIHeaders.hh"
+#include "KSATestA.hh"
 
-namespace KEMField{
+#include <iostream>
+#include <utility>
+#include <vector>
+
+namespace KEMField
+{
 
 /**
 *
@@ -23,59 +24,55 @@ namespace KEMField{
 *
 */
 
-class KSATestC: public KSATestA
+class KSATestC : public KSATestA
 {
-    public:
-
-        KSATestC():KSATestA()
-        {
-
-        };
-
-
-        KSATestC(const KSATestC& copyObject):
-        KSATestA(copyObject)
-        {
-            fCData = copyObject.fCData;
-        }
-
-        virtual ~KSATestC()
-        {
+  public:
+    KSATestC() :
+        KSATestA(){
 
         };
 
-        virtual const char* GetName() const;
 
-        KSATestC& operator=(const KSATestC& rhs)
-        {
-            if(&rhs != this)
-            {
-                KSATestA::operator = (rhs);
-                fCData = rhs.fCData;
-            }
-            return *this;
+    KSATestC(const KSATestC& copyObject) : KSATestA(copyObject)
+    {
+        fCData = copyObject.fCData;
+    }
+
+    ~KSATestC() override{
+
+    };
+
+    const char* GetName() const override;
+
+    KSATestC& operator=(const KSATestC& rhs)
+    {
+        if (&rhs != this) {
+            KSATestA::operator=(rhs);
+            fCData = rhs.fCData;
         }
+        return *this;
+    }
 
-        double GetCData() const;
-        void SetCData(const double& x);
+    double GetCData() const;
+    void SetCData(const double& x);
 
-        void DefineOutputNode(KSAOutputNode* node) const;
+    void DefineOutputNode(KSAOutputNode* node) const override;
 
-        void DefineInputNode(KSAInputNode* node);
+    void DefineInputNode(KSAInputNode* node) override;
 
-        virtual const char* ClassName() const { return "KSATestC"; };
+    const char* ClassName() const override
+    {
+        return "KSATestC";
+    };
 
-    protected:
-
-
-        double fCData;
-
+  protected:
+    double fCData;
 };
 
-DefineKSAClassName( KSATestC )
+DefineKSAClassName(KSATestC)
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KSATestC_H__ */

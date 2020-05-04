@@ -6,34 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMinLongEnergy :
-        public KSComponentTemplate< KSTermMinLongEnergy, KSTerminator >
-    {
-        public:
-            KSTermMinLongEnergy();
-            KSTermMinLongEnergy( const KSTermMinLongEnergy& aCopy );
-            KSTermMinLongEnergy* Clone() const;
-            virtual ~KSTermMinLongEnergy();
+class KSTermMinLongEnergy : public KSComponentTemplate<KSTermMinLongEnergy, KSTerminator>
+{
+  public:
+    KSTermMinLongEnergy();
+    KSTermMinLongEnergy(const KSTermMinLongEnergy& aCopy);
+    KSTermMinLongEnergy* Clone() const override;
+    ~KSTermMinLongEnergy() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMinLongEnergy( const double& aValue );
+  public:
+    void SetMinLongEnergy(const double& aValue);
 
-        private:
-            double fMinLongEnergy;
+  private:
+    double fMinLongEnergy;
+};
 
-    };
-
-    inline void KSTermMinLongEnergy::SetMinLongEnergy( const double& aValue )
-    {
-        fMinLongEnergy = aValue;
-    }
-
+inline void KSTermMinLongEnergy::SetMinLongEnergy(const double& aValue)
+{
+    fMinLongEnergy = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

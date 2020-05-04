@@ -53,50 +53,61 @@
 #define KMATHINTEGRATORFERENC_H_
 
 
-#include <assert.h>
 #include <algorithm>
+#include <assert.h>
 #include <cmath>
 
-namespace katrin {
+namespace katrin
+{
 
-class KMathIntegratorFerenc {
-public:
+class KMathIntegratorFerenc
+{
+  public:
     static double GetWeight(uint32_t iStep, uint32_t NSteps);
 
-public:
+  public:
     KMathIntegratorFerenc(double xMin = 0.0, double xMax = 1.0, uint32_t nSteps = 25) :
-        fXMin(xMin), fXMax(xMax), fNSteps(nSteps)
+        fXMin(xMin),
+        fXMax(xMax),
+        fNSteps(nSteps)
     {
         SetNSteps(nSteps);
     }
 
-    template <typename TFunc>
-    double Integrate( TFunc&  func) const;
+    template<typename TFunc> double Integrate(TFunc& func) const;
 
-    template <typename TFunc>
-    double Integrate( const TFunc&  func) const;
+    template<typename TFunc> double Integrate(const TFunc& func) const;
 
-    void SetRange(double xmin, double xmax) {
+    void SetRange(double xmin, double xmax)
+    {
         fXMin = xmin;
         fXMax = xmax;
     }
-    void SetNSteps(uint32_t nsteps) {
+    void SetNSteps(uint32_t nsteps)
+    {
         /*if (nsteps <= 1) fNSteps = 1;
-        else */if (nsteps <= 6) fNSteps = 6;
-        else if (nsteps <= 12) fNSteps = 12;
-        else fNSteps = nsteps;
+        else */
+        if (nsteps <= 6)
+            fNSteps = 6;
+        else if (nsteps <= 12)
+            fNSteps = 12;
+        else
+            fNSteps = nsteps;
     }
-    uint32_t GetNSteps() const {
+    uint32_t GetNSteps() const
+    {
         return fNSteps;
     }
-    void SetStepSize(double stepSize) {
-        SetNSteps( (uint32_t) fabs((fXMax-fXMin) / stepSize) + 1 );
+    void SetStepSize(double stepSize)
+    {
+        SetNSteps((uint32_t) fabs((fXMax - fXMin) / stepSize) + 1);
     }
-    double GetStepSize() const {
-        return fabs( (fXMax-fXMin) / (double) fNSteps );
+    double GetStepSize() const
+    {
+        return fabs((fXMax - fXMin) / (double) fNSteps);
     }
 
-protected:
+  protected:
     double fXMin;
     double fXMax;
     uint32_t fNSteps;
@@ -109,27 +120,30 @@ inline double KMathIntegratorFerenc::GetWeight(uint32_t iStep, uint32_t NSteps)
     static const double sWeightSingle = 0.5;
 
     // NSteps == 6
-    static const double sWeightsWeddle[7] = {
-        3.0/10.0, 3.0/2.0, 3.0/10.0, 9.0/5.0, 3.0/10.0, 3.0/2.0, 3.0/10.0
-    };
+    static const double sWeightsWeddle[7] =
+        {3.0 / 10.0, 3.0 / 2.0, 3.0 / 10.0, 9.0 / 5.0, 3.0 / 10.0, 3.0 / 2.0, 3.0 / 10.0};
 
     // NSteps >= 12
-    static const double sWeights5[6] = {
-        0.3187500000000000e+00, 0.1376388888888889e+01,
-        0.6555555555555556e+00, 0.1212500000000000e+01,
-        0.9256944444444445e+00, 0.1011111111111111e+01
-    };
+    static const double sWeights5[6] = {0.3187500000000000e+00,
+                                        0.1376388888888889e+01,
+                                        0.6555555555555556e+00,
+                                        0.1212500000000000e+01,
+                                        0.9256944444444445e+00,
+                                        0.1011111111111111e+01};
 
     // NSteps >= 20
-    static const double sWeights9[10] = {
-        0.2803440531305107e0, 0.1648702325837748e1,
-        -0.2027449845679092e0, 0.2797927414021179e1,
-        -0.9761199294532843e0, 0.2556499393738999e1,
-        0.1451083002645404e0, 0.1311227127425048e1,
-        0.9324249063051143e0, 0.1006631393298060e1
-    };
+    static const double sWeights9[10] = {0.2803440531305107e0,
+                                         0.1648702325837748e1,
+                                         -0.2027449845679092e0,
+                                         0.2797927414021179e1,
+                                         -0.9761199294532843e0,
+                                         0.2556499393738999e1,
+                                         0.1451083002645404e0,
+                                         0.1311227127425048e1,
+                                         0.9324249063051143e0,
+                                         0.1006631393298060e1};
 
-    assert( (NSteps == 1 || NSteps == 6 || NSteps >= 12) && iStep <= NSteps );
+    assert((NSteps == 1 || NSteps == 6 || NSteps >= 12) && iStep <= NSteps);
 
     if (NSteps == 1) {
         return sWeightSingle;
@@ -140,24 +154,23 @@ inline double KMathIntegratorFerenc::GetWeight(uint32_t iStep, uint32_t NSteps)
     else if (NSteps < 20) {
         if (iStep <= 5)
             return sWeights5[iStep];
-        else if (iStep >= NSteps-5)
-            return sWeights5[NSteps-iStep];
+        else if (iStep >= NSteps - 5)
+            return sWeights5[NSteps - iStep];
         else
             return 1.0;
     }
     else {
         if (iStep <= 9)
             return sWeights9[iStep];
-        else if (iStep >= NSteps-9)
-            return sWeights9[NSteps-iStep];
+        else if (iStep >= NSteps - 9)
+            return sWeights9[NSteps - iStep];
         else
             return 1.0;
     }
 }
 
 
-template <typename TFunc>
-inline double KMathIntegratorFerenc::Integrate( TFunc& func) const
+template<typename TFunc> inline double KMathIntegratorFerenc::Integrate(TFunc& func) const
 {
     if (fXMax == fXMin)
         return 0.0;
@@ -166,18 +179,17 @@ inline double KMathIntegratorFerenc::Integrate( TFunc& func) const
     const double stepsize = (fXMax - fXMin) / (double) fNSteps;
 
     for (uint32_t iStep = 0; iStep <= fNSteps; ++iStep) {
-        integral += GetWeight(iStep, fNSteps) * func( fXMin + stepsize * (double) iStep );
+        integral += GetWeight(iStep, fNSteps) * func(fXMin + stepsize * (double) iStep);
     }
 
     return integral * stepsize;
 }
 
-template <typename TFunc>
-inline double KMathIntegratorFerenc::Integrate( const TFunc&  func) const
+template<typename TFunc> inline double KMathIntegratorFerenc::Integrate(const TFunc& func) const
 {
     return this->Integrate(const_cast<TFunc&>(func));
 }
 
-}
+}  // namespace katrin
 
 #endif /* KMATHINTEGRATORFERENC_H_ */

@@ -8,24 +8,21 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTermMinLongEnergy > KSTermMinLongEnergyBuilder;
+typedef KComplexElement<KSTermMinLongEnergy> KSTermMinLongEnergyBuilder;
 
-    template< >
-    inline bool KSTermMinLongEnergyBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "long_energy" )
-        {
-            aContainer->CopyTo( fObject, &KSTermMinLongEnergy::SetMinLongEnergy );
-            return true;
-        }
-        return false;
+template<> inline bool KSTermMinLongEnergyBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "long_energy") {
+        aContainer->CopyTo(fObject, &KSTermMinLongEnergy::SetMinLongEnergy);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

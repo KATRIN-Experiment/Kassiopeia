@@ -6,9 +6,13 @@ namespace KGeoBag
 {
 
 
-KG2DPolyLineWithArcs::KG2DPolyLineWithArcs():fIsValid(false){;}
+KG2DPolyLineWithArcs::KG2DPolyLineWithArcs() : fIsValid(false)
+{
+    ;
+}
 
-KG2DPolyLineWithArcs::KG2DPolyLineWithArcs(const std::vector< KGVertexSideDescriptor >* ordered_descriptors):fIsValid(false)
+KG2DPolyLineWithArcs::KG2DPolyLineWithArcs(const std::vector<KGVertexSideDescriptor>* ordered_descriptors) :
+    fIsValid(false)
 {
     SetDescriptors(ordered_descriptors);
     Initialize();
@@ -16,43 +20,36 @@ KG2DPolyLineWithArcs::KG2DPolyLineWithArcs(const std::vector< KGVertexSideDescri
 
 KG2DPolyLineWithArcs::~KG2DPolyLineWithArcs()
 {
-    for(unsigned int i=0; i<fSides.size(); i++)
-    {
+    for (unsigned int i = 0; i < fSides.size(); i++) {
         delete fSides[i];
     }
 }
 
-void
-KG2DPolyLineWithArcs::SetDescriptors(const std::vector< KGVertexSideDescriptor >* ordered_descriptors)
+void KG2DPolyLineWithArcs::SetDescriptors(const std::vector<KGVertexSideDescriptor>* ordered_descriptors)
 {
     fDescriptors = *ordered_descriptors;
     Initialize();
 }
 
-void
-KG2DPolyLineWithArcs::Initialize()
+void KG2DPolyLineWithArcs::Initialize()
 {
-    if(fDescriptors.size() < 2)
-    {
-        std::cout<<"KG2DPolyLineWithArcs::Initialize() Warning! polyline has been assigned less than two vertices."<<std::endl;
+    if (fDescriptors.size() < 2) {
+        std::cout << "KG2DPolyLineWithArcs::Initialize() Warning! polyline has been assigned less than two vertices."
+                  << std::endl;
         fIsValid = false;
     }
-    else
-    {
+    else {
         //start by extracting the vertices
         fNVertices = fDescriptors.size();
         fVertices.clear();
         fVertices.resize(fNVertices);
-        for(int i=0; i<fNVertices; i++)
-        {
+        for (int i = 0; i < fNVertices; i++) {
             fVertices[i] = fDescriptors[i].Vertex;
         }
 
         //if for some odd reason there are sides already, eliminate them
-        if(fSides.size() > 0)
-        {
-            for(unsigned int i = 0; i<fSides.size(); i++)
-            {
+        if (fSides.size() > 0) {
+            for (unsigned int i = 0; i < fSides.size(); i++) {
                 delete fSides[i];
             }
         }
@@ -62,11 +59,9 @@ KG2DPolyLineWithArcs::Initialize()
         fNArcs = 0;
 
         int j;
-        for(int i = 0; i < fNVertices-1; i++)
-        {
-            j = i+1;
-            if(fDescriptors[i].IsArc)
-            {
+        for (int i = 0; i < fNVertices - 1; i++) {
+            j = i + 1;
+            if (fDescriptors[i].IsArc) {
                 //create an arc
                 fArcs.push_back(new KG2DArc(fVertices[i],
                                             fVertices[j],
@@ -76,10 +71,9 @@ KG2DPolyLineWithArcs::Initialize()
                 fNArcs++;
                 fSides.push_back(fArcs.back());
             }
-            else
-            {
+            else {
                 //create a line segment
-                fSides.push_back( new KG2DLineSegment(fVertices[i], fVertices[j]) );
+                fSides.push_back(new KG2DLineSegment(fVertices[i], fVertices[j]));
             }
         }
 
@@ -88,41 +82,33 @@ KG2DPolyLineWithArcs::Initialize()
         DetermineIfPolyLineIsSimple();
 
         fIsValid = true;
-
-        }
+    }
 }
 
 
-void
-KG2DPolyLineWithArcs::GetVertices(std::vector<KTwoVector>* vertices) const
+void KG2DPolyLineWithArcs::GetVertices(std::vector<KTwoVector>* vertices) const
 {
     vertices->clear();
-    if(fIsValid)
-    {
+    if (fIsValid) {
         vertices->resize(fNVertices);
-        for(int i =0; i < fNVertices; i++)
-        {
+        for (int i = 0; i < fNVertices; i++) {
             (*vertices)[i] = fVertices[i];
         }
     }
 }
 
-void
-KG2DPolyLineWithArcs::GetSides( std::vector< KG2DShape* >* sides) const
+void KG2DPolyLineWithArcs::GetSides(std::vector<KG2DShape*>* sides) const
 {
     sides->clear();
-    if(fIsValid)
-    {
+    if (fIsValid) {
         sides->resize(fNSides);
-        for(int i =0; i < fNSides; i++)
-        {
+        for (int i = 0; i < fNSides; i++) {
             (*sides)[i] = fSides[i];
         }
     }
 }
 
-void
-KG2DPolyLineWithArcs::NearestDistance( const KTwoVector& aPoint, double& aDistance ) const
+void KG2DPolyLineWithArcs::NearestDistance(const KTwoVector& aPoint, double& aDistance) const
 {
     double min, dist;
 
@@ -133,21 +119,18 @@ KG2DPolyLineWithArcs::NearestDistance( const KTwoVector& aPoint, double& aDistan
     aDistance = dist;
 
     //loop over the rest of the polyline's sides looking for a minimum
-    for(int i=0; i<fNSides; i++)
-    {
+    for (int i = 0; i < fNSides; i++) {
         fSides[i]->NearestDistance(aPoint, dist);
-        if(dist <= min)
-        {
+        if (dist <= min) {
             aDistance = dist;
             min = dist;
         }
     }
 }
 
-KTwoVector
-KG2DPolyLineWithArcs::Point( const KTwoVector& aPoint ) const
+KTwoVector KG2DPolyLineWithArcs::Point(const KTwoVector& aPoint) const
 {
-  KTwoVector aNearest;
+    KTwoVector aNearest;
     double min2, dist2;
     KTwoVector near;
 
@@ -158,12 +141,10 @@ KG2DPolyLineWithArcs::Point( const KTwoVector& aPoint ) const
     aNearest = near;
 
     //loop over the rest of the polyline's sides looking for a minimum
-    for(int i=0; i<fNSides; i++)
-    {
+    for (int i = 0; i < fNSides; i++) {
         near = fSides[i]->Point(aPoint);
         dist2 = (aPoint - near).MagnitudeSquared();
-        if(dist2 <= min2)
-        {
+        if (dist2 <= min2) {
             aNearest = near;
             min2 = dist2;
         }
@@ -171,10 +152,9 @@ KG2DPolyLineWithArcs::Point( const KTwoVector& aPoint ) const
     return aNearest;
 }
 
-KTwoVector
-KG2DPolyLineWithArcs::Normal( const KTwoVector& aPoint ) const
+KTwoVector KG2DPolyLineWithArcs::Normal(const KTwoVector& aPoint) const
 {
-  KTwoVector aNormal;
+    KTwoVector aNormal;
     //first we have to find the side with the nearest point
     double min2, dist2;
     KTwoVector near, nearest, normal;
@@ -188,12 +168,10 @@ KG2DPolyLineWithArcs::Normal( const KTwoVector& aPoint ) const
     index = 0;
 
     //loop over the rest of the polyline's sides looking for a minimum
-    for(int i=0; i<fNSides; i++)
-    {
+    for (int i = 0; i < fNSides; i++) {
         near = fSides[i]->Point(aPoint);
         dist2 = (aPoint - near).MagnitudeSquared();
-        if(dist2 <= min2)
-        {
+        if (dist2 <= min2) {
             nearest = near;
             index = i;
         }
@@ -204,35 +182,35 @@ KG2DPolyLineWithArcs::Normal( const KTwoVector& aPoint ) const
     //return the vector which points from the vertex to the point
     //in question.
 
-//    //first we check if the nearest point is really close to a vertex
-//    if( (nearest - fVertices[index]).MagnitudeSquared() < SMALLNUMBER*SMALLNUMBER )
-//    {
-//        aNormal = ((nearest - fVertices[index])).Unit();
-//        return;
-//    }
-//    else if( index + 1 < fNVertices )
-//    {
-//        if( (nearest - fVertices[index +1 ]).MagnitudeSquared() < SMALLNUMBER*SMALLNUMBER )
-//        {
-//            aNormal = ((nearest - fVertices[index + 1])).Unit();
-//            return;
-//        }
-//    }
-//    else //no troubles with vertices
-//    {
+    //    //first we check if the nearest point is really close to a vertex
+    //    if( (nearest - fVertices[index]).MagnitudeSquared() < SMALLNUMBER*SMALLNUMBER )
+    //    {
+    //        aNormal = ((nearest - fVertices[index])).Unit();
+    //        return;
+    //    }
+    //    else if( index + 1 < fNVertices )
+    //    {
+    //        if( (nearest - fVertices[index +1 ]).MagnitudeSquared() < SMALLNUMBER*SMALLNUMBER )
+    //        {
+    //            aNormal = ((nearest - fVertices[index + 1])).Unit();
+    //            return;
+    //        }
+    //    }
+    //    else //no troubles with vertices
+    //    {
 
 
-        //ignore any possible issues with vertices for now
-        aNormal = fSides[index]->Normal(aPoint);
+    //ignore any possible issues with vertices for now
+    aNormal = fSides[index]->Normal(aPoint);
 
 
-//        return;
-//    }
-	return aNormal;
+    //        return;
+    //    }
+    return aNormal;
 }
 
-void
-KG2DPolyLineWithArcs::NearestIntersection( const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult, KTwoVector& anIntersection ) const
+void KG2DPolyLineWithArcs::NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
+                                               KTwoVector& anIntersection) const
 {
     bool found;
     double min2, dist2;
@@ -243,15 +221,12 @@ KG2DPolyLineWithArcs::NearestIntersection( const KTwoVector& aStart, const KTwoV
     min2 = (anEnd - aStart).MagnitudeSquared();  //use MagnitudeSquared to avoid computing sqrt
 
     //loop over all sides looking for an intersection
-    for(int i=0; i<fNSides; i++)
-    {
+    for (int i = 0; i < fNSides; i++) {
         found = false;
         fSides[i]->NearestIntersection(aStart, anEnd, found, inter);
-        if(found)
-        {
+        if (found) {
             dist2 = (inter - aStart).MagnitudeSquared();
-            if(dist2 <= min2)
-            {
+            if (dist2 <= min2) {
                 aResult = true;
                 anIntersection = inter;
             }
@@ -260,14 +235,13 @@ KG2DPolyLineWithArcs::NearestIntersection( const KTwoVector& aStart, const KTwoV
 }
 
 
-void
-KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
+void KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
 {
     KG2DLineSegment* aLine;
     KG2DArc* aArc;
     KG2DArc* ArcUnderTest;
     KG2DLineSegment* LineUnderTest;
-    int test_type=0;
+    int test_type = 0;
 
 
     int i = 0;
@@ -280,71 +254,75 @@ KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
     int flag;
     fIsSimple = true;
 
-    do
-    {
+    do {
         test = false;
-        aLine = NULL;
-        aArc = NULL;
-        LineUnderTest = NULL;
-        ArcUnderTest = NULL;
+        aLine = nullptr;
+        aArc = nullptr;
+        LineUnderTest = nullptr;
+        ArcUnderTest = nullptr;
         inters.clear();
         flag = 0;
 
         aLine = dynamic_cast<KG2DLineSegment*>(fSides[i]);
         aArc = dynamic_cast<KG2DArc*>(fSides[i]);
 
-        for(int x = 0; x < fNSides; x++)
-        {
-            if(x!=i) //no tests against self
+        for (int x = 0; x < fNSides; x++) {
+            if (x != i)  //no tests against self
             {
                 LineUnderTest = dynamic_cast<KG2DLineSegment*>(fSides[x]);
                 ArcUnderTest = dynamic_cast<KG2DArc*>(fSides[x]);
 
-                if(aLine && LineUnderTest){test_type = 0;};
-                if(aLine && ArcUnderTest){test_type = 1;};
-                if(aArc && LineUnderTest){test_type = 2;};
-                if(aArc && ArcUnderTest){test_type = 3;};
+                if (aLine && LineUnderTest) {
+                    test_type = 0;
+                };
+                if (aLine && ArcUnderTest) {
+                    test_type = 1;
+                };
+                if (aArc && LineUnderTest) {
+                    test_type = 2;
+                };
+                if (aArc && ArcUnderTest) {
+                    test_type = 3;
+                };
 
-                switch(test_type)
-                {
+                switch (test_type) {
                     case 0:
-                    aLine->NearestIntersection(*LineUnderTest, test, inter);
-                    break;
+                        aLine->NearestIntersection(*LineUnderTest, test, inter);
+                        break;
                     case 1:
-                    ArcUnderTest->NearestIntersection(aLine->GetFirstPoint(), aLine->GetSecondPoint(), test, inter);
-                    break;
+                        ArcUnderTest->NearestIntersection(aLine->GetFirstPoint(), aLine->GetSecondPoint(), test, inter);
+                        break;
                     case 2:
-                    aArc->NearestIntersection(LineUnderTest->GetFirstPoint(), LineUnderTest->GetSecondPoint(), test, inter);
-                    break;
+                        aArc->NearestIntersection(LineUnderTest->GetFirstPoint(),
+                                                  LineUnderTest->GetSecondPoint(),
+                                                  test,
+                                                  inter);
+                        break;
                     case 3:
-                    aArc->NearestIntersection(ArcUnderTest, flag, &inters);
-                    break;
+                        aArc->NearestIntersection(ArcUnderTest, flag, &inters);
+                        break;
                 }
 
 
-                if(test || flag != 0)
-                {
+                if (test || flag != 0) {
                     //we found an intersection somewhere but
                     //check to make sure it is not just overlap between the end points
                     //this can only happen if the segments are adjacent
-                    if( x == i+1 || x == i-1 )
-                    {
-                        if(test_type == 0 || test_type == 1) //intersection with a line segment
+                    if (x == i + 1 || x == i - 1) {
+                        if (test_type == 0 || test_type == 1)  //intersection with a line segment
                         {
-                            if( !( ( (inter - aLine->GetFirstPoint() ).Magnitude() < SMALLNUMBER ) ||
-                                 ( (inter - aLine->GetSecondPoint() ).Magnitude() < SMALLNUMBER ) ) )
-                            {
+                            if (!(((inter - aLine->GetFirstPoint()).Magnitude() < SMALLNUMBER) ||
+                                  ((inter - aLine->GetSecondPoint()).Magnitude() < SMALLNUMBER))) {
                                 //not close to end point
                                 fIsSimple = false;
                                 return;
                             }
                         }
 
-                        if(test_type == 2) //intersection with an arc segment
+                        if (test_type == 2)  //intersection with an arc segment
                         {
-                            if( !( ( (inter - aArc->GetFirstPoint() ).Magnitude() < SMALLNUMBER ) ||
-                                 ( (inter - aArc->GetSecondPoint() ).Magnitude() < SMALLNUMBER ) ) )
-                            {
+                            if (!(((inter - aArc->GetFirstPoint()).Magnitude() < SMALLNUMBER) ||
+                                  ((inter - aArc->GetSecondPoint()).Magnitude() < SMALLNUMBER))) {
                                 //not close to end point
                                 fIsSimple = false;
                                 return;
@@ -352,13 +330,11 @@ KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
                         }
 
 
-                        if( test_type ==3 && flag > 0) //intersection with an arc segment
+                        if (test_type == 3 && flag > 0)  //intersection with an arc segment
                         {
-                            for(unsigned int m=0; m<inters.size(); m++)
-                            {
-                                if( !( ( (inters[m] - aArc->GetFirstPoint() ).Magnitude() < SMALLNUMBER ) ||
-                                     ( (inters[m] - aArc->GetSecondPoint() ).Magnitude() < SMALLNUMBER ) ) )
-                                {
+                            for (unsigned int m = 0; m < inters.size(); m++) {
+                                if (!(((inters[m] - aArc->GetFirstPoint()).Magnitude() < SMALLNUMBER) ||
+                                      ((inters[m] - aArc->GetSecondPoint()).Magnitude() < SMALLNUMBER))) {
                                     //not close to end point
                                     fIsSimple = false;
                                     return;
@@ -366,14 +342,13 @@ KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
                             }
                         }
 
-                        if(flag == -1) //large overlap between arcs
+                        if (flag == -1)  //large overlap between arcs
                         {
                             fIsSimple = false;
                             return;
                         }
                     }
-                    else
-                    {
+                    else {
                         fIsSimple = false;
                         return;
                     }
@@ -381,10 +356,8 @@ KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
             }
         }
         i++;
-    }
-    while( fIsSimple && (i<fNSides) );
-
+    } while (fIsSimple && (i < fNSides));
 }
 
 
-}//end of kgeobag namespace
+}  // namespace KGeoBag

@@ -18,41 +18,47 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList, typename CollectedObjectType >
-class KFMObjectCollector: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, typename CollectedObjectType>
+class KFMObjectCollector : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMObjectCollector(){};
-        virtual ~KFMObjectCollector(){};
+  public:
+    KFMObjectCollector(){};
+    ~KFMObjectCollector() override{};
 
-        void Clear(){fCollectedObjects.clear(); fNodeIDs.clear();};
+    void Clear()
+    {
+        fCollectedObjects.clear();
+        fNodeIDs.clear();
+    };
 
-        const std::vector< CollectedObjectType* >* GetCollectedObjects() const {return &fCollectedObjects;};
-        const std::vector< int >* GetCollectedObjectAssociatedNodeIDs() const {return &fNodeIDs;};
+    const std::vector<CollectedObjectType*>* GetCollectedObjects() const
+    {
+        return &fCollectedObjects;
+    };
+    const std::vector<int>* GetCollectedObjectAssociatedNodeIDs() const
+    {
+        return &fNodeIDs;
+    };
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                int id = node->GetID();
-                CollectedObjectType* obj = KFMObjectRetriever<ObjectTypeList, CollectedObjectType>::GetNodeObject(node);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            int id = node->GetID();
+            CollectedObjectType* obj = KFMObjectRetriever<ObjectTypeList, CollectedObjectType>::GetNodeObject(node);
 
-                if(obj != NULL)
-                {
-                    fCollectedObjects.push_back(obj);
-                    fNodeIDs.push_back(id);
-                }
+            if (obj != nullptr) {
+                fCollectedObjects.push_back(obj);
+                fNodeIDs.push_back(id);
             }
         }
+    }
 
-    private:
-
-        std::vector< int > fNodeIDs;
-        std::vector< CollectedObjectType* > fCollectedObjects;
-
+  private:
+    std::vector<int> fNodeIDs;
+    std::vector<CollectedObjectType*> fCollectedObjects;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMObjectCollector_H__ */

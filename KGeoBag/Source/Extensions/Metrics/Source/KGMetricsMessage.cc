@@ -7,6 +7,4 @@
 
 #include "KGMetricsMessage.hh"
 
-KMESSAGE_DEFINE( KGeoBag, metricsmsg, kg_metrics, KGMETRICS )
-
-
+KMESSAGE_DEFINE(KGeoBag, metricsmsg, kg_metrics, KGMETRICS)

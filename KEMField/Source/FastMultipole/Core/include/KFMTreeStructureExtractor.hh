@@ -21,55 +21,59 @@ namespace KEMField
 */
 
 
-template< typename ObjectTypeList>
-class KFMTreeStructureExtractor: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMTreeStructureExtractor : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMTreeStructureExtractor(){ fFlattenedTree.clear(); fNNodes = 0; };
-        virtual ~KFMTreeStructureExtractor(){};
+  public:
+    KFMTreeStructureExtractor()
+    {
+        fFlattenedTree.clear();
+        fNNodes = 0;
+    };
+    ~KFMTreeStructureExtractor() override{};
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                //we only need to actively keep track of non-leaf nodes
-                if( node->HasChildren() )
-                {
-                    unsigned int id = node->GetID();
-                    std::vector<unsigned int> child_ids;
-                    child_ids.resize(0);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            //we only need to actively keep track of non-leaf nodes
+            if (node->HasChildren()) {
+                unsigned int id = node->GetID();
+                std::vector<unsigned int> child_ids;
+                child_ids.resize(0);
 
-                    unsigned int n_children = node->GetNChildren();
-                    child_ids.reserve(n_children);
-                    for(unsigned int i=0; i<n_children; i++)
-                    {
-                        child_ids.push_back( node->GetChild(i)->GetID() );
-                    }
-
-                    KFMNodeData data;
-                    data.SetID(id);
-                    data.SetChildIDs(&child_ids);
-
-                    fFlattenedTree.push_back(data);
+                unsigned int n_children = node->GetNChildren();
+                child_ids.reserve(n_children);
+                for (unsigned int i = 0; i < n_children; i++) {
+                    child_ids.push_back(node->GetChild(i)->GetID());
                 }
 
-                fNNodes++;
+                KFMNodeData data;
+                data.SetID(id);
+                data.SetChildIDs(&child_ids);
+
+                fFlattenedTree.push_back(data);
             }
+
+            fNNodes++;
         }
+    }
 
-        unsigned int GetNumberOfNodes() const {return fNNodes;};
+    unsigned int GetNumberOfNodes() const
+    {
+        return fNNodes;
+    };
 
-        const std::vector<KFMNodeData>* GetFlattenedTree() const {return &fFlattenedTree;};
+    const std::vector<KFMNodeData>* GetFlattenedTree() const
+    {
+        return &fFlattenedTree;
+    };
 
 
-    private:
-
-        unsigned int fNNodes;
-        std::vector<KFMNodeData> fFlattenedTree;
-
+  private:
+    unsigned int fNNodes;
+    std::vector<KFMNodeData> fFlattenedTree;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMTreeStructureExtractor_H__ */

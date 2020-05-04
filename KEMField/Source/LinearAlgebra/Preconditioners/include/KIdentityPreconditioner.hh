@@ -19,57 +19,59 @@ namespace KEMField
 *
 */
 
-template < typename ValueType >
-class KIdentityPreconditioner: public KPreconditioner< ValueType >
+template<typename ValueType> class KIdentityPreconditioner : public KPreconditioner<ValueType>
 {
-    public:
-        KIdentityPreconditioner(unsigned int dimension):
-            fDimension(dimension),
-            fOne(1),
-            fZero(0){};
+  public:
+    KIdentityPreconditioner(unsigned int dimension) : fDimension(dimension), fOne(1), fZero(0){};
 
-        virtual ~KIdentityPreconditioner(){};
+    virtual ~KIdentityPreconditioner(){};
 
-        virtual std::string Name(){ return std::string("identity"); };
+    virtual std::string Name()
+    {
+        return std::string("identity");
+    };
 
-        virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
-        {
-            //copy x into y
-            for(unsigned int i=0; i<fDimension; i++)
-            {
-                y[i] = x(i);
-            }
+    virtual void Multiply(const KVector<ValueType>& x, KVector<ValueType>& y) const
+    {
+        //copy x into y
+        for (unsigned int i = 0; i < fDimension; i++) {
+            y[i] = x(i);
         }
+    }
 
-        virtual void MultiplyTranspose(const KVector<ValueType>& x, KVector<ValueType>& y) const
-        {
-            //copy x into y
-            for(unsigned int i=0; i<fDimension; i++)
-            {
-                y[i] = x(i);
-            }
+    virtual void MultiplyTranspose(const KVector<ValueType>& x, KVector<ValueType>& y) const
+    {
+        //copy x into y
+        for (unsigned int i = 0; i < fDimension; i++) {
+            y[i] = x(i);
         }
+    }
 
-        virtual bool IsStationary(){return true;};
+    virtual bool IsStationary()
+    {
+        return true;
+    };
 
-        virtual unsigned int Dimension() const {return fDimension;} ;
+    virtual unsigned int Dimension() const
+    {
+        return fDimension;
+    };
 
-        virtual const ValueType& operator()(unsigned int i, unsigned int j) const
-        {
-            if(i == j){return fOne;};
-            return fZero;
-        }
+    virtual const ValueType& operator()(unsigned int i, unsigned int j) const
+    {
+        if (i == j) {
+            return fOne;
+        };
+        return fZero;
+    }
 
-    private:
-
-        unsigned int fDimension;
-        ValueType fOne;
-        ValueType fZero;
-
-
+  private:
+    unsigned int fDimension;
+    ValueType fOne;
+    ValueType fZero;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KIdentityPreconditioner_H__ */

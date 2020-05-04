@@ -6,52 +6,51 @@
 namespace KGeoBag
 {
 
-    class KGPlanarCircle :
-        public KGPlanarClosedPath
-    {
-        public:
-            KGPlanarCircle();
-            KGPlanarCircle( const KGPlanarCircle& aCopy );
-            KGPlanarCircle( const KTwoVector& aCentroid, const double& aRadius, const unsigned int aCount = 32 );
-            KGPlanarCircle( const double& anX, const double& aY, const double& aRadius, const unsigned int aCount = 32 );
-            virtual ~KGPlanarCircle();
+class KGPlanarCircle : public KGPlanarClosedPath
+{
+  public:
+    KGPlanarCircle();
+    KGPlanarCircle(const KGPlanarCircle& aCopy);
+    KGPlanarCircle(const KTwoVector& aCentroid, const double& aRadius, const unsigned int aCount = 32);
+    KGPlanarCircle(const double& anX, const double& aY, const double& aRadius, const unsigned int aCount = 32);
+    ~KGPlanarCircle() override;
 
-            KGPlanarCircle* Clone() const;
-            void CopyFrom( const KGPlanarCircle& aCopy );
+    KGPlanarCircle* Clone() const override;
+    void CopyFrom(const KGPlanarCircle& aCopy);
 
-        public:
-            void Centroid( const KTwoVector& aStart );
-            void X( const double& aValue );
-            void Y( const double& aValue );
-            void Radius( const double& aValue );
-            void MeshCount( const unsigned int& aCount );
+  public:
+    void Centroid(const KTwoVector& aStart);
+    void X(const double& aValue);
+    void Y(const double& aValue);
+    void Radius(const double& aValue);
+    void MeshCount(const unsigned int& aCount);
 
-            const KTwoVector& Centroid() const;
-            const double& X() const;
-            const double& Y() const;
-            const double& Radius() const;
-            const unsigned int& MeshCount() const;
+    const KTwoVector& Centroid() const override;
+    const double& X() const;
+    const double& Y() const;
+    const double& Radius() const;
+    const unsigned int& MeshCount() const;
 
-            const double& Length() const;
-            const KTwoVector& Anchor() const;
+    const double& Length() const override;
+    const KTwoVector& Anchor() const override;
 
-        public:
-            KTwoVector At( const double& aLength ) const;
-            KTwoVector Point( const KTwoVector& aQuery ) const;
-            KTwoVector Normal( const KTwoVector& aQuery ) const;
-            bool Above( const KTwoVector& aQuery ) const;
+  public:
+    KTwoVector At(const double& aLength) const override;
+    KTwoVector Point(const KTwoVector& aQuery) const override;
+    KTwoVector Normal(const KTwoVector& aQuery) const override;
+    bool Above(const KTwoVector& aQuery) const override;
 
-        private:
-            KTwoVector fCentroid;
-            double fRadius;
-            unsigned int fMeshCount;
+  private:
+    KTwoVector fCentroid;
+    double fRadius;
+    unsigned int fMeshCount;
 
-            mutable double fLength;
-            mutable KTwoVector fAnchor;
+    mutable double fLength;
+    mutable KTwoVector fAnchor;
 
-            void Initialize() const;
-            mutable bool fInitialized;
-    };
-}
+    void Initialize() const;
+    mutable bool fInitialized;
+};
+}  // namespace KGeoBag
 
 #endif

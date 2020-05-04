@@ -1,111 +1,107 @@
-#include <vector>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <cmath>
-#include <iomanip>
-
-#include "KThreeVector_KEMField.hh"
 #include "KEMConstants.hh"
 #include "KEMCout.hh"
-
 #include "KSurface.hh"
+#include "KThreeVector_KEMField.hh"
+
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
 
 using namespace KEMField;
 
 int main(int /*argc*/, char** /*argv*/)
 {
-  double a = 1.5;
-  double b = 1.3;
-  KThreeVector p0(0.,0.,0.);
-  KThreeVector n1(1./sqrt(2.),1./sqrt(2.),0.);
-  KThreeVector n2(1./sqrt(2.),-1./sqrt(2.),0.);
+    double a = 1.5;
+    double b = 1.3;
+    KThreeVector p0(0., 0., 0.);
+    KThreeVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
+    KThreeVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
 
-  double dirichletValue = 10.2;
+    double dirichletValue = 10.2;
 
-  double chargeDensity = 4.8;
+    double chargeDensity = 4.8;
 
-  KSurface<KElectrostaticBasis,
-  	   KDirichletBoundary,
-  	   KTriangle>* t = new KSurface<KElectrostaticBasis,
-  					KDirichletBoundary,
-  					KTriangle>();
+    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* t =
+        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
 
 
-  t->SetA(a);
-  t->SetB(b);
-  t->SetP0(p0);
-  t->SetN1(n1);
-  t->SetN2(n2);
+    t->SetA(a);
+    t->SetB(b);
+    t->SetP0(p0);
+    t->SetN1(n1);
+    t->SetN2(n2);
 
-  t->SetBoundaryValue(dirichletValue);
+    t->SetBoundaryValue(dirichletValue);
 
-  t->SetSolution(chargeDensity);
+    t->SetSolution(chargeDensity);
 
-  
-  class Visitor : public KSelectiveVisitor<KShapeVisitor,
-					   KTYPELIST_2( KTriangle,KRectangle )>
-  {
-  public:
-    using KSelectiveVisitor<KShapeVisitor,
-			    KTYPELIST_2( KTriangle,KRectangle )>::Visit;
 
-    Visitor() {}
-    ~Visitor() {}
+    class Visitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_2(KTriangle, KRectangle)>
+    {
+      public:
+        using KSelectiveVisitor<KShapeVisitor, KTYPELIST_2(KTriangle, KRectangle)>::Visit;
 
-    void Visit(KTriangle& t) { (void)t;KEMField::cout<<"Triangle!"<<KEMField::endl; }
-    void Visit(KRectangle& r) { (void)r;KEMField::cout<<"Rectangle!"<<KEMField::endl; }
-  };
+        Visitor() {}
+        ~Visitor() {}
 
-  Visitor visitor;
+        void Visit(KTriangle& t)
+        {
+            (void) t;
+            KEMField::cout << "Triangle!" << KEMField::endl;
+        }
+        void Visit(KRectangle& r)
+        {
+            (void) r;
+            KEMField::cout << "Rectangle!" << KEMField::endl;
+        }
+    };
 
-  t->Accept(visitor);
+    Visitor visitor;
 
-  KSurface<KElectrostaticBasis,
-	   KDirichletBoundary,
-	   KRectangle>* r = new KSurface<KElectrostaticBasis,
-					KDirichletBoundary,
-					KRectangle>();
+    t->Accept(visitor);
 
-  r->SetA(a);
-  r->SetB(b);
-  r->SetP0(p0);
-  r->SetN1(n1);
-  r->SetN2(n2);
+    KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>* r =
+        new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
 
-  r->SetBoundaryValue(dirichletValue);
+    r->SetA(a);
+    r->SetB(b);
+    r->SetP0(p0);
+    r->SetN1(n1);
+    r->SetN2(n2);
 
-  r->SetSolution(chargeDensity);
+    r->SetBoundaryValue(dirichletValue);
 
-  r->Accept(visitor);
-  // visitor.Visit(r->GetShape());
+    r->SetSolution(chargeDensity);
 
-  KSurfacePrimitive* p = r;
+    r->Accept(visitor);
+    // visitor.Visit(r->GetShape());
 
-  KEMField::cout<<"From base: "<<KEMField::endl;
+    KSurfacePrimitive* p = r;
 
-  p->Accept(visitor);
-  // visitor.Visit(p->GetBasis());
+    KEMField::cout << "From base: " << KEMField::endl;
 
-  KSurface<KElectrostaticBasis,
-	   KRobinBoundary,
-	   KLineSegment>* w = new KSurface<KElectrostaticBasis,
-					   KRobinBoundary,
-					   KLineSegment>();
+    p->Accept(visitor);
+    // visitor.Visit(p->GetBasis());
 
-  w->SetP0(KThreeVector(0.,1.,0.));
-  w->SetP1(KThreeVector(1.,0.,0.));
-  w->SetDiameter(1.e-4);
-  w->SetNormalBoundaryFlux(3.3);
-  w->SetSolution(12.6);
+    KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>* w =
+        new KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>();
 
-  KEMField::cout<<"Attempting to visit a class that is not in the selective visitor:"<<KEMField::endl;
+    w->SetP0(KThreeVector(0., 1., 0.));
+    w->SetP1(KThreeVector(1., 0., 0.));
+    w->SetDiameter(1.e-4);
+    w->SetNormalBoundaryFlux(3.3);
+    w->SetSolution(12.6);
 
-  w->Accept(visitor);
+    KEMField::cout << "Attempting to visit a class that is not in the selective visitor:" << KEMField::endl;
 
-  delete r;
-  delete t;
+    w->Accept(visitor);
 
-  return 0;
+    delete r;
+    delete t;
+
+    return 0;
 }

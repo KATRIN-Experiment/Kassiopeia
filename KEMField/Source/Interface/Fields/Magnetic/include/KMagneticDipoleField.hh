@@ -10,22 +10,25 @@
 
 #include "KMagnetostaticField.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KMagneticDipoleField: public KMagnetostaticField {
-public:
+class KMagneticDipoleField : public KMagnetostaticField
+{
+  public:
     KMagneticDipoleField();
-    virtual ~KMagneticDipoleField();
-private:
-    KThreeVector MagneticPotentialCore( const KPosition& aSamplePoint ) const;
-    KThreeVector MagneticFieldCore( const KPosition& aSamplePoint ) const;
-    KGradient MagneticGradientCore( const KPosition& aSamplePoint) const;
+    ~KMagneticDipoleField() override;
 
-public:
-    void SetLocation( const KPosition& aLocation );
-    void SetMoment( const KDirection& aMoment );
+  private:
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
-private:
+  public:
+    void SetLocation(const KPosition& aLocation);
+    void SetMoment(const KDirection& aMoment);
+
+  private:
     KPosition fLocation;
     KDirection fMoment;
 };

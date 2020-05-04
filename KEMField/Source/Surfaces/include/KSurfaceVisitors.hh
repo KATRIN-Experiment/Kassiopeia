@@ -17,16 +17,14 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KBasisVisitor : public KGenLinearHierarchy<KBasisTypes,
-						   KVisitorType,
-						   KVisitorBase>
-  {
+class KBasisVisitor : public KGenLinearHierarchy<KBasisTypes, KVisitorType, KVisitorBase>
+{
   public:
     typedef KBasisTypes AcceptedTypes;
 
     KBasisVisitor() {}
-    virtual ~KBasisVisitor() {}
-  };
+    ~KBasisVisitor() override {}
+};
 
 /**
 * @class KBoundaryVisitor
@@ -38,16 +36,14 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KBoundaryVisitor : public KGenLinearHierarchy<KBoundaryTypes,
-						      KVisitorType,
-						      KVisitorBase>
-  {
+class KBoundaryVisitor : public KGenLinearHierarchy<KBoundaryTypes, KVisitorType, KVisitorBase>
+{
   public:
     typedef KBoundaryTypes AcceptedTypes;
 
     KBoundaryVisitor() {}
-    virtual ~KBoundaryVisitor() {}
-  };
+    ~KBoundaryVisitor() override {}
+};
 
 /**
 * @class KShapeVisitor
@@ -59,16 +55,14 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KShapeVisitor : public KGenLinearHierarchy<KShapeTypes,
-						   KVisitorType,
-						   KVisitorBase>
-  {
+class KShapeVisitor : public KGenLinearHierarchy<KShapeTypes, KVisitorType, KVisitorBase>
+{
   public:
     typedef KShapeTypes AcceptedTypes;
 
     KShapeVisitor() {}
-    virtual ~KShapeVisitor() {}
-  };
-}
+    ~KShapeVisitor() override {}
+};
+}  // namespace KEMField
 
 #endif /* KSURFACEVISITORS_DEF */

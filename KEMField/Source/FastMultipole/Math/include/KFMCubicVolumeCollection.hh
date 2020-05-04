@@ -2,6 +2,7 @@
 #define __KFMCubicVolumeCollection_H__
 
 #include "KFMCube.hh"
+
 #include <vector>
 
 namespace KEMField
@@ -20,63 +21,57 @@ namespace KEMField
 */
 
 
-
-template<unsigned int NDIM>
-class KFMCubicVolumeCollection
+template<unsigned int NDIM> class KFMCubicVolumeCollection
 {
-    public:
-        KFMCubicVolumeCollection()
-        {
-            fNCubes = 0;
-            fCubes.clear();
-        };
+  public:
+    KFMCubicVolumeCollection()
+    {
+        fNCubes = 0;
+        fCubes.clear();
+    };
 
-        virtual ~KFMCubicVolumeCollection(){};
+    virtual ~KFMCubicVolumeCollection(){};
 
-        void Clear()
-        {
-            fCubes.clear();
-            fNCubes = 0;
-        }
+    void Clear()
+    {
+        fCubes.clear();
+        fNCubes = 0;
+    }
 
-        void AddCube(KFMCube<NDIM>* cube)
-        {
-            bool is_present = false;
-            for(unsigned int i=0; i<fNCubes; i++)
-            {
-                if(fCubes[i] == cube){is_present = true;}
-            }
-
-            if(!is_present)
-            {
-                fCubes.push_back(cube);
-                fNCubes = fCubes.size();
+    void AddCube(KFMCube<NDIM>* cube)
+    {
+        bool is_present = false;
+        for (unsigned int i = 0; i < fNCubes; i++) {
+            if (fCubes[i] == cube) {
+                is_present = true;
             }
         }
 
-
-        //navigation
-        bool PointIsInside(const double* p) const
-        {
-            for(unsigned int i=0; i<fNCubes; i++)
-            {
-                if(fCubes[i]->PointIsInside(p))
-                {
-                    return true;
-                }
-            }
-            return false;
+        if (!is_present) {
+            fCubes.push_back(cube);
+            fNCubes = fCubes.size();
         }
+    }
 
 
-    protected:
+    //navigation
+    bool PointIsInside(const double* p) const
+    {
+        for (unsigned int i = 0; i < fNCubes; i++) {
+            if (fCubes[i]->PointIsInside(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        /* data */
-        unsigned int fNCubes;
-        std::vector< KFMCube<NDIM>* > fCubes;
 
+  protected:
+    /* data */
+    unsigned int fNCubes;
+    std::vector<KFMCube<NDIM>*> fCubes;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMCubicVolumeCollection_H__ */

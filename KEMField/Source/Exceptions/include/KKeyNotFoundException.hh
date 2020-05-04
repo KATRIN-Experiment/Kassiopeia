@@ -12,27 +12,30 @@
 #include <exception>
 #include <string>
 
-namespace KEMField{
+namespace KEMField
+{
 
 class KKeyNotFoundException : public std::exception
 {
-public:
-	enum ErrorCode {noEntry, wrongType};
+  public:
+    enum ErrorCode
+    {
+        noEntry,
+        wrongType
+    };
 
-	KKeyNotFoundException(std::string container, std::string key, ErrorCode errorCode);
-	~KKeyNotFoundException() noexcept;
+    KKeyNotFoundException(std::string container, std::string key, ErrorCode errorCode);
+    ~KKeyNotFoundException() noexcept override;
 
-	const char* what() const noexcept;
+    const char* what() const noexcept override;
 
-private:
-	std::string fContainer;
-	std::string fKey;
-	ErrorCode fErrorCode;
-
+  private:
+    std::string fContainer;
+    std::string fKey;
+    ErrorCode fErrorCode;
 };
 
-}//KEMField
-
+}  // namespace KEMField
 
 
 #endif /* KKEYNOTFOUNDEXCEPTION_HH_ */

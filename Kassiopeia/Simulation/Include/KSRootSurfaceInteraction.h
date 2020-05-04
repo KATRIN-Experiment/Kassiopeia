@@ -1,56 +1,56 @@
 #ifndef _Kassiopeia_KSRootSurfaceInteraction_h_
 #define _Kassiopeia_KSRootSurfaceInteraction_h_
 
-#include "KSSurfaceInteraction.h"
-#include "KSStep.h"
 #include "KSList.h"
+#include "KSStep.h"
+#include "KSSurfaceInteraction.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootSurfaceInteraction :
-        public KSComponentTemplate< KSRootSurfaceInteraction, KSSurfaceInteraction >
-    {
-        public:
-            KSRootSurfaceInteraction();
-            KSRootSurfaceInteraction( const KSRootSurfaceInteraction& aCopy );
-            KSRootSurfaceInteraction* Clone() const;
-            ~KSRootSurfaceInteraction();
+class KSRootSurfaceInteraction : public KSComponentTemplate<KSRootSurfaceInteraction, KSSurfaceInteraction>
+{
+  public:
+    KSRootSurfaceInteraction();
+    KSRootSurfaceInteraction(const KSRootSurfaceInteraction& aCopy);
+    KSRootSurfaceInteraction* Clone() const override;
+    ~KSRootSurfaceInteraction() override;
 
-            //*******************
-            //surface interaction
-            //*******************
+    //*******************
+    //surface interaction
+    //*******************
 
-        public:
-            void ExecuteInteraction( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries );
+  protected:
+    void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aSecondaries) override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void SetSurfaceInteraction( KSSurfaceInteraction* anInteraction );
-            void ClearSurfaceInteraction( KSSurfaceInteraction* anInteraction );
+  public:
+    void SetSurfaceInteraction(KSSurfaceInteraction* anInteraction);
+    void ClearSurfaceInteraction(KSSurfaceInteraction* anInteraction);
 
-        private:
-            KSSurfaceInteraction* fSurfaceInteraction;
+  private:
+    KSSurfaceInteraction* fSurfaceInteraction;
 
-            //******
-            //action
-            //******
+    //******
+    //action
+    //******
 
-        public:
-            void SetStep( KSStep* anStep );
+  public:
+    void SetStep(KSStep* anStep);
 
-            void ExecuteInteraction();
+    void ExecuteInteraction();
 
-        private:
-            KSStep* fStep;
-            const KSParticle* fTerminatorParticle;
-            KSParticle* fInteractionParticle;
-            KSParticleQueue* fParticleQueue;
-    };
+  private:
+    KSStep* fStep;
+    const KSParticle* fTerminatorParticle;
+    KSParticle* fInteractionParticle;
+    KSParticleQueue* fParticleQueue;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

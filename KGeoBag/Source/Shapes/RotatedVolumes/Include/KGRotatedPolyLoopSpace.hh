@@ -1,13 +1,13 @@
 #ifndef KGROTATEDPOLYLOOPSPACE_HH_
 #define KGROTATEDPOLYLOOPSPACE_HH_
 
-#include "KGRotatedClosedPathSpace.hh"
 #include "KGPlanarPolyLoop.hh"
+#include "KGRotatedClosedPathSpace.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGRotatedClosedPathSpace< KGPlanarPolyLoop > KGRotatedPolyLoopSpace;
+typedef KGRotatedClosedPathSpace<KGPlanarPolyLoop> KGRotatedPolyLoopSpace;
 
 }
 

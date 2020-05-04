@@ -20,28 +20,34 @@ namespace KEMField
 *
 */
 
-template <class Visitor, class VisitedList>
-class KSurfaceOrderingPredicate: public KSelectiveVisitor<Visitor, VisitedList>
+template<class Visitor, class VisitedList>
+class KSurfaceOrderingPredicate : public KSelectiveVisitor<Visitor, VisitedList>
 {
-    public:
-        KSurfaceOrderingPredicate(){};
-        virtual ~KSurfaceOrderingPredicate(){};
+  public:
+    KSurfaceOrderingPredicate(){};
+    virtual ~KSurfaceOrderingPredicate(){};
 
-        virtual void SetSurfaceContainer(const KSurfaceContainer& container ){fSurfaceContainer = container;};
-        virtual void Initialize(){;}
+    virtual void SetSurfaceContainer(const KSurfaceContainer& container)
+    {
+        fSurfaceContainer = container;
+    };
+    virtual void Initialize()
+    {
+        ;
+    }
 
-        //the ordering operator
-        virtual bool operator() (int i,int j){return i < j;} //default is normal ordering
+    //the ordering operator
+    virtual bool operator()(int i, int j)
+    {
+        return i < j;
+    }  //default is normal ordering
 
-    private:
-
-        const KSurfaceContainer& fSurfaceContainer;
-
-
+  private:
+    const KSurfaceContainer& fSurfaceContainer;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KSurfaceOrderingPredicate_H__ */

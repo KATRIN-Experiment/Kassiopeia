@@ -8,14 +8,16 @@
 #ifndef KELECTROSTATICBOUNDARYINTEGRATORPOLICY_HH_
 #define KELECTROSTATICBOUNDARYINTEGRATORPOLICY_HH_
 
-#include <string>
 #include "KElectrostaticBoundaryIntegrator.hh"
+
+#include <string>
 
 #ifdef KEMFIELD_USE_OPENCL
 #include "KOpenCLElectrostaticBoundaryIntegrator.hh"
 #endif
 
-namespace KEMField {
+namespace KEMField
+{
 
 /**
  * This class mirrors the Interfaces way of having or not having the
@@ -27,23 +29,23 @@ namespace KEMField {
  * names, etc.) where the bindings can process them and create sensible error
  * messages.
  */
-class KElectrostaticBoundaryIntegratorPolicy {
-public:
-	KElectrostaticBoundaryIntegratorPolicy();
-	KElectrostaticBoundaryIntegratorPolicy(std::string name);
+class KElectrostaticBoundaryIntegratorPolicy
+{
+  public:
+    KElectrostaticBoundaryIntegratorPolicy();
+    KElectrostaticBoundaryIntegratorPolicy(std::string name);
 
-	KElectrostaticBoundaryIntegrator CreateIntegrator();
+    KElectrostaticBoundaryIntegrator CreateIntegrator();
 #ifdef KEMFIELD_USE_OPENCL
-	KOpenCLElectrostaticBoundaryIntegrator
-	CreateOpenCLIntegrator(KOpenCLSurfaceContainer& container);
+    KOpenCLElectrostaticBoundaryIntegrator CreateOpenCLIntegrator(KOpenCLSurfaceContainer& container);
 
-	KoclEBIConfig CreateOpenCLConfig();
+    KoclEBIConfig CreateOpenCLConfig();
 #endif
 
-private:
-	KElectrostaticBoundaryIntegrator fIntegratorCPU;
+  private:
+    KElectrostaticBoundaryIntegrator fIntegratorCPU;
 #ifdef KEMFIELD_USE_OPENCL
-	KOpenCLElectrostaticBoundaryIntegratorConfig fOpenCLIntegratorConfig;
+    KOpenCLElectrostaticBoundaryIntegratorConfig fOpenCLIntegratorConfig;
 #endif
 };
 

@@ -6,11 +6,10 @@
 #ifndef KSURFACEACTION_DEF
 #define KSURFACEACTION_DEF
 
-#include "KTypeManipulation.hh"
-#include "KFundamentalTypeCounter.hh"
-
 #include "../../../Surfaces/include/KSurfaceID.hh"
 #include "../../../Surfaces/include/KSurfaceTypes.hh"
+#include "KFundamentalTypeCounter.hh"
+#include "KTypeManipulation.hh"
 
 namespace KEMField
 {
@@ -26,23 +25,21 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int shapeID=0>
-  class KShapesAction
-  {
+template<class Action, int shapeID = 0> class KShapesAction
+{
   public:
     static void ActOnShapes(Action& anAction)
     {
-      anAction.PerformAction(Type2Type<typename TypeAt< KShapeTypes, shapeID>::Result >());
-      return KShapesAction<Action,shapeID+1>::ActOnShapes(anAction);
+        anAction.PerformAction(Type2Type<typename TypeAt<KShapeTypes, shapeID>::Result>());
+        return KShapesAction<Action, shapeID + 1>::ActOnShapes(anAction);
     }
-  };
+};
 
-  template <class Action>
-  class KShapesAction<Action,Length<KShapeTypes>::value>
-  {
+template<class Action> class KShapesAction<Action, Length<KShapeTypes>::value>
+{
   public:
     static void ActOnShapes(Action&) {}
-  };
+};
 
 /**
 * @class KBoundariesAction
@@ -55,23 +52,21 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int boundaryID=0>
-  class KBoundariesAction
-  {
+template<class Action, int boundaryID = 0> class KBoundariesAction
+{
   public:
     static void ActOnBoundaries(Action& anAction)
     {
-      anAction.PerformAction(Type2Type<typename TypeAt< KBoundaryTypes, boundaryID>::Result >());
-      return KBoundariesAction<Action,boundaryID+1>::ActOnBoundaries(anAction);
+        anAction.PerformAction(Type2Type<typename TypeAt<KBoundaryTypes, boundaryID>::Result>());
+        return KBoundariesAction<Action, boundaryID + 1>::ActOnBoundaries(anAction);
     }
-  };
+};
 
-  template <class Action>
-  class KBoundariesAction<Action,Length<KBoundaryTypes>::value>
-  {
+template<class Action> class KBoundariesAction<Action, Length<KBoundaryTypes>::value>
+{
   public:
     static void ActOnBoundaries(Action&) {}
-  };
+};
 
 /**
 * @class KBasesAction
@@ -84,23 +79,21 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int basisID=0>
-  class KBasesAction
-  {
+template<class Action, int basisID = 0> class KBasesAction
+{
   public:
     static void ActOnBases(Action& anAction)
     {
-      anAction.PerformAction(Type2Type<typename TypeAt< KBasisTypes, basisID>::Result >());
-      return KBasesAction<Action,basisID+1>::ActOnBases(anAction);
+        anAction.PerformAction(Type2Type<typename TypeAt<KBasisTypes, basisID>::Result>());
+        return KBasesAction<Action, basisID + 1>::ActOnBases(anAction);
     }
-  };
+};
 
-  template <class Action>
-  class KBasesAction<Action,Length<KBasisTypes>::value>
-  {
+template<class Action> class KBasesAction<Action, Length<KBasisTypes>::value>
+{
   public:
     static void ActOnBases(Action&) {}
-  };
+};
 
 /**
 * @class KShapeAction
@@ -113,28 +106,25 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int shapeID=0>
-  class KShapeAction
-  {
+template<class Action, int shapeID = 0> class KShapeAction
+{
   public:
-    static void ActOnShapeType(const KSurfaceID& anID,Action& anAction)
+    static void ActOnShapeType(const KSurfaceID& anID, Action& anAction)
     {
-      if (anID.ShapeID == shapeID)
-      {
-	anAction.PerformAction(Type2Type<typename TypeAt< KShapeTypes, shapeID >::Result >());
-	return;
-      }
-      else
-	return KShapeAction<Action,shapeID+1>::ActOnShapeType(anID,anAction);
+        if (anID.ShapeID == shapeID) {
+            anAction.PerformAction(Type2Type<typename TypeAt<KShapeTypes, shapeID>::Result>());
+            return;
+        }
+        else
+            return KShapeAction<Action, shapeID + 1>::ActOnShapeType(anID, anAction);
     }
-  };
+};
 
-  template <class Action>
-  class KShapeAction<Action,Length<KShapeTypes>::value>
-  {
+template<class Action> class KShapeAction<Action, Length<KShapeTypes>::value>
+{
   public:
-    static void ActOnShapeType(const KSurfaceID&,Action&) {}
-  };
+    static void ActOnShapeType(const KSurfaceID&, Action&) {}
+};
 
 /**
 * @class KBoundaryAction
@@ -147,40 +137,36 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int basisID=0,int boundaryID=0>
-  class KBoundaryAction
-  {
+template<class Action, int basisID = 0, int boundaryID = 0> class KBoundaryAction
+{
   public:
-    static void ActOnBoundaryType(const KSurfaceID& anID,Action& anAction)
+    static void ActOnBoundaryType(const KSurfaceID& anID, Action& anAction)
     {
-      if (anID.BasisID == basisID)
-      {
-	if (anID.BoundaryID == boundaryID)
-	{
-	  anAction.PerformAction(Type2Type < KBoundaryType<typename TypeAt< KBasisTypes, basisID >::Result,typename TypeAt< KBoundaryTypes, boundaryID >::Result > > ());
-	  return;
-	}
-	else
-	  return KBoundaryAction<Action,basisID,boundaryID+1>::ActOnBoundaryType(anID,anAction);
-      }
-      else
-	return KBoundaryAction<Action,basisID+1,boundaryID>::ActOnBoundaryType(anID,anAction);
+        if (anID.BasisID == basisID) {
+            if (anID.BoundaryID == boundaryID) {
+                anAction.PerformAction(Type2Type<KBoundaryType<typename TypeAt<KBasisTypes, basisID>::Result,
+                                                               typename TypeAt<KBoundaryTypes, boundaryID>::Result>>());
+                return;
+            }
+            else
+                return KBoundaryAction<Action, basisID, boundaryID + 1>::ActOnBoundaryType(anID, anAction);
+        }
+        else
+            return KBoundaryAction<Action, basisID + 1, boundaryID>::ActOnBoundaryType(anID, anAction);
     }
-  };
+};
 
-  template <class Action,int basisID>
-  class KBoundaryAction<Action,basisID,Length<KBoundaryTypes>::value>
-  {
+template<class Action, int basisID> class KBoundaryAction<Action, basisID, Length<KBoundaryTypes>::value>
+{
   public:
-    static void ActOnBoundaryType(const KSurfaceID&,Action&) {}
-  };
+    static void ActOnBoundaryType(const KSurfaceID&, Action&) {}
+};
 
-  template <class Action,int boundaryID>
-  class KBoundaryAction<Action,Length<KBasisTypes>::value,boundaryID>
-  {
+template<class Action, int boundaryID> class KBoundaryAction<Action, Length<KBasisTypes>::value, boundaryID>
+{
   public:
-    static void ActOnBoundaryType(const KSurfaceID&,Action&) {}
-  };
+    static void ActOnBoundaryType(const KSurfaceID&, Action&) {}
+};
 
 /**
 * @class KBasisAction
@@ -193,28 +179,25 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int basisID=0>
-  class KBasisAction
-  {
+template<class Action, int basisID = 0> class KBasisAction
+{
   public:
-    static void ActOnBasisType(const KSurfaceID& anID,Action& anAction)
+    static void ActOnBasisType(const KSurfaceID& anID, Action& anAction)
     {
-      if (anID.BasisID == basisID)
-      {
-	anAction.PerformAction(Type2Type<typename TypeAt< KBasisTypes, basisID >::Result >());
-	return;
-      }
-      else
-	return KBasisAction<Action,basisID+1>::ActOnBasisType(anID,anAction);
+        if (anID.BasisID == basisID) {
+            anAction.PerformAction(Type2Type<typename TypeAt<KBasisTypes, basisID>::Result>());
+            return;
+        }
+        else
+            return KBasisAction<Action, basisID + 1>::ActOnBasisType(anID, anAction);
     }
-  };
+};
 
-  template <class Action>
-  class KBasisAction<Action,Length<KBasisTypes>::value>
-  {
+template<class Action> class KBasisAction<Action, Length<KBasisTypes>::value>
+{
   public:
-    static void ActOnBasisType(const KSurfaceID&,Action&) {}
-  };
+    static void ActOnBasisType(const KSurfaceID&, Action&) {}
+};
 
 /**
 * @class KSurfaceAction
@@ -227,73 +210,65 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class Action,int basisID=0,int boundaryID=0,int shapeID=0>
-  class KSurfaceAction
-  {
+template<class Action, int basisID = 0, int boundaryID = 0, int shapeID = 0> class KSurfaceAction
+{
   public:
-    static void ActOnSurfaceType(const KSurfaceID& anID,Action& anAction)
+    static void ActOnSurfaceType(const KSurfaceID& anID, Action& anAction)
     {
-      if (anID.BasisID == basisID)
-      {
-  	if (anID.BoundaryID == boundaryID)
-  	{
-  	  if (anID.ShapeID == shapeID)
-  	  {
-  	    anAction.PerformAction(Type2Type<KSurface< typename TypeAt< KBasisTypes,basisID >::Result, typename TypeAt< KBoundaryTypes, boundaryID >::Result, typename TypeAt< KShapeTypes, shapeID >::Result > >());
-  	    return;
-      }
-  	  else
-  	    return KSurfaceAction<Action,
-  				  basisID,
-  				  boundaryID,
-  				  shapeID+1>::ActOnSurfaceType(anID,anAction);
+        if (anID.BasisID == basisID) {
+            if (anID.BoundaryID == boundaryID) {
+                if (anID.ShapeID == shapeID) {
+                    anAction.PerformAction(Type2Type<KSurface<typename TypeAt<KBasisTypes, basisID>::Result,
+                                                              typename TypeAt<KBoundaryTypes, boundaryID>::Result,
+                                                              typename TypeAt<KShapeTypes, shapeID>::Result>>());
+                    return;
+                }
+                else
+                    return KSurfaceAction<Action, basisID, boundaryID, shapeID + 1>::ActOnSurfaceType(anID, anAction);
+            }
+            else
+                return KSurfaceAction<Action, basisID, boundaryID + 1, shapeID>::ActOnSurfaceType(anID, anAction);
+        }
+        else
+            return KSurfaceAction<Action, basisID + 1, boundaryID, shapeID>::ActOnSurfaceType(anID, anAction);
     }
-  	else
-  	  return KSurfaceAction<Action,
-  				basisID,
-  				boundaryID+1,
-  				shapeID>::ActOnSurfaceType(anID,anAction);
-  }
-      else
-  	return KSurfaceAction<Action,
-  			      basisID+1,
-  			      boundaryID,
-  			      shapeID>::ActOnSurfaceType(anID,anAction);
-    }
-  };
+};
 
-  template <typename Action,int boundaryID,int basisID>
-  class KSurfaceAction<Action,basisID,boundaryID,Length<KShapeTypes>::value>
-  {
+template<typename Action, int boundaryID, int basisID>
+class KSurfaceAction<Action, basisID, boundaryID, Length<KShapeTypes>::value>
+{
   public:
-    static void ActOnSurfaceType(const KSurfaceID& anID,Action&)
+    static void ActOnSurfaceType(const KSurfaceID& anID, Action&)
     {
-      std::cout<<"Unable to find a shape whose ID matches the ID in question ("<<anID.ShapeID<<")."<<std::endl;
-      return;
+        std::cout << "Unable to find a shape whose ID matches the ID in question (" << anID.ShapeID << ")."
+                  << std::endl;
+        return;
     }
-  };
+};
 
-  template <typename Action,int basisID,int shapeID>
-  class KSurfaceAction<Action,basisID,Length<KBoundaryTypes>::value,shapeID>
-  {
+template<typename Action, int basisID, int shapeID>
+class KSurfaceAction<Action, basisID, Length<KBoundaryTypes>::value, shapeID>
+{
   public:
-    static void ActOnSurfaceType(const KSurfaceID& anID,Action&)
+    static void ActOnSurfaceType(const KSurfaceID& anID, Action&)
     {
-      std::cout<<"Unable to find a boundary whose ID matches the ID in question ("<<anID.BoundaryID<<")."<<std::endl;
-      return;
+        std::cout << "Unable to find a boundary whose ID matches the ID in question (" << anID.BoundaryID << ")."
+                  << std::endl;
+        return;
     }
-  };
+};
 
-  template <typename Action,int boundaryID,int shapeID>
-  class KSurfaceAction<Action,Length<KBasisTypes>::value,boundaryID,shapeID>
-  {
+template<typename Action, int boundaryID, int shapeID>
+class KSurfaceAction<Action, Length<KBasisTypes>::value, boundaryID, shapeID>
+{
   public:
-    static void ActOnSurfaceType(const KSurfaceID& anID,Action&)
+    static void ActOnSurfaceType(const KSurfaceID& anID, Action&)
     {
-      std::cout<<"Unable to find a basis whose ID matches the ID in question ("<<anID.BasisID<<")."<<std::endl;
-      return;
+        std::cout << "Unable to find a basis whose ID matches the ID in question (" << anID.BasisID << ")."
+                  << std::endl;
+        return;
     }
-  };
+};
 
 /**
 * @class KSurfaceGeneratorAction
@@ -306,31 +281,33 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KSurfaceGeneratorAction : public KSurfaceAction<KSurfaceGeneratorAction>
-  {
+class KSurfaceGeneratorAction : public KSurfaceAction<KSurfaceGeneratorAction>
+{
   public:
-    template <typename Surface>
-    void PerformAction(Type2Type<Surface>)
+    template<typename Surface> void PerformAction(Type2Type<Surface>)
     {
-      fSurfacePrimitive = new Surface();
+        fSurfacePrimitive = new Surface();
     }
 
-    KSurfacePrimitive* GetSurfacePrimitive() { return fSurfacePrimitive; }
+    KSurfacePrimitive* GetSurfacePrimitive()
+    {
+        return fSurfacePrimitive;
+    }
 
   private:
     KSurfacePrimitive* fSurfacePrimitive;
-  };
+};
 
-  class KSurfaceGenerator
-  {
+class KSurfaceGenerator
+{
   public:
     static KSurfacePrimitive* GenerateSurface(KSurfaceID& anID)
     {
-      KSurfaceGeneratorAction surfaceGeneratorAction;
-      KSurfaceAction<KSurfaceGeneratorAction>::ActOnSurfaceType(anID,surfaceGeneratorAction);
-      return surfaceGeneratorAction.GetSurfacePrimitive();
+        KSurfaceGeneratorAction surfaceGeneratorAction;
+        KSurfaceAction<KSurfaceGeneratorAction>::ActOnSurfaceType(anID, surfaceGeneratorAction);
+        return surfaceGeneratorAction.GetSurfacePrimitive();
     }
-  };
+};
 
 /**
 * @class KSurfaceSize
@@ -344,30 +321,35 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <class SurfacePolicy>
-  class KSurfaceSize
-  {
+template<class SurfacePolicy> class KSurfaceSize
+{
   public:
-    template <class Policy>
-    void PerformAction(Type2Type<Policy>)
+    template<class Policy> void PerformAction(Type2Type<Policy>)
     {
-      Policy* policy = static_cast<Policy*>(fSurface);
-      fTypeCounter << *policy;
+        auto* policy = static_cast<Policy*>(fSurface);
+        fTypeCounter << *policy;
     }
 
-    template <class Streamed>
-    void PreStreamOutAction(const Streamed&) {}
-    template <class Streamed>
-    void PostStreamOutAction(const Streamed&) {}
+    template<class Streamed> void PreStreamOutAction(const Streamed&) {}
+    template<class Streamed> void PostStreamOutAction(const Streamed&) {}
 
-    void SetSurface(SurfacePolicy* s) { fSurface = s; }
-    unsigned int size() const { return fTypeCounter.NumberOfTypes(); }
-    void Reset() { fTypeCounter.Reset(); }
+    void SetSurface(SurfacePolicy* s)
+    {
+        fSurface = s;
+    }
+    unsigned int size() const
+    {
+        return fTypeCounter.NumberOfTypes();
+    }
+    void Reset()
+    {
+        fTypeCounter.Reset();
+    }
 
   private:
     KFundamentalTypeCounter fTypeCounter;
     SurfacePolicy* fSurface;
-  };
+};
 
 /**
 * @class KSurfaceStreamerAction
@@ -382,57 +364,62 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  template <typename Stream,bool inStream>
-  class KSurfaceStreamerAction : public KSurfaceAction<KSurfaceStreamerAction<Stream,inStream> >
-  {
+template<typename Stream, bool inStream>
+class KSurfaceStreamerAction : public KSurfaceAction<KSurfaceStreamerAction<Stream, inStream>>
+{
   public:
-    template <typename Surface>
-    void PerformAction(Type2Type<Surface>)
+    template<typename Surface> void PerformAction(Type2Type<Surface>)
     {
-      fStream = &(StreamSurface<Surface>(*fStream,*fSurfacePrimitive,Int2Type<inStream>()));
+        fStream = &(StreamSurface<Surface>(*fStream, *fSurfacePrimitive, Int2Type<inStream>()));
     }
 
-    template <typename Surface>
-    Stream& StreamSurface(Stream& s,const KSurfacePrimitive& sP,Int2Type<true>)
+    template<typename Surface> Stream& StreamSurface(Stream& s, const KSurfacePrimitive& sP, Int2Type<true>)
     {
-      return s << static_cast<const Surface&>(sP);
+        return s << static_cast<const Surface&>(sP);
     }
 
-    template <typename Surface>
-    Stream& StreamSurface(Stream& s,const KSurfacePrimitive& sP,Int2Type<false>)
+    template<typename Surface> Stream& StreamSurface(Stream& s, const KSurfacePrimitive& sP, Int2Type<false>)
     {
-      KSurfacePrimitive& sP_ = const_cast<KSurfacePrimitive&>(sP);
-      return s >> static_cast<Surface&>(sP_);
+        auto& sP_ = const_cast<KSurfacePrimitive&>(sP);
+        return s >> static_cast<Surface&>(sP_);
     }
 
-    void SetStream(Stream& s) { fStream = &s; }
-    void SetSurfacePrimitive(const KSurfacePrimitive& sP) { fSurfacePrimitive = &sP; }
-    Stream& GetStream() { return *fStream; }
+    void SetStream(Stream& s)
+    {
+        fStream = &s;
+    }
+    void SetSurfacePrimitive(const KSurfacePrimitive& sP)
+    {
+        fSurfacePrimitive = &sP;
+    }
+    Stream& GetStream()
+    {
+        return *fStream;
+    }
 
   private:
     Stream* fStream;
     const KSurfacePrimitive* fSurfacePrimitive;
-  };
+};
 
-  template <typename Stream,bool inStream>
-  class KSurfaceStreamer
-  {
+template<typename Stream, bool inStream> class KSurfaceStreamer
+{
   public:
-    static Stream& StreamSurface(Stream& s,const KSurfacePrimitive& sP,const KSurfaceID& sID)
+    static Stream& StreamSurface(Stream& s, const KSurfacePrimitive& sP, const KSurfaceID& sID)
     {
-      KSurfaceStreamerAction<Stream,inStream> surfaceStreamerAction;
-      surfaceStreamerAction.SetStream(s);
-      surfaceStreamerAction.SetSurfacePrimitive(sP);
-      KSurfaceAction<KSurfaceStreamerAction<Stream,inStream> >::ActOnSurfaceType(sID,surfaceStreamerAction);
-      return surfaceStreamerAction.GetStream();
+        KSurfaceStreamerAction<Stream, inStream> surfaceStreamerAction;
+        surfaceStreamerAction.SetStream(s);
+        surfaceStreamerAction.SetSurfacePrimitive(sP);
+        KSurfaceAction<KSurfaceStreamerAction<Stream, inStream>>::ActOnSurfaceType(sID, surfaceStreamerAction);
+        return surfaceStreamerAction.GetStream();
     }
 
-    static Stream& StreamSurface(Stream& s,const KSurfacePrimitive& sP)
+    static Stream& StreamSurface(Stream& s, const KSurfacePrimitive& sP)
     {
-      return StreamSurface(s,sP,sP.GetID());
+        return StreamSurface(s, sP, sP.GetID());
     }
-  };
+};
 
-}
+}  // namespace KEMField
 
 #endif /* KSURFACEACTION_DEF */

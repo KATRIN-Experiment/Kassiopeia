@@ -1,8 +1,8 @@
 #ifndef KFMObjectRetriever_HH__
 #define KFMObjectRetriever_HH__
 
-#include "KTypelist.hh"
 #include "KFMNode.hh"
+#include "KTypelist.hh"
 
 namespace KEMField
 {
@@ -20,33 +20,32 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList, typename ObjectType>
-class KFMObjectRetriever
+template<typename ObjectTypeList, typename ObjectType> class KFMObjectRetriever
 {
-    public:
-        KFMObjectRetriever(){};
-        virtual ~KFMObjectRetriever(){};
+  public:
+    KFMObjectRetriever(){};
+    virtual ~KFMObjectRetriever(){};
 
-        static ObjectType* GetNodeObject(KFMNode<ObjectTypeList>* node)
-        {
-            return static_cast< KFMObjectHolder<ObjectType>* >(node)->fObject;
-        }
+    static ObjectType* GetNodeObject(KFMNode<ObjectTypeList>* node)
+    {
+        return static_cast<KFMObjectHolder<ObjectType>*>(node)->fObject;
+    }
 
-        static const ObjectType* GetNodeObject(const KFMNode<ObjectTypeList>* node)
-        {
-            return static_cast< KFMObjectHolder<ObjectType>* >(node)->fObject;
-        }
+    static const ObjectType* GetNodeObject(const KFMNode<ObjectTypeList>* node)
+    {
+        return static_cast<KFMObjectHolder<ObjectType>*>(node)->fObject;
+    }
 
-        static void SetNodeObject(ObjectType* obj_ptr, KFMNode<ObjectTypeList>* node)
-        {
-            static_cast< KFMObjectHolder<ObjectType>* >(node)->fObject = obj_ptr;
-        }
+    static void SetNodeObject(ObjectType* obj_ptr, KFMNode<ObjectTypeList>* node)
+    {
+        static_cast<KFMObjectHolder<ObjectType>*>(node)->fObject = obj_ptr;
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 
 #endif /* KFMObjectRetriever_H__ */

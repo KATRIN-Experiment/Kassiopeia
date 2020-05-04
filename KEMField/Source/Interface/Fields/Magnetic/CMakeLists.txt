@@ -3,13 +3,13 @@
 
 # header files
 set (FIELDS_MAGNETIC_HEADER_BASENAMES
-  KMagneticField.hh
-  KStaticElectromagnetField.hh
-  KMagnetostaticField.hh
-  KMagnetostaticConstantField.hh
-  KMagneticDipoleField.hh
-  KMagneticSuperpositionField.hh
-  KRampedMagneticField.hh
+    KMagneticField.hh
+    KStaticElectromagnetField.hh
+    KMagnetostaticField.hh
+    KMagnetostaticConstantField.hh
+    KMagneticDipoleField.hh
+    KMagneticSuperpositionField.hh
+    KRampedMagneticField.hh
 )
 
 set( FIELDS_MAGNETIC_HEADER_PATH
@@ -23,6 +23,7 @@ endforeach( BASENAME )
 set( FIELDS_MAGNETIC_SOURCE_BASENAMES
     KStaticElectromagnetField.cc
     KMagneticDipoleField.cc
+    KMagnetostaticConstantField.cc
     KMagneticSuperpositionField.cc
     KRampedMagneticField.cc
 )

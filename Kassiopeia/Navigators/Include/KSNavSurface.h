@@ -6,31 +6,31 @@
 namespace Kassiopeia
 {
 
-    class KSNavSurface :
-        public KSComponentTemplate< KSNavSurface, KSSurfaceNavigator >
-    {
-        public:
-            KSNavSurface();
-            KSNavSurface( const KSNavSurface& aCopy );
-            KSNavSurface* Clone() const;
-            virtual ~KSNavSurface();
+class KSNavSurface : public KSComponentTemplate<KSNavSurface, KSSurfaceNavigator>
+{
+  public:
+    KSNavSurface();
+    KSNavSurface(const KSNavSurface& aCopy);
+    KSNavSurface* Clone() const override;
+    ~KSNavSurface() override;
 
-        public:
-            void SetTransmissionSplit( const bool& aTransmissionSplit );
-            const bool& GetTransmissionSplit() const;
+  public:
+    void SetTransmissionSplit(const bool& aTransmissionSplit);
+    const bool& GetTransmissionSplit() const;
 
-            void SetReflectionSplit( const bool& aReflectionSplit );
-            const bool& GetReflectionSplit() const;
+    void SetReflectionSplit(const bool& aReflectionSplit);
+    const bool& GetReflectionSplit() const;
 
-        private:
-            bool fTransmissionSplit;
-            bool fReflectionSplit;
+  private:
+    bool fTransmissionSplit;
+    bool fReflectionSplit;
 
-        public:
-            void ExecuteNavigation( const KSParticle& anInitialParticle, const KSParticle& aNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
-            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
-    };
+  public:
+    void ExecuteNavigation(const KSParticle& anInitialParticle, const KSParticle& aNavigationParticle,
+                           KSParticle& aFinalParticle, KSParticleQueue& aSecondaries) const override;
+    void FinalizeNavigation(KSParticle& aFinalParticle) const override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

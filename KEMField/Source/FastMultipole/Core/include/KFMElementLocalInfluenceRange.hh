@@ -1,8 +1,8 @@
 #ifndef __KFMElementLocalInfluenceRange_H__
 #define __KFMElementLocalInfluenceRange_H__
 
-#include <vector>
 #include <utility>
+#include <vector>
 
 namespace KEMField
 {
@@ -21,31 +21,34 @@ namespace KEMField
 
 class KFMElementLocalInfluenceRange
 {
-    public:
-        KFMElementLocalInfluenceRange():fTotalSize(0){};
-        virtual ~KFMElementLocalInfluenceRange(){};
+  public:
+    KFMElementLocalInfluenceRange() : fTotalSize(0){};
+    virtual ~KFMElementLocalInfluenceRange(){};
 
-        bool IsEmpty()
-        {
-            if(fRangeList.size() == 0){return true;};
-            return false;
-        }
+    bool IsEmpty()
+    {
+        if (fRangeList.size() == 0) {
+            return true;
+        };
+        return false;
+    }
 
-        unsigned int GetTotalSizeOfRange()
-        {
-            return fTotalSize;
-        }
+    unsigned int GetTotalSizeOfRange()
+    {
+        return fTotalSize;
+    }
 
-        void AddRange(unsigned int start_index, unsigned int size);
-        const std::vector< std::pair<unsigned int, unsigned int> >* GetRangeList() const {return &fRangeList;};
+    void AddRange(unsigned int start_index, unsigned int size);
+    const std::vector<std::pair<unsigned int, unsigned int>>* GetRangeList() const
+    {
+        return &fRangeList;
+    };
 
-    protected:
-
-        unsigned int fTotalSize;
-        std::vector< std::pair<unsigned int, unsigned int> > fRangeList;
-
+  protected:
+    unsigned int fTotalSize;
+    std::vector<std::pair<unsigned int, unsigned int>> fRangeList;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMElementLocalInfluenceRange_H__ */

@@ -1,3 +1,3 @@
 #include "KGMeshMessage.hh"
 
-KMESSAGE_DEFINE( KGeoBag, meshmsg, kg_mesh, KGMESH )
+KMESSAGE_DEFINE(KGeoBag, meshmsg, kg_mesh, KGMESH)

@@ -10,47 +10,38 @@
 
 #include "KMagnetostaticField.hh"
 
-namespace KEMField {
-
-class KMagnetostaticConstantField: public KEMField::KMagnetostaticField
+namespace KEMField
 {
-public:
-    KMagnetostaticConstantField() :
-        KMagnetostaticField(),
-        fFieldVector() {}
 
-    KMagnetostaticConstantField( const KThreeVector& aField ) :
-        KMagnetostaticField(),
-        fFieldVector(aField) {}
+class KMagnetostaticConstantField : public KEMField::KMagnetostaticField
+{
+  public:
+    KMagnetostaticConstantField();
+    KMagnetostaticConstantField(const KThreeVector& aField);
+    ~KMagnetostaticConstantField() override{};
 
-    virtual ~KMagnetostaticConstantField() {}
-
-private:
-    /** We choose A(r) = 1/2 * B x r as the magnetic potential.
-     * This is a viable choice for Coulomb gauge.*/
-    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const {
-        return 0.5 * fFieldVector.Cross(P);
-    }
-    virtual KThreeVector MagneticFieldCore(const KPosition& /*P*/) const {
-        return fFieldVector;
-    }
-    virtual KGradient MagneticGradientCore(const KPosition& /*P*/) const {
-        return KThreeMatrix::sZero;
+    static std::string Name()
+    {
+        return "MagnetostaticConstantFieldSolver";
     }
 
-public:
-    void SetField( const KThreeVector& aFieldVector ) {
-        fFieldVector = aFieldVector;
-    }
+  private:
+    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
-    KThreeVector GetField() const {
-        return fFieldVector;
-    }
+  public:
+    void SetField(const KThreeVector& aFieldVector);
+    KThreeVector GetField() const;
 
-private:
+    void SetLocation(const KPosition& aLocation);
+    KThreeVector GetLocation() const;
+
+  private:
     KThreeVector fFieldVector;
+    KThreeVector fLocation;
 };
 
-} /* namespace KEMFIELD */
+}  // namespace KEMField
 
 #endif /* KMAGNETOSTATICCONSTANTFIELD_HH_ */

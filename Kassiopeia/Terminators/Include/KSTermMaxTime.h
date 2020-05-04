@@ -6,33 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMaxTime :
-        public KSComponentTemplate< KSTermMaxTime, KSTerminator >
-    {
-        public:
-            KSTermMaxTime();
-            KSTermMaxTime( const KSTermMaxTime& aCopy );
-            KSTermMaxTime* Clone() const;
-            virtual ~KSTermMaxTime();
+class KSTermMaxTime : public KSComponentTemplate<KSTermMaxTime, KSTerminator>
+{
+  public:
+    KSTermMaxTime();
+    KSTermMaxTime(const KSTermMaxTime& aCopy);
+    KSTermMaxTime* Clone() const override;
+    ~KSTermMaxTime() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetTime( const double& aValue );
+  public:
+    void SetTime(const double& aValue);
 
-        private:
-            double fTime;
-    };
+  private:
+    double fTime;
+};
 
-    inline void KSTermMaxTime::SetTime( const double& aValue )
-    {
-        fTime = aValue;
-    }
-
+inline void KSTermMaxTime::SetTime(const double& aValue)
+{
+    fTime = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

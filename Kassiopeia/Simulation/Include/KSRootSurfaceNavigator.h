@@ -1,64 +1,62 @@
 #ifndef Kassiopeia_KSRootSurfaceNavigator_h_
 #define Kassiopeia_KSRootSurfaceNavigator_h_
 
-#include "KSSurfaceNavigator.h"
-#include "KSList.h"
-
-#include "KSStep.h"
-#include "KSTrajectory.h"
-
 #include "KMathBracketingSolver.h"
+#include "KSList.h"
+#include "KSStep.h"
+#include "KSSurfaceNavigator.h"
+#include "KSTrajectory.h"
 using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {
 
-    class KSRootSurfaceNavigator :
-        public KSComponentTemplate< KSRootSurfaceNavigator, KSSurfaceNavigator >
-    {
-        public:
-            KSRootSurfaceNavigator();
-            KSRootSurfaceNavigator( const KSRootSurfaceNavigator& aCopy );
-            KSRootSurfaceNavigator* Clone() const;
-            ~KSRootSurfaceNavigator();
+class KSRootSurfaceNavigator : public KSComponentTemplate<KSRootSurfaceNavigator, KSSurfaceNavigator>
+{
+  public:
+    KSRootSurfaceNavigator();
+    KSRootSurfaceNavigator(const KSRootSurfaceNavigator& aCopy);
+    KSRootSurfaceNavigator* Clone() const override;
+    ~KSRootSurfaceNavigator() override;
 
-            //******************
-            //surface navigation
-            //******************
+    //******************
+    //surface navigation
+    //******************
 
-        public:
-            void ExecuteNavigation( const KSParticle& anInitialParticle, const KSParticle& anNavigationParticle, KSParticle& aFinalParticle, KSParticleQueue& aSecondaries ) const;
-            void FinalizeNavigation( KSParticle& aFinalParticle ) const;
+  protected:
+    void ExecuteNavigation(const KSParticle& anInitialParticle, const KSParticle& anNavigationParticle,
+                           KSParticle& aFinalParticle, KSParticleQueue& aSecondaries) const override;
+    void FinalizeNavigation(KSParticle& aFinalParticle) const override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void SetSurfaceNavigator( KSSurfaceNavigator* anNavigation );
-            void ClearSurfaceNavigator( KSSurfaceNavigator* anNavigation );
+  public:
+    void SetSurfaceNavigator(KSSurfaceNavigator* anNavigation);
+    void ClearSurfaceNavigator(KSSurfaceNavigator* anNavigation);
 
-        private:
-            KSSurfaceNavigator* fSurfaceNavigator;
+  private:
+    KSSurfaceNavigator* fSurfaceNavigator;
 
-            //******
-            //action
-            //******
+    //******
+    //action
+    //******
 
-        public:
-            void SetStep( KSStep* anStep );
+  public:
+    void SetStep(KSStep* anStep);
 
-            void ExecuteNavigation();
-            void FinalizeNavigation();
+    void ExecuteNavigation();
+    void FinalizeNavigation();
 
-        private:
-            KSStep* fStep;
-            const KSParticle* fTerminatorParticle;
-            const KSParticle* fInteractionParticle;
-            KSParticle* fFinalParticle;
-            KSParticleQueue* fParticleQueue;
-    };
+  private:
+    KSStep* fStep;
+    const KSParticle* fTerminatorParticle;
+    const KSParticle* fInteractionParticle;
+    KSParticle* fFinalParticle;
+    KSParticleQueue* fParticleQueue;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

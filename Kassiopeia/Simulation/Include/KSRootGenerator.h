@@ -1,53 +1,52 @@
 #ifndef Kassiopeia_KSRootGenerator_h_
 #define Kassiopeia_KSRootGenerator_h_
 
-#include "KSGenerator.h"
 #include "KSEvent.h"
+#include "KSGenerator.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootGenerator :
-        public KSComponentTemplate< KSRootGenerator, KSGenerator >
-    {
-        public:
-            KSRootGenerator();
-            KSRootGenerator( const KSRootGenerator& aCopy );
-            KSRootGenerator* Clone() const;
-            virtual ~KSRootGenerator();
+class KSRootGenerator : public KSComponentTemplate<KSRootGenerator, KSGenerator>
+{
+  public:
+    KSRootGenerator();
+    KSRootGenerator(const KSRootGenerator& aCopy);
+    KSRootGenerator* Clone() const override;
+    ~KSRootGenerator() override;
 
-            //*********
-            //generator
-            //*********
+    //*********
+    //generator
+    //*********
 
-        public:
-            void ExecuteGeneration( KSParticleQueue& aPrimaries );
+  protected:
+    void ExecuteGeneration(KSParticleQueue& aPrimaries) override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void SetGenerator( KSGenerator* aGenerator );
-            void ClearGenerator( KSGenerator* aGenerator );
+  public:
+    void SetGenerator(KSGenerator* aGenerator);
+    void ClearGenerator(KSGenerator* aGenerator);
 
-        private:
-            KSGenerator* fGenerator;
+  private:
+    KSGenerator* fGenerator;
 
-            //******
-            //action
-            //******
+    //******
+    //action
+    //******
 
-        public:
-            void SetEvent( KSEvent* anEvent );
-            KSEvent* GetEvent() const;
+  public:
+    void SetEvent(KSEvent* anEvent);
+    KSEvent* GetEvent() const;
 
-            void ExecuteGeneration();
+    void ExecuteGeneration();
 
-        private:
-            KSEvent* fEvent;
-    };
+  private:
+    KSEvent* fEvent;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

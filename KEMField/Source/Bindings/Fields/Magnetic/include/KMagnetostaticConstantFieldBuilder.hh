@@ -9,34 +9,36 @@
 #define KMAGNETOSTATICCONSTANTFIELDBUILDER_HH_
 
 #include "KComplexElement.hh"
-#include "KMagnetostaticConstantField.hh"
 #include "KEMStreamableThreeVector.hh"
+#include "KMagnetostaticConstantField.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KMagnetostaticConstantField > KSFieldMagneticConstantBuilder;
-
-template< >
-inline bool KSFieldMagneticConstantBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "name" )
-    {
+
+typedef KComplexElement<KEMField::KMagnetostaticConstantField> KSFieldMagneticConstantBuilder;
+
+template<> inline bool KSFieldMagneticConstantBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
         std::string name;
         aContainer->CopyTo(name);
         this->SetName(name);
         fObject->SetName(name);
+        return true;
     }
-    else if( aContainer->GetName() == "field" )
-    {
+    else if (aContainer->GetName() == "field") {
         KEMField::KEMStreamableThreeVector vec;
         aContainer->CopyTo(vec);
         fObject->SetField(vec.GetThreeVector());
+        return true;
     }
-    else
-    {
-        return false;
+    else if (aContainer->GetName() == "location") {
+        KEMField::KEMStreamableThreeVector vec;
+        aContainer->CopyTo(vec);
+        fObject->SetLocation(vec.GetThreeVector());
+        return true;
     }
-    return true;
+    return false;
 }
 
 } /* namespace katrin */

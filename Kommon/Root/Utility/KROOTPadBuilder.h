@@ -10,50 +10,42 @@
 namespace katrin
 {
 
-typedef KComplexElement< KROOTPad > KROOTPadBuilder;
+typedef KComplexElement<KROOTPad> KROOTPadBuilder;
 
-template< >
-inline bool KROOTPadBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KROOTPadBuilder::AddAttribute(KContainer* aContainer)
 {
-    if( aContainer->GetName() == "name" )
-    {
-        aContainer->CopyTo( fObject, &KNamed::SetName );
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
         return true;
     }
-    if( aContainer->GetName() == "xlow" )
-    {
-        aContainer->CopyTo( fObject, &KROOTPad::Setxlow );
+    if (aContainer->GetName() == "xlow") {
+        aContainer->CopyTo(fObject, &KROOTPad::Setxlow);
         return true;
     }
-    if( aContainer->GetName() == "ylow" )
-    {
-        aContainer->CopyTo( fObject, &KROOTPad::Setylow );
+    if (aContainer->GetName() == "ylow") {
+        aContainer->CopyTo(fObject, &KROOTPad::Setylow);
         return true;
     }
-    if( aContainer->GetName() == "xup" )
-    {
-        aContainer->CopyTo( fObject, &KROOTPad::Setxup );
+    if (aContainer->GetName() == "xup") {
+        aContainer->CopyTo(fObject, &KROOTPad::Setxup);
         return true;
     }
-    if( aContainer->GetName() == "yup" )
-    {
-        aContainer->CopyTo( fObject, &KROOTPad::Setyup );
+    if (aContainer->GetName() == "yup") {
+        aContainer->CopyTo(fObject, &KROOTPad::Setyup);
         return true;
     }
     return false;
 }
 
-template< >
-inline bool KROOTPadBuilder::AddElement( KContainer* aContainer )
+template<> inline bool KROOTPadBuilder::AddElement(KContainer* aContainer)
 {
-    if( aContainer->Is< KPainter >() == true )
-    {
-        aContainer->ReleaseTo( fObject, &KROOTPad::AddPainter );
+    if (aContainer->Is<KPainter>() == true) {
+        aContainer->ReleaseTo(fObject, &KROOTPad::AddPainter);
         return true;
     }
     return false;
 }
 
-}
+}  // namespace katrin
 
-#endif //KASPER_KROOTPADBUILDER_H
+#endif  //KASPER_KROOTPADBUILDER_H

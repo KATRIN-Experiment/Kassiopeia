@@ -2,7 +2,6 @@
 #define KGMatrixVectorOperations_HH__
 
 
-
 /*
 *
 *@file KGMatrixVectorOperations.hh
@@ -30,7 +29,7 @@ void kg_vector_outer_product(const kg_vector* a, const kg_vector* b, kg_matrix* 
 
 void kg_sparse_matrix_vector_product(const kg_sparse_matrix* m, const kg_vector* in, kg_vector* out);
 
-}
+}  // namespace KGeoBag
 
 
 #endif /* KGMatrixVectorOperations_H__ */

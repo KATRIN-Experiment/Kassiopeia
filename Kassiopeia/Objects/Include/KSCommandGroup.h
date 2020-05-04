@@ -6,33 +6,32 @@
 namespace Kassiopeia
 {
 
-    class KSCommandGroup :
-        public KSCommand
-    {
-        public:
-            KSCommandGroup();
-            KSCommandGroup( const KSCommandGroup& aCopy );
-            virtual ~KSCommandGroup();
+class KSCommandGroup : public KSCommand
+{
+  public:
+    KSCommandGroup();
+    KSCommandGroup(const KSCommandGroup& aCopy);
+    ~KSCommandGroup() override;
 
-        public:
-            KSCommandGroup* Clone() const;
+  public:
+    KSCommandGroup* Clone() const override;
 
-        public:
-            void AddCommand( KSCommand* anCommand );
-            void RemoveCommand( KSCommand* anCommand );
+  public:
+    void AddCommand(KSCommand* anCommand);
+    void RemoveCommand(KSCommand* anCommand);
 
-            KSCommand* CommandAt( unsigned int anIndex );
-            const KSCommand* CommandAt( unsigned int anIndex ) const;
-            unsigned int CommandCount() const;
+    KSCommand* CommandAt(unsigned int anIndex);
+    const KSCommand* CommandAt(unsigned int anIndex) const;
+    unsigned int CommandCount() const;
 
-        private:
-            typedef std::vector< KSCommand* > CommandVector;
-            typedef CommandVector::iterator CommandIt;
-            typedef CommandVector::const_iterator CommandCIt;
+  private:
+    typedef std::vector<KSCommand*> CommandVector;
+    typedef CommandVector::iterator CommandIt;
+    typedef CommandVector::const_iterator CommandCIt;
 
-            CommandVector fCommands;
-    };
+    CommandVector fCommands;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

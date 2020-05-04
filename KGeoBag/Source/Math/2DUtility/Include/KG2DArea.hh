@@ -3,12 +3,12 @@
 
 
 #include "KG2DShape.hh"
-
 #include "KTwoVector.hh"
 
 #include <vector>
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /**
 *
@@ -24,20 +24,24 @@ namespace KGeoBag{
 */
 
 
-class KG2DArea: public KG2DShape
+class KG2DArea : public KG2DShape
 {
-    public:
-        KG2DArea(){;};
-        virtual ~KG2DArea(){;};
+  public:
+    KG2DArea()
+    {
+        ;
+    };
+    ~KG2DArea() override
+    {
+        ;
+    };
 
-        //geometry
-        virtual bool IsInside(const KTwoVector& aPoint) const = 0;
-        virtual double Area() const = 0;
-
-
+    //geometry
+    virtual bool IsInside(const KTwoVector& aPoint) const = 0;
+    virtual double Area() const = 0;
 };
 
 
-}//end of namespace
+}  // namespace KGeoBag
 
 #endif /* __KG2DArea_H__ */

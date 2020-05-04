@@ -1,17 +1,19 @@
 #include "Printable.h"
 
-namespace katrin{
+namespace katrin
+{
 
-namespace Kommon{
+namespace Kommon
+{
 
 
-    std::ostream& operator<<(std::ostream& output, const Printable& printable){
+std::ostream& operator<<(std::ostream& output, const Printable& printable)
+{
 
-        printable.Print(output);
-        return output;
-
-    }
-
+    printable.Print(output);
+    return output;
 }
 
-}
+}  // namespace Kommon
+
+}  // namespace katrin

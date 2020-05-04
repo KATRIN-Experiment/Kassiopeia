@@ -6,11 +6,8 @@
 #include "KFMObjectRetriever.hh"
 
 
-
 namespace KEMField
 {
-
-
 
 
 /*
@@ -26,24 +23,24 @@ namespace KEMField
 *
 */
 
-template<typename ObjectTypeList, typename TypeToRemove >
-class KFMNodeObjectNullifier: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, typename TypeToRemove>
+class KFMNodeObjectNullifier : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeObjectNullifier(){};
-        virtual ~KFMNodeObjectNullifier(){};
+  public:
+    KFMNodeObjectNullifier(){};
+    ~KFMNodeObjectNullifier() override{};
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            //does not delete the object, just sets the pointer to null, this is useful
-            //when many nodes point to the same object, which has just been deleted
-            KFMObjectRetriever<ObjectTypeList, TypeToRemove >::SetNodeObject(NULL, node);
-        }
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        //does not delete the object, just sets the pointer to null, this is useful
+        //when many nodes point to the same object, which has just been deleted
+        KFMObjectRetriever<ObjectTypeList, TypeToRemove>::SetNodeObject(nullptr, node);
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMNodeObjectNullifier_H__ */

@@ -19,39 +19,37 @@ namespace KEMField
 */
 
 
-template< typename ObjectTypeList >
-class KFMExternalIdentitySetNullifier: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMExternalIdentitySetNullifier : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
+  public:
+    KFMExternalIdentitySetNullifier()
+    {
+        ;
+    };
+    virtual ~KFMExternalIdentitySetNullifier(){};
 
-        KFMExternalIdentitySetNullifier(){;};
-        virtual ~KFMExternalIdentitySetNullifier(){};
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        if (node != NULL) {
+            if (node->GetParent() != NULL) {
+                KFMExternalIdentitySet* parent_eid_set =
+                    KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(node->GetParent());
+                KFMExternalIdentitySet* eid_set =
+                    KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(node);
 
-        virtual void ApplyAction( KFMNode< ObjectTypeList >* node)
-        {
-            if(node != NULL )
-            {
-                if(node->GetParent() != NULL )
-                {
-                    KFMExternalIdentitySet* parent_eid_set =  KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject( node->GetParent() );
-                    KFMExternalIdentitySet* eid_set =  KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject( node );
-
-                    if(eid_set == parent_eid_set)
-                    {
-                        //null out the childs pointer to the parents id set
-                        KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::SetNodeObject(NULL, node);
-                    }
+                if (eid_set == parent_eid_set) {
+                    //null out the childs pointer to the parents id set
+                    KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::SetNodeObject(NULL, node);
                 }
             }
         }
+    }
 
-    private:
-
+  private:
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KFMExternalIdentitySetNullifier_H__ */

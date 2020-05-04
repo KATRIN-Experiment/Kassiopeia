@@ -11,11 +11,12 @@
 #include "KSElectricField.h"
 #include "KSMagneticField.h"
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
-    KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field);
+KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field);
 
-    KSMagneticField* MakeConstantMagneticField(KGeoBag::KThreeVector field);
+KSMagneticField* MakeConstantMagneticField(KGeoBag::KThreeVector field);
 
 } /* namespace Kassiopeia */
 

@@ -3,11 +3,7 @@
 namespace KGeoBag
 {
 
-    KGAxialMesher::KGAxialMesher()
-    {
-    }
-    KGAxialMesher::~KGAxialMesher()
-    {
-    }
+KGAxialMesher::KGAxialMesher() {}
+KGAxialMesher::~KGAxialMesher() {}
 
-}
+}  // namespace KGeoBag

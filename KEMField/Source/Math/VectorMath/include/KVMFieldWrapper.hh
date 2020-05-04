@@ -4,7 +4,8 @@
 
 #include "KVMField.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -20,37 +21,45 @@ namespace KEMField{
 *
 */
 
-#define CALL_MEMBER_FN(object_ptr, ptrToMember)  (object_ptr->*(ptrToMember))
+#define CALL_MEMBER_FN(object_ptr, ptrToMember) (object_ptr->*(ptrToMember))
 
-template<class T, void (T::*memberFunction)(const double*, double*) const>
-class KVMFieldWrapper: public KVMField
+template<class T, void (T::*memberFunction)(const double*, double*) const> class KVMFieldWrapper : public KVMField
 {
-    public:
-
-        KVMFieldWrapper(T* ptr_to_object, unsigned int dimDomain, unsigned int dimRange):
+  public:
+    KVMFieldWrapper(T* ptr_to_object, unsigned int dimDomain, unsigned int dimRange) :
         fObjectPtr(ptr_to_object),
         fDimDomain(dimDomain),
         fDimRange(dimRange)
-        {;};
+    {
+        ;
+    };
 
-        ~KVMFieldWrapper(){;};
+    ~KVMFieldWrapper() override
+    {
+        ;
+    };
 
-        unsigned int GetNDimDomain() const {return fDimDomain;};
-        unsigned int GetNDimRange() const {return fDimRange;};
+    unsigned int GetNDimDomain() const override
+    {
+        return fDimDomain;
+    };
+    unsigned int GetNDimRange() const override
+    {
+        return fDimRange;
+    };
 
-        void Evaluate(const double* in, double* out) const
-        {
-            return CALL_MEMBER_FN(fObjectPtr, memberFunction)(in, out);
-        }
+    void Evaluate(const double* in, double* out) const override
+    {
+        return CALL_MEMBER_FN(fObjectPtr, memberFunction)(in, out);
+    }
 
-    private:
-
-        T* fObjectPtr;
-        unsigned int fDimDomain;
-        unsigned int fDimRange;
+  private:
+    T* fObjectPtr;
+    unsigned int fDimDomain;
+    unsigned int fDimRange;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KVMFieldWrapper_H */

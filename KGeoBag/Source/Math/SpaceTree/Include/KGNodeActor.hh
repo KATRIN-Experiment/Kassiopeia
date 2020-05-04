@@ -1,7 +1,8 @@
 #ifndef KGNodeActor_HH__
 #define KGNodeActor_HH__
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /**
 *
@@ -16,22 +17,18 @@ namespace KGeoBag{
 *
 */
 
-template<typename NodeType >
-class KGNodeActor
+template<typename NodeType> class KGNodeActor
 {
-    public:
-        KGNodeActor(){};
-        virtual ~KGNodeActor(){};
+  public:
+    KGNodeActor(){};
+    virtual ~KGNodeActor(){};
 
-        virtual void ApplyAction( NodeType* node) = 0;
+    virtual void ApplyAction(NodeType* node) = 0;
 
-    private:
-
+  private:
 };
 
 
-
-
-} //end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGNodeActor_H__ */

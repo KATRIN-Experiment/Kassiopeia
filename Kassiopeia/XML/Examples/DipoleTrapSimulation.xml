@@ -4,60 +4,60 @@
 <messages>
     <file path="[log_path]" base="DipoleTrapLog.txt"/>
 
-	<message key="k_file" terminal="normal" log="warning"/>
-	<message key="k_initialization" terminal="normal" log="warning"/>
+    <message key="k_file" terminal="normal" log="warning"/>
+    <message key="k_initialization" terminal="normal" log="warning"/>
 
     <message key="kg_core" terminal="normal" log="warning"/>
-	<message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_shape" terminal="normal" log="warning"/>
     <message key="kg_mesh" terminal="normal" log="warning"/>
     <message key="kg_axial_mesh" terminal="normal" log="warning"/>
 
-	<message key="ks_object" terminal="normal" log="normal"/>
+    <message key="ks_object" terminal="normal" log="normal"/>
     <message key="ks_operator" terminal="normal" log="normal"/>
-	<message key="ks_field" terminal="normal" log="normal"/>
-	<message key="ks_geometry" terminal="normal" log="normal"/>
+    <message key="ks_field" terminal="normal" log="normal"/>
+    <message key="ks_geometry" terminal="normal" log="normal"/>
     <message key="ks_generator" terminal="normal" log="normal"/>
-	<message key="ks_trajectory" terminal="normal" log="normal"/>
-	<message key="ks_interaction" terminal="normal" log="normal"/>
+    <message key="ks_trajectory" terminal="normal" log="normal"/>
+    <message key="ks_interaction" terminal="normal" log="normal"/>
     <message key="ks_navigator" terminal="normal" log="normal"/>
-	<message key="ks_terminator" terminal="normal" log="normal"/>
-	<message key="ks_writer" terminal="normal" log="normal"/>
-	<message key="ks_main" terminal="normal" log="normal"/>
-	<message key="ks_run" terminal="normal" log="normal"/>
-	<message key="ks_event" terminal="normal" log="normal"/>
-	<message key="ks_track" terminal="normal" log="normal"/>
-	<message key="ks_step" terminal="normal" log="normal"/>
+    <message key="ks_terminator" terminal="normal" log="normal"/>
+    <message key="ks_writer" terminal="normal" log="normal"/>
+    <message key="ks_main" terminal="normal" log="normal"/>
+    <message key="ks_run" terminal="normal" log="normal"/>
+    <message key="ks_event" terminal="normal" log="normal"/>
+    <message key="ks_track" terminal="normal" log="normal"/>
+    <message key="ks_step" terminal="normal" log="normal"/>
 
 </messages>
 
 <geometry>
 
-	<!-- world -->
+    <!-- world -->
 
-	<cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
+    <cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
 
-	<!-- solenoid -->
+    <!-- solenoid -->
 
     <tag name="magnet_tag">
         <cylinder_tube_space
-        	name="solenoid_space"
-        	z1="-1.e-2"
-        	z2="1.e-2"
-        	r1="0.5e-2"
-        	r2="1.5e-2"
-        	radial_mesh_count="30"
+            name="solenoid_space"
+            z1="-1.e-2"
+            z2="1.e-2"
+            r1="0.5e-2"
+            r2="1.5e-2"
+            radial_mesh_count="30"
         />
     </tag>
 
     <!-- ring -->
 
     <tag name="electrode_tag">
-    	<cylinder_surface
-    		name="ring_surface"
-    		z1="-2.0e-2"
-    		z2="2.0e-2"
-    		r="2.5e-1"
-    		longitudinal_mesh_count="200"
+        <cylinder_surface
+            name="ring_surface"
+            z1="-2.0e-2"
+            z2="2.0e-2"
+            r="2.5e-1"
+            longitudinal_mesh_count="200"
             longitudinal_mesh_power="3."
             axial_mesh_count="128"
         />
@@ -66,12 +66,12 @@
     <!-- tube -->
 
     <tag name="electrode_tag">
-    	<cylinder_surface
-    		name="tube_surface"
-        	z1="-1.e-2"
-        	z2="1.e-2"
-        	r="0.5e-2"
-    		longitudinal_mesh_count="200"
+        <cylinder_surface
+            name="tube_surface"
+            z1="-1.e-2"
+            z2="1.e-2"
+            r="0.5e-2"
+            longitudinal_mesh_count="200"
             longitudinal_mesh_power="3."
             axial_mesh_count="128"
         />
@@ -92,26 +92,26 @@
     <!-- assembly -->
 
     <space name="dipole_trap_assembly">
-    	<surface name="ring" node="ring_surface"/>
+        <surface name="ring" node="ring_surface"/>
         <surface name="center" node="center_surface"/>
-    	<space name="downstream_solenoid" node="solenoid_space">
-    		<transformation displacement="0. 0. -0.5"/>
-    	</space>
-    	<surface name="downstream_tube" node="tube_surface">
-    		<transformation displacement="0. 0. -0.5"/>
-    	</surface>
-    	<surface name="upstream_target" node="target_surface">
-    		<transformation displacement="0. 0. -0.48"/>
-    	</surface>
-    	<space name="upstream_solenoid" node="solenoid_space">
-    		<transformation displacement="0. 0. 0.5"/>
-    	</space>
-    	<surface name="upstream_tube" node="tube_surface">
-    		<transformation displacement="0. 0. 0.5"/>
-    	</surface>
-    	<surface name="downstream_target" node="target_surface">
-    		<transformation displacement="0. 0. 0.48"/>
-    	</surface>
+        <space name="downstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. -0.5"/>
+        </space>
+        <surface name="downstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. -0.5"/>
+        </surface>
+        <surface name="upstream_target" node="target_surface">
+            <transformation displacement="0. 0. -0.48"/>
+        </surface>
+        <space name="upstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. 0.5"/>
+        </space>
+        <surface name="upstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. 0.5"/>
+        </surface>
+        <surface name="downstream_target" node="target_surface">
+            <transformation displacement="0. 0. 0.48"/>
+        </surface>
     </space>
 
     <space name="world" node="world_space">
@@ -143,7 +143,7 @@
 
 <kassiopeia>
 
-	<!-- magnetic fields -->
+    <!-- magnetic fields -->
 
     <ksfield_electromagnet
         name="field_electromagnet"
@@ -201,13 +201,13 @@
     </ksfield_electrostatic>
 
     <ksfield_electric_constant
-    	name="field_constant"
-    	field="0. 0. 0."
-	/>
+        name="field_constant"
+        field="0. 0. 0."
+    />
 
-	<!-- generators -->
+    <!-- generators -->
 
-	<ksgen_generator_composite name="generator_uniform" pid="11">
+    <ksgen_generator_composite name="generator_uniform" pid="11">
         <energy_composite>
             <energy_fix value="1."/>
         </energy_composite>
@@ -252,7 +252,7 @@
 
     <!-- writers -->
 
-    <kswrite_root name="write_root" base="DipoleTrapSimulation.root"/>
+    <kswrite_root name="write_root" path="[output_path]" base="DipoleTrapSimulation.root"/>
 
     <!-- output -->
 
@@ -328,7 +328,7 @@
     <ks_simulation
         run="1"
         seed="51385"
-        events="1"
+        events="[events:1]"
         magnetic_field="field_electromagnet"
         electric_field="field_electrostatic"
         space="space_world"

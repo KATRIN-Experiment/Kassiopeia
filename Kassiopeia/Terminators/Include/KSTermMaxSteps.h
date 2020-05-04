@@ -6,37 +6,37 @@
 namespace Kassiopeia
 {
 
-    class KSTermMaxSteps :
-        public KSComponentTemplate< KSTermMaxSteps, KSTerminator >
-    {
-        public:
-            KSTermMaxSteps();
-            KSTermMaxSteps( const KSTermMaxSteps& aCopy );
-            KSTermMaxSteps* Clone() const;
-            virtual ~KSTermMaxSteps();
+class KSTermMaxSteps : public KSComponentTemplate<KSTermMaxSteps, KSTerminator>
+{
+  public:
+    KSTermMaxSteps();
+    KSTermMaxSteps(const KSTermMaxSteps& aCopy);
+    KSTermMaxSteps* Clone() const override;
+    ~KSTermMaxSteps() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMaxSteps( const unsigned int& maxsteps );
+  public:
+    void SetMaxSteps(const unsigned int& maxsteps);
 
-        protected:
-            virtual void ActivateComponent();
-            virtual void DeactivateComponent();
+  protected:
+    void ActivateComponent() override;
+    void DeactivateComponent() override;
 
-        private:
-            unsigned int fMaxSteps;
-            unsigned int fSteps;
-    };
+  private:
+    unsigned int fMaxSteps;
+    unsigned int fSteps;
+};
 
-    inline void KSTermMaxSteps::SetMaxSteps( const unsigned int& maxsteps )
-    {
-        fMaxSteps = maxsteps;
-        return;
-    }
-
+inline void KSTermMaxSteps::SetMaxSteps(const unsigned int& maxsteps)
+{
+    fMaxSteps = maxsteps;
+    return;
 }
+
+}  // namespace Kassiopeia
 
 #endif

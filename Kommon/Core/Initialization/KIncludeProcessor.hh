@@ -8,49 +8,67 @@
 namespace katrin
 {
 
-    class KIncludeProcessor :
-        public KProcessor
+class KIncludeProcessor : public KProcessor
+{
+  public:
+    KIncludeProcessor();
+    ~KIncludeProcessor() override;
+
+    void ProcessToken(KBeginElementToken* aToken) override;
+    void ProcessToken(KBeginAttributeToken* aToken) override;
+    void ProcessToken(KAttributeDataToken* aToken) override;
+    void ProcessToken(KEndAttributeToken* aToken) override;
+    void ProcessToken(KMidElementToken* aToken) override;
+    void ProcessToken(KElementDataToken* aToken) override;
+    void ProcessToken(KEndElementToken* aToken) override;
+
+    void SetPath(const std::string& path);
+    void AddDefaultPath(const std::string& path);
+
+  private:
+    void Reset();
+
+    typedef enum
     {
-        public:
-            KIncludeProcessor();
-            virtual ~KIncludeProcessor();
+        eElementInactive,
+        eActive,
+        eElementComplete
+    } ElementState;
+    ElementState fElementState;
 
-            virtual void ProcessToken( KBeginElementToken* aToken );
-            virtual void ProcessToken( KBeginAttributeToken* aToken );
-            virtual void ProcessToken( KAttributeDataToken* aToken );
-            virtual void ProcessToken( KEndAttributeToken* aToken );
-            virtual void ProcessToken( KMidElementToken* aToken );
-            virtual void ProcessToken( KElementDataToken* aToken );
-            virtual void ProcessToken( KEndElementToken* aToken );
+    typedef enum
+    {
+        eAttributeInactive,
+        eName,
+        ePath,
+        eBase,
+        eOptionalFlag,
+        eAttributeComplete
+    } AttributeState;
+    AttributeState fAttributeState;
 
-            void AddDefaultPath(const std::string& path);
+    bool fOptionalFlag;
 
-        private:
-            void Reset();
+    std::vector<std::string> fNames;
+    std::vector<std::string> fPaths;
+    std::vector<std::string> fBases;
 
-            typedef enum
-            {
-                eElementInactive, eActive, eElementComplete
-            } ElementState;
-            ElementState fElementState;
+    std::string fDefaultPath;
+    std::vector<std::string> fAdditionalDefaultPaths;
 
-            typedef enum
-            {
-                eAttributeInactive, eName, ePath, eBase, eOptionalFlag, eAttributeComplete
-            } AttributeState;
-            AttributeState fAttributeState;
+    std::map<std::string, std::string> fIncludedPaths;
 
-            bool fOptionalFlag;
+    typedef struct TreeNode_t
+    {
+        std::string fName;
+        TreeNode_t* fParent;
+        std::list<TreeNode_t*> fChildren;
+    } TreeNode;
+    TreeNode* fIncludeTree;
 
-            std::vector< std::string > fNames;
-            std::vector< std::string > fPaths;
-            std::vector< std::string > fBases;
+    static void PrintTreeNode(TreeNode* node, int level = 0, bool deleteAll = false);
+};
 
-            std::vector< std::string > fDefaultPaths;
-
-            std::vector< std::string > fIncludedPaths;
-    };
-
-}
+}  // namespace katrin
 
 #endif

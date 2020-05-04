@@ -3,14 +3,8 @@
 namespace KGeoBag
 {
 
-    template<>
-    KGShellPolyLoopSurface::Visitor::Visitor()
-    {
-    }
+template<> KGShellPolyLoopSurface::Visitor::Visitor() {}
 
-    template<>
-    KGShellPolyLoopSurface::Visitor::~Visitor()
-    {
-    }
+template<> KGShellPolyLoopSurface::Visitor::~Visitor() {}
 
-}
+}  // namespace KGeoBag

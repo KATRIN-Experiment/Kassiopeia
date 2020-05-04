@@ -1,11 +1,11 @@
 #ifndef KFMElectrostaticRegionSizeEstimator_HH__
 #define KFMElectrostaticRegionSizeEstimator_HH__
 
-#include <cstddef>
-
-#include "KFMCube.hh"
 #include "KFMBoundaryCalculator.hh"
+#include "KFMCube.hh"
 #include "KFMElectrostaticElementContainerBase.hh"
+
+#include <cstddef>
 
 namespace KEMField
 {
@@ -26,25 +26,27 @@ namespace KEMField
 
 class KFMElectrostaticRegionSizeEstimator
 {
-    public:
-        KFMElectrostaticRegionSizeEstimator();
-        virtual ~KFMElectrostaticRegionSizeEstimator();
+  public:
+    KFMElectrostaticRegionSizeEstimator();
+    virtual ~KFMElectrostaticRegionSizeEstimator();
 
-        void SetElectrostaticElementContainer(const KFMElectrostaticElementContainerBase<3,1>* container){fElementContainer = container;}
+    void SetElectrostaticElementContainer(const KFMElectrostaticElementContainerBase<3, 1>* container)
+    {
+        fElementContainer = container;
+    }
 
-        void ComputeEstimate();
+    void ComputeEstimate();
 
-        KFMCube<3> GetCubeEstimate() const;
-        KFMBall<3> GetBallEstimate() const;
-        KFMBox<3> GetBoxEstimate() const;
+    KFMCube<3> GetCubeEstimate() const;
+    KFMBall<3> GetBallEstimate() const;
+    KFMBox<3> GetBoxEstimate() const;
 
-    private:
+  private:
+    const KFMElectrostaticElementContainerBase<3, 1>* fElementContainer;
 
-        const KFMElectrostaticElementContainerBase<3,1>* fElementContainer;
-
-        KFMBoundaryCalculator<3>* fEstimator;
+    KFMBoundaryCalculator<3>* fEstimator;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticRegionSizeEstimator_H__ */

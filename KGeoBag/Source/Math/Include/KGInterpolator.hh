@@ -1,14 +1,14 @@
 #ifndef KGINTERPOLATOR_HH_
 #define KGINTERPOLATOR_HH_
 
-#include <vector>
-
 #include "KGDataPoint.hh"
+
+#include <vector>
 
 namespace KGeoBag
 {
-  class KGInterpolator
-  {
+class KGInterpolator
+{
   public:
     typedef KGDataPoint<1> DataPoint;
     typedef std::vector<DataPoint> DataSet;
@@ -16,7 +16,7 @@ namespace KGeoBag
     KGInterpolator() {}
     virtual ~KGInterpolator() {}
 
-    void Initialize(std::vector<double>&,std::vector<double>&);
+    void Initialize(std::vector<double>&, std::vector<double>&);
 
     virtual void Initialize(DataSet&) = 0;
 
@@ -28,7 +28,7 @@ namespace KGeoBag
     virtual double Range(unsigned int) const = 0;
 
     virtual double operator()(double) const = 0;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

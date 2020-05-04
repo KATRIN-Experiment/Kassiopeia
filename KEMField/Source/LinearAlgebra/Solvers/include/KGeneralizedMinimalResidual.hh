@@ -2,22 +2,18 @@
 #ifndef KGeneralizedMinimalResidual_HH__
 #define KGeneralizedMinimalResidual_HH__
 
-#include <cmath>
-
-
-#include "KMatrix.hh"
-#include "KVector.hh"
-
-#include "KSquareMatrix.hh"
-#include "KSimpleMatrix.hh"
-#include "KSimpleVector.hh"
-
 #include "KFMLinearAlgebraDefinitions.hh"
-#include "KFMVectorOperations.hh"
 #include "KFMMatrixOperations.hh"
 #include "KFMMatrixVectorOperations.hh"
-
+#include "KFMVectorOperations.hh"
 #include "KGeneralizedMinimalResidualState.hh"
+#include "KMatrix.hh"
+#include "KSimpleMatrix.hh"
+#include "KSimpleVector.hh"
+#include "KSquareMatrix.hh"
+#include "KVector.hh"
+
+#include <cmath>
 
 namespace KEMField
 {
@@ -42,119 +38,130 @@ namespace KEMField
 *
 */
 
-template< typename ValueType >
-class KGeneralizedMinimalResidual
+template<typename ValueType> class KGeneralizedMinimalResidual
 {
-    public:
-        typedef KSquareMatrix<ValueType> Matrix;
-        typedef KVector<ValueType> Vector;
+  public:
+    typedef KSquareMatrix<ValueType> Matrix;
+    typedef KVector<ValueType> Vector;
 
-        typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-        typedef KSimpleVector<ValueType> KSimpleVectorType;
+    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
+    typedef KSimpleVector<ValueType> KSimpleVectorType;
 
-        KGeneralizedMinimalResidual(const Matrix& A, Vector& x, const Vector& b):
-        fDim(A.Dimension()),
-        fA(A),
-        fX(x),
-        fB(b)
-        {
-            fR.resize(fDim);
-            fW.resize(fDim);
-            fJ = 0;
-            fUseSVD = true; //default is to use SVD for solution calculation
-            fExternalStateSet = false;
-        };
+    KGeneralizedMinimalResidual(const Matrix& A, Vector& x, const Vector& b) : fDim(A.Dimension()), fA(A), fX(x), fB(b)
+    {
+        fR.resize(fDim);
+        fW.resize(fDim);
+        fJ = 0;
+        fUseSVD = true;  //default is to use SVD for solution calculation
+        fExternalStateSet = false;
+    };
 
-        virtual ~KGeneralizedMinimalResidual(){};
+    virtual ~KGeneralizedMinimalResidual(){};
 
-        static std::string Name() { return std::string("gmres"); }
-        std::string NameLabel() { return std::string("gmres"); }
+    static std::string Name()
+    {
+        return std::string("gmres");
+    }
+    std::string NameLabel()
+    {
+        return std::string("gmres");
+    }
 
-        const KGeneralizedMinimalResidualState<ValueType>& GetState() const;
-        void SetState(const KGeneralizedMinimalResidualState<ValueType>& state);
+    const KGeneralizedMinimalResidualState<ValueType>& GetState() const;
+    void SetState(const KGeneralizedMinimalResidualState<ValueType>& state);
 
-        void Initialize();
-        void ResetAndInitialize();
-        void AugmentKrylovSubspace();
-        void UpdateSolution();
+    void Initialize();
+    void ResetAndInitialize();
+    void AugmentKrylovSubspace();
+    void UpdateSolution();
 
-        void GetResidualNorm(double& norm){norm = fResidualNorm;};
+    void GetResidualNorm(double& norm)
+    {
+        norm = fResidualNorm;
+    };
 
-        void CoalesceData(){};
-        void Finalize(){};
+    void CoalesceData(){};
+    void Finalize(){};
 
-        unsigned int Dimension() const {return fDim;};
+    unsigned int Dimension() const
+    {
+        return fDim;
+    };
 
-        void SetResidualVector(const Vector&);
-        void GetResidualVector(Vector&) const;
+    void SetResidualVector(const Vector&);
+    void GetResidualVector(Vector&) const;
 
-        //user can indicate a preference for how the solution is calculated, default is SVD
-        void UseSingularValueDecomposition(){fUseSVD = true;};
-        void UseBackSubstitution(){fUseSVD = false;};
+    //user can indicate a preference for how the solution is calculated, default is SVD
+    void UseSingularValueDecomposition()
+    {
+        fUseSVD = true;
+    };
+    void UseBackSubstitution()
+    {
+        fUseSVD = false;
+    };
 
-    private:
+  private:
+    //inner product for vectors
+    double InnerProduct(const Vector& a, const Vector& b);
+    void ReconstructState();
 
-        //inner product for vectors
-        double InnerProduct(const Vector& a, const Vector& b);
-        void ReconstructState();
+    //data
+    unsigned int fDim;
 
-        //data
-        unsigned int fDim;
+    //matrix system
+    const Matrix& fA;
+    Vector& fX;
+    const Vector& fB;
 
-        //matrix system
-        const Matrix& fA;
-        Vector& fX;
-        const Vector& fB;
+    //inner iteration count
+    unsigned int fJ;
+    double fResidualNorm;
 
-        //inner iteration count
-        unsigned int fJ;
-        double fResidualNorm;
+    //intial residual vector
+    KSimpleVectorType fR;
 
-        //intial residual vector
-        KSimpleVectorType fR;
+    //columns of H, the minimization matrix
+    std::vector<KSimpleVectorType> fH;
 
-        //columns of H, the minimization matrix
-        std::vector< KSimpleVectorType > fH;
+    //the krylov subspace basis vectors
+    std::vector<KSimpleVectorType> fV;
 
-        //the krylov subspace basis vectors
-        std::vector< KSimpleVectorType > fV;
+    KSimpleVectorType fY;  //solution vector to the minimization problem
+    KSimpleVectorType fP;  //right hand side of minimization problem
+    KSimpleVectorType fW;  //workspace
 
-        KSimpleVectorType fY; //solution vector to the minimization problem
-        KSimpleVectorType fP; //right hand side of minimization problem
-        KSimpleVectorType fW; //workspace
+    KSimpleVectorType fC;  //Givens rotation cosines
+    KSimpleVectorType fS;  //Givens rotation sines
 
-        KSimpleVectorType fC; //Givens rotation cosines
-        KSimpleVectorType fS; //Givens rotation sines
+    bool fUseSVD;
 
-        bool fUseSVD;
-
-        bool fExternalStateSet;
-        mutable KGeneralizedMinimalResidualState<ValueType> fState;
+    bool fExternalStateSet;
+    mutable KGeneralizedMinimalResidualState<ValueType> fState;
 };
 
-template< typename ValueType >
-void
-KGeneralizedMinimalResidual<ValueType>::Initialize()
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::Initialize()
 {
-    if(fExternalStateSet) //we have data from a previous run of the same process
+    if (fExternalStateSet)  //we have data from a previous run of the same process
     {
         double inf_norm = 0;
-        for(unsigned int i=0; i<fDim; i++){ if( std::fabs(fX[i]) > inf_norm){inf_norm = std::fabs(fX[i]); }; };
+        for (unsigned int i = 0; i < fDim; i++) {
+            if (std::fabs(fX[i]) > inf_norm) {
+                inf_norm = std::fabs(fX[i]);
+            };
+        };
 
-        if(InnerProduct(fX,fX) <  1e-14 )
-        {
+        if (InnerProduct(fX, fX) < 1e-14) {
             //current solution guess is probably zero vector
             //so load up the old checkpoint and go
             ReconstructState();
             return;
         }
-        else
-        {
+        else {
             //first compute the residual of current solution
             ResetAndInitialize();
             //compare residual to previous checkpoint
-            if(fResidualNorm > fState.GetResidualNorm())
-            {
+            if (fResidualNorm > fState.GetResidualNorm()) {
                 //current residual is worse than old checkpointed solution, so load it into memory
                 ReconstructState();
                 return;
@@ -167,9 +174,7 @@ KGeneralizedMinimalResidual<ValueType>::Initialize()
 }
 
 
-template< typename ValueType >
-void
-KGeneralizedMinimalResidual<ValueType>::ResetAndInitialize()
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::ResetAndInitialize()
 {
 
     //clear out any old data
@@ -184,21 +189,19 @@ KGeneralizedMinimalResidual<ValueType>::ResetAndInitialize()
     fJ = 0;
 
     fA.Multiply(fX, fR);
-    for(unsigned int i=0; i<fDim; i++)
-    {
+    for (unsigned int i = 0; i < fDim; i++) {
         fR[i] = fB(i) - fR[i];
     }
 
     //now compute residual norm
-    double norm = std::sqrt( InnerProduct(fR, fR) );
-    double inv_norm = 1.0/norm;
+    double norm = std::sqrt(InnerProduct(fR, fR));
+    double inv_norm = 1.0 / norm;
 
     //set v_0 = r/|r|
-    fV.push_back( KSimpleVectorType() );
+    fV.push_back(KSimpleVectorType());
     fV[fJ].resize(fDim);
-    for(unsigned int i=0; i<fDim; i++)
-    {
-        fV[fJ][i] =  fR[i]*inv_norm;
+    for (unsigned int i = 0; i < fDim; i++) {
+        fV[fJ][i] = fR[i] * inv_norm;
     }
 
     //set p_0 = |r|
@@ -207,77 +210,70 @@ KGeneralizedMinimalResidual<ValueType>::ResetAndInitialize()
 }
 
 
-template< typename ValueType >
-void
-KGeneralizedMinimalResidual<ValueType>::AugmentKrylovSubspace()
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::AugmentKrylovSubspace()
 {
     //compute w = A*v_j
-    fV.push_back( KSimpleVectorType() );
-    fV[fJ+1].resize(fDim);
+    fV.push_back(KSimpleVectorType());
+    fV[fJ + 1].resize(fDim);
     fA.Multiply(fV[fJ], fW);
 
     //append new column to fH
     fH.push_back(KSimpleVectorType());
-    fH[fJ].resize(fJ+1);
+    fH[fJ].resize(fJ + 1);
 
     //fH: note the change in row-column index convention!!
     unsigned int row;
     //compute the fJ-th column of fH
-    for(row=0; row <= fJ; row++)
-    {
+    for (row = 0; row <= fJ; row++) {
         double h = InnerProduct(fW, fV[row]);
         fH[fJ][row] = h;
 
         //gram-schmidt process: subtract off component parallel to subspace vector v_i
-        for(unsigned int n=0; n<fDim; n++){ fW[n] -= h*fV[row][n]; };
-   }
+        for (unsigned int n = 0; n < fDim; n++) {
+            fW[n] -= h * fV[row][n];
+        };
+    }
 
     //set v_j+1 = w/h
-    double beta = std::sqrt( InnerProduct(fW, fW) );
-    double inv_beta = 1.0/beta;
-    for(unsigned int n=0; n<fDim; n++)
-    {
-        fV[fJ+1][n] = fW[n]*inv_beta;
+    double beta = std::sqrt(InnerProduct(fW, fW));
+    double inv_beta = 1.0 / beta;
+    for (unsigned int n = 0; n < fDim; n++) {
+        fV[fJ + 1][n] = fW[n] * inv_beta;
     }
 
     //now apply all previous Given's rotations to the new column of fH
-    for( row=0; row < fJ; row++)
-    {
+    for (row = 0; row < fJ; row++) {
         double a = fH[fJ][row];
-        double b = fH[fJ][row+1];
-        fH[fJ][row] = fC[row]*a + fS[row]*b;
-        fH[fJ][row+1] = -1.0*fS[row]*a + fC[row]*b;
+        double b = fH[fJ][row + 1];
+        fH[fJ][row] = fC[row] * a + fS[row] * b;
+        fH[fJ][row + 1] = -1.0 * fS[row] * a + fC[row] * b;
     }
 
     //compute the newest rotation
-    double gamma = std::sqrt( (fH[fJ][fJ])*(fH[fJ][fJ]) + beta*beta );
-    fC.push_back(fH[fJ][fJ]/gamma);
-    fS.push_back(beta/gamma);
+    double gamma = std::sqrt((fH[fJ][fJ]) * (fH[fJ][fJ]) + beta * beta);
+    fC.push_back(fH[fJ][fJ] / gamma);
+    fS.push_back(beta / gamma);
 
     //apply newest rotation to last element of column
     //note the element 1 past the end (beta) is zero-ed out by this rotation
     fH[fJ][fJ] = gamma;
 
     //apply givens rotation to fP
-    fP.push_back( -1.0*fS[fJ]*fP[fJ] );
-    fP[fJ] = fC[fJ]*fP[fJ];
+    fP.push_back(-1.0 * fS[fJ] * fP[fJ]);
+    fP[fJ] = fC[fJ] * fP[fJ];
 
     //update residual norm
-    fResidualNorm = std::fabs(fP[fJ+1]);
+    fResidualNorm = std::fabs(fP[fJ + 1]);
 
     //increment iteration count
     fJ++;
 }
 
-template< typename ValueType >
-void
-KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
 {
-    if(fJ != 0)
-    {
+    if (fJ != 0) {
         //clear out old values of fX
-        for(unsigned int i=0; i<fDim; i++)
-        {
+        for (unsigned int i = 0; i < fDim; i++) {
             fX[i] = 0.0;
         }
 
@@ -292,34 +288,28 @@ KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
         kfm_vector* fSVD_b = kfm_vector_calloc(fJ);
         kfm_vector* fSVD_x = kfm_vector_calloc(fJ);
 
-        for(unsigned int row = 0; row < fJ; row++)
-        {
+        for (unsigned int row = 0; row < fJ; row++) {
             kfm_vector_set(fSVD_b, row, fP[row]);
 
-            for(unsigned int col = 0; col < fJ; col++)
-            {
-                if(row <= col)
-                {
+            for (unsigned int col = 0; col < fJ; col++) {
+                if (row <= col) {
                     //note that fH is transposed because we store it by columns
-                    kfm_matrix_set(fSVD_a, row, col, fH[col][row] );
+                    kfm_matrix_set(fSVD_a, row, col, fH[col][row]);
                 }
-                else
-                {
-                    kfm_matrix_set(fSVD_a, row, col, 0.0 );
+                else {
+                    kfm_matrix_set(fSVD_a, row, col, 0.0);
                 }
             }
         }
 
-        if(fUseSVD)
-        {
+        if (fUseSVD) {
             //perform singular value decomposition of H
             kfm_matrix_svd(fSVD_a, fSVD_u, fSVD_s, fSVD_v);
 
             //solve minimization problem H*y = p with SVD of H
             kfm_matrix_svd_solve(fSVD_u, fSVD_s, fSVD_v, fSVD_b, fSVD_x);
         }
-        else
-        {
+        else {
             //solve this upper triangular system using back-substitution
             //Note: this is currently more memory intensive than it needs to be,
             //since we have allocated an entire NxN matrix to store the columns of H.
@@ -328,12 +318,10 @@ KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
         }
 
         //now compute the solution vector x
-        for(unsigned int row=0; row < fJ; row++)
-        {
+        for (unsigned int row = 0; row < fJ; row++) {
             double y = kfm_vector_get(fSVD_x, row);
-            for(unsigned int n=0; n<fDim; n++)
-            {
-                fX[n] += y*fV[row][n];
+            for (unsigned int n = 0; n < fDim; n++) {
+                fX[n] += y * fV[row][n];
             }
         }
 
@@ -344,46 +332,37 @@ KGeneralizedMinimalResidual<ValueType>::UpdateSolution()
         kfm_vector_free(fSVD_s);
         kfm_vector_free(fSVD_b);
         kfm_vector_free(fSVD_x);
-
     }
-
 }
 
-template< typename ValueType >
-double
-KGeneralizedMinimalResidual<ValueType>::InnerProduct(const Vector& a, const Vector& b)
+template<typename ValueType>
+double KGeneralizedMinimalResidual<ValueType>::InnerProduct(const Vector& a, const Vector& b)
 {
     double result = 0.;
 
-    for(unsigned int i=0; i<fDim; i++)
-    {
-        result += a(i)*b(i);
+    for (unsigned int i = 0; i < fDim; i++) {
+        result += a(i) * b(i);
     }
 
     return result;
 }
 
-template <typename ValueType>
-void
-KGeneralizedMinimalResidual<ValueType>::SetResidualVector(const Vector& v)
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::SetResidualVector(const Vector& v)
 {
-  fR.resize(v.Dimension());
+    fR.resize(v.Dimension());
 
-  for (unsigned int i = 0;i<v.Dimension();i++)
-    fR[i] = v(i);
+    for (unsigned int i = 0; i < v.Dimension(); i++)
+        fR[i] = v(i);
 }
 
-template <typename ValueType>
-void
-KGeneralizedMinimalResidual<ValueType>::GetResidualVector(Vector& v) const
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::GetResidualVector(Vector& v) const
 {
-  for (unsigned int i = 0;i<fR.Dimension();i++)
-    v[i] = fR(i);
+    for (unsigned int i = 0; i < fR.Dimension(); i++)
+        v[i] = fR(i);
 }
 
-template <typename ValueType>
-const KGeneralizedMinimalResidualState<ValueType>&
-KGeneralizedMinimalResidual<ValueType>::GetState() const
+template<typename ValueType>
+const KGeneralizedMinimalResidualState<ValueType>& KGeneralizedMinimalResidual<ValueType>::GetState() const
 {
     fState.SetDimension(fDim);
     fState.SetIterationCount(fJ);
@@ -391,15 +370,14 @@ KGeneralizedMinimalResidual<ValueType>::GetState() const
 
     //have to handle x and b specially
     //fill temp vector with x fState
-    KSimpleVectorType temp; temp.resize(fDim);
-    for(unsigned int i=0; i<fDim; i++)
-    {
+    KSimpleVectorType temp;
+    temp.resize(fDim);
+    for (unsigned int i = 0; i < fDim; i++) {
         temp[i] = fX(i);
     }
     fState.SetSolutionVector(&temp);
 
-    for(unsigned int i=0; i<fDim; i++)
-    {
+    for (unsigned int i = 0; i < fDim; i++) {
         temp[i] = fB(i);
     }
     fState.SetRightHandSide(&temp);
@@ -414,9 +392,8 @@ KGeneralizedMinimalResidual<ValueType>::GetState() const
     return fState;
 }
 
-template <typename ValueType>
-void
-KGeneralizedMinimalResidual<ValueType>::SetState(const KGeneralizedMinimalResidualState<ValueType>& state)
+template<typename ValueType>
+void KGeneralizedMinimalResidual<ValueType>::SetState(const KGeneralizedMinimalResidualState<ValueType>& state)
 {
     fState.SetDimension(state.GetDimension());
     fState.SetIterationCount(state.GetIterationCount());
@@ -433,11 +410,11 @@ KGeneralizedMinimalResidual<ValueType>::SetState(const KGeneralizedMinimalResidu
     temp = state.GetResidualVector();
     fState.SetResidualVector(temp);
 
-    const std::vector< KSimpleVector<ValueType> >* h_temp;
+    const std::vector<KSimpleVector<ValueType>>* h_temp;
     h_temp = state.GetMinimizationMatrix();
     fState.SetMinimizationMatrix(h_temp);
 
-    const std::vector< KSimpleVector<ValueType> >* v_temp;
+    const std::vector<KSimpleVector<ValueType>>* v_temp;
     v_temp = state.GetKrylovSpaceBasis();
     fState.SetKrylovSpaceBasis(v_temp);
 
@@ -454,75 +431,79 @@ KGeneralizedMinimalResidual<ValueType>::SetState(const KGeneralizedMinimalResidu
 }
 
 
-
-template <typename ValueType>
-void
-KGeneralizedMinimalResidual<ValueType>::ReconstructState()
+template<typename ValueType> void KGeneralizedMinimalResidual<ValueType>::ReconstructState()
 {
-    if(fExternalStateSet)
-    {
+    if (fExternalStateSet) {
         fDim = fState.GetDimension();
         fJ = fState.GetIterationCount();
         fResidualNorm = fState.GetResidualNorm();
 
         const KSimpleVectorType* temp;
         temp = fState.GetSolutionVector();
-        for(unsigned int i=0; i<temp->size(); i++){fX[i] = (*temp)(i); };
+        for (unsigned int i = 0; i < temp->size(); i++) {
+            fX[i] = (*temp)(i);
+        };
 
         temp = fState.GetResidualVector();
         fR.resize(temp->size());
-        for(unsigned int i=0; i<temp->size(); i++){fR[i] = (*temp)(i); };
+        for (unsigned int i = 0; i < temp->size(); i++) {
+            fR[i] = (*temp)(i);
+        };
 
         //clear out fH
-        for(unsigned int i=0; i<fH.size(); i++){fH[i].clear();};
+        for (unsigned int i = 0; i < fH.size(); i++) {
+            fH[i].clear();
+        };
         //fill up with new data
-        std::vector< KSimpleVectorType > h_temp;
+        std::vector<KSimpleVectorType> h_temp;
         fState.GetMinimizationMatrix(&h_temp);
         fH.resize(h_temp.size());
-        for(unsigned int i=0; i<h_temp.size(); i++)
-        {
+        for (unsigned int i = 0; i < h_temp.size(); i++) {
             unsigned int s = h_temp[i].size();
             fH[i].resize(s);
-            for(unsigned int j= 0; j<s; j++)
-            {
+            for (unsigned int j = 0; j < s; j++) {
                 fH[i][j] = h_temp[i][j];
             }
         }
 
         //clear out fV
-        for(unsigned int i=0; i<fV.size(); i++){fV[i].clear();};
+        for (unsigned int i = 0; i < fV.size(); i++) {
+            fV[i].clear();
+        };
         //fill up with new data
-        std::vector< KSimpleVectorType > v_temp;
+        std::vector<KSimpleVectorType> v_temp;
         fState.GetKrylovSpaceBasis(&v_temp);
         fV.resize(v_temp.size());
-        for(unsigned int i=0; i<v_temp.size(); i++)
-        {
+        for (unsigned int i = 0; i < v_temp.size(); i++) {
             unsigned int s = v_temp[i].size();
             fV[i].resize(s);
-            for(unsigned int j=0; j<s; j++)
-            {
+            for (unsigned int j = 0; j < s; j++) {
                 fV[i][j] = v_temp[i][j];
             }
         }
 
         temp = fState.GetMinimizationRightHandSide();
         fP.resize(temp->size());
-        for(unsigned int i=0; i<temp->size(); i++){fP[i] = (*temp)(i); };
+        for (unsigned int i = 0; i < temp->size(); i++) {
+            fP[i] = (*temp)(i);
+        };
 
         temp = fState.GetGivensRotationCosines();
         fC.resize(temp->size());
-        for(unsigned int i=0; i<temp->size(); i++){fC[i] = (*temp)(i); };
+        for (unsigned int i = 0; i < temp->size(); i++) {
+            fC[i] = (*temp)(i);
+        };
 
         temp = fState.GetGivensRotationSines();
         fS.resize(temp->size());
-        for(unsigned int i=0; i<temp->size(); i++){fS[i] = (*temp)(i); };
+        for (unsigned int i = 0; i < temp->size(); i++) {
+            fS[i] = (*temp)(i);
+        };
     }
-
 }
 
 
-
-template <typename ValueType, typename Stream>
+template<typename ValueType, typename Stream>
 Stream& operator>>(Stream& s, KGeneralizedMinimalResidual<ValueType>& aData)
 {
     s.PreStreamInAction(aData);
@@ -536,7 +517,7 @@ Stream& operator>>(Stream& s, KGeneralizedMinimalResidual<ValueType>& aData)
 }
 
 
-template <typename ValueType, typename Stream>
+template<typename ValueType, typename Stream>
 Stream& operator<<(Stream& s, const KGeneralizedMinimalResidual<ValueType>& aData)
 {
     s.PreStreamOutAction(aData);
@@ -549,10 +530,6 @@ Stream& operator<<(Stream& s, const KGeneralizedMinimalResidual<ValueType>& aDat
 }
 
 
-
-
-
-
-}
+}  // namespace KEMField
 
 #endif /* KGeneralizedMinimalResidual_H__ */

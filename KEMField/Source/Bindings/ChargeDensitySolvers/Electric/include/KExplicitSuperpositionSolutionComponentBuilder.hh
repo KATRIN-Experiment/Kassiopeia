@@ -11,30 +11,27 @@
 #include "KComplexElement.hh"
 #include "KExplicitSuperpositionSolutionComponent.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KExplicitSuperpositionSolutionComponent > KExplicitSuperpositionSolutionComponentBuilder;
-
-template< >
-inline bool KExplicitSuperpositionSolutionComponentBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-    if( aContainer->GetName() == "name" )
-    {
-        aContainer->CopyTo( fObject->name );
+
+typedef KComplexElement<KEMField::KExplicitSuperpositionSolutionComponent>
+    KExplicitSuperpositionSolutionComponentBuilder;
+
+template<> inline bool KExplicitSuperpositionSolutionComponentBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject->name);
         return true;
     }
-    if( aContainer->GetName() == "scale" )
-    {
-        aContainer->CopyTo( fObject->scale );
+    if (aContainer->GetName() == "scale") {
+        aContainer->CopyTo(fObject->scale);
         return true;
     }
-    if( aContainer->GetName() == "hash" )
-    {
-        aContainer->CopyTo( fObject->hash );
+    if (aContainer->GetName() == "hash") {
+        aContainer->CopyTo(fObject->hash);
         return true;
     }
     return false;
-
 }
 
 } /* namespace katrin */

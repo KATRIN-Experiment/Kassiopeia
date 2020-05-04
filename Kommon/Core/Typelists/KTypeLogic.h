@@ -4,42 +4,37 @@
 namespace katrin
 {
 
-    template< class XLeft, class XRight >
-    class KTypeEqual
+template<class XLeft, class XRight> class KTypeEqual
+{
+  public:
+    enum
     {
-        public:
-            enum
-            {
-                Value = 0
-            };
+        Value = 0
     };
+};
 
-    template< class XMatch >
-    class KTypeEqual< XMatch, XMatch >
+template<class XMatch> class KTypeEqual<XMatch, XMatch>
+{
+  public:
+    enum
     {
-        public:
-            enum
-            {
-                Value = 1
-            };
+        Value = 1
     };
+};
 
-    template< int XCondition, class XConditionMet, class XConditionNotMet >
-    class KTypeIf;
+template<int XCondition, class XConditionMet, class XConditionNotMet> class KTypeIf;
 
-    template< class XConditionMet, class XConditionNotMet >
-    class KTypeIf< 1, XConditionMet, XConditionNotMet >
-    {
-        public:
-            typedef XConditionMet Type;
-    };
+template<class XConditionMet, class XConditionNotMet> class KTypeIf<1, XConditionMet, XConditionNotMet>
+{
+  public:
+    typedef XConditionMet Type;
+};
 
-    template< class XConditionMet, class XConditionNotMet >
-    class KTypeIf< 0, XConditionMet, XConditionNotMet >
-    {
-        public:
-            typedef XConditionNotMet Type;
-    };
-}
+template<class XConditionMet, class XConditionNotMet> class KTypeIf<0, XConditionMet, XConditionNotMet>
+{
+  public:
+    typedef XConditionNotMet Type;
+};
+}  // namespace katrin
 
 #endif

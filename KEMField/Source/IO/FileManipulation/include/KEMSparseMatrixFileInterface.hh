@@ -2,14 +2,14 @@
 #define KEMSparseMatrixFileInterface_HH__
 
 #ifndef KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB
-    #define KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB 128 //size of buffer in megabytes
+#define KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB 128  //size of buffer in megabytes
 #endif
 
 #include "KEMFileInterface.hh"
 
-#include <string>
+#include <cstdio>
 #include <sstream>
-#include <stdio.h>
+#include <string>
 
 namespace KEMField
 {
@@ -30,92 +30,90 @@ namespace KEMField
 
 class KEMSparseMatrixFileInterface
 {
-    public:
+  public:
+    KEMSparseMatrixFileInterface()
+    {
+        fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + std::string("SparseMatrix_");
+        fPredicate = std::string(".bin");
+        fBufferSize = KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB;
+        fBufferSize *= sizeof(double) * 1024 * 1024;
+    };
 
-        KEMSparseMatrixFileInterface()
-        {
-            fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + std::string("SparseMatrix_");
-            fPredicate = std::string(".bin");
-            fBufferSize = KEMFIELD_SPARSE_MATRIX_BUFFER_SIZE_MB;
-            fBufferSize *= sizeof(double)*1024*1024;
-        };
-
-        virtual ~KEMSparseMatrixFileInterface(){};
+    virtual ~KEMSparseMatrixFileInterface(){};
 
 
-        virtual void SetFilePrefix(std::string file_prefix)
-        {
-            fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_prefix;
+    virtual void SetFilePrefix(std::string file_prefix)
+    {
+        fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_prefix;
+    }
+
+    virtual void SetFilePredicate(std::string file_predicate)
+    {
+        fPredicate = file_predicate;
+    }
+
+
+    virtual bool DoesSectionExist(unsigned int section)
+    {
+        std::stringstream ss;
+        ss << fPrefix;
+        ss << section;
+        ss << fPredicate;
+
+        std::string name = ss.str();
+
+        std::set<std::string> file_list = KEMFileInterface::GetInstance()->CompleteFileList();
+
+        for (auto it = file_list.begin(); it != file_list.end(); ++it) {
+            if (name == *it) {
+                return true;
+            };
         }
 
-        virtual void SetFilePredicate(std::string file_predicate)
-        {
-            fPredicate = file_predicate;
-        }
+        return false;
+    }
+
+    virtual void WriteMatrixElements(unsigned int section, const double* matrix_elements) const
+    {
+        //write the buffer out to file
+        FILE* pFile;
+
+        std::stringstream ss;
+        ss << fPrefix;
+        ss << section;
+        ss << fPredicate;
+
+        pFile = fopen(ss.str().c_str(), "wb");
+
+        fwrite(matrix_elements, sizeof(double), fBufferSize, pFile);
+        fclose(pFile);
+    }
+
+    virtual void ReadMatrixElements(unsigned int section, double* matrix_elements) const
+    {
+        //read buffer in from file
+        FILE* pFile;
+
+        std::stringstream ss;
+        ss << fPrefix;
+        ss << section;
+        ss << fPredicate;
+
+        pFile = fopen(ss.str().c_str(), "rb");
+
+        size_t __attribute__((__unused__)) unused = fread(matrix_elements, sizeof(double), fBufferSize, pFile);
+        fclose(pFile);
+    }
 
 
-        virtual bool DoesSectionExist(unsigned int section)
-        {
-            std::stringstream ss;
-            ss << fPrefix;
-            ss << section;
-            ss << fPredicate;
-
-            std::string name = ss.str();
-
-            std::set< std::string > file_list = KEMFileInterface::GetInstance()->CompleteFileList();
-
-            for(std::set<std::string>::iterator it=file_list.begin(); it!=file_list.end(); ++it)
-            {
-                if(name == *it){return true;};
-            }
-
-            return false;
-        }
-
-        virtual void WriteMatrixElements(unsigned int section, const double* matrix_elements) const
-        {
-            //write the buffer out to file
-            FILE* pFile;
-
-            std::stringstream ss;
-            ss << fPrefix;
-            ss << section;
-            ss << fPredicate;
-
-            pFile = fopen(ss.str().c_str(), "wb");
-
-            fwrite(matrix_elements, sizeof(double), fBufferSize, pFile);
-            fclose(pFile);
-        }
-
-        virtual void ReadMatrixElements(unsigned int section, double* matrix_elements) const
-        {
-            //read buffer in from file
-            FILE* pFile;
-
-            std::stringstream ss;
-            ss << fPrefix;
-            ss << section;
-            ss << fPredicate;
-
-            pFile = fopen(ss.str().c_str(), "rb");
-
-            size_t __attribute__((__unused__)) unused = fread(matrix_elements, sizeof(double), fBufferSize, pFile);
-            fclose(pFile);
-        }
-
-
-    private:
-
-        size_t fBufferSize;
-        std::string fPrefix;
-        std::string fPredicate;
-
+  private:
+    size_t fBufferSize;
+    std::string fPrefix;
+    std::string fPredicate;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* KEMSparseMatrixFileInterface_H__ */

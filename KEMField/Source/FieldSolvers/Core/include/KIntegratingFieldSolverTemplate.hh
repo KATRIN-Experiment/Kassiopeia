@@ -8,7 +8,8 @@
 #ifndef KINTEGRATINGFIELDSOLVERTEMPLATE_HH_
 #define KINTEGRATINGFIELDSOLVERTEMPLATE_HH_
 
-namespace KEMField {
+namespace KEMField
+{
 
 /**
  *  This partial specialisation rule allows to use different boundary integrators for one
@@ -19,11 +20,9 @@ namespace KEMField {
  *  The KIntegratingFieldSolver will just need one template argument and figure out
  *  with the help of the boundary integrator which template specialisation is adequat.
  */
-template <class Integrator, typename Kind = typename Integrator::Kind>
-class KIntegratingFieldSolver;
+template<class Integrator, typename Kind = typename Integrator::Kind> class KIntegratingFieldSolver;
 
-}
-
+}  // namespace KEMField
 
 
 #endif /* KINTEGRATINGFIELDSOLVERTEMPLATE_HH_ */

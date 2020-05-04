@@ -1,141 +1,151 @@
 #include "KFormulaProcessor.hh"
+
 #include "KInitializationMessage.hh"
 
-#include <sstream>
+#include <TFormula.h>
 #include <cstdlib>
 #include <iomanip>
 #include <memory>
-
-#include <TFormula.h>
+#include <sstream>
 
 using namespace std;
 
 namespace katrin
 {
 
-    const string KFormulaProcessor::fStartBracket = string( "{" );
-    const string KFormulaProcessor::fEndBracket = string( "}" );
-    const string KFormulaProcessor::fEqual = string( "eq" );
-    const string KFormulaProcessor::fNonEqual = string( "ne" );
-    const string KFormulaProcessor::fGreater = string( "gt" );
-    const string KFormulaProcessor::fLess = string( "lt" );
-    const string KFormulaProcessor::fGreaterEqual = string( "ge" );
-    const string KFormulaProcessor::fLessEqual = string( "le" );
-    const string KFormulaProcessor::fModulo = string( "mod" );
+const string KFormulaProcessor::fStartBracket = string("{");
+const string KFormulaProcessor::fEndBracket = string("}");
+const string KFormulaProcessor::fEqual = string("eq");
+const string KFormulaProcessor::fNonEqual = string("ne");
+const string KFormulaProcessor::fGreater = string("gt");
+const string KFormulaProcessor::fLess = string("lt");
+const string KFormulaProcessor::fGreaterEqual = string("ge");
+const string KFormulaProcessor::fLessEqual = string("le");
+const string KFormulaProcessor::fModulo = string("mod");
 
 
-    KFormulaProcessor::KFormulaProcessor()
-    {
-    }
+KFormulaProcessor::KFormulaProcessor()
+{
+    fFormulaParser = new TFormula();
+}
 
-    KFormulaProcessor::~KFormulaProcessor()
-    {
-    }
+KFormulaProcessor::~KFormulaProcessor()
+{
+    delete fFormulaParser;
+}
 
-    void KFormulaProcessor::ProcessToken( KAttributeDataToken* aToken )
-    {
-        Evaluate( aToken );
-        KProcessor::ProcessToken( aToken );
-        return;
-    }
+void KFormulaProcessor::ProcessToken(KAttributeDataToken* aToken)
+{
+    Evaluate(aToken);
+    KProcessor::ProcessToken(aToken);
+    return;
+}
 
-    void KFormulaProcessor::ProcessToken( KElementDataToken* aToken )
-    {
-        Evaluate( aToken );
-        KProcessor::ProcessToken( aToken );
-        return;
-    }
+void KFormulaProcessor::ProcessToken(KElementDataToken* aToken)
+{
+    Evaluate(aToken);
+    KProcessor::ProcessToken(aToken);
+    return;
+}
 
-    void KFormulaProcessor::Evaluate( KToken* aToken )
-    {
-        string tValue;
-        string tBuffer;
-        stack< string > tBufferStack;
+void KFormulaProcessor::Evaluate(KToken* aToken)
+{
+    string tValue;
+    string tBuffer;
+    stack<string> tBufferStack;
+    unsigned int tBracketcount;
 
-        stringstream tResultConverter;
+    stringstream tResultConverter;
 
-        tValue = aToken->GetValue();
+    tValue = aToken->GetValue();
 
-        tBufferStack.push( "" );
-        for( size_t Index = 0; Index < tValue.size(); Index++ )
-        {
-            if( tValue[Index] == fStartBracket[0] )
-            {
-                tBufferStack.top() += tBuffer;
-                tBufferStack.push( "" );
-                tBuffer.clear();
-                continue;
+    tBufferStack.push("");
+    tBracketcount = 0;
+    for (size_t Index = 0; Index < tValue.size(); Index++) {
+        if (tValue[Index] == fStartBracket[0]) {
+            tBracketcount += 1;
+            tBufferStack.top() += tBuffer;
+            tBufferStack.push("");
+            tBuffer.clear();
+            continue;
+        }
+
+        if (tValue[Index] == fEndBracket[0]) {
+            tBracketcount -= 1;
+            tBufferStack.top() += tBuffer;
+            tBuffer = tBufferStack.top();
+            tBufferStack.pop();
+            if (tBufferStack.size() == 0) {
+                initmsg(eError) << "bracket matching problem at position <" << Index << "> in string <" << tValue << ">"
+                                << ret;
+                initmsg(eError) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile()
+                                << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">"
+                                << eom;
+                return;
             }
 
-            if( tValue[Index] == fEndBracket[0] )
-            {
+            if (tBracketcount != 0) {
+                tBufferStack.top() += "(";
                 tBufferStack.top() += tBuffer;
-                tBuffer = tBufferStack.top();
-                tBufferStack.pop();
-                if( tBufferStack.size() == 0 )
-                {
-                    initmsg( eError ) << "bracket matching problem at position <" << Index << "> in string <" << tValue << ">" << ret;
-                    initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-                    return;
-                }
-
+                tBufferStack.top() += ")";
+            }
+            else {
                 //conversions for logical operations
-                while ( tBuffer.find( fGreaterEqual ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fGreaterEqual ), fGreaterEqual.length(), string(">=") );
+                while (tBuffer.find(fGreaterEqual) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fGreaterEqual), fGreaterEqual.length(), string(">="));
                 }
-                while ( tBuffer.find( fLessEqual ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fLessEqual ), fLessEqual.length(), string("<=") );
+                while (tBuffer.find(fLessEqual) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fLessEqual), fLessEqual.length(), string("<="));
                 }
-                while ( tBuffer.find( fNonEqual ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fNonEqual ), fNonEqual.length(), string("!=") );
+                while (tBuffer.find(fNonEqual) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fNonEqual), fNonEqual.length(), string("!="));
                 }
-                while ( tBuffer.find( fEqual ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fEqual ), fEqual.length(), string("==") );
+                while (tBuffer.find(fEqual) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fEqual), fEqual.length(), string("=="));
                 }
-                while ( tBuffer.find( fGreater ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fGreater ), fGreater.length(), string(">") );
+                while (tBuffer.find(fGreater) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fGreater), fGreater.length(), string(">"));
                 }
-                while ( tBuffer.find( fLess ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fLess ), fLess.length(), string("<") );
+                while (tBuffer.find(fLess) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fLess), fLess.length(), string("<"));
                 }
 
-                while ( tBuffer.find( fModulo ) != string::npos )
-                {
-                	tBuffer.replace( tBuffer.find( fModulo ), fModulo.length(), string("%") );
+                while (tBuffer.find(fModulo) != string::npos) {
+                    tBuffer.replace(tBuffer.find(fModulo), fModulo.length(), string("%"));
                 }
 
-                TFormula formulaParser("(anonymous)", tBuffer.c_str());
+                //TFormula formulaParser("(anonymous)", tBuffer.c_str());
+                //tResultConverter.str("");
+                //tResultConverter << std::setprecision( 15 ) << formulaParser.Eval( 0.0 );
+
+                fFormulaParser->Compile(tBuffer.c_str());
                 tResultConverter.str("");
-                tResultConverter << std::setprecision( 15 ) << formulaParser.Eval( 0.0 );
+                tResultConverter << std::setprecision(15) << fFormulaParser->Eval(0.0);
+                fFormulaParser->Clear();
+
                 tBuffer = tResultConverter.str();
-
                 tBufferStack.top() += tBuffer;
-                tBuffer.clear();
-                continue;
             }
-
-            tBuffer.append( 1, tValue[Index] );
-        }
-        tBufferStack.top() += tBuffer;
-        tValue = tBufferStack.top();
-        tBufferStack.pop();
-
-        if( tBufferStack.size() != 0 )
-        {
-            initmsg( eError ) << "bracket matching problem at end of string <" << tValue << ">" << ret;
-            initmsg( eError ) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
-            return;
+            tBuffer.clear();
+            continue;
         }
 
-        aToken->SetValue( tValue );
+        tBuffer.append(1, tValue[Index]);
+    }
+    tBufferStack.top() += tBuffer;
+    tValue = tBufferStack.top();
+    tBufferStack.pop();
 
+    if (tBufferStack.size() != 0) {
+        initmsg(eError) << "bracket matching problem at end of string <" << tValue << ">" << ret;
+        initmsg(eError) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile() << "> at line <"
+                        << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">" << eom;
         return;
     }
 
-} /* namespace Kassiopeia */
+    aToken->SetValue(tValue);
+
+    return;
+}
+
+}  // namespace katrin

@@ -7,6 +7,4 @@
 
 #include "KGRandomMessage.hh"
 
-KMESSAGE_DEFINE( KGeoBag, randommsg, kg_random, KGRANDOM )
-
-
+KMESSAGE_DEFINE(KGeoBag, randommsg, kg_random, KGRANDOM)

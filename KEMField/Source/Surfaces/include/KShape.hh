@@ -1,9 +1,9 @@
 #ifndef KSHAPE_DEF
 #define KSHAPE_DEF
 
-#include <string>
-
 #include "KThreeVector_KEMField.hh"
+
+#include <string>
 
 namespace KEMField
 {
@@ -19,15 +19,13 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KShape
-  {
+class KShape
+{
   protected:
-
     KShape() {}
     virtual ~KShape() {}
 
   public:
-
     virtual double Area() const = 0;
 
     virtual const KPosition Centroid() const = 0;
@@ -35,7 +33,7 @@ namespace KEMField
     virtual double DistanceTo(const KPosition&, KPosition&) = 0;
 
     virtual const KDirection Normal() const = 0;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KSHAPE_DEF */

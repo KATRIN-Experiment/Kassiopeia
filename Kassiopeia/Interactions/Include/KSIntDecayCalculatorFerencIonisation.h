@@ -6,59 +6,57 @@
 #define KASPER_KSINTDECAYCALCULATORFERENCIONISATION_H
 
 
-#include "KSIntDecayCalculator.h"
 #include "KField.h"
+#include "KSIntDecayCalculator.h"
 #include "RydbergFerenc.h"
 
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
-    class KSIntDecayCalculatorFerencIonisation :
-            public KSComponentTemplate<KSIntDecayCalculatorFerencIonisation, KSIntDecayCalculator> {
+class KSIntDecayCalculatorFerencIonisation :
+    public KSComponentTemplate<KSIntDecayCalculatorFerencIonisation, KSIntDecayCalculator>
+{
 
-        public:
-            KSIntDecayCalculatorFerencIonisation();
-            virtual ~KSIntDecayCalculatorFerencIonisation();
+  public:
+    KSIntDecayCalculatorFerencIonisation();
+    ~KSIntDecayCalculatorFerencIonisation() override;
 
-            KSIntDecayCalculatorFerencIonisation(const KSIntDecayCalculatorFerencIonisation &aCopy);
+    KSIntDecayCalculatorFerencIonisation(const KSIntDecayCalculatorFerencIonisation& aCopy);
 
-            KSIntDecayCalculatorFerencIonisation *Clone() const;
+    KSIntDecayCalculatorFerencIonisation* Clone() const override;
 
-        public:
-            void CalculateLifeTime(const KSParticle &aParticle, double &aLifeTime);
+  public:
+    void CalculateLifeTime(const KSParticle& aParticle, double& aLifeTime) override;
 
-            void ExecuteInteraction(const KSParticle &anInitialParticle,
-                                          KSParticle &aFinalParticle,
-                                          KSParticleQueue &aSecondaries);
+    void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aSecondaries) override;
 
-        protected:
-            virtual void InitializeComponent();
-
-
-        public:
-            K_SET_GET(long long, TargetPID)
-            K_SET_GET(long long, minPID)
-            K_SET_GET(long long, maxPID)
-            K_SET_GET(double, Temperature)
-
-        public:
-            void SetDecayProductGenerator(KSGenerator *const aGenerator);
-
-            KSGenerator *GetDecayProductGenerator() const;
-
-        protected:
-            KSGenerator *fDecayProductGenerator;
-
-        private:
-            double low_n_lifetimes[150][150];
-
-        private:
-            RydbergCalculator* fCalculator;
+  protected:
+    void InitializeComponent() override;
 
 
+  public:
+    K_SET_GET(long long, TargetPID)
+    K_SET_GET(long long, minPID)
+    K_SET_GET(long long, maxPID)
+    K_SET_GET(double, Temperature)
 
-    };
-}
+  public:
+    void SetDecayProductGenerator(KSGenerator* const aGenerator);
+
+    KSGenerator* GetDecayProductGenerator() const;
+
+  protected:
+    KSGenerator* fDecayProductGenerator;
+
+  private:
+    double low_n_lifetimes[150][150];
+
+  private:
+    RydbergCalculator* fCalculator;
+};
+}  // namespace Kassiopeia
 
 
-#endif //KASPER_KSINTDECAYCALCULATORFERENCIONISATION_H
+#endif  //KASPER_KSINTDECAYCALCULATORFERENCIONISATION_H

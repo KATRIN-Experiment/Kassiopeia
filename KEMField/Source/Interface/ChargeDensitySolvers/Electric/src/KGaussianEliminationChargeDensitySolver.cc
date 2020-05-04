@@ -6,46 +6,40 @@
  */
 
 #include "KGaussianEliminationChargeDensitySolver.hh"
-#include "KElectrostaticBoundaryIntegratorFactory.hh"
-#include "KSquareMatrix.hh"
+
 #include "KBoundaryIntegralMatrix.hh"
-#include "KBoundaryIntegralVector.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
+#include "KBoundaryIntegralVector.hh"
+#include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KGaussianElimination.hh"
+#include "KSquareMatrix.hh"
 
-namespace KEMField {
-
-KGaussianEliminationChargeDensitySolver::KGaussianEliminationChargeDensitySolver()
+namespace KEMField
 {
+
+KGaussianEliminationChargeDensitySolver::KGaussianEliminationChargeDensitySolver() {}
+
+KGaussianEliminationChargeDensitySolver::~KGaussianEliminationChargeDensitySolver() {}
+
+void KGaussianEliminationChargeDensitySolver::SetIntegratorPolicy(const KEBIPolicy& policy)
+{
+    fIntegratorPolicy = policy;
 }
 
-KGaussianEliminationChargeDensitySolver::~KGaussianEliminationChargeDensitySolver()
+void KGaussianEliminationChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
+    if (FindSolution(0., container) == false) {
+        KElectrostaticBoundaryIntegrator integrator{fIntegratorPolicy.CreateIntegrator()};
+        KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(container, integrator);
+        KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator> x(container, integrator);
+        KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(container, integrator);
+
+        KGaussianElimination<KElectrostaticBoundaryIntegrator::ValueType> gaussianElimination;
+        gaussianElimination.Solve(A, x, b);
+
+        SaveSolution(0., container);
+    }
+    return;
 }
 
-void KGaussianEliminationChargeDensitySolver::SetIntegratorPolicy(
-		const KEBIPolicy& policy)
-{
-	fIntegratorPolicy = policy;
-}
-
-void KGaussianEliminationChargeDensitySolver::InitializeCore( KSurfaceContainer& container )
-{
-	if( FindSolution( 0., container ) == false )
-	{
-		KElectrostaticBoundaryIntegrator integrator {fIntegratorPolicy.CreateIntegrator()};
-		KBoundaryIntegralMatrix< KElectrostaticBoundaryIntegrator > A( container, integrator );
-		KBoundaryIntegralSolutionVector< KElectrostaticBoundaryIntegrator > x( container, integrator );
-		KBoundaryIntegralVector< KElectrostaticBoundaryIntegrator > b( container, integrator );
-
-		KGaussianElimination< KElectrostaticBoundaryIntegrator::ValueType > gaussianElimination;
-		gaussianElimination.Solve( A, x, b );
-
-		SaveSolution( 0., container );
-	}
-	return;
-}
-
-} // KEMField
-
-
+}  // namespace KEMField

@@ -8,22 +8,21 @@
 #ifndef KGGENERICSURFACERANDOM_HH_
 #define KGGENERICSURFACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGArea.hh"
 #include "KGRandomMessage.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for implementation of a generic code
    * for dicing a point on an arbitrary surface.
    */
-  class KGGenericSurfaceRandom : virtual public KGShapeRandom,
-				 public KGArea::Visitor
-  {
+class KGGenericSurfaceRandom : virtual public KGShapeRandom, public KGArea::Visitor
+{
   public:
-	  KGGenericSurfaceRandom() : KGShapeRandom() {}
-    virtual ~KGGenericSurfaceRandom() {}
+    KGGenericSurfaceRandom() : KGShapeRandom() {}
+    ~KGGenericSurfaceRandom() override {}
 
     /**
 	 * \brief Visitor function to dice the point on
@@ -31,8 +30,8 @@ namespace KGeoBag
 	 *
 	 * \brief aArea
 	 */
-    virtual void VisitArea(KGArea* aArea);
-  };
-}
+    void VisitArea(KGArea* aArea) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGGENERICSURFACERANDOM_HH_ */

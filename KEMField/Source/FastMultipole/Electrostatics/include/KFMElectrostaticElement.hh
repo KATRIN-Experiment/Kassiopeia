@@ -1,10 +1,10 @@
 #ifndef KFMElectrostaticElement_HH__
 #define KFMElectrostaticElement_HH__
 
-#include "KFMBasisData.hh"
 #include "KFMBall.hh"
-#include "KFMPointCloud.hh"
+#include "KFMBasisData.hh"
 #include "KFMIdentityPair.hh"
+#include "KFMPointCloud.hh"
 
 namespace KEMField
 {
@@ -22,48 +22,78 @@ namespace KEMField
 *
 */
 
-template<unsigned int SpatialDimension, unsigned int BasisDimension>
-class KFMElectrostaticElement
+template<unsigned int SpatialDimension, unsigned int BasisDimension> class KFMElectrostaticElement
 {
-    public:
-        KFMElectrostaticElement(){};
-        virtual ~KFMElectrostaticElement(){};
+  public:
+    KFMElectrostaticElement(){};
+    virtual ~KFMElectrostaticElement(){};
 
-        void SetIdentityPair(const KFMIdentityPair& id){fIDPair = id;};
-        KFMIdentityPair GetIdentityPair() const {return fIDPair;};
+    void SetIdentityPair(const KFMIdentityPair& id)
+    {
+        fIDPair = id;
+    };
+    KFMIdentityPair GetIdentityPair() const
+    {
+        return fIDPair;
+    };
 
-        void SetBoundingBall(const KFMBall<SpatialDimension>& ball){fBoundingBall = ball;};
-        const KFMBall<SpatialDimension>& GetBoundingBall() const {return fBoundingBall;};
+    void SetBoundingBall(const KFMBall<SpatialDimension>& ball)
+    {
+        fBoundingBall = ball;
+    };
+    const KFMBall<SpatialDimension>& GetBoundingBall() const
+    {
+        return fBoundingBall;
+    };
 
-        void SetPointCloud(const KFMPointCloud<SpatialDimension>& cloud){fPointCloud = cloud;};
-        const KFMPointCloud<SpatialDimension>& GetPointCloud() const {return fPointCloud;};
+    void SetPointCloud(const KFMPointCloud<SpatialDimension>& cloud)
+    {
+        fPointCloud = cloud;
+    };
+    const KFMPointCloud<SpatialDimension>& GetPointCloud() const
+    {
+        return fPointCloud;
+    };
 
-        void SetBasisData(const KFMBasisData<BasisDimension>& basis){fBasis = basis;};
-        const KFMBasisData<BasisDimension>& GetBasisData() const {return fBasis;};
+    void SetBasisData(const KFMBasisData<BasisDimension>& basis)
+    {
+        fBasis = basis;
+    };
+    const KFMBasisData<BasisDimension>& GetBasisData() const
+    {
+        return fBasis;
+    };
 
-        void SetAspectRatio(double aspect_ratio){fAspectRatio = aspect_ratio;};
-        double GetAspectRatio() const {return fAspectRatio;};
+    void SetAspectRatio(double aspect_ratio)
+    {
+        fAspectRatio = aspect_ratio;
+    };
+    double GetAspectRatio() const
+    {
+        return fAspectRatio;
+    };
 
-        void SetCentroid(const KFMPoint<SpatialDimension>& centroid){fCentroid = centroid;};
-        const KFMPoint<SpatialDimension>& GetCentroid() const {return fCentroid;};
+    void SetCentroid(const KFMPoint<SpatialDimension>& centroid)
+    {
+        fCentroid = centroid;
+    };
+    const KFMPoint<SpatialDimension>& GetCentroid() const
+    {
+        return fCentroid;
+    };
 
 
-    private:
-
-
+  private:
     KFMIdentityPair fIDPair;
     KFMBall<SpatialDimension> fBoundingBall;
     KFMPointCloud<SpatialDimension> fPointCloud;
     KFMBasisData<BasisDimension> fBasis;
     KFMPoint<SpatialDimension> fCentroid;
     double fAspectRatio;
-
-
 };
 
 
-
-}
+}  // namespace KEMField
 
 
 #endif /* KFMElectrostaticElement_H__ */

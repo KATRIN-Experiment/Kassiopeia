@@ -1,13 +1,13 @@
 #ifndef KGROTATEDLINESEGMENTSURFACE_HH_
 #define KGROTATEDLINESEGMENTSURFACE_HH_
 
-#include "KGRotatedPathSurface.hh"
 #include "KGPlanarLineSegment.hh"
+#include "KGRotatedPathSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGRotatedPathSurface< KGPlanarLineSegment > KGRotatedLineSegmentSurface;
+typedef KGRotatedPathSurface<KGPlanarLineSegment> KGRotatedLineSegmentSurface;
 
 }
 

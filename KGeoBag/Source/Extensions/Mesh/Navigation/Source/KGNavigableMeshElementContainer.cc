@@ -11,8 +11,7 @@ KGNavigableMeshElementContainer::KGNavigableMeshElementContainer()
 
 KGNavigableMeshElementContainer::~KGNavigableMeshElementContainer()
 {
-    for(unsigned int i=0; i<fMeshElements.size(); i++)
-    {
+    for (unsigned int i = 0; i < fMeshElements.size(); i++) {
         delete fMeshElements[i];
     }
     fMeshElements.clear();
@@ -20,11 +19,10 @@ KGNavigableMeshElementContainer::~KGNavigableMeshElementContainer()
 
 
 //access individual element data
-void
-KGNavigableMeshElementContainer::Add(KGNavigableMeshElement* element)
+void KGNavigableMeshElementContainer::Add(KGNavigableMeshElement* element)
 {
-    element->SetID( fMeshElements.size() ); //set unique id
-    fMeshElements.push_back(element); //add to the collection
+    element->SetID(fMeshElements.size());  //set unique id
+    fMeshElements.push_back(element);      //add to the collection
 
     //compute the bounding ball
     KGPointCloud<KGMESH_DIM> point_cloud = element->GetMeshElement()->GetPointCloud();
@@ -40,21 +38,17 @@ KGNavigableMeshElement* KGNavigableMeshElementContainer::GetElement(unsigned int
     return fMeshElements[id];
 }
 
-KGBall<KGMESH_DIM>
-KGNavigableMeshElementContainer::GetElementBoundingBall(unsigned int id)
+KGBall<KGMESH_DIM> KGNavigableMeshElementContainer::GetElementBoundingBall(unsigned int id)
 {
     return fMeshElementBoundingBalls[id];
 }
 
-KGCube<KGMESH_DIM>
-KGNavigableMeshElementContainer::GetGlobalBoundingCube()
+KGCube<KGMESH_DIM> KGNavigableMeshElementContainer::GetGlobalBoundingCube()
 {
 
-    if(!fValidGlobalCube)
-    {
+    if (!fValidGlobalCube) {
         fBoundaryCalculator.Reset();
-        for(unsigned int i=0; i<fMeshElements.size(); i++)
-        {
+        for (unsigned int i = 0; i < fMeshElements.size(); i++) {
             //KGPointCloud<KGMESH_DIM> point_cloud = fMeshElements[i]->GetMeshElement()->GetPointCloud();
             //fBoundaryCalculator.AddPointCloud(&point_cloud);
             fBoundaryCalculator.AddBall(&(fMeshElementBoundingBalls[i]));
@@ -63,9 +57,8 @@ KGNavigableMeshElementContainer::GetGlobalBoundingCube()
         fValidGlobalCube = true;
     }
 
-    return  fGlobalBoundingCube;
+    return fGlobalBoundingCube;
 }
 
 
-
-}
+}  // namespace KGeoBag

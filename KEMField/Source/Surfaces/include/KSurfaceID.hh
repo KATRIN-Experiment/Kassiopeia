@@ -2,9 +2,9 @@
 #define KSURFACEID_DEF
 
 
-#include <string>
-
 #include "KDataComparator.hh"
+
+#include <string>
 
 namespace KEMField
 {
@@ -22,41 +22,42 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  struct KSurfaceID
-  {
+struct KSurfaceID
+{
     KSurfaceID() : BasisID(0), BoundaryID(0), ShapeID(0) {}
-    KSurfaceID(unsigned short basisID,
-	       unsigned short boundaryID,
-	       unsigned short shapeID) : BasisID(basisID),
-					 BoundaryID(boundaryID),
-					 ShapeID(shapeID) {}
+    KSurfaceID(unsigned short basisID, unsigned short boundaryID, unsigned short shapeID) :
+        BasisID(basisID),
+        BoundaryID(boundaryID),
+        ShapeID(shapeID)
+    {}
     virtual ~KSurfaceID() {}
 
-    static std::string Name() { return "SurfaceID"; }
+    static std::string Name()
+    {
+        return "SurfaceID";
+    }
 
     unsigned short BasisID;
     unsigned short BoundaryID;
     unsigned short ShapeID;
-  };
+};
 
-  template <typename Stream>
-  Stream& operator>>(Stream& s,KSurfaceID& sID)
-  {
+template<typename Stream> Stream& operator>>(Stream& s, KSurfaceID& sID)
+{
     s.PreStreamInAction(sID);
     s >> sID.BasisID >> sID.BoundaryID >> sID.ShapeID;
     s.PostStreamInAction(sID);
     return s;
-  }
+}
 
-  template <typename Stream>
-  Stream& operator<<(Stream& s,const KSurfaceID& sID)
-  {
+template<typename Stream> Stream& operator<<(Stream& s, const KSurfaceID& sID)
+{
     s.PreStreamOutAction(sID);
     s << sID.BasisID << sID.BoundaryID << sID.ShapeID;
     s.PostStreamOutAction(sID);
     return s;
-  }
-
 }
+
+}  // namespace KEMField
 
 #endif /* KSURFACEID_DEF */

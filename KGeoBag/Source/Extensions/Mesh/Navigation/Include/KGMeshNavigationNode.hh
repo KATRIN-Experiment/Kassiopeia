@@ -1,14 +1,13 @@
 #ifndef KGMeshNavigationNode_HH__
 #define KGMeshNavigationNode_HH__
 
-#include "KGTypelist.hh"
-#include "KGNode.hh"
-
 #include "KGCube.hh"
-#include "KGMeshElement.hh"
 #include "KGIdentitySet.hh"
+#include "KGMeshElement.hh"
 #include "KGNavigableMeshElementContainer.hh"
+#include "KGNode.hh"
 #include "KGSpaceTreeProperties.hh"
+#include "KGTypelist.hh"
 
 
 namespace KGeoBag
@@ -27,23 +26,22 @@ namespace KGeoBag
 *
 */
 
-typedef KGCube< KGMESH_DIM > kg_mesh_cube;
+typedef KGCube<KGMESH_DIM> kg_mesh_cube;
 
-typedef KGSpaceTreeProperties< KGMESH_DIM > kg_mesh_tree_properties;
+typedef KGSpaceTreeProperties<KGMESH_DIM> kg_mesh_tree_properties;
 
-typedef KGTYPELIST_4(kg_mesh_cube, kg_mesh_tree_properties, KGIdentitySet, KGNavigableMeshElementContainer) KGMeshNavigationNodeObjects;
+typedef KGTYPELIST_4(kg_mesh_cube, kg_mesh_tree_properties, KGIdentitySet,
+                     KGNavigableMeshElementContainer) KGMeshNavigationNodeObjects;
 
-typedef KGNode< KGMeshNavigationNodeObjects > KGMeshNavigationNode;
+typedef KGNode<KGMeshNavigationNodeObjects> KGMeshNavigationNode;
 
 
 //streamrs for the cube
-template <typename Stream>
-Stream& operator>>(Stream& s,kg_mesh_cube& aData)
+template<typename Stream> Stream& operator>>(Stream& s, kg_mesh_cube& aData)
 {
     s.PreStreamInAction(aData);
 
-    for(unsigned int i=0; i<4; i++)
-    {
+    for (unsigned int i = 0; i < 4; i++) {
         s >> aData[i];
     }
 
@@ -51,13 +49,11 @@ Stream& operator>>(Stream& s,kg_mesh_cube& aData)
     return s;
 }
 
-template <typename Stream>
-Stream& operator<<(Stream& s,const kg_mesh_cube& aData)
+template<typename Stream> Stream& operator<<(Stream& s, const kg_mesh_cube& aData)
 {
     s.PreStreamOutAction(aData);
 
-    for(unsigned int i=0; i<4; i++)
-    {
+    for (unsigned int i = 0; i < 4; i++) {
         s << aData[i];
     }
 
@@ -66,6 +62,6 @@ Stream& operator<<(Stream& s,const kg_mesh_cube& aData)
     return s;
 }
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGMeshNavigationNode_H__ */

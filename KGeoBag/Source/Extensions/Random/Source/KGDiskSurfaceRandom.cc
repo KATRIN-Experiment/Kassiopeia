@@ -13,7 +13,7 @@ void KGeoBag::KGDiskSurfaceRandom::VisitDiskSurface(KGeoBag::KGDiskSurface* aDis
 
     // point is always on the disk surface
 
-    double phi = Uniform(0, 2 * KConst::Pi());
+    double phi = Uniform(0, 2 * katrin::KConst::Pi());
     double r = aDiskSpace->R() * sqrt(Uniform());
 
     point.SetZ(aDiskSpace->Z());

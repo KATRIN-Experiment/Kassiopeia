@@ -2,39 +2,49 @@
 #define Kassiopeia_KSTrajTermSynchrotron_h_
 
 #include "KSComponentTemplate.h"
-#include "KSTrajExactTypes.h"
 #include "KSTrajAdiabaticTypes.h"
 #include "KSTrajExactTrappedTypes.h"
+#include "KSTrajExactTypes.h"
 
 namespace Kassiopeia
 {
 
-    class KSTrajTermSynchrotron :
-        public KSComponentTemplate< KSTrajTermSynchrotron >,
-        public KSTrajExactDifferentiator,
-        public KSTrajAdiabaticDifferentiator,
-        public KSTrajExactTrappedDifferentiator
+class KSTrajTermSynchrotron :
+    public KSComponentTemplate<KSTrajTermSynchrotron>,
+    public KSTrajExactDifferentiator,
+    public KSTrajAdiabaticDifferentiator,
+    public KSTrajExactTrappedDifferentiator
+{
+  public:
+    KSTrajTermSynchrotron();
+    KSTrajTermSynchrotron(const KSTrajTermSynchrotron& aCopy);
+    KSTrajTermSynchrotron* Clone() const override;
+    ~KSTrajTermSynchrotron() override;
+
+  public:
+    void Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
+                       KSTrajExactDerivative& aDerivative) const override;
+    void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
+                       KSTrajAdiabaticDerivative& aDerivative) const override;
+    void Differentiate(double aTime, const KSTrajExactTrappedParticle& aParticle,
+                       KSTrajExactTrappedDerivative& aDerivative) const override;
+
+  public:
+    void SetEnhancement(const double& anEnhancement);
+    void SetOldMethode(const bool& aBool);
+
+    const double& GetTotalForce() const
     {
-        public:
-            KSTrajTermSynchrotron();
-            KSTrajTermSynchrotron( const KSTrajTermSynchrotron& aCopy );
-            KSTrajTermSynchrotron* Clone() const;
-            virtual ~KSTrajTermSynchrotron();
+        return fTotalForce;
+    }
 
-        public:
-            virtual void Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle, KSTrajExactDerivative& aDerivative ) const;
-            virtual void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle, KSTrajAdiabaticDerivative& aDerivative ) const;
-            virtual void Differentiate(double aTime, const KSTrajExactTrappedParticle& aParticle, KSTrajExactTrappedDerivative& aDerivative) const;
+  private:
+    double fEnhancement;
+    bool fOldMethode;
 
-        public:
-            void SetEnhancement( const double& anEnhancement );
-            void SetOldMethode( const bool& aBool );
+    mutable double fTotalForce;
+};
 
-        private:
-            double fEnhancement;
-            bool fOldMethode;
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

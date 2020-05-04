@@ -7,9 +7,10 @@
 
 namespace KEMField
 {
-  typedef KTYPELIST_14( bool, char, unsigned char, short, unsigned short, int, unsigned int, long, unsigned long, long long, unsigned long long, float, double , std::string ) FundamentalTypes;
+typedef KTYPELIST_14(bool, char, unsigned char, short, unsigned short, int, unsigned int, long, unsigned long,
+                     long long, unsigned long long, float, double, std::string) FundamentalTypes;
 
-  extern const std::string FundamentalTypeNames[14];
-}
+extern const std::string FundamentalTypeNames[14];
+}  // namespace KEMField
 
 #endif /* KFUNDAMENTALTYPES_DEF */

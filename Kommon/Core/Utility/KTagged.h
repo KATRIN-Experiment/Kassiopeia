@@ -4,70 +4,66 @@
 #include "KNamed.h"
 
 #include <ostream>
-#include <string>
 #include <set>
+#include <string>
 
 namespace katrin
 {
 
-    typedef std::string KTag;
-    typedef std::set< std::string > KTagSet;
-    typedef KTagSet::iterator KTagSetIt;
-    typedef KTagSet::const_iterator KTagSetCIt;
+typedef std::string KTag;
+typedef std::set<std::string> KTagSet;
+typedef KTagSet::iterator KTagSetIt;
+typedef KTagSet::const_iterator KTagSetCIt;
 
-    class KTagged :
-        public KNamed
-    {
-        public:
-            KTagged();
-            KTagged( const KTagged& aCopy );
-            virtual ~KTagged();
+class KTagged : public KNamed
+{
+  public:
+    KTagged();
+    KTagged(const KTagged& aCopy);
+    ~KTagged() override;
 
-            bool Empty() const;
-            bool HasTag( const KTag& aTag ) const;
-            bool HasTags( const KTagSet& aTagSet ) const;
-            bool HasAllTags( const KTagSet& aTagSet ) const;
-            bool HasTagsFrom( const KTagged* aTagged ) const;
+    bool Empty() const;
+    bool HasTag(const KTag& aTag) const;
+    bool HasTags(const KTagSet& aTagSet) const;
+    bool HasAllTags(const KTagSet& aTagSet) const;
+    bool HasTagsFrom(const KTagged* aTagged) const;
 
-            const KTagSet& GetTags() const;
-            void SetTag( const KTag& aTag );
-            void SetTags( const KTagSet& aTagSet );
-            void SetTagsFrom( const KTagged* aTagged );
+    const KTagSet& GetTags() const;
+    void SetTag(const KTag& aTag);
+    void SetTags(const KTagSet& aTagSet);
+    void SetTagsFrom(const KTagged* aTagged);
 
-            void AddTag( const KTag& aTag );
-            void AddTags( const KTagSet& aTagSet );
-            void AddTagsFrom( const KTagged* aTagged );
+    void AddTag(const KTag& aTag);
+    void AddTags(const KTagSet& aTagSet);
+    void AddTagsFrom(const KTagged* aTagged);
 
-            void RemoveTag( const KTag& aTag );
-            void RemoveTags( const KTagSet& aTagSet );
-            void RemoveTagsFrom( const KTagged* aTagged );
+    void RemoveTag(const KTag& aTag);
+    void RemoveTags(const KTagSet& aTagSet);
+    void RemoveTagsFrom(const KTagged* aTagged);
 
-        protected:
-            KTagSet fTags;
+  protected:
+    KTagSet fTags;
 
-        public:
-            static void OpenTag( const KTag& aTag );
-            static void CloseTag( const KTag& aTag );
+  public:
+    static void OpenTag(const KTag& aTag);
+    static void CloseTag(const KTag& aTag);
 
-            static KTagSet sOpenTags;
-    };
+    static KTagSet sOpenTags;
+};
 
-    inline std::ostream& operator<<( std::ostream& aStream, const KTagged& aTagged )
-    {
-        aStream << "<" << aTagged.GetName() << "> with tags <";
-        for( KTagSetIt tIter = aTagged.GetTags().begin(); tIter != aTagged.GetTags().end(); tIter++ )
-        {
-            if( tIter != aTagged.GetTags().begin() )
-            {
-                aStream << " ";
-            }
-            aStream << *tIter;
+inline std::ostream& operator<<(std::ostream& aStream, const KTagged& aTagged)
+{
+    aStream << "<" << aTagged.GetName() << "> with tags <";
+    for (auto tIter = aTagged.GetTags().begin(); tIter != aTagged.GetTags().end(); tIter++) {
+        if (tIter != aTagged.GetTags().begin()) {
+            aStream << " ";
         }
-        aStream << ">";
-        return aStream;
+        aStream << *tIter;
     }
+    aStream << ">";
+    return aStream;
 }
-
+}  // namespace katrin
 
 
 #endif

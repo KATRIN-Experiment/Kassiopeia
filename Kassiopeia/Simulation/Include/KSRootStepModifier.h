@@ -1,67 +1,67 @@
 #ifndef Kassiopeia_KSRootStepModifier_h_
 #define Kassiopeia_KSRootStepModifier_h_
 
-#include "KSStepModifier.h"
-#include "KSStep.h"
 #include "KSList.h"
 #include "KSParticle.h"
+#include "KSStep.h"
+#include "KSStepModifier.h"
 
 namespace Kassiopeia
 {
 
-    class KSTrack;
+class KSTrack;
 
-    class KSRootStepModifier :
-            public KSComponentTemplate< KSRootStepModifier, KSStepModifier >
-    {
-    public:
-        KSRootStepModifier();
-        KSRootStepModifier( const KSRootStepModifier& aCopy );
-        KSRootStepModifier* Clone() const;
-        virtual ~KSRootStepModifier();
+class KSRootStepModifier : public KSComponentTemplate<KSRootStepModifier, KSStepModifier>
+{
+  public:
+    KSRootStepModifier();
+    KSRootStepModifier(const KSRootStepModifier& aCopy);
+    KSRootStepModifier* Clone() const override;
+    ~KSRootStepModifier() override;
 
-        //**********
-        // modifier
-        //**********
+    //**********
+    // modifier
+    //**********
 
-    public:
-        bool ExecutePreStepModification( KSParticle& anInitialParticle, KSParticleQueue& aQueue );
-        bool ExecutePostStepModification( KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aQueue );
+  protected:
+    bool ExecutePreStepModification(KSParticle& anInitialParticle, KSParticleQueue& aQueue) override;
+    bool ExecutePostStepModification(KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                                     KSParticleQueue& aQueue) override;
 
-        //***********
-        //composition
-        //***********
+    //***********
+    //composition
+    //***********
 
-    public:
-        void AddModifier( KSStepModifier* aModifier );
-        void RemoveModifier( KSStepModifier* aModifier );
+  public:
+    void AddModifier(KSStepModifier* aModifier);
+    void RemoveModifier(KSStepModifier* aModifier);
 
-    private:
-        KSList< KSStepModifier > fModifiers;
-        KSStepModifier* fModifier;
+  private:
+    KSList<KSStepModifier> fModifiers;
+    KSStepModifier* fModifier;
 
-        //******
-        //action
-        //******
+    //******
+    //action
+    //******
 
-    public:
-        void SetStep( KSStep* aStep );
+  public:
+    void SetStep(KSStep* aStep);
 
-        bool ExecutePreStepModification();
-        bool ExecutePostStepModification();
+    bool ExecutePreStepModification();
+    bool ExecutePostStepModification();
 
-        virtual void PushUpdateComponent();
-        virtual void PushDeupdateComponent();
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
 
-    private:
-        KSStep* fStep;
-        const KSParticle* fInitialParticle;
-        KSParticle* fModifierParticle;
-        KSParticle* fFinalParticle;
-        KSParticleQueue* fParticleQueue;
-    };
+  private:
+    KSStep* fStep;
+    const KSParticle* fInitialParticle;
+    KSParticle* fModifierParticle;
+    KSParticle* fFinalParticle;
+    KSParticleQueue* fParticleQueue;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

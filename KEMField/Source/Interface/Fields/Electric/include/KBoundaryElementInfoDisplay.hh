@@ -15,13 +15,11 @@ namespace KEMField
 
 class KBoundaryElementInfoDisplay : public KElectrostaticBoundaryField::Visitor
 {
-public:
-
+  public:
     KBoundaryElementInfoDisplay();
-    virtual ~KBoundaryElementInfoDisplay();
+    ~KBoundaryElementInfoDisplay() override;
 
-    void PreVisit(KElectrostaticBoundaryField& field);
-
+    void PreVisit(KElectrostaticBoundaryField& field) override;
 };
 
 } /* namespace KEMField */

@@ -2,8 +2,8 @@
 #define KSAOutputObject_HH__
 
 
-
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -22,19 +22,23 @@ class KSAOutputNode;
 
 class KSAOutputObject
 {
-    public:
-        KSAOutputObject(){;};
-        virtual ~KSAOutputObject(){;};
+  public:
+    KSAOutputObject()
+    {
+        ;
+    };
+    virtual ~KSAOutputObject()
+    {
+        ;
+    };
 
-        //defines the children to add to the node associated with this object
-        virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
+    //defines the children to add to the node associated with this object
+    virtual void DefineOutputNode(KSAOutputNode* node) const = 0;
 
-    protected:
-
+  protected:
 };
 
 
-
-}
+}  // namespace KEMField
 
 #endif /* KSAOutputObject_H__ */

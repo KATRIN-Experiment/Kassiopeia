@@ -7,28 +7,27 @@
 
 #include "KElectrostaticBoundaryFieldTimer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 KElectrostaticBoundaryFieldTimer::KElectrostaticBoundaryFieldTimer() :
-        fChargeDensityTimer("charge density solver initialization"),
-        fFieldSolverTimer("field solver initialization")
+    fChargeDensityTimer("charge density solver initialization"),
+    fFieldSolverTimer("field solver initialization")
 {
     Preprocessing(true);
     InBetweenProcessing(true);
     Postprocessing(true);
 }
 
-KElectrostaticBoundaryFieldTimer::~KElectrostaticBoundaryFieldTimer()
-{
-}
+KElectrostaticBoundaryFieldTimer::~KElectrostaticBoundaryFieldTimer() {}
 
-void KElectrostaticBoundaryFieldTimer::PreVisit(KElectrostaticBoundaryField& )
+void KElectrostaticBoundaryFieldTimer::PreVisit(KElectrostaticBoundaryField&)
 {
     fChargeDensityTimer = KTimer("charge density solver initialization");
     fChargeDensityTimer.start();
 }
 
-void KElectrostaticBoundaryFieldTimer::InBetweenVisit( KElectrostaticBoundaryField&)
+void KElectrostaticBoundaryFieldTimer::InBetweenVisit(KElectrostaticBoundaryField&)
 {
     fChargeDensityTimer.end();
     fChargeDensityTimer.display();

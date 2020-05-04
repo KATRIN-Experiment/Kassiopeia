@@ -11,15 +11,15 @@
 #define KMPIENVIRONMENT_HH_
 
 #ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
+#include "KMPIInterface.hh"
 #endif
 
 #ifdef KEMFIELD_USE_MPI
-    #define MPI_SINGLE_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==0 )
-    #define MPI_SECOND_PROCESS if ( KEMField::KMPIInterface::GetInstance()->GetProcess()==1 )
+#define MPI_SINGLE_PROCESS if (KEMField::KMPIInterface::GetInstance()->GetProcess() == 0)
+#define MPI_SECOND_PROCESS if (KEMField::KMPIInterface::GetInstance()->GetProcess() == 1)
 #else
-    #define MPI_SINGLE_PROCESS
-    #define MPI_SECOND_PROCESS
+#define MPI_SINGLE_PROCESS
+#define MPI_SECOND_PROCESS
 #endif
 
 #endif /* KMPIENVIRONMENT_HH_ */

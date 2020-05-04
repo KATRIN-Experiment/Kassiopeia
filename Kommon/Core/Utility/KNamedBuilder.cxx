@@ -5,6 +5,7 @@
 
 using namespace std;
 
-namespace katrin {
-    STATICINT sReferenceBuilderStructure = KNamedBuilder::Attribute<string>("Name");
+namespace katrin
+{
+STATICINT sReferenceBuilderStructure = KNamedBuilder::Attribute<string>("Name");
 }

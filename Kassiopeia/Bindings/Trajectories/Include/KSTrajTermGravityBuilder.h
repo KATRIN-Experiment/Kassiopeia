@@ -8,23 +8,20 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSTrajTermGravity > KSTrajTermGravityBuilder;
+typedef KComplexElement<KSTrajTermGravity> KSTrajTermGravityBuilder;
 
-    template< >
-    inline bool KSTrajTermGravityBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "gravity" )
-        {
-            aContainer->CopyTo( fObject, &KSTrajTermGravity::SetGravity );
-            return true;
-        }
-        return false;
+template<> inline bool KSTrajTermGravityBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "gravity") {
+        aContainer->CopyTo(fObject, &KSTrajTermGravity::SetGravity);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 #endif

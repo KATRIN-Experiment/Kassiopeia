@@ -2,4 +2,4 @@
 
 #include <cstdlib>
 
-KMESSAGE_DEFINE( katrin, initmsg, k_initialization, INITIALIZATION )
+KMESSAGE_DEFINE(katrin, initmsg, k_initialization, INITIALIZATION)

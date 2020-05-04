@@ -3,17 +3,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( katrin, filemsg )
+KMESSAGE_DECLARE(katrin, filemsg)
 
 #ifdef Kommon_ENABLE_DEBUG
 
-#define filemsg_debug( xCONTENT )\
-    filemsg( eDebug ) << xCONTENT;
+#define filemsg_debug(xCONTENT) filemsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef filemsg_debug
-#define filemsg_debug( xCONTENT )
+#define filemsg_debug(xCONTENT)
 #endif
 
 #endif

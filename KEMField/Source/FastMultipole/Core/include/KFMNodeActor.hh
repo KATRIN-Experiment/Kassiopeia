@@ -1,7 +1,8 @@
 #ifndef KFMNodeActor_HH__
 #define KFMNodeActor_HH__
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -16,22 +17,18 @@ namespace KEMField{
 *
 */
 
-template<typename NodeType >
-class KFMNodeActor
+template<typename NodeType> class KFMNodeActor
 {
-    public:
-        KFMNodeActor(){};
-        virtual ~KFMNodeActor(){};
+  public:
+    KFMNodeActor(){};
+    virtual ~KFMNodeActor(){};
 
-        virtual void ApplyAction( NodeType* node) = 0;
+    virtual void ApplyAction(NodeType* node) = 0;
 
-    private:
-
+  private:
 };
 
 
-
-
-} //end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMNodeActor_H__ */

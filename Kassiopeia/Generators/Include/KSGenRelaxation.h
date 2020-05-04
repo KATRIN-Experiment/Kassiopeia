@@ -27,82 +27,80 @@
 
  */
 
-#include <map>
 #include "KTextFile.h"
+
+#include <map>
 
 namespace Kassiopeia
 {
 
-    class KSGenRelaxation
+class KSGenRelaxation
+{
+
+  public:
+    KSGenRelaxation();
+    ~KSGenRelaxation();
+
+    void ClearAugerEnergies()
     {
-
-        public:
-
-            KSGenRelaxation();
-            ~KSGenRelaxation();
-
-            void ClearAugerEnergies()
-            {
-                fAugerEnergies.clear();
-            }
-
-            void ClearVacancies()
-            {
-                    fVacancies->clear();
-            }
-
-            bool Initialize( int isotope );
-
-            std::vector< double > GetAugerEnergies() const;
-            std::vector< double > GetFluorescenceEnergies() const;
-            std::vector< unsigned int >* GetVacancies() const;
-
-            void RelaxVacancy( unsigned int shell );
-            void Relax();
-            void Relax( unsigned int vacancy );
-
-            void SetIsotope( int isotope )
-            {
-                fIsotope = isotope;
-            }
-
-        protected:
-
-            typedef struct line_struct
-            {
-                    unsigned int vacOne, vacTwo, vacThree;
-                    double probability, energy;
-            } line;
-
-            bool ReadData();
-            katrin::KTextFile* fDataFile;
-
-            std::map< unsigned int, double > fshellEnergies;
-            std::vector< line > fTransProp;
-
-            std::vector< double > fAugerEnergies;
-            std::vector< double > fFluorescenceEnergies;
-            std::vector< unsigned int >* fVacancies;
-
-            int fIsotope;
-
-    };
-
-    inline std::vector< double > KSGenRelaxation::GetAugerEnergies() const
-    {
-        return fAugerEnergies;
+        fAugerEnergies.clear();
     }
 
-    inline std::vector< double > KSGenRelaxation::GetFluorescenceEnergies() const
+    void ClearVacancies()
     {
-        return fFluorescenceEnergies;
+        fVacancies->clear();
     }
 
-    inline std::vector< unsigned int >* KSGenRelaxation::GetVacancies() const
+    bool Initialize(int isotope);
+
+    std::vector<double> GetAugerEnergies() const;
+    std::vector<double> GetFluorescenceEnergies() const;
+    std::vector<unsigned int>* GetVacancies() const;
+
+    void RelaxVacancy(unsigned int shell);
+    void Relax();
+    void Relax(unsigned int vacancy);
+
+    void SetIsotope(int isotope)
     {
-        return fVacancies;
+        fIsotope = isotope;
     }
 
-} //namespace kassiopeia
+  protected:
+    typedef struct line_struct
+    {
+        unsigned int vacOne, vacTwo, vacThree;
+        double probability, energy;
+    } line;
+
+    bool ReadData();
+    katrin::KTextFile* fDataFile;
+
+    std::map<unsigned int, double> fshellEnergies;
+    std::vector<line> fTransProp;
+
+    std::vector<double> fAugerEnergies;
+    std::vector<double> fFluorescenceEnergies;
+    std::vector<unsigned int>* fVacancies;
+
+    int fIsotope;
+};
+
+inline std::vector<double> KSGenRelaxation::GetAugerEnergies() const
+{
+    return fAugerEnergies;
+}
+
+inline std::vector<double> KSGenRelaxation::GetFluorescenceEnergies() const
+{
+    return fFluorescenceEnergies;
+}
+
+inline std::vector<unsigned int>* KSGenRelaxation::GetVacancies() const
+{
+    return fVacancies;
+}
+
+}  // namespace Kassiopeia
 
 #endif /* KSGenRelaxation_H_ */

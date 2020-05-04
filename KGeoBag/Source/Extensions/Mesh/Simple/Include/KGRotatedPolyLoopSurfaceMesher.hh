@@ -2,27 +2,24 @@
 #define KGeoBag_KGRotatedPolyLoopSurfaceMesher_hh_
 
 #include "KGRotatedPolyLoopSurface.hh"
-
 #include "KGSimpleMesher.hh"
 
 namespace KGeoBag
 {
-    class KGRotatedPolyLoopSurfaceMesher :
-        virtual public KGSimpleMesher,
-        public KGRotatedPolyLoopSurface::Visitor
-    {
-        public:
-            using KGMesherBase::VisitExtendedSurface;
-            using KGMesherBase::VisitExtendedSpace;
+class KGRotatedPolyLoopSurfaceMesher : virtual public KGSimpleMesher, public KGRotatedPolyLoopSurface::Visitor
+{
+  public:
+    using KGMesherBase::VisitExtendedSpace;
+    using KGMesherBase::VisitExtendedSurface;
 
-        public:
-            KGRotatedPolyLoopSurfaceMesher();
-            virtual ~KGRotatedPolyLoopSurfaceMesher();
+  public:
+    KGRotatedPolyLoopSurfaceMesher();
+    ~KGRotatedPolyLoopSurfaceMesher() override;
 
-        protected:
-            void VisitRotatedPathSurface( KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface );
-    };
+  protected:
+    void VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface) override;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

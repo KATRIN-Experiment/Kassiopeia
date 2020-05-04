@@ -1,38 +1,32 @@
 #ifndef KGROTATEDSURFACEINTERSECTOR_DEF
 #define KGROTATEDSURFACEINTERSECTOR_DEF
 
-#include "KGRotatedSurface.hh"
-
 #include "KGIntersectorInitializer.hh"
+#include "KGRotatedSurface.hh"
 
 namespace KGeoBag
 {
-  class KGRotatedSurfaceIntersectorInitializer :
-    public KGRotatedSurface::Visitor,
-    virtual public KGIntersectorInitializer
-  {
+class KGRotatedSurfaceIntersectorInitializer : public KGRotatedSurface::Visitor, virtual public KGIntersectorInitializer
+{
   public:
     KGRotatedSurfaceIntersectorInitializer() {}
-    virtual ~KGRotatedSurfaceIntersectorInitializer() {}
+    ~KGRotatedSurfaceIntersectorInitializer() override {}
 
   protected:
     void VisitRotatedSurface(const KGRotatedSurface* rotatedSurface);
+};
 
-  };
-
-  class KGRotatedSurfaceIntersector : virtual public KGAnalyticIntersector
-  {
+class KGRotatedSurfaceIntersector : virtual public KGAnalyticIntersector
+{
   public:
     KGRotatedSurfaceIntersector(const KGRotatedSurface& rotatedSurface);
-    virtual ~KGRotatedSurfaceIntersector() {}
+    ~KGRotatedSurfaceIntersector() override {}
 
-    virtual bool Intersection(KThreeVector& aStart,
-			      KThreeVector& anEnd,
-			      KThreeVector& aResult) const;
+    bool Intersection(KThreeVector& aStart, KThreeVector& anEnd, KThreeVector& aResult) const override;
 
   protected:
     const KGRotatedSurface& fRotatedSurface;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif /* KGROTATEDSURFACEINTERSECTOR_DEF */

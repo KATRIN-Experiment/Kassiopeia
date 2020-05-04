@@ -6,93 +6,84 @@
 namespace Kassiopeia
 {
 
-    class KSComponent;
+class KSComponent;
 
-    class KSCommand :
-        public KSObject
+class KSCommand : public KSObject
+{
+  public:
+    KSCommand();
+    KSCommand(const KSCommand& aCopy);
+    ~KSCommand() override;
+
+  public:
+    KSCommand* Clone() const override = 0;
+
+  public:
+    typedef enum
     {
-        public:
-            KSCommand();
-            KSCommand( const KSCommand& aCopy );
-            virtual ~KSCommand();
+        eIdle = 0,
+        eActivated = 1
+    } StateType;
 
-        public:
-            virtual KSCommand* Clone() const = 0;
+    const StateType& State() const;
 
-        public:
-            typedef enum
-            {
-                eIdle = 0,
-                eActivated = 1
-            } StateType;
+    void Activate();
+    void Deactivate();
 
-            const StateType& State() const;
+  protected:
+    StateType fState;
 
-            void Activate();
-            void Deactivate();
+    virtual void ActivateCommand();
+    virtual void DeactivateCommand();
 
-        protected:
-            StateType fState;
+  public:
+    void SetParent(KSComponent* aComponent);
+    KSComponent* GetParent() const;
 
-            virtual void ActivateCommand();
-            virtual void DeactivateCommand();
+    void SetChild(KSComponent* aComponent);
+    KSComponent* GetChild() const;
 
-        public:
-            void SetParent( KSComponent* aComponent );
-            KSComponent* GetParent() const;
+  protected:
+    KSComponent* fParentComponent;
+    KSComponent* fChildComponent;
+};
 
-            void SetChild( KSComponent* aComponent );
-            KSComponent* GetChild() const;
-
-        protected:
-            KSComponent* fParentComponent;
-            KSComponent* fChildComponent;
-    };
-
-    template< >
-    inline bool KSObject::Is< KSCommand >()
-    {
-        KSCommand* tCommand = dynamic_cast< KSCommand* >( this );
-        if( tCommand != NULL )
-        {
-            return true;
-        }
-        return false;
+template<> inline bool KSObject::Is<KSCommand>()
+{
+    auto* tCommand = dynamic_cast<KSCommand*>(this);
+    if (tCommand != nullptr) {
+        return true;
     }
-
-    template< >
-    inline bool KSObject::Is< KSCommand >() const
-    {
-        const KSCommand* tCommand = dynamic_cast< const KSCommand* >( this );
-        if( tCommand != NULL )
-        {
-            return true;
-        }
-        return false;
-    }
-
-    template< >
-    inline KSCommand* KSObject::As< KSCommand >()
-    {
-        KSCommand* tCommand = dynamic_cast< KSCommand* >( this );
-        if( tCommand != NULL )
-        {
-            return tCommand;
-        }
-        return NULL;
-    }
-
-    template< >
-    inline const KSCommand* KSObject::As< KSCommand >() const
-    {
-        const KSCommand* tCommand = dynamic_cast< const KSCommand* >( this );
-        if( tCommand != NULL )
-        {
-            return tCommand;
-        }
-        return NULL;
-    }
-
+    return false;
 }
+
+template<> inline bool KSObject::Is<KSCommand>() const
+{
+    const auto* tCommand = dynamic_cast<const KSCommand*>(this);
+    if (tCommand != nullptr) {
+        return true;
+    }
+    return false;
+}
+
+template<> inline KSCommand* KSObject::As<KSCommand>()
+{
+    auto* tCommand = dynamic_cast<KSCommand*>(this);
+    if (tCommand != nullptr) {
+        return tCommand;
+    }
+    return nullptr;
+}
+
+template<> inline const KSCommand* KSObject::As<KSCommand>() const
+{
+    const auto* tCommand = dynamic_cast<const KSCommand*>(this);
+    if (tCommand != nullptr) {
+        return tCommand;
+    }
+    return nullptr;
+}
+
+}  // namespace Kassiopeia
 
 #endif

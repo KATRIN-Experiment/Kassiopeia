@@ -12,14 +12,12 @@ using namespace std;
 
 namespace katrin
 {
-    template<>
-    KSGenPositionSurfaceRandomBuilder::~KComplexElement() {}
+template<> KSGenPositionSurfaceRandomBuilder::~KComplexElement() {}
 
-    STATICINT sKSGenPositionSurfaceRandomStructure =
-            KSGenPositionSurfaceRandomBuilder::Attribute<string>("name") +
-                    KSGenPositionSurfaceRandomBuilder::Attribute<string>("surfaces");
+STATICINT sKSGenPositionSurfaceRandomStructure = KSGenPositionSurfaceRandomBuilder::Attribute<string>("name") +
+                                                 KSGenPositionSurfaceRandomBuilder::Attribute<string>("surfaces");
 
-    STATICINT sKSGenPositionSurfaceRandom =
-            KSRootBuilder::ComplexElement<KSGenPositionSurfaceRandom>("ksgen_position_surface_random");
+STATICINT sKSGenPositionSurfaceRandom =
+    KSRootBuilder::ComplexElement<KSGenPositionSurfaceRandom>("ksgen_position_surface_random");
 
-}
+}  // namespace katrin

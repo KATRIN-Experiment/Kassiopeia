@@ -3,9 +3,10 @@
 //
 
 #include "KROOTWindowBuilder.h"
-#include "KRoot.h"
-#include "KROOTPadBuilder.h"
+
 #include "KElementProcessor.hh"
+#include "KROOTPadBuilder.h"
+#include "KRoot.h"
 
 using namespace std;
 
@@ -13,18 +14,13 @@ namespace katrin
 {
 
 STATICINT sKROOTWindowStructure =
-    KROOTWindowBuilder::Attribute< string >( "name" ) +
-    KROOTWindowBuilder::Attribute< unsigned int >( "canvas_width" ) +
-    KROOTWindowBuilder::Attribute< unsigned int >( "canvas_height" ) +
-    KROOTWindowBuilder::Attribute< bool >( "active" ) +
-    KROOTWindowBuilder::Attribute< bool >( "write_enabled" ) +
-    KROOTWindowBuilder::Attribute< string >( "path" ) +
-    KROOTWindowBuilder::ComplexElement< KROOTPad >( "root_pad" );
+    KROOTWindowBuilder::Attribute<string>("name") + KROOTWindowBuilder::Attribute<unsigned int>("canvas_width") +
+    KROOTWindowBuilder::Attribute<unsigned int>("canvas_height") + KROOTWindowBuilder::Attribute<bool>("active") +
+    KROOTWindowBuilder::Attribute<bool>("write_enabled") + KROOTWindowBuilder::Attribute<string>("path") +
+    KROOTWindowBuilder::ComplexElement<KROOTPad>("root_pad");
 
-STATICINT sKROOTWindow =
-    KRootBuilder::ComplexElement< KROOTWindow >( "root_window" );
+STATICINT sKROOTWindow = KRootBuilder::ComplexElement<KROOTWindow>("root_window");
 
-STATICINT sKROOTWindowCompat =
-    KElementProcessor::ComplexElement< KROOTWindow >( "root_window" );
+STATICINT sKROOTWindowCompat = KElementProcessor::ComplexElement<KROOTWindow>("root_window");
 
-}
+}  // namespace katrin

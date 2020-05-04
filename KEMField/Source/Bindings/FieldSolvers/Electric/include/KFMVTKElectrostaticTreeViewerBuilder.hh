@@ -8,58 +8,53 @@
 #ifndef KFMVTKELECTROSTATICTREEVIEWERBUILDER_HH_
 #define KFMVTKELECTROSTATICTREEVIEWERBUILDER_HH_
 
-#include "KFMVTKElectrostaticTreeViewer.hh"
 #include "KComplexElement.hh"
+#include "KFMVTKElectrostaticTreeViewer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
 class KFMVTKElectrostaticTreeViewerData
 {
-    public:
-        std::string fFileName;
-        //bool fViewGeometry;
-        bool fSaveGeometry;
+  public:
+    std::string fFileName;
+    //bool fViewGeometry;
+    bool fSaveGeometry;
 };
 
-}
+}  // namespace KEMField
 
-namespace katrin {
+namespace katrin
+{
 
-typedef KComplexElement<KEMField::KFMVTKElectrostaticTreeViewerData>
-KFMVTKElectrostaticTreeViewerBuilder;
+typedef KComplexElement<KEMField::KFMVTKElectrostaticTreeViewerData> KFMVTKElectrostaticTreeViewerBuilder;
 
-template< >
-inline bool KFMVTKElectrostaticTreeViewerBuilder::Begin()
+template<> inline bool KFMVTKElectrostaticTreeViewerBuilder::Begin()
 {
     fObject = new KEMField::KFMVTKElectrostaticTreeViewerData;
     return true;
 }
 
-template< >
-inline bool KFMVTKElectrostaticTreeViewerBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KFMVTKElectrostaticTreeViewerBuilder::AddAttribute(KContainer* aContainer)
 {
-    if( aContainer->GetName() == "file" )
-    {
-        aContainer->CopyTo( fObject->fFileName );
+    if (aContainer->GetName() == "file") {
+        aContainer->CopyTo(fObject->fFileName);
         return true;
     }
-    if( aContainer->GetName() == "save" )
-    {
-        aContainer->CopyTo( fObject->fSaveGeometry );
+    if (aContainer->GetName() == "save") {
+        aContainer->CopyTo(fObject->fSaveGeometry);
         return true;
     }
     return false;
 }
 
-template< >
-inline bool KFMVTKElectrostaticTreeViewerBuilder::End()
+template<> inline bool KFMVTKElectrostaticTreeViewerBuilder::End()
 {
-    KEMField::KFMElectrostaticTree *tTree = dynamic_cast<KEMField::KFMElectrostaticTree*>(fParentElement);
+    KEMField::KFMElectrostaticTree* tTree = dynamic_cast<KEMField::KFMElectrostaticTree*>(fParentElement);
 
-    KEMField::KFMVTKElectrostaticTreeViewer *tViewer = new KEMField::KFMVTKElectrostaticTreeViewer(*tTree);
+    KEMField::KFMVTKElectrostaticTreeViewer* tViewer = new KEMField::KFMVTKElectrostaticTreeViewer(*tTree);
 
-    if (fObject->fSaveGeometry)
-    {
+    if (fObject->fSaveGeometry) {
         tViewer->GenerateGeometryFile(fObject->fFileName);
     }
 

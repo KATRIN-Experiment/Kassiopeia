@@ -2,7 +2,6 @@
 #define KSAIsDerivedFrom_HH__
 
 
-
 /**
 *
 *@file KSAIsDerivedFrom.hh
@@ -29,24 +28,35 @@
 //taken from: http://www.gotw.ca/publications/mxc++-item-4.htm
 
 
-template<typename D, typename B>
-class KSAIsDerivedFrom
+template<typename D, typename B> class KSAIsDerivedFrom
 {
-  class No { };
-  class Yes { No no[3]; };
+    class No
+    {};
+    class Yes
+    {
+        No no[3];
+    };
 
-  static Yes Test( B* ); // not defined
-  static No Test( ... ); // not defined
+    static Yes Test(B*);  // not defined
+    static No Test(...);  // not defined
 
-  static void Constraints(D* p) { B* pb = p; pb = p; }
+    static void Constraints(D* p)
+    {
+        B* pb = p;
+        pb = p;
+    }
 
-public:
-  enum { Is = sizeof(Test(static_cast<D*>(0))) == sizeof(Yes) };
+  public:
+    enum
+    {
+        Is = sizeof(Test(static_cast<D*>(nullptr))) == sizeof(Yes)
+    };
 
-  KSAIsDerivedFrom() { void(*p)(D*) = Constraints; }
+    KSAIsDerivedFrom()
+    {
+        void (*p)(D*) = Constraints;
+    }
 };
-
-
 
 
 #endif /* KSAIsDerivedFrom_H__ */

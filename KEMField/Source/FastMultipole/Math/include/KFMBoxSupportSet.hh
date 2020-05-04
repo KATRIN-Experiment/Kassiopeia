@@ -2,8 +2,8 @@
 #define KFMBoxSupportSet_HH__
 
 
-#include "KFMPoint.hh"
 #include "KFMBox.hh"
+#include "KFMPoint.hh"
 
 namespace KEMField
 {
@@ -21,130 +21,127 @@ namespace KEMField
 *
 */
 
-template<unsigned int NDIM>
-class KFMBoxSupportSet
+template<unsigned int NDIM> class KFMBoxSupportSet
 {
-    public:
+  public:
+    KFMBoxSupportSet() : fCurrentMinimalBoundingBox()
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fLength[i] = 0;
+        }
+        fCurrentMinimalBoundingBox.SetLength(fLength);
+        fAllPoints.clear();
+    };
 
-        KFMBoxSupportSet():fCurrentMinimalBoundingBox()
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
+    virtual ~KFMBoxSupportSet()
+    {
+        ;
+    };
+
+    unsigned int GetNSupportPoints()
+    {
+        if (fAllPoints.size() <= 1) {
+            return fAllPoints.size();
+        }
+        else {
+            return 2;
+        }
+    };
+
+    unsigned int GetNPoints()
+    {
+        return fAllPoints.size();
+    };
+
+    bool AddPoint(const KFMPoint<NDIM>& point)
+    {
+        if (fAllPoints.size() == 0) {
+            for (unsigned int i = 0; i < NDIM; i++) {
                 fLength[i] = 0;
             }
-            fCurrentMinimalBoundingBox.SetLength(fLength);
-            fAllPoints.clear();
-        };
 
-        virtual ~KFMBoxSupportSet(){;};
+            fCurrentMinimalBoundingBox.SetCenter(point);
+            fCurrentMinimalBoundingBox.SetLength(fLength);  //no extent
 
-        unsigned int GetNSupportPoints()
-        {
-            if(fAllPoints.size() <= 1)
-            {
-                return fAllPoints.size();
+            for (unsigned int i = 0; i < NDIM; i++) {
+                fLowerLimits[i] = point[i];
+                fUpperLimits[i] = point[i];
             }
-            else
-            {
-                return 2;
-            }
-        };
 
-        unsigned int GetNPoints(){return fAllPoints.size();};
-
-        bool AddPoint(const KFMPoint<NDIM>& point)
-        {
-            if(fAllPoints.size() == 0)
-            {
-                for(unsigned int i=0; i<NDIM; i++)
-                {
-                    fLength[i] = 0;
-                }
-
-                fCurrentMinimalBoundingBox.SetCenter(point);
-                fCurrentMinimalBoundingBox.SetLength(fLength); //no extent
-
-                for(unsigned int i=0; i<NDIM; i++)
-                {
-                    fLowerLimits[i] = point[i];
-                    fUpperLimits[i] = point[i];
-                }
-
-                fAllPoints.push_back(point);
-                return true;
-            }
-            else
-            {
-                fAllPoints.push_back(point);
-                bool update;
-                for(unsigned int i=0; i<NDIM; i++)
-                {
-                    update = false;
-
-                    if(point[i] < fLowerLimits[i]){fLowerLimits[i] = point[i]; update = true;};
-                    if(point[i] > fUpperLimits[i]){fUpperLimits[i] = point[i]; update = true;};
-
-                    if(update)
-                    {
-                        fCenter[i] = (fLowerLimits[i] + fUpperLimits[i])/2.0;
-                        fLength[i] = (fUpperLimits[i] - fLowerLimits[i]);
-                    }
-                }
-
-                fCurrentMinimalBoundingBox.SetCenter(fCenter);
-                fCurrentMinimalBoundingBox.SetLength(fLength);
-
-                return true;
-            }
+            fAllPoints.push_back(point);
+            return true;
         }
+        else {
+            fAllPoints.push_back(point);
+            bool update;
+            for (unsigned int i = 0; i < NDIM; i++) {
+                update = false;
 
-        void GetAllPoints( std::vector< KFMPoint<NDIM> >* points) const
-        {
+                if (point[i] < fLowerLimits[i]) {
+                    fLowerLimits[i] = point[i];
+                    update = true;
+                };
+                if (point[i] > fUpperLimits[i]) {
+                    fUpperLimits[i] = point[i];
+                    update = true;
+                };
+
+                if (update) {
+                    fCenter[i] = (fLowerLimits[i] + fUpperLimits[i]) / 2.0;
+                    fLength[i] = (fUpperLimits[i] - fLowerLimits[i]);
+                }
+            }
+
+            fCurrentMinimalBoundingBox.SetCenter(fCenter);
+            fCurrentMinimalBoundingBox.SetLength(fLength);
+
+            return true;
+        }
+    }
+
+    void GetAllPoints(std::vector<KFMPoint<NDIM>>* points) const
+    {
+        *points = fAllPoints;
+    }
+
+    void GetSupportPoints(std::vector<KFMPoint<NDIM>>* points) const
+    {
+        if (fAllPoints.size() <= 1) {
             *points = fAllPoints;
         }
-
-        void GetSupportPoints( std::vector< KFMPoint<NDIM> >* points) const
-        {
-            if(fAllPoints.size() <= 1)
-            {
-                *points = fAllPoints;
-            }
-            else
-            {
-                points->clear();
-                points->push_back(fLowerLimits);
-                points->push_back(fUpperLimits);
-            }
+        else {
+            points->clear();
+            points->push_back(fLowerLimits);
+            points->push_back(fUpperLimits);
         }
+    }
 
-        void Clear()
-        {
-            fAllPoints.clear();
-        }
+    void Clear()
+    {
+        fAllPoints.clear();
+    }
 
 
-        KFMBox<NDIM> GetMinimalBoundingBox() const
-        {
-            return fCurrentMinimalBoundingBox;
-        }
+    KFMBox<NDIM> GetMinimalBoundingBox() const
+    {
+        return fCurrentMinimalBoundingBox;
+    }
 
-    private:
+  private:
+    //the two support points
+    KFMPoint<NDIM> fLowerLimits;
+    KFMPoint<NDIM> fUpperLimits;
 
-        //the two support points
-        KFMPoint<NDIM> fLowerLimits;
-        KFMPoint<NDIM> fUpperLimits;
+    KFMBox<NDIM> fCurrentMinimalBoundingBox;
 
-        KFMBox<NDIM> fCurrentMinimalBoundingBox;
+    std::vector<KFMPoint<NDIM>> fAllPoints;
 
-        std::vector< KFMPoint<NDIM> > fAllPoints;
-
-        //scratch space
-        double fCenter[NDIM];
-        double fLength[NDIM];
-
+    //scratch space
+    double fCenter[NDIM];
+    double fLength[NDIM];
 };
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMBoxSupportSet_H__ */

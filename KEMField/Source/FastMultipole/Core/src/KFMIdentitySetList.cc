@@ -3,53 +3,43 @@
 namespace KEMField
 {
 
-unsigned int
-KFMIdentitySetList::GetNumberOfSets() const
+unsigned int KFMIdentitySetList::GetNumberOfSets() const
 {
     return fIDSetList.size();
 }
 
-unsigned int
-KFMIdentitySetList::GetTotalSize() const
+unsigned int KFMIdentitySetList::GetTotalSize() const
 {
     unsigned int ret_val = 0;
-    for(unsigned int i=0; i<fIDSetList.size(); i++)
-    {
+    for (unsigned int i = 0; i < fIDSetList.size(); i++) {
         ret_val += fIDSetList[i]->size();
     }
     return ret_val;
 }
 
-void
-KFMIdentitySetList::AddIDSet(const KFMIdentitySet* set)
+void KFMIdentitySetList::AddIDSet(const KFMIdentitySet* set)
 {
-    if(set != NULL)
-    {
-        if(set->GetSize() != 0 )
-        {
+    if (set != nullptr) {
+        if (set->GetSize() != 0) {
             fIDSetList.push_back(set->GetRawIDList());
         }
     }
 }
 
-void
-KFMIdentitySetList::AddIDSetList(const KFMIdentitySetList* set_list)
+void KFMIdentitySetList::AddIDSetList(const KFMIdentitySetList* set_list)
 {
-    if(set_list != NULL)
-    {
-        const std::vector< const std::vector<unsigned int>* >* raw_list = set_list->GetRawSetList();
-        for(unsigned int i=0; i<raw_list->size(); i++)
-        {
+    if (set_list != nullptr) {
+        const std::vector<const std::vector<unsigned int>*>* raw_list = set_list->GetRawSetList();
+        for (unsigned int i = 0; i < raw_list->size(); i++) {
             fIDSetList.push_back(raw_list->at(i));
         }
     }
 }
 
-void
-KFMIdentitySetList::Clear()
+void KFMIdentitySetList::Clear()
 {
     fIDSetList.clear();
 }
 
 
-}
+}  // namespace KEMField

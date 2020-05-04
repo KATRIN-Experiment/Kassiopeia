@@ -3,8 +3,8 @@
 
 namespace KEMField
 {
-  class KEMConstants
-  {
+class KEMConstants
+{
   public:
     static const double Pi;
     static const double PiOverTwo;
@@ -12,7 +12,7 @@ namespace KEMField
     static const double OneOverFourPiEps0;
     static const double Mu0;
     static const double Mu0OverPi;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KEMCONSTANTS_DEF */

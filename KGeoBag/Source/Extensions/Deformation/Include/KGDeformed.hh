@@ -6,15 +6,15 @@
 
 namespace KGeoBag
 {
-  class KGDeformedObject
-  {
+class KGDeformedObject
+{
   public:
     typedef std::shared_ptr<KGDeformation> KGDeformationPtr;
 
     KGDeformedObject(KGSurface*) {}
     KGDeformedObject(KGSpace*) {}
-    KGDeformedObject(KGSurface*, const KGDeformedObject& aCopy): fDeformation(aCopy.fDeformation) {}
-	KGDeformedObject(KGSpace*, const KGDeformedObject& aCopy): fDeformation(aCopy.fDeformation) {}
+    KGDeformedObject(KGSurface*, const KGDeformedObject& aCopy) : fDeformation(aCopy.fDeformation) {}
+    KGDeformedObject(KGSpace*, const KGDeformedObject& aCopy) : fDeformation(aCopy.fDeformation) {}
     virtual ~KGDeformedObject() {}
 
     void SetDeformation(KGDeformationPtr deformation);
@@ -23,14 +23,14 @@ namespace KGeoBag
 
   private:
     KGDeformationPtr fDeformation;
-  };
+};
 
-  class KGDeformed
-  {
+class KGDeformed
+{
   public:
     typedef KGDeformedObject Surface;
     typedef KGDeformedObject Space;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif

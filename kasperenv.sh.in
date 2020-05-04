@@ -57,21 +57,16 @@ fi
 export KEMFIELD_CACHE
 mkdir -p ${KEMFIELD_CACHE}
 
-export PATH=${KASPER_INSTALL_BIN}:${PATH//${OLD_PATH}/}
-export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:${LD_LIBRARY_PATH//${OLD_LDLIBPATH}/}
-export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:${PKG_CONFIG_PATH//${OLD_PKGCFGPATH}/}
-export PYTHONPATH=${KASPER_INSTALL_LIB}/python:${PYTHONPATH//${OLD_PYTHONPATH}/}
-export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:${CMAKE_PREFIX_PATH//${OLD_CMAKE_PREF}/}
+export PATH=${KASPER_INSTALL_BIN}:$(echo $PATH | sed 's/${OLD_PATH}//g')
+export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$(echo $LD_LIBRARY_PATH | sed 's/${OLD_LDLIBPATH}//g')
+export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$(echo $PKG_CONFIG_PATH | sed 's/${OLD_PKGCFGPATH}//g')
+export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$(echo $PYTHONPATH | sed 's/${OLD_PYTHONPATH}//g')
+export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$(echo $CMAKE_PREFIX_PATH | sed 's/${OLD_CMAKE_PREF}//g')
 
-echo -e "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m"
-echo -e "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m"
+printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]"
+printf "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m\n"
+printf "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m\n"
 
-function _kafit_krypton_auto()
-{
-    local curr_arg;
-    curr_arg=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W 'DrawData drawdata DrawResponse drawresponse DrawRP drawrp DrawMF drawmf Test test Fit fit DrawFitResult drawfitresult DrawResidual drawresidual FitSummary fitsummary --mode= --num= --ringselection=\" --fitrange=\" --batch= --auto= --average= --relative= --input= --output= true false uniform ring pixel' -- $curr_arg ) );
-}
-[ ! -z "${BASH}" ] && complete -o nospace -F  _kafit_krypton_auto  kafit-krypton
+[ ! -z "${BASH}" ] && . ${KASPER_INSTALL_BIN}/kasper-krypton.bash
 
 return 0

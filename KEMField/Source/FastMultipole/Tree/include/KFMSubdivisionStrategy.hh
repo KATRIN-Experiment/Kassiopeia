@@ -11,6 +11,6 @@ struct KFMSubdivisionStrategy
     static const unsigned int Guided;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* end of include guard: KFMSubdivisionStrategy_HH__ */

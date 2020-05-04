@@ -1,63 +1,61 @@
 #ifndef Kassiopeia_KSRootTrackModifier_h_
 #define Kassiopeia_KSRootTrackModifier_h_
 
-#include "KSTrackModifier.h"
+#include "KSList.h"
 #include "KSParticle.h"
 #include "KSStep.h"
 #include "KSTrack.h"
-#include "KSList.h"
+#include "KSTrackModifier.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootTrackModifier :
-            public KSComponentTemplate< KSRootTrackModifier, KSTrackModifier >
-    {
-    public:
-        KSRootTrackModifier();
-        KSRootTrackModifier( const KSRootTrackModifier& aCopy );
-        KSRootTrackModifier* Clone() const;
-        virtual ~KSRootTrackModifier();
+class KSRootTrackModifier : public KSComponentTemplate<KSRootTrackModifier, KSTrackModifier>
+{
+  public:
+    KSRootTrackModifier();
+    KSRootTrackModifier(const KSRootTrackModifier& aCopy);
+    KSRootTrackModifier* Clone() const override;
+    ~KSRootTrackModifier() override;
 
-        //**********
-        // modifier
-        //**********
+    //**********
+    // modifier
+    //**********
 
-    public:
-        bool ExecutePreTrackModification( KSTrack& aTrack );
-        bool ExecutePostTrackModification( KSTrack& aTrack );
+  protected:
+    bool ExecutePreTrackModification(KSTrack& aTrack) override;
+    bool ExecutePostTrackModification(KSTrack& aTrack) override;
 
-        //***********
-        //composition
-        //***********
+    //***********
+    //composition
+    //***********
 
-    public:
-        void AddModifier( KSTrackModifier* aModifier );
-        void RemoveModifier( KSTrackModifier* aModifier );
+  public:
+    void AddModifier(KSTrackModifier* aModifier);
+    void RemoveModifier(KSTrackModifier* aModifier);
 
-    private:
-        KSList< KSTrackModifier > fModifiers;
-        KSTrackModifier* fModifier;
+  private:
+    KSList<KSTrackModifier> fModifiers;
+    KSTrackModifier* fModifier;
 
-        //******
-        //action
-        //******
+    //******
+    //action
+    //******
 
-    public:
-        void SetTrack( KSTrack* aTrack );
+  public:
+    void SetTrack(KSTrack* aTrack);
 
-        bool ExecutePreTrackModification();
-        bool ExecutePostTrackModification();
+    bool ExecutePreTrackModification();
+    bool ExecutePostTrackModification();
 
-        virtual void PushUpdateComponent();
-        virtual void PushDeupdateComponent();
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
 
-    private:
-
-        KSTrack* fTrack;
-    };
+  private:
+    KSTrack* fTrack;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

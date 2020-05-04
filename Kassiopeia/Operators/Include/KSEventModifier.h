@@ -5,24 +5,22 @@
 
 namespace Kassiopeia
 {
-    class KSEvent;
+class KSEvent;
 
-    class KSEventModifier:
-            public KSComponentTemplate< KSEventModifier >
-    {
-        public:
-            KSEventModifier();
-            virtual ~KSEventModifier();
+class KSEventModifier : public KSComponentTemplate<KSEventModifier>
+{
+  public:
+    KSEventModifier();
+    ~KSEventModifier() override;
 
-        public:
+  public:
+    //returns true if any of the state variables of anEvent are changed
+    virtual bool ExecutePreEventModification(KSEvent& anEvent) = 0;
 
-            //returns true if any of the state variables of anEvent are changed
-            virtual bool ExecutePreEventModification( KSEvent& anEvent ) = 0;
+    //returns true if any of the state variables of anEvent are changed
+    virtual bool ExecutePostEventModification(KSEvent& anEvent) = 0;
+};
 
-            //returns true if any of the state variables of anEvent are changed
-            virtual bool ExecutePostEventModification( KSEvent& anEvent ) = 0;
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

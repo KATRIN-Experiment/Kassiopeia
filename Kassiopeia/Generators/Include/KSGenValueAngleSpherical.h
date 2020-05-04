@@ -1,30 +1,27 @@
 #ifndef Kassiopeia_KSGenValueAngleSpherical_h_
 #define Kassiopeia_KSGenValueAngleSpherical_h_
 
-#include "KSGenValue.h"
-
 #include "KField.h"
+#include "KSGenValue.h"
 
 namespace Kassiopeia
 {
-    class KSGenValueAngleSpherical :
-        public KSComponentTemplate< KSGenValueAngleSpherical, KSGenValue >
-    {
-        public:
-    		KSGenValueAngleSpherical();
-    		KSGenValueAngleSpherical( const KSGenValueAngleSpherical& aCopy );
-    		KSGenValueAngleSpherical* Clone() const;
-            virtual ~KSGenValueAngleSpherical();
+class KSGenValueAngleSpherical : public KSComponentTemplate<KSGenValueAngleSpherical, KSGenValue>
+{
+  public:
+    KSGenValueAngleSpherical();
+    KSGenValueAngleSpherical(const KSGenValueAngleSpherical& aCopy);
+    KSGenValueAngleSpherical* Clone() const override;
+    ~KSGenValueAngleSpherical() override;
 
-        public:
-            virtual void DiceValue( std::vector< double >& aDicedValues );
+  public:
+    void DiceValue(std::vector<double>& aDicedValues) override;
 
-        public:
-            K_SET_GET( double, AngleMin )
-            K_SET_GET( double, AngleMax )
+  public:
+    K_SET_GET(double, AngleMin)
+    K_SET_GET(double, AngleMax)
+};
 
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

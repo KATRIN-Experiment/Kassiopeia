@@ -3,11 +3,7 @@
 namespace Kassiopeia
 {
 
-    KSTerminator::KSTerminator()
-    {
-    }
-    KSTerminator::~KSTerminator()
-    {
-    }
+KSTerminator::KSTerminator() {}
+KSTerminator::~KSTerminator() {}
 
-}
+}  // namespace Kassiopeia

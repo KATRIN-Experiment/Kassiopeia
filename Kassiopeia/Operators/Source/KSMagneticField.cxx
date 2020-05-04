@@ -3,12 +3,8 @@
 namespace Kassiopeia
 {
 
-    KSMagneticField::KSMagneticField()
-    {
-    }
+KSMagneticField::KSMagneticField() {}
 
-    KSMagneticField::~KSMagneticField()
-    {
-    }
+KSMagneticField::~KSMagneticField() {}
 
-}
+}  // namespace Kassiopeia

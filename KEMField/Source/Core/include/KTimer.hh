@@ -8,29 +8,32 @@
 #ifndef KTIMER_HH_
 #define KTIMER_HH_
 
-#include <time.h>
+#include <ctime>
+#include <string>
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KTimer {
-public:
-	KTimer(std::string timedActionDescription);
-	virtual ~KTimer();
-	void start();
-	void end();
-	void display();
+class KTimer
+{
+  public:
+    KTimer(std::string timedActionDescription);
+    virtual ~KTimer();
+    void start();
+    void end();
+    void display();
 
-private:
-	std::string fDescription;
+  private:
+    std::string fDescription;
 
 #ifdef KEMFIELD_USE_REALTIME_CLOCK
-	timespec TimeDifference(timespec start, timespec end);
+    timespec TimeDifference(timespec start, timespec end);
 
-	timespec fStart, fEnd;
+    timespec fStart, fEnd;
 #endif
-	clock_t fCStart, fCEnd;
+    clock_t fCStart, fCEnd;
 };
 
-} /* namespace Kassiopeia */
+}  // namespace KEMField
 
 #endif /* KTIMER_HH_ */

@@ -2,16 +2,18 @@
 // Author: Sanshiro Enomoto <sanshiro@uw.edu> //
 
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <cstring>
-#include <deque>
-#include <map>
+#include "KArgumentList.h"
+
+#include "KVariant.h"
+
 #include <algorithm>
 #include <cctype>
-#include "KVariant.h"
-#include "KArgumentList.h"
+#include <cstring>
+#include <deque>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
 
 
 using namespace std;
@@ -25,55 +27,55 @@ KArgumentList::KArgumentList(int argc, char** argv)
         fCommandLine = argv[0];
         string::size_type slash = fProgramPathName.find_last_of('/');
         if (slash != string::npos) {
-            fProgramName = fProgramPathName.substr(slash+1, string::npos);
+            fProgramName = fProgramPathName.substr(slash + 1, string::npos);
         }
         else {
             fProgramName = fProgramPathName;
         }
     }
     for (int i = 1; i < argc; i++) {
-	string Argument = argv[i];
+        string Argument = argv[i];
         fCommandLine += " " + Argument;
-	if ((Argument[0] != '-') || (Argument == "-") || (Argument == "--")) {
-	    fParameterList.push_back(Argument);
-	}
-	else if ((Argument.size() > 1) && (isdigit(Argument[1]))) {
-	    // negative number parameter //
-	    fParameterList.push_back(Argument);
-	}
-	else {
-	    string::size_type NameLength = Argument.find_first_of('=');
-	    string Name = Argument.substr(0, NameLength);
-	    string Value = "";
+        if ((Argument[0] != '-') || (Argument == "-") || (Argument == "--")) {
+            fParameterList.push_back(Argument);
+        }
+        else if ((Argument.size() > 1) && (isdigit(Argument[1]))) {
+            // negative number parameter //
+            fParameterList.push_back(Argument);
+        }
+        else {
+            string::size_type NameLength = Argument.find_first_of('=');
+            string Name = Argument.substr(0, NameLength);
+            string Value = "";
 
-	    if (NameLength != string::npos) {
-		Value = Argument.substr(NameLength + 1, Argument.size());
-	    }
-	    
-	    if (Value.empty() && (i+1 < argc)) {
-		if (NameLength != string::npos) {
-		    // already contains the assign operator// 
-		    i++;
-		    Value = argv[i];
-		}
-		else if (argv[i+1][0] == '=') {
-		    i++;
-		    if (argv[i][1] != '\0') {
-			Value = (argv[i] + 1);
-		    }
-		    else if (i+1 < argc) {
-			i++;
-			Value = argv[i];
-		    }
-		}
-	    }
+            if (NameLength != string::npos) {
+                Value = Argument.substr(NameLength + 1, Argument.size());
+            }
 
-	    fOptionTable[Name] = Value;
-	    fOptionNameList.push_back(Name);
-	}
+            if (Value.empty() && (i + 1 < argc)) {
+                if (NameLength != string::npos) {
+                    // already contains the assign operator//
+                    i++;
+                    Value = argv[i];
+                }
+                else if (argv[i + 1][0] == '=') {
+                    i++;
+                    if (argv[i][1] != '\0') {
+                        Value = (argv[i] + 1);
+                    }
+                    else if (i + 1 < argc) {
+                        i++;
+                        Value = argv[i];
+                    }
+                }
+            }
+
+            fOptionTable[Name] = Value;
+            fOptionNameList.push_back(Name);
+        }
     }
 
-    fArgvBuffer = 0;
+    fArgvBuffer = nullptr;
     fArgvBufferSize = 0;
 }
 
@@ -99,7 +101,7 @@ KVariant KArgumentList::GetParameter(unsigned int Index) const
 
 KVariant KArgumentList::GetOption(const std::string& Name) const
 {
-    map<string, string>::const_iterator Option = fOptionTable.find(Name);
+    auto Option = fOptionTable.find(Name);
     if (Option == fOptionTable.end()) {
         return KVariant();
     }
@@ -128,13 +130,13 @@ void KArgumentList::Dump(ostream& os) const
 {
     os << "Parameters:" << endl;
     for (unsigned i = 0; i < fParameterList.size(); i++) {
-	os << "    " << fParameterList[i] << endl;
+        os << "    " << fParameterList[i] << endl;
     }
-    
+
     os << "Options:" << endl;
     for (unsigned i = 0; i < fOptionNameList.size(); i++) {
         string Name = fOptionNameList[i];
-	os << "    " << Name << ": " << fOptionTable.find(Name)->second << endl;
+        os << "    " << Name << ": " << fOptionTable.find(Name)->second << endl;
     }
 }
 
@@ -151,7 +153,7 @@ void KArgumentList::PullBack(int& argc, char**& argv) const
     fArgvBuffer = new char*[fArgvBufferSize];
     fArgvBuffer[0] = strdup(fProgramName.c_str());
     for (unsigned i = 0; i < fParameterList.size(); i++) {
-        fArgvBuffer[i+1] = strdup(fParameterList[i].c_str());
+        fArgvBuffer[i + 1] = strdup(fParameterList[i].c_str());
     }
 
     argc = fParameterList.size() + 1;
@@ -164,9 +166,7 @@ KArgumentSchema::KElement::KElement(std::string Name)
     fIsDefaultValueEnabled = false;
 }
 
-KArgumentSchema::KElement::~KElement()
-{
-}
+KArgumentSchema::KElement::~KElement() {}
 
 KArgumentSchema::KElement& KArgumentSchema::KElement::WhichIs(const std::string& Description)
 {
@@ -199,14 +199,14 @@ void KArgumentSchema::KElement::Print(std::ostream& os, size_t NameWidth)
     os << fDescription << endl;
 }
 
-void KArgumentSchema::KElement::Validate(const std::string& Value, std::string Name) 
+void KArgumentSchema::KElement::Validate(const std::string& Value, std::string Name)
 {
     if (Name.empty()) {
         Name = fName;
     }
 
     if (fPrototype.IsVoid()) {
-        if (! Value.empty()) {
+        if (!Value.empty()) {
             throw KException() << "argument does not take value: " << Name;
         }
     }
@@ -215,13 +215,13 @@ void KArgumentSchema::KElement::Validate(const std::string& Value, std::string N
             KVariant TestValue = fPrototype;
             TestValue.Assign(Value);
         }
-        catch (KException &e) {
+        catch (KException& e) {
             throw KException() << "invalid argument value: " << Name << "=" << Value;
         }
     }
 }
 
-KVariant KArgumentSchema::KElement::DefaultValue(void) const
+KVariant KArgumentSchema::KElement::DefaultValue() const
 {
     if (fIsDefaultValueEnabled) {
         return fPrototype;
@@ -232,8 +232,7 @@ KVariant KArgumentSchema::KElement::DefaultValue(void) const
 }
 
 
-
-KArgumentSchema::KArgumentSchema(void)
+KArgumentSchema::KArgumentSchema()
 {
     fNameLength = 0;
 
@@ -243,9 +242,7 @@ KArgumentSchema::KArgumentSchema(void)
     fNumberOfRequiredParameters = 0;
 }
 
-KArgumentSchema::~KArgumentSchema()
-{
-}
+KArgumentSchema::~KArgumentSchema() {}
 
 KArgumentSchema::KElement& KArgumentSchema::Require(std::string Names)
 {
@@ -288,10 +285,10 @@ KArgumentSchema::KElement& KArgumentSchema::AddOption(std::string Names)
 {
     unsigned int Index = fOptionList.size();
     fOptionList.push_back(KElement(Names));
-    
+
     fNameLength = max(fNameLength, (unsigned int) Names.size());
 
-    while (1) {
+    while (true) {
         string::size_type Start = Names.find_first_not_of(' ');
         if (Start == string::npos) {
             break;
@@ -302,26 +299,26 @@ KArgumentSchema::KElement& KArgumentSchema::AddOption(std::string Names)
         if (Cut != string::npos) {
             Name = Name.substr(0, Cut);
         }
-        if (! Name.empty()) {
-            fNameIndexTable[Name] = Index+1;
+        if (!Name.empty()) {
+            fNameIndexTable[Name] = Index + 1;
             fOptionNameList.push_back(Name);
         }
         if (End == string::npos) {
             break;
         }
-        Names = Names.substr(End+1);
+        Names = Names.substr(End + 1);
     }
 
     return fOptionList.back();
 }
 
-KArgumentSchema& KArgumentSchema::AllowExcess(void)
+KArgumentSchema& KArgumentSchema::AllowExcess()
 {
     fIsExcessAllowed = true;
     return *this;
 }
 
-KArgumentSchema& KArgumentSchema::AllowUnknown(void)
+KArgumentSchema& KArgumentSchema::AllowUnknown()
 {
     fIsUnknownAllowed = true;
     return *this;
@@ -342,7 +339,7 @@ void KArgumentSchema::Print(std::ostream& os)
     }
 }
 
-void KArgumentSchema::Validate(KArgumentList& ArgumentList) 
+void KArgumentSchema::Validate(KArgumentList& ArgumentList)
 {
     // verification: parameter //
     if (ArgumentList.Length() < fNumberOfRequiredParameters) {
@@ -375,7 +372,7 @@ void KArgumentSchema::Validate(KArgumentList& ArgumentList)
             throw KException() << "undefined option: " << Name;
         }
 
-        fOptionList[Index-1].Validate(ArgumentList[Name], Name);
+        fOptionList[Index - 1].Validate(ArgumentList[Name], Name);
     }
 
     // default value filling: parameter //
@@ -401,7 +398,7 @@ void KArgumentSchema::Validate(KArgumentList& ArgumentList)
             continue;
         }
         unsigned int Index = fNameIndexTable[Name] - 1;
-        if (! OptionValueList[Index].IsVoid()) {
+        if (!OptionValueList[Index].IsVoid()) {
             OptionValueList[Index].Assign(ArgumentList[Name]);
         }
     }
@@ -409,7 +406,7 @@ void KArgumentSchema::Validate(KArgumentList& ArgumentList)
         // fill the argument lists //
         string Name = fOptionNameList[i];
         unsigned int Index = fNameIndexTable[Name] - 1;
-        if (! OptionValueList[Index].IsVoid()) {
+        if (!OptionValueList[Index].IsVoid()) {
             ArgumentList.SetOption(Name, OptionValueList[Index]);
         }
     }

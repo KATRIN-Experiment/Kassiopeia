@@ -7,7 +7,7 @@
 namespace KGeoBag
 {
 
-    typedef KGFlattenedClosedPathSurface< KGPlanarCircle > KGFlattenedCircleSurface;
+typedef KGFlattenedClosedPathSurface<KGPlanarCircle> KGFlattenedCircleSurface;
 
 }
 

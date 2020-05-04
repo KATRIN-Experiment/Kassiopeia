@@ -6,27 +6,26 @@
 namespace Kassiopeia
 {
 
-    class KSReadTrackROOT :
-        public KSReadIteratorROOT
-    {
-        public:
-            KSReadTrackROOT( TFile* aFile );
-            virtual ~KSReadTrackROOT();
+class KSReadTrackROOT : public KSReadIteratorROOT
+{
+  public:
+    KSReadTrackROOT(TFile* aFile);
+    ~KSReadTrackROOT() override;
 
-        public:
-            unsigned int GetTrackIndex() const;
-            unsigned int GetFirstStepIndex() const;
-            unsigned int GetLastStepIndex() const;
+  public:
+    unsigned int GetTrackIndex() const;
+    unsigned int GetFirstStepIndex() const;
+    unsigned int GetLastStepIndex() const;
 
-        public:
-            KSReadTrackROOT& operator= (const unsigned int& aValue);
+  public:
+    KSReadTrackROOT& operator=(const unsigned int& aValue);
 
-        private:
-            unsigned int fTrackIndex;
-            unsigned int fFirstStepIndex;
-            unsigned int fLastStepIndex;
-    };
+  private:
+    unsigned int fTrackIndex;
+    unsigned int fFirstStepIndex;
+    unsigned int fLastStepIndex;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

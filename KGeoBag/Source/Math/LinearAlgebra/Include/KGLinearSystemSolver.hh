@@ -2,13 +2,12 @@
 #define KGLinearSystemSolver_HH__
 
 #include "KGArrayMath.hh"
-
-#include <vector>
-#include <cmath>
-
-#include "KGVectorOperations.hh"
 #include "KGMatrixOperations.hh"
 #include "KGMatrixVectorOperations.hh"
+#include "KGVectorOperations.hh"
+
+#include <cmath>
+#include <vector>
 
 namespace KGeoBag
 {
@@ -31,48 +30,48 @@ namespace KGeoBag
 
 class KGLinearSystemSolver
 {
-    public:
+  public:
+    KGLinearSystemSolver(unsigned int dim);
 
-        KGLinearSystemSolver(unsigned int dim);
+    virtual ~KGLinearSystemSolver();
 
-        virtual ~KGLinearSystemSolver();
+    unsigned int GetDimension() const
+    {
+        return fDim;
+    };
 
-        unsigned int GetDimension() const {return fDim;};
 
+    void SetMatrix(const double* mx);
 
-        void SetMatrix(const double* mx);
+    void SetMatrixElement(unsigned int row, unsigned int col, const double& val);
 
-        void SetMatrixElement(unsigned int row, unsigned int col, const double& val);
+    void SetBVector(const double* vec);
 
-        void SetBVector(const double* vec);
+    void SetBVectorElement(unsigned int index, const double& val);
 
-        void SetBVectorElement(unsigned int index, const double& val);
+    void Reset();  //reset fA, fX, and fB to zero
 
-        void Reset(); //reset fA, fX, and fB to zero
+    void Solve();
 
-        void Solve();
+    void GetXVector(double* vec) const;
 
-        void GetXVector(double* vec) const;
+    double GetXVectorElement(unsigned int i) const;
 
-        double GetXVectorElement(unsigned int i) const;
+  private:
+    unsigned int fDim;
+    unsigned int fDimSize[2];
 
-    private:
+    kg_matrix* fA;
+    kg_matrix* fU;
+    kg_vector* fX;
+    kg_vector* fB;
 
-        unsigned int fDim;
-        unsigned int fDimSize[2];
-
-        kg_matrix* fA;
-        kg_matrix* fU;
-        kg_vector* fX;
-        kg_vector* fB;
-
-        //for SVD
-        kg_matrix* fV;
-        kg_vector* fS;
-        kg_vector* fWork;
-
+    //for SVD
+    kg_matrix* fV;
+    kg_vector* fS;
+    kg_vector* fWork;
 };
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGLinearSystemSolver_H__ */

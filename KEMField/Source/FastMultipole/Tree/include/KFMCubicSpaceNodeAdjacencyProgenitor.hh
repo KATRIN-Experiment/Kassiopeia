@@ -1,8 +1,9 @@
 #ifndef KFMCubicSpaceNodeAdjacencyProgenitor_HH__
 #define KFMCubicSpaceNodeAdjacencyProgenitor_HH__
 
-#include "KFMInspectingActor.hh"
+#include "KFMCubicSpaceNodeNeighborFinder.hh"
 #include "KFMCubicSpaceNodeProgenitor.hh"
+#include "KFMInspectingActor.hh"
 #include "KFMNodeFlags.hh"
 
 #include <cmath>
@@ -24,58 +25,55 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList, unsigned int SpatialNDIM>
-class KFMCubicSpaceNodeAdjacencyProgenitor: public KFMNodeActor< KFMNode< ObjectTypeList > >
+template<typename ObjectTypeList, unsigned int SpatialNDIM>
+class KFMCubicSpaceNodeAdjacencyProgenitor : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMCubicSpaceNodeAdjacencyProgenitor()
-        {
-            fProgenitor = new KFMCubicSpaceNodeProgenitor<SpatialNDIM, ObjectTypeList>();
-            fZeroMaskSize = 0;
-        };
+  public:
+    KFMCubicSpaceNodeAdjacencyProgenitor()
+    {
+        fProgenitor = new KFMCubicSpaceNodeProgenitor<SpatialNDIM, ObjectTypeList>();
+        fZeroMaskSize = 0;
+    };
 
-        virtual ~KFMCubicSpaceNodeAdjacencyProgenitor()
-        {
-            delete fProgenitor;
-        };
+    ~KFMCubicSpaceNodeAdjacencyProgenitor() override
+    {
+        delete fProgenitor;
+    };
 
-        virtual void SetZeroMaskSize(int zmask){fZeroMaskSize = std::abs(zmask);};
+    virtual void SetZeroMaskSize(int zmask)
+    {
+        fZeroMaskSize = std::abs(zmask);
+    };
 
-        virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                //we expect that some external condition has been satisfied
-                //now visit all this nodes neighbors
-                //and if they do not have any children present
-                //we given them children
-                KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>:: GetAllNeighbors(node, fZeroMaskSize, &fNeighborNodeList);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            //we expect that some external condition has been satisfied
+            //now visit all this nodes neighbors
+            //and if they do not have any children present
+            //we given them children
+            KFMCubicSpaceNodeNeighborFinder<SpatialNDIM, ObjectTypeList>::GetAllNeighbors(node,
+                                                                                          fZeroMaskSize,
+                                                                                          &fNeighborNodeList);
 
-                for(unsigned int i=0; i<fNeighborNodeList.size(); i++)
-                {
-                    if(fNeighborNodeList[i] != NULL)
-                    {
-                        if( !(fNeighborNodeList[i]->HasChildren()) )
-                        {
-                            fProgenitor->ApplyAction(fNeighborNodeList[i]);
-                        }
+            for (unsigned int i = 0; i < fNeighborNodeList.size(); i++) {
+                if (fNeighborNodeList[i] != nullptr) {
+                    if (!(fNeighborNodeList[i]->HasChildren())) {
+                        fProgenitor->ApplyAction(fNeighborNodeList[i]);
                     }
                 }
             }
         }
+    }
 
 
-
-    private:
-
-        int fZeroMaskSize;
-        KFMCubicSpaceNodeProgenitor<SpatialNDIM, ObjectTypeList>* fProgenitor;
-        std::vector< KFMNode<ObjectTypeList>* > fNeighborNodeList;
-
-
+  private:
+    int fZeroMaskSize;
+    KFMCubicSpaceNodeProgenitor<SpatialNDIM, ObjectTypeList>* fProgenitor;
+    std::vector<KFMNode<ObjectTypeList>*> fNeighborNodeList;
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* KFMCubicSpaceNodeAdjacencyProgenitor_H__ */

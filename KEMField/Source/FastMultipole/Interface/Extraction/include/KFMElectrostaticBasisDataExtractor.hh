@@ -3,10 +3,9 @@
 
 #include "KBasis.hh"
 #include "KElectrostaticBasis.hh"
+#include "KFMBasisData.hh"
 #include "KSurfaceTypes.hh"
 #include "KSurfaceVisitors.hh"
-
-#include "KFMBasisData.hh"
 
 namespace KEMField
 {
@@ -25,29 +24,29 @@ namespace KEMField
 */
 
 
-class KFMElectrostaticBasisDataExtractor: public KSelectiveVisitor<KBasisVisitor,KTYPELIST_1(KElectrostaticBasis)>
+class KFMElectrostaticBasisDataExtractor : public KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>
 {
-    public:
-        KFMElectrostaticBasisDataExtractor(){};
-        virtual ~KFMElectrostaticBasisDataExtractor(){};
+  public:
+    KFMElectrostaticBasisDataExtractor(){};
+    ~KFMElectrostaticBasisDataExtractor() override{};
 
-        using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>::Visit;
+    using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>::Visit;
 
-        void Visit(KElectrostaticBasis& basis)
-        {
-            fCurrentBasisData[0] = basis.GetSolution(0);
-        }
+    void Visit(KElectrostaticBasis& basis) override
+    {
+        fCurrentBasisData[0] = basis.GetSolution(0);
+    }
 
-        KFMBasisData<1> GetBasisData() const {return fCurrentBasisData;};
+    KFMBasisData<1> GetBasisData() const
+    {
+        return fCurrentBasisData;
+    };
 
-    private:
-
-        KFMBasisData<1> fCurrentBasisData;
+  private:
+    KFMBasisData<1> fCurrentBasisData;
 };
 
 
-
-
-}
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticBasisDataExtractor_H__ */

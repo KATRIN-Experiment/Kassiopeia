@@ -19,75 +19,70 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KStreamedSizeOf;
+class KStreamedSizeOf;
 
-  template <typename Type>
-  class KStreamedSizeOfType
-  {
+template<typename Type> class KStreamedSizeOfType
+{
   public:
     virtual ~KStreamedSizeOfType() {}
     virtual void Add(size_t) = 0;
     virtual KStreamedSizeOf& Self() = 0;
-    friend inline KStreamedSizeOf &operator<<(KStreamedSizeOfType<Type>& s, const Type&)
+    friend inline KStreamedSizeOf& operator<<(KStreamedSizeOfType<Type>& s, const Type&)
     {
-      s.Add(sizeof(Type));
-      return s.Self();
+        s.Add(sizeof(Type));
+        return s.Self();
     }
-  };
+};
 
-  template <>
-  class KStreamedSizeOfType<std::string>
-  {
+template<> class KStreamedSizeOfType<std::string>
+{
   public:
     virtual ~KStreamedSizeOfType() {}
     virtual void Add(size_t) = 0;
     virtual KStreamedSizeOf& Self() = 0;
-    friend inline KStreamedSizeOf &operator<<(KStreamedSizeOfType<std::string>& s, const std::string& str)
+    friend inline KStreamedSizeOf& operator<<(KStreamedSizeOfType<std::string>& s, const std::string& str)
     {
-      s.Add(sizeof(unsigned int));
-      s.Add(sizeof(char)*str.size());
-      return s.Self();
+        s.Add(sizeof(unsigned int));
+        s.Add(sizeof(char) * str.size());
+        return s.Self();
     }
-  };
+};
 
-  typedef KGenScatterHierarchy<KEMField::FundamentalTypes,
-			       KStreamedSizeOfType>
-  KStreamedSizeOfTypes;
+typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KStreamedSizeOfType> KStreamedSizeOfTypes;
 
-  class KStreamedSizeOf : public KStreamedSizeOfTypes
-  {
+class KStreamedSizeOf : public KStreamedSizeOfTypes
+{
   public:
     KStreamedSizeOf() {}
-    virtual ~KStreamedSizeOf() {}
+    ~KStreamedSizeOf() override {}
 
-    template <class Sized>
-    size_t operator()(const Sized&);
+    template<class Sized> size_t operator()(const Sized&);
 
-    template <class Streamed>
-    void PreStreamInAction(Streamed&) {}
-    template <class Streamed>
-    void PostStreamInAction(Streamed&) {}
-    template <class Streamed>
-    void PreStreamOutAction(const Streamed&) {}
-    template <class Streamed>
-    void PostStreamOutAction(const Streamed&) {}
+    template<class Streamed> void PreStreamInAction(Streamed&) {}
+    template<class Streamed> void PostStreamInAction(Streamed&) {}
+    template<class Streamed> void PreStreamOutAction(const Streamed&) {}
+    template<class Streamed> void PostStreamOutAction(const Streamed&) {}
 
   protected:
-
-    KStreamedSizeOf& Self() { return *this; }
-    void Add(size_t aSize) { fSize += aSize; }
+    KStreamedSizeOf& Self() override
+    {
+        return *this;
+    }
+    void Add(size_t aSize) override
+    {
+        fSize += aSize;
+    }
 
   private:
     size_t fSize;
-  };
+};
 
-  template <class Sized>
-  size_t KStreamedSizeOf::operator()(const Sized& sized)
-  {
+template<class Sized> size_t KStreamedSizeOf::operator()(const Sized& sized)
+{
     fSize = 0;
     *this << sized;
     return fSize;
-  }
 }
+}  // namespace KEMField
 
 #endif /* KSTREAMEDSIZEOF_DEF */

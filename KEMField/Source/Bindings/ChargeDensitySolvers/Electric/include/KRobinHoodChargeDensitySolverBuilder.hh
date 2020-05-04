@@ -8,59 +8,50 @@
 #ifndef KROBINHOODCHARGEDENSITYSOLVERBUILDER_HH_
 #define KROBINHOODCHARGEDENSITYSOLVERBUILDER_HH_
 
-#include "KElectrostaticBoundaryIntegratorAttributeProcessor.hh"
 #include "KComplexElement.hh"
+#include "KElectrostaticBoundaryIntegratorAttributeProcessor.hh"
 #include "KRobinHoodChargeDensitySolver.hh"
 
-namespace katrin {
-
-typedef KComplexElement<KEMField::KRobinHoodChargeDensitySolver>
-KRobinHoodChargeDensitySolverBuilder;
-
-template< >
-inline bool KRobinHoodChargeDensitySolverBuilder::AddAttribute( KContainer* aContainer )
+namespace katrin
 {
-	if (aContainer->GetName() == "integrator" )
-		return AddElectrostaticIntegratorPolicy(fObject,aContainer);
 
-    if( aContainer->GetName() == "tolerance" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::SetTolerance );
+typedef KComplexElement<KEMField::KRobinHoodChargeDensitySolver> KRobinHoodChargeDensitySolverBuilder;
+
+template<> inline bool KRobinHoodChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "integrator")
+        return AddElectrostaticIntegratorPolicy(fObject, aContainer);
+
+    if (aContainer->GetName() == "tolerance") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetTolerance);
         return true;
     }
-    if( aContainer->GetName() == "check_sub_interval" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::SetCheckSubInterval );
+    if (aContainer->GetName() == "check_sub_interval") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetCheckSubInterval);
         return true;
     }
-    if( aContainer->GetName() == "display_interval" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::SetDisplayInterval );
+    if (aContainer->GetName() == "display_interval") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetDisplayInterval);
         return true;
     }
-    if( aContainer->GetName() == "write_interval" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::SetWriteInterval );
+    if (aContainer->GetName() == "write_interval") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetWriteInterval);
         return true;
     }
-    if( aContainer->GetName() == "plot_interval" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::SetPlotInterval );
+    if (aContainer->GetName() == "plot_interval") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::SetPlotInterval);
         return true;
     }
-    if( aContainer->GetName() == "cache_matrix_elements" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::CacheMatrixElements );
+    if (aContainer->GetName() == "cache_matrix_elements") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::CacheMatrixElements);
         return true;
     }
-    if( aContainer->GetName() == "use_opencl" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::UseOpenCL );
+    if (aContainer->GetName() == "use_opencl") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::UseOpenCL);
         return true;
     }
-    if( aContainer->GetName() == "use_vtk" )
-    {
-        aContainer->CopyTo( fObject, &KEMField::KRobinHoodChargeDensitySolver::UseVTK );
+    if (aContainer->GetName() == "use_vtk") {
+        aContainer->CopyTo(fObject, &KEMField::KRobinHoodChargeDensitySolver::UseVTK);
         return true;
     }
     return false;

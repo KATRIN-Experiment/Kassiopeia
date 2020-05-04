@@ -1,64 +1,62 @@
 #ifndef Kassiopeia_KSRootEventModifier_h_
 #define Kassiopeia_KSRootEventModifier_h_
 
+#include "KSEvent.h"
 #include "KSEventModifier.h"
+#include "KSList.h"
 #include "KSParticle.h"
 #include "KSStep.h"
-#include "KSEvent.h"
 #include "KSTrack.h"
-#include "KSList.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootEventModifier :
-            public KSComponentTemplate< KSRootEventModifier, KSEventModifier >
-    {
-    public:
-        KSRootEventModifier();
-        KSRootEventModifier( const KSRootEventModifier& aCopy );
-        KSRootEventModifier* Clone() const;
-        virtual ~KSRootEventModifier();
+class KSRootEventModifier : public KSComponentTemplate<KSRootEventModifier, KSEventModifier>
+{
+  public:
+    KSRootEventModifier();
+    KSRootEventModifier(const KSRootEventModifier& aCopy);
+    KSRootEventModifier* Clone() const override;
+    ~KSRootEventModifier() override;
 
-        //**********
-        // modifier
-        //**********
+    //**********
+    // modifier
+    //**********
 
-    public:
-        bool ExecutePreEventModification( KSEvent& anEvent );
-        bool ExecutePostEventModification( KSEvent& anEvent );
+  protected:
+    bool ExecutePreEventModification(KSEvent& anEvent) override;
+    bool ExecutePostEventModification(KSEvent& anEvent) override;
 
-        //***********
-        //composition
-        //***********
+    //***********
+    //composition
+    //***********
 
-    public:
-        void AddModifier( KSEventModifier* aModifier );
-        void RemoveModifier( KSEventModifier* aModifier );
+  public:
+    void AddModifier(KSEventModifier* aModifier);
+    void RemoveModifier(KSEventModifier* aModifier);
 
-    private:
-        KSList< KSEventModifier > fModifiers;
-        KSEventModifier* fModifier;
+  private:
+    KSList<KSEventModifier> fModifiers;
+    KSEventModifier* fModifier;
 
-        //******
-        //action
-        //******
+    //******
+    //action
+    //******
 
-    public:
-        void SetEvent( KSEvent* anEvent );
+  public:
+    void SetEvent(KSEvent* anEvent);
 
-        bool ExecutePreEventModification();
-        bool ExecutePostEventModification();
+    bool ExecutePreEventModification();
+    bool ExecutePostEventModification();
 
-        virtual void PushUpdateComponent();
-        virtual void PushDeupdateComponent();
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
 
-    private:
-
-        KSEvent* fEvent;
-    };
+  private:
+    KSEvent* fEvent;
+};
 
 
-}
+}  // namespace Kassiopeia
 
 #endif

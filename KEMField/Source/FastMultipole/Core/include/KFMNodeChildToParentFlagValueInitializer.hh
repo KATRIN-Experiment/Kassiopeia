@@ -4,9 +4,9 @@
 
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
-#include "KFMObjectRetriever.hh"
-#include "KFMNodeFlags.hh"
 #include "KFMNodeFlagValueInitializer.hh"
+#include "KFMNodeFlags.hh"
+#include "KFMObjectRetriever.hh"
 
 
 namespace KEMField
@@ -25,39 +25,42 @@ namespace KEMField
 */
 
 
-template< typename ObjectTypeList, unsigned int NFLAGS>
-class KFMNodeChildToParentFlagValueInitializer: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, unsigned int NFLAGS>
+class KFMNodeChildToParentFlagValueInitializer : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeChildToParentFlagValueInitializer(){};
-        virtual ~KFMNodeChildToParentFlagValueInitializer(){};
+  public:
+    KFMNodeChildToParentFlagValueInitializer(){};
+    ~KFMNodeChildToParentFlagValueInitializer() override{};
 
-        void SetFlagIndex(unsigned int flag_index){fValueInitializer.SetFlagIndex(flag_index);};
-        void SetFlagValue(char value){fValueInitializer.SetFlagValue(value);};
+    void SetFlagIndex(unsigned int flag_index)
+    {
+        fValueInitializer.SetFlagIndex(flag_index);
+    };
+    void SetFlagValue(char value)
+    {
+        fValueInitializer.SetFlagValue(value);
+    };
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            //set the flag value for this node
-            fValueInitializer.ApplyAction(node);
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        //set the flag value for this node
+        fValueInitializer.ApplyAction(node);
 
-            //now succesively apply the value initializer to all parents of this node
-            KFMNode<ObjectTypeList>* parent = node->GetParent();
+        //now succesively apply the value initializer to all parents of this node
+        KFMNode<ObjectTypeList>* parent = node->GetParent();
 
-            while(parent != NULL)
-            {
-                fValueInitializer.ApplyAction(parent);
-                parent = parent->GetParent();
-            }
+        while (parent != nullptr) {
+            fValueInitializer.ApplyAction(parent);
+            parent = parent->GetParent();
         }
+    }
 
 
-    protected:
-
-        KFMNodeFlagValueInitializer<ObjectTypeList, NFLAGS> fValueInitializer;
-
+  protected:
+    KFMNodeFlagValueInitializer<ObjectTypeList, NFLAGS> fValueInitializer;
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* __KFMNodeChildToParentFlagValueInitializer_H__ */

@@ -3,7 +3,8 @@
 
 #include <cstddef>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -20,26 +21,24 @@ namespace KEMField{
 */
 
 
-template<typename T>
-class KFMObjectHolder
+template<typename T> class KFMObjectHolder
 {
-    public:
+  public:
+    KFMObjectHolder() : fObject(nullptr)
+    {
+        ;
+    };
 
-        KFMObjectHolder():fObject(NULL){;};
+    virtual ~KFMObjectHolder()
+    {
+        delete fObject;
+    };
 
-        virtual ~KFMObjectHolder()
-        {
-            delete fObject;
-        };
-
-        T* fObject;
-
+    T* fObject;
 };
 
 
-
-}//end of KEMField
-
+}  // namespace KEMField
 
 
 #endif /* KFMObjectHolder_H__ */

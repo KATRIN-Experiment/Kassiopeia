@@ -18,40 +18,51 @@ namespace KGeoBag
 */
 
 
-
 //class to hold very basic node data for tree reconstruction
 class KGNodeData
 {
-    public:
-        KGNodeData()
-        {
-            fID = -1;
-            fChildIDs.resize(0);
-        };
-        virtual ~KGNodeData(){};
+  public:
+    KGNodeData()
+    {
+        fID = -1;
+        fChildIDs.resize(0);
+    };
+    virtual ~KGNodeData(){};
 
-        unsigned int GetID() const {return fID;};
-        void SetID(const unsigned int& id){fID = id;};
+    unsigned int GetID() const
+    {
+        return fID;
+    };
+    void SetID(const unsigned int& id)
+    {
+        fID = id;
+    };
 
-        unsigned int GetNChildren() const {return fChildIDs.size();};
-        unsigned int GetChildID(unsigned int index) const
-        {
-            return fChildIDs[index];
-        };
+    unsigned int GetNChildren() const
+    {
+        return fChildIDs.size();
+    };
+    unsigned int GetChildID(unsigned int index) const
+    {
+        return fChildIDs[index];
+    };
 
-        void GetChildIDs(std::vector<unsigned int>* child_ids) const {*child_ids = fChildIDs;};
-        void SetChildIDs(const std::vector<unsigned int>* child_ids){fChildIDs = *child_ids;};
+    void GetChildIDs(std::vector<unsigned int>* child_ids) const
+    {
+        *child_ids = fChildIDs;
+    };
+    void SetChildIDs(const std::vector<unsigned int>* child_ids)
+    {
+        fChildIDs = *child_ids;
+    };
 
-    private:
-
-        unsigned int fID;
-        std::vector< unsigned int > fChildIDs;
-
+  private:
+    unsigned int fID;
+    std::vector<unsigned int> fChildIDs;
 };
 
 
-template <typename Stream>
-Stream& operator>>(Stream& s, KGNodeData& aData)
+template<typename Stream> Stream& operator>>(Stream& s, KGNodeData& aData)
 {
     s.PreStreamInAction(aData);
 
@@ -66,8 +77,7 @@ Stream& operator>>(Stream& s, KGNodeData& aData)
     std::vector<unsigned int> child_ids;
     child_ids.resize(size);
 
-    for(unsigned int i=0; i<size; i++)
-    {
+    for (unsigned int i = 0; i < size; i++) {
         unsigned int id;
         s >> id;
         child_ids[i] = id;
@@ -79,8 +89,7 @@ Stream& operator>>(Stream& s, KGNodeData& aData)
     return s;
 }
 
-template <typename Stream>
-Stream& operator<<(Stream& s,const KGNodeData& aData)
+template<typename Stream> Stream& operator<<(Stream& s, const KGNodeData& aData)
 {
     s.PreStreamOutAction(aData);
 
@@ -91,8 +100,7 @@ Stream& operator<<(Stream& s,const KGNodeData& aData)
     unsigned int n_children = aData.GetNChildren();
     s << n_children;
 
-    for(unsigned int i=0; i<n_children; i++)
-    {
+    for (unsigned int i = 0; i < n_children; i++) {
         unsigned int id = aData.GetChildID(i);
         s << id;
     }
@@ -102,7 +110,7 @@ Stream& operator<<(Stream& s,const KGNodeData& aData)
     return s;
 }
 
-}
+}  // namespace KGeoBag
 
 
 #endif /* KGNodeData_H__ */

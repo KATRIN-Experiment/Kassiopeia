@@ -5,8 +5,8 @@
 
 namespace KEMField
 {
-  class KTicker
-  {
+class KTicker
+{
   public:
     KTicker() : fGoal(0), fCounter(0), fNoGoal(false) {}
     ~KTicker() {}
@@ -19,7 +19,7 @@ namespace KEMField
     double fGoal;
     mutable unsigned int fCounter;
     bool fNoGoal;
-  };
-}
+};
+}  // namespace KEMField
 
 #endif /* KEMTICKER_DEF */

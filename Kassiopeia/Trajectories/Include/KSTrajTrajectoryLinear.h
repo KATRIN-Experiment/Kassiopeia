@@ -6,44 +6,44 @@
 namespace Kassiopeia
 {
 
-    class KSTrajTrajectoryLinear :
-        public KSComponentTemplate< KSTrajTrajectoryLinear, KSTrajectory >
-    {
-        public:
-        	KSTrajTrajectoryLinear();
-        	KSTrajTrajectoryLinear( const KSTrajTrajectoryLinear& aCopy );
-        	KSTrajTrajectoryLinear* Clone() const;
-            virtual ~KSTrajTrajectoryLinear();
+class KSTrajTrajectoryLinear : public KSComponentTemplate<KSTrajTrajectoryLinear, KSTrajectory>
+{
+  public:
+    KSTrajTrajectoryLinear();
+    KSTrajTrajectoryLinear(const KSTrajTrajectoryLinear& aCopy);
+    KSTrajTrajectoryLinear* Clone() const override;
+    ~KSTrajTrajectoryLinear() override;
 
-        public:
-            void SetLength( const double& aLength );
-            const double& GetLength() const;
+  public:
+    void SetLength(const double& aLength);
+    const double& GetLength() const;
 
-        private:
-            double fLength;
+  private:
+    double fLength;
 
-            //**********
-            //trajectory
-            //**********
+    //**********
+    //trajectory
+    //**********
 
-        public:
+  public:
+    void Reset() override;
+    void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter,
+                             double& aRadius, double& aTimeStep) override;
+    void ExecuteTrajectory(const double& aTimeStep, KSParticle& anIntermediateParticle) const override;
+    void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle,
+                                         std::vector<KSParticle>* intermediateParticleStates) const override;
 
-            void Reset();
-            void CalculateTrajectory( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter, double& aRadius, double& aTimeStep );
-            void ExecuteTrajectory( const double& aTimeStep, KSParticle& anIntermediateParticle ) const;
-            void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle, std::vector< KSParticle >* intermediateParticleStates) const;
 
+  private:
+    double fTime;
+    KThreeVector fPosition;
+    KThreeVector fVelocity;
 
-        private:
-            double fTime;
-            KThreeVector fPosition;
-            KThreeVector fVelocity;
+    //internal state for piecewise approximation
+    KSParticle fFirstParticle;
+    KSParticle fLastParticle;
+};
 
-            //internal state for piecewise approximation
-            KSParticle fFirstParticle;
-            KSParticle fLastParticle;
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

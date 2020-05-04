@@ -9,55 +9,58 @@
 #define KGELECTROSTATICBOUNDARYFIELD_HH_
 
 #include "KElectrostaticBoundaryField.hh"
-#include <string>
-#include <vector>
-
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
 #include "KGCore.hh"
 
+#include <string>
+#include <vector>
 
-namespace KEMField {
 
-class KGElectrostaticBoundaryField :
-		public KElectrostaticBoundaryField
+namespace KEMField
 {
-public:
-	KGElectrostaticBoundaryField();
-	virtual ~KGElectrostaticBoundaryField();
-	enum Symmetry { NoSymmetry , AxialSymmetry , DiscreteAxialSymmetry };
 
-	void SetMinimumElementArea( const double& aArea);
-	void SetMaximumElementAspectRatio(const double& aAspect);
+class KGElectrostaticBoundaryField : public KElectrostaticBoundaryField
+{
+  public:
+    KGElectrostaticBoundaryField();
+    ~KGElectrostaticBoundaryField() override;
+    enum Symmetry
+    {
+        NoSymmetry,
+        AxialSymmetry,
+        DiscreteAxialSymmetry
+    };
 
-	void SetSystem( KGeoBag::KGSpace* aSpace );
-	void AddSurface( KGeoBag::KGSurface* aSurface );
-	void AddSpace( KGeoBag::KGSpace* aSpace );
-	void SetSymmetry( const Symmetry& aSymmetry );
-	KSmartPointer<KGeoBag::KGBEMConverter> GetConverter();
+    void SetMinimumElementArea(const double& aArea);
+    void SetMaximumElementAspectRatio(const double& aAspect);
+
+    void SetSystem(KGeoBag::KGSpace* aSpace);
+    void AddSurface(KGeoBag::KGSurface* aSurface);
+    void AddSpace(KGeoBag::KGSpace* aSpace);
+    void SetSymmetry(const Symmetry& aSymmetry);
+    KSmartPointer<KGeoBag::KGBEMConverter> GetConverter();
 
 
+  private:
+    double PotentialCore(const KPosition& P) const override;
+    KThreeVector ElectricFieldCore(const KPosition& P) const override;
+    void InitializeCore() override;
 
-private:
-	virtual double PotentialCore(const KPosition& P) const;
-	virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
-	virtual void InitializeCore();
+    void ConfigureSurfaceContainer();
 
-	void ConfigureSurfaceContainer();
+    double fMinimumElementArea;
+    double fMaximumElementAspectRatio;
+    KGeoBag::KGSpace* fSystem;
+    std::vector<KGeoBag::KGSurface*> fSurfaces;
+    std::vector<KGeoBag::KGSpace*> fSpaces;
+    Symmetry fSymmetry;
 
-	double fMinimumElementArea;
-	double fMaximumElementAspectRatio;
-	KGeoBag::KGSpace* fSystem;
-	std::vector< KGeoBag::KGSurface* > fSurfaces;
-	std::vector< KGeoBag::KGSpace* > fSpaces;
-	Symmetry fSymmetry;
-
-private:
-	KSmartPointer<KGeoBag::KGBEMConverter> fConverter;
+  private:
+    KSmartPointer<KGeoBag::KGBEMConverter> fConverter;
 };
 
-} //KEMField
-
+}  // namespace KEMField
 
 
 #endif /* KGELECTROSTATICBOUNDARYFIELD_HH_ */

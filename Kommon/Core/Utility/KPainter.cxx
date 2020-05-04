@@ -3,12 +3,8 @@
 namespace katrin
 {
 
-    KPainter::KPainter()
-    {
-    }
+KPainter::KPainter() {}
 
-    KPainter::~KPainter()
-    {
-    }
+KPainter::~KPainter() {}
 
-}
+}  // namespace katrin

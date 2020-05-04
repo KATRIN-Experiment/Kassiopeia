@@ -10,55 +10,65 @@
 
 namespace KEMField
 {
-  template<bool Cond, class T = void>
-  struct EnableIf {};
+template<bool Cond, class T = void> struct EnableIf
+{};
 
-  template<class T>
-  struct EnableIf<true, T>
-  {
+template<class T> struct EnableIf<true, T>
+{
     typedef T type;
-  };
+};
 
-  template<typename T>
-  struct Type2Type
-  {
+template<typename T> struct Type2Type
+{
     typedef T OriginalType;
-  };
+};
 
-  template <int i>
-  struct Int2Type
-  {
-    enum {type = i};
-  };
+template<int i> struct Int2Type
+{
+    enum
+    {
+        type = i
+    };
+};
 
-  template<typename D, typename B>
-  class IsDerivedFrom
-  {
-    class No {};
-    class Yes { No no[2]; };
+template<typename D, typename B> class IsDerivedFrom
+{
+    class No
+    {};
+    class Yes
+    {
+        No no[2];
+    };
 
     static Yes Test(B*);
     static No Test(...);
 
   public:
-    enum { Is = sizeof(Test(static_cast<D*>(0))) == sizeof(Yes) };
-  };
+    enum
+    {
+        Is = sizeof(Test(static_cast<D*>(0))) == sizeof(Yes)
+    };
+};
 
-  template<typename T>
-  class IsNamed
-  {
-    class No {};
-    class Yes { No no[2]; };
+template<typename T> class IsNamed
+{
+    class No
+    {};
+    class Yes
+    {
+        No no[2];
+    };
 
-    template <typename C>
-    static Yes Test(__typeof__(&C::Name));
-    template <typename C>
-    static No Test(...);
+    template<typename C> static Yes Test(__typeof__(&C::Name));
+    template<typename C> static No Test(...);
 
   public:
-    enum { Is = sizeof(Test<T>(0)) == sizeof(Yes) };
-  };
+    enum
+    {
+        Is = sizeof(Test<T>(nullptr)) == sizeof(Yes)
+    };
+};
 
-}
+}  // namespace KEMField
 
 #endif /* KTYPEMANIPULATION_DEF */

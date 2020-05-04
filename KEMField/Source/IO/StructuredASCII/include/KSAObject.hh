@@ -2,14 +2,15 @@
 #define KSAObject_HH__
 
 #include "KSADefinitions.hh"
+
+#include <list>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include <list>
 
 
-
-namespace KEMField{
+namespace KEMField
+{
 
 //we want to have the flexibility to have objects of the
 //same type to have different names, but we also need to know
@@ -18,20 +19,18 @@ namespace KEMField{
 // DefineKSAClassName(MyClass); to the header of class (after its definition)
 
 
-template< typename Type >
-class KSAClassName
+template<typename Type> class KSAClassName
 {
-    public:
+  public:
     static std::string name()
     {
         return "INVALID";
     }
 };
 
-template< typename Type >
-class KSAClassName< Type* >
+template<typename Type> class KSAClassName<Type*>
 {
-    public:
+  public:
     static std::string name()
     {
         return KSAClassName<Type>::name();
@@ -39,10 +38,9 @@ class KSAClassName< Type* >
 };
 
 
-template< typename Type >
-class KSAClassName< std::vector< Type > >
+template<typename Type> class KSAClassName<std::vector<Type>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "vector";
@@ -50,10 +48,9 @@ class KSAClassName< std::vector< Type > >
     }
 };
 
-template< typename Type >
-class KSAClassName< std::list< Type > >
+template<typename Type> class KSAClassName<std::list<Type>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "list";
@@ -61,10 +58,9 @@ class KSAClassName< std::list< Type > >
     }
 };
 
-template< typename Type >
-class KSAClassName< std::vector< Type* > >
+template<typename Type> class KSAClassName<std::vector<Type*>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "vector";
@@ -72,10 +68,9 @@ class KSAClassName< std::vector< Type* > >
     }
 };
 
-template< typename Type >
-class KSAClassName< std::list< Type* > >
+template<typename Type> class KSAClassName<std::list<Type*>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "list";
@@ -84,10 +79,9 @@ class KSAClassName< std::list< Type* > >
 };
 
 
-template< typename TypeA, typename TypeB >
-class KSAClassName< std::map< TypeA, TypeB > >
+template<typename TypeA, typename TypeB> class KSAClassName<std::map<TypeA, TypeB>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "map";
@@ -96,10 +90,9 @@ class KSAClassName< std::map< TypeA, TypeB > >
 };
 
 
-template< typename TypeA, typename TypeB >
-class KSAClassName< std::map< TypeA*, TypeB > >
+template<typename TypeA, typename TypeB> class KSAClassName<std::map<TypeA*, TypeB>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "map";
@@ -107,10 +100,9 @@ class KSAClassName< std::map< TypeA*, TypeB > >
     }
 };
 
-template< typename TypeA, typename TypeB >
-class KSAClassName< std::map< TypeA, TypeB* > >
+template<typename TypeA, typename TypeB> class KSAClassName<std::map<TypeA, TypeB*>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "map";
@@ -118,10 +110,9 @@ class KSAClassName< std::map< TypeA, TypeB* > >
     }
 };
 
-template< typename TypeA, typename TypeB >
-class KSAClassName< std::map< TypeA*, TypeB* > >
+template<typename TypeA, typename TypeB> class KSAClassName<std::map<TypeA*, TypeB*>>
 {
-    public:
+  public:
     static std::string name()
     {
         std::string full_name = "map";
@@ -129,16 +120,16 @@ class KSAClassName< std::map< TypeA*, TypeB* > >
     }
 };
 
-#define DefineKSAClassName( className )		\
-  						\
-  template<> class KSAClassName< className >	\
-  {						\
-  public:					\
-    static std::string name()			\
-    {						\
-      return #className;			\
-    }						\
-  };
+#define DefineKSAClassName(className)                                                                                  \
+                                                                                                                       \
+    template<> class KSAClassName<className>                                                                           \
+    {                                                                                                                  \
+      public:                                                                                                          \
+        static std::string name()                                                                                      \
+        {                                                                                                              \
+            return #className;                                                                                         \
+        }                                                                                                              \
+    };
 
 
 /**
@@ -156,53 +147,57 @@ class KSAClassName< std::map< TypeA*, TypeB* > >
 
 class KSAObject
 {
-    public:
+  public:
+    KSAObject()
+    {
+        fKSAObjectName = "INVALID";
+        fKSAObjectStartTag = "INVALID";
+        fKSAObjectStopTag = "INVALID";
+    };
 
-        KSAObject()
-        {
-            fKSAObjectName = "INVALID";
-            fKSAObjectStartTag = "INVALID";
-            fKSAObjectStopTag = "INVALID";
-        };
-
-        KSAObject(std::string name):
+    KSAObject(std::string name) :
         fKSAObjectName(name),
         fKSAObjectStartTag(std::string(START_TAG_BEGIN) + fKSAObjectName + std::string(START_TAG_END)),
         fKSAObjectStopTag(std::string(STOP_TAG_BEGIN) + fKSAObjectName + std::string(STOP_TAG_END))
-        {;};
+    {
+        ;
+    };
 
-        virtual ~KSAObject(){;};
+    virtual ~KSAObject()
+    {
+        ;
+    };
 
-        void SetName(std::string name)
-        {
-            fKSAObjectName = name;
-            fKSAObjectStartTag = std::string(START_TAG_BEGIN) + fKSAObjectName + std::string(START_TAG_END);
-            fKSAObjectStopTag = std::string(STOP_TAG_BEGIN) + fKSAObjectName + std::string(STOP_TAG_END);
-        };
+    void SetName(std::string name)
+    {
+        fKSAObjectName = name;
+        fKSAObjectStartTag = std::string(START_TAG_BEGIN) + fKSAObjectName + std::string(START_TAG_END);
+        fKSAObjectStopTag = std::string(STOP_TAG_BEGIN) + fKSAObjectName + std::string(STOP_TAG_END);
+    };
 
-        virtual std::string GetName() const {return fKSAObjectName;};
+    virtual std::string GetName() const
+    {
+        return fKSAObjectName;
+    };
 
-        virtual std::string GetStartTag() const
-        {
-            return fKSAObjectStartTag;
-        }
+    virtual std::string GetStartTag() const
+    {
+        return fKSAObjectStartTag;
+    }
 
-        virtual std::string GetStopTag() const
-        {
-            return fKSAObjectStopTag;
-        }
+    virtual std::string GetStopTag() const
+    {
+        return fKSAObjectStopTag;
+    }
 
-    protected:
-
-        std::string fKSAObjectName;
-        std::string fKSAObjectStartTag;
-        std::string fKSAObjectStopTag;
-
+  protected:
+    std::string fKSAObjectName;
+    std::string fKSAObjectStartTag;
+    std::string fKSAObjectStopTag;
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 
 #endif /* KSAObject_H__ */

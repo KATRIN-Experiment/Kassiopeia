@@ -8,20 +8,19 @@
 #ifndef KGCONESPACERANDOM_HH_
 #define KGCONESPACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGConeSpace.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for dicing a point inside a KGConeSpace.
    */
-  class KGConeSpaceRandom : virtual public KGShapeRandom,
-				 public KGConeSpace::Visitor
-  {
+class KGConeSpaceRandom : virtual public KGShapeRandom, public KGConeSpace::Visitor
+{
   public:
-	  KGConeSpaceRandom() : KGShapeRandom() {}
-    virtual ~KGConeSpaceRandom() {}
+    KGConeSpaceRandom() : KGShapeRandom() {}
+    ~KGConeSpaceRandom() override {}
 
     /**
      * \brief Visitor function to dice a point
@@ -29,8 +28,8 @@ namespace KGeoBag
      *
      * \param aConeSpace
      */
-    virtual void VisitConeSpace(KGConeSpace* aConeSpace);
-  };
-}
+    void VisitConeSpace(KGConeSpace* aConeSpace) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGCONESPACERANDOM_HH_ */

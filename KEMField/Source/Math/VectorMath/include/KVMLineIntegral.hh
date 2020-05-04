@@ -7,7 +7,8 @@
 #include "KVMFixedArray.hh"
 #include "KVMPathIntegral.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -24,24 +25,21 @@ namespace KEMField{
 */
 
 
-
-class KVMLineIntegral: public KVMPathIntegral<1>
+class KVMLineIntegral : public KVMPathIntegral<1>
 {
-    public:
-        KVMLineIntegral();
-        virtual ~KVMLineIntegral();
+  public:
+    KVMLineIntegral();
+    ~KVMLineIntegral() override;
 
-        virtual void SetField(const KVMField* aField);
+    void SetField(const KVMField* aField) override;
 
-    protected:
+  protected:
+    void Integrand(const double* point, double* result) const override;
 
-        virtual void Integrand(const double* point, double* result) const;
-
-        mutable KVMFixedArray<double, KVMCurveRDim> fV;
-
+    mutable KVMFixedArray<double, KVMCurveRDim> fV;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KVMLineIntegral_H */

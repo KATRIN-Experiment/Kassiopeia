@@ -8,22 +8,21 @@
 #ifndef KGGENERICSPACERANDOM_HH_
 #define KGGENERICSPACERANDOM_HH_
 
+#include "KGRandomMessage.hh"
 #include "KGShapeRandom.hh"
 #include "KGVolume.hh"
-#include "KGRandomMessage.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for implementation of a generic code
    * for dicing a point inside an arbitrary space.
    */
-  class KGGenericSpaceRandom : virtual public KGShapeRandom,
-				 public KGVolume::Visitor
-  {
+class KGGenericSpaceRandom : virtual public KGShapeRandom, public KGVolume::Visitor
+{
   public:
-	  KGGenericSpaceRandom() : KGShapeRandom() {}
-    virtual ~KGGenericSpaceRandom() {}
+    KGGenericSpaceRandom() : KGShapeRandom() {}
+    ~KGGenericSpaceRandom() override {}
 
     /**
      * \brief Visitor function to dice the point inside
@@ -31,8 +30,8 @@ namespace KGeoBag
      *
      * \brief aVolume
      */
-    virtual void VisitVolume(KGVolume* aVolume);
-  };
-}
+    void VisitVolume(KGVolume* aVolume) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGGENERICSPACERANDOM_HH_ */

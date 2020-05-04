@@ -1,3 +1,3 @@
 #include "KSFieldsMessage.h"
 
-KMESSAGE_DEFINE( Kassiopeia, fieldmsg, ks_field, KSFIELD )
+KMESSAGE_DEFINE(Kassiopeia, fieldmsg, ks_field, KSFIELD)

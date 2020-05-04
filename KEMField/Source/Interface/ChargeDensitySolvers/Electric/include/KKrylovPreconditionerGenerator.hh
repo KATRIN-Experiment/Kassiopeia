@@ -11,78 +11,88 @@
 
 #include "KBoundaryMatrixGenerator.hh"
 #include "KElectrostaticBasis.hh"
-#include "KSmartPointer.hh"
 #include "KKrylovSolverConfiguration.hh"
+#include "KSmartPointer.hh"
 
 
-namespace KEMField {
-
-class KKrylovPreconditionerGenerator:
-		public KBoundaryMatrixGenerator<KElectrostaticBasis::ValueType>
+namespace KEMField
 {
-public:
-	typedef KElectrostaticBasis::ValueType ValueType;
-	typedef KBoundaryMatrixGenerator<ValueType> MatrixGenerator;
 
-	KKrylovPreconditionerGenerator();
-	virtual ~KKrylovPreconditionerGenerator();
+class KKrylovPreconditionerGenerator : public KBoundaryMatrixGenerator<KElectrostaticBasis::ValueType>
+{
+  public:
+    typedef KElectrostaticBasis::ValueType ValueType;
+    typedef KBoundaryMatrixGenerator<ValueType> MatrixGenerator;
 
-	KSmartPointer<KSquareMatrix<ValueType> > Build(const KSurfaceContainer& container) const;
+    KKrylovPreconditionerGenerator();
+    ~KKrylovPreconditionerGenerator() override;
 
-	void SetMatrixGenerator(KSmartPointer<MatrixGenerator > matrixGen);
-	KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
-	void SetPreconditionerGenerator(KSmartPointer<MatrixGenerator > preconGen);
+    KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
 
-	void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart) {
-		fKrylovConfig.SetIterationsBetweenRestart(iterationsBetweenRestart);
-	}
+    void SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen);
+    KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
+    void SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen);
 
-	void SetMaxIterations(unsigned int maxIterations) {
-		fKrylovConfig.SetMaxIterations(maxIterations);
-	}
+    void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart)
+    {
+        fKrylovConfig.SetIterationsBetweenRestart(iterationsBetweenRestart);
+    }
 
-	void SetSolverName(const std::string& solverName) {
-		fKrylovConfig.SetSolverName(solverName);
-	}
+    void SetMaxIterations(unsigned int maxIterations)
+    {
+        fKrylovConfig.SetMaxIterations(maxIterations);
+    }
 
-	void SetStepsBetweenCheckpoints(unsigned int stepsBetweenCheckpoints) {
-		fKrylovConfig.SetStepsBetweenCheckpoints(stepsBetweenCheckpoints);
-	}
+    void SetSolverName(const std::string& solverName)
+    {
+        fKrylovConfig.SetSolverName(solverName);
+    }
 
-	void SetStepsBetweenTimeChecks(unsigned int stepsBetweenTimeChecks) {
-		fKrylovConfig.SetStepsBetweenTimeChecks(stepsBetweenTimeChecks);
-	}
+    void SetStepsBetweenCheckpoints(unsigned int stepsBetweenCheckpoints)
+    {
+        fKrylovConfig.SetStepsBetweenCheckpoints(stepsBetweenCheckpoints);
+    }
 
-	void SetTimeLimitSeconds(double timeLimitSeconds) {
-		fKrylovConfig.SetTimeLimitSeconds(timeLimitSeconds);
-	}
+    void SetStepsBetweenTimeChecks(unsigned int stepsBetweenTimeChecks)
+    {
+        fKrylovConfig.SetStepsBetweenTimeChecks(stepsBetweenTimeChecks);
+    }
 
-	void SetTolerance(double tolerance) {
-		fKrylovConfig.SetTolerance(tolerance);
-	}
+    void SetTimeLimitSeconds(double timeLimitSeconds)
+    {
+        fKrylovConfig.SetTimeLimitSeconds(timeLimitSeconds);
+    }
 
-	void SetUseCheckpoints(bool useCheckpoints) {
-		fKrylovConfig.SetUseCheckpoints(useCheckpoints);
-	}
+    void SetTolerance(double tolerance)
+    {
+        fKrylovConfig.SetTolerance(tolerance);
+    }
 
-	void SetUseDisplay(bool useDisplay) {
-		fKrylovConfig.SetUseDisplay(useDisplay);
-	}
+    void SetUseCheckpoints(bool useCheckpoints)
+    {
+        fKrylovConfig.SetUseCheckpoints(useCheckpoints);
+    }
 
-	void SetUsePlot(bool usePlot) {
-		fKrylovConfig.SetUsePlot(usePlot);
-	}
+    void SetUseDisplay(bool useDisplay)
+    {
+        fKrylovConfig.SetUseDisplay(useDisplay);
+    }
 
-	void SetUseTimer(bool useTimer) {
-		fKrylovConfig.SetUseTimer(useTimer);
-	}
+    void SetUsePlot(bool usePlot)
+    {
+        fKrylovConfig.SetUsePlot(usePlot);
+    }
 
-private:
+    void SetUseTimer(bool useTimer)
+    {
+        fKrylovConfig.SetUseTimer(useTimer);
+    }
 
-	KSmartPointer<MatrixGenerator> fMatrixGenerator;
-	KSmartPointer<MatrixGenerator> fPreconditionerGenerator;
+  private:
+    KSmartPointer<MatrixGenerator> fMatrixGenerator;
+    KSmartPointer<MatrixGenerator> fPreconditionerGenerator;
 
-	KKrylovSolverConfiguration fKrylovConfig;
+    KKrylovSolverConfiguration fKrylovConfig;
 };
 
 } /* namespace KEMField */

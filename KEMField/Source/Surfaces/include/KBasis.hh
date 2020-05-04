@@ -1,9 +1,9 @@
 #ifndef KBASIS_DEF
 #define KBASIS_DEF
 
-#include <vector>
-
 #include "KComplexStreamer.hh"
+
+#include <vector>
 
 namespace KEMField
 {
@@ -20,60 +20,71 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-  class KBasis
-  {
+class KBasis
+{
   protected:
-
     KBasis() {}
     virtual ~KBasis() {}
-  };
+};
 
-  // Template for bases
-  template <typename Type, unsigned int Dim>
-  class KBasisType : public KBasis
-  {
+// Template for bases
+template<typename Type, unsigned int Dim> class KBasisType : public KBasis
+{
   public:
     typedef Type ValueType;
-    enum { Dimension = Dim };
+    enum
+    {
+        Dimension = Dim
+    };
 
   protected:
-    KBasisType() : fSolution(Dim,0.) {}
-    virtual ~KBasisType() {}
+    KBasisType() : fSolution(Dim, 0.) {}
+    ~KBasisType() override {}
 
   public:
-    void SetSolution(ValueType v) { fSolution[0] = v; }
-    void SetSolution(unsigned int i,ValueType v) { if (i<Dim) fSolution[i] = v; }
-    ValueType GetSolution(unsigned int i=0) const { return (i<Dim ? fSolution[i] : 0.); }
-    ValueType& GetSolution(unsigned int i=0) { return (i<Dim ? fSolution[i] : fSolution[0]); }
+    void SetSolution(ValueType v)
+    {
+        fSolution[0] = v;
+    }
+    void SetSolution(unsigned int i, ValueType v)
+    {
+        if (i < Dim)
+            fSolution[i] = v;
+    }
+    ValueType GetSolution(unsigned int i = 0) const
+    {
+        return (i < Dim ? fSolution[i] : 0.);
+    }
+    ValueType& GetSolution(unsigned int i = 0)
+    {
+        return (i < Dim ? fSolution[i] : fSolution[0]);
+    }
 
   protected:
     std::vector<ValueType> fSolution;
-  };
+};
 
-  template <typename Type, unsigned int Dim, typename Stream>
-  Stream& operator>>(Stream& s,KBasisType<Type,Dim>& b)
-  {
+template<typename Type, unsigned int Dim, typename Stream> Stream& operator>>(Stream& s, KBasisType<Type, Dim>& b)
+{
     s.PreStreamInAction(b);
     Type value;
-    for (unsigned int i=0;i<Dim;i++)
-    {
-      s >> value;
-      b.SetSolution(i,value);
+    for (unsigned int i = 0; i < Dim; i++) {
+        s >> value;
+        b.SetSolution(i, value);
     }
     s.PostStreamInAction(b);
     return s;
-  }
+}
 
-  template <typename Type, unsigned int Dim, typename Stream>
-  Stream& operator<<(Stream& s,const KBasisType<Type,Dim>& b)
-  {
+template<typename Type, unsigned int Dim, typename Stream> Stream& operator<<(Stream& s, const KBasisType<Type, Dim>& b)
+{
     s.PreStreamOutAction(b);
-    for (unsigned int i=0;i<Dim;i++)
-      s << b.GetSolution(i);
+    for (unsigned int i = 0; i < Dim; i++)
+        s << b.GetSolution(i);
     s.PostStreamOutAction(b);
     return s;
-  }
-
 }
+
+}  // namespace KEMField
 
 #endif /* KBASIS_DEF */

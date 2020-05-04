@@ -1,11 +1,11 @@
 #ifndef KFMIdentitySet_HH__
 #define KFMIdentitySet_HH__
 
-#include <set>
-#include <vector>
-#include <string>
-
 #include "KSAStructuredASCIIHeaders.hh"
+
+#include <set>
+#include <string>
+#include <vector>
 
 namespace KEMField
 {
@@ -23,69 +23,73 @@ namespace KEMField
 *
 */
 
-class KFMIdentitySet: public KSAFixedSizeInputOutputObject
+class KFMIdentitySet : public KSAFixedSizeInputOutputObject
 {
-    public:
-        KFMIdentitySet(){};
-        KFMIdentitySet(const KFMIdentitySet& copyObject):
-        KSAFixedSizeInputOutputObject()
-        {
-            fIDSet = copyObject.fIDSet;
+  public:
+    KFMIdentitySet(){};
+    KFMIdentitySet(const KFMIdentitySet& copyObject) : KSAFixedSizeInputOutputObject()
+    {
+        fIDSet = copyObject.fIDSet;
+    }
+    ~KFMIdentitySet() override{};
+
+    unsigned int GetSize() const;
+
+    void AddID(unsigned int id);            //add this id to the set
+    void RemoveID(unsigned int id);         //if id exists it will be removed
+    bool IsPresent(unsigned int id) const;  //returns true if id is in set
+
+    //returns the index of id in the storage array if present, else returns -1
+    //the identity set must be sorted before calling this function!
+    int FindID(unsigned int id) const;
+    unsigned int GetID(unsigned int index) const
+    {
+        return fIDSet[index];
+    };
+
+    void SetIDs(const std::vector<unsigned int>* fill);
+    void GetIDs(std::vector<unsigned int>* fill) const;  //fills the vector with all ids in set
+    void Clear();
+
+    void Print() const;
+
+    void Sort();
+
+    void Merge(const KFMIdentitySet* set)
+    {
+        //merge the given set into this one
+        fIDSet.reserve(fIDSet.size() + set->fIDSet.size());
+        fIDSet.insert(fIDSet.end(), set->fIDSet.begin(), set->fIDSet.end());
+    }
+
+    void Remove(const KFMIdentitySet* set)
+    {
+        //remove elements of the given set from this one if they are present
+        std::vector<unsigned int>::const_iterator IT;
+        for (IT = set->fIDSet.begin(); IT != set->fIDSet.end(); ++IT) {
+            RemoveID(*IT);
         }
-        virtual ~KFMIdentitySet(){};
+    }
 
-        unsigned int GetSize() const;
+    virtual const std::vector<unsigned int>* GetRawIDList() const
+    {
+        return &(this->fIDSet);
+    };
 
-        void AddID(unsigned int id); //add this id to the set
-        void RemoveID(unsigned int id); //if id exists it will be removed
-        bool IsPresent(unsigned int id) const; //returns true if id is in set
+    //IO
+    virtual std::string ClassName()
+    {
+        return std::string("KFMIdentitySet");
+    };
+    void DefineOutputNode(KSAOutputNode* node) const override;
+    void DefineInputNode(KSAInputNode* node) override;
 
-        //returns the index of id in the storage array if present, else returns -1
-        //the identity set must be sorted before calling this function!
-        int FindID(unsigned int id) const;
-        unsigned int GetID(unsigned int index) const {return fIDSet[index];};
-
-        void SetIDs(const std::vector<unsigned int>* fill);
-        void GetIDs(std::vector<unsigned int>* fill) const; //fills the vector with all ids in set
-        void Clear();
-
-        void Print() const;
-
-        void Sort();
-
-        void Merge(const KFMIdentitySet* set)
-        {
-            //merge the given set into this one
-            fIDSet.reserve(fIDSet.size() + set->fIDSet.size());
-            fIDSet.insert(fIDSet.end(), set->fIDSet.begin(), set->fIDSet.end());
-        }
-
-        void Remove(const KFMIdentitySet* set)
-        {
-            //remove elements of the given set from this one if they are present
-            std::vector<unsigned int>::const_iterator IT;
-            for(IT = set->fIDSet.begin(); IT != set->fIDSet.end(); ++IT)
-            {
-                RemoveID(*IT);
-            }
-        }
-
-       virtual const std::vector<unsigned int>* GetRawIDList() const {return &(this->fIDSet);};
-
-        //IO
-        virtual std::string ClassName() {return std::string("KFMIdentitySet");};
-        virtual void DefineOutputNode(KSAOutputNode* node) const;
-        virtual void DefineInputNode(KSAInputNode* node);
-
-    protected:
-
-
-        std::vector<unsigned int> fIDSet;
+  protected:
+    std::vector<unsigned int> fIDSet;
 };
 
 
-template <typename Stream>
-Stream& operator>>(Stream& s, KFMIdentitySet& aData)
+template<typename Stream> Stream& operator>>(Stream& s, KFMIdentitySet& aData)
 {
     s.PreStreamInAction(aData);
 
@@ -93,8 +97,7 @@ Stream& operator>>(Stream& s, KFMIdentitySet& aData)
     s >> size;
 
     unsigned int id;
-    for(unsigned int i=0;i<size;i++)
-    {
+    for (unsigned int i = 0; i < size; i++) {
         s >> id;
         aData.AddID(id);
     }
@@ -103,16 +106,14 @@ Stream& operator>>(Stream& s, KFMIdentitySet& aData)
     return s;
 }
 
-template <typename Stream>
-Stream& operator<<(Stream& s,const KFMIdentitySet& aData)
+template<typename Stream> Stream& operator<<(Stream& s, const KFMIdentitySet& aData)
 {
     s.PreStreamOutAction(aData);
 
     unsigned int size = aData.GetSize();
     s << size;
 
-    for(unsigned int i=0; i<size; i++)
-    {
+    for (unsigned int i = 0; i < size; i++) {
         s << aData.GetID(i);
     }
 
@@ -122,11 +123,9 @@ Stream& operator<<(Stream& s,const KFMIdentitySet& aData)
 }
 
 
-
-
 DefineKSAClassName(KFMIdentitySet)
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMIdentitySet_H__ */

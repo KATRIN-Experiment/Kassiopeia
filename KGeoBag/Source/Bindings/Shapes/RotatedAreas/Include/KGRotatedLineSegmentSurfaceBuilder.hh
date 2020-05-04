@@ -7,35 +7,30 @@
 namespace katrin
 {
 
-    typedef KComplexElement< KGRotatedLineSegmentSurface > KGRotatedLineSegmentSurfaceBuilder;
+typedef KComplexElement<KGRotatedLineSegmentSurface> KGRotatedLineSegmentSurfaceBuilder;
 
-    template< >
-    inline bool KGRotatedLineSegmentSurfaceBuilder::AddAttribute( KContainer* anAttribute )
-    {
-        if( anAttribute->GetName() == "name" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSurface::SetName );
-            return true;
-        }
-        if( anAttribute->GetName() == "rotated_mesh_count" )
-        {
-            anAttribute->CopyTo( fObject, &KGRotatedLineSegmentSurface::RotatedMeshCount );
-            return true;
-        }
-        return false;
+template<> inline bool KGRotatedLineSegmentSurfaceBuilder::AddAttribute(KContainer* anAttribute)
+{
+    if (anAttribute->GetName() == "name") {
+        anAttribute->CopyTo(fObject, &KGRotatedLineSegmentSurface::SetName);
+        return true;
     }
-
-    template< >
-    inline bool KGRotatedLineSegmentSurfaceBuilder::AddElement( KContainer* anElement )
-    {
-        if( anElement->GetName() == "line_segment" )
-        {
-            anElement->CopyTo( fObject->Path().operator ->(), &KGPlanarLineSegment::CopyFrom );
-            return true;
-        }
-        return false;
+    if (anAttribute->GetName() == "rotated_mesh_count") {
+        anAttribute->CopyTo(fObject, &KGRotatedLineSegmentSurface::RotatedMeshCount);
+        return true;
     }
-
+    return false;
 }
+
+template<> inline bool KGRotatedLineSegmentSurfaceBuilder::AddElement(KContainer* anElement)
+{
+    if (anElement->GetName() == "line_segment") {
+        anElement->CopyTo(fObject->Path().operator->(), &KGPlanarLineSegment::CopyFrom);
+        return true;
+    }
+    return false;
+}
+
+}  // namespace katrin
 
 #endif

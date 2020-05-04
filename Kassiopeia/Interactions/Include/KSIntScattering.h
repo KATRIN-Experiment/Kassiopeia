@@ -1,9 +1,9 @@
 #ifndef Kassiopeia_KSIntScattering_h_
 #define Kassiopeia_KSIntScattering_h_
 
-#include "KSSpaceInteraction.h"
-#include "KSIntDensity.h"
 #include "KSIntCalculator.h"
+#include "KSIntDensity.h"
+#include "KSSpaceInteraction.h"
 
 #include <vector>
 using std::vector;
@@ -11,82 +11,68 @@ using std::vector;
 namespace Kassiopeia
 {
 
-    class KSIntCalculator;
+class KSIntCalculator;
 
-    class KSIntScattering :
-        public KSComponentTemplate< KSIntScattering, KSSpaceInteraction >
-    {
-        public:
-            KSIntScattering();
-            KSIntScattering( const KSIntScattering& aCopy );
-            KSIntScattering* Clone() const;
-            virtual ~KSIntScattering();
+class KSIntScattering : public KSComponentTemplate<KSIntScattering, KSSpaceInteraction>
+{
+  public:
+    KSIntScattering();
+    KSIntScattering(const KSIntScattering& aCopy);
+    KSIntScattering* Clone() const override;
+    ~KSIntScattering() override;
 
-        public:
-            void CalculateAverageCrossSection(
-                    const KSParticle& aTrajectoryInitialParticle,
-                    const KSParticle& aTrajectoryFinalParticle,
-                    double& anAverageCrossSection
-            );
+  public:
+    void CalculateAverageCrossSection(const KSParticle& aTrajectoryInitialParticle,
+                                      const KSParticle& aTrajectoryFinalParticle, double& anAverageCrossSection);
 
-            void DiceCalculator( const double& anAverageCrossSection );
+    void DiceCalculator(const double& anAverageCrossSection);
 
-            void CalculateInteraction(
-                    const KSTrajectory& aTrajectory,
-                    const KSParticle& aTrajectoryInitialParticle,
-                    const KSParticle& aTrajectoryFinalParticle,
-                    const KThreeVector& aTrajectoryCenter,
-                    const double& aTrajectoryRadius,
-                    const double& aTrajectoryTimeStep,
-                    KSParticle& anInteractionParticle,
-                    double& aTimeStep,
-                    bool& aFlag
-            );
+    void CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
+                              const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
+                              const double& aTrajectoryRadius, const double& aTrajectoryTimeStep,
+                              KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag) override;
 
-            void ExecuteInteraction(
-                    const KSParticle& anInteractionParticle,
-                    KSParticle& aFinalParticle,
-                    KSParticleQueue& aSecondaries
-            ) const;
+    void ExecuteInteraction(const KSParticle& anInteractionParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aSecondaries) const override;
 
-            //***********
-            //composition
-            //***********
+    //***********
+    //composition
+    //***********
 
-        public:
-            void SetSplit( const bool& aSplit );
-            const bool& GetSplit() const;
+  public:
+    void SetSplit(const bool& aSplit);
+    const bool& GetSplit() const;
 
-            void SetDensity( KSIntDensity* const aDensityCalculator );
-            void ClearDensity( KSIntDensity* const aDensityCalculator );
+    void SetDensity(KSIntDensity* const aDensityCalculator);
+    void ClearDensity(KSIntDensity* const aDensityCalculator);
 
-            void AddCalculator( KSIntCalculator* const aScatteringCalculator );
-            void RemoveCalculator( KSIntCalculator* const aScatteringCalculator );
+    void AddCalculator(KSIntCalculator* const aScatteringCalculator);
+    void RemoveCalculator(KSIntCalculator* const aScatteringCalculator);
 
-            void SetEnhancement( double anEnhancement );
+    void SetEnhancement(double anEnhancement);
 
-        private:
-            bool fSplit;
-            KSIntDensity* fDensity;
-            KSIntCalculator* fCalculator;
-            std::vector< KSIntCalculator* > fCalculators;
-            std::vector< double > fCrossSections;
+  private:
+    bool fSplit;
+    KSIntDensity* fDensity;
+    KSIntCalculator* fCalculator;
+    std::vector<KSIntCalculator*> fCalculators;
+    std::vector<double> fCrossSections;
 
-            double fEnhancement;
+    double fEnhancement;
 
-            //**************
-            //initialization
-            //**************
+    //**************
+    //initialization
+    //**************
 
-        protected:
-            virtual void InitializeComponent();
-            virtual void ActivateComponent();
-            virtual void DeinitializeComponent();
-            virtual void DeactivateComponent();
-            virtual void PushUpdateComponent();
-            virtual void PushDeupdateComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void ActivateComponent() override;
+    void DeinitializeComponent() override;
+    void DeactivateComponent() override;
+    void PushUpdateComponent() override;
+    void PushDeupdateComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

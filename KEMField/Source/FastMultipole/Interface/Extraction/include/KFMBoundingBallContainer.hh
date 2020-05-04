@@ -1,17 +1,14 @@
 #ifndef KFMBoundingBallContainer_HH__
 #define KFMBoundingBallContainer_HH__
 
-#include "KFMObjectContainer.hh"
-
-#include "KFMPointCloud.hh"
 #include "KFMBall.hh"
+#include "KFMObjectContainer.hh"
+#include "KFMPointCloud.hh"
 #include "KFMPointCloudToBoundingBallConverter.hh"
-
-#include "KSurfaceTypes.hh"
-#include "KSurfaceContainer.hh"
-#include "KSortedSurfaceContainer.hh"
-
 #include "KFMSurfaceToPointCloudConverter.hh"
+#include "KSortedSurfaceContainer.hh"
+#include "KSurfaceContainer.hh"
+#include "KSurfaceTypes.hh"
 
 namespace KEMField
 {
@@ -29,125 +26,118 @@ namespace KEMField
 *
 */
 
-typedef KFMObjectContainer< KFMBall<3> > KFMBoundingBallContainer3D;
+typedef KFMObjectContainer<KFMBall<3>> KFMBoundingBallContainer3D;
 
-class KFMBoundingBallContainer: public KFMBoundingBallContainer3D
+class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
 {
-    public:
+  public:
+    KFMBoundingBallContainer(const KSurfaceContainer& container) :
+        fSurfaceContainer(&container),
+        fSortedSurfaceContainer(NULL)
+    {
+        fContainerIsSorted = false;
+    };
 
-        KFMBoundingBallContainer(const KSurfaceContainer& container):fSurfaceContainer(&container),fSortedSurfaceContainer(NULL)
-        {
-            fContainerIsSorted = false;
-        };
+    KFMBoundingBallContainer(const KSortedSurfaceContainer& container) :
+        fSurfaceContainer(NULL),
+        fSortedSurfaceContainer(&container)
+    {
+        fContainerIsSorted = true;
+    };
 
-        KFMBoundingBallContainer(const KSortedSurfaceContainer& container):fSurfaceContainer(NULL), fSortedSurfaceContainer(&container)
-        {
-            fContainerIsSorted = true;
-        };
+    virtual ~KFMBoundingBallContainer(){};
 
-        virtual ~KFMBoundingBallContainer(){};
-
-        virtual unsigned int GetNObjects() const
-        {
-            if(fContainerIsSorted)
-            {
-                return fSortedSurfaceContainer->size();
-            }
-            else
-            {
-                return fSurfaceContainer->size();
-            }
-        };
-
-        virtual void AddObject(const KFMBall<3>& /*obj*/)
-        {
-            //warning...cannot add object to a virtual container
+    virtual unsigned int GetNObjects() const
+    {
+        if (fContainerIsSorted) {
+            return fSortedSurfaceContainer->size();
         }
+        else {
+            return fSurfaceContainer->size();
+        }
+    };
 
-        virtual KFMBall<3>* GetObjectWithID(const unsigned int& id)
-        {
-            if(fContainerIsSorted)
+    virtual void AddObject(const KFMBall<3>& /*obj*/)
+    {
+        //warning...cannot add object to a virtual container
+    }
+
+    virtual KFMBall<3>* GetObjectWithID(const unsigned int& id)
+    {
+        if (fContainerIsSorted) {
+            fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
+
+            if (fPointCloudGenerator.IsRecognizedType())  //surface is a triange/rectangle/wire
             {
-                fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
-
-                if( fPointCloudGenerator.IsRecognizedType() ) //surface is a triange/rectangle/wire
-                {
-                    fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
-                    fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
-                    return &fCurrentBoundingBall;
-                }
-                else
-                {
-                    return NULL;
-                }
+                fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
+                fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
+                return &fCurrentBoundingBall;
             }
-            else
-            {
-                fSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
-
-                if( fPointCloudGenerator.IsRecognizedType() ) //surface is a triange/rectangle/wire
-                {
-                    fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
-                    fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
-                    return &fCurrentBoundingBall;
-                }
-                else
-                {
-                    return NULL;
-                }
+            else {
+                return NULL;
             }
         }
+        else {
+            fSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
 
-        virtual const KFMBall<3>* GetObjectWithID(const unsigned int& id) const
-        {
-            if(fContainerIsSorted)
+            if (fPointCloudGenerator.IsRecognizedType())  //surface is a triange/rectangle/wire
             {
-                fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
-                if( fPointCloudGenerator.IsRecognizedType() ) //surface is a triange/rectangle/wire
-                {
-                    fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
-                    fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
-                    return &fCurrentBoundingBall;
-                }
-                else
-                {
-                    return NULL;
-                }
+                fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
+                fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
+                return &fCurrentBoundingBall;
             }
-            else
-            {
-                fSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
-                if( fPointCloudGenerator.IsRecognizedType() ) //surface is a triange/rectangle/wire
-                {
-                    fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
-                    fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
-                    return &fCurrentBoundingBall;
-                }
-                else
-                {
-                    return NULL;
-                }
+            else {
+                return NULL;
             }
         }
+    }
 
-        virtual void DeleteAllObjects(){;}; //does nothing, no objects to delete
+    virtual const KFMBall<3>* GetObjectWithID(const unsigned int& id) const
+    {
+        if (fContainerIsSorted) {
+            fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
+            if (fPointCloudGenerator.IsRecognizedType())  //surface is a triange/rectangle/wire
+            {
+                fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
+                fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
+                return &fCurrentBoundingBall;
+            }
+            else {
+                return NULL;
+            }
+        }
+        else {
+            fSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
+            if (fPointCloudGenerator.IsRecognizedType())  //surface is a triange/rectangle/wire
+            {
+                fCurrentPointCloud = fPointCloudGenerator.GetPointCloud();
+                fCurrentBoundingBall = fBoundingBallGenerator.Convert(&fCurrentPointCloud);
+                return &fCurrentBoundingBall;
+            }
+            else {
+                return NULL;
+            }
+        }
+    }
+
+    virtual void DeleteAllObjects()
+    {
+        ;
+    };  //does nothing, no objects to delete
 
 
-    private:
+  private:
+    const KSurfaceContainer* fSurfaceContainer;
+    const KSortedSurfaceContainer* fSortedSurfaceContainer;
+    bool fContainerIsSorted;
 
-        const KSurfaceContainer* fSurfaceContainer;
-        const KSortedSurfaceContainer* fSortedSurfaceContainer;
-        bool fContainerIsSorted;
-
-        mutable KFMSurfaceToPointCloudConverter fPointCloudGenerator;
-        mutable KFMPointCloudToBoundingBallConverter<3> fBoundingBallGenerator;
-        mutable KFMPointCloud<3> fCurrentPointCloud;
-        mutable KFMBall<3> fCurrentBoundingBall;
-
+    mutable KFMSurfaceToPointCloudConverter fPointCloudGenerator;
+    mutable KFMPointCloudToBoundingBallConverter<3> fBoundingBallGenerator;
+    mutable KFMPointCloud<3> fCurrentPointCloud;
+    mutable KFMBall<3> fCurrentBoundingBall;
 };
 
-}
-
+}  // namespace KEMField
 
 
 #endif /* KFMBoundingBallContainer_H__ */

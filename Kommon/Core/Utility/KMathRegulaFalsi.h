@@ -7,36 +7,57 @@
 #ifndef KOMMON_CORE_UTILITY_KMATHREGULAFALSI_H_
 #define KOMMON_CORE_UTILITY_KMATHREGULAFALSI_H_
 
-#include "KNumeric.h"
 #include "KException.h"
+#include "KNumeric.h"
 
+#include <algorithm>
 #include <functional>
 #include <utility>
-#include <algorithm>
 
-namespace katrin {
+namespace katrin
+{
 
-enum class KEMathRegulaFalsiMethod {
-   Pegasus, AndersonBjoerck, Illinois
+enum class KEMathRegulaFalsiMethod
+{
+    Pegasus,
+    AndersonBjoerck,
+    Illinois
 };
 
-template<class XFloatT>
-class KMathRegulaFalsi {
-public:
-    KMathRegulaFalsi(XFloatT relError = 1E-5, uint16_t nMax = 1000, KEMathRegulaFalsiMethod method = KEMathRegulaFalsiMethod::AndersonBjoerck) :
-        fRelError(relError), fNMax(nMax), fMethod(method) { };
+template<class XFloatT> class KMathRegulaFalsi
+{
+  public:
+    KMathRegulaFalsi(XFloatT relError = 1E-5, uint16_t nMax = 1000,
+                     KEMathRegulaFalsiMethod method = KEMathRegulaFalsiMethod::AndersonBjoerck) :
+        fRelError(relError),
+        fNMax(nMax),
+        fMethod(method){};
 
-    void SetRelativeError(XFloatT relError) { fRelError = relError; }
-    void SetNMax(uint16_t nMax) { fNMax = nMax; }
-    void SetMethod(KEMathRegulaFalsiMethod method) { fMethod = method; }
-    void SetBisectionRatio(XFloatT bisec = 0.1) { fBisec = std::max(0.0, std::min(1.0, bisec)); }
+    void SetRelativeError(XFloatT relError)
+    {
+        fRelError = relError;
+    }
+    void SetNMax(uint16_t nMax)
+    {
+        fNMax = nMax;
+    }
+    void SetMethod(KEMathRegulaFalsiMethod method)
+    {
+        fMethod = method;
+    }
+    void SetBisectionRatio(XFloatT bisec = 0.1)
+    {
+        fBisec = std::max(0.0, std::min(1.0, bisec));
+    }
 
-    template<class XCallableT>
-    XFloatT FindIntercept(const XCallableT& callable, XFloatT x1, XFloatT x2);
+    template<class XCallableT> XFloatT FindIntercept(const XCallableT& callable, XFloatT x1, XFloatT x2);
 
-    uint16_t GetNEvaluations() const { return fNCounter; }
+    uint16_t GetNEvaluations() const
+    {
+        return fNCounter;
+    }
 
-private:
+  private:
     XFloatT fRelError;
     uint16_t fNCounter = 0;
     uint16_t fNMax;
@@ -52,7 +73,7 @@ inline XFloatT KMathRegulaFalsi<XFloatT>::FindIntercept(const XCallableT& callab
     XFloatT f2 = callable(x2);
     fNCounter = 2;
 
-    if (f1*f2 > 0.0) {
+    if (f1 * f2 > 0.0) {
         throw KException() << "KMathRegulaFalsi: No intersect between starting points.";
     }
 
@@ -65,7 +86,7 @@ inline XFloatT KMathRegulaFalsi<XFloatT>::FindIntercept(const XCallableT& callab
         // determine, if we should make a bisection step
         const XFloatT bisection = (std::abs(v) > bisectionLength);
 
-        XFloatT deltaX = (bisection) ? 0.5*v : v*f2/(f2-f1);
+        XFloatT deltaX = (bisection) ? 0.5 * v : v * f2 / (f2 - f1);
         if (std::abs(deltaX) < tol)
             deltaX = 0.9 * KNumeric::Sign(v) * tol;
 
@@ -85,36 +106,34 @@ inline XFloatT KMathRegulaFalsi<XFloatT>::FindIntercept(const XCallableT& callab
         v = x1 - x2;
 
         if (std::abs(v) <= tol)
-            return ( std::abs(f2) <= std::abs(f1) ) ? x2 : x1;
+            return (std::abs(f2) <= std::abs(f1)) ? x2 : x1;
 
         // prepare next iteration
 
-        double g = 0.5; // fMethod == EMethod::Illinois
+        double g = 0.5;  // fMethod == EMethod::Illinois
 
         if (fMethod == KEMathRegulaFalsiMethod::Pegasus) {
-            g = f3/(f3+f2);
+            g = f3 / (f3 + f2);
         }
-        else if  (fMethod == KEMathRegulaFalsiMethod::AndersonBjoerck) {
+        else if (fMethod == KEMathRegulaFalsiMethod::AndersonBjoerck) {
             if (bisection) {
-                g = f3/(f3+f2);
+                g = f3 / (f3 + f2);
             }
             else {
-                g = 1.0-f2/f3;
+                g = 1.0 - f2 / f3;
                 if (g <= 0.0)
                     g = 0.5;
             }
         }
 
         f1 *= g;
-    }
-    while (++fNCounter < fNMax);
+    } while (++fNCounter < fNMax);
 
-    throw KException() << "KMathRegulaFalsi: Unable to find an intercept within "
-        << fNMax << " function evaluations.";
+    throw KException() << "KMathRegulaFalsi: Unable to find an intercept within " << fNMax << " function evaluations.";
 }
 
 using KMathRegulaFalsiD = KMathRegulaFalsi<double>;
 
-}
+}  // namespace katrin
 
 #endif /* KOMMON_CORE_UTILITY_KMATHREGULAFALSI_H_ */

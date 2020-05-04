@@ -1,44 +1,42 @@
 #ifndef Kassiopeia_KSRootSpace_h_
 #define Kassiopeia_KSRootSpace_h_
 
+#include "KSList.h"
+#include "KSSide.h"
 #include "KSSpace.h"
 #include "KSSurface.h"
-#include "KSSide.h"
-
-#include "KSList.h"
 
 namespace Kassiopeia
 {
 
-    class KSRootSpace :
-            public KSComponentTemplate< KSRootSpace, KSSpace >
-    {
-        public:
-            KSRootSpace();
-            KSRootSpace( const KSRootSpace& aCopy );
-            KSRootSpace* Clone() const;
-            virtual ~KSRootSpace();
+class KSRootSpace : public KSComponentTemplate<KSRootSpace, KSSpace>
+{
+  public:
+    KSRootSpace();
+    KSRootSpace(const KSRootSpace& aCopy);
+    KSRootSpace* Clone() const override;
+    ~KSRootSpace() override;
 
-        public:
-            void Enter() const;
-            void Exit() const;
+  public:
+    void Enter() const override;
+    void Exit() const override;
 
-            bool Outside( const KThreeVector& aPoint ) const;
-            KThreeVector Point( const KThreeVector& aPoint ) const;
-            KThreeVector Normal( const KThreeVector& aPoint ) const;
+    bool Outside(const KThreeVector& aPoint) const override;
+    KThreeVector Point(const KThreeVector& aPoint) const override;
+    KThreeVector Normal(const KThreeVector& aPoint) const override;
 
-        public:
-            void AddSpace( KSSpace* aSpace );
-            void RemoveSpace( KSSpace* aSpace );
+  public:
+    void AddSpace(KSSpace* aSpace);
+    void RemoveSpace(KSSpace* aSpace);
 
-            void AddSurface( KSSurface* aSurface );
-            void RemoveSurface( KSSurface* aSurface );
+    void AddSurface(KSSurface* aSurface);
+    void RemoveSurface(KSSurface* aSurface);
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

@@ -1,0 +1,11 @@
+<!-- here is some stuff to get us started -->
+<test_element color="orange"/>
+
+<!-- you can include things by explictly stating the base -->
+<include base="TestXMLVariables.xml"/>
+
+<!-- there was a global variable defined in that file which we can use -->
+<test_element color="[secondary_color]"/>
+
+<!-- now we undefine that variable -->
+<global_undefine name="secondary_color"/>

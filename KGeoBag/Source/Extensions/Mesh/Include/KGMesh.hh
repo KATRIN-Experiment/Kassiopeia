@@ -2,55 +2,54 @@
 #define KGeoBag_KGMesh_hh_
 
 #include "KGCore.hh"
-
 #include "KGMeshElement.hh"
 
 namespace KGeoBag
 {
 
-    class KGMeshData
+class KGMeshData
+{
+  public:
+    KGMeshData() {}
+    KGMeshData(KGSpace*) {}
+    KGMeshData(KGSurface*) {}
+    KGMeshData(KGSpace*, const KGMeshData& aCopy)
     {
-        public:
-            KGMeshData()
-            {
-            }
-            KGMeshData( KGSpace* )
-            {
-            }
-            KGMeshData( KGSurface* )
-            {
-            }
-            KGMeshData( KGSpace*, const KGMeshData& aCopy )
-            {
-                fElements = aCopy.fElements;
-            }
-            KGMeshData( KGSurface*, const KGMeshData& aCopy )
-            {
-                fElements = aCopy.fElements;
-            }
-            virtual ~KGMeshData();
+        fElements = aCopy.fElements;
+    }
+    KGMeshData(KGSurface*, const KGMeshData& aCopy)
+    {
+        fElements = aCopy.fElements;
+    }
+    virtual ~KGMeshData();
 
-            void Clear();
+    void Clear();
 
-            bool HasData() const { if(fElements.size() != 0 ){return true;} return false;};
-
-            const KGMeshElementVector* Elements() const;
-            KGMeshElementVector* Elements();
-
-        private:
-            KGMeshElementVector fElements;
+    bool HasData() const
+    {
+        if (fElements.size() != 0) {
+            return true;
+        }
+        return false;
     };
 
-    class KGMesh
-    {
-        public:
-            typedef KGMeshData Surface;
-            typedef KGMeshData Space;
-    };
+    const KGMeshElementVector* Elements() const;
+    KGMeshElementVector* Elements();
 
-    typedef KGExtendedSurface< KGMesh > KGMeshSurface;
-    typedef KGExtendedSpace< KGMesh > KGMeshSpace;
+  private:
+    KGMeshElementVector fElements;
+};
 
-}
+class KGMesh
+{
+  public:
+    typedef KGMeshData Surface;
+    typedef KGMeshData Space;
+};
+
+typedef KGExtendedSurface<KGMesh> KGMeshSurface;
+typedef KGExtendedSpace<KGMesh> KGMeshSpace;
+
+}  // namespace KGeoBag
 
 #endif

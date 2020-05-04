@@ -1,0 +1,16 @@
+<!-- git, this is different -->
+
+<!-- you can do loop-like things in xml... -->
+<loop variable="index" start="0" end="10" step="2">
+   <define name="local" value="[index]_test"/>
+   <test_element field="this_thing_[index]"/>
+   <test_element field="local version of [index] is [local]"/>
+   <undefine name="local"/>
+</loop>
+
+<!-- you can nest loops too -->
+<loop variable="index_one" start="0" end="8" step="2">
+    <loop variable="index_two" start="0" end="9" step="1">
+       <test_element field="array_[index_one][index_two]"/>
+    </loop>
+</loop>

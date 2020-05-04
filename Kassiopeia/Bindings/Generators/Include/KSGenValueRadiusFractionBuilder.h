@@ -8,19 +8,17 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSGenValueRadiusFraction > KSGenValueRadiusFractionBuilder;
+typedef KComplexElement<KSGenValueRadiusFraction> KSGenValueRadiusFractionBuilder;
 
-    template< >
-    inline bool KSGenValueRadiusFractionBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        return false;
+template<> inline bool KSGenValueRadiusFractionBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

@@ -117,7 +117,7 @@ an example of particle tracking in a photomultiplier tube is also included. Sinc
 system that needs to be solved in order to compute the electric field is rather large (~150K mesh elements),
 the initialization of the electric field may take some time. If the user has the appropriate device (e.g. a GPU)
 it is recommended that the field solving sub-module *KEMField* be augmented with OpenCL in order
-to take advantage of hardware based acceleration. This can be done by setting the KEMField_USE_OpenCL
+to take advantage of hardware based acceleration. This can be done by setting the KEMField_USE_OPENCL
 flag to ON during cmake configuration.
 
 To run this simulation, from the $KASPERSYS directory type::

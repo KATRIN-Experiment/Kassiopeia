@@ -6,110 +6,120 @@
 namespace Kassiopeia
 {
 
-    class KSCommand;
+class KSCommand;
 
-    class KSComponent :
-        public KSObject
+class KSComponent : public KSObject
+{
+  public:
+    KSComponent();
+    KSComponent(const KSComponent& aCopy);
+    ~KSComponent() override;
+
+  public:
+    KSComponent* Clone() const override = 0;
+    virtual KSComponent* Component(const std::string& aField) = 0;
+    virtual KSCommand* Command(const std::string& aField, KSComponent* aChild) = 0;
+
+  public:
+    typedef enum
     {
-        public:
-            KSComponent();
-            KSComponent( const KSComponent& aCopy );
-            virtual ~KSComponent();
+        eIdle = 0,
+        eInitialized = 1,
+        eActivated = 2,
+        eUpdated = 3
+    } StateType;
 
-        public:
-            virtual KSComponent* Clone() const = 0;
-            virtual KSComponent* Component( const std::string& aField ) = 0;
-            virtual KSCommand* Command( const std::string& aField, KSComponent* aChild ) = 0;
+    const StateType& State() const;
+    bool IsInitialized() const;
+    bool IsActivated() const;
 
-        public:
-            typedef enum
-            {
-                eIdle = 0,
-                eInitialized = 1,
-                eActivated = 2,
-                eUpdated = 3
-            } StateType;
+    void TryInitialize();
+    void Initialize();
+    void Deinitialize();
+    void TryActivate();
+    void Activate();
+    void Deactivate();
+    void PushUpdate();
+    void PushDeupdate();
+    void PullUpdate();
+    void PullDeupdate();
 
-            const StateType& State() const;
+  protected:
+    StateType fState;
 
-            void Initialize();
-            void Deinitialize();
-            void Activate();
-            void Deactivate();
-            void PushUpdate();
-            void PushDeupdate();
-            void PullUpdate();
-            void PullDeupdate();
+    virtual void InitializeComponent();
+    virtual void DeinitializeComponent();
+    virtual void ActivateComponent();
+    virtual void DeactivateComponent();
+    virtual void PushUpdateComponent();
+    virtual void PushDeupdateComponent();
+    virtual void PullUpdateComponent();
+    virtual void PullDeupdateComponent();
 
-        protected:
-            StateType fState;
+  public:
+    void SetParent(KSComponent* aParent);
+    KSComponent* GetParent() const;
 
-            virtual void InitializeComponent();
-            virtual void DeinitializeComponent();
-            virtual void ActivateComponent();
-            virtual void DeactivateComponent();
-            virtual void PushUpdateComponent();
-            virtual void PushDeupdateComponent();
-            virtual void PullUpdateComponent();
-            virtual void PullDeupdateComponent();
+    void AddChild(KSComponent* aChild);
+    unsigned int GetChildCount() const;
+    KSComponent* GetChild(const unsigned int& anIndex) const;
 
-        public:
-            void SetParent( KSComponent* aParent );
-            KSComponent* GetParent() const;
+  protected:
+    KSComponent* fParentComponent;
+    std::vector<KSComponent*> fChildComponents;
+};
 
-            void AddChild( KSComponent* aChild );
-            unsigned int GetChildCount() const;
-            KSComponent* GetChild( const unsigned int& anIndex ) const;
-
-        protected:
-            KSComponent* fParentComponent;
-            std::vector< KSComponent* > fChildComponents;
-    };
-
-    template< >
-    inline bool KSObject::Is< KSComponent >()
-    {
-        KSComponent* tComponent = dynamic_cast< KSComponent* >( this );
-        if( tComponent != NULL )
-        {
-            return true;
-        }
-        return false;
-    }
-
-    template< >
-    inline bool KSObject::Is< KSComponent >() const
-    {
-        const KSComponent* tComponent = dynamic_cast< const KSComponent* >( this );
-        if( tComponent != NULL )
-        {
-            return true;
-        }
-        return false;
-    }
-
-    template< >
-    inline KSComponent* KSObject::As< KSComponent >()
-    {
-        KSComponent* tComponent = dynamic_cast< KSComponent* >( this );
-        if( tComponent != NULL )
-        {
-            return tComponent;
-        }
-        return NULL;
-    }
-
-    template< >
-    inline const KSComponent* KSObject::As< KSComponent >() const
-    {
-        const KSComponent* tComponent = dynamic_cast< const KSComponent* >( this );
-        if( tComponent != NULL )
-        {
-            return tComponent;
-        }
-        return NULL;
-    }
-
+inline const KSComponent::StateType& KSComponent::State() const
+{
+    return fState;
 }
+
+inline bool KSComponent::IsInitialized() const
+{
+    return (fState == eInitialized) || (fState == eActivated);
+}
+
+inline bool KSComponent::IsActivated() const
+{
+    return (fState == eActivated);
+}
+
+template<> inline bool KSObject::Is<KSComponent>()
+{
+    auto* tComponent = dynamic_cast<KSComponent*>(this);
+    if (tComponent != nullptr) {
+        return true;
+    }
+    return false;
+}
+
+template<> inline bool KSObject::Is<KSComponent>() const
+{
+    const auto* tComponent = dynamic_cast<const KSComponent*>(this);
+    if (tComponent != nullptr) {
+        return true;
+    }
+    return false;
+}
+
+template<> inline KSComponent* KSObject::As<KSComponent>()
+{
+    auto* tComponent = dynamic_cast<KSComponent*>(this);
+    if (tComponent != nullptr) {
+        return tComponent;
+    }
+    return nullptr;
+}
+
+template<> inline const KSComponent* KSObject::As<KSComponent>() const
+{
+    const auto* tComponent = dynamic_cast<const KSComponent*>(this);
+    if (tComponent != nullptr) {
+        return tComponent;
+    }
+    return nullptr;
+}
+
+}  // namespace Kassiopeia
 
 #endif

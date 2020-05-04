@@ -7,42 +7,41 @@
 namespace Kassiopeia
 {
 
-    class KSGenSpinComposite :
-        public KSComponentTemplate< KSGenSpinComposite, KSGenCreator >
-    {
-        public:
-            KSGenSpinComposite();
-            KSGenSpinComposite( const KSGenSpinComposite& aCopy );
-            KSGenSpinComposite* Clone() const;
-            virtual ~KSGenSpinComposite();
+class KSGenSpinComposite : public KSComponentTemplate<KSGenSpinComposite, KSGenCreator>
+{
+  public:
+    KSGenSpinComposite();
+    KSGenSpinComposite(const KSGenSpinComposite& aCopy);
+    KSGenSpinComposite* Clone() const override;
+    ~KSGenSpinComposite() override;
 
-        public:
-            virtual void Dice( KSParticleQueue* aParticleList );
+  public:
+    void Dice(KSParticleQueue* aParticleList) override;
 
-        public:
-            void SetXAxis( const KThreeVector& anXAxis );
-            void SetYAxis( const KThreeVector& anYAxis );
-            void SetZAxis( const KThreeVector& anZAxis );
+  public:
+    void SetXAxis(const KThreeVector& anXAxis);
+    void SetYAxis(const KThreeVector& anYAxis);
+    void SetZAxis(const KThreeVector& anZAxis);
 
-            void SetThetaValue( KSGenValue* anThetaValue );
-            void ClearThetaValue( KSGenValue* anThetaValue );
+    void SetThetaValue(KSGenValue* anThetaValue);
+    void ClearThetaValue(KSGenValue* anThetaValue);
 
-            void SetPhiValue( KSGenValue* aPhiValue );
-            void ClearPhiValue( KSGenValue* aPhiValue );
+    void SetPhiValue(KSGenValue* aPhiValue);
+    void ClearPhiValue(KSGenValue* aPhiValue);
 
-        private:
-            KSGenValue* fThetaValue;
-            KSGenValue* fPhiValue;
+  private:
+    KSGenValue* fThetaValue;
+    KSGenValue* fPhiValue;
 
-            KThreeVector fXAxis;
-            KThreeVector fYAxis;
-            KThreeVector fZAxis;
+    KThreeVector fXAxis;
+    KThreeVector fYAxis;
+    KThreeVector fZAxis;
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

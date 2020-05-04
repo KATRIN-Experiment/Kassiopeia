@@ -8,28 +8,29 @@
 #ifndef KINTEGRATINGMAGNETOSTATICFIELDSOLVER_HH_
 #define KINTEGRATINGMAGNETOSTATICFIELDSOLVER_HH_
 
-#include "KMagneticFieldSolver.hh"
-#include "KElectromagnetIntegrator.hh"
 #include "KElectromagnetIntegratingFieldSolver.hh"
-
+#include "KElectromagnetIntegrator.hh"
+#include "KMagneticFieldSolver.hh"
 #include "KSmartPointer.hh"
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KIntegratingMagnetostaticFieldSolver: public KMagneticFieldSolver {
+class KIntegratingMagnetostaticFieldSolver : public KMagneticFieldSolver
+{
 
-public:
+  public:
     KIntegratingMagnetostaticFieldSolver();
 
-    void InitializeCore( KElectromagnetContainer& container );
+    void InitializeCore(KElectromagnetContainer& container) override;
 
-    KThreeVector MagneticPotentialCore( const KPosition& P ) const;
-    KThreeVector MagneticFieldCore( const KPosition& P ) const;
-    KGradient MagneticGradientCore( const KPosition& P ) const;
+    KThreeVector MagneticPotentialCore(const KPosition& P) const override;
+    KThreeVector MagneticFieldCore(const KPosition& P) const override;
+    KGradient MagneticGradientCore(const KPosition& P) const override;
 
-private:
+  private:
     KElectromagnetIntegrator fIntegrator;
-    KSmartPointer<KIntegratingFieldSolver< KElectromagnetIntegrator > > fIntegratingFieldSolver;
+    KSmartPointer<KIntegratingFieldSolver<KElectromagnetIntegrator>> fIntegratingFieldSolver;
 };
 
 } /* namespace KEMField */

@@ -6,12 +6,13 @@
 
 namespace KGeoBag
 {
-  class KGShapeRandom : public KGVisitor
-  {
+class KGShapeRandom : public KGVisitor
+{
   protected:
     KGShapeRandom() {}
+
   public:
-    virtual ~KGShapeRandom() {}
+    ~KGShapeRandom() override {}
 
     KThreeVector Random(KGSurface* surface);
     KThreeVector Random(KGSpace* space);
@@ -20,14 +21,16 @@ namespace KGeoBag
     KThreeVector Random(std::vector<KGSpace*>& spaces);
 
   protected:
+    void SetRandomPoint(KThreeVector& random) const
+    {
+        fRandom = random;
+    }
 
-    void SetRandomPoint(KThreeVector& random) const { fRandom = random; }
-
-    double Uniform(double min = 0,double max = 1.) const;
+    double Uniform(double min = 0, double max = 1.) const;
 
   private:
     mutable KThreeVector fRandom;
-  };
-}
+};
+}  // namespace KGeoBag
 
 #endif /* KGSHAPERANDOM_DEF */

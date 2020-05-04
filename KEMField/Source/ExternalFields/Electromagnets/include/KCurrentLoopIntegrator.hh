@@ -5,17 +5,15 @@
 
 namespace KEMField
 {
-  class KCurrentLoopIntegrator
-  {
+class KCurrentLoopIntegrator
+{
   public:
     KCurrentLoopIntegrator() {}
     virtual ~KCurrentLoopIntegrator() {}
 
-    KThreeVector VectorPotential(const KCurrentLoop& currentLoop,
-				 const KPosition& P) const;
-    KThreeVector MagneticField(const KCurrentLoop& currentLoop,
-			       const KPosition& P) const;
-  };
-}
+    KThreeVector VectorPotential(const KCurrentLoop& currentLoop, const KPosition& P) const;
+    KThreeVector MagneticField(const KCurrentLoop& currentLoop, const KPosition& P) const;
+};
+}  // namespace KEMField
 
 #endif /* KCURRENTLOOPINTEGRATOR */

@@ -9,35 +9,30 @@
 #define KELECTROSTATICBOUNDARYINTEGRATORFACTORY_HH_
 
 #include "KElectrostaticBoundaryIntegrator.hh"
+
 #include <string>
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KElectrostaticBoundaryIntegratorFactory {
-public:
-
-    static KElectrostaticBoundaryIntegrator
-    MakeDefault();
+class KElectrostaticBoundaryIntegratorFactory
+{
+  public:
+    static KElectrostaticBoundaryIntegrator MakeDefault();
 
     // FFTM might use different default because only
     // close by evaluations are normally used
-    static KElectrostaticBoundaryIntegrator
-	MakeDefaultForFFTM();
+    static KElectrostaticBoundaryIntegrator MakeDefaultForFFTM();
 
-    static KElectrostaticBoundaryIntegrator
-    MakeAnalytic();
+    static KElectrostaticBoundaryIntegrator MakeAnalytic();
 
-    static KElectrostaticBoundaryIntegrator
-    MakeNumeric();
+    static KElectrostaticBoundaryIntegrator MakeNumeric();
 
-    static KElectrostaticBoundaryIntegrator
-    MakeRWG();
+    static KElectrostaticBoundaryIntegrator MakeRWG();
 
-    static KElectrostaticBoundaryIntegrator
-    MakeReference();
+    static KElectrostaticBoundaryIntegrator MakeReference();
 
-    static KElectrostaticBoundaryIntegrator
-    Make(const std::string& name);
+    static KElectrostaticBoundaryIntegrator Make(const std::string& name);
 };
 
 using KEBIFactory = KElectrostaticBoundaryIntegratorFactory;

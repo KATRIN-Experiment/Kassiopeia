@@ -11,22 +11,22 @@
 #include <exception>
 #include <string>
 
-namespace KEMField{
+namespace KEMField
+{
 
 class KEMSimpleException : public std::exception
 {
-public:
-	KEMSimpleException(std::string information);
-	~KEMSimpleException() noexcept;
+  public:
+    KEMSimpleException(std::string information);
+    ~KEMSimpleException() noexcept override;
 
-	const char* what() const noexcept;
+    const char* what() const noexcept override;
 
-private:
-	std::string fInformation;
+  private:
+    std::string fInformation;
 };
 
-}//KEMField
-
+}  // namespace KEMField
 
 
 #endif /* KEMSIMPLEEXCEPTION_HH_ */

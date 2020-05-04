@@ -6,34 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMaxLongEnergy :
-        public KSComponentTemplate< KSTermMaxLongEnergy, KSTerminator >
-    {
-        public:
-            KSTermMaxLongEnergy();
-            KSTermMaxLongEnergy( const KSTermMaxLongEnergy& aCopy );
-            KSTermMaxLongEnergy* Clone() const;
-            virtual ~KSTermMaxLongEnergy();
+class KSTermMaxLongEnergy : public KSComponentTemplate<KSTermMaxLongEnergy, KSTerminator>
+{
+  public:
+    KSTermMaxLongEnergy();
+    KSTermMaxLongEnergy(const KSTermMaxLongEnergy& aCopy);
+    KSTermMaxLongEnergy* Clone() const override;
+    ~KSTermMaxLongEnergy() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMaxLongEnergy( const double& aValue );
+  public:
+    void SetMaxLongEnergy(const double& aValue);
 
-        private:
-            double fMaxLongEnergy;
+  private:
+    double fMaxLongEnergy;
+};
 
-    };
-
-    inline void KSTermMaxLongEnergy::SetMaxLongEnergy( const double& aValue )
-    {
-        fMaxLongEnergy = aValue;
-    }
-
+inline void KSTermMaxLongEnergy::SetMaxLongEnergy(const double& aValue)
+{
+    fMaxLongEnergy = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

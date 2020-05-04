@@ -3,11 +3,7 @@
 namespace KGeoBag
 {
 
-    KGMesher::KGMesher()
-    {
-    }
-    KGMesher::~KGMesher()
-    {
-    }
+KGMesher::KGMesher() {}
+KGMesher::~KGMesher() {}
 
-}
+}  // namespace KGeoBag

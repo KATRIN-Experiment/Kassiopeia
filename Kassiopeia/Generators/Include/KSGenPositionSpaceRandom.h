@@ -9,60 +9,60 @@
 #define KSGENPOSITIONSPACERANDOM_H_
 
 #include "KGCore.hh"
-#include "KSGeneratorsMessage.h"
+#include "KGRandomPointGenerator.hh"
 #include "KSGenCreator.h"
 #include "KSGenValue.h"
-#include "KGRandomPointGenerator.hh"
+#include "KSGeneratorsMessage.h"
+
 #include <vector>
 
 namespace Kassiopeia
 {
-        /**
+/**
          * \brief Dices positions of particles inside of spaces.
          */
-    class KSGenPositionSpaceRandom :
-        public KSComponentTemplate<KSGenPositionSpaceRandom, KSGenCreator>
-    {
-        public:
-    			KSGenPositionSpaceRandom();
-    			KSGenPositionSpaceRandom(const KSGenPositionSpaceRandom&);
-    			KSGenPositionSpaceRandom* Clone() const;
-            virtual ~KSGenPositionSpaceRandom();
+class KSGenPositionSpaceRandom : public KSComponentTemplate<KSGenPositionSpaceRandom, KSGenCreator>
+{
+  public:
+    KSGenPositionSpaceRandom();
+    KSGenPositionSpaceRandom(const KSGenPositionSpaceRandom&);
+    KSGenPositionSpaceRandom* Clone() const override;
+    ~KSGenPositionSpaceRandom() override;
 
-        public:
-            /**
+  public:
+    /**
              * \brief Dices the positions of all particles of
              * the KSParticleQueue inside of spaces whiche are
              * defined with AddSpace.
              *
              * \param aPrimaries
              */
-            virtual void Dice(KSParticleQueue* aPrimaries);
+    void Dice(KSParticleQueue* aPrimaries) override;
 
-        public:
-            /**
+  public:
+    /**
              * \brief Adds spaces to the class in which the
              * position of the particles will be diced.
              *
              * \param aSpace
              */
-            void AddSpace(KGeoBag::KGSpace* aSpace);
+    void AddSpace(KGeoBag::KGSpace* aSpace);
 
-            /**
+    /**
              * \brief Removes a space from this class.
              *
              * \param aSpace
              */
-            bool RemoveSpace(KGeoBag::KGSpace* aSpace);
+    bool RemoveSpace(KGeoBag::KGSpace* aSpace);
 
-        private:
-            std::vector<KGeoBag::KGSpace*> fSpaces;
-            KGeoBag::KGRandomPointGenerator random;
+  private:
+    std::vector<KGeoBag::KGSpace*> fSpaces;
+    KGeoBag::KGRandomPointGenerator random;
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
-}
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
+}  // namespace Kassiopeia
 
 #endif /* KSGENPOSITIONSPACE_H_ */

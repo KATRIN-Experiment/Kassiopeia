@@ -8,28 +8,27 @@
 #ifndef KGAUSSIANELIMINATIONCHARGEDENSITYSOLVERBUILDER_HH_
 #define KGAUSSIANELIMINATIONCHARGEDENSITYSOLVERBUILDER_HH_
 
-#include "KElectrostaticBoundaryIntegratorAttributeProcessor.hh"
-#include "KEMBindingsMessage.hh"
 #include "KComplexElement.hh"
-#include "KGaussianEliminationChargeDensitySolver.hh"
+#include "KEMBindingsMessage.hh"
+#include "KElectrostaticBoundaryIntegratorAttributeProcessor.hh"
 #include "KElectrostaticBoundaryIntegratorPolicy.hh"
+#include "KGaussianEliminationChargeDensitySolver.hh"
 
-namespace katrin {
-
-typedef KComplexElement< KEMField::KGaussianEliminationChargeDensitySolver >
-			KGaussianEliminationChargeDensitySolverBuilder;
-
-template< >
-bool KGaussianEliminationChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
+namespace katrin
 {
-	if(aContainer->GetName() == "integrator")
-		return AddElectrostaticIntegratorPolicy(fObject,aContainer);
 
-	return false;
+typedef KComplexElement<KEMField::KGaussianEliminationChargeDensitySolver>
+    KGaussianEliminationChargeDensitySolverBuilder;
+
+template<> bool KGaussianEliminationChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "integrator")
+        return AddElectrostaticIntegratorPolicy(fObject, aContainer);
+
+    return false;
 }
 
-} // katrin
-
+}  // namespace katrin
 
 
 #endif /* KGAUSSIANELIMINATIONCHARGEDENSITYSOLVERBUILDER_HH_ */

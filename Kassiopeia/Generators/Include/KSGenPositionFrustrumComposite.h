@@ -8,64 +8,62 @@ namespace Kassiopeia
 {
 
 
+class KSGenPositionFrustrumComposite : public KSComponentTemplate<KSGenPositionFrustrumComposite, KSGenCreator>
+{
+  public:
+    KSGenPositionFrustrumComposite();
+    KSGenPositionFrustrumComposite(const KSGenPositionFrustrumComposite& aCopy);
+    KSGenPositionFrustrumComposite* Clone() const override;
+    ~KSGenPositionFrustrumComposite() override;
 
-    class KSGenPositionFrustrumComposite :
-        public KSComponentTemplate< KSGenPositionFrustrumComposite, KSGenCreator >
+  public:
+    void Dice(KSParticleQueue* aPrimaryList) override;
+
+  public:
+    void SetRValue(KSGenValue* anRValue);
+    void ClearRValue(KSGenValue* anRValue);
+
+    void SetPhiValue(KSGenValue* aPhiValue);
+    void ClearPhiValue(KSGenValue* aPhiValue);
+
+    void SetZValue(KSGenValue* anZValue);
+    void ClearZValue(KSGenValue* anZValue);
+
+    void SetR1Value(KSGenValue* anRValue);
+    void SetR2Value(KSGenValue* anRValue);
+
+    void SetZ1Value(KSGenValue* anZValue);
+    void SetZ2Value(KSGenValue* anZValue);
+
+    // void SetR1Value( double r1 );
+    // void SetZ1Value( double z1 );
+    //
+    // void SetR2Value( double r2 );
+    // void SetZ2Value( double z2 );
+
+  private:
+    double r1;
+    double z1;
+
+    double r2;
+    double z2;
+
+    typedef enum
     {
-        public:
-            KSGenPositionFrustrumComposite();
-            KSGenPositionFrustrumComposite( const KSGenPositionFrustrumComposite& aCopy );
-            KSGenPositionFrustrumComposite* Clone() const;
-            virtual ~KSGenPositionFrustrumComposite();
+        eRadius,
+        ePhi,
+        eZ
+    } CoordinateType;
 
-        public:
-            virtual void Dice( KSParticleQueue* aPrimaryList );
-
-        public:
-
-            void SetRValue( KSGenValue* anRValue );
-            void ClearRValue( KSGenValue* anRValue );
-
-            void SetPhiValue( KSGenValue* aPhiValue );
-            void ClearPhiValue( KSGenValue* aPhiValue );
-
-            void SetZValue( KSGenValue* anZValue );
-            void ClearZValue( KSGenValue* anZValue );
-
-            void SetR1Value( KSGenValue* anRValue );
-            void SetR2Value( KSGenValue* anRValue );
-
-            void SetZ1Value( KSGenValue* anZValue );
-            void SetZ2Value( KSGenValue* anZValue );
-
-            // void SetR1Value( double r1 );
-            // void SetZ1Value( double z1 );
-            //
-            // void SetR2Value( double r2 );
-            // void SetZ2Value( double z2 );
-
-        private:
-
-            double r1;
-            double z1;
-
-            double r2;
-            double z2;
-
-            typedef enum
-            {
-                eRadius, ePhi, eZ
-            } CoordinateType;
-
-            std::map<CoordinateType, int> fCoordinateMap;
-            std::vector<std::pair<CoordinateType,KSGenValue*> > fValues;
+    std::map<CoordinateType, int> fCoordinateMap;
+    std::vector<std::pair<CoordinateType, KSGenValue*>> fValues;
 
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

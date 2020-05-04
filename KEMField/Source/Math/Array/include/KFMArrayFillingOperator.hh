@@ -2,9 +2,11 @@
 #define KFMArrayFillingOperator_H__
 
 #include "KFMArrayOperator.hh"
+
 #include <iostream>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -20,33 +22,42 @@ namespace KEMField{
 */
 
 
-template<typename T, unsigned int NDIM>
-class KFMArrayFillingOperator: public KFMArrayOperator<T,NDIM>
+template<typename T, unsigned int NDIM> class KFMArrayFillingOperator : public KFMArrayOperator<T, NDIM>
 {
-    public:
-        KFMArrayFillingOperator():fOutput(NULL){;};
-        virtual ~KFMArrayFillingOperator(){;};
+  public:
+    KFMArrayFillingOperator() : fOutput(nullptr)
+    {
+        ;
+    };
+    ~KFMArrayFillingOperator() override
+    {
+        ;
+    };
 
-        virtual void SetOutput(KFMArrayWrapper<T,NDIM>* out)
-        {
-            fOutput = out;
-//            std::cout<<"Setting output to: "<<fOutput<<std::endl;
-//            std::cout<<"output raw data ptr = "<<fOutput->GetData()<<std::endl;
-        };
+    virtual void SetOutput(KFMArrayWrapper<T, NDIM>* out)
+    {
+        fOutput = out;
+        //            std::cout<<"Setting output to: "<<fOutput<<std::endl;
+        //            std::cout<<"output raw data ptr = "<<fOutput->GetData()<<std::endl;
+    };
 
-        virtual KFMArrayWrapper<T,NDIM>* GetOutput(){return fOutput;};
+    virtual KFMArrayWrapper<T, NDIM>* GetOutput()
+    {
+        return fOutput;
+    };
 
-        virtual void Initialize(){;};
+    void Initialize() override
+    {
+        ;
+    };
 
-        virtual void ExecuteOperation() = 0;
+    void ExecuteOperation() override = 0;
 
-    protected:
-
-        KFMArrayWrapper<T,NDIM>* fOutput;
-
+  protected:
+    KFMArrayWrapper<T, NDIM>* fOutput;
 };
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 
 #endif /* __KFMArrayFillingOperator_H__ */

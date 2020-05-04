@@ -23,22 +23,20 @@ namespace KEMField
 
 class KFMSquareRootUtilities
 {
-    public:
-        KFMSquareRootUtilities(){};
-        virtual ~KFMSquareRootUtilities(){};
+  public:
+    KFMSquareRootUtilities(){};
+    virtual ~KFMSquareRootUtilities(){};
 
-        static double SqrtInteger(int arg);
-        static double InverseSqrtInteger(int arg);
-        static double SqrtIntegerRatio(int numer, int denom);
+    static double SqrtInteger(int arg);
+    static double InverseSqrtInteger(int arg);
+    static double SqrtIntegerRatio(int numer, int denom);
 
-    private:
-
+  private:
     static const double fIntegerSqrtLUT[KFM_SQRT_LUT_SIZE];
     static const double fInverseIntegerSqrtLUT[KFM_SQRT_LUT_SIZE];
-
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMSquareRootUtilities_H__ */

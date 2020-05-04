@@ -1,35 +1,35 @@
 #include "KGMeshElementCollector.hh"
 
-#include "KGMeshTriangle.hh"
 #include "KGMeshRectangle.hh"
+#include "KGMeshTriangle.hh"
 #include "KGMeshWire.hh"
 
 namespace KGeoBag
 {
 
 
-KGMeshElementCollector::KGMeshElementCollector():
-    fMeshContainer( NULL ),
-    fOrigin( KThreeVector::sZero ),
-    fXAxis( KThreeVector::sXUnit ),
-    fYAxis( KThreeVector::sYUnit ),
-    fZAxis( KThreeVector::sZUnit ),
-    fCurrentOrigin( KThreeVector::sZero ),
-    fCurrentXAxis( KThreeVector::sXUnit ),
-    fCurrentYAxis( KThreeVector::sYUnit ),
-    fCurrentZAxis( KThreeVector::sZUnit )
+KGMeshElementCollector::KGMeshElementCollector() :
+    fMeshContainer(nullptr),
+    fOrigin(KThreeVector::sZero),
+    fXAxis(KThreeVector::sXUnit),
+    fYAxis(KThreeVector::sYUnit),
+    fZAxis(KThreeVector::sZUnit),
+    fCurrentOrigin(KThreeVector::sZero),
+    fCurrentXAxis(KThreeVector::sXUnit),
+    fCurrentYAxis(KThreeVector::sYUnit),
+    fCurrentZAxis(KThreeVector::sZUnit)
 {}
 
 KGMeshElementCollector::~KGMeshElementCollector(){};
 
-void KGMeshElementCollector::SetSystem( const KThreeVector& anOrigin, const KThreeVector& aXAxis, const KThreeVector& aYAxis, const KThreeVector& aZAxis )
+void KGMeshElementCollector::SetSystem(const KThreeVector& anOrigin, const KThreeVector& aXAxis,
+                                       const KThreeVector& aYAxis, const KThreeVector& aZAxis)
 {
     fOrigin = anOrigin;
     fXAxis = aXAxis;
     fYAxis = aYAxis;
     fZAxis = aZAxis;
     return;
-
 }
 const KThreeVector& KGMeshElementCollector::GetOrigin() const
 {
@@ -48,41 +48,40 @@ const KThreeVector& KGMeshElementCollector::GetZAxis() const
     return fZAxis;
 }
 
-void
-KGMeshElementCollector::VisitSurface( KGSurface* aSurface )
+void KGMeshElementCollector::VisitSurface(KGSurface* aSurface)
 {
     fCurrentOrigin = aSurface->GetOrigin();
     fCurrentXAxis = aSurface->GetXAxis();
     fCurrentYAxis = aSurface->GetYAxis();
     fCurrentZAxis = aSurface->GetZAxis();
     fCurrentSurface = aSurface;
-    fCurrentSpace = NULL;
-    Add( aSurface->AsExtension< KGMesh >() );
+    fCurrentSpace = nullptr;
+    Add(aSurface->AsExtension<KGMesh>());
 }
 
-void
-KGMeshElementCollector::VisitSpace( KGSpace* aSpace )
+void KGMeshElementCollector::VisitSpace(KGSpace* aSpace)
 {
     fCurrentOrigin = aSpace->GetOrigin();
     fCurrentXAxis = aSpace->GetXAxis();
     fCurrentYAxis = aSpace->GetYAxis();
     fCurrentZAxis = aSpace->GetZAxis();
     fCurrentSpace = aSpace;
-    fCurrentSurface = NULL;
-    Add( aSpace->AsExtension< KGMesh >() );
+    fCurrentSurface = nullptr;
+    Add(aSpace->AsExtension<KGMesh>());
 }
 
 
-KThreeVector
-KGMeshElementCollector::LocalToInternal( const KThreeVector& aVector )
+KThreeVector KGMeshElementCollector::LocalToInternal(const KThreeVector& aVector)
 {
-    KThreeVector tGlobalVector( fCurrentOrigin + aVector.X() * fCurrentXAxis + aVector.Y() * fCurrentYAxis + aVector.Z() * fCurrentZAxis );
-    KThreeVector tInternalVector( (tGlobalVector - fOrigin).Dot( fXAxis ), (tGlobalVector - fOrigin).Dot( fYAxis ), (tGlobalVector - fOrigin).Dot( fZAxis ) );
-    return KThreeVector( tInternalVector.X(), tInternalVector.Y(), tInternalVector.Z() );
+    KThreeVector tGlobalVector(fCurrentOrigin + aVector.X() * fCurrentXAxis + aVector.Y() * fCurrentYAxis +
+                               aVector.Z() * fCurrentZAxis);
+    KThreeVector tInternalVector((tGlobalVector - fOrigin).Dot(fXAxis),
+                                 (tGlobalVector - fOrigin).Dot(fYAxis),
+                                 (tGlobalVector - fOrigin).Dot(fZAxis));
+    return KThreeVector(tInternalVector.X(), tInternalVector.Y(), tInternalVector.Z());
 }
 
-void
-KGMeshElementCollector::Add( KGMeshData* aData )
+void KGMeshElementCollector::Add(KGMeshData* aData)
 {
     KGMeshElement* tMeshElement;
     KGMeshTriangle* tMeshTriangle;
@@ -91,21 +90,19 @@ KGMeshElementCollector::Add( KGMeshData* aData )
 
     PreCollectionAction(aData);
 
-    if( aData != NULL )
-    {
-        if(aData->HasData())
-        {
-            for( vector< KGMeshElement* >::iterator tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++ )
-            {
+    if (aData != nullptr) {
+        if (aData->HasData()) {
+            for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
                 tMeshElement = *tElementIt;
 
-                tMeshTriangle = dynamic_cast< KGMeshTriangle* >( tMeshElement );
-                if( (tMeshTriangle != NULL) )
-                {
+                tMeshTriangle = dynamic_cast<KGMeshTriangle*>(tMeshElement);
+                if ((tMeshTriangle != nullptr)) {
                     fCurrentElementType = eTriangle;
                     //transform mesh triangle into global coordinates
-                    KGMeshTriangle* t = new KGMeshTriangle( LocalToInternal( tMeshTriangle->GetP0() ), LocalToInternal( tMeshTriangle->GetP1() ), LocalToInternal( tMeshTriangle->GetP2() ) );
-                    KGNavigableMeshElement* navi_mesh_element = new KGNavigableMeshElement();
+                    KGMeshTriangle* t = new KGMeshTriangle(LocalToInternal(tMeshTriangle->GetP0()),
+                                                           LocalToInternal(tMeshTriangle->GetP1()),
+                                                           LocalToInternal(tMeshTriangle->GetP2()));
+                    auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(t);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);
                     // navi_mesh_element->SetParentSpace(fCurrentSpace);
@@ -114,13 +111,15 @@ KGMeshElementCollector::Add( KGMeshData* aData )
                     continue;
                 }
 
-                tMeshRectangle = dynamic_cast< KGMeshRectangle* >( tMeshElement );
-                if( (tMeshRectangle != NULL) )
-                {
+                tMeshRectangle = dynamic_cast<KGMeshRectangle*>(tMeshElement);
+                if ((tMeshRectangle != nullptr)) {
                     fCurrentElementType = eRectangle;
                     //transform mesh rectangle into global coordinates
-                    KGMeshRectangle* r = new KGMeshRectangle( LocalToInternal( tMeshRectangle->GetP0() ), LocalToInternal( tMeshRectangle->GetP1() ), LocalToInternal( tMeshRectangle->GetP2() ), LocalToInternal( tMeshRectangle->GetP3() ) );
-                    KGNavigableMeshElement* navi_mesh_element = new KGNavigableMeshElement();
+                    KGMeshRectangle* r = new KGMeshRectangle(LocalToInternal(tMeshRectangle->GetP0()),
+                                                             LocalToInternal(tMeshRectangle->GetP1()),
+                                                             LocalToInternal(tMeshRectangle->GetP2()),
+                                                             LocalToInternal(tMeshRectangle->GetP3()));
+                    auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(r);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);
                     // navi_mesh_element->SetParentSpace(fCurrentSpace);
@@ -129,13 +128,14 @@ KGMeshElementCollector::Add( KGMeshData* aData )
                     continue;
                 }
 
-                tMeshWire = dynamic_cast< KGMeshWire* >( tMeshElement );
-                if( (tMeshWire != NULL) )
-                {
+                tMeshWire = dynamic_cast<KGMeshWire*>(tMeshElement);
+                if ((tMeshWire != nullptr)) {
                     fCurrentElementType = eWire;
                     //transform mesh wire into global coordinates
-                    KGMeshWire* w = new KGMeshWire( LocalToInternal( tMeshWire->GetP0() ), LocalToInternal( tMeshWire->GetP1() ), tMeshWire->GetDiameter() );
-                    KGNavigableMeshElement* navi_mesh_element = new KGNavigableMeshElement();
+                    KGMeshWire* w = new KGMeshWire(LocalToInternal(tMeshWire->GetP0()),
+                                                   LocalToInternal(tMeshWire->GetP1()),
+                                                   tMeshWire->GetDiameter());
+                    auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(w);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);
                     // navi_mesh_element->SetParentSpace(fCurrentSpace);
@@ -156,11 +156,9 @@ KGMeshElementCollector::Add( KGMeshData* aData )
 }
 
 
-void
-KGMeshElementCollector::PreCollectionActionExecute(KGMeshData* /*aData*/){};
+void KGMeshElementCollector::PreCollectionActionExecute(KGMeshData* /*aData*/){};
 
-void
-KGMeshElementCollector::PostCollectionActionExecute( KGNavigableMeshElement* /*element */){};
+void KGMeshElementCollector::PostCollectionActionExecute(KGNavigableMeshElement* /*element */){};
 
 
-}
+}  // namespace KGeoBag

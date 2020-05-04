@@ -12,18 +12,18 @@
 #include "KGConicalWireArraySurface.hh"
 
 
-namespace KGeoBag {
+namespace KGeoBag
+{
 
-	class KGDiscreteRotationalAreaMesher :
-			public KGConicalWireArrayDiscreteRotationalMesher
-	{
-		public:
-			KGDiscreteRotationalAreaMesher(){};
-			virtual ~KGDiscreteRotationalAreaMesher(){};
+class KGDiscreteRotationalAreaMesher : public KGConicalWireArrayDiscreteRotationalMesher
+{
+  public:
+    KGDiscreteRotationalAreaMesher(){};
+    ~KGDiscreteRotationalAreaMesher() override{};
 
-			using KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface;
-	};
+    using KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif /* KGEOBAG_KGDISCRETEROTATIONALAREAMESHER_HH_ */

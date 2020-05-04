@@ -12,20 +12,21 @@
 using namespace KEMField;
 using namespace std;
 
-namespace katrin {
+namespace katrin
+{
 
 STATICINT sKMagneticSuperpositionFieldEntryStructure =
-        KMagneticSuperpositionFieldEntryBuilder::Attribute< string >( "name" ) +
-        KMagneticSuperpositionFieldEntryBuilder::Attribute< double >( "enhancement" );
+    KMagneticSuperpositionFieldEntryBuilder::Attribute<string>("name") +
+    KMagneticSuperpositionFieldEntryBuilder::Attribute<double>("enhancement");
 
 
 STATICINT sKMagneticSuperpositionFieldStructure =
-        KMagneticSuperpositionFieldBuilder::Attribute< string >( "name" ) +
-        KMagneticSuperpositionFieldBuilder::Attribute< bool >( "use_caching" ) +
-        KMagneticSuperpositionFieldBuilder::ComplexElement< KMagneticSuperpositionFieldEntry >( "add_field" );
+    KMagneticSuperpositionFieldBuilder::Attribute<string>("name") +
+    KMagneticSuperpositionFieldBuilder::Attribute<bool>("use_caching") +
+    KMagneticSuperpositionFieldBuilder::ComplexElement<KMagneticSuperpositionFieldEntry>("add_field");
 
 
 STATICINT sKEMFieldToolboxStructure =
-        KEMToolboxBuilder::ComplexElement<KMagneticSuperpositionField>("magnetic_superposition_field");
+    KEMToolboxBuilder::ComplexElement<KMagneticSuperpositionField>("magnetic_superposition_field");
 
 } /* namespace katrin */

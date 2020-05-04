@@ -7,8 +7,7 @@ namespace KEMField
 {
 
 
-bool
-KFMBitReversalPermutation::IsPowerOfTwo(unsigned int N)
+bool KFMBitReversalPermutation::IsPowerOfTwo(unsigned int N)
 {
     //taken from Bit Twiddling Hacks
     //http://graphics.stanford.edu/~seander/bithacks.html
@@ -16,42 +15,35 @@ KFMBitReversalPermutation::IsPowerOfTwo(unsigned int N)
 }
 
 
-unsigned int
-KFMBitReversalPermutation::LogBaseTwo(unsigned int N)
+unsigned int KFMBitReversalPermutation::LogBaseTwo(unsigned int N)
 {
     //taken from Bit Twiddling Hacks
     //http://graphics.stanford.edu/~seander/bithacks.html
     unsigned int p = 0;
-    while (N >>= 1)
-    {
+    while (N >>= 1) {
         p++;
     }
     return p;
 }
 
 
-unsigned int
-KFMBitReversalPermutation::TwoToThePowerOf(unsigned int N)
+unsigned int KFMBitReversalPermutation::TwoToThePowerOf(unsigned int N)
 {
     unsigned int val = 1;
-    for(unsigned int i=0; i<N; i++)
-    {
+    for (unsigned int i = 0; i < N; i++) {
         val *= 2;
     }
     return val;
 }
 
-unsigned int
-KFMBitReversalPermutation::NextLowestPowerOfTwo(unsigned int N)
+unsigned int KFMBitReversalPermutation::NextLowestPowerOfTwo(unsigned int N)
 {
-    if(IsPowerOfTwo(N) )
-    {
+    if (IsPowerOfTwo(N)) {
         return N;
     }
-    else
-    {
+    else {
         unsigned int p = LogBaseTwo(N);
-        return TwoToThePowerOf(p+1);
+        return TwoToThePowerOf(p + 1);
     }
 }
 
@@ -59,19 +51,18 @@ KFMBitReversalPermutation::NextLowestPowerOfTwo(unsigned int N)
 bool KFMBitReversalPermutation::IsPowerOfBase(unsigned int N, unsigned int B)
 {
     //check if N is a perfect power of B, this is very slow!!
-    if(N < B)
-    {
+    if (N < B) {
         return false;
     }
-    else
-    {
+    else {
         unsigned int i = 1;
-        while(i < N)
-        {
+        while (i < N) {
             i *= B;
         }
 
-        if(N == i){return true;}
+        if (N == i) {
+            return true;
+        }
         return false;
     }
 }
@@ -79,8 +70,7 @@ bool KFMBitReversalPermutation::IsPowerOfBase(unsigned int N, unsigned int B)
 unsigned int KFMBitReversalPermutation::RaiseBaseToThePower(unsigned int B, unsigned int N)
 {
     unsigned int val = 1;
-    for(unsigned int i=0; i<N; i++)
-    {
+    for (unsigned int i = 0; i < N; i++) {
         val *= B;
     }
     return val;
@@ -90,28 +80,25 @@ unsigned int KFMBitReversalPermutation::LogBaseB(unsigned int N, unsigned int B)
 {
     //we assume that N is a perfect power of B
     //but if not we return the leading power
-    if(N != 0)
-    {
-        if(N == 1){return 0;}
+    if (N != 0) {
+        if (N == 1) {
+            return 0;
+        }
 
         unsigned int power = 0;
         unsigned int quotient = N;
 
-        do
-        {
+        do {
             quotient /= B;
             power++;
-        }
-        while(quotient > 1);
+        } while (quotient > 1);
         return power;
     }
-    else
-    {
+    else {
         //error
         return 0;
     }
 }
-
 
 
 //void
@@ -165,8 +152,7 @@ unsigned int KFMBitReversalPermutation::LogBaseB(unsigned int N, unsigned int B)
 //}
 
 
-void
-KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(unsigned int N, unsigned int* index_arr)
+void KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(unsigned int N, unsigned int* index_arr)
 {
     //this function uses the recursive Buneman algorithm to compute
     //the bit reversed permutation of an array of length N = 2^p with entries 0,1,2...N-1
@@ -176,17 +162,16 @@ KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(unsigned int N, unsi
     //Fast Fourier Transforms by James S. Walker, CRC Press
 
 
-    if( IsPowerOfTwo(N) && N != 0)
-    {
+    if (IsPowerOfTwo(N) && N != 0) {
         unsigned int p = LogBaseTwo(N);
 
-        if(N == 1) //p = 0
+        if (N == 1)  //p = 0
         {
             index_arr[0] = 0;
             return;
         }
 
-        if(N == 2) //p = 1
+        if (N == 2)  //p = 1
         {
             index_arr[0] = 0;
             index_arr[1] = 1;
@@ -197,19 +182,18 @@ KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(unsigned int N, unsi
         index_arr[1] = 1;
 
         unsigned int mid;
-        for(unsigned int r=2; r<=p; r++)
-        {
-            mid = TwoToThePowerOf(r-1);
-            for(unsigned int q=0; q<mid; q++)
-            {
+        for (unsigned int r = 2; r <= p; r++) {
+            mid = TwoToThePowerOf(r - 1);
+            for (unsigned int q = 0; q < mid; q++) {
                 index_arr[q] *= 2;
                 index_arr[q + mid] = index_arr[q] + 1;
             }
         }
     }
-    else
-    {
-        kfmout<<"KFMBitReversalPermutation::ComputeBitReversedIndices: error, called with non-power of two array size."<<kfmendl;
+    else {
+        kfmout
+            << "KFMBitReversalPermutation::ComputeBitReversedIndices: error, called with non-power of two array size."
+            << kfmendl;
         kfmexit(1);
         //error
     }
@@ -220,65 +204,59 @@ void KFMBitReversalPermutation::ComputeBitReversedIndices(unsigned int N, unsign
     //this function is the base B extention of the recursive Buneman algorithm to compute
     //the bit reversed permutation of an array of length N
 
-    if( IsPowerOfBase(N,B) && N != 0)
-    {
-        unsigned int p = LogBaseB(N,B);
+    if (IsPowerOfBase(N, B) && N != 0) {
+        unsigned int p = LogBaseB(N, B);
 
-        if(N == 1) //p = 0
+        if (N == 1)  //p = 0
         {
             index_arr[0] = 0;
             return;
         }
 
         //p >= 1
-        for(unsigned int i=0; i<B; i++)
-        {
+        for (unsigned int i = 0; i < B; i++) {
             index_arr[i] = i;
         }
 
-        if(N == B){return;};
+        if (N == B) {
+            return;
+        };
 
         //p >=2
         unsigned int division;
-        for(unsigned int r=2; r <= p; r++)
-        {
-            division = RaiseBaseToThePower(B,r-1);
-            for(unsigned int q=0; q < division; q++)
-            {
+        for (unsigned int r = 2; r <= p; r++) {
+            division = RaiseBaseToThePower(B, r - 1);
+            for (unsigned int q = 0; q < division; q++) {
                 index_arr[q] *= B;
-                for(unsigned int s=1; s<B; s++)
-                {
-                    index_arr[q + s*division] = index_arr[q] + s;
+                for (unsigned int s = 1; s < B; s++) {
+                    index_arr[q + s * division] = index_arr[q] + s;
                 }
             }
         }
     }
-    else
-    {
-        kfmout<<"KFMBitReversalPermutation::ComputeBitReversedIndices: error, called with non-power of "<<B<<" array size."<<kfmendl;
+    else {
+        kfmout << "KFMBitReversalPermutation::ComputeBitReversedIndices: error, called with non-power of " << B
+               << " array size." << kfmendl;
         kfmexit(1);
         //error
     }
 }
 
-bool
-KFMBitReversalPermutation::Factor(unsigned int N, unsigned int n_factors, unsigned int* factors, unsigned int* powers)
+bool KFMBitReversalPermutation::Factor(unsigned int N, unsigned int n_factors, unsigned int* factors,
+                                       unsigned int* powers)
 {
-    unsigned int test  = 1;
-    for(unsigned int i=0; i<n_factors; i++)
-    {
+    unsigned int test = 1;
+    for (unsigned int i = 0; i < n_factors; i++) {
         unsigned int quotient = N;
         powers[i] = 0;
-        while(quotient % factors[i] == 0)
-        {
+        while (quotient % factors[i] == 0) {
             quotient /= factors[i];
             powers[i] += 1;
             test *= factors[i];
         }
     }
 
-    if(test == N)
-    {
+    if (test == N) {
         return true;
     }
 
@@ -286,4 +264,4 @@ KFMBitReversalPermutation::Factor(unsigned int N, unsigned int n_factors, unsign
 }
 
 
-}
+}  // namespace KEMField

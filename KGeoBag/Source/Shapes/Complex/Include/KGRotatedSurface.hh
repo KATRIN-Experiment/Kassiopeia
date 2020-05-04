@@ -1,14 +1,13 @@
 #ifndef KGROTATEDSURFACE_HH_
 #define KGROTATEDSURFACE_HH_
 
-#include "KGWrappedSurface.hh"
-
 #include "KGRotatedObject.hh"
+#include "KGWrappedSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGWrappedSurface< KGRotatedObject > KGRotatedSurface;
+typedef KGWrappedSurface<KGRotatedObject> KGRotatedSurface;
 
 }
 

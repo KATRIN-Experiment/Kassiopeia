@@ -4,54 +4,48 @@
 namespace katrin
 {
 
-template<class XType>
-class KSingleton
+template<class XType> class KSingleton
 {
-public:
+  public:
     static XType& GetInstance();
     static bool IsInitialized();
 
     KSingleton(KSingleton const&) = delete;             // Copy construct
     KSingleton(KSingleton&&) = delete;                  // Move construct
     KSingleton& operator=(KSingleton const&) = delete;  // Copy assign
-    KSingleton& operator=(KSingleton &&) = delete;      // Move assign
+    KSingleton& operator=(KSingleton&&) = delete;       // Move assign
 
-protected:
+  protected:
     KSingleton();
     virtual ~KSingleton();
 
-private:
+  private:
     static bool sInitialized;
 };
 
-template<class XType>
-XType& KSingleton<XType>::GetInstance()
+template<class XType> XType& KSingleton<XType>::GetInstance()
 {
     static XType tInstance;
     return tInstance;
 }
 
-template<class XType>
-KSingleton<XType>::KSingleton()
+template<class XType> KSingleton<XType>::KSingleton()
 {
     sInitialized = true;
 }
 
-template<class XType>
-KSingleton<XType>::~KSingleton()
+template<class XType> KSingleton<XType>::~KSingleton()
 {
     sInitialized = false;
 }
 
-template<class XType>
-bool KSingleton<XType>::IsInitialized()
+template<class XType> bool KSingleton<XType>::IsInitialized()
 {
     return sInitialized;
 }
 
-template<class XType>
-bool KSingleton<XType>::sInitialized = false;
+template<class XType> bool KSingleton<XType>::sInitialized = false;
 
-}
+}  // namespace katrin
 
 #endif

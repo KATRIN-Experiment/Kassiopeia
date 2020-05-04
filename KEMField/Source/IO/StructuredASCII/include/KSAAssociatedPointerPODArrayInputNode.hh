@@ -1,13 +1,16 @@
 #ifndef KSAAssociatedPointerPODArrayInputNode_HH__
 #define KSAAssociatedPointerPODArrayInputNode_HH__
 
-#include "KSAPODInputNode.hh"
 #include "KSACallbackTypes.hh"
+#include "KSAPODInputNode.hh"
 
-#define AddKSAInputForArray(class,var,type,size) \
-  node->AddChild(new KSAAssociatedPointerPODArrayInputNode<class, type, &class::Set ## var ## Array>( std::string(#var), size, this) )
+#define AddKSAInputForArray(class, var, type, size)                                                                    \
+    node->AddChild(new KSAAssociatedPointerPODArrayInputNode<class, type, &class ::Set##var##Array>(std::string(#var), \
+                                                                                                    size,              \
+                                                                                                    this))
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -24,42 +27,42 @@ namespace KEMField{
 */
 
 
-
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*) >
-class KSAAssociatedPointerPODArrayInputNode: public KSAPODInputNode< std::vector<SetType> >
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*)>
+class KSAAssociatedPointerPODArrayInputNode : public KSAPODInputNode<std::vector<SetType>>
 {
-    public:
+  public:
+    KSAAssociatedPointerPODArrayInputNode(std::string name, unsigned int arr_size, CallType* call_ptr) :
+        KSAPODInputNode<std::vector<SetType>>(name),
+        fArraySize(arr_size)
+    {
+        fCallPtr = call_ptr;
+    };
 
-        KSAAssociatedPointerPODArrayInputNode(std::string name, unsigned int arr_size, CallType* call_ptr):KSAPODInputNode< std::vector< SetType > >(name),fArraySize(arr_size)
-        {
-            fCallPtr = call_ptr;
-        };
+    ~KSAAssociatedPointerPODArrayInputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPointerPODArrayInputNode(){;};
-
-        void FinalizeObject()
-        {
-            fArray = new SetType[fArraySize];
-            for(unsigned int i=0; i<fArraySize; i++)
-            {
-                fArray[i] = (this->fValue)[i];
-            }
-
-            fCallback(fCallPtr, fArray );
-
-            delete[] fArray;
+    void FinalizeObject() override
+    {
+        fArray = new SetType[fArraySize];
+        for (unsigned int i = 0; i < fArraySize; i++) {
+            fArray[i] = (this->fValue)[i];
         }
 
-    protected:
+        fCallback(fCallPtr, fArray);
 
-        CallType* fCallPtr;
-        unsigned int fArraySize;
-        SetType* fArray;
-        KSAPassByConstantPointerSet< CallType, SetType, memberFunction > fCallback;
+        delete[] fArray;
+    }
 
+  protected:
+    CallType* fCallPtr;
+    unsigned int fArraySize;
+    SetType* fArray;
+    KSAPassByConstantPointerSet<CallType, SetType, memberFunction> fCallback;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPointerPODArrayInputNode_H__ */

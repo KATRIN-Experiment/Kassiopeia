@@ -12,78 +12,73 @@ namespace KEMField
  * \f}
  * where the coordinates are as described in the above image.
  */
-double KElectrostaticAnalyticLineSegmentIntegrator::Potential(const KLineSegment* source,const KPosition& P) const
+double KElectrostaticAnalyticLineSegmentIntegrator::Potential(const KLineSegment* source, const KPosition& P) const
 {
-	double L = (source->GetP1()-source->GetP0()).Magnitude();
-	double Da = (source->GetP0()-P).Magnitude();
-	double Db = (source->GetP1()-P).Magnitude();
+    double L = (source->GetP1() - source->GetP0()).Magnitude();
+    double Da = (source->GetP0() - P).Magnitude();
+    double Db = (source->GetP1() - P).Magnitude();
 
-	double ln;
+    double ln;
 
-	if((Da+Db) > (L+source->GetDiameter()))
-		ln = log((Da+Db+L)/(Da+Db-L));
-	else
-	{
-		KDirection u = (source->GetP1()-source->GetP0())/L;
-		double p = (P - source->GetP0()).Dot(u);
+    if ((Da + Db) > (L + source->GetDiameter()))
+        ln = log((Da + Db + L) / (Da + Db - L));
+    else {
+        KDirection u = (source->GetP1() - source->GetP0()) / L;
+        double p = (P - source->GetP0()).Dot(u);
 
-		if(p<(-source->GetDiameter()*.5) || p>(L+source->GetDiameter()*.5))
-			ln=log((Da+Db+L)/(Da+Db-L));
-		else
-		{
-			KPosition p_ = source->GetP0() + p*u;
-			double D = (P - p_).Magnitude();
+        if (p < (-source->GetDiameter() * .5) || p > (L + source->GetDiameter() * .5))
+            ln = log((Da + Db + L) / (Da + Db - L));
+        else {
+            KPosition p_ = source->GetP0() + p * u;
+            double D = (P - p_).Magnitude();
 
-			if(D>=source->GetDiameter()*.5)
-				ln=log((Da+Db+L)/(Da+Db-L));
-			else
-			{
-				Da = (source->GetP0() - p_).MagnitudeSquared();
-				Db = (source->GetP1() - p_).MagnitudeSquared();
-				Da = sqrt(Da + source->GetDiameter()*source->GetDiameter()*.25);
-				Db = sqrt(Db + source->GetDiameter()*source->GetDiameter()*.25);
+            if (D >= source->GetDiameter() * .5)
+                ln = log((Da + Db + L) / (Da + Db - L));
+            else {
+                Da = (source->GetP0() - p_).MagnitudeSquared();
+                Db = (source->GetP1() - p_).MagnitudeSquared();
+                Da = sqrt(Da + source->GetDiameter() * source->GetDiameter() * .25);
+                Db = sqrt(Db + source->GetDiameter() * source->GetDiameter() * .25);
 
-				ln=log((Da+Db+L)/(Da+Db-L));
-			}
-		}
-	}
-	return source->GetDiameter()/(4.*KEMConstants::Eps0)*ln;
+                ln = log((Da + Db + L) / (Da + Db - L));
+            }
+        }
+    }
+    return source->GetDiameter() / (4. * KEMConstants::Eps0) * ln;
 }
 
 
-KThreeVector KElectrostaticAnalyticLineSegmentIntegrator::ElectricField(const KLineSegment* source,const KPosition& P) const
+KThreeVector KElectrostaticAnalyticLineSegmentIntegrator::ElectricField(const KLineSegment* source,
+                                                                        const KPosition& P) const
 {
-	double L = (source->GetP1()-source->GetP0()).Magnitude();
-	double Da = (source->GetP0()-P).Magnitude();
-	double Db = (source->GetP1()-P).Magnitude();
-	KDirection u;
+    double L = (source->GetP1() - source->GetP0()).Magnitude();
+    double Da = (source->GetP0() - P).Magnitude();
+    double Db = (source->GetP1() - P).Magnitude();
+    KDirection u;
 
-	// if we are not far outside of the wire...
-	if(!((Da+Db)>(L+source->GetDiameter())))
-	{
-		u = (source->GetP1()-source->GetP0())/L;
-		double p = (P - source->GetP0()).Dot(u);
+    // if we are not far outside of the wire...
+    if (!((Da + Db) > (L + source->GetDiameter()))) {
+        u = (source->GetP1() - source->GetP0()) / L;
+        double p = (P - source->GetP0()).Dot(u);
 
-		// if we are not just outside of the endcaps of the wire...
-		if (!(p<(-source->GetDiameter()*.5) || p>(L + source->GetDiameter()*.5)))
-		{
-			KPosition p_ = source->GetP0() + p*u;
-			double D = (P - p_).Magnitude();
+        // if we are not just outside of the endcaps of the wire...
+        if (!(p < (-source->GetDiameter() * .5) || p > (L + source->GetDiameter() * .5))) {
+            KPosition p_ = source->GetP0() + p * u;
+            double D = (P - p_).Magnitude();
 
-			// if we are not just outside the cylindrical surface of the wire...
-			if (!(D>=source->GetDiameter()*.5))
-			{
-				// we are in the wire
-				Da = (source->GetP0() - p_).Magnitude();
-				Db = (source->GetP1() - p_).Magnitude();
-			}
-		}
-	}
+            // if we are not just outside the cylindrical surface of the wire...
+            if (!(D >= source->GetDiameter() * .5)) {
+                // we are in the wire
+                Da = (source->GetP0() - p_).Magnitude();
+                Db = (source->GetP1() - p_).Magnitude();
+            }
+        }
+    }
 
-	double denom = (Da*(Da + Db + L)*(Da + Db - L)*Db)*4.*KEMConstants::Eps0;
-	denom = -1./denom;
+    double denom = (Da * (Da + Db + L) * (Da + Db - L) * Db) * 4. * KEMConstants::Eps0;
+    denom = -1. / denom;
 
-	return (2.*L*(source->GetP1()*Da - P*(Da + Db) + source->GetP0()*Db))*source->GetDiameter()*denom;
+    return (2. * L * (source->GetP1() * Da - P * (Da + Db) + source->GetP0() * Db)) * source->GetDiameter() * denom;
 }
 
-}
+}  // namespace KEMField

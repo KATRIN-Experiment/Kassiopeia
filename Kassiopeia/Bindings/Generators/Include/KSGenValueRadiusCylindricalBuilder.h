@@ -8,29 +8,25 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-    typedef KComplexElement< KSGenValueRadiusCylindrical > KSGenValueRadiusCylindricalBuilder;
+typedef KComplexElement<KSGenValueRadiusCylindrical> KSGenValueRadiusCylindricalBuilder;
 
-    template< >
-    inline bool KSGenValueRadiusCylindricalBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KNamed::SetName );
-            return true;
-        }
-        if( aContainer->GetName() == "radius_min" )
-        {
-            aContainer->CopyTo( fObject, &KSGenValueRadiusCylindrical::SetRadiusMin );
-            return true;
-        }
-        if( aContainer->GetName() == "radius_max" )
-        {
-            aContainer->CopyTo( fObject, &KSGenValueRadiusCylindrical::SetRadiusMax );
-            return true;
-        }
-        return false;
+template<> inline bool KSGenValueRadiusCylindricalBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
-
+    if (aContainer->GetName() == "radius_min") {
+        aContainer->CopyTo(fObject, &KSGenValueRadiusCylindrical::SetRadiusMin);
+        return true;
+    }
+    if (aContainer->GetName() == "radius_max") {
+        aContainer->CopyTo(fObject, &KSGenValueRadiusCylindrical::SetRadiusMax);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

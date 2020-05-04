@@ -1,11 +1,10 @@
 #ifndef KFMElectrostaticLocalCoefficientFieldCalculator_HH__
 #define KFMElectrostaticLocalCoefficientFieldCalculator_HH__
 
+#include "KFMComplexSphericalHarmonicExpansionRotator.hh"
 #include "KFMElectrostaticLocalCoefficientSet.hh"
 #include "KFMLinearAlgebraDefinitions.hh"
-
 #include "KFMPinchonJMatrixCalculator.hh"
-#include "KFMComplexSphericalHarmonicExpansionRotator.hh"
 
 namespace KEMField
 {
@@ -25,82 +24,82 @@ namespace KEMField
 
 class KFMElectrostaticLocalCoefficientFieldCalculator
 {
-    public:
-        KFMElectrostaticLocalCoefficientFieldCalculator();
-        virtual ~KFMElectrostaticLocalCoefficientFieldCalculator();
+  public:
+    KFMElectrostaticLocalCoefficientFieldCalculator();
+    virtual ~KFMElectrostaticLocalCoefficientFieldCalculator();
 
-        void SetDegree(int degree);
-        void SetExpansionOrigin(const double* origin);
-        void SetExpansionRadius(double er){fExpansionRadius = er;};
+    void SetDegree(int degree);
+    void SetExpansionOrigin(const double* origin);
+    void SetExpansionRadius(double er)
+    {
+        fExpansionRadius = er;
+    };
 
-        void SetLocalCoefficients(const KFMElectrostaticLocalCoefficientSet* set);
-        void SetRealMoments(const double* real_mom);
-        void SetImaginaryMoments(const double* imag_mom);
+    void SetLocalCoefficients(const KFMElectrostaticLocalCoefficientSet* set);
+    void SetRealMoments(const double* real_mom);
+    void SetImaginaryMoments(const double* imag_mom);
 
-        //computes the potential and field given a point
-        double Potential(const double* p) const;
-        void ElectricField(const double* p, double* f) const;
+    //computes the potential and field given a point
+    double Potential(const double* p) const;
+    void ElectricField(const double* p, double* f) const;
 
 
-        void ElectricFieldNearZPole(const double* p, double* f) const;
-        void ElectricFieldNumerical(const double* p, double* f) const;
+    void ElectricFieldNearZPole(const double* p, double* f) const;
+    void ElectricFieldNumerical(const double* p, double* f) const;
 
-    private:
+  private:
+    //computes the potential and field
+    double Potential() const;
+    void ElectricField(double* f) const;
 
-        //computes the potential and field
-        double Potential() const;
-        void ElectricField(double* f) const;
+    int fDegree;
+    unsigned int fNTerms;
+    unsigned int fSize;
+    double fKFactor;
+    double fOrigin[3];
+    double fExpansionRadius;
 
-        int fDegree;
-        unsigned int fNTerms;
-        unsigned int fSize;
-        double fKFactor;
-        double fOrigin[3];
-        double fExpansionRadius;
+    mutable double fDel[3];
+    mutable double fCosTheta;
+    mutable double fSinTheta;
+    //        mutable double fPhi;
+    //        mutable double fRadius;
+    mutable double* fPlmArr;
+    mutable double* fPlmDervArr;
+    mutable double* fRadPowerArr;
+    mutable double* fCosMPhiArr;
+    mutable double* fSinMPhiArr;
 
-        mutable double fDel[3];
-        mutable double fCosTheta;
-        mutable double fSinTheta;
-//        mutable double fPhi;
-//        mutable double fRadius;
-        mutable double* fPlmArr;
-        mutable double* fPlmDervArr;
-        mutable double* fRadPowerArr;
-        mutable double* fCosMPhiArr;
-        mutable double* fSinMPhiArr;
+    mutable kfm_matrix* fXForm;
+    mutable kfm_vector* fSphField;
+    mutable kfm_vector* fCartField;
 
-        mutable kfm_matrix* fXForm;
-        mutable kfm_vector* fSphField;
-        mutable kfm_vector* fCartField;
+    const KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
+    const double* fRealMoments;
+    const double* fImagMoments;
 
-        const KFMElectrostaticLocalCoefficientSet* fLocalCoeff;
-        const double* fRealMoments;
-        const double* fImagMoments;
+    bool fEvaluate;
 
-        bool fEvaluate;
+    //internal members needed for computing fields under rotation
+    KFMPinchonJMatrixCalculator* fJCalc;
+    std::vector<kfm_matrix*> fJMatrix;
+    mutable KFMComplexSphericalHarmonicExpansionRotator* fRotator;
+    mutable std::vector<std::complex<double>> fMomentsA;
+    mutable std::vector<std::complex<double>> fMomentsB;
 
-        //internal members needed for computing fields under rotation
-        KFMPinchonJMatrixCalculator* fJCalc;
-        std::vector<kfm_matrix*> fJMatrix;
-        mutable KFMComplexSphericalHarmonicExpansionRotator* fRotator;
-        mutable std::vector< std::complex<double> > fMomentsA;
-        mutable std::vector< std::complex<double> > fMomentsB;
+    mutable kfm_vector* fDisplacement;
+    mutable kfm_vector* fRotDisplacement;
+    mutable kfm_matrix* fRotation;
+    mutable kfm_matrix* fTempMx;
+    mutable kfm_matrix* fTempMx2;
+    mutable double* fRealMomentsB;
+    mutable double* fImagMomentsB;
 
-        mutable kfm_vector* fDisplacement;
-        mutable kfm_vector* fRotDisplacement;
-        mutable kfm_matrix* fRotation;
-        mutable kfm_matrix* fTempMx;
-        mutable kfm_matrix* fTempMx2;
-        mutable double* fRealMomentsB;
-        mutable double* fImagMomentsB;
-
-    public:
-        static const double fRootThreeOverTwo;
-
+  public:
+    static const double fRootThreeOverTwo;
 };
 
 
-
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticLocalCoefficientFieldCalculator_H__ */

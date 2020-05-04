@@ -1,38 +1,38 @@
 #ifndef Kassiopeia_KSTermTrapped_h_
 #define Kassiopeia_KSTermTrapped_h_
 
-#include "KSTerminator.h"
 #include "KField.h"
+#include "KSTerminator.h"
 
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermTrapped :
-        public KSComponentTemplate< KSTermTrapped, KSTerminator >
-    {
-        public:
-    		KSTermTrapped();
-    		KSTermTrapped( const KSTermTrapped& aCopy );
-    		KSTermTrapped* Clone() const;
-            virtual ~KSTermTrapped();
+class KSTermTrapped : public KSComponentTemplate<KSTermTrapped, KSTerminator>
+{
+  public:
+    KSTermTrapped();
+    KSTermTrapped(const KSTermTrapped& aCopy);
+    KSTermTrapped* Clone() const override;
+    ~KSTermTrapped() override;
 
-            K_SET_GET(int, MaxTurns)
+    K_SET_GET(int, MaxTurns)
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        protected:
-            virtual void ActivateComponent();
-            virtual void DeactivateComponent();
+  protected:
+    void ActivateComponent() override;
+    void DeactivateComponent() override;
 
-        private:
-            int fCurrentTurns;
-            double fCurrentDotProduct;
-    };
+  private:
+    int fCurrentTurns;
+    double fCurrentDotProduct;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

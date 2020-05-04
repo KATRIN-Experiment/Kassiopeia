@@ -10,11 +10,13 @@
 
 #include <string>
 
-namespace KEMField {
+namespace KEMField
+{
 
-class KExplicitSuperpositionSolutionComponent {
-public:
-    KExplicitSuperpositionSolutionComponent(): scale(1.0) {};
+class KExplicitSuperpositionSolutionComponent
+{
+  public:
+    KExplicitSuperpositionSolutionComponent() : scale(1.0){};
     virtual ~KExplicitSuperpositionSolutionComponent(){};
 
     std::string name;

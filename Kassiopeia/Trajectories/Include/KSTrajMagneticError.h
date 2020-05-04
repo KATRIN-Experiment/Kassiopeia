@@ -2,74 +2,73 @@
 #define Kassiopeia_KSTrajMagneticError_h_
 
 #include "KSMathArray.h"
-
 #include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 
-    class KSTrajMagneticError :
-        public KSMathArray< 5 >
-    {
-        public:
-            KSTrajMagneticError();
-            virtual ~KSTrajMagneticError();
+class KSTrajMagneticError : public KSMathArray<5>
+{
+  public:
+    KSTrajMagneticError();
+    KSTrajMagneticError(const KSTrajMagneticError& anOperand);
+    virtual ~KSTrajMagneticError();
 
-            //**********
-            //assignment
-            //**********
+    //**********
+    //assignment
+    //**********
 
-        public:
-            KSTrajMagneticError& operator=( const double& anOperand );
+  public:
+    KSTrajMagneticError& operator=(const double& anOperand);
 
-            KSTrajMagneticError& operator=( const KSMathArray< 5 >& anOperand );
+    KSTrajMagneticError& operator=(const KSMathArray<5>& anOperand);
 
-            template< class XLeft, class XOperation, class XRight >
-            KSTrajMagneticError& operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand );
+    template<class XLeft, class XOperation, class XRight>
+    KSTrajMagneticError& operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand);
 
-            KSTrajMagneticError& operator=( const KSTrajMagneticError& anOperand );
+    KSTrajMagneticError& operator=(const KSTrajMagneticError& anOperand);
 
-            //*********
-            //variables
-            //*********
+    //*********
+    //variables
+    //*********
 
-        public:
-            const double& GetTimeError() const;
-            const double& GetLengthError() const;
-            const KThreeVector& GetPositionError() const;
+  public:
+    const double& GetTimeError() const;
+    const double& GetLengthError() const;
+    const KThreeVector& GetPositionError() const;
 
-        protected:
-            mutable double fTimeError;
-            mutable double fLengthError;
-            mutable KThreeVector fPositionError;
-    };
+  protected:
+    mutable double fTimeError;
+    mutable double fLengthError;
+    mutable KThreeVector fPositionError;
+};
 
-    inline KSTrajMagneticError& KSTrajMagneticError::operator=( const double& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    inline KSTrajMagneticError& KSTrajMagneticError::operator=( const KSMathArray< 5 >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    template< class XLeft, class XOperation, class XRight >
-    inline KSTrajMagneticError& KSTrajMagneticError::operator=( const KSMathExpression< XLeft, XOperation, XRight >& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
-    inline KSTrajMagneticError& KSTrajMagneticError::operator=( const KSTrajMagneticError& anOperand )
-    {
-        this->KSMathArray< 5 >::operator =( anOperand );
-        return *this;
-    }
-
+inline KSTrajMagneticError& KSTrajMagneticError::operator=(const double& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
 }
+
+inline KSTrajMagneticError& KSTrajMagneticError::operator=(const KSMathArray<5>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+template<class XLeft, class XOperation, class XRight>
+inline KSTrajMagneticError& KSTrajMagneticError::operator=(const KSMathExpression<XLeft, XOperation, XRight>& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+inline KSTrajMagneticError& KSTrajMagneticError::operator=(const KSTrajMagneticError& anOperand)
+{
+    this->KSMathArray<5>::operator=(anOperand);
+    return *this;
+}
+
+}  // namespace Kassiopeia
 
 #endif

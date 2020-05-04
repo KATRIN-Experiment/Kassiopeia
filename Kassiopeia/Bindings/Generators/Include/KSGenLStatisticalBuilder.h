@@ -10,18 +10,19 @@
 #include "KToolbox.h"
 
 using namespace Kassiopeia;
-namespace katrin {
+namespace katrin
+{
 
-    typedef KComplexElement <KSGenLStatistical> KSGenLStatisticalBuilder;
+typedef KComplexElement<KSGenLStatistical> KSGenLStatisticalBuilder;
 
-    template<>
-    inline bool KSGenLStatisticalBuilder::AddAttribute(KContainer *aContainer) {
-        if (aContainer->GetName() == "name") {
-            aContainer->CopyTo(fObject, &KNamed::SetName);
-            return true;
-        }
-        return false;
+template<> inline bool KSGenLStatisticalBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
+        return true;
     }
+    return false;
 }
+}  // namespace katrin
 
-#endif //KASPER_KSGENLSTATISTICALBUILDER_H
+#endif  //KASPER_KSGENLSTATISTICALBUILDER_H

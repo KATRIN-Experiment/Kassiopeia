@@ -10,36 +10,42 @@
 
 #include "KSElectricField.h"
 
-namespace KEMField {			// forward declaration has to be in namespace
-	class KElectricField;
-} // KEMField
+namespace KEMField  // forward declaration has to be in namespace
+{
+class KElectricField;
+}  // namespace KEMField
 
-namespace Kassiopeia {
+namespace Kassiopeia
+{
 
-class KSElectricKEMField : public KSElectricField {
+class KSElectricKEMField : public KSElectricField
+{
 
-public:
-	KSElectricKEMField();
-	KSElectricKEMField(const KSElectricKEMField& aCopy);
+  public:
+    KSElectricKEMField();
+    KSElectricKEMField(const KSElectricKEMField& aCopy);
     KSElectricKEMField(KEMField::KElectricField* field);
-	KSElectricKEMField* Clone() const;
-	virtual ~KSElectricKEMField();
+    KSElectricKEMField* Clone() const override;
+    ~KSElectricKEMField() override;
 
-	void SetElectricField(KEMField::KElectricField* field);
-	const KEMField::KElectricField* getElectricField();
+    void SetElectricField(KEMField::KElectricField* field);
+    const KEMField::KElectricField* GetElectricField();
 
-	virtual void CalculatePotential( const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime, double& aPotential );
-	virtual void CalculateField( const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime, KGeoBag::KThreeVector& aField );
-    virtual void CalculateFieldAndPotential( const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime, KGeoBag::KThreeVector& aField, double& aPotential);
+    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                            double& aPotential) override;
+    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        KGeoBag::KThreeVector& aField) override;
+    void CalculateFieldAndPotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                    KGeoBag::KThreeVector& aField, double& aPotential) override;
 
-private:
-    void InitializeComponent();
-    void DeinitializeComponent();
+  private:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
 
-	KEMField::KElectricField* fField;
+    KEMField::KElectricField* fField;
 };
 
-} // Kassiopeia
+}  // namespace Kassiopeia
 
 #endif /* KSELECTRICKEMFIELD_H_ */

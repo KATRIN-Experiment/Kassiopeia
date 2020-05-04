@@ -6,11 +6,8 @@
 #include "KGObjectRetriever.hh"
 
 
-
 namespace KGeoBag
 {
-
-
 
 
 /*
@@ -26,28 +23,27 @@ namespace KGeoBag
 *
 */
 
-template<typename ObjectTypeList, typename TypeToRemove >
-class KGNodeObjectRemover: public KGNodeActor< KGNode<ObjectTypeList> >
+template<typename ObjectTypeList, typename TypeToRemove>
+class KGNodeObjectRemover : public KGNodeActor<KGNode<ObjectTypeList>>
 {
-    public:
-        KGNodeObjectRemover(){};
-        virtual ~KGNodeObjectRemover(){};
+  public:
+    KGNodeObjectRemover(){};
+    virtual ~KGNodeObjectRemover(){};
 
-        virtual void ApplyAction( KGNode<ObjectTypeList>* node)
-        {
-            TypeToRemove* remove_this_object = KGObjectRetriever<ObjectTypeList, TypeToRemove>::GetNodeObject(node);
+    virtual void ApplyAction(KGNode<ObjectTypeList>* node)
+    {
+        TypeToRemove* remove_this_object = KGObjectRetriever<ObjectTypeList, TypeToRemove>::GetNodeObject(node);
 
-            if(remove_this_object != NULL)
-            {
-                delete remove_this_object;
-                KGObjectRetriever<ObjectTypeList, TypeToRemove >::SetNodeObject(NULL, node);
-            }
+        if (remove_this_object != NULL) {
+            delete remove_this_object;
+            KGObjectRetriever<ObjectTypeList, TypeToRemove>::SetNodeObject(NULL, node);
         }
+    }
 
-    private:
+  private:
 };
 
 
-}//end of KGeoBag
+}  // namespace KGeoBag
 
 #endif /* KGNodeObjectRemover_H__ */

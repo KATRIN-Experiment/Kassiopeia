@@ -6,6 +6,4 @@
  */
 #include "KEMBindingsMessage.hh"
 
-KMESSAGE_DEFINE( katrin, BINDINGMSG, kem_bindings, KEMBINDINGS )
-
-
+KMESSAGE_DEFINE(katrin, BINDINGMSG, kem_bindings, KEMBINDINGS)

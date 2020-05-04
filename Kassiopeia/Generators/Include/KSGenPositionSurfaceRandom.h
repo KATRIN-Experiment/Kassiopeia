@@ -9,60 +9,60 @@
 #define KSGENPOSITIONSURFACERANDOM_H_
 
 #include "KGCore.hh"
-#include "KSGeneratorsMessage.h"
+#include "KGRandomPointGenerator.hh"
 #include "KSGenCreator.h"
 #include "KSGenValue.h"
-#include "KGRandomPointGenerator.hh"
+#include "KSGeneratorsMessage.h"
+
 #include <vector>
 
 namespace Kassiopeia
 {
-    /**
+/**
     * \brief Dices positions of particles on surfaces.
     */
-    class KSGenPositionSurfaceRandom :
-            public KSComponentTemplate<KSGenPositionSurfaceRandom, KSGenCreator>
-    {
-    public:
-        KSGenPositionSurfaceRandom();
-        KSGenPositionSurfaceRandom(const KSGenPositionSurfaceRandom&);
-        KSGenPositionSurfaceRandom* Clone() const;
-        virtual ~KSGenPositionSurfaceRandom();
+class KSGenPositionSurfaceRandom : public KSComponentTemplate<KSGenPositionSurfaceRandom, KSGenCreator>
+{
+  public:
+    KSGenPositionSurfaceRandom();
+    KSGenPositionSurfaceRandom(const KSGenPositionSurfaceRandom&);
+    KSGenPositionSurfaceRandom* Clone() const override;
+    ~KSGenPositionSurfaceRandom() override;
 
-    public:
-        /**
+  public:
+    /**
         * \brief Dices the positions of all particles of
         * the KSParticleQueue on surfaces which are
         * defined with AddSurface.
         *
         * \param aPrimaries
         */
-        virtual void Dice(KSParticleQueue* aPrimaries);
+    void Dice(KSParticleQueue* aPrimaries) override;
 
-    public:
-        /**
+  public:
+    /**
         * \brief Adds surfaces to the class in which the
         * position of the particles will be diced.
         *
         * \param aSurface
         */
-        void AddSurface(KGeoBag::KGSurface* aSurface);
+    void AddSurface(KGeoBag::KGSurface* aSurface);
 
-        /**
+    /**
         * \brief Removes a surface from this class.
         *
         * \param aSurface
         */
-        bool RemoveSurface(KGeoBag::KGSurface* aSurface);
+    bool RemoveSurface(KGeoBag::KGSurface* aSurface);
 
-    private:
-        std::vector<KGeoBag::KGSurface*> fSurfaces;
-        KGeoBag::KGRandomPointGenerator random;
+  private:
+    std::vector<KGeoBag::KGSurface*> fSurfaces;
+    KGeoBag::KGRandomPointGenerator random;
 
-    protected:
-        void InitializeComponent();
-        void DeinitializeComponent();
-    };
-}
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
+}  // namespace Kassiopeia
 
 #endif /* KSGENPOSITIONSURFACERANDOM_H_ */

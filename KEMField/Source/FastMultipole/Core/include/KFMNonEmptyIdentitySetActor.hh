@@ -1,9 +1,9 @@
 #ifndef __KFMNonEmptyIdentitySetActor_H__
 #define __KFMNonEmptyIdentitySetActor_H__
 
-#include "KFMNode.hh"
-#include "KFMInspectingActor.hh"
 #include "KFMIdentitySet.hh"
+#include "KFMInspectingActor.hh"
+#include "KFMNode.hh"
 #include "KFMObjectRetriever.hh"
 
 namespace KEMField
@@ -22,35 +22,31 @@ namespace KEMField
 */
 
 
-template<typename ObjectTypeList>
-class KFMNonEmptyIdentitySetActor: public KFMInspectingActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMNonEmptyIdentitySetActor : public KFMInspectingActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNonEmptyIdentitySetActor(){};
-        virtual ~KFMNonEmptyIdentitySetActor(){};
+  public:
+    KFMNonEmptyIdentitySetActor(){};
+    ~KFMNonEmptyIdentitySetActor() override{};
 
-        virtual bool ConditionIsSatisfied( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
-                if(set != NULL)
-                {
-                    if(set->GetSize() != 0)
-                    {
-                        return true;
-                    }
+    bool ConditionIsSatisfied(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            KFMIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMIdentitySet>::GetNodeObject(node);
+            if (set != nullptr) {
+                if (set->GetSize() != 0) {
+                    return true;
                 }
             }
-            return false;
         }
+        return false;
+    }
 
 
-    protected:
-        /* data */
+  protected:
+    /* data */
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMNonEmptyIdentitySetActor_H__ */

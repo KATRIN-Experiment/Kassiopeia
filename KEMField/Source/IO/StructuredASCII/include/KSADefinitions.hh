@@ -1,7 +1,8 @@
 #ifndef KSADefinitions_HH__
 #define KSADefinitions_HH__
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -16,19 +17,19 @@ namespace KEMField{
 *
 */
 
-#define CHUNK 4194304
+#define CHUNK       4194304
 #define WRITE_CHUNK CHUNK
-#define READ_CHUNK CHUNK
+#define READ_CHUNK  CHUNK
 
 #define START_TAG_BEGIN "<"
-#define START_TAG_END ">"
-#define STOP_TAG_BEGIN "</"
-#define STOP_TAG_END ">"
-#define LINE_DELIM "\n"
-#define LINE_PREFIX "\t"
-#define ELEM_DELIM " "
-#define XML_ENCODING "<?xml version=\"1.0\" encoding=\"ASCII\" standalone=\"yes\"?>"
+#define START_TAG_END   ">"
+#define STOP_TAG_BEGIN  "</"
+#define STOP_TAG_END    ">"
+#define LINE_DELIM      "\n"
+#define LINE_PREFIX     "\t"
+#define ELEM_DELIM      " "
+#define XML_ENCODING    "<?xml version=\"1.0\" encoding=\"ASCII\" standalone=\"yes\"?>"
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* __KSADefinitions_H__ */

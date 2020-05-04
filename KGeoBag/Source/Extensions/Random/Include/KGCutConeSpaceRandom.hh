@@ -8,21 +8,20 @@
 #ifndef KGCUTCONESPACERANDOM_HH_
 #define KGCUTCONESPACERANDOM_HH_
 
-#include "KGShapeRandom.hh"
 #include "KGCutConeSpace.hh"
+#include "KGShapeRandom.hh"
 
 namespace KGeoBag
 {
-  /**
+/**
    * \brief Class for dicing a point
    * inside a KGCutConeSpace.
    */
-  class KGCutConeSpaceRandom : virtual public KGShapeRandom,
-				 public KGCutConeSpace::Visitor
-  {
+class KGCutConeSpaceRandom : virtual public KGShapeRandom, public KGCutConeSpace::Visitor
+{
   public:
-	  KGCutConeSpaceRandom() : KGShapeRandom() {}
-    virtual ~KGCutConeSpaceRandom() {}
+    KGCutConeSpaceRandom() : KGShapeRandom() {}
+    ~KGCutConeSpaceRandom() override {}
 
     /**
      * \brief Visitor function for dicing the point
@@ -30,8 +29,8 @@ namespace KGeoBag
      *
      * \param aCutConeSpace
      */
-    virtual void VisitCutConeSpace(KGCutConeSpace* aCutConeSpace);
-  };
-}
+    void VisitCutConeSpace(KGCutConeSpace* aCutConeSpace) override;
+};
+}  // namespace KGeoBag
 
 #endif /* KGCUTCONESPACERANDOM_HH_ */

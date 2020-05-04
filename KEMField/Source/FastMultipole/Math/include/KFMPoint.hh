@@ -21,112 +21,100 @@ namespace KEMField
 *
 */
 
-template<unsigned int NDIM>
-class KFMPoint
+template<unsigned int NDIM> class KFMPoint
 {
-    public:
-
-        KFMPoint()
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fData[i] = 0; //init to zero
-            }
-        };
-
-        KFMPoint(const double* p)
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fData[i] = p[i];
-            }
+  public:
+    KFMPoint()
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fData[i] = 0;  //init to zero
         }
+    };
 
-        KFMPoint( const KFMPoint<NDIM>& p )
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fData[i] = p[i];
-            }
+    KFMPoint(const double* p)
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fData[i] = p[i];
         }
+    }
 
-        virtual ~KFMPoint(){};
-
-        unsigned int GetDimension() const {return NDIM;};
-
-        //cast to double array
-        operator double* ();
-        operator const double* () const;
-
-        //assignment
-        inline KFMPoint<NDIM>& operator=(const KFMPoint<NDIM>& p)
-        {
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                fData[ i ] = p.fData[ i ];
-            }
-            return *this;
+    KFMPoint(const KFMPoint<NDIM>& p)
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fData[i] = p[i];
         }
+    }
 
+    virtual ~KFMPoint(){};
 
-        double MagnitudeSquared() const
-        {
-            double val = 0;
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                val += fData[i]*fData[i];
-            }
-            return val;
+    unsigned int GetDimension() const
+    {
+        return NDIM;
+    };
+
+    //cast to double array
+    operator double*();
+    operator const double*() const;
+
+    //assignment
+    inline KFMPoint<NDIM>& operator=(const KFMPoint<NDIM>& p)
+    {
+        for (unsigned int i = 0; i < NDIM; i++) {
+            fData[i] = p.fData[i];
         }
+        return *this;
+    }
 
-        double Magnitude() const
-        {
-            double val = 0;
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                val += fData[i]*fData[i];
-            }
-            return std::sqrt(val);
+
+    double MagnitudeSquared() const
+    {
+        double val = 0;
+        for (unsigned int i = 0; i < NDIM; i++) {
+            val += fData[i] * fData[i];
         }
+        return val;
+    }
 
-        double Dot(const KFMPoint<NDIM>& p) const
-        {
-            double val = 0;
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                val += fData[i]*p[i];
-            }
-            return val;
+    double Magnitude() const
+    {
+        double val = 0;
+        for (unsigned int i = 0; i < NDIM; i++) {
+            val += fData[i] * fData[i];
         }
+        return std::sqrt(val);
+    }
 
-        KFMPoint<NDIM> Unit() const
-        {
-            KFMPoint<NDIM> val;
-            double mag = this->Magnitude();
-            for(unsigned int i=0; i<NDIM; i++)
-            {
-                val[i] = fData[i]/mag;
-            }
-            return val;
+    double Dot(const KFMPoint<NDIM>& p) const
+    {
+        double val = 0;
+        for (unsigned int i = 0; i < NDIM; i++) {
+            val += fData[i] * p[i];
         }
+        return val;
+    }
+
+    KFMPoint<NDIM> Unit() const
+    {
+        KFMPoint<NDIM> val;
+        double mag = this->Magnitude();
+        for (unsigned int i = 0; i < NDIM; i++) {
+            val[i] = fData[i] / mag;
+        }
+        return val;
+    }
 
 
-
-    private:
-
-        double fData[NDIM];
-
+  private:
+    double fData[NDIM];
 };
 
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>::operator double* ()
+template<unsigned int NDIM> inline KFMPoint<NDIM>::operator double*()
 {
     return fData;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>::operator const double* () const
+template<unsigned int NDIM> inline KFMPoint<NDIM>::operator const double*() const
 {
     return fData;
 }
@@ -143,113 +131,93 @@ inline KFMPoint<NDIM>::operator const double* () const
 //    return fData[i];
 //}
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM> operator+( const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight )
+template<unsigned int NDIM> inline KFMPoint<NDIM> operator+(const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight)
 {
-    KFMPoint<NDIM> aResult( aLeft );
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    KFMPoint<NDIM> aResult(aLeft);
+    for (unsigned int i = 0; i < NDIM; i++) {
         aResult[i] += aRight[i];
     }
     return aResult;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator+=( KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight )
+template<unsigned int NDIM> inline KFMPoint<NDIM>& operator+=(KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight)
 {
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    for (unsigned int i = 0; i < NDIM; i++) {
         aLeft[i] += aRight[i];
     }
     return aLeft;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>  operator-( const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight )
+template<unsigned int NDIM> inline KFMPoint<NDIM> operator-(const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight)
 {
-    KFMPoint<NDIM> aResult( aLeft );
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    KFMPoint<NDIM> aResult(aLeft);
+    for (unsigned int i = 0; i < NDIM; i++) {
         aResult[i] -= aRight[i];
     }
     return aResult;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator-=( KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight )
+template<unsigned int NDIM> inline KFMPoint<NDIM>& operator-=(KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight)
 {
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    for (unsigned int i = 0; i < NDIM; i++) {
         aLeft[i] -= aRight[i];
     }
     return aLeft;
 }
 
-template<unsigned int NDIM>
-inline double operator*( const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight )
+template<unsigned int NDIM> inline double operator*(const KFMPoint<NDIM>& aLeft, const KFMPoint<NDIM>& aRight)
 {
     double val = 0;
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    for (unsigned int i = 0; i < NDIM; i++) {
         val += aLeft[i] * aRight[i];
     }
     return val;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>  operator*( double aScalar, const KFMPoint<NDIM>& aVector )
+template<unsigned int NDIM> inline KFMPoint<NDIM> operator*(double aScalar, const KFMPoint<NDIM>& aVector)
 {
-    KFMPoint<NDIM>  aResult( aVector );
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    KFMPoint<NDIM> aResult(aVector);
+    for (unsigned int i = 0; i < NDIM; i++) {
         aResult[i] *= aScalar;
     }
     return aResult;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM> operator*( const KFMPoint<NDIM>& aVector, double aScalar )
+template<unsigned int NDIM> inline KFMPoint<NDIM> operator*(const KFMPoint<NDIM>& aVector, double aScalar)
 {
-    KFMPoint<NDIM>  aResult( aVector );
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    KFMPoint<NDIM> aResult(aVector);
+    for (unsigned int i = 0; i < NDIM; i++) {
         aResult[i] *= aScalar;
     }
     return aResult;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator*=( KFMPoint<NDIM>& aVector, double aScalar )
+template<unsigned int NDIM> inline KFMPoint<NDIM>& operator*=(KFMPoint<NDIM>& aVector, double aScalar)
 {
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    for (unsigned int i = 0; i < NDIM; i++) {
         aVector[i] *= aScalar;
     }
     return aVector;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM> operator/( const KFMPoint<NDIM>& aVector, double aScalar )
+template<unsigned int NDIM> inline KFMPoint<NDIM> operator/(const KFMPoint<NDIM>& aVector, double aScalar)
 {
-    KFMPoint<NDIM>  aResult( aVector );
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    KFMPoint<NDIM> aResult(aVector);
+    for (unsigned int i = 0; i < NDIM; i++) {
         aResult[i] /= aScalar;
     }
     return aResult;
 }
 
-template<unsigned int NDIM>
-inline KFMPoint<NDIM>& operator/=( KFMPoint<NDIM>& aVector, double aScalar )
+template<unsigned int NDIM> inline KFMPoint<NDIM>& operator/=(KFMPoint<NDIM>& aVector, double aScalar)
 {
-    for(unsigned int i=0; i<NDIM; i++)
-    {
+    for (unsigned int i = 0; i < NDIM; i++) {
         aVector[i] /= aScalar;
     }
     return aVector;
 }
 
 
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMPoint_H__ */

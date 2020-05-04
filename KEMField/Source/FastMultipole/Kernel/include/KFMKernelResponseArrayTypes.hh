@@ -3,7 +3,6 @@
 
 #include "KFMKernelResponseArray.hh"
 #include "KFMReducedKernelResponseArray.hh"
-
 #include "KFMResponseKernel_3DLaplaceL2L.hh"
 #include "KFMResponseKernel_3DLaplaceM2L.hh"
 #include "KFMResponseKernel_3DLaplaceM2M.hh"
@@ -23,14 +22,20 @@ namespace KEMField
 *
 */
 
-typedef KFMKernelResponseArray< KFMResponseKernel_3DLaplaceM2M, false, 3 > KFMKernelResponseArray_3DLaplaceM2M; //inward response
-typedef KFMKernelResponseArray< KFMResponseKernel_3DLaplaceM2L, true, 3 > KFMKernelResponseArray_3DLaplaceM2L; //outward response
-typedef KFMKernelResponseArray< KFMResponseKernel_3DLaplaceL2L, true, 3> KFMKernelResponseArray_3DLaplaceL2L; //outward response
+typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>
+    KFMKernelResponseArray_3DLaplaceM2M;  //inward response
+typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>
+    KFMKernelResponseArray_3DLaplaceM2L;  //outward response
+typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>
+    KFMKernelResponseArray_3DLaplaceL2L;  //outward response
 
-typedef KFMReducedKernelResponseArray< KFMResponseKernel_3DLaplaceM2M, false, 3 > KFMKernelReducedResponseArray_3DLaplaceM2M; //inward response
-typedef KFMReducedKernelResponseArray< KFMResponseKernel_3DLaplaceM2L, true, 3 > KFMKernelReducedResponseArray_3DLaplaceM2L; //outward response
-typedef KFMReducedKernelResponseArray< KFMResponseKernel_3DLaplaceL2L, true, 3 > KFMKernelReducedResponseArray_3DLaplaceL2L; //outward response
+typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>
+    KFMKernelReducedResponseArray_3DLaplaceM2M;  //inward response
+typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>
+    KFMKernelReducedResponseArray_3DLaplaceM2L;  //outward response
+typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>
+    KFMKernelReducedResponseArray_3DLaplaceL2L;  //outward response
 
-}
+}  // namespace KEMField
 
 #endif /* KFMKernelResponseArrayTypes_H__ */

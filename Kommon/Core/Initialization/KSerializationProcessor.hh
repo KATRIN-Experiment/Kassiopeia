@@ -5,48 +5,56 @@
 
 namespace katrin
 {
-    class KSerializationProcessor :
-        public KProcessor
+class KSerializationProcessor : public KProcessor
 
+{
+  public:
+    KSerializationProcessor();
+    ~KSerializationProcessor() override;
+
+    void ProcessToken(KBeginParsingToken* aToken) override;
+    void ProcessToken(KBeginFileToken* aToken) override;
+    void ProcessToken(KBeginElementToken* aToken) override;
+    void ProcessToken(KBeginAttributeToken* aToken) override;
+    void ProcessToken(KAttributeDataToken* aToken) override;
+    void ProcessToken(KEndAttributeToken* aToken) override;
+    void ProcessToken(KMidElementToken* aToken) override;
+    void ProcessToken(KElementDataToken* aToken) override;
+    void ProcessToken(KEndElementToken* aToken) override;
+    void ProcessToken(KEndFileToken* aToken) override;
+    void ProcessToken(KEndParsingToken* aToken) override;
+    void ProcessToken(KCommentToken* aToken) override;
+    void ProcessToken(KErrorToken* aToken) override;
+
+    std::string GetConfig()
     {
-        public:
-    		KSerializationProcessor();
-            virtual ~KSerializationProcessor();
+        return completeconfig;
+    }
+    void Clear()
+    {
+        completeconfig.clear();
+    }
 
-            virtual void ProcessToken( KBeginParsingToken* aToken );
-            virtual void ProcessToken( KBeginFileToken* aToken );
-            virtual void ProcessToken( KBeginElementToken* aToken );
-            virtual void ProcessToken( KBeginAttributeToken* aToken );
-            virtual void ProcessToken( KAttributeDataToken* aToken );
-            virtual void ProcessToken( KEndAttributeToken* aToken );
-            virtual void ProcessToken( KMidElementToken* aToken );
-            virtual void ProcessToken( KElementDataToken* aToken );
-            virtual void ProcessToken( KEndElementToken* aToken );
-            virtual void ProcessToken( KEndFileToken* aToken );
-            virtual void ProcessToken( KEndParsingToken* aToken );
-            virtual void ProcessToken( KCommentToken* aToken );
-            virtual void ProcessToken( KErrorToken* aToken );
+  private:
+    std::string completeconfig;
+    std::string fOutputFilename;
 
-            std::string GetConfig() { return completeconfig; }
-            void Clear() { completeconfig.clear(); }
+    typedef enum
+    {
+        eElementInactive,
+        eActiveFileDefine,
+        eElementComplete
+    } ElementState;
+    typedef enum
+    {
+        eAttributeInactive,
+        eActiveFileName,
+        eAttributeComplete
+    } AttributeState;
 
-       private:
-            std::string completeconfig;
-            std::string fOutputFilename;
-
-            typedef enum
-            {
-                eElementInactive, eActiveFileDefine, eElementComplete
-            } ElementState;
-            typedef enum
-            {
-                eAttributeInactive, eActiveFileName, eAttributeComplete
-            } AttributeState;
-
-            ElementState fElementState;
-            AttributeState fAttributeState;
-
-    };
-}
+    ElementState fElementState;
+    AttributeState fAttributeState;
+};
+}  // namespace katrin
 
 #endif

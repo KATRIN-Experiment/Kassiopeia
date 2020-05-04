@@ -1,11 +1,11 @@
 #include "KVMCompactVolume.hh"
+
 #include <limits>
 
 using namespace KEMField;
 
 
-bool
-KVMCompactVolume::PointInDomain(const KVMFixedArray<double, KVMVolumeDDim >* in) const
+bool KVMCompactVolume::PointInDomain(const KVMFixedArray<double, KVMVolumeDDim>* in) const
 {
     ///default is to just check if we are in the domain bounding
     ///box but the user can override this if they have a non-rectangular
@@ -15,18 +15,16 @@ KVMCompactVolume::PointInDomain(const KVMFixedArray<double, KVMVolumeDDim >* in)
     return InBoundingBox(in);
 }
 
-bool
-KVMCompactVolume::Evaluate(const KVMFixedArray<double, KVMVolumeDDim >* in, KVMFixedArray<double, KVMVolumeRDim >* out) const
+bool KVMCompactVolume::Evaluate(const KVMFixedArray<double, KVMVolumeDDim>* in,
+                                KVMFixedArray<double, KVMVolumeRDim>* out) const
 {
-    if(PointInDomain(in))
-    {
+    if (PointInDomain(in)) {
         (*out)[0] = x((*in)[0], (*in)[1], (*in)[2]);
         (*out)[1] = y((*in)[0], (*in)[1], (*in)[2]);
         (*out)[2] = z((*in)[0], (*in)[1], (*in)[2]);
         return true;
     }
-    else
-    {
+    else {
         (*out)[0] = std::numeric_limits<double>::quiet_NaN();
         (*out)[1] = std::numeric_limits<double>::quiet_NaN();
         (*out)[2] = std::numeric_limits<double>::quiet_NaN();
@@ -35,11 +33,10 @@ KVMCompactVolume::Evaluate(const KVMFixedArray<double, KVMVolumeDDim >* in, KVMF
 }
 
 
-bool
-KVMCompactVolume::Jacobian(const KVMFixedArray<double, KVMVolumeDDim >* in, KVMFixedArray< KVMFixedArray<double, KVMVolumeRDim>, KVMVolumeDDim >* jacobian) const
+bool KVMCompactVolume::Jacobian(const KVMFixedArray<double, KVMVolumeDDim>* in,
+                                KVMFixedArray<KVMFixedArray<double, KVMVolumeRDim>, KVMVolumeDDim>* jacobian) const
 {
-    if(PointInDomain(in))
-    {
+    if (PointInDomain(in)) {
         (*jacobian)[0][0] = dxdu((*in)[0], (*in)[1], (*in)[2]);
         (*jacobian)[0][1] = dydu((*in)[0], (*in)[1], (*in)[2]);
         (*jacobian)[0][2] = dzdu((*in)[0], (*in)[1], (*in)[2]);
@@ -51,8 +48,7 @@ KVMCompactVolume::Jacobian(const KVMFixedArray<double, KVMVolumeDDim >* in, KVMF
         (*jacobian)[2][2] = dzdw((*in)[0], (*in)[1], (*in)[2]);
         return true;
     }
-    else
-    {
+    else {
         (*jacobian)[0][0] = std::numeric_limits<double>::quiet_NaN();
         (*jacobian)[0][1] = std::numeric_limits<double>::quiet_NaN();
         (*jacobian)[0][2] = std::numeric_limits<double>::quiet_NaN();
@@ -64,5 +60,4 @@ KVMCompactVolume::Jacobian(const KVMFixedArray<double, KVMVolumeDDim >* in, KVMF
         (*jacobian)[2][2] = std::numeric_limits<double>::quiet_NaN();
         return false;
     }
-
 }

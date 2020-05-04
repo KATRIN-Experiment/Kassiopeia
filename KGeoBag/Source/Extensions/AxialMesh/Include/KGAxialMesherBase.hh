@@ -1,32 +1,31 @@
 #ifndef KGeoBag_KGAxialMesherBase_hh_
 #define KGeoBag_KGAxialMesherBase_hh_
 
-#include "KGCore.hh"
-
 #include "KGAxialMesh.hh"
+#include "KGCore.hh"
 
 namespace KGeoBag
 {
 
-    class KGAxialMesherBase :
-        public KGVisitor,
-        public KGExtendedSurface< KGAxialMesh >::Visitor,
-        public KGExtendedSpace< KGAxialMesh >::Visitor
-    {
-        protected:
-            KGAxialMesherBase();
+class KGAxialMesherBase :
+    public KGVisitor,
+    public KGExtendedSurface<KGAxialMesh>::Visitor,
+    public KGExtendedSpace<KGAxialMesh>::Visitor
+{
+  protected:
+    KGAxialMesherBase();
 
-        public:
-            virtual ~KGAxialMesherBase();
+  public:
+    ~KGAxialMesherBase() override;
 
-        public:
-            virtual void VisitExtendedSurface( KGExtendedSurface< KGAxialMesh >* aSurface );
-            virtual void VisitExtendedSpace( KGExtendedSpace< KGAxialMesh >* aSpace );
+  public:
+    void VisitExtendedSurface(KGExtendedSurface<KGAxialMesh>* aSurface) override;
+    void VisitExtendedSpace(KGExtendedSpace<KGAxialMesh>* aSpace) override;
 
-        protected:
-            KGAxialMeshElementVector* fCurrentElements;
-    };
+  protected:
+    KGAxialMeshElementVector* fCurrentElements;
+};
 
-}
+}  // namespace KGeoBag
 
 #endif

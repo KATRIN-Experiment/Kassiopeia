@@ -5,45 +5,49 @@
 #ifndef KVariant_h__
 #define KVariant_h__
 
+#include "KException.h"
+
+#include <iostream>
+#include <map>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <map>
-#include <iostream>
-#include <sstream>
-#include "KException.h"
 
 
 // "variant" is not "any" as in boost, because it does not support
 // general types as a template, but limits to primitive types.
 // In return, variant provides non-explicit constructors and
-// type-cast operators which make conversions invisible. 
+// type-cast operators which make conversions invisible.
 // (If you do this with a template, it will generate a global
 // type conversion path between any types, and can destroy the
 // C++ conversion rules.)
 //
-// "variant" uses "union" instead of dynamically allocated templated 
-// type holder object (like "any" in boost), which will be an advantage 
-// for large scale data table etc. 
+// "variant" uses "union" instead of dynamically allocated templated
+// type holder object (like "any" in boost), which will be an advantage
+// for large scale data table etc.
 
 
-namespace katrin {
+namespace katrin
+{
 
 
-class KUnknown {
+class KUnknown
+{
   public:
     // use RTTI to get actual type //
-    KUnknown(void) {}
+    KUnknown() {}
     virtual ~KUnknown() {}
-    virtual KUnknown* Clone(void) const = 0;
+    virtual KUnknown* Clone() const = 0;
 };
 
 
 /**
  * \brief Variant data type (union + data conversion interface)
  */
-class KVariant {
+class KVariant
+{
   public:
-    inline KVariant(void);
+    inline KVariant();
     inline KVariant(bool Value);
     inline KVariant(int Value);
     inline KVariant(unsigned int Value);
@@ -59,41 +63,52 @@ class KVariant {
     inline KVariant(const KVariant& Value);
     inline ~KVariant();
     inline KVariant& operator=(const KVariant& Value);
-    inline void Assign(const KVariant& Value) ;
+    inline void Assign(const KVariant& Value);
+
   public:
-    template<typename T> inline T As(void) const ;
-    inline operator bool() const ;
-    inline operator int() const ;
-    inline operator unsigned int() const ;
-    inline operator long() const ;
-    inline operator unsigned long() const ;
-    inline operator long long() const ;
-    inline operator unsigned long long() const ;
-    inline operator float() const ;
-    inline operator double() const ;
+    template<typename T> inline T As() const;
+    inline operator bool() const;
+    inline operator int() const;
+    inline operator unsigned int() const;
+    inline operator long() const;
+    inline operator unsigned long() const;
+    inline operator long long() const;
+    inline operator unsigned long long() const;
+    inline operator float() const;
+    inline operator double() const;
     inline operator std::string() const;
-    inline operator const KUnknown&() const ;
+    inline operator const KUnknown&() const;
+
   public:
-    inline bool IsVoid(void) const;
-    inline bool IsBool(void) const;
-    inline bool IsInteger(void) const;
-    inline bool IsNumeric(void) const;
-    inline bool IsString(void) const;
-    inline bool IsUnknown(void) const;
-    bool AsBool(void) const ;
-    long long AsLong(void) const;
-    double AsDouble(void) const;
-    std::string AsString(int precision=-1) const;
-    KUnknown& AsUnknown(void);
-    const KUnknown& AsUnknown(void) const;
+    inline bool IsVoid() const;
+    inline bool IsBool() const;
+    inline bool IsInteger() const;
+    inline bool IsNumeric() const;
+    inline bool IsString() const;
+    inline bool IsUnknown() const;
+    bool AsBool() const;
+    long long AsLong() const;
+    double AsDouble() const;
+    std::string AsString(int precision = -1) const;
+    KUnknown& AsUnknown();
+    const KUnknown& AsUnknown() const;
+
   public:
     inline KVariant Or(const KVariant& DefaultValue) const;
-    std::map<int, KVariant> SplitBy(const std::string& Separator, std::vector<KVariant> DefaultValueList={}) const;
+    std::map<int, KVariant> SplitBy(const std::string& Separator, std::vector<KVariant> DefaultValueList = {}) const;
+
   private:
-    enum TValueType { 
-	Type_Void, Type_Bool, Type_Long, Type_Double, Type_String, Type_Unknown
+    enum TValueType
+    {
+        Type_Void,
+        Type_Bool,
+        Type_Long,
+        Type_Double,
+        Type_String,
+        Type_Unknown
     } fType;
-    union TPrimitive {
+    union TPrimitive
+    {
         bool fBoolValue;
         long long fLongValue;
         double fDoubleValue;
@@ -103,249 +118,263 @@ class KVariant {
 };
 
 
-
-template<typename T>
-struct KVariantDecoder {
-  // explicit partial instantiations only //
+template<typename T> struct KVariantDecoder
+{
+    // explicit partial instantiations only //
   private:
-    static T As(const KVariant&) { return T(); }
+    static T As(const KVariant&)
+    {
+        return T();
+    }
 };
 
-template<> struct KVariantDecoder<void> {
-    static void As(const KVariant&) { }
+template<> struct KVariantDecoder<void>
+{
+    static void As(const KVariant&) {}
 };
 
-template<> struct KVariantDecoder<bool> {
-    static bool As(const KVariant& Value) {
+template<> struct KVariantDecoder<bool>
+{
+    static bool As(const KVariant& Value)
+    {
         return Value.AsBool();
     }
 };
 
-template<> struct KVariantDecoder<signed char> {
-    static signed char As(const KVariant& Value) {
+template<> struct KVariantDecoder<signed char>
+{
+    static signed char As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<unsigned char> {
-    static unsigned char As(const KVariant& Value) {
+template<> struct KVariantDecoder<unsigned char>
+{
+    static unsigned char As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<short> {
-    static short As(const KVariant& Value) {
+template<> struct KVariantDecoder<short>
+{
+    static short As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<unsigned short> {
-    static unsigned short As(const KVariant& Value) {
+template<> struct KVariantDecoder<unsigned short>
+{
+    static unsigned short As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<int> {
-    static int As(const KVariant& Value) {
+template<> struct KVariantDecoder<int>
+{
+    static int As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<unsigned int> {
-    static unsigned int As(const KVariant& Value) {
+template<> struct KVariantDecoder<unsigned int>
+{
+    static unsigned int As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<long> {
-    static long As(const KVariant& Value) {
+template<> struct KVariantDecoder<long>
+{
+    static long As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<unsigned long> {
-    static unsigned long As(const KVariant& Value) {
+template<> struct KVariantDecoder<unsigned long>
+{
+    static unsigned long As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<long long> {
-    static long long As(const KVariant& Value) {
+template<> struct KVariantDecoder<long long>
+{
+    static long long As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<unsigned long long> {
-    static unsigned long long As(const KVariant& Value) {
+template<> struct KVariantDecoder<unsigned long long>
+{
+    static unsigned long long As(const KVariant& Value)
+    {
         return Value.AsLong();
     }
 };
 
-template<> struct KVariantDecoder<float> {
-    static float As(const KVariant& Value) {
+template<> struct KVariantDecoder<float>
+{
+    static float As(const KVariant& Value)
+    {
         return Value.AsDouble();
     }
 };
 
-template<> struct KVariantDecoder<double> {
-    static double As(const KVariant& Value) {
+template<> struct KVariantDecoder<double>
+{
+    static double As(const KVariant& Value)
+    {
         return Value.AsDouble();
     }
 };
 
-template<> struct KVariantDecoder<std::string> {
-    static std::string As(const KVariant& Value) {
+template<> struct KVariantDecoder<std::string>
+{
+    static std::string As(const KVariant& Value)
+    {
         return Value.AsString();
     }
 };
 
-template<> struct KVariantDecoder<const char*> {
-    static std::string As(const KVariant& Value) {
+template<> struct KVariantDecoder<const char*>
+{
+    static std::string As(const KVariant& Value)
+    {
         return Value.AsString().c_str();
     }
 };
 
-template<> struct KVariantDecoder<const KUnknown&> {
-    static const KUnknown& As(const KVariant& Value) {
+template<> struct KVariantDecoder<const KUnknown&>
+{
+    static const KUnknown& As(const KVariant& Value)
+    {
         return Value.AsUnknown();
     }
 };
 
 
+KVariant::KVariant() : fType(Type_Void) {}
 
-KVariant::KVariant(void)
-: fType(Type_Void)
-{
-}
-
-KVariant::KVariant(bool Value)
-: fType(Type_Bool)
+KVariant::KVariant(bool Value) : fType(Type_Bool)
 {
     fPrimitive.fBoolValue = Value;
 }
 
-KVariant::KVariant(int Value)
-: fType(Type_Long)
+KVariant::KVariant(int Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(unsigned int Value)
-: fType(Type_Long)
+KVariant::KVariant(unsigned int Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(long Value)
-: fType(Type_Long)
+KVariant::KVariant(long Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(unsigned long Value)
-: fType(Type_Long)
+KVariant::KVariant(unsigned long Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(long long Value)
-: fType(Type_Long)
+KVariant::KVariant(long long Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(unsigned long long Value)
-: fType(Type_Long)
+KVariant::KVariant(unsigned long long Value) : fType(Type_Long)
 {
     fPrimitive.fLongValue = Value;
 }
 
-KVariant::KVariant(float Value)
-: fType(Type_Double)
+KVariant::KVariant(float Value) : fType(Type_Double)
 {
     fPrimitive.fDoubleValue = Value;
 }
 
-KVariant::KVariant(double Value)
-: fType(Type_Double)
+KVariant::KVariant(double Value) : fType(Type_Double)
 {
     fPrimitive.fDoubleValue = Value;
 }
 
-KVariant::KVariant(const std::string& Value)
-: fType(Type_String)
+KVariant::KVariant(const std::string& Value) : fType(Type_String)
 {
     fPrimitive.fStringValue = new std::string(Value);
 }
 
-KVariant::KVariant(const char* Value)
-: fType(Type_String)
+KVariant::KVariant(const char* Value) : fType(Type_String)
 {
     fPrimitive.fStringValue = new std::string(Value);
 }
 
-KVariant::KVariant(const KUnknown& Value)
-: fType(Type_Unknown)
+KVariant::KVariant(const KUnknown& Value) : fType(Type_Unknown)
 {
     fPrimitive.fUnknownValue = Value.Clone();
 }
 
-KVariant::KVariant(const KVariant& Value)
-: fType(Value.fType), fPrimitive(Value.fPrimitive)
+KVariant::KVariant(const KVariant& Value) : fType(Value.fType), fPrimitive(Value.fPrimitive)
 {
     if (fType == Type_String) {
-	fPrimitive.fStringValue = (
-	    new std::string(*Value.fPrimitive.fStringValue)
-	);
+        fPrimitive.fStringValue = (new std::string(*Value.fPrimitive.fStringValue));
     }
     else if (fType == Type_Unknown) {
-	fPrimitive.fUnknownValue = Value.fPrimitive.fUnknownValue->Clone();
+        fPrimitive.fUnknownValue = Value.fPrimitive.fUnknownValue->Clone();
     }
 }
 
 KVariant::~KVariant()
 {
     if (fType == Type_String) {
-	delete fPrimitive.fStringValue;
+        delete fPrimitive.fStringValue;
     }
     else if (fType == Type_Unknown) {
-	delete fPrimitive.fUnknownValue;
+        delete fPrimitive.fUnknownValue;
     }
 }
 
 KVariant& KVariant::operator=(const KVariant& Value)
 {
     if (&Value == this) {
-	return *this;
+        return *this;
     }
 
     if (fType == Type_String) {
-	delete fPrimitive.fStringValue;
+        delete fPrimitive.fStringValue;
     }
     else if (fType == Type_Unknown) {
-	delete fPrimitive.fUnknownValue;
+        delete fPrimitive.fUnknownValue;
     }
 
     if (Value.fType == Type_String) {
-	fPrimitive.fStringValue = (
-	    new std::string(*Value.fPrimitive.fStringValue)
-	);
+        fPrimitive.fStringValue = (new std::string(*Value.fPrimitive.fStringValue));
     }
     else if (Value.fType == Type_Unknown) {
-	fPrimitive.fUnknownValue = Value.fPrimitive.fUnknownValue->Clone();
+        fPrimitive.fUnknownValue = Value.fPrimitive.fUnknownValue->Clone();
     }
     else {
-	fPrimitive = Value.fPrimitive;
+        fPrimitive = Value.fPrimitive;
     }
     fType = Value.fType;
 
     return *this;
 }
 
-void KVariant::Assign(const KVariant& Value) 
+void KVariant::Assign(const KVariant& Value)
 {
     if (fType == Type_Void) {
-	throw KException() << "assignment to void variable not allowed";
+        throw KException() << "assignment to void variable not allowed";
     }
     else if (fType == Type_Bool) {
         fPrimitive.fBoolValue = Value.AsBool();
@@ -360,57 +389,56 @@ void KVariant::Assign(const KVariant& Value)
         *(fPrimitive.fStringValue) = Value.AsString();
     }
     else {
-	throw KException() << "assignment to Unknown variable not allowed";
+        throw KException() << "assignment to Unknown variable not allowed";
     }
 }
 
-template <typename T> 
-inline T KVariant::As(void) const 
+template<typename T> inline T KVariant::As() const
 {
     return katrin::KVariantDecoder<T>::As(*this);
 }
 
-KVariant::operator bool() const 
+KVariant::operator bool() const
 {
     return As<bool>();
 }
 
-KVariant::operator int() const 
+KVariant::operator int() const
 {
     return As<int>();
 }
 
-KVariant::operator unsigned int() const 
+KVariant::operator unsigned int() const
 {
     return As<unsigned int>();
 }
 
-KVariant::operator long() const 
+KVariant::operator long() const
 {
     return As<long>();
 }
 
-KVariant::operator unsigned long() const 
+KVariant::operator unsigned long() const
 {
     return As<unsigned long>();
 }
 
-KVariant::operator long long() const 
+KVariant::operator long long() const
 {
     return As<long long>();
 }
 
-KVariant::operator unsigned long long() const 
+KVariant::operator unsigned long long() const
 {
     return As<unsigned long long>();
 }
 
-KVariant::operator float() const 
+KVariant::operator float() const
 {
     return As<float>();
 }
 
-KVariant::operator double() const 
+KVariant::operator double() const
 {
     return As<double>();
 }
@@ -420,41 +448,41 @@ KVariant::operator std::string() const
     return As<std::string>();
 }
 
-KVariant::operator const KUnknown&() const 
+KVariant::operator const KUnknown&() const
 {
     return As<const KUnknown&>();
 }
 
-bool KVariant::IsVoid(void) const
+bool KVariant::IsVoid() const
 {
     return (fType == Type_Void);
 }
 
-bool KVariant::IsBool(void) const
+bool KVariant::IsBool() const
 {
     return (fType == Type_Bool);
 }
 
-bool KVariant::IsInteger(void) const
+bool KVariant::IsInteger() const
 {
     return (fType == Type_Long);
 }
 
-bool KVariant::IsNumeric(void) const
+bool KVariant::IsNumeric() const
 {
     return ((fType == Type_Long) || (fType == Type_Double));
 }
 
-bool KVariant::IsString(void) const
+bool KVariant::IsString() const
 {
     return (fType == Type_String);
 }
 
-bool KVariant::IsUnknown(void) const
+bool KVariant::IsUnknown() const
 {
     return (fType == Type_Unknown);
 }
-    
+
 
 inline KVariant KVariant::Or(const KVariant& DefaultValue) const
 {
@@ -467,30 +495,27 @@ inline KVariant KVariant::Or(const KVariant& DefaultValue) const
 }
 
 
-
-inline std::ostream& operator<<(std::ostream& os, const KVariant& Value) 
+inline std::ostream& operator<<(std::ostream& os, const KVariant& Value)
 {
     if (Value.IsInteger()) {
-	os << (long) Value;
+        os << (long) Value;
     }
     else if (Value.IsNumeric()) {
-	os << (double) Value;
+        os << (double) Value;
     }
     else {
-	os << (const std::string&) Value;
+        os << (const std::string&) Value;
     }
 
     return os;
 }
 
 
-
 #if 1
 // do not use const KVariant& for the following operator overloading
 // otherwise the operators will be ambiguous (e.g., enum + int)
 
-template <typename T>
-inline KVariant operator+(KVariant& Left, const T& Right)
+template<typename T> inline KVariant operator+(KVariant& Left, const T& Right)
 {
     if (Left.IsInteger()) {
         return KVariant(Left.As<long long>() + Right);
@@ -499,16 +524,13 @@ inline KVariant operator+(KVariant& Left, const T& Right)
         return KVariant(Left.As<double>() + Right);
     }
     else if (Left.IsString()) {
-        return KVariant(
-            Left.As<std::string>() + KVariant(Right).As<std::string>()
-        );
+        return KVariant(Left.As<std::string>() + KVariant(Right).As<std::string>());
     }
 
     return KVariant(Left.As<T>() + Right);
 }
 
-template <typename T>
-inline KVariant operator+(const T& Left, KVariant& Right)
+template<typename T> inline KVariant operator+(const T& Left, KVariant& Right)
 {
     if (Right.IsInteger()) {
         return KVariant(Left + Right.As<long long>());
@@ -517,9 +539,7 @@ inline KVariant operator+(const T& Left, KVariant& Right)
         return KVariant(Left + Right.As<double>());
     }
     else if (Right.IsString()) {
-        return KVariant(
-            KVariant(Left).As<std::string>() + Right.As<std::string>()
-        );
+        return KVariant(KVariant(Left).As<std::string>() + Right.As<std::string>());
     }
 
     return KVariant(Left + Right.As<T>());
@@ -538,7 +558,7 @@ inline KVariant operator+(KVariant& Left, KVariant& Right)
     }
 }
 
-inline KVariant operator+(KVariant& Left, const std::string& Right) 
+inline KVariant operator+(KVariant& Left, const std::string& Right)
 {
     return KVariant(Left.As<std::string>() + Right);
 }
@@ -548,7 +568,7 @@ inline KVariant operator+(const std::string& Left, KVariant& Right)
     return KVariant(Left + Right.As<std::string>());
 }
 
-inline KVariant operator+(KVariant& Left, const char Right[]) 
+inline KVariant operator+(KVariant& Left, const char Right[])
 {
     return KVariant(Left.As<std::string>() + std::string(Right));
 }
@@ -558,14 +578,12 @@ inline KVariant operator+(const char Left[], KVariant& Right)
     return KVariant(std::string(Left) + Right.As<std::string>());
 }
 
-template <typename T>
-inline KVariant& operator+=(KVariant& This, const T& Value)
+template<typename T> inline KVariant& operator+=(KVariant& This, const T& Value)
 {
     return This = operator+(This, Value);
 }
 
-template <typename T>
-inline KVariant& operator-=(KVariant& This, const T& Value)
+template<typename T> inline KVariant& operator-=(KVariant& This, const T& Value)
 {
     if (This.IsInteger()) {
         return This = This.As<long long>() - Value;
@@ -577,8 +595,7 @@ inline KVariant& operator-=(KVariant& This, const T& Value)
     return This = This.As<T>() - Value;
 }
 
-template <typename T>
-inline KVariant& operator*=(KVariant& This, const T& Value)
+template<typename T> inline KVariant& operator*=(KVariant& This, const T& Value)
 {
     if (This.IsInteger()) {
         return This = This.As<long long>() * Value;
@@ -590,8 +607,7 @@ inline KVariant& operator*=(KVariant& This, const T& Value)
     return This = This.As<T>() * Value;
 }
 
-template <typename T>
-inline KVariant& operator/=(KVariant& This, const T& Value)
+template<typename T> inline KVariant& operator/=(KVariant& This, const T& Value)
 {
     if (This.IsInteger()) {
         return This = This.As<long long>() / Value;
@@ -603,8 +619,7 @@ inline KVariant& operator/=(KVariant& This, const T& Value)
     return This = This.As<T>() / Value;
 }
 
-template <typename T>
-inline bool operator==(KVariant& This, const T& Value)
+template<typename T> inline bool operator==(KVariant& This, const T& Value)
 {
     return This.As<T>() == Value;
 }
@@ -614,8 +629,7 @@ inline bool operator==(KVariant& This, const char Value[])
     return This.As<std::string>() == std::string(Value);
 }
 
-template <typename T>
-inline bool operator!=(KVariant& This, const T& Value)
+template<typename T> inline bool operator!=(KVariant& This, const T& Value)
 {
     return This.As<T>() != Value;
 }
@@ -625,26 +639,22 @@ inline bool operator!=(KVariant& This, const char Value[])
     return This.As<std::string>() != std::string(Value);
 }
 
-template <typename T>
-inline bool operator>(KVariant& This, const T& Value)
+template<typename T> inline bool operator>(KVariant& This, const T& Value)
 {
     return This.As<T>() > Value;
 }
 
-template <typename T>
-inline bool operator<(KVariant& This, const T& Value)
+template<typename T> inline bool operator<(KVariant& This, const T& Value)
 {
     return This.As<T>() < Value;
 }
 
-template <typename T>
-inline bool operator>=(KVariant& This, const T& Value)
+template<typename T> inline bool operator>=(KVariant& This, const T& Value)
 {
     return This.As<T>() >= Value;
 }
 
-template <typename T>
-inline bool operator<=(KVariant& This, const T& Value)
+template<typename T> inline bool operator<=(KVariant& This, const T& Value)
 {
     return This.As<T>() <= Value;
 }
@@ -655,5 +665,5 @@ inline bool operator<=(KVariant& This, const T& Value)
 typedef KVariant var;
 
 
-}
+}  // namespace katrin
 #endif

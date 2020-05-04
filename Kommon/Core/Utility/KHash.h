@@ -8,34 +8,31 @@
 #define KOMMON_CORE_UTILITY_KHASH_H_
 
 #include <functional>
-#include <type_traits>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
-namespace katrin {
+namespace katrin
+{
 
-template<class T>
-inline std::size_t hash_value(T const& v)
+template<class T> inline std::size_t hash_value(T const& v)
 {
     return std::hash<T>()(v);
 }
 
-template<class T>
-inline void hash_combine(std::size_t& seed, T const& v)
+template<class T> inline void hash_combine(std::size_t& seed, T const& v)
 {
     seed ^= std::hash<T>()(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 }
 
-template <class It>
-inline void hash_range(std::size_t& seed, It first, It last)
+template<class It> inline void hash_range(std::size_t& seed, It first, It last)
 {
-    for(; first != last; ++first) {
+    for (; first != last; ++first) {
         hash_combine(seed, *first);
     }
 }
 
-template<typename ContainerT>
-struct hash_container
+template<typename ContainerT> struct hash_container
 {
     std::size_t operator()(const ContainerT& arr) const
     {
@@ -46,19 +43,17 @@ struct hash_container
 };
 
 
-
-template<class E>
-struct hash_enum
+template<class E> struct hash_enum
 {
     using utype = typename std::underlying_type<E>::type;
-    std::size_t operator()(const E& e) const {
-        return std::hash<utype>()( (utype) e );
+    std::size_t operator()(const E& e) const
+    {
+        return std::hash<utype>()((utype) e);
     }
 };
 
 // Recursive template code derived from Matthieu M.
-template<class Tuple, std::size_t Index = std::tuple_size<Tuple>::value - 1>
-struct HashValueImpl
+template<class Tuple, std::size_t Index = std::tuple_size<Tuple>::value - 1> struct HashValueImpl
 {
     static void apply(std::size_t& seed, Tuple const& tuple)
     {
@@ -67,8 +62,7 @@ struct HashValueImpl
     }
 };
 
-template<class Tuple>
-struct HashValueImpl<Tuple, 0>
+template<class Tuple> struct HashValueImpl<Tuple, 0>
 {
     static void apply(std::size_t& seed, Tuple const& tuple)
     {
@@ -76,27 +70,25 @@ struct HashValueImpl<Tuple, 0>
     }
 };
 
-}
+}  // namespace katrin
 
 
 // hash specializations for some STL containers and std::tuple
 
-namespace std {
+namespace std
+{
 
-template<typename ... TT>
-struct hash<tuple<TT...> >
+template<typename... TT> struct hash<tuple<TT...>>
 {
     size_t operator()(tuple<TT...> const& tt) const
     {
         size_t seed = 0;
-        katrin::HashValueImpl<tuple<TT...> >::apply(seed, tt);
+        katrin::HashValueImpl<tuple<TT...>>::apply(seed, tt);
         return seed;
     }
-
 };
 
-template<typename KeyT, typename ValueT>
-struct hash<pair<KeyT, ValueT> >
+template<typename KeyT, typename ValueT> struct hash<pair<KeyT, ValueT>>
 {
     size_t operator()(const pair<KeyT, ValueT>& pair) const
     {
@@ -107,7 +99,7 @@ struct hash<pair<KeyT, ValueT> >
     }
 };
 
-}
+}  // namespace std
 
 
 #endif /* KOMMON_CORE_UTILITY_KHASH_H_ */

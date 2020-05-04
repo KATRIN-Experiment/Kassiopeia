@@ -1,13 +1,14 @@
 #ifndef KSAAssociatedPointerPODInputNode_HH__
 #define KSAAssociatedPointerPODInputNode_HH__
 
-#include "KSAPODInputNode.hh"
 #include "KSACallbackTypes.hh"
+#include "KSAPODInputNode.hh"
 
-#define AddKSAInputForPointer(class,var,type) \
-  node->AddChild(new KSAAssociatedPointerPODInputNode< class, type, &class::Set ## var>(std::string(#var), this) )
+#define AddKSAInputForPointer(class, var, type)                                                                        \
+    node->AddChild(new KSAAssociatedPointerPODInputNode<class, type, &class ::Set##var>(std::string(#var), this))
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -24,32 +25,31 @@ namespace KEMField{
 */
 
 
-
-template< typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*) >
-class KSAAssociatedPointerPODInputNode: public KSAPODInputNode<SetType>
+template<typename CallType, typename SetType, void (CallType::*memberFunction)(const SetType*)>
+class KSAAssociatedPointerPODInputNode : public KSAPODInputNode<SetType>
 {
-    public:
+  public:
+    KSAAssociatedPointerPODInputNode(std::string name, CallType* call_ptr) : KSAPODInputNode<SetType>(name)
+    {
+        fCallPtr = call_ptr;
+    };
 
-        KSAAssociatedPointerPODInputNode(std::string name, CallType* call_ptr):KSAPODInputNode< SetType >(name)
-        {
-            fCallPtr = call_ptr;
-        };
+    ~KSAAssociatedPointerPODInputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPointerPODInputNode(){;};
+    void FinalizeObject() override
+    {
+        fCallback(fCallPtr, &(this->fValue));
+    }
 
-        void FinalizeObject()
-        {
-            fCallback(fCallPtr, &(this->fValue) );
-        }
-
-    protected:
-
-        CallType* fCallPtr;
-        KSAPassByConstantPointerSet< CallType, SetType, memberFunction > fCallback;
-
+  protected:
+    CallType* fCallPtr;
+    KSAPassByConstantPointerSet<CallType, SetType, memberFunction> fCallback;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPointerPODInputNode_H__ */

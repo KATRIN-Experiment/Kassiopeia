@@ -5,50 +5,48 @@
 
 namespace Kassiopeia
 {
-    class KSGenRelaxation;
-    class KSGenConversion;
+class KSGenRelaxation;
+class KSGenConversion;
 
-    class KSGenEnergyKryptonEvent :
-        public KSComponentTemplate< KSGenEnergyKryptonEvent, KSGenCreator >
-    {
-        public:
-            KSGenEnergyKryptonEvent();
-            KSGenEnergyKryptonEvent( const KSGenEnergyKryptonEvent& aCopy );
-            KSGenEnergyKryptonEvent* Clone() const;
-            virtual ~KSGenEnergyKryptonEvent();
+class KSGenEnergyKryptonEvent : public KSComponentTemplate<KSGenEnergyKryptonEvent, KSGenCreator>
+{
+  public:
+    KSGenEnergyKryptonEvent();
+    KSGenEnergyKryptonEvent(const KSGenEnergyKryptonEvent& aCopy);
+    KSGenEnergyKryptonEvent* Clone() const override;
+    ~KSGenEnergyKryptonEvent() override;
 
-        public:
-            void Dice( KSParticleQueue* aPrimaries );
+  public:
+    void Dice(KSParticleQueue* aPrimaries) override;
 
-            //*************
-            //configuration
-            //*************
+    //*************
+    //configuration
+    //*************
 
-        public:
-            void SetForceConversion( bool aSetting );
-            void SetDoConversion( bool aSetting );
-            void SetDoAuger( bool aSetting );
+  public:
+    void SetForceConversion(bool aSetting);
+    void SetDoConversion(bool aSetting);
+    void SetDoAuger(bool aSetting);
 
 
-        private:
-            bool fForceConversion;
-            bool fDoConversion;
-            bool fDoAuger;
+  private:
+    bool fForceConversion;
+    bool fDoConversion;
+    bool fDoAuger;
 
-            //**************
-            //initialization
-            //**************
+    //**************
+    //initialization
+    //**************
 
-        public:
-            void InitializeComponent();
-            void DeinitializeComponent();
+  public:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
-        private:
-            KSGenRelaxation* fMyRelaxation;
-            KSGenConversion* fMyConversion;
+  private:
+    KSGenRelaxation* fMyRelaxation;
+    KSGenConversion* fMyConversion;
+};
 
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

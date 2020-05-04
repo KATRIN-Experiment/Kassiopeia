@@ -18,43 +18,43 @@
 #include "KOpenCLElectrostaticIntegratingFieldSolver.hh"
 #endif
 
-namespace KEMField {
-
-class KIntegratingElectrostaticFieldSolver :
-		public KElectricFieldSolver
+namespace KEMField
 {
-public:
-	KIntegratingElectrostaticFieldSolver();
-	virtual ~KIntegratingElectrostaticFieldSolver();
 
-	void SetIntegratorPolicy( KEBIPolicy& policy)
-	{
-		fIntegratorPolicy = policy;
-	}
+class KIntegratingElectrostaticFieldSolver : public KElectricFieldSolver
+{
+  public:
+    KIntegratingElectrostaticFieldSolver();
+    ~KIntegratingElectrostaticFieldSolver() override;
 
-	void UseOpenCL( bool choice )
-	{
-		fUseOpenCL = choice;
-	}
+    void SetIntegratorPolicy(KEBIPolicy& policy)
+    {
+        fIntegratorPolicy = policy;
+    }
 
-private:
-	void InitializeCore( KSurfaceContainer& container );
+    void UseOpenCL(bool choice)
+    {
+        fUseOpenCL = choice;
+    }
 
-	double PotentialCore( const KPosition& P ) const;
-	KThreeVector ElectricFieldCore( const KPosition& P ) const;
+  private:
+    void InitializeCore(KSurfaceContainer& container) override;
 
-	KElectrostaticBoundaryIntegrator* fIntegrator;
-	KEBIPolicy fIntegratorPolicy;
-	KIntegratingFieldSolver< KElectrostaticBoundaryIntegrator >* fIntegratingFieldSolver;
+    double PotentialCore(const KPosition& P) const override;
+    KThreeVector ElectricFieldCore(const KPosition& P) const override;
+
+    KElectrostaticBoundaryIntegrator* fIntegrator;
+    KEBIPolicy fIntegratorPolicy;
+    KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* fIntegratingFieldSolver;
 
 #ifdef KEMFIELD_USE_OPENCL
-KOpenCLElectrostaticBoundaryIntegrator* fOCLIntegrator;
-KIntegratingFieldSolver< KOpenCLElectrostaticBoundaryIntegrator >* fOCLIntegratingFieldSolver;
+    KOpenCLElectrostaticBoundaryIntegrator* fOCLIntegrator;
+    KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>* fOCLIntegratingFieldSolver;
 #endif
 
-bool fUseOpenCL;
+    bool fUseOpenCL;
 };
 
-} //KEMField
+}  // namespace KEMField
 
 #endif /* KINTEGRATINGELECTROSTATICFIELDSOLVER_HH_ */

@@ -21,86 +21,78 @@ namespace KEMField
 *
 */
 
-template< typename ObjectType >
-class KFMObjectContainer
+template<typename ObjectType> class KFMObjectContainer
 {
-    public:
+  public:
+    KFMObjectContainer()
+    {
+        ;
+    }
 
-        KFMObjectContainer(){;}
+    virtual ~KFMObjectContainer()
+    {
+        DeleteAllObjects();
+    };
 
-        virtual ~KFMObjectContainer()
-        {
-            DeleteAllObjects();
-        };
+    virtual unsigned int GetNObjects() const
+    {
+        return fObjectVector.size();
+    };
 
-        virtual unsigned int GetNObjects() const {return fObjectVector.size();};
+    virtual void AddObject(const ObjectType& obj)
+    {
+        fObjectVector.push_back(new ObjectType(obj));
+    }
 
-        virtual void AddObject(const ObjectType& obj)
-        {
-            fObjectVector.push_back( new ObjectType(obj) );
+    virtual ObjectType* GetObjectWithID(const unsigned int& id)
+    {
+        if (id < fObjectVector.size()) {
+            return fObjectVector[id];
         }
-
-        virtual ObjectType* GetObjectWithID(const unsigned int& id)
-        {
-            if(id < fObjectVector.size())
-            {
-                return fObjectVector[id];
-            }
-            else
-            {
-                return NULL;
-            }
+        else {
+            return nullptr;
         }
+    }
 
-        virtual const ObjectType* GetObjectWithID(const unsigned int& id) const
-        {
-            if(id < fObjectVector.size())
-            {
-                return fObjectVector[id];
-            }
-            else
-            {
-                return NULL;
-            }
+    virtual const ObjectType* GetObjectWithID(const unsigned int& id) const
+    {
+        if (id < fObjectVector.size()) {
+            return fObjectVector[id];
         }
-
-        virtual void DeleteAllObjects()
-        {
-            for(unsigned int i=0; i<fObjectVector.size(); i++)
-            {
-                delete fObjectVector[i];
-            }
-            fObjectVector.clear();
+        else {
+            return nullptr;
         }
+    }
+
+    virtual void DeleteAllObjects()
+    {
+        for (unsigned int i = 0; i < fObjectVector.size(); i++) {
+            delete fObjectVector[i];
+        }
+        fObjectVector.clear();
+    }
 
 
-        //access elements
-        inline ObjectType* operator[](unsigned int i);
-        inline const ObjectType* operator[](unsigned int i) const;
+    //access elements
+    inline ObjectType* operator[](unsigned int i);
+    inline const ObjectType* operator[](unsigned int i) const;
 
-    private:
-
-
-        std::vector< ObjectType* > fObjectVector;
-
+  private:
+    std::vector<ObjectType*> fObjectVector;
 };
 
 
-
-template< typename ObjectType >
-inline ObjectType* KFMObjectContainer<ObjectType>::operator[](unsigned int i)
+template<typename ObjectType> inline ObjectType* KFMObjectContainer<ObjectType>::operator[](unsigned int i)
 {
-    return GetObjectWithID(i);//fObjectVector[i];
+    return GetObjectWithID(i);  //fObjectVector[i];
 }
 
-template< typename ObjectType >
-inline const ObjectType* KFMObjectContainer<ObjectType>::operator[](unsigned int i) const
+template<typename ObjectType> inline const ObjectType* KFMObjectContainer<ObjectType>::operator[](unsigned int i) const
 {
-    return GetObjectWithID(i);//fObjectVector[i];
+    return GetObjectWithID(i);  //fObjectVector[i];
 }
 
 
-
-}//end of KEMField
+}  // namespace KEMField
 
 #endif /* KFMObjectContainer_H__ */

@@ -8,21 +8,16 @@ using namespace std;
 namespace katrin
 {
 
-    template< >
-    KSGenEnergyRadonEventBuilder::~KComplexElement()
-    {
-    }
+template<> KSGenEnergyRadonEventBuilder::~KComplexElement() {}
 
-    STATICINT sKSGenEnergyRadonEventStructure =
-        KSGenEnergyRadonEventBuilder::Attribute< string >( "name" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< bool >( "force_shake_off" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< bool >( "force_conversion" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< bool >( "do_shake_off" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< bool >( "do_conversion" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< bool >( "do_auger" ) +
-        KSGenEnergyRadonEventBuilder::Attribute< int >( "isotope_number" );
+STATICINT sKSGenEnergyRadonEventStructure = KSGenEnergyRadonEventBuilder::Attribute<string>("name") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<bool>("force_shake_off") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<bool>("force_conversion") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<bool>("do_shake_off") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<bool>("do_conversion") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<bool>("do_auger") +
+                                            KSGenEnergyRadonEventBuilder::Attribute<int>("isotope_number");
 
-    STATICINT sKSGenEnergyRadonEvent =
-        KSRootBuilder::ComplexElement< KSGenEnergyRadonEvent >( "ksgen_energy_radon_event" );
+STATICINT sKSGenEnergyRadonEvent = KSRootBuilder::ComplexElement<KSGenEnergyRadonEvent>("ksgen_energy_radon_event");
 
-}
+}  // namespace katrin

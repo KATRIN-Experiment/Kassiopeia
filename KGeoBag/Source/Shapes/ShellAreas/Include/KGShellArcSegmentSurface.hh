@@ -1,13 +1,13 @@
 #ifndef KGSHELLARCSEGMENTSURFACE_HH_
 #define KGSHELLARCSEGMENTSURFACE_HH_
 
-#include "KGShellPathSurface.hh"
 #include "KGPlanarArcSegment.hh"
+#include "KGShellPathSurface.hh"
 
 namespace KGeoBag
 {
 
-    typedef KGShellPathSurface< KGPlanarArcSegment > KGShellArcSegmentSurface;
+typedef KGShellPathSurface<KGPlanarArcSegment> KGShellArcSegmentSurface;
 
 }
 

@@ -1,11 +1,11 @@
 #ifndef __KFMNodeParentToChildFlagValueInspector_H__
 #define __KFMNodeParentToChildFlagValueInspector_H__
 
-#include "KFMNode.hh"
 #include "KFMInspectingActor.hh"
-#include "KFMObjectRetriever.hh"
-#include "KFMNodeFlags.hh"
+#include "KFMNode.hh"
 #include "KFMNodeFlagValueInspector.hh"
+#include "KFMNodeFlags.hh"
+#include "KFMObjectRetriever.hh"
 
 namespace KEMField
 {
@@ -23,82 +23,83 @@ namespace KEMField
 */
 
 
-template< typename ObjectTypeList, unsigned int NFLAGS>
-class KFMNodeParentToChildFlagValueInspector: public KFMInspectingActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, unsigned int NFLAGS>
+class KFMNodeParentToChildFlagValueInspector : public KFMInspectingActor<KFMNode<ObjectTypeList>>
 {
-    public:
+  public:
+    KFMNodeParentToChildFlagValueInspector()
+    {
+        fAndOr = true;
+    };
 
-        KFMNodeParentToChildFlagValueInspector()
-        {
-            fAndOr = true;
-        };
+    ~KFMNodeParentToChildFlagValueInspector() override{};
 
-        virtual ~KFMNodeParentToChildFlagValueInspector(){};
+    void UseAndCondition()
+    {
+        fAndOr = true;
+    };
+    void UseOrCondition()
+    {
+        fAndOr = false;
+    };
 
-        void UseAndCondition(){fAndOr = true;};
-        void UseOrCondition(){fAndOr = false;};
+    void SetFlagIndex(unsigned int flag_index)
+    {
+        fValueInspector.SetFlagIndex(flag_index);
+    };
+    void SetFlagValue(char value)
+    {
+        fValueInspector.SetFlagValue(value);
+    };
 
-        void SetFlagIndex(unsigned int flag_index){fValueInspector.SetFlagIndex(flag_index);};
-        void SetFlagValue(char value){fValueInspector.SetFlagValue(value);};
+    //needs to answer this question about whether this node statisfies a condition
+    bool ConditionIsSatisfied(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            if (node->HasChildren()) {
+                unsigned int n_children = node->GetNChildren();
 
-        //needs to answer this question about whether this node statisfies a condition
-        virtual bool ConditionIsSatisfied( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                if(node->HasChildren())
-                {
-                    unsigned int n_children = node->GetNChildren();
+                bool result = fAndOr;
 
-                    bool result = fAndOr;
-
-                    for(unsigned int i=0; i<n_children; i++)
-                    {
-                        KFMNode<ObjectTypeList>* child = node->GetChild(i);
+                for (unsigned int i = 0; i < n_children; i++) {
+                    KFMNode<ObjectTypeList>* child = node->GetChild(i);
 
 
-                        if(fAndOr)
-                        {
-                            //use and condition
-                            if(result && fValueInspector.ConditionIsSatisfied(child))
-                            {
-                                result = true;
-                            }
-                            else
-                            {
-                                result = false;
-                            }
+                    if (fAndOr) {
+                        //use and condition
+                        if (result && fValueInspector.ConditionIsSatisfied(child)) {
+                            result = true;
                         }
-                        else
-                        {
-                            //use or condition
-                            if(result || fValueInspector.ConditionIsSatisfied(child))
-                            {
-                                result = true;
-                            }
-                            else
-                            {
-                                result = false;
-                            }
+                        else {
+                            result = false;
                         }
                     }
-
-                    return result;
+                    else {
+                        //use or condition
+                        if (result || fValueInspector.ConditionIsSatisfied(child)) {
+                            result = true;
+                        }
+                        else {
+                            result = false;
+                        }
+                    }
                 }
+
+                return result;
             }
-            return false;
         }
+        return false;
+    }
 
-    protected:
-        /* data */
+  protected:
+    /* data */
 
-        bool fAndOr; //true = and, false = or;
-        KFMNodeFlagValueInspector<ObjectTypeList, NFLAGS> fValueInspector;
-
+    bool fAndOr;  //true = and, false = or;
+    KFMNodeFlagValueInspector<ObjectTypeList, NFLAGS> fValueInspector;
 };
 
 
-}
+}  // namespace KEMField
 
 
 #endif /* __KFMNodeParentToChildFlagValueInspector_H__ */

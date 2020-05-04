@@ -6,34 +6,33 @@
 namespace Kassiopeia
 {
 
-    class KSParticle;
+class KSParticle;
 
-    class KSTermMinR :
-        public KSComponentTemplate< KSTermMinR, KSTerminator >
-    {
-        public:
-            KSTermMinR();
-            KSTermMinR( const KSTermMinR& aCopy );
-            KSTermMinR* Clone() const;
-            virtual ~KSTermMinR();
+class KSTermMinR : public KSComponentTemplate<KSTermMinR, KSTerminator>
+{
+  public:
+    KSTermMinR();
+    KSTermMinR(const KSTermMinR& aCopy);
+    KSTermMinR* Clone() const override;
+    ~KSTermMinR() override;
 
-        public:
-            void CalculateTermination( const KSParticle& anInitialParticle, bool& aFlag );
-            void ExecuteTermination( const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KSParticleQueue& aParticleQueue ) const;
+  public:
+    void CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag) override;
+    void ExecuteTermination(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                            KSParticleQueue& aParticleQueue) const override;
 
-        public:
-            void SetMinR( const double& aValue );
+  public:
+    void SetMinR(const double& aValue);
 
-        private:
-            double fMinR;
+  private:
+    double fMinR;
+};
 
-    };
-
-    inline void KSTermMinR::SetMinR( const double& aValue )
-    {
-        fMinR = aValue;
-    }
-
+inline void KSTermMinR::SetMinR(const double& aValue)
+{
+    fMinR = aValue;
 }
+
+}  // namespace Kassiopeia
 
 #endif

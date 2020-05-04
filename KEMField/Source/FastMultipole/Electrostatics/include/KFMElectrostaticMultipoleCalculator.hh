@@ -2,15 +2,13 @@
 #define KFMElectrostaticMultipoleCalculator_HH__
 
 
-
-#include <complex>
-#include <vector>
-
 #include "KFMMath.hh"
 #include "KFMPoint.hh"
 #include "KFMPointCloud.hh"
-
 #include "KFMScalarMultipoleExpansion.hh"
+
+#include <complex>
+#include <vector>
 
 
 namespace KEMField
@@ -32,23 +30,25 @@ namespace KEMField
 
 class KFMElectrostaticMultipoleCalculator
 {
-    public:
-        KFMElectrostaticMultipoleCalculator(){};
-        virtual ~KFMElectrostaticMultipoleCalculator(){};
+  public:
+    KFMElectrostaticMultipoleCalculator(){};
+    virtual ~KFMElectrostaticMultipoleCalculator(){};
 
-        virtual void SetDegree(int l_max) = 0;
-        int GetDegree() const {return fDegree;};
+    virtual void SetDegree(int l_max) = 0;
+    int GetDegree() const
+    {
+        return fDegree;
+    };
 
-        //constructs unscaled multipole expansion, assuming constant charge density
-        //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
-        virtual bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices, KFMScalarMultipoleExpansion* moments) const = 0;
+    //constructs unscaled multipole expansion, assuming constant charge density
+    //assumes a point cloud with 2 vertics is a wire electrode, 3 vertices is a triangle, and 4 is a rectangle/quadrilateral
+    virtual bool ConstructExpansion(double* target_origin, const KFMPointCloud<3>* vertices,
+                                    KFMScalarMultipoleExpansion* moments) const = 0;
 
-    protected:
-
-        int fDegree;
-
+  protected:
+    int fDegree;
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticMultipoleCalculator_H__ */

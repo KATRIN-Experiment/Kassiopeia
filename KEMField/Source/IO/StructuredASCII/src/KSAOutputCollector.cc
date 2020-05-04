@@ -1,6 +1,7 @@
 #include "KSAOutputCollector.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 void KSAOutputCollector::SetFileWriter(KSAFileWriter* writer)
 {
@@ -11,7 +12,7 @@ void KSAOutputCollector::SetFileWriter(KSAFileWriter* writer)
 //below this one
 void KSAOutputCollector::CollectOutput(KSAOutputNode* node)
 {
-    fNodeStack = std::stack< KSAOutputNode* >();
+    fNodeStack = std::stack<KSAOutputNode*>();
     fNodeStack.push(node);
 
     //add the root's start tag
@@ -19,33 +20,27 @@ void KSAOutputCollector::CollectOutput(KSAOutputNode* node)
 
     fWriter->AddToFile(fLine);
 
-    do
-    {
-        CollectNodeOutput( fNodeStack.top() );
-        fTempNode = NULL;
+    do {
+        CollectNodeOutput(fNodeStack.top());
+        fTempNode = nullptr;
         //now figure out whether we needed to decend the tree, stay, or ascend
         fStatus = fNodeStack.top()->GetNextNode(fTempNode);
 
         ForwardNodeOutput();
 
-        if(fStatus == KSANODE_MOVE_DOWNWARD && fTempNode != NULL)
-        {
-            fNodeStack.push( fTempNode ); //descend to child
+        if (fStatus == KSANODE_MOVE_DOWNWARD && fTempNode != nullptr) {
+            fNodeStack.push(fTempNode);  //descend to child
         }
-        else if (fStatus == KSANODE_MOVE_UPWARD)
-        {
+        else if (fStatus == KSANODE_MOVE_UPWARD) {
             fNodeStack.pop();
         }
-        else if (fStatus == KSANODE_STAY)
-        {
+        else if (fStatus == KSANODE_STAY) {
             //do nothing, stay on same node for another line
         }
-        else
-        {
+        else {
             //break, error
         }
-    }
-    while(fNodeStack.size() != 0 );
+    } while (fNodeStack.size() != 0);
 }
 
 void KSAOutputCollector::CollectNodeOutput(KSAOutputNode* node)
@@ -64,26 +59,21 @@ void KSAOutputCollector::ForwardNodeOutput()
     //as the current depth of the output tree
     //this has no use other than to make the output look pretty
 
-    if(fUseTabbing)
-    {
+    if (fUseTabbing) {
         int depth = fNodeStack.size();
-        if(fStatus == KSANODE_MOVE_UPWARD)
-        {
-            if(depth > 0)
-            {
+        if (fStatus == KSANODE_MOVE_UPWARD) {
+            if (depth > 0) {
                 depth -= 1;
             }
         }
-        for(int i=0; i<depth; i++)
-        {
+        for (int i = 0; i < depth; i++) {
             fStream << "\t";
         }
     }
 
     fStream << fLine;
     fWriter->AddToFile(fStream.str());
-
 }
 
 
-}//end of kemfield
+}  // namespace KEMField

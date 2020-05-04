@@ -3,10 +3,12 @@
 
 
 #include "KSADefinitions.hh"
-#include <vector>
-#include <string>
 
-namespace KEMField{
+#include <string>
+#include <vector>
+
+namespace KEMField
+{
 
 /**
 *
@@ -24,72 +26,77 @@ namespace KEMField{
 
 class KSATokenizer
 {
-    public:
-        KSATokenizer()
-        {
-            fDelim = " "; //default delim is space
-            fString = NULL;
-            fIncludeEmptyTokens = false;
-        };
-        virtual ~KSATokenizer(){;};
+  public:
+    KSATokenizer()
+    {
+        fDelim = " ";  //default delim is space
+        fString = nullptr;
+        fIncludeEmptyTokens = false;
+    };
+    virtual ~KSATokenizer()
+    {
+        ;
+    };
 
-        void SetIncludeEmptyTokensTrue(){fIncludeEmptyTokens = true;};
-        void SetIncludeEmptyTokensFalse(){fIncludeEmptyTokens = false;};
+    void SetIncludeEmptyTokensTrue()
+    {
+        fIncludeEmptyTokens = true;
+    };
+    void SetIncludeEmptyTokensFalse()
+    {
+        fIncludeEmptyTokens = false;
+    };
 
-        void SetString(const std::string* aString){fString = aString;};
-        void SetDelimiter(const std::string& aDelim){fDelim = aDelim;};
-        void GetTokens(std::vector< std::string>* tokens) const
-        {
-            if(tokens != NULL && fString != NULL)
-            {
-                tokens->clear();
-                if(fDelim.size() > 0)
-                {
+    void SetString(const std::string* aString)
+    {
+        fString = aString;
+    };
+    void SetDelimiter(const std::string& aDelim)
+    {
+        fDelim = aDelim;
+    };
+    void GetTokens(std::vector<std::string>* tokens) const
+    {
+        if (tokens != nullptr && fString != nullptr) {
+            tokens->clear();
+            if (fDelim.size() > 0) {
 
-                    size_t start = 0;
-                    size_t end = 0;
-                    size_t length = 0;
-                    while( end != std::string::npos )
-                    {
-                        end = fString->find(fDelim, start);
+                size_t start = 0;
+                size_t end = 0;
+                size_t length = 0;
+                while (end != std::string::npos) {
+                    end = fString->find(fDelim, start);
 
-                        if(end == std::string::npos)
-                        {
-                            length = std::string::npos;
-                        }
-                        else
-                        {
-                            length = end - start;
-                        }
+                    if (end == std::string::npos) {
+                        length = std::string::npos;
+                    }
+                    else {
+                        length = end - start;
+                    }
 
 
-                        if( fIncludeEmptyTokens || ( (length > 0 ) && ( start < fString->size() ) ) )
-                        {
-                            tokens->push_back( fString->substr(start,length) );
-                        }
+                    if (fIncludeEmptyTokens || ((length > 0) && (start < fString->size()))) {
+                        tokens->push_back(fString->substr(start, length));
+                    }
 
-                        if( end > std::string::npos - fDelim.size() )
-                        {
-                            start = std::string::npos;
-                        }
-                        else
-                        {
-                            start = end + fDelim.size();
-                        }
+                    if (end > std::string::npos - fDelim.size()) {
+                        start = std::string::npos;
+                    }
+                    else {
+                        start = end + fDelim.size();
                     }
                 }
             }
         }
+    }
 
 
-    protected:
-
-        bool fIncludeEmptyTokens;
-        std::string fDelim;
-        const std::string* fString;
-
+  protected:
+    bool fIncludeEmptyTokens;
+    std::string fDelim;
+    const std::string* fString;
 };
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* __KSATokenizer_H__ */

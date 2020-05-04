@@ -6,10 +6,10 @@
 #include "KVMSpaceRectangle.hh"
 
 #include <cmath>
-
 #include <string>
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -24,55 +24,53 @@ namespace KEMField{
 *
 */
 
-class KVMRectangularSurface: public KVMCompactSurface, public KVMSpaceRectangle
+class KVMRectangularSurface : public KVMCompactSurface, public KVMSpaceRectangle
 {
-    public:
+  public:
+    KVMRectangularSurface();
+    ~KVMRectangularSurface() override
+    {
+        ;
+    };
 
-        KVMRectangularSurface();
-        ~KVMRectangularSurface(){;};
+    inline KVMRectangularSurface(const KVMRectangularSurface& copyObject);
 
-        inline KVMRectangularSurface(const KVMRectangularSurface &copyObject);
+    inline KVMRectangularSurface& operator=(const KVMSpaceRectangle& rhs);
 
-        inline KVMRectangularSurface& operator=(const KVMSpaceRectangle& rhs);
+    void Initialize() override;
 
-        virtual void Initialize();
+  protected:
+    //functions that define the jacobian
+    double dxdu(double /*u*/, double /*v*/) const override;
+    double dydu(double /*u*/, double /*v*/) const override;
+    double dzdu(double /*u*/, double /*v*/) const override;
+    double dxdv(double /*u*/, double /*v*/) const override;
+    double dydv(double /*u*/, double /*v*/) const override;
+    double dzdv(double /*u*/, double /*v*/) const override;
 
-    protected:
-
-        //functions that define the jacobian
-        virtual double dxdu(double /*u*/, double /*v*/) const;
-        virtual double dydu(double /*u*/, double /*v*/) const;
-        virtual double dzdu(double /*u*/, double /*v*/) const;
-        virtual double dxdv(double /*u*/, double /*v*/) const;
-        virtual double dydv(double /*u*/, double /*v*/) const;
-        virtual double dzdv(double /*u*/, double /*v*/) const;
-
-        //functions which define the surface
-        virtual double x(double u, double v) const;
-        virtual double y(double u, double v) const;
-        virtual double z(double u, double v) const;
-
+    //functions which define the surface
+    double x(double u, double v) const override;
+    double y(double u, double v) const override;
+    double z(double u, double v) const override;
 };
 
-inline KVMRectangularSurface::KVMRectangularSurface(const KVMRectangularSurface &copyObject):
-KVMCompactSurface(copyObject),
-KVMSpaceRectangle(copyObject)
+inline KVMRectangularSurface::KVMRectangularSurface(const KVMRectangularSurface& copyObject) :
+    KVMCompactSurface(copyObject),
+    KVMSpaceRectangle(copyObject)
 {
     Initialize();
 }
 
 inline KVMRectangularSurface& KVMRectangularSurface::operator=(const KVMSpaceRectangle& rhs)
 {
-    if(this != &rhs)
-    {
+    if (this != &rhs) {
         KVMSpaceRectangle::operator=(rhs);
     }
     Initialize();
     return *this;
 }
 
-} //end of KEMField namespace
-
+}  // namespace KEMField
 
 
 #endif

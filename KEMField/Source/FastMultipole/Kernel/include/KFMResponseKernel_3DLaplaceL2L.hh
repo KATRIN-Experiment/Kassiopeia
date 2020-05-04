@@ -2,11 +2,11 @@
 #define KFMResponseKernel_3DLaplaceL2L_H__
 
 #include "KFMMath.hh"
-
-#include "KFMScaleInvariantKernelExpansion.hh"
 #include "KFMScalarMultipoleExpansion.hh"
+#include "KFMScaleInvariantKernelExpansion.hh"
 
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -21,27 +21,35 @@ namespace KEMField{
 *
 */
 
-class KFMResponseKernel_3DLaplaceL2L: public KFMScaleInvariantKernelExpansion<3>
+class KFMResponseKernel_3DLaplaceL2L : public KFMScaleInvariantKernelExpansion<3>
 {
-    public:
-        KFMResponseKernel_3DLaplaceL2L():KFMScaleInvariantKernelExpansion<3>(){;};
-        virtual ~KFMResponseKernel_3DLaplaceL2L(){;};
+  public:
+    KFMResponseKernel_3DLaplaceL2L() : KFMScaleInvariantKernelExpansion<3>()
+    {
+        ;
+    };
+    ~KFMResponseKernel_3DLaplaceL2L() override
+    {
+        ;
+    };
 
-        virtual void Initialize(){;};
-        virtual bool IsPhysical(int source_index, const int target_index) const;
-        virtual std::complex<double> GetResponseFunction(int source_index, int target_index) const;
+    void Initialize() override
+    {
+        ;
+    };
+    bool IsPhysical(int source_index, const int target_index) const override;
+    std::complex<double> GetResponseFunction(int source_index, int target_index) const override;
 
-        virtual std::complex<double> GetSourceScaleFactor(int source_index, std::complex<double>& scale) const;
-        virtual std::complex<double> GetTargetScaleFactor(int target_index, std::complex<double>& scale) const;
+    std::complex<double> GetSourceScaleFactor(int source_index, std::complex<double>& scale) const override;
+    std::complex<double> GetTargetScaleFactor(int target_index, std::complex<double>& scale) const override;
 
-        virtual std::complex<double> GetNormalizationFactor(int source_index, int target_index) const;
-        virtual std::complex<double> GetIndependentResponseFunction(int response_index) const;
+    std::complex<double> GetNormalizationFactor(int source_index, int target_index) const override;
+    std::complex<double> GetIndependentResponseFunction(int response_index) const override;
 
-    protected:
-
+  protected:
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KFMResponseKernel_3DLaplaceL2L_H__ */

@@ -8,15 +8,17 @@
 #ifndef KELECTROSTATICBOUNDARYINTEGRATOROPTIONS_HH_
 #define KELECTROSTATICBOUNDARYINTEGRATOROPTIONS_HH_
 
-#include <map>
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 
+#include <map>
+
 #ifdef KEMFIELD_USE_OPENCL
-#include "KOpenCLSurfaceContainer.hh"
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
+#include "KOpenCLSurfaceContainer.hh"
 #endif
 
-namespace KEMField {
+namespace KEMField
+{
 
 struct IntegratorOption
 {
@@ -28,20 +30,17 @@ struct IntegratorOption
 };
 
 #ifndef KEMFIELD_USE_OPENCL
-static std::map<int,IntegratorOption> integratorOptionList {
-    {0, {&KEBIFactory::MakeAnalytic,"analytic"}},
-    {1, {&KEBIFactory::MakeRWG,"RWG"}},
-    {2, {&KEBIFactory::MakeNumeric,"numeric"}}
-};
+static std::map<int, IntegratorOption> integratorOptionList{{0, {&KEBIFactory::MakeAnalytic, "analytic"}},
+                                                            {1, {&KEBIFactory::MakeRWG, "RWG"}},
+                                                            {2, {&KEBIFactory::MakeNumeric, "numeric"}}};
 #else
-static std::map<int,IntegratorOption> integratorOptionList {
-	{0, {&KEBIFactory::MakeAnalytic,&KoclEBIFactory::MakeAnalytic,"analytic"}},
-	{1, {&KEBIFactory::MakeRWG,&KoclEBIFactory::MakeRWG,"RWG"}},
-	{2, {&KEBIFactory::MakeNumeric,&KoclEBIFactory::MakeNumeric,"numeric"}}
-};
+static std::map<int, IntegratorOption> integratorOptionList{
+    {0, {&KEBIFactory::MakeAnalytic, &KoclEBIFactory::MakeAnalytic, "analytic"}},
+    {1, {&KEBIFactory::MakeRWG, &KoclEBIFactory::MakeRWG, "RWG"}},
+    {2, {&KEBIFactory::MakeNumeric, &KoclEBIFactory::MakeNumeric, "numeric"}}};
 #endif
 
-} /* KEMField */
+}  // namespace KEMField
 
 
 #endif /* KELECTROSTATICBOUNDARYINTEGRATOROPTIONS_HH_ */

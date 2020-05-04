@@ -2,17 +2,17 @@
 #define KFMElectrostaticNodeInspector_H
 
 
-#include <vector>
-#include <sstream>
-#include <string>
-
+#include "KFMElectrostaticNode.hh"
 #include "KFMNodeActor.hh"
 #include "KFMObjectRetriever.hh"
-#include "KFMElectrostaticNode.hh"
+
+#include <sstream>
+#include <string>
+#include <vector>
 
 
-
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -27,31 +27,27 @@ namespace KEMField{
 *
 */
 
-class KFMElectrostaticNodeInspector: public KFMNodeActor< KFMElectrostaticNode >
+class KFMElectrostaticNodeInspector : public KFMNodeActor<KFMElectrostaticNode>
 {
-    public:
-        KFMElectrostaticNodeInspector();
-        virtual ~KFMElectrostaticNodeInspector();
+  public:
+    KFMElectrostaticNodeInspector();
+    virtual ~KFMElectrostaticNodeInspector();
 
-        virtual void ApplyAction(KFMElectrostaticNode* node);
-        void Print();
+    virtual void ApplyAction(KFMElectrostaticNode* node);
+    void Print();
 
-    private:
+  private:
+    double fNumberOfNodes;
 
-        double fNumberOfNodes;
+    std::vector<double> fNumberOfNodesAtLevel;
 
-        std::vector< double > fNumberOfNodesAtLevel;
+    std::vector<double> fNumberOfElementsAtLevel;
 
-        std::vector< double > fNumberOfElementsAtLevel;
+    std::vector<std::vector<double>> fElementSizeAtLevel;
 
-        std::vector< std::vector< double > > fElementSizeAtLevel;
-
-        std::vector< std::vector< double > > fDirectCallDistribution;
-
-
-
+    std::vector<std::vector<double>> fDirectCallDistribution;
 };
 
-}//end of KEMField namespace
+}  // namespace KEMField
 
 #endif /* KFMElectrostaticNodeInspector_H */

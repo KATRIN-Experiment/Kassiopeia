@@ -8,57 +8,56 @@
 namespace katrin
 {
 
-    class KTextFile :
-        public KFile
-    {
-        public:
-            KTextFile();
-            virtual ~KTextFile();
+class KTextFile : public KFile
+{
+  public:
+    KTextFile();
+    ~KTextFile() override;
 
-        public:
-            std::fstream* File();
+  public:
+    std::fstream* File();
 
-        protected:
-            virtual bool OpenFileSubclass( const std::string& aName, const Mode& aMode );
-            virtual bool CloseFileSubclass();
+  protected:
+    bool OpenFileSubclass(const std::string& aName, const Mode& aMode) override;
+    bool CloseFileSubclass() override;
 
-        private:
-            std::fstream* fFile;
-    };
+  private:
+    std::fstream* fFile;
+};
 
-    inline KTextFile* CreateConfigTextFile( const std::string& aBase )
-    {
-        KTextFile* tFile = new KTextFile();
-        tFile->SetDefaultPath( CONFIG_DEFAULT_DIR );
-        tFile->SetDefaultBase( aBase );
-        return tFile;
-    }
-
-    inline KTextFile* CreateScratchTextFile( const std::string& aBase )
-    {
-        KTextFile* tFile = new KTextFile();
-        tFile->SetDefaultPath( SCRATCH_DEFAULT_DIR );
-        tFile->SetDefaultBase( aBase );
-        return tFile;
-    }
-
-    inline KTextFile* CreateDataTextFile( const std::string& aBase )
-    {
-        KTextFile* tFile = new KTextFile();
-        tFile->SetDefaultPath( DATA_DEFAULT_DIR );
-        tFile->SetDefaultBase( aBase );
-        return tFile;
-    }
-
-    inline KTextFile* CreateOutputTextFile( const std::string& aBase )
-    {
-        KTextFile* tFile = new KTextFile();
-        tFile->SetDefaultPath( OUTPUT_DEFAULT_DIR );
-        tFile->SetDefaultBase( aBase );
-        return tFile;
-    }
-
+inline KTextFile* CreateConfigTextFile(const std::string& aBase)
+{
+    auto* tFile = new KTextFile();
+    tFile->SetDefaultPath(CONFIG_DEFAULT_DIR);
+    tFile->SetDefaultBase(aBase);
+    return tFile;
 }
+
+inline KTextFile* CreateScratchTextFile(const std::string& aBase)
+{
+    auto* tFile = new KTextFile();
+    tFile->SetDefaultPath(SCRATCH_DEFAULT_DIR);
+    tFile->SetDefaultBase(aBase);
+    return tFile;
+}
+
+inline KTextFile* CreateDataTextFile(const std::string& aBase)
+{
+    auto* tFile = new KTextFile();
+    tFile->SetDefaultPath(DATA_DEFAULT_DIR);
+    tFile->SetDefaultBase(aBase);
+    return tFile;
+}
+
+inline KTextFile* CreateOutputTextFile(const std::string& aBase)
+{
+    auto* tFile = new KTextFile();
+    tFile->SetDefaultPath(OUTPUT_DEFAULT_DIR);
+    tFile->SetDefaultBase(aBase);
+    return tFile;
+}
+
+}  // namespace katrin
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -79,39 +78,33 @@ namespace katrin
 namespace katrin
 {
 
-    typedef KComplexElement< KTextFile > KTextFileBuilder;
+typedef KComplexElement<KTextFile> KTextFileBuilder;
 
-    template< >
-    inline bool KTextFileBuilder::AddAttribute( KContainer* aContainer )
-    {
-        if( aContainer->GetName() == "path" )
-        {
-            aContainer->CopyTo( fObject, &KFile::AddToPaths );
-            return true;
-        }
-        if( aContainer->GetName() == "default_path" )
-        {
-            aContainer->CopyTo( fObject, &KFile::SetDefaultPath );
-            return true;
-        }
-        if( aContainer->GetName() == "base" )
-        {
-            aContainer->CopyTo( fObject, &KFile::AddToBases );
-            return true;
-        }
-        if( aContainer->GetName() == "default_base" )
-        {
-            aContainer->CopyTo( fObject, &KFile::SetDefaultBase );
-            return true;
-        }
-        if( aContainer->GetName() == "name" )
-        {
-            aContainer->CopyTo( fObject, &KFile::AddToBases );
-            return true;
-        }
-        return false;
+template<> inline bool KTextFileBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "path") {
+        aContainer->CopyTo(fObject, &KFile::AddToPaths);
+        return true;
     }
-
+    if (aContainer->GetName() == "default_path") {
+        aContainer->CopyTo(fObject, &KFile::SetDefaultPath);
+        return true;
+    }
+    if (aContainer->GetName() == "base") {
+        aContainer->CopyTo(fObject, &KFile::AddToBases);
+        return true;
+    }
+    if (aContainer->GetName() == "default_base") {
+        aContainer->CopyTo(fObject, &KFile::SetDefaultBase);
+        return true;
+    }
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KFile::AddToBases);
+        return true;
+    }
+    return false;
 }
+
+}  // namespace katrin
 
 #endif

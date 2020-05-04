@@ -19,25 +19,29 @@ namespace KEMField
 *
 */
 
-template<unsigned int NDIM> //spatial dimension
-class KFMScaleInvariantKernelExpansion: public KFMKernelExpansion<NDIM>
+template<unsigned int NDIM>  //spatial dimension
+class KFMScaleInvariantKernelExpansion : public KFMKernelExpansion<NDIM>
 {
-    public:
+  public:
+    KFMScaleInvariantKernelExpansion() : KFMKernelExpansion<NDIM>()
+    {
+        ;
+    };
+    ~KFMScaleInvariantKernelExpansion() override{};
 
-        KFMScaleInvariantKernelExpansion(): KFMKernelExpansion<NDIM>(){;};
-        virtual ~KFMScaleInvariantKernelExpansion(){};
+    bool IsScaleInvariant() const override
+    {
+        return true;
+    };
 
-        bool IsScaleInvariant() const {return true;};
+    virtual std::complex<double> GetSourceScaleFactor(int source_index, std::complex<double>& scale) const = 0;
+    virtual std::complex<double> GetTargetScaleFactor(int target_index, std::complex<double>& scale) const = 0;
 
-        virtual std::complex<double> GetSourceScaleFactor(int source_index, std::complex<double>& scale) const = 0;
-        virtual std::complex<double> GetTargetScaleFactor(int target_index, std::complex<double>& scale) const = 0;
-
-    protected:
-
-    private:
+  protected:
+  private:
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMScaleInvariantKernelExpansion_H__ */

@@ -2,13 +2,13 @@
 
 namespace KGeoBag
 {
-    void KGElectromagnetData::SetCurrent( double d )
-    {
-        fCurrent = d;
-    }
-    double KGElectromagnetData::GetCurrent() const
-    {
-        return fCurrent;
-    }
-
+void KGElectromagnetData::SetCurrent(double d)
+{
+    fCurrent = d;
 }
+double KGElectromagnetData::GetCurrent() const
+{
+    return fCurrent;
+}
+
+}  // namespace KGeoBag

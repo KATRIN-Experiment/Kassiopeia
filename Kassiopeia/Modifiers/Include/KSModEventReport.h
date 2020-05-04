@@ -6,30 +6,29 @@
 
 namespace Kassiopeia
 {
-    class KSEvent;
+class KSEvent;
 
-    //This is a super simple example of an event modifier that does
-    //essentially nothing (it can be used as a static event modifier too).
-    //If a user wishes to write their own event modifier they should place it
-    //in a separate library (not in Kassiopeia/Modifiers) or they will introduce
-    //a cyclic dependency between the KassiopieaModifiers and KassiopeiaSimulation libraries.
-    //This is is also true for run/track/step modifiers as well.
+//This is a super simple example of an event modifier that does
+//essentially nothing (it can be used as a static event modifier too).
+//If a user wishes to write their own event modifier they should place it
+//in a separate library (not in Kassiopeia/Modifiers) or they will introduce
+//a cyclic dependency between the KassiopieaModifiers and KassiopeiaSimulation libraries.
+//This is is also true for run/track/step modifiers as well.
 
-    class KSModEventReport:
-            public KSComponentTemplate< KSModEventReport, KSEventModifier >
-    {
-        public:
-            KSModEventReport();
-            KSModEventReport( const KSModEventReport& /*aCopy*/);
-            KSModEventReport* Clone() const;
-            virtual ~KSModEventReport();
+class KSModEventReport : public KSComponentTemplate<KSModEventReport, KSEventModifier>
+{
+  public:
+    KSModEventReport();
+    KSModEventReport(const KSModEventReport& /*aCopy*/);
+    KSModEventReport* Clone() const override;
+    ~KSModEventReport() override;
 
-            virtual bool ExecutePreEventModification( KSEvent& /*anEvent*/ );
-            virtual bool ExecutePostEventModification( KSEvent& /*anEvent*/ );
+    bool ExecutePreEventModification(KSEvent& /*anEvent*/) override;
+    bool ExecutePostEventModification(KSEvent& /*anEvent*/) override;
 
-        private:
-    };
+  private:
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

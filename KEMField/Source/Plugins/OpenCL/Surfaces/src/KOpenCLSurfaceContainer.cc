@@ -1,13 +1,13 @@
 #include "KOpenCLSurfaceContainer.hh"
 
-#include <limits.h>
-#include <algorithm>
-
 #include "KOpenCLBufferStreamer.hh"
+
+#include <algorithm>
+#include <limits.h>
 
 namespace KEMField
 {
-  KOpenCLSurfaceContainer::KOpenCLSurfaceContainer(const KSurfaceContainer& container) :
+KOpenCLSurfaceContainer::KOpenCLSurfaceContainer(const KSurfaceContainer& container) :
     KSortedSurfaceContainer(container),
     KOpenCLData(),
     fNBufferedElements(0),
@@ -19,7 +19,7 @@ namespace KEMField
     fBufferBoundaryInfo(NULL),
     fBufferBoundaryData(NULL),
     fBufferBasisData(NULL)
-  {
+{
     // Acquire the maximum buffer sizes for the shape, boundary and basis policies
     KSurfaceSize<KShape> shapeSize;
     KSurfaceSize<KBoundary> boundarySize;
@@ -32,183 +32,174 @@ namespace KEMField
     std::vector<unsigned short> shapes;
     std::vector<unsigned short> boundaries;
 
-    for (unsigned int i=0;i<container.NumberOfSurfaceTypes();i++)
-    {
-      KSurfacePrimitive* sP = container.FirstSurfaceType(i);
+    for (unsigned int i = 0; i < container.NumberOfSurfaceTypes(); i++) {
+        KSurfacePrimitive* sP = container.FirstSurfaceType(i);
 
-      shapeSize.Reset();
-      shapeSize.SetSurface(sP->GetShape());
-      KShapeAction<KSurfaceSize<KShape> >::ActOnShapeType(sP->GetID(),shapeSize);
-      if (shapeSize.size()>fShapeSize) fShapeSize = shapeSize.size();
+        shapeSize.Reset();
+        shapeSize.SetSurface(sP->GetShape());
+        KShapeAction<KSurfaceSize<KShape>>::ActOnShapeType(sP->GetID(), shapeSize);
+        if (shapeSize.size() > fShapeSize)
+            fShapeSize = shapeSize.size();
 
-      KShapeAction<FlagGenerator>::ActOnShapeType(sP->GetID(),flagGenerator);
-      if (std::find(shapes.begin(),shapes.end(),sP->GetID().ShapeID) == shapes.end())
-      {
-	shapes.push_back(sP->GetID().ShapeID);
-	s << flagGenerator.GetFlag()<<sP->GetID().ShapeID;
-      }
+        KShapeAction<FlagGenerator>::ActOnShapeType(sP->GetID(), flagGenerator);
+        if (std::find(shapes.begin(), shapes.end(), sP->GetID().ShapeID) == shapes.end()) {
+            shapes.push_back(sP->GetID().ShapeID);
+            s << flagGenerator.GetFlag() << sP->GetID().ShapeID;
+        }
 
-      boundarySize.Reset();
-      boundarySize.SetSurface(sP->GetBoundary());
-      KBoundaryAction<KSurfaceSize<KBoundary> >::ActOnBoundaryType(sP->GetID(),boundarySize);
-      if (boundarySize.size()>fBoundarySize) fBoundarySize = boundarySize.size();
+        boundarySize.Reset();
+        boundarySize.SetSurface(sP->GetBoundary());
+        KBoundaryAction<KSurfaceSize<KBoundary>>::ActOnBoundaryType(sP->GetID(), boundarySize);
+        if (boundarySize.size() > fBoundarySize)
+            fBoundarySize = boundarySize.size();
 
-      KBoundaryAction<FlagGenerator>::ActOnBoundaryType(sP->GetID(),flagGenerator);
-      if (std::find(boundaries.begin(),boundaries.end(),sP->GetID().BoundaryID) == boundaries.end())
-      {
-	boundaries.push_back(sP->GetID().BoundaryID);
-	s << flagGenerator.GetFlag()<<sP->GetID().BoundaryID;
-      }
+        KBoundaryAction<FlagGenerator>::ActOnBoundaryType(sP->GetID(), flagGenerator);
+        if (std::find(boundaries.begin(), boundaries.end(), sP->GetID().BoundaryID) == boundaries.end()) {
+            boundaries.push_back(sP->GetID().BoundaryID);
+            s << flagGenerator.GetFlag() << sP->GetID().BoundaryID;
+        }
 
-      basisSize.Reset();
-      basisSize.SetSurface(sP->GetBasis());
-      KBasisAction<KSurfaceSize<KBasis> >::ActOnBasisType(sP->GetID(),basisSize);
-      if (basisSize.size()>fBasisSize) fBasisSize = basisSize.size();
+        basisSize.Reset();
+        basisSize.SetSurface(sP->GetBasis());
+        KBasisAction<KSurfaceSize<KBasis>>::ActOnBasisType(sP->GetID(), basisSize);
+        if (basisSize.size() > fBasisSize)
+            fBasisSize = basisSize.size();
     }
 
     s << " -D SHAPESIZE=" << fShapeSize;
     s << " -D BOUNDARYSIZE=" << fBoundarySize;
     s << " -D BASISSIZE=" << fBasisSize;
     fOpenCLFlags = s.str();
-  }
+}
 
-  KOpenCLSurfaceContainer::~KOpenCLSurfaceContainer()
-  {
-    if (fBufferShapeInfo)    delete fBufferShapeInfo;
-    if (fBufferShapeData)    delete fBufferShapeData;
-    if (fBufferBoundaryInfo) delete fBufferBoundaryInfo;
-    if (fBufferBoundaryData) delete fBufferBoundaryData;
-    if (fBufferBasisData)    delete fBufferBasisData;
-  }
+KOpenCLSurfaceContainer::~KOpenCLSurfaceContainer()
+{
+    if (fBufferShapeInfo)
+        delete fBufferShapeInfo;
+    if (fBufferShapeData)
+        delete fBufferShapeData;
+    if (fBufferBoundaryInfo)
+        delete fBufferBoundaryInfo;
+    if (fBufferBoundaryData)
+        delete fBufferBoundaryData;
+    if (fBufferBasisData)
+        delete fBufferBasisData;
+}
 
-  void KOpenCLSurfaceContainer::BuildOpenCLObjects()
-  {
+void KOpenCLSurfaceContainer::BuildOpenCLObjects()
+{
     // First, we fill a vector with shape data
     unsigned int nDummy = 0;
-    unsigned int tmp = fNLocal - (size()%fNLocal);
+    unsigned int tmp = fNLocal - (size() % fNLocal);
     if (tmp != fNLocal)
-      nDummy += tmp;
+        nDummy += tmp;
 
     fNBufferedElements = size() + nDummy;
 
-    fShapeInfo.resize(fNBufferedElements,-1);
+    fShapeInfo.resize(fNBufferedElements, -1);
 
-    fShapeData.resize(fShapeSize*fNBufferedElements,0.);
+    fShapeData.resize(fShapeSize * fNBufferedElements, 0.);
 
     KOpenCLBufferPolicyStreamer<KShape> shapeStreamer;
     shapeStreamer.SetBufferSize(fShapeSize);
     shapeStreamer.SetBuffer(&fShapeData[0]);
 
-    for (unsigned int i=0;i<size();i++)
-    {
-      fShapeInfo[i] = at(i)->GetID().ShapeID;
-      shapeStreamer.SetSurfacePolicy(at(i)->GetShape());
-      KShapeAction<KOpenCLBufferPolicyStreamer<KShape> >::ActOnShapeType(at(i)->GetID(),shapeStreamer);
+    for (unsigned int i = 0; i < size(); i++) {
+        fShapeInfo[i] = at(i)->GetID().ShapeID;
+        shapeStreamer.SetSurfacePolicy(at(i)->GetShape());
+        KShapeAction<KOpenCLBufferPolicyStreamer<KShape>>::ActOnShapeType(at(i)->GetID(), shapeStreamer);
     }
 
     // Next, we fill a vector with boundary information
-    fBoundaryInfo.resize(3*NUniqueBoundaries()+2);
+    fBoundaryInfo.resize(3 * NUniqueBoundaries() + 2);
     fBoundaryInfo[0] = size();
     fBoundaryInfo[1] = NUniqueBoundaries();
 
 
-    for (unsigned int i=0;i<NUniqueBoundaries();i++)
-    {
-      fBoundaryInfo[2 + i*3] = size(i);
-      fBoundaryInfo[2 + i*3 + 1] = BoundaryType(i);
-      fBoundaryInfo[2 + i*3 + 2] = IndexOfFirstSurface(i);
+    for (unsigned int i = 0; i < NUniqueBoundaries(); i++) {
+        fBoundaryInfo[2 + i * 3] = size(i);
+        fBoundaryInfo[2 + i * 3 + 1] = BoundaryType(i);
+        fBoundaryInfo[2 + i * 3 + 2] = IndexOfFirstSurface(i);
     }
 
     // Next, we fill a vector with the actual boundary data
-    fBoundaryData.resize(fBoundarySize*NUniqueBoundaries());
+    fBoundaryData.resize(fBoundarySize * NUniqueBoundaries());
     KOpenCLBufferPolicyStreamer<KBoundary> boundaryStreamer;
     boundaryStreamer.SetBufferSize(fBoundarySize);
     boundaryStreamer.SetBuffer(&fBoundaryData[0]);
 
-    for (unsigned int i=0;i<NUniqueBoundaries();i++)
-    {
-      unsigned int index = IndexOfFirstSurface(i);
-      boundaryStreamer.SetSurfacePolicy(at(index)->GetBoundary());
-      KBoundaryAction<KOpenCLBufferPolicyStreamer<KBoundary> >::ActOnBoundaryType(at(index)->GetID(),boundaryStreamer);
+    for (unsigned int i = 0; i < NUniqueBoundaries(); i++) {
+        unsigned int index = IndexOfFirstSurface(i);
+        boundaryStreamer.SetSurfacePolicy(at(index)->GetBoundary());
+        KBoundaryAction<KOpenCLBufferPolicyStreamer<KBoundary>>::ActOnBoundaryType(at(index)->GetID(),
+                                                                                   boundaryStreamer);
     }
 
     // Finally, we fill a vector with the basis data
-    fBasisData.resize(fBasisSize*fNBufferedElements,0.);
+    fBasisData.resize(fBasisSize * fNBufferedElements, 0.);
 
     KOpenCLBufferPolicyStreamer<KBasis> basisStreamer;
     basisStreamer.SetBufferSize(fBasisSize);
     basisStreamer.SetBuffer(&fBasisData[0]);
 
-    for (unsigned int i=0;i<size();i++)
-    {
-      basisStreamer.SetSurfacePolicy(at(i)->GetBasis());
-      KBasisAction<KOpenCLBufferPolicyStreamer<KBasis> >::ActOnBasisType(at(i)->GetID(),basisStreamer);
+    for (unsigned int i = 0; i < size(); i++) {
+        basisStreamer.SetSurfacePolicy(at(i)->GetBasis());
+        KBasisAction<KOpenCLBufferPolicyStreamer<KBasis>>::ActOnBasisType(at(i)->GetID(), basisStreamer);
     }
 
 
     // Now that the data is in array form, we can construct the buffers
-    fBufferShapeInfo =
-      new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
-		     CL_MEM_READ_ONLY,
-		     fShapeInfo.size()*sizeof(cl_short));
+    fBufferShapeInfo = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+                                      CL_MEM_READ_ONLY,
+                                      fShapeInfo.size() * sizeof(cl_short));
 
-    fBufferShapeData =
-      new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
-		     CL_MEM_READ_ONLY,
-		     fShapeData.size()*sizeof(CL_TYPE));
+    fBufferShapeData = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+                                      CL_MEM_READ_ONLY,
+                                      fShapeData.size() * sizeof(CL_TYPE));
 
 
+    fBufferBoundaryInfo = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+                                         CL_MEM_READ_ONLY,
+                                         fBoundaryInfo.size() * sizeof(cl_int));
 
-    fBufferBoundaryInfo =
-      new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
-		     CL_MEM_READ_ONLY,
-		     fBoundaryInfo.size()*sizeof(cl_int));
+    fBufferBoundaryData = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+                                         CL_MEM_READ_ONLY,
+                                         fBasisData.size() * sizeof(CL_TYPE));
 
-    fBufferBoundaryData =
-      new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
-		     CL_MEM_READ_ONLY,
-		     fBasisData.size()*sizeof(CL_TYPE));
+    fBufferBasisData = new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
+                                      CL_MEM_WRITE_ONLY,
+                                      fBasisData.size() * sizeof(CL_TYPE));
 
-    fBufferBasisData =
-      new cl::Buffer(KOpenCLInterface::GetInstance()->GetContext(),
-		     CL_MEM_WRITE_ONLY,
-		     fBasisData.size()*sizeof(CL_TYPE));
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBufferShapeInfo,
+                                                                   CL_TRUE,
+                                                                   0,
+                                                                   fShapeInfo.size() * sizeof(cl_short),
+                                                                   &fShapeInfo[0]);
 
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueWriteBuffer(*fBufferShapeInfo,
-			 CL_TRUE,
-			 0,
-			 fShapeInfo.size()*sizeof(cl_short),
-			 &fShapeInfo[0]);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBufferShapeData,
+                                                                   CL_TRUE,
+                                                                   0,
+                                                                   fShapeData.size() * sizeof(CL_TYPE),
+                                                                   &fShapeData[0]);
 
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueWriteBuffer(*fBufferShapeData,
-			 CL_TRUE,
-			 0,
-			 fShapeData.size()*sizeof(CL_TYPE),
-			 &fShapeData[0]);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBufferBoundaryInfo,
+                                                                   CL_TRUE,
+                                                                   0,
+                                                                   fBoundaryInfo.size() * sizeof(cl_int),
+                                                                   &fBoundaryInfo[0]);
 
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueWriteBuffer(*fBufferBoundaryInfo,
-			 CL_TRUE,
-			 0,
-			 fBoundaryInfo.size()*sizeof(cl_int),
-			 &fBoundaryInfo[0]);
-
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueWriteBuffer(*fBufferBoundaryData,
-			 CL_TRUE,
-			 0,
-			 fBoundaryData.size()*sizeof(CL_TYPE),
-			 &fBoundaryData[0]);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBufferBoundaryData,
+                                                                   CL_TRUE,
+                                                                   0,
+                                                                   fBoundaryData.size() * sizeof(CL_TYPE),
+                                                                   &fBoundaryData[0]);
 
 
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueWriteBuffer(*fBufferBasisData,
-			 CL_TRUE,
-			 0,
-			 fBasisData.size()*sizeof(CL_TYPE),
-			 &fBasisData[0]);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueWriteBuffer(*fBufferBasisData,
+                                                                   CL_TRUE,
+                                                                   0,
+                                                                   fBasisData.size() * sizeof(CL_TYPE),
+                                                                   &fBasisData[0]);
 
     fIsConstructed = true;
 
@@ -249,19 +240,18 @@ namespace KEMField
     // for (unsigned int i = 0;i<fBasisData.size();++i)
     //   std::cout<<i<<" "<<fBasisData.at(i)<<std::endl;
     // std::cout<<""<<std::endl;
-  }
+}
 
-  void KOpenCLSurfaceContainer::ReadBasisData()
-  {
+void KOpenCLSurfaceContainer::ReadBasisData()
+{
     cl::Event event;
-    KOpenCLInterface::GetInstance()->GetQueue().
-      enqueueReadBuffer(*fBufferBasisData,
-			CL_TRUE,
-			0,
-			fBasisData.size()*sizeof(CL_TYPE),
-			&fBasisData[0],
-			NULL,
-			&event);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fBufferBasisData,
+                                                                  CL_TRUE,
+                                                                  0,
+                                                                  fBasisData.size() * sizeof(CL_TYPE),
+                                                                  &fBasisData[0],
+                                                                  NULL,
+                                                                  &event);
     event.wait();
 
     KOpenCLBufferPolicyStreamer<KBasis> basisStreamer;
@@ -269,11 +259,10 @@ namespace KEMField
     basisStreamer.SetBufferSize(fBasisSize);
     basisStreamer.SetBuffer(&fBasisData[0]);
 
-    for (unsigned int i=0;i<size();i++)
-    {
-      basisStreamer.SetSurfacePolicy(at(i)->GetBasis());
-      KBasisAction<KOpenCLBufferPolicyStreamer<KBasis> >::ActOnBasisType(at(i)->GetID(),basisStreamer);
+    for (unsigned int i = 0; i < size(); i++) {
+        basisStreamer.SetSurfacePolicy(at(i)->GetBasis());
+        KBasisAction<KOpenCLBufferPolicyStreamer<KBasis>>::ActOnBasisType(at(i)->GetID(), basisStreamer);
     }
-  }
-
 }
+
+}  // namespace KEMField

@@ -2,10 +2,11 @@
 #define KGObjectCollection_HH__
 
 
-#include "KGTypelist.hh"
 #include "KGObjectHolder.hh"
+#include "KGTypelist.hh"
 
-namespace KGeoBag{
+namespace KGeoBag
+{
 
 /*
 *
@@ -20,18 +21,17 @@ namespace KGeoBag{
 *
 */
 
-template< typename TypeList >
-class KGObjectCollection: public KGGenScatterHierarchy<TypeList, KGObjectHolder >
+template<typename TypeList> class KGObjectCollection : public KGGenScatterHierarchy<TypeList, KGObjectHolder>
 {
-    public:
-        KGObjectCollection(){};
-        virtual ~KGObjectCollection(){};
+  public:
+    KGObjectCollection(){};
+    ~KGObjectCollection() override{};
 
-    private:
+  private:
 };
 
 
-} //end of KGeoBag
+}  // namespace KGeoBag
 
 
 #endif /* KGObjectCollection_H__ */

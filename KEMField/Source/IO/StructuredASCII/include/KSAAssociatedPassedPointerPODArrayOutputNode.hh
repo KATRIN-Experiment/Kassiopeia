@@ -5,11 +5,15 @@
 #include "KSACallbackTypes.hh"
 #include "KSAPODArrayOutputNode.hh"
 
-#define AddKSAOutputForArray(class,var,type,size) \
-  node->AddChild(new KSAAssociatedPassedPointerPODArrayOutputNode<class, type, &class::Get ## var ## Array>( std::string(#var), size, this) )
+#define AddKSAOutputForArray(class, var, type, size)                                                                   \
+    node->AddChild(                                                                                                    \
+        new KSAAssociatedPassedPointerPODArrayOutputNode<class, type, &class ::Get##var##Array>(std::string(#var),     \
+                                                                                                size,                  \
+                                                                                                this))
 
 
-namespace KEMField{
+namespace KEMField
+{
 
 
 /**
@@ -26,28 +30,29 @@ namespace KEMField{
 */
 
 
-template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType* ) const >
-class KSAAssociatedPassedPointerPODArrayOutputNode: public KSAPODArrayOutputNode< ReturnType >
+template<typename CallType, typename ReturnType, void (CallType::*memberFunction)(ReturnType*) const>
+class KSAAssociatedPassedPointerPODArrayOutputNode : public KSAPODArrayOutputNode<ReturnType>
 {
-    public:
+  public:
+    KSAAssociatedPassedPointerPODArrayOutputNode(std::string name, unsigned int arr_size, const CallType* call_ptr) :
+        KSAPODArrayOutputNode<ReturnType>(name, arr_size)
+    {
+        KSAConstantReturnByPassedPointerGet<CallType, ReturnType, memberFunction> callback;
+        auto* val = new ReturnType[this->fArraySize];
+        callback(call_ptr, val);
+        KSAPODArrayOutputNode<ReturnType>::SetValue(val);
+        delete[] val;
+    }
 
-        KSAAssociatedPassedPointerPODArrayOutputNode(std::string name, unsigned int arr_size, const CallType* call_ptr):KSAPODArrayOutputNode< ReturnType >(name, arr_size)
-        {
-            KSAConstantReturnByPassedPointerGet< CallType, ReturnType, memberFunction > callback;
-            ReturnType* val = new ReturnType[this->fArraySize];
-            callback(call_ptr, val);
-            KSAPODArrayOutputNode< ReturnType >::SetValue(val);
-            delete[] val;
-        }
+    ~KSAAssociatedPassedPointerPODArrayOutputNode() override
+    {
+        ;
+    };
 
-        virtual ~KSAAssociatedPassedPointerPODArrayOutputNode(){;};
-
-    protected:
-
+  protected:
 };
 
 
-
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* KSAAssociatedPassedPointerPODArrayOutputNode_H__ */

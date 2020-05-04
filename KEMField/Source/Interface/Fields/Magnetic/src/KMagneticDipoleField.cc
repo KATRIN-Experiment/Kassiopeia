@@ -6,29 +6,29 @@
  */
 
 #include "KMagneticDipoleField.hh"
+
 #include "KConst.h"
 
-namespace KEMField {
+namespace KEMField
+{
 
-KMagneticDipoleField::KMagneticDipoleField() :
-                            fLocation( 0., 0., 0. ),
-                            fMoment( 0., 0., 0. )
-{}
+KMagneticDipoleField::KMagneticDipoleField() : fLocation(0., 0., 0.), fMoment(0., 0., 0.) {}
 
-KMagneticDipoleField::~KMagneticDipoleField()
-{}
+KMagneticDipoleField::~KMagneticDipoleField() {}
 
 /**
  *  The magnetic potential of a dipole at the origin can be written as
  *  A(r) = (m x r)/(|r|^3).
  */
-KThreeVector KMagneticDipoleField::MagneticPotentialCore(const KPosition& aSamplePoint) const {
-    KPosition r = aSamplePoint-fLocation;
+KThreeVector KMagneticDipoleField::MagneticPotentialCore(const KPosition& aSamplePoint) const
+{
+    KPosition r = aSamplePoint - fLocation;
     double distance = r.Magnitude();
-    return fMoment.Cross(r)/(distance * distance * distance);
+    return fMoment.Cross(r) / (distance * distance * distance);
 }
 
-KThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSamplePoint) const {
+KThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSamplePoint) const
+{
     KThreeVector aPoint = aSamplePoint - fLocation;
     double aPointMag = aPoint.Magnitude();
     double aPointMag2 = aPointMag * aPointMag;
@@ -36,10 +36,12 @@ KThreeVector KMagneticDipoleField::MagneticFieldCore(const KPosition& aSamplePoi
     double aPointMag4 = aPointMag * aPointMag3;
     double aPointMag5 = aPointMag * aPointMag4;
 
-    return (katrin::KConst::MuNull() / (4 * katrin::KConst::Pi())) * ((3. / aPointMag5) * fMoment.Dot( aPoint ) * aPoint - (1. / aPointMag3) * fMoment);
+    return (katrin::KConst::MuNull() / (4 * katrin::KConst::Pi())) *
+           ((3. / aPointMag5) * fMoment.Dot(aPoint) * aPoint - (1. / aPointMag3) * fMoment);
 }
 
-KGradient KMagneticDipoleField::MagneticGradientCore(const KPosition& aSamplePoint) const {
+KGradient KMagneticDipoleField::MagneticGradientCore(const KPosition& aSamplePoint) const
+{
     KThreeVector aPoint = aSamplePoint - fLocation;
     double aPointMag = aPoint.Magnitude();
     double aPointMag2 = aPointMag * aPointMag;
@@ -54,31 +56,45 @@ KGradient KMagneticDipoleField::MagneticGradientCore(const KPosition& aSamplePoi
     double tMX = fMoment.X();
     double tMY = fMoment.Y();
     double tMZ = fMoment.Z();
-    double tMR = fMoment.Dot( aPoint );
+    double tMR = fMoment.Dot(aPoint);
 
     KGradient aGradient;
 
-    aGradient( 0, 0 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * ((aPointMag2 - 5. * tX * tX) * (tMR / aPointMag7) + (tMX * tX) * (2. / aPointMag5));
-    aGradient( 1, 1 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * ((aPointMag2 - 5. * tY * tY) * (tMR / aPointMag7) + (tMY * tY) * (2. / aPointMag5));
-    aGradient( 2, 2 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * ((aPointMag2 - 5. * tZ * tZ) * (tMR / aPointMag7) + (tMZ * tZ) * (2. / aPointMag5));
+    aGradient(0, 0) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+                      ((aPointMag2 - 5. * tX * tX) * (tMR / aPointMag7) + (tMX * tX) * (2. / aPointMag5));
+    aGradient(1, 1) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+                      ((aPointMag2 - 5. * tY * tY) * (tMR / aPointMag7) + (tMY * tY) * (2. / aPointMag5));
+    aGradient(2, 2) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+                      ((aPointMag2 - 5. * tZ * tZ) * (tMR / aPointMag7) + (tMZ * tZ) * (2. / aPointMag5));
 
-    aGradient( 0, 1 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * (tX * tMY * (aPointMag2 - 5. * tY * tY) + tY * tMX * (aPointMag2 - 5. * tX * tX) - 5. * tX * tY * tZ * tMZ) / (aPointMag7);
-    aGradient( 0, 2 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * (tX * tMZ * (aPointMag2 - 5. * tZ * tZ) + tZ * tMX * (aPointMag2 - 5. * tX * tX) - 5. * tX * tY * tZ * tMY) / (aPointMag7);
-    aGradient( 1, 2 ) = ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) * (tY * tMZ * (aPointMag2 - 5. * tZ * tZ) + tZ * tMY * (aPointMag2 - 5. * tY * tY) - 5. * tX * tY * tZ * tMX) / (aPointMag7);
+    aGradient(0, 1) =
+        ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+        (tX * tMY * (aPointMag2 - 5. * tY * tY) + tY * tMX * (aPointMag2 - 5. * tX * tX) - 5. * tX * tY * tZ * tMZ) /
+        (aPointMag7);
+    aGradient(0, 2) =
+        ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+        (tX * tMZ * (aPointMag2 - 5. * tZ * tZ) + tZ * tMX * (aPointMag2 - 5. * tX * tX) - 5. * tX * tY * tZ * tMY) /
+        (aPointMag7);
+    aGradient(1, 2) =
+        ((3. * katrin::KConst::MuNull()) / (4 * katrin::KConst::Pi())) *
+        (tY * tMZ * (aPointMag2 - 5. * tZ * tZ) + tZ * tMY * (aPointMag2 - 5. * tY * tY) - 5. * tX * tY * tZ * tMX) /
+        (aPointMag7);
 
-    aGradient( 1, 0 ) = aGradient( 0, 1 );
-    aGradient( 2, 0 ) = aGradient( 0, 2 );
-    aGradient( 2, 1 ) = aGradient( 1, 2 );
+    aGradient(1, 0) = aGradient(0, 1);
+    aGradient(2, 0) = aGradient(0, 2);
+    aGradient(2, 1) = aGradient(1, 2);
 
     return aGradient;
 }
 
-void KMagneticDipoleField::SetLocation(const KPosition& aLocation) {
+void KMagneticDipoleField::SetLocation(const KPosition& aLocation)
+{
     fLocation = aLocation;
     return;
 }
 
-void KMagneticDipoleField::SetMoment(const KDirection& aMoment) {
+void KMagneticDipoleField::SetMoment(const KDirection& aMoment)
+{
     fMoment = aMoment;
     return;
 }

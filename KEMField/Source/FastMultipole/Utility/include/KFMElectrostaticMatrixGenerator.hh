@@ -9,21 +9,18 @@
 #define KFMELECTROSTATICMATRIXGENERATOR_HH_
 
 #include "KBoundaryMatrixGenerator.hh"
-
 #include "KFMElectrostaticTypes.hh"
 
-namespace KEMField {
-
-class KFMElectrostaticMatrixGenerator
-		: public KBoundaryMatrixGenerator<KFMElectrostaticTypes::ValueType>
+namespace KEMField
 {
-public:
 
-	KSmartPointer< KSquareMatrix<KFMElectrostaticTypes::ValueType> >
-	Build(const KSurfaceContainer* container) const;
+class KFMElectrostaticMatrixGenerator : public KBoundaryMatrixGenerator<KFMElectrostaticTypes::ValueType>
+{
+  public:
+    KSmartPointer<KSquareMatrix<KFMElectrostaticTypes::ValueType>> Build(const KSurfaceContainer* container) const;
 
 
-private:
+  private:
 };
 
 } /* namespace KEMField */

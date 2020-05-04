@@ -8,46 +8,42 @@
 #ifndef KITERATIVESOLVERTIMER_HH_
 #define KITERATIVESOLVERTIMER_HH_
 
-#include "KIterativeSolver.hh"
 #include "KFMMessaging.hh"
-
+#include "KIterativeSolver.hh"
 #include "KTimer.hh"
 
 namespace KEMField
 {
 
 
-template <typename ValueType>
-class KIterativeSolverTimer : public KIterativeSolver<ValueType>::Visitor
+template<typename ValueType> class KIterativeSolverTimer : public KIterativeSolver<ValueType>::Visitor
 {
-public:
+  public:
     KIterativeSolverTimer() : fTimer(sDescription) {}
-	virtual ~KIterativeSolverTimer(){}
+    ~KIterativeSolverTimer() override {}
 
-    virtual void Initialize(KIterativeSolver<ValueType>&);
-    virtual void Visit(KIterativeSolver<ValueType>&) {}
-    virtual void Finalize(KIterativeSolver<ValueType>&);
-private:
-	KTimer fTimer;
-	static const std::string sDescription;
+    void Initialize(KIterativeSolver<ValueType>&) override;
+    void Visit(KIterativeSolver<ValueType>&) override {}
+    void Finalize(KIterativeSolver<ValueType>&) override;
+
+  private:
+    KTimer fTimer;
+    static const std::string sDescription;
 };
 
-template <typename ValueType>
-const std::string KIterativeSolverTimer<ValueType>::sDescription = "Iterative solver";
+template<typename ValueType> const std::string KIterativeSolverTimer<ValueType>::sDescription = "Iterative solver";
 
-template <typename ValueType>
-void KIterativeSolverTimer<ValueType>::Initialize(KIterativeSolver<ValueType>&)
+template<typename ValueType> void KIterativeSolverTimer<ValueType>::Initialize(KIterativeSolver<ValueType>&)
 {
     fTimer.start();
 }
 
-template<typename ValueType>
-void KIterativeSolverTimer<ValueType>::Finalize(KIterativeSolver<ValueType>&)
+template<typename ValueType> void KIterativeSolverTimer<ValueType>::Finalize(KIterativeSolver<ValueType>&)
 {
     fTimer.end();
     fTimer.display();
 }
 
-}
+}  // namespace KEMField
 
 #endif /* KITERATIVESOLVERTIMER_HH_ */

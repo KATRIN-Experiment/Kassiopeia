@@ -12,30 +12,26 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-typedef KComplexElement< KSGenEnergyRydberg > KSGenEnergyRydbergBuilder;
+typedef KComplexElement<KSGenEnergyRydberg> KSGenEnergyRydbergBuilder;
 
-template< >
-inline bool KSGenEnergyRydbergBuilder::AddAttribute( KContainer* aContainer )
+template<> inline bool KSGenEnergyRydbergBuilder::AddAttribute(KContainer* aContainer)
 {
-    if( aContainer->GetName() == "name" )
-    {
-        aContainer->CopyTo( fObject, &KNamed::SetName );
+    if (aContainer->GetName() == "name") {
+        aContainer->CopyTo(fObject, &KNamed::SetName);
         return true;
     }
-    if( aContainer->GetName() == "ionization_energy" )
-    {
-        aContainer->CopyTo( fObject, &KSGenEnergyRydberg::SetIonizationEnergy );
+    if (aContainer->GetName() == "ionization_energy") {
+        aContainer->CopyTo(fObject, &KSGenEnergyRydberg::SetIonizationEnergy);
         return true;
     }
-    if( aContainer->GetName() == "deposited_energy" )
-    {
-        aContainer->CopyTo( fObject, &KSGenEnergyRydberg::SetDepositedEnergy );
+    if (aContainer->GetName() == "deposited_energy") {
+        aContainer->CopyTo(fObject, &KSGenEnergyRydberg::SetDepositedEnergy);
         return true;
     }
 
     return false;
 }
 
-}
+}  // namespace katrin
 
-#endif //KASPER_KSGENENERGYRYDBERGBUILDER_H
+#endif  //KASPER_KSGENENERGYRYDBERGBUILDER_H

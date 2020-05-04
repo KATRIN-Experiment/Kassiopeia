@@ -22,26 +22,24 @@ namespace KEMField
 *
 */
 
-template< typename ObjectTypeList>
-class KFMExternalIdentitySetSorter: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList> class KFMExternalIdentitySetSorter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMExternalIdentitySetSorter(){};
-        virtual ~KFMExternalIdentitySetSorter(){};
+  public:
+    KFMExternalIdentitySetSorter(){};
+    virtual ~KFMExternalIdentitySetSorter(){};
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            KFMExternalIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(node);
-            if(set != NULL)
-            {
-                set->Sort();
-            }
+    virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
+    {
+        KFMExternalIdentitySet* set = KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(node);
+        if (set != nullptr) {
+            set->Sort();
         }
+    }
 
-    private:
+  private:
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* KFMExternalIdentitySetSorter_H__ */

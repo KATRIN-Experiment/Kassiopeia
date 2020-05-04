@@ -1,3 +1,3 @@
 #include "KSUtilityMessage.h"
 
-KMESSAGE_DEFINE( Kassiopeia, ksutilmsg, KSUtility, KSUTILITY )
+KMESSAGE_DEFINE(Kassiopeia, ksutilmsg, KSUtility, KSUTILITY)

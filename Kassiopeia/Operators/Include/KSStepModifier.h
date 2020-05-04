@@ -7,27 +7,23 @@
 namespace Kassiopeia
 {
 
-    class KSTrack;
+class KSTrack;
 
-    class KSStepModifier:
-            public KSComponentTemplate< KSStepModifier >
-    {
-        public:
-            KSStepModifier();
-            virtual ~KSStepModifier();
+class KSStepModifier : public KSComponentTemplate<KSStepModifier>
+{
+  public:
+    KSStepModifier();
+    ~KSStepModifier() override;
 
-        public:
+  public:
+    //returns true if any of the state variables of anInitialParticle are changed
+    virtual bool ExecutePreStepModification(KSParticle& anInitialParticle, KSParticleQueue& aQueue) = 0;
 
-            //returns true if any of the state variables of anInitialParticle are changed
-            virtual bool ExecutePreStepModification( KSParticle& anInitialParticle,
-                                                     KSParticleQueue& aQueue ) = 0;
+    //returns true if any of the state variables of aFinalParticle are changed
+    virtual bool ExecutePostStepModification(KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                                             KSParticleQueue& aQueue) = 0;
+};
 
-            //returns true if any of the state variables of aFinalParticle are changed
-            virtual bool ExecutePostStepModification( KSParticle& anInitialParticle,
-                                                     KSParticle& aFinalParticle,
-                                                     KSParticleQueue& aQueue ) = 0;
-    };
-
-}
+}  // namespace Kassiopeia
 
 #endif

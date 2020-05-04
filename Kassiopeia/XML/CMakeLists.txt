@@ -32,13 +32,13 @@ if( Kassiopeia_USE_VTK )
         Examples/VTK/ToricTrapSimulation.xml
         Examples/VTK/PhotoMultiplierTubeSimulation.xml
     )
+else( Kassiopeia_USE_VTK )
+    kasper_install_config_subdir( Examples
+        Examples/AnalyticSimulation.xml
+        Examples/QuadrupoleTrapSimulation.xml
+        Examples/DipoleTrapSimulation.xml
+        Examples/DipoleTrapMeshedSpaceSimulation.xml
+        Examples/ToricTrapSimulation.xml
+        Examples/PhotoMultiplierTubeSimulation.xml
+    )
 endif( Kassiopeia_USE_VTK )
-
-kasper_install_config_subdir( Examples
-    Examples/AnalyticSimulation.xml
-    Examples/QuadrupoleTrapSimulation.xml
-    Examples/DipoleTrapSimulation.xml
-    Examples/DipoleTrapMeshedSpaceSimulation.xml
-    Examples/ToricTrapSimulation.xml
-    Examples/PhotoMultiplierTubeSimulation.xml
-)

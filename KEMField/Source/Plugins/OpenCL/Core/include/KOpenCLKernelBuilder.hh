@@ -2,6 +2,7 @@
 #define KOpenCLKernelBuilder_HH__
 
 #include "KOpenCLInterface.hh"
+
 #include <string>
 
 namespace KEMField
@@ -9,16 +10,16 @@ namespace KEMField
 
 class KOpenCLKernelBuilder
 {
-    public:
-        KOpenCLKernelBuilder(){};
-        virtual ~KOpenCLKernelBuilder(){};
+  public:
+    KOpenCLKernelBuilder(){};
+    virtual ~KOpenCLKernelBuilder(){};
 
-        cl::Kernel* BuildKernel(std::string SourceFileName, std::string KernelName, std::string BuildFlags=std::string("") );
+    cl::Kernel* BuildKernel(std::string SourceFileName, std::string KernelName,
+                            std::string BuildFlags = std::string(""));
 
-    protected:
-
+  protected:
 };
 
-}
+}  // namespace KEMField
 
 #endif /* KOpenCLKernelBuilder_H__ */

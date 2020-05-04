@@ -6,19 +6,20 @@
 #include <time.h>
 #endif
 
-#include <cmath>
 #include "KEMCout.hh"
 #include "KIterativeSolver.hh"
 
+#include <cmath>
+
 #ifdef KEMFIELD_USE_MPI
-    #include "KMPIInterface.hh"
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY if (KMPIInterface::GetInstance()->GetProcess()==0)
-    #endif
+#include "KMPIInterface.hh"
+#ifndef MPI_ROOT_PROCESS_ONLY
+#define MPI_ROOT_PROCESS_ONLY if (KMPIInterface::GetInstance()->GetProcess() == 0)
+#endif
 #else
-    #ifndef MPI_ROOT_PROCESS_ONLY
-        #define MPI_ROOT_PROCESS_ONLY
-    #endif
+#ifndef MPI_ROOT_PROCESS_ONLY
+#define MPI_ROOT_PROCESS_ONLY
+#endif
 #endif
 
 namespace KEMField
@@ -38,99 +39,94 @@ namespace KEMField
 */
 
 
-template <typename ValueType>
-class KTimeTerminator: public KIterativeSolver<ValueType>::Visitor
+template<typename ValueType> class KTimeTerminator : public KIterativeSolver<ValueType>::Visitor
 {
-    public:
+  public:
+    KTimeTerminator() : KIterativeSolver<ValueType>::Visitor(), fMaxTimeAllowed(1e10), fResult(0){};
 
-        KTimeTerminator():
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxTimeAllowed(1e10),
-            fResult(0){};
+    KTimeTerminator(double max_time_sec) :
+        KIterativeSolver<ValueType>::Visitor(),
+        fMaxTimeAllowed(std::fabs(max_time_sec)),
+        fResult(0){};
 
-        KTimeTerminator(double max_time_sec):
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxTimeAllowed(std::fabs(max_time_sec)),
-            fResult(0){};
+    KTimeTerminator(double max_time_sec, unsigned int interval) :
+        KIterativeSolver<ValueType>::Visitor(),
+        fMaxTimeAllowed(std::fabs(max_time_sec)),
+        fResult(0)
+    {
+        this->fInterval = interval;
+    };
 
-        KTimeTerminator(double max_time_sec, unsigned int interval):
-            KIterativeSolver<ValueType>::Visitor(),
-            fMaxTimeAllowed(std::fabs(max_time_sec)),
-            fResult(0)
+    ~KTimeTerminator() override{};
+
+    void SetMaximumAllowedTime(double time_sec)
+    {
+        fMaxTimeAllowed = time_sec;
+    };
+
+    void Initialize(KIterativeSolver<ValueType>&) override
+    {
+#ifdef KEMFIELD_USE_REALTIME_CLOCK
+        clock_gettime(CLOCK_REALTIME, &fStart);
+        this->fTerminate = false;
+        fResult = 0;
+#else
+        MPI_ROOT_PROCESS_ONLY
         {
-            this->fInterval = interval;
-        };
+            KEMField::cout
+                << "KTimeTerminator::Initialize: KEMField must be compiled with use of real time clock enabled."
+                << KEMField::endl;
+        }
+#endif
+    };
 
-        virtual ~KTimeTerminator(){};
+    void Visit(KIterativeSolver<ValueType>&) override
+    {
+#ifdef KEMFIELD_USE_REALTIME_CLOCK
+        timespec now;
+        clock_gettime(CLOCK_REALTIME, &now);
+        double time_elapsed = TimeDifferenceSec(fStart, now);
 
-        void SetMaximumAllowedTime(double time_sec)
-        {
-            fMaxTimeAllowed = time_sec;
-        };
+        if (time_elapsed >= fMaxTimeAllowed) {
+            fResult = 1;
+        }
 
-        virtual void Initialize(KIterativeSolver<ValueType>&)
-        {
-            #ifdef KEMFIELD_USE_REALTIME_CLOCK
-            clock_gettime(CLOCK_REALTIME, &fStart);
-            this->fTerminate = false;
-            fResult = 0;
-            #else
+//only use the result determined by the root (0) process
+#ifdef KEMFIELD_USE_MPI
+        MPI_Bcast(&(fResult), 1, MPI_INT, 0, MPI_COMM_WORLD);
+#endif
+
+        if (fResult != 0) {
+            this->fTerminate = true;
             MPI_ROOT_PROCESS_ONLY
             {
-                KEMField::cout<<"KTimeTerminator::Initialize: KEMField must be compiled with use of real time clock enabled."<<KEMField::endl;
+                KEMField::cout
+                    << "KTimeTerminator::Visit: Will terminate iterative solver progress because elapsed time of: ";
+                KEMField::cout << time_elapsed << "(s) exceeds the allowed time of: " << fMaxTimeAllowed << "(s)."
+                               << KEMField::endl;
             }
-            #endif
         };
+#endif
+    }
 
-        virtual void Visit(KIterativeSolver<ValueType>&)
-        {
-            #ifdef KEMFIELD_USE_REALTIME_CLOCK
-            timespec now;
-            clock_gettime(CLOCK_REALTIME, &now);
-            double time_elapsed = TimeDifferenceSec(fStart, now);
+    void Finalize(KIterativeSolver<ValueType>&) override{};
 
-            if(time_elapsed >= fMaxTimeAllowed)
-            {
-                fResult = 1;
-            }
+  protected:
+#ifdef KEMFIELD_USE_REALTIME_CLOCK
+    double TimeDifferenceSec(timespec start, timespec end)
+    {
+        double end_sec = end.tv_sec;
+        double start_sec = start.tv_sec;
+        return std::fabs(end_sec - start_sec);
+    }
+#endif
 
-            //only use the result determined by the root (0) process
-            #ifdef KEMFIELD_USE_MPI
-            MPI_Bcast( &(fResult), 1, MPI_INT, 0, MPI_COMM_WORLD );
-            #endif
-
-            if(fResult != 0)
-            {
-                this->fTerminate = true;
-                MPI_ROOT_PROCESS_ONLY
-                {
-                    KEMField::cout<<"KTimeTerminator::Visit: Will terminate iterative solver progress because elapsed time of: ";
-                    KEMField::cout<<time_elapsed<<"(s) exceeds the allowed time of: "<<fMaxTimeAllowed<<"(s)."<<KEMField::endl;
-                }
-            };
-            #endif
-        }
-
-        virtual void Finalize(KIterativeSolver<ValueType>&){};
-
-    protected:
-
-        #ifdef KEMFIELD_USE_REALTIME_CLOCK
-        double TimeDifferenceSec(timespec start, timespec end)
-        {
-            double end_sec = end.tv_sec;
-            double start_sec = start.tv_sec;
-            return std::fabs(end_sec - start_sec);
-        }
-        #endif
-
-        double fMaxTimeAllowed;
-        int fResult;
-        timespec fStart;
-
+    double fMaxTimeAllowed;
+    int fResult;
+    timespec fStart;
 };
 
 
-}
+}  // namespace KEMField
 
 #endif /* __KTimeTerminator_H__ */

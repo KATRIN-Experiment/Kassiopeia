@@ -7,26 +7,19 @@
 namespace Kassiopeia
 {
 
-    class KSSurfaceNavigator :
-        public KSComponentTemplate< KSSurfaceNavigator >
-    {
-        public:
-            KSSurfaceNavigator();
-            virtual ~KSSurfaceNavigator();
+class KSSurfaceNavigator : public KSComponentTemplate<KSSurfaceNavigator>
+{
+  public:
+    KSSurfaceNavigator();
+    ~KSSurfaceNavigator() override;
 
-        public:
-            virtual void ExecuteNavigation(
-            	const KSParticle& anInitialParticle,
-                const KSParticle& aNavigationParticle,
-                KSParticle& aFinalParticle,
-                KSParticleQueue& aSecondaries
-            ) const = 0;
+  public:
+    virtual void ExecuteNavigation(const KSParticle& anInitialParticle, const KSParticle& aNavigationParticle,
+                                   KSParticle& aFinalParticle, KSParticleQueue& aSecondaries) const = 0;
 
-            virtual void FinalizeNavigation(
-                KSParticle& aFinalParticle
-            ) const = 0;
-    };
+    virtual void FinalizeNavigation(KSParticle& aFinalParticle) const = 0;
+};
 
-}
+}  // namespace Kassiopeia
 
 #endif

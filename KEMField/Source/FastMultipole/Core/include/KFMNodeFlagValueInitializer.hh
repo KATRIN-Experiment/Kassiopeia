@@ -3,8 +3,8 @@
 
 #include "KFMNode.hh"
 #include "KFMNodeActor.hh"
-#include "KFMObjectRetriever.hh"
 #include "KFMNodeFlags.hh"
+#include "KFMObjectRetriever.hh"
 
 
 namespace KEMField
@@ -23,40 +23,41 @@ namespace KEMField
 */
 
 
-template< typename ObjectTypeList, unsigned int NFLAGS>
-class KFMNodeFlagValueInitializer: public KFMNodeActor< KFMNode<ObjectTypeList> >
+template<typename ObjectTypeList, unsigned int NFLAGS>
+class KFMNodeFlagValueInitializer : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
-    public:
-        KFMNodeFlagValueInitializer(){};
-        virtual ~KFMNodeFlagValueInitializer(){};
+  public:
+    KFMNodeFlagValueInitializer(){};
+    ~KFMNodeFlagValueInitializer() override{};
 
-        void SetFlagIndex(unsigned int flag_index){fFlagIndex = flag_index;};
-        void SetFlagValue(char value){fValue = value;};
+    void SetFlagIndex(unsigned int flag_index)
+    {
+        fFlagIndex = flag_index;
+    };
+    void SetFlagValue(char value)
+    {
+        fValue = value;
+    };
 
-        virtual void ApplyAction( KFMNode<ObjectTypeList>* node)
-        {
-            if(node != NULL)
-            {
-                KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS> >::GetNodeObject(node);
-                if(flags == NULL)
-                {
-                    flags = new KFMNodeFlags<NFLAGS>();
-                    KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS> >::SetNodeObject(flags, node);
-                }
-
-                flags->SetFlag(fFlagIndex, fValue );
+    void ApplyAction(KFMNode<ObjectTypeList>* node) override
+    {
+        if (node != nullptr) {
+            KFMNodeFlags<NFLAGS>* flags = KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS>>::GetNodeObject(node);
+            if (flags == nullptr) {
+                flags = new KFMNodeFlags<NFLAGS>();
+                KFMObjectRetriever<ObjectTypeList, KFMNodeFlags<NFLAGS>>::SetNodeObject(flags, node);
             }
+
+            flags->SetFlag(fFlagIndex, fValue);
         }
+    }
 
-    protected:
-
-        unsigned int fFlagIndex;
-        char fValue;
-
-
+  protected:
+    unsigned int fFlagIndex;
+    char fValue;
 };
 
-}
+}  // namespace KEMField
 
 
 #endif /* __KFMNodeFlagValueInitializer_H__ */

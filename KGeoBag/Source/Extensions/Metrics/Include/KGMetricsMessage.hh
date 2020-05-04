@@ -10,17 +10,16 @@
 
 #include "KMessage.h"
 
-KMESSAGE_DECLARE( KGeoBag, metricsmsg )
+KMESSAGE_DECLARE(KGeoBag, metricsmsg)
 
 #ifdef KGeoBag_ENABLE_DEBUG
 
-#define metricsmsg_debug( xCONTENT )\
-    metricsmsg( eDebug ) << xCONTENT;
+#define metricsmsg_debug(xCONTENT) metricsmsg(eDebug) << xCONTENT;
 
 #endif
 
 #ifndef metricsmsg_debug
-#define metricsmsg_debug( xCONTENT )
+#define metricsmsg_debug(xCONTENT)
 #endif
 
 #endif /* KGMETRICSMESSAGE_HH_ */

@@ -7,45 +7,44 @@
 namespace Kassiopeia
 {
 
-    class KSGenMomentumRectangularComposite :
-        public KSComponentTemplate< KSGenMomentumRectangularComposite, KSGenCreator >
-    {
-        public:
-            KSGenMomentumRectangularComposite();
-            KSGenMomentumRectangularComposite( const KSGenMomentumRectangularComposite& aCopy );
-            KSGenMomentumRectangularComposite* Clone() const;
-            virtual ~KSGenMomentumRectangularComposite();
+class KSGenMomentumRectangularComposite : public KSComponentTemplate<KSGenMomentumRectangularComposite, KSGenCreator>
+{
+  public:
+    KSGenMomentumRectangularComposite();
+    KSGenMomentumRectangularComposite(const KSGenMomentumRectangularComposite& aCopy);
+    KSGenMomentumRectangularComposite* Clone() const override;
+    ~KSGenMomentumRectangularComposite() override;
 
-        public:
-            virtual void Dice( KSParticleQueue* aParticleList );
+  public:
+    void Dice(KSParticleQueue* aParticleList) override;
 
-        public:
-            void SetXAxis( const KThreeVector& anXAxis );
-            void SetYAxis( const KThreeVector& anYAxis );
-            void SetZAxis( const KThreeVector& anZAxis );
+  public:
+    void SetXAxis(const KThreeVector& anXAxis);
+    void SetYAxis(const KThreeVector& anYAxis);
+    void SetZAxis(const KThreeVector& anZAxis);
 
-            void SetXValue( KSGenValue* anXValue );
-            void ClearXValue( KSGenValue* anXValue );
-            void SetYValue( KSGenValue* aYValue );
-            void ClearYValue( KSGenValue* aYValue );
-            void SetZValue( KSGenValue* aZValue );
-            void ClearZValue( KSGenValue* aZValue );
+    void SetXValue(KSGenValue* anXValue);
+    void ClearXValue(KSGenValue* anXValue);
+    void SetYValue(KSGenValue* aYValue);
+    void ClearYValue(KSGenValue* aYValue);
+    void SetZValue(KSGenValue* aZValue);
+    void ClearZValue(KSGenValue* aZValue);
 
 
-        private:
-            KSGenValue* fXValue;
-            KSGenValue* fYValue;
-            KSGenValue* fZValue;
+  private:
+    KSGenValue* fXValue;
+    KSGenValue* fYValue;
+    KSGenValue* fZValue;
 
-            KThreeVector fXAxis;
-            KThreeVector fYAxis;
-            KThreeVector fZAxis;
+    KThreeVector fXAxis;
+    KThreeVector fYAxis;
+    KThreeVector fZAxis;
 
-        protected:
-            void InitializeComponent();
-            void DeinitializeComponent();
-    };
+  protected:
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
+};
 
-}
+}  // namespace Kassiopeia
 
-#endif // KSGENMOMENTUMRECTANGULARCOMPOSITE_H
+#endif  // KSGENMOMENTUMRECTANGULARCOMPOSITE_H

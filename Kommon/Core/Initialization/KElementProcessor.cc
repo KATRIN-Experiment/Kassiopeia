@@ -3,13 +3,6 @@
 namespace katrin
 {
 
-    template<>
-    KElementProcessor::~KComplexElement()
-    {
-    }
+template<> KElementProcessor::~KComplexElement() {}
 
-}
-
-
-
-
+}  // namespace katrin

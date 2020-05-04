@@ -1,14 +1,15 @@
 #ifndef KSAOutputCollector_H__
 #define KSAOutputCollector_H__
 
+#include "KSAFileWriter.hh"
+#include "KSAOutputNode.hh"
+
+#include <sstream>
 #include <stack>
 #include <string>
-#include <sstream>
 
-#include "KSAOutputNode.hh"
-#include "KSAFileWriter.hh"
-
-namespace KEMField{
+namespace KEMField
+{
 
 /**
 *
@@ -26,37 +27,46 @@ namespace KEMField{
 
 class KSAOutputCollector
 {
-    public:
-        KSAOutputCollector(){fUseTabbing = false;};
-        ~KSAOutputCollector(){;};
+  public:
+    KSAOutputCollector()
+    {
+        fUseTabbing = false;
+    };
+    ~KSAOutputCollector()
+    {
+        ;
+    };
 
-        void SetFileWriter(KSAFileWriter* writer);
+    void SetFileWriter(KSAFileWriter* writer);
 
-        //recursively ask GetLine() from every node
-        //below this one, this should only be called on the root node
-        void CollectOutput(KSAOutputNode* node);
+    //recursively ask GetLine() from every node
+    //below this one, this should only be called on the root node
+    void CollectOutput(KSAOutputNode* node);
 
-        void SetUseTabbingTrue(){fUseTabbing = true;}
-        void SetUseTabbingFalse(){fUseTabbing = false;}
-
-
-    protected:
-
-        void CollectNodeOutput(KSAOutputNode* node);
-        void ForwardNodeOutput();
-
-        std::stack< KSAOutputNode* > fNodeStack;
-        KSAOutputNode* fTempNode;
-        bool fUseTabbing;
-        int fStatus;
-        std::string fLine;
-        KSAFileWriter* fWriter;
-        std::stringstream fStream;
+    void SetUseTabbingTrue()
+    {
+        fUseTabbing = true;
+    }
+    void SetUseTabbingFalse()
+    {
+        fUseTabbing = false;
+    }
 
 
+  protected:
+    void CollectNodeOutput(KSAOutputNode* node);
+    void ForwardNodeOutput();
+
+    std::stack<KSAOutputNode*> fNodeStack;
+    KSAOutputNode* fTempNode;
+    bool fUseTabbing;
+    int fStatus;
+    std::string fLine;
+    KSAFileWriter* fWriter;
+    std::stringstream fStream;
 };
 
 
-}//end of kemfield namespace
+}  // namespace KEMField
 
 #endif /* __KSAOutputCollector_H__ */
