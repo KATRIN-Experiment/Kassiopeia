@@ -9,6 +9,7 @@
 #if defined __APPLE__
 #include <OpenCL/cl.hpp>
 #else
+#define CL_TARGET_OPENCL_VERSION 120
 #include <CL/cl.hpp>
 #endif
 #include <algorithm>
