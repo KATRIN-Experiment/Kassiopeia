@@ -77,7 +77,7 @@ if (${PROJECT_NAME}_USE_OPENCL)
 
   find_package (OpenCL REQUIRED)
 
-  kasper_external_include_directories(${OPENCL_INCLUDE_DIRS})
+  kasper_external_include_directories(${OpenCL_INCLUDE_DIRS})
 
   if(${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
     kasper_internal_include_directories(SYSTEM ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.1)
@@ -89,14 +89,14 @@ if (${PROJECT_NAME}_USE_OPENCL)
 
   add_cflag (KEMFIELD_USE_OPENCL)
 
-  get_filename_component(OPENCL_LIBDIR ${OPENCL_LIBRARIES} PATH)
+  get_filename_component(OPENCL_LIBDIR ${OpenCL_LIBRARIES} PATH)
 
   if (APPLE)
     execute_process(COMMAND ${CMAKE_CXX_COMPILER}
       -D KEMFIELD_OPENCL_PLATFORM=${KEMField_OPENCL_PLATFORM}
       -D KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}
       -o GenerateOpenCLHeader
-      -I${OPENCL_INCLUDE_DIRS}
+      -I${OpenCL_INCLUDE_DIRS}
       ${${PROJECT_NAME}_OPENCL_CFLAGS}
       -framework OpenCL
       ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
@@ -107,10 +107,10 @@ if (${PROJECT_NAME}_USE_OPENCL)
       -D KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM}
       -D KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}
       -o GenerateOpenCLHeader
-      -I${OPENCL_INCLUDE_DIRS}
+      -I${OpenCL_INCLUDE_DIRS}
       ${${PROJECT_NAME}_OPENCL_CFLAGS}
       ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
-      ${OPENCL_LIBRARIES}
+      ${OpenCL_LIBRARIES}
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
   endif (APPLE)
@@ -343,7 +343,7 @@ if (${PROJECT_NAME}_USE_OPENCL)
     KFMMath
     KFMMathUtilities
     KFMElectrostatics
-    ${OPENCL_LIBRARIES}
+    ${OpenCL_LIBRARIES}
     )
 
   kasper_install_headers (${OPENCLPLUGIN_HEADERFILES})
