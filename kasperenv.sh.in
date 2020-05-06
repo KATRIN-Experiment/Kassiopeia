@@ -67,6 +67,4 @@ printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTA
 printf "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m\n"
 printf "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m\n"
 
-[ ! -z "${BASH}" ] && . ${KASPER_INSTALL_BIN}/kasper-krypton.bash
-
 return 0
