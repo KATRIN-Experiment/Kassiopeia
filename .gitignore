@@ -43,3 +43,6 @@ cmake_install.cmake
 .clang_complete
 .idea/
 .ipynb_checkpoints/
+
+!Kommon/Core/Binning/BinningConfig.cmake
+!Kommon/Core/Maths/MathsConfig.cmake
