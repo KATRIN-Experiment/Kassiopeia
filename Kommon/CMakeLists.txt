@@ -55,7 +55,6 @@ set(KOMMON_SOURCE_FILES)
 
 # subdirectories
 add_subdirectory( cmake )
-add_subdirectory( Core )
 add_subdirectory( Documentation )
 
 if( KASPER_USE_BOOST )
@@ -89,6 +88,8 @@ if( KASPER_USE_TBB )
     add_compile_definitions( KASPER_USE_TBB )
     add_subdirectory( TBB )
 endif()
+
+add_subdirectory( Core )
 
 kasper_include_default_dirs()
 kasper_install_headers( ${KOMMON_HEADER_FILES} )
