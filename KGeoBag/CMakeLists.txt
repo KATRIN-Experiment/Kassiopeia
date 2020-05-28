@@ -30,7 +30,12 @@ set( KGeoBag_USE_ROOT ${KASPER_USE_ROOT} )
 
 if( KGeoBag_USE_BOOST )
     find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
-    kasper_external_include_directories( ${Boost_INCLUDE_DIRS} )
+    if( Boost_INCLUDE_DIR )
+        kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
+        list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
+    else()
+        list(APPEND EXTERNAL_LIBRARIES Boost::headers Boost::filesystem )
+    endif()
     set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_BOOST )
 endif()
 
