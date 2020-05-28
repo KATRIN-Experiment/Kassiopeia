@@ -11,6 +11,10 @@
 #include <utility>
 #include <vector>
 
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
 namespace katrin
 {
 
