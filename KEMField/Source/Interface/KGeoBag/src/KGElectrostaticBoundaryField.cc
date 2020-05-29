@@ -128,10 +128,9 @@ void KGElectrostaticBoundaryField::ConfigureSurfaceContainer()
     }
 
     if (container->empty()) {
-        // TODO find alternative to KNamed::GetName which is not available here
-        cout << "ERROR:"
-             << "electrostatic field solver <" /*<< GetName()*/ << "> has zero surface elements" << endl;
-        std::exit(-1);
+        cout << "WARNING:"
+             << "electrostatic field solver <" << GetName() << "> has zero surface elements" << endl;
+        //std::exit(-1);
     }
 
     SetContainer(container);

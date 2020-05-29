@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     }
 
     auto& tXML = KXMLInitializer::GetInstance();
-    auto* tTokenizer = tXML.Configure(argc, argv, false);  // process files below
+    auto* tTokenizer = tXML.Configure(argc, argv);  // process extra files below
 
     //tXML.DumpConfiguration();
 
@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     for (auto tFilename : tXML.GetArguments().ParameterList()) {
 
-        coremsg(eInfo) << "processing file <" << tFilename << "> ..." << eom;
+        coremsg(eNormal) << "processing file <" << tFilename << "> ..." << eom;
         auto* tFile = new KTextFile();
         tFile->AddToNames(tFilename);
         tTokenizer->ProcessFile(tFile);

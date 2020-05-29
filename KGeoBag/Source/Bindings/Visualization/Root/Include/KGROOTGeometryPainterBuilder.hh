@@ -19,6 +19,14 @@ template<> inline bool KGROOTGeometryPainterBuilder::AddAttribute(KContainer* aC
         aContainer->CopyTo(fObject, &KNamed::SetName);
         return true;
     }
+    if (aContainer->GetName() == "file") {
+        aContainer->CopyTo(fObject, &KGROOTGeometryPainter::SetFile);
+        return true;
+    }
+    if (aContainer->GetName() == "path") {
+        aContainer->CopyTo(fObject, &KGROOTGeometryPainter::SetPath);
+        return true;
+    }
     if (aContainer->GetName() == "surfaces") {
         if (aContainer->AsReference<string>().size() == 0) {
             return true;

@@ -8,6 +8,7 @@ if( Kassiopeia_USE_ROOT )
     	KSROOTTrackPainter.h
 	KSROOTPotentialPainter.h
         KSROOTMagFieldPainter.h
+        KSROOTZonalHarmonicsPainter.h
     )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_HEADER_BASENAMES
@@ -37,6 +38,7 @@ if( Kassiopeia_USE_ROOT )
     	KSROOTTrackPainter.cxx
 	KSROOTPotentialPainter.cxx
         KSROOTMagFieldPainter.cxx
+        KSROOTZonalHarmonicsPainter.cxx
     )
 	if( Kassiopeia_USE_VTK )
 	    set( VISUALIZATION_SOURCE_BASENAMES

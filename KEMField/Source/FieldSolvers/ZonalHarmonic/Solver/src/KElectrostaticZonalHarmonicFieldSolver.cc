@@ -6,6 +6,32 @@
 
 namespace KEMField
 {
+bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansion(const KPosition& P) const
+{
+    if (UseCentralExpansion(P))
+        return true;
+
+    for (auto& sub : fSubsetFieldSolvers) {
+        if (sub->CentralExpansion(P))
+            return true;
+    }
+
+    return false;
+}
+
+bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansion(const KPosition& P) const
+{
+    if (UseRemoteExpansion(P))
+        return true;
+
+    for (auto& sub : fSubsetFieldSolvers) {
+        if (sub->UseRemoteExpansion(P))
+            return true;
+    }
+
+    return false;
+}
+
 double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition& P) const
 {
     double phi = 0;

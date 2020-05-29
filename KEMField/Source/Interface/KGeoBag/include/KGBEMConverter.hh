@@ -312,7 +312,7 @@ class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisType
     void DispatchSpace(KGSpace* aSpace) override;
 
   private:
-    void Add(KGMeshData* aData);
+    bool Add(KGMeshData* aData);
 };
 
 class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisTypes, KBoundaryTypes>
@@ -327,7 +327,7 @@ class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasi
     void DispatchSpace(KGSpace* aSpace) override;
 
   private:
-    void Add(KGAxialMeshData* aData);
+    bool Add(KGAxialMeshData* aData);
 };
 
 class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisTypes, KBoundaryTypes>
@@ -342,7 +342,7 @@ class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConvert
     void DispatchSpace(KGSpace* aSpace) override;
 
   private:
-    void Add(KGDiscreteRotationalMeshData* aData);
+    bool Add(KGDiscreteRotationalMeshData* aData);
 };
 
 }  // namespace KGeoBag

@@ -11,6 +11,7 @@
 #include "KEMFileInterface.hh"
 #include "KEMSimpleException.hh"
 #include "KFile.h"
+#include "KGslErrorHandler.h"
 
 #include <vtkDataArray.h>
 #include <vtkPointData.h>
@@ -394,6 +395,8 @@ KMagnetostaticFieldmapCalculator::KMagnetostaticFieldmapCalculator() :
     fOutputFilename(""),
     fDirectory(SCRATCH_DEFAULT_DIR),
     fFile(""),
+    fForceUpdate(false),
+    fComputeGradient(false),
     fCenter(),
     fLength(),
     fMirrorX(false),
@@ -514,6 +517,18 @@ void KMagnetostaticFieldmapCalculator::Prepare()
     fFieldData->SetNumberOfComponents(3);  // vector data
     fFieldData->SetNumberOfTuples(tNumPoints);
     fGrid->GetPointData()->AddArray(fFieldData);
+
+    if (fComputeGradient) {
+        if (fMagneticFields.size() > 1) {
+            cout << "computing magnetic gradient of multiple fields, results are probably incorrect" << endl;
+        }
+
+        fGradientData = vtkSmartPointer<vtkDoubleArray>::New();
+        fGradientData->SetName("magnetic gradient");
+        fGradientData->SetNumberOfComponents(9);  // tensor data
+        fGradientData->SetNumberOfTuples(tNumPoints);
+        fGrid->GetPointData()->AddArray(fGradientData);
+    }
 }
 
 void KMagnetostaticFieldmapCalculator::Execute()
@@ -576,8 +591,13 @@ void KMagnetostaticFieldmapCalculator::Execute()
 
         if (!tHasValue) {
             tField = KThreeVector::sZero;
-            for (auto& it : fMagneticFields)
-                tField += it.second->MagneticField(KPosition(tPoint));
+            try {
+                for (auto& it : fMagneticFields)
+                    tField += it.second->MagneticField(KPosition(tPoint));
+            }
+            catch (katrin::KGslException& e) {
+                tField = KThreeVector::sInvalid;
+            }
         }
 
         fFieldData->SetTuple3(i, tField[0], tField[1], tField[2]);
@@ -589,6 +609,89 @@ void KMagnetostaticFieldmapCalculator::Execute()
     tTimeSpent = ((double) (tClockEnd - tClockStart)) / CLOCKS_PER_SEC;  // time in seconds
     cout << "finished computing field map (total time spent = " << tTimeSpent
          << ", time per field evaluation = " << tTimeSpent / (double) (tNumPoints) << ")" << endl;
+
+
+    if (fComputeGradient) {
+        cout << "computing magnetic gradient at " << tNumPoints << " grid points" << endl;
+
+        //evaluate field
+        tClockStart = clock();
+        for (unsigned int i = 0; i < tNumPoints; i++) {
+            if (i % 10 == 0) {
+                int progress = 50 * (float) i / (float) (tNumPoints - 1);
+                std::cout << "\r  ";
+                for (int j = 0; j < 50; j++)
+                    std::cout << (j <= progress ? "#" : ".");
+                std::cout << "  [" << 2 * progress << "%]" << std::flush;
+            }
+
+            double tPoint[3];
+            fGrid->GetPoint(i, tPoint);
+
+            if (!CheckPosition(KPosition(tPoint)))
+                continue;
+
+            bool tHasValue = false;
+            KThreeMatrix tGradient;
+
+            if (fMirrorX || fMirrorY || fMirrorZ) {
+                double tMirrorPoint[3];
+                tMirrorPoint[0] = tPoint[0];
+                tMirrorPoint[1] = tPoint[1];
+                tMirrorPoint[2] = tPoint[2];
+                if (fMirrorX && (tPoint[0] > fCenter.X()))
+                    tMirrorPoint[0] = 2. * fCenter.X() - tPoint[0];
+                if (fMirrorY && (tPoint[1] > fCenter.Y()))
+                    tMirrorPoint[1] = 2. * fCenter.Y() - tPoint[1];
+                if (fMirrorZ && (tPoint[2] > fCenter.Z()))
+                    tMirrorPoint[2] = 2. * fCenter.Z() - tPoint[2];
+
+                if ((tMirrorPoint[0] != tPoint[0]) || (tMirrorPoint[1] != tPoint[1]) ||
+                    (tMirrorPoint[2] != tPoint[2])) {
+                    unsigned int j = fGrid->FindPoint(tMirrorPoint);
+                    if (fValidityData->GetTuple1(j) >= 3)  // 3 = gradient valid
+                    {
+                        tGradient.SetComponents(fGradientData->GetTuple9(j));
+                        tHasValue = true;
+                    }
+                }
+            }
+
+            if (!tHasValue) {
+                tGradient = KThreeMatrix::sZero;
+                try {
+                    /// FIXME: summing up gradients from multiple fields doesn't make much sense,
+                    /// Needs to be handled in a better way, e.g. calculate gradient from field map directly.
+                    for (auto& it : fMagneticFields)
+                        tGradient += it.second->MagneticGradient(KPosition(tPoint));
+                }
+                catch (katrin::KGslException& e) {
+                    tGradient = KThreeMatrix::sInvalid;
+                }
+            }
+
+            fGradientData->SetTuple9(i,
+                                     tGradient[0],
+                                     tGradient[1],
+                                     tGradient[2],
+                                     tGradient[3],
+                                     tGradient[4],
+                                     tGradient[5],
+                                     tGradient[6],
+                                     tGradient[7],
+                                     tGradient[8]);
+            fValidityData->SetTuple1(i, 3);
+        }
+        std::cout << std::endl;
+        tClockEnd = clock();
+
+        tTimeSpent = ((double) (tClockEnd - tClockStart)) / CLOCKS_PER_SEC;  // time in seconds
+        cout << "finished computing gradient map (total time spent = " << tTimeSpent
+             << ", time per gradient evaluation = " << tTimeSpent / (double) (tNumPoints) << ")" << endl;
+    }
+    else {
+        cout << "not computing magnetic gradient" << endl;
+    }
 }
 
 void KMagnetostaticFieldmapCalculator::Finish()

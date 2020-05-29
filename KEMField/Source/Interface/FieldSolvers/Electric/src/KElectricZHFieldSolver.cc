@@ -121,12 +121,22 @@ std::pair<KThreeVector, double> KElectricZHFieldSolver::ElectricFieldAndPotentia
 
 bool KElectricZHFieldSolver::UseCentralExpansion(const KPosition& P)
 {
-    return fZonalHarmonicFieldSolver->UseCentralExpansion(P);
+    return fZonalHarmonicFieldSolver->CentralExpansion(P);
 }
 
 bool KElectricZHFieldSolver::UseRemoteExpansion(const KPosition& P)
 {
-    return fZonalHarmonicFieldSolver->UseRemoteExpansion(P);
+    return fZonalHarmonicFieldSolver->RemoteExpansion(P);
+}
+
+std::set<std::pair<double, double>> KElectricZHFieldSolver::CentralSourcePoints()
+{
+    return fZHContainer->CentralSourcePoints();
+}
+
+std::set<std::pair<double, double>> KElectricZHFieldSolver::RemoteSourcePoints()
+{
+    return fZHContainer->RemoteSourcePoints();
 }
 
 

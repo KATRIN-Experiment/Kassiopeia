@@ -93,9 +93,9 @@ void KGStaticElectromagnetField::ConfigureSurfaceContainer()
     }
 
     if (container->empty()) {
-        cout << "ERROR:"
-             << "electromagnet field solver <" /*<< GetName()*/ << "> has zero surface or space elements" << endl;
-        std::exit(-1);
+        cout << "WARNING:"
+             << "electromagnet field solver <" << GetName() << "> has zero surface or space elements" << endl;
+        //std::exit(-1);
     }
 
     SetContainer(container);

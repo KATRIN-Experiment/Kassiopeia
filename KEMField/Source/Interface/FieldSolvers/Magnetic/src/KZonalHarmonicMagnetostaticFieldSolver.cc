@@ -97,4 +97,25 @@ KZonalHarmonicMagnetostaticFieldSolver::MagneticFieldAndGradientCore(const KPosi
     return fZonalHarmonicFieldSolver->MagneticFieldAndGradient(P);
 }
 
+bool KZonalHarmonicMagnetostaticFieldSolver::UseCentralExpansion(const KPosition& P)
+{
+    return fZonalHarmonicFieldSolver->CentralExpansion(P);
+}
+
+bool KZonalHarmonicMagnetostaticFieldSolver::UseRemoteExpansion(const KPosition& P)
+{
+    return fZonalHarmonicFieldSolver->RemoteExpansion(P);
+}
+
+std::set<std::pair<double, double>> KZonalHarmonicMagnetostaticFieldSolver::CentralSourcePoints()
+{
+    return fZHContainer->CentralSourcePoints();
+}
+
+std::set<std::pair<double, double>> KZonalHarmonicMagnetostaticFieldSolver::RemoteSourcePoints()
+{
+    return fZHContainer->RemoteSourcePoints();
+}
+
+
 } /* namespace KEMField */

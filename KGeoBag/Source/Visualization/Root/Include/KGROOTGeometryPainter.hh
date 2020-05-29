@@ -111,6 +111,9 @@ class KGROOTGeometryPainter :
     void Display() override;
     void Write() override;
 
+    void WriteJSON();
+    void WriteSVG();
+
     void AddSurface(KGSurface* aSurface);
     void AddSpace(KGSpace* aSpace);
 
@@ -134,7 +137,10 @@ class KGROOTGeometryPainter :
     K_SET(KThreeVector, PlanePoint);
     K_SET(bool, SwapAxis);
     K_GET(KThreeVector, PlaneVectorA);
-    K_GET(KThreeVector, PlaneVectorB)
+    K_GET(KThreeVector, PlaneVectorB);
+
+    K_SET_GET(std::string, File);
+    K_SET_GET(std::string, Path);
 
   public:
     std::string GetXAxisLabel() override;

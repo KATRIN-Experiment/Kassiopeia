@@ -17,7 +17,7 @@ namespace katrin
 template<> KZonalHarmonicMagnetostaticFieldSolverBuilder::~KComplexElement() {}
 
 STATICINT sKZonalHarmonicMagnetostaticFieldSolverStructure =
-    KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<int>("number_of_bifurcations") +
+    KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<unsigned int>("number_of_bifurcations") +
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("convergence_ratio") +
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("proximity_to_sourcepoint") +
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<double>("convergence_parameter") +

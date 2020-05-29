@@ -97,7 +97,7 @@
     <space name="quadrupole_trap_assembly">
         <surface name="top_endcap_electrode" node="endcap_electrode_surface"/>
         <surface name="bottom_endcap_electrode" node="endcap_electrode_surface">
-                <transformation rotation_euler="0. 180. 0."/>
+            <transformation rotation_euler="0. 180. 0."/>
         </surface>
         <surface name="ring_electrode" node="ring_electrode_surface"/>
         <space name="solenoid" node="solenoid_space"/>
@@ -144,57 +144,57 @@
     <!-- magnetic fields -->
 
     <ksfield_electromagnet
-        name="field_electromagnet"
-        directory="[KEMFIELD_CACHE]"
-        file="QuadrupoleTrapMagnets.kbd"
-        system="world/quadrupole_trap"
-        spaces="world/quadrupole_trap/@magnet_tag"
-    >
+            name="field_electromagnet"
+            directory="[KEMFIELD_CACHE]"
+            file="QuadrupoleTrapMagnets.kbd"
+            system="world/quadrupole_trap"
+            spaces="world/quadrupole_trap/@magnet_tag"
+            >
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="true"
-            central_sourcepoint_fractional_distance="1e-2"
-            central_sourcepoint_spacing="2.e-5"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-1.e-1"
-            remote_sourcepoint_end="1.e-1"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="true"
+                central_sourcepoint_fractional_distance="1e-2"
+                central_sourcepoint_spacing="2.e-5"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-1.e-1"
+                remote_sourcepoint_end="1.e-1"
         />
     </ksfield_electromagnet>
 
     <!-- electric fields -->
 
     <ksfield_electrostatic
-        name="field_electrostatic"
-        directory="[KEMFIELD_CACHE]"
-        file="QuadrupoleTrapElectrodes.kbd"
-        system="world/quadrupole_trap"
-        surfaces="world/quadrupole_trap/@electrode_tag"
-        symmetry="axial"
-    >
+            name="field_electrostatic"
+            directory="[KEMFIELD_CACHE]"
+            file="QuadrupoleTrapElectrodes.kbd"
+            system="world/quadrupole_trap"
+            surfaces="world/quadrupole_trap/@electrode_tag"
+            symmetry="axial"
+            >
         <robin_hood_bem_solver
-            tolerance="1.e-10"
-            check_sub_interval="100"
-            display_interval="1"
-            cache_matrix_elements="true"
-            use_vtk="true"
+                tolerance="1.e-10"
+                check_sub_interval="100"
+                display_interval="1"
+                cache_matrix_elements="true"
+                use_vtk="true"
         />
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="false"
-            central_sourcepoint_spacing="2.e-6"
-            central_sourcepoint_start="-3.3e-3"
-            central_sourcepoint_end="3.3e-3"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-1.e-1"
-            remote_sourcepoint_end="1.e-1"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="false"
+                central_sourcepoint_spacing="2.e-6"
+                central_sourcepoint_start="-3.3e-3"
+                central_sourcepoint_end="3.3e-3"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-1.e-1"
+                remote_sourcepoint_end="1.e-1"
         />
     </ksfield_electrostatic>
 
@@ -341,7 +341,8 @@
         <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
         <component_member name="initial_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
-        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
         <component_member name="final_time" field="time" parent="component_track_final_particle"/>
         <component_member name="final_position" field="position" parent="component_track_final_particle"/>
         <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
@@ -389,50 +390,50 @@
     <!-- simulation -->
 
     <ks_simulation
-        name="quadrupole_trap_simulation"
-        run="1"
-        seed="51385"
-        events="10"
-        magnetic_field="field_electromagnet"
-        electric_field="field_electrostatic"
-        space="space_world"
-        generator="generator_uniform"
-        trajectory="trajectory_exact"
-        space_navigator="nav_space"
-        surface_navigator="nav_surface"
-        writer="write_root"
-        writer="write_vtk"
+            name="quadrupole_trap_simulation"
+            run="1"
+            seed="51385"
+            events="10"
+            magnetic_field="field_electromagnet"
+            electric_field="field_electrostatic"
+            space="space_world"
+            generator="generator_uniform"
+            trajectory="trajectory_exact"
+            space_navigator="nav_space"
+            surface_navigator="nav_surface"
+            writer="write_root"
+            writer="write_vtk"
     />
 
 </kassiopeia>
 
 <vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
+        name="vtk_window"
+        enable_display="true"
+        enable_write="true"
+        frame_title="KGeoBag Visualization"
+        frame_size_x="1024"
+        frame_size_y="768"
+        frame_color_red=".2"
+        frame_color_green=".2"
+        frame_color_blue=".2"
+        view_angle="45"
+        eye_angle="0.5"
+        multi_samples="4"
+        depth_peeling="10"
+        >
     <vtk_geometry_painter
-        name="geometry_painter"
-        path="[output_path]"
-        surfaces="world/quadrupole_trap/#"
+            name="geometry_painter"
+            path="[output_path]"
+            surfaces="world/quadrupole_trap/#"
     />
     <vtk_track_painter
-        name="track_painter"
-        path="[output_path]"
-        file="QuadrupoleTrapSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_cell"
-        color_variable="polar_angle_to_b"
+            name="track_painter"
+            path="[output_path]"
+            file="QuadrupoleTrapSimulation.root"
+            point_object="component_step_world"
+            point_variable="position"
+            color_object="component_step_cell"
+            color_variable="polar_angle_to_b"
     />
 </vtk_window>

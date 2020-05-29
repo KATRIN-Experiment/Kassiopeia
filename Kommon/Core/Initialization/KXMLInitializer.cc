@@ -275,8 +275,15 @@ KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processCon
     KMessageTable::GetInstance().SetShowShutdownMessage();
 
     pair<string, KTextFile> tConfig;
-    if (processConfig)
+    if (processConfig) {
         tConfig = GetConfigFile();
+    }
+    else {
+        string configLocation = fArguments.GetOption("config");
+        if (!configLocation.empty()) {
+            KINFO("Config file ignored: " << configLocation);
+        }
+    }
 
     SetupProcessChain(fArguments.OptionTable(), tConfig.first);
 
