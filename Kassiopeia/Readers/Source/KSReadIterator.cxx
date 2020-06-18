@@ -21,6 +21,8 @@ template<> const KSULong KSULong::sZero(0);
 
 template<> const KSLong KSLong::sZero(0);
 
+template<> const KSLongLong KSLongLong::sZero(0);
+
 template<> const KSFloat KSFloat::sZero(0.);
 
 template<> const KSDouble KSDouble::sZero(0);
