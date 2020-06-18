@@ -68,6 +68,10 @@ KSReadObjectROOT::KSReadObjectROOT(TTree* aStructureTree, TTree* aPresenceTree, 
             fData->SetBranchAddress(tLabel.c_str(), Add<KSLong>(tLabel).Pointer());
             continue;
         }
+        if (tType == string("long long")) {
+            fData->SetBranchAddress(tLabel.c_str(), Add<KSLongLong>(tLabel).Pointer());
+            continue;
+        }
 
         if (tType == string("float")) {
             fData->SetBranchAddress(tLabel.c_str(), Add<KSFloat>(tLabel).Pointer());

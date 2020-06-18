@@ -247,7 +247,7 @@ void KSGenGeneratorSimulation::GenerateParticlesFromFile(KSParticleQueue& aParti
                     tTime = tTrackGroup.Get<KSDouble>(fTimeName).Value();
                 }
                 if (!fPIDName.empty()) {
-                    tPID = tTrackGroup.Get<KSInt>(fPIDName).Value();
+                    tPID = tTrackGroup.Get<KSLongLong>(fPIDName).Value();
                 }
 
                 if (fFormulaPositionX != nullptr)
