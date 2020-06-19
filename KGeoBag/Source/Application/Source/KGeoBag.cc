@@ -21,8 +21,9 @@ int main(int argc, char** argv)
 
     coremsg(eNormal) << "starting..." << eom;
 
-    for (auto tFilename : tXML.GetArguments().ParameterList()) {
-
+    auto tFileNames = tXML.GetArguments().ParameterList();
+    tFileNames.pop_front();
+    for (auto tFilename : tFileNames) {
         coremsg(eNormal) << "processing file <" << tFilename << "> ..." << eom;
         auto* tFile = new KTextFile();
         tFile->AddToNames(tFilename);
