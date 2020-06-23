@@ -203,6 +203,7 @@ if( Kassiopeia_USE_ROOT )
         Visualization/Include/KSROOTTrackPainterBuilder.h
         Visualization/Include/KSROOTPotentialPainterBuilder.h
         Visualization/Include/KSROOTMagFieldPainterBuilder.h
+        Visualization/Include/KSROOTZonalHarmonicsPainterBuilder.h
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_HEADER_FILES
@@ -424,6 +425,7 @@ if( Kassiopeia_USE_ROOT )
         Visualization/Source/KSROOTTrackPainterBuilder.cxx
         Visualization/Source/KSROOTPotentialPainterBuilder.cxx
         Visualization/Source/KSROOTMagFieldPainterBuilder.cxx
+        Visualization/Source/KSROOTZonalHarmonicsPainterBuilder.cxx
     )
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_SOURCE_FILES

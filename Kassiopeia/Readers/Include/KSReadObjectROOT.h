@@ -18,6 +18,7 @@ class KSReadObjectROOT :
     public KSIntSet,
     public KSULongSet,
     public KSLongSet,
+    public KSLongLongSet,
     public KSFloatSet,
     public KSDoubleSet,
     public KSThreeVectorSet,

@@ -11,6 +11,7 @@
 #include "KEMFileInterface.hh"
 #include "KEMSimpleException.hh"
 #include "KFile.h"
+#include "KGslErrorHandler.h"
 
 #include <vtkDataArray.h>
 #include <vtkPointData.h>
@@ -388,6 +389,8 @@ KElectrostaticPotentialmapCalculator::KElectrostaticPotentialmapCalculator() :
     fOutputFilename(""),
     fDirectory(SCRATCH_DEFAULT_DIR),
     fFile(""),
+    fForceUpdate(false),
+    fComputeField(false),
     fCenter(),
     fLength(),
     fMirrorX(false),
@@ -510,11 +513,13 @@ void KElectrostaticPotentialmapCalculator::Prepare()
     fPotentialData->SetNumberOfTuples(tNumPoints);
     fGrid->GetPointData()->AddArray(fPotentialData);
 
-    fFieldData = vtkSmartPointer<vtkDoubleArray>::New();
-    fFieldData->SetName("electric field");
-    fFieldData->SetNumberOfComponents(3);  // vector data
-    fFieldData->SetNumberOfTuples(tNumPoints);
-    fGrid->GetPointData()->AddArray(fFieldData);
+    if (fComputeField) {
+        fFieldData = vtkSmartPointer<vtkDoubleArray>::New();
+        fFieldData->SetName("electric field");
+        fFieldData->SetNumberOfComponents(3);  // vector data
+        fFieldData->SetNumberOfTuples(tNumPoints);
+        fGrid->GetPointData()->AddArray(fFieldData);
+    }
 }
 
 void KElectrostaticPotentialmapCalculator::Execute()
@@ -577,8 +582,13 @@ void KElectrostaticPotentialmapCalculator::Execute()
 
         if (!tHasValue) {
             tPotential = 0.;
-            for (auto& it : fElectricFields)
-                tPotential += it.second->Potential(KThreeVector(tPoint));
+            try {
+                for (auto& it : fElectricFields)
+                    tPotential += it.second->Potential(KThreeVector(tPoint));
+            }
+            catch (katrin::KGslException& e) {
+                continue;
+            }
         }
 
         fPotentialData->SetTuple1(i, tPotential);
@@ -592,65 +602,76 @@ void KElectrostaticPotentialmapCalculator::Execute()
          << ", time per potential evaluation = " << tTimeSpent / (double) (tNumPoints) << ")" << endl;
 
 
-    cout << "computing electric field at " << tNumPoints << " grid points" << endl;
+    if (fComputeField) {
+        cout << "computing electric field at " << tNumPoints << " grid points" << endl;
 
-    //evaluate field
-    tClockStart = clock();
-    for (unsigned int i = 0; i < tNumPoints; i++) {
-        if (i % 10 == 0) {
-            int progress = 50 * (float) i / (float) (tNumPoints - 1);
-            std::cout << "\r  ";
-            for (int j = 0; j < 50; j++)
-                std::cout << (j <= progress ? "#" : ".");
-            std::cout << "  [" << 2 * progress << "%]" << std::flush;
-        }
+        //evaluate field
+        tClockStart = clock();
+        for (unsigned int i = 0; i < tNumPoints; i++) {
+            if (i % 10 == 0) {
+                int progress = 50 * (float) i / (float) (tNumPoints - 1);
+                std::cout << "\r  ";
+                for (int j = 0; j < 50; j++)
+                    std::cout << (j <= progress ? "#" : ".");
+                std::cout << "  [" << 2 * progress << "%]" << std::flush;
+            }
 
-        double tPoint[3];
-        fGrid->GetPoint(i, tPoint);
+            double tPoint[3];
+            fGrid->GetPoint(i, tPoint);
 
-        if (!CheckPosition(KPosition(tPoint)))
-            continue;
+            if (!CheckPosition(KPosition(tPoint)))
+                continue;
 
-        bool tHasValue = false;
-        KThreeVector tField;
+            bool tHasValue = false;
+            KThreeVector tField;
 
-        if (fMirrorX || fMirrorY || fMirrorZ) {
-            double tMirrorPoint[3];
-            tMirrorPoint[0] = tPoint[0];
-            tMirrorPoint[1] = tPoint[1];
-            tMirrorPoint[2] = tPoint[2];
-            if (fMirrorX && (tPoint[0] > fCenter.X()))
-                tMirrorPoint[0] = 2. * fCenter.X() - tPoint[0];
-            if (fMirrorY && (tPoint[1] > fCenter.Y()))
-                tMirrorPoint[1] = 2. * fCenter.Y() - tPoint[1];
-            if (fMirrorZ && (tPoint[2] > fCenter.Z()))
-                tMirrorPoint[2] = 2. * fCenter.Z() - tPoint[2];
+            if (fMirrorX || fMirrorY || fMirrorZ) {
+                double tMirrorPoint[3];
+                tMirrorPoint[0] = tPoint[0];
+                tMirrorPoint[1] = tPoint[1];
+                tMirrorPoint[2] = tPoint[2];
+                if (fMirrorX && (tPoint[0] > fCenter.X()))
+                    tMirrorPoint[0] = 2. * fCenter.X() - tPoint[0];
+                if (fMirrorY && (tPoint[1] > fCenter.Y()))
+                    tMirrorPoint[1] = 2. * fCenter.Y() - tPoint[1];
+                if (fMirrorZ && (tPoint[2] > fCenter.Z()))
+                    tMirrorPoint[2] = 2. * fCenter.Z() - tPoint[2];
 
-            if ((tMirrorPoint[0] != tPoint[0]) || (tMirrorPoint[1] != tPoint[1]) || (tMirrorPoint[2] != tPoint[2])) {
-                unsigned int j = fGrid->FindPoint(tMirrorPoint);
-                if (fValidityData->GetTuple1(j) >= 2)  // 2 = field valid
-                {
-                    tField.SetComponents(fFieldData->GetTuple3(j));
-                    tHasValue = true;
+                if ((tMirrorPoint[0] != tPoint[0]) || (tMirrorPoint[1] != tPoint[1]) ||
+                    (tMirrorPoint[2] != tPoint[2])) {
+                    unsigned int j = fGrid->FindPoint(tMirrorPoint);
+                    if (fValidityData->GetTuple1(j) >= 2)  // 2 = field valid
+                    {
+                        tField.SetComponents(fFieldData->GetTuple3(j));
+                        tHasValue = true;
+                    }
                 }
             }
-        }
 
-        if (!tHasValue) {
-            tField = KThreeVector::sZero;
-            for (auto& it : fElectricFields)
-                tField += it.second->ElectricField(KPosition(tPoint));
-        }
+            if (!tHasValue) {
+                tField = KThreeVector::sZero;
+                try {
+                    for (auto& it : fElectricFields)
+                        tField += it.second->ElectricField(KPosition(tPoint));
+                }
+                catch (katrin::KGslException& e) {
+                    continue;
+                }
+            }
 
-        fFieldData->SetTuple3(i, tField[0], tField[1], tField[2]);
-        fValidityData->SetTuple1(i, 2);
+            fFieldData->SetTuple3(i, tField[0], tField[1], tField[2]);
+            fValidityData->SetTuple1(i, 2);
+        }
+        std::cout << std::endl;
+        tClockEnd = clock();
+
+        tTimeSpent = ((double) (tClockEnd - tClockStart)) / CLOCKS_PER_SEC;  // time in seconds
+        cout << "finished computing field map (total time spent = " << tTimeSpent
+             << ", time per field evaluation = " << tTimeSpent / (double) (tNumPoints) << ")" << endl;
     }
-    std::cout << std::endl;
-    tClockEnd = clock();
-
-    tTimeSpent = ((double) (tClockEnd - tClockStart)) / CLOCKS_PER_SEC;  // time in seconds
-    cout << "finished computing potential map (total time spent = " << tTimeSpent
-         << ", time per field evaluation = " << tTimeSpent / (double) (tNumPoints) << ")" << endl;
+    else {
+        cout << "not computing electric field" << endl;
+    }
 }
 
 void KElectrostaticPotentialmapCalculator::Finish()

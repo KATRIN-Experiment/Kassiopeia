@@ -4,6 +4,37 @@
 
 namespace KEMField
 {
+
+bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansion(const KPosition& P) const
+{
+    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+
+    if (UseCentralExpansion(localP))
+        return true;
+
+    for (auto& sub : fSubsetFieldSolvers) {
+        if (sub->CentralExpansion(P))
+            return true;
+    }
+
+    return false;
+}
+
+bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansion(const KPosition& P) const
+{
+    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+
+    if (UseRemoteExpansion(localP))
+        return true;
+
+    for (auto& sub : fSubsetFieldSolvers) {
+        if (sub->RemoteExpansion(P))
+            return true;
+    }
+
+    return false;
+}
+
 KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(const KPosition& P) const
 {
     KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
@@ -50,7 +81,6 @@ KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
 KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const KPosition& P) const
 {
     KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
-
     KThreeVector B;
 
     if (fCentralFirst) {
@@ -969,8 +999,8 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralGradientExpansionNum
     for (unsigned int i = 0; i < 3; i++) {
         KThreeVector forward;
         KThreeVector backward;
-        retval *= CentralExpansionMagneticField(P + num_eps * coord_ax[i], forward);
-        retval *= CentralExpansionMagneticField(P - num_eps * coord_ax[i], backward);
+        retval = retval && CentralExpansionMagneticField(P + num_eps * coord_ax[i], forward);
+        retval = retval && CentralExpansionMagneticField(P - num_eps * coord_ax[i], backward);
         result[i] = (forward - backward) / (2.0 * num_eps);
         g(0, i) = result[i][0];
         g(1, i) = result[i][1];
@@ -995,8 +1025,8 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteGradientExpansionNume
     for (unsigned int i = 0; i < 3; i++) {
         KThreeVector forward;
         KThreeVector backward;
-        retval *= RemoteExpansionMagneticField(P + num_eps * coord_ax[i], forward);
-        retval *= RemoteExpansionMagneticField(P - num_eps * coord_ax[i], backward);
+        retval = retval && RemoteExpansionMagneticField(P + num_eps * coord_ax[i], forward);
+        retval = retval && RemoteExpansionMagneticField(P - num_eps * coord_ax[i], backward);
         result[i] = (forward - backward) / (2.0 * num_eps);
         g(0, i) = result[i][0];
         g(1, i) = result[i][1];

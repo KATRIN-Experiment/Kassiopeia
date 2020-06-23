@@ -69,6 +69,16 @@ const KGSpace* KGSurface::GetParent() const
     return fParent;
 }
 
+std::string KGSurface::GetPath() const
+{
+    string tPath = GetName();
+    const KGSpace* tParent = GetParent();
+    if (tParent != nullptr && tParent != KGInterface::GetInstance()->Root()) {
+        tPath = tParent->GetPath() + "/" + tPath;
+    }
+    return tPath;
+}
+
 //*************
 //transformable
 //*************

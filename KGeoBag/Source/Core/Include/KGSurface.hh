@@ -50,6 +50,7 @@ class KGSurface : public KTagged
     void Orphan();
 
     const KGSpace* GetParent() const;
+    std::string GetPath() const;
 
   protected:
     KGSpace* fParent;

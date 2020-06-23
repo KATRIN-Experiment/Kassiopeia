@@ -1,3 +1,8 @@
+set( MAIN_BASENAMES
+    Kassiopeia
+    ParticleGenerator
+)
+
 set( MAIN_LIBRARIES
     ${Kommon_LIBRARIES}
     ${Kommon_Vtk_LIBRARIES}
@@ -18,10 +23,14 @@ set( MAIN_LIBRARIES
     KassiopeiaBindings
 )
 
+set( MAIN_PATH
+	${CMAKE_CURRENT_SOURCE_DIR}/Source
+)
+
 kasper_internal_include_directories()
+foreach( BASENAME ${MAIN_BASENAMES} )
+	add_executable( ${BASENAME} ${MAIN_PATH}/${BASENAME}.cxx )
+	target_link_libraries( ${BASENAME} ${MAIN_LIBRARIES} )
+endforeach( BASENAME )
 
-# target
-add_executable( Kassiopeia MACOSX_BUNDLE ${CMAKE_CURRENT_SOURCE_DIR}/Source/Kassiopeia.cxx )
-target_link_libraries (Kassiopeia ${MAIN_LIBRARIES})
-
-kasper_install_executables( Kassiopeia )
+kasper_install_executables( ${MAIN_BASENAMES} )

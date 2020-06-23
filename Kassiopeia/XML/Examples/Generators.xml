@@ -1,0 +1,316 @@
+<!--
+    Usage examples:
+
+        Kassiopeia Generators.xml
+
+        ParticleGenerator Generators.xml 10 <generator_name>
+-->
+
+<geometry>
+
+    <!-- geometry from DipoleTrapSimulation.xml -->
+
+    <!-- world -->
+
+    <cylinder_space name="world_space" z1="-2." z2="2." r="2."/>
+
+    <!-- solenoid -->
+
+    <tag name="magnet_tag">
+        <cylinder_tube_space
+                name="solenoid_space"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r1="0.5e-2"
+                r2="1.5e-2"
+                radial_mesh_count="30"
+        />
+    </tag>
+
+    <!-- ring -->
+
+    <tag name="electrode_tag">
+        <cylinder_surface
+                name="ring_surface"
+                z1="-2.0e-2"
+                z2="2.0e-2"
+                r="2.5e-1"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
+        />
+    </tag>
+
+    <!-- tube -->
+
+    <tag name="electrode_tag">
+        <cylinder_surface
+                name="tube_surface"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r="0.5e-2"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
+        />
+    </tag>
+
+    <!-- target -->
+
+    <tag name="target_tag">
+        <disk_surface name="target_surface" r="1.0e-2" z="0."/>
+    </tag>
+
+    <!-- center -->
+
+    <tag name="center_tag">
+        <disk_surface name="center_surface" r="2.5e-1" z="0."/>
+    </tag>
+
+    <!-- assembly -->
+
+    <space name="dipole_trap_assembly">
+        <surface name="ring" node="ring_surface"/>
+        <surface name="center" node="center_surface"/>
+        <space name="downstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. -0.5"/>
+        </space>
+        <surface name="downstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. -0.5"/>
+        </surface>
+        <surface name="upstream_target" node="target_surface">
+            <transformation displacement="0. 0. -0.48"/>
+        </surface>
+        <space name="upstream_solenoid" node="solenoid_space">
+            <transformation displacement="0. 0. 0.5"/>
+        </space>
+        <surface name="upstream_tube" node="tube_surface">
+            <transformation displacement="0. 0. 0.5"/>
+        </surface>
+        <surface name="downstream_target" node="target_surface">
+            <transformation displacement="0. 0. 0.48"/>
+        </surface>
+    </space>
+
+    <space name="world" node="world_space">
+        <space name="dipole_trap" tree="dipole_trap_assembly"/>
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_magnet" color="0 255 127 127" arc="72" surfaces="world/dipole_trap/@magnet_tag"/>
+    <appearance name="app_electrode" color="255 127 0 127" arc="72" surfaces="world/dipole_trap/@electrode_tag"/>
+    <appearance name="app_target" color="127 0 255 127" arc="72" surfaces="world/dipole_trap/@target_tag"/>
+
+    <!-- mesh -->
+
+    <axial_mesh name="mesh_center" surfaces="world/dipole_trap/center"/>
+    <axial_mesh name="mesh_electrode" surfaces="world/dipole_trap/@electrode_tag"/>
+
+    <!-- bem -->
+
+    <electrostatic_dirichlet name="electrode_ring" surfaces="world/dipole_trap/ring" value="-10."/>
+    <electrostatic_dirichlet name="electrode_upstream_tube" surfaces="world/dipole_trap/upstream_tube" value="0."/>
+    <electrostatic_dirichlet name="electrode_downstream_tube" surfaces="world/dipole_trap/downstream_tube" value="0."/>
+
+    <!-- electromagnets -->
+
+    <electromagnet name="electromagnet_upstream_solenoid" spaces="world/dipole_trap/upstream_solenoid" current="{22.3047 * 20000}"/>
+    <electromagnet name="electromagnet_downstream_solenoid" spaces="world/dipole_trap/downstream_solenoid" current="{22.3047 * 20000}"/>
+
+</geometry>
+
+
+<kemfield>
+
+    <!-- magnetic fields -->
+
+    <electromagnet_field
+            name="magnetic_field_zh"
+            file="ExampleMagneticField.kbd"
+            system="world/dipole_trap"
+            spaces="world/dipole_trap/@magnet_tag"
+            >
+        <integrating_field_solver/>
+    </electromagnet_field>
+
+
+    <!-- electric fields -->
+
+    <electrostatic_field
+            name="electric_field"
+            file="ExampleElectricField.kbd"
+            system="world/dipole_trap"
+            surfaces="world/dipole_trap/@electrode_tag"
+            symmetry="axial"
+            >
+        <robin_hood_bem_solver
+                integrator="analytic"
+                tolerance="1.e-10"
+                check_sub_interval="100"
+                display_interval="1"
+                cache_matrix_elements="true"
+        />
+        <integrating_field_solver/>
+    </electrostatic_field>
+
+</kemfield>
+
+
+<kassiopeia>
+
+    <ksgen_generator_composite name="generator_fixed" pid="11">
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_surface" pid="11">
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+        <position_mesh_surface_random surfaces="world/dipole_trap/center"/>
+        <direction_surface_composite surfaces="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_surface_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_center" pid="11">
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_cylindrical radius_min="0." radius_max="2.0e-1"/>
+            <phi_uniform value_min="0." value_max="360."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_center_isotropic" pid="11">
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_cylindrical radius_min="0." radius_max="2.0e-1"/>
+            <phi_uniform value_min="0." value_max="360."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_spherical angle_min="0." angle_max="90."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_center_cosine" pid="11">
+        <energy_composite>
+            <energy_fix value="1."/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_cylindrical radius_min="0." radius_max="2.0e-1"/>
+            <phi_uniform value_min="0." value_max="360."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_cosine angle_min="0." angle_max="90."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_energy_uniform" pid="11">
+        <energy_composite>
+            <energy_uniform value_min="1." value_max="100."/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_energy_thermal" pid="11">
+        <energy_composite>
+            <energy_boltzmann value_mass="511e3" value_kT="25e-3" unit_eV="true"/>
+        </energy_composite>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_energy_krypton" pid="11">
+        <energy_krypton_event do_conversion="true" do_auger="true"/>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+    <ksgen_generator_composite name="generator_energy_tritium" pid="11">
+        <energy_beta_decay daughter_z="2" endpoint_ev="18575." mnu_ev="0."/>
+        <position_cylindrical_composite surface="world/dipole_trap/center">
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="0."/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite surface="world/dipole_trap/center">
+            <theta_fix value="0."/>
+            <phi_fix value="0."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+</kassiopeia>

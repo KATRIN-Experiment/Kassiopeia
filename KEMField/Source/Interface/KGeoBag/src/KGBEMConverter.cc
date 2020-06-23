@@ -211,7 +211,7 @@ void KGBEMMeshConverter::DispatchSpace(KGSpace* aSpace)
     return;
 }
 
-void KGBEMMeshConverter::Add(KGMeshData* aData)
+bool KGBEMMeshConverter::Add(KGMeshData* aData)
 {
     KGMeshElement* tMeshElement;
     KGMeshTriangle* tMeshTriangle;
@@ -270,7 +270,7 @@ void KGBEMMeshConverter::Add(KGMeshData* aData)
         }
     }
 
-    return;
+    return true;
 }
 
 KGBEMAxialMeshConverter::KGBEMAxialMeshConverter() {}
@@ -282,16 +282,18 @@ KGBEMAxialMeshConverter::~KGBEMAxialMeshConverter() {}
 
 void KGBEMAxialMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
-    Add(aSurface->AsExtension<KGAxialMesh>());
+    if (!Add(aSurface->AsExtension<KGAxialMesh>()))
+        coremsg(eWarning) << "not adding surface <" << aSurface->GetPath() << "> since it is not coaxial" << eom;
     return;
 }
 void KGBEMAxialMeshConverter::DispatchSpace(KGSpace* aSpace)
 {
-    Add(aSpace->AsExtension<KGAxialMesh>());
+    if (!Add(aSpace->AsExtension<KGAxialMesh>()))
+        coremsg(eWarning) << "not adding space <" << aSpace->GetPath() << "> since it is not coaxial" << eom;
     return;
 }
 
-void KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
+bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
 {
     KGAxialMeshElement* tAxialMeshElement;
     KGAxialMeshLoop* tAxialMeshLoop;
@@ -309,7 +311,7 @@ void KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             //cout << "...current origin is <" << fCurrentOrigin << ">" << endl;
             //cout << "...current z axis is <" << fCurrentZAxis << ">" << endl;
             //cout << "...axes do not match!" << endl;
-            return;
+            return false;
         }
 
         for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
@@ -336,7 +338,7 @@ void KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
         //cout << "...added <" << fConicSections.size() + fRings.size() << "> components." << endl;
     }
 
-    return;
+    return true;
 }
 
 KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter() {}
@@ -348,16 +350,18 @@ KGBEMDiscreteRotationalMeshConverter::~KGBEMDiscreteRotationalMeshConverter() {}
 
 void KGBEMDiscreteRotationalMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
-    Add(aSurface->AsExtension<KGDiscreteRotationalMesh>());
+    if (!Add(aSurface->AsExtension<KGDiscreteRotationalMesh>()))
+        coremsg(eWarning) << "not adding surface <" << aSurface->GetPath() << "> since it is not coaxial" << eom;
     return;
 }
 void KGBEMDiscreteRotationalMeshConverter::DispatchSpace(KGSpace* aSpace)
 {
-    Add(aSpace->AsExtension<KGDiscreteRotationalMesh>());
+    if (!Add(aSpace->AsExtension<KGDiscreteRotationalMesh>()))
+        coremsg(eWarning) << "not adding space <" << aSpace->GetPath() << "> since it is not coaxial" << eom;
     return;
 }
 
-void KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aData)
+bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aData)
 {
     KGDiscreteRotationalMeshElement* tMeshElement;
     KGDiscreteRotationalMeshRectangle* tMeshRectangle;
@@ -377,7 +381,7 @@ void KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
         if (fAxis.EqualTo(fCurrentAxis) == false) {
             // improve the hell out of this
             //cout << "...axes do not match!" << endl;
-            return;
+            return false;
         }
 
         tCenter.SetComponents(fAxis.GetCenter().X(), fAxis.GetCenter().Y(), fAxis.GetCenter().Z());
@@ -425,6 +429,6 @@ void KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
         }
     }
 
-    return;
+    return true;
 }
 }  // namespace KGeoBag

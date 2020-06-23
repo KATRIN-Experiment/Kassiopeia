@@ -53,6 +53,8 @@ class KGSpace : public KTagged
     void AddChildSpace(KGSpace* aSpace);
 
     const KGSpace* GetParent() const;
+    std::string GetPath() const;
+
     const std::vector<KGSurface*>* GetBoundaries() const;
     const std::vector<KGSurface*>* GetChildSurfaces() const;
     const std::vector<KGSpace*>* GetChildSpaces() const;

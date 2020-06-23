@@ -8,6 +8,7 @@ using katrin::KFile;
 
 #include <TColor.h>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <limits>
 
@@ -23,6 +24,8 @@ KGROOTGeometryPainter::KGROOTGeometryPainter() :
     fSwapAxis(false),
     fPlaneVectorA(0.0, 0.0, 1.0),
     fPlaneVectorB(1.0, 0.0, 0.0),
+    fFile(""),
+    fPath(""),
     fEpsilon(1.0e-10),
     fROOTSpaces(),
     fROOTSurfaces(),
@@ -225,27 +228,158 @@ std::string KGROOTGeometryPainter::GetAxisLabel(KThreeVector anAxis)
 
 void KGROOTGeometryPainter::Display()
 {
+    if (fDisplayEnabled == true) {
+        vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSpaces.size() << " spaces" << eom;
 
-    vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSpaces.size() << " spaces" << eom;
+        for (size_t i = 0; i < fROOTSpaces.size(); i++) {
+            fROOTSpaces.at(i)->SetLineStyle(kSolid);
+            fROOTSpaces.at(i)->SetLineColor(kGreen + 2);
+            fROOTSpaces.at(i)->SetLineWidth(1);
+            fROOTSpaces.at(i)->SetFillColorAlpha(kGreen + 2, 0.8);
+            fROOTSpaces.at(i)->Draw("F");
+        }
 
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        fROOTSpaces.at(i)->SetFillColor(kGreen + 2);
-        fROOTSpaces.at(i)->Draw("f");
+        vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSurfaces.size() << " surfaces" << eom;
+
+        for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
+            fROOTSurfaces.at(i)->SetLineStyle(kSolid);
+            fROOTSurfaces.at(i)->SetLineColor(kBlack);
+            fROOTSurfaces.at(i)->SetLineWidth(1);
+            fROOTSurfaces.at(i)->Draw();
+        }
     }
 
-    vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSurfaces.size() << " surfaces" << eom;
+    Write();  // FIXME
 
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        fROOTSurfaces.at(i)->SetLineColor(kBlack);
-        fROOTSurfaces.at(i)->SetLineWidth(1);
-        fROOTSurfaces.at(i)->Draw();
-    }
     return;
 }
 void KGROOTGeometryPainter::Write()
 {
-    //root write
+    std::cout << "WRITE: " << fWriteEnabled << std::endl;
+
+    //if (fWriteEnabled == true) {
+
+    WriteJSON();
+    WriteSVG();
+
+    //}
     return;
+}
+
+void KGROOTGeometryPainter::WriteJSON()
+{
+    string tFileName;
+
+    if (fFile.length() > 0) {
+        if (!fPath.empty()) {
+            tFileName = string(fPath) + string("/") + fFile + string(".json");
+        }
+        else {
+            tFileName = string(OUTPUT_DEFAULT_DIR) + string("/") + fFile + string(".json");
+        }
+    }
+    else {
+        if (!fPath.empty()) {
+            tFileName = string(fPath) + string("/") + GetName() + string(".json");
+        }
+        else {
+            tFileName = string(OUTPUT_DEFAULT_DIR) + string("/") + GetName() + string(".json");
+        }
+    }
+
+    vismsg(eInfo) << "ROOT geometry painter writing to file <" << tFileName << ">" << eom;
+
+    ofstream json(tFileName);
+
+    json << "{" << endl;
+
+    json << "  \"spaces\": [" << endl;
+    for (auto& it : fROOTSpaces) {
+
+        json << "    [";
+        for (int i = 0; i < it->Size(); i++) {
+            json << (i > 0 ? ", " : " ") << "[" << it->GetX()[i] << "," << it->GetY()[i] << "]";
+        }
+        json << " ]" << (it != fROOTSpaces.back() ? "," : "") << endl;
+    }
+    json << "  ]," << endl;
+
+    json << "  \"surfaces\": [" << endl;
+    for (auto& it : fROOTSurfaces) {
+        json << "    [";
+        for (int i = 0; i < it->Size(); i++) {
+            json << (i > 0 ? ", " : " ") << "[" << it->GetX()[i] << "," << it->GetY()[i] << "]";
+        }
+        json << " ]" << (it != fROOTSurfaces.back() ? "," : "") << endl;
+    }
+    json << "  ]" << endl;
+
+    json << "}" << endl;
+
+    json.close();
+}
+
+void KGROOTGeometryPainter::WriteSVG()
+{
+    string tFileName;
+
+    if (fFile.length() > 0) {
+        if (!fPath.empty()) {
+            tFileName = string(fPath) + string("/") + fFile + string(".svg");
+        }
+        else {
+            tFileName = string(OUTPUT_DEFAULT_DIR) + string("/") + fFile + string(".svg");
+        }
+    }
+    else {
+        if (!fPath.empty()) {
+            tFileName = string(fPath) + string("/") + GetName() + string(".svg");
+        }
+        else {
+            tFileName = string(OUTPUT_DEFAULT_DIR) + string("/") + GetName() + string(".svg");
+        }
+    }
+
+    vismsg(eInfo) << "ROOT geometry painter writing to file <" << tFileName << ">" << eom;
+
+    ofstream svg(tFileName);
+
+    svg << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" << endl;
+
+    double x = GetXMin();
+    double y = GetYMin();
+    double w = GetXMax() - GetXMin();
+    double h = GetYMax() - GetYMin();
+
+    const string spaceColor = "green";
+    const string surfaceColor = "blue";
+    const double lineWidth = 0.005;
+
+    svg << "<svg viewBox=\"" << x << " " << y << " " << w << " " << h << "\" xmlns=\"http://www.w3.org/2000/svg\">"
+        << endl;
+
+    svg << "  <!-- ROOT spaces -->" << endl;
+    for (auto& it : fROOTSpaces) {
+        svg << "  <polyline points=\"";
+        for (int i = 0; i < it->Size(); i++) {
+            svg << (i > 0 ? " " : "") << it->GetX()[i] << "," << it->GetY()[i];
+        }
+        svg << "\" style=\"fill:" << spaceColor << "; stroke:" << spaceColor << "; stroke-width:" << lineWidth << "\"/>"
+            << endl;
+    }
+
+    svg << "  <!-- ROOT surfaces -->" << endl;
+    for (auto& it : fROOTSurfaces) {
+        svg << "  <polyline points=\"";
+        for (int i = 0; i < it->Size(); i++) {
+            svg << (i > 0 ? " " : "") << it->GetX()[i] << "," << it->GetY()[i];
+        }
+        svg << "\" style=\"fill:none; stroke:" << surfaceColor << "; stroke-width:" << lineWidth << "\"/>" << endl;
+    }
+
+    svg << "</svg>" << endl;
+
+    svg.close();
 }
 
 void KGROOTGeometryPainter::AddSurface(KGSurface* aSurface)

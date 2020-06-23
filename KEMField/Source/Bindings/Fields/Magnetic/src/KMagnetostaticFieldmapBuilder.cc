@@ -34,6 +34,7 @@ STATICINT sKMagnetostaticFieldmapCalculatorStructure =
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("directory") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("file") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("force_update") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("compute_gradient") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("center") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("length") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("mirror_x") +

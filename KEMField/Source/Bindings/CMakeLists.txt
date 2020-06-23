@@ -22,6 +22,7 @@ add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KBoundaryElementInfoDisplayBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectricQuadrupoleFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticConstantFieldBuilder.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticLinearFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticBoundaryFieldBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KElectrostaticBoundaryFieldTimerBuilder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/include/KVTKViewerVisitorBuilder.hh
@@ -64,6 +65,7 @@ add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KBoundaryElementInfoDisplayBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectricQuadrupoleFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticConstantFieldBuilder.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticLinearFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticBoundaryFieldBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KElectrostaticBoundaryFieldTimerBuilder.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Fields/Electric/src/KVTKViewerVisitorBuilder.cc

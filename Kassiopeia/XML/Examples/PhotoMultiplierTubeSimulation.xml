@@ -47,62 +47,89 @@
 
     <tag name="electrode_tag" name="photocathode_tag">
         <rotated_arc_segment_surface name="photocathode_surface" rotated_mesh_count="128">
-            <arc_segment x1="{0.0}" y1="{-0.99*[radius]}" x2="{0.0}" y2="{0.99*[radius]}" radius="{2*[radius]}" right="false" short="true" arc_mesh_count="64"/>
+            <arc_segment x1="{0.0}" y1="{-0.99*[radius]}" x2="{0.0}" y2="{0.99*[radius]}" radius="{2*[radius]}" right="false" short="true"
+                    arc_mesh_count="64"/>
         </rotated_arc_segment_surface>
     </tag>
 
     <tag name="electrode_tag" name="cylindrical_housing_tag">
-        <cylinder_surface name="cylindrical_housing_surface" z1="0.0" z2="{[tube_length]}" r="{[radius]}" longitudinal_mesh_count="80" longitudinal_mesh_power="1." axial_mesh_count="80"/>
+        <cylinder_surface name="cylindrical_housing_surface" z1="0.0" z2="{[tube_length]}" r="{[radius]}" longitudinal_mesh_count="80"
+                longitudinal_mesh_power="1." axial_mesh_count="80"/>
     </tag>
 
     <tag name="electrode_tag" name="backplate_housing_tag">
-        <disk_surface name="backplate_housing_surface" z="{[tube_length]}" r="{[radius]}" radial_mesh_count="64" radial_mesh_power="1." axial_mesh_count="64"/>
+        <disk_surface name="backplate_housing_surface" z="{[tube_length]}" r="{[radius]}" radial_mesh_count="64" radial_mesh_power="1."
+                axial_mesh_count="64"/>
     </tag>
 
     <tag name="electrode_tag" name="focusing_electrode0_tag">
         <beam_surface name="focusing_electrode0_surface">
-          <beam longitudinal_mesh_count="20" axial_mesh_count="20">
-        <define name="poly" value="120"/>
-        <define name="fe0_r" value="{0.9*[radius]}"/>
-        <define name="z_start_max" value="1.7e-2"/>
-        <define name="z_start_min" value="1.2e-2"/>
-        <define name="z_end_max" value="2.5e-2"/>
-        <define name="z_end_min" value="2.5e-2"/>
-        <loop variable="i" start="0" end="[poly]" step="1">
-          <start_line x1="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" y1="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" x2="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" y2="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"/>
-          <end_line x1="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" y1="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" x2="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" y2="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"/>
-        </loop>
+            <beam longitudinal_mesh_count="20" axial_mesh_count="20">
+                <define name="poly" value="120"/>
+                <define name="fe0_r" value="{0.9*[radius]}"/>
+                <define name="z_start_max" value="1.7e-2"/>
+                <define name="z_start_min" value="1.2e-2"/>
+                <define name="z_end_max" value="2.5e-2"/>
+                <define name="z_end_min" value="2.5e-2"/>
+                <loop variable="i" start="0" end="[poly]" step="1">
+                    <start_line x1="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" y1="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"
+                            z1="{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"
+                            x2="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            y2="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            z2="{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"/>
+                    <end_line x1="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" y1="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"
+                            z1="{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"
+                            x2="{[fe0_r]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            y2="{[fe0_r]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            z2="{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"/>
+                </loop>
             </beam>
         </beam_surface>
     </tag>
 
     <tag name="electrode_tag" name="focusing_electrode1_tag">
         <beam_surface name="focusing_electrode1_surface">
-          <beam longitudinal_mesh_count="20" axial_mesh_count="20">
-        <define name="fe1_router" value="{0.9*[radius]}"/>
-        <define name="fe1_rinner" value="{0.5*[radius]}"/>
-        <define name="x_inner" value="{0.17*[radius]}"/>
-        <define name="y_inner" value="0"/>
-        <loop variable="i" start="0" end="[poly]" step="1">
-          <start_line x1="{[fe1_router]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" y1="{[fe1_router]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="0" x2="{[fe1_router]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" y2="{[fe1_router]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="0"/>
-          <end_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}" y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="0" x2="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }" y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="0"/>
-        </loop>
+            <beam longitudinal_mesh_count="20" axial_mesh_count="20">
+                <define name="fe1_router" value="{0.9*[radius]}"/>
+                <define name="fe1_rinner" value="{0.5*[radius]}"/>
+                <define name="x_inner" value="{0.17*[radius]}"/>
+                <define name="y_inner" value="0"/>
+                <loop variable="i" start="0" end="[poly]" step="1">
+                    <start_line x1="{[fe1_router]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"
+                            y1="{[fe1_router]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="0"
+                            x2="{[fe1_router]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            y2="{[fe1_router]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="0"/>
+                    <end_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}"
+                            y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="0"
+                            x2="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }"
+                            y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="0"/>
+                </loop>
             </beam>
         </beam_surface>
     </tag>
 
     <tag name="electrode_tag" name="focusing_electrode2_tag">
         <beam_surface name="focusing_electrode2_surface">
-        <beam longitudinal_mesh_count="20" axial_mesh_count="20">
-            <define name="z2_start" value="2.5e-2"/>
-            <define name="z2_start_del" value="0.0"/>
-            <define name="z2_end" value="2.3e-2"/>
-            <define name="z2_end_del" value="0.19e-2"/>
-            <loop variable="i" start="0" end="[poly]" step="1">
-             <start_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}" y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="{ [z2_start] + ([z2_start_del])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" x2="{[fe1_rinner]*TMath::Cos( 2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }" y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="{ [z2_start] + ([z2_start_del])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly]) /[poly] ) }"/>
-              <end_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}" y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}" z1="{ [z2_end] + ([z2_end_del])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}" x2="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }" y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}" z2="{ [z2_end] + ([z2_end_del])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly] )}"/>
-            </loop>
-        </beam>
+            <beam longitudinal_mesh_count="20" axial_mesh_count="20">
+                <define name="z2_start" value="2.5e-2"/>
+                <define name="z2_start_del" value="0.0"/>
+                <define name="z2_end" value="2.3e-2"/>
+                <define name="z2_end_del" value="0.19e-2"/>
+                <loop variable="i" start="0" end="[poly]" step="1">
+                    <start_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}"
+                            y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"
+                            z1="{ [z2_start] + ([z2_start_del])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"
+                            x2="{[fe1_rinner]*TMath::Cos( 2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }"
+                            y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            z2="{ [z2_start] + ([z2_start_del])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly]) /[poly] ) }"/>
+                    <end_line x1="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*[i]/[poly]) + [x_inner]}"
+                            y1="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"
+                            z1="{ [z2_end] + ([z2_end_del])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"
+                            x2="{[fe1_rinner]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly]) + [x_inner] }"
+                            y2="{[fe1_rinner]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"
+                            z2="{ [z2_end] + ([z2_end_del])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly] )}"/>
+                </loop>
+            </beam>
         </beam_surface>
     </tag>
 
@@ -137,33 +164,41 @@
 
     <tag name="electrode_tag" name="large_dynode_tag">
         <tag name="dynode_tag">
-        <extruded_arc_segment_surface name="large_dynode_surface" zmin="-1.0e-2" zmax="1.0e-2" extruded_mesh_count="32" extruded_mesh_power="2.7">
-            <arc_segment x1="[large_dynode_radius]" y1="0.0" x2="0.0" y2="[large_dynode_radius]" radius="[large_dynode_radius]" right="true" short="true" arc_mesh_count="64"/>
-        </extruded_arc_segment_surface>
+            <extruded_arc_segment_surface name="large_dynode_surface" zmin="-1.0e-2" zmax="1.0e-2" extruded_mesh_count="32"
+                    extruded_mesh_power="2.7">
+                <arc_segment x1="[large_dynode_radius]" y1="0.0" x2="0.0" y2="[large_dynode_radius]" radius="[large_dynode_radius]"
+                        right="true" short="true" arc_mesh_count="64"/>
+            </extruded_arc_segment_surface>
         </tag>
     </tag>
 
     <tag name="electrode_tag" name="medium_dynode_tag">
         <tag name="dynode_tag">
-        <extruded_arc_segment_surface name="medium_dynode_surface" zmin="-0.9e-2" zmax="0.9e-2" extruded_mesh_count="32" extruded_mesh_power="2.7">
-            <arc_segment x1="[medium_dynode_radius]" y1="0.0" x2="0.0" y2="[medium_dynode_radius]" radius="[medium_dynode_radius]" right="true" short="true" arc_mesh_count="64"/>
-        </extruded_arc_segment_surface>
+            <extruded_arc_segment_surface name="medium_dynode_surface" zmin="-0.9e-2" zmax="0.9e-2" extruded_mesh_count="32"
+                    extruded_mesh_power="2.7">
+                <arc_segment x1="[medium_dynode_radius]" y1="0.0" x2="0.0" y2="[medium_dynode_radius]" radius="[medium_dynode_radius]"
+                        right="true" short="true" arc_mesh_count="64"/>
+            </extruded_arc_segment_surface>
         </tag>
     </tag>
 
     <tag name="electrode_tag" name="small_dynode_tag">
         <tag name="dynode_tag">
-        <extruded_arc_segment_surface name="small_dynode_surface" zmin="-0.8e-2" zmax="0.8e-2" extruded_mesh_count="32" extruded_mesh_power="2.7">
-            <arc_segment x1="[small_dynode_radius]" y1="0.0" x2="{(TMath::Cos(0.68*TMath::Pi()))*([small_dynode_radius])}" y2="{TMath::Sin(0.68*TMath::Pi())*([small_dynode_radius])}" radius="[small_dynode_radius]" right="true" short="true" arc_mesh_count="64"/>
-        </extruded_arc_segment_surface>
+            <extruded_arc_segment_surface name="small_dynode_surface" zmin="-0.8e-2" zmax="0.8e-2" extruded_mesh_count="32"
+                    extruded_mesh_power="2.7">
+                <arc_segment x1="[small_dynode_radius]" y1="0.0" x2="{(TMath::Cos(0.68*TMath::Pi()))*([small_dynode_radius])}"
+                        y2="{TMath::Sin(0.68*TMath::Pi())*([small_dynode_radius])}" radius="[small_dynode_radius]" right="true"
+                        short="true" arc_mesh_count="64"/>
+            </extruded_arc_segment_surface>
         </tag>
     </tag>
 
     <tag name="electrode_tag" name="anode_tag">
         <tag name="anode_tag">
-        <extruded_line_segment_surface name="anode_surface" zmin="-0.75e-2" zmax="0.75e-2" extruded_mesh_count="48"     extruded_mesh_power="2.7">
-            <line_segment x1="0.0" y1="0.0" x2="0.6e-2" y2="0.6e-2" line_mesh_count="48" line_mesh_power="1.2"/>
-        </extruded_line_segment_surface>
+            <extruded_line_segment_surface name="anode_surface" zmin="-0.75e-2" zmax="0.75e-2" extruded_mesh_count="48"
+                    extruded_mesh_power="2.7">
+                <line_segment x1="0.0" y1="0.0" x2="0.6e-2" y2="0.6e-2" line_mesh_count="48" line_mesh_power="1.2"/>
+            </extruded_line_segment_surface>
         </tag>
     </tag>
 
@@ -223,8 +258,8 @@
         <space name="placed_dynode_assembly" tree="dynode_assembly">
             <transformation displacement="[x_inner] 0. 3.3e-2"/>
         </space>
-       <surface name="cylindrical_housing_electrode" node="cylindrical_housing_surface"/>
-       <surface name="backplate_housing_electrode" node="backplate_housing_surface"/>
+        <surface name="cylindrical_housing_electrode" node="cylindrical_housing_surface"/>
+        <surface name="backplate_housing_electrode" node="backplate_housing_surface"/>
     </space>
 
     <!-- appearance -->
@@ -237,24 +272,41 @@
 
     <!-- bem -->
 
-    <electrostatic_dirichlet name="electrode_photocathode" surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/photocathode_electrode" value="0."/>
-    <electrostatic_dirichlet name="electrode_cylindrical_housing" surfaces="photomultiplier_tube_assembly/cylindrical_housing_electrode" value="0."/>
-    <electrostatic_dirichlet name="electrode_backplate_housing" surfaces="photomultiplier_tube_assembly/backplate_housing_electrode" value="0."/>
-    <electrostatic_dirichlet name="electrode1_focusing" surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode0" value="120."/>
-    <electrostatic_dirichlet name="electrode1_focusing" surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode1" value="110."/>
-    <electrostatic_dirichlet name="electrode2_focusing" surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode2" value="110."/>
-    <electrostatic_dirichlet name="electrode2_focusing" surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode3" value="110."/>
-    <electrostatic_dirichlet name="electrode_dynode1" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode1" value="120."/>
-    <electrostatic_dirichlet name="electrode_dynode2" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode2" value="230."/>
-    <electrostatic_dirichlet name="electrode_dynode3" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode3" value="340."/>
-    <electrostatic_dirichlet name="electrode_dynode4" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode4" value="450."/>
-    <electrostatic_dirichlet name="electrode_dynode5" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode5" value="560."/>
-    <electrostatic_dirichlet name="electrode_dynode6" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode6" value="670."/>
-    <electrostatic_dirichlet name="electrode_dynode7" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode7" value="780."/>
-    <electrostatic_dirichlet name="electrode_dynode8" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode8" value="890."/>
-    <electrostatic_dirichlet name="electrode_dynode9" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode9" value="1000."/>
+    <electrostatic_dirichlet name="electrode_photocathode"
+            surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/photocathode_electrode" value="0."/>
+    <electrostatic_dirichlet name="electrode_cylindrical_housing" surfaces="photomultiplier_tube_assembly/cylindrical_housing_electrode"
+            value="0."/>
+    <electrostatic_dirichlet name="electrode_backplate_housing" surfaces="photomultiplier_tube_assembly/backplate_housing_electrode"
+            value="0."/>
+    <electrostatic_dirichlet name="electrode1_focusing"
+            surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode0" value="120."/>
+    <electrostatic_dirichlet name="electrode1_focusing"
+            surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode1" value="110."/>
+    <electrostatic_dirichlet name="electrode2_focusing"
+            surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode2" value="110."/>
+    <electrostatic_dirichlet name="electrode2_focusing"
+            surfaces="photomultiplier_tube_assembly/placed_focusing_assembly/focusing_electrode3" value="110."/>
+    <electrostatic_dirichlet name="electrode_dynode1" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode1"
+            value="120."/>
+    <electrostatic_dirichlet name="electrode_dynode2" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode2"
+            value="230."/>
+    <electrostatic_dirichlet name="electrode_dynode3" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode3"
+            value="340."/>
+    <electrostatic_dirichlet name="electrode_dynode4" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode4"
+            value="450."/>
+    <electrostatic_dirichlet name="electrode_dynode5" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode5"
+            value="560."/>
+    <electrostatic_dirichlet name="electrode_dynode6" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode6"
+            value="670."/>
+    <electrostatic_dirichlet name="electrode_dynode7" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode7"
+            value="780."/>
+    <electrostatic_dirichlet name="electrode_dynode8" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode8"
+            value="890."/>
+    <electrostatic_dirichlet name="electrode_dynode9" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/dynode9"
+            value="1000."/>
     <electrostatic_dirichlet name="electrode_anode" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/anode" value="1100."/>
-    <electrostatic_dirichlet name="electrode_anode_guard" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/anode_guard" value="1110."/>
+    <electrostatic_dirichlet name="electrode_anode_guard" surfaces="photomultiplier_tube_assembly/placed_dynode_assembly/anode_guard"
+            value="1110."/>
 
 
 </geometry>
@@ -263,7 +315,8 @@
 
     <cylinder_space name="world_space" z1="-2e-2" z2="15.1e-2" r="6e-2"/>
 
-    <cylinder_surface name="world_surface" z1="-2e-2" z2="15.1e-2" r="6e-2" longitudinal_mesh_count="15" longitudinal_mesh_power="1." axial_mesh_count="32"/>
+    <cylinder_surface name="world_surface" z1="-2e-2" z2="15.1e-2" r="6e-2" longitudinal_mesh_count="15" longitudinal_mesh_power="1."
+            axial_mesh_count="32"/>
 
     <space name="world" node="world_space">
         <space name="photomultiplier_tube" tree="photomultiplier_tube_assembly"/>
@@ -278,82 +331,82 @@
     <!-- fields -->
 
     <ksfield_electrostatic
-        name="kemfield_e"
-        directory="[KEMFIELD_CACHE]"
-        file="PhotoMultiplierTubeElectrodes.kbd"
-        system="world/photomultiplier_tube"
-        surfaces="world/photomultiplier_tube/@electrode_tag"
-        symmetry="none"
-        minimum_element_area="1e-15"
-        maximum_element_aspect_ratio="50"
-    >
+            name="kemfield_e"
+            directory="[KEMFIELD_CACHE]"
+            file="PhotoMultiplierTubeElectrodes.kbd"
+            system="world/photomultiplier_tube"
+            surfaces="world/photomultiplier_tube/@electrode_tag"
+            symmetry="none"
+            minimum_element_area="1e-15"
+            maximum_element_aspect_ratio="50"
+            >
         <viewer
-            file="PhotomultiplierTube.vtp"
-            view="false"
-            save="true"
-            preprocessing="true"
-            postprocessing="true"
+                file="PhotomultiplierTube.vtp"
+                view="false"
+                save="true"
+                preprocessing="true"
+                postprocessing="true"
         />
         <krylov_bem_solver
-           solver_name="gmres"
-           preconditioner="implicit_krylov"
-           tolerance="1e-6"
-           preconditioner_tolerance="0.01"
-           max_iterations="500"
-           max_preconditioner_iterations="30"
-           iterations_between_restarts="250"
-           preconditioner_degree="1"
-           intermediate_save_interval="1"
-           use_display="true"
-           show_plot="false"
-           use_timer="true"
-        >
-        <fftm_multiplication
-           verbosity="3"
-           strategy="balanced"
-           top_level_divisions="8"
-           tree_level_divisions="2"
-           expansion_degree="7"
-           bias_degree="1"
-           neighbor_order="1"
-           maximum_tree_depth="9"
-           use_region_size_estimation="true"
-           use_caching="true"
-           region_expansion_factor="1.1"
-           insertion_ratio="1.3333333"
-           world_cube_center_x="0.0"
-           world_cube_center_y="0.0"
-           world_cube_center_z="0.0"
-           world_cube_length="0.0"
-        />
+                solver_name="gmres"
+                preconditioner="implicit_krylov"
+                tolerance="1e-6"
+                preconditioner_tolerance="0.01"
+                max_iterations="500"
+                max_preconditioner_iterations="30"
+                iterations_between_restarts="250"
+                preconditioner_degree="1"
+                intermediate_save_interval="1"
+                use_display="true"
+                show_plot="false"
+                use_timer="true"
+                >
+            <fftm_multiplication
+                    verbosity="3"
+                    strategy="balanced"
+                    top_level_divisions="8"
+                    tree_level_divisions="2"
+                    expansion_degree="7"
+                    bias_degree="1"
+                    neighbor_order="1"
+                    maximum_tree_depth="9"
+                    use_region_size_estimation="true"
+                    use_caching="true"
+                    region_expansion_factor="1.1"
+                    insertion_ratio="1.3333333"
+                    world_cube_center_x="0.0"
+                    world_cube_center_y="0.0"
+                    world_cube_center_z="0.0"
+                    world_cube_length="0.0"
+            />
             <preconditioner_electrostatic_parameters
-                verbosity="3"
-                top_level_divisions="2"
-                tree_level_divisions="2"
-                expansion_degree="0"
-                neighbor_order="1"
-                maximum_tree_depth="5"
-                use_region_size_estimation="true"
-                use_caching="true"
-                region_expansion_factor="1.1"
-                insertion_ratio="1.3333333"
-                world_cube_center_x="0.0"
-                world_cube_center_y="0.0"
-                world_cube_center_z="0.0"
-                world_cube_length="0.0"
+                    verbosity="3"
+                    top_level_divisions="2"
+                    tree_level_divisions="2"
+                    expansion_degree="0"
+                    neighbor_order="1"
+                    maximum_tree_depth="5"
+                    use_region_size_estimation="true"
+                    use_caching="true"
+                    region_expansion_factor="1.1"
+                    insertion_ratio="1.3333333"
+                    world_cube_center_x="0.0"
+                    world_cube_center_y="0.0"
+                    world_cube_center_z="0.0"
+                    world_cube_length="0.0"
             />
         </krylov_bem_solver>
         <fast_multipole_field_solver
-            top_level_divisions="8"
-            tree_level_divisions="2"
-            expansion_degree="8"
-            neighbor_order="1"
-            maximum_tree_depth="6"
-            region_expansion_factor="2"
-            use_region_size_estimation="true"
-            use_caching="true"
-            verbosity="3"
-            use_opencl="true"
+                top_level_divisions="8"
+                tree_level_divisions="2"
+                expansion_degree="8"
+                neighbor_order="1"
+                maximum_tree_depth="6"
+                region_expansion_factor="2"
+                use_region_size_estimation="true"
+                use_caching="true"
+                verbosity="3"
+                use_opencl="true"
         />
     </ksfield_electrostatic>
 
@@ -396,10 +449,10 @@
     <ksnav_surface name="nav_surface"/>
 
     <!-- surface interactions -->
-   <ksint_surface_multiplication name="int_surface_multiplication"
+    <ksint_surface_multiplication name="int_surface_multiplication"
                                  side="bottom"
                                  energy_loss_fraction="0.05"
-                                 required_energy_per_particle_ev="10."/>
+            required_energy_per_particle_ev="10."/>
 
     <!-- terminators -->
 
@@ -413,9 +466,9 @@
     <!-- writers -->
 
     <kswrite_root
-        name="write_root"
-        path="[output_path]"
-        base="PhotoMultiplierTubeSimulation.root"
+            name="write_root"
+            path="[output_path]"
+            base="PhotoMultiplierTubeSimulation.root"
     />
 
 
@@ -529,17 +582,17 @@
     <!-- simulation -->
 
     <ks_simulation
-        name="pmt_simulation"
-        run="1"
-        seed="12345"
-        events="[events:1]"
-        electric_field="kemfield_e"
-        space="space_world"
-        generator="photoelectron_single"
-        trajectory="trajectory_exact"
-        space_navigator="nav_meshed_space"
-        surface_navigator="nav_surface"
-        writer="write_root"
+            name="pmt_simulation"
+            run="1"
+            seed="12345"
+            events="[events:1]"
+            electric_field="kemfield_e"
+            space="space_world"
+            generator="photoelectron_single"
+            trajectory="trajectory_exact"
+            space_navigator="nav_meshed_space"
+            surface_navigator="nav_surface"
+            writer="write_root"
     />
 
 </kassiopeia>

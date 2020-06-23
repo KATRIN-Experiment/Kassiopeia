@@ -74,6 +74,7 @@ typedef KSReadSet<KSReadValue<unsigned int>> KSUIntSet;
 typedef KSReadSet<KSReadValue<int>> KSIntSet;
 typedef KSReadSet<KSReadValue<unsigned long>> KSULongSet;
 typedef KSReadSet<KSReadValue<long>> KSLongSet;
+typedef KSReadSet<KSReadValue<long long>> KSLongLongSet;
 typedef KSReadSet<KSReadValue<float>> KSFloatSet;
 typedef KSReadSet<KSReadValue<double>> KSDoubleSet;
 typedef KSReadSet<KSReadValue<KThreeVector>> KSThreeVectorSet;

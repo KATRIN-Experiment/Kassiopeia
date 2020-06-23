@@ -24,6 +24,9 @@ template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalH
 
     ~KZonalHarmonicFieldSolver() override {}
 
+    bool CentralExpansion(const KPosition& P) const;
+    bool RemoteExpansion(const KPosition& P) const;
+
     double Potential(const KPosition& P) const;
     KThreeVector ElectricField(const KPosition& P) const;
     std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P) const;

@@ -42,12 +42,12 @@
 
     <tag name="magnet_tag">
         <cylinder_tube_space
-            name="solenoid_space"
-            z1="-1.e-2"
-            z2="1.e-2"
-            r1="0.5e-2"
-            r2="1.5e-2"
-            radial_mesh_count="30"
+                name="solenoid_space"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r1="0.5e-2"
+                r2="1.5e-2"
+                radial_mesh_count="30"
         />
     </tag>
 
@@ -55,13 +55,13 @@
 
     <tag name="electrode_tag">
         <cylinder_surface
-            name="ring_surface"
-            z1="-2.0e-2"
-            z2="2.0e-2"
-            r="2.5e-1"
-            longitudinal_mesh_count="200"
-            longitudinal_mesh_power="3."
-            axial_mesh_count="128"
+                name="ring_surface"
+                z1="-2.0e-2"
+                z2="2.0e-2"
+                r="2.5e-1"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
         />
     </tag>
 
@@ -70,13 +70,13 @@
     <!-- if they are too close the field calculation will fail -->
     <tag name="guard_tag">
         <cylinder_surface
-            name="guard_surface"
-            z1="-0.5"
-            z2="0.5"
-            r="0.21"
-            longitudinal_mesh_count="200"
-            longitudinal_mesh_power="1."
-            axial_mesh_count="128"
+                name="guard_surface"
+                z1="-0.5"
+                z2="0.5"
+                r="0.21"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="1."
+                axial_mesh_count="128"
         />
     </tag>
 
@@ -85,13 +85,13 @@
 
     <tag name="electrode_tag">
         <cylinder_surface
-            name="tube_surface"
-            z1="-1.e-2"
-            z2="1.e-2"
-            r="0.5e-2"
-            longitudinal_mesh_count="200"
-            longitudinal_mesh_power="3."
-            axial_mesh_count="128"
+                name="tube_surface"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r="0.5e-2"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
         />
     </tag>
 
@@ -122,19 +122,19 @@
         <surface name="ring" node="ring_surface"/>
         <surface name="center" node="center_surface"/>
         <loop variable="i" start="0" end="10" step="1">
-        <surface name="intermediate_z[i]" node="intermediate_z_surface">
-            <transformation displacement="0. 0. {-0.5 + [i]*(0.4/10.)}"/>
-        </surface>
+            <surface name="intermediate_z[i]" node="intermediate_z_surface">
+                <transformation displacement="0. 0. {-0.5 + [i]*(0.4/10.)}"/>
+            </surface>
         </loop>
         <loop variable="i" start="10" end="20" step="1">
-        <surface name="intermediate_z[i]" node="intermediate_z_surface">
-            <transformation displacement="0. 0. {0.1 + ([i]-10)*(0.4/10.)}"/>
-        </surface>
+            <surface name="intermediate_z[i]" node="intermediate_z_surface">
+                <transformation displacement="0. 0. {0.1 + ([i]-10)*(0.4/10.)}"/>
+            </surface>
         </loop>
         <loop variable="i" start="0" end="20" step="1">
-        <surface name="azimuthal[i]" node="azimuthal_surface">
-            <transformation rotation_euler="0. 0. {[i]*(360.0/20.)}"/>
-        </surface>
+            <surface name="azimuthal[i]" node="azimuthal_surface">
+                <transformation rotation_euler="0. 0. {[i]*(360.0/20.)}"/>
+            </surface>
         </loop>
         <space name="downstream_solenoid" node="solenoid_space">
             <transformation displacement="0. 0. -0.5"/>
@@ -191,63 +191,63 @@
     <!-- magnetic fields -->
 
     <ksfield_electromagnet
-        name="field_electromagnet"
-        directory="[KEMFIELD_CACHE]"
-        file="DipoleTrapMagnets.kbd"
-        system="world/dipole_trap"
-        spaces="world/dipole_trap/@magnet_tag"
-    >
+            name="field_electromagnet"
+            directory="[KEMFIELD_CACHE]"
+            file="DipoleTrapMagnets.kbd"
+            system="world/dipole_trap"
+            spaces="world/dipole_trap/@magnet_tag"
+            >
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="true"
-            central_sourcepoint_fractional_distance="1e-2"
-            central_sourcepoint_spacing="1.e-3"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-5.e-2"
-            remote_sourcepoint_end="5.e-2"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="true"
+                central_sourcepoint_fractional_distance="1e-2"
+                central_sourcepoint_spacing="1.e-3"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-5.e-2"
+                remote_sourcepoint_end="5.e-2"
         />
     </ksfield_electromagnet>
 
     <!-- electric fields -->
 
     <ksfield_electrostatic
-        name="field_electrostatic"
-        directory="[KEMFIELD_CACHE]"
-        file="DipoleTrapElectrodes.kbd"
-        system="world/dipole_trap"
-        surfaces="world/dipole_trap/@electrode_tag"
-        symmetry="axial"
-    >
+            name="field_electrostatic"
+            directory="[KEMFIELD_CACHE]"
+            file="DipoleTrapElectrodes.kbd"
+            system="world/dipole_trap"
+            surfaces="world/dipole_trap/@electrode_tag"
+            symmetry="axial"
+            >
         <robin_hood_bem_solver
-            tolerance="1.e-10"
-            check_sub_interval="100"
-            display_interval="1"
-            cache_matrix_elements="true"
-            use_vtk="true"
+                tolerance="1.e-10"
+                check_sub_interval="100"
+                display_interval="1"
+                cache_matrix_elements="true"
+                use_vtk="true"
         />
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="false"
-            central_sourcepoint_spacing="1.e-3"
-            central_sourcepoint_start="-5.2e-1"
-            central_sourcepoint_end="5.2e-1"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-5.e-2"
-            remote_sourcepoint_end="5.e-2"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="false"
+                central_sourcepoint_spacing="1.e-3"
+                central_sourcepoint_start="-5.2e-1"
+                central_sourcepoint_end="5.2e-1"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-5.e-2"
+                remote_sourcepoint_end="5.e-2"
         />
     </ksfield_electrostatic>
 
     <ksfield_electric_constant
-        name="field_constant"
-        field="0. 0. 0."
+            name="field_constant"
+            field="0. 0. 0."
     />
 
     <!-- generators -->
@@ -285,7 +285,8 @@
     </kstraj_trajectory_exact>
 
     <!--  adiabatic trajectory -->
-    <kstraj_trajectory_adiabatic name="trajectory_adiabatic" piecewise_tolerance="1e-12" max_segments="130" use_true_position="true" cyclotron_fraction="{1.0/128.0}">
+    <kstraj_trajectory_adiabatic name="trajectory_adiabatic" piecewise_tolerance="1e-12" max_segments="130" use_true_position="true"
+            cyclotron_fraction="{1.0/128.0}">
         <interpolator_crk name="interpolator_crk"/>
         <integrator_rkdp853 name="integrator_rkdp853"/>
         <term_propagation name="term_propagation"/>
@@ -349,7 +350,8 @@
         <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
         <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
         <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
-        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
         <component_member name="final_time" field="time" parent="component_track_final_particle"/>
@@ -408,76 +410,76 @@
             <command parent="root_terminator" field="add_terminator" child="term_ring"/>
         </geo_surface>
         <loop variable="i" start="0" end="20" step="1">
-         <geo_surface name="surface_intermediate_z[i]" surfaces="world/dipole_trap/intermediate_z[i]"/>
+            <geo_surface name="surface_intermediate_z[i]" surfaces="world/dipole_trap/intermediate_z[i]"/>
         </loop>
         <loop variable="i" start="0" end="20" step="1">
-         <geo_surface name="surface_azimuthal[i]" surfaces="world/dipole_trap/azimuthal[i]"/>
+            <geo_surface name="surface_azimuthal[i]" surfaces="world/dipole_trap/azimuthal[i]"/>
         </loop>
     </ksgeo_space>
 
     <!-- meshed space navigator must be specified after structure so it can construct the octree -->
     <!-- Note: if you see multiple intersections detected in the same place, you may need to increase your tolerances -->
     <ksnav_meshed_space
-        name="nav_meshed_space"
-        octree_file="dipole_octree.kbd"
-        root_space="space_world"
-        enter_split="false"
-        exit_split="false"
-        fail_check="true"
-        relative_tolerance="1e-2"
-        absolute_tolerance="1e-3"
-        max_octree_depth="8"
-        n_allowed_elements="1"
+            name="nav_meshed_space"
+            octree_file="dipole_octree.kbd"
+            root_space="space_world"
+            enter_split="false"
+            exit_split="false"
+            fail_check="true"
+            relative_tolerance="1e-2"
+            absolute_tolerance="1e-3"
+            max_octree_depth="8"
+            n_allowed_elements="1"
     />
 
     <!-- simulation -->
 
     <ks_simulation
-        run="1"
-        seed="51385"
-        events="1"
-        magnetic_field="field_electromagnet"
-        electric_field="field_electrostatic"
-        space="space_world"
-        generator="generator_uniform"
-        trajectory="[trajectory_name]"
-        space_navigator="nav_meshed_space"
-        surface_navigator="nav_surface"
-        terminator="term_world"
-        writer="write_root"
-        writer="write_vtk"
+            run="1"
+            seed="51385"
+            events="1"
+            magnetic_field="field_electromagnet"
+            electric_field="field_electrostatic"
+            space="space_world"
+            generator="generator_uniform"
+            trajectory="[trajectory_name]"
+            space_navigator="nav_meshed_space"
+            surface_navigator="nav_surface"
+            terminator="term_world"
+            writer="write_root"
+            writer="write_vtk"
     />
 
 </kassiopeia>
 
 <vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
+        name="vtk_window"
+        enable_display="true"
+        enable_write="true"
+        frame_title="KGeoBag Visualization"
+        frame_size_x="1024"
+        frame_size_y="768"
+        frame_color_red=".2"
+        frame_color_green=".2"
+        frame_color_blue=".2"
+        view_angle="45"
+        eye_angle="0.5"
+        multi_samples="4"
+        depth_peeling="10"
+        >
     <vtk_geometry_painter
-        name="geometry_painter"
-        path="[output_path]"
-        file="DipoleTrapMeshedSpaceGeometry.vtp"
-        surfaces="world/dipole_trap/#"
+            name="geometry_painter"
+            path="[output_path]"
+            file="DipoleTrapMeshedSpaceGeometry.vtp"
+            surfaces="world/dipole_trap/#"
     />
     <vtk_track_painter
-        name="track_painter"
-        path="[output_path]"
-        file="DipoleTrapMeshedSpaceSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_world"
-        color_variable="polar_angle_to_b"
+            name="track_painter"
+            path="[output_path]"
+            file="DipoleTrapMeshedSpaceSimulation.root"
+            point_object="component_step_world"
+            point_variable="position"
+            color_object="component_step_world"
+            color_variable="polar_angle_to_b"
     />
 </vtk_window>

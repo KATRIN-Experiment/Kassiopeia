@@ -18,13 +18,13 @@ int main(int argc, char** argv)
 {
     if (argc == 1) {
         cout
-            << "usage: ./Kassiopeia <config_file_one.xml> [<config_file_one.xml> <...>] [ -r variable1=value1 variable2=value ... ]"
+            << "usage: ./Kassiopeia <config_file_one.xml> [<config_file_two.xml> <...>] [ -r variable1=value1 variable2=value ... ]"
             << endl;
         exit(-1);
     }
 
     auto& tXML = KXMLInitializer::GetInstance();
-    auto* tTokenizer = tXML.Configure(argc, argv, false);  // process files below
+    auto* tTokenizer = tXML.Configure(argc, argv);  // process extra files below
 
     //tXML.DumpConfiguration();
 
@@ -32,8 +32,10 @@ int main(int argc, char** argv)
 
     KToolbox::GetInstance();
 
-    for (auto tFilename : tXML.GetArguments().ParameterList()) {
-        mainmsg(eInfo) << "processing file <" << tFilename << "> ..." << eom;
+    auto tFileNames = tXML.GetArguments().ParameterList();
+    tFileNames.pop_front();
+    for (auto tFilename : tFileNames) {
+        mainmsg(eNormal) << "processing file <" << tFilename << "> ..." << eom;
         auto* tFile = new KTextFile();
         tFile->AddToNames(tFilename);
         tTokenizer->ProcessFile(tFile);

@@ -43,6 +43,7 @@ template<class Basis> class KZonalHarmonicContainer
     {
         return fCoordinateSystem;
     }
+
     SourcePointVector& GetCentralSourcePoints()
     {
         return fCentralSourcePoints;
@@ -51,6 +52,7 @@ template<class Basis> class KZonalHarmonicContainer
     {
         return fCentralSourcePoints;
     }
+
     SourcePointVector& GetRemoteSourcePoints()
     {
         return fRemoteSourcePoints;
@@ -59,6 +61,11 @@ template<class Basis> class KZonalHarmonicContainer
     {
         return fRemoteSourcePoints;
     }
+
+    std::set<std::pair<double, double>> CentralSourcePoints();
+    std::set<std::pair<double, double>> RemoteSourcePoints();
+
+
     ZonalHarmonicContainerVector& GetSubContainers()
     {
         return fSubContainers;
@@ -333,6 +340,42 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ComputeCoefficients(i
         for (auto it = fSubContainers.begin(); it != fSubContainers.end(); ++it)
             (*it)->ComputeCoefficients(level + 1);
     }
+}
+
+template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::CentralSourcePoints()
+{
+    std::set<std::pair<double, double>> SPs;
+
+    for (auto& sp : fCentralSourcePoints) {
+        auto z0 = sp->GetZ0() + fCoordinateSystem.GetOrigin().Z();
+        auto rho = sp->GetRho();
+        SPs.insert({z0, rho});
+    }
+
+    for (auto& subcontainer : fSubContainers) {
+        for (auto& sp : subcontainer->CentralSourcePoints()) {
+            SPs.insert(sp);
+        }
+    }
+    return SPs;
+}
+
+template<class Basis> std::set<std::pair<double, double>> KZonalHarmonicContainer<Basis>::RemoteSourcePoints()
+{
+    std::set<std::pair<double, double>> SPs;
+
+    for (auto& sp : fRemoteSourcePoints) {
+        auto z0 = sp->GetZ0() + fCoordinateSystem.GetOrigin().Z();
+        auto rho = sp->GetRho();
+        SPs.insert({z0, rho});
+    }
+
+    for (auto& subcontainer : fSubContainers) {
+        for (auto& sp : subcontainer->RemoteSourcePoints()) {
+            SPs.insert(sp);
+        }
+    }
+    return SPs;
 }
 
 }  // end namespace KEMField

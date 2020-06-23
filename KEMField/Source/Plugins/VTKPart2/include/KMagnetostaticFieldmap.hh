@@ -228,6 +228,10 @@ class KMagnetostaticFieldmapCalculator
     {
         fForceUpdate = aFlag;
     }
+    void SetComputeGradient(bool aFlag)
+    {
+        fComputeGradient = aFlag;
+    }
     void SetCenter(KPosition aCenter)
     {
         fCenter = aCenter;
@@ -299,6 +303,7 @@ class KMagnetostaticFieldmapCalculator
     std::string fFile;
     std::string fName;
     bool fForceUpdate;
+    bool fComputeGradient;
     KPosition fCenter;
     KThreeVector fLength;
     bool fMirrorX, fMirrorY, fMirrorZ;
@@ -309,6 +314,7 @@ class KMagnetostaticFieldmapCalculator
     vtkSmartPointer<vtkImageData> fGrid;
     vtkSmartPointer<vtkIntArray> fValidityData;
     vtkSmartPointer<vtkDoubleArray> fFieldData;
+    vtkSmartPointer<vtkDoubleArray> fGradientData;
 };
 
 } /* namespace KEMField */
