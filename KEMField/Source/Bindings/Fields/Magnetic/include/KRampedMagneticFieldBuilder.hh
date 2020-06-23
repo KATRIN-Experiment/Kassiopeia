@@ -65,6 +65,9 @@ template<> inline bool KRampedMagneticFieldBuilder::AddAttribute(KContainer* aCo
     else if (aContainer->GetName() == "time_constant") {
         aContainer->CopyTo(fObject, &KEMField::KRampedMagneticField::SetTimeConstant);
     }
+    else if (aContainer->GetName() == "time_constant_2") {
+        aContainer->CopyTo(fObject, &KEMField::KRampedMagneticField::SetTimeConstant2);
+    }
     else if (aContainer->GetName() == "time_scaling") {
         aContainer->CopyTo(fObject, &KEMField::KRampedMagneticField::SetTimeScalingFactor);
     }

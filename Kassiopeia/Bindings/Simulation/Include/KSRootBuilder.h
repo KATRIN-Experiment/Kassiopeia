@@ -6,6 +6,7 @@
 #include "KMagneticField.hh"
 #include "KSElectricKEMField.h"
 #include "KSMagneticKEMField.h"
+#include "KSMainMessage.h"
 #include "KSRoot.h"
 #include "KSSimulation.h"
 #include "KToolbox.h"
@@ -26,8 +27,12 @@ template<> inline bool KSRootBuilder::AddElement(KContainer* aContainer)
         KToolbox::GetInstance().AddContainer(*aContainer);
         return true;
     }
-    // legacy support for old field bindings in the <kassiopeia> tag
+
+    /// NOTE: deprecated legacy support for old field bindings in the <kassiopeia> tag
     if (aContainer->Is<KEMField::KElectricField>()) {
+        mainmsg(eWarning) << "legacy binding for electric field <" << aContainer->GetName()
+                          << "> is DEPRECATED - please move objects to <kemfield> tag" << eom;
+
         auto* tField = new KSElectricKEMField();
         tField->SetName(aContainer->GetName());
         aContainer->ReleaseTo(tField, &KSElectricKEMField::SetElectricField);
@@ -35,6 +40,9 @@ template<> inline bool KSRootBuilder::AddElement(KContainer* aContainer)
         return true;
     }
     if (aContainer->Is<KEMField::KMagneticField>()) {
+        mainmsg(eWarning) << "legacy binding for magnetic field <" << aContainer->GetName()
+                          << "> is DEPRECATED - please move objects to <kemfield> tag" << eom;
+
         auto* tField = new KSMagneticKEMField();
         tField->SetName(aContainer->GetName());
         aContainer->ReleaseTo(tField, &KSMagneticKEMField::SetMagneticField);

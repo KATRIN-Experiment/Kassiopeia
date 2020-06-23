@@ -76,7 +76,8 @@ int main(int argc, char** argv)
             continue;
         }
 
-        mainmsg(eNormal) << "Electric Field at position " << tPosition << " is " << tElectricField << eom;
+        mainmsg(eNormal) << "Electric Field at position " << tPosition << " is " << tElectricField
+                         << " and potential is " << tPotential << eom;
 
         outFile << std::fixed << std::setprecision(16) << tPosition.X() << "\t" << tPosition.Y() << "\t"
                 << tPosition.Z() << "\t" << tPotential << "\t" << tElectricField.X() << "\t" << tElectricField.Y()

@@ -79,12 +79,14 @@ void KXMLTokenizer::ProcessFile(KTextFile* aFile)
         if (fState == &KXMLTokenizer::ParseEndFile) {
             tClockEnd = std::chrono::steady_clock::now();
             tElapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(tClockEnd - tClockStart);
-            auto tMilliSeconds = tElapsedTime.count();
-            KDEBUG("Finished: " << fFile->GetName() << " (" << tMilliSeconds << " ms)");
+            tClockStart = tClockEnd;
 
-            if (tMilliSeconds > 5000)
-                initmsg(eWarning) << "It took " << tMilliSeconds << " ms to process the file <" << fFile->GetName()
-                                  << ">" << eom;
+            auto tMilliSeconds = tElapsedTime.count();
+            KDEBUG("Finished: " << fFile->GetName() << " (took " << tMilliSeconds << " ms)");
+
+            if (tMilliSeconds > 10000)
+                initmsg(eWarning) << "It took " << ceil(tMilliSeconds/100.)/10. << " s to process the file <"
+                                  << fFile->GetName() << ">" << eom;
         }
 
         if (fState == fFinalState) {

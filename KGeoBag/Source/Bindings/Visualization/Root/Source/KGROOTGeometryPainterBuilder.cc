@@ -10,6 +10,8 @@ namespace katrin
 {
 
 STATICINT sKGROOTGeometryPainterStructure = KGROOTGeometryPainterBuilder::Attribute<string>("name") +
+                                            KGROOTGeometryPainterBuilder::Attribute<string>("file") +
+                                            KGROOTGeometryPainterBuilder::Attribute<string>("path") +
                                             KGROOTGeometryPainterBuilder::Attribute<string>("surfaces") +
                                             KGROOTGeometryPainterBuilder::Attribute<string>("spaces") +
                                             KGROOTGeometryPainterBuilder::Attribute<KThreeVector>("plane_normal") +

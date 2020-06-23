@@ -30,6 +30,9 @@ template<> class KZonalHarmonicFieldSolver<KMagnetostaticBasis> : public KZonalH
     KGradient MagneticFieldGradient(const KPosition& P) const;
     std::pair<KThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const;
 
+    bool CentralExpansion(const KPosition& P) const;
+    bool RemoteExpansion(const KPosition& P) const;
+
   private:
     KZHLegendreCoefficients* fZHCoeffSingleton;
 

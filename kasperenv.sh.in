@@ -1,8 +1,10 @@
 #!/bin/sh
 
 # To automatically set the KASPER directory on opening a terminal,
-# append this line to your ~/.bashrc file:
+# append this line to your ~/.bashrc or ~/.zshrc file (or similar):
 #    source <kasper install path>/bin/kasperenv.sh
+
+printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]\n"
 
 if [ -n "${KASPERSYS}" ]
     then
@@ -30,9 +32,13 @@ if [ -n "${KASPER_SOURCE}" ]
 fi
 
 export KASPER_SOURCE=@CMAKE_HOME_DIRECTORY@
-export KASPER_INSTALL=@CMAKE_INSTALL_PREFIX@
-KASPER_INSTALL_BIN=@CMAKE_INSTALL_FULL_BINDIR@
-KASPER_INSTALL_LIB=@CMAKE_INSTALL_FULL_LIBDIR@
+export KASPER_INSTALL=@KASPER_INSTALL_DIR@
+KASPER_INSTALL_BIN=@BIN_INSTALL_DIR@
+KASPER_INSTALL_LIB=@LIB_INSTALL_DIR@
+KASPER_INSTALL_CACHE=@CACHE_INSTALL_DIR@
+
+printf "\033[32;1m** KASPER source directory set to ${KASPER_SOURCE}\033[0m\n"
+printf "\033[32;1m** KASPER install directory set to ${KASPER_INSTALL}\033[0m\n"
 
 if [ $# -eq 0 ]
   then
@@ -42,15 +48,19 @@ if [ $# -eq 0 ]
 fi
 
 export KASPERSYS
+printf "\033[32;1m** KASPER config directory set to ${KASPERSYS}\033[0m\n"
 
-if [ ! -z "${KEMFIELD_CACHE}" -a -w "${KEMFIELD_CACHE}" ] ; then
-    echo "Using KEMField cache in ${KEMFIELD_CACHE}"
+if [ ! -z "${KEMFIELD_CACHE}" -a -w "${KEMFIELD_CACHE}" ]
+    then
+        printf "\033[32;1m** Using KEMField cache in ${KEMFIELD_CACHE}\033[0m\n"
 else
-    if [ -w "${KASPERSYS}/cache/KEMField/" ] ; then
-        KEMFIELD_CACHE=${KASPERSYS}/cache/KEMField
-    else
-        echo "Directory ${KASPERSYS}/cache/KEMField/ does not exist or is not writeable, setting KEMField cache to ${HOME}/.cache/KEMField"
-        KEMFIELD_CACHE=${HOME}/.cache/KEMField
+    if [ -w "${KASPER_INSTALL_CACHE}/KEMField/" ]
+        then
+            printf "\033[36;1m** Setting KEMField cache to ${KASPER_INSTALL_CACHE}/KEMField\033[0m\n"
+            KEMFIELD_CACHE=${KASPER_INSTALL_CACHE}/KEMField
+        else
+            printf "\033[33;1m** Directory ${KASPER_INSTALL_CACHE}/KEMField/ does not exist or is not writeable, setting KEMField cache to ${HOME}/.cache/KEMField\033[0m\n"
+            KEMFIELD_CACHE=${HOME}/.cache/KEMField
     fi
 fi
 
@@ -62,9 +72,5 @@ export LD_LIBRARY_PATH=${KASPER_INSTALL_LIB}:$(echo $LD_LIBRARY_PATH | sed 's/${
 export PKG_CONFIG_PATH=${KASPER_INSTALL_LIB}/pkgconfig:$(echo $PKG_CONFIG_PATH | sed 's/${OLD_PKGCFGPATH}//g')
 export PYTHONPATH=${KASPER_INSTALL_LIB}/python:$(echo $PYTHONPATH | sed 's/${OLD_PYTHONPATH}//g')
 export CMAKE_PREFIX_PATH=${KASPER_INSTALL}:$(echo $CMAKE_PREFIX_PATH | sed 's/${OLD_CMAKE_PREF}//g')
-
-printf "\033[32;1mThis is KASPER v@KASPER_VERSION@ (build: @KASPER_BUILD_TIMESTAMP@) [git:@KASPER_GIT_REVISION@]"
-printf "\033[32;1mKASPER config  directory set to ${KASPERSYS}\033[0m\n"
-printf "\033[32;1mKASPER install  directory set to ${KASPER_INSTALL}\033[0m\n"
 
 return 0

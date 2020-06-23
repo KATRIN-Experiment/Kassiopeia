@@ -19,8 +19,16 @@ namespace KEMField
 class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
 {
   public:
+    typedef std::vector<KZonalHarmonicSourcePoint*> SourcePointVector;
+
     KZonalHarmonicMagnetostaticFieldSolver();
     ~KZonalHarmonicMagnetostaticFieldSolver() override;
+
+    bool UseCentralExpansion(const KPosition& P);
+    bool UseRemoteExpansion(const KPosition& P);
+
+    std::set<std::pair<double, double>> CentralSourcePoints();
+    std::set<std::pair<double, double>> RemoteSourcePoints();
 
     void InitializeCore(KElectromagnetContainer& container) override;
 
@@ -33,6 +41,7 @@ class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
     {
         return fParameters;
     }
+
 
   private:
     KElectromagnetIntegrator fIntegrator;

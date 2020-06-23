@@ -20,6 +20,8 @@ namespace KEMField
 class KElectricZHFieldSolver : public KElectricFieldSolver
 {
   public:
+    typedef std::vector<KZonalHarmonicSourcePoint*> SourcePointVector;
+
     KElectricZHFieldSolver();
     ~KElectricZHFieldSolver() override;
 
@@ -35,6 +37,9 @@ class KElectricZHFieldSolver : public KElectricFieldSolver
     {
         return fParameters;
     }
+
+    std::set<std::pair<double, double>> CentralSourcePoints();
+    std::set<std::pair<double, double>> RemoteSourcePoints();
 
   private:
     void InitializeCore(KSurfaceContainer& container) override;

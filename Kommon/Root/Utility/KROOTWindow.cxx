@@ -162,6 +162,8 @@ void KROOTWindow::Display()
 
 void KROOTWindow::Write()
 {
+    utilmsg(eNormal) << "KROOTWindow starts to write!" << eom;
+
     if (fWriteEnabled) {
         string tOutputStringRoot;
         string tOutputStringPNG;
@@ -200,6 +202,7 @@ void KROOTWindow::Write()
         }
     }
 
+    utilmsg(eNormal) << "KROOTWindow finished to write!" << eom;
     return;
 }
 

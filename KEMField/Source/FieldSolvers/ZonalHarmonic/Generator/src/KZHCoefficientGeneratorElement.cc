@@ -14,12 +14,13 @@ bool KZHCoefficientGeneratorElement::IsCoaxial(const KEMCoordinateSystem& coordi
     if (betweenOrigins.MagnitudeSquared() < coaxialityTolerance) {
         return true;
     }
-    else {
-        betweenOrigins = betweenOrigins.Unit();
 
-        if (1. - fabs(GetCoordinateSystem().GetZAxis().Dot(betweenOrigins)) > coaxialityTolerance)
-            return false;
-    }
+    betweenOrigins = betweenOrigins.Unit();
+    if (1. - fabs(GetCoordinateSystem().GetZAxis().Dot(betweenOrigins)) > coaxialityTolerance)
+        return false;
+
+    if (coaxialityTolerance <= 1e-14)
+        return false;
 
     return true;
 }

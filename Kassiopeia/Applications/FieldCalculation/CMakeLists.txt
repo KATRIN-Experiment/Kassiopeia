@@ -1,11 +1,13 @@
 set( APPLICATIONS_FIELDS_BASENAMES
     SimpleElectricFieldCalculator
     SimpleElectricFieldCalculatorAlongZaxis
+    SimpleElectricFieldCalculatorOverXYplane
     SimpleElectricFieldCalculatorFromFile
     SimpleElectricFieldCalculatorSpeedTest
 
     SimpleMagneticFieldCalculator
     SimpleMagneticFieldCalculatorAlongZaxis
+    SimpleMagneticFieldCalculatorOverXYplane
     SimpleMagneticFieldCalculatorFromFile
     SimpleMagneticFieldCalculatorSpeedTest
 )

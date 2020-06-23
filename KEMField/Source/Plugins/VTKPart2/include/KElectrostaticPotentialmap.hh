@@ -225,6 +225,10 @@ class KElectrostaticPotentialmapCalculator
     {
         fForceUpdate = aFlag;
     }
+    void SetComputeField(bool aFlag)
+    {
+        fComputeField = aFlag;
+    }
     void SetCenter(KPosition aCenter)
     {
         fCenter = aCenter;
@@ -296,6 +300,7 @@ class KElectrostaticPotentialmapCalculator
     std::string fFile;
     std::string fName;
     bool fForceUpdate;
+    bool fComputeField;
     KPosition fCenter;
     KThreeVector fLength;
     bool fMirrorX, fMirrorY, fMirrorZ;

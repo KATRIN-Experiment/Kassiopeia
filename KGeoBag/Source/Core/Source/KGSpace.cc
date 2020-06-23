@@ -119,6 +119,17 @@ const KGSpace* KGSpace::GetParent() const
     return fParent;
 }
 
+std::string KGSpace::GetPath() const
+{
+    string tPath = GetName();
+    const KGSpace* tParent = GetParent();
+    while (tParent != nullptr && tParent != KGInterface::GetInstance()->Root()) {
+        tPath = tParent->GetName() + "/" + tPath;
+        tParent = tParent->GetParent();
+    }
+    return tPath;
+}
+
 const vector<KGSurface*>* KGSpace::GetBoundaries() const
 {
     return &fBoundaries;

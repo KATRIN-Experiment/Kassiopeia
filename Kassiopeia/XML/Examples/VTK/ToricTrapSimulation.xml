@@ -42,12 +42,12 @@
 
     <tag name="magnet_tag">
         <cylinder_tube_space
-            name="solenoid_space"
-            z1="-1.e-2"
-            z2="1.e-2"
-            r1="0.5e-2"
-            r2="1.5e-2"
-            radial_mesh_count="30"
+                name="solenoid_space"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r1="0.5e-2"
+                r2="1.5e-2"
+                radial_mesh_count="30"
         />
     </tag>
 
@@ -61,10 +61,10 @@
 
     <tag name="sheet_tag">
         <annulus_surface
-            name="sheet_surface"
-            r1="3.5e-2"
-            r2="6.5e-2"
-            z="0."
+                name="sheet_surface"
+                r1="3.5e-2"
+                r2="6.5e-2"
+                z="0."
         />
     </tag>
 
@@ -123,15 +123,15 @@
     <!-- mesh -->
 
     <!--
-    <axial_mesh name="mesh_electrode" surfaces="toric_trap/@electrode_tag"/>
+        <axial_mesh name="mesh_electrode" surfaces="toric_trap/@electrode_tag"/>
     -->
 
     <!-- bem -->
 
     <!--
-    <electrostatic_dirichlet name="electrode_ring" surfaces="toric_trap/ring" value="-1."/>
-    <electrostatic_dirichlet name="electrode_upstream_tube" surfaces="toric_trap/upstream_tube" value="0."/>
-    <electrostatic_dirichlet name="electrode_downstream_tube" surfaces="toric_trap/downstream_tube" value="0."/>
+        <electrostatic_dirichlet name="electrode_ring" surfaces="toric_trap/ring" value="-1."/>
+        <electrostatic_dirichlet name="electrode_upstream_tube" surfaces="toric_trap/upstream_tube" value="0."/>
+        <electrostatic_dirichlet name="electrode_downstream_tube" surfaces="toric_trap/downstream_tube" value="0."/>
     -->
 
     <!-- electromagnets -->
@@ -148,31 +148,31 @@
 </geometry>
 
 <vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
+        name="vtk_window"
+        enable_display="true"
+        enable_write="true"
+        frame_title="KGeoBag Visualization"
+        frame_size_x="1024"
+        frame_size_y="768"
+        frame_color_red=".2"
+        frame_color_green=".2"
+        frame_color_blue=".2"
+        view_angle="45"
+        eye_angle="0.5"
+        multi_samples="4"
+        depth_peeling="10"
+        >
     <vtk_geometry_painter
-        name="magnet_painter"
-        path="[output_path]"
-        file="ToricTrapMagnets.vtp"
-        surfaces="world/toric_trap/@magnet_tag"
+            name="magnet_painter"
+            path="[output_path]"
+            file="ToricTrapMagnets.vtp"
+            surfaces="world/toric_trap/@magnet_tag"
     />
     <vtk_geometry_painter
-        path="[output_path]"
-        name="sheet_painter"
-        file="ToricTrapSheet.vtp"
-        surfaces="world/toric_trap/sheet"
+            path="[output_path]"
+            name="sheet_painter"
+            file="ToricTrapSheet.vtp"
+            surfaces="world/toric_trap/sheet"
     />
 </vtk_window>
 
@@ -181,38 +181,38 @@
     <!-- magnetic fields -->
 
     <ksfield_electromagnet
-        name="field_electromagnet"
-        directory="[KEMFIELD_CACHE]"
-        file="ToricTrapMagnets.kbd"
-        system="world/toric_trap"
-        spaces="world/toric_trap/@magnet_tag"
-    >
+            name="field_electromagnet"
+            directory="[KEMFIELD_CACHE]"
+            file="ToricTrapMagnets.kbd"
+            system="world/toric_trap"
+            spaces="world/toric_trap/@magnet_tag"
+            >
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="false"
-            central_sourcepoint_spacing="1.e-3"
-            central_sourcepoint_start="-5.2e-1"
-            central_sourcepoint_end="5.2e-1"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-5.e-2"
-            remote_sourcepoint_end="5.e-2"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="false"
+                central_sourcepoint_spacing="1.e-3"
+                central_sourcepoint_start="-5.2e-1"
+                central_sourcepoint_end="5.2e-1"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-5.e-2"
+                remote_sourcepoint_end="5.e-2"
         />
     </ksfield_electromagnet>
 
     <!-- electric fields -->
 
     <!--
-    <ksfield_electrostatic
+        <ksfield_electrostatic
         name="field_electrostatic"
         file="ToricTrapElectrodes.kbd"
         system="world/toric_trap"
         surfaces="world/toric_trap/@electrode_tag"
         symmetry="axial"
-    >
+        >
         <robin_hood_bem_solver
             tolerance="1.e-10"
             check_sub_interval="100"
@@ -234,12 +234,12 @@
             remote_sourcepoint_start="-5.e-2"
             remote_sourcepoint_end="5.e-2"
         />
-    </ksfield_electrostatic>
+        </ksfield_electrostatic>
     -->
 
     <ksfield_electric_constant
-        name="field_constant"
-        field="0. 0. 0."
+            name="field_constant"
+            field="0. 0. 0."
     />
 
     <!-- generators -->
@@ -314,7 +314,8 @@
         <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
         <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
         <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
-        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
         <component_member name="final_time" field="time" parent="component_track_final_particle"/>
@@ -370,19 +371,19 @@
     <!-- simulation -->
 
     <ks_simulation
-        run="1"
-        seed="51385"
-        events="1"
-        magnetic_field="field_electromagnet"
-        electric_field="field_constant"
-        space="space_world"
-        generator="generator_fix"
-        trajectory="trajectory_exact"
-        space_navigator="nav_space"
-        surface_navigator="nav_surface"
-        terminator="term_world"
-        writer="write_root"
-        writer="write_vtk"
+            run="1"
+            seed="51385"
+            events="1"
+            magnetic_field="field_electromagnet"
+            electric_field="field_constant"
+            space="space_world"
+            generator="generator_fix"
+            trajectory="trajectory_exact"
+            space_navigator="nav_space"
+            surface_navigator="nav_surface"
+            terminator="term_world"
+            writer="write_root"
+            writer="write_vtk"
     />
 
 </kassiopeia>

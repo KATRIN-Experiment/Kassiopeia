@@ -22,18 +22,29 @@ void KElementBase::ProcessToken(KBeginElementToken* aToken)
     if ((fElementDepth == 0) && (fAttributeDepth == 0)) {
         //look up constructor method in the map, complain and exit if not found
         auto It = fElements->find(aToken->GetValue());
+
+        // show suggestions for other elements if no match was found
         if (It == fElements->end()) {
-            // show only elements with similar beginning, and limit to maximum of 10 entries
+            // show only elements with similar beginning, and limit to maximum of 12 entries
+            const unsigned tMaxElements = 12;
             std::string token = aToken->GetValue();
             std::set<std::string> elements;
             while (token.length() > 0) {
                 for (auto& it : GetElements()) {
-                    if (elements.size() >= 10)
+                    if (elements.size() >= tMaxElements)
                         break;
                     if (it.substr(0, token.length()) == token)
                         elements.insert(it);
                 }
                 token.resize(token.size() - 1);
+            }
+            // add other elements in alphabetical order, if list still has less than 12 entries
+            if (elements.size() < fElements->size()) {
+                for (auto& it : GetElements()) {
+                    if (elements.size() >= tMaxElements)
+                        break;
+                    elements.insert(it);
+                }
             }
 
             initmsg(eWarning) << "nothing registered for element <" << aToken->GetValue() << "> in element <"
@@ -42,7 +53,7 @@ void KElementBase::ProcessToken(KBeginElementToken* aToken)
                               << aToken->GetLine() << "> at column <" << aToken->GetColumn() << ">" << ret;
             initmsg(eWarning) << "available elements: " << elements;
             if (elements.size() < fElements->size())
-                initmsg(eWarning) << " and " << (fElements->size() - elements.size()) << " more";
+                initmsg(eWarning) << " + " << (fElements->size() - elements.size()) << " more (not shown)";
             initmsg(eWarning) << eom;
 
             fChild = nullptr;

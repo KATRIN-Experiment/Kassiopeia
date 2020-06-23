@@ -69,6 +69,10 @@ template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute
         aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetForceUpdate);
         return true;
     }
+    if (aContainer->GetName() == "compute_field") {
+        aContainer->CopyTo(fObject, &KEMField::KElectrostaticPotentialmapCalculator::SetComputeField);
+        return true;
+    }
     if (aContainer->GetName() == "center") {
         KEMField::KEMStreamableThreeVector center;
         aContainer->CopyTo(center);

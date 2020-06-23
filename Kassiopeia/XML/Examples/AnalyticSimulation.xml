@@ -68,18 +68,18 @@
     <!-- magnetic fields -->
 
     <ksfield_magnetic_constant
-        name="field_magnetic_constant"
-        field="0. 0. 5."
+            name="field_magnetic_constant"
+            field="0. 0. 5."
     />
 
     <!-- electric fields -->
 
     <ksfield_electric_quadrupole
-        name="field_electric_quadrupole"
-        location="0. 0. 0."
-        strength="-10000."
-        length="1.e-2"
-        radius="1.e-2"
+            name="field_electric_quadrupole"
+            location="0. 0. 0."
+            strength="-10000."
+            length="1.e-2"
+            radius="1.e-2"
     />
 
     <!-- generators -->
@@ -183,7 +183,8 @@
         <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
         <component_member name="initial_azimuthal_angle_to_x" field="azimuthal_angle_to_x" parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
-        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
         <component_member name="final_time" field="time" parent="component_track_final_particle"/>
         <component_member name="final_position" field="position" parent="component_track_final_particle"/>
         <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
@@ -222,18 +223,18 @@
     <!-- simulation -->
 
     <ks_simulation
-        name="analytic_simulation"
-        run="1"
-        seed="51385"
-        events="[events:1]"
-        magnetic_field="field_magnetic_constant"
-        electric_field="field_electric_quadrupole"
-        space="space_world"
-        generator="generator_fix"
-        trajectory="trajectory_exact"
-        space_navigator="nav_space"
-        surface_navigator="nav_surface"
-        writer="write_root"
+            name="analytic_simulation"
+            run="1"
+            seed="51385"
+            events="[events:1]"
+            magnetic_field="field_magnetic_constant"
+            electric_field="field_electric_quadrupole"
+            space="space_world"
+            generator="generator_fix"
+            trajectory="trajectory_exact"
+            space_navigator="nav_space"
+            surface_navigator="nav_surface"
+            writer="write_root"
     />
 
 </kassiopeia>

@@ -5,6 +5,9 @@
 #include "KGCylinderSurface.hh"
 #include "KGRodSpace.hh"
 
+/// FIXME: If defined, print magfield3 lines of converted magnet geometry. This should be a runtime option.
+//#define PRINT_MAGFIELD3
+
 namespace KGeoBag
 {
 
@@ -92,6 +95,10 @@ void KGElectromagnetConverter::VisitSpace(KGSpace* aSpace)
 {
     Clear();
 
+#ifdef PRINT_MAGFIELD3
+    std::cout << "# " << aSpace->GetPath() << std::endl;
+#endif
+
     fCurrentOrigin = aSpace->GetOrigin();
     fCurrentXAxis = aSpace->GetXAxis();
     fCurrentYAxis = aSpace->GetYAxis();
@@ -114,6 +121,10 @@ void KGElectromagnetConverter::VisitSurface(KGSurface* aSurface)
 
 void KGElectromagnetConverter::VisitExtendedSpace(KGExtendedSpace<KGElectromagnet>* electromagnetSpace)
 {
+#ifdef PRINT_MAGFIELD3
+    //std::cout << "# " << electromagnetSpace->GetName() << std::endl;
+#endif
+
     fCurrentElectromagnetSpace = electromagnetSpace;
 }
 
@@ -181,6 +192,16 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
                                               GlobalToInternalVector(fCurrentYAxis),
                                               GlobalToInternalVector(fCurrentZAxis));
         fElectromagnetContainer->push_back(coil);
+
+#ifdef PRINT_MAGFIELD3
+        // do not use coil->GetP0|P1() because it is defined as (r,0,z)
+        auto p0 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMin));
+        auto p1 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMax));
+
+        std::cout << " " << coil->GetCurrentDensity() << " " << p0.X() << " " << p0.Y() << " " << p0.Z() << " "
+                  << p1.X() << " " << p1.Y() << " " << p1.Z() << " " << coil->GetR0() << " " << coil->GetR1() << " "
+                  << coil->GetIntegrationScale() << std::endl;
+#endif
     }
 }
 

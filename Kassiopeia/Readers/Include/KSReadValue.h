@@ -170,6 +170,7 @@ typedef KSReadValue<unsigned int> KSUInt;
 typedef KSReadValue<int> KSInt;
 typedef KSReadValue<unsigned long> KSULong;
 typedef KSReadValue<long> KSLong;
+typedef KSReadValue<long long> KSLongLong;
 typedef KSReadValue<float> KSFloat;
 typedef KSReadValue<double> KSDouble;
 typedef KSReadValue<KThreeVector> KSThreeVector;
@@ -193,6 +194,8 @@ template<> const KSInt KSInt::sZero;
 template<> const KSULong KSULong::sZero;
 
 template<> const KSLong KSLong::sZero;
+
+template<> const KSLongLong KSLongLong::sZero;
 
 template<> const KSFloat KSFloat::sZero;
 

@@ -69,6 +69,10 @@ template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KCo
         aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmapCalculator::SetForceUpdate);
         return true;
     }
+    if (aContainer->GetName() == "compute_gradient") {
+        aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmapCalculator::SetComputeGradient);
+        return true;
+    }
     if (aContainer->GetName() == "center") {
         KEMField::KEMStreamableThreeVector center;
         aContainer->CopyTo(center);

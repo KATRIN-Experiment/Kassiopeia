@@ -1,39 +1,9 @@
 <global_define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
 
-<external_define name="type" value="inversion2"/>
+<external_define name="type" value="exponential"/>
 <external_define name="cycles" value="1"/>
 <external_define name="length" value="2.0"/>
-<external_define name="timeconstant" value="0.41"/>
-<external_define name="timeconstant2" value="0.025"/>
-
-<messages>
-
-	<file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
-
-	<message key="k_file" terminal="normal" log="warning"/>
-	<message key="k_initialization" terminal="normal" log="warning"/>
-
-    <message key="kg_core" terminal="normal" log="warning"/>
-	<message key="kg_shape" terminal="normal" log="warning"/>
-    <message key="kg_mesh" terminal="normal" log="warning"/>
-    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
-
-	<message key="ks_object" terminal="debug" log="normal"/>
-    <message key="ks_operator" terminal="debug" log="normal"/>
-	<message key="ks_field" terminal="debug" log="normal"/>
-	<message key="ks_generator" terminal="debug" log="normal"/>
-	<message key="ks_trajectory" terminal="debug" log="normal"/>
-	<message key="ks_interaction" terminal="debug" log="normal"/>
-	<message key="ks_terminator" terminal="debug" log="normal"/>
-	<message key="ks_writer" terminal="debug" log="normal"/>
-	<message key="ks_navigation" terminal="debug" log="normal"/>
-	<message key="ks_main" terminal="debug" log="normal"/>
-	<message key="ks_run" terminal="debug" log="normal"/>
-	<message key="ks_event" terminal="debug" log="normal"/>
-	<message key="ks_track" terminal="debug" log="normal"/>
-	<message key="ks_step" terminal="debug" log="normal"/>
-
-</messages>
+<external_define name="timeconstant" value="0.1"/>
 
 <geometry>
 
@@ -43,19 +13,19 @@
 
 </geometry>
 
-<kassiopeia>
+<kemfield>
 
-    <ksfield_electric_constant
+    <constant_electric_field
         name="constant_e"
         field="0. 0. 1."
     />
 
-    <ksfield_magnetic_constant
+    <constant_magnetic_field
         name="constant_b"
         field="0. 0. 1."
     />
 
-    <ksfield_magnetic_ramped
+    <ramped_magnetic_field
         name="ramped_b"
         root_field="constant_b"
         ramping_type="[type]"
@@ -63,11 +33,10 @@
         ramp_up_time="{[length]/2}"
         ramp_down_time="{[length]/2}"
         time_constant="[timeconstant]"
-        time_constant_2="[timeconstant2]"
         >
-    </ksfield_magnetic_ramped>
-    
-    <ksfield_electric_ramped
+    </ramped_magnetic_field>
+
+    <ramped_electric_field
         name="ramped_e"
         root_field="constant_e"
         ramping_type="[type]"
@@ -76,12 +45,12 @@
         ramp_down_time="{[length]/2}"
         time_constant="[timeconstant]"
         >
-    </ksfield_electric_ramped>
+    </ramped_electric_field>
 
-    <ksfield_electric_induced_azi
+    <induced_azimuthal_electric_field
         name="induced_e"
         root_field="ramped_b"
         >
-    </ksfield_electric_induced_azi>
+    </induced_azimuthal_electric_field>
 
-</kassiopeia>
+</kemfield>

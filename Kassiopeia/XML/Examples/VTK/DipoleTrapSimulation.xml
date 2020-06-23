@@ -40,12 +40,12 @@
 
     <tag name="magnet_tag">
         <cylinder_tube_space
-            name="solenoid_space"
-            z1="-1.e-2"
-            z2="1.e-2"
-            r1="0.5e-2"
-            r2="1.5e-2"
-            radial_mesh_count="30"
+                name="solenoid_space"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r1="0.5e-2"
+                r2="1.5e-2"
+                radial_mesh_count="30"
         />
     </tag>
 
@@ -53,13 +53,13 @@
 
     <tag name="electrode_tag">
         <cylinder_surface
-            name="ring_surface"
-            z1="-2.0e-2"
-            z2="2.0e-2"
-            r="2.5e-1"
-            longitudinal_mesh_count="200"
-            longitudinal_mesh_power="3."
-            axial_mesh_count="128"
+                name="ring_surface"
+                z1="-2.0e-2"
+                z2="2.0e-2"
+                r="2.5e-1"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
         />
     </tag>
 
@@ -67,13 +67,13 @@
 
     <tag name="electrode_tag">
         <cylinder_surface
-            name="tube_surface"
-            z1="-1.e-2"
-            z2="1.e-2"
-            r="0.5e-2"
-            longitudinal_mesh_count="200"
-            longitudinal_mesh_power="3."
-            axial_mesh_count="128"
+                name="tube_surface"
+                z1="-1.e-2"
+                z2="1.e-2"
+                r="0.5e-2"
+                longitudinal_mesh_count="200"
+                longitudinal_mesh_power="3."
+                axial_mesh_count="128"
         />
     </tag>
 
@@ -146,64 +146,64 @@
     <!-- magnetic fields -->
 
     <ksfield_electromagnet
-        name="field_electromagnet"
-        directory="[KEMFIELD_CACHE]"
-        file="DipoleTrapMagnets.kbd"
-        system="world/dipole_trap"
-        spaces="world/dipole_trap/@magnet_tag"
-    >
+            name="field_electromagnet"
+            directory="[KEMFIELD_CACHE]"
+            file="DipoleTrapMagnets.kbd"
+            system="world/dipole_trap"
+            spaces="world/dipole_trap/@magnet_tag"
+            >
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="true"
-            central_sourcepoint_fractional_distance="1e-2"
-            central_sourcepoint_spacing="1.e-3"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-5.e-2"
-            remote_sourcepoint_end="5.e-2"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="true"
+                central_sourcepoint_fractional_distance="1e-2"
+                central_sourcepoint_spacing="1.e-3"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-5.e-2"
+                remote_sourcepoint_end="5.e-2"
         />
     </ksfield_electromagnet>
 
     <!-- electric fields -->
 
     <ksfield_electrostatic
-        name="field_electrostatic"
-        directory="[KEMFIELD_CACHE]"
-        file="DipoleTrapElectrodes.kbd"
-        system="world/dipole_trap"
-        surfaces="world/dipole_trap/@electrode_tag"
-        symmetry="axial"
-    >
+            name="field_electrostatic"
+            directory="[KEMFIELD_CACHE]"
+            file="DipoleTrapElectrodes.kbd"
+            system="world/dipole_trap"
+            surfaces="world/dipole_trap/@electrode_tag"
+            symmetry="axial"
+            >
         <robin_hood_bem_solver
-            integrator="analytic"
-            tolerance="1.e-10"
-            check_sub_interval="100"
-            display_interval="1"
-            cache_matrix_elements="true"
-            use_vtk="true"
+                integrator="analytic"
+                tolerance="1.e-10"
+                check_sub_interval="100"
+                display_interval="1"
+                cache_matrix_elements="true"
+                use_vtk="true"
         />
         <zonal_harmonic_field_solver
-            number_of_bifurcations="-1"
-            convergence_ratio=".99"
-            convergence_parameter="1.e-15"
-            proximity_to_sourcepoint="1.e-12"
-            number_of_central_coefficients="500"
-            use_fractional_central_sourcepoint_spacing="false"
-            central_sourcepoint_spacing="1.e-3"
-            central_sourcepoint_start="-5.2e-1"
-            central_sourcepoint_end="5.2e-1"
-            number_of_remote_coefficients="200"
-            remote_sourcepoint_start="-5.e-2"
-            remote_sourcepoint_end="5.e-2"
+                number_of_bifurcations="-1"
+                convergence_ratio=".99"
+                convergence_parameter="1.e-15"
+                proximity_to_sourcepoint="1.e-12"
+                number_of_central_coefficients="500"
+                use_fractional_central_sourcepoint_spacing="false"
+                central_sourcepoint_spacing="1.e-3"
+                central_sourcepoint_start="-5.2e-1"
+                central_sourcepoint_end="5.2e-1"
+                number_of_remote_coefficients="200"
+                remote_sourcepoint_start="-5.e-2"
+                remote_sourcepoint_end="5.e-2"
         />
     </ksfield_electrostatic>
 
     <ksfield_electric_constant
-        name="field_constant"
-        field="0. 0. 0."
+            name="field_constant"
+            field="0. 0. 0."
     />
 
     <!-- generators -->
@@ -275,7 +275,8 @@
         <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
         <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
         <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
-        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment" parent="component_track_initial_particle"/>
+        <component_member name="initial_orbital_magnetic_moment" field="orbital_magnetic_moment"
+                parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_z" field="polar_angle_to_z" parent="component_track_initial_particle"/>
         <component_member name="initial_polar_angle_to_b" field="polar_angle_to_b" parent="component_track_initial_particle"/>
         <component_member name="final_time" field="time" parent="component_track_final_particle"/>
@@ -333,66 +334,66 @@
     <!-- simulation -->
 
     <ks_simulation
-        run="1"
-        seed="51385"
-        events="1"
-        magnetic_field="field_electromagnet"
-        electric_field="field_electrostatic"
-        space="space_world"
-        generator="generator_uniform"
-        trajectory="trajectory_exact"
-        space_navigator="nav_space"
-        surface_navigator="nav_surface"
-        terminator="term_world"
-        writer="write_root"
-        writer="write_vtk"
+            run="1"
+            seed="51385"
+            events="1"
+            magnetic_field="field_electromagnet"
+            electric_field="field_electrostatic"
+            space="space_world"
+            generator="generator_uniform"
+            trajectory="trajectory_exact"
+            space_navigator="nav_space"
+            surface_navigator="nav_surface"
+            terminator="term_world"
+            writer="write_root"
+            writer="write_vtk"
     />
 
 </kassiopeia>
 
 <vtk_window
-    name="vtk_window"
-    enable_display="true"
-    enable_write="true"
-    frame_title="KGeoBag Visualization"
-    frame_size_x="1024"
-    frame_size_y="768"
-    frame_color_red=".2"
-    frame_color_green=".2"
-    frame_color_blue=".2"
-    view_angle="45"
-    eye_angle="0.5"
-    multi_samples="4"
-    depth_peeling="10"
->
+        name="vtk_window"
+        enable_display="true"
+        enable_write="true"
+        frame_title="KGeoBag Visualization"
+        frame_size_x="1024"
+        frame_size_y="768"
+        frame_color_red=".2"
+        frame_color_green=".2"
+        frame_color_blue=".2"
+        view_angle="45"
+        eye_angle="0.5"
+        multi_samples="4"
+        depth_peeling="10"
+        >
     <vtk_geometry_painter
-        name="geometry_painter"
-        path="[output_path]"
-        file="DipoleTrapGeometry.vtp"
-        surfaces="world/dipole_trap/#"
+            name="geometry_painter"
+            path="[output_path]"
+            file="DipoleTrapGeometry.vtp"
+            surfaces="world/dipole_trap/#"
     />
     <vtk_track_painter
-        name="track_painter"
-        path="[output_path]"
-        file="DipoleTrapSimulation.root"
-        point_object="component_step_world"
-        point_variable="position"
-        color_object="component_step_world"
-        color_variable="polar_angle_to_b"
+            name="track_painter"
+            path="[output_path]"
+            file="DipoleTrapSimulation.root"
+            point_object="component_step_world"
+            point_variable="position"
+            color_object="component_step_world"
+            color_variable="polar_angle_to_b"
     />
     <vtk_track_terminator_painter
-        name="terminator_painter"
-        path="[output_path]"
-        file="DipoleTrapSimulation.root"
-        point_object="component_track_world"
-        point_variable="final_position"
-        terminator_object="component_track_world"
-        terminator_variable="terminator_name"
-        add_terminator="term_upstream_target"
-        add_color="0 255 0"
-        add_terminator="term_downstream_target"
-        add_color="0 255 0"
-        add_terminator="term_max_steps"
-        add_color="255 0 0"
+            name="terminator_painter"
+            path="[output_path]"
+            file="DipoleTrapSimulation.root"
+            point_object="component_track_world"
+            point_variable="final_position"
+            terminator_object="component_track_world"
+            terminator_variable="terminator_name"
+            add_terminator="term_upstream_target"
+            add_color="0 255 0"
+            add_terminator="term_downstream_target"
+            add_color="0 255 0"
+            add_terminator="term_max_steps"
+            add_color="255 0 0"
     />
 </vtk_window>

@@ -42,3 +42,8 @@ else( Kassiopeia_USE_VTK )
         Examples/PhotoMultiplierTubeSimulation.xml
     )
 endif( Kassiopeia_USE_VTK )
+
+kasper_install_config_subdir( Examples
+    Examples/Fields.xml
+    Examples/Generators.xml
+)

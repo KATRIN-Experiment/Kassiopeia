@@ -17,7 +17,7 @@ namespace katrin
 template<> KElectricZHFieldSolverBuilder::~KComplexElement() {}
 
 STATICINT sKElectricZHFieldSolverBuilderStructure =
-    KElectricZHFieldSolverBuilder::Attribute<int>("number_of_bifurcations") +
+    KElectricZHFieldSolverBuilder::Attribute<unsigned int>("number_of_bifurcations") +
     KElectricZHFieldSolverBuilder::Attribute<double>("convergence_ratio") +
     KElectricZHFieldSolverBuilder::Attribute<double>("proximity_to_sourcepoint") +
     KElectricZHFieldSolverBuilder::Attribute<double>("convergence_parameter") +

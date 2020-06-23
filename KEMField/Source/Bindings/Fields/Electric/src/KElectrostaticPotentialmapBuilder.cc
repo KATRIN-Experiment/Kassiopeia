@@ -35,6 +35,7 @@ STATICINT sKElectrostaticPotentialmapCalculatorStructure =
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("directory") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("file") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("force_update") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("compute_field") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("center") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("length") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("mirror_x") +
