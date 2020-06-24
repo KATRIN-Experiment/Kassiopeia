@@ -30,6 +30,7 @@ RUN mkdir -p build && \
     pushd build && \
     cmake -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -DBUILD_UNIT_TESTS=ON \
           -DKASPER_USE_ROOT=ON \
           -DKASPER_USE_VTK=ON \
           -DKASPER_USE_TBB=ON \
