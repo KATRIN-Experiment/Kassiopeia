@@ -33,9 +33,16 @@ set( APPLICATIONS_OTHER_LIBRARIES
 )
 
 if( KASPER_USE_BOOST )
-    list( APPEND APPLICATIONS_OTHER_LIBRARIES
-        ${Boost_LIBRARIES}
-    )
+    if( Boost_LIBRARIES )
+        list( APPEND APPLICATIONS_OTHER_LIBRARIES
+            ${Boost_LIBRARIES}
+        )
+    endif()
+    if( TARGET Boost::program_options )
+        list( APPEND APPLICATIONS_OTHER_LIBRARIES
+            Boost::program_options
+        )
+    endif()
 endif()
 
 set( APPLICATIONS_OTHER_PATH
