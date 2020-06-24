@@ -32,15 +32,15 @@ set( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE )
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
 
 if( APPLE )
-    set(CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path")
+    set(CMAKE_INSTALL_RPATH "@executable_path/../${LIB_INSTALL_DIR};@loader_path")
 elseif( UNIX )
-    set(CMAKE_INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
+    set(CMAKE_INSTALL_RPATH "$ORIGIN/../${LIB_INSTALL_DIR}")
 endif( APPLE )
 
 # the RPATH to be used when installing, but only if it's not a system directory
-LIST( FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir )
+LIST( FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${LIB_INSTALL_DIR}/lib" isSystemDir )
 IF( "${isSystemDir}" STREQUAL "-1" )
-   set( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
+   set( CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}/lib" )
 ENDIF( "${isSystemDir}" STREQUAL "-1" )
 
 

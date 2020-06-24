@@ -17,3 +17,9 @@ CMakeLists.txt.user*
 *.tmp
 *.old
 *.srctrl*
+
+/*.vt?
+/*.root
+/*.dat
+/*.pdf
+/*.png
