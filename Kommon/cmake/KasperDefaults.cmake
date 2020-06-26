@@ -356,7 +356,7 @@ endmacro()
 macro(kasper_install_module)
 
     configure_file(ModuleConfigVersion.cmake.in ${PROJECT_NAME}ConfigVersion.cmake @ONLY)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DIR})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME})
 
     get_property(MODULE_TARGETS GLOBAL PROPERTY MODULE_TARGETS)
     #list(APPEND EXTERNAL_INCLUDE_DIRS ${KASPER_INCLUDE_DIRS})
@@ -374,11 +374,11 @@ macro(kasper_install_module)
     list(REMOVE_DUPLICATES INSTALLED_INCLUDE_DIRS)
 
     configure_file(ModuleConfigInstalled.cmake.in ${PROJECT_NAME}ConfigInstalled.cmake @ONLY)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigInstalled.cmake DESTINATION ${KASPER_INSTALL_DIR}
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigInstalled.cmake DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME}
             RENAME ${PROJECT_NAME}Config.cmake)
 
     if(STANDALONE)
-        install(EXPORT KasperTargets DESTINATION ${KASPER_INSTALL_DIR} FILE ModuleTargets.cmake)
+        install(EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR} FILE ModuleTargets.cmake)
     else()
 
         set(MODULE_INCLUDE_DIRS )
@@ -501,7 +501,7 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             set(PACKAGE_VERSION ${MODULE_VERSION_MAJOR})
         endif()
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${DOXYGEN_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE} @ONLY)
-        set(REF_BUILD_DIR ${KASPER_INSTALL_DIR}/doc/${PROJECT_NAME}/Reference)
+        set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/Reference)
         file(MAKE_DIRECTORY ${REF_BUILD_DIR})
         add_custom_target (reference-${PROJECT_NAME}
             ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE}
@@ -510,7 +510,7 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             VERBATIM
         )
         add_custom_command(TARGET reference-${PROJECT_NAME} POST_BUILD
-            COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${KASPER_INSTALL_DIR}/doc/${PROJECT_NAME}.html
+            COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${DOC_INSTALL_DIR}/${PROJECT_NAME}.html
             DEPENDS ${REF_BUILD_DIR}/html/index.html
             COMMENT "Updating documentation symlinks for ${PROJECT_NAME}"
         )
@@ -528,7 +528,7 @@ macro(kasper_add_doc_reference_sphinx SPHINX_FILE)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/conf.py.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/conf.py @ONLY)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/index.rst.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/index.rst @ONLY)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${SPHINX_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${SPHINX_FILE} @ONLY)
-        set(REF_BUILD_DIR ${KASPER_INSTALL_DIR}/doc/${PROJECT_NAME}/Reference)
+        set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/Reference)
         file(MAKE_DIRECTORY ${REF_BUILD_DIR})
         add_custom_target (reference-${PROJECT_NAME}
             ${SPHINX_EXECUTABLE} -b html ${CMAKE_CURRENT_BINARY_DIR}/Reference/ ${REF_BUILD_DIR}
@@ -550,7 +550,7 @@ macro(kasper_add_user_reference_sphinx SPHINX_FILE DOXYGEN_FILE)
             endif()
             #first generate the doxygen C++ API reference
             configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${DOXYGEN_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE} @ONLY)
-            set(REF_BUILD_DIR ${KASPER_INSTALL_DIR}/doc/${PROJECT_NAME}/UserGuide)
+            set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/UserGuide)
             file(MAKE_DIRECTORY ${REF_BUILD_DIR})
             set(DOXY_REF_BUILD_DIR ${REF_BUILD_DIR}/_static)
             file(MAKE_DIRECTORY ${DOXY_REF_BUILD_DIR})
@@ -583,8 +583,7 @@ macro(kasper_add_user_reference_sphinx SPHINX_FILE DOXYGEN_FILE)
 endmacro()
 
 macro(kasper_install_doc)
-    set(DOC_INSTALL_DIR ${KASPER_INSTALL_DIR}/doc/${PROJECT_NAME})
-    install(FILES ${ARGN} DESTINATION ${DOC_INSTALL_DIR})
+    install(FILES ${ARGN} DESTINATION ${DOC_INSTALL_DIR}/${PROJECT_NAME})
 endmacro()
 
 

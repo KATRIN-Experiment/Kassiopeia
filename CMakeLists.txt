@@ -2,10 +2,10 @@ set( CMAKE_MINIMUM_VERSION "3.13.0" )
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # project version
-set( KASPER_VERSION_MAJOR 3 )
-set( KASPER_VERSION_MINOR 7 )
-set( KASPER_VERSION_PATCH 4 )
-set( KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}" )
+set(KASPER_VERSION_MAJOR 3)
+set(KASPER_VERSION_MINOR 7)
+set(KASPER_VERSION_PATCH 4)
+set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}")
 
 #project( Kasper VERSION ${KASPER_VERSION} )
 project( Kasper )
@@ -15,6 +15,27 @@ set( BUILD_SHARED_LIBS ON )
 set( CMAKE_CXX_STANDARD 14 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
+
+# Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
+if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
+    if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
+        if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "5.0" )
+            message(WARNING "Your compiler is unsupported! You need at least GCC 5.0 to build Kasper.")
+        endif()
+    elseif( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
+        if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "3.4" )
+            message(WARNING "Your compiler is unsupported! You need at least Clang 3.4 to build Kasper.")
+        endif()
+    endif()
+elseif( CMAKE_SYSTEM_NAME STREQUAL "Darwin" )
+    if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
+        if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "10.0" )
+            message(WARNING "Your compiler is unsupported! You need at least Clang 10.0 to build Kasper.")
+        endif()
+    endif()
+else()
+    message(WARNING "You're using an unknown compiler that may be unable to build Kasper. ")
+endif()
 
 set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Kommon/cmake )
 include( KasperDefaults )
@@ -40,10 +61,10 @@ elseif( UNIX )
 endif( APPLE )
 
 # the RPATH to be used when installing, but only if it's not a system directory
-LIST( FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${LIB_INSTALL_DIR}/lib" isSystemDir )
-IF( "${isSystemDir}" STREQUAL "-1" )
-   set( CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}/lib" )
-ENDIF( "${isSystemDir}" STREQUAL "-1" )
+#LIST( FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${LIB_INSTALL_DIR}" isSystemDir )
+#IF( "${isSystemDir}" STREQUAL "-1" )
+#   set( CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}" )
+#ENDIF()
 
 
 # Flags for all modules, every module should have a flag.
@@ -74,7 +95,7 @@ endif()
 add_compile_options( -Wall -Wextra -Werror )
 
 # Enable some advanced options depending on build type
-if ( CMAKE_BUILD_TYPE MATCHES Rel )
+if (CMAKE_BUILD_TYPE MATCHES Rel)
     option( COMPILER_TUNE_OPTIONS "Enable additional tuning options [compiles for local CPU, use with care!]" OFF )
     if( COMPILER_TUNE_OPTIONS )
         # These are advanced options for GCC which might improve performance ... or break everything - use with care!
@@ -83,9 +104,11 @@ if ( CMAKE_BUILD_TYPE MATCHES Rel )
 endif()
 
 if( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR CMAKE_COMPILER_IS_GNUCXX )
-    # Use -faligned-new flag to trick gcc into using aligned allocators CL types.
-    # This is only used by KEMField, but required here because of include files.
-    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-faligned-new>)
+    if( NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "7.0" )
+        # Use -faligned-new flag to trick gcc into using aligned allocators CL types.
+        # This is only used by KEMField, but required here because of include files.
+        add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-faligned-new>)
+    endif()
 
     # Enable some advanced options
     option( GCC_FORCE_LINKING "Fix linker errors with some GCC versions by adding the --no-as-needed flag" ON )
@@ -207,7 +230,7 @@ endif()
 
 #add_subdirectory( Documentation )
 
-install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR} )
+install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/{PROJECT_NAME} )
 
 configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
 configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
