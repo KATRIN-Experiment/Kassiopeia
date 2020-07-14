@@ -4,7 +4,7 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 # project version
 set(KASPER_VERSION_MAJOR 3)
 set(KASPER_VERSION_MINOR 7)
-set(KASPER_VERSION_PATCH 4)
+set(KASPER_VERSION_PATCH 5)
 set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}")
 
 #project( Kasper VERSION ${KASPER_VERSION} )
@@ -53,11 +53,10 @@ set( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE )
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
-
 if( APPLE )
-    set(CMAKE_INSTALL_RPATH "@executable_path/../${LIB_INSTALL_DIR};@loader_path")
+    set(CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path")
 elseif( UNIX )
-    set(CMAKE_INSTALL_RPATH "$ORIGIN/../${LIB_INSTALL_DIR}")
+    set(CMAKE_INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
 endif( APPLE )
 
 # the RPATH to be used when installing, but only if it's not a system directory

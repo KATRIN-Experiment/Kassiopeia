@@ -8,7 +8,7 @@ endmacro(set_path)
 
 include(CMakeDependentOption)
 include(MacroParseArguments)
-#include(GNUInstallDirs)
+include(GNUInstallDirs)
 
 if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
 
@@ -48,9 +48,9 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
 
     # define global install paths
     set_path(KASPER_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" "Kasper install directory")
-    set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/include" "Install directory for headers")
-    set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/lib" "Install directory for libraries")
-    set_path(BIN_INSTALL_DIR "${KASPER_INSTALL_DIR}/bin" "Install directory for binaries")
+    set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}" "Install directory for headers")
+    set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}" "Install directory for libraries")
+    set_path(BIN_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_BINDIR}" "Install directory for binaries")
     set_path(DOC_INSTALL_DIR "${KASPER_INSTALL_DIR}/doc" "Install directory for documentation files")
     set_path(CONFIG_INSTALL_DIR "${KASPER_INSTALL_DIR}/config" "Install directory for config files")
     set_path(DATA_INSTALL_DIR "${KASPER_INSTALL_DIR}/data" "Install directory for data files")
@@ -61,7 +61,7 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     set_path(CMAKE_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake" "Directory for CMake files" )
     set_path(MODULE_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/modules" "Directory for CMake module files")
 
-    message(STATUS "*** Kasper install path is: ${KASPER_INSTALL_DIR}")
+    message(STATUS "*** Kasper install path is: ${KASPER_INSTALL_DIR} [${CMAKE_INSTALL_LIBDIR}]")
 
     # a temporary fix to Apple's historical exclusion of system includes
     if ( APPLE AND NOT CMAKE_INCLUDE_SYSTEM_FLAG_CXX)
