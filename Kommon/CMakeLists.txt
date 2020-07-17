@@ -55,13 +55,16 @@ set(KOMMON_SOURCE_FILES)
 
 # subdirectories
 add_subdirectory( cmake )
-add_subdirectory( Core )
 add_subdirectory( Documentation )
 
 if( KASPER_USE_BOOST )
     find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
-    kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
-    list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
+    if( Boost_INCLUDE_DIR )
+        kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
+        list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
+    else()
+        list(APPEND EXTERNAL_LIBRARIES Boost::headers Boost::filesystem )
+    endif()
     add_compile_definitions( KASPER_USE_BOOST )
     add_subdirectory( Boost )
 endif()
@@ -89,6 +92,8 @@ if( KASPER_USE_TBB )
     add_compile_definitions( KASPER_USE_TBB )
     add_subdirectory( TBB )
 endif()
+
+add_subdirectory( Core )
 
 kasper_include_default_dirs()
 kasper_install_headers( ${KOMMON_HEADER_FILES} )

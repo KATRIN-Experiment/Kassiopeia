@@ -46,16 +46,22 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
         #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${_wflags_release}" CACHE STRING "Flags used by the compiler during release builds." FORCE)
     endif()
 
+    # define global install paths
     set_path(KASPER_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" "Kasper install directory")
-    set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/include" "Install directory for headers")
-    set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/lib" "Install directory for libraries")
-    set_path(BIN_INSTALL_DIR "${KASPER_INSTALL_DIR}/bin" "Install directory for binaries")
+    set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}" "Install directory for headers")
+    set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}" "Install directory for libraries")
+    set_path(BIN_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_BINDIR}" "Install directory for binaries")
+    set_path(DOC_INSTALL_DIR "${KASPER_INSTALL_DIR}/doc" "Install directory for documentation files")
     set_path(CONFIG_INSTALL_DIR "${KASPER_INSTALL_DIR}/config" "Install directory for config files")
     set_path(DATA_INSTALL_DIR "${KASPER_INSTALL_DIR}/data" "Install directory for data files")
     set_path(SCRATCH_INSTALL_DIR "${KASPER_INSTALL_DIR}/scratch" "Directory for temporary files")
     set_path(OUTPUT_INSTALL_DIR "${KASPER_INSTALL_DIR}/output" "Directory for output files")
     set_path(CACHE_INSTALL_DIR "${KASPER_INSTALL_DIR}/cache" "Directory for cache files")
     set_path(LOG_INSTALL_DIR "${KASPER_INSTALL_DIR}/log" "Directory for log files")
+    set_path(CMAKE_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake" "Directory for CMake files" )
+    set_path(MODULE_INSTALL_DIR "${LIB_INSTALL_DIR}/cmake/modules" "Directory for CMake module files")
+
+    message(STATUS "*** Kasper install path is: ${KASPER_INSTALL_DIR} [${CMAKE_INSTALL_LIBDIR}]")
 
     # a temporary fix to Apple's historical exclusion of system includes
     if ( APPLE AND NOT CMAKE_INCLUDE_SYSTEM_FLAG_CXX)
@@ -86,8 +92,6 @@ else()
     set(EXTERNAL_INCLUDE_DIRS)
 endif()
 
-set(CMAKE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
-set(MODULE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/modules)
 set_property(GLOBAL PROPERTY MODULE_TARGETS)
 
 macro(kasper_set_version_numbers VERSION_VAR)
@@ -121,7 +125,7 @@ endmacro()
 
 if( ${PROJECT_NAME} STREQUAL Kasper )
     kasper_set_version_numbers(KASPER_VERSION)
-    message(STATUS "Building Kasper v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
+    message(STATUS "Kasper version is v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
 
     # git revision (if available)
     set(KASPER_GIT_REVISION "n/a")
@@ -173,15 +177,16 @@ find_package (Sphinx)
 # mechanism for setting module-specific install paths
 macro( kasper_module_paths PATH )
 
-    set( ${PROJECT_NAME}_INCLUDE_INSTALL_DIR ${INCLUDE_INSTALL_DIR} )
-    set( ${PROJECT_NAME}_LIB_INSTALL_DIR ${LIB_INSTALL_DIR} )
-    set( ${PROJECT_NAME}_BIN_INSTALL_DIR ${BIN_INSTALL_DIR} )
-    set( ${PROJECT_NAME}_CONFIG_INSTALL_DIR ${CONFIG_INSTALL_DIR}/${PATH} )
-    set( ${PROJECT_NAME}_DATA_INSTALL_DIR ${DATA_INSTALL_DIR}/${PATH} )
-    set( ${PROJECT_NAME}_SCRATCH_INSTALL_DIR ${SCRATCH_INSTALL_DIR}/${PATH} )
-    set( ${PROJECT_NAME}_OUTPUT_INSTALL_DIR ${OUTPUT_INSTALL_DIR}/${PATH} )
-    set( ${PROJECT_NAME}_LOG_INSTALL_DIR ${LOG_INSTALL_DIR}/${PATH} )
-    set( ${PROJECT_NAME}_CACHE_INSTALL_DIR ${CACHE_INSTALL_DIR}/${PATH} )
+    set( ${PROJECT_NAME}_INCLUDE_INSTALL_DIR "${INCLUDE_INSTALL_DIR}" )
+    set( ${PROJECT_NAME}_LIB_INSTALL_DIR "${LIB_INSTALL_DIR}" )
+    set( ${PROJECT_NAME}_BIN_INSTALL_DIR "${BIN_INSTALL_DIR}" )
+    #set( ${PROJECT_NAME}_DOC_INSTALL_DIR "${DOC_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_CONFIG_INSTALL_DIR "${CONFIG_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_DATA_INSTALL_DIR "${DATA_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_SCRATCH_INSTALL_DIR "${SCRATCH_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_OUTPUT_INSTALL_DIR "${OUTPUT_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_LOG_INSTALL_DIR "${LOG_INSTALL_DIR}/${PATH}" )
+    set( ${PROJECT_NAME}_CACHE_INSTALL_DIR "${CACHE_INSTALL_DIR}/${PATH}" )
 
     add_definitions( -DKASPER_INSTALL_DIR=${KASPER_INSTALL_DIR} )
 
@@ -191,6 +196,8 @@ macro( kasper_module_paths PATH )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_LIB_INSTALL_DIR}\")" )
     add_definitions( -DBIN_INSTALL_DIR=${${PROJECT_NAME}_BIN_INSTALL_DIR} )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_BIN_INSTALL_DIR}\")" )
+    #add_definitions( -DDOC_INSTALL_DIR=${${PROJECT_NAME}_DOC_INSTALL_DIR} )
+    #install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_DOC_INSTALL_DIR}\")" )
     add_definitions( -DCONFIG_INSTALL_DIR=${${PROJECT_NAME}_CONFIG_INSTALL_DIR} )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_CONFIG_INSTALL_DIR}\")" )
     add_definitions( -DDATA_INSTALL_DIR=${${PROJECT_NAME}_DATA_INSTALL_DIR} )
@@ -349,12 +356,12 @@ endmacro()
 macro(kasper_install_module)
 
     configure_file(ModuleConfigVersion.cmake.in ${PROJECT_NAME}ConfigVersion.cmake @ONLY)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DIR})
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME})
 
     get_property(MODULE_TARGETS GLOBAL PROPERTY MODULE_TARGETS)
     #list(APPEND EXTERNAL_INCLUDE_DIRS ${KASPER_INCLUDE_DIRS})
 
-    set(INSTALLED_INCLUDE_DIRS ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+    set(INSTALLED_INCLUDE_DIRS ${INCLUDE_INSTALL_DIR})
 
     foreach(DIR ${EXTERNAL_INCLUDE_DIRS})
         if (NOT ${DIR} STREQUAL "SYSTEM")
@@ -367,7 +374,7 @@ macro(kasper_install_module)
     list(REMOVE_DUPLICATES INSTALLED_INCLUDE_DIRS)
 
     configure_file(ModuleConfigInstalled.cmake.in ${PROJECT_NAME}ConfigInstalled.cmake @ONLY)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigInstalled.cmake DESTINATION ${CMAKE_INSTALL_DIR}
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigInstalled.cmake DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME}
             RENAME ${PROJECT_NAME}Config.cmake)
 
     if(STANDALONE)
@@ -464,10 +471,10 @@ macro(kasper_export_pkgconfig)
         set( LINKER_FLAGS "-Wl,--no-as-needed")
     endif()
 
-    set( PC_CONTENTS "prefix=${CMAKE_INSTALL_PREFIX}
-    exec_prefix=${CMAKE_INSTALL_FULL_BINDIR}
-    libdir=${CMAKE_INSTALL_FULL_LIBDIR}
-    includedir=${CMAKE_INSTALL_FULL_INCLUDEDIR}
+    set( PC_CONTENTS "prefix=${KASPER_INSTALL_DIR}
+    exec_prefix=${BIN_INSTALL_DIR}
+    libdir=${LIB_INSTALL_DIR}
+    includedir=${INCLUDE_INSTALL_DIR}
 rpath=${PC_RPATH_STR}
 
 Name: ${PROJECT_NAME}
@@ -479,8 +486,8 @@ Cflags: ${GLOBAL_CXX11_FLAG} ${PC_INCLUDE_DIR_STR}
 ")
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER )
     file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc ${PC_CONTENTS})
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig )
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME_LOWER}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig
             RENAME ${PROJECT_NAME}.pc )
 
 endmacro()
@@ -494,7 +501,7 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             set(PACKAGE_VERSION ${MODULE_VERSION_MAJOR})
         endif()
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${DOXYGEN_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE} @ONLY)
-        set(REF_BUILD_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}/Reference)
+        set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/Reference)
         file(MAKE_DIRECTORY ${REF_BUILD_DIR})
         add_custom_target (reference-${PROJECT_NAME}
             ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE}
@@ -503,7 +510,7 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             VERBATIM
         )
         add_custom_command(TARGET reference-${PROJECT_NAME} POST_BUILD
-            COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}.html
+            COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${DOC_INSTALL_DIR}/${PROJECT_NAME}.html
             DEPENDS ${REF_BUILD_DIR}/html/index.html
             COMMENT "Updating documentation symlinks for ${PROJECT_NAME}"
         )
@@ -521,7 +528,7 @@ macro(kasper_add_doc_reference_sphinx SPHINX_FILE)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/conf.py.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/conf.py @ONLY)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/index.rst.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/index.rst @ONLY)
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${SPHINX_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${SPHINX_FILE} @ONLY)
-        set(REF_BUILD_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}/Reference)
+        set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/Reference)
         file(MAKE_DIRECTORY ${REF_BUILD_DIR})
         add_custom_target (reference-${PROJECT_NAME}
             ${SPHINX_EXECUTABLE} -b html ${CMAKE_CURRENT_BINARY_DIR}/Reference/ ${REF_BUILD_DIR}
@@ -543,7 +550,7 @@ macro(kasper_add_user_reference_sphinx SPHINX_FILE DOXYGEN_FILE)
             endif()
             #first generate the doxygen C++ API reference
             configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Reference/${DOXYGEN_FILE}.in ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE} @ONLY)
-            set(REF_BUILD_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME}/UserGuide)
+            set(REF_BUILD_DIR ${DOC_INSTALL_DIR}/${PROJECT_NAME}/UserGuide)
             file(MAKE_DIRECTORY ${REF_BUILD_DIR})
             set(DOXY_REF_BUILD_DIR ${REF_BUILD_DIR}/_static)
             file(MAKE_DIRECTORY ${DOXY_REF_BUILD_DIR})
@@ -576,8 +583,7 @@ macro(kasper_add_user_reference_sphinx SPHINX_FILE DOXYGEN_FILE)
 endmacro()
 
 macro(kasper_install_doc)
-    set(DOC_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/doc/${PROJECT_NAME})
-    install(FILES ${ARGN} DESTINATION ${DOC_INSTALL_DIR})
+    install(FILES ${ARGN} DESTINATION ${DOC_INSTALL_DIR}/${PROJECT_NAME})
 endmacro()
 
 
