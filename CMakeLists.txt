@@ -229,7 +229,7 @@ endif()
 
 #add_subdirectory( Documentation )
 
-install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/{PROJECT_NAME} )
+install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME} )
 
 configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
 configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
