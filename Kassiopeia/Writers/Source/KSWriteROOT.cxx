@@ -8,6 +8,8 @@
 //using katrin::KPathUtils;
 #endif
 
+#include "TObjString.h"
+
 using namespace std;
 
 namespace Kassiopeia
