@@ -75,7 +75,7 @@ TEST(KommonMath, ThreadedIntegrator)
 
     numerical = integrator.Integrate(integrand, -3.0, 3.0);
 
-    EXPECT_EQ(524289, integrator.NumberOfSteps());
+    EXPECT_EQ(524289U, integrator.NumberOfSteps());
     ASSERT_NEAR(analytical, numerical, precision);
 }
 
