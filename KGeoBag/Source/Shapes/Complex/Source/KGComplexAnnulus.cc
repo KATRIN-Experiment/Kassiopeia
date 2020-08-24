@@ -90,6 +90,9 @@ bool KGComplexAnnulus::ContainsPoint(const double* P) const
 
 double KGComplexAnnulus::DistanceTo(const double* P, double* P_in, double* P_norm) const
 {
+    if (!P_in || !P_norm)
+        return NAN;
+
     //Compute the closest point P_in to Point P as well as the norm vector pointing from point to closest point and returns the distance between them.
 
     double dist_main = 0;
@@ -252,6 +255,8 @@ bool KGComplexAnnulus::Ring::ContainsPoint(const double* P) const
 
 double KGComplexAnnulus::Ring::DistanceTo(const double* P, double* P_in, double* P_norm) const
 {
+    if (!P_in || !P_norm)
+        return NAN;
 
     //Let's first transform to local coordinates:
 

@@ -24,19 +24,26 @@ namespace KGeoBag
 class KGElectromagnetData
 {
   public:
-    KGElectromagnetData() : fCurrent(0.) {}
-    KGElectromagnetData(KGSpace*) : fCurrent(0.) {}
-    KGElectromagnetData(KGSurface*) : fCurrent(0.) {}
-    KGElectromagnetData(KGSpace*, const KGElectromagnetData& aCopy) : fCurrent(aCopy.fCurrent) {}
-    KGElectromagnetData(KGSurface*, const KGElectromagnetData& aCopy) : fCurrent(aCopy.fCurrent) {}
+    KGElectromagnetData() : fLineCurrent(0.), fCurrentTurns(1) {}
+    KGElectromagnetData(KGSpace*) : fLineCurrent(0.), fCurrentTurns(1) {}
+    KGElectromagnetData(KGSurface*) : fLineCurrent(0.), fCurrentTurns(1) {}
+    KGElectromagnetData(KGSpace*, const KGElectromagnetData& aCopy) : fLineCurrent(aCopy.fLineCurrent), fCurrentTurns(aCopy.fCurrentTurns) {}
+    KGElectromagnetData(KGSurface*, const KGElectromagnetData& aCopy) : fLineCurrent(aCopy.fLineCurrent), fCurrentTurns(aCopy.fCurrentTurns) {}
 
     virtual ~KGElectromagnetData() {}
 
     void SetCurrent(double d);
     double GetCurrent() const;
 
-  private:
-    double fCurrent;
+    void SetCurrentTurns(double d);
+    double GetCurrentTurns() const;
+
+    void SetLineCurrent(double d);
+    double GetLineCurrent() const;
+
+private:
+    double fLineCurrent;
+    double fCurrentTurns;
 };
 
 class KGElectromagnet

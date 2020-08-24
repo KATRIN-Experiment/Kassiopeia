@@ -96,7 +96,7 @@ void KGElectromagnetConverter::VisitSpace(KGSpace* aSpace)
     Clear();
 
 #ifdef PRINT_MAGFIELD3
-    std::cout << "# " << aSpace->GetPath() << std::endl;
+    //std::cout << "# " << aSpace->GetPath() << std::endl;
 #endif
 
     fCurrentOrigin = aSpace->GetOrigin();
@@ -163,6 +163,8 @@ void KGElectromagnetConverter::VisitCylinderSurface(KGCylinderSurface* cylinder)
         double tZMin = cylinder->Z1() > cylinder->Z2() ? cylinder->Z2() : cylinder->Z1();
         double tZMax = cylinder->Z1() > cylinder->Z2() ? cylinder->Z1() : cylinder->Z2();
         double tCurrent = fCurrentElectromagnetSurface->GetCurrent();
+        //double tNumTurns = fCurrentElectromagnetSurface->GetCurrentTurns();
+
         auto* solenoid = new KSolenoid();
         solenoid->SetValues(tR, tZMin, tZMax, tCurrent);
 
@@ -198,9 +200,13 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
         auto p0 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMin));
         auto p1 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMax));
 
+        double tLineCurrent = fCurrentElectromagnetSpace->GetLineCurrent();
+        double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();
+        std::string tName = fCurrentElectromagnetSpace->GetName();
+
         std::cout << " " << coil->GetCurrentDensity() << " " << p0.X() << " " << p0.Y() << " " << p0.Z() << " "
                   << p1.X() << " " << p1.Y() << " " << p1.Z() << " " << coil->GetR0() << " " << coil->GetR1() << " "
-                  << coil->GetIntegrationScale() << std::endl;
+                  << coil->GetIntegrationScale() << " " << tLineCurrent << " " << tNumTurns << "\t# " << tName << std::endl;
 #endif
     }
 }

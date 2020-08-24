@@ -21,7 +21,7 @@ class KGElectromagnetAttributor : public KTagged, public KGElectromagnetData
     std::vector<KGSurface*> fSurfaces;
     std::vector<KGSpace*> fSpaces;
     K_SET_GET(double, LineCurrent)
-    K_SET_GET(double, ScalingFactor)
+    K_SET_GET(double, CurrentTurns)
     K_SET_GET(double, Direction)
 };
 
@@ -47,8 +47,8 @@ template<> inline bool KGElectromagnetBuilder::AddAttribute(KContainer* aContain
         fObject->SetLineCurrent(aContainer->AsReference<double>());
         return true;
     }
-    if (aContainer->GetName() == "scaling_factor") {
-        fObject->SetScalingFactor(aContainer->AsReference<double>());
+    if (aContainer->GetName() == "scaling_factor" || aContainer->GetName() == "num_turns") {
+        fObject->SetCurrentTurns(aContainer->AsReference<double>());
         return true;
     }
     if (aContainer->GetName() == "direction") {
@@ -101,7 +101,8 @@ template<> inline bool KGElectromagnetBuilder::AddAttribute(KContainer* aContain
 
 template<> inline bool KGElectromagnetBuilder::End()
 {
-    fObject->SetCurrent(fObject->GetLineCurrent() * fObject->GetScalingFactor() * fObject->GetDirection());
+    fObject->SetLineCurrent(fObject->GetLineCurrent() * fObject->GetDirection());
+    fObject->SetCurrentTurns(fObject->GetCurrentTurns());
     return true;
 }
 
