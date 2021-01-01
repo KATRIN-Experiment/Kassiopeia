@@ -1063,7 +1063,7 @@ void KGPortHousingSurfaceMesher::CircularPortDiscretizer::DiscretizePort(
     // cylindrical portion of the valve
 
     if (sub_length > merge_length) {
-        dz.empty();
+        dz.clear();
         dz.resize(circularPort->GetNumDiscSub());
         DiscretizeInterval(sub_length - merge_length, circularPort->GetNumDiscSub(), 1, dz);
 
