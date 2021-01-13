@@ -3,8 +3,8 @@
 namespace katrin
 {
 
-KPainter::KPainter() {}
+KPainter::KPainter() = default;
 
-KPainter::~KPainter() {}
+KPainter::~KPainter() = default;
 
 }  // namespace katrin

@@ -13,8 +13,8 @@ class KGCircleWireMesher : virtual public KGComplexMesher, public KGWrappedSurfa
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGCircleWireMesher() {}
-    ~KGCircleWireMesher() override {}
+    KGCircleWireMesher() = default;
+    ~KGCircleWireMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGCircleWire>* circleWireSurface) override;

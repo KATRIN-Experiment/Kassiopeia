@@ -4,7 +4,7 @@ namespace KGeoBag
 {
 
 KGAxialMesherBase::KGAxialMesherBase() : fCurrentElements(nullptr) {}
-KGAxialMesherBase::~KGAxialMesherBase() {}
+KGAxialMesherBase::~KGAxialMesherBase() = default;
 
 void KGAxialMesherBase::VisitExtendedSurface(KGExtendedSurface<KGAxialMesh>* aSurface)
 {

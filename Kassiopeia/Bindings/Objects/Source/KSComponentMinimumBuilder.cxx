@@ -9,11 +9,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSComponentMinimumBuilder::~KComplexElement() {}
+template<> KSComponentMinimumBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentMinimumStructure =
-    KSComponentMinimumBuilder::Attribute<string>("name") + KSComponentMinimumBuilder::Attribute<string>("group") +
-    KSComponentMinimumBuilder::Attribute<string>("component") + KSComponentMinimumBuilder::Attribute<string>("parent");
+STATICINT sKSComponentMinimumStructure = KSComponentMinimumBuilder::Attribute<std::string>("name") +
+                                         KSComponentMinimumBuilder::Attribute<std::string>("group") +
+                                         KSComponentMinimumBuilder::Attribute<std::string>("component") +
+                                         KSComponentMinimumBuilder::Attribute<std::string>("parent");
 
 STATICINT sKSComponentMinimum = KSComponentGroupBuilder::ComplexElement<KSComponentMinimumData>("component_minimum") +
                                 KSComponentGroupBuilder::ComplexElement<KSComponentMinimumData>("output_minimum") +

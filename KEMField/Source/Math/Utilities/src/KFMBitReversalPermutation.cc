@@ -242,7 +242,7 @@ void KFMBitReversalPermutation::ComputeBitReversedIndices(unsigned int N, unsign
     }
 }
 
-bool KFMBitReversalPermutation::Factor(unsigned int N, unsigned int n_factors, unsigned int* factors,
+bool KFMBitReversalPermutation::Factor(unsigned int N, unsigned int n_factors, const unsigned int* factors,
                                        unsigned int* powers)
 {
     unsigned int test = 1;

@@ -50,7 +50,7 @@ template<> inline bool KGPortHousingRectangularPortBuilder::AddAttribute(KContai
 }
 
 
-typedef KComplexElement<KGPortHousing::CircularPort> KGPortHousingCircularPortBuilder;
+using KGPortHousingCircularPortBuilder = KComplexElement<KGPortHousing::CircularPort>;
 
 template<> inline bool KGPortHousingCircularPortBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -86,7 +86,7 @@ template<> inline bool KGPortHousingCircularPortBuilder::AddAttribute(KContainer
 }
 
 
-typedef KComplexElement<KGPortHousing> KGPortHousingBuilder;
+using KGPortHousingBuilder = KComplexElement<KGPortHousing>;
 
 template<> inline bool KGPortHousingBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -172,7 +172,7 @@ template<> inline bool KGPortHousingBuilder::AddElement(KContainer* anElement)
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGPortHousing>> KGPortHousingSurfaceBuilder;
+using KGPortHousingSurfaceBuilder = KComplexElement<KGWrappedSurface<KGPortHousing>>;
 
 template<> inline bool KGPortHousingSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -196,7 +196,7 @@ template<> inline bool KGPortHousingSurfaceBuilder::AddElement(KContainer* anEle
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGPortHousing>> KGPortHousingSpaceBuilder;
+using KGPortHousingSpaceBuilder = KComplexElement<KGWrappedSpace<KGPortHousing>>;
 
 template<> inline bool KGPortHousingSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

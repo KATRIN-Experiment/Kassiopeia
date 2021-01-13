@@ -6,12 +6,12 @@ namespace Kassiopeia
 {
 
 KSGenLComposite::KSGenLComposite() : fLValue(nullptr) {}
-KSGenLComposite::KSGenLComposite(const KSGenLComposite& aCopy) : KSComponent(), fLValue(aCopy.fLValue) {}
+KSGenLComposite::KSGenLComposite(const KSGenLComposite& aCopy) : KSComponent(aCopy), fLValue(aCopy.fLValue) {}
 KSGenLComposite* KSGenLComposite::Clone() const
 {
     return new KSGenLComposite(*this);
 }
-KSGenLComposite::~KSGenLComposite() {}
+KSGenLComposite::~KSGenLComposite() = default;
 
 void KSGenLComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -20,8 +20,8 @@ void KSGenLComposite::Dice(KSParticleQueue* aPrimaries)
     KSParticleIt tParticleIt;
 
     double tLValue;
-    vector<double> tLValues;
-    vector<double>::iterator tLValueIt;
+    std::vector<double> tLValues;
+    std::vector<double>::iterator tLValueIt;
 
     fLValue->DiceValue(tLValues);
 

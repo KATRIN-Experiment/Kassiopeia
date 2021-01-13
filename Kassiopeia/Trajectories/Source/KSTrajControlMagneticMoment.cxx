@@ -12,7 +12,7 @@ KSTrajControlMagneticMoment::KSTrajControlMagneticMoment() :
     fFirstStep(true)
 {}
 KSTrajControlMagneticMoment::KSTrajControlMagneticMoment(const KSTrajControlMagneticMoment& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLowerLimit(aCopy.fLowerLimit),
     fUpperLimit(aCopy.fUpperLimit),
     fTimeStep(aCopy.fTimeStep),
@@ -22,7 +22,7 @@ KSTrajControlMagneticMoment* KSTrajControlMagneticMoment::Clone() const
 {
     return new KSTrajControlMagneticMoment(*this);
 }
-KSTrajControlMagneticMoment::~KSTrajControlMagneticMoment() {}
+KSTrajControlMagneticMoment::~KSTrajControlMagneticMoment() = default;
 
 void KSTrajControlMagneticMoment::ActivateObject()
 {

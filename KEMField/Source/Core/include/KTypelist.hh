@@ -65,8 +65,8 @@ struct KEmptyType
 
 template<class T, class U> struct KTypelist
 {
-    typedef T Head;
-    typedef U Tail;
+    using Head = T;
+    using Tail = U;
 };
 
 // 3.4 Calculating Length
@@ -92,11 +92,11 @@ template<class T, class U> struct Length<KTypelist<T, U>>
 template<class TList, unsigned int index> struct TypeAt;
 template<class Head, class Tail> struct TypeAt<KTypelist<Head, Tail>, 0>
 {
-    typedef Head Result;
+    using Result = Head;
 };
 template<class Head, class Tail, unsigned int i> struct TypeAt<KTypelist<Head, Tail>, i>
 {
-    typedef typename TypeAt<Tail, i - 1>::Result Result;
+    using Result = typename TypeAt<Tail, i - 1>::Result;
 };
 
 // 3.7 Searching Typelists
@@ -136,19 +136,19 @@ template<class Head, class Tail, class T> struct IndexOf<KTypelist<Head, Tail>, 
 template<class TList, class T> struct Append;
 template<> struct Append<KNullType, KNullType>
 {
-    typedef KNullType Result;
+    using Result = KNullType;
 };
 template<class T> struct Append<KNullType, T>
 {
-    typedef KTYPELIST_1(T) Result;
+    using Result = KEMField::KTypelist<T, KEMField::KNullType>;
 };
 template<class Head, class Tail> struct Append<KNullType, KTypelist<Head, Tail>>
 {
-    typedef KTypelist<Head, Tail> Result;
+    using Result = KTypelist<Head, Tail>;
 };
 template<class Head, class Tail, class T> struct Append<KTypelist<Head, Tail>, T>
 {
-    typedef KTypelist<Head, typename Append<Tail, T>::Result> Result;
+    using Result = KTypelist<Head, typename Append<Tail, T>::Result>;
 };
 
 // 3.9 Erasing a Type from a Typelist
@@ -156,15 +156,15 @@ template<class Head, class Tail, class T> struct Append<KTypelist<Head, Tail>, T
 template<class TList, class T> struct Erase;
 template<class T> struct Erase<KNullType, T>
 {
-    typedef KNullType Result;
+    using Result = KNullType;
 };
 template<class T, class Tail> struct Erase<KTypelist<T, Tail>, T>
 {
-    typedef Tail Result;
+    using Result = Tail;
 };
 template<class Head, class Tail, class T> struct Erase<KTypelist<Head, Tail>, T>
 {
-    typedef KTypelist<Head, typename Erase<Tail, T>::Result> Result;
+    using Result = KTypelist<Head, typename Erase<Tail, T>::Result>;
 };
 
 // (My own code) Removing one typelist from another
@@ -172,27 +172,27 @@ template<class Head, class Tail, class T> struct Erase<KTypelist<Head, Tail>, T>
 template<class TList, class TListRemove> struct RemoveTypelist;
 template<class TList> struct RemoveTypelist<TList, KNullType>
 {
-    typedef TList Result;
+    using Result = TList;
 };
 template<class TList, class Head, class Tail> struct RemoveTypelist<TList, KTypelist<Head, Tail>>
 {
-    typedef typename RemoveTypelist<typename Erase<TList, Head>::Result, Tail>::Result Result;
+    using Result = typename RemoveTypelist<typename Erase<TList, Head>::Result, Tail>::Result;
 };
 
 template<class TList, class T> struct EraseAll;
 template<class T> struct EraseAll<KNullType, T>
 {
-    typedef KNullType Result;
+    using Result = KNullType;
 };
 template<class T, class Tail> struct EraseAll<KTypelist<T, Tail>, T>
 {
     // Go all the way down the list removing the type
-    typedef typename EraseAll<Tail, T>::Result Result;
+    using Result = typename EraseAll<Tail, T>::Result;
 };
 template<class Head, class Tail, class T> struct EraseAll<KTypelist<Head, Tail>, T>
 {
     // Go all the way down the list removing the type
-    typedef KTypelist<Head, typename EraseAll<Tail, T>::Result> Result;
+    using Result = KTypelist<Head, typename EraseAll<Tail, T>::Result>;
 };
 
 // 3.10 Erasing Duplicates
@@ -200,31 +200,31 @@ template<class Head, class Tail, class T> struct EraseAll<KTypelist<Head, Tail>,
 template<class TList> struct NoDuplicates;
 template<> struct NoDuplicates<KNullType>
 {
-    typedef KNullType Result;
+    using Result = KNullType;
 };
 template<class Head, class Tail> struct NoDuplicates<KTypelist<Head, Tail>>
 {
   private:
-    typedef typename NoDuplicates<Tail>::Result L1;
-    typedef typename Erase<L1, Head>::Result L2;
+    using L1 = typename NoDuplicates<Tail>::Result;
+    using L2 = typename Erase<L1, Head>::Result;
 
   public:
-    typedef KTypelist<Head, L2> Result;
+    using Result = KTypelist<Head, L2>;
 };
 
 // 3.11 Replacing an Element in a Typelist
 template<class TList, class T, class U> struct Replace;
 template<class T, class U> struct Replace<KNullType, T, U>
 {
-    typedef KNullType Result;
+    using Result = KNullType;
 };
 template<class T, class Tail, class U> struct Replace<KTypelist<T, Tail>, T, U>
 {
-    typedef KTypelist<U, Tail> Result;
+    using Result = KTypelist<U, Tail>;
 };
 template<class Head, class Tail, class T, class U> struct Replace<KTypelist<Head, Tail>, T, U>
 {
-    typedef KTypelist<Head, typename Replace<Tail, T, U>::Result> Result;
+    using Result = KTypelist<Head, typename Replace<Tail, T, U>::Result>;
 };
 
 // 3.13 Class Generation with Typelists
@@ -236,21 +236,21 @@ class KGenScatterHierarchy<KTypelist<T1, T2>, Unit> :
     public KGenScatterHierarchy<T2, Unit>
 {
   public:
-    typedef KTypelist<T1, T2> TList;
-    typedef KGenScatterHierarchy<T1, Unit> LeftBase;
-    typedef KGenScatterHierarchy<T2, Unit> RightBase;
+    using TList = KTypelist<T1, T2>;
+    using LeftBase = KGenScatterHierarchy<T1, Unit>;
+    using RightBase = KGenScatterHierarchy<T2, Unit>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 // Pass an atomic type (non-typelist) to Unit
 template<class AtomicType, template<class> class Unit> class KGenScatterHierarchy : public Unit<AtomicType>
 {
-    typedef Unit<AtomicType> LeftBase;
+    using LeftBase = Unit<AtomicType>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 // Do nothing for NullType
@@ -258,7 +258,7 @@ template<template<class> class Unit> class KGenScatterHierarchy<KNullType, Unit>
 {
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 
@@ -281,22 +281,22 @@ class KGenScatterHierarchyWithParameter<KTypelist<T1, T2>, Parameter, Unit> :
     public KGenScatterHierarchyWithParameter<T2, Parameter, Unit>
 {
   public:
-    typedef KTypelist<T1, T2> TList;
-    typedef KGenScatterHierarchyWithParameter<T1, Parameter, Unit> LeftBase;
-    typedef KGenScatterHierarchyWithParameter<T2, Parameter, Unit> RightBase;
+    using TList = KTypelist<T1, T2>;
+    using LeftBase = KGenScatterHierarchyWithParameter<T1, Parameter, Unit>;
+    using RightBase = KGenScatterHierarchyWithParameter<T2, Parameter, Unit>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T, Parameter> Result;
+        using Result = Unit<T, Parameter>;
     };
 };
 // Pass an atomic type (non-typelist) to Unit
 template<class AtomicType, class Parameter, template<class, class> class Unit>
 class KGenScatterHierarchyWithParameter : public Unit<AtomicType, Parameter>
 {
-    typedef Unit<AtomicType, Parameter> LeftBase;
+    using LeftBase = Unit<AtomicType, Parameter>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T, Parameter> Result;
+        using Result = Unit<T, Parameter>;
     };
 };
 // Do nothing for NullType
@@ -305,7 +305,7 @@ class KGenScatterHierarchyWithParameter<KNullType, Parameter, Unit>
 {
     template<typename T> struct Rebind
     {
-        typedef Unit<T, Parameter> Result;
+        using Result = Unit<T, Parameter>;
     };
 };
 

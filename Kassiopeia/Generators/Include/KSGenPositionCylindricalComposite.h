@@ -22,10 +22,10 @@ class KSGenPositionCylindricalComposite : public KSComponentTemplate<KSGenPositi
     void Dice(KSParticleQueue* aPrimaryList) override;
 
   public:
-    void SetOrigin(const KThreeVector& anOrigin);
-    void SetXAxis(const KThreeVector& anXAxis);
-    void SetYAxis(const KThreeVector& anYAxis);
-    void SetZAxis(const KThreeVector& anZAxis);
+    void SetOrigin(const KGeoBag::KThreeVector& anOrigin);
+    void SetXAxis(const KGeoBag::KThreeVector& anXAxis);
+    void SetYAxis(const KGeoBag::KThreeVector& anYAxis);
+    void SetZAxis(const KGeoBag::KThreeVector& anZAxis);
 
     void SetRValue(KSGenValue* anRValue);
     void ClearRValue(KSGenValue* anRValue);
@@ -37,10 +37,10 @@ class KSGenPositionCylindricalComposite : public KSComponentTemplate<KSGenPositi
     void ClearZValue(KSGenValue* anZValue);
 
   private:
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 
     typedef enum
     {

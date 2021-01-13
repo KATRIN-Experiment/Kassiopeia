@@ -3,11 +3,8 @@
 
 #include "KSReadValue.h"
 
-#include <string>
-using std::string;
-
 #include <map>
-using std::map;
+#include <string>
 
 namespace Kassiopeia
 {
@@ -17,10 +14,10 @@ template<class XType> class KSReadSet;
 template<class XType> class KSReadSet<KSReadValue<XType>>
 {
   protected:
-    typedef map<std::string, KSReadValue<XType>> ValueMap;
-    typedef typename ValueMap::iterator ValueIt;
-    typedef typename ValueMap::const_iterator ValueCIt;
-    typedef typename ValueMap::value_type ValueEntry;
+    using ValueMap = std::map<std::string, KSReadValue<XType>>;
+    using ValueIt = typename ValueMap::iterator;
+    using ValueCIt = typename ValueMap::const_iterator;
+    using ValueEntry = typename ValueMap::value_type;
 
   public:
     KSReadSet();
@@ -36,7 +33,7 @@ template<class XType> class KSReadSet<KSReadValue<XType>>
 };
 
 template<class XType> KSReadSet<KSReadValue<XType>>::KSReadSet() : fValueMap() {}
-template<class XType> KSReadSet<KSReadValue<XType>>::~KSReadSet() {}
+template<class XType> KSReadSet<KSReadValue<XType>>::~KSReadSet() = default;
 
 template<class XType> KSReadValue<XType>& KSReadSet<KSReadValue<XType>>::Add(const std::string& aLabel)
 {
@@ -65,21 +62,21 @@ template<class XType> bool KSReadSet<KSReadValue<XType>>::Exists(const std::stri
     return false;
 }
 
-typedef KSReadSet<KSReadValue<bool>> KSBoolSet;
-typedef KSReadSet<KSReadValue<unsigned char>> KSUCharSet;
-typedef KSReadSet<KSReadValue<char>> KSCharSet;
-typedef KSReadSet<KSReadValue<unsigned short>> KSUShortSet;
-typedef KSReadSet<KSReadValue<short>> KSShortSet;
-typedef KSReadSet<KSReadValue<unsigned int>> KSUIntSet;
-typedef KSReadSet<KSReadValue<int>> KSIntSet;
-typedef KSReadSet<KSReadValue<unsigned long>> KSULongSet;
-typedef KSReadSet<KSReadValue<long>> KSLongSet;
-typedef KSReadSet<KSReadValue<long long>> KSLongLongSet;
-typedef KSReadSet<KSReadValue<float>> KSFloatSet;
-typedef KSReadSet<KSReadValue<double>> KSDoubleSet;
-typedef KSReadSet<KSReadValue<KThreeVector>> KSThreeVectorSet;
-typedef KSReadSet<KSReadValue<KTwoVector>> KSTwoVectorSet;
-typedef KSReadSet<KSReadValue<std::string>> KSStringSet;
+using KSBoolSet = KSReadSet<KSReadValue<bool>>;
+using KSUCharSet = KSReadSet<KSReadValue<unsigned char>>;
+using KSCharSet = KSReadSet<KSReadValue<char>>;
+using KSUShortSet = KSReadSet<KSReadValue<unsigned short>>;
+using KSShortSet = KSReadSet<KSReadValue<short>>;
+using KSUIntSet = KSReadSet<KSReadValue<unsigned int>>;
+using KSIntSet = KSReadSet<KSReadValue<int>>;
+using KSULongSet = KSReadSet<KSReadValue<unsigned long>>;
+using KSLongSet = KSReadSet<KSReadValue<long>>;
+using KSLongLongSet = KSReadSet<KSReadValue<long long>>;
+using KSFloatSet = KSReadSet<KSReadValue<float>>;
+using KSDoubleSet = KSReadSet<KSReadValue<double>>;
+using KSThreeVectorSet = KSReadSet<KSReadValue<KGeoBag::KThreeVector>>;
+using KSTwoVectorSet = KSReadSet<KSReadValue<KGeoBag::KTwoVector>>;
+using KSStringSet = KSReadSet<KSReadValue<std::string>>;
 
 }  // namespace Kassiopeia
 

@@ -12,11 +12,11 @@ template<> class KEMRootSVDSolver<double>
 {
   public:
     typedef double ValueType;
-    typedef KMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KEMRootSVDSolver() : fTolerance(1.e-14) {}
-    virtual ~KEMRootSVDSolver() {}
+    virtual ~KEMRootSVDSolver() = default;
 
     bool Solve(const Matrix& A, Vector& x, const Vector& b) const;
     void SetTolerance(double tol)

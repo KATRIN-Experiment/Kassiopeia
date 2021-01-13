@@ -13,8 +13,8 @@ class KGConicalWireArrayMesher : virtual public KGComplexMesher, public KGWrappe
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGConicalWireArrayMesher() {}
-    ~KGConicalWireArrayMesher() override {}
+    KGConicalWireArrayMesher() = default;
+    ~KGConicalWireArrayMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGConicalWireArray>* conicalWireArraySurface) override;

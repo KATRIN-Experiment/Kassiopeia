@@ -30,7 +30,7 @@ class KSComponentMinimumData
     std::string fParentName;
 };
 
-KSComponent* BuildOutputMinimum(KSComponent* aComponent)
+inline KSComponent* BuildOutputMinimum(KSComponent* aComponent)
 {
     if (aComponent->Is<bool>() == true) {
         return new KSComponentMinimum<bool>(aComponent, aComponent->As<bool>());
@@ -106,12 +106,12 @@ template<> inline bool KSComponentMinimumBuilder::Begin()
 template<> inline bool KSComponentMinimumBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
     if (aContainer->GetName() == "group") {
-        std::string tGroupName = aContainer->AsReference<std::string>();
+        std::string tGroupName = aContainer->AsString();
         fObject->fGroupName = tGroupName;
         return true;
     }
@@ -119,12 +119,12 @@ template<> inline bool KSComponentMinimumBuilder::AddAttribute(KContainer* aCont
         objctmsg(eWarning)
             << "deprecated warning in KSComponentMinimumBuilder: Please use the attribute <parent> instead <component>"
             << eom;
-        std::string tParentName = aContainer->AsReference<std::string>();
+        std::string tParentName = aContainer->AsString();
         fObject->fParentName = tParentName;
         return true;
     }
     if (aContainer->GetName() == "parent") {
-        std::string tParentName = aContainer->AsReference<std::string>();
+        std::string tParentName = aContainer->AsString();
         fObject->fParentName = tParentName;
         return true;
     }

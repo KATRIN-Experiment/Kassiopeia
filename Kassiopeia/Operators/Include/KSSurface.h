@@ -3,7 +3,6 @@
 
 #include "KSComponentTemplate.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -23,8 +22,8 @@ class KSSurface : public KSComponentTemplate<KSSurface>
     virtual void On() const = 0;
     virtual void Off() const = 0;
 
-    virtual KThreeVector Point(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector Normal(const KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const = 0;
 
     const KSSpace* GetParent() const;
     KSSpace* GetParent();

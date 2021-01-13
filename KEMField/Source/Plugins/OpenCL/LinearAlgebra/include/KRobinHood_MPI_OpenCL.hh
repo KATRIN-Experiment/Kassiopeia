@@ -6,6 +6,10 @@
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KRobinHood.hh"
 
+#ifndef KEMFIELD_USE_MPI
+#pragma message "KEMField OpenCL was built without MPI. You should use the \"KRobinHood_OpenCL.hh\" header instead."
+#endif
+
 #define STRINGIFY(x) #x
 #define TOSTRING(x)  STRINGIFY(x)
 
@@ -14,21 +18,21 @@ namespace KEMField
 template<typename ValueType> class KRobinHood_MPI_OpenCL : public KOpenCLAction
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KRobinHood_MPI_OpenCL(const Matrix& A, Vector& x, const Vector& b);
-    ~KRobinHood_MPI_OpenCL();
+    ~KRobinHood_MPI_OpenCL() override;
 
-    void ConstructOpenCLKernels() const;
-    void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override;
+    void AssignBuffers() const override;
 
-    std::string GetOpenCLFlags() const
+    std::string GetOpenCLFlags() const override
     {
         return fOpenCLFlags;
     }
 
-    void Initialize();
+    void Initialize() override;
     void FindResidual();
     void FindResidualNorm(double& residualNorm);
     void CompleteResidualNormalization(double& residualNorm);
@@ -105,20 +109,20 @@ template<typename ValueType> class KRobinHood_MPI_OpenCL : public KOpenCLAction
     MPI_Op fMPI_Max;
     MPI_Op fMPI_Min;
 
-    typedef struct Res_Real_t
+    using Res_Real = struct Res_Real_t
     {
         int fIndex;
         double fRes;
         double fCorrection;
-    } Res_Real;
+    };
 
-    typedef struct Res_Complex_t
+    using Res_Complex = struct Res_Complex_t
     {
         int fIndex;
         double fRes;
         double fCorrection_real;
         double fCorrection_imag;
-    } Res_Complex;
+    };
 
     Res_Real fRes_real;
     Res_Complex fRes_complex;
@@ -139,36 +143,40 @@ KRobinHood_MPI_OpenCL<ValueType>::KRobinHood_MPI_OpenCL(const Matrix& A, Vector&
     fX(X),
     fB(B),
     fBInfinityNorm(1.e30),
-    fInitializeVectorApproximationKernel(NULL),
-    fFindResidualKernel(NULL),
-    fFindResidualNormKernel(NULL),
-    fCompleteResidualNormalizationKernel(NULL),
-    fIdentifyLargestResidualElementKernel(NULL),
-    fCompleteLargestResidualIdentificationKernel(NULL),
-    fComputeCorrectionKernel(NULL),
-    fUpdateSolutionApproximationKernel(NULL),
-    fUpdateVectorApproximationKernel(NULL),
-    fBufferResidual(NULL),
-    fBufferB_iterative(NULL),
-    fBufferCorrection(NULL),
-    fBufferPartialMaxResidualIndex(NULL),
-    fBufferMaxResidualIndex(NULL),
-    fBufferPartialResidualNorm(NULL),
-    fBufferResidualNorm(NULL),
-    fBufferNWarps(NULL),
-    fBufferCounter(NULL),
-    fCLResidual(NULL),
-    fCLB_iterative(NULL),
-    fCLCorrection(NULL),
-    fCLPartialMaxResidualIndex(NULL),
-    fCLMaxResidualIndex(NULL),
-    fCLMaxResidual(NULL),
-    fCLPartialResidualNorm(NULL),
-    fCLResidualNorm(NULL),
-    fCLNWarps(NULL),
-    fCLCounter(NULL),
+    fInitializeVectorApproximationKernel(nullptr),
+    fFindResidualKernel(nullptr),
+    fFindResidualNormKernel(nullptr),
+    fCompleteResidualNormalizationKernel(nullptr),
+    fIdentifyLargestResidualElementKernel(nullptr),
+    fCompleteLargestResidualIdentificationKernel(nullptr),
+    fComputeCorrectionKernel(nullptr),
+    fUpdateSolutionApproximationKernel(nullptr),
+    fUpdateVectorApproximationKernel(nullptr),
+    fBufferResidual(nullptr),
+    fBufferB_iterative(nullptr),
+    fBufferCorrection(nullptr),
+    fBufferPartialMaxResidualIndex(nullptr),
+    fBufferMaxResidualIndex(nullptr),
+    fBufferPartialResidualNorm(nullptr),
+    fBufferResidualNorm(nullptr),
+    fBufferNWarps(nullptr),
+    fBufferCounter(nullptr),
+    fCLResidual(nullptr),
+    fCLB_iterative(nullptr),
+    fCLCorrection(nullptr),
+    fCLPartialMaxResidualIndex(nullptr),
+    fCLMaxResidualIndex(nullptr),
+    fCLMaxResidual(nullptr),
+    fCLPartialResidualNorm(nullptr),
+    fCLResidualNorm(nullptr),
+    fCLNWarps(nullptr),
+    fCLCounter(nullptr),
     fReadResidual(false)
 {
+#ifndef KEMFIELD_USE_MPI
+    kem_cout(eWarning) << "KEMField was built without MPI, but you're using the MPI+OpenCL solver." << eom;
+#endif
+
     InitializeMPIStructs(Type2Type<ValueType>());
     std::stringstream options;
     options << " -DKEMFIELD_OCLNEUMANNCHECKMETHOD=" << TOSTRING(KEMFIELD_FASTDIELECTRICS_VALUE);
@@ -201,10 +209,10 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ConstructOpe
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
-    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, 0);
+    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, nullptr);
 
     // if (fVerbose>1 && fRank == 0)
     // {
@@ -296,9 +304,9 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ConstructOpe
 
     fNLocal = UINT_MAX;
 
-    for (std::vector<cl::Kernel*>::iterator it = kernelArray.begin(); it != kernelArray.end(); ++it) {
+    for (auto& it : kernelArray) {
         unsigned int workgroupSize =
-            (*it)->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
+            it->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
         if (workgroupSize < fNLocal)
             fNLocal = workgroupSize;
     }
@@ -313,13 +321,13 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ConstructOpe
 template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::AssignBuffers() const
 {
     if (fData.GetMinimumWorkgroupSizeForKernels() % KMPIInterface::GetInstance()->GetNProcesses() != 0)
-        KEMField::cout << "Number of streams does not evenly divide across processes!" << KEMField::endl;
+        kem_cout(eWarning) << "Number of streams does not evenly divide across processes!" << eom;
 
     fNLocal = fData.GetMinimumWorkgroupSizeForKernels();
     fNWorkgroups = fData.GetNBufferedElements() / fNLocal;
     fNLocal /= KMPIInterface::GetInstance()->GetNProcesses();
 
-    KOpenCLSurfaceContainer& container = dynamic_cast<KOpenCLSurfaceContainer&>(fData);
+    auto& container = dynamic_cast<KOpenCLSurfaceContainer&>(fData);
 
     // Construct the ranges over which the OpenCL kernels will run
     fGlobalRange = new cl::NDRange(fData.GetNBufferedElements());
@@ -472,7 +480,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::AssignBuffer
     fCompleteResidualNormalizationKernel->setArg(2, *fBufferResidualNorm);
 
     fIdentifyLargestResidualElementKernel->setArg(0, *fBufferResidual);
-    fIdentifyLargestResidualElementKernel->setArg(1, fNLocal * sizeof(cl_int), NULL);
+    fIdentifyLargestResidualElementKernel->setArg(1, fNLocal * sizeof(cl_int), nullptr);
     fIdentifyLargestResidualElementKernel->setArg(2, *fBufferPartialMaxResidualIndex);
 
     fCompleteLargestResidualIdentificationKernel->setArg(0, *fBufferResidual);
@@ -604,7 +612,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::Initialize()
                                                                              *fGlobalRangeOffset,
                                                                              *fGlobalSize,
                                                                              *fLocalRange,
-                                                                             NULL,
+                                                                             nullptr,
                                                                              &event);
             event.wait();
         }
@@ -634,7 +642,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::CompleteResi
     cl::Event event;
     KOpenCLInterface::GetInstance()
         ->GetQueue()
-        .enqueueReadBuffer(*fBufferResidualNorm, CL_TRUE, 0, sizeof(CL_TYPE), fCLResidualNorm, NULL, &event);
+        .enqueueReadBuffer(*fBufferResidualNorm, CL_TRUE, 0, sizeof(CL_TYPE), fCLResidualNorm, nullptr, &event);
     event.wait();
 
     residualNorm = fCLResidualNorm[0];
@@ -660,7 +668,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::IdentifyLarg
                                                                          cl::NullRange,
                                                                          *fRangeOne,
                                                                          *fRangeOne,
-                                                                         NULL,
+                                                                         nullptr,
                                                                          &event);
         event.wait();
     }
@@ -674,7 +682,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ComputeCorre
                                                                          cl::NullRange,
                                                                          *fRangeOne,
                                                                          *fRangeOne,
-                                                                         NULL,
+                                                                         nullptr,
                                                                          &event);
         event.wait();
     }
@@ -695,7 +703,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ComputeCorre
         cl::Event event;
         KOpenCLInterface::GetInstance()
             ->GetQueue()
-            .enqueueReadBuffer(fBufferMaxResidual, CL_TRUE, 0, sizeof(CL_TYPE), fCLMaxResidual, NULL, &event);
+            .enqueueReadBuffer(fBufferMaxResidual, CL_TRUE, 0, sizeof(CL_TYPE), fCLMaxResidual, nullptr, &event);
         event.wait();
     }
 
@@ -718,7 +726,7 @@ template<typename ValueType> void KRobinHood_MPI_OpenCL<ValueType>::ComputeCorre
         cl::Event event;
         KOpenCLInterface::GetInstance()
             ->GetQueue()
-            .enqueueWriteBuffer(*fBufferCorrection, CL_TRUE, 0, sizeof(CL_TYPE), fCLCorrection, NULL, &event);
+            .enqueueWriteBuffer(*fBufferCorrection, CL_TRUE, 0, sizeof(CL_TYPE), fCLCorrection, nullptr, &event);
         event.wait();
     }
 }

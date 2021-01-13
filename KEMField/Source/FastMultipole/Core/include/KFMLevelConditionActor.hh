@@ -28,7 +28,8 @@ template<typename NodeType> class KFMLevelConditionActor : public KFMInspectingA
         fLevel = 0;
         fSwitch = 0;
     };
-    virtual ~KFMLevelConditionActor(){};
+    virtual ~KFMLevelConditionActor() = default;
+    ;
 
     void SetLevel(unsigned int l)
     {

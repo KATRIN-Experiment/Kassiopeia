@@ -25,8 +25,8 @@
 #define MAXDR        10000   // maximal distance ratio to be investigated
 #define STEPSDR      1000    // steps between given distance ratio range
 #define ACCURACY     1.E-15  // targeted accuracy for both electric potential and field
-#define SEPARATECOMP         // if this variable has been defined potentials and fields will be computed separately,   \
-                             // hence 'ElectricFieldAndPotential' function won't be used                               \
+#define SEPARATECOMP         // if this variable has been defined potentials and fields will be computed separately,
+                             // hence 'ElectricFieldAndPotential' function won't be used
                              // both options have to produce same values
 #define DRADDPERC 15         // additional fraction of distance ratio value at given accuracy to be added
 
@@ -60,7 +60,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KEMTriangle
 void subrn(double* u, int len);
 double randomnumber();
 
-void printVec(std::string add, KThreeVector input)
+void printVec(const std::string& add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -75,9 +75,9 @@ class TriangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTri
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTriangle)>::Visit;
 
-    TriangleVisitor() {}
+    TriangleVisitor() = default;
 
-    void Visit(KTriangle& t)
+    void Visit(KTriangle& t) override
     {
         ProcessTriangle(t);
     }
@@ -92,18 +92,18 @@ class TriangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTri
         fShapeCentroid = t.Centroid();
     }
 
-    double GetAverageSideLength()
+    double GetAverageSideLength() const
     {
         return fAverageSideLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
 
   private:
     double fAverageSideLength;
-    KThreeVector fShapeCentroid;
+    KFieldVector fShapeCentroid;
 };
 
 // visitor for computing fields and potentials
@@ -113,9 +113,9 @@ class TriangleVisitorForElectricFieldAndPotential : public KSelectiveVisitor<KSh
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTriangle)>::Visit;
 
-    TriangleVisitorForElectricFieldAndPotential() {}
+    TriangleVisitorForElectricFieldAndPotential() = default;
 
-    void Visit(KTriangle& t)
+    void Visit(KTriangle& t) override
     {
         ComputeElectricFieldAndPotential(t);
     }
@@ -211,46 +211,46 @@ class TriangleVisitorForElectricFieldAndPotential : public KSelectiveVisitor<KSh
         fP = p;
     }
 
-    std::pair<KThreeVector, double>& GetQuadElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuadElectricFieldAndPotential() const
     {
         return fQuadElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetAnaElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetAnaElectricFieldAndPotential() const
     {
         return fAnaElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetRwgElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetRwgElectricFieldAndPotential() const
     {
         return fRwgElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetCub4ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub4ElectricFieldAndPotential() const
     {
         return fCub4ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetCub7ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub7ElectricFieldAndPotential() const
     {
         return fCub7ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetCub12ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub12ElectricFieldAndPotential() const
     {
         return fCub12ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetCub16ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub16ElectricFieldAndPotential() const
     {
         return fCub16ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetCub19ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub19ElectricFieldAndPotential() const
     {
         return fCub19ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetCub33ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetCub33ElectricFieldAndPotential() const
     {
         return fCub33ElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetNumElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetNumElectricFieldAndPotential() const
     {
         return fNumElectricFieldAndPotential;
     }
@@ -259,28 +259,28 @@ class TriangleVisitorForElectricFieldAndPotential : public KSelectiveVisitor<KSh
     mutable KPosition fP;
 
     // Bi-Quadrature integrator as reference
-    mutable std::pair<KThreeVector, double> fQuadElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuadElectricFieldAndPotential;
     KElectrostaticBiQuadratureTriangleIntegrator fQuadIntegrator;
 
     // analytical integration
-    mutable std::pair<KThreeVector, double> fAnaElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fAnaElectricFieldAndPotential;
     KElectrostaticAnalyticTriangleIntegrator fAnaIntegrator;
 
     // analytical integration with RWG
-    mutable std::pair<KThreeVector, double> fRwgElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fRwgElectricFieldAndPotential;
     KElectrostaticRWGTriangleIntegrator fRwgIntegrator;
 
     // cubature n-point integration rules
-    mutable std::pair<KThreeVector, double> fCub4ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fCub7ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fCub12ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fCub16ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fCub19ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fCub33ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub4ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub7ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub12ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub16ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub19ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fCub33ElectricFieldAndPotential;
     KElectrostaticCubatureTriangleIntegrator fCubIntegrator;
 
     // adjusted cubature integrator dependent from distance ratio
-    mutable std::pair<KThreeVector, double> fNumElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fNumElectricFieldAndPotential;
 };
 
 }  // namespace KEMField
@@ -299,25 +299,25 @@ int main()
     double N2[3];
 
     // assign a unique direction vector for field point to each rectangle and save into std::vector
-    std::vector<KThreeVector> fPointDirections;
+    std::vector<KFieldVector> fPointDirections;
 
     // 'Num' triangles will be diced in the beginning and added to a surface container
     // This values decides how much triangles=field points will be computed for each distance ratio value
 
-    KSurfaceContainer* container = new KSurfaceContainer();
+    auto* container = new KSurfaceContainer();
     const unsigned int Num(NUMTRIANGLES); /* number of triangles */
 
     for (unsigned int i = 0; i < Num; i++) {
         IJKLRANDOM = i + 1;
-        KEMTriangle* triangle = new KEMTriangle();
+        auto* triangle = new KEMTriangle();
 
         // dice triangle geometry
-        for (unsigned short l = 0; l < 3; l++)
-            P0[l] = -1. + 2. * randomnumber();
-        for (unsigned short j = 0; j < 3; j++)
-            P1[j] = -1. + 2. * randomnumber();
-        for (unsigned short k = 0; k < 3; k++)
-            P2[k] = -1. + 2. * randomnumber();
+        for (double& l : P0)
+            l = -1. + 2. * randomnumber();
+        for (double& j : P1)
+            j = -1. + 2. * randomnumber();
+        for (double& k : P2)
+            k = -1. + 2. * randomnumber();
 
         // compute further triangle data
         A = sqrt(POW2(P1[0] - P0[0]) + POW2(P1[1] - P0[1]) + POW2(P1[2] - P0[2]));
@@ -332,9 +332,9 @@ int main()
 
         triangle->SetA(A);
         triangle->SetB(B);
-        triangle->SetP0(KThreeVector(P0[0], P0[1], P0[2]));
-        triangle->SetN1(KThreeVector(N1[0], N1[1], N1[2]));
-        triangle->SetN2(KThreeVector(N2[0], N2[1], N2[2]));
+        triangle->SetP0(KFieldVector(P0[0], P0[1], P0[2]));
+        triangle->SetN1(KFieldVector(N1[0], N1[1], N1[2]));
+        triangle->SetN2(KFieldVector(N2[0], N2[1], N2[2]));
 
         triangle->SetBoundaryValue(1.);
         triangle->SetSolution(1.);
@@ -345,7 +345,7 @@ int main()
         const double sinthetaFP = sqrt(1. - POW2(costhetaFP));
         const double phiFP = 2. * M_PI * randomnumber();
 
-        fPointDirections.push_back(KThreeVector(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP));
+        fPointDirections.emplace_back(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP);
     }
 
     // visitor for elements
@@ -367,14 +367,14 @@ int main()
                    << " triangles for each dist. ratio value." << KEMField::endl;
 
     // field point
-    KThreeVector fP;
+    KFieldVector fP;
 
     // field and potential values
-    std::pair<KThreeVector, double> valQuad;
-    std::pair<KThreeVector, double> valAna;
-    std::pair<KThreeVector, double> valRwg;
-    std::pair<KThreeVector, double> valCub[6];
-    std::pair<KThreeVector, double> valNum;
+    std::pair<KFieldVector, double> valQuad;
+    std::pair<KFieldVector, double> valAna;
+    std::pair<KFieldVector, double> valRwg;
+    std::pair<KFieldVector, double> valCub[6];
+    std::pair<KFieldVector, double> valNum;
 
     // variables for accuracy check of n-point cubature integration
 
@@ -408,15 +408,15 @@ int main()
 
     // plot
 
-    TApplication* fAppWindow = new TApplication("fAppWindow", 0, NULL);
+    auto* fAppWindow = new TApplication("fAppWindow", nullptr, nullptr);
 
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetLabelOffset(0.03, "xyz");  // values
     gStyle->SetTitleOffset(1.8, "xyz");   // label
 
-    TMultiGraph* mgPot = new TMultiGraph();
+    auto* mgPot = new TMultiGraph();
 
-    TGraph* plotDrPotAna = new TGraph(kmax + 1);
+    auto* plotDrPotAna = new TGraph(kmax + 1);
     plotDrPotAna->SetTitle("Relative error of analytical triangle potential");
     plotDrPotAna->SetDrawOption("AC");
     plotDrPotAna->SetMarkerColor(COLANA);
@@ -427,7 +427,7 @@ int main()
     if (PLOTANA)
         mgPot->Add(plotDrPotAna);
 
-    TGraph* plotDrPotRwg = new TGraph(kmax + 1);
+    auto* plotDrPotRwg = new TGraph(kmax + 1);
     plotDrPotRwg->SetTitle("Relative error of triangle RWG potential");
     plotDrPotRwg->SetDrawOption("same");
     plotDrPotRwg->SetMarkerColor(COLRWG);
@@ -438,7 +438,7 @@ int main()
     if (PLOTRWG)
         mgPot->Add(plotDrPotRwg);
 
-    TGraph* plotDrPotCub4 = new TGraph(kmax + 1);
+    auto* plotDrPotCub4 = new TGraph(kmax + 1);
     plotDrPotCub4->SetTitle("Relative error of triangle 4-point cubature potential");
     plotDrPotCub4->SetDrawOption("same");
     plotDrPotCub4->SetMarkerColor(COLCUB4);
@@ -449,7 +449,7 @@ int main()
     if (PLOTCUB4)
         mgPot->Add(plotDrPotCub4);
 
-    TGraph* plotDrPotCub7 = new TGraph(kmax + 1);
+    auto* plotDrPotCub7 = new TGraph(kmax + 1);
     plotDrPotCub7->SetTitle("Relative error of triangle 7-point cubature potential");
     plotDrPotCub7->SetDrawOption("same");
     plotDrPotCub7->SetMarkerColor(COLCUB7);
@@ -460,7 +460,7 @@ int main()
     if (PLOTCUB7)
         mgPot->Add(plotDrPotCub7);
 
-    TGraph* plotDrPotCub12 = new TGraph(kmax + 1);
+    auto* plotDrPotCub12 = new TGraph(kmax + 1);
     plotDrPotCub12->SetTitle("Relative error of triangle 12-point cubature potential");
     plotDrPotCub12->SetDrawOption("same");
     plotDrPotCub12->SetMarkerColor(COLCUB12);
@@ -471,7 +471,7 @@ int main()
     if (PLOTCUB12)
         mgPot->Add(plotDrPotCub12);
 
-    TGraph* plotDrPotCub16 = new TGraph(kmax + 1);
+    auto* plotDrPotCub16 = new TGraph(kmax + 1);
     plotDrPotCub16->SetTitle("Relative error of triangle 16-point cubature potential");
     plotDrPotCub16->SetDrawOption("same");
     plotDrPotCub16->SetMarkerColor(COLCUB16);
@@ -482,7 +482,7 @@ int main()
     if (PLOTCUB16)
         mgPot->Add(plotDrPotCub16);
 
-    TGraph* plotDrPotCub19 = new TGraph(kmax + 1);
+    auto* plotDrPotCub19 = new TGraph(kmax + 1);
     plotDrPotCub19->SetTitle("Relative error of triangle 19-point cubature potential");
     plotDrPotCub19->SetDrawOption("same");
     plotDrPotCub19->SetMarkerColor(COLCUB19);
@@ -493,7 +493,7 @@ int main()
     if (PLOTCUB19)
         mgPot->Add(plotDrPotCub19);
 
-    TGraph* plotDrPotCub33 = new TGraph(kmax + 1);
+    auto* plotDrPotCub33 = new TGraph(kmax + 1);
     plotDrPotCub33->SetTitle("Relative error of triangle 33-point cubature potential");
     plotDrPotCub33->SetDrawOption("same");
     plotDrPotCub33->SetMarkerColor(COLCUB33);
@@ -504,7 +504,7 @@ int main()
     if (PLOTCUB33)
         mgPot->Add(plotDrPotCub33);
 
-    TGraph* plotDrPotNum = new TGraph(kmax + 1);
+    auto* plotDrPotNum = new TGraph(kmax + 1);
     plotDrPotNum->SetTitle("Relative error of triangle potential with adjusted numerical integrator");
     plotDrPotNum->SetDrawOption("same");
     plotDrPotNum->SetMarkerColor(COLNUM);
@@ -515,9 +515,9 @@ int main()
     if (PLOTNUM)
         mgPot->Add(plotDrPotNum);
 
-    TMultiGraph* mgField = new TMultiGraph();
+    auto* mgField = new TMultiGraph();
 
-    TGraph* plotDrFieldAna = new TGraph(kmax + 1);
+    auto* plotDrFieldAna = new TGraph(kmax + 1);
     plotDrFieldAna->SetTitle("Relative error of analytical triangle potential");
     plotDrFieldAna->SetDrawOption("AC");
     plotDrFieldAna->SetMarkerColor(COLANA);
@@ -528,7 +528,7 @@ int main()
     if (PLOTANA)
         mgField->Add(plotDrFieldAna);
 
-    TGraph* plotDrFieldRwg = new TGraph(kmax + 1);
+    auto* plotDrFieldRwg = new TGraph(kmax + 1);
     plotDrFieldRwg->SetTitle("Relative error of triangle RWG potential");
     plotDrFieldRwg->SetDrawOption("same");
     plotDrFieldRwg->SetMarkerColor(COLRWG);
@@ -539,7 +539,7 @@ int main()
     if (PLOTRWG)
         mgField->Add(plotDrFieldRwg);
 
-    TGraph* plotDrFieldCub4 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub4 = new TGraph(kmax + 1);
     plotDrFieldCub4->SetTitle("Relative error of triangle 4-point cubature potential");
     plotDrFieldCub4->SetDrawOption("same");
     plotDrFieldCub4->SetMarkerColor(COLCUB4);
@@ -550,7 +550,7 @@ int main()
     if (PLOTCUB4)
         mgField->Add(plotDrFieldCub4);
 
-    TGraph* plotDrFieldCub7 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub7 = new TGraph(kmax + 1);
     plotDrFieldCub7->SetTitle("Relative error of triangle 7-point cubature potential");
     plotDrFieldCub7->SetDrawOption("same");
     plotDrFieldCub7->SetMarkerColor(COLCUB7);
@@ -561,7 +561,7 @@ int main()
     if (PLOTCUB7)
         mgField->Add(plotDrFieldCub7);
 
-    TGraph* plotDrFieldCub12 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub12 = new TGraph(kmax + 1);
     plotDrFieldCub12->SetTitle("Relative error of triangle 12-point cubature potential");
     plotDrFieldCub12->SetDrawOption("same");
     plotDrFieldCub12->SetMarkerColor(COLCUB12);
@@ -572,7 +572,7 @@ int main()
     if (PLOTCUB12)
         mgField->Add(plotDrFieldCub12);
 
-    TGraph* plotDrFieldCub16 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub16 = new TGraph(kmax + 1);
     plotDrFieldCub16->SetTitle("Relative error of triangle 16-point cubature potential");
     plotDrFieldCub16->SetDrawOption("same");
     plotDrFieldCub16->SetMarkerColor(COLCUB16);
@@ -583,7 +583,7 @@ int main()
     if (PLOTCUB16)
         mgField->Add(plotDrFieldCub16);
 
-    TGraph* plotDrFieldCub19 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub19 = new TGraph(kmax + 1);
     plotDrFieldCub19->SetTitle("Relative error of triangle 19-point cubature potential");
     plotDrFieldCub19->SetDrawOption("same");
     plotDrFieldCub19->SetMarkerColor(COLCUB19);
@@ -594,7 +594,7 @@ int main()
     if (PLOTCUB19)
         mgField->Add(plotDrFieldCub19);
 
-    TGraph* plotDrFieldCub33 = new TGraph(kmax + 1);
+    auto* plotDrFieldCub33 = new TGraph(kmax + 1);
     plotDrFieldCub33->SetTitle("Relative error of triangle 33-point cubature potential");
     plotDrFieldCub33->SetDrawOption("same");
     plotDrFieldCub33->SetMarkerColor(COLCUB33);
@@ -605,7 +605,7 @@ int main()
     if (PLOTCUB33)
         mgField->Add(plotDrFieldCub33);
 
-    TGraph* plotDrFieldNum = new TGraph(kmax + 1);
+    auto* plotDrFieldNum = new TGraph(kmax + 1);
     plotDrFieldNum->SetTitle("Relative error of triangle field with adjusted numerical integrator");
     plotDrFieldNum->SetDrawOption("same");
     plotDrFieldNum->SetMarkerColor(COLNUM);
@@ -879,15 +879,15 @@ int main()
     l.SetTextFont(62);
     l.SetTextSize(0.032);
 
-    if ((PLOTRWG) | (PLOTANA)) {
+    if (PLOTRWG || PLOTANA) {
         l.SetTextAngle(29);
         if (PLOTRWG)
             l.SetTextColor(COLRWG);
-        if ((PLOTANA) && !(PLOTRWG))
+        if (((PLOTANA) != 0) && ((PLOTRWG) == 0))
             l.SetTextColor(COLANA);
         if (PLOTRWG)
             l.DrawLatex(500, 1.5e-9, "Analytical (RWG)");
-        if ((PLOTANA) && !(PLOTRWG))
+        if (((PLOTANA) != 0) && ((PLOTRWG) == 0))
             l.DrawLatex(500, 1.5e-9, "Analytical");
     }
 
@@ -949,15 +949,15 @@ int main()
     mgField->GetYaxis()->SetTitle("relative error");
     mgField->GetYaxis()->CenterTitle();
 
-    if ((PLOTRWG) | (PLOTANA)) {
+    if (PLOTRWG || PLOTANA) {
         l.SetTextAngle(29);
         if (PLOTRWG)
             l.SetTextColor(COLRWG);
-        if ((PLOTANA) && !(PLOTRWG))
+        if (((PLOTANA) != 0) && ((PLOTRWG) == 0))
             l.SetTextColor(COLANA);
         if (PLOTRWG)
             l.DrawLatex(500, 2.0e-9, "Analytical (RWG)");
-        if ((PLOTANA) && !(PLOTRWG))
+        if (((PLOTANA) != 0) && ((PLOTRWG) == 0))
             l.DrawLatex(500, 2.0e-9, "Analytical");
     }
 
@@ -1087,7 +1087,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 ////////////////////////////////////////////////////////////////

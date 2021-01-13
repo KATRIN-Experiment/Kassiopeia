@@ -1,6 +1,6 @@
+#include <cmath>
+#include <ctime>
 #include <iostream>
-#include <math.h>
-#include <time.h>
 
 #define POW2(x) ((x) * (x))
 #define POW3(x) ((x) * (x) * (x))
@@ -161,12 +161,12 @@ int main()
         IJKLRANDOM = i + 1;
 
         // dice triangle geometry
-        for (unsigned short l = 0; l < 3; l++)
-            P0[l] = -1. + 2. * randomnumber();
-        for (unsigned short j = 0; j < 3; j++)
-            P1[j] = -1. + 2. * randomnumber();
-        for (unsigned short k = 0; k < 3; k++)
-            P2[k] = -1. + 2. * randomnumber();
+        for (double& l : P0)
+            l = -1. + 2. * randomnumber();
+        for (double& j : P1)
+            j = -1. + 2. * randomnumber();
+        for (double& k : P2)
+            k = -1. + 2. * randomnumber();
 
         // compute further triangle data
         A = sqrt(POW2(P1[0] - P0[0]) + POW2(P1[1] - P0[1]) + POW2(P1[2] - P0[2]));
@@ -347,7 +347,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 double randomnumber()

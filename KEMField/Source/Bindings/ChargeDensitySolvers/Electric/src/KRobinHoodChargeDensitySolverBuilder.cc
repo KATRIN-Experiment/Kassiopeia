@@ -16,7 +16,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KRobinHoodChargeDensitySolverBuilder::~KComplexElement() {}
+template<> KRobinHoodChargeDensitySolverBuilder::~KComplexElement() = default;
 
 STATICINT sKRobinHoodChargeDensitySolverStructure =
     KRobinHoodChargeDensitySolverBuilder::Attribute<double>("tolerance") +

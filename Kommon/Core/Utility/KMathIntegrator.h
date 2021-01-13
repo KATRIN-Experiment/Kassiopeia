@@ -53,7 +53,7 @@ class KMathIntegrator : private XSamplingPolicy
 {
   public:
     KMathIntegrator(XFloatT precision = 1E-4, KEMathIntegrationMethod method = KEMathIntegrationMethod::Simpson);
-    virtual ~KMathIntegrator() {}
+    virtual ~KMathIntegrator() = default;
 
     /**
      * Perform the integration.

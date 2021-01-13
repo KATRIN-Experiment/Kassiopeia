@@ -5,19 +5,22 @@
 
 #include <cmath>
 
+using KGeoBag::KThreeMatrix;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSTrajTermPropagation::KSTrajTermPropagation() : fDirection(eForward) {}
 KSTrajTermPropagation::KSTrajTermPropagation(const KSTrajTermPropagation& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fDirection(aCopy.fDirection)
 {}
 KSTrajTermPropagation* KSTrajTermPropagation::Clone() const
 {
     return new KSTrajTermPropagation(*this);
 }
-KSTrajTermPropagation::~KSTrajTermPropagation() {}
+KSTrajTermPropagation::~KSTrajTermPropagation() = default;
 
 void KSTrajTermPropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                           KSTrajExactDerivative& aDerivative) const

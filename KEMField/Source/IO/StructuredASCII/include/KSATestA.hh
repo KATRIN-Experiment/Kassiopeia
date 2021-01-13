@@ -40,9 +40,8 @@ class KSATestA : public KSAOutputObject, public KSAInputObject
         fBVec = copyObject.fBVec;
     }
 
-    ~KSATestA() override{
-
-    };
+    ~KSATestA() override = default;
+    ;
 
     virtual const char* GetName() const;
 

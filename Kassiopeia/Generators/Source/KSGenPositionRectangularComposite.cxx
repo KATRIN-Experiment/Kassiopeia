@@ -3,6 +3,7 @@
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -18,7 +19,7 @@ KSGenPositionRectangularComposite::KSGenPositionRectangularComposite() :
     fCoordinateMap[eZ] = 2;
 }
 KSGenPositionRectangularComposite::KSGenPositionRectangularComposite(const KSGenPositionRectangularComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fOrigin(aCopy.fOrigin),
     fXAxis(aCopy.fXAxis),
     fYAxis(aCopy.fYAxis),
@@ -30,7 +31,7 @@ KSGenPositionRectangularComposite* KSGenPositionRectangularComposite::Clone() co
 {
     return new KSGenPositionRectangularComposite(*this);
 }
-KSGenPositionRectangularComposite::~KSGenPositionRectangularComposite() {}
+KSGenPositionRectangularComposite::~KSGenPositionRectangularComposite() = default;
 
 void KSGenPositionRectangularComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -38,10 +39,10 @@ void KSGenPositionRectangularComposite::Dice(KSParticleQueue* aPrimaries)
     bool tYValue = false;
     bool tZValue = false;
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        tXValue = tXValue | ((*tIt).first == eX);
-        tYValue = tYValue | ((*tIt).first == eY);
-        tZValue = tZValue | ((*tIt).first == eZ);
+    for (auto& value : fValues) {
+        tXValue = tXValue | (value.first == eX);
+        tYValue = tYValue | (value.first == eY);
+        tZValue = tZValue | (value.first == eZ);
     }
 
     if (!tXValue | !tYValue | !tZValue)
@@ -99,14 +100,14 @@ void KSGenPositionRectangularComposite::Dice(KSParticleQueue* aPrimaries)
 
 void KSGenPositionRectangularComposite::SetXValue(KSGenValue* anXValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eX) {
+    for (auto& value : fValues) {
+        if (value.first == eX) {
             genmsg(eError) << "cannot set x value <" << anXValue->GetName()
                            << "> to composite position rectangular creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eX, anXValue));
+    fValues.emplace_back(eX, anXValue);
 }
 void KSGenPositionRectangularComposite::ClearXValue(KSGenValue* anXValue)
 {
@@ -124,14 +125,14 @@ void KSGenPositionRectangularComposite::ClearXValue(KSGenValue* anXValue)
 
 void KSGenPositionRectangularComposite::SetYValue(KSGenValue* aYValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eY) {
+    for (auto& value : fValues) {
+        if (value.first == eY) {
             genmsg(eError) << "cannot set y value <" << aYValue->GetName()
                            << "> to composite position rectangular creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eY, aYValue));
+    fValues.emplace_back(eY, aYValue);
 }
 void KSGenPositionRectangularComposite::ClearYValue(KSGenValue* anYValue)
 {
@@ -149,14 +150,14 @@ void KSGenPositionRectangularComposite::ClearYValue(KSGenValue* anYValue)
 
 void KSGenPositionRectangularComposite::SetZValue(KSGenValue* anZValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eZ) {
+    for (auto& value : fValues) {
+        if (value.first == eZ) {
             genmsg(eError) << "cannot set z value <" << anZValue->GetName()
                            << "> to composite position rectangular creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eZ, anZValue));
+    fValues.emplace_back(eZ, anZValue);
 }
 void KSGenPositionRectangularComposite::ClearZValue(KSGenValue* anZValue)
 {
@@ -195,15 +196,15 @@ void KSGenPositionRectangularComposite::SetZAxis(const KThreeVector& anZAxis)
 
 void KSGenPositionRectangularComposite::InitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Initialize();
+    for (auto& value : fValues) {
+        value.second->Initialize();
     }
     return;
 }
 void KSGenPositionRectangularComposite::DeinitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Deinitialize();
+    for (auto& value : fValues) {
+        value.second->Deinitialize();
     }
     return;
 }

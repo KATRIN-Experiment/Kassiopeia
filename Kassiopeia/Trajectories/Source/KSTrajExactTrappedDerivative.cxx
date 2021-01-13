@@ -3,11 +3,9 @@
 namespace Kassiopeia
 {
 
-KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative() {}
-KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative(const KSTrajExactTrappedDerivative& anOperand) :
-    KSMathArray<8>(anOperand)
-{}
-KSTrajExactTrappedDerivative::~KSTrajExactTrappedDerivative() {}
+KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative() = default;
+KSTrajExactTrappedDerivative::KSTrajExactTrappedDerivative(const KSTrajExactTrappedDerivative&) = default;
+KSTrajExactTrappedDerivative::~KSTrajExactTrappedDerivative() = default;
 
 void KSTrajExactTrappedDerivative::AddToTime(const double& aTime)
 {
@@ -19,14 +17,14 @@ void KSTrajExactTrappedDerivative::AddToSpeed(const double& aSpeed)
     fData[1] += aSpeed;
     return;
 }
-void KSTrajExactTrappedDerivative::AddToVelocity(const KThreeVector& aVelocity)
+void KSTrajExactTrappedDerivative::AddToVelocity(const KGeoBag::KThreeVector& aVelocity)
 {
     fData[2] += aVelocity.X();
     fData[3] += aVelocity.Y();
     fData[4] += aVelocity.Z();
     return;
 }
-void KSTrajExactTrappedDerivative::AddToForce(const KThreeVector& aForce)
+void KSTrajExactTrappedDerivative::AddToForce(const KGeoBag::KThreeVector& aForce)
 {
     fData[5] += aForce.X();
     fData[6] += aForce.Y();

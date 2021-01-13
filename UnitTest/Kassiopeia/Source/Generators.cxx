@@ -46,6 +46,7 @@
 #include "KSGenPositionRectangularComposite.h"
 #include "KSGenTimeComposite.h"
 
+using namespace KGeoBag;
 using namespace Kassiopeia;
 
 
@@ -57,7 +58,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueFix)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueFix* tGenerator = new KSGenValueFix();
+    auto* tGenerator = new KSGenValueFix();
     ASSERT_PTR(tGenerator);
     tGenerator->SetValue(1);
 
@@ -76,7 +77,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueFormula)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueFormula* tGenerator = new KSGenValueFormula();
+    auto* tGenerator = new KSGenValueFormula();
     ASSERT_PTR(tGenerator);
     tGenerator->SetValueMin(-1);
     tGenerator->SetValueMax(1);
@@ -100,7 +101,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueGauss)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueGauss* tGenerator = new KSGenValueGauss();
+    auto* tGenerator = new KSGenValueGauss();
     ASSERT_PTR(tGenerator);
     tGenerator->SetValueMin(-1);
     tGenerator->SetValueMax(1);
@@ -123,7 +124,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueAngleSpherical)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueAngleSpherical* tGenerator = new KSGenValueAngleSpherical();
+    auto* tGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tGenerator);
     tGenerator->SetAngleMin(0);
     tGenerator->SetAngleMax(180);
@@ -144,7 +145,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueSet)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueSet* tGenerator = new KSGenValueSet();
+    auto* tGenerator = new KSGenValueSet();
     ASSERT_PTR(tGenerator);
     tGenerator->SetValueStart(-1);
     tGenerator->SetValueStop(1);
@@ -166,7 +167,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenValueUniform)
 {
     ASSERT_EQ(fValues.size(), 0UL);
 
-    KSGenValueUniform* tGenerator = new KSGenValueUniform();
+    auto* tGenerator = new KSGenValueUniform();
     ASSERT_PTR(tGenerator);
     tGenerator->SetValueMin(-1);
     tGenerator->SetValueMax(1);
@@ -188,7 +189,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Kr83)
     ASSERT_EQ(fValues.size(), 0UL);
     vector<int> tVacancies;
 
-    KSGenConversion* tGenerator = new KSGenConversion();
+    auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
     tGenerator->SetForceCreation(true);
     tGenerator->Initialize(83);
@@ -216,7 +217,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn219)
     ASSERT_EQ(fValues.size(), 0UL);
     vector<int> tVacancies;
 
-    KSGenConversion* tGenerator = new KSGenConversion();
+    auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
     tGenerator->SetForceCreation(true);
     tGenerator->Initialize(219);
@@ -244,7 +245,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenConversion_Rn220)
     ASSERT_EQ(fValues.size(), 0UL);
     vector<int> tVacancies;
 
-    KSGenConversion* tGenerator = new KSGenConversion();
+    auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
     tGenerator->SetForceCreation(true);
     tGenerator->Initialize(220);
@@ -277,7 +278,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenShakeOff_Rn)
     ASSERT_EQ(fValues.size(), 0UL);
     vector<int> tVacancies;
 
-    KSGenShakeOff* tGenerator = new KSGenShakeOff();
+    auto* tGenerator = new KSGenShakeOff();
     ASSERT_PTR(tGenerator);
     tGenerator->SetForceCreation(false);
 
@@ -304,7 +305,7 @@ TEST_F(KassiopeiaGeneratorTest, KSGenShakeOff_Rn)
 TEST(KassiopeiaGeneratorDeathTest, KSGenConversion)  // test case name should end in "DeathTest"
 {
     // should fail because isotope 0 is not defined
-    KSGenConversion* tGenerator = new KSGenConversion();
+    auto* tGenerator = new KSGenConversion();
     ASSERT_PTR(tGenerator);
     ASSERT_ANY_THROW(tGenerator->Initialize(0));
 }
@@ -318,17 +319,17 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenDirectionSphericalComposite)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueAngleSpherical* tPhiGenerator = new KSGenValueAngleSpherical();
+    auto* tPhiGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tPhiGenerator);
     tPhiGenerator->SetAngleMin(0);
     tPhiGenerator->SetAngleMax(180);
 
-    KSGenValueAngleSpherical* tThetaGenerator = new KSGenValueAngleSpherical();
+    auto* tThetaGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tThetaGenerator);
     tThetaGenerator->SetAngleMin(0);
     tThetaGenerator->SetAngleMax(90);
 
-    KSGenDirectionSphericalComposite* tCompositeGenerator = new KSGenDirectionSphericalComposite();
+    auto* tCompositeGenerator = new KSGenDirectionSphericalComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->SetPhiValue(tPhiGenerator);
     tCompositeGenerator->SetThetaValue(tThetaGenerator);
@@ -361,12 +362,12 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenEnergyComposite)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueUniform* tEnergyGenerator = new KSGenValueUniform();
+    auto* tEnergyGenerator = new KSGenValueUniform();
     ASSERT_PTR(tEnergyGenerator);
     tEnergyGenerator->SetValueMin(0);
     tEnergyGenerator->SetValueMax(1000);
 
-    KSGenEnergyComposite* tCompositeGenerator = new KSGenEnergyComposite();
+    auto* tCompositeGenerator = new KSGenEnergyComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->SetEnergyValue(tEnergyGenerator);
 
@@ -395,22 +396,22 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionCylindrical)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueUniform* tRGenerator = new KSGenValueUniform();
+    auto* tRGenerator = new KSGenValueUniform();
     ASSERT_PTR(tRGenerator);
     tRGenerator->SetValueMin(0);
     tRGenerator->SetValueMax(0.5);
 
-    KSGenValueAngleSpherical* tPhiGenerator = new KSGenValueAngleSpherical();
+    auto* tPhiGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tPhiGenerator);
     tPhiGenerator->SetAngleMin(0);
     tPhiGenerator->SetAngleMax(180);
 
-    KSGenValueUniform* tZGenerator = new KSGenValueUniform();
+    auto* tZGenerator = new KSGenValueUniform();
     ASSERT_PTR(tZGenerator);
     tZGenerator->SetValueMin(0);
     tZGenerator->SetValueMax(1);
 
-    KSGenPositionCylindricalComposite* tCompositeGenerator = new KSGenPositionCylindricalComposite();
+    auto* tCompositeGenerator = new KSGenPositionCylindricalComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->SetRValue(tRGenerator);
     tCompositeGenerator->SetPhiValue(tPhiGenerator);
@@ -448,22 +449,22 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenCompositePositionRectangular)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueUniform* tXGenerator = new KSGenValueUniform();
+    auto* tXGenerator = new KSGenValueUniform();
     ASSERT_PTR(tXGenerator);
     tXGenerator->SetValueMin(0);
     tXGenerator->SetValueMax(1);
 
-    KSGenValueAngleSpherical* tYGenerator = new KSGenValueAngleSpherical();
+    auto* tYGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tYGenerator);
     tYGenerator->SetAngleMin(0);
     tYGenerator->SetAngleMax(1);
 
-    KSGenValueUniform* tZGenerator = new KSGenValueUniform();
+    auto* tZGenerator = new KSGenValueUniform();
     ASSERT_PTR(tZGenerator);
     tZGenerator->SetValueMin(0);
     tZGenerator->SetValueMax(1);
 
-    KSGenPositionRectangularComposite* tCompositeGenerator = new KSGenPositionRectangularComposite();
+    auto* tCompositeGenerator = new KSGenPositionRectangularComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->SetXValue(tXGenerator);
     tCompositeGenerator->SetYValue(tYGenerator);
@@ -510,7 +511,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSpaceRandom)
     auto* tSpace = new KGeoBag::KGSpace();
     tSpace->Volume(std::shared_ptr<KGeoBag::KGVolume>(tCylinder));
 
-    KSGenPositionSpaceRandom* tPositionGenerator = new KSGenPositionSpaceRandom();
+    auto* tPositionGenerator = new KSGenPositionSpaceRandom();
     ASSERT_PTR(tPositionGenerator);
     tPositionGenerator->AddSpace(tSpace);
 
@@ -550,7 +551,7 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenPositionSurfaceRandom)
     auto* tSurface = new KGeoBag::KGSurface();
     tSurface->Area(std::shared_ptr<KGeoBag::KGArea>(tCylinder));
 
-    KSGenPositionSurfaceRandom* tPositionGenerator = new KSGenPositionSurfaceRandom();
+    auto* tPositionGenerator = new KSGenPositionSurfaceRandom();
     ASSERT_PTR(tPositionGenerator);
     tPositionGenerator->AddSurface(tSurface);
 
@@ -579,12 +580,12 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenTimeComposite)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueUniform* tTimeGenerator = new KSGenValueUniform();
+    auto* tTimeGenerator = new KSGenValueUniform();
     ASSERT_PTR(tTimeGenerator);
     tTimeGenerator->SetValueMin(0);
     tTimeGenerator->SetValueMax(1e-3);
 
-    KSGenTimeComposite* tCompositeGenerator = new KSGenTimeComposite();
+    auto* tCompositeGenerator = new KSGenTimeComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->SetTimeValue(tTimeGenerator);
 
@@ -613,61 +614,61 @@ TEST_F(KassiopeiaCompositeGeneratorTest, KSGenGeneratorComposite)
 {
     ASSERT_EQ(fParticles->size(), fNTests);
 
-    KSGenValueUniform* tEnergyGenerator = new KSGenValueUniform();
+    auto* tEnergyGenerator = new KSGenValueUniform();
     ASSERT_PTR(tEnergyGenerator);
     tEnergyGenerator->SetValueMin(0);
     tEnergyGenerator->SetValueMax(1000);
 
-    KSGenValueAngleSpherical* tPhiGenerator = new KSGenValueAngleSpherical();
+    auto* tPhiGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tPhiGenerator);
     tPhiGenerator->SetAngleMin(0);
     tPhiGenerator->SetAngleMax(180);
 
-    KSGenValueAngleSpherical* tThetaGenerator = new KSGenValueAngleSpherical();
+    auto* tThetaGenerator = new KSGenValueAngleSpherical();
     ASSERT_PTR(tThetaGenerator);
     tThetaGenerator->SetAngleMin(0);
     tThetaGenerator->SetAngleMax(90);
 
-    KSGenValueUniform* tRGenerator = new KSGenValueUniform();
+    auto* tRGenerator = new KSGenValueUniform();
     ASSERT_PTR(tRGenerator);
     tRGenerator->SetValueMin(0);
     tRGenerator->SetValueMax(0.5);
 
-    KSGenValueUniform* tZGenerator = new KSGenValueUniform();
+    auto* tZGenerator = new KSGenValueUniform();
     ASSERT_PTR(tZGenerator);
     tZGenerator->SetValueMin(0);
     tZGenerator->SetValueMax(1);
 
-    KSGenValueUniform* tTimeGenerator = new KSGenValueUniform();
+    auto* tTimeGenerator = new KSGenValueUniform();
     ASSERT_PTR(tTimeGenerator);
     tTimeGenerator->SetValueMin(0);
     tTimeGenerator->SetValueMax(1e-3);
 
-    KSGenEnergyComposite* tCompositeEnergyGenerator = new KSGenEnergyComposite();
+    auto* tCompositeEnergyGenerator = new KSGenEnergyComposite();
     ASSERT_PTR(tCompositeEnergyGenerator);
     tCompositeEnergyGenerator->SetEnergyValue(tEnergyGenerator);
 
-    KSGenDirectionSphericalComposite* tCompositeDirectionGenerator = new KSGenDirectionSphericalComposite();
+    auto* tCompositeDirectionGenerator = new KSGenDirectionSphericalComposite();
     ASSERT_PTR(tCompositeDirectionGenerator);
     tCompositeDirectionGenerator->SetPhiValue(tPhiGenerator);
     tCompositeDirectionGenerator->SetThetaValue(tThetaGenerator);
 
-    KSGenPositionCylindricalComposite* tCompositePositionGenerator = new KSGenPositionCylindricalComposite();
+    auto* tCompositePositionGenerator = new KSGenPositionCylindricalComposite();
     tCompositePositionGenerator->SetRValue(tRGenerator);
     ASSERT_PTR(tCompositePositionGenerator);
     tCompositePositionGenerator->SetPhiValue(tPhiGenerator);
     tCompositePositionGenerator->SetZValue(tZGenerator);
     tCompositePositionGenerator->SetOrigin(KThreeVector(0, 0, -0.5));
 
-    KSGenTimeComposite* tCompositeTimeGenerator = new KSGenTimeComposite();
+    auto* tCompositeTimeGenerator = new KSGenTimeComposite();
     ASSERT_PTR(tCompositeTimeGenerator);
     tCompositeTimeGenerator->SetTimeValue(tTimeGenerator);
 
-    KSGenValueFix* tCompositePidGenerator = new KSGenValueFix();
+    auto* tCompositePidGenerator = new KSGenValueFix();
     ASSERT_PTR(tCompositePidGenerator);
     tCompositePidGenerator->SetValue(11);
 
-    KSGenGeneratorComposite* tCompositeGenerator = new KSGenGeneratorComposite();
+    auto* tCompositeGenerator = new KSGenGeneratorComposite();
     ASSERT_PTR(tCompositeGenerator);
     tCompositeGenerator->AddCreator(tCompositeEnergyGenerator);
     tCompositeGenerator->AddCreator(tCompositeDirectionGenerator);
@@ -842,7 +843,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
      KSGenDirectionSphericalComposite)  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
-    KSGenDirectionSphericalComposite* tCompositeGenerator = new KSGenDirectionSphericalComposite();
+    auto* tCompositeGenerator = new KSGenDirectionSphericalComposite();
     //    tCompositeGenerator->Initialize();
     ASSERT_ANY_THROW(tCompositeGenerator->Dice(&tParticles));
     //    tCompositeGenerator->Deinitialize();
@@ -851,7 +852,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
 TEST(KassiopeiaCompositeGeneratorDeathTest, KSGenEnergyComposite)  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
-    KSGenEnergyComposite* tCompositeGenerator = new KSGenEnergyComposite();
+    auto* tCompositeGenerator = new KSGenEnergyComposite();
     //    tCompositeGenerator->Initialize();
     ASSERT_ANY_THROW(tCompositeGenerator->Dice(&tParticles));
     //    tCompositeGenerator->Deinitialize();
@@ -861,7 +862,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
      KSGenPositionCylindricalComposite)  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
-    KSGenPositionCylindricalComposite* tCompositeGenerator = new KSGenPositionCylindricalComposite();
+    auto* tCompositeGenerator = new KSGenPositionCylindricalComposite();
     //    tCompositeGenerator->Initialize();
     ASSERT_ANY_THROW(tCompositeGenerator->Dice(&tParticles));
     //    tCompositeGenerator->Deinitialize();
@@ -871,7 +872,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
      KSGenPositionRectangularComposite)  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
-    KSGenPositionRectangularComposite* tCompositeGenerator = new KSGenPositionRectangularComposite();
+    auto* tCompositeGenerator = new KSGenPositionRectangularComposite();
     //    tCompositeGenerator->Initialize();
     ASSERT_ANY_THROW(tCompositeGenerator->Dice(&tParticles));
     //    tCompositeGenerator->Deinitialize();
@@ -880,7 +881,7 @@ TEST(KassiopeiaCompositeGeneratorDeathTest,
 TEST(KassiopeiaCompositeGeneratorDeathTest, KSGenTimeComposite)  // test case name should end in "DeathTest"
 {
     KSParticleQueue tParticles;
-    KSGenTimeComposite* tCompositeGenerator = new KSGenTimeComposite();
+    auto* tCompositeGenerator = new KSGenTimeComposite();
     //    tCompositeGenerator->Initialize();
     ASSERT_ANY_THROW(tCompositeGenerator->Dice(&tParticles));
     //    tCompositeGenerator->Deinitialize();

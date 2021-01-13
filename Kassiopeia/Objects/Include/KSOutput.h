@@ -414,7 +414,6 @@ int KSDictionary<XType>::AddOutput(XMemberType aMember, const std::string& aLabe
 
 #include "KComplexElement.hh"
 
-using namespace Kassiopeia;
 namespace katrin
 {
 
@@ -437,17 +436,17 @@ template<> inline bool KSOutputBuilder::Begin()
 template<> inline bool KSOutputBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
     if (aContainer->GetName() == "object") {
-        KTagged* tObject = KToolbox::GetInstance().Get<KTagged>(aContainer->AsReference<std::string>());
+        KTagged* tObject = KToolbox::GetInstance().Get<KTagged>(aContainer->AsString());
         fObject->fParent = tObject;
         return true;
     }
     if (aContainer->GetName() == "field") {
-        std::string tField = aContainer->AsReference<std::string>();
+        std::string tField = aContainer->AsString();
         fObject->fField = tField;
         return true;
     }

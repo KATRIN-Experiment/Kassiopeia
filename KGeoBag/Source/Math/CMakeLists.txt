@@ -46,7 +46,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagMath SHARED
-	${MATH_SOURCE_FILES}
+	${MATH_SOURCE_FILES} ${MATH_HEADER_FILES}
 )
 target_link_libraries( KGeoBagMath
     ${Kommon_LIBRARIES}

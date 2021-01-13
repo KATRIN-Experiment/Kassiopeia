@@ -31,7 +31,7 @@ template<typename Content> KEMField::KSmartPointer<Content> ReleaseToSmartPtr(KC
 }
 
 template<typename Content>
-KEMField::KSmartPointer<Content> ReleaseToSmartPtr(KEMField::KSmartPointer<KContainer> container)
+KEMField::KSmartPointer<Content> ReleaseToSmartPtr(const KEMField::KSmartPointer<KContainer>& container)
 {
     return ReleaseToSmartPtr<Content>(&(*container));
 }

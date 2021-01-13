@@ -11,9 +11,11 @@ class KSolenoid;
 class KCurrentLoop;
 
 // A list of all of the electromagnet types
-typedef KTYPELIST_4(KLineCurrent, KCoil, KSolenoid, KCurrentLoop) KElectromagnetTypes_;
+using KElectromagnetTypes_ = KEMField::KTypelist<
+    KLineCurrent,
+    KEMField::KTypelist<KCoil, KEMField::KTypelist<KSolenoid, KEMField::KTypelist<KCurrentLoop, KEMField::KNullType>>>>;
 
-typedef NoDuplicates<KElectromagnetTypes_>::Result KElectromagnetTypes;
+using KElectromagnetTypes = NoDuplicates<KElectromagnetTypes_>::Result;
 }  // namespace KEMField
 
 #include "KCoil.hh"

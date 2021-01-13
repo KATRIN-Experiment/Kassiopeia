@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajExactSpinError : public KSMathArray<12>
   public:
     KSTrajExactSpinError();
     KSTrajExactSpinError(const KSTrajExactSpinError& anOperand);
-    ~KSTrajExactSpinError();
+    ~KSTrajExactSpinError() override;
 
     //**********
     //assignment
@@ -36,18 +35,18 @@ class KSTrajExactSpinError : public KSMathArray<12>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KThreeVector& GetPositionError() const;
-    const KThreeVector& GetMomentumError() const;
+    const KGeoBag::KThreeVector& GetPositionError() const;
+    const KGeoBag::KThreeVector& GetMomentumError() const;
     const double& GetSpin0Error() const;
-    const KThreeVector& GetSpinError() const;
+    const KGeoBag::KThreeVector& GetSpinError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KThreeVector fPositionError;
-    mutable KThreeVector fMomentumError;
+    mutable KGeoBag::KThreeVector fPositionError;
+    mutable KGeoBag::KThreeVector fMomentumError;
     mutable double fSpin0Error;
-    mutable KThreeVector fSpinError;
+    mutable KGeoBag::KThreeVector fSpinError;
 };
 
 inline KSTrajExactSpinError& KSTrajExactSpinError::operator=(const double& anOperand)

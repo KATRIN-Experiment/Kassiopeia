@@ -63,9 +63,9 @@ class KVMSpaceLineSegment
     void SetPoint1(const double* point);  //start point
     void SetPoint2(const double* point);  //end point
 
-    KThreeVector fP1;  //start point
-    KThreeVector fP2;  //end point
-    KThreeVector fN;   //unit vector
+    KFieldVector fP1;  //start point
+    KFieldVector fP2;  //end point
+    KFieldVector fN;   //unit vector
     double fL;         //length
 };
 

@@ -2,12 +2,14 @@
 
 #include "KSNavigatorsMessage.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSNavSurface::KSNavSurface() : fTransmissionSplit(false), fReflectionSplit(false) {}
 KSNavSurface::KSNavSurface(const KSNavSurface& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTransmissionSplit(aCopy.fTransmissionSplit),
     fReflectionSplit(aCopy.fReflectionSplit)
 {}
@@ -15,7 +17,7 @@ KSNavSurface* KSNavSurface::Clone() const
 {
     return new KSNavSurface(*this);
 }
-KSNavSurface::~KSNavSurface() {}
+KSNavSurface::~KSNavSurface() = default;
 
 void KSNavSurface::SetTransmissionSplit(const bool& aTransmissionSplit)
 {

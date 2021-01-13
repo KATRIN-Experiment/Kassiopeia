@@ -60,8 +60,8 @@ struct KIsolatedBoundary
 class KBoundary
 {
   protected:
-    KBoundary() {}
-    virtual ~KBoundary() {}
+    KBoundary() = default;
+    virtual ~KBoundary() = default;
 
     virtual bool SameBoundaryAs(const KBoundary*) const = 0;
 
@@ -83,7 +83,7 @@ template<typename ValueType, unsigned int Dim> class KBoundaryValue
 {
   protected:
     KBoundaryValue() : fBoundaryValue(Dim, 0.) {}
-    virtual ~KBoundaryValue() {}
+    virtual ~KBoundaryValue() = default;
 
   public:
     void SetBoundaryValue(ValueType v)
@@ -133,7 +133,7 @@ template<typename ValueType, unsigned int Dim> class KNormalBoundaryFlux
 {
   protected:
     KNormalBoundaryFlux() : fNormalBoundaryFlux(Dim, 0.) {}
-    virtual ~KNormalBoundaryFlux() {}
+    virtual ~KNormalBoundaryFlux() = default;
 
   public:
     void SetNormalBoundaryFlux(ValueType v)
@@ -196,7 +196,7 @@ class KBoundaryType<BasisPolicy, KDirichletBoundary> :
         KDirichletBoundary(),
         KBoundaryValue<typename BasisPolicy::ValueType, BasisPolicy::Dimension>()
     {}
-    ~KBoundaryType() override {}
+    ~KBoundaryType() override = default;
 
     bool SameBoundaryAs(const KBoundary*) const override;
 
@@ -244,7 +244,7 @@ class KBoundaryType<BasisPolicy, KNeumannBoundary> :
     public KNormalBoundaryFlux<typename BasisPolicy::ValueType, BasisPolicy::Dimension>
 {
   public:
-    typedef KBoundaryType<BasisPolicy, KNeumannBoundary> SelfType;
+    using SelfType = KBoundaryType<BasisPolicy, KNeumannBoundary>;
 
   protected:
     KBoundaryType() :
@@ -252,7 +252,7 @@ class KBoundaryType<BasisPolicy, KNeumannBoundary> :
         KNeumannBoundary(),
         KNormalBoundaryFlux<typename BasisPolicy::ValueType, BasisPolicy::Dimension>()
     {}
-    ~KBoundaryType() override {}
+    ~KBoundaryType() override = default;
 
     bool SameBoundaryAs(const KBoundary*) const override;
 
@@ -301,7 +301,7 @@ class KBoundaryType<BasisPolicy, KCauchyBoundary> :
     public KNormalBoundaryFlux<typename BasisPolicy::ValueType, BasisPolicy::Dimension>
 {
   public:
-    typedef KBoundaryType<BasisPolicy, KCauchyBoundary> SelfType;
+    using SelfType = KBoundaryType<BasisPolicy, KCauchyBoundary>;
 
   protected:
     KBoundaryType() :
@@ -310,7 +310,7 @@ class KBoundaryType<BasisPolicy, KCauchyBoundary> :
         KBoundaryValue<typename BasisPolicy::ValueType, BasisPolicy::Dimension>(),
         KNormalBoundaryFlux<typename BasisPolicy::ValueType, BasisPolicy::Dimension>()
     {}
-    ~KBoundaryType() override {}
+    ~KBoundaryType() override = default;
 
     bool SameBoundaryAs(const KBoundary*) const override;
 
@@ -361,7 +361,7 @@ class KBoundaryType<BasisPolicy, KRobinBoundary> :
 {
   protected:
   public:
-    typedef KBoundaryType<BasisPolicy, KRobinBoundary> SelfType;
+    using SelfType = KBoundaryType<BasisPolicy, KRobinBoundary>;
 
     KBoundaryType() :
         KBoundary(),
@@ -369,7 +369,7 @@ class KBoundaryType<BasisPolicy, KRobinBoundary> :
         KBoundaryValue<typename BasisPolicy::ValueType, BasisPolicy::Dimension>(),
         KNormalBoundaryFlux<typename BasisPolicy::ValueType, BasisPolicy::Dimension>()
     {}
-    ~KBoundaryType() override {}
+    ~KBoundaryType() override = default;
 
     bool SameBoundaryAs(const KBoundary*) const override;
 
@@ -415,11 +415,11 @@ template<class BasisPolicy>
 class KBoundaryType<BasisPolicy, KIsolatedBoundary> : public KBoundary, public KIsolatedBoundary
 {
   public:
-    typedef KBoundaryType<BasisPolicy, KIsolatedBoundary> SelfType;
+    using SelfType = KBoundaryType<BasisPolicy, KIsolatedBoundary>;
 
   protected:
     KBoundaryType() : KBoundary(), fBoundaryIndex(0) {}
-    ~KBoundaryType() override {}
+    ~KBoundaryType() override = default;
 
     bool SameBoundaryAs(const KBoundary*) const override;
 

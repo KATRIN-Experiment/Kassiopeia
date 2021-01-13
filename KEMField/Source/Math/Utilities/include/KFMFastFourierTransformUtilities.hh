@@ -25,8 +25,10 @@ namespace KEMField
 class KFMFastFourierTransformUtilities
 {
   public:
-    KFMFastFourierTransformUtilities(){};
-    virtual ~KFMFastFourierTransformUtilities(){};
+    KFMFastFourierTransformUtilities() = default;
+    ;
+    virtual ~KFMFastFourierTransformUtilities() = default;
+    ;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -38,10 +40,10 @@ class KFMFastFourierTransformUtilities
     ////////////////////////////////////////////////////////////////////////
     //RADIX-2
     static void FFTRadixTwo_DIT(unsigned int N, double* data, double* twiddle);
-    static void ButterflyRadixTwo_CooleyTukey(double* H0, double* H1, double* W);
+    static void ButterflyRadixTwo_CooleyTukey(double* H0, double* H1, const double* W);
 
     static void FFTRadixTwo_DIF(unsigned int N, double* data, double* twiddle);
-    static void ButterflyRadixTwo_GentlemanSande(double* H0, double* H1, double* W);
+    static void ButterflyRadixTwo_GentlemanSande(double* H0, double* H1, const double* W);
 
     //wrappers for complex array
     static void FFTRadixTwo_DIT(unsigned int N, std::complex<double>* data, std::complex<double>* twiddle);

@@ -19,10 +19,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenTimeCompositeBuilder::~KComplexElement() {}
+template<> KSGenTimeCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenTimeCompositeStructure =
-    KSGenTimeCompositeBuilder::Attribute<string>("name") + KSGenTimeCompositeBuilder::Attribute<string>("time_value") +
+    KSGenTimeCompositeBuilder::Attribute<std::string>("name") +
+    KSGenTimeCompositeBuilder::Attribute<std::string>("time_value") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueFix>("time_fix") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueSet>("time_set") +
     KSGenTimeCompositeBuilder::ComplexElement<KSGenValueList>("time_list") +

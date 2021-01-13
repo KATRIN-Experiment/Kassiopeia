@@ -8,12 +8,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueFormulaBuilder::~KComplexElement() {}
+template<> KSGenValueFormulaBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueFormulaStructure = KSGenValueFormulaBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueFormulaStructure = KSGenValueFormulaBuilder::Attribute<std::string>("name") +
                                         KSGenValueFormulaBuilder::Attribute<double>("value_min") +
                                         KSGenValueFormulaBuilder::Attribute<double>("value_max") +
-                                        KSGenValueFormulaBuilder::Attribute<string>("value_formula");
+                                        KSGenValueFormulaBuilder::Attribute<std::string>("value_formula");
 
 STATICINT sKSGenValueFormula = KSRootBuilder::ComplexElement<KSGenValueFormula>("ksgen_value_formula");
 

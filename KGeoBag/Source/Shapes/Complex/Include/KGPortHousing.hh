@@ -12,7 +12,7 @@ class KGPortHousing : public KGBoundary
 {
   public:
     KGPortHousing() : fCoordTransform(nullptr) {}
-    KGPortHousing(double Amain[3], double Bmain[3], double rmain);
+    KGPortHousing(const double Amain[3], const double Bmain[3], double rmain);
 
     ~KGPortHousing() override;
 
@@ -27,7 +27,7 @@ class KGPortHousing : public KGBoundary
     virtual KGPortHousing* Clone() const;
 
     virtual void Initialize() const;
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -95,10 +95,10 @@ class KGPortHousing : public KGBoundary
     class Port
     {
       public:
-        Port() {}
+        Port() = default;
         Port(KGPortHousing* portHousing) : fPortHousing(portHousing) {}
 
-        virtual ~Port() {}
+        virtual ~Port() = default;
 
         virtual Port* Clone(KGPortHousing*) const = 0;
 
@@ -143,8 +143,8 @@ class KGPortHousing : public KGBoundary
     class RectangularPort : public KGPortHousing::Port
     {
       public:
-        RectangularPort() {}
-        RectangularPort(KGPortHousing* portHousing, double asub[3], double length, double width);
+        RectangularPort() = default;
+        RectangularPort(KGPortHousing* portHousing, const double asub[3], double length, double width);
 
         ~RectangularPort() override;
 
@@ -273,8 +273,8 @@ class KGPortHousing : public KGBoundary
     class CircularPort : public KGPortHousing::Port
     {
       public:
-        CircularPort() {}
-        CircularPort(KGPortHousing* portHousing, double asub[3], double rsub);
+        CircularPort() = default;
+        CircularPort(KGPortHousing* portHousing, const double asub[3], double rsub);
 
         ~CircularPort() override;
 

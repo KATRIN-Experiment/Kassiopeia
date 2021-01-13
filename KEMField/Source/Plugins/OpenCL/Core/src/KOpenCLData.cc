@@ -17,11 +17,9 @@ void KOpenCLData::ConstructOpenCLObjects()
 
     // First, construct the kernels that will use the surface buffers (this sets
     // the number of dummy elements in each buffer)
-    for (std::vector<const KOpenCLAction*>::iterator action = fAssociatedActions.begin();
-         action != fAssociatedActions.end();
-         ++action) {
-        if ((*action)->Enabled())
-            (*action)->ConstructOpenCLKernels();
+    for (auto& associatedAction : fAssociatedActions) {
+        if (associatedAction->Enabled())
+            associatedAction->ConstructOpenCLKernels();
     }
 
     if (fNLocal == std::numeric_limits<unsigned int>::max()) {
@@ -34,11 +32,9 @@ void KOpenCLData::ConstructOpenCLObjects()
     BuildOpenCLObjects();
 
     // Finally, we assign the buffers to the actions
-    for (std::vector<const KOpenCLAction*>::iterator action = fAssociatedActions.begin();
-         action != fAssociatedActions.end();
-         ++action) {
-        if ((*action)->Enabled())
-            (*action)->AssignBuffers();
+    for (auto& associatedAction : fAssociatedActions) {
+        if (associatedAction->Enabled())
+            associatedAction->AssignBuffers();
     }
 }
 

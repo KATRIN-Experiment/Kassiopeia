@@ -3,22 +3,18 @@
 namespace KEMField
 {
 
-KMagnetostaticConstantField::KMagnetostaticConstantField() : KMagnetostaticField(), fFieldVector(), fLocation() {}
+KMagnetostaticConstantField::KMagnetostaticConstantField() = default;
 
-KMagnetostaticConstantField::KMagnetostaticConstantField(const KThreeVector& aField) :
-    KMagnetostaticField(),
-    fFieldVector(aField),
-    fLocation()
-{}
+KMagnetostaticConstantField::KMagnetostaticConstantField(const KFieldVector& aField) : fFieldVector(aField) {}
 
 /** We choose A(r) = 1/2 * B x r as the magnetic potential.
  * This is a viable choice for Coulomb gauge.*/
-KThreeVector KMagnetostaticConstantField::MagneticPotentialCore(const KPosition& aSamplePoint) const
+KFieldVector KMagnetostaticConstantField::MagneticPotentialCore(const KPosition& aSamplePoint) const
 {
     KPosition FieldPoint = aSamplePoint - fLocation;
     return 0.5 * fFieldVector.Cross(FieldPoint);
 }
-KThreeVector KMagnetostaticConstantField::MagneticFieldCore(const KPosition& /*aSamplePoint*/) const
+KFieldVector KMagnetostaticConstantField::MagneticFieldCore(const KPosition& /*aSamplePoint*/) const
 {
     return fFieldVector;
 }
@@ -27,11 +23,11 @@ KGradient KMagnetostaticConstantField::MagneticGradientCore(const KPosition& /*a
     return KThreeMatrix::sZero;
 }
 
-void KMagnetostaticConstantField::SetField(const KThreeVector& aFieldVector)
+void KMagnetostaticConstantField::SetField(const KFieldVector& aFieldVector)
 {
     fFieldVector = aFieldVector;
 }
-KThreeVector KMagnetostaticConstantField::GetField() const
+KFieldVector KMagnetostaticConstantField::GetField() const
 {
     return fFieldVector;
 }
@@ -40,7 +36,7 @@ void KMagnetostaticConstantField::SetLocation(const KPosition& aLocation)
 {
     fLocation = aLocation;
 }
-KThreeVector KMagnetostaticConstantField::GetLocation() const
+KFieldVector KMagnetostaticConstantField::GetLocation() const
 {
     return fLocation;
 }

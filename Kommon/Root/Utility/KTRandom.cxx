@@ -19,7 +19,7 @@ KTRandom::KTRandom() : fGenerator(KRandom::GetInstance())
     SetTitle("Random number generator: KATRIN's Mersenne Twistor");
 }
 
-KTRandom::~KTRandom() {}
+KTRandom::~KTRandom() = default;
 
 UInt_t KTRandom::GetSeed() const
 {

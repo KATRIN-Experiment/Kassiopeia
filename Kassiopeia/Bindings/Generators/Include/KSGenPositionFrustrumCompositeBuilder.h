@@ -30,15 +30,15 @@ template<> inline bool KSGenPositionFrustrumCompositeBuilder::AddAttribute(KCont
         return true;
     }
     if (aContainer->GetName() == "r") {
-        fObject->SetRValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetRValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "phi") {
-        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "z") {
-        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "r1") {

@@ -7,7 +7,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectrostaticLinearFieldBuilder::~KComplexElement() {}
+template<> KElectrostaticLinearFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKEMToolBoxBuilder = KEMToolboxBuilder::ComplexElement<KElectrostaticLinearField>("linear_electric_field");
 

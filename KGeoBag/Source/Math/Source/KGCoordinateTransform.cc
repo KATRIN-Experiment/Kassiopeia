@@ -67,7 +67,8 @@ void KGCoordinateTransform::ConvertToGlobalCoords(const double* local, double* g
     }
 }
 
-void KGCoordinateTransform::ConvertToLocalCoords(const KThreeVector global, KThreeVector& local, const bool isVec) const
+void KGCoordinateTransform::ConvertToLocalCoords(const KThreeVector& global, KThreeVector& local,
+                                                 const bool isVec) const
 {
     /**
      * Transforms global x,y,z using the coordinates of the group into local
@@ -89,7 +90,7 @@ void KGCoordinateTransform::ConvertToLocalCoords(const KThreeVector global, KThr
     }
 }
 
-void KGCoordinateTransform::ConvertToGlobalCoords(const KThreeVector local, KThreeVector& global,
+void KGCoordinateTransform::ConvertToGlobalCoords(const KThreeVector& local, KThreeVector& global,
                                                   const bool isVec) const
 {
     /**

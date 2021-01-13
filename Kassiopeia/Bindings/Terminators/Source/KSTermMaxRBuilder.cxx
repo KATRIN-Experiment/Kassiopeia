@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMaxRBuilder::~KComplexElement() {}
+template<> KSTermMaxRBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxRStructure =
-    KSTermMaxRBuilder::Attribute<string>("name") + KSTermMaxRBuilder::Attribute<double>("r");
+    KSTermMaxRBuilder::Attribute<std::string>("name") + KSTermMaxRBuilder::Attribute<double>("r");
 
 STATICINT sKSTermMaxR = KSRootBuilder::ComplexElement<KSTermMaxR>("ksterm_max_r");
 

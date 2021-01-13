@@ -16,7 +16,7 @@ template<class XFloatT, class XSamplingPolicy = policies::PlainSumming> class KM
 {
   public:
     KMathIntegrator2D(XFloatT precision = 1E-4, KEMathIntegrationMethod method = KEMathIntegrationMethod::Simpson);
-    virtual ~KMathIntegrator2D(){};
+    virtual ~KMathIntegrator2D() = default;
 
     /**
      * Set the integration limits.

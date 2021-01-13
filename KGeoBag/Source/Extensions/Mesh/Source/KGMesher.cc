@@ -3,7 +3,7 @@
 namespace KGeoBag
 {
 
-KGMesher::KGMesher() {}
-KGMesher::~KGMesher() {}
+KGMesher::KGMesher() = default;
+KGMesher::~KGMesher() = default;
 
 }  // namespace KGeoBag

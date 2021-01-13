@@ -7,14 +7,14 @@ namespace Kassiopeia
 
 KSTrajControlSpinPrecession::KSTrajControlSpinPrecession() : fFraction(1. / 16.) {}
 KSTrajControlSpinPrecession::KSTrajControlSpinPrecession(const KSTrajControlSpinPrecession& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fFraction(aCopy.fFraction)
 {}
 KSTrajControlSpinPrecession* KSTrajControlSpinPrecession::Clone() const
 {
     return new KSTrajControlSpinPrecession(*this);
 }
-KSTrajControlSpinPrecession::~KSTrajControlSpinPrecession() {}
+KSTrajControlSpinPrecession::~KSTrajControlSpinPrecession() = default;
 
 void KSTrajControlSpinPrecession::Calculate(const KSTrajExactSpinParticle& aParticle, double& aValue)
 {

@@ -1,17 +1,14 @@
 #ifndef KGELECTROMAGNETCONVERTER_DEF
 #define KGELECTROMAGNETCONVERTER_DEF
 
-#include "KTagged.h"
-using katrin::KTag;
-
-#include "KThreeMatrix_KEMField.hh"
-using KGeoBag::KThreeMatrix;
-
 #include "KGCylinderSurface.hh"
 #include "KGCylinderTubeSpace.hh"
 #include "KGElectromagnet.hh"
 #include "KGRodSpace.hh"
+#include "KTagged.h"
+#include "KThreeMatrix_KEMField.hh"
 
+#include <KTextFile.h>
 
 namespace KGeoBag
 {
@@ -30,14 +27,16 @@ class KGElectromagnetConverter :
     ~KGElectromagnetConverter() override;
 
   public:
-    void SetElectromagnetContainer(KElectromagnetContainer* aContainer)
+    void SetElectromagnetContainer(KEMField::KElectromagnetContainer* aContainer)
     {
         fElectromagnetContainer = aContainer;
         return;
     }
 
+    void SetDumpMagfield3ToFile(const std::string& aFileName);
+
   protected:
-    KElectromagnetContainer* fElectromagnetContainer;
+    KEMField::KElectromagnetContainer* fElectromagnetContainer;
 
   public:
     void SetSystem(const KThreeVector& anOrigin, const KThreeVector& anXAxis, const KThreeVector& aYAxis,
@@ -51,7 +50,7 @@ class KGElectromagnetConverter :
     KThreeVector GlobalToInternalVector(const KThreeVector& aVector);
     KThreeVector InternalToGlobalPosition(const KThreeVector& aVector);
     KThreeVector InternalToGlobalVector(const KThreeVector& aVector);
-    KThreeMatrix InternalTensorToGlobal(const KGradient& aGradient);
+    KThreeMatrix InternalTensorToGlobal(const KEMField::KGradient& aGradient);
 
     void VisitSpace(KGSpace* aSpace) override;
     void VisitSurface(KGSurface* aSurface) override;
@@ -65,6 +64,8 @@ class KGElectromagnetConverter :
 
   private:
     void Clear();
+
+    katrin::KTextFile* fMagfield3File;
 
     KThreeVector fOrigin;
     KThreeVector fXAxis;

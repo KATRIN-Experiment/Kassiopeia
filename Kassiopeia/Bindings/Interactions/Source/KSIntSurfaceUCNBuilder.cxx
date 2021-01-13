@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntSurfaceUCNBuilder::~KComplexElement() {}
+template<> KSIntSurfaceUCNBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntSurfaceUCNStructure = KSIntSurfaceUCNBuilder::Attribute<string>("name") +
+STATICINT sKSIntSurfaceUCNStructure = KSIntSurfaceUCNBuilder::Attribute<std::string>("name") +
                                       KSIntSurfaceUCNBuilder::Attribute<double>("eta") +
                                       KSIntSurfaceUCNBuilder::Attribute<double>("alpha") +
                                       KSIntSurfaceUCNBuilder::Attribute<double>("real_optical_potential") +

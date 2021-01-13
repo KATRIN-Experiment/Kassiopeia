@@ -73,7 +73,7 @@ void KVMSpaceTriangle::SetVertices(const double* point0, const double* point1, c
 
 void KVMSpaceTriangle::GetVertices(double* point0, double* point1, double* point2) const
 {
-    for (unsigned int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         point0[i] = fP[i];
         point1[i] = fP[i] + fL1 * fN1[i];
         point2[i] = fP[i] + fL2 * fN2[i];

@@ -11,15 +11,15 @@ KSComponentGroup::KSComponentGroup() : KSComponent(), fComponents()
 }
 KSComponentGroup::KSComponentGroup(const KSComponentGroup& aCopy) : KSComponent(aCopy), fComponents(aCopy.fComponents)
 {
-    for (auto tIt = fComponents.begin(); tIt != fComponents.end(); tIt++) {
-        (*tIt) = (*tIt)->Clone();
+    for (auto& component : fComponents) {
+        component = component->Clone();
     }
     Set(this);
 }
 KSComponentGroup::~KSComponentGroup()
 {
-    for (auto tIt = fComponents.begin(); tIt != fComponents.end(); tIt++) {
-        delete (*tIt);
+    for (auto& component : fComponents) {
+        delete component;
     }
 }
 

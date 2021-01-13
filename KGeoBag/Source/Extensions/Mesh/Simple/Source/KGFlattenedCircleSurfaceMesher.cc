@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGFlattenedCircleSurfaceMesher::KGFlattenedCircleSurfaceMesher() : KGSimpleMesher() {}
-KGFlattenedCircleSurfaceMesher::~KGFlattenedCircleSurfaceMesher() {}
+KGFlattenedCircleSurfaceMesher::KGFlattenedCircleSurfaceMesher() = default;
+KGFlattenedCircleSurfaceMesher::~KGFlattenedCircleSurfaceMesher() = default;
 
 void KGFlattenedCircleSurfaceMesher::VisitFlattenedClosedPathSurface(KGFlattenedCircleSurface* aFlattenedCircleSurface)
 {

@@ -28,7 +28,8 @@ template<typename ObjectTypeList, unsigned int SpatialNDIM> class KFMCollocation
 {
   public:
     KFMCollocationPointIdentitySetCreator() : fTree(nullptr), fRootNode(nullptr){};
-    virtual ~KFMCollocationPointIdentitySetCreator(){};
+    virtual ~KFMCollocationPointIdentitySetCreator() = default;
+    ;
 
     void SetTree(KFMCubicSpaceTree<SpatialNDIM, ObjectTypeList>* tree)
     {

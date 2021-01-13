@@ -9,6 +9,8 @@ using katrin::KRandom;
 #include <cmath>
 #include <iostream>
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -21,7 +23,7 @@ KSIntSurfaceDiffuse::KSIntSurfaceDiffuse() :
     fUseRelativeLoss(false)
 {}
 KSIntSurfaceDiffuse::KSIntSurfaceDiffuse(const KSIntSurfaceDiffuse& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fProbability(aCopy.fProbability),
     fReflectionLoss(aCopy.fReflectionLoss),
     fTransmissionLoss(aCopy.fTransmissionLoss),
@@ -33,7 +35,7 @@ KSIntSurfaceDiffuse* KSIntSurfaceDiffuse::Clone() const
 {
     return new KSIntSurfaceDiffuse(*this);
 }
-KSIntSurfaceDiffuse::~KSIntSurfaceDiffuse() {}
+KSIntSurfaceDiffuse::~KSIntSurfaceDiffuse() = default;
 
 void KSIntSurfaceDiffuse::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                              KSParticleQueue& aQueue)

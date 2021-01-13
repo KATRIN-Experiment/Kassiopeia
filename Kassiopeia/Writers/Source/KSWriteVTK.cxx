@@ -5,11 +5,13 @@
 #include "KSWritersMessage.h"
 
 #ifdef Kassiopeia_USE_BOOST
-//#include "KPathUtils.h"
-//using katrin::KPathUtils;
+#include "KPathUtils.h"
+using katrin::KPathUtils;
 #endif
 
 using namespace std;
+using KGeoBag::KThreeVector;
+using KGeoBag::KTwoVector;
 
 namespace Kassiopeia
 {
@@ -31,7 +33,7 @@ KSWriteVTK::KSWriteVTK() :
     fStepDataActions()
 {}
 KSWriteVTK::KSWriteVTK(const KSWriteVTK& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBase(aCopy.fBase),
     fPath(aCopy.fPath),
     fTrackPointFlag(false),
@@ -51,7 +53,7 @@ KSWriteVTK* KSWriteVTK::Clone() const
 {
     return new KSWriteVTK(*this);
 }
-KSWriteVTK::~KSWriteVTK() {}
+KSWriteVTK::~KSWriteVTK() = default;
 
 void KSWriteVTK::SetBase(const string& aBase)
 {
@@ -328,33 +330,31 @@ void KSWriteVTK::DeinitializeComponent()
 {
     wtrmsg_debug("stopping VTK writer" << eom);
 
-    if (fBase.empty()) {
-        fBase = GetName();
-    }
+    string tBase = fBase.empty() ? GetName() : fBase;
+    string tPath = fPath.empty() ? OUTPUT_DEFAULT_DIR : fPath;
 
-    if (fPath.empty()) {
-        fPath = OUTPUT_DEFAULT_DIR;
-    }
-    else {
 #ifdef Kassiopeia_USE_BOOST
-//            KPathUtils::MakeDirectory( fPath );
+    KPathUtils::MakeDirectory(tPath);
 #endif
-    }
 
     vtkSmartPointer<vtkXMLPolyDataWriter> tStepWriter = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
-    tStepWriter->SetFileName((fPath + string("/") + fBase + string("Step.vtp")).c_str());
+    tStepWriter->SetFileName((tPath + string("/") + tBase + string("Step.vtp")).c_str());
     tStepWriter->SetDataModeToBinary();
 #ifdef VTK6
     tStepWriter->SetInputData(fStepData);
 #else
     tStepWriter->SetInput(fStepData);
 #endif
-    tStepWriter->Write();
 
-    wtrmsg(eNormal) << "VTK output was written to file <" << tStepWriter->GetFileName() << ">" << eom;
+    if (tStepWriter->Write() == 1) {
+        wtrmsg(eNormal) << "VTK step output was written to file <" << tStepWriter->GetFileName() << ">" << eom;
+    }
+    else {
+        wtrmsg(eWarning) << "could not write VTK step output to file <" << tStepWriter->GetFileName() << ">" << eom;
+    }
 
     vtkSmartPointer<vtkXMLPolyDataWriter> tTrackWriter = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
-    tTrackWriter->SetFileName((fPath + string("/") + fBase + string("Track.vtp")).c_str());
+    tTrackWriter->SetFileName((tPath + string("/") + tBase + string("Track.vtp")).c_str());
     tTrackWriter->SetDataModeToBinary();
 #ifdef VTK6
     tTrackWriter->SetInputData(fTrackData);
@@ -363,7 +363,12 @@ void KSWriteVTK::DeinitializeComponent()
 #endif
     tTrackWriter->Write();
 
-    wtrmsg(eNormal) << "VTK output was written to file <" << tTrackWriter->GetFileName() << ">" << eom;
+    if (tTrackWriter->Write() == 1) {
+        wtrmsg(eNormal) << "VTK track output was written to file <" << tTrackWriter->GetFileName() << ">" << eom;
+    }
+    else {
+        wtrmsg(eWarning) << "could not write VTK track output to file <" << tTrackWriter->GetFileName() << ">" << eom;
+    }
 
     return;
 }
@@ -373,7 +378,7 @@ void KSWriteVTK::AddTrackPoint(KSComponent* anComponent)
     wtrmsg_debug("VTK writer <" << GetName() << "> making track point action for object <" << anComponent->GetName()
                                 << ">" << eom)
 
-        KThreeVector* tThreeVector = anComponent->As<KThreeVector>();
+        auto* tThreeVector = anComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a three_vector" << eom) fTrackPointAction.first =
             anComponent;
@@ -392,7 +397,7 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
     wtrmsg_debug("VTK writer <" << GetName() << "> making track data action for object <" << anComponent->GetName()
                                 << ">" << eom)
 
-        KSComponentGroup* tComponentGroup = anComponent->As<KSComponentGroup>();
+        auto* tComponentGroup = anComponent->As<KSComponentGroup>();
     if (tComponentGroup != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a group"
                                   << eom) for (unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount();
@@ -403,14 +408,14 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         return;
     }
 
-    string* tString = anComponent->As<string>();
+    auto* tString = anComponent->As<string>();
     if (tString != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a string" << eom) wtrmsg(eWarning)
             << "  ignoring string object <" << anComponent->GetName() << ">" << eom;
         return;
     }
 
-    KTwoVector* tTwoVector = anComponent->As<KTwoVector>();
+    auto* tTwoVector = anComponent->As<KTwoVector>();
     if (tTwoVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a two_vector" << eom)
             vtkSmartPointer<vtkDoubleArray>
@@ -421,7 +426,7 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         fTrackDataActions.insert(ActionEntry(anComponent, new TwoVectorAction(tTwoVector, tArray)));
         return;
     }
-    KThreeVector* tThreeVector = anComponent->As<KThreeVector>();
+    auto* tThreeVector = anComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a three_vector" << eom)
             vtkSmartPointer<vtkDoubleArray>
@@ -440,20 +445,20 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         return;
     }
 
-    unsigned short* tUShort = anComponent->As<unsigned short>();
+    auto* tUShort = anComponent->As<unsigned short>();
     if (tUShort != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is an unsigned_short" << eom) wtrmsg(eWarning)
             << "  ignoring unsigned short object <" << anComponent->GetName() << ">" << eom;
         return;
     }
-    short* tShort = anComponent->As<short>();
+    auto* tShort = anComponent->As<short>();
     if (tShort != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a short" << eom) wtrmsg(eWarning)
             << "  ignoring short object <" << anComponent->GetName() << ">" << eom;
         return;
     }
 
-    unsigned int* tUInt = anComponent->As<unsigned int>();
+    auto* tUInt = anComponent->As<unsigned int>();
     if (tUInt != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a unsigned_int" << eom)
             vtkSmartPointer<vtkUnsignedIntArray>
@@ -475,7 +480,7 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         return;
     }
 
-    unsigned long* tULong = anComponent->As<unsigned long>();
+    auto* tULong = anComponent->As<unsigned long>();
     if (tULong != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is an unsigned_long" << eom) wtrmsg(eWarning)
             << "  ignoring unsigned long object <" << anComponent->GetName() << ">" << eom;
@@ -488,7 +493,7 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         return;
     }
 
-    float* tFloat = anComponent->As<float>();
+    auto* tFloat = anComponent->As<float>();
     if (tFloat != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a float" << eom) vtkSmartPointer<vtkFloatArray>
             tArray = vtkSmartPointer<vtkFloatArray>::New();
@@ -498,7 +503,7 @@ void KSWriteVTK::AddTrackData(KSComponent* anComponent)
         fTrackDataActions.insert(ActionEntry(anComponent, new FloatAction(tFloat, tArray)));
         return;
     }
-    double* tDouble = anComponent->As<double>();
+    auto* tDouble = anComponent->As<double>();
     if (tDouble != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a double" << eom) vtkSmartPointer<vtkDoubleArray>
             tArray = vtkSmartPointer<vtkDoubleArray>::New();
@@ -524,10 +529,10 @@ void KSWriteVTK::FillTrack()
             fTrackPointAction.second->Execute();
             fTrackPointAction.first->PullDeupdate();
 
-            for (ActionIt tIt = fTrackDataActions.begin(); tIt != fTrackDataActions.end(); tIt++) {
-                tIt->first->PullUpdate();
-                tIt->second->Execute();
-                tIt->first->PullDeupdate();
+            for (auto& trackDataAction : fTrackDataActions) {
+                trackDataAction.first->PullUpdate();
+                trackDataAction.second->Execute();
+                trackDataAction.first->PullDeupdate();
             }
         }
     }
@@ -561,7 +566,7 @@ void KSWriteVTK::AddStepPoint(KSComponent* anComponent)
     wtrmsg_debug("VTK writer <" << GetName() << "> making step point action for object <" << anComponent->GetName()
                                 << ">" << eom)
 
-        KThreeVector* tThreeVector = anComponent->As<KThreeVector>();
+        auto* tThreeVector = anComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a three_vector" << eom) fStepPointAction.first =
             anComponent;
@@ -580,7 +585,7 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
     wtrmsg_debug("VTK writer <" << GetName() << "> making step data action for object <" << anComponent->GetName()
                                 << ">" << eom)
 
-        KSComponentGroup* tComponentGroup = anComponent->As<KSComponentGroup>();
+        auto* tComponentGroup = anComponent->As<KSComponentGroup>();
     if (tComponentGroup != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a group"
                                   << eom) for (unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount();
@@ -591,14 +596,14 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         return;
     }
 
-    string* tString = anComponent->As<string>();
+    auto* tString = anComponent->As<string>();
     if (tString != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a string" << eom) wtrmsg(eWarning)
             << "  ignoring string object <" << anComponent->GetName() << ">" << eom;
         return;
     }
 
-    KTwoVector* tTwoVector = anComponent->As<KTwoVector>();
+    auto* tTwoVector = anComponent->As<KTwoVector>();
     if (tTwoVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a two_vector" << eom)
             vtkSmartPointer<vtkDoubleArray>
@@ -609,7 +614,7 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         fStepDataActions.insert(ActionEntry(anComponent, new TwoVectorAction(tTwoVector, tArray)));
         return;
     }
-    KThreeVector* tThreeVector = anComponent->As<KThreeVector>();
+    auto* tThreeVector = anComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a three_vector" << eom)
             vtkSmartPointer<vtkDoubleArray>
@@ -628,20 +633,20 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         return;
     }
 
-    unsigned short* tUShort = anComponent->As<unsigned short>();
+    auto* tUShort = anComponent->As<unsigned short>();
     if (tUShort != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is an unsigned_short" << eom) wtrmsg(eWarning)
             << "  ignoring unsigned short object <" << anComponent->GetName() << ">" << eom;
         return;
     }
-    short* tShort = anComponent->As<short>();
+    auto* tShort = anComponent->As<short>();
     if (tShort != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a short" << eom) wtrmsg(eWarning)
             << "  ignoring short object <" << anComponent->GetName() << ">" << eom;
         return;
     }
 
-    unsigned int* tUInt = anComponent->As<unsigned int>();
+    auto* tUInt = anComponent->As<unsigned int>();
     if (tUInt != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a unsigned_int" << eom)
             vtkSmartPointer<vtkUnsignedIntArray>
@@ -663,7 +668,7 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         return;
     }
 
-    unsigned long* tULong = anComponent->As<unsigned long>();
+    auto* tULong = anComponent->As<unsigned long>();
     if (tULong != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is an unsigned_long" << eom) wtrmsg(eWarning)
             << "  ignoring unsigned long object <" << anComponent->GetName() << ">" << eom;
@@ -676,7 +681,7 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         return;
     }
 
-    float* tFloat = anComponent->As<float>();
+    auto* tFloat = anComponent->As<float>();
     if (tFloat != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a float" << eom) vtkSmartPointer<vtkFloatArray>
             tArray = vtkSmartPointer<vtkFloatArray>::New();
@@ -686,7 +691,7 @@ void KSWriteVTK::AddStepData(KSComponent* anComponent)
         fStepDataActions.insert(ActionEntry(anComponent, new FloatAction(tFloat, tArray)));
         return;
     }
-    double* tDouble = anComponent->As<double>();
+    auto* tDouble = anComponent->As<double>();
     if (tDouble != nullptr) {
         wtrmsg_debug("  object <" << anComponent->GetName() << "> is a double" << eom) vtkSmartPointer<vtkDoubleArray>
             tArray = vtkSmartPointer<vtkDoubleArray>::New();
@@ -712,10 +717,10 @@ void KSWriteVTK::FillStep()
             fStepPointAction.second->Execute();
             fStepPointAction.first->PullDeupdate();
 
-            for (ActionIt tIt = fStepDataActions.begin(); tIt != fStepDataActions.end(); tIt++) {
-                tIt->first->PullUpdate();
-                tIt->second->Execute();
-                tIt->first->PullDeupdate();
+            for (auto& stepDataAction : fStepDataActions) {
+                stepDataAction.first->PullUpdate();
+                stepDataAction.second->Execute();
+                stepDataAction.first->PullDeupdate();
             }
         }
     }

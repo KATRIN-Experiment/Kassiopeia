@@ -30,7 +30,8 @@ template<typename ObjectTypeList> class KGTreeStructureExtractor : public KGNode
         fFlattenedTree.clear();
         fNNodes = 0;
     };
-    ~KGTreeStructureExtractor() override{};
+    ~KGTreeStructureExtractor() override = default;
+    ;
 
     void ApplyAction(KGNode<ObjectTypeList>* node) override
     {

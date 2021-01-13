@@ -1,5 +1,7 @@
 #include "KSReadIteratorROOT.h"
 
+using namespace std;
+
 namespace Kassiopeia
 {
 
@@ -43,7 +45,7 @@ KSReadIteratorROOT::KSReadIteratorROOT(TFile* aFile, TTree* aKeyTree, TTree* aDa
         fObjects.insert(ObjectEntry(tKey, tObject));
     }
 }
-KSReadIteratorROOT::~KSReadIteratorROOT() {}
+KSReadIteratorROOT::~KSReadIteratorROOT() = default;
 
 void KSReadIteratorROOT::operator<<(const unsigned int& aValue)
 {
@@ -62,8 +64,8 @@ void KSReadIteratorROOT::operator<<(const unsigned int& aValue)
     fData->GetEntry(fIndex);
     fValid = true;
 
-    for (auto tIt = fObjects.begin(); tIt != fObjects.end(); tIt++) {
-        (*(tIt->second)) << aValue;
+    for (auto& object : fObjects) {
+        (*(object.second)) << aValue;
     }
 
     return;
@@ -80,8 +82,8 @@ void KSReadIteratorROOT::operator++(int)
     fData->GetEntry(fIndex);
     fValid = true;
 
-    for (auto tIt = fObjects.begin(); tIt != fObjects.end(); tIt++) {
-        (*(tIt->second))++;
+    for (auto& object : fObjects) {
+        (*(object.second))++;
     }
 
     return;
@@ -97,8 +99,8 @@ void KSReadIteratorROOT::operator--(int)
     fData->GetEntry(fIndex);
     fValid = true;
 
-    for (auto tIt = fObjects.begin(); tIt != fObjects.end(); tIt++) {
-        (*(tIt->second))--;
+    for (auto& object : fObjects) {
+        (*(object.second))--;
     }
 
     return;

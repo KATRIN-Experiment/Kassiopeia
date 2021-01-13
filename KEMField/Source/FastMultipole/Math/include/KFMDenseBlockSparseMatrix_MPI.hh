@@ -40,9 +40,9 @@ class KFMDenseBlockSparseMatrix_MPI : public KSquareMatrix<ValueType>
         fVerbosity(verbosity)
     {
         fZero = 0.0;
-        fRowFileInterface = NULL;
-        fColumnFileInterface = NULL;
-        fElementFileInterface = NULL;
+        fRowFileInterface = nullptr;
+        fColumnFileInterface = nullptr;
+        fElementFileInterface = nullptr;
     };
 
     virtual ~KFMDenseBlockSparseMatrix_MPI()

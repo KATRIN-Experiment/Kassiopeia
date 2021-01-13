@@ -4,8 +4,8 @@
 
 namespace KGeoBag
 {
-template<> KGRotatedArcSegmentSpace::Visitor::Visitor() {}
+template<> KGRotatedArcSegmentSpace::Visitor::Visitor() = default;
 
-template<> KGRotatedArcSegmentSpace::Visitor::~Visitor() {}
+template<> KGRotatedArcSegmentSpace::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

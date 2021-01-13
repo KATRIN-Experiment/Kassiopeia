@@ -6,12 +6,12 @@ namespace Kassiopeia
 {
 
 KSTermMinR::KSTermMinR() : fMinR(0.) {}
-KSTermMinR::KSTermMinR(const KSTermMinR& aCopy) : KSComponent(), fMinR(aCopy.fMinR) {}
+KSTermMinR::KSTermMinR(const KSTermMinR& aCopy) : KSComponent(aCopy), fMinR(aCopy.fMinR) {}
 KSTermMinR* KSTermMinR::Clone() const
 {
     return new KSTermMinR(*this);
 }
-KSTermMinR::~KSTermMinR() {}
+KSTermMinR::~KSTermMinR() = default;
 
 void KSTermMinR::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

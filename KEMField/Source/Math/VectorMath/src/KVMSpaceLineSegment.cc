@@ -56,7 +56,7 @@ void KVMSpaceLineSegment::SetVertices(const double* point1, const double* point2
 
 void KVMSpaceLineSegment::GetVertices(double* point1, double* point2) const
 {
-    for (unsigned int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         point1[i] = fP1[i];
         point2[i] = fP2[i];
     }

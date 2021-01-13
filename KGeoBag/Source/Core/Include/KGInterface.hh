@@ -40,25 +40,27 @@ class KGInterface
 
   public:
     std::vector<KGSurface*> RetrieveSurfaces();
-    std::vector<KGSurface*> RetrieveSurfaces(std::string aPath);
-    KGSurface* RetrieveSurface(std::string aPath);
+    std::vector<KGSurface*> RetrieveSurfaces(const std::string& aPath);
+    KGSurface* RetrieveSurface(const std::string& aPath);
 
     std::vector<KGSpace*> RetrieveSpaces();
-    std::vector<KGSpace*> RetrieveSpaces(std::string aPath);
-    KGSpace* RetrieveSpace(std::string aPath);
+    std::vector<KGSpace*> RetrieveSpaces(const std::string& aPath);
+    KGSpace* RetrieveSpace(const std::string& aPath);
 
   private:
     void RetrieveSurfacesBySpecifier(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, std::string aSpecifier);
     void RetrieveSpacesBySpecifier(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, std::string aSpecifier);
 
-    void RetrieveSurfacesByPath(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, std::string aPath);
-    void RetrieveSpacesByPath(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, std::string aPath);
+    void RetrieveSurfacesByPath(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, const std::string& aPath);
+    void RetrieveSpacesByPath(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, const std::string& aPath);
 
-    void RetrieveSurfacesByName(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, std::string aName);
-    void RetrieveSpacesByName(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, std::string aName);
+    static void RetrieveSurfacesByName(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode,
+                                       const std::string& aName);
+    static void RetrieveSpacesByName(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, const std::string& aName);
 
-    void RetrieveSurfacesByTag(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, std::string aTag, int aDepth);
-    void RetrieveSpacesByTag(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, std::string aTag, int aDepth);
+    void RetrieveSurfacesByTag(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, const std::string& aTag,
+                               int aDepth);
+    void RetrieveSpacesByTag(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, const std::string& aTag, int aDepth);
 
     void RetrieveSurfacesByWildcard(std::vector<KGSurface*>& anAccumulator, KGSpace* aNode, int aDepth);
     void RetrieveSpacesByWildcard(std::vector<KGSpace*>& anAccumulator, KGSpace* aNode, int aDepth);

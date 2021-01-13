@@ -20,15 +20,15 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionCylindricalCompositeBuilder::~KComplexElement() {}
+template<> KSGenPositionCylindricalCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionCylindricalCompositeStructure =
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("name") +
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("surface") +
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("space") +
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("r") +
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("phi") +
-    KSGenPositionCylindricalCompositeBuilder::Attribute<string>("z") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("name") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("space") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("r") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("phi") +
+    KSGenPositionCylindricalCompositeBuilder::Attribute<std::string>("z") +
     KSGenPositionCylindricalCompositeBuilder::ComplexElement<KSGenValueFix>("r_fix") +
     KSGenPositionCylindricalCompositeBuilder::ComplexElement<KSGenValueSet>("r_set") +
     KSGenPositionCylindricalCompositeBuilder::ComplexElement<KSGenValueList>("r_list") +

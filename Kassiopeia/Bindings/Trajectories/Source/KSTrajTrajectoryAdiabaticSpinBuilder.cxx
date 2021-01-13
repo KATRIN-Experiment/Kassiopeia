@@ -31,10 +31,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryAdiabaticSpinBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryAdiabaticSpinBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryAdiabaticSpinStructure =
-    KSTrajTrajectoryAdiabaticSpinBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryAdiabaticSpinBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryAdiabaticSpinBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryAdiabaticSpinBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +
     KSTrajTrajectoryAdiabaticSpinBuilder::ComplexElement<KSTrajIntegratorRKDP54>("integrator_rkdp54") +

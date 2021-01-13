@@ -9,7 +9,7 @@ namespace Kassiopeia
 
 KSGenValuePareto::KSGenValuePareto() : fSlope(1.), fCutoff(1.), fOffset(0.), fValueMin(-1.), fValueMax(-1.) {}
 KSGenValuePareto::KSGenValuePareto(const KSGenValuePareto& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSlope(aCopy.fSlope),
     fCutoff(aCopy.fCutoff),
     fOffset(aCopy.fOffset),
@@ -20,9 +20,9 @@ KSGenValuePareto* KSGenValuePareto::Clone() const
 {
     return new KSGenValuePareto(*this);
 }
-KSGenValuePareto::~KSGenValuePareto() {}
+KSGenValuePareto::~KSGenValuePareto() = default;
 
-void KSGenValuePareto::DiceValue(vector<double>& aDicedValues)
+void KSGenValuePareto::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 

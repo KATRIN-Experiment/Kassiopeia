@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueFixBuilder::~KComplexElement() {}
+template<> KSGenValueFixBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueFixStructure =
-    KSGenValueFixBuilder::Attribute<string>("name") + KSGenValueFixBuilder::Attribute<double>("value");
+    KSGenValueFixBuilder::Attribute<std::string>("name") + KSGenValueFixBuilder::Attribute<double>("value");
 
 STATICINT sKSGenValueFix = KSRootBuilder::ComplexElement<KSGenValueFix>("ksgen_value_fix");
 

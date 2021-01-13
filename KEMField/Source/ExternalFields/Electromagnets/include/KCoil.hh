@@ -18,16 +18,15 @@ class KCoil : public KElectromagnet
 {
   public:
     KCoil() : KElectromagnet(), fP0(0., 0., 0.), fP1(0., 0., 0.), fCurrent(0.), fIntegrationScale(30) {}
-    ~KCoil() override {}
+    ~KCoil() override = default;
 
     static std::string Name()
     {
         return "Coil";
     }
 
-    void SetValues(const KPosition& p0, const KPosition& p1, double current, unsigned int integrationScale);
-
-    void SetValues(double r0, double r1, double z0, double z1, double current, unsigned int integrationScale);
+    void SetValues(const KPosition& p0, const KPosition& p1, double current, int integrationScale);
+    void SetValues(double r0, double r1, double z0, double z1, double current, int integrationScale);
 
     void SetCurrent(double current)
     {
@@ -96,7 +95,7 @@ class KCoil : public KElectromagnet
     {
         return fP1;
     }
-    unsigned int GetIntegrationScale() const
+    int GetIntegrationScale() const
     {
         return fIntegrationScale;
     }
@@ -107,7 +106,7 @@ class KCoil : public KElectromagnet
     KPosition fP0;
     KPosition fP1;
     double fCurrent;
-    unsigned int fIntegrationScale;
+    int fIntegrationScale;
 };
 
 template<typename Stream> Stream& operator>>(Stream& s, KCoil& c)

@@ -26,7 +26,7 @@ void KZHCoefficientGenerator<KCurrentLoop>::ComputeCentralCoefficients(double z0
 
     coeff[0] += Psi_cen;
 
-    for (unsigned int i = 1; i < coeff.size() - 1; i++) {
+    for (int i = 1; i < (int) coeff.size() - 1; i++) {
         P1p[i + 1] = (KZHLegendreCoefficients::GetInstance()->Get(2, i + 1) * u * P1p.at(i) -
                       KZHLegendreCoefficients::GetInstance()->Get(3, i + 1) * P1p.at(i - 1));
 
@@ -54,7 +54,7 @@ void KZHCoefficientGenerator<KCurrentLoop>::ComputeRemoteCoefficients(double z0,
 
     double Psi_rem = prefactor * rho_ratio;
 
-    for (unsigned int i = 2; i < coeff.size(); i++) {
+    for (int i = 2; i < (int) coeff.size(); i++) {
         P1p[i] = (KZHLegendreCoefficients::GetInstance()->Get(2, i) * u * P1p.at(i - 1) -
                   KZHLegendreCoefficients::GetInstance()->Get(3, i) * P1p.at(i - 2));
 
@@ -67,7 +67,7 @@ void KZHCoefficientGenerator<KCurrentLoop>::ComputeRemoteCoefficients(double z0,
    * Computes rho_cen/rem for the ring corresponding to a source point located
    * at z0.  
    */
-double KZHCoefficientGenerator<KCurrentLoop>::ComputeRho(double z0, bool) const
+double KZHCoefficientGenerator<KCurrentLoop>::ComputeRho(double z0, bool /*unused*/) const
 {
     return sqrt((fCurrentLoop->GetZ() - z0) * (fCurrentLoop->GetZ() - z0) +
                 fCurrentLoop->GetR() * fCurrentLoop->GetR());

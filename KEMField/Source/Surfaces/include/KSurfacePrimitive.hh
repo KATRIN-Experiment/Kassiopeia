@@ -31,10 +31,10 @@ class KShapeVisitor;
 class KSurfacePrimitive
 {
   protected:
-    KSurfacePrimitive() {}
+    KSurfacePrimitive() = default;
 
   public:
-    virtual ~KSurfacePrimitive() {}
+    virtual ~KSurfacePrimitive() = default;
 
     static std::string Name()
     {

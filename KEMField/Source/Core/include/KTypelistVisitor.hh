@@ -9,7 +9,7 @@ namespace KEMField
 class KVisitorBase
 {
   public:
-    virtual ~KVisitorBase() {}
+    virtual ~KVisitorBase() = default;
 
     virtual void Visit(KEmptyType&) {}
 };
@@ -19,7 +19,7 @@ template<class Policy, class Base = KVisitorBase> class KVisitorType : public Ba
   public:
     using Base::Visit;
 
-    ~KVisitorType() override {}
+    ~KVisitorType() override = default;
 
     virtual void Visit(Policy&) = 0;
 };
@@ -29,8 +29,8 @@ template<class Policy, class Base> class KNonVisitorType : public Base
   public:
     using Base::Visit;
 
-    KNonVisitorType() {}
-    ~KNonVisitorType() override {}
+    KNonVisitorType() = default;
+    ~KNonVisitorType() override = default;
 
     void Visit(Policy&) override {}
 };
@@ -49,13 +49,13 @@ class KSelectiveVisitor :
                                KNonVisitorType, Visitor>
 {
   public:
-    ~KSelectiveVisitor() override {}
+    ~KSelectiveVisitor() override = default;
 };
 
 template<class Visitor> class KSelectiveVisitor<Visitor, typename Visitor::AcceptedTypes> : public Visitor
 {
   public:
-    ~KSelectiveVisitor() override {}
+    ~KSelectiveVisitor() override = default;
 };
 }  // namespace KEMField
 

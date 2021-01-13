@@ -23,7 +23,7 @@ class KSComponentTemplate<XThisType, XFirstParentType, void, void> : virtual pub
     {
         Set(static_cast<XThisType*>(this));
     }
-    ~KSComponentTemplate() override {}
+    ~KSComponentTemplate() override = default;
 
     //***********
     //KSComponent
@@ -72,7 +72,7 @@ template<class XThisType> class KSComponentTemplate<XThisType, void, void, void>
     {
         Set(static_cast<XThisType*>(this));
     }
-    ~KSComponentTemplate() override {}
+    ~KSComponentTemplate() override = default;
 
     //***********
     //KSComponent

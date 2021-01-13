@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajInterpolatorFastBuilder::~KComplexElement() {}
+template<> KSTrajInterpolatorFastBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajInterpolatorFastStructure = KSTrajInterpolatorFastBuilder::Attribute<string>("name");
+STATICINT sKSTrajInterpolatorFastStructure = KSTrajInterpolatorFastBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajInterpolatorFast =
     KSRootBuilder::ComplexElement<KSTrajInterpolatorFast>("kstraj_interpolator_fast");

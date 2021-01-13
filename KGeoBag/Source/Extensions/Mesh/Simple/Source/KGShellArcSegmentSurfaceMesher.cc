@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGShellArcSegmentSurfaceMesher::KGShellArcSegmentSurfaceMesher() : KGSimpleMesher() {}
-KGShellArcSegmentSurfaceMesher::~KGShellArcSegmentSurfaceMesher() {}
+KGShellArcSegmentSurfaceMesher::KGShellArcSegmentSurfaceMesher() = default;
+KGShellArcSegmentSurfaceMesher::~KGShellArcSegmentSurfaceMesher() = default;
 
 void KGShellArcSegmentSurfaceMesher::VisitShellPathSurface(KGShellArcSegmentSurface* aShellArcSegmentSurface)
 {

@@ -525,7 +525,7 @@ template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream&
 
 template<class T> inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::matrix<T>& matrix)
 {
-    typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
+    using size_type = typename boost::numeric::ublas::matrix<T>::size_type;
 
     os << "[" << matrix.size1() << "," << matrix.size2() << "]";
 
@@ -543,7 +543,7 @@ template<class T> inline std::ostream& operator<<(std::ostream& os, const boost:
 template<class T, class U>
 inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::triangular_matrix<T, U>& matrix)
 {
-    typedef typename boost::numeric::ublas::matrix<T>::size_type size_type;
+    using size_type = typename boost::numeric::ublas::matrix<T>::size_type;
 
     os << "[" << matrix.size1() << "," << matrix.size2() << "]";
 
@@ -560,7 +560,7 @@ inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::t
 
 template<class InputT> inline std::ostream& operator<<(std::ostream& os, const std::vector<std::vector<InputT>>& matrix)
 {
-    typedef typename std::vector<std::vector<InputT>>::size_type size_type;
+    using size_type = typename std::vector<std::vector<InputT>>::size_type;
 
     const size_type nRows = matrix.size();
     const size_type nCols = (matrix.empty()) ? 0 : matrix.front().size();

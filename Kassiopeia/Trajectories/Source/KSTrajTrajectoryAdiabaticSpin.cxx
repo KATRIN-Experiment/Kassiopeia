@@ -25,7 +25,7 @@ KSTrajTrajectoryAdiabaticSpin::KSTrajTrajectoryAdiabaticSpin() :
     fMaxAttempts(32)
 {}
 KSTrajTrajectoryAdiabaticSpin::KSTrajTrajectoryAdiabaticSpin(const KSTrajTrajectoryAdiabaticSpin& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fInitialParticle(aCopy.fInitialParticle),
     fIntermediateParticle(aCopy.fIntermediateParticle),
     fFinalParticle(aCopy.fFinalParticle),
@@ -42,7 +42,7 @@ KSTrajTrajectoryAdiabaticSpin* KSTrajTrajectoryAdiabaticSpin::Clone() const
 {
     return new KSTrajTrajectoryAdiabaticSpin(*this);
 }
-KSTrajTrajectoryAdiabaticSpin::~KSTrajTrajectoryAdiabaticSpin() {}
+KSTrajTrajectoryAdiabaticSpin::~KSTrajTrajectoryAdiabaticSpin() = default;
 
 void KSTrajTrajectoryAdiabaticSpin::SetIntegrator(KSTrajAdiabaticSpinIntegrator* anIntegrator)
 {
@@ -275,9 +275,9 @@ void KSTrajTrajectoryAdiabaticSpin::GetPiecewiseLinearApproximation(
     std::vector<KSParticle>* intermediateParticleStates) const
 {
     intermediateParticleStates->clear();
-    for (unsigned int i = 0; i < fIntermediateParticleStates.size(); i++) {
+    for (auto& particleState : fIntermediateParticleStates) {
         KSParticle particle(anInitialParticle);
-        fIntermediateParticleStates[i].PushTo(particle);
+        particleState.PushTo(particle);
         intermediateParticleStates->push_back(particle);
     }
 }

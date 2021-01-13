@@ -21,11 +21,11 @@ class KCachedChargeDensitySolver : public KChargeDensitySolver
     KCachedChargeDensitySolver();
     ~KCachedChargeDensitySolver() override;
 
-    void SetName(std::string s)
+    void SetName(const std::string& s)
     {
         fName = s;
     }
-    void SetHash(std::string s)
+    void SetHash(const std::string& s)
     {
         fHash = s;
     }

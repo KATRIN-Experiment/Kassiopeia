@@ -25,8 +25,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMNonEmptyIdentitySetActor : public KFMInspectingActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMNonEmptyIdentitySetActor(){};
-    ~KFMNonEmptyIdentitySetActor() override{};
+    KFMNonEmptyIdentitySetActor() = default;
+    ;
+    ~KFMNonEmptyIdentitySetActor() override = default;
+    ;
 
     bool ConditionIsSatisfied(KFMNode<ObjectTypeList>* node) override
     {

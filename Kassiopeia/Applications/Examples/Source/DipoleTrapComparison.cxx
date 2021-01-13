@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
 
-    auto* exact_tRootFile = new KRootFile();
+    auto* exact_tRootFile = new katrin::KRootFile();
     exact_tRootFile->AddToNames("~/Work/kasper/install/output/Kassiopeia/DipoleNeutronTrapSimulation.root");
 
     KSReadFileROOT exact_tReader;
@@ -56,7 +56,7 @@ int main()
 
     delete exact_tRootFile;
 
-    auto* adiabatic_tRootFile = new KRootFile();
+    auto* adiabatic_tRootFile = new katrin::KRootFile();
     adiabatic_tRootFile->AddToNames(
         "~/Work/kasper/install/output/Kassiopeia/DipoleNeutronAdiabaticTrapSimulation.root");
 

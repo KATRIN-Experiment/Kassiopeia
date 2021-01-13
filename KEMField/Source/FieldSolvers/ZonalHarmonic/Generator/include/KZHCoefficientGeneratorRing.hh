@@ -9,10 +9,10 @@ namespace KEMField
 template<> class KZHCoefficientGenerator<KRing> : public KZHCoefficientGeneratorElement
 {
   public:
-    typedef KRing ElementType;
+    using ElementType = KRing;
 
     KZHCoefficientGenerator() : KZHCoefficientGeneratorElement(), fNullDistance(0.) {}
-    ~KZHCoefficientGenerator() override {}
+    ~KZHCoefficientGenerator() override = default;
 
     void SetElement(const KRing* r)
     {

@@ -4,11 +4,12 @@
 #include "KSWritersMessage.h"
 
 #ifdef Kassiopeia_USE_BOOST
-//#include "KPathUtils.h"
-//using katrin::KPathUtils;
+#include "KPathUtils.h"
 #endif
 
 using namespace std;
+using namespace katrin;
+using namespace KGeoBag;
 
 namespace Kassiopeia
 {
@@ -87,7 +88,7 @@ KSWriteASCII::Data::Data(KSComponent* aComponent, KSWriteASCII* aWriter) :
     MakeTitle(aComponent, 0);
 }
 
-KSWriteASCII::Data::~Data() {}
+KSWriteASCII::Data::~Data() = default;
 
 void KSWriteASCII::Data::Start(const unsigned int& anIndex)
 {
@@ -108,12 +109,12 @@ void KSWriteASCII::Data::Fill()
     }
 
     string str;
-    for (auto tIt = fObjekts.begin(); tIt != fObjekts.end(); ++tIt) {
-        tObjekt = (*tIt);
+    for (auto& objekt : fObjekts) {
+        tObjekt = objekt;
         str = string(tObjekt->getValue().c_str());
 
-        for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : str)
+            fWriter->TextFile()->File()->put(it);
     }
     for (tIt = fComponents.begin(); tIt != fComponents.end(); ++tIt) {
         tComponent = (*tIt);
@@ -139,14 +140,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tString = aComponent->As<string>();
     if (tString != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a string" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a string" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "string", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "string", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -157,14 +158,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tTwoVector = aComponent->As<KTwoVector>();
     if (tTwoVector != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a two_vector" << eom) string* str = new string(
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a two_vector" << eom) auto* str = new string(
             (aComponent->GetName() + string("_x") + '\t' + aComponent->GetName() + string("_y") + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "KTwoVector", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "KTwoVector", fWriter->Precision());
             fObjekts.push_back(obj);
             fComponents.push_back(aComponent);
         }
@@ -173,16 +174,16 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tThreeVector = aComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a three_vector" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a three_vector" << eom) auto* str =
             new string((aComponent->GetName() + string("_x") + '\t' + aComponent->GetName() + string("_y") + '\t' +
                         aComponent->GetName() + string("_z") + '\t')
                            .c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "KThreeVector", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "KThreeVector", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -192,14 +193,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tBool = aComponent->As<bool>();
     if (tBool != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a bool" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a bool" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "bool", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "bool", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -209,14 +210,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tUChar = aComponent->As<unsigned char>();
     if (tUChar != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_char" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_char" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "unsigned char", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "unsigned char", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -226,14 +227,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tChar = aComponent->As<char>();
     if (tChar != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a char" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a char" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "char", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "char", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -243,14 +244,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tUShort = aComponent->As<unsigned short>();
     if (tUShort != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_short" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_short" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "unsigned short", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "unsigned short", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -260,14 +261,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tShort = aComponent->As<short>();
     if (tShort != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a short" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a short" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "short", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "short", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -277,14 +278,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tUInt = aComponent->As<unsigned int>();
     if (tUInt != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a unsigned_int" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a unsigned_int" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "unsigned int", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "unsigned int", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -294,14 +295,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tInt = aComponent->As<int>();
     if (tInt != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an int" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an int" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "int", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "int", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -311,14 +312,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tULong = aComponent->As<unsigned long>();
     if (tULong != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_long" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_long" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "unsigned long", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "unsigned long", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -328,14 +329,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tLong = aComponent->As<long>();
     if (tLong != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "long", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "long", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -345,14 +346,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tFloat = aComponent->As<float>();
     if (tFloat != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a float" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a float" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "float", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "float", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -362,14 +363,14 @@ void KSWriteASCII::Data::MakeTitle(KSComponent* aComponent, int aTrack)
 
     auto* tDouble = aComponent->As<double>();
     if (tDouble != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a double" << eom) string* str =
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a double" << eom) auto* str =
             new string((aComponent->GetName() + '\t').c_str());
 
-        for (std::string::iterator it = str->begin(); it != str->end(); ++it)
-            fWriter->TextFile()->File()->put(*it);
+        for (char& it : *str)
+            fWriter->TextFile()->File()->put(it);
 
         if (aTrack == 0) {
-            Objekt* obj = new Objekt(aComponent, "double", fWriter->Precision());
+            auto* obj = new Objekt(aComponent, "double", fWriter->Precision());
             fObjekts.push_back(obj);
 
             fComponents.push_back(aComponent);
@@ -418,7 +419,7 @@ KSWriteASCII::KSWriteASCII() :
 }
 
 KSWriteASCII::KSWriteASCII(const KSWriteASCII& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBase(aCopy.fBase),
     fPath(aCopy.fPath),
     fStepIteration(aCopy.fStepIteration),
@@ -458,7 +459,7 @@ KSWriteASCII* KSWriteASCII::Clone() const
     return new KSWriteASCII(*this);
 }
 
-KSWriteASCII::~KSWriteASCII() {}
+KSWriteASCII::~KSWriteASCII() = default;
 
 void KSWriteASCII::ExecuteRun()
 {
@@ -473,8 +474,8 @@ void KSWriteASCII::ExecuteRun()
     if (fStepIndex != 0)
         fRunLastStepIndex = fStepIndex - 1;
 
-    for (auto tIt = fActiveRunComponents.begin(); tIt != fActiveRunComponents.end(); tIt++)
-        tIt->second->Fill();
+    for (auto& activeRunComponent : fActiveRunComponents)
+        activeRunComponent.second->Fill();
 
     fRunIndex++;
     fRunFirstEventIndex = fEventIndex;
@@ -494,9 +495,8 @@ void KSWriteASCII::ExecuteEvent()
     if (fStepIndex != 0)
         fEventLastStepIndex = fStepIndex - 1;
 
-    for (auto tIt = fActiveEventComponents.begin(); tIt != fActiveEventComponents.end(); tIt++)
-        tIt->second->Fill();
-
+    for (auto& activeEventComponent : fActiveEventComponents)
+        activeEventComponent.second->Fill();
 
     fEventIndex++;
     fEventFirstTrackIndex = fTrackIndex;
@@ -514,24 +514,19 @@ void KSWriteASCII::ExecuteTrack()
     ComponentIt tIt;
 
     fTextFile->File()->put('\n');
-    for (auto tIt = fActiveTrackComponents.begin(); tIt != fActiveTrackComponents.end(); ++tIt)
-        tIt->second->Fill();
+    for (auto& activeTrackComponent : fActiveTrackComponents)
+        activeTrackComponent.second->Fill();
 
     fTextFile->Close();
     delete fTextFile;
-    stringstream s;
-    s << fBase << "_Track" << fTrackIndex + 1 << +".txt";
-    fTextFile = CreateOutputTextFile(s.str().c_str());
 
-
-    if (!fPath.empty()) {
-#ifdef Kassiopeia_USE_BOOST
-//            KPathUtils::MakeDirectory( fPath );
-#endif
-        fTextFile->AddToPaths(fPath);
+    fTextFile = MakeOutputFile(fTrackIndex + 1);
+    if (fTextFile->Open(KFile::eWrite) == true) {
+        // do nothing here
     }
-
-    if (fTextFile->Open(KFile::eWrite) == true) {}
+    else {
+        wtrmsg(eError) << "could not open ASCII output file" << eom;
+    }
 
     for (tIt = fTrackComponents.begin(); tIt != fTrackComponents.end(); tIt++)
         tIt->second->MakeTitle(tIt->first, 0);
@@ -557,8 +552,8 @@ void KSWriteASCII::ExecuteStep()
     if (fStepComponent == true) {
         wtrmsg_debug("ASCII writer <" << GetName() << "> is filling a step" << eom);
 
-        for (auto tIt = fActiveStepComponents.begin(); tIt != fActiveStepComponents.end(); tIt++)
-            tIt->second->Fill();
+        for (auto& activeStepComponent : fActiveStepComponents)
+            activeStepComponent.second->Fill();
     }
 
     fStepIndex++;
@@ -707,15 +702,23 @@ void KSWriteASCII::RemoveStepComponent(KSComponent* aComponent)
 void KSWriteASCII::InitializeComponent()
 {
     wtrmsg_debug("starting ASCII writer" << eom);
+
     stringstream s;
     s << fBase << "_Track" << fTrackIndex << +".txt";
-    fTextFile = CreateOutputTextFile(s.str().c_str());
+    string tBase = s.str();
+    string tPath = fPath.empty() ? OUTPUT_DEFAULT_DIR : fPath;
 
-    if (!fPath.empty())
-        fTextFile->AddToPaths(fPath);
+#ifdef Kassiopeia_USE_BOOST
+    KPathUtils::MakeDirectory(tPath);
+#endif
+    fTextFile = MakeOutputFile(fTrackIndex);
 
-
-    if (fTextFile->Open(KFile::eWrite) == true) {}
+    if (fTextFile->Open(KFile::eWrite) == true) {
+        // do nothing here
+    }
+    else {
+        wtrmsg(eError) << "could not open ASCII output file" << eom;
+    }
 
     return;
 }
@@ -736,6 +739,19 @@ void KSWriteASCII::DeinitializeComponent()
 
     delete fTextFile;
     return;
+}
+
+KTextFile* KSWriteASCII::MakeOutputFile(int anIndex) const
+{
+    stringstream s;
+    s << fBase << "_Track" << anIndex << +".txt";
+    string tBase = s.str();
+    string tPath = fPath.empty() ? OUTPUT_DEFAULT_DIR : fPath;
+
+#ifdef Kassiopeia_USE_BOOST
+    KPathUtils::MakeDirectory(tPath);
+#endif
+    return KTextFile::CreateOutputTextFile(tPath, tBase);
 }
 
 STATICINT sKSWriteASCIIDict =

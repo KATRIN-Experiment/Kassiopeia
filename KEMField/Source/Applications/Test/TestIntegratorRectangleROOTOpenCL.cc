@@ -16,15 +16,13 @@
 #include <cstdlib>
 #include <iostream>
 
-#define POW2(x) ((x) * (x))
-
 // VALUES
 #define NUMRECTANGLES 500    // number of rectangles for each Dr step
 #define MINDR         2      // minimal distance ratio to be investigated
 #define MAXDR         10000  // maximal distance ratio to be investigated
 #define STEPSDR       500    // steps between given distance ratio range
-#define SEPARATECOMP         // if this variable has been defined potentials and fields will be computed separately,   \
-                             // hence 'ElectricFieldAndPotential' function won't be used                               \
+#define SEPARATECOMP         // if this variable has been defined potentials and fields will be computed separately,
+                             // hence 'ElectricFieldAndPotential' function won't be used
                              // both options have to produce same values
 
 // ROOT PLOTS AND COLORS (all settings apply for both field and potential)
@@ -45,7 +43,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KEMRectang
 void subrn(double* u, int len);
 double randomnumber();
 
-void printVec(std::string add, KThreeVector input)
+void printVec(std::string add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -60,9 +58,9 @@ class RectangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KRe
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KRectangle)>::Visit;
 
-    RectangleVisitor() {}
+    RectangleVisitor() = default;
 
-    void Visit(KRectangle& r)
+    void Visit(KRectangle& r) override
     {
         ProcessRectangle(r);
     }
@@ -80,14 +78,14 @@ class RectangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KRe
     {
         return fAverageSideLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
 
   private:
     double fAverageSideLength;
-    KThreeVector fShapeCentroid;
+    KFieldVector fShapeCentroid;
 };
 
 }  // namespace KEMField
@@ -104,17 +102,17 @@ int main()
     double N2[3];
 
     // assign a unique direction vector for field point to each rectangle and save into std::vector
-    std::vector<KThreeVector> fPointDirections;
+    std::vector<KFieldVector> fPointDirections;
 
     // 'Num' rectangles will be diced in the beginning and added to a surface container
     // This values decides how much rectangles=field points will be computed for each distance ratio value
 
-    KSurfaceContainer* container = new KSurfaceContainer();
+    auto* container = new KSurfaceContainer();
     const unsigned int Num(NUMRECTANGLES); /* number of rectangles */
 
     for (unsigned int i = 0; i < Num; i++) {
         IJKLRANDOM = i + 1;
-        KEMRectangle* rectangle = new KEMRectangle();
+        auto* rectangle = new KEMRectangle();
 
         // dice rectangle geometry
 
@@ -141,9 +139,9 @@ int main()
 
         rectangle->SetA(A);
         rectangle->SetB(B);
-        rectangle->SetP0(KThreeVector(P0[0], P0[1], P0[2]));
-        rectangle->SetN1(KThreeVector(N1[0], N1[1], N1[2]));
-        rectangle->SetN2(KThreeVector(N2[0], N2[1], N2[2]));
+        rectangle->SetP0(KFieldVector(P0[0], P0[1], P0[2]));
+        rectangle->SetN1(KFieldVector(N1[0], N1[1], N1[2]));
+        rectangle->SetN2(KFieldVector(N2[0], N2[1], N2[2]));
 
         rectangle->SetBoundaryValue(1.);
         rectangle->SetSolution(1.);
@@ -156,11 +154,11 @@ int main()
         const double sinthetaFP = sqrt(1. - POW2(costhetaFP));
         const double phiFP = 2. * M_PI * randomnumber();
 
-        fPointDirections.push_back(KThreeVector(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP));
+        fPointDirections.emplace_back(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP);
     }
 
     // OpenCL surface container
-    KOpenCLSurfaceContainer* oclContainer = new KOpenCLSurfaceContainer(*container);
+    auto* oclContainer = new KOpenCLSurfaceContainer(*container);
     KOpenCLInterface::GetInstance()->SetActiveData(oclContainer);
 
     // Bi-Quadrature and OpenCL integrator classes
@@ -188,24 +186,24 @@ int main()
 
     // field point
 
-    KThreeVector fP;
+    KFieldVector fP;
 
-    std::pair<KThreeVector, double> valQuad;
-    std::pair<KThreeVector, double> valAna;
-    std::pair<KThreeVector, double> valRwg;
-    std::pair<KThreeVector, double> valNum;
+    std::pair<KFieldVector, double> valQuad;
+    std::pair<KFieldVector, double> valAna;
+    std::pair<KFieldVector, double> valRwg;
+    std::pair<KFieldVector, double> valNum;
 
     // plot
 
-    TApplication* fAppWindow = new TApplication("fAppWindow", 0, NULL);
+    auto* fAppWindow = new TApplication("fAppWindow", nullptr, nullptr);
 
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetLabelOffset(0.03, "xyz");  // values
     gStyle->SetTitleOffset(1.6, "xyz");   // label
 
-    TMultiGraph* mgPot = new TMultiGraph();
+    auto* mgPot = new TMultiGraph();
 
-    TGraph* plotDrPotAna = new TGraph(kmax + 1);
+    auto* plotDrPotAna = new TGraph(kmax + 1);
     plotDrPotAna->SetTitle("Relative error of analytical rectangle potential");
     plotDrPotAna->SetDrawOption("AC");
     plotDrPotAna->SetMarkerColor(COLANA);
@@ -216,7 +214,7 @@ int main()
     if (PLOTANA)
         mgPot->Add(plotDrPotAna);
 
-    TGraph* plotDrPotRwg = new TGraph(kmax + 1);
+    auto* plotDrPotRwg = new TGraph(kmax + 1);
     plotDrPotRwg->SetTitle("Relative error of rectangle RWG potential");
     plotDrPotRwg->SetDrawOption("same");
     plotDrPotRwg->SetMarkerColor(COLRWG);
@@ -227,7 +225,7 @@ int main()
     if (PLOTRWG)
         mgPot->Add(plotDrPotRwg);
 
-    TGraph* plotDrPotNum = new TGraph(kmax + 1);
+    auto* plotDrPotNum = new TGraph(kmax + 1);
     plotDrPotNum->SetTitle("Relative error of rectangle potential with adjusted numerical integrator");
     plotDrPotNum->SetDrawOption("same");
     plotDrPotNum->SetMarkerColor(COLNUM);
@@ -238,9 +236,9 @@ int main()
     if (PLOTNUM)
         mgPot->Add(plotDrPotNum);
 
-    TMultiGraph* mgField = new TMultiGraph();
+    auto* mgField = new TMultiGraph();
 
-    TGraph* plotDrFieldAna = new TGraph(kmax + 1);
+    auto* plotDrFieldAna = new TGraph(kmax + 1);
     plotDrFieldAna->SetTitle("Relative error of analytical rectangle field");
     plotDrFieldAna->SetDrawOption("AC");
     plotDrFieldAna->SetMarkerColor(COLANA);
@@ -251,7 +249,7 @@ int main()
     if (PLOTANA)
         mgField->Add(plotDrFieldAna);
 
-    TGraph* plotDrFieldRwg = new TGraph(kmax + 1);
+    auto* plotDrFieldRwg = new TGraph(kmax + 1);
     plotDrFieldRwg->SetTitle("Relative error of rectangle RWG field");
     plotDrFieldRwg->SetDrawOption("same");
     plotDrFieldRwg->SetMarkerColor(COLRWG);
@@ -262,7 +260,7 @@ int main()
     if (PLOTRWG)
         mgField->Add(plotDrFieldRwg);
 
-    TGraph* plotDrFieldNum = new TGraph(kmax + 1);
+    auto* plotDrFieldNum = new TGraph(kmax + 1);
     plotDrFieldNum->SetTitle("Relative error of triangle field with adjusted numerical integrator");
     plotDrFieldNum->SetDrawOption("same");
     plotDrFieldNum->SetMarkerColor(COLNUM);

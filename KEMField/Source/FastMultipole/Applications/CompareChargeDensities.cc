@@ -86,12 +86,12 @@ int main(int argc, char* argv[])
         "\t -s, --size               (size of box for potential comparison)\n"
         "\n";
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"fileA", required_argument, 0, 'a'},
-                                          {"fileB", required_argument, 0, 'b'},
-                                          {"nameA", required_argument, 0, 'n'},
-                                          {"nameB", required_argument, 0, 'm'},
-                                          {"size", required_argument, 0, 's'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"fileA", required_argument, nullptr, 'a'},
+                                          {"fileB", required_argument, nullptr, 'b'},
+                                          {"nameA", required_argument, nullptr, 'n'},
+                                          {"nameB", required_argument, nullptr, 'm'},
+                                          {"size", required_argument, nullptr, 's'}};
 
     static const char* optString = "ha:b:n:m:s:";
 
@@ -101,8 +101,8 @@ int main(int argc, char* argv[])
     std::string containerName2 = "surfaceContainer";
     double len = 1.0;
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -293,7 +293,7 @@ int main(int argc, char* argv[])
         direct_solver1->Initialize();
 #else
         KElectrostaticBoundaryIntegrator integrator1{KEBIFactory::MakeDefault()};
-        KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver1 =
+        auto* direct_solver1 =
             new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer1, integrator1);
 #endif
 
@@ -309,7 +309,7 @@ int main(int argc, char* argv[])
         direct_solver2->Initialize();
 #else
         KElectrostaticBoundaryIntegrator integrator2{KEBIFactory::MakeDefault()};
-        KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver2 =
+        auto* direct_solver2 =
             new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer2, integrator2);
 #endif
 
@@ -345,7 +345,7 @@ int main(int argc, char* argv[])
             z = len * (gsl_rng_uniform(fR));
 #endif
 
-            random_points.push_back(KThreeVector(x, y, z));
+            random_points.emplace_back(x, y, z);
         }
 
         double l2_pot_diff = 0.0;

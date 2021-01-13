@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlMomentumNumericalErrorBuilder::~KComplexElement() {}
+template<> KSTrajControlMomentumNumericalErrorBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajControlMomentumNumericalErrorStructure =
-    KSTrajControlMomentumNumericalErrorBuilder::Attribute<string>("name") +
+    KSTrajControlMomentumNumericalErrorBuilder::Attribute<std::string>("name") +
     KSTrajControlMomentumNumericalErrorBuilder::Attribute<double>("absolute_momentum_error") +
     KSTrajControlMomentumNumericalErrorBuilder::Attribute<double>("safety_factor") +
     KSTrajControlMomentumNumericalErrorBuilder::Attribute<double>("solver_order");

@@ -24,8 +24,10 @@ namespace KGeoBag
 template<typename TypeList> class KGObjectCollection : public KGGenScatterHierarchy<TypeList, KGObjectHolder>
 {
   public:
-    KGObjectCollection(){};
-    ~KGObjectCollection() override{};
+    KGObjectCollection() = default;
+    ;
+    ~KGObjectCollection() override = default;
+    ;
 
   private:
 };

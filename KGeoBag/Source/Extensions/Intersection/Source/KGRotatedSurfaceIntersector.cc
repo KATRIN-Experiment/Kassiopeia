@@ -10,7 +10,6 @@ void KGRotatedSurfaceIntersectorInitializer::VisitRotatedSurface(const KGRotated
 }
 
 KGRotatedSurfaceIntersector::KGRotatedSurfaceIntersector(const KGRotatedSurface& rotatedSurface) :
-    KGAnalyticIntersector(),
     fRotatedSurface(rotatedSurface)
 {
     // Initialize!

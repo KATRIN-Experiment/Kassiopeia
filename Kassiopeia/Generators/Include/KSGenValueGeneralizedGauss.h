@@ -4,7 +4,6 @@
 #include "KField.h"
 #include "KMathBracketingSolver.h"
 #include "KSGenValue.h"
-using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {
@@ -28,7 +27,7 @@ class KSGenValueGeneralizedGauss : public KSComponentTemplate<KSGenValueGenerali
 
   protected:
     double ValueFunction(const double& aValue) const;
-    KMathBracketingSolver fSolver;
+    katrin::KMathBracketingSolver fSolver;
 };
 
 }  // namespace Kassiopeia

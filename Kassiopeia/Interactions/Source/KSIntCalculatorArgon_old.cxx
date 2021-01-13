@@ -586,7 +586,7 @@ namespace katrin
 
 template<> KSIntCalculatorArgonBuilder::~KComplexElement() {}
 
-static int sKSIntCalculatorArgonStructure = KSIntCalculatorArgonBuilder::Attribute<string>("name") +
+static int sKSIntCalculatorArgonStructure = KSIntCalculatorArgonBuilder::Attribute<std::string>("name") +
                                             KSIntCalculatorArgonBuilder::Attribute<bool>("elastic") +
                                             KSIntCalculatorArgonBuilder::Attribute<bool>("excitation") +
                                             KSIntCalculatorArgonBuilder::Attribute<bool>("single_ionisation") +

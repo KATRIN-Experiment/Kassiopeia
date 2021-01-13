@@ -12,7 +12,7 @@ class KSTrajExactSpinParticle : public KSMathArray<12>
   public:
     KSTrajExactSpinParticle();
     KSTrajExactSpinParticle(const KSTrajExactSpinParticle& aParticle);
-    ~KSTrajExactSpinParticle();
+    ~KSTrajExactSpinParticle() override;
 
     //**********
     //assignment
@@ -66,20 +66,20 @@ class KSTrajExactSpinParticle : public KSMathArray<12>
   public:
     const double& GetTime() const;
     const double& GetLength() const;
-    const KThreeVector& GetPosition() const;
-    const KThreeVector& GetMomentum() const;
-    const KThreeVector& GetVelocity() const;
+    const KGeoBag::KThreeVector& GetPosition() const;
+    const KGeoBag::KThreeVector& GetMomentum() const;
+    const KGeoBag::KThreeVector& GetVelocity() const;
     const double& GetSpin0() const;
-    const KThreeVector& GetSpin() const;
+    const KGeoBag::KThreeVector& GetSpin() const;
     const double& GetLorentzFactor() const;
     const double& GetKineticEnergy() const;
 
-    const KThreeVector& GetMagneticField() const;
-    const KThreeVector& GetElectricField() const;
+    const KGeoBag::KThreeVector& GetMagneticField() const;
+    const KGeoBag::KThreeVector& GetElectricField() const;
     const double& GetElectricPotential() const;
-    const KThreeMatrix& GetMagneticGradient() const;
+    const KGeoBag::KThreeMatrix& GetMagneticGradient() const;
 
-    const KThreeVector& GetGuidingCenter() const;
+    const KGeoBag::KThreeVector& GetGuidingCenter() const;
     const double& GetLongMomentum() const;
     const double& GetTransMomentum() const;
     const double& GetLongVelocity() const;
@@ -99,20 +99,20 @@ class KSTrajExactSpinParticle : public KSMathArray<12>
 
     mutable double fTime;
     mutable double fLength;
-    mutable KThreeVector fPosition;
-    mutable KThreeVector fMomentum;
-    mutable KThreeVector fVelocity;
+    mutable KGeoBag::KThreeVector fPosition;
+    mutable KGeoBag::KThreeVector fMomentum;
+    mutable KGeoBag::KThreeVector fVelocity;
     mutable double fSpin0;
-    mutable KThreeVector fSpin;
+    mutable KGeoBag::KThreeVector fSpin;
     mutable double fLorentzFactor;
     mutable double fKineticEnergy;
 
-    mutable KThreeVector fMagneticField;
-    mutable KThreeVector fElectricField;
-    mutable KThreeMatrix fMagneticGradient;
+    mutable KGeoBag::KThreeVector fMagneticField;
+    mutable KGeoBag::KThreeVector fElectricField;
+    mutable KGeoBag::KThreeMatrix fMagneticGradient;
     mutable double fElectricPotential;
 
-    mutable KThreeVector fGuidingCenter;
+    mutable KGeoBag::KThreeVector fGuidingCenter;
     mutable double fLongMomentum;
     mutable double fTransMomentum;
     mutable double fLongVelocity;

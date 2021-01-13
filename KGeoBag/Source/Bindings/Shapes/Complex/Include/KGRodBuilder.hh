@@ -36,7 +36,7 @@ template<> inline bool KGRodVertexBuilder::AddAttribute(KContainer* anAttribute)
     return false;
 }
 
-typedef KComplexElement<KGRod> KGRodBuilder;
+using KGRodBuilder = KComplexElement<KGRod>;
 
 template<> inline bool KGRodBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -70,7 +70,7 @@ template<> inline bool KGRodBuilder::AddElement(KContainer* anElement)
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGRod>> KGRodSurfaceBuilder;
+using KGRodSurfaceBuilder = KComplexElement<KGWrappedSurface<KGRod>>;
 
 template<> inline bool KGRodSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -95,7 +95,7 @@ template<> inline bool KGRodSurfaceBuilder::AddElement(KContainer* anElement)
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGRod>> KGRodSpaceBuilder;
+using KGRodSpaceBuilder = KComplexElement<KGWrappedSpace<KGRod>>;
 
 template<> inline bool KGRodSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

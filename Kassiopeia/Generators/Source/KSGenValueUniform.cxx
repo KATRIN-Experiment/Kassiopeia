@@ -8,7 +8,7 @@ namespace Kassiopeia
 
 KSGenValueUniform::KSGenValueUniform() : fValueMin(0.), fValueMax(0.) {}
 KSGenValueUniform::KSGenValueUniform(const KSGenValueUniform& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueMin(aCopy.fValueMin),
     fValueMax(aCopy.fValueMax)
 {}
@@ -16,9 +16,9 @@ KSGenValueUniform* KSGenValueUniform::Clone() const
 {
     return new KSGenValueUniform(*this);
 }
-KSGenValueUniform::~KSGenValueUniform() {}
+KSGenValueUniform::~KSGenValueUniform() = default;
 
-void KSGenValueUniform::DiceValue(vector<double>& aDicedValues)
+void KSGenValueUniform::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue = KRandom::GetInstance().Uniform(fValueMin, fValueMax);
     aDicedValues.push_back(tValue);

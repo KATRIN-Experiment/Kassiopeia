@@ -1,21 +1,18 @@
 #ifndef Kassiopeia_KSParticleFactory_h_
 #define Kassiopeia_KSParticleFactory_h_
 
-#include "KSingleton.h"
-using katrin::KSingleton;
-
 #include "KSParticle.h"
+#include "KSingleton.h"
 
 #include <map>
-using std::map;
 
 namespace Kassiopeia
 {
 
-class KSParticleFactory : public KSingleton<KSParticleFactory>
+class KSParticleFactory : public katrin::KSingleton<KSParticleFactory>
 {
   public:
-    friend class KSingleton<KSParticleFactory>;
+    friend class katrin::KSingleton<KSParticleFactory>;
 
   private:
     KSParticleFactory();
@@ -42,15 +39,15 @@ class KSParticleFactory : public KSingleton<KSParticleFactory>
     KSElectricField* GetElectricField();
 
   private:
-    typedef map<long long, KSParticle*> ParticleMap;
-    typedef ParticleMap::iterator ParticleIt;
-    typedef ParticleMap::const_iterator ParticleCIt;
-    typedef ParticleMap::value_type ParticleEntry;
+    using ParticleMap = std::map<long long, KSParticle*>;
+    using ParticleIt = ParticleMap::iterator;
+    using ParticleCIt = ParticleMap::const_iterator;
+    using ParticleEntry = ParticleMap::value_type;
 
-    typedef map<std::string, KSParticle*> ParticleStringMap;
-    typedef ParticleStringMap::iterator ParticleStringIt;
-    typedef ParticleStringMap::const_iterator ParticleStringCIt;
-    typedef ParticleStringMap::value_type ParticleStringEntry;
+    using ParticleStringMap = std::map<std::string, KSParticle*>;
+    using ParticleStringIt = ParticleStringMap::iterator;
+    using ParticleStringCIt = ParticleStringMap::const_iterator;
+    using ParticleStringEntry = ParticleStringMap::value_type;
 
     ParticleMap fParticles;
     ParticleStringMap fParticleString;

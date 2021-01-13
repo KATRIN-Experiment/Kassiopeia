@@ -27,7 +27,7 @@ class KVTKWindow : public KWindow
 
   public:
     KVTKWindow();
-    virtual ~KVTKWindow();
+    ~KVTKWindow() override;
 
     //********
     //settings
@@ -55,10 +55,10 @@ class KVTKWindow : public KWindow
     void SetFrameTitle(const std::string& aFrameTitle);
     const std::string& GetFrameTitle() const;
 
-    void SetFrameSizeX(const unsigned int& anXPixelCount);
-    const unsigned int& GetFrameSizeX() const;
-    void SetFrameSizeY(const unsigned int& aYPixelCount);
-    const unsigned int& GetFrameSizeY() const;
+    void SetFrameSizeX(const int& anXPixelCount);
+    const int& GetFrameSizeX() const;
+    void SetFrameSizeY(const int& aYPixelCount);
+    const int& GetFrameSizeY() const;
 
     void SetFrameColorRed(const float& aRed);
     const float& GetFrameColorRed() const;
@@ -73,11 +73,11 @@ class KVTKWindow : public KWindow
     void SetViewAngle(const double& fov);
     const double& GetViewAngle() const;
 
-    void SetMultiSamples(const unsigned int& samples);
-    const unsigned int& GetMultiSamples() const;
+    void SetMultiSamples(const int& samples);
+    const int& GetMultiSamples() const;
 
-    void SetDepthPeelingLevel(const unsigned int& level);
-    const unsigned int& GetDepthPeelingLevel() const;
+    void SetDepthPeelingLevel(const int& level);
+    const int& GetDepthPeelingLevel() const;
 
     vtkSmartPointer<vtkRenderWindow> GetRenderWindow() const;
     vtkSmartPointer<vtkRenderer> GetRenderer() const;
@@ -92,24 +92,24 @@ class KVTKWindow : public KWindow
     bool fParallelProjectionToggle;
 
     std::string fFrameTitle;
-    unsigned int fFrameXPixels;
-    unsigned int fFrameYPixels;
+    int fFrameXPixels;
+    int fFrameYPixels;
     float fFrameRed;
     float fFrameGreen;
     float fFrameBlue;
 
     double fEyeAngle;
     double fViewAngle;
-    unsigned int fMultiSamples;
-    unsigned int fDepthPeelingLevel;
+    int fMultiSamples;
+    int fDepthPeelingLevel;
 
   public:
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
-    void AddPainter(KPainter* aPainter);
-    void RemovePainter(KPainter* aPainter);
+    void AddPainter(KPainter* aPainter) override;
+    void RemovePainter(KPainter* aPainter) override;
 
     void AddActor(vtkSmartPointer<vtkActor> anActor);
     void RemoveActor(vtkSmartPointer<vtkActor> anActor);
@@ -119,15 +119,15 @@ class KVTKWindow : public KWindow
 
   private:
     typedef std::set<KVTKPainter*> PainterSet;
-    typedef PainterSet::iterator PainterIt;
+    using PainterIt = PainterSet::iterator;
     PainterSet fPainters;
 
-    typedef std::vector<vtkSmartPointer<vtkActor>> ActorVector;
-    typedef ActorVector::iterator ActorIt;
+    using ActorVector = std::vector<vtkSmartPointer<vtkActor>>;
+    using ActorIt = ActorVector::iterator;
     ActorVector fActors;
 
-    typedef std::vector<vtkSmartPointer<vtkPolyData>> PolyVector;
-    typedef PolyVector::iterator PolyIt;
+    using PolyVector = std::vector<vtkSmartPointer<vtkPolyData>>;
+    using PolyIt = PolyVector::iterator;
     PolyVector fPolys;
 
     //********
@@ -225,12 +225,12 @@ inline const std::string& KVTKWindow::GetFrameTitle() const
     return fFrameTitle;
 }
 
-inline void KVTKWindow::SetFrameSizeX(const unsigned int& anXPixelCount)
+inline void KVTKWindow::SetFrameSizeX(const int& anXPixelCount)
 {
     fFrameXPixels = anXPixelCount;
     return;
 }
-inline void KVTKWindow::SetFrameSizeY(const unsigned int& aYPixelCount)
+inline void KVTKWindow::SetFrameSizeY(const int& aYPixelCount)
 {
     fFrameYPixels = aYPixelCount;
     return;
@@ -284,22 +284,22 @@ inline const double& KVTKWindow::GetViewAngle() const
     return fViewAngle;
 }
 
-inline void KVTKWindow::SetMultiSamples(const unsigned int& samples)
+inline void KVTKWindow::SetMultiSamples(const int& samples)
 {
     fMultiSamples = samples;
     return;
 }
-inline const unsigned int& KVTKWindow::GetMultiSamples() const
+inline const int& KVTKWindow::GetMultiSamples() const
 {
     return fMultiSamples;
 }
 
-inline void KVTKWindow::SetDepthPeelingLevel(const unsigned int& level)
+inline void KVTKWindow::SetDepthPeelingLevel(const int& level)
 {
     fDepthPeelingLevel = level;
     return;
 }
-inline const unsigned int& KVTKWindow::GetDepthPeelingLevel() const
+inline const int& KVTKWindow::GetDepthPeelingLevel() const
 {
     return fDepthPeelingLevel;
 }
@@ -319,20 +319,5 @@ inline vtkSmartPointer<vtkXMLPolyDataWriter> KVTKWindow::GetWriter() const
 }
 
 }  // namespace katrin
-
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////                                                   /////
-/////  BBBB   U   U  IIIII  L      DDDD   EEEEE  RRRR   /////
-/////  B   B  U   U    I    L      D   D  E      R   R  /////
-/////  BBBB   U   U    I    L      D   D  EE     RRRR   /////
-/////  B   B  U   U    I    L      D   D  E      R   R  /////
-/////  BBBB    UUU   IIIII  LLLLL  DDDD   EEEEE  R   R  /////
-/////                                                   /////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-
 
 #endif

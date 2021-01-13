@@ -85,10 +85,10 @@ class KVMSpaceTriangle
 
     //descriptor variables
     //indexing is: [0] = x, [1] = y, [2] = z
-    KThreeVector fP;   //corner point
-    KThreeVector fN1;  //1st basis vector
-    KThreeVector fN2;  //2nd basis vector (non-orthogonal)
-    KThreeVector fN3;  //normal vector
+    KFieldVector fP;   //corner point
+    KFieldVector fN1;  //1st basis vector
+    KFieldVector fN2;  //2nd basis vector (non-orthogonal)
+    KFieldVector fN3;  //normal vector
     double fL1;        //length of side along N1
     double fL2;        //length of side along N2
     double fSinTheta;

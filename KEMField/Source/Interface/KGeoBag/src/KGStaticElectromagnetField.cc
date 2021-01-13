@@ -7,21 +7,17 @@
 
 #include "KGStaticElectromagnetField.hh"
 
+#include "KEMCoreMessage.hh"
+
 using namespace KGeoBag;
 using namespace std;
 
 namespace KEMField
 {
 
-KGStaticElectromagnetField::KGStaticElectromagnetField() :
-    KStaticElectromagnetField(),
-    fSystem(nullptr),
-    fSurfaces(),
-    fSpaces(),
-    fConverter(nullptr)
-{}
+KGStaticElectromagnetField::KGStaticElectromagnetField() : fSystem(nullptr), fConverter(nullptr) {}
 
-KGStaticElectromagnetField::~KGStaticElectromagnetField() {}
+KGStaticElectromagnetField::~KGStaticElectromagnetField() = default;
 
 void KGStaticElectromagnetField::SetSystem(KGeoBag::KGSpace* aSystem)
 {
@@ -38,6 +34,11 @@ void KGStaticElectromagnetField::AddSpace(KGeoBag::KGSpace* aSpace)
     fSpaces.push_back(aSpace);
 }
 
+void KGStaticElectromagnetField::SetSaveMagfield3(bool aFlag)
+{
+    fSaveMagfield3 = aFlag;
+}
+
 KSmartPointer<KGeoBag::KGElectromagnetConverter> KGStaticElectromagnetField::GetConverter()
 {
     return fConverter;
@@ -50,14 +51,14 @@ void KGStaticElectromagnetField::InitializeCore()
     KStaticElectromagnetField::InitializeCore();
 }
 
-KThreeVector KGStaticElectromagnetField::MagneticPotentialCore(const KPosition& aSamplePoint) const
+KFieldVector KGStaticElectromagnetField::MagneticPotentialCore(const KPosition& aSamplePoint) const
 {
     KPosition internal = fConverter->GlobalToInternalPosition(aSamplePoint);
     KDirection internalPotential = KStaticElectromagnetField::MagneticPotentialCore(internal);
     return fConverter->InternalToGlobalVector(internalPotential);
 }
 
-KThreeVector KGStaticElectromagnetField::MagneticFieldCore(const KPosition& aSamplePoint) const
+KFieldVector KGStaticElectromagnetField::MagneticFieldCore(const KPosition& aSamplePoint) const
 {
     KPosition internal = fConverter->GlobalToInternalPosition(aSamplePoint);
     KDirection internalField = KStaticElectromagnetField::MagneticFieldCore(internal);
@@ -73,28 +74,32 @@ KGradient KGStaticElectromagnetField::MagneticGradientCore(const KPosition& aSam
 
 void KGStaticElectromagnetField::ConfigureSurfaceContainer()
 {
-
     auto* container = new KElectromagnetContainer();
 
     fConverter = new KGElectromagnetConverter();
-
     fConverter->SetElectromagnetContainer(container);
+
+    if (fSaveMagfield3) {
+        string tFileName = GetName() + string(".mag3");
+        GetConverter()->SetDumpMagfield3ToFile(tFileName);
+    }
 
     if (fSystem != nullptr) {
         fConverter->SetSystem(fSystem->GetOrigin(), fSystem->GetXAxis(), fSystem->GetYAxis(), fSystem->GetZAxis());
     }
 
-    for (auto tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end(); tSurfaceIt++) {
-        (*tSurfaceIt)->AcceptNode(&(*fConverter));
+    for (auto& surface : fSurfaces) {
+        surface->AcceptNode(&(*fConverter));
     }
 
-    for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-        (*tSpaceIt)->AcceptNode(&(*fConverter));
+    for (auto& space : fSpaces) {
+        space->AcceptNode(&(*fConverter));
     }
 
     if (container->empty()) {
-        cout << "WARNING:"
-             << "electromagnet field solver <" << GetName() << "> has zero surface or space elements" << endl;
+        kem_cout(eWarning) << "WARNING:"
+                           << "electromagnet field solver <" << GetName() << "> has zero surface or space elements"
+                           << eom;
         //std::exit(-1);
     }
 

@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlSpinPrecessionBuilder::~KComplexElement() {}
+template<> KSTrajControlSpinPrecessionBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajControlSpinPrecessionStructure = KSTrajControlSpinPrecessionBuilder::Attribute<string>("name") +
+STATICINT sKSTrajControlSpinPrecessionStructure = KSTrajControlSpinPrecessionBuilder::Attribute<std::string>("name") +
                                                   KSTrajControlSpinPrecessionBuilder::Attribute<double>("fraction");
 
 STATICINT sToolboxKSTrajControlSpinPrecession =

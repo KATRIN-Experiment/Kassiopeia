@@ -155,7 +155,7 @@ class KSAObject
         fKSAObjectStopTag = "INVALID";
     };
 
-    KSAObject(std::string name) :
+    KSAObject(const std::string& name) :
         fKSAObjectName(name),
         fKSAObjectStartTag(std::string(START_TAG_BEGIN) + fKSAObjectName + std::string(START_TAG_END)),
         fKSAObjectStopTag(std::string(STOP_TAG_BEGIN) + fKSAObjectName + std::string(STOP_TAG_END))
@@ -168,7 +168,7 @@ class KSAObject
         ;
     };
 
-    void SetName(std::string name)
+    void SetName(const std::string& name)
     {
         fKSAObjectName = name;
         fKSAObjectStartTag = std::string(START_TAG_BEGIN) + fKSAObjectName + std::string(START_TAG_END);

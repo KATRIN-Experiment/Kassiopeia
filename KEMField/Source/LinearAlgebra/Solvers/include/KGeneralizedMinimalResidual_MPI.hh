@@ -55,11 +55,11 @@ namespace KEMField
 template<typename ValueType> class KGeneralizedMinimalResidual_MPI
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
-    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleMatrixType = KSimpleMatrix<ValueType>;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
     KGeneralizedMinimalResidual_MPI(const Matrix& A, Vector& x, const Vector& b) :
         fDim(A.Dimension()),

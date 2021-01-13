@@ -7,7 +7,7 @@ endif()
 # KEMField version
 set(MODULE_VERSION_MAJOR 3)
 set(MODULE_VERSION_MINOR 7)
-set(MODULE_VERSION_PATCH 3)
+set(MODULE_VERSION_PATCH 5)
 set(MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}")
 
 project( KEMField )
@@ -36,6 +36,12 @@ endif ()
 
 # paths
 kasper_module_paths( KEMField )
+
+# module debugging
+kasper_module_debug()
+if( KEMField_ENABLE_DEBUG )
+    add_cflag( KEMField_ENABLE_DEBUG )
+endif()
 
 # internal dependencies: kommon
 kasper_find_module( Kommon )

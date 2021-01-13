@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyLeadEventBuilder::~KComplexElement() {}
+template<> KSGenEnergyLeadEventBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyLeadEventStructure = KSGenEnergyLeadEventBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyLeadEventStructure = KSGenEnergyLeadEventBuilder::Attribute<std::string>("name") +
                                            KSGenEnergyLeadEventBuilder::Attribute<bool>("force_conversion") +
                                            KSGenEnergyLeadEventBuilder::Attribute<bool>("do_conversion") +
                                            KSGenEnergyLeadEventBuilder::Attribute<bool>("do_auger");

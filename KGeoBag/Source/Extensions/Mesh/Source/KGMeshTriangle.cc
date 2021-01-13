@@ -11,14 +11,13 @@ namespace KGeoBag
 {
 KGMeshTriangle::KGMeshTriangle(const double& fA, const double& fB, const KThreeVector& p0, const KThreeVector& n1,
                                const KThreeVector& n2) :
-    KGMeshElement(),
     fA(fA),
     fB(fB),
     fP0(p0),
     fN1(n1),
     fN2(n2)
 {}
-KGMeshTriangle::KGMeshTriangle(const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& p2) : KGMeshElement()
+KGMeshTriangle::KGMeshTriangle(const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& p2)
 {
     fP0 = p0;
     fN1 = p1 - p0;
@@ -28,15 +27,8 @@ KGMeshTriangle::KGMeshTriangle(const KThreeVector& p0, const KThreeVector& p1, c
     fB = fN2.Magnitude();
     fN2 = fN2.Unit();
 }
-KGMeshTriangle::KGMeshTriangle(const KGMeshTriangle& t) :
-    KGMeshElement(t),
-    fA(t.fA),
-    fB(t.fB),
-    fP0(t.fP0),
-    fN1(t.fN1),
-    fN2(t.fN2)
-{}
-KGMeshTriangle::~KGMeshTriangle() {}
+KGMeshTriangle::KGMeshTriangle(const KGMeshTriangle&) = default;
+KGMeshTriangle::~KGMeshTriangle() = default;
 
 double KGMeshTriangle::Area() const
 {
@@ -282,7 +274,7 @@ void KGMeshTriangle::GetEdge(KThreeVector& start, KThreeVector& end, unsigned in
 
 
 KThreeVector KGMeshTriangle::NearestPointOnLineSegment(const KThreeVector& a, const KThreeVector& b,
-                                                       const KThreeVector& point) const
+                                                       const KThreeVector& point)
 {
     KThreeVector diff = b - a;
     double t = ((point - a) * diff);
@@ -296,7 +288,8 @@ KThreeVector KGMeshTriangle::NearestPointOnLineSegment(const KThreeVector& a, co
 }
 
 
-bool KGMeshTriangle::SameSide(KThreeVector point, KThreeVector A, KThreeVector B, KThreeVector C) const
+bool KGMeshTriangle::SameSide(const KThreeVector& point, const KThreeVector& A, const KThreeVector& B,
+                              const KThreeVector& C)
 {
     KThreeVector cp1 = (B - A).Cross(point - A);
     KThreeVector cp2 = (B - A).Cross(C - A);

@@ -213,7 +213,7 @@ KSRoot::KSRoot() :
     }
 }
 KSRoot::KSRoot(const KSRoot& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fToolbox(KToolbox::GetInstance()),
     fSimulation(nullptr),
     fRun(aCopy.fRun),
@@ -252,12 +252,12 @@ KSRoot* KSRoot::Clone() const
 {
     return new KSRoot(*this);
 }
-KSRoot::~KSRoot()
-{
-    /*
-         * KToolbox takes care of destruction
-         */
-}
+KSRoot::~KSRoot() = default;
+//{
+/*
+ * KToolbox takes care of destruction
+ */
+//}
 
 void KSRoot::Execute(KSSimulation* aSimulation)
 {
@@ -287,25 +287,25 @@ void KSRoot::Execute(KSSimulation* aSimulation)
         Initialize();
         fSimulation->Initialize();
 
-        for (unsigned int i = 0; i < staticRunModifiers->size(); i++) {
-            staticRunModifiers->at(i)->Initialize();
-            staticRunModifiers->at(i)->Activate();
-            fRootRunModifier->AddModifier(staticRunModifiers->at(i));
+        for (auto& staticRunModifier : *staticRunModifiers) {
+            staticRunModifier->Initialize();
+            staticRunModifier->Activate();
+            fRootRunModifier->AddModifier(staticRunModifier);
         };
-        for (unsigned int i = 0; i < staticEventModifiers->size(); i++) {
-            staticEventModifiers->at(i)->Initialize();
-            staticEventModifiers->at(i)->Activate();
-            fRootEventModifier->AddModifier(staticEventModifiers->at(i));
+        for (auto& staticEventModifier : *staticEventModifiers) {
+            staticEventModifier->Initialize();
+            staticEventModifier->Activate();
+            fRootEventModifier->AddModifier(staticEventModifier);
         };
-        for (unsigned int i = 0; i < staticTrackModifiers->size(); i++) {
-            staticTrackModifiers->at(i)->Initialize();
-            staticTrackModifiers->at(i)->Activate();
-            fRootTrackModifier->AddModifier(staticTrackModifiers->at(i));
+        for (auto& staticTrackModifier : *staticTrackModifiers) {
+            staticTrackModifier->Initialize();
+            staticTrackModifier->Activate();
+            fRootTrackModifier->AddModifier(staticTrackModifier);
         };
-        for (unsigned int i = 0; i < staticStepModifiers->size(); i++) {
-            staticStepModifiers->at(i)->Initialize();
-            staticStepModifiers->at(i)->Activate();
-            fRootStepModifier->AddModifier(staticStepModifiers->at(i));
+        for (auto& staticStepModifier : *staticStepModifiers) {
+            staticStepModifier->Initialize();
+            staticStepModifier->Activate();
+            fRootStepModifier->AddModifier(staticStepModifier);
         };
 
         Activate();
@@ -372,21 +372,21 @@ void KSRoot::Execute(KSSimulation* aSimulation)
     fSimulation->Deactivate();
     Deactivate();
 
-    for (unsigned int i = 0; i < staticRunModifiers->size(); i++) {
-        staticRunModifiers->at(i)->Deactivate();
-        staticRunModifiers->at(i)->Deinitialize();
+    for (auto& staticRunModifier : *staticRunModifiers) {
+        staticRunModifier->Deactivate();
+        staticRunModifier->Deinitialize();
     };
-    for (unsigned int i = 0; i < staticEventModifiers->size(); i++) {
-        staticEventModifiers->at(i)->Deactivate();
-        staticEventModifiers->at(i)->Deinitialize();
+    for (auto& staticEventModifier : *staticEventModifiers) {
+        staticEventModifier->Deactivate();
+        staticEventModifier->Deinitialize();
     };
-    for (unsigned int i = 0; i < staticTrackModifiers->size(); i++) {
-        staticTrackModifiers->at(i)->Deactivate();
-        staticTrackModifiers->at(i)->Deinitialize();
+    for (auto& staticTrackModifier : *staticTrackModifiers) {
+        staticTrackModifier->Deactivate();
+        staticTrackModifier->Deinitialize();
     };
-    for (unsigned int i = 0; i < staticStepModifiers->size(); i++) {
-        staticStepModifiers->at(i)->Deactivate();
-        staticStepModifiers->at(i)->Deinitialize();
+    for (auto& staticStepModifier : *staticStepModifiers) {
+        staticStepModifier->Deactivate();
+        staticStepModifier->Deinitialize();
     };
 
     fSimulation->Deinitialize();
@@ -786,54 +786,47 @@ void KSRoot::ExecuteStep()
     }
 
     // debug spritz
-    stepmsg_debug("processing step " << fStep->GetStepId() << eom) stepmsg_debug("step initial particle state: " << eom)
-        stepmsg_debug(
-            "  initial particle space: <"
-            << (fStep->InitialParticle().GetCurrentSpace() ? fStep->InitialParticle().GetCurrentSpace()->GetName() : "")
-            << ">" << eom) stepmsg_debug("  initial particle surface: <"
-                                         << (fStep->InitialParticle().GetCurrentSurface()
-                                                 ? fStep->InitialParticle().GetCurrentSurface()->GetName()
-                                                 : "")
-                                         << ">" << eom)
-            stepmsg_debug("  initial particle side: <" << (fStep->InitialParticle().GetCurrentSide()
-                                                               ? fStep->InitialParticle().GetCurrentSide()->GetName()
-                                                               : "")
-                                                       << ">" << eom)
-                stepmsg_debug("  initial particle time: <" << fStep->InitialParticle().GetTime() << ">" << eom)
-                    stepmsg_debug("  initial particle length: <" << fStep->InitialParticle().GetLength() << ">" << eom)
-                        stepmsg_debug("  initial particle position: <"
-                                      << fStep->InitialParticle().GetPosition().X() << ", "
-                                      << fStep->InitialParticle().GetPosition().Y() << ", "
-                                      << fStep->InitialParticle().GetPosition().Z() << ">" << eom)
-                            stepmsg_debug("  initial particle momentum: <"
-                                          << fStep->InitialParticle().GetMomentum().X() << ", "
-                                          << fStep->InitialParticle().GetMomentum().Y() << ", "
-                                          << fStep->InitialParticle().GetMomentum().Z() << ">" << eom)
-                                stepmsg_debug("  initial particle kinetic energy: <"
-                                              << fStep->InitialParticle().GetKineticEnergy_eV() << ">" << eom)
-                                    stepmsg_debug("  initial particle electric field: <"
-                                                  << fStep->InitialParticle().GetElectricField().X() << ","
-                                                  << fStep->InitialParticle().GetElectricField().Y() << ","
-                                                  << fStep->InitialParticle().GetElectricField().Z() << ">" << eom)
-                                        stepmsg_debug("  initial particle magnetic field: <"
-                                                      << fStep->InitialParticle().GetMagneticField().X() << ","
-                                                      << fStep->InitialParticle().GetMagneticField().Y() << ","
-                                                      << fStep->InitialParticle().GetMagneticField().Z() << ">" << eom)
-                                            stepmsg_debug("  initial particle angle to magnetic field: <"
-                                                          << fStep->InitialParticle().GetPolarAngleToB() << ">" << eom)
-                                                stepmsg_debug("  initial particle spin: "
-                                                              << fStep->InitialParticle().GetSpin() << eom)
-                                                    stepmsg_debug("  initial particle spin0: <"
-                                                                  << fStep->InitialParticle().GetSpin0() << ">" << eom)
-                                                        stepmsg_debug("  initial particle aligned spin: <"
-                                                                      << fStep->InitialParticle().GetAlignedSpin()
-                                                                      << ">" << eom)
-                                                            stepmsg_debug("  initial particle spin angle: <"
-                                                                          << fStep->InitialParticle().GetSpinAngle()
-                                                                          << ">" << eom)
+    stepmsg_debug("processing step " << fStep->GetStepId() << eom);
+    stepmsg_debug("step initial particle state: " << eom);
+    stepmsg_debug("  initial particle space: <"
+                  << (fStep->InitialParticle().GetCurrentSpace() ? fStep->InitialParticle().GetCurrentSpace()->GetName()
+                                                                 : "")
+                  << ">" << eom);
+    stepmsg_debug("  initial particle surface: <" << (fStep->InitialParticle().GetCurrentSurface()
+                                                          ? fStep->InitialParticle().GetCurrentSurface()->GetName()
+                                                          : "")
+                                                  << ">" << eom);
+    stepmsg_debug("  initial particle side: <"
+                  << (fStep->InitialParticle().GetCurrentSide() ? fStep->InitialParticle().GetCurrentSide()->GetName()
+                                                                : "")
+                  << ">" << eom);
+    stepmsg_debug("  initial particle time: <" << fStep->InitialParticle().GetTime() << ">" << eom);
+    stepmsg_debug("  initial particle length: <" << fStep->InitialParticle().GetLength() << ">" << eom);
+    stepmsg_debug("  initial particle position: <" << fStep->InitialParticle().GetPosition().X() << ", "
+                                                   << fStep->InitialParticle().GetPosition().Y() << ", "
+                                                   << fStep->InitialParticle().GetPosition().Z() << ">" << eom);
+    stepmsg_debug("  initial particle momentum: <" << fStep->InitialParticle().GetMomentum().X() << ", "
+                                                   << fStep->InitialParticle().GetMomentum().Y() << ", "
+                                                   << fStep->InitialParticle().GetMomentum().Z() << ">" << eom);
+    stepmsg_debug("  initial particle kinetic energy: <" << fStep->InitialParticle().GetKineticEnergy_eV() << ">"
+                                                         << eom);
+    stepmsg_debug("  initial particle electric field: <" << fStep->InitialParticle().GetElectricField().X() << ","
+                                                         << fStep->InitialParticle().GetElectricField().Y() << ","
+                                                         << fStep->InitialParticle().GetElectricField().Z() << ">"
+                                                         << eom);
+    stepmsg_debug("  initial particle magnetic field: <" << fStep->InitialParticle().GetMagneticField().X() << ","
+                                                         << fStep->InitialParticle().GetMagneticField().Y() << ","
+                                                         << fStep->InitialParticle().GetMagneticField().Z() << ">"
+                                                         << eom);
+    stepmsg_debug("  initial particle angle to magnetic field: <" << fStep->InitialParticle().GetPolarAngleToB() << ">"
+                                                                  << eom);
+    stepmsg_debug("  initial particle spin: " << fStep->InitialParticle().GetSpin() << eom);
+    stepmsg_debug("  initial particle spin0: <" << fStep->InitialParticle().GetSpin0() << ">" << eom);
+    stepmsg_debug("  initial particle aligned spin: <" << fStep->InitialParticle().GetAlignedSpin() << ">" << eom);
+    stepmsg_debug("  initial particle spin angle: <" << fStep->InitialParticle().GetSpinAngle() << ">" << eom);
 
-        //clear any abort signals in root trajectory
-        KSTrajectory::ClearAbort();
+    //clear any abort signals in root trajectory
+    KSTrajectory::ClearAbort();
 
     //clear any previous GSL errors
     KGslErrorHandler::GetInstance().ClearError();
@@ -1006,6 +999,25 @@ void KSRoot::ExecuteStep()
         // if the terminators killed the particle, execute them
         else {
             fRootTerminator->ExecuteTermination();
+
+            fStep->FinalParticle().SetActive(false);
+
+            // push update
+            fStep->PushUpdate();
+            fRootSurfaceInteraction->PushUpdate();
+            fRootSurfaceNavigator->PushUpdate();
+            fRootTerminator->PushUpdate();
+            fRootStepModifier->PushUpdate();
+
+            // write the step
+            fRootWriter->ExecuteStep();
+
+            // push deupdate
+            fStep->PushDeupdate();
+            fRootSurfaceInteraction->PushDeupdate();
+            fRootSurfaceNavigator->PushDeupdate();
+            fRootTerminator->PushDeupdate();
+            fRootStepModifier->PushDeupdate();
         }
 
         // check if particle has turned around
@@ -1037,61 +1049,63 @@ void KSRoot::ExecuteStep()
     }
     // NOTE: any other exceptions lead to failure but may be caught higher up (track/event/run)
 
+    // push deupdate in case exceptions prevented it
+    if (fStep->State() == eUpdated)
+        fStep->PushDeupdate();
+    if (fRootSurfaceInteraction->State() == eUpdated)
+        fRootSurfaceInteraction->PushDeupdate();
+    if (fRootSurfaceNavigator->State() == eUpdated)
+        fRootSurfaceNavigator->PushDeupdate();
+    if (fRootTerminator->State() == eUpdated)
+        fRootTerminator->PushDeupdate();
+    if (fRootStepModifier->State() == eUpdated)
+        fRootStepModifier->PushDeupdate();
+
     // label secondaries
-    for (auto tParticleIt = fStep->ParticleQueue().begin(); tParticleIt != fStep->ParticleQueue().end();
-         tParticleIt++) {
-        (*tParticleIt)->SetParentRunId(fRun->RunId());
-        (*tParticleIt)->SetParentEventId(fEvent->EventId());
-        (*tParticleIt)->SetParentTrackId(fTrack->TrackId());
-        (*tParticleIt)->SetParentStepId(fStep->StepId());
+    for (auto& tParticleIt : fStep->ParticleQueue()) {
+        tParticleIt->SetParentRunId(fRun->RunId());
+        tParticleIt->SetParentEventId(fEvent->EventId());
+        tParticleIt->SetParentTrackId(fTrack->TrackId());
+        tParticleIt->SetParentStepId(fStep->StepId());
     }
 
-    stepmsg_debug("finished step " << fStep->GetStepId() << eom) stepmsg_debug("step final particle state: " << eom)
-        stepmsg_debug("  final particle space: <"
-                      << (fStep->FinalParticle().GetCurrentSpace() ? fStep->FinalParticle().GetCurrentSpace()->GetName()
-                                                                   : "")
-                      << ">" << eom) stepmsg_debug("  final particle surface: <"
-                                                   << (fStep->FinalParticle().GetCurrentSurface()
-                                                           ? fStep->FinalParticle().GetCurrentSurface()->GetName()
-                                                           : "")
-                                                   << ">" << eom)
-            stepmsg_debug(
-                "  final particle side: <"
-                << (fStep->FinalParticle().GetCurrentSide() ? fStep->FinalParticle().GetCurrentSide()->GetName() : "")
-                << ">" << eom) stepmsg_debug("  final particle time: <"
-                                             << fStep->FinalParticle().GetTime() << ">"
-                                             << eom) stepmsg_debug("  final particle length: <"
-                                                                   << fStep->FinalParticle().GetLength() << ">" << eom)
-                stepmsg_debug("  final particle position: <" << fStep->FinalParticle().GetPosition().X() << ", "
-                                                             << fStep->FinalParticle().GetPosition().Y() << ", "
-                                                             << fStep->FinalParticle().GetPosition().Z() << ">" << eom)
-                    stepmsg_debug("  final particle momentum: <"
-                                  << fStep->FinalParticle().GetMomentum().X() << ", "
-                                  << fStep->FinalParticle().GetMomentum().Y() << ", "
-                                  << fStep->FinalParticle().GetMomentum().Z() << ">"
-                                  << eom) stepmsg_debug("  final particle kinetic energy: <"
-                                                        << fStep->FinalParticle().GetKineticEnergy_eV() << ">" << eom)
-                        stepmsg_debug("  final particle electric field: <"
-                                      << fStep->FinalParticle().GetElectricField().X() << ","
-                                      << fStep->FinalParticle().GetElectricField().Y() << ","
-                                      << fStep->FinalParticle().GetElectricField().Z() << ">" << eom)
-                            stepmsg_debug("  final particle magnetic field: <"
-                                          << fStep->FinalParticle().GetMagneticField().X() << ","
-                                          << fStep->FinalParticle().GetMagneticField().Y() << ","
-                                          << fStep->FinalParticle().GetMagneticField().Z() << ">" << eom)
-                                stepmsg_debug("  final particle angle to magnetic field: <"
-                                              << fStep->FinalParticle().GetPolarAngleToB() << ">" << eom)
-                                    stepmsg_debug("  final particle spin: " << fStep->FinalParticle().GetSpin() << eom)
-                                        stepmsg_debug("  final particle spin0: <" << fStep->FinalParticle().GetSpin0()
-                                                                                  << ">" << eom)
-                                            stepmsg_debug("  final particle aligned spin: <"
-                                                          << fStep->FinalParticle().GetAlignedSpin() << ">" << eom)
-                                                stepmsg_debug("  final particle spin angle: <"
-                                                              << fStep->FinalParticle().GetSpinAngle() << ">" << eom)
+    stepmsg_debug("finished step " << fStep->GetStepId() << eom);
+    stepmsg_debug("step final particle state: " << eom);
+    stepmsg_debug("  final particle space: <"
+                  << (fStep->FinalParticle().GetCurrentSpace() ? fStep->FinalParticle().GetCurrentSpace()->GetName()
+                                                               : "")
+                  << ">" << eom);
+    stepmsg_debug("  final particle surface: <"
+                  << (fStep->FinalParticle().GetCurrentSurface() ? fStep->FinalParticle().GetCurrentSurface()->GetName()
+                                                                 : "")
+                  << ">" << eom);
+    stepmsg_debug("  final particle side: <"
+                  << (fStep->FinalParticle().GetCurrentSide() ? fStep->FinalParticle().GetCurrentSide()->GetName() : "")
+                  << ">" << eom);
+    stepmsg_debug("  final particle time: <" << fStep->FinalParticle().GetTime() << ">" << eom);
+    stepmsg_debug("  final particle length: <" << fStep->FinalParticle().GetLength() << ">" << eom);
+    stepmsg_debug("  final particle position: <" << fStep->FinalParticle().GetPosition().X() << ", "
+                                                 << fStep->FinalParticle().GetPosition().Y() << ", "
+                                                 << fStep->FinalParticle().GetPosition().Z() << ">" << eom);
+    stepmsg_debug("  final particle momentum: <" << fStep->FinalParticle().GetMomentum().X() << ", "
+                                                 << fStep->FinalParticle().GetMomentum().Y() << ", "
+                                                 << fStep->FinalParticle().GetMomentum().Z() << ">" << eom);
+    stepmsg_debug("  final particle kinetic energy: <" << fStep->FinalParticle().GetKineticEnergy_eV() << ">" << eom);
+    stepmsg_debug("  final particle electric field: <" << fStep->FinalParticle().GetElectricField().X() << ","
+                                                       << fStep->FinalParticle().GetElectricField().Y() << ","
+                                                       << fStep->FinalParticle().GetElectricField().Z() << ">" << eom);
+    stepmsg_debug("  final particle magnetic field: <" << fStep->FinalParticle().GetMagneticField().X() << ","
+                                                       << fStep->FinalParticle().GetMagneticField().Y() << ","
+                                                       << fStep->FinalParticle().GetMagneticField().Z() << ">" << eom);
+    stepmsg_debug("  final particle angle to magnetic field: <" << fStep->FinalParticle().GetPolarAngleToB() << ">"
+                                                                << eom);
+    stepmsg_debug("  final particle spin: " << fStep->FinalParticle().GetSpin() << eom);
+    stepmsg_debug("  final particle spin0: <" << fStep->FinalParticle().GetSpin0() << ">" << eom);
+    stepmsg_debug("  final particle aligned spin: <" << fStep->FinalParticle().GetAlignedSpin() << ">" << eom);
+    stepmsg_debug("  final particle spin angle: <" << fStep->FinalParticle().GetSpinAngle() << ">" << eom);
 
-        //signal handler terminate particle
-        if (fStopRunSignal || fStopEventSignal || fStopTrackSignal)
-    {
+    //signal handler terminate particle
+    if (fStopRunSignal || fStopEventSignal || fStopTrackSignal) {
         fStep->FinalParticle().SetActive(false);
     }
 

@@ -11,8 +11,8 @@ KGNavigableMeshElementContainer::KGNavigableMeshElementContainer()
 
 KGNavigableMeshElementContainer::~KGNavigableMeshElementContainer()
 {
-    for (unsigned int i = 0; i < fMeshElements.size(); i++) {
-        delete fMeshElements[i];
+    for (auto& element : fMeshElements) {
+        delete element;
     }
     fMeshElements.clear();
 }

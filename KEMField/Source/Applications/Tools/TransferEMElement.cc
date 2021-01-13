@@ -1,6 +1,7 @@
 #include "KBinaryDataStreamer.hh"
 #include "KDataDisplay.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KIterativeStateWriter.hh"
 #include "KResidualVector.hh"
@@ -16,6 +17,7 @@
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
+#include <utility>
 #include <vector>
 
 using namespace KEMField;
@@ -31,18 +33,18 @@ void TransferElement(std::string& inFile, std::string& inName, std::string& outF
     KEMFileInterface::GetInstance()->Read(inFile, element, inName);
     std::cout << "OUT: \t" << outFile << std::endl;
     std::cout << "\t" << outName << std::endl;
-    for (unsigned int i = 0; i < labels.size(); i++)
-        std::cout << "\t" << labels.at(i) << std::endl;
+    for (auto& label : labels)
+        std::cout << "\t" << label << std::endl;
     KEMFileInterface::GetInstance()->Write(outFile, element, outName, labels);
 }
 
 template<class Typelist> struct TransferElementInTypelist
 {
-    TransferElementInTypelist(std::string elementName, std::string& inFile, std::string& inName, std::string& outFile,
-                              std::string& outName, std::vector<std::string>& labels)
+    TransferElementInTypelist(const std::string& elementName, std::string& inFile, std::string& inName,
+                              std::string& outFile, std::string& outName, std::vector<std::string>& labels)
     {
         typedef typename Typelist::Head Head;
-        typedef typename Typelist::Tail Tail;
+        using Tail = typename Typelist::Tail;
 
         if (Head::Name() == elementName)
             TransferElement<Head>(inFile, inName, outFile, outName, labels);
@@ -53,19 +55,19 @@ template<class Typelist> struct TransferElementInTypelist
 
 template<> struct TransferElementInTypelist<KNullType>
 {
-    TransferElementInTypelist(std::string elementName, std::string&, std::string&, std::string&, std::string&,
-                              std::vector<std::string>&)
+    TransferElementInTypelist(const std::string& elementName, std::string& /*unused*/, std::string& /*unused*/,
+                              std::string& /*unused*/, std::string& /*unused*/, std::vector<std::string>& /*unused*/)
     {
-        KEMField::cout << "Unknown type <" << elementName << ">" << KEMField::endl;
+        KEMField::cout << "Unknown type <" << std::move(elementName) << ">" << KEMField::endl;
     }
 };
 
 template<class Typelist> struct AppendNames
 {
-    AppendNames(std::string prefix, std::string suffix, std::string& usage)
+    AppendNames(const std::string& prefix, const std::string& suffix, std::string& usage)
     {
-        typedef typename Typelist::Head Head;
-        typedef typename Typelist::Tail Tail;
+        using Head = typename Typelist::Head;
+        using Tail = typename Typelist::Tail;
 
         usage.append(prefix);
         usage.append(Head::Name());
@@ -76,12 +78,14 @@ template<class Typelist> struct AppendNames
 
 template<> struct AppendNames<KNullType>
 {
-    AppendNames(std::string, std::string, std::string&) {}
+    AppendNames(const std::string& /*unused*/, const std::string /*unused*/&, std::string& /*unused*/) {}
 };
 
 int main(int argc, char* argv[])
 {
-    typedef KTYPELIST_3(KSurfaceContainer, KResidualVector<double>, KResidualThreshold) KElementTypes;
+    using KElementTypes = KEMField::KTypelist<
+        KSurfaceContainer,
+        KEMField::KTypelist<KResidualVector<double>, KEMField::KTypelist<KResidualThreshold, KEMField::KNullType>>>;
 
     std::string usage = "\n"
                         "Usage: TransferEMElement -i <InElementFile> -t <ElementType>\n"
@@ -132,7 +136,7 @@ int main(int argc, char* argv[])
     std::vector<std::string> labels;
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -155,7 +159,7 @@ int main(int argc, char* argv[])
                 outName = optarg;
                 break;
             case ('l'):  // label
-                labels.push_back(std::string(optarg));
+                labels.emplace_back(optarg);
                 break;
             default:  // unrecognized option
                 std::cout << usage << std::endl;
@@ -174,7 +178,7 @@ int main(int argc, char* argv[])
     if (outName.empty())
         outName = inName;
 
-    std::string fileSuffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string fileSuffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -194,7 +198,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (fileSuffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (fileSuffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }

@@ -24,14 +24,14 @@ template<typename ValueType> class KSimpleSquareMatrix : public KSquareMatrix<Va
 {
   public:
     KSimpleSquareMatrix(unsigned int size);
-    virtual ~KSimpleSquareMatrix() {}
+    virtual ~KSimpleSquareMatrix() = default;
 
     unsigned int Dimension() const;
     const ValueType& operator()(unsigned int, unsigned int) const;
     ValueType& operator()(unsigned int, unsigned int);
 
   protected:
-    KSimpleSquareMatrix() {}
+    KSimpleSquareMatrix() = default;
     std::vector<std::vector<ValueType>> fElements;
 };
 

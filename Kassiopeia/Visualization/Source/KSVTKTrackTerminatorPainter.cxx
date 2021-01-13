@@ -9,6 +9,9 @@
 
 #include <algorithm>
 
+using namespace katrin;
+using namespace std;
+
 namespace Kassiopeia
 {
 KSVTKTrackTerminatorPainter::KSVTKTrackTerminatorPainter() :
@@ -33,7 +36,7 @@ KSVTKTrackTerminatorPainter::KSVTKTrackTerminatorPainter() :
     fMapper->SetScalarModeToUseCellData();
     fActor->SetMapper(fMapper);
 }
-KSVTKTrackTerminatorPainter::~KSVTKTrackTerminatorPainter() {}
+KSVTKTrackTerminatorPainter::~KSVTKTrackTerminatorPainter() = default;
 
 void KSVTKTrackTerminatorPainter::Render()
 {

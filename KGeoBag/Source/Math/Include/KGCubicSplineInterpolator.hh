@@ -9,7 +9,7 @@ class KGCubicSplineInterpolator : public KGInterpolator
 {
   public:
     KGCubicSplineInterpolator() : KGInterpolator() {}
-    ~KGCubicSplineInterpolator() override {}
+    ~KGCubicSplineInterpolator() override = default;
 
     void Initialize(DataSet& data, double yp0, double ypn);
     void Initialize(DataSet& data) override

@@ -9,8 +9,8 @@ namespace katrin
 {
 
 STATICINT sKSGeoSurfaceStructure =
-    KSGeoSurfaceBuilder::Attribute<string>("name") + KSGeoSurfaceBuilder::Attribute<string>("surfaces") +
-    KSGeoSurfaceBuilder::Attribute<string>("spaces") +
+    KSGeoSurfaceBuilder::Attribute<std::string>("name") + KSGeoSurfaceBuilder::Attribute<std::string>("surfaces") +
+    KSGeoSurfaceBuilder::Attribute<std::string>("spaces") +
     KSGeoSurfaceBuilder::ComplexElement<KSCommandMemberData>("command") +
     KSGeoSurfaceBuilder::ComplexElement<KSCommandMemberAddTerminatorData>("add_terminator") +
     KSGeoSurfaceBuilder::ComplexElement<KSCommandMemberRemoveTerminatorData>("remove_terminator") +

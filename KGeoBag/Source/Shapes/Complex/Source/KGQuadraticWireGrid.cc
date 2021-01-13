@@ -18,33 +18,33 @@ KGQuadraticWireGrid* KGQuadraticWireGrid::Clone() const
     return w;
 }
 
-double KGQuadraticWireGrid::GetLength() const
+double KGQuadraticWireGrid::GetLength()
 {
     // TODO
     return 0.;
 }
 
 
-double KGQuadraticWireGrid::Area() const
+double KGQuadraticWireGrid::Area()
 {
     // TODO
     return 0.;
 }
 
-double KGQuadraticWireGrid::Volume() const
+double KGQuadraticWireGrid::Volume()
 {
     // TODO
     return 0.;
 }
 
-bool KGQuadraticWireGrid::ContainsPoint(const double* P) const
+bool KGQuadraticWireGrid::ContainsPoint(const double* P)
 {
     // TODO
     (void) P;
     return true;
 }
 
-double KGQuadraticWireGrid::DistanceTo(const double* P, double* P_in, double* P_norm) const
+double KGQuadraticWireGrid::DistanceTo(const double* P, const double* P_in, const double* P_norm)
 {
     // TODO
     (void) P;

@@ -25,8 +25,10 @@ namespace KGeoBag
 template<size_t NDIM> class KGBallCloud
 {
   public:
-    KGBallCloud(){};
-    virtual ~KGBallCloud(){};
+    KGBallCloud() = default;
+    ;
+    virtual ~KGBallCloud() = default;
+    ;
 
     size_t GetNBalls() const
     {

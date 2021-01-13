@@ -17,7 +17,8 @@ class KExplicitSuperpositionSolutionComponent
 {
   public:
     KExplicitSuperpositionSolutionComponent() : scale(1.0){};
-    virtual ~KExplicitSuperpositionSolutionComponent(){};
+    virtual ~KExplicitSuperpositionSolutionComponent() = default;
+    ;
 
     std::string name;
     double scale;

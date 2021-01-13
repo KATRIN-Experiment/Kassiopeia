@@ -1,4 +1,5 @@
 #include "KDataDisplay.hh"
+#include "KEMCout.hh"
 #include "KSurface.hh"
 #include "KSurfaceContainer.hh"
 #include "KSurfaceTypes.hh"
@@ -110,11 +111,11 @@ using namespace KEMField;
 using namespace KGeoBag;
 #endif
 
-void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer);
-std::vector<std::string> Tokenize(std::string separators, std::string input);
+void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
+std::vector<std::string> Tokenize(const std::string& separators, std::string input);
 
 void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
-                    double permittivity2, double* P, double* F);
+                    double permittivity2, const double* P, double* F);
 
 clock_t start;
 
@@ -222,7 +223,7 @@ int main(int argc, char* argv[])
 #endif
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -519,7 +520,7 @@ int main(int argc, char* argv[])
 #endif
 
     double computationTime = 0.;
-    int dimension = b.Dimension();
+    unsigned int dimension = b.Dimension();
 
     if (!skipBEM) {
         if (method == 0) {
@@ -616,7 +617,7 @@ int main(int argc, char* argv[])
             stateWriter->Interval(saveIncrement);
             robinHood.AddVisitor(stateWriter);
 
-            robinHood.SetResidualCheckInterval((rh_increment ? rh_increment : b.Dimension()));
+            robinHood.SetResidualCheckInterval((rh_increment != 0 ? rh_increment : b.Dimension()));
 
 #ifdef KEMFIELD_USE_VTK
             if (residualGraph) {
@@ -652,7 +653,7 @@ int main(int argc, char* argv[])
             stateWriter->Interval(saveIncrement);
             robinHood.AddVisitor(stateWriter);
 
-            robinHood.SetResidualCheckInterval((rh_increment ? rh_increment : b.Dimension() / 2));
+            robinHood.SetResidualCheckInterval((rh_increment != 0 ? rh_increment : b.Dimension() / 2));
 
 #ifdef KEMFIELD_USE_VTK
             if (residualGraph) {
@@ -754,7 +755,7 @@ int main(int argc, char* argv[])
             stateWriter->Interval(saveIncrement);
             ssc.AddVisitor(stateWriter);
 
-            ssc.SetResidualCheckInterval((rh_increment ? rh_increment : b.Dimension() / 2));
+            ssc.SetResidualCheckInterval((rh_increment != 0 ? rh_increment : b.Dimension() / 2));
 
 #ifdef KEMFIELD_USE_VTK
             if (residualGraph) {
@@ -822,7 +823,7 @@ int main(int argc, char* argv[])
         fieldCanvas = new KEMRootFieldCanvas(0., A->Dimension(), 0, A->Dimension(), 1.e30, true);
 #endif
 
-        if (fieldCanvas) {
+        if (fieldCanvas != nullptr) {
             std::vector<double> x_;
             std::vector<double> y_;
             std::vector<double> V_;
@@ -1050,7 +1051,7 @@ int main(int argc, char* argv[])
                     abs_average[i] /= nTest;
                 }
 
-                if (verbose) {
+                if (verbose != 0) {
                     std::cout << "" << std::endl;
                     std::cout << "Relative Accuracy Summary (analytic vs numeric): " << std::endl;
                     std::cout << "\t Average \t\t Max \t\t\t Min" << std::endl;
@@ -1208,7 +1209,7 @@ int main(int argc, char* argv[])
                 fieldCanvas = new KEMVTKFieldCanvas(z1, z2, x1, x2, 1.e30, true);
 #endif
 
-                if (fieldCanvas) {
+                if (fieldCanvas != nullptr) {
                     auto N_x = (int) ((x2 - x1) / dx);
                     auto N_z = (int) ((z2 - z1) / dz);
 
@@ -1225,9 +1226,11 @@ int main(int argc, char* argv[])
 
                     std::cout << "Computing potential field on a " << N_x << " by " << N_z << " grid" << std::endl;
 
+                    x_.reserve(N_z);
                     for (int g = 0; g < N_z; g++)
                         x_.push_back(z1 + g * spacing[0] + spacing[0] / 2);
 
+                    y_.reserve(N_x);
                     for (int h = 0; h < N_x; h++)
                         y_.push_back(x1 + h * spacing[1] + spacing[1] / 2);
 
@@ -1268,10 +1271,10 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
+void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
     typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KDirichletTriangle;
-    typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle> KNeumannTriangle;
+    using KNeumannTriangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
 
     std::string inBuf;
     std::vector<std::string> token;
@@ -1289,7 +1292,7 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
 
     while (!file.eof()) {
         lineNum++;
-        if (token.size() > 0) {
+        if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
                 token = Tokenize(" \t", inBuf);
@@ -1297,7 +1300,7 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
             }
         }
 
-        if (token.size() != 0) {
+        if (!token.empty()) {
             if (token.size() == 1) {
                 MPI_SINGLE_PROCESS
                 KEMField::cout << "Reading in " << token.at(0) << " triangles." << KEMField::endl;
@@ -1351,13 +1354,13 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
     file.close();
 }
 
-std::vector<std::string> Tokenize(std::string separators, std::string input)
+std::vector<std::string> Tokenize(const std::string& separators, std::string input)
 {
     unsigned int startToken = 0, endToken;  // Pointers to the token pos
     std::vector<std::string> tokens;        // Vector to keep the tokens
     unsigned int commentPos = input.size() + 1;
 
-    if (separators.size() > 0 && input.size() > 0) {
+    if (!separators.empty() && !input.empty()) {
         // Check for comment
         for (unsigned int i = 0; i < input.size(); i++) {
             if (input[i] == '#' || (i < input.size() - 1 && (input[i] == '/' && input[i + 1] == '/'))) {
@@ -1372,8 +1375,8 @@ std::vector<std::string> Tokenize(std::string separators, std::string input)
 
             // Stop parsing when comment symbol is reached
             if (startToken == commentPos) {
-                if (tokens.size() == 0)
-                    tokens.push_back("#");
+                if (tokens.empty())
+                    tokens.emplace_back("#");
                 return tokens;
             }
 
@@ -1399,7 +1402,7 @@ std::vector<std::string> Tokenize(std::string separators, std::string input)
 }
 
 void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
-                    double permittivity2, double* P, double* F)
+                    double permittivity2, const double* P, double* F)
 {
     // This function computes the electric potential and electric field due to a
     // charge <Q> on a sphere of radius <radius1>, surrounded by two dielectrics.

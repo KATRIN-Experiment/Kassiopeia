@@ -20,7 +20,7 @@ using namespace katrin;
 using namespace KGeoBag;
 using namespace std;
 
-ostream& operator<<(ostream&, KThreeVector&);
+ostream& operator<<(ostream& /*o*/, KThreeVector& /*v*/);
 
 int main(int /*anArgc*/, char** /*anArgv*/)
 {

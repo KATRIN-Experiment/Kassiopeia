@@ -21,9 +21,11 @@
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
 #include "KBoundaryIntegralVector.hh"
+#include "KEMCoreMessage.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KIterativeStateWriter.hh"
 #include "KSquareMatrix.hh"
+#include "KStringUtils.h"
 
 #ifdef KEMFIELD_USE_MPI
 #include "KMPIInterface.hh"
@@ -57,7 +59,7 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
     tShapeHashGenerator.Omit(Type2Type<KBoundaryType<KElectrostaticBasis, KDirichletBoundary>>());
     string tShapeHash = tShapeHashGenerator.GenerateHash(aContainer);
 
-    //fieldmsg_debug( "<shape> hash is <" << tShapeHash << ">" << eom )
+    kem_cout_debug("<shape> hash is <" << tShapeHash << ">" << eom);
 
     // compute shape+boundary hash
     KMD5HashGenerator tShapeBoundaryHashGenerator;
@@ -66,7 +68,7 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
     tShapeBoundaryHashGenerator.Omit(Type2Type<KElectrostaticBasis>());
     string tShapeBoundaryHash = tShapeBoundaryHashGenerator.GenerateHash(aContainer);
 
-    //fieldmsg_debug( "<shape+boundary> hash is <" << tShapeBoundaryHash << ">" << eom )
+    kem_cout_debug("<shape+boundary> hash is <" << tShapeBoundaryHash << ">" << eom);
 
     vector<string> tLabels;
     unsigned int tCount;
@@ -78,10 +80,12 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
     tLabels.push_back(tShapeHash);
     tLabels.push_back(tShapeBoundaryHash);
 
-    // find matching residual thresholds
-    tCount = KEMFileInterface::GetInstance()->NumberWithLabels(tLabels);
+    kem_cout_debug("charge density solver looking for existing solution ..." << eom);
 
-    //fieldmsg_debug KEMField::cout <<"found <" << tCount << "> that match <shape> and <shape+boundary> hashes" << endl;
+    // find matching residual thresholds
+
+    tCount = KEMFileInterface::GetInstance()->NumberWithLabels(tLabels);
+    kem_cout_debug("found <" << tCount << "> solutions that match the <shape> and <shape+boundary> hashes" << eom);
 
     if (tCount > 0) {
         KResidualThreshold tResidualThreshold;
@@ -89,24 +93,30 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
 
         for (unsigned int i = 0; i < tCount; i++) {
             KEMFileInterface::GetInstance()->FindByLabels(tResidualThreshold, tLabels, i);
-
-            //fieldmsg_debug KEMField::cout << "found threshold <" << tResidualThreshold.fResidualThreshold << ">" << endl;
+            kem_cout_debug("found threshold <" << tResidualThreshold.fResidualThreshold << ">" << eom);
 
             if (tResidualThreshold < tMinResidualThreshold) {
-                //fieldmsg_debug KEMField::cout << "found minimum solution <" << tResidualThreshold.fGeometryHash << "> with threshold <" << tResidualThreshold.fResidualThreshold << ">" << endl;
+                kem_cout_debug("found minimum solution <" << tResidualThreshold.fGeometryHash << "> with threshold <"
+                                                          << tResidualThreshold.fResidualThreshold << ">" << eom);
 
                 tMinResidualThreshold = tResidualThreshold;
             }
         }
 
-        //fieldmsg_debug KEMField::cout << "global minimum solution <" << tMinResidualThreshold.fGeometryHash << "> with threshold <" << tResidualThreshold.fResidualThreshold << ">" << endl;
-
-        KEMFileInterface::GetInstance()->FindByHash(aContainer, tMinResidualThreshold.fGeometryHash);
+        kem_cout_debug("global minimum solution <" << tMinResidualThreshold.fGeometryHash << "> with threshold <"
+                                                   << tResidualThreshold.fResidualThreshold << ">" << eom);
 
         tSolution = false;
+        string tSolutionFilename;
+        KEMFileInterface::GetInstance()->FindByHash(aContainer,
+                                                    tMinResidualThreshold.fGeometryHash,
+                                                    tSolution,
+                                                    tSolutionFilename);
+
         if (tMinResidualThreshold.fResidualThreshold <= aThreshold) {
             MPI_SINGLE_PROCESS
-            cout << "previously computed solution found" << endl;
+            kem_cout() << "previously computed charge density solution found in file <" << tSolutionFilename << ">"
+                       << eom;
             tSolution = true;
         }
 
@@ -123,7 +133,7 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
     // find residual thresholds for geometry
     tCount = KEMFileInterface::GetInstance()->NumberWithLabels(tLabels);
 
-    //fieldmsg_debug( "found <" << tCount << "> that match <shape> hash" << eom )
+    kem_cout_debug("found <" << tCount << "> that match <shape> hash" << eom);
 
     if (tCount > 0) {
 #ifdef KEMFIELD_USE_ROOT
@@ -145,16 +155,21 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
         vector<KBoundaryIntegralSolutionVector<KElectrostaticBoundaryIntegrator>*> tSolutionVectors;
         vector<KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>*> tVectors;
 
+        vector<string> tSolutionFilenames = {""};
         for (unsigned int tIndex = 0; tIndex < tCount; tIndex++) {
             KEMFileInterface::GetInstance()->FindByLabels(tResidualThreshold, tLabels, tIndex);
 
-            //fieldmsg_debug( "found threshold <" << tResidualThreshold.fResidualThreshold << ">" << eom )
+            kem_cout_debug("found threshold <" << tResidualThreshold.fResidualThreshold << ">" << eom);
 
             if (tResidualThreshold.fResidualThreshold <= aThreshold) {
-                //fieldmsg_debug( "adding solution <" << tResidualThreshold.fGeometryHash << "> with threshold <" << tResidualThreshold.fResidualThreshold << ">" << eom )
+                kem_cout_debug("adding solution <" << tResidualThreshold.fGeometryHash << "> with threshold <"
+                                                   << tResidualThreshold.fResidualThreshold << ">" << eom);
 
                 auto* tNewContainer = new KSurfaceContainer();
-                KEMFileInterface::GetInstance()->FindByHash(*tNewContainer, tResidualThreshold.fGeometryHash);
+                KEMFileInterface::GetInstance()->FindByHash(*tNewContainer,
+                                                            tResidualThreshold.fGeometryHash,
+                                                            tSolution,
+                                                            tSolutionFilenames.back());
 
                 auto* tNewVector =
                     new KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator>(*tNewContainer, tIntegrator);
@@ -166,32 +181,36 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
                 tSolutionVectors.push_back(tNewSolutionVector);
                 tSuperpositionSolver.AddSolvedSystem(*tNewSolutionVector, *tNewVector);
             }
+
+            tSolutionFilenames.push_back("");
         }
 
         tSolution = false;
         if (tSuperpositionSolver.SolutionSpaceIsSpanned(tVector)) {
             tSuperpositionSolver.ComposeSolution(tSolutionVector);
-            //fieldmsg( eNormal ) << "superposition of previously computed solutions found" << eom;
+            kem_cout() << "superposition of previously computed charge density solutions found" << eom;
             tSolution = true;
         }
 
-        for (unsigned int i = 0; i < tContainers.size(); i++) {
-            delete tContainers.at(i);
+        for (auto& tContainer : tContainers) {
+            delete tContainer;
         }
-        for (unsigned int i = 0; i < tSolutionVectors.size(); i++) {
-            delete tSolutionVectors.at(i);
+        for (auto& tSolutionVector : tSolutionVectors) {
+            delete tSolutionVector;
         }
-        for (unsigned int i = 0; i < tVectors.size(); i++) {
-            delete tVectors.at(i);
+        for (auto& tVector : tVectors) {
+            delete tVector;
         }
 
         if (tSolution == true) {
             return true;
         }
     }
+
+    kem_cout(eInfo) << "no previously computed charge density solution found." << eom;
     return false;
 }
-void KChargeDensitySolver::SaveSolution(double aThreshold, KSurfaceContainer& aContainer)
+void KChargeDensitySolver::SaveSolution(double aThreshold, KSurfaceContainer& aContainer) const
 {
     // compute hash of the bare geometry
     KMD5HashGenerator tShapeHashGenerator;
@@ -201,7 +220,7 @@ void KChargeDensitySolver::SaveSolution(double aThreshold, KSurfaceContainer& aC
     tShapeHashGenerator.Omit(Type2Type<KBoundaryType<KElectrostaticBasis, KDirichletBoundary>>());
     string tShapeHash = tShapeHashGenerator.GenerateHash(aContainer);
 
-    //fieldmsg_debug( "<shape> hash is <" << tShapeHash << ">" << eom )
+    kem_cout_debug("<shape> hash is <" << tShapeHash << ">" << eom);
 
     // compute hash of the boundary values on the bare geometry
     KMD5HashGenerator tShapeBoundaryHashGenerator;
@@ -210,13 +229,13 @@ void KChargeDensitySolver::SaveSolution(double aThreshold, KSurfaceContainer& aC
     tShapeBoundaryHashGenerator.Omit(Type2Type<KElectrostaticBasis>());
     string tShapeBoundaryHash = tShapeBoundaryHashGenerator.GenerateHash(aContainer);
 
-    //fieldmsg_debug( "<shape+boundary> hash is <" << tShapeBoundaryHash << ">" << eom )
+    kem_cout_debug("<shape+boundary> hash is <" << tShapeBoundaryHash << ">" << eom);
 
     // compute hash of solution with boundary values on the bare geometry
     KMD5HashGenerator tShapeBoundarySolutionHashGenerator;
     string tShapeBoundarySolutionHash = tShapeBoundarySolutionHashGenerator.GenerateHash(aContainer);
 
-    //fieldmsg_debug( "<shape+boundary+solution> hash is <" << tShapeBoundarySolutionHash << ">" << eom )
+    kem_cout_debug("<shape+boundary+solution> hash is <" << tShapeBoundarySolutionHash << ">" << eom);
 
     // create label set for summary object
     string tThresholdBase(KResidualThreshold::Name());

@@ -19,18 +19,18 @@ class KMagneticField : public katrin::KNamed
 {
   public:
     KMagneticField() : katrin::KNamed(), fInitialized(false) {}
-    virtual ~KMagneticField() {}
+    ~KMagneticField() override = default;
 
     // this class uses the non virtual interface (NVI) pattern
     // the virtual methods that have to be implemented by subclasses
     // are named ...Core
 
-    KThreeVector MagneticPotential(const KPosition& P, const double& time) const
+    KFieldVector MagneticPotential(const KPosition& P, const double& time) const
     {
         return MagneticPotentialCore(P, time);
     }
 
-    KThreeVector MagneticField(const KPosition& P, const double& time) const
+    KFieldVector MagneticField(const KPosition& P, const double& time) const
     {
         return MagneticFieldCore(P, time);
     }
@@ -40,7 +40,7 @@ class KMagneticField : public katrin::KNamed
         return MagneticGradientCore(P, time);
     }
 
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P, const double& time) const
+    std::pair<KFieldVector, KGradient> MagneticFieldAndGradient(const KPosition& P, const double& time) const
     {
         return MagneticFieldAndGradientCore(P, time);
     }
@@ -55,21 +55,21 @@ class KMagneticField : public katrin::KNamed
     }
 
   protected:
-    virtual KThreeVector MagneticPotentialCore(const KPosition& P, const double& time) const = 0;
+    virtual KFieldVector MagneticPotentialCore(const KPosition& P, const double& time) const = 0;
 
-    virtual KThreeVector MagneticFieldCore(const KPosition& P, const double& time) const = 0;
+    virtual KFieldVector MagneticFieldCore(const KPosition& P, const double& time) const = 0;
 
     virtual KGradient MagneticGradientCore(const KPosition& P, const double& time) const = 0;
 
-    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P,
+    virtual std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P,
                                                                             const double& time) const
     {
         //default behavior is to simply call the field and gradient separately
         //this function may be overloaded to perform a more efficient combined calculation
-        KThreeVector field = MagneticFieldCore(P, time);
+        KFieldVector field = MagneticFieldCore(P, time);
         KGradient grad = MagneticGradientCore(P, time);
 
-        return std::pair<KThreeVector, KGradient>(field, grad);
+        return std::pair<KFieldVector, KGradient>(field, grad);
     }
 
     virtual void InitializeCore() {}

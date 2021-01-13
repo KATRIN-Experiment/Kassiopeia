@@ -5,7 +5,7 @@
 namespace Kassiopeia
 {
 
-KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation() {}
+KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation() = default;
 KSTrajTermConstantForcePropagation::KSTrajTermConstantForcePropagation(const KSTrajTermConstantForcePropagation&) :
     KSComponent()
 {}
@@ -13,12 +13,12 @@ KSTrajTermConstantForcePropagation* KSTrajTermConstantForcePropagation::Clone() 
 {
     return new KSTrajTermConstantForcePropagation(*this);
 }
-KSTrajTermConstantForcePropagation::~KSTrajTermConstantForcePropagation() {}
+KSTrajTermConstantForcePropagation::~KSTrajTermConstantForcePropagation() = default;
 
 void KSTrajTermConstantForcePropagation::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                                        KSTrajExactDerivative& aDerivative) const
 {
-    KThreeVector tVelocity = aParticle.GetVelocity();
+    KGeoBag::KThreeVector tVelocity = aParticle.GetVelocity();
 
     aDerivative.AddToVelocity(tVelocity);
     aDerivative.AddToForce(fForce);
@@ -26,7 +26,7 @@ void KSTrajTermConstantForcePropagation::Differentiate(double /*aTime*/, const K
     return;
 }
 
-void KSTrajTermConstantForcePropagation::SetForce(const KThreeVector& aForce)
+void KSTrajTermConstantForcePropagation::SetForce(const KGeoBag::KThreeVector& aForce)
 {
     fForce = aForce;
 }

@@ -41,7 +41,8 @@ KFMDenseBlockSparseMatrixStructure::KFMDenseBlockSparseMatrixStructure()
     fBufferMaxElements = 0;
 };
 
-KFMDenseBlockSparseMatrixStructure::~KFMDenseBlockSparseMatrixStructure(){};
+KFMDenseBlockSparseMatrixStructure::~KFMDenseBlockSparseMatrixStructure() = default;
+;
 
 void KFMDenseBlockSparseMatrixStructure::Initialize()
 {
@@ -168,27 +169,27 @@ void KFMDenseBlockSparseMatrixStructure::Initialize()
         fNBlocksInBuffer.push_back(n_blocks_in_buffer);
         fNBuffers++;
 
-        for (size_t i = 0; i < fRowIndexBufferSize.size(); i++) {
-            if (fBufferMaxRowIndices < fRowIndexBufferSize[i]) {
-                fBufferMaxRowIndices = fRowIndexBufferSize[i];
+        for (unsigned long i : fRowIndexBufferSize) {
+            if (fBufferMaxRowIndices < i) {
+                fBufferMaxRowIndices = i;
             };
         }
 
-        for (size_t i = 0; i < fColumnIndexBufferSize.size(); i++) {
-            if (fBufferMaxColumnIndices < fColumnIndexBufferSize[i]) {
-                fBufferMaxColumnIndices = fColumnIndexBufferSize[i];
+        for (unsigned long i : fColumnIndexBufferSize) {
+            if (fBufferMaxColumnIndices < i) {
+                fBufferMaxColumnIndices = i;
             };
         }
 
-        for (size_t i = 0; i < fNBlocksInBuffer.size(); i++) {
-            if (fBufferMaxBlocks < fNBlocksInBuffer[i]) {
-                fBufferMaxBlocks = fNBlocksInBuffer[i];
+        for (unsigned long i : fNBlocksInBuffer) {
+            if (fBufferMaxBlocks < i) {
+                fBufferMaxBlocks = i;
             };
         }
 
-        for (size_t i = 0; i < fMatrixElementBufferSize.size(); i++) {
-            if (fBufferMaxElements < fMatrixElementBufferSize[i]) {
-                fBufferMaxElements = fMatrixElementBufferSize[i];
+        for (unsigned long i : fMatrixElementBufferSize) {
+            if (fBufferMaxElements < i) {
+                fBufferMaxElements = i;
             };
         }
 

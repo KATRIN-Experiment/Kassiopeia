@@ -17,19 +17,26 @@ class KSRootMagneticField : public KSComponentTemplate<KSRootMagneticField, KSMa
     ~KSRootMagneticField() override;
 
   public:
-    void CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField) override;
-    void CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
-                           KThreeMatrix& aGradient) override;
-    void CalculateFieldAndGradient(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField,
-                                   KThreeMatrix& aGradient) override;
+    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                            KGeoBag::KThreeVector& aPotential) override;
+
+    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        KGeoBag::KThreeVector& aField) override;
+
+    void CalculateGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                           KGeoBag::KThreeMatrix& aGradient) override;
+
+    void CalculateFieldAndGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                   KGeoBag::KThreeVector& aField, KGeoBag::KThreeMatrix& aGradient) override;
 
   public:
     void AddMagneticField(KSMagneticField* aMagneticField);
     void RemoveMagneticField(KSMagneticField* aMagneticField);
 
   private:
-    KThreeVector fCurrentField;
-    KThreeMatrix fCurrentGradient;
+    KGeoBag::KThreeVector fCurrentPotential;
+    KGeoBag::KThreeVector fCurrentField;
+    KGeoBag::KThreeMatrix fCurrentGradient;
 
     KSList<KSMagneticField> fMagneticFields;
 

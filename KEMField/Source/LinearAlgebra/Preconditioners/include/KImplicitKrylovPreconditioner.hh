@@ -36,7 +36,7 @@ template<typename ValueType> class KImplicitKrylovPreconditioner : public KPreco
     KImplicitKrylovPreconditioner(KSmartPointer<KIterativeKrylovSolver<ValueType>> solver) : fZero(0.), fSolver(solver)
     {}
 
-    ~KImplicitKrylovPreconditioner() override {}
+    ~KImplicitKrylovPreconditioner() override = default;
 
     std::string Name() override
     {

@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGRotatedPolyLineSurface::Visitor::Visitor() {}
+template<> KGRotatedPolyLineSurface::Visitor::Visitor() = default;
 
-template<> KGRotatedPolyLineSurface::Visitor::~Visitor() {}
+template<> KGRotatedPolyLineSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

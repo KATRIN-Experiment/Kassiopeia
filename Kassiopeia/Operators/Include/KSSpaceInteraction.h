@@ -16,10 +16,10 @@ class KSSpaceInteraction : public KSComponentTemplate<KSSpaceInteraction>
 
   public:
     virtual void CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                                      const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
-                                      const double& aTrajectoryRadius, const double& aTrajectoryTimeStep,
-                                      KSParticle& anInteractionParticle, double& anInteractionStep,
-                                      bool& anInteractionFlag) = 0;
+                                      const KSParticle& aTrajectoryFinalParticle,
+                                      const KGeoBag::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
+                                      const double& aTrajectoryTimeStep, KSParticle& anInteractionParticle,
+                                      double& anInteractionStep, bool& anInteractionFlag) = 0;
 
     virtual void ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                     KSParticleQueue& aSecondaries) const = 0;

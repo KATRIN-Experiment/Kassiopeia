@@ -217,7 +217,6 @@ class KSIntCalculatorHydrogenData
 #include "KSInteractionsMessage.h"
 #include "KToolbox.h"
 
-using namespace Kassiopeia;
 namespace katrin
 {
 

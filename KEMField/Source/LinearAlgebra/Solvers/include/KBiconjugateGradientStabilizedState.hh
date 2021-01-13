@@ -34,10 +34,12 @@ namespace KEMField
 template<typename ValueType> class KBiconjugateGradientStabilizedState
 {
   public:
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
-    KBiconjugateGradientStabilizedState(){};
-    virtual ~KBiconjugateGradientStabilizedState(){};
+    KBiconjugateGradientStabilizedState() = default;
+    ;
+    virtual ~KBiconjugateGradientStabilizedState() = default;
+    ;
 
     static std::string Name()
     {

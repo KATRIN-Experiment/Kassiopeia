@@ -28,7 +28,8 @@ class KFMIdentityPair
     {
         ;
     };
-    virtual ~KFMIdentityPair(){};
+    virtual ~KFMIdentityPair() = default;
+    ;
 
     unsigned int GetID() const
     {

@@ -26,7 +26,8 @@ class KFMSurfaceToPointCloudConverter :
     public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
 {
   public:
-    KFMSurfaceToPointCloudConverter(){};
+    KFMSurfaceToPointCloudConverter() = default;
+    ;
     ~KFMSurfaceToPointCloudConverter() override
     {
         ;

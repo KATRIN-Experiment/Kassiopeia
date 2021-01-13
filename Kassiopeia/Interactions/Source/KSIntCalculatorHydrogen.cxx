@@ -3,8 +3,6 @@
 #include "KSInteractionsMessage.h"
 #include "KSParticleFactory.h"
 #include "KTextFile.h"
-using katrin::KTextFile;
-
 #include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
 
@@ -18,9 +16,9 @@ namespace Kassiopeia
 /////		Elastic	Base		/////
 /////////////////////////////////////
 
-KSIntCalculatorHydrogenElasticBase::KSIntCalculatorHydrogenElasticBase() {}
+KSIntCalculatorHydrogenElasticBase::KSIntCalculatorHydrogenElasticBase() = default;
 
-KSIntCalculatorHydrogenElasticBase::~KSIntCalculatorHydrogenElasticBase() {}
+KSIntCalculatorHydrogenElasticBase::~KSIntCalculatorHydrogenElasticBase() = default;
 
 void KSIntCalculatorHydrogenElasticBase::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {
@@ -191,7 +189,7 @@ void KSIntCalculatorHydrogenElasticBase::CalculateDifferentialCrossSection(const
 /////		Elastic			/////
 /////////////////////////////////
 
-KSIntCalculatorHydrogenElastic::KSIntCalculatorHydrogenElastic() {}
+KSIntCalculatorHydrogenElastic::KSIntCalculatorHydrogenElastic() = default;
 
 KSIntCalculatorHydrogenElastic::KSIntCalculatorHydrogenElastic(const KSIntCalculatorHydrogenElastic&) : KSComponent() {}
 
@@ -200,7 +198,7 @@ KSIntCalculatorHydrogenElastic* KSIntCalculatorHydrogenElastic::Clone() const
     return new KSIntCalculatorHydrogenElastic(*this);
 }
 
-KSIntCalculatorHydrogenElastic::~KSIntCalculatorHydrogenElastic() {}
+KSIntCalculatorHydrogenElastic::~KSIntCalculatorHydrogenElastic() = default;
 
 void KSIntCalculatorHydrogenElastic::CalculateCrossSection(const double anEnergie, double& aCrossSection)
 {
@@ -288,7 +286,7 @@ void KSIntCalculatorHydrogenElastic::CalculateEloss(const double anEnergie, cons
 /////		Vibration		/////
 /////////////////////////////////
 
-KSIntCalculatorHydrogenVib::KSIntCalculatorHydrogenVib() {}
+KSIntCalculatorHydrogenVib::KSIntCalculatorHydrogenVib() = default;
 
 KSIntCalculatorHydrogenVib::KSIntCalculatorHydrogenVib(const KSIntCalculatorHydrogenVib&) : KSComponent() {}
 
@@ -297,7 +295,7 @@ KSIntCalculatorHydrogenVib* KSIntCalculatorHydrogenVib::Clone() const
     return new KSIntCalculatorHydrogenVib(*this);
 }
 
-KSIntCalculatorHydrogenVib::~KSIntCalculatorHydrogenVib() {}
+KSIntCalculatorHydrogenVib::~KSIntCalculatorHydrogenVib() = default;
 
 void KSIntCalculatorHydrogenVib::CalculateCrossSection(const double anEnergie, double& aCrossSection)
 {
@@ -340,7 +338,7 @@ void KSIntCalculatorHydrogenVib::CalculateEloss(const double, const double, doub
 /////		Rot02			/////
 /////////////////////////////////
 
-KSIntCalculatorHydrogenRot02::KSIntCalculatorHydrogenRot02() {}
+KSIntCalculatorHydrogenRot02::KSIntCalculatorHydrogenRot02() = default;
 
 KSIntCalculatorHydrogenRot02::KSIntCalculatorHydrogenRot02(const KSIntCalculatorHydrogenRot02&) : KSComponent() {}
 
@@ -349,7 +347,7 @@ KSIntCalculatorHydrogenRot02* KSIntCalculatorHydrogenRot02::Clone() const
     return new KSIntCalculatorHydrogenRot02(*this);
 }
 
-KSIntCalculatorHydrogenRot02::~KSIntCalculatorHydrogenRot02() {}
+KSIntCalculatorHydrogenRot02::~KSIntCalculatorHydrogenRot02() = default;
 
 void KSIntCalculatorHydrogenRot02::CalculateCrossSection(const double anEnergie, double& aCrossSection)
 {
@@ -404,7 +402,7 @@ void KSIntCalculatorHydrogenRot02::CalculateEloss(const double, const double, do
 /////		Rot13			/////
 /////////////////////////////////
 
-KSIntCalculatorHydrogenRot13::KSIntCalculatorHydrogenRot13() {}
+KSIntCalculatorHydrogenRot13::KSIntCalculatorHydrogenRot13() = default;
 
 KSIntCalculatorHydrogenRot13::KSIntCalculatorHydrogenRot13(const KSIntCalculatorHydrogenRot13&) : KSComponent() {}
 
@@ -413,7 +411,7 @@ KSIntCalculatorHydrogenRot13* KSIntCalculatorHydrogenRot13::Clone() const
     return new KSIntCalculatorHydrogenRot13(*this);
 }
 
-KSIntCalculatorHydrogenRot13::~KSIntCalculatorHydrogenRot13() {}
+KSIntCalculatorHydrogenRot13::~KSIntCalculatorHydrogenRot13() = default;
 
 void KSIntCalculatorHydrogenRot13::CalculateCrossSection(const double anEnergie, double& aCrossSection)
 {
@@ -467,7 +465,7 @@ void KSIntCalculatorHydrogenRot13::CalculateEloss(const double, const double, do
 /////		Rot20			/////
 /////////////////////////////////
 
-KSIntCalculatorHydrogenRot20::KSIntCalculatorHydrogenRot20() {}
+KSIntCalculatorHydrogenRot20::KSIntCalculatorHydrogenRot20() = default;
 
 KSIntCalculatorHydrogenRot20::KSIntCalculatorHydrogenRot20(const KSIntCalculatorHydrogenRot20&) : KSComponent() {}
 
@@ -476,7 +474,7 @@ KSIntCalculatorHydrogenRot20* KSIntCalculatorHydrogenRot20::Clone() const
     return new KSIntCalculatorHydrogenRot20(*this);
 }
 
-KSIntCalculatorHydrogenRot20::~KSIntCalculatorHydrogenRot20() {}
+KSIntCalculatorHydrogenRot20::~KSIntCalculatorHydrogenRot20() = default;
 
 void KSIntCalculatorHydrogenRot20::CalculateCrossSection(const double anEnergie, double& aCrossSection)
 {
@@ -561,7 +559,7 @@ void KSIntCalculatorHydrogenExcitationBase::initialize_sum()
     fmax = 1.05 * fmax;
 }
 
-KSIntCalculatorHydrogenExcitationBase::~KSIntCalculatorHydrogenExcitationBase() {}
+KSIntCalculatorHydrogenExcitationBase::~KSIntCalculatorHydrogenExcitationBase() = default;
 
 void KSIntCalculatorHydrogenExcitationBase::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {
@@ -899,16 +897,16 @@ KSIntCalculatorHydrogenExcitationB::KSIntCalculatorHydrogenExcitationB() : Emin(
 {
     initialize_sum();
     FrankCondonSum = 0.;
-    for (int i = 0; i < 28; i++)
-        FrankCondonSum += FrankCondonFactors[i];
+    for (double FrankCondonFactor : FrankCondonFactors)
+        FrankCondonSum += FrankCondonFactor;
     ElExcitationFCSum = 0.;
-    for (int i = 0; i < 7; i++)
-        ElExcitationFCSum += FCFactorsElectronicExcitation[i];
+    for (double i : FCFactorsElectronicExcitation)
+        ElExcitationFCSum += i;
 }
 
 KSIntCalculatorHydrogenExcitationB::KSIntCalculatorHydrogenExcitationB(
     const KSIntCalculatorHydrogenExcitationB& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     Emin(aCopy.Emin)
 {
     initialize_sum();
@@ -916,8 +914,8 @@ KSIntCalculatorHydrogenExcitationB::KSIntCalculatorHydrogenExcitationB(
     for (int i = 0; i < 14; i++)
         FrankCondonSum += FrankCondonFactors[i];
     ElExcitationFCSum = 0.;
-    for (int i = 0; i < 7; i++)
-        ElExcitationFCSum += FCFactorsElectronicExcitation[i];
+    for (double i : FCFactorsElectronicExcitation)
+        ElExcitationFCSum += i;
 }
 
 KSIntCalculatorHydrogenExcitationB* KSIntCalculatorHydrogenExcitationB::Clone() const
@@ -925,7 +923,7 @@ KSIntCalculatorHydrogenExcitationB* KSIntCalculatorHydrogenExcitationB::Clone() 
     return new KSIntCalculatorHydrogenExcitationB(*this);
 }
 
-KSIntCalculatorHydrogenExcitationB::~KSIntCalculatorHydrogenExcitationB() {}
+KSIntCalculatorHydrogenExcitationB::~KSIntCalculatorHydrogenExcitationB() = default;
 
 // Energy values of the B vibrational states:
 //   (from: Phys. Rev. A51 (1995) 3745 , in Hartree atomic units)
@@ -977,8 +975,8 @@ void KSIntCalculatorHydrogenExcitationB::CalculateCrossSection(const double anEn
         aCrossSection = 0.;
     else if (anEnergy < 226.36976843987776)  // Energy limit is the numerically computed intersection
     {                                        // betweeen the two cases
-        for (int n = 0; n < 9; n++) {
-            lnsigma += CrossSectionParameters[n] * lnEn;
+        for (double CrossSectionParameter : CrossSectionParameters) {
+            lnsigma += CrossSectionParameter * lnEn;
             lnEn = lnEn * lnE;
         }
         aCrossSection = 1.e-4 * exp(lnsigma);
@@ -1017,8 +1015,8 @@ KSIntCalculatorHydrogenExcitationC::KSIntCalculatorHydrogenExcitationC() : Emin(
 {
     initialize_sum();
     FrankCondonSum = 0;
-    for (int i = 0; i < 14; i++)
-        FrankCondonSum += FrankCondonFactors[i];
+    for (double FrankCondonFactor : FrankCondonFactors)
+        FrankCondonSum += FrankCondonFactor;
 }
 
 // Energy values of the C vibrational states:
@@ -1051,13 +1049,13 @@ const double KSIntCalculatorHydrogenExcitationC ::CrossSectionParameters[9] = {-
 
 KSIntCalculatorHydrogenExcitationC::KSIntCalculatorHydrogenExcitationC(
     const KSIntCalculatorHydrogenExcitationC& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     Emin(aCopy.Emin)
 {
     initialize_sum();
     FrankCondonSum = 0;
-    for (int i = 0; i < 14; i++)
-        FrankCondonSum += FrankCondonFactors[i];
+    for (double FrankCondonFactor : FrankCondonFactors)
+        FrankCondonSum += FrankCondonFactor;
 }
 
 KSIntCalculatorHydrogenExcitationC* KSIntCalculatorHydrogenExcitationC::Clone() const
@@ -1065,7 +1063,7 @@ KSIntCalculatorHydrogenExcitationC* KSIntCalculatorHydrogenExcitationC::Clone() 
     return new KSIntCalculatorHydrogenExcitationC(*this);
 }
 
-KSIntCalculatorHydrogenExcitationC::~KSIntCalculatorHydrogenExcitationC() {}
+KSIntCalculatorHydrogenExcitationC::~KSIntCalculatorHydrogenExcitationC() = default;
 
 void KSIntCalculatorHydrogenExcitationC::CalculateCrossSection(const double anEnergy, double& aCrossSection)
 {
@@ -1085,8 +1083,8 @@ void KSIntCalculatorHydrogenExcitationC::CalculateCrossSection(const double anEn
         if (anEnergy < Emin)
             aCrossSection = 0.;
         else {
-            for (int n = 0; n < 9; n++) {
-                lnsigma += CrossSectionParameters[n] * lnEn;
+            for (double CrossSectionParameter : CrossSectionParameters) {
+                lnsigma += CrossSectionParameter * lnEn;
                 lnEn = lnEn * lnE;
             }
             aCrossSection = 1.e-4 * exp(lnsigma);
@@ -1129,7 +1127,7 @@ KSIntCalculatorHydrogenDissoziation10::KSIntCalculatorHydrogenDissoziation10() :
 
 KSIntCalculatorHydrogenDissoziation10::KSIntCalculatorHydrogenDissoziation10(
     const KSIntCalculatorHydrogenDissoziation10& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     Emin(aCopy.Emin)
 {
     initialize_sum();
@@ -1140,7 +1138,7 @@ KSIntCalculatorHydrogenDissoziation10* KSIntCalculatorHydrogenDissoziation10::Cl
     return new KSIntCalculatorHydrogenDissoziation10(*this);
 }
 
-KSIntCalculatorHydrogenDissoziation10::~KSIntCalculatorHydrogenDissoziation10() {}
+KSIntCalculatorHydrogenDissoziation10::~KSIntCalculatorHydrogenDissoziation10() = default;
 
 // Parameters for a logarithmic expansion of the Crosssection which were originally obtained from
 // a fit to experimental data.
@@ -1170,8 +1168,8 @@ void KSIntCalculatorHydrogenDissoziation10::CalculateCrossSection(const double a
     if (anEnergy < Emin)
         aCrossSection = 0.;
     else {
-        for (int n = 0; n < 9; n++) {
-            lnsigma += CrossSectionParameters[n] * lnEn;
+        for (double CrossSectionParameter : CrossSectionParameters) {
+            lnsigma += CrossSectionParameter * lnEn;
             lnEn = lnEn * lnE;
         }
         aCrossSection = 1.e-4 * exp(lnsigma);
@@ -1197,7 +1195,7 @@ KSIntCalculatorHydrogenDissoziation15::KSIntCalculatorHydrogenDissoziation15() :
 
 KSIntCalculatorHydrogenDissoziation15::KSIntCalculatorHydrogenDissoziation15(
     const KSIntCalculatorHydrogenDissoziation15& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     Emin(aCopy.Emin)
 {
     initialize_sum();
@@ -1208,7 +1206,7 @@ KSIntCalculatorHydrogenDissoziation15* KSIntCalculatorHydrogenDissoziation15::Cl
     return new KSIntCalculatorHydrogenDissoziation15(*this);
 }
 
-KSIntCalculatorHydrogenDissoziation15::~KSIntCalculatorHydrogenDissoziation15() {}
+KSIntCalculatorHydrogenDissoziation15::~KSIntCalculatorHydrogenDissoziation15() = default;
 
 // Parameters for a logarithmic expansion of the Crosssection which were originally obtained from
 // a fit to experimental data.
@@ -1239,8 +1237,8 @@ void KSIntCalculatorHydrogenDissoziation15::CalculateCrossSection(const double a
     if (anEnergy < Emin)
         aCrossSection = 0.;
     else {
-        for (int n = 0; n < 9; n++) {
-            lnsigma += CrossSectionParameters[n] * lnEn;
+        for (double CrossSectionParameter : CrossSectionParameters) {
+            lnsigma += CrossSectionParameter * lnEn;
             lnEn = lnEn * lnE;
         }
         aCrossSection = 1.e-4 * exp(lnsigma);
@@ -1270,7 +1268,7 @@ KSIntCalculatorHydrogenExcitationElectronic::KSIntCalculatorHydrogenExcitationEl
 
 KSIntCalculatorHydrogenExcitationElectronic::KSIntCalculatorHydrogenExcitationElectronic(
     const KSIntCalculatorHydrogenExcitationElectronic& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     Emin(aCopy.Emin),
     FrankCondonSum(aCopy.FrankCondonSum),
     ExcitationSum(aCopy.ExcitationSum),
@@ -1283,7 +1281,7 @@ KSIntCalculatorHydrogenExcitationElectronic* KSIntCalculatorHydrogenExcitationEl
     return new KSIntCalculatorHydrogenExcitationElectronic(*this);
 }
 
-KSIntCalculatorHydrogenExcitationElectronic::~KSIntCalculatorHydrogenExcitationElectronic() {}
+KSIntCalculatorHydrogenExcitationElectronic::~KSIntCalculatorHydrogenExcitationElectronic() = default;
 
 // Energy values of the excited electronic states:
 //  (from Mol. Phys. 41 (1980) 1501, in eV)
@@ -1363,7 +1361,7 @@ KSIntCalculatorHydrogenIonisation::KSIntCalculatorHydrogenIonisation(
 }
 
 KSIntCalculatorHydrogenIonisation::KSIntCalculatorHydrogenIonisation(const KSIntCalculatorHydrogenIonisation& aCopy) :
-    KSComponent()
+    KSComponent(aCopy)
 {
     CrossParam_A1 = aCopy.CrossParam_A1;
     CrossParam_A2 = aCopy.CrossParam_A2;
@@ -1382,7 +1380,7 @@ KSIntCalculatorHydrogenIonisation* KSIntCalculatorHydrogenIonisation::Clone() co
     return new KSIntCalculatorHydrogenIonisation(*this);
 }
 
-KSIntCalculatorHydrogenIonisation::~KSIntCalculatorHydrogenIonisation() {}
+KSIntCalculatorHydrogenIonisation::~KSIntCalculatorHydrogenIonisation() = default;
 
 void KSIntCalculatorHydrogenIonisation::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {

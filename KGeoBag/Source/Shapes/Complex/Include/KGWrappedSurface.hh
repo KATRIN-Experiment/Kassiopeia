@@ -11,8 +11,8 @@ template<class XObject> class KGWrappedSurface : public KGArea
     class Visitor
     {
       public:
-        Visitor() {}
-        virtual ~Visitor() {}
+        Visitor() = default;
+        virtual ~Visitor() = default;
 
         virtual void VisitWrappedSurface(KGWrappedSurface<XObject>* aWrappedSurface) = 0;
     };
@@ -24,6 +24,11 @@ template<class XObject> class KGWrappedSurface : public KGArea
     KGWrappedSurface(const KGWrappedSurface& aCopy);
     ~KGWrappedSurface() override;
 
+    static std::string Name()
+    {
+        return "wrapped_" + XObject::Name() + "_surface";
+    }
+
   public:
     void SetObject(std::shared_ptr<XObject> anObject);
     std::shared_ptr<XObject> GetObject();
@@ -32,9 +37,9 @@ template<class XObject> class KGWrappedSurface : public KGArea
   public:
     void AreaInitialize() const override;
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KThreeVector& aPoint) const override;
-    KThreeVector AreaPoint(const KThreeVector& aPoint) const override;
-    KThreeVector AreaNormal(const KThreeVector& aPoint) const override;
+    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
 
   protected:
     mutable std::shared_ptr<XObject> fObject;
@@ -54,7 +59,7 @@ template<class XObject> KGWrappedSurface<XObject>::KGWrappedSurface(const KGWrap
     fObject = aCopy.fObject;
 }
 
-template<class XObject> KGWrappedSurface<XObject>::~KGWrappedSurface() {}
+template<class XObject> KGWrappedSurface<XObject>::~KGWrappedSurface() = default;
 
 template<class XObject> void KGWrappedSurface<XObject>::SetObject(std::shared_ptr<XObject> anObject)
 {
@@ -89,7 +94,7 @@ template<class XObject> void KGWrappedSurface<XObject>::AreaAccept(KGVisitor* aV
     return;
 }
 
-template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const KThreeVector& aQuery) const
+template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const KGeoBag::KThreeVector& aQuery) const
 {
     if (fObject->ContainsPoint((const double*) (aQuery)) == true) {
         return false;
@@ -97,17 +102,19 @@ template<class XObject> bool KGWrappedSurface<XObject>::AreaAbove(const KThreeVe
     return true;
 }
 
-template<class XObject> KThreeVector KGWrappedSurface<XObject>::AreaPoint(const KThreeVector& aQuery) const
+template<class XObject>
+KGeoBag::KThreeVector KGWrappedSurface<XObject>::AreaPoint(const KGeoBag::KThreeVector& aQuery) const
 {
-    KThreeVector tPoint;
+    KGeoBag::KThreeVector tPoint;
     fObject->DistanceTo((const double*) (aQuery), (double*) (tPoint));
 
     return tPoint;
 }
 
-template<class XObject> KThreeVector KGWrappedSurface<XObject>::AreaNormal(const KThreeVector& aQuery) const
+template<class XObject>
+KGeoBag::KThreeVector KGWrappedSurface<XObject>::AreaNormal(const KGeoBag::KThreeVector& aQuery) const
 {
-    KThreeVector tNormal;
+    KGeoBag::KThreeVector tNormal;
     fObject->DistanceTo((const double*) (aQuery), nullptr, (double*) (tNormal));
 
     return tNormal;

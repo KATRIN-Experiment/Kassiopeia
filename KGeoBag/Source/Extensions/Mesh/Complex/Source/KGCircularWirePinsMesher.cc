@@ -36,8 +36,8 @@ void KGCircularWirePinsMesher::VisitWrappedSurface(KGWrappedSurface<KGCircularWi
                                     0.);
 
         // Iteration over segment length
-        for (unsigned int i = 0; i < segments.size(); i++) {
-            rOuter += segments.at(i);
+        for (double segment : segments) {
+            rOuter += segment;
 
             endPointPin.SetComponents(rOuter * cos((pinIt * pinAngle) + thetaRadiant),
                                       rOuter * sin((pinIt * pinAngle) + thetaRadiant),

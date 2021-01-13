@@ -30,7 +30,8 @@ class KGSubdivisionCondition : public KGInspectingActor<KGMeshNavigationNode>
 {
   public:
     KGSubdivisionCondition(unsigned int n_allowed = 1) : fNAllowedElements(n_allowed), fContainer(nullptr){};
-    ~KGSubdivisionCondition() override{};
+    ~KGSubdivisionCondition() override = default;
+    ;
 
     void SetMeshElementContainer(KGNavigableMeshElementContainer* container)
     {

@@ -23,6 +23,11 @@ class KGCutTorusSurface : public KGRotatedArcSegmentSurface
     KGCutTorusSurface(const KGCutTorusSurface& aCopy);
     ~KGCutTorusSurface() override;
 
+    static std::string Name()
+    {
+        return "cut_torus_surface";
+    }
+
   public:
     void Z1(const double& aZ1);
     void Z2(const double& aZ2);

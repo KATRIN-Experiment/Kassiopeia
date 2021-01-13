@@ -16,7 +16,7 @@ KSRootTrajectory::KSRootTrajectory() :
     fFinalParticle(nullptr)
 {}
 KSRootTrajectory::KSRootTrajectory(const KSRootTrajectory& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTrajectory(aCopy.fTrajectory),
     fStep(aCopy.fStep),
     fTerminatorParticle(aCopy.fTerminatorParticle),
@@ -27,7 +27,7 @@ KSRootTrajectory* KSRootTrajectory::Clone() const
 {
     return new KSRootTrajectory(*this);
 }
-KSRootTrajectory::~KSRootTrajectory() {}
+KSRootTrajectory::~KSRootTrajectory() = default;
 
 void KSRootTrajectory::Reset()
 {
@@ -36,7 +36,7 @@ void KSRootTrajectory::Reset()
 };
 
 void KSRootTrajectory::CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
-                                           KThreeVector& aCenter, double& aRadius, double& aTimeStep)
+                                           KGeoBag::KThreeVector& aCenter, double& aRadius, double& aTimeStep)
 {
     if (fTrajectory == nullptr) {
         trajmsg(eError) << "<" << GetName() << "> cannot calculate trajectory with no trajectory set" << eom;

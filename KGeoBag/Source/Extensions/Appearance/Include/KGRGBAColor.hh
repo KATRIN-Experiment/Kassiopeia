@@ -31,7 +31,7 @@ class KGRGBAColor : public KGRGBColor
     unsigned char fOpacity;
 };
 
-inline istream& operator>>(istream& aStream, KGRGBAColor& aColor)
+inline std::istream& operator>>(std::istream& aStream, KGRGBAColor& aColor)
 {
     unsigned int tRed;
     unsigned int tGreen;
@@ -47,7 +47,7 @@ inline istream& operator>>(istream& aStream, KGRGBAColor& aColor)
 
     return aStream;
 }
-inline ostream& operator<<(ostream& aStream, const KGRGBAColor& aColor)
+inline std::ostream& operator<<(std::ostream& aStream, const KGRGBAColor& aColor)
 {
     unsigned int tRed = aColor.GetRed();
     unsigned int tGreen = aColor.GetGreen();

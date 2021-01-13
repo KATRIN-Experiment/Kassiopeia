@@ -7,7 +7,7 @@
 
 #include "KElectricFastMultipoleFieldSolver.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KEMFileInterface.hh"
 #include "KFMElectrostaticFieldMapper_SingleThread.hh"
 #include "KFMElectrostaticTreeConstructor.hh"
@@ -75,21 +75,21 @@ void KElectricFastMultipoleFieldSolver::InitializeCore(KSurfaceContainer& contai
         KOpenCLInterface::GetInstance()->SetActiveData(oclContainer);
     }
 #else
-    typedef KFMElectrostaticTreeConstructor<KFMElectrostaticFieldMapper_SingleThread> TreeConstructor_OpenCL;
+    using TreeConstructor_OpenCL = KFMElectrostaticTreeConstructor<KFMElectrostaticFieldMapper_SingleThread>;
 #endif
 
     // compute hash of the solved geometry
     KMD5HashGenerator solutionHashGenerator;
     string solutionHash = solutionHashGenerator.GenerateHash(container);
 
-    //KEMField::cout << "<shape+boundary+solution> hash is <" << solutionHash << ">" << KEMField::endl;
+    kem_cout_debug("<shape+boundary+solution> hash is <" << solutionHash << ">" << eom);
 
     // compute hash of the parameter values on the bare geometry
     // compute hash of the parameter values
     KMD5HashGenerator parameterHashGenerator;
     string parameterHash = parameterHashGenerator.GenerateHash(fParameters);
 
-    //KEMField::cout << "<parameter> hash is <" << parameterHash << ">" KEMField::endl;
+    kem_cout_debug("<parameter> hash is <" << parameterHash << ">" << eom);
 
     // create label set for multipole tree container object
     string fmContainerBase(KFMElectrostaticTreeData::Name());
@@ -102,17 +102,19 @@ void KElectricFastMultipoleFieldSolver::InitializeCore(KSurfaceContainer& contai
     auto* tree_data = new KFMElectrostaticTreeData();
 
     bool containerFound = false;
-    KEMFileInterface::GetInstance()->FindByName(*tree_data, fmContainerName, containerFound);
+    string containerFilename;
+
+    KEMFileInterface::GetInstance()->FindByName(*tree_data, fmContainerName, containerFound, containerFilename);
 
     if (containerFound == true) {
-        KEMField::cout << "fast multipole tree found." << KEMField::endl;
+        kem_cout() << "fast multipole tree found in file <" << containerFilename << ">" << eom;
 
         //construct tree from data
         TreeConstructor_SingleThread constructor;
         constructor.ConstructTree(*tree_data, *fTree);
     }
     else {
-        //KEMField::cout << "no fast multipole tree found." << KEMField::endl;
+        kem_cout(eInfo) << "no fast multipole tree found." << eom;
 
         //must construct the tree
         //assign tree parameters and id
@@ -167,7 +169,7 @@ double KElectricFastMultipoleFieldSolver::PotentialCore(const KPosition& P) cons
     return fFastMultipoleFieldSolver->Potential(P);
 }
 
-KThreeVector KElectricFastMultipoleFieldSolver::ElectricFieldCore(const KPosition& P) const
+KFieldVector KElectricFastMultipoleFieldSolver::ElectricFieldCore(const KPosition& P) const
 {
     if (fUseOpenCL) {
 #ifdef KEMFIELD_USE_OPENCL
@@ -185,9 +187,8 @@ void KElectricFastMultipoleFieldSolver::UseOpenCL(bool choice)
         fUseOpenCL = choice;
         return;
 #endif
-        KEMField::cout
-            << "cannot use opencl in fast multipole without kemfield being built with opencl, using defaults."
-            << KEMField::endl;
+        kem_cout(eWarning)
+            << "cannot use opencl in fast multipole without kemfield being built with opencl, using defaults." << eom;
     }
     fUseOpenCL = false;
     return;

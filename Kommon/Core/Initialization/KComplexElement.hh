@@ -11,7 +11,6 @@
 #include "KSimpleElement.hh"
 
 #include <string>
-using std::string;
 
 namespace katrin
 {
@@ -54,7 +53,7 @@ template<class XType> KComplexElement<XType>::KComplexElement(KElementBase* aPar
     }
     fAttributes = sAttributes;
 }
-template<class XType> KComplexElement<XType>::~KComplexElement() {}
+template<class XType> KComplexElement<XType>::~KComplexElement() = default;
 
 template<class XType> bool KComplexElement<XType>::Begin()
 {

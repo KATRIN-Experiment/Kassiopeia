@@ -4,16 +4,18 @@
 
 #include <list>
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
-KSTrajInterpolatorHermite::KSTrajInterpolatorHermite() {}
+KSTrajInterpolatorHermite::KSTrajInterpolatorHermite() = default;
 KSTrajInterpolatorHermite::KSTrajInterpolatorHermite(const KSTrajInterpolatorHermite&) : KSComponent() {}
 KSTrajInterpolatorHermite* KSTrajInterpolatorHermite::Clone() const
 {
     return new KSTrajInterpolatorHermite(*this);
 }
-KSTrajInterpolatorHermite::~KSTrajInterpolatorHermite() {}
+KSTrajInterpolatorHermite::~KSTrajInterpolatorHermite() = default;
 
 void KSTrajInterpolatorHermite::Interpolate(double aTime, const KSTrajExactIntegrator& anIntegrator,
                                             const KSTrajExactDifferentiator& aDifferentiator,

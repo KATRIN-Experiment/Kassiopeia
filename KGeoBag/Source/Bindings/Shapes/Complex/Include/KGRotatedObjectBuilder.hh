@@ -47,7 +47,7 @@ template<> inline bool KGRotatedObjectLineBuilder::AddAttribute(KContainer* anAt
     return false;
 }
 
-typedef KComplexElement<KGRotatedObject::Arc> KGRotatedObjectArcBuilder;
+using KGRotatedObjectArcBuilder = KComplexElement<KGRotatedObject::Arc>;
 
 template<> inline bool KGRotatedObjectArcBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -90,7 +90,7 @@ template<> inline bool KGRotatedObjectArcBuilder::AddAttribute(KContainer* anAtt
     return false;
 }
 
-typedef KComplexElement<KGRotatedObject> KGRotatedObjectBuilder;
+using KGRotatedObjectBuilder = KComplexElement<KGRotatedObject>;
 
 template<> inline bool KGRotatedObjectBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -129,7 +129,7 @@ template<> inline bool KGRotatedObjectBuilder::AddElement(KContainer* anElement)
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGRotatedObject>> KGRotatedSurfaceBuilder;
+using KGRotatedSurfaceBuilder = KComplexElement<KGWrappedSurface<KGRotatedObject>>;
 
 template<> inline bool KGRotatedSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -154,7 +154,7 @@ template<> inline bool KGRotatedSurfaceBuilder::AddElement(KContainer* anElement
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGRotatedObject>> KGRotatedSpaceBuilder;
+using KGRotatedSpaceBuilder = KComplexElement<KGWrappedSpace<KGRotatedObject>>;
 
 template<> inline bool KGRotatedSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

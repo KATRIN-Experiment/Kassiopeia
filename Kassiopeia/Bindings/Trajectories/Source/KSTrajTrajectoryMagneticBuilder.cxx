@@ -22,10 +22,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryMagneticBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryMagneticBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryMagneticStructure =
-    KSTrajTrajectoryMagneticBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryMagneticBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryMagneticBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryMagneticBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +
     KSTrajTrajectoryMagneticBuilder::ComplexElement<KSTrajIntegratorRKDP54>("integrator_rkdp54") +

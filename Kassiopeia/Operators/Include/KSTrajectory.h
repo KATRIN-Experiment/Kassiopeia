@@ -23,7 +23,7 @@ class KSTrajectory : public KSComponentTemplate<KSTrajectory>
     };
 
     virtual void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
-                                     KThreeVector& aCenter, double& aRadius, double& aTimeStep) = 0;
+                                     KGeoBag::KThreeVector& aCenter, double& aRadius, double& aTimeStep) = 0;
 
     virtual void ExecuteTrajectory(const double& aTimeStep, KSParticle& anIntermediateParticle) const = 0;
 

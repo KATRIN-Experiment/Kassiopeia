@@ -7,8 +7,6 @@
 
 #include <map>
 
-using namespace katrin;
-
 namespace Kassiopeia
 {
 class KESSPhotoAbsorbtion;

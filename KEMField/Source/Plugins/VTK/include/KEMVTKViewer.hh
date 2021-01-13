@@ -55,9 +55,9 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
 {
   public:
     KEMVTKViewer(KSurfaceContainer& aSurfaceContainer);
-    ~KEMVTKViewer() {}
+    ~KEMVTKViewer() = default;
 
-    void GenerateGeometryFile(std::string fileName = "EMSurfaces.vtp");
+    void GenerateGeometryFile(const std::string& fileName = "EMSurfaces.vtp");
 
     void ViewGeometry();
 
@@ -122,8 +122,9 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
     template<typename Surface> void AddIfNeumannBoundary(Int2Type<true>);
 
 
-    double TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2);
-    double RectangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2, KThreeVector P3);
+    double TriangleAspectRatio(KFieldVector P0, KFieldVector P1, KFieldVector P2);
+    double RectangleAspectRatio(const KFieldVector& P0, const KFieldVector& P1, const KFieldVector& P2,
+                                const KFieldVector& P3);
 
     vtkSmartPointer<vtkPoints> fPoints;
     vtkSmartPointer<vtkCellArray> fCells;
@@ -152,7 +153,7 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
 
 template<typename Surface> void KEMVTKViewer::PerformAction(Type2Type<Surface>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     AddIfTriangleSymmetryGroup<Surface>(Int2Type<IsDerivedFrom<Surface, KSymmetryGroup<KTriangle>>::Is>());
     AddIfRectangleSymmetryGroup<Surface>(Int2Type<IsDerivedFrom<Surface, KSymmetryGroup<KRectangle>>::Is>());
@@ -178,7 +179,7 @@ template<typename Surface> void KEMVTKViewer::PerformAction(Type2Type<Surface>)
 
 template<typename Surface> void KEMVTKViewer::AddIfTriangleSymmetryGroup(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
     fNElementsInRepresentation = s->size();
 
     for (unsigned int i = 0; i < s->size(); i++) {
@@ -199,7 +200,7 @@ template<typename Surface> void KEMVTKViewer::AddIfTriangleSymmetryGroup(Int2Typ
 
 template<typename Surface> void KEMVTKViewer::AddIfRectangleSymmetryGroup(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
     fNElementsInRepresentation = s->size();
 
     for (unsigned int i = 0; i < s->size(); i++) {
@@ -223,7 +224,7 @@ template<typename Surface> void KEMVTKViewer::AddIfRectangleSymmetryGroup(Int2Ty
 
 template<typename Surface> void KEMVTKViewer::AddIfLineSegmentSymmetryGroup(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
     fNElementsInRepresentation = fLineSegmentPolyApprox * s->size();
 
     for (unsigned int i = 0; i < s->size(); i++) {
@@ -233,19 +234,19 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegmentSymmetryGroup(Int2
 
         double length = (s->at(i)->GetP0() - s->at(i)->GetP1()).Magnitude();
 
-        KThreeVector tmp1, tmp2;
+        KFieldVector tmp1, tmp2;
         for (unsigned int m = 0; m < 3; m++) {
             tmp1[m] = (s->at(i)->GetP1()[m] - s->at(i)->GetP0()[m]) / length;
             tmp2[m] = (s->at(i)->GetP1()[(m + 1) % 3] - s->at(i)->GetP0()[(m + 1) % 3]) / length;
         }
 
-        KThreeVector norm1, norm2;
+        KFieldVector norm1, norm2;
         for (unsigned int m = 0; m < 3; m++)
             norm1[m] = tmp1[(m + 1) % 3] * tmp2[(m + 2) % 3] - tmp1[(m + 2) % 3] * tmp2[(m + 1) % 3];
         for (unsigned int m = 0; m < 3; m++)
             norm2[m] = (tmp1[(m + 1) % 3] * norm1[(m + 2) % 3] - tmp1[(m + 2) % 3] * norm1[(m + 1) % 3]);
 
-        KThreeVector p0, p1, p2, p3;
+        KFieldVector p0, p1, p2, p3;
 
         for (unsigned int k = 0; k < fLineSegmentPolyApprox; k++) {
             double theta1 = 2. * M_PI * ((double) k) / fLineSegmentPolyApprox;
@@ -278,7 +279,7 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegmentSymmetryGroup(Int2
 
 template<typename Surface> void KEMVTKViewer::AddIfConicSectionSymmetryGroup(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
     fNElementsInRepresentation = fArcPolyApprox * s->size();
 
     for (unsigned int i = 0; i < s->size(); i++) {
@@ -292,7 +293,7 @@ template<typename Surface> void KEMVTKViewer::AddIfConicSectionSymmetryGroup(Int
         z[1] = s->at(i)->GetP1()[2];
         r[1] = sqrt(s->at(i)->GetP1()[0] * s->at(i)->GetP1()[0] + s->at(i)->GetP1()[1] * s->at(i)->GetP1()[1]);
 
-        KThreeVector p[2][2];
+        KFieldVector p[2][2];
 
         for (unsigned int k = 0; k < fArcPolyApprox; k++) {
             theta[0] = 2. * M_PI * ((double) (k) / (double) (fArcPolyApprox));
@@ -335,7 +336,7 @@ template<typename Surface> void KEMVTKViewer::AddIfTriangle(Int2Type<true>)
 {
     fNElementsInRepresentation = 1;
 
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     fPoints->InsertNextPoint(s->GetP0()[0], s->GetP0()[1], s->GetP0()[2]);
     fPoints->InsertNextPoint(s->GetP1()[0], s->GetP1()[1], s->GetP1()[2]);
@@ -355,7 +356,7 @@ template<typename Surface> void KEMVTKViewer::AddIfRectangle(Int2Type<true>)
 {
     fNElementsInRepresentation = 1;
 
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     fPoints->InsertNextPoint(s->GetP0()[0], s->GetP0()[1], s->GetP0()[2]);
     fPoints->InsertNextPoint(s->GetP1()[0], s->GetP1()[1], s->GetP1()[2]);
@@ -377,7 +378,7 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegment(Int2Type<true>)
 {
     fNElementsInRepresentation = fLineSegmentPolyApprox;
 
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     double radius = s->GetDiameter() / 2.;
     if (radius < 5.e-4)
@@ -385,19 +386,19 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegment(Int2Type<true>)
 
     double length = (s->GetP0() - s->GetP1()).Magnitude();
 
-    KThreeVector tmp1, tmp2;
+    KFieldVector tmp1, tmp2;
     for (unsigned int m = 0; m < 3; m++) {
         tmp1[m] = (s->GetP1()[m] - s->GetP0()[m]) / length;
         tmp2[m] = (s->GetP1()[(m + 1) % 3] - s->GetP0()[(m + 1) % 3]) / length;
     }
 
-    KThreeVector norm1, norm2;
+    KFieldVector norm1, norm2;
     for (unsigned int m = 0; m < 3; m++)
         norm1[m] = tmp1[(m + 1) % 3] * tmp2[(m + 2) % 3] - tmp1[(m + 2) % 3] * tmp2[(m + 1) % 3];
     for (unsigned int m = 0; m < 3; m++)
         norm2[m] = (tmp1[(m + 1) % 3] * norm1[(m + 2) % 3] - tmp1[(m + 2) % 3] * norm1[(m + 1) % 3]);
 
-    KThreeVector p0, p1, p2, p3;
+    KFieldVector p0, p1, p2, p3;
 
     for (unsigned int k = 0; k < fLineSegmentPolyApprox; k++) {
         double theta1 = 2. * M_PI * ((double) k) / fLineSegmentPolyApprox;
@@ -431,7 +432,7 @@ template<typename Surface> void KEMVTKViewer::AddIfConicSection(Int2Type<true>)
 {
     fNElementsInRepresentation = fArcPolyApprox;
 
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     double z[2];
     double r[2];
@@ -443,7 +444,7 @@ template<typename Surface> void KEMVTKViewer::AddIfConicSection(Int2Type<true>)
     z[1] = s->GetP1()[2];
     r[1] = sqrt(s->GetP1()[0] * s->GetP1()[0] + s->GetP1()[1] * s->GetP1()[1]);
 
-    KThreeVector p[2][2];
+    KFieldVector p[2][2];
 
     for (unsigned int k = 0; k < fArcPolyApprox; k++) {
         theta[0] = 2. * M_PI * ((double) (k) / (double) (fArcPolyApprox));
@@ -484,7 +485,7 @@ template<typename Surface> void KEMVTKViewer::AddIfRing(Int2Type<true>)
 
 template<typename Surface> void KEMVTKViewer::AddIfElectrostaticBasis(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     double cd = s->GetSolution();
     fChargeDensity->InsertNextValue(cd);
@@ -499,7 +500,7 @@ template<typename Surface> void KEMVTKViewer::AddIfElectrostaticBasis(Int2Type<t
 
 template<typename Surface> void KEMVTKViewer::AddIfDirichletBoundary(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     fPotential->InsertNextValue(s->GetBoundaryValue());
     fPermittivity->InsertNextValue(std::numeric_limits<double>::quiet_NaN());
@@ -507,14 +508,14 @@ template<typename Surface> void KEMVTKViewer::AddIfDirichletBoundary(Int2Type<tr
 
 template<typename Surface> void KEMVTKViewer::AddIfNeumannBoundary(Int2Type<true>)
 {
-    Surface* s = static_cast<Surface*>(fSurfacePrimitive);
+    auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     fPotential->InsertNextValue(std::numeric_limits<double>::quiet_NaN());
     fPermittivity->InsertNextValue(s->GetNormalBoundaryFlux());
 }
 
 
-double KEMVTKViewer::TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2)
+inline double KEMVTKViewer::TriangleAspectRatio(KFieldVector P0, KFieldVector P1, KFieldVector P2)
 {
     double a, b, c, max;
     double delx, dely, delz;
@@ -537,34 +538,34 @@ double KEMVTKViewer::TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThre
 
     c = std::sqrt(delx * delx + dely * dely + delz * delz);
 
-    KThreeVector PA;
-    KThreeVector PB;
-    KThreeVector PC;
-    KThreeVector V;
-    KThreeVector X;
-    KThreeVector Y;
-    KThreeVector Q;
-    KThreeVector SUB;
+    KFieldVector PA;
+    KFieldVector PB;
+    KFieldVector PC;
+    KFieldVector V;
+    KFieldVector X;
+    KFieldVector Y;
+    KFieldVector Q;
+    KFieldVector SUB;
 
     //find the longest side:
     if (a > b) {
         max = a;
-        PA = KThreeVector(P2[0], P2[1], P2[2]);
-        PB = KThreeVector(P0[0], P0[1], P0[2]);
-        PC = KThreeVector(P1[0], P1[1], P1[2]);
+        PA = KFieldVector(P2[0], P2[1], P2[2]);
+        PB = KFieldVector(P0[0], P0[1], P0[2]);
+        PC = KFieldVector(P1[0], P1[1], P1[2]);
     }
     else {
         max = b;
-        PA = KThreeVector(P1[0], P1[1], P1[2]);
-        PB = KThreeVector(P2[0], P2[1], P2[2]);
-        PC = KThreeVector(P0[0], P0[1], P0[2]);
+        PA = KFieldVector(P1[0], P1[1], P1[2]);
+        PB = KFieldVector(P2[0], P2[1], P2[2]);
+        PC = KFieldVector(P0[0], P0[1], P0[2]);
     }
 
     if (c > max) {
         max = c;
-        PA = KThreeVector(P0[0], P0[1], P0[2]);
-        PB = KThreeVector(P1[0], P1[1], P1[2]);
-        PC = KThreeVector(P2[0], P2[1], P2[2]);
+        PA = KFieldVector(P0[0], P0[1], P0[2]);
+        PB = KFieldVector(P1[0], P1[1], P1[2]);
+        PC = KFieldVector(P2[0], P2[1], P2[2]);
     }
 
     //the line pointing along v is the y-axis
@@ -590,10 +591,11 @@ double KEMVTKViewer::TriangleAspectRatio(KThreeVector P0, KThreeVector P1, KThre
 }
 
 
-double KEMVTKViewer::RectangleAspectRatio(KThreeVector P0, KThreeVector P1, KThreeVector P2, KThreeVector P3)
+inline double KEMVTKViewer::RectangleAspectRatio(const KFieldVector& P0, const KFieldVector& P1, const KFieldVector& P2,
+                                                 const KFieldVector& P3)
 {
     //figure out which vertices make the sides
-    KThreeVector p[4];
+    KFieldVector p[4];
     p[0] = P0;
     p[1] = P1;
     p[2] = P2;

@@ -18,8 +18,7 @@ template<> inline bool KSRootSurfaceNavigatorBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "set_surface_navigator") {
-        fObject->SetSurfaceNavigator(
-            KToolbox::GetInstance().Get<KSSurfaceNavigator>(aContainer->AsReference<std::string>()));
+        fObject->SetSurfaceNavigator(KToolbox::GetInstance().Get<KSSurfaceNavigator>(aContainer->AsString()));
         return true;
     }
     return false;

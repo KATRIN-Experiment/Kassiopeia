@@ -12,7 +12,7 @@ namespace katrin
 STATICINT sKGSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGSpace>("space");
 
 STATICINT sKGSpaceBuilderStructure =
-    KGSpaceBuilder::Attribute<string>("name") + KGSpaceBuilder::Attribute<string>("node") +
-    KGSpaceBuilder::Attribute<string>("tree") + KGSpaceBuilder::ComplexElement<KTransformation>("transformation") +
+    KGSpaceBuilder::Attribute<std::string>("name") + KGSpaceBuilder::Attribute<std::string>("node") +
+    KGSpaceBuilder::Attribute<std::string>("tree") + KGSpaceBuilder::ComplexElement<KTransformation>("transformation") +
     KGSpaceBuilder::ComplexElement<KGSpace>("space") + KGSpaceBuilder::ComplexElement<KGSurface>("surface");
 }  // namespace katrin

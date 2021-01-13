@@ -16,7 +16,7 @@ KSGenEnergyKryptonEvent::KSGenEnergyKryptonEvent() :
     fMyConversion(nullptr)
 {}
 KSGenEnergyKryptonEvent::KSGenEnergyKryptonEvent(const KSGenEnergyKryptonEvent& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fForceConversion(aCopy.fForceConversion),
     fDoConversion(aCopy.fDoConversion),
     fDoAuger(aCopy.fDoAuger),
@@ -27,7 +27,7 @@ KSGenEnergyKryptonEvent* KSGenEnergyKryptonEvent::Clone() const
 {
     return new KSGenEnergyKryptonEvent(*this);
 }
-KSGenEnergyKryptonEvent::~KSGenEnergyKryptonEvent() {}
+KSGenEnergyKryptonEvent::~KSGenEnergyKryptonEvent() = default;
 
 void KSGenEnergyKryptonEvent::Dice(KSParticleQueue* aPrimaries)
 {
@@ -44,8 +44,8 @@ void KSGenEnergyKryptonEvent::Dice(KSParticleQueue* aPrimaries)
         //conversions
         //***********
 
-        vector<double> conversionElectronEnergy;
-        vector<int> conversionVacancy;
+        std::vector<double> conversionElectronEnergy;
+        std::vector<int> conversionVacancy;
 
         if (fDoConversion == true) {
             genmsg_debug("creating a conversion electron" << fMyConversion << eom);

@@ -8,13 +8,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSRootSurfaceInteractionBuilder::~KComplexElement() {}
+template<> KSRootSurfaceInteractionBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootSurfaceInteraction =
     KSRootBuilder::ComplexElement<KSRootSurfaceInteraction>("ks_root_surface_interaction");
 
 STATICINT sKSRootSurfaceInteractionStructure =
-    KSRootSurfaceInteractionBuilder::Attribute<string>("name") +
-    KSRootSurfaceInteractionBuilder::Attribute<string>("set_surface_interaction");
+    KSRootSurfaceInteractionBuilder::Attribute<std::string>("name") +
+    KSRootSurfaceInteractionBuilder::Attribute<std::string>("set_surface_interaction");
 
 }  // namespace katrin

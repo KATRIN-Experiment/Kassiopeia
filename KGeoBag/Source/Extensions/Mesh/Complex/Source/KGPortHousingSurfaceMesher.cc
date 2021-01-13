@@ -154,7 +154,7 @@ void KGPortHousingSurfaceMesher::VisitWrappedSurface(KGWrappedSurface<KGPortHous
                     n2[m] /= tmp2;
                 }
 
-                KGMeshRectangle* r = new KGMeshRectangle(a, p2_loc[0] - p0_loc[0], p0, n1, n2);
+                auto* r = new KGMeshRectangle(a, p2_loc[0] - p0_loc[0], p0, n1, n2);
                 AddElement(r);
 
                 p0_loc[0] = p1_loc[0] = p2_loc[0];
@@ -608,7 +608,7 @@ void KGPortHousingSurfaceMesher::RectangularPortDiscretizer::DiscretizePort(
                 rectangularPort->GetCoordinateTransform()->ConvertToGlobalCoords(p3_loc, p3, false);
 
                 // now, we cast the global points into triangle-form
-                KGMeshTriangle* t = new KGMeshTriangle(p0, p1, p2);
+                auto* t = new KGMeshTriangle(p0, p1, p2);
                 fPortHousingDiscretizer->AddElement(t);
 
                 t = new KGMeshTriangle(p3, p1, p2);
@@ -645,7 +645,7 @@ void KGPortHousingSurfaceMesher::RectangularPortDiscretizer::DiscretizePort(
                 rectangularPort->GetCoordinateTransform()->ConvertToGlobalCoords(p3_loc, p3, false);
 
                 // now, we cast the global points into rectangle-form
-                KGMeshRectangle* r = new KGMeshRectangle(p0, p1, p3, p2);
+                auto* r = new KGMeshRectangle(p0, p1, p3, p2);
                 fPortHousingDiscretizer->AddElement(r);
             }
 
@@ -706,7 +706,7 @@ void KGPortHousingSurfaceMesher::RectangularPortDiscretizer::DiscretizePort(
             rectangularPort->GetCoordinateTransform()->ConvertToGlobalCoords(p3_loc, p3, false);
 
             // now, we cast the global points into triangle-form
-            KGMeshTriangle* t = new KGMeshTriangle(p0, p1, p2);
+            auto* t = new KGMeshTriangle(p0, p1, p2);
             fPortHousingDiscretizer->AddElement(t);
 
             t = new KGMeshTriangle(p3, p1, p2);

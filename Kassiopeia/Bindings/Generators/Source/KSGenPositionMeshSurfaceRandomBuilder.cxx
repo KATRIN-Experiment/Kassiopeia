@@ -12,12 +12,12 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSGenPositionMeshSurfaceRandomBuilder::~KComplexElement() {}
+template<> KSGenPositionMeshSurfaceRandomBuilder::~KComplexElement() = default;
 
 
 STATICINT sKSGenPositionMeshSurfaceRandomStructure =
-    KSGenPositionMeshSurfaceRandomBuilder::Attribute<string>("name") +
-    KSGenPositionMeshSurfaceRandomBuilder::Attribute<string>("surfaces");
+    KSGenPositionMeshSurfaceRandomBuilder::Attribute<std::string>("name") +
+    KSGenPositionMeshSurfaceRandomBuilder::Attribute<std::string>("surfaces");
 
 STATICINT sKSGenPositionMeshSurfaceRandom =
     KSRootBuilder::ComplexElement<KSGenPositionMeshSurfaceRandom>("ksgen_position_mesh_surface_random");

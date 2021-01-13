@@ -26,13 +26,13 @@ STATICINT sKGRotatedObjectBuilderStructure = KGRotatedObjectBuilder::Attribute<i
                                              KGRotatedObjectBuilder::ComplexElement<KGRotatedObject::Arc>("arc");
 
 STATICINT sKGRotatedSurfaceBuilderStructure =
-    KGRotatedSurfaceBuilder::Attribute<string>("name") +
+    KGRotatedSurfaceBuilder::Attribute<std::string>("name") +
     KGRotatedSurfaceBuilder::ComplexElement<KGRotatedObject>("rotated_object");
 
 STATICINT sKGRotatedSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGRotatedObject>>("rotated_surface");
 
-STATICINT sKGRotatedSpaceBuilderStructure = KGRotatedSpaceBuilder::Attribute<string>("name") +
+STATICINT sKGRotatedSpaceBuilderStructure = KGRotatedSpaceBuilder::Attribute<std::string>("name") +
                                             KGRotatedSpaceBuilder::ComplexElement<KGRotatedObject>("rotated_object");
 
 STATICINT sKGRotatedSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGRotatedObject>>("rotated_space");

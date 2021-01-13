@@ -48,7 +48,7 @@ template<> inline bool KSGenPositionHomogeneousFluxTubeBuilder::AddAttribute(KCo
         return true;
     }
     if (aContainer->GetName() == "magnetic_field_name") {
-        fObject->AddMagneticField(getMagneticField(aContainer->AsReference<std::string>()));
+        fObject->AddMagneticField(getMagneticField(aContainer->AsString()));
         return true;
     }
     return false;

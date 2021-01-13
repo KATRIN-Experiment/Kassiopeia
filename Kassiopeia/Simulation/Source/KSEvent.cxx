@@ -28,7 +28,7 @@ KSEvent::KSEvent() :
     fParticleQueue()
 {}
 KSEvent::KSEvent(const KSEvent& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEventId(aCopy.fEventId),
     fEventCount(aCopy.fEventCount),
     fParentRunId(aCopy.fParentRunId),
@@ -82,7 +82,7 @@ KSEvent* KSEvent::Clone() const
 {
     return new KSEvent(*this);
 }
-KSEvent::~KSEvent() {}
+KSEvent::~KSEvent() = default;
 
 STATICINT sKSEventDict =
     KSDictionary<KSEvent>::AddComponent(&KSEvent::GetEventId, "event_id") +

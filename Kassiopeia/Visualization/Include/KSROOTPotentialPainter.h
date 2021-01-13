@@ -1,20 +1,16 @@
 #ifndef KSROOTPOTENTIALPAINTER_H
 #define KSROOTPOTENTIALPAINTER_H
 
-#include "KROOTWindow.h"
-using katrin::KROOTWindow;
-
-#include "KROOTPainter.h"
-using katrin::KROOTPainter;
-
 #include "KField.h"
 #include "KGCore.hh"
+#include "KROOTPainter.h"
+#include "KROOTWindow.h"
 #include "KSElectricField.h"
 
 namespace Kassiopeia
 {
 
-class KSROOTPotentialPainter : public KROOTPainter
+class KSROOTPotentialPainter : public katrin::KROOTPainter
 {
   public:
     KSROOTPotentialPainter();
@@ -33,7 +29,7 @@ class KSROOTPotentialPainter : public KROOTPainter
     std::string GetYAxisLabel() override;
 
   public:
-    bool CheckPosition(const KThreeVector& aPosition) const;
+    bool CheckPosition(const KGeoBag::KThreeVector& aPosition) const;
 
   private:
     ;

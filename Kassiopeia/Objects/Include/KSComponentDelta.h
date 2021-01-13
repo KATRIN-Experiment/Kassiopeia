@@ -23,7 +23,7 @@ template<class XValueType> class KSComponentDelta : public KSComponent
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentDelta() override {}
+    ~KSComponentDelta() override = default;
 
     //***********
     //KSComponent

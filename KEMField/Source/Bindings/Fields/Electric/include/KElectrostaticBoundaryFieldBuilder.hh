@@ -33,12 +33,10 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddAttribute(KContain
         aContainer->CopyTo(fObject, &KEMField::KGElectrostaticBoundaryField::SetFile);
     }
     else if (aContainer->GetName() == "system") {
-        KGeoBag::KGSpace* tSpace =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpace(aContainer->AsReference<string>());
+        KGeoBag::KGSpace* tSpace = KGeoBag::KGInterface::GetInstance()->RetrieveSpace(aContainer->AsString());
 
         if (tSpace == nullptr) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 
@@ -46,13 +44,12 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddAttribute(KContain
     }
     else if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         std::vector<KGeoBag::KGSurface*>::const_iterator tSurfaceIt;
         KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -63,13 +60,12 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddAttribute(KContain
     }
     else if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -79,15 +75,15 @@ template<> inline bool KElectrostaticBoundaryFieldBuilder::AddAttribute(KContain
         }
     }
     else if (aContainer->GetName() == "symmetry") {
-        if (aContainer->AsReference<string>() == "none") {
+        if (aContainer->AsString() == "none") {
             fObject->SetSymmetry(KEMField::KGElectrostaticBoundaryField::NoSymmetry);
             return true;
         }
-        if (aContainer->AsReference<string>() == "axial") {
+        if (aContainer->AsString() == "axial") {
             fObject->SetSymmetry(KEMField::KGElectrostaticBoundaryField::AxialSymmetry);
             return true;
         }
-        if (aContainer->AsReference<string>() == "discrete_axial") {
+        if (aContainer->AsString() == "discrete_axial") {
             fObject->SetSymmetry(KEMField::KGElectrostaticBoundaryField::DiscreteAxialSymmetry);
             return true;
         }

@@ -9,8 +9,8 @@ namespace KGeoBag
 class KGRotatedSurfaceIntersectorInitializer : public KGRotatedSurface::Visitor, virtual public KGIntersectorInitializer
 {
   public:
-    KGRotatedSurfaceIntersectorInitializer() {}
-    ~KGRotatedSurfaceIntersectorInitializer() override {}
+    KGRotatedSurfaceIntersectorInitializer() = default;
+    ~KGRotatedSurfaceIntersectorInitializer() override = default;
 
   protected:
     void VisitRotatedSurface(const KGRotatedSurface* rotatedSurface);
@@ -20,9 +20,10 @@ class KGRotatedSurfaceIntersector : virtual public KGAnalyticIntersector
 {
   public:
     KGRotatedSurfaceIntersector(const KGRotatedSurface& rotatedSurface);
-    ~KGRotatedSurfaceIntersector() override {}
+    ~KGRotatedSurfaceIntersector() override = default;
 
-    bool Intersection(KThreeVector& aStart, KThreeVector& anEnd, KThreeVector& aResult) const override;
+    bool Intersection(KThreeVector& aStart, KGeoBag::KThreeVector& anEnd,
+                      KGeoBag::KThreeVector& aResult) const override;
 
   protected:
     const KGRotatedSurface& fRotatedSurface;

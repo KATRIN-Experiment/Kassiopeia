@@ -28,7 +28,7 @@ class KFMElectrostaticNearFieldToLocalCoefficientCalculator : public KFMNodeActo
 {
   public:
     KFMElectrostaticNearFieldToLocalCoefficientCalculator();
-    virtual ~KFMElectrostaticNearFieldToLocalCoefficientCalculator();
+    ~KFMElectrostaticNearFieldToLocalCoefficientCalculator() override;
 
     void SetDegree(int l_max);
     void SetNumberOfQuadratureTerms(unsigned int n);
@@ -40,7 +40,7 @@ class KFMElectrostaticNearFieldToLocalCoefficientCalculator : public KFMNodeActo
         fElementContainer = elementContainer;
     }
 
-    virtual void ApplyAction(KFMElectrostaticNode* node);
+    void ApplyAction(KFMElectrostaticNode* node) override;
 
   private:
     unsigned int fDegree;

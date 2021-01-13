@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGExtrudedCircleSurfaceMesher::KGExtrudedCircleSurfaceMesher() : KGSimpleMesher() {}
-KGExtrudedCircleSurfaceMesher::~KGExtrudedCircleSurfaceMesher() {}
+KGExtrudedCircleSurfaceMesher::KGExtrudedCircleSurfaceMesher() = default;
+KGExtrudedCircleSurfaceMesher::~KGExtrudedCircleSurfaceMesher() = default;
 
 void KGExtrudedCircleSurfaceMesher::VisitExtrudedPathSurface(KGExtrudedCircleSurface* aExtrudedCircleSurface)
 {

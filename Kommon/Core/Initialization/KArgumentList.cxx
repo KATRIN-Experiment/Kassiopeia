@@ -113,7 +113,7 @@ KVariant KArgumentList::GetOption(const std::string& Name) const
 void KArgumentList::SetParameter(unsigned int Index, const std::string& Value)
 {
     while (Index >= fParameterList.size()) {
-        fParameterList.push_back("");
+        fParameterList.emplace_back("");
     }
     fParameterList[Index] = Value;
 }
@@ -129,13 +129,12 @@ void KArgumentList::SetOption(const std::string& Name, const std::string& Value)
 void KArgumentList::Dump(ostream& os) const
 {
     os << "Parameters:" << endl;
-    for (unsigned i = 0; i < fParameterList.size(); i++) {
-        os << "    " << fParameterList[i] << endl;
+    for (const auto& i : fParameterList) {
+        os << "    " << i << endl;
     }
 
     os << "Options:" << endl;
-    for (unsigned i = 0; i < fOptionNameList.size(); i++) {
-        string Name = fOptionNameList[i];
+    for (auto Name : fOptionNameList) {
         os << "    " << Name << ": " << fOptionTable.find(Name)->second << endl;
     }
 }
@@ -156,7 +155,7 @@ void KArgumentList::PullBack(int& argc, char**& argv) const
         fArgvBuffer[i + 1] = strdup(fParameterList[i].c_str());
     }
 
-    argc = fParameterList.size() + 1;
+    argc = (int) fParameterList.size() + 1;
     argv = fArgvBuffer;
 }
 
@@ -166,7 +165,7 @@ KArgumentSchema::KElement::KElement(std::string Name)
     fIsDefaultValueEnabled = false;
 }
 
-KArgumentSchema::KElement::~KElement() {}
+KArgumentSchema::KElement::~KElement() = default;
 
 KArgumentSchema::KElement& KArgumentSchema::KElement::WhichIs(const std::string& Description)
 {
@@ -242,7 +241,7 @@ KArgumentSchema::KArgumentSchema()
     fNumberOfRequiredParameters = 0;
 }
 
-KArgumentSchema::~KArgumentSchema() {}
+KArgumentSchema::~KArgumentSchema() = default;
 
 KArgumentSchema::KElement& KArgumentSchema::Require(std::string Names)
 {
@@ -284,7 +283,7 @@ KArgumentSchema::KElement& KArgumentSchema::AddParameter(std::string Name)
 KArgumentSchema::KElement& KArgumentSchema::AddOption(std::string Names)
 {
     unsigned int Index = fOptionList.size();
-    fOptionList.push_back(KElement(Names));
+    fOptionList.emplace_back(Names);
 
     fNameLength = max(fNameLength, (unsigned int) Names.size());
 
@@ -327,15 +326,15 @@ KArgumentSchema& KArgumentSchema::AllowUnknown()
 void KArgumentSchema::Print(std::ostream& os)
 {
     os << "Parameters:" << endl;
-    for (unsigned i = 0; i < fParameterList.size(); i++) {
+    for (auto& i : fParameterList) {
         os << "  ";
-        fParameterList[i].Print(os, fNameLength + 3);
+        i.Print(os, fNameLength + 3);
     }
 
     os << "Options:" << endl;
-    for (unsigned i = 0; i < fOptionList.size(); i++) {
+    for (auto& i : fOptionList) {
         os << "  ";
-        fOptionList[i].Print(os, fNameLength + 3);
+        i.Print(os, fNameLength + 3);
     }
 }
 
@@ -387,13 +386,12 @@ void KArgumentSchema::Validate(KArgumentList& ArgumentList)
     // default value filling: option //
     // note one option can have multiple names //
     vector<KVariant> OptionValueList;
-    for (unsigned i = 0; i < fOptionList.size(); i++) {
+    for (auto& i : fOptionList) {
         // fill all elements with default value //
-        OptionValueList.push_back(fOptionList[i].DefaultValue());
+        OptionValueList.push_back(i.DefaultValue());
     }
-    for (unsigned i = 0; i < fOptionNameList.size(); i++) {
+    for (auto Name : fOptionNameList) {
         // overwrite with specified values //
-        string Name = fOptionNameList[i];
         if (ArgumentList[Name].IsVoid()) {
             continue;
         }
@@ -402,9 +400,8 @@ void KArgumentSchema::Validate(KArgumentList& ArgumentList)
             OptionValueList[Index].Assign(ArgumentList[Name]);
         }
     }
-    for (unsigned i = 0; i < fOptionNameList.size(); i++) {
+    for (auto Name : fOptionNameList) {
         // fill the argument lists //
-        string Name = fOptionNameList[i];
         unsigned int Index = fNameIndexTable[Name] - 1;
         if (!OptionValueList[Index].IsVoid()) {
             ArgumentList.SetOption(Name, OptionValueList[Index]);

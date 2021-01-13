@@ -30,7 +30,7 @@ class KGBeam : public KGBoundary
     virtual KGBeam* Clone() const;
 
     virtual void Initialize() const;
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -38,8 +38,8 @@ class KGBeam : public KGBoundary
     bool ContainsPoint(const double* P) const;
     double DistanceTo(const double* P, double* P_in = nullptr, double* P_norm = nullptr) const;
 
-    void AddStartLine(double p1[3], double p2[3]);
-    void AddEndLine(double p1[3], double p2[3]);
+    void AddStartLine(double p1[3], const double p2[3]);
+    void AddEndLine(double p1[3], const double p2[3]);
 
     void SetNDiscRad(int i)
     {

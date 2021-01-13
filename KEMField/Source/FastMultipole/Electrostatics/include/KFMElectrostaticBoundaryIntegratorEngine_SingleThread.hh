@@ -52,7 +52,7 @@ class KFMElectrostaticBoundaryIntegratorEngine_SingleThread
         fContainer = container;
     };
 
-    void SetParameters(KFMElectrostaticParameters params);
+    void SetParameters(const KFMElectrostaticParameters& params);
     void SetTree(KFMElectrostaticTree* tree);
     void InitializeMultipoleMoments();
     void InitializeLocalCoefficientsForPrimaryNodes();
@@ -77,9 +77,9 @@ class KFMElectrostaticBoundaryIntegratorEngine_SingleThread
   protected:
     void AssociateElementsAndNodes();
 
-    double ComputeDiskMatrixVectorProductWeight();
-    double ComputeRamMatrixVectorProductWeight();
-    double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
+    static double ComputeDiskMatrixVectorProductWeight();
+    static double ComputeRamMatrixVectorProductWeight();
+    static double ComputeFFTWeight(unsigned int divisions, unsigned int zeromask);
 
 #ifdef KEMFIELD_USE_REALTIME_CLOCK
     timespec diff(timespec start, timespec end)

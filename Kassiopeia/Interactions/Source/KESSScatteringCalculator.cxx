@@ -21,7 +21,7 @@ KESSScatteringCalculator::KESSScatteringCalculator() :
     fRelaxationCalculator(nullptr)
 {}
 
-KESSScatteringCalculator::~KESSScatteringCalculator() {}
+KESSScatteringCalculator::~KESSScatteringCalculator() = default;
 
 
 void KESSScatteringCalculator::ReadMFP(string data_filename, map<double, double>& MapForTables)

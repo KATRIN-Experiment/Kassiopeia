@@ -3,10 +3,7 @@
 
 #include "KSReadersMessage.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
 #include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
 
 namespace Kassiopeia
 {
@@ -72,7 +69,7 @@ KSReadValue<XType>::KSReadValue(const KSReadValue<XType>& aValue) :
     fPointer(&fValue),
     fHandle(&fPointer)
 {}
-template<class XType> KSReadValue<XType>::~KSReadValue() {}
+template<class XType> KSReadValue<XType>::~KSReadValue() = default;
 
 template<class XType> XType& KSReadValue<XType>::Value()
 {
@@ -161,21 +158,21 @@ template<class XType> KSReadValue<XType> KSReadValue<XType>::operator/(const XTy
     return KSReadValue<XType>(fValue / aValue);
 }
 
-typedef KSReadValue<bool> KSBool;
-typedef KSReadValue<unsigned char> KSUChar;
-typedef KSReadValue<char> KSChar;
-typedef KSReadValue<unsigned short> KSUShort;
-typedef KSReadValue<short> KSShort;
-typedef KSReadValue<unsigned int> KSUInt;
-typedef KSReadValue<int> KSInt;
-typedef KSReadValue<unsigned long> KSULong;
-typedef KSReadValue<long> KSLong;
-typedef KSReadValue<long long> KSLongLong;
-typedef KSReadValue<float> KSFloat;
-typedef KSReadValue<double> KSDouble;
-typedef KSReadValue<KThreeVector> KSThreeVector;
-typedef KSReadValue<KTwoVector> KSTwoVector;
-typedef KSReadValue<std::string> KSString;
+using KSBool = KSReadValue<bool>;
+using KSUChar = KSReadValue<unsigned char>;
+using KSChar = KSReadValue<char>;
+using KSUShort = KSReadValue<unsigned short>;
+using KSShort = KSReadValue<short>;
+using KSUInt = KSReadValue<unsigned int>;
+using KSInt = KSReadValue<int>;
+using KSULong = KSReadValue<unsigned long>;
+using KSLong = KSReadValue<long>;
+using KSLongLong = KSReadValue<long long>;
+using KSFloat = KSReadValue<float>;
+using KSDouble = KSReadValue<double>;
+using KSThreeVector = KSReadValue<KGeoBag::KThreeVector>;
+using KSTwoVector = KSReadValue<KGeoBag::KTwoVector>;
+using KSString = KSReadValue<std::string>;
 
 template<> const KSBool KSBool::sZero;
 

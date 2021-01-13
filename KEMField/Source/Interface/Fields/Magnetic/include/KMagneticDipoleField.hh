@@ -20,8 +20,8 @@ class KMagneticDipoleField : public KMagnetostaticField
     ~KMagneticDipoleField() override;
 
   private:
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
   public:

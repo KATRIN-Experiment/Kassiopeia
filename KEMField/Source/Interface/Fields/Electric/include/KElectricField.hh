@@ -19,7 +19,7 @@ class KElectricField : public katrin::KNamed
 {
   public:
     KElectricField() : katrin::KNamed(), fInitialized(false) {}
-    virtual ~KElectricField() {}
+    ~KElectricField() override = default;
 
     // this class uses the non virtual interface (NVI) pattern
     // the virtual methods that have to be implemented by subclasses
@@ -30,12 +30,12 @@ class KElectricField : public katrin::KNamed
         return PotentialCore(P, time);
     }
 
-    KThreeVector ElectricField(const KPosition& P, const double& time) const
+    KFieldVector ElectricField(const KPosition& P, const double& time) const
     {
         return ElectricFieldCore(P, time);
     }
 
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P, const double& time) const
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KPosition& P, const double& time) const
     {
         return ElectricFieldAndPotentialCore(P, time);
     }
@@ -52,9 +52,9 @@ class KElectricField : public katrin::KNamed
   private:
     virtual double PotentialCore(const KPosition& P, const double& time) const = 0;
 
-    virtual KThreeVector ElectricFieldCore(const KPosition& P, const double& time) const = 0;
+    virtual KFieldVector ElectricFieldCore(const KPosition& P, const double& time) const = 0;
 
-    virtual std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P, const double& time) const
+    virtual std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P, const double& time) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -63,9 +63,9 @@ class KElectricField : public katrin::KNamed
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P, time);
-        KThreeVector field = ElectricFieldCore(P, time);
+        KFieldVector field = ElectricFieldCore(P, time);
 
-        return std::pair<KThreeVector, double>(field, potential);
+        return std::pair<KFieldVector, double>(field, potential);
     }
 
     virtual void InitializeCore() {}

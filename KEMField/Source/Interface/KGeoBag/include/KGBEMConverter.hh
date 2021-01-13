@@ -13,6 +13,9 @@
 namespace KGeoBag
 {
 
+using KEMField::KNullType;
+using KEMField::KTypelist;
+
 template<template<class, class> class XNode, class XListOne, class XListTwo> class KGDualHierarchy;
 
 template<template<class, class> class XNode, class XTypeOne, class XHeadTwo, class XTailTwo>
@@ -50,7 +53,7 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     ~KGBEMConverter() override;
 
   public:
-    void SetSurfaceContainer(KSurfaceContainer* aContainer)
+    void SetSurfaceContainer(KEMField::KSurfaceContainer* aContainer)
     {
         fSurfaceContainer = aContainer;
         return;
@@ -73,7 +76,7 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     }
 
   protected:
-    KSurfaceContainer* fSurfaceContainer;
+    KEMField::KSurfaceContainer* fSurfaceContainer;
     double fMinimumArea;
     double fMaximumAspectRatio;
     int fVerbosity;
@@ -81,91 +84,91 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     class Triangle : public KEMField::KTriangle
     {
       public:
-        typedef KEMField::KTriangle ShapePolicy;
+        using ShapePolicy = KEMField::KTriangle;
 
-        Triangle() {}
-        ~Triangle() override {}
+        Triangle() = default;
+        ~Triangle() override = default;
     };
 
     class Rectangle : public KEMField::KRectangle
     {
       public:
-        typedef KEMField::KRectangle ShapePolicy;
+        using ShapePolicy = KEMField::KRectangle;
 
-        Rectangle() {}
-        ~Rectangle() override {}
+        Rectangle() = default;
+        ~Rectangle() override = default;
     };
 
     class LineSegment : public KEMField::KLineSegment
     {
       public:
-        typedef KEMField::KLineSegment ShapePolicy;
+        using ShapePolicy = KEMField::KLineSegment;
 
-        LineSegment() {}
-        ~LineSegment() override {}
+        LineSegment() = default;
+        ~LineSegment() override = default;
     };
 
     class ConicSection : public KEMField::KConicSection
     {
       public:
-        typedef KEMField::KConicSection ShapePolicy;
+        using ShapePolicy = KEMField::KConicSection;
 
-        ConicSection() {}
-        ~ConicSection() override {}
+        ConicSection() = default;
+        ~ConicSection() override = default;
     };
 
     class Ring : public KEMField::KRing
     {
       public:
-        typedef KEMField::KRing ShapePolicy;
+        using ShapePolicy = KEMField::KRing;
 
-        Ring() {}
-        ~Ring() override {}
+        Ring() = default;
+        ~Ring() override = default;
     };
 
     class SymmetricTriangle : public KEMField::KSymmetryGroup<KEMField::KTriangle>
     {
       public:
-        typedef KEMField::KSymmetryGroup<KEMField::KTriangle> ShapePolicy;
+        using ShapePolicy = KEMField::KSymmetryGroup<KEMField::KTriangle>;
 
-        SymmetricTriangle() {}
-        ~SymmetricTriangle() override {}
+        SymmetricTriangle() = default;
+        ~SymmetricTriangle() override = default;
     };
 
     class SymmetricRectangle : public KEMField::KSymmetryGroup<KEMField::KRectangle>
     {
       public:
-        typedef KEMField::KSymmetryGroup<KEMField::KRectangle> ShapePolicy;
+        using ShapePolicy = KEMField::KSymmetryGroup<KEMField::KRectangle>;
 
-        SymmetricRectangle() {}
-        ~SymmetricRectangle() override {}
+        SymmetricRectangle() = default;
+        ~SymmetricRectangle() override = default;
     };
 
     class SymmetricLineSegment : public KEMField::KSymmetryGroup<KEMField::KLineSegment>
     {
       public:
-        typedef KEMField::KSymmetryGroup<KEMField::KLineSegment> ShapePolicy;
+        using ShapePolicy = KEMField::KSymmetryGroup<KEMField::KLineSegment>;
 
-        SymmetricLineSegment() {}
-        ~SymmetricLineSegment() override {}
+        SymmetricLineSegment() = default;
+        ~SymmetricLineSegment() override = default;
     };
 
     class SymmetricConicSection : public KEMField::KSymmetryGroup<KEMField::KConicSection>
     {
       public:
-        typedef KEMField::KSymmetryGroup<KEMField::KConicSection> ShapePolicy;
+        using ShapePolicy = KEMField::KSymmetryGroup<KEMField::KConicSection>;
 
-        SymmetricConicSection() {}
-        ~SymmetricConicSection() override {}
+        SymmetricConicSection() = default;
+        ~SymmetricConicSection() override = default;
     };
 
     class SymmetricRing : public KEMField::KSymmetryGroup<KEMField::KRing>
     {
       public:
-        typedef KEMField::KSymmetryGroup<KEMField::KRing> ShapePolicy;
+        using ShapePolicy = KEMField::KSymmetryGroup<KEMField::KRing>;
 
-        SymmetricRing() {}
-        ~SymmetricRing() override {}
+        SymmetricRing() = default;
+        ~SymmetricRing() override = default;
     };
 
     void Clear();
@@ -227,7 +230,7 @@ class KGBEMConverterNode :
 {
   public:
     KGBEMConverterNode() : KGBEMConverter() {}
-    ~KGBEMConverterNode() override {}
+    ~KGBEMConverterNode() override = default;
 
   public:
     void VisitExtendedSurface(KGExtendedSurface<KGBEM<XBasisPolicy, XBoundaryPolicy>>* aSurface) override
@@ -245,6 +248,8 @@ class KGBEMConverterNode :
   private:
     void Add(KGBEMData<XBasisPolicy, XBoundaryPolicy>* aBEM)
     {
+        using namespace KEMField;
+
         //cout << "adding bem surface of type < " << XBasisPolicy::Name() << ", " << XBoundaryPolicy::Name() << " >..." << endl;
 
         for (auto tTriangleIt = fTriangles.begin(); tTriangleIt != fTriangles.end(); tTriangleIt++) {
@@ -304,7 +309,7 @@ class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisType
 {
   public:
     KGBEMMeshConverter();
-    KGBEMMeshConverter(KSurfaceContainer& aContainer);
+    KGBEMMeshConverter(KEMField::KSurfaceContainer& aContainer);
     ~KGBEMMeshConverter() override;
 
   protected:
@@ -319,7 +324,7 @@ class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasi
 {
   public:
     KGBEMAxialMeshConverter();
-    KGBEMAxialMeshConverter(KSurfaceContainer& aContainer);
+    KGBEMAxialMeshConverter(KEMField::KSurfaceContainer& aContainer);
     ~KGBEMAxialMeshConverter() override;
 
   protected:
@@ -334,7 +339,7 @@ class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConvert
 {
   public:
     KGBEMDiscreteRotationalMeshConverter();
-    KGBEMDiscreteRotationalMeshConverter(KSurfaceContainer& aContainer);
+    KGBEMDiscreteRotationalMeshConverter(KEMField::KSurfaceContainer& aContainer);
     ~KGBEMDiscreteRotationalMeshConverter() override;
 
   protected:

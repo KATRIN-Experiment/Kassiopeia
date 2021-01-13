@@ -15,7 +15,7 @@ KSTrajControlPositionNumericalError::KSTrajControlPositionNumericalError() :
 
 KSTrajControlPositionNumericalError::KSTrajControlPositionNumericalError(
     const KSTrajControlPositionNumericalError& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fAbsoluteError(aCopy.fAbsoluteError),
     fSafetyFactor(aCopy.fSafetyFactor),
     fSolverOrder(aCopy.fSolverOrder),
@@ -32,7 +32,7 @@ KSTrajControlPositionNumericalError* KSTrajControlPositionNumericalError::Clone(
     return new KSTrajControlPositionNumericalError(*this);
 }
 
-KSTrajControlPositionNumericalError::~KSTrajControlPositionNumericalError() {}
+KSTrajControlPositionNumericalError::~KSTrajControlPositionNumericalError() = default;
 
 void KSTrajControlPositionNumericalError::ActivateObject()
 {

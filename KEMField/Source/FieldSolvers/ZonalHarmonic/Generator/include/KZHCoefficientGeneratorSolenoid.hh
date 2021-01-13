@@ -9,10 +9,10 @@ namespace KEMField
 template<> class KZHCoefficientGenerator<KSolenoid> : public KZHCoefficientGeneratorElement
 {
   public:
-    typedef KSolenoid ElementType;
+    using ElementType = KSolenoid;
 
     KZHCoefficientGenerator() : KZHCoefficientGeneratorElement() {}
-    ~KZHCoefficientGenerator() override {}
+    ~KZHCoefficientGenerator() override = default;
 
     void SetElement(const KSolenoid* s)
     {

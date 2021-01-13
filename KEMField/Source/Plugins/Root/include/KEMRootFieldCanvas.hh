@@ -23,20 +23,21 @@ class KEMRootFieldCanvas : public KEMFieldCanvas
 
     void InitializeCanvas();
 
-    void DrawGeomRZ(std::string conicSectfile, std::string wirefile, std::string coilfile);
+    void DrawGeomRZ(const std::string& conicSectfile, const std::string& wirefile, const std::string& coilfile);
 
-    void DrawGeomXY(double z, std::string conicSectfile, std::string wirefile, std::string coilfile);
+    static void DrawGeomXY(double z, const std::string& conicSectfile, const std::string& wirefile,
+                           const std::string& coilfile);
 
     void DrawFieldMapCube(double x_1, double x_2, double y_1, double y_2);
 
-    void DrawFieldMap(std::vector<double> x, std::vector<double> y, std::vector<double> V, bool xy = false,
-                      double z = 0) override;
-    void DrawComparisonMap(int nPoints, std::vector<double> x, std::vector<double> y, std::vector<double> V1,
-                           std::vector<double> V2) override;
-    void DrawFieldLines(std::vector<double> x, std::vector<double> y) override;
-    void LabelAxes(std::string xname, std::string yname, std::string zname) override;
-    void LabelCanvas(std::string title) override;
-    void SaveAs(std::string savename) override;
+    void DrawFieldMap(const std::vector<double>& x, const std::vector<double>& y, const std::vector<double>& V,
+                      bool xy = false, double z = 0) override;
+    void DrawComparisonMap(int nPoints, const std::vector<double>& x, const std::vector<double>& y,
+                           const std::vector<double>& V1, const std::vector<double>& V2) override;
+    void DrawFieldLines(const std::vector<double>& x, const std::vector<double>& y) override;
+    void LabelAxes(const std::string& xname, const std::string& yname, const std::string& zname) override;
+    void LabelCanvas(const std::string& title) override;
+    void SaveAs(const std::string& savename) override;
 
   private:
     TCanvas* canvas;

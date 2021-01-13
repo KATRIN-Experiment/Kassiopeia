@@ -44,7 +44,7 @@ KSStep::KSStep() :
     fParticleQueue()
 {}
 KSStep::KSStep(const KSStep& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fStepId(aCopy.fStepId),
     fStepCount(aCopy.fStepCount),
     fParentTrackId(aCopy.fParentTrackId),
@@ -126,7 +126,7 @@ KSStep* KSStep::Clone() const
 {
     return new KSStep(*this);
 }
-KSStep::~KSStep() {}
+KSStep::~KSStep() = default;
 
 STATICINT sKSStepDict =
     KSDictionary<KSStep>::AddComponent(&KSStep::GetStepId, "step_id") +

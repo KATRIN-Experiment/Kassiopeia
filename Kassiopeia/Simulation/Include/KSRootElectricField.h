@@ -17,12 +17,17 @@ class KSRootElectricField : public KSComponentTemplate<KSRootElectricField, KSEl
     ~KSRootElectricField() override;
 
   public:
-    void CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime, double& aPotential) override;
-    void CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField) override;
-    void CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
-                           KThreeMatrix& aGradient) override;
-    void CalculateFieldAndPotential(const KThreeVector& aSamplePoint, const double& aSampleTime, KThreeVector& aField,
-                                    double& aPotentia) override;
+    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                            double& aPotential) override;
+
+    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        KGeoBag::KThreeVector& aField) override;
+
+    void CalculateGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                           KGeoBag::KThreeMatrix& aGradient) override;
+
+    void CalculateFieldAndPotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                    KGeoBag::KThreeVector& aField, double& aPotentia) override;
 
   public:
     void AddElectricField(KSElectricField* anElectricField);
@@ -30,8 +35,8 @@ class KSRootElectricField : public KSComponentTemplate<KSRootElectricField, KSEl
 
   private:
     double fCurrentPotential;
-    KThreeVector fCurrentField;
-    KThreeMatrix fCurrentGradient;
+    KGeoBag::KThreeVector fCurrentField;
+    KGeoBag::KThreeMatrix fCurrentGradient;
 
     KSList<KSElectricField> fElectricFields;
 

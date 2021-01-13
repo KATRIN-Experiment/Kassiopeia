@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KESSSurfaceInteractionBuilder::~KComplexElement() {}
+template<> KESSSurfaceInteractionBuilder::~KComplexElement() = default;
 
-STATICINT sKESSSSurfaceInteractionStructure = KESSSurfaceInteractionBuilder::Attribute<string>("name") +
-                                              KESSSurfaceInteractionBuilder::Attribute<string>("siliconside");
+STATICINT sKESSSSurfaceInteractionStructure = KESSSurfaceInteractionBuilder::Attribute<std::string>("name") +
+                                              KESSSurfaceInteractionBuilder::Attribute<std::string>("siliconside");
 
 STATICINT sKESSSSurfaceInteractionElement =
     KSRootBuilder::ComplexElement<KESSSurfaceInteraction>("kess_surface_interaction");

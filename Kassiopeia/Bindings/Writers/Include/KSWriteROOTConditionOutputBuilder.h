@@ -35,7 +35,7 @@ template<> inline bool KSWriteROOTConditionOutputBuilder::Begin()
 template<> inline bool KSWriteROOTConditionOutputBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
@@ -50,12 +50,12 @@ template<> inline bool KSWriteROOTConditionOutputBuilder::AddAttribute(KContaine
         return true;
     }
     if (aContainer->GetName() == "group") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fGroupName = tName;
         return true;
     }
     if (aContainer->GetName() == "parent") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fComponentName = tName;
         return true;
     }

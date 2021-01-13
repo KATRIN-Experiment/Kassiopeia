@@ -42,8 +42,10 @@ namespace KEMField
 template<typename ParallelTrait = KFMElectrostaticFieldMapper_SingleThread> class KFMElectrostaticTreeConstructor
 {
   public:
-    KFMElectrostaticTreeConstructor(){};
-    virtual ~KFMElectrostaticTreeConstructor(){};
+    KFMElectrostaticTreeConstructor() = default;
+    ;
+    virtual ~KFMElectrostaticTreeConstructor() = default;
+    ;
 
 
     void ConstructTree(const KSurfaceContainer& surface_container, KFMElectrostaticTree& tree) const
@@ -200,14 +202,14 @@ template<typename ParallelTrait = KFMElectrostaticFieldMapper_SingleThread> clas
         std::vector<KFMNodeData> tree_structure_data;
         data.GetFlattenedTree(&tree_structure_data);
 
-        for (unsigned int i = 0; i < tree_structure_data.size(); i++) {
-            KFMElectrostaticNode* current_node = tree_nodes[tree_structure_data[i].GetID()];
+        for (auto& i : tree_structure_data) {
+            KFMElectrostaticNode* current_node = tree_nodes[i.GetID()];
 
             //link the children of this current node
             std::vector<unsigned int> child_ids;
-            tree_structure_data[i].GetChildIDs(&child_ids);
-            for (unsigned int j = 0; j < child_ids.size(); j++) {
-                current_node->AddChild(tree_nodes[child_ids[j]]);
+            i.GetChildIDs(&child_ids);
+            for (unsigned int child_id : child_ids) {
+                current_node->AddChild(tree_nodes[child_id]);
             }
         }
 

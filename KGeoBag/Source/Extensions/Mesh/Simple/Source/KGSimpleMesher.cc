@@ -9,8 +9,8 @@
 namespace KGeoBag
 {
 
-KGSimpleMesher::KGSimpleMesher() : KGMesherBase() {}
-KGSimpleMesher::~KGSimpleMesher() {}
+KGSimpleMesher::KGSimpleMesher() = default;
+KGSimpleMesher::~KGSimpleMesher() = default;
 
 //*******************
 //partition functions
@@ -220,9 +220,9 @@ void KGSimpleMesher::ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& 
     TubeMesh::Group tGroup;
     for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != --(tPartition.fData.end()); tPartitionIt++) {
         tGroup.clear();
-        for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-            tPoint.X() = (*tPointsIt).X() + (*tPartitionIt) * (aCentroid.X() - (*tPointsIt).X());
-            tPoint.Y() = (*tPointsIt).Y() + (*tPartitionIt) * (aCentroid.Y() - (*tPointsIt).Y());
+        for (const auto& tPointsIt : aPoints.fData) {
+            tPoint.X() = tPointsIt.X() + (*tPartitionIt) * (aCentroid.X() - tPointsIt.X());
+            tPoint.Y() = tPointsIt.Y() + (*tPartitionIt) * (aCentroid.Y() - tPointsIt.Y());
             tPoint.Z() = aZ;
             tGroup.push_back(tPoint);
         }
@@ -246,12 +246,12 @@ void KGSimpleMesher::OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, cons
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != --(tPartition.fData.end()); tPartitionIt++) {
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt));
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt));
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt));
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt));
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -274,14 +274,14 @@ void KGSimpleMesher::OpenPointsRotatedToShellMesh(const OpenPoints& aPoints, con
 
     KThreeVector tPoint;
     ShellMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
-        for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++) {
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Z() = (*tPointsIt).X();
+        for (double& tPartitionIt : tPartition.fData) {
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -302,12 +302,12 @@ void KGSimpleMesher::ClosedPointsRotatedToTorusMesh(const ClosedPoints& aPoints,
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != --(tPartition.fData.end()); tPartitionIt++) {
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt));
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt));
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt));
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt));
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -329,14 +329,14 @@ void KGSimpleMesher::ClosedPointsRotatedToShellMesh(const ClosedPoints& aPoints,
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
-        for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++) {
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Z() = (*tPointsIt).X();
+        for (double& tPartitionIt : tPartition.fData) {
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -357,12 +357,12 @@ void KGSimpleMesher::OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, con
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++) {
+    for (double& tPartitionIt : tPartition.fData) {
         tGroup.clear();
-        for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-            tPoint.X() = (*tPointsIt).X();
-            tPoint.Y() = (*tPointsIt).Y();
-            tPoint.Z() = (*tPartitionIt);
+        for (const auto& tPointsIt : aPoints.fData) {
+            tPoint.X() = tPointsIt.X();
+            tPoint.Y() = tPointsIt.Y();
+            tPoint.Z() = tPartitionIt;
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -384,12 +384,12 @@ void KGSimpleMesher::ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aPoints,
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++) {
+    for (double& tPartitionIt : tPartition.fData) {
         tGroup.clear();
-        for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-            tPoint.X() = (*tPointsIt).X();
-            tPoint.Y() = (*tPointsIt).Y();
-            tPoint.Z() = (*tPartitionIt);
+        for (const auto& tPointsIt : aPoints.fData) {
+            tPoint.X() = tPointsIt.X();
+            tPoint.Y() = tPointsIt.Y();
+            tPoint.Z() = tPartitionIt;
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);

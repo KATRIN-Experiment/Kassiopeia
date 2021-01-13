@@ -31,12 +31,12 @@ namespace KEMField
 template<typename ValueType> class KPreconditionedBiconjugateGradientStabilized
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
-    typedef KPreconditioner<ValueType> Preconditioner;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
+    using Preconditioner = KPreconditioner<ValueType>;
 
-    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleMatrixType = KSimpleMatrix<ValueType>;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
     KPreconditionedBiconjugateGradientStabilized(const Matrix& A, Preconditioner& P, Vector& x, const Vector& b) :
         fDim(A.Dimension()),
@@ -48,7 +48,8 @@ template<typename ValueType> class KPreconditionedBiconjugateGradientStabilized
         fExternalStateSet = false;
     };
 
-    virtual ~KPreconditionedBiconjugateGradientStabilized(){};
+    virtual ~KPreconditionedBiconjugateGradientStabilized() = default;
+    ;
 
 
     static std::string Name()

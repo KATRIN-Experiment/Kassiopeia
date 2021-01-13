@@ -20,8 +20,10 @@ namespace KEMField
 template<typename NodeType> class KFMInspectingActor
 {
   public:
-    KFMInspectingActor(){};
-    virtual ~KFMInspectingActor(){};
+    KFMInspectingActor() = default;
+    ;
+    virtual ~KFMInspectingActor() = default;
+    ;
 
     //needs to answer this question about whether this node statisfies a condition
     virtual bool ConditionIsSatisfied(NodeType* node) = 0;

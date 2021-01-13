@@ -30,7 +30,7 @@ int main()
     unsigned int size = (degree + 1) * (degree + 1);
 
     //now lets make the multipole calculators
-    KFMElectrostaticMultipoleCalculatorAnalytic* aCalc = new KFMElectrostaticMultipoleCalculatorAnalytic();
+    auto* aCalc = new KFMElectrostaticMultipoleCalculatorAnalytic();
     aCalc->SetDegree(degree);
 
 

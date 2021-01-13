@@ -19,8 +19,8 @@ template<typename ValueType> class KBoundaryMatrixGenerator
 {
 
   public:
-    KBoundaryMatrixGenerator() {}
-    virtual ~KBoundaryMatrixGenerator() {}
+    KBoundaryMatrixGenerator() = default;
+    virtual ~KBoundaryMatrixGenerator() = default;
 
     virtual KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const = 0;
 };

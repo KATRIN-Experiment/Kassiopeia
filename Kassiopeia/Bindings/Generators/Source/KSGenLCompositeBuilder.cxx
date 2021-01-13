@@ -17,10 +17,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenLCompositeBuilder::~KComplexElement() {}
+template<> KSGenLCompositeBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenLCompositeStructure = KSGenLCompositeBuilder::Attribute<string>("name") +
-                                      KSGenLCompositeBuilder::Attribute<string>("l_value") +
+STATICINT sKSGenLCompositeStructure = KSGenLCompositeBuilder::Attribute<std::string>("name") +
+                                      KSGenLCompositeBuilder::Attribute<std::string>("l_value") +
                                       KSGenLCompositeBuilder::ComplexElement<KSGenValueFix>("l_fix") +
                                       KSGenLCompositeBuilder::ComplexElement<KSGenValueSet>("l_set") +
                                       KSGenLCompositeBuilder::ComplexElement<KSGenValueList>("l_list") +

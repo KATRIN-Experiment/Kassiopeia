@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSWriter::KSWriter() {}
+KSWriter::KSWriter() = default;
 
-KSWriter::~KSWriter() {}
+KSWriter::~KSWriter() = default;
 
 }  // namespace Kassiopeia

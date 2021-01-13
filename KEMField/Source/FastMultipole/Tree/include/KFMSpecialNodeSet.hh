@@ -31,7 +31,8 @@ template<typename ObjectTypeList> class KFMSpecialNodeSet
         fSize = 0;
     };
 
-    virtual ~KFMSpecialNodeSet(){};
+    virtual ~KFMSpecialNodeSet() = default;
+    ;
 
     void SetTotalNumberOfNodes(unsigned int n_nodes)
     {

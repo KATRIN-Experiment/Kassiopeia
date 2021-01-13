@@ -29,7 +29,7 @@ namespace KEMField
 template<typename ValueType> class KFMDenseBlockSparseMatrix : public KSquareMatrix<ValueType>
 {
   public:
-    KFMDenseBlockSparseMatrix(std::string unique_id, unsigned int verbosity = 0) :
+    KFMDenseBlockSparseMatrix(const std::string& unique_id, unsigned int verbosity = 0) :
         fUniqueID(unique_id),
         fVerbosity(verbosity)
     {

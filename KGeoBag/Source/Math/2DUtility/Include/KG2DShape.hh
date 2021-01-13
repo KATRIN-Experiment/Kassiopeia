@@ -77,7 +77,7 @@ class KG2DShape
         return val;
     }
 
-    static KTwoVector Rotate_vector_by_angle(KTwoVector vec, double angle)
+    static KTwoVector Rotate_vector_by_angle(const KTwoVector& vec, double angle)
     {
         //expects angles in radian
         double c = std::cos(angle);

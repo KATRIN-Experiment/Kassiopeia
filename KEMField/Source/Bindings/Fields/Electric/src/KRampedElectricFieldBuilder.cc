@@ -15,11 +15,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KRampedElectricFieldBuilder::~KComplexElement() {}
+template<> KRampedElectricFieldBuilder::~KComplexElement() = default;
 
-STATICINT sKRampedElectricFieldStructure = KRampedElectricFieldBuilder::Attribute<string>("name") +
-                                           KRampedElectricFieldBuilder::Attribute<string>("root_field") +
-                                           KRampedElectricFieldBuilder::Attribute<string>("ramping_type") +
+STATICINT sKRampedElectricFieldStructure = KRampedElectricFieldBuilder::Attribute<std::string>("name") +
+                                           KRampedElectricFieldBuilder::Attribute<std::string>("root_field") +
+                                           KRampedElectricFieldBuilder::Attribute<std::string>("ramping_type") +
                                            KRampedElectricFieldBuilder::Attribute<int>("num_cycles") +
                                            KRampedElectricFieldBuilder::Attribute<double>("ramp_up_delay") +
                                            KRampedElectricFieldBuilder::Attribute<double>("ramp_down_delay") +

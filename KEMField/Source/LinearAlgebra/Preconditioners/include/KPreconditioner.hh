@@ -30,7 +30,7 @@ template<typename ValueType> class KPreconditioner : public KSquareMatrix<ValueT
 {
   public:
     KPreconditioner() : KSquareMatrix<ValueType>(){};
-    ~KPreconditioner() override {}
+    ~KPreconditioner() override = default;
 
     virtual std::string Name() = 0;
 

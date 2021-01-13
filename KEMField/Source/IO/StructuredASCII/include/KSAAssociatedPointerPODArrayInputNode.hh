@@ -31,7 +31,7 @@ template<typename CallType, typename SetType, void (CallType::*memberFunction)(c
 class KSAAssociatedPointerPODArrayInputNode : public KSAPODInputNode<std::vector<SetType>>
 {
   public:
-    KSAAssociatedPointerPODArrayInputNode(std::string name, unsigned int arr_size, CallType* call_ptr) :
+    KSAAssociatedPointerPODArrayInputNode(const std::string& name, unsigned int arr_size, CallType* call_ptr) :
         KSAPODInputNode<std::vector<SetType>>(name),
         fArraySize(arr_size)
     {

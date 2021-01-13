@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGCylinderTubeSpace::Visitor::Visitor() {}
-KGCylinderTubeSpace::Visitor::~Visitor() {}
+KGCylinderTubeSpace::Visitor::Visitor() = default;
+KGCylinderTubeSpace::Visitor::~Visitor() = default;
 
 KGCylinderTubeSpace::KGCylinderTubeSpace() :
     fZ1(0.),
@@ -17,7 +17,7 @@ KGCylinderTubeSpace::KGCylinderTubeSpace() :
     fRadialMeshPower(1.),
     fAxialMeshCount(64)
 {}
-KGCylinderTubeSpace::~KGCylinderTubeSpace() {}
+KGCylinderTubeSpace::~KGCylinderTubeSpace() = default;
 
 void KGCylinderTubeSpace::Z1(const double& aZ1)
 {

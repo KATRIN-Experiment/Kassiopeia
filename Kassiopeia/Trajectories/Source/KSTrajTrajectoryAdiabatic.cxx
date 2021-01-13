@@ -27,7 +27,7 @@ KSTrajTrajectoryAdiabatic::KSTrajTrajectoryAdiabatic() :
     fMaxAttempts(32)
 {}
 KSTrajTrajectoryAdiabatic::KSTrajTrajectoryAdiabatic(const KSTrajTrajectoryAdiabatic& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fInitialParticle(aCopy.fInitialParticle),
     fIntermediateParticle(aCopy.fIntermediateParticle),
     fFinalParticle(aCopy.fFinalParticle),
@@ -46,7 +46,7 @@ KSTrajTrajectoryAdiabatic* KSTrajTrajectoryAdiabatic::Clone() const
 {
     return new KSTrajTrajectoryAdiabatic(*this);
 }
-KSTrajTrajectoryAdiabatic::~KSTrajTrajectoryAdiabatic() {}
+KSTrajTrajectoryAdiabatic::~KSTrajTrajectoryAdiabatic() = default;
 
 void KSTrajTrajectoryAdiabatic::SetIntegrator(KSTrajAdiabaticIntegrator* anIntegrator)
 {
@@ -265,7 +265,7 @@ void KSTrajTrajectoryAdiabatic::CalculateTrajectory(const KSParticle& anInitialP
             double mean_cyclotron =
                 (fInitialParticle.GetCyclotronFrequency() + fFinalParticle.GetCyclotronFrequency()) / 2.0;
             double n_periods = (fFinalParticle.GetTime() - fInitialParticle.GetTime()) * mean_cyclotron;
-            unsigned int n_segments = static_cast<unsigned int>(n_periods / fCyclotronFraction);
+            auto n_segments = static_cast<unsigned int>(n_periods / fCyclotronFraction);
             if (n_segments < 1) {
                 n_segments = 1;
             };
@@ -413,10 +413,10 @@ void KSTrajTrajectoryAdiabatic::GetPiecewiseLinearApproximation(
     std::vector<KSParticle>* intermediateParticleStates) const
 {
     intermediateParticleStates->clear();
-    for (unsigned int i = 0; i < fIntermediateParticleStates.size(); i++) {
+    for (auto& particleState : fIntermediateParticleStates) {
         KSParticle particle(anInitialParticle);
         particle.ResetFieldCaching();
-        fIntermediateParticleStates[i].PushTo(particle);
+        particleState.PushTo(particle);
         intermediateParticleStates->push_back(particle);
     }
 }

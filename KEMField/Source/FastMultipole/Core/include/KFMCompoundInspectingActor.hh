@@ -29,7 +29,8 @@ template<typename NodeType> class KFMCompoundInspectingActor : public KFMInspect
         fAndOr = true;
     };
 
-    ~KFMCompoundInspectingActor() override{};
+    ~KFMCompoundInspectingActor() override = default;
+    ;
 
     void AddInspectingActor(KFMInspectingActor<NodeType>* actor)
     {

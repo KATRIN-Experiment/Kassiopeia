@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGRotatedArcSegmentSpaceAxialMesher::KGRotatedArcSegmentSpaceAxialMesher() : KGSimpleAxialMesher() {}
-KGRotatedArcSegmentSpaceAxialMesher::~KGRotatedArcSegmentSpaceAxialMesher() {}
+KGRotatedArcSegmentSpaceAxialMesher::KGRotatedArcSegmentSpaceAxialMesher() = default;
+KGRotatedArcSegmentSpaceAxialMesher::~KGRotatedArcSegmentSpaceAxialMesher() = default;
 
 void KGRotatedArcSegmentSpaceAxialMesher::VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* aRotatedArcSegmentSpace)
 {

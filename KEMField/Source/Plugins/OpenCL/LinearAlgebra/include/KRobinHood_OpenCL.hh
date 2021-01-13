@@ -5,7 +5,7 @@
 #include "KOpenCLBoundaryIntegralMatrix.hh"
 #include "KRobinHood.hh"
 
-#include <limits.h>
+#include <climits>
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x)  STRINGIFY(x)
@@ -15,21 +15,21 @@ namespace KEMField
 template<typename ValueType> class KRobinHood_OpenCL : public KOpenCLAction
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KRobinHood_OpenCL(const Matrix& A, Vector& x, const Vector& b);
-    ~KRobinHood_OpenCL();
+    ~KRobinHood_OpenCL() override;
 
-    void ConstructOpenCLKernels() const;
-    void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override;
+    void AssignBuffers() const override;
 
-    std::string GetOpenCLFlags() const
+    std::string GetOpenCLFlags() const override
     {
         return fOpenCLFlags;
     }
 
-    void Initialize();
+    void Initialize() override;
     void FindResidual();
     void FindResidualNorm(double& residualNorm);
     void CompleteResidualNormalization(double& residualNorm);
@@ -104,35 +104,39 @@ KRobinHood_OpenCL<ValueType>::KRobinHood_OpenCL(const Matrix& A, Vector& x, cons
     fA(A),
     fX(x),
     fB(b),
-    fInitializeVectorApproximationKernel(NULL),
-    fFindResidualKernel(NULL),
-    fFindResidualNormKernel(NULL),
-    fCompleteResidualNormalizationKernel(NULL),
-    fIdentifyLargestResidualElementKernel(NULL),
-    fCompleteLargestResidualIdentificationKernel(NULL),
-    fComputeCorrectionKernel(NULL),
-    fUpdateSolutionApproximationKernel(NULL),
-    fUpdateVectorApproximationKernel(NULL),
-    fBufferResidual(NULL),
-    fBufferB_iterative(NULL),
-    fBufferCorrection(NULL),
-    fBufferPartialMaxResidualIndex(NULL),
-    fBufferMaxResidualIndex(NULL),
-    fBufferPartialResidualNorm(NULL),
-    fBufferResidualNorm(NULL),
-    fBufferNWarps(NULL),
-    fBufferCounter(NULL),
-    fCLResidual(NULL),
-    fCLB_iterative(NULL),
-    fCLCorrection(NULL),
-    fCLPartialMaxResidualIndex(NULL),
-    fCLMaxResidualIndex(NULL),
-    fCLPartialResidualNorm(NULL),
-    fCLResidualNorm(NULL),
-    fCLNWarps(NULL),
-    fCLCounter(NULL),
+    fInitializeVectorApproximationKernel(nullptr),
+    fFindResidualKernel(nullptr),
+    fFindResidualNormKernel(nullptr),
+    fCompleteResidualNormalizationKernel(nullptr),
+    fIdentifyLargestResidualElementKernel(nullptr),
+    fCompleteLargestResidualIdentificationKernel(nullptr),
+    fComputeCorrectionKernel(nullptr),
+    fUpdateSolutionApproximationKernel(nullptr),
+    fUpdateVectorApproximationKernel(nullptr),
+    fBufferResidual(nullptr),
+    fBufferB_iterative(nullptr),
+    fBufferCorrection(nullptr),
+    fBufferPartialMaxResidualIndex(nullptr),
+    fBufferMaxResidualIndex(nullptr),
+    fBufferPartialResidualNorm(nullptr),
+    fBufferResidualNorm(nullptr),
+    fBufferNWarps(nullptr),
+    fBufferCounter(nullptr),
+    fCLResidual(nullptr),
+    fCLB_iterative(nullptr),
+    fCLCorrection(nullptr),
+    fCLPartialMaxResidualIndex(nullptr),
+    fCLMaxResidualIndex(nullptr),
+    fCLPartialResidualNorm(nullptr),
+    fCLResidualNorm(nullptr),
+    fCLNWarps(nullptr),
+    fCLCounter(nullptr),
     fReadResidual(false)
 {
+#ifdef KEMFIELD_USE_MPI
+    kem_cout(eWarning) << "KEMField was built with MPI, but you're not using the MPI+OpenCL solver." << eom;
+#endif
+
     std::stringstream options;
     options << " -DKEMFIELD_OCLNEUMANNCHECKMETHOD="
             << TOSTRING(KEMFIELD_FASTDIELECTRICS_VALUE); /* variable defined via cmake */
@@ -165,10 +169,10 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::ConstructOpenCLK
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
-    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, 0);
+    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, nullptr);
 
     // if (fVerbose>1 && fRank == 0)
     // {
@@ -261,9 +265,9 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::ConstructOpenCLK
 
     fNLocal = UINT_MAX;
 
-    for (std::vector<cl::Kernel*>::iterator it = kernelArray.begin(); it != kernelArray.end(); ++it) {
+    for (auto& it : kernelArray) {
         unsigned int workgroupSize =
-            (*it)->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
+            it->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
         if (workgroupSize < fNLocal)
             fNLocal = workgroupSize;
     }
@@ -276,7 +280,7 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::AssignBuffers() 
     fNLocal = fData.GetMinimumWorkgroupSizeForKernels();
     fNWorkgroups = fData.GetNBufferedElements() / fNLocal;
 
-    KOpenCLSurfaceContainer& container = dynamic_cast<KOpenCLSurfaceContainer&>(fData);
+    auto& container = dynamic_cast<KOpenCLSurfaceContainer&>(fData);
 
     fCLB_iterative = new CL_TYPE[fData.GetNBufferedElements()];
 
@@ -411,7 +415,7 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::AssignBuffers() 
     fCompleteResidualNormalizationKernel->setArg(2, *fBufferResidualNorm);
 
     fIdentifyLargestResidualElementKernel->setArg(0, *fBufferResidual);
-    fIdentifyLargestResidualElementKernel->setArg(1, fNLocal * sizeof(cl_int), NULL);
+    fIdentifyLargestResidualElementKernel->setArg(1, fNLocal * sizeof(cl_int), nullptr);
     fIdentifyLargestResidualElementKernel->setArg(2, *fBufferPartialMaxResidualIndex);
 
     fCompleteLargestResidualIdentificationKernel->setArg(0, *fBufferResidual);
@@ -536,7 +540,7 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::Initialize()
                                                                              cl::NullRange,
                                                                              *fGlobalSize,
                                                                              *fLocalRange,
-                                                                             NULL,
+                                                                             nullptr,
                                                                              &event);
             event.wait();
         }
@@ -576,7 +580,7 @@ template<typename ValueType> void KRobinHood_OpenCL<ValueType>::CompleteResidual
     cl::Event event;
     KOpenCLInterface::GetInstance()
         ->GetQueue()
-        .enqueueReadBuffer(*fBufferResidualNorm, CL_TRUE, 0, sizeof(CL_TYPE), fCLResidualNorm, NULL, &event);
+        .enqueueReadBuffer(*fBufferResidualNorm, CL_TRUE, 0, sizeof(CL_TYPE), fCLResidualNorm, nullptr, &event);
     event.wait();
     residualNorm = fCLResidualNorm[0];
 }

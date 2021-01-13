@@ -11,6 +11,10 @@
 #include <iostream>
 #include <limits>
 
+using namespace KGeoBag;
+using namespace katrin;
+using namespace std;
+
 namespace Kassiopeia
 {
 KSROOTMagFieldPainter::KSROOTMagFieldPainter() :
@@ -24,7 +28,7 @@ KSROOTMagFieldPainter::KSROOTMagFieldPainter() :
     fDraw("COLZ"),
     fMap()
 {}
-KSROOTMagFieldPainter::~KSROOTMagFieldPainter() {}
+KSROOTMagFieldPainter::~KSROOTMagFieldPainter() = default;
 
 void KSROOTMagFieldPainter::FieldMapZ(KSMagneticField* tMagField, double tDeltaZ, double tDeltaR)
 {

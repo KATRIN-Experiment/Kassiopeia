@@ -58,9 +58,7 @@ struct DataMap
         tStructureLabelHandle(&tStructureLabelPointer),
         tStructureTypePointer(&tStructureType),
         tStructureTypeHandle(&tStructureTypePointer),
-        tPresenceIndex(0),
         tPresenceIndexPointer(&tPresenceIndex),
-        tPresenceLength(0),
         tPresenceLengthPointer(&tPresenceLength)
     {}
 
@@ -70,9 +68,9 @@ struct DataMap
     string tStructureType;
     string* tStructureTypePointer;
     string** tStructureTypeHandle;
-    unsigned int tPresenceIndex;
+    unsigned int tPresenceIndex{0};
     unsigned int* tPresenceIndexPointer;
-    unsigned int tPresenceLength;
+    unsigned int tPresenceLength{0};
     unsigned int* tPresenceLengthPointer;
     map<string, Bool_t> tBoolMap;
     map<string, UChar_t> tUCharMap;
@@ -95,7 +93,7 @@ struct DataMap
 };
 
 //function declarations
-TTree* GetTree(KRootFile* tInputRootFile, TString tName);
+TTree* GetTree(KRootFile* tInputRootFile, const TString& tName);
 void CheckLabel(KRootFile* tInputRootFile);
 void GetIndicesBranchAddresses(Trees* tTrees, Indices* tIndices);
 void GetDataTrees(KRootFile* tInputFile, TTree* tKeyTree, DataTreeVector* tDataTreeVector, bool first);
@@ -172,7 +170,7 @@ int main(int argc, char** argv)
     }
 
     //set kassiopeia label for output file
-    TObjString* fLabel = new TObjString(string("KASSIOPEIA_TREE_DATA").c_str());
+    auto* fLabel = new TObjString(string("KASSIOPEIA_TREE_DATA").c_str());
     fLabel->Write("LABEL", TObject::kOverwrite);
     TTree::SetBranchStyle(1);
 
@@ -384,7 +382,7 @@ int main(int argc, char** argv)
 }
 
 
-TTree* GetTree(KRootFile* tInputRootFile, TString tName)
+TTree* GetTree(KRootFile* tInputRootFile, const TString& tName)
 {
     auto* tTree = (TTree*) (tInputRootFile->File()->Get(tName));
     if (!tTree) {
@@ -606,9 +604,8 @@ void WriteIndexTrees(KRootFile* tRootFile, Trees* tTrees, Indices* tIndices, con
 
 void WriteDataTrees(KRootFile* tRootFile, DataTreeVector* tOutputDataTreeVector, DataTreeVector* tDataTreeVector)
 {
-    for (auto tIt = tDataTreeVector->begin(); tIt != tDataTreeVector->end(); ++tIt) {
-        tOutputDataTreeVector->push_back(
-            make_pair((*tIt).first, new TTree((TString)(*tIt).first, (TString)(*tIt).first)));
+    for (auto& tIt : *tDataTreeVector) {
+        tOutputDataTreeVector->push_back(make_pair(tIt.first, new TTree((TString) tIt.first, (TString) tIt.first)));
         tOutputDataTreeVector->back().second->SetDirectory(tRootFile->File());
     }
 }
@@ -622,56 +619,56 @@ void WriteDataBranches(TTree* tStructureTree, TTree* tPresenceTree, TTree* tData
     tPresenceTree->Branch("INDEX", tDataMap->tPresenceIndexPointer, tBufferSize, tSplitSize);
     tPresenceTree->Branch("LENGTH", tDataMap->tPresenceLengthPointer, tBufferSize, tSplitSize);
 
-    for (auto tIt = tDataMap->tBoolMap.begin(); tIt != tDataMap->tBoolMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tBoolMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tUCharMap.begin(); tIt != tDataMap->tUCharMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tUCharMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tCharMap.begin(); tIt != tDataMap->tCharMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tCharMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tUShortMap.begin(); tIt != tDataMap->tUShortMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tUShortMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tShortMap.begin(); tIt != tDataMap->tShortMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tShortMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tUIntMap.begin(); tIt != tDataMap->tUIntMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tUIntMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tIntMap.begin(); tIt != tDataMap->tIntMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tIntMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tULongMap.begin(); tIt != tDataMap->tULongMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tULongMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tLongMap.begin(); tIt != tDataMap->tLongMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tLongMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tFloatMap.begin(); tIt != tDataMap->tFloatMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tFloatMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tDoubleMap.begin(); tIt != tDataMap->tDoubleMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tDoubleMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tStringPointerMap.begin(); tIt != tDataMap->tStringPointerMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tStringPointerMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tTwoVectorXMap.begin(); tIt != tDataMap->tTwoVectorXMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tTwoVectorXMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tTwoVectorYMap.begin(); tIt != tDataMap->tTwoVectorYMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tTwoVectorYMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tThreeVectorXMap.begin(); tIt != tDataMap->tThreeVectorXMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tThreeVectorXMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tThreeVectorYMap.begin(); tIt != tDataMap->tThreeVectorYMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tThreeVectorYMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
-    for (auto tIt = tDataMap->tThreeVectorZMap.begin(); tIt != tDataMap->tThreeVectorZMap.end(); ++tIt) {
-        tDataTree->Branch((TString)(*tIt).first, &((*tIt).second), tBufferSize, tSplitSize);
+    for (auto& tIt : tDataMap->tThreeVectorZMap) {
+        tDataTree->Branch((TString) tIt.first, &(tIt.second), tBufferSize, tSplitSize);
     }
 }
 

@@ -11,14 +11,14 @@ KSCommandGroup::KSCommandGroup(const KSCommandGroup& aCopy) : KSCommand(aCopy), 
 {
     Set(this);
 
-    for (auto tIt = fCommands.begin(); tIt != fCommands.end(); tIt++) {
-        (*tIt) = (*tIt)->Clone();
+    for (auto& command : fCommands) {
+        command = command->Clone();
     }
 }
 KSCommandGroup::~KSCommandGroup()
 {
-    for (auto tIt = fCommands.begin(); tIt != fCommands.end(); tIt++) {
-        delete (*tIt);
+    for (auto& command : fCommands) {
+        delete command;
     }
 }
 

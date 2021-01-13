@@ -13,6 +13,11 @@ class KGAxialMeshLoop : public KGAxialMeshElement
     KGAxialMeshLoop(const KTwoVector& aStart, const KTwoVector& p1);
     ~KGAxialMeshLoop() override;
 
+    static std::string Name()
+    {
+        return "axial_mesh_loop";
+    }
+
     double Area() const override;
     double Aspect() const override;
 

@@ -154,6 +154,13 @@ set(KOMMON_CORE_SOURCE_FILES
     Logging/KLogger.cxx
 )
 
+# header added here to not include it in installation
+set(KOMMON_CORE_EXTRA_FILES
+    Initialization/tinyexpr.c
+    Initialization/tinyexpr.h
+)
+
+
 set_source_files_properties(Initialization/KVariant.cxx PROPERTIES COMPILE_DEFINITIONS __GLIBCXX_USE_CXX11_ABI=0)
 
 if( LOG4CXX_FOUND )
@@ -169,7 +176,7 @@ endif()
 
 # propagate path variable to parent scope
 kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_CORE_HEADER_FILES} )
-kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_CORE_SOURCE_FILES} )
+kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_CORE_SOURCE_FILES} ${KOMMON_CORE_EXTRA_FILES})
 
 add_subdirectory(Binning)
 add_subdirectory(Maths)

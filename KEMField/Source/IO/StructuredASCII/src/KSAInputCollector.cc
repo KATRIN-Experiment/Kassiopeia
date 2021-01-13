@@ -10,7 +10,7 @@ KSAInputCollector::KSAInputCollector()
     fReader = nullptr;
 }
 
-KSAInputCollector::~KSAInputCollector() {}
+KSAInputCollector::~KSAInputCollector() = default;
 
 void KSAInputCollector::ForwardInput(KSAInputNode* root)
 {
@@ -25,7 +25,7 @@ void KSAInputCollector::ForwardInput(KSAInputNode* root)
 
 
     int count = 0;
-    while (fNodeStack.size() != 0 && file_status) {
+    while (!fNodeStack.empty() && file_status) {
 
         //std::cout<<"calling the reader at line count: "<<count<<std::endl;
 

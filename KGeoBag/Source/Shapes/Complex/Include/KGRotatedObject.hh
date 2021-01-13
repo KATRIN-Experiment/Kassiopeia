@@ -30,7 +30,7 @@ class KGRotatedObject : public KGBoundary
     }
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -83,10 +83,10 @@ class KGRotatedObject : public KGBoundary
     class Line
     {
       public:
-        Line() {}
+        Line() = default;
         Line(KGRotatedObject* rO, const double p1[2], const double p2[2]);
 
-        virtual ~Line() {}
+        virtual ~Line() = default;
 
         virtual void Initialize() const;
 
@@ -264,12 +264,12 @@ class KGRotatedObject : public KGBoundary
     class Arc : public KGRotatedObject::Line
     {
       public:
-        Arc() {}
+        Arc() = default;
         Arc(KGRotatedObject* aRotated, const double p1[2], const double p2[2], const double radius,
             const bool positiveOrientation = true);
         Arc(const KGRotatedObject::Arc& rA);
 
-        ~Arc() override {}
+        ~Arc() override = default;
 
         void Initialize() const override;
 
@@ -282,7 +282,7 @@ class KGRotatedObject : public KGBoundary
 
         double GetLength() const override;
 
-        double NormalizeAngle(double angle) const;
+        static double NormalizeAngle(double angle);
 
         double GetRadius(double z) const;
 
@@ -332,7 +332,7 @@ class KGRotatedObject : public KGBoundary
         }
 
       private:
-        bool AngleIsWithinRange(double phi_test, double phi_min, double phi_max, bool positiveOrientation) const;
+        static bool AngleIsWithinRange(double phi_test, double phi_min, double phi_max, bool positiveOrientation);
 
         // the radius of the arc
         mutable double fRadius;

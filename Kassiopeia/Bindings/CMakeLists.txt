@@ -482,7 +482,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KassiopeiaBindings SHARED
-    ${BINDINGS_SOURCE_FILES}
+    ${BINDINGS_SOURCE_FILES} ${BINDINGS_HEADER_FILES}
 )
 set_target_properties( KassiopeiaBindings PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaBindings

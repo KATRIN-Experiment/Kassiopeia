@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntSurfaceSpecularBuilder::~KComplexElement() {}
+template<> KSIntSurfaceSpecularBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntSurfaceSpecularStructure =
-    KSIntSurfaceSpecularBuilder::Attribute<string>("name") +
+    KSIntSurfaceSpecularBuilder::Attribute<std::string>("name") +
     KSIntSurfaceSpecularBuilder::Attribute<double>("reflection_loss") +
     KSIntSurfaceSpecularBuilder::Attribute<double>("transmission_loss") +
     KSIntSurfaceSpecularBuilder::Attribute<double>("reflection_loss_fraction") +

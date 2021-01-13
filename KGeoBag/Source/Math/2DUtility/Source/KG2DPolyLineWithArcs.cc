@@ -20,8 +20,8 @@ KG2DPolyLineWithArcs::KG2DPolyLineWithArcs(const std::vector<KGVertexSideDescrip
 
 KG2DPolyLineWithArcs::~KG2DPolyLineWithArcs()
 {
-    for (unsigned int i = 0; i < fSides.size(); i++) {
-        delete fSides[i];
+    for (auto& side : fSides) {
+        delete side;
     }
 }
 
@@ -48,9 +48,9 @@ void KG2DPolyLineWithArcs::Initialize()
         }
 
         //if for some odd reason there are sides already, eliminate them
-        if (fSides.size() > 0) {
-            for (unsigned int i = 0; i < fSides.size(); i++) {
-                delete fSides[i];
+        if (!fSides.empty()) {
+            for (auto& side : fSides) {
+                delete side;
             }
         }
 
@@ -332,9 +332,9 @@ void KG2DPolyLineWithArcs::DetermineIfPolyLineIsSimple()
 
                         if (test_type == 3 && flag > 0)  //intersection with an arc segment
                         {
-                            for (unsigned int m = 0; m < inters.size(); m++) {
-                                if (!(((inters[m] - aArc->GetFirstPoint()).Magnitude() < SMALLNUMBER) ||
-                                      ((inters[m] - aArc->GetSecondPoint()).Magnitude() < SMALLNUMBER))) {
+                            for (auto& inter : inters) {
+                                if (!(((inter - aArc->GetFirstPoint()).Magnitude() < SMALLNUMBER) ||
+                                      ((inter - aArc->GetSecondPoint()).Magnitude() < SMALLNUMBER))) {
                                     //not close to end point
                                     fIsSimple = false;
                                     return;

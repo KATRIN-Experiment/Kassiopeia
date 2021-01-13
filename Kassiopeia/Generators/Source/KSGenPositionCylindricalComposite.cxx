@@ -3,6 +3,7 @@
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -18,7 +19,7 @@ KSGenPositionCylindricalComposite::KSGenPositionCylindricalComposite() :
     fCoordinateMap[eZ] = 2;
 }
 KSGenPositionCylindricalComposite::KSGenPositionCylindricalComposite(const KSGenPositionCylindricalComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fOrigin(aCopy.fOrigin),
     fXAxis(aCopy.fXAxis),
     fYAxis(aCopy.fYAxis),
@@ -30,7 +31,7 @@ KSGenPositionCylindricalComposite* KSGenPositionCylindricalComposite::Clone() co
 {
     return new KSGenPositionCylindricalComposite(*this);
 }
-KSGenPositionCylindricalComposite::~KSGenPositionCylindricalComposite() {}
+KSGenPositionCylindricalComposite::~KSGenPositionCylindricalComposite() = default;
 
 void KSGenPositionCylindricalComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -38,10 +39,10 @@ void KSGenPositionCylindricalComposite::Dice(KSParticleQueue* aPrimaries)
     bool tHasPhiValue = false;
     bool tHasZValue = false;
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        tHasRValue = tHasRValue | ((*tIt).first == eRadius);
-        tHasPhiValue = tHasPhiValue | ((*tIt).first == ePhi);
-        tHasZValue = tHasZValue | ((*tIt).first == eZ);
+    for (auto& value : fValues) {
+        tHasRValue = tHasRValue | (value.first == eRadius);
+        tHasPhiValue = tHasPhiValue | (value.first == ePhi);
+        tHasZValue = tHasZValue | (value.first == eZ);
     }
 
     if (!tHasRValue | !tHasPhiValue | !tHasZValue)
@@ -126,14 +127,14 @@ void KSGenPositionCylindricalComposite::SetZAxis(const KThreeVector& anZAxis)
 void KSGenPositionCylindricalComposite::SetRValue(KSGenValue* anRValue)
 {
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eRadius) {
+    for (auto& value : fValues) {
+        if (value.first == eRadius) {
             genmsg(eError) << "cannot set r value <" << anRValue->GetName()
                            << "> to composite position cylindrical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eRadius, anRValue));
+    fValues.emplace_back(eRadius, anRValue);
 }
 
 void KSGenPositionCylindricalComposite::ClearRValue(KSGenValue* anRValue)
@@ -152,14 +153,14 @@ void KSGenPositionCylindricalComposite::ClearRValue(KSGenValue* anRValue)
 
 void KSGenPositionCylindricalComposite::SetPhiValue(KSGenValue* aPhiValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == ePhi) {
+    for (auto& value : fValues) {
+        if (value.first == ePhi) {
             genmsg(eError) << "cannot set phi value <" << aPhiValue->GetName()
                            << "> to composite position cylindrical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(ePhi, aPhiValue));
+    fValues.emplace_back(ePhi, aPhiValue);
     return;
 }
 void KSGenPositionCylindricalComposite::ClearPhiValue(KSGenValue* anPhiValue)
@@ -178,14 +179,14 @@ void KSGenPositionCylindricalComposite::ClearPhiValue(KSGenValue* anPhiValue)
 
 void KSGenPositionCylindricalComposite::SetZValue(KSGenValue* anZValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eZ) {
+    for (auto& value : fValues) {
+        if (value.first == eZ) {
             genmsg(eError) << "cannot set z value <" << anZValue->GetName()
                            << "> to composite position cylindrical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eZ, anZValue));
+    fValues.emplace_back(eZ, anZValue);
 }
 void KSGenPositionCylindricalComposite::ClearZValue(KSGenValue* anZValue)
 {
@@ -203,15 +204,15 @@ void KSGenPositionCylindricalComposite::ClearZValue(KSGenValue* anZValue)
 
 void KSGenPositionCylindricalComposite::InitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Initialize();
+    for (auto& value : fValues) {
+        value.second->Initialize();
     }
     return;
 }
 void KSGenPositionCylindricalComposite::DeinitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Deinitialize();
+    for (auto& value : fValues) {
+        value.second->Deinitialize();
     }
     return;
 }

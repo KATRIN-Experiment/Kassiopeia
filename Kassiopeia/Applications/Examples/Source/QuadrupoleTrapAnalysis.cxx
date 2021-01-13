@@ -7,10 +7,13 @@ using namespace Kassiopeia;
 
 int main()
 {
+    using std::cout;
+    using std::endl;
+
     katrin::KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     katrin::KMessageTable::GetInstance().SetLogVerbosity(eDebug);
 
-    KRootFile* tRootFile = KRootFile::CreateOutputRootFile("QuadrupoleTrapSimulation.root");
+    auto tRootFile = katrin::KRootFile::CreateOutputRootFile("QuadrupoleTrapSimulation.root");
 
     KSReadFileROOT tReader;
     tReader.OpenFile(tRootFile);

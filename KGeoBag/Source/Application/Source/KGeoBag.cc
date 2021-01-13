@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     auto tFileNames = tXML.GetArguments().ParameterList();
     tFileNames.pop_front();
-    for (auto tFilename : tFileNames) {
+    for (const auto& tFilename : tFileNames) {
         coremsg(eNormal) << "processing file <" << tFilename << "> ..." << eom;
         auto* tFile = new KTextFile();
         tFile->AddToNames(tFilename);

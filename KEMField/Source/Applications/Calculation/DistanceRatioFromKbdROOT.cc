@@ -4,6 +4,7 @@
 // Date: 08.05.2016
 
 #include "KBinaryDataStreamer.hh"
+#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KSADataStreamer.hh"
 #include "KSerializer.hh"
@@ -34,7 +35,7 @@ class DistRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTr
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>::Visit;
 
-    DistRatioVisitor() {}
+    DistRatioVisitor() = default;
 
     void Visit(KTriangle& t) override
     {
@@ -85,29 +86,29 @@ class DistRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTr
         fShapeType.SetComponents(0, 0, 1);
     }
 
-    double GetAverageSideLength()
+    double GetAverageSideLength() const
     {
         return fAverageSideLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
-    KThreeVector GetShapeType()
+    KFieldVector GetShapeType()
     {
         return fShapeType;
     }
 
   private:
     double fAverageSideLength;
-    KThreeVector fShapeCentroid;
-    KThreeVector fShapeType; /* ( triangle, rectangle, line segment ) */
+    KFieldVector fShapeCentroid;
+    KFieldVector fShapeType; /* ( triangle, rectangle, line segment ) */
 };
 }  // namespace KEMField
 
-void GetMinMaxDistanceRatio(double* retValues, KThreeVector fP, unsigned int containerSize,
-                            std::vector<KThreeVector>& shapeTypes, std::vector<double>& avgLengths,
-                            std::vector<KThreeVector>& centerPoints)
+void GetMinMaxDistanceRatio(double* retValues, const KFieldVector& fP, unsigned int containerSize,
+                            std::vector<KFieldVector>& shapeTypes, std::vector<double>& avgLengths,
+                            std::vector<KFieldVector>& centerPoints)
 {
     double distanceRatioTri = 0.;
     double distanceRatioTriMin = 0.;
@@ -182,13 +183,11 @@ void GetMinMaxDistanceRatio(double* retValues, KThreeVector fP, unsigned int con
                    << ", max: " << distanceRatioRectMax << KEMField::endl;
     KEMField::cout << "Min. distance ratio for line segments: " << distanceRatioLineMin
                    << ", max: " << distanceRatioLineMax << KEMField::endl;
-
-    return;
 }
 
-std::vector<TH1D*> ComputeDistanceRatios(KThreeVector selectedPoint, unsigned int contSize,
-                                         std::vector<KThreeVector>& types, std::vector<double>& lengths,
-                                         std::vector<KThreeVector>& centroids)
+std::vector<TH1D*> ComputeDistanceRatios(KFieldVector selectedPoint, unsigned int contSize,
+                                         std::vector<KFieldVector>& types, std::vector<double>& lengths,
+                                         std::vector<KFieldVector>& centroids)
 {
     // get min and max dr values for chosen field point
     double minmax[6];
@@ -275,11 +274,11 @@ int main(int argc, char* argv[])
 
     static const char* optString = "h:f:n:";
 
-    std::string inFile = "";
+    std::string inFile;
     std::string containerName = "surfaceContainer";
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -298,7 +297,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string suffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -318,7 +317,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }
@@ -335,13 +334,13 @@ int main(int argc, char* argv[])
 
     //loop over every element in the container and retrieve shape data and the charge density
 
-    KThreeVector fieldPoint(0., 0., 0.);
+    KFieldVector fieldPoint(0., 0., 0.);
 
     DistRatioVisitor fShapeVisitor;
     std::vector<double> lengths;
-    std::vector<KThreeVector> centroids;
-    std::vector<KThreeVector> types;
-    KThreeVector countShapeTypes(0, 0, 0);
+    std::vector<KFieldVector> centroids;
+    std::vector<KFieldVector> types;
+    KFieldVector countShapeTypes(0, 0, 0);
 
     KSurfaceContainer::iterator it;
 

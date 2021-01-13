@@ -3,6 +3,7 @@
 #include "KBoundaryIntegralSolutionVector.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KDataDisplay.hh"
+#include "KEMCout.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KGaussianElimination.hh"
 #include "KIterativeStateReader.hh"
@@ -61,10 +62,10 @@
 
 using namespace KEMField;
 
-void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer);
-void ReadInRectangles(std::string fileName, KSurfaceContainer& surfaceContainer);
-void ReadInWires(std::string fileName, KSurfaceContainer& surfaceContainer);
-std::vector<std::string> Tokenize(std::string separators, std::string input);
+void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
+void ReadInRectangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
+void ReadInWires(const std::string& fileName, KSurfaceContainer& surfaceContainer);
+std::vector<std::string> Tokenize(const std::string& separators, std::string input);
 
 void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
                     double permittivity2, double* P, double* F);
@@ -132,7 +133,7 @@ int main(int argc, char* argv[])
     static const char* optString = "hv:f:t:r:w:a:g:i:j:k:m:";
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -193,7 +194,7 @@ int main(int argc, char* argv[])
 #ifdef KEMFIELD_USE_MPI
         KMPIInterface::GetInstance()->BeginSequentialProcess();
 #endif
-        std::string suffix = infile.substr(infile.find_last_of("."), std::string::npos);
+        std::string suffix = infile.substr(infile.find_last_of('.'), std::string::npos);
 
         KSADataStreamer ksaDataStreamer;
         KBinaryDataStreamer binaryDataStreamer;
@@ -214,12 +215,12 @@ int main(int argc, char* argv[])
             return 1;
         }
 
-        if (suffix.compare(ksaDataStreamer.GetFileSuffix()) == 0) {
+        if (suffix == ksaDataStreamer.GetFileSuffix()) {
             ksaDataStreamer.open(infile, "read");
             ksaDataStreamer >> surfaceContainer;
             ksaDataStreamer.close();
         }
-        else if (suffix.compare(binaryDataStreamer.GetFileSuffix()) == 0) {
+        else if (suffix == binaryDataStreamer.GetFileSuffix()) {
             binaryDataStreamer.open(infile, "read");
             binaryDataStreamer >> surfaceContainer;
             binaryDataStreamer.close();
@@ -288,7 +289,7 @@ int main(int argc, char* argv[])
         std::vector<std::string> labels;
 
         labels.push_back(hashGenerator.GenerateHash(surfaceContainer));
-        labels.push_back("residual_threshold");
+        labels.emplace_back("residual_threshold");
 
         unsigned int nElements = KEMFileInterface::GetInstance()->NumberWithLabels(labels);
 
@@ -346,7 +347,7 @@ int main(int argc, char* argv[])
 #endif
 #endif
 
-            outfile = outfile.substr(0, outfile.find_last_of("."));
+            outfile = outfile.substr(0, outfile.find_last_of('.'));
 
             auto* stateReader =
                 new KIterativeStateReader<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
@@ -411,10 +412,10 @@ int main(int argc, char* argv[])
 #endif
 }
 
-void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
+void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
     typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KDirichletTriangle;
-    typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle> KNeumannTriangle;
+    using KNeumannTriangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
 
     std::string inBuf;
     std::vector<std::string> token;
@@ -431,7 +432,7 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
 
     while (!file.eof()) {
         lineNum++;
-        if (token.size() > 0) {
+        if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
                 token = Tokenize(" \t", inBuf);
@@ -439,7 +440,7 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
             }
         }
 
-        if (token.size() != 0) {
+        if (!token.empty()) {
             if (token.size() == 1) {
                 MPI_SINGLE_PROCESS
                 KEMField::cout << "Reading in " << token.at(0) << " triangles." << KEMField::endl;
@@ -495,10 +496,10 @@ void ReadInTriangles(std::string fileName, KSurfaceContainer& surfaceContainer)
     file.close();
 }
 
-void ReadInRectangles(std::string fileName, KSurfaceContainer& surfaceContainer)
+void ReadInRectangles(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
-    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KDirichletRectangle;
-    typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KRectangle> KNeumannRectangle;
+    using KDirichletRectangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>;
+    using KNeumannRectangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KRectangle>;
 
     std::string inBuf;
     std::vector<std::string> token;
@@ -515,7 +516,7 @@ void ReadInRectangles(std::string fileName, KSurfaceContainer& surfaceContainer)
 
     while (!file.eof()) {
         lineNum++;
-        if (token.size() > 0) {
+        if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
                 token = Tokenize(" \t", inBuf);
@@ -523,7 +524,7 @@ void ReadInRectangles(std::string fileName, KSurfaceContainer& surfaceContainer)
             }
         }
 
-        if (token.size() != 0) {
+        if (!token.empty()) {
             if (token.size() == 1)
                 std::cout << "reading in " << token.at(0) << " rectangles" << std::endl;
             else {
@@ -577,9 +578,9 @@ void ReadInRectangles(std::string fileName, KSurfaceContainer& surfaceContainer)
     file.close();
 }
 
-void ReadInWires(std::string fileName, KSurfaceContainer& surfaceContainer)
+void ReadInWires(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
-    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KDirichletWire;
+    using KDirichletWire = KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>;
 
     std::string inBuf;
     std::vector<std::string> token;
@@ -596,7 +597,7 @@ void ReadInWires(std::string fileName, KSurfaceContainer& surfaceContainer)
 
     while (!file.eof()) {
         lineNum++;
-        if (token.size() > 0) {
+        if (!token.empty()) {
             if (token.at(0).at(0) == '#') {
                 getline(file, inBuf);
                 token = Tokenize(" \t", inBuf);
@@ -604,7 +605,7 @@ void ReadInWires(std::string fileName, KSurfaceContainer& surfaceContainer)
             }
         }
 
-        if (token.size() != 0) {
+        if (!token.empty()) {
             if (token.size() == 1)
                 std::cout << "reading in " << token.at(0) << " wires" << std::endl;
             else {
@@ -643,13 +644,13 @@ void ReadInWires(std::string fileName, KSurfaceContainer& surfaceContainer)
     file.close();
 }
 
-std::vector<std::string> Tokenize(std::string separators, std::string input)
+std::vector<std::string> Tokenize(const std::string& separators, std::string input)
 {
     unsigned int startToken = 0, endToken;  // Pointers to the token pos
     std::vector<std::string> tokens;        // Vector to keep the tokens
     unsigned int commentPos = input.size() + 1;
 
-    if (separators.size() > 0 && input.size() > 0) {
+    if (!separators.empty() && !input.empty()) {
         // Check for comment
         for (unsigned int i = 0; i < input.size(); i++) {
             if (input[i] == '#' || (i < input.size() - 1 && (input[i] == '/' && input[i + 1] == '/'))) {
@@ -664,8 +665,8 @@ std::vector<std::string> Tokenize(std::string separators, std::string input)
 
             // Stop parsing when comment symbol is reached
             if (startToken == commentPos) {
-                if (tokens.size() == 0)
-                    tokens.push_back("#");
+                if (tokens.empty())
+                    tokens.emplace_back("#");
                 return tokens;
             }
 

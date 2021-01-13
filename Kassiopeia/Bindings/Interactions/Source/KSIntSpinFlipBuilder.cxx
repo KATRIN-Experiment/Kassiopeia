@@ -10,6 +10,6 @@ namespace katrin
 
 STATICINT sKSIntSpinFlip = KSRootBuilder::ComplexElement<KSIntSpinFlip>("ksint_spin_flip");
 
-STATICINT sKSIntSpinFlipStructure = KSIntSpinFlipBuilder::Attribute<string>("name");
+STATICINT sKSIntSpinFlipStructure = KSIntSpinFlipBuilder::Attribute<std::string>("name");
 
 }  // namespace katrin

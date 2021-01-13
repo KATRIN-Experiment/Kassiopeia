@@ -25,14 +25,14 @@ template<> inline bool KFastMultipoleMatrixGeneratorBuilder::AddAttribute(KConta
 
     if (aContainer->GetName() == "strategy") {
         int val = KEMField::KFMSubdivisionStrategy::Aggressive;
-        std::string strategy_name = aContainer->AsReference<string>();
-        if (strategy_name == string("aggressive")) {
+        std::string strategy_name = aContainer->AsString();
+        if (strategy_name == "aggressive") {
             val = KEMField::KFMSubdivisionStrategy::Aggressive;
         }
-        if (strategy_name == string("balanced")) {
+        if (strategy_name == "balanced") {
             val = KEMField::KFMSubdivisionStrategy::Balanced;
         }
-        if (strategy_name == string("guided")) {
+        if (strategy_name == "guided") {
             val = KEMField::KFMSubdivisionStrategy::Guided;
         }
         fObject->SetStrategy(val);

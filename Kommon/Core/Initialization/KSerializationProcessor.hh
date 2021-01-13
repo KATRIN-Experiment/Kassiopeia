@@ -39,13 +39,14 @@ class KSerializationProcessor : public KProcessor
     std::string completeconfig;
     std::string fOutputFilename;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eElementInactive,
         eActiveFileDefine,
         eElementComplete
     } ElementState;
-    typedef enum
+
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eAttributeInactive,
         eActiveFileName,

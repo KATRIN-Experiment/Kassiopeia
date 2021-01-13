@@ -27,8 +27,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMNodeCollector : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMNodeCollector(){};
-    virtual ~KFMNodeCollector(){};
+    KFMNodeCollector() = default;
+    ;
+    virtual ~KFMNodeCollector() = default;
+    ;
 
     void SetListOfNodeIDs(std::vector<unsigned int>* node_ids)
     {
@@ -62,7 +64,7 @@ template<typename ObjectTypeList> class KFMNodeCollector : public KFMNodeActor<K
   protected:
     int GetCollectionIndex(unsigned int id)
     {
-        std::map<unsigned int, unsigned int>::iterator it = fNodeID2IndexMap.find(id);
+        auto it = fNodeID2IndexMap.find(id);
 
         if (it != fNodeID2IndexMap.end()) {
             return (int) (it->second);

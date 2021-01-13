@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajIntegratorRK54Builder::~KComplexElement() {}
+template<> KSTrajIntegratorRK54Builder::~KComplexElement() = default;
 
-STATICINT sKSTrajIntegratorRK54Structure = KSTrajIntegratorRK54Builder::Attribute<string>("name");
+STATICINT sKSTrajIntegratorRK54Structure = KSTrajIntegratorRK54Builder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajIntegratorRK54 = KSRootBuilder::ComplexElement<KSTrajIntegratorRK54>("kstraj_integrator_rk54");
 

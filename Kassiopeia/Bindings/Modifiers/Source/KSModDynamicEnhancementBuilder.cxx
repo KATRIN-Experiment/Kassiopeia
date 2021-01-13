@@ -7,11 +7,11 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSModDynamicEnhancementBuilder::~KComplexElement() {}
+template<> KSModDynamicEnhancementBuilder::~KComplexElement() = default;
 
-STATICINT SKSModDynamicEnhancementStructure = KSModDynamicEnhancementBuilder::Attribute<string>("name") +
-                                              KSModDynamicEnhancementBuilder::Attribute<string>("synchrotron") +
-                                              KSModDynamicEnhancementBuilder::Attribute<string>("scattering") +
+STATICINT SKSModDynamicEnhancementStructure = KSModDynamicEnhancementBuilder::Attribute<std::string>("name") +
+                                              KSModDynamicEnhancementBuilder::Attribute<std::string>("synchrotron") +
+                                              KSModDynamicEnhancementBuilder::Attribute<std::string>("scattering") +
                                               KSModDynamicEnhancementBuilder::Attribute<double>("static_enhancement") +
                                               KSModDynamicEnhancementBuilder::Attribute<bool>("dynamic") +
                                               KSModDynamicEnhancementBuilder::Attribute<double>("reference_energy");

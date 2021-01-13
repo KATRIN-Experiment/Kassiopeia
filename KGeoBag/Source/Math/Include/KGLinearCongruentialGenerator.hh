@@ -7,7 +7,7 @@ class KGLinearCongruentialGenerator
 {
   public:
     KGLinearCongruentialGenerator();
-    virtual ~KGLinearCongruentialGenerator() {}
+    virtual ~KGLinearCongruentialGenerator() = default;
 
     double Random() const;
 

@@ -3,11 +3,9 @@
 namespace Kassiopeia
 {
 
-KSTrajMagneticDerivative::KSTrajMagneticDerivative() {}
-KSTrajMagneticDerivative::KSTrajMagneticDerivative(const KSTrajMagneticDerivative& anOperand) :
-    KSMathArray<5>(anOperand)
-{}
-KSTrajMagneticDerivative::~KSTrajMagneticDerivative() {}
+KSTrajMagneticDerivative::KSTrajMagneticDerivative() = default;
+KSTrajMagneticDerivative::KSTrajMagneticDerivative(const KSTrajMagneticDerivative&) = default;
+KSTrajMagneticDerivative::~KSTrajMagneticDerivative() = default;
 
 void KSTrajMagneticDerivative::AddToTime(const double& aTime)
 {
@@ -19,7 +17,7 @@ void KSTrajMagneticDerivative::AddToSpeed(const double& aSpeed)
     fData[1] = aSpeed;
     return;
 }
-void KSTrajMagneticDerivative::AddToVelocity(const KThreeVector& aVelocity)
+void KSTrajMagneticDerivative::AddToVelocity(const KGeoBag::KThreeVector& aVelocity)
 {
     fData[2] = aVelocity.X();
     fData[3] = aVelocity.Y();

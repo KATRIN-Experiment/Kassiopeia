@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGExtrudedCircleSurface::Visitor::Visitor() {}
+template<> KGExtrudedCircleSurface::Visitor::Visitor() = default;
 
-template<> KGExtrudedCircleSurface::Visitor::~Visitor() {}
+template<> KGExtrudedCircleSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

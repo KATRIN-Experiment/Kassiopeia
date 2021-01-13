@@ -135,11 +135,18 @@ class KScaledUnit<
     XTag>
 {
   public:
-    typedef KDimension<KTYPELIST7(KTypeInteger<XMassPowerValue>, KTypeInteger<XLengthPowerValue>,
-                                  KTypeInteger<XTimePowerValue>, KTypeInteger<XChargePowerValue>,
-                                  KTypeInteger<XTemperaturePowerValue>, KTypeInteger<XIntensityPowerValue>,
-                                  KTypeInteger<XAnglePowerValue>)>
-        Dimension;
+    using Dimension = KDimension<::katrin::KTypeList<
+        KTypeInteger<XMassPowerValue>,
+        ::katrin::KTypeList<
+            KTypeInteger<XLengthPowerValue>,
+            ::katrin::KTypeList<
+                KTypeInteger<XTimePowerValue>,
+                ::katrin::KTypeList<
+                    KTypeInteger<XChargePowerValue>,
+                    ::katrin::KTypeList<
+                        KTypeInteger<XTemperaturePowerValue>,
+                        ::katrin::KTypeList<KTypeInteger<XIntensityPowerValue>,
+                                            ::katrin::KTypeList<KTypeInteger<XAnglePowerValue>, KTypeNull>>>>>>>>;
 
   public:
     static const std::string fSymbol;
@@ -161,11 +168,18 @@ class KOffsetUnit<
     XTag>
 {
   public:
-    typedef KDimension<KTYPELIST7(KTypeInteger<XMassPowerValue>, KTypeInteger<XLengthPowerValue>,
-                                  KTypeInteger<XTimePowerValue>, KTypeInteger<XChargePowerValue>,
-                                  KTypeInteger<XTemperaturePowerValue>, KTypeInteger<XIntensityPowerValue>,
-                                  KTypeInteger<XAnglePowerValue>)>
-        Dimension;
+    using Dimension = KDimension<::katrin::KTypeList<
+        KTypeInteger<XMassPowerValue>,
+        ::katrin::KTypeList<
+            KTypeInteger<XLengthPowerValue>,
+            ::katrin::KTypeList<
+                KTypeInteger<XTimePowerValue>,
+                ::katrin::KTypeList<
+                    KTypeInteger<XChargePowerValue>,
+                    ::katrin::KTypeList<
+                        KTypeInteger<XTemperaturePowerValue>,
+                        ::katrin::KTypeList<KTypeInteger<XIntensityPowerValue>,
+                                            ::katrin::KTypeList<KTypeInteger<XAnglePowerValue>, KTypeNull>>>>>>>>;
 
   public:
     static const std::string fSymbol;
@@ -177,60 +191,60 @@ class KOffsetUnit<
 //**************
 
 //unitless
-typedef KUnit<KDimensionless> KUnitless;
+using KUnitless = KUnit<KDimensionless>;
 
 //base units
-typedef KUnit<KMassDimension> KKilogram;
-typedef KUnit<KLengthDimension> KMeter;
-typedef KUnit<KTimeDimension> KSecond;
-typedef KUnit<KChargeDimension> KCoulomb;
-typedef KUnit<KTemperatureDimension> KKelvin;
-typedef KUnit<KIntensityDimension> KCandela;
-typedef KUnit<KAngleDimension> KRadian;
+using KKilogram = KUnit<KMassDimension>;
+using KMeter = KUnit<KLengthDimension>;
+using KSecond = KUnit<KTimeDimension>;
+using KCoulomb = KUnit<KChargeDimension>;
+using KKelvin = KUnit<KTemperatureDimension>;
+using KCandela = KUnit<KIntensityDimension>;
+using KRadian = KUnit<KAngleDimension>;
 
 //derived units
-typedef KUnit<KAreaDimension> KSquareMeter;
-typedef KUnit<KVolumeDimension> KCubicMeter;
-typedef KUnit<KFrequencyDimension> KHertz;
-typedef KUnit<KAngularFrequencyDimension> KRadianPerSecond;
-typedef KUnit<KVelocityDimension> KMeterPerSecond;
-typedef KUnit<KAccelerationDimension> KMeterPerSecondSquared;
-typedef KUnit<KMomentumDimension> KKilogramMeterPerSecond;
-typedef KUnit<KForceDimension> KNewton;
-typedef KUnit<KAngularMomentumDimension> KKilogramMeterSquaredPerSecondPerRadian;
-typedef KUnit<KTorqueDimension> KKilogramMeterSquaredPerSecondSquaredPerRadian;
-typedef KUnit<KEnergyDimension> KJoule;
-typedef KUnit<KPowerDimension> KJoulePerSecond;
+using KSquareMeter = KUnit<KAreaDimension>;
+using KCubicMeter = KUnit<KVolumeDimension>;
+using KHertz = KUnit<KFrequencyDimension>;
+using KRadianPerSecond = KUnit<KAngularFrequencyDimension>;
+using KMeterPerSecond = KUnit<KVelocityDimension>;
+using KMeterPerSecondSquared = KUnit<KAccelerationDimension>;
+using KKilogramMeterPerSecond = KUnit<KMomentumDimension>;
+using KNewton = KUnit<KForceDimension>;
+using KKilogramMeterSquaredPerSecondPerRadian = KUnit<KAngularMomentumDimension>;
+using KKilogramMeterSquaredPerSecondSquaredPerRadian = KUnit<KTorqueDimension>;
+using KJoule = KUnit<KEnergyDimension>;
+using KJoulePerSecond = KUnit<KPowerDimension>;
 
-typedef KUnit<KElectricPotentialDimension> KVolt;
-typedef KUnit<KElectricFieldDimension> KVoltPerMeter;
-typedef KUnit<KMagneticPotentialDimension> KTeslaMeter;
-typedef KUnit<KMagneticFieldDimension> KTesla;
-typedef KUnit<KElectricPermittivityDimension> KFaradPerMeter;
-typedef KUnit<KMagneticPermeabilityDimension> KHenryPerMeter;
+using KVolt = KUnit<KElectricPotentialDimension>;
+using KVoltPerMeter = KUnit<KElectricFieldDimension>;
+using KTeslaMeter = KUnit<KMagneticPotentialDimension>;
+using KTesla = KUnit<KMagneticFieldDimension>;
+using KFaradPerMeter = KUnit<KElectricPermittivityDimension>;
+using KHenryPerMeter = KUnit<KMagneticPermeabilityDimension>;
 
-typedef KUnit<KCurrentDimension> KAmpere;
-typedef KUnit<KResistanceDimension> KOhm;
-typedef KUnit<KInductanceDimension> KHenry;
-typedef KUnit<KCapacitanceDimension> KFarad;
-typedef KUnit<KMagneticFluxDimension> KWeber;
+using KAmpere = KUnit<KCurrentDimension>;
+using KOhm = KUnit<KResistanceDimension>;
+using KHenry = KUnit<KInductanceDimension>;
+using KFarad = KUnit<KCapacitanceDimension>;
+using KWeber = KUnit<KMagneticFluxDimension>;
 
 //scaled units
 class KLiterTag;
-typedef KScaledUnit<KVolumeDimension, KLiterTag> KLiter;
+using KLiter = KScaledUnit<KVolumeDimension, KLiterTag>;
 
 class KElectronVoltTag;
-typedef KScaledUnit<KEnergyDimension, KElectronVoltTag> KElectronVolt;
+using KElectronVolt = KScaledUnit<KEnergyDimension, KElectronVoltTag>;
 
 class KGaussTag;
-typedef KScaledUnit<KMagneticFieldDimension, KGaussTag> KGauss;
+using KGauss = KScaledUnit<KMagneticFieldDimension, KGaussTag>;
 
 class KDegreeTag;
-typedef KScaledUnit<KAngleDimension, KDegreeTag> KDegree;
+using KDegree = KScaledUnit<KAngleDimension, KDegreeTag>;
 
 //offset units
 class KCelsiusTag;
-typedef KOffsetUnit<KTemperatureDimension, KCelsiusTag> KCelsius;
+using KCelsius = KOffsetUnit<KTemperatureDimension, KCelsiusTag>;
 
 }  // namespace katrin
 

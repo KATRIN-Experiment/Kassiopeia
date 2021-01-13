@@ -1,10 +1,8 @@
 #include "KGVTKRandomPointTester.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 #include "KRandom.h"
 using katrin::KRandom;
 
@@ -43,7 +41,7 @@ KGVTKRandomPointTester::KGVTKRandomPointTester() :
     fActor->SetMapper(fMapper);
 }
 
-KGVTKRandomPointTester::~KGVTKRandomPointTester() {}
+KGVTKRandomPointTester::~KGVTKRandomPointTester() = default;
 
 void KGVTKRandomPointTester::Render()
 {
@@ -51,10 +49,8 @@ void KGVTKRandomPointTester::Render()
 
     vtkIdType vPointId;
 
-    for (std::vector<KThreeVector*>::const_iterator p = fSamplePoints.begin(); p != fSamplePoints.end(); ++p) {
-        tPoint = *(*p);
-
-        vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
+    for (auto & tPoint : fSamplePoints) {
+        vPointId = fPoints->InsertNextPoint(tPoint->X(), tPoint->Y(), tPoint->Z());
         fColors->InsertNextTuple3(fSampleColor.GetRed(), fSampleColor.GetGreen(), fSampleColor.GetBlue());
         fCells->InsertNextCell(1, &vPointId);
     }

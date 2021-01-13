@@ -36,8 +36,10 @@ namespace KEMField
 class KFMArrayMath
 {
   public:
-    KFMArrayMath(){};
-    virtual ~KFMArrayMath(){};
+    KFMArrayMath() = default;
+    ;
+    virtual ~KFMArrayMath() = default;
+    ;
 
     //modulus of two integers
     static unsigned int Modulus(int arg, int n)

@@ -29,14 +29,17 @@ namespace KGeoBag
 class KGInsertionCondition
 {
   public:
-    KGInsertionCondition(){};
-    virtual ~KGInsertionCondition(){};
+    KGInsertionCondition() = default;
+    ;
+    virtual ~KGInsertionCondition() = default;
+    ;
 
     virtual bool ElementIntersectsCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
     virtual bool ElementEnclosedByCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
 
   private:
-    bool LineSegmentIntersectsCube(KThreeVector start, KThreeVector end, const KGCube<KGMESH_DIM>* cube) const;
+    static bool LineSegmentIntersectsCube(const KGeoBag::KThreeVector& start, const KGeoBag::KThreeVector& end,
+                                          const KGCube<KGMESH_DIM>* cube);
 
 
     mutable KGBoundaryCalculator<KGMESH_DIM> fBoundaryCalculator;

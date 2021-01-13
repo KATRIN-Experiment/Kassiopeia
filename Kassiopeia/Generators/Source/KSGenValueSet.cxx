@@ -7,7 +7,7 @@ namespace Kassiopeia
 
 KSGenValueSet::KSGenValueSet() : fValueStart(0.), fValueStop(0.), fValueIncrement(0.), fValueCount(0) {}
 KSGenValueSet::KSGenValueSet(const KSGenValueSet& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueStart(aCopy.fValueStart),
     fValueStop(aCopy.fValueStop),
     fValueIncrement(aCopy.fValueIncrement),
@@ -17,9 +17,9 @@ KSGenValueSet* KSGenValueSet::Clone() const
 {
     return new KSGenValueSet(*this);
 }
-KSGenValueSet::~KSGenValueSet() {}
+KSGenValueSet::~KSGenValueSet() = default;
 
-void KSGenValueSet::DiceValue(vector<double>& aDicedValues)
+void KSGenValueSet::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
     double tValueCount = fValueCount;

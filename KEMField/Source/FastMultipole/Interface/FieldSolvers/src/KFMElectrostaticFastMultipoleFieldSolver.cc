@@ -14,9 +14,7 @@ KFMElectrostaticFastMultipoleFieldSolver::KFMElectrostaticFastMultipoleFieldSolv
     fSurfaceContainer(container),
     fTree(tree),
     fDirectIntegrator(KEBIFactory::MakeAnalytic()),
-    fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator),
-    fFastFieldSolver(),
-    fNavigator()
+    fDirectFieldSolver(fSurfaceContainer, fDirectIntegrator)
 {
     fRootNode = fTree.GetRootNode();
     fParameters = fTree.GetParameters();
@@ -64,19 +62,19 @@ double KFMElectrostaticFastMultipoleFieldSolver::Potential(const KPosition& P) c
     }
 }
 
-KThreeVector KFMElectrostaticFastMultipoleFieldSolver::ElectricField(const KPosition& P) const
+KFieldVector KFMElectrostaticFastMultipoleFieldSolver::ElectricField(const KPosition& P) const
 {
     SetPoint(P);
 
     if (!fFallback) {
         double fast_f[3];
-        KThreeVector f;
+        KFieldVector f;
         fFastFieldSolver.ElectricField(P, fast_f);
         f[0] = fast_f[0];
         f[1] = fast_f[1];
         f[2] = fast_f[2];
 
-        KThreeVector direct_f;
+        KFieldVector direct_f;
 
         if (fSubsetSize != 0) {
             direct_f = fDirectFieldSolver.ElectricField(fDirectCallIDs, fSubsetSize, P);

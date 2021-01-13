@@ -13,9 +13,9 @@ namespace katrin
 class KConditionProcessor : public KProcessor
 {
   private:
-    typedef std::vector<KToken*> TokenVector;
-    typedef TokenVector::iterator TokenIt;
-    typedef TokenVector::const_iterator TokenCIt;
+    using TokenVector = std::vector<KToken*>;
+    using TokenIt = TokenVector::iterator;
+    using TokenCIt = TokenVector::const_iterator;
 
   public:
     KConditionProcessor();
@@ -32,7 +32,7 @@ class KConditionProcessor : public KProcessor
   private:
     void Dispatch(KToken* aToken);
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eElementInactive,
         eActive,
@@ -41,7 +41,7 @@ class KConditionProcessor : public KProcessor
     } ElementState;
     ElementState fElementState;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eAttributeInactive,
         eCondition,
@@ -49,7 +49,7 @@ class KConditionProcessor : public KProcessor
     } AttributeState;
     AttributeState fAttributeState;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eIfCondition,
         eElseCondition

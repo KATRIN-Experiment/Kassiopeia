@@ -18,7 +18,7 @@ template<class XType> class KTypedToken : public KToken
 
 template<class XType> inline KTypedToken<XType>::KTypedToken() : KToken() {}
 template<class XType> inline KTypedToken<XType>::KTypedToken(const KTypedToken& aToken) : KToken(aToken) {}
-template<class XType> KTypedToken<XType>::~KTypedToken() {}
+template<class XType> KTypedToken<XType>::~KTypedToken() = default;
 
 template<class XType> inline KToken* KTypedToken<XType>::Clone()
 {
@@ -29,40 +29,40 @@ class KBeginParsing;
 typedef KTypedToken<KBeginParsing> KBeginParsingToken;
 
 class KEndParsing;
-typedef KTypedToken<KEndParsing> KEndParsingToken;
+using KEndParsingToken = KTypedToken<KEndParsing>;
 
 class KBeginFile;
-typedef KTypedToken<KBeginFile> KBeginFileToken;
+using KBeginFileToken = KTypedToken<KBeginFile>;
 
 class KEndFile;
-typedef KTypedToken<KEndFile> KEndFileToken;
+using KEndFileToken = KTypedToken<KEndFile>;
 
 class KBeginElement;
-typedef KTypedToken<KBeginElement> KBeginElementToken;
+using KBeginElementToken = KTypedToken<KBeginElement>;
 
 class KBeginAttribute;
-typedef KTypedToken<KBeginAttribute> KBeginAttributeToken;
+using KBeginAttributeToken = KTypedToken<KBeginAttribute>;
 
 class KAttributeData;
-typedef KTypedToken<KAttributeData> KAttributeDataToken;
+using KAttributeDataToken = KTypedToken<KAttributeData>;
 
 class KEndAttribute;
-typedef KTypedToken<KEndAttribute> KEndAttributeToken;
+using KEndAttributeToken = KTypedToken<KEndAttribute>;
 
 class KMidElement;
-typedef KTypedToken<KMidElement> KMidElementToken;
+using KMidElementToken = KTypedToken<KMidElement>;
 
 class KElementData;
-typedef KTypedToken<KElementData> KElementDataToken;
+using KElementDataToken = KTypedToken<KElementData>;
 
 class KEndElement;
-typedef KTypedToken<KEndElement> KEndElementToken;
+using KEndElementToken = KTypedToken<KEndElement>;
 
 class KComment;
-typedef KTypedToken<KComment> KCommentToken;
+using KCommentToken = KTypedToken<KComment>;
 
 class KError;
-typedef KTypedToken<KError> KErrorToken;
+using KErrorToken = KTypedToken<KError>;
 
 }  // namespace katrin
 

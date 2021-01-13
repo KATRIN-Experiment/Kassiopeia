@@ -10,7 +10,7 @@ namespace KGeoBag
 class KGMeshData
 {
   public:
-    KGMeshData() {}
+    KGMeshData() = default;
     KGMeshData(KGSpace*) {}
     KGMeshData(KGSurface*) {}
     KGMeshData(KGSpace*, const KGMeshData& aCopy)
@@ -44,11 +44,11 @@ class KGMesh
 {
   public:
     typedef KGMeshData Surface;
-    typedef KGMeshData Space;
+    using Space = KGMeshData;
 };
 
-typedef KGExtendedSurface<KGMesh> KGMeshSurface;
-typedef KGExtendedSpace<KGMesh> KGMeshSpace;
+using KGMeshSurface = KGExtendedSurface<KGMesh>;
+using KGMeshSpace = KGExtendedSpace<KGMesh>;
 
 }  // namespace KGeoBag
 

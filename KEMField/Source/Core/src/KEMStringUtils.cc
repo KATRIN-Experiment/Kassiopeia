@@ -10,7 +10,7 @@
 namespace KEMField
 {
 
-bool endsWith(std::string aString, std::string ending)
+bool endsWith(const std::string& aString, const std::string& ending)
 {
     if (aString.length() >= ending.length()) {
         return (0 == aString.compare(aString.length() - ending.length(), ending.length(), ending));

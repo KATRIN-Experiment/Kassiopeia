@@ -6,8 +6,8 @@ namespace KGeoBag
 {
 
 KAxis::KAxis() : fCenter(KThreeVector::sZero), fDirection(KThreeVector::sZUnit) {}
-KAxis::KAxis(const KAxis& anAxis) : fCenter(anAxis.fCenter), fDirection(anAxis.fDirection) {}
-KAxis::~KAxis() {}
+KAxis::KAxis(const KAxis&) = default;
+KAxis::~KAxis() = default;
 
 bool KAxis::EqualTo(const KAxis& anAxis) const
 {

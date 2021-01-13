@@ -47,6 +47,11 @@ class KContainer : public KNamed
     template<class XTargetType> XTargetType& AsReference();
     template<class XTargetType> XTargetType* AsPointer();
 
+    std::string& AsString()
+    {
+        return AsReference<std::string>();
+    }
+
     template<class XTargetType> operator XTargetType();
 
     template<class XTargetType> void CopyTo(XTargetType& aTarget);
@@ -77,8 +82,8 @@ class KContainer : public KNamed
     KHolder* fHolder;
 };
 
-inline KContainer::KHolder::KHolder() {}
-inline KContainer::KHolder::~KHolder() {}
+inline KContainer::KHolder::KHolder() = default;
+inline KContainer::KHolder::~KHolder() = default;
 
 template<class XType> inline KContainer::KHolderPrototype<XType>::KHolderPrototype(XType* anObject) : fObject(anObject)
 {}
@@ -136,7 +141,7 @@ template<class XTargetType> inline XTargetType& KContainer::AsReference()
     }
 
     XTargetType* tTarget = nullptr;
-    return *tTarget;
+    return *tTarget;  // NOLINT: FIXME: need to return empty reference here
 }
 template<class XTargetType> inline XTargetType* KContainer::AsPointer()
 {

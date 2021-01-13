@@ -27,7 +27,6 @@
 
 namespace Kassiopeia
 {
-using std::vector;
 
 class KSGenConversion
 {

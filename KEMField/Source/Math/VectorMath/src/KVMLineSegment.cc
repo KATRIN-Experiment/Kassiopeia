@@ -2,7 +2,7 @@
 
 using namespace KEMField;
 
-KVMLineSegment::KVMLineSegment() {}
+KVMLineSegment::KVMLineSegment() = default;
 
 void KVMLineSegment::Initialize()
 {

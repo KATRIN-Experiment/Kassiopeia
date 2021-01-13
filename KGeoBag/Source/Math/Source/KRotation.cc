@@ -8,12 +8,12 @@
 namespace KGeoBag
 {
 
-KRotation::KRotation() : KThreeMatrix()
+KRotation::KRotation()
 {
     SetIdentity();
 }
-KRotation::KRotation(const KRotation& aRotation) : KThreeMatrix(aRotation) {}
-KRotation::~KRotation() {}
+KRotation::KRotation(const KRotation&) = default;
+KRotation::~KRotation() = default;
 
 KRotation& KRotation::operator=(const KThreeMatrix& aMatrix)
 {
@@ -104,12 +104,12 @@ void KRotation::SetEulerAnglesInDegrees(const double& anAlpha, const double& aBe
                    katrin::KConst::Pi() / 180. * aGamma);
 }
 
-void KRotation::SetEulerAngles(const vector<double>& anArray)
+void KRotation::SetEulerAngles(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 3);
     SetEulerAngles(anArray[0], anArray[1], anArray[2]);
 }
-void KRotation::SetEulerAnglesInDegrees(const vector<double>& anArray)
+void KRotation::SetEulerAnglesInDegrees(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 3);
     SetEulerAnglesInDegrees(anArray[0], anArray[1], anArray[2]);
@@ -146,12 +146,12 @@ void KRotation::SetEulerZYZAnglesInDegrees(const double& anAlpha, const double& 
                       katrin::KConst::Pi() / 180. * aGamma);
 }
 
-void KRotation::SetEulerZYZAngles(const vector<double>& anArray)
+void KRotation::SetEulerZYZAngles(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 3);
     SetEulerZYZAngles(anArray[0], anArray[1], anArray[2]);
 }
-void KRotation::SetEulerZYZAnglesInDegrees(const vector<double>& anArray)
+void KRotation::SetEulerZYZAnglesInDegrees(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 3);
     SetEulerZYZAnglesInDegrees(anArray[0], anArray[1], anArray[2]);
@@ -172,6 +172,47 @@ void KRotation::SetRotatedFrame(const KThreeVector& x, const KThreeVector& y, co
     fData[8] = z[2];
 
     return;
+}
+
+void KRotation::GetEulerAngles(double& anAlpha, double& aBeta, double& aGamma) const
+{
+    /// Get Euler angles by deconstructing rotation matrix.
+    /// @see https://gregslabaugh.net/publications/euler.pdf
+
+    if (fData[8] == 0) {
+        aBeta = katrin::KConst::Pi();
+        // cos(b) = 0 and sin(b) = 1
+        anAlpha = atan2(fData[4], fData[1]);  // -sin(a) * sin(g) | -cos(a) * sin(g)
+        aGamma = atan2(-fData[4], fData[3]);  // -sin(a) * sin(g) |  sin(a) * cos(g)
+    }
+    else if (fData[8] == 1) {
+        aBeta = 0;
+        // cos(b) = 1 and sin(b) = 0
+        anAlpha = atan2(fData[3], fData[4]);  // sin(a+g) | cos(a+g)
+        aGamma = 0;
+    }
+    else if (fData[8] == -1) {
+        aBeta = 0;
+        // cos(b) = -1 and sin(b) = 0
+        anAlpha = atan2(-fData[3], -fData[4]);  // sin(a-g) | cos(a-g)
+        aGamma = 0;
+    }
+    else {
+        aBeta = acos(fData[8]);                // cos(beta)
+        anAlpha = atan2(fData[2], -fData[5]);  //  sin(a) * sin(b) | -cos(a) * sin(b)
+        aGamma = atan2(fData[6], fData[7]);    //  sin(b) * sin(g) |  sin(b) * cos(g)
+    }
+
+    return;
+}
+
+void KRotation::GetEulerAnglesInDegrees(double& anAlpha, double& aBeta, double& aGamma) const
+{
+    GetEulerAngles(anAlpha, aBeta, aGamma);
+
+    anAlpha *= 180. / katrin::KConst::Pi();
+    aBeta *= 180. / katrin::KConst::Pi();
+    aGamma *= 180. / katrin::KConst::Pi();
 }
 
 }  // namespace KGeoBag

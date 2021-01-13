@@ -12,7 +12,7 @@ STATICINT sKGExtrudedArcSegmentSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGExtrudedArcSegmentSurface>("extruded_arc_segment_surface");
 
 STATICINT sKGExtrudedArcSegmentSurfaceBuilderStructure =
-    KGExtrudedArcSegmentSurfaceBuilder::Attribute<string>("name") +
+    KGExtrudedArcSegmentSurfaceBuilder::Attribute<std::string>("name") +
     KGExtrudedArcSegmentSurfaceBuilder::Attribute<double>("zmin") +
     KGExtrudedArcSegmentSurfaceBuilder::Attribute<double>("zmax") +
     KGExtrudedArcSegmentSurfaceBuilder::Attribute<unsigned int>("extruded_mesh_count") +

@@ -19,8 +19,8 @@ class KSIntCalculatorTritiumElasticBase :
     public KSComponentTemplate<KSIntCalculatorTritiumElasticBase, KSIntCalculatorHydrogenElasticBase>
 {
   public:
-    KSIntCalculatorTritiumElasticBase() {}
-    ~KSIntCalculatorTritiumElasticBase() override {}
+    KSIntCalculatorTritiumElasticBase() = default;
+    ~KSIntCalculatorTritiumElasticBase() override = default;
 };
 
 /////////////////////////////////
@@ -31,12 +31,12 @@ class KSIntCalculatorTritiumElastic :
     public KSComponentTemplate<KSIntCalculatorTritiumElastic, KSIntCalculatorTritiumElasticBase>
 {
   public:
-    KSIntCalculatorTritiumElastic() {}
+    KSIntCalculatorTritiumElastic() = default;
     KSIntCalculatorTritiumElastic* Clone() const override
     {
         return new KSIntCalculatorTritiumElastic(*this);
     }
-    ~KSIntCalculatorTritiumElastic() override {}
+    ~KSIntCalculatorTritiumElastic() override = default;
 
   public:
     void CalculateCrossSection(const double anEnergy, double& aCrossSection) override;
@@ -50,12 +50,12 @@ class KSIntCalculatorTritiumElastic :
 class KSIntCalculatorTritiumVib : public KSComponentTemplate<KSIntCalculatorTritiumVib, KSIntCalculatorHydrogenVib>
 {
   public:
-    KSIntCalculatorTritiumVib() {}
+    KSIntCalculatorTritiumVib() = default;
     KSIntCalculatorTritiumVib* Clone() const override
     {
         return new KSIntCalculatorTritiumVib(*this);
     }
-    ~KSIntCalculatorTritiumVib() override {}
+    ~KSIntCalculatorTritiumVib() override = default;
 };
 
 /////////////////////////////////
@@ -66,12 +66,12 @@ class KSIntCalculatorTritiumRot02 :
     public KSComponentTemplate<KSIntCalculatorTritiumRot02, KSIntCalculatorHydrogenRot02>
 {
   public:
-    KSIntCalculatorTritiumRot02() {}
+    KSIntCalculatorTritiumRot02() = default;
     KSIntCalculatorTritiumRot02* Clone() const override
     {
         return new KSIntCalculatorTritiumRot02(*this);
     }
-    ~KSIntCalculatorTritiumRot02() override {}
+    ~KSIntCalculatorTritiumRot02() override = default;
 };
 
 /////////////////////////////////
@@ -82,12 +82,12 @@ class KSIntCalculatorTritiumRot13 :
     public KSComponentTemplate<KSIntCalculatorTritiumRot13, KSIntCalculatorHydrogenRot13>
 {
   public:
-    KSIntCalculatorTritiumRot13() {}
+    KSIntCalculatorTritiumRot13() = default;
     KSIntCalculatorTritiumRot13* Clone() const override
     {
         return new KSIntCalculatorTritiumRot13(*this);
     }
-    ~KSIntCalculatorTritiumRot13() override {}
+    ~KSIntCalculatorTritiumRot13() override = default;
 };
 
 /////////////////////////////////
@@ -98,12 +98,12 @@ class KSIntCalculatorTritiumRot20 :
     public KSComponentTemplate<KSIntCalculatorTritiumRot20, KSIntCalculatorHydrogenRot20>
 {
   public:
-    KSIntCalculatorTritiumRot20() {}
+    KSIntCalculatorTritiumRot20() = default;
     KSIntCalculatorTritiumRot20* Clone() const override
     {
         return new KSIntCalculatorTritiumRot20(*this);
     }
-    ~KSIntCalculatorTritiumRot20() override {}
+    ~KSIntCalculatorTritiumRot20() override = default;
 };
 
 } /* namespace Kassiopeia */

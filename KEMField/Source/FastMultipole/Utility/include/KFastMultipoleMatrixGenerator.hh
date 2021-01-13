@@ -115,7 +115,7 @@ class KFastMultipoleMatrixGenerator : public KBoundaryMatrixGenerator<KFMElectro
   private:
     KSmartPointer<KFMElectrostaticTypes::FastMultipoleMatrix>
     CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                 KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>) const;
+                 const KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
 
     KFMElectrostaticParameters fParameters;
     KElectrostaticBoundaryIntegrator fDirectIntegrator;

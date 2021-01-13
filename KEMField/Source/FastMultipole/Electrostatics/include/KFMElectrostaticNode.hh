@@ -42,19 +42,26 @@ namespace KEMField
 //some typedefs...needed for picky compilers
 typedef KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM> three_dimensional_tree_properties;
 
-typedef KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>
-    three_dimensional_constant_charge_density_element_container;
+using three_dimensional_constant_charge_density_element_container =
+    KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>;
 
-typedef KFMCube<KFMELECTROSTATICS_DIM> three_dimensional_cube;
+using three_dimensional_cube = KFMCube<KFMELECTROSTATICS_DIM>;
 
-typedef KFMNodeFlags<KFMELECTROSTATICS_FLAGS> electrostatic_node_flags;
+using electrostatic_node_flags = KFMNodeFlags<KFMELECTROSTATICS_FLAGS>;
 
-typedef KTYPELIST_9(three_dimensional_tree_properties, three_dimensional_constant_charge_density_element_container,
-                    KFMIdentitySet, KFMIdentitySetList, KFMCollocationPointIdentitySet, three_dimensional_cube,
-                    electrostatic_node_flags, KFMElectrostaticMultipoleSet,
-                    KFMElectrostaticLocalCoefficientSet) KFMElectrostaticNodeObjects;
+using KFMElectrostaticNodeObjects =
+    KEMField::KTypelist<three_dimensional_tree_properties,
+        KEMField::KTypelist<three_dimensional_constant_charge_density_element_container,
+            KEMField::KTypelist<KFMIdentitySet,
+                KEMField::KTypelist<KFMIdentitySetList,
+                    KEMField::KTypelist<KFMCollocationPointIdentitySet,
+                        KEMField::KTypelist<three_dimensional_cube,
+                            KEMField::KTypelist<electrostatic_node_flags,
+                                KEMField::KTypelist<KFMElectrostaticMultipoleSet,
+                                    KEMField::KTypelist<KFMElectrostaticLocalCoefficientSet,
+                                        KEMField::KNullType>>>>>>>>>;
 
-typedef KFMNode<KFMElectrostaticNodeObjects> KFMElectrostaticNode;
+using KFMElectrostaticNode = KFMNode<KFMElectrostaticNodeObjects>;
 
 }  // namespace KEMField
 

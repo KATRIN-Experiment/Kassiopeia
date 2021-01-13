@@ -44,7 +44,7 @@ class KGElectrostaticBoundaryField : public KElectrostaticBoundaryField
 
   private:
     double PotentialCore(const KPosition& P) const override;
-    KThreeVector ElectricFieldCore(const KPosition& P) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P) const override;
     void InitializeCore() override;
 
     void ConfigureSurfaceContainer();

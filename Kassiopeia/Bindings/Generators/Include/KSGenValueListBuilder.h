@@ -20,6 +20,10 @@ template<> inline bool KSGenValueListBuilder::AddAttribute(KContainer* aContaine
         aContainer->CopyTo(fObject, &KSGenValueList::AddValue);
         return true;
     }
+    if (aContainer->GetName() == "randomize") {
+        aContainer->CopyTo(fObject, &KSGenValueList::SetRandomize);
+        return true;
+    }
     return false;
 }
 

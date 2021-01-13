@@ -2,22 +2,26 @@
 #define KZONALHARMONICCONTAINER_DEF
 
 #include "KEMCoordinateSystem.hh"
+#include "KEMCoreMessage.hh"
 #include "KMD5HashGenerator.hh"
 #include "KZonalHarmonicCoefficientGenerator.hh"
 #include "KZonalHarmonicParameters.hh"
 #include "KZonalHarmonicSourcePoint.hh"
+
+#include <memory>
 
 namespace KEMField
 {
 template<class Basis> class KZonalHarmonicContainer
 {
   public:
-    typedef KZonalHarmonicTrait<Basis> ZonalHarmonicType;
-    typedef typename ZonalHarmonicType::Container ElementContainer;
-    typedef std::vector<KZonalHarmonicSourcePoint*> SourcePointVector;
-    typedef std::vector<KZonalHarmonicContainer<Basis>*> ZonalHarmonicContainerVector;
+    using ZonalHarmonicType = KZonalHarmonicTrait<Basis>;
+    using ElementContainer = typename ZonalHarmonicType::Container;
+    using SourcePointVector = std::vector<KZonalHarmonicSourcePoint*>;
+    using ZonalHarmonicContainerVector = std::vector<KZonalHarmonicContainer<Basis>*>;
 
-    KZonalHarmonicContainer(ElementContainer& elementContainer, KZonalHarmonicParameters* parameters = nullptr);
+    KZonalHarmonicContainer(ElementContainer& elementContainer,
+                            std::shared_ptr<KZonalHarmonicParameters> parameters = {});
 
     virtual ~KZonalHarmonicContainer();
 
@@ -84,7 +88,7 @@ template<class Basis> class KZonalHarmonicContainer
     }
 
   private:
-    KZonalHarmonicContainer() {}
+    KZonalHarmonicContainer() = default;
 
     void ComputeCoefficients(int level);
     void ConstructSubContainers(int level = -1);
@@ -94,7 +98,7 @@ template<class Basis> class KZonalHarmonicContainer
     SourcePointVector fCentralSourcePoints;
     SourcePointVector fRemoteSourcePoints;
     ZonalHarmonicContainerVector fSubContainers;
-    KZonalHarmonicParameters* fParameters;
+    std::shared_ptr<KZonalHarmonicParameters> fParameters;
 
     bool fHead;
 
@@ -107,7 +111,7 @@ template<class Basis> class KZonalHarmonicContainer
         s >> hash;
         KMD5HashGenerator hashGenerator;
         if (hash != hashGenerator.GenerateHash(c.fElementContainer)) {
-            std::cout << "Error!  Hashes don't match." << std::endl;
+            kem_cout(eError) << "Error!  Hashes don't match." << eom;
             return s;
         }
 
@@ -157,7 +161,7 @@ template<class Basis> class KZonalHarmonicContainer
         // Get the subcontainers
         s >> nElements;
         if (nElements != c.fSubContainers.size()) {
-            std::cout << "Error!  Subcontainer sizes don't match." << std::endl;
+            kem_cout(eError) << "Error!  Subcontainer sizes don't match." << eom;
             return s;
         }
         for (unsigned int i = 0; i < nElements; i++)
@@ -204,27 +208,27 @@ template<class Basis> class KZonalHarmonicContainer
 
 template<class Basis>
 KZonalHarmonicContainer<Basis>::KZonalHarmonicContainer(ElementContainer& elementContainer,
-                                                        KZonalHarmonicParameters* parameters) :
+                                                        std::shared_ptr<KZonalHarmonicParameters> parameters) :
     fElementContainer(elementContainer),
     fCoordinateSystem(gGlobalCoordinateSystem),
     fParameters(parameters),
     fHead(true)
 {
-    if (!fParameters)
-        fParameters = new KZonalHarmonicParameters();
+    if (!fParameters.get())
+        fParameters = std::make_shared<KZonalHarmonicParameters>();
 }
 
 template<class Basis> KZonalHarmonicContainer<Basis>::~KZonalHarmonicContainer()
 {
-    for (auto it = fCentralSourcePoints.begin(); it != fCentralSourcePoints.end(); ++it)
-        delete *it;
+    for (auto& sourcePoint : fCentralSourcePoints)
+        delete sourcePoint;
 
-    for (auto it = fRemoteSourcePoints.begin(); it != fRemoteSourcePoints.end(); ++it)
-        delete *it;
+    for (auto& sourcePoint : fRemoteSourcePoints)
+        delete sourcePoint;
 
     if (fHead) {
-        delete fParameters;
-        fParameters = nullptr;
+        //delete fParameters;
+        //fParameters = nullptr;
     }
     else
         fElementContainer.~ElementContainer();
@@ -334,8 +338,8 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ComputeCoefficients(i
     }
 
     if (!fSubContainers.empty()) {
-        KEMField::cout << "Computing source points for " << fSubContainers.size() << " subcontainers at level "
-                       << level + 1 << KEMField::endl;
+        kem_cout(eNormal) << "Computing source points for " << fSubContainers.size() << " subcontainers at level "
+                          << level + 1 << eom;
 
         for (auto it = fSubContainers.begin(); it != fSubContainers.end(); ++it)
             (*it)->ComputeCoefficients(level + 1);

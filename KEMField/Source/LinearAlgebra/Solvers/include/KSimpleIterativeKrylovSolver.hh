@@ -128,8 +128,7 @@ KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>::KSimpleIterativeKrylovSo
 }
 
 template<typename ValueType, template<typename> class ParallelTrait>
-KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>::~KSimpleIterativeKrylovSolver()
-{}
+KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>::~KSimpleIterativeKrylovSolver() = default;
 
 template<typename ValueType, template<typename> class ParallelTrait>
 void KSimpleIterativeKrylovSolver<ValueType, ParallelTrait>::SolveCore(Vector& x, const Vector& b)

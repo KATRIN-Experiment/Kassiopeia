@@ -1,10 +1,8 @@
 #include "KGVTKOutsideTester.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 #include "KRandom.h"
 using katrin::KRandom;
 
@@ -48,7 +46,7 @@ KGVTKOutsideTester::KGVTKOutsideTester() :
     fActor->SetMapper(fMapper);
 }
 
-KGVTKOutsideTester::~KGVTKOutsideTester() {}
+KGVTKOutsideTester::~KGVTKOutsideTester() = default;
 
 void KGVTKOutsideTester::Render()
 {
@@ -68,9 +66,8 @@ void KGVTKOutsideTester::Render()
         tPhi = tRandom.Uniform(0., 2. * katrin::KConst::Pi());
         tPoint = fSampleDiskOrigin + tRadius * (cos(tPhi) * tUnitOne + sin(tPhi) * tUnitTwo);
 
-        for (vector<const KGSurface*>::iterator tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end();
-             tSurfaceIt++) {
-            tOutside = (*tSurfaceIt)->Above(tPoint);
+        for (auto& surface : fSurfaces) {
+            tOutside = surface->Above(tPoint);
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
 
@@ -84,8 +81,8 @@ void KGVTKOutsideTester::Render()
             fPointCells->InsertNextCell(1, &vPointId);
         }
 
-        for (vector<const KGSpace*>::iterator tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-            tOutside = (*tSpaceIt)->Outside(tPoint);
+        for (auto& space : fSpaces) {
+            tOutside = space->Outside(tPoint);
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
 

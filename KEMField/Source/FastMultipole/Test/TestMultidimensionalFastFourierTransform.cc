@@ -23,7 +23,7 @@ int main(int /*argc*/, char** /*argv*/)
     const unsigned int dim_size[ndim] = {18, 18, 18};
     const unsigned int total_size = dim_size[0] * dim_size[1] * dim_size[2];
 
-    std::complex<double>* raw_data = new std::complex<double>[total_size];
+    auto* raw_data = new std::complex<double>[total_size];
     KFMArrayWrapper<std::complex<double>, ndim> input(raw_data, dim_size);
 
     //fill up the array with a signal
@@ -53,7 +53,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     kfmout << "--------------------------------------------------------------" << kfmendl;
 
-    FFT_TYPE* fft2d = new FFT_TYPE();
+    auto* fft2d = new FFT_TYPE();
 
     fft2d->SetForward();
     fft2d->SetInput(&input);

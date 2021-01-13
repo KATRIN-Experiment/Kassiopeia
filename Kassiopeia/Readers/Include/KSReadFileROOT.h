@@ -7,8 +7,6 @@
 #include "KSReadRunROOT.h"
 #include "KSReadStepROOT.h"
 #include "KSReadTrackROOT.h"
-using katrin::KFile;
-using katrin::KRootFile;
 
 namespace Kassiopeia
 {
@@ -16,17 +14,17 @@ namespace Kassiopeia
 class KSReadFileROOT : public KSReadFile
 {
   public:
-    typedef map<std::string, KSReadObjectROOT*> ObjectMap;
-    typedef ObjectMap::iterator ObjectIt;
-    typedef ObjectMap::const_iterator ObjectCIt;
-    typedef ObjectMap::value_type ObjectEntry;
+    using ObjectMap = std::map<std::string, KSReadObjectROOT*>;
+    using ObjectIt = ObjectMap::iterator;
+    using ObjectCIt = ObjectMap::const_iterator;
+    using ObjectEntry = ObjectMap::value_type;
 
   public:
     KSReadFileROOT();
     ~KSReadFileROOT() override;
 
-    bool TryFile(KRootFile* aFile);
-    void OpenFile(KRootFile* aFile);
+    bool TryFile(katrin::KRootFile* aFile);
+    void OpenFile(katrin::KRootFile* aFile);
     void CloseFile();
 
     KSReadRunROOT& GetRun();
@@ -35,7 +33,7 @@ class KSReadFileROOT : public KSReadFile
     KSReadStepROOT& GetStep();
 
   protected:
-    KRootFile* fRootFile;
+    katrin::KRootFile* fRootFile;
 
     KSReadRunROOT* fRun;
     KSReadEventROOT* fEvent;

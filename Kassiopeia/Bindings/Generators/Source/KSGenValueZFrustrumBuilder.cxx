@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueZFrustrumBuilder::~KComplexElement() {}
+template<> KSGenValueZFrustrumBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueZFrustrumStructure =
-    KSGenValueZFrustrumBuilder::Attribute<string>("name") + KSGenValueZFrustrumBuilder::Attribute<double>("r1") +
+    KSGenValueZFrustrumBuilder::Attribute<std::string>("name") + KSGenValueZFrustrumBuilder::Attribute<double>("r1") +
     KSGenValueZFrustrumBuilder::Attribute<double>("r2") + KSGenValueZFrustrumBuilder::Attribute<double>("z1") +
     KSGenValueZFrustrumBuilder::Attribute<double>("z2");
 

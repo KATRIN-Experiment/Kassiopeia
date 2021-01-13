@@ -22,7 +22,7 @@ namespace katrin
 class KArgumentList
 {
   public:
-    KArgumentList() {}
+    KArgumentList() = default;
     KArgumentList(int argc, char** argv);
     virtual ~KArgumentList();
     inline KVariant operator[](unsigned int Index) const;

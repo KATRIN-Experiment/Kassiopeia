@@ -9,14 +9,14 @@ namespace Kassiopeia
 
 KSTrajControlBChange::KSTrajControlBChange() : fFraction(1. / 16.) {}
 KSTrajControlBChange::KSTrajControlBChange(const KSTrajControlBChange& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fFraction(aCopy.fFraction)
 {}
 KSTrajControlBChange* KSTrajControlBChange::Clone() const
 {
     return new KSTrajControlBChange(*this);
 }
-KSTrajControlBChange::~KSTrajControlBChange() {}
+KSTrajControlBChange::~KSTrajControlBChange() = default;
 
 void KSTrajControlBChange::Calculate(const KSTrajExactParticle& aParticle, double& aValue)
 {

@@ -12,7 +12,7 @@ class KLineSegment : public KShape
 
   protected:
     KLineSegment() : fP0(0., 0., 0.), fP1(0., 0., 0.), fDiameter(0.) {}
-    ~KLineSegment() override {}
+    ~KLineSegment() override = default;
 
   public:
     static std::string Name()

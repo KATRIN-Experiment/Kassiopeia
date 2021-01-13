@@ -5,12 +5,10 @@
 #include "KSurfaceTypes.hh"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 using namespace KEMField;
@@ -26,7 +24,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     int nTest = 1.e6;
 
-    srand((unsigned) time(0));
+    srand((unsigned) time(nullptr));
 
     double a = 1 + 5. * ((double) rand()) / RAND_MAX;
     double b = a + 1;
@@ -91,10 +89,10 @@ int main(int /*argc*/, char** /*argv*/)
     std::cout << "" << std::endl;
 
     typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KEMRectangle;
-    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KEMTriangle;
-    typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle> KEMTriangle2;
+    using KEMTriangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>;
+    using KEMTriangle2 = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
 
-    KEMTriangle* t1 = new KEMTriangle();
+    auto* t1 = new KEMTriangle();
     t1->SetA(a_tri1);
     t1->SetB(b_tri1);
     t1->SetP0(p0_tri1);
@@ -115,7 +113,7 @@ int main(int /*argc*/, char** /*argv*/)
     std::cout << "   n2: (" << n2_tri2[0] << "," << n2_tri2[1] << "," << n2_tri2[2] << ")" << std::endl;
     std::cout << "" << std::endl;
 
-    KEMTriangle2* t2 = new KEMTriangle2();
+    auto* t2 = new KEMTriangle2();
     t2->SetA(a_tri2);
     t2->SetB(b_tri2);
     t2->SetP0(p0_tri2);
@@ -136,7 +134,7 @@ int main(int /*argc*/, char** /*argv*/)
     std::cout << "   n2: (" << n2_tri3[0] << "," << n2_tri3[1] << "," << n2_tri3[2] << ")" << std::endl;
     std::cout << "" << std::endl;
 
-    KEMTriangle* t3 = new KEMTriangle();
+    auto* t3 = new KEMTriangle();
     t3->SetA(a_tri3);
     t3->SetB(b_tri3);
     t3->SetP0(p0_tri3);
@@ -157,7 +155,7 @@ int main(int /*argc*/, char** /*argv*/)
     std::cout << "   n2: (" << n2_tri4[0] << "," << n2_tri4[1] << "," << n2_tri4[2] << ")" << std::endl;
     std::cout << "" << std::endl;
 
-    KEMTriangle2* t4 = new KEMTriangle2();
+    auto* t4 = new KEMTriangle2();
     t4->SetA(a_tri4);
     t4->SetB(b_tri4);
     t4->SetP0(p0_tri4);
@@ -171,7 +169,7 @@ int main(int /*argc*/, char** /*argv*/)
     KDirection n1_rect1 = n1;
     KDirection n2_rect1 = n2;
 
-    KEMRectangle* r1 = new KEMRectangle();
+    auto* r1 = new KEMRectangle();
     r1->SetA(a_rect1);
     r1->SetB(b_rect1);
     r1->SetP0(p0_rect1);
@@ -180,8 +178,8 @@ int main(int /*argc*/, char** /*argv*/)
     r1->SetBoundaryValue(1.);
 
     KPosition P(0, 0, 0);
-    KThreeVector field_1;
-    KThreeVector field_2;
+    KGeoBag::KThreeVector field_1;
+    KGeoBag::KThreeVector field_2;
 
     double max[4] = {0, 0, 0, 0};
     double min[4] = {1.e10, 1.e10, 1.e10, 1.e10};
@@ -260,8 +258,8 @@ int main(int /*argc*/, char** /*argv*/)
     }
     std::cout << "\r";
 
-    for (int i = 0; i < 4; i++)
-        average[i] /= nTest;
+    for (double& i : average)
+        i /= nTest;
 
     std::cout << "" << std::endl;
     std::cout << "Accuracy Summary (2 triangles vs 1 rectangle): " << std::endl;

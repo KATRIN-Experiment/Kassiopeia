@@ -15,11 +15,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KInducedAzimuthalElectricFieldBuilder::~KComplexElement() {}
+template<> KInducedAzimuthalElectricFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKInducedAzimuthalElectricFieldStructure =
-    KInducedAzimuthalElectricFieldBuilder::Attribute<string>("name") +
-    KInducedAzimuthalElectricFieldBuilder::Attribute<string>("root_field");
+    KInducedAzimuthalElectricFieldBuilder::Attribute<std::string>("name") +
+    KInducedAzimuthalElectricFieldBuilder::Attribute<std::string>("root_field");
 
 STATICINT sKInducedAzimuthalElectricField =
     KEMToolboxBuilder::ComplexElement<KInducedAzimuthalElectricField>("induced_azimuthal_electric_field");

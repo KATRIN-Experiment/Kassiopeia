@@ -29,7 +29,7 @@ kasper_internal_include_directories(
 )
 
 # target
-add_library( KGeoBag2DUtility SHARED ${2DUTILITY_SOURCE_FILES})
+add_library( KGeoBag2DUtility SHARED ${2DUTILITY_SOURCE_FILES} ${2DUTILITY_HEADER_FILES})
 
 target_link_libraries( KGeoBag2DUtility
 	KGeoBagCore

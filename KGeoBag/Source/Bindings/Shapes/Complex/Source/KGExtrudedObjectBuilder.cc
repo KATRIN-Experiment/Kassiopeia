@@ -29,14 +29,14 @@ STATICINT sKGExtrudedObjectBuilderStructure =
     KGExtrudedObjectBuilder::ComplexElement<KGExtrudedObject::Arc>("inner_arc");
 
 STATICINT sKGExtrudedSurfaceBuilderStructure =
-    KGExtrudedSurfaceBuilder::Attribute<string>("name") +
+    KGExtrudedSurfaceBuilder::Attribute<std::string>("name") +
     KGExtrudedSurfaceBuilder::ComplexElement<KGExtrudedObject>("extruded_object");
 
 STATICINT sKGExtrudedSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGExtrudedObject>>("extruded_surface");
 
 STATICINT sKGExtrudedSpaceBuilderStructure =
-    KGExtrudedSpaceBuilder::Attribute<string>("name") +
+    KGExtrudedSpaceBuilder::Attribute<std::string>("name") +
     KGExtrudedSpaceBuilder::ComplexElement<KGExtrudedObject>("extruded_object");
 
 STATICINT sKGExtrudedSpaceBuilder =

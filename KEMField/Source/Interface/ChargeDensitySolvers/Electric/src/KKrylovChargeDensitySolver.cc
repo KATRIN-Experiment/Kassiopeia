@@ -21,9 +21,9 @@ KKrylovChargeDensitySolver::KKrylovChargeDensitySolver()
     fKrylovConfig.SetDisplayName("Solver: ");
 }
 
-KKrylovChargeDensitySolver::~KKrylovChargeDensitySolver() {}
+KKrylovChargeDensitySolver::~KKrylovChargeDensitySolver() = default;
 
-void KKrylovChargeDensitySolver::SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen)
+void KKrylovChargeDensitySolver::SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen)
 {
     fMatrixGenerator = matrixGen;
 }
@@ -33,7 +33,7 @@ KSmartPointer<const KKrylovChargeDensitySolver::MatrixGenerator> KKrylovChargeDe
     return fMatrixGenerator;
 }
 
-void KKrylovChargeDensitySolver::SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen)
+void KKrylovChargeDensitySolver::SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen)
 {
     fPreconditionerGenerator = preconGen;
 }

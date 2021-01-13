@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGBoxSpace::Visitor::Visitor() {}
-KGBoxSpace::Visitor::~Visitor() {}
+KGBoxSpace::Visitor::Visitor() = default;
+KGBoxSpace::Visitor::~Visitor() = default;
 
 KGBoxSpace::KGBoxSpace() :
     fXA(0.),
@@ -20,7 +20,7 @@ KGBoxSpace::KGBoxSpace() :
     fZMeshCount(2),
     fZMeshPower(1.)
 {}
-KGBoxSpace::~KGBoxSpace() {}
+KGBoxSpace::~KGBoxSpace() = default;
 
 void KGBoxSpace::XA(const double& aXA)
 {

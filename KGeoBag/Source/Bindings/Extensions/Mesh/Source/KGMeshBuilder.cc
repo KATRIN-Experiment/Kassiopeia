@@ -8,23 +8,23 @@ using namespace KGeoBag;
 namespace KGeoBag
 {
 
-KGMeshAttributor::KGMeshAttributor() : fSurfaces(), fSpaces() {}
+KGMeshAttributor::KGMeshAttributor() = default;
 
 KGMeshAttributor::~KGMeshAttributor()
 {
     KGMesher tMesher;
 
     KGMeshSurface* tMeshSurface;
-    for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-        tMeshSurface = (*tIt)->MakeExtension<KGMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& surface : fSurfaces) {
+        tMeshSurface = surface->MakeExtension<KGMesh>();
+        surface->AcceptNode(&tMesher);
         tMeshSurface->SetName(GetName());
         tMeshSurface->SetTags(GetTags());
     }
     KGMeshSpace* tMeshSpace;
-    for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-        tMeshSpace = (*tIt)->MakeExtension<KGMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& space : fSpaces) {
+        tMeshSpace = space->MakeExtension<KGMesh>();
+        space->AcceptNode(&tMesher);
         tMeshSpace->SetName(GetName());
         tMeshSpace->SetTags(GetTags());
     }
@@ -48,10 +48,11 @@ void KGMeshAttributor::AddSpace(KGSpace* aSpace)
 namespace katrin
 {
 
-template<> KGMeshBuilder::~KComplexElement() {}
+template<> KGMeshBuilder::~KComplexElement() = default;
 
-STATICINT sKGMeshStructure = KGMeshBuilder::Attribute<string>("name") + KGMeshBuilder::Attribute<string>("surfaces") +
-                             KGMeshBuilder::Attribute<string>("spaces");
+STATICINT sKGMeshStructure = KGMeshBuilder::Attribute<std::string>("name") +
+                             KGMeshBuilder::Attribute<std::string>("surfaces") +
+                             KGMeshBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKGMesh = KGInterfaceBuilder::ComplexElement<KGMeshAttributor>("mesh");
 

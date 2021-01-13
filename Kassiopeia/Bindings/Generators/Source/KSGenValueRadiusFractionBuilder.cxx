@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueRadiusFractionBuilder::~KComplexElement() {}
+template<> KSGenValueRadiusFractionBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueRadiusFractionStructure = KSGenValueRadiusFractionBuilder::Attribute<string>("name");
+STATICINT sKSGenValueRadiusFractionStructure = KSGenValueRadiusFractionBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSGenValueRadiusFraction =
     KSRootBuilder::ComplexElement<KSGenValueRadiusFraction>("ksgen_value_radius_fraction");

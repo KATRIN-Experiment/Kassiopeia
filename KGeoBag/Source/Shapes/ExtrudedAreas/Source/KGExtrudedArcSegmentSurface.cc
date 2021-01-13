@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGExtrudedArcSegmentSurface::Visitor::Visitor() {}
+template<> KGExtrudedArcSegmentSurface::Visitor::Visitor() = default;
 
-template<> KGExtrudedArcSegmentSurface::Visitor::~Visitor() {}
+template<> KGExtrudedArcSegmentSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

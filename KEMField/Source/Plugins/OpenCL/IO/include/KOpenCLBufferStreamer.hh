@@ -36,7 +36,7 @@ template<typename Type> struct KOpenCLBufferStreamerType
         return d.Self();
     }
 
-    virtual ~KOpenCLBufferStreamerType() {}
+    virtual ~KOpenCLBufferStreamerType() = default;
     virtual void AppendToBuffer(CL_TYPE x) = 0;
     virtual void ExtractFromBuffer(CL_TYPE& x) = 0;
     virtual KOpenCLBufferStreamer& Self() = 0;
@@ -48,8 +48,8 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KOpenCLBufferStreamerTy
 class KOpenCLBufferStreamer : public KOpenCLBufferStreamerFundamentalTypes
 {
   public:
-    KOpenCLBufferStreamer() {}
-    virtual ~KOpenCLBufferStreamer() {}
+    KOpenCLBufferStreamer() = default;
+    ~KOpenCLBufferStreamer() override = default;
     template<class Streamed> void PreStreamInAction(Streamed&) {}
     template<class Streamed> void PostStreamInAction(Streamed&) {}
     template<class Streamed> void PreStreamOutAction(const Streamed&) {}
@@ -63,15 +63,15 @@ template<class SurfacePolicy> class KOpenCLBufferPolicyStreamer : public KOpenCL
         KOpenCLBufferStreamer(),
         fWrite(true),
         fSurfacePolicy(NULL),
-        fBuffer(NULL),
+        fBuffer(nullptr),
         fBufferSize(0),
         fCounter(0)
     {}
-    ~KOpenCLBufferPolicyStreamer() {}
+    ~KOpenCLBufferPolicyStreamer() override = default;
 
     template<class Policy> void PerformAction(Type2Type<Policy>)
     {
-        Policy* policy = static_cast<Policy*>(fSurfacePolicy);
+        auto* policy = static_cast<Policy*>(fSurfacePolicy);
         if (fWrite) {
             fTypeCounter.Reset();
             fTypeCounter << *policy;
@@ -115,15 +115,15 @@ template<class SurfacePolicy> class KOpenCLBufferPolicyStreamer : public KOpenCL
     }
 
   protected:
-    void AppendToBuffer(CL_TYPE x)
+    void AppendToBuffer(CL_TYPE x) override
     {
         fBuffer[fCounter++] = x;
     }
-    void ExtractFromBuffer(CL_TYPE& x)
+    void ExtractFromBuffer(CL_TYPE& x) override
     {
         x = fBuffer[fCounter++];
     }
-    virtual KOpenCLBufferStreamer& Self()
+    KOpenCLBufferStreamer& Self() override
     {
         return *this;
     }

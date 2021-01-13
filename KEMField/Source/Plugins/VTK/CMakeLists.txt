@@ -44,7 +44,7 @@ if (${PROJECT_NAME}_USE_VTK)
     ${VTK_LIBRARIES}
   )
 
-  add_library (KEMVTKPlugin SHARED ${VTKPLUGIN_SOURCEFILES})
+  add_library (KEMVTKPlugin SHARED ${VTKPLUGIN_SOURCEFILES} ${VTKPLUGIN_HEADERFILES})
   target_link_libraries (KEMVTKPlugin ${VTKPLUGIN_LINK_LIBRARIES})
 
   kasper_install_headers (${VTKPLUGIN_HEADERFILES})

@@ -3,7 +3,7 @@
 namespace Kassiopeia
 {
 
-KSTerminator::KSTerminator() {}
-KSTerminator::~KSTerminator() {}
+KSTerminator::KSTerminator() = default;
+KSTerminator::~KSTerminator() = default;
 
 }  // namespace Kassiopeia

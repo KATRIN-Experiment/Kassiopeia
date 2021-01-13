@@ -8,8 +8,8 @@ namespace KGeoBag
 {
 KGRotatedObject::~KGRotatedObject()
 {
-    for (unsigned int i = 0; i < fSegments.size(); i++)
-        delete fSegments.at(i);
+    for (auto& segment : fSegments)
+        delete segment;
 }
 
 KGRotatedObject* KGRotatedObject::Clone() const
@@ -24,8 +24,8 @@ KGRotatedObject* KGRotatedObject::Clone() const
     tClone->fNSegments = fNSegments;
     tClone->fDiscretizationPower = fDiscretizationPower;
 
-    for (size_t i = 0; i < fSegments.size(); i++)
-        tClone->fSegments.push_back(fSegments[i]->Clone(tClone));
+    for (auto* segment : fSegments)
+        tClone->fSegments.push_back(segment->Clone(tClone));
 
     return tClone;
 }
@@ -72,8 +72,8 @@ bool KGRotatedObject::ContainsPoint(const double* P) const
 {
     // Determines if point <aPoint> is contained by the geometry.
 
-    for (unsigned int i = 0; i < fSegments.size(); i++)
-        if (fSegments.at(i)->ContainsPoint(P))
+    for (auto* segment : fSegments)
+        if (segment->ContainsPoint(P))
             return true;
 
     return false;
@@ -82,16 +82,16 @@ bool KGRotatedObject::ContainsPoint(const double* P) const
 double KGRotatedObject::Area() const
 {
     double area = 0.;
-    for (unsigned int i = 0; i < fSegments.size(); i++)
-        area += fSegments.at(i)->Area();
+    for (auto* segment : fSegments)
+        area += segment->Area();
     return area;
 }
 
 double KGRotatedObject::Volume() const
 {
     double volume = 0.;
-    for (unsigned int i = 0; i < fSegments.size(); i++)
-        volume += fSegments.at(i)->Volume();
+    for (auto* segment : fSegments)
+        volume += segment->Volume();
     return volume;
 }
 
@@ -103,8 +103,8 @@ double KGRotatedObject::DistanceTo(const double* P, double* P_in, double* P_norm
     double P_in1[3];
     double P_norm1[3];
 
-    for (unsigned int i = 0; i < fSegments.size(); i++) {
-        distance1 = fSegments.at(i)->DistanceTo(P, P_in1, P_norm1);
+    for (auto* segment : fSegments) {
+        distance1 = segment->DistanceTo(P, P_in1, P_norm1);
         if (distance1 < distance) {
             for (unsigned int j = 0; j < 3; j++) {
                 if (P_in)
@@ -614,15 +614,15 @@ void KGRotatedObject::Arc::FindCenter() const
     // unit vector pointing from p1 to p2
     double unit[2] = {fP2[0] - fP1[0], fP2[1] - fP1[1]};
     double chord = sqrt(unit[0] * unit[0] + unit[1] * unit[1]);
-    for (int i = 0; i < 2; i++)
-        unit[i] /= chord;
+    for (double& i : unit)
+        i /= chord;
 
     // unit vector normal to line connecting p1 and p2
     double norm[2] = {-unit[1], unit[0]};
 
     if (!fPositiveOrientation)
-        for (int i = 0; i < 2; i++)
-            norm[i] *= -1.;
+        for (double& i : norm)
+            i *= -1.;
 
     double theta = 2. * asin(chord / (2. * fRadius));
 
@@ -681,7 +681,7 @@ double KGRotatedObject::Arc::GetLength() const
     return fRadius * theta;
 }
 
-double KGRotatedObject::Arc::NormalizeAngle(double angle) const
+double KGRotatedObject::Arc::NormalizeAngle(double angle)
 {
     double normalized_angle = angle;
     while (normalized_angle > 2. * M_PI)
@@ -706,8 +706,7 @@ double KGRotatedObject::Arc::GetRadius(double z) const
     return fCenter[0] + (fPositiveOrientation ? 1. : -1.) * r;
 }
 
-bool KGRotatedObject::Arc::AngleIsWithinRange(double phi_test, double phi_min, double phi_max,
-                                              bool positiveOrientation) const
+bool KGRotatedObject::Arc::AngleIsWithinRange(double phi_test, double phi_min, double phi_max, bool positiveOrientation)
 {
     // determines whether or not <phi_test> is sandwiched by <phi_min> and
     // <phi_max>.

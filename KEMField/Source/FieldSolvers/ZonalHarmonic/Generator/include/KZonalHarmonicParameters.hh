@@ -1,6 +1,7 @@
 #ifndef KZONALHARMONICPARAMETERS_DEF
 #define KZONALHARMONICPARAMETERS_DEF
 
+#include <string>
 
 namespace KEMField
 {
@@ -25,7 +26,7 @@ class KZonalHarmonicParameters
         fRemoteZ2(0.)
     {}
 
-    virtual ~KZonalHarmonicParameters() {}
+    virtual ~KZonalHarmonicParameters() = default;
 
     static std::string Name()
     {

@@ -44,7 +44,7 @@ set (FIELDSOLVER_MAGNETIC_LINK_LIBRARIES
 
 # library
 kasper_internal_include_directories( ${FIELDSOLVER_MAGNETIC_HEADER_PATH} )
-add_library( KEMMagneticFieldSolvers SHARED ${FIELDSOLVER_MAGNETIC_SOURCE_FILENAMES} )
+add_library( KEMMagneticFieldSolvers SHARED ${FIELDSOLVER_MAGNETIC_SOURCE_FILENAMES} ${FIELDSOLVER_MAGNETIC_HEADER_FILENAMES} )
 set_target_properties( KEMMagneticFieldSolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KEMMagneticFieldSolvers 
     ${FIELDSOLVER_MAGNETIC_LINK_LIBRARIES}

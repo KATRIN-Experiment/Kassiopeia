@@ -27,8 +27,10 @@ namespace KEMField
 class KFMElectrostaticBasisDataExtractor : public KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>
 {
   public:
-    KFMElectrostaticBasisDataExtractor(){};
-    ~KFMElectrostaticBasisDataExtractor() override{};
+    KFMElectrostaticBasisDataExtractor() = default;
+    ;
+    ~KFMElectrostaticBasisDataExtractor() override = default;
+    ;
 
     using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>::Visit;
 

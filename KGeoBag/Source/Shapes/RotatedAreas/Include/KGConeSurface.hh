@@ -12,6 +12,11 @@ class KGConeSurface : public KGRotatedLineSegmentSurface
     KGConeSurface();
     ~KGConeSurface() override;
 
+    static std::string Name()
+    {
+        return "cone_surface";
+    }
+
   public:
     void ZA(const double& aZA);
     void ZB(const double& aZB);

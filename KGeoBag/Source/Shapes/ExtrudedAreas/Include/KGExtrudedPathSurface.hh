@@ -52,7 +52,12 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
         fExtrudedMeshCount(8),
         fExtrudedMeshPower(1.)
     {}
-    ~KGExtrudedPathSurface() override {}
+    ~KGExtrudedPathSurface() override = default;
+
+    static std::string Name()
+    {
+        return "extruded_" + XPathType::Name() + "_surface";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -137,7 +142,7 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KThreeVector& aPoint) const override
+    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         double tXYAbove = fPath->Above(tXYPoint);
@@ -148,7 +153,7 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
             return false;
         }
     }
-    KThreeVector AreaPoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         KTwoVector tXYNearest = fPath->Point(tXYPoint);
@@ -161,13 +166,13 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
             tZ = fZMax;
         }
 
-        return KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZ);
+        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZ);
     }
-    KThreeVector AreaNormal(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         KTwoVector tXYNormal = fPath->Normal(tXYPoint);
-        return KThreeVector(fSign * tXYNormal.X(), fSign * tXYNormal.Y(), 0.);
+        return KGeoBag::KThreeVector(fSign * tXYNormal.X(), fSign * tXYNormal.Y(), 0.);
     }
 
   private:

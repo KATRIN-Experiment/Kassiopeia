@@ -42,7 +42,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${CHARGEDENSITYSOLVER_ELECTRIC_HEADER_PATH} )
-add_library( KEMFieldChargeDensitySolvers SHARED ${CHARGEDENSITYSOLVER_ELECTRIC_SOURCE_FILENAMES} )
+add_library( KEMFieldChargeDensitySolvers SHARED ${CHARGEDENSITYSOLVER_ELECTRIC_SOURCE_FILENAMES} ${CHARGEDENSITYSOLVER_ELECTRIC_HEADER_FILENAMES} )
 set_target_properties( KEMFieldChargeDensitySolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KEMFieldChargeDensitySolvers
     ${KGeoBag_LIBRARIES}

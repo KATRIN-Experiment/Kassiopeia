@@ -11,7 +11,7 @@ namespace KEMField
 {
 
 
-KIntegratingMagnetostaticFieldSolver::KIntegratingMagnetostaticFieldSolver() {}
+KIntegratingMagnetostaticFieldSolver::KIntegratingMagnetostaticFieldSolver() = default;
 
 void KIntegratingMagnetostaticFieldSolver::InitializeCore(KElectromagnetContainer& container)
 {
@@ -20,12 +20,12 @@ void KIntegratingMagnetostaticFieldSolver::InitializeCore(KElectromagnetContaine
     fIntegratingFieldSolver = new KIntegratingFieldSolver<KElectromagnetIntegrator>(container, fIntegrator);
 }
 
-KThreeVector KIntegratingMagnetostaticFieldSolver::MagneticPotentialCore(const KPosition& P) const
+KFieldVector KIntegratingMagnetostaticFieldSolver::MagneticPotentialCore(const KPosition& P) const
 {
     return fIntegratingFieldSolver->VectorPotential(P);
 }
 
-KThreeVector KIntegratingMagnetostaticFieldSolver::MagneticFieldCore(const KPosition& P) const
+KFieldVector KIntegratingMagnetostaticFieldSolver::MagneticFieldCore(const KPosition& P) const
 {
     return fIntegratingFieldSolver->MagneticField(P);
 }

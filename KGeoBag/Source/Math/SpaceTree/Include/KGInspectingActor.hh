@@ -20,8 +20,10 @@ namespace KGeoBag
 template<typename NodeType> class KGInspectingActor
 {
   public:
-    KGInspectingActor(){};
-    virtual ~KGInspectingActor(){};
+    KGInspectingActor() = default;
+    ;
+    virtual ~KGInspectingActor() = default;
+    ;
 
     //needs to answer this question about whether this node statisfies a condition
     virtual bool ConditionIsSatisfied(NodeType* node) = 0;

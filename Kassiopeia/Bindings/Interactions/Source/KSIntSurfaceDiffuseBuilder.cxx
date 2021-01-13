@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntSurfaceDiffuseBuilder::~KComplexElement() {}
+template<> KSIntSurfaceDiffuseBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntSurfaceDiffuseStructure = KSIntSurfaceDiffuseBuilder::Attribute<string>("name") +
+STATICINT sKSIntSurfaceDiffuseStructure = KSIntSurfaceDiffuseBuilder::Attribute<std::string>("name") +
                                           KSIntSurfaceDiffuseBuilder::Attribute<double>("reflection_loss") +
                                           KSIntSurfaceDiffuseBuilder::Attribute<double>("transmission_loss") +
                                           KSIntSurfaceDiffuseBuilder::Attribute<double>("reflection_loss_fraction") +

@@ -55,7 +55,7 @@ class KFMPinchonJMatrixCalculator
     void AllocateMatrices(std::vector<kfm_matrix*>* matrices);
 
     ///this function will deallocate all the matrices in the given vector
-    void DeallocateMatrices(std::vector<kfm_matrix*>* matrices);
+    static void DeallocateMatrices(std::vector<kfm_matrix*>* matrices);
 
     ///this functions takes an pointer to a vector of pointers of kfm_matrix
     ///the matrices must be allocated before calling this function
@@ -66,7 +66,7 @@ class KFMPinchonJMatrixCalculator
   protected:
     void ComputeJMatrixFromPrevious(unsigned int target_degree, kfm_matrix* prev, kfm_matrix* target);
 
-    bool CheckMatrixSizes(std::vector<kfm_matrix*>* matrices);
+    static bool CheckMatrixSizes(std::vector<kfm_matrix*>* matrices);
 
     unsigned int fDegree;
     KFMPinchonGMatrixCalculator* fGCalc;

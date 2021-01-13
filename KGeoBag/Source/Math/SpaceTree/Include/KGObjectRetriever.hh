@@ -23,8 +23,10 @@ namespace KGeoBag
 template<typename ObjectTypeList, typename ObjectType> class KGObjectRetriever
 {
   public:
-    KGObjectRetriever(){};
-    virtual ~KGObjectRetriever(){};
+    KGObjectRetriever() = default;
+    ;
+    virtual ~KGObjectRetriever() = default;
+    ;
 
     static ObjectType* GetNodeObject(KGNode<ObjectTypeList>* node)
     {

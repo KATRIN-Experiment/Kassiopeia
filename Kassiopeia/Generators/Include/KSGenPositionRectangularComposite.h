@@ -28,10 +28,10 @@ class KSGenPositionRectangularComposite : public KSComponentTemplate<KSGenPositi
     void SetZValue(KSGenValue* anZValue);
     void ClearZValue(KSGenValue* anZValue);
 
-    void SetOrigin(const KThreeVector& anOrigin);
-    void SetXAxis(const KThreeVector& anXAxis);
-    void SetYAxis(const KThreeVector& anYAxis);
-    void SetZAxis(const KThreeVector& anZAxis);
+    void SetOrigin(const KGeoBag::KThreeVector& anOrigin);
+    void SetXAxis(const KGeoBag::KThreeVector& anXAxis);
+    void SetYAxis(const KGeoBag::KThreeVector& anYAxis);
+    void SetZAxis(const KGeoBag::KThreeVector& anZAxis);
 
     typedef enum
     {
@@ -41,10 +41,10 @@ class KSGenPositionRectangularComposite : public KSComponentTemplate<KSGenPositi
     } CoordinateType;
 
   private:
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 
     std::map<CoordinateType, int> fCoordinateMap;
     std::vector<std::pair<CoordinateType, KSGenValue*>> fValues;

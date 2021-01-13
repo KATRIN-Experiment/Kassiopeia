@@ -17,14 +17,14 @@ STATICINT sKGCircularWirePinsBuilderStructure = KGCircularWirePinsBuilder::Attri
                                                 KGCircularWirePinsBuilder::Attribute<double>("mesh_power");
 
 STATICINT sKGCircularWirePinsSurfaceBuilderStructure =
-    KGCircularWirePinsSurfaceBuilder::Attribute<string>("name") +
+    KGCircularWirePinsSurfaceBuilder::Attribute<std::string>("name") +
     KGCircularWirePinsSurfaceBuilder::ComplexElement<KGCircularWirePins>("circular_wire_pins");
 
 STATICINT sKGCircularWirePinsSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGCircularWirePins>>("circular_wire_pins_surface");
 
 STATICINT sKGCircleWireSpaceBuilderStructure =
-    KGCircularWirePinsSpaceBuilder::Attribute<string>("name") +
+    KGCircularWirePinsSpaceBuilder::Attribute<std::string>("name") +
     KGCircularWirePinsSpaceBuilder::ComplexElement<KGCircularWirePins>("circular_wire_pins");
 
 STATICINT sKGCircularWirePinsSpaceBuilder =

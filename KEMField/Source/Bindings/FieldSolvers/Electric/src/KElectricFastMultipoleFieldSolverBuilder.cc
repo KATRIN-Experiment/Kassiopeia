@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectricFastMultipoleFieldSolverBuilder::~KComplexElement() {}
+template<> KElectricFastMultipoleFieldSolverBuilder::~KComplexElement() = default;
 
 STATICINT sKElectricFastMultipoleFieldSolverStructure =
     KElectricFastMultipoleFieldSolverBuilder::Attribute<unsigned int>("top_level_divisions") +

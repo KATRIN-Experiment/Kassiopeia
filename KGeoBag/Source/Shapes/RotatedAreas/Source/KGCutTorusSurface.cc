@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGCutTorusSurface::Visitor::Visitor() {}
-KGCutTorusSurface::Visitor::~Visitor() {}
+KGCutTorusSurface::Visitor::Visitor() = default;
+KGCutTorusSurface::Visitor::~Visitor() = default;
 
 KGCutTorusSurface::KGCutTorusSurface() :
     fZ1(0.),
@@ -17,7 +17,7 @@ KGCutTorusSurface::KGCutTorusSurface() :
     fToroidalMeshCount(64),
     fAxialMeshCount(64)
 {}
-KGCutTorusSurface::~KGCutTorusSurface() {}
+KGCutTorusSurface::~KGCutTorusSurface() = default;
 
 void KGCutTorusSurface::Z1(const double& aZ1)
 {

@@ -24,7 +24,8 @@ template<typename ValueType> class KIdentityPreconditioner : public KPreconditio
   public:
     KIdentityPreconditioner(unsigned int dimension) : fDimension(dimension), fOne(1), fZero(0){};
 
-    virtual ~KIdentityPreconditioner(){};
+    virtual ~KIdentityPreconditioner() = default;
+    ;
 
     virtual std::string Name()
     {

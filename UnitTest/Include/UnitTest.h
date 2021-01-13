@@ -49,8 +49,8 @@ class TimeoutTest : public ::testing::Test
   public:
     static int GetTimeoutSeconds()
     {
-        return 30;
-    }  // all tests should complete within 30 seconds
+        return 60;
+    }  // all tests should complete within 60 seconds
 
   protected:
     typedef void Sigfunc(int);

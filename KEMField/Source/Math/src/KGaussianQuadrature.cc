@@ -15,7 +15,7 @@ namespace KEMField
    * @param n Granularity of numerical integrator.
    * @param ans An array of the results from integration.
    */
-void KGaussianQuadrature::operator()(double (**f)(const double*, double*), int m, double a, double b, double* par,
+void KGaussianQuadrature::operator()(double (**f)(const double*, const double*), int m, double a, double b, double* par,
                                      int n, double* ans) const
 {
     int i, j;

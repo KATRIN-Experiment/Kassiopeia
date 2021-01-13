@@ -19,15 +19,15 @@ KElectrostaticBoundaryFieldTimer::KElectrostaticBoundaryFieldTimer() :
     Postprocessing(true);
 }
 
-KElectrostaticBoundaryFieldTimer::~KElectrostaticBoundaryFieldTimer() {}
+KElectrostaticBoundaryFieldTimer::~KElectrostaticBoundaryFieldTimer() = default;
 
-void KElectrostaticBoundaryFieldTimer::PreVisit(KElectrostaticBoundaryField&)
+void KElectrostaticBoundaryFieldTimer::PreVisit(KElectrostaticBoundaryField& /*unused*/)
 {
     fChargeDensityTimer = KTimer("charge density solver initialization");
     fChargeDensityTimer.start();
 }
 
-void KElectrostaticBoundaryFieldTimer::InBetweenVisit(KElectrostaticBoundaryField&)
+void KElectrostaticBoundaryFieldTimer::InBetweenVisit(KElectrostaticBoundaryField& /*unused*/)
 {
     fChargeDensityTimer.end();
     fChargeDensityTimer.display();
@@ -35,7 +35,7 @@ void KElectrostaticBoundaryFieldTimer::InBetweenVisit(KElectrostaticBoundaryFiel
     fFieldSolverTimer.start();
 }
 
-void KElectrostaticBoundaryFieldTimer::PostVisit(KElectrostaticBoundaryField&)
+void KElectrostaticBoundaryFieldTimer::PostVisit(KElectrostaticBoundaryField& /*unused*/)
 {
     fFieldSolverTimer.end();
     fFieldSolverTimer.display();

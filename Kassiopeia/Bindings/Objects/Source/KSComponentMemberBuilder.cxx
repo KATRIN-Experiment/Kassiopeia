@@ -9,11 +9,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSComponentBuilder::~KComplexElement() {}
+template<> KSComponentBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentStructure = KSComponentBuilder::Attribute<string>("name") +
-                                  KSComponentBuilder::Attribute<string>("parent") +
-                                  KSComponentBuilder::Attribute<string>("field");
+STATICINT sKSComponentStructure = KSComponentBuilder::Attribute<std::string>("name") +
+                                  KSComponentBuilder::Attribute<std::string>("parent") +
+                                  KSComponentBuilder::Attribute<std::string>("field");
 
 STATICINT sKSComponent = KSComponentGroupBuilder::ComplexElement<KSComponentMemberData>("component_member") +
                          KSComponentGroupBuilder::ComplexElement<KSComponentMemberData>("output") +

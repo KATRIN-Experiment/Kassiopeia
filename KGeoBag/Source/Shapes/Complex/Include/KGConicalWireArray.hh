@@ -16,7 +16,7 @@ class KGConicalWireArray : public KGBoundary
       A class describing a wire array with a conic section profile
     */
   public:
-    KGConicalWireArray() {}
+    KGConicalWireArray() = default;
     KGConicalWireArray(double r1, double z1, double r2, double z2, unsigned int nWires, double thetaStart,
                        double diameter, unsigned int nDisc, double nDiscPower) :
         fR1(r1),
@@ -30,7 +30,7 @@ class KGConicalWireArray : public KGBoundary
         fNDiscPower(nDiscPower)
     {}
 
-    ~KGConicalWireArray() override {}
+    ~KGConicalWireArray() override = default;
 
     static std::string Name()
     {
@@ -40,7 +40,7 @@ class KGConicalWireArray : public KGBoundary
     virtual KGConicalWireArray* Clone() const;
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }

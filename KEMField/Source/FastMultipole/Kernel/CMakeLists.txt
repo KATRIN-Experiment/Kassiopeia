@@ -25,7 +25,7 @@ set (KERNEL_SOURCEFILES
 
 ##################################################
 
-add_library (KFMKernel SHARED ${KERNEL_SOURCEFILES})
+add_library (KFMKernel SHARED ${KERNEL_SOURCEFILES} ${KERNEL_HEADERFILES})
 target_link_libraries (KFMKernel KFMCore KFMMath)
 
 kasper_install_headers (${KERNEL_HEADERFILES})

@@ -12,11 +12,10 @@
 #include "KSurfaceContainer.hh"
 
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 #ifdef KEMFIELD_USE_VTK
@@ -34,16 +33,15 @@ int main(int argc, char** argv)
     if (test == 0) {
         double a = 1.5;
         double b = 1.3;
-        KThreeVector p0(0., 0., -1.);
-        KThreeVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
-        KThreeVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
+        KFieldVector p0(0., 0., -1.);
+        KFieldVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
+        KFieldVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
 
         double dirichletValue = 10.2;
 
         double chargeDensity = 4.8;
 
-        KSurface<KElectrostaticBasis, KDirichletBoundary, KSymmetryGroup<KRectangle>>* tg =
-            new KSurface<KElectrostaticBasis, KDirichletBoundary, KSymmetryGroup<KRectangle>>();
+        auto* tg = new KSurface<KElectrostaticBasis, KDirichletBoundary, KSymmetryGroup<KRectangle>>();
 
         KRectangle* t = tg->NewElement();
 
@@ -59,14 +57,14 @@ int main(int argc, char** argv)
         KEMField::cout << "Before symmetry: " << KEMField::endl;
         KEMField::cout << *tg << KEMField::endl;
 
-        tg->AddReflectionThroughPlane(KGeoBag::KThreeVector(0., 0., 0.), KGeoBag::KThreeVector(0., 0., -1.));
+        tg->AddReflectionThroughPlane(KFieldVector(0., 0., 0.), KFieldVector(0., 0., -1.));
 
         KEMField::cout << "After symmetry: " << KEMField::endl;
         KEMField::cout << *tg << KEMField::endl;
     }
     else if (test == 1) {
 #ifdef KEMFIELD_USE_KGEOBAG
-        KGeoBag::KGConicalWireArray* wireArray = new KGeoBag::KGConicalWireArray();
+        auto* wireArray = new KGeoBag::KGConicalWireArray();
         wireArray->SetR1(1.);
         wireArray->SetZ1(0.);
         wireArray->SetR2(1.5);
@@ -75,15 +73,15 @@ int main(int argc, char** argv)
         wireArray->SetDiameter(.003);
         wireArray->SetNDisc(30);
 
-        KGeoBag::KGConicalWireArraySurface* wASurface = new KGeoBag::KGConicalWireArraySurface(wireArray);
-        KGeoBag::KGSurface* wireArraySurface = new KGeoBag::KGSurface(wASurface);
+        auto* wASurface = new KGeoBag::KGConicalWireArraySurface(wireArray);
+        auto* wireArraySurface = new KGeoBag::KGSurface(wASurface);
         wireArraySurface->SetName("conicalWireArray");
         wireArraySurface->MakeExtension<KGeoBag::KGDiscreteRotationalMesh>();
         wireArraySurface->MakeExtension<KGeoBag::KGElectrostaticDirichlet>();
         wireArraySurface->AsExtension<KGeoBag::KGElectrostaticDirichlet>()->SetBoundaryValue(1.);
 
         // Mesh the elements
-        KGeoBag::KGDiscreteRotationalMesher* mesher = new KGeoBag::KGDiscreteRotationalMesher();
+        auto* mesher = new KGeoBag::KGDiscreteRotationalMesher();
         mesher->SetAxialCount(100);
         wireArraySurface->AcceptNode(mesher);
 

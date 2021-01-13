@@ -17,12 +17,11 @@ template<> inline bool KSModDynamicEnhancementBuilder::AddAttribute(KContainer* 
         return true;
     }
     if (aContainer->GetName() == "synchrotron") {
-        fObject->SetSynchrotron(
-            KToolbox::GetInstance().Get<KSTrajTermSynchrotron>(aContainer->AsReference<std::string>()));
+        fObject->SetSynchrotron(KToolbox::GetInstance().Get<KSTrajTermSynchrotron>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "scattering") {
-        fObject->SetScattering(KToolbox::GetInstance().Get<KSIntScattering>(aContainer->AsReference<std::string>()));
+        fObject->SetScattering(KToolbox::GetInstance().Get<KSIntScattering>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "static_enhancement") {

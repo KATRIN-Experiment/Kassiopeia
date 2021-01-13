@@ -4,12 +4,15 @@
 
 #include <cmath>
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSGenSpinRelativeComposite::KSGenSpinRelativeComposite() : fThetaValue(nullptr), fPhiValue(nullptr) {}
 KSGenSpinRelativeComposite::KSGenSpinRelativeComposite(const KSGenSpinRelativeComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fThetaValue(aCopy.fThetaValue),
     fPhiValue(aCopy.fPhiValue)
 {}
@@ -17,7 +20,7 @@ KSGenSpinRelativeComposite* KSGenSpinRelativeComposite::Clone() const
 {
     return new KSGenSpinRelativeComposite(*this);
 }
-KSGenSpinRelativeComposite::~KSGenSpinRelativeComposite() {}
+KSGenSpinRelativeComposite::~KSGenSpinRelativeComposite() = default;
 
 void KSGenSpinRelativeComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -36,8 +39,8 @@ void KSGenSpinRelativeComposite::Dice(KSParticleQueue* aPrimaries)
     vector<double>::iterator tThetaValueIt;
 
     double tPhiValue;
-    vector<double> tPhiValues;
-    vector<double>::iterator tPhiValueIt;
+    std::vector<double> tPhiValues;
+    std::vector<double>::iterator tPhiValueIt;
 
     fThetaValue->DiceValue(tThetaValues);
     fPhiValue->DiceValue(tPhiValues);

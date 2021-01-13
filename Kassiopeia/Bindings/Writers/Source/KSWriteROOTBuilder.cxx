@@ -8,11 +8,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSWriteROOTBuilder::~KComplexElement() {}
+template<> KSWriteROOTBuilder::~KComplexElement() = default;
 
-STATICINT sKSWriteROOTStructure = KSWriteROOTBuilder::Attribute<string>("name") +
-                                  KSWriteROOTBuilder::Attribute<string>("base") +
-                                  KSWriteROOTBuilder::Attribute<string>("path");
+STATICINT sKSWriteROOTStructure = KSWriteROOTBuilder::Attribute<std::string>("name") +
+                                  KSWriteROOTBuilder::Attribute<std::string>("base") +
+                                  KSWriteROOTBuilder::Attribute<std::string>("path");
 
 STATICINT sKSWriteROOT = KSRootBuilder::ComplexElement<KSWriteROOT>("kswrite_root");
 

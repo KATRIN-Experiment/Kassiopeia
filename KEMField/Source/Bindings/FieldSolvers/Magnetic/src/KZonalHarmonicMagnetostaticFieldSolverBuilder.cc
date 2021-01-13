@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KZonalHarmonicMagnetostaticFieldSolverBuilder::~KComplexElement() {}
+template<> KZonalHarmonicMagnetostaticFieldSolverBuilder::~KComplexElement() = default;
 
 STATICINT sKZonalHarmonicMagnetostaticFieldSolverStructure =
     KZonalHarmonicMagnetostaticFieldSolverBuilder::Attribute<unsigned int>("number_of_bifurcations") +

@@ -226,7 +226,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagShapes SHARED
-    ${SHAPES_SOURCE_FILES}
+    ${SHAPES_SOURCE_FILES} ${SHAPES_HEADER_FILES}
 )
 target_link_libraries( KGeoBagShapes
     ${Kommon_LIBRARIES}

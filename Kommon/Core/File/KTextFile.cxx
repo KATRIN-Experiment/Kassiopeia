@@ -8,7 +8,7 @@ namespace katrin
 {
 
 KTextFile::KTextFile() : fFile(nullptr) {}
-KTextFile::~KTextFile() {}
+KTextFile::~KTextFile() = default;
 
 bool KTextFile::OpenFileSubclass(const string& aName, const Mode& aMode)
 {
@@ -71,8 +71,8 @@ namespace katrin
 {
 
 STATICINT sTextFileStructure =
-    KTextFileBuilder::Attribute<string>("path") + KTextFileBuilder::Attribute<string>("default_path") +
-    KTextFileBuilder::Attribute<string>("base") + KTextFileBuilder::Attribute<string>("default_base") +
-    KTextFileBuilder::Attribute<string>("name");
+    KTextFileBuilder::Attribute<std::string>("path") + KTextFileBuilder::Attribute<std::string>("default_path") +
+    KTextFileBuilder::Attribute<std::string>("base") + KTextFileBuilder::Attribute<std::string>("default_base") +
+    KTextFileBuilder::Attribute<std::string>("name");
 
 }

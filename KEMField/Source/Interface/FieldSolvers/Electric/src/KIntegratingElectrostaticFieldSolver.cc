@@ -7,7 +7,7 @@
 
 #include "KIntegratingElectrostaticFieldSolver.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {
@@ -61,7 +61,7 @@ void KIntegratingElectrostaticFieldSolver::InitializeCore(KSurfaceContainer& con
         fOCLIntegratingFieldSolver->Initialize();
         return;
 #else
-        cout << "Warning: OpenCL not installed, running integrating field solver on CPU." << endl;
+        kem_cout(eWarning) << "Warning: OpenCL not installed, running integrating field solver on CPU." << eom;
 #endif
     }
     fIntegrator = new KElectrostaticBoundaryIntegrator{fIntegratorPolicy.CreateIntegrator()};
@@ -78,7 +78,7 @@ double KIntegratingElectrostaticFieldSolver::PotentialCore(const KPosition& P) c
     return fIntegratingFieldSolver->Potential(P);
 }
 
-KThreeVector KIntegratingElectrostaticFieldSolver::ElectricFieldCore(const KPosition& P) const
+KFieldVector KIntegratingElectrostaticFieldSolver::ElectricFieldCore(const KPosition& P) const
 {
     if (fUseOpenCL) {
 #ifdef KEMFIELD_USE_OPENCL

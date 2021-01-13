@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGExtrudedLineSegmentSurfaceMesher::KGExtrudedLineSegmentSurfaceMesher() : KGSimpleMesher() {}
-KGExtrudedLineSegmentSurfaceMesher::~KGExtrudedLineSegmentSurfaceMesher() {}
+KGExtrudedLineSegmentSurfaceMesher::KGExtrudedLineSegmentSurfaceMesher() = default;
+KGExtrudedLineSegmentSurfaceMesher::~KGExtrudedLineSegmentSurfaceMesher() = default;
 
 void KGExtrudedLineSegmentSurfaceMesher::VisitExtrudedPathSurface(
     KGExtrudedLineSegmentSurface* aExtrudedLineSegmentSurface)

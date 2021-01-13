@@ -122,7 +122,7 @@ void KFMFastFourierTransformUtilities::FFTRadixTwo_DIF(unsigned int N, std::comp
     FFTRadixTwo_DIF(N, (double*) &(data[0]), (double*) &(twiddle[0]));
 }
 
-void KFMFastFourierTransformUtilities::ButterflyRadixTwo_CooleyTukey(double* H0, double* H1, double* W)
+void KFMFastFourierTransformUtilities::ButterflyRadixTwo_CooleyTukey(double* H0, double* H1, const double* W)
 {
     ////////////////////////////////////////////////////////////////////////
     //See page 23
@@ -144,7 +144,7 @@ void KFMFastFourierTransformUtilities::ButterflyRadixTwo_CooleyTukey(double* H0,
 }
 
 
-void KFMFastFourierTransformUtilities::ButterflyRadixTwo_GentlemanSande(double* H0, double* H1, double* W)
+void KFMFastFourierTransformUtilities::ButterflyRadixTwo_GentlemanSande(double* H0, double* H1, const double* W)
 {
     ////////////////////////////////////////////////////////////////////////
     //See page 25

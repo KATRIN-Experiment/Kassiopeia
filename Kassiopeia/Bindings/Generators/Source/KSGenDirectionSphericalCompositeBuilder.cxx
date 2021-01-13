@@ -21,14 +21,14 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenDirectionSphericalCompositeBuilder::~KComplexElement() {}
+template<> KSGenDirectionSphericalCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenDirectionSphericalCompositeStructure =
-    KSGenDirectionSphericalCompositeBuilder::Attribute<string>("name") +
-    KSGenDirectionSphericalCompositeBuilder::Attribute<string>("theta") +
-    KSGenDirectionSphericalCompositeBuilder::Attribute<string>("phi") +
-    KSGenDirectionSphericalCompositeBuilder::Attribute<string>("surface") +
-    KSGenDirectionSphericalCompositeBuilder::Attribute<string>("space") +
+    KSGenDirectionSphericalCompositeBuilder::Attribute<std::string>("name") +
+    KSGenDirectionSphericalCompositeBuilder::Attribute<std::string>("theta") +
+    KSGenDirectionSphericalCompositeBuilder::Attribute<std::string>("phi") +
+    KSGenDirectionSphericalCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenDirectionSphericalCompositeBuilder::Attribute<std::string>("space") +
     KSGenDirectionSphericalCompositeBuilder::ComplexElement<KSGenValueFix>("theta_fix") +
     KSGenDirectionSphericalCompositeBuilder::ComplexElement<KSGenValueSet>("theta_set") +
     KSGenDirectionSphericalCompositeBuilder::ComplexElement<KSGenValueList>("theta_list") +

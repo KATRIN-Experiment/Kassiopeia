@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 KGBoundary::KGBoundary() : fInitialized(false) {}
-KGBoundary::KGBoundary(const KGBoundary& aCopy) : KTagged(), fInitialized(aCopy.fInitialized) {}
-KGBoundary::~KGBoundary() {}
+KGBoundary::KGBoundary(const KGBoundary&) = default;
+KGBoundary::~KGBoundary() = default;
 
 void KGBoundary::Accept(KGVisitor* /*aVisitor*/) {}
 }  // namespace KGeoBag

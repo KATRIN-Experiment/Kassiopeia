@@ -9,7 +9,7 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSRootBuilder::~KComplexElement() {}
+template<> KSRootBuilder::~KComplexElement() = default;
 
 STATICINT sKSRoot = KRootBuilder::ComplexElement<KSRoot>("kassiopeia");
 

@@ -25,7 +25,7 @@ class KSException : public katrin::KExceptionPrototype<KSException, katrin::KExc
 class KSFieldError : public katrin::KExceptionPrototype<KSFieldError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "field_error";
     };
@@ -34,7 +34,7 @@ class KSFieldError : public katrin::KExceptionPrototype<KSFieldError, KSExceptio
 class KSGeneratorError : public katrin::KExceptionPrototype<KSGeneratorError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "generator_error";
     };
@@ -43,7 +43,7 @@ class KSGeneratorError : public katrin::KExceptionPrototype<KSGeneratorError, KS
 class KSNavigatorError : public katrin::KExceptionPrototype<KSNavigatorError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "navigator_error";
     };
@@ -52,7 +52,7 @@ class KSNavigatorError : public katrin::KExceptionPrototype<KSNavigatorError, KS
 class KSInteractionError : public katrin::KExceptionPrototype<KSInteractionError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "interaction_error";
     };
@@ -61,7 +61,7 @@ class KSInteractionError : public katrin::KExceptionPrototype<KSInteractionError
 class KSTrajectoryError : public katrin::KExceptionPrototype<KSTrajectoryError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "trajectory_error";
     };
@@ -70,7 +70,7 @@ class KSTrajectoryError : public katrin::KExceptionPrototype<KSTrajectoryError, 
 class KSTerminatorError : public katrin::KExceptionPrototype<KSTerminatorError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "terminatior_error";
     };
@@ -79,7 +79,7 @@ class KSTerminatorError : public katrin::KExceptionPrototype<KSTerminatorError, 
 class KSWriterError : public katrin::KExceptionPrototype<KSWriterError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "writer_error";
     };
@@ -88,7 +88,7 @@ class KSWriterError : public katrin::KExceptionPrototype<KSWriterError, KSExcept
 class KSModifierError : public katrin::KExceptionPrototype<KSModifierError, KSException>
 {
   public:
-    virtual std::string SignalName() const
+    std::string SignalName() const override
     {
         return "modifier_error";
     };

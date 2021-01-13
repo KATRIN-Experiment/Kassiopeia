@@ -6,7 +6,7 @@ namespace KEMField
 {
 struct KGaussianQuadrature
 {
-    void operator()(double (**f)(const double*, double*), int m, double a, double b, double* par, int n,
+    void operator()(double (**f)(const double*, const double*), int m, double a, double b, double* par, int n,
                     double* ans) const;
 };
 }  // namespace KEMField

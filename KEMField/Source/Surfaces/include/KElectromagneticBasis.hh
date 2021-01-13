@@ -24,7 +24,7 @@ class KElectromagneticBasis : public KBasisType<std::complex<double>, 4>
 {
   public:
     KElectromagneticBasis() : KBasisType<std::complex<double>, 4>() {}
-    ~KElectromagneticBasis() override {}
+    ~KElectromagneticBasis() override = default;
 
     static std::string Name()
     {

@@ -20,12 +20,10 @@ class KSMathDifferentiator<KSMathSystem<XValueType, XDerivativeType, XErrorType>
 };
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathDifferentiator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathDifferentiator()
-{}
+KSMathDifferentiator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathDifferentiator() = default;
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathDifferentiator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathDifferentiator()
-{}
+KSMathDifferentiator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathDifferentiator() = default;
 
 }  // namespace Kassiopeia
 

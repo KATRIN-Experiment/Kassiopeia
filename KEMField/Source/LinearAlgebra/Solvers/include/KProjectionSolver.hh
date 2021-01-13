@@ -41,7 +41,7 @@ template<typename ValueType> class KProjectionSolver
     typedef KVector<ValueType> Vector;
 
     KProjectionSolver() : fTolerance(1.e-14) {}
-    virtual ~KProjectionSolver() {}
+    virtual ~KProjectionSolver() = default;
 
     void SetTolerance(double d)
     {

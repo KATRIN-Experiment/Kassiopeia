@@ -9,10 +9,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntDecayCalculatorGlukhovExcitationBuilder::~KComplexElement() {}
+template<> KSIntDecayCalculatorGlukhovExcitationBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntDecayCalculatorGlukhovExcitationBuilderStructure =
-    KSIntDecayCalculatorGlukhovExcitationBuilder::Attribute<string>("name") +
+    KSIntDecayCalculatorGlukhovExcitationBuilder::Attribute<std::string>("name") +
     KSIntDecayCalculatorGlukhovExcitationBuilder::Attribute<long long>("target_pid") +
     KSIntDecayCalculatorGlukhovExcitationBuilder::Attribute<long long>("min_pid") +
     KSIntDecayCalculatorGlukhovExcitationBuilder::Attribute<long long>("max_pid") +

@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGFlattenedPolyLoopSurfaceMesher::KGFlattenedPolyLoopSurfaceMesher() : KGSimpleMesher() {}
-KGFlattenedPolyLoopSurfaceMesher::~KGFlattenedPolyLoopSurfaceMesher() {}
+KGFlattenedPolyLoopSurfaceMesher::KGFlattenedPolyLoopSurfaceMesher() = default;
+KGFlattenedPolyLoopSurfaceMesher::~KGFlattenedPolyLoopSurfaceMesher() = default;
 
 void KGFlattenedPolyLoopSurfaceMesher::VisitFlattenedClosedPathSurface(
     KGFlattenedPolyLoopSurface* aFlattenedPolyLoopSurface)

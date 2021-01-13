@@ -85,7 +85,7 @@ const int graphcolors[14] = {kBlack,
                              kGray};
 
 #define READ_VALUE(xREADER, xNAME, xDEFAULT, xTYPE, xGETTER)                                                           \
-    (xREADER.Exists<xTYPE>(xNAME) ? xREADER.Get<xTYPE>(xNAME).xGETTER : (xDEFAULT))
+    ((xREADER).Exists<xTYPE>(xNAME) ? (xREADER).Get<xTYPE>(xNAME).xGETTER : (xDEFAULT))
 #define READ_STRING(xREADER, xNAME, xDEFAULT)   READ_VALUE(xREADER, xNAME, xDEFAULT, KSString, Value())
 #define READ_INT(xREADER, xNAME, xDEFAULT)      READ_VALUE(xREADER, xNAME, xDEFAULT, KSInt, Value())
 #define READ_UINT(xREADER, xNAME, xDEFAULT)     READ_VALUE(xREADER, xNAME, xDEFAULT, KSUInt, Value())
@@ -95,8 +95,8 @@ const int graphcolors[14] = {kBlack,
 #define READ_VECTOR_MAG(xREADER, xNAME, xDEFAULT)                                                                      \
     READ_VALUE(xREADER, xNAME, xDEFAULT, KSThreeVector, Value().Magnitude())
 #define READ_VECTOR_DOTP(xREADER, xNAMEA, xNAMEB, xDEFAULT)                                                            \
-    (xREADER.Exists<KSThreeVector>(xNAMEA) && xREADER.Exists<KSThreeVector>(xNAMEB)                                    \
-         ? xREADER.Get<KSThreeVector>(xNAMEA).Value().Dot(xREADER.Get<KSThreeVector>(xNAMEB).Value())                  \
+    ((xREADER).Exists<KSThreeVector>(xNAMEA) && (xREADER).Exists<KSThreeVector>(xNAMEB)                                \
+         ? (xREADER).Get<KSThreeVector>(xNAMEA).Value().Dot((xREADER).Get<KSThreeVector>(xNAMEB).Value())              \
          : (xDEFAULT))
 
 #define PREP_MULTIGRAPH(xNAME, xTITLE)                                                                                 \
@@ -129,7 +129,7 @@ const int graphcolors[14] = {kBlack,
               << "\tarea=" << sGraphs.xNAME->Integral() << std::endl;
 
 
-int AnalyzeFile(KRootFile* aRootFile, po::variables_map aOptions)
+int AnalyzeFile(katrin::KRootFile* aRootFile, const po::variables_map& aOptions)
 {
     static unsigned int tIndex = 0;
 
@@ -376,12 +376,12 @@ int main(int argc, char** argv)
     PREP_MULTIGRAPH(TotalEnergyChange, "Total Energy Change");
     PREP_MULTIGRAPH(CumulTotalEnergyChange, "Cumul. Total Energy Change");
 
-    KRootFile* tRootFile;
+    katrin::KRootFile* tRootFile;
     vector<string> tInputFiles = vm["file"].as<vector<string>>();
-    for (auto it = tInputFiles.begin(); it != tInputFiles.end(); ++it) {
-        string tFilename = (*it);
+    for (auto& tInputFile : tInputFiles) {
+        const string& tFilename = tInputFile;
         mainmsg(eNormal) << "Reading from ROOT file <" << tFilename << "> ..." << eom;
-        tRootFile = KRootFile::CreateOutputRootFile(tFilename);
+        tRootFile = katrin::KRootFile::CreateOutputRootFile(tFilename);
         AnalyzeFile(tRootFile, vm);
         delete tRootFile;
     }
@@ -440,7 +440,7 @@ int main(int argc, char** argv)
     //tCanvas->SaveAs( (tOutputFile + string(".pdf")).c_str() );
     delete tCanvas;
 
-    TFile* tFile = new TFile((tOutputFile + string(".root")).c_str(), "RECREATE");
+    auto* tFile = new TFile((tOutputFile + string(".root")).c_str(), "RECREATE");
     tOutputArray->Write();
     tFile->Close();
     delete tFile;

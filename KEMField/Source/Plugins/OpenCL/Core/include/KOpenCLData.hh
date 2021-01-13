@@ -22,7 +22,7 @@ class KOpenCLData
 {
   public:
     KOpenCLData();
-    virtual ~KOpenCLData() {}
+    virtual ~KOpenCLData() = default;
 
     void ConstructOpenCLObjects();
     virtual void BuildOpenCLObjects() = 0;

@@ -11,6 +11,7 @@
 #include "KEMVTKViewer.hh"
 #endif
 
+#include "KEMCoreMessage.hh"
 #include "KMPIEnvironment.hh"
 
 namespace KEMField
@@ -22,7 +23,7 @@ KVTKViewerAsBoundaryFieldVisitor::KVTKViewerAsBoundaryFieldVisitor() :
     fFile("ElectrostaticGeometry.vtp")
 {}
 
-KVTKViewerAsBoundaryFieldVisitor::~KVTKViewerAsBoundaryFieldVisitor() {}
+KVTKViewerAsBoundaryFieldVisitor::~KVTKViewerAsBoundaryFieldVisitor() = default;
 
 void KVTKViewerAsBoundaryFieldVisitor::PreVisit(KElectrostaticBoundaryField& electrostaticField)
 {
@@ -39,7 +40,7 @@ void KVTKViewerAsBoundaryFieldVisitor::PostVisit(KElectrostaticBoundaryField& el
             if (fViewGeometry)
                 viewer.ViewGeometry();
             if (fSaveGeometry) {
-                KEMField::cout << "Saving electrode geometry to " << fFile << "." << KEMField::endl;
+                kem_cout << "Saving electrode geometry to " << fFile << "." << eom;
                 viewer.GenerateGeometryFile(fFile);
             }
         }

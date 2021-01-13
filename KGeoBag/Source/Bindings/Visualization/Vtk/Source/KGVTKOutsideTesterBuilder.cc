@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-STATICINT sKGVTKOutsideTesterStructure = KGVTKOutsideTesterBuilder::Attribute<string>("name") +
-                                         KGVTKOutsideTesterBuilder::Attribute<string>("surfaces") +
-                                         KGVTKOutsideTesterBuilder::Attribute<string>("spaces") +
+STATICINT sKGVTKOutsideTesterStructure = KGVTKOutsideTesterBuilder::Attribute<std::string>("name") +
+                                         KGVTKOutsideTesterBuilder::Attribute<std::string>("surfaces") +
+                                         KGVTKOutsideTesterBuilder::Attribute<std::string>("spaces") +
                                          KGVTKOutsideTesterBuilder::Attribute<KThreeVector>("sample_disk_origin") +
                                          KGVTKOutsideTesterBuilder::Attribute<KThreeVector>("sample_disk_normal") +
                                          KGVTKOutsideTesterBuilder::Attribute<double>("sample_disk_radius") +

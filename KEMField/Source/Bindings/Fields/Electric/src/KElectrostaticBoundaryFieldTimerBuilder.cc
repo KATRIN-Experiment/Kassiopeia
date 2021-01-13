@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectrostaticBoundaryFieldTimerBuilder::~KComplexElement() {}
+template<> KElectrostaticBoundaryFieldTimerBuilder::~KComplexElement() = default;
 
 STATICINT sKElectrostaticBoundaryField =
     KElectrostaticBoundaryFieldBuilder::ComplexElement<KElectrostaticBoundaryFieldTimer>("timer");

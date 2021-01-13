@@ -100,7 +100,7 @@ void ComputeChargeDensity(KSurfaceContainer& surfaceContainer, double rh_accurac
                           int method);
 
 void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
-                    double permittivity2, double* P, double* F);
+                    double permittivity2, const double* P, double* F);
 
 int main(int argc, char* argv[])
 {
@@ -138,19 +138,19 @@ int main(int argc, char* argv[])
     int method = 1;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"verbose", required_argument, 0, 'v'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"increment", required_argument, 0, 'i'},
-        {"save_increment", required_argument, 0, 'j'},
-        {"scale", required_argument, 0, 's'},
-        {"method", required_argument, 0, 'm'},
+        {"help", no_argument, nullptr, 'h'},
+        {"verbose", required_argument, nullptr, 'v'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"increment", required_argument, nullptr, 'i'},
+        {"save_increment", required_argument, nullptr, 'j'},
+        {"scale", required_argument, nullptr, 's'},
+        {"method", required_argument, nullptr, 'm'},
     };
 
     static const char* optString = "hv:a:i:j:s:m:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -365,7 +365,7 @@ int main(int argc, char* argv[])
         KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator> field(surfaceContainer, integrator);
 #endif
 
-        srand((unsigned) time(0));
+        srand((unsigned) time(nullptr));
 
         int nTest = 1.e4;
 
@@ -432,7 +432,7 @@ int main(int argc, char* argv[])
             abs_average[i] /= nTest;
         }
 
-        if (verbose) {
+        if (verbose != 0) {
             std::cout << "" << std::endl;
             std::cout << "Relative Accuracy Summary (analytic vs numeric): " << std::endl;
             std::cout << "\t Average \t\t Max \t\t\t Min" << std::endl;
@@ -501,7 +501,7 @@ int main(int argc, char* argv[])
             // std::cout<<""<<std::endl;
         }
 
-        TCanvas* C = new TCanvas("C", "Canvas", 5, 5, 900, 450);
+        auto* C = new TCanvas("C", "Canvas", 5, 5, 900, 450);
         C->Divide(2);
         C->cd(1);
         C->SetBorderMode(0);
@@ -509,12 +509,12 @@ int main(int argc, char* argv[])
         gStyle->SetOptStat(0000000);
         gStyle->SetOptFit(0111);
 
-        TMultiGraph* mg1 = new TMultiGraph();
+        auto* mg1 = new TMultiGraph();
 
-        TGraph* g1 = new TGraph(nSamples, &Z_points.at(0), &phiA_points.at(0));
+        auto* g1 = new TGraph(nSamples, &Z_points.at(0), &phiA_points.at(0));
         g1->SetLineColor(kBlue);
         mg1->Add(g1);
-        TGraph* g2 = new TGraph(nSamples, &Z_points.at(0), &phiN_points.at(0));
+        auto* g2 = new TGraph(nSamples, &Z_points.at(0), &phiN_points.at(0));
         g2->SetLineColor(kGreen);
         mg1->Add(g2);
 
@@ -538,12 +538,12 @@ int main(int argc, char* argv[])
         gStyle->SetOptStat(0000000);
         gStyle->SetOptFit(0111);
 
-        TMultiGraph* mg2 = new TMultiGraph();
+        auto* mg2 = new TMultiGraph();
 
-        TGraph* g3 = new TGraph(nSamples, &Z_points.at(0), &EA_points.at(0));
+        auto* g3 = new TGraph(nSamples, &Z_points.at(0), &EA_points.at(0));
         g3->SetLineColor(kBlue);
         mg2->Add(g3);
-        TGraph* g4 = new TGraph(nSamples, &Z_points.at(0), &EN_points.at(0));
+        auto* g4 = new TGraph(nSamples, &Z_points.at(0), &EN_points.at(0));
         g4->SetLineColor(kGreen);
         mg2->Add(g4);
 
@@ -575,7 +575,7 @@ int main(int argc, char* argv[])
         double dx = .05;
         double dz = .05;
 
-        KEMFieldCanvas* fieldCanvas = NULL;
+        KEMFieldCanvas* fieldCanvas = nullptr;
 
 #if defined(KEMFIELD_USE_ROOT)
         fieldCanvas = new KEMRootFieldCanvas(z1, z2, x1, x2, 1.e30, true);
@@ -583,7 +583,7 @@ int main(int argc, char* argv[])
         fieldCanvas = new KEMVTKFieldCanvas(z1, z2, x1, x2, 1.e30, true);
 #endif
 
-        if (fieldCanvas) {
+        if (fieldCanvas != nullptr) {
             int N_x = (int) ((x2 - x1) / dx);
             int N_z = (int) ((z2 - z1) / dz);
 
@@ -600,9 +600,11 @@ int main(int argc, char* argv[])
 
             std::cout << "Computing potential field on a " << N_x << " by " << N_z << " grid" << std::endl;
 
+            x_.reserve(N_z);
             for (int g = 0; g < N_z; g++)
                 x_.push_back(z1 + g * spacing[0] + spacing[0] / 2);
 
+            y_.reserve(N_x);
             for (int h = 0; h < N_x; h++)
                 y_.push_back(x1 + h * spacing[1] + spacing[1] / 2);
 
@@ -647,14 +649,14 @@ void PopulateSurfaceContainer(KSurfaceContainer& surfaceContainer, double radius
     double p1[2], p2[2];
     double radius = radius1;
 
-    KGRotatedObject* innerhemi1 = new KGRotatedObject(scale * 10, 10);
+    auto* innerhemi1 = new KGRotatedObject(scale * 10, 10);
     p1[0] = -radius;
     p1[1] = 0.;
     p2[0] = 0.;
     p2[1] = radius;
     innerhemi1->AddArc(p2, p1, radius, true);
 
-    KGRotatedObject* innerhemi2 = new KGRotatedObject(scale * 10, 10);
+    auto* innerhemi2 = new KGRotatedObject(scale * 10, 10);
     p2[0] = radius;
     p2[1] = 0.;
     p1[0] = 0.;
@@ -663,14 +665,14 @@ void PopulateSurfaceContainer(KSurfaceContainer& surfaceContainer, double radius
 
     radius = radius2;
 
-    KGRotatedObject* middlehemi1 = new KGRotatedObject(20 * scale, 10);
+    auto* middlehemi1 = new KGRotatedObject(20 * scale, 10);
     p1[0] = -radius;
     p1[1] = 0.;
     p2[0] = 0.;
     p2[1] = radius;
     middlehemi1->AddArc(p2, p1, radius, true);
 
-    KGRotatedObject* middlehemi2 = new KGRotatedObject(20 * scale, 10);
+    auto* middlehemi2 = new KGRotatedObject(20 * scale, 10);
     p2[0] = radius;
     p2[1] = 0.;
     p1[0] = 0.;
@@ -679,14 +681,14 @@ void PopulateSurfaceContainer(KSurfaceContainer& surfaceContainer, double radius
 
     radius = radius3;
 
-    KGRotatedObject* outerhemi1 = new KGRotatedObject(30 * scale, 10);
+    auto* outerhemi1 = new KGRotatedObject(30 * scale, 10);
     p1[0] = -radius;
     p1[1] = 0.;
     p2[0] = 0.;
     p2[1] = radius;
     outerhemi1->AddArc(p2, p1, radius, true);
 
-    KGRotatedObject* outerhemi2 = new KGRotatedObject(30 * scale, 10);
+    auto* outerhemi2 = new KGRotatedObject(30 * scale, 10);
     p2[0] = radius;
     p2[1] = 0.;
     p1[0] = 0.;
@@ -694,43 +696,43 @@ void PopulateSurfaceContainer(KSurfaceContainer& surfaceContainer, double radius
     outerhemi2->AddArc(p1, p2, radius, false);
 
     // Construct shape placement
-    KGRotatedSurface* ih1 = new KGRotatedSurface(innerhemi1);
-    KGSurface* innerhemisphere1 = new KGSurface(ih1);
+    auto* ih1 = new KGRotatedSurface(innerhemi1);
+    auto* innerhemisphere1 = new KGSurface(ih1);
     innerhemisphere1->SetName("innerhemisphere1");
     innerhemisphere1->MakeExtension<KGMesh>();
     innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-    KGRotatedSurface* ih2 = new KGRotatedSurface(innerhemi2);
-    KGSurface* innerhemisphere2 = new KGSurface(ih2);
+    auto* ih2 = new KGRotatedSurface(innerhemi2);
+    auto* innerhemisphere2 = new KGSurface(ih2);
     innerhemisphere2->SetName("innerhemisphere2");
     innerhemisphere2->MakeExtension<KGMesh>();
     innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-    KGRotatedSurface* mh1 = new KGRotatedSurface(middlehemi1);
-    KGSurface* middlehemisphere1 = new KGSurface(mh1);
+    auto* mh1 = new KGRotatedSurface(middlehemi1);
+    auto* middlehemisphere1 = new KGSurface(mh1);
     middlehemisphere1->SetName("middlehemisphere1");
     middlehemisphere1->MakeExtension<KGMesh>();
     middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2 / permittivity1);
 
-    KGRotatedSurface* mh2 = new KGRotatedSurface(middlehemi2);
-    KGSurface* middlehemisphere2 = new KGSurface(mh2);
+    auto* mh2 = new KGRotatedSurface(middlehemi2);
+    auto* middlehemisphere2 = new KGSurface(mh2);
     middlehemisphere2->SetName("middlehemisphere2");
     middlehemisphere2->MakeExtension<KGMesh>();
     middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 / permittivity2);
 
-    KGRotatedSurface* oh1 = new KGRotatedSurface(outerhemi1);
-    KGSurface* outerhemisphere1 = new KGSurface(oh1);
+    auto* oh1 = new KGRotatedSurface(outerhemi1);
+    auto* outerhemisphere1 = new KGSurface(oh1);
     outerhemisphere1->SetName("outerhemisphere1");
     outerhemisphere1->MakeExtension<KGMesh>();
     outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-    KGRotatedSurface* oh2 = new KGRotatedSurface(outerhemi2);
-    KGSurface* outerhemisphere2 = new KGSurface(oh2);
+    auto* oh2 = new KGRotatedSurface(outerhemi2);
+    auto* outerhemisphere2 = new KGSurface(oh2);
     outerhemisphere2->SetName("outerhemisphere2");
     outerhemisphere2->MakeExtension<KGMesh>();
     outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
 
     // Mesh the elements
-    KGMesher* mesher = new KGMesher();
+    auto* mesher = new KGMesher();
     innerhemisphere1->AcceptNode(mesher);
     innerhemisphere2->AcceptNode(mesher);
     middlehemisphere1->AcceptNode(mesher);
@@ -796,8 +798,7 @@ void ComputeChargeDensity(KSurfaceContainer& surfaceContainer, double rh_accurac
             robinHood.AddVisitor(new KIterationDisplay<KElectrostaticBoundaryIntegrator::ValueType>());
         }
 
-        KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>* stateWriter =
-            new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
+        auto* stateWriter = new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
         stateWriter->Interval(saveIncrement);
         robinHood.AddVisitor(stateWriter);
 
@@ -813,7 +814,7 @@ void ComputeChargeDensity(KSurfaceContainer& surfaceContainer, double rh_accurac
 }
 
 void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
-                    double permittivity2, double* P, double* F)
+                    double permittivity2, const double* P, double* F)
 {
     // This function computes the electric potential and electric field due to a
     // charge <Q> on a sphere of radius <radius1>, surrounded by two dielectrics.

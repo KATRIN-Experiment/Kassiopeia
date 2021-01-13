@@ -46,7 +46,7 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     }
 }
 
-void KEMVTKViewer::GenerateGeometryFile(std::string fileName)
+void KEMVTKViewer::GenerateGeometryFile(const std::string& fileName)
 {
     vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
     polydata->SetPoints(fPoints);

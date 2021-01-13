@@ -26,8 +26,10 @@ namespace KGeoBag
 class KGArrayMath
 {
   public:
-    KGArrayMath(){};
-    virtual ~KGArrayMath(){};
+    KGArrayMath() = default;
+    ;
+    virtual ~KGArrayMath() = default;
+    ;
 
     //modulus of two integers
     static unsigned int Modulus(int arg, int n)

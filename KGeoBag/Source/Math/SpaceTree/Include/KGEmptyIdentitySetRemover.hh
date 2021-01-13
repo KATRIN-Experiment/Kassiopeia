@@ -1,7 +1,7 @@
 #ifndef KGEmptyIdentitySetRemover_HH__
 #define KGEmptyIdentitySetRemover_HH__
 
-#include "KGExternalIdentitySet.hh"
+//#include "KGExternalIdentitySet.hh"
 #include "KGIdentitySet.hh"
 #include "KGNode.hh"
 #include "KGNodeActor.hh"
@@ -26,8 +26,10 @@ namespace KGeoBag
 template<typename ObjectTypeList> class KGEmptyIdentitySetRemover : public KGNodeActor<KGNode<ObjectTypeList>>
 {
   public:
-    KGEmptyIdentitySetRemover(){};
-    virtual ~KGEmptyIdentitySetRemover(){};
+    KGEmptyIdentitySetRemover() = default;
+    ;
+    virtual ~KGEmptyIdentitySetRemover() = default;
+    ;
 
 
     virtual void ApplyAction(KGNode<ObjectTypeList>* node)
@@ -35,13 +37,14 @@ template<typename ObjectTypeList> class KGEmptyIdentitySetRemover : public KGNod
         if (node != NULL) {
             KGIdentitySet* set = KGObjectRetriever<ObjectTypeList, KGIdentitySet>::GetNodeObject(node);
 
-            if (set != NULL) {
+            if (set != nullptr) {
                 if (set->GetSize() == 0) {
                     delete set;
                     KGObjectRetriever<ObjectTypeList, KGIdentitySet>::SetNodeObject(NULL, node);
                 }
             }
 
+            /*
             KGExternalIdentitySet* eset = KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::GetNodeObject(node);
 
             if (eset != NULL) {
@@ -50,6 +53,7 @@ template<typename ObjectTypeList> class KGEmptyIdentitySetRemover : public KGNod
                     KGObjectRetriever<ObjectTypeList, KGExternalIdentitySet>::SetNodeObject(NULL, node);
                 }
             }
+            */
         }
     }
 

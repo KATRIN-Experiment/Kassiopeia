@@ -17,7 +17,7 @@ template<> inline bool KSRootEventModifierBuilder::AddAttribute(KContainer* aCon
         return true;
     }
     if (aContainer->GetName() == "add_modifier") {
-        fObject->AddModifier(KToolbox::GetInstance().Get<KSEventModifier>(aContainer->AsReference<std::string>()));
+        fObject->AddModifier(KToolbox::GetInstance().Get<KSEventModifier>(aContainer->AsString()));
         return true;
     }
     return false;

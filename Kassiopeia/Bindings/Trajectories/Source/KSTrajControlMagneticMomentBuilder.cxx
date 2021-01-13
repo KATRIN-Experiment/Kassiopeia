@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlMagneticMomentBuilder::~KComplexElement() {}
+template<> KSTrajControlMagneticMomentBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajControlMagneticMomentStructure = KSTrajControlMagneticMomentBuilder::Attribute<string>("name") +
+STATICINT sKSTrajControlMagneticMomentStructure = KSTrajControlMagneticMomentBuilder::Attribute<std::string>("name") +
                                                   KSTrajControlMagneticMomentBuilder::Attribute<double>("lower_limit") +
                                                   KSTrajControlMagneticMomentBuilder::Attribute<double>("upper_limit");
 

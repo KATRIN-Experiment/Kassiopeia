@@ -44,13 +44,13 @@ int main(int /*argc*/, char** /*argv*/)
         test_points.clear();
 
         //generate three points to make the triangle and compute centroid
-        for (unsigned int j = 0; j < NPointsInGroup; j++) {
+        for (auto& j : p) {
             for (unsigned int i = 0; i < 3; i++) {
-                p[j][i] = ((double) rand() / (double) RAND_MAX);
-                p[j][i] = ((double) rand() / (double) RAND_MAX);
-                cent[i] += p[j][i] / ((double) NPointsInGroup);
+                j[i] = ((double) rand() / (double) RAND_MAX);
+                j[i] = ((double) rand() / (double) RAND_MAX);
+                cent[i] += j[i] / ((double) NPointsInGroup);
             }
-            test_points.push_back(KFMPoint<3>(p[j]));
+            test_points.emplace_back(j);
         }
 
         //compute the approximate bounding sphere

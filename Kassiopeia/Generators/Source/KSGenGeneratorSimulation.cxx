@@ -3,6 +3,8 @@
 #include "KSGeneratorsMessage.h"
 #include "KSParticleFactory.h"
 
+using namespace katrin;
+
 namespace Kassiopeia
 {
 
@@ -27,8 +29,8 @@ KSGenGeneratorSimulation::KSGenGeneratorSimulation() :
     fKineticEnergyName("final_kinetic_energy"),
     fTimeName("final_time"),
     fPIDName(""),
-    fDefaultPosition(KThreeVector(0, 0, 0)),
-    fDefaultDirection(KThreeVector(0, 0, 0)),
+    fDefaultPosition(KGeoBag::KThreeVector(0, 0, 0)),
+    fDefaultDirection(KGeoBag::KThreeVector(0, 0, 0)),
     fDefaultEnergy(1.),
     fDefaultTime(0.),
     fDefaultPID(11),  // electron
@@ -43,7 +45,7 @@ KSGenGeneratorSimulation::KSGenGeneratorSimulation() :
     fFormulaTime(nullptr)
 {}
 KSGenGeneratorSimulation::KSGenGeneratorSimulation(const KSGenGeneratorSimulation& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBase(aCopy.fBase),
     fPath(aCopy.fPath),
     fPositionX(aCopy.fPositionX),
@@ -78,7 +80,7 @@ KSGenGeneratorSimulation* KSGenGeneratorSimulation::Clone() const
 {
     return new KSGenGeneratorSimulation(*this);
 }
-KSGenGeneratorSimulation::~KSGenGeneratorSimulation() {}
+KSGenGeneratorSimulation::~KSGenGeneratorSimulation() = default;
 
 void KSGenGeneratorSimulation::ExecuteGeneration(KSParticleQueue& aPrimaries)
 {
@@ -217,19 +219,19 @@ void KSGenGeneratorSimulation::GenerateParticlesFromFile(KSParticleQueue& aParti
                     continue;
 
                 if (!fTerminator.empty()) {
-                    string tTerminator = tTrackGroup.Get<KSString>(fTerminatorName).Value();
+                    std::string tTerminator = tTrackGroup.Get<KSString>(fTerminatorName).Value();
                     if (tTerminator != fTerminator)
                         continue;
                 }
 
                 if (!fGenerator.empty()) {
-                    string tGenerator = tTrackGroup.Get<KSString>(fGeneratorName).Value();
+                    std::string tGenerator = tTrackGroup.Get<KSString>(fGeneratorName).Value();
                     if (tGenerator != fGenerator)
                         continue;
                 }
 
-                KThreeVector tPosition = fDefaultPosition;
-                KThreeVector tDirection = fDefaultDirection;
+                KGeoBag::KThreeVector tPosition = fDefaultPosition;
+                KGeoBag::KThreeVector tDirection = fDefaultDirection;
                 double tEnergy = fDefaultEnergy;
                 double tTime = fDefaultTime;
                 int tPID = fDefaultPID;

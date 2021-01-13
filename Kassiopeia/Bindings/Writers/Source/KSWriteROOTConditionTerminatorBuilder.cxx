@@ -12,13 +12,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSWriteROOTConditionTerminatorBuilder::~KComplexElement() {}
+template<> KSWriteROOTConditionTerminatorBuilder::~KComplexElement() = default;
 
 STATICINT sKSWriteROOTConditionTerminatorStructure =
-    KSWriteROOTConditionTerminatorBuilder::Attribute<string>("name") +
-    KSWriteROOTConditionTerminatorBuilder::Attribute<string>("group") +
-    KSWriteROOTConditionTerminatorBuilder::Attribute<string>("parent") +
-    KSWriteROOTConditionTerminatorBuilder::Attribute<string>("match_terminator");
+    KSWriteROOTConditionTerminatorBuilder::Attribute<std::string>("name") +
+    KSWriteROOTConditionTerminatorBuilder::Attribute<std::string>("group") +
+    KSWriteROOTConditionTerminatorBuilder::Attribute<std::string>("parent") +
+    KSWriteROOTConditionTerminatorBuilder::Attribute<std::string>("match_terminator");
 
 
 STATICINT sKSWriteROOTConditionTerminator =

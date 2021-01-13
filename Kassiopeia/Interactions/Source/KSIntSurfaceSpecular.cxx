@@ -4,6 +4,8 @@
 #include "KSInteractionsMessage.h"
 using katrin::KRandom;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -16,7 +18,7 @@ KSIntSurfaceSpecular::KSIntSurfaceSpecular() :
     fUseRelativeLoss(false)
 {}
 KSIntSurfaceSpecular::KSIntSurfaceSpecular(const KSIntSurfaceSpecular& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fProbability(aCopy.fProbability),
     fReflectionLoss(aCopy.fReflectionLoss),
     fTransmissionLoss(aCopy.fTransmissionLoss),
@@ -28,7 +30,7 @@ KSIntSurfaceSpecular* KSIntSurfaceSpecular::Clone() const
 {
     return new KSIntSurfaceSpecular(*this);
 }
-KSIntSurfaceSpecular::~KSIntSurfaceSpecular() {}
+KSIntSurfaceSpecular::~KSIntSurfaceSpecular() = default;
 
 void KSIntSurfaceSpecular::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                               KSParticleQueue& aQueue)

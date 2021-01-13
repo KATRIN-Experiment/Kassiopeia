@@ -3,8 +3,8 @@
 
 #include "KTransformation.hh"
 
+#include <string>
 #include <vector>
-using std::vector;
 
 namespace KGeoBag
 {
@@ -17,6 +17,11 @@ class KGDiscreteRotationalMeshElement
     KGDiscreteRotationalMeshElement();
     virtual ~KGDiscreteRotationalMeshElement();
 
+    static std::string Name()
+    {
+        return "discrete_mesh_base";
+    }
+
     virtual double Area() const = 0;
     virtual double Aspect() const = 0;
 
@@ -25,9 +30,9 @@ class KGDiscreteRotationalMeshElement
     virtual void Transform(const KTransformation& transform) = 0;
 };
 
-typedef vector<KGDiscreteRotationalMeshElement*> KGDiscreteRotationalMeshElementVector;
-typedef vector<KGDiscreteRotationalMeshElement*>::iterator KGDiscreteRotationalMeshElementIt;
-typedef vector<KGDiscreteRotationalMeshElement*>::const_iterator KGDiscreteRotationalMeshElementCIt;
+typedef std::vector<KGDiscreteRotationalMeshElement*> KGDiscreteRotationalMeshElementVector;
+using KGDiscreteRotationalMeshElementIt = KGDiscreteRotationalMeshElementVector::iterator;
+using KGDiscreteRotationalMeshElementCIt = KGDiscreteRotationalMeshElementVector::const_iterator;
 
 template<class XMeshElement> class KGDiscreteRotationalMeshElementType : public KGDiscreteRotationalMeshElement
 {
@@ -37,7 +42,12 @@ template<class XMeshElement> class KGDiscreteRotationalMeshElementType : public 
         fMeshElement(element),
         fNElements(1)
     {}
-    ~KGDiscreteRotationalMeshElementType() override {}
+    ~KGDiscreteRotationalMeshElementType() override = default;
+
+    static std::string Name()
+    {
+        return "discrete_" + XMeshElement::Name();
+    }
 
     XMeshElement& Element() override
     {
@@ -81,8 +91,8 @@ template<class XMeshElement> class KGDiscreteRotationalMeshElementType : public 
 namespace KGeoBag
 {
 typedef KGDiscreteRotationalMeshElementType<KGMeshRectangle> KGDiscreteRotationalMeshRectangle;
-typedef KGDiscreteRotationalMeshElementType<KGMeshTriangle> KGDiscreteRotationalMeshTriangle;
-typedef KGDiscreteRotationalMeshElementType<KGMeshWire> KGDiscreteRotationalMeshWire;
+using KGDiscreteRotationalMeshTriangle = KGDiscreteRotationalMeshElementType<KGMeshTriangle>;
+using KGDiscreteRotationalMeshWire = KGDiscreteRotationalMeshElementType<KGMeshWire>;
 }  // namespace KGeoBag
 
 #endif

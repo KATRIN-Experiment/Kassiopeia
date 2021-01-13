@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntCalculatorConstantBuilder::~KComplexElement() {}
+template<> KSIntCalculatorConstantBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntCalculatorConstantStructure = KSIntCalculatorConstantBuilder::Attribute<string>("name") +
+STATICINT sKSIntCalculatorConstantStructure = KSIntCalculatorConstantBuilder::Attribute<std::string>("name") +
                                               KSIntCalculatorConstantBuilder::Attribute<double>("cross_section");
 
 STATICINT sToolboxKSIntCalculatorConstant =

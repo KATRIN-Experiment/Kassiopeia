@@ -13,7 +13,7 @@ namespace Kassiopeia
 
 KSGenValueBoltzmann::KSGenValueBoltzmann() : fValueMass(1.), fValuekT(1.), fUseElectronVolts(false) {}
 KSGenValueBoltzmann::KSGenValueBoltzmann(const KSGenValueBoltzmann& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueMass(aCopy.fValueMass),
     fValuekT(aCopy.fValuekT)
 {}
@@ -21,9 +21,9 @@ KSGenValueBoltzmann* KSGenValueBoltzmann::Clone() const
 {
     return new KSGenValueBoltzmann(*this);
 }
-KSGenValueBoltzmann::~KSGenValueBoltzmann() {}
+KSGenValueBoltzmann::~KSGenValueBoltzmann() = default;
 
-void KSGenValueBoltzmann::DiceValue(vector<double>& aDicedValues)
+void KSGenValueBoltzmann::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 

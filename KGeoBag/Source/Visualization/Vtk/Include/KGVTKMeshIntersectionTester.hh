@@ -1,12 +1,6 @@
 #ifndef KGVTKNEARESTNORMALPAINTER_HH_
 #define KGVTKNEARESTNORMALPAINTER_HH_
 
-#include "KVTKWindow.h"
-using katrin::KVTKWindow;
-
-#include "KVTKPainter.h"
-using katrin::KVTKPainter;
-
 #include "KField.h"
 #include "KGBall.hh"
 #include "KGCore.hh"
@@ -20,6 +14,8 @@ using katrin::KVTKPainter;
 #include "KGNavigableMeshTreeBuilder.hh"
 #include "KGNavigableMeshTreeInformationExtractor.hh"
 #include "KGRGBColor.hh"
+#include "KVTKPainter.h"
+#include "KVTKWindow.h"
 #include "vtkActor.h"
 #include "vtkCellArray.h"
 #include "vtkPoints.h"
@@ -31,15 +27,15 @@ using katrin::KVTKPainter;
 namespace KGeoBag
 {
 
-class KGVTKMeshIntersectionTester : public KVTKPainter
+class KGVTKMeshIntersectionTester : public katrin::KVTKPainter
 {
   public:
     KGVTKMeshIntersectionTester();
-    virtual ~KGVTKMeshIntersectionTester();
+    ~KGVTKMeshIntersectionTester() override;
 
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
     void AddSurface(KGSurface* aSurface);
     void AddSpace(KGSpace* aSpace);
@@ -48,19 +44,19 @@ class KGVTKMeshIntersectionTester : public KVTKPainter
     {
         fSampleCount = s;
     };
-    void SetSampleColor(KGRGBColor c)
+    void SetSampleColor(const KGRGBColor& c)
     {
         fSampleColor = c;
     };
-    void SetPointColor(KGRGBColor c)
+    void SetPointColor(const KGRGBColor& c)
     {
         fPointColor = c;
     };
-    void SetUnintersectedLineColor(KGRGBColor c)
+    void SetUnintersectedLineColor(const KGRGBColor& c)
     {
         fUnintersectedLineColor = c;
     };
-    void SetIntersectedLineColor(KGRGBColor c)
+    void SetIntersectedLineColor(const KGRGBColor& c)
     {
         fIntersectedLineColor = c;
     };

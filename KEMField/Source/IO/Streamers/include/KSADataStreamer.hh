@@ -36,7 +36,7 @@ template<typename Type> struct KSADataStreamerType
         return d.Self();
     }
 
-    virtual ~KSADataStreamerType() {}
+    virtual ~KSADataStreamerType() = default;
     virtual KSABuffer& Buffer() = 0;
     virtual KSADataStreamer& Self() = 0;
 };
@@ -47,7 +47,7 @@ class KSADataStreamer : public KSADataStreamerFundamentalTypes
 {
   public:
     KSADataStreamer() : fFlushSize(CHUNK) {}
-    ~KSADataStreamer() override {}
+    ~KSADataStreamer() override = default;
 
     void open(const std::string& fileName, const std::string& action);
     void close();

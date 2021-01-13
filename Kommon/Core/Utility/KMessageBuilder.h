@@ -20,6 +20,7 @@ class KMessageData
     KMessageFormat fFormat;
     KMessagePrecision fPrecision;
     bool fShowShutdownMessage;
+    bool fShowParserContext;
     KMessageSeverity fTerminalVerbosity;
     KMessageSeverity fLogVerbosity;
 };
@@ -33,57 +34,57 @@ template<> inline bool KMessageDataBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "terminal") {
-        if (aContainer->AsReference<std::string>() == std::string("error")) {
+        if (aContainer->AsString() == "error") {
             fObject->fTerminalVerbosity = eError;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("warning")) {
+        if (aContainer->AsString() == "warning") {
             fObject->fTerminalVerbosity = eWarning;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("normal")) {
+        if (aContainer->AsString() == "normal") {
             fObject->fTerminalVerbosity = eNormal;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("info")) {
+        if (aContainer->AsString() == "info") {
             fObject->fTerminalVerbosity = eInfo;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("debug")) {
+        if (aContainer->AsString() == "debug") {
             fObject->fTerminalVerbosity = eDebug;
             return true;
         }
         return false;
     }
     if (aContainer->GetName() == "log") {
-        if (aContainer->AsReference<std::string>() == std::string("error")) {
+        if (aContainer->AsString() == "error") {
             fObject->fLogVerbosity = eError;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("warning")) {
+        if (aContainer->AsString() == "warning") {
             fObject->fLogVerbosity = eWarning;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("normal")) {
+        if (aContainer->AsString() == "normal") {
             fObject->fLogVerbosity = eNormal;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("info")) {
+        if (aContainer->AsString() == "info") {
             fObject->fLogVerbosity = eInfo;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("debug")) {
+        if (aContainer->AsString() == "debug") {
             fObject->fLogVerbosity = eDebug;
             return true;
         }
         return false;
     }
     if (aContainer->GetName() == "format") {
-        if (aContainer->AsReference<std::string>() == std::string("fixed")) {
+        if (aContainer->AsString() == "fixed") {
             fObject->fFormat = std::ios_base::fixed;
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("scientific")) {
+        if (aContainer->AsString() == "scientific") {
             fObject->fFormat = std::ios_base::scientific;
             return true;
         }
@@ -101,7 +102,7 @@ template<> inline bool KMessageDataBuilder::AddAttribute(KContainer* aContainer)
 }
 
 
-typedef KComplexElement<KMessageTable> KMessageTableBuilder;
+using KMessageTableBuilder = KComplexElement<KMessageTable>;
 
 template<> inline bool KMessageTableBuilder::Begin()
 {
@@ -113,57 +114,57 @@ template<> inline bool KMessageTableBuilder::Begin()
 template<> inline bool KMessageTableBuilder::AddAttribute(KContainer* anAttribute)
 {
     if (anAttribute->GetName() == "terminal") {
-        if (anAttribute->AsReference<std::string>() == std::string("error")) {
+        if (anAttribute->AsString() == "error") {
             fObject->SetTerminalVerbosity(eError);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("warning")) {
+        if (anAttribute->AsString() == "warning") {
             fObject->SetTerminalVerbosity(eWarning);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("normal")) {
+        if (anAttribute->AsString() == "normal") {
             fObject->SetTerminalVerbosity(eNormal);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("info")) {
+        if (anAttribute->AsString() == "info") {
             fObject->SetTerminalVerbosity(eInfo);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("debug")) {
+        if (anAttribute->AsString() == "debug") {
             fObject->SetTerminalVerbosity(eDebug);
             return true;
         }
         return false;
     }
     if (anAttribute->GetName() == "log") {
-        if (anAttribute->AsReference<std::string>() == std::string("error")) {
+        if (anAttribute->AsString() == "error") {
             fObject->SetLogVerbosity(eError);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("warning")) {
+        if (anAttribute->AsString() == "warning") {
             fObject->SetLogVerbosity(eWarning);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("normal")) {
+        if (anAttribute->AsString() == "normal") {
             fObject->SetLogVerbosity(eNormal);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("info")) {
+        if (anAttribute->AsString() == "info") {
             fObject->SetLogVerbosity(eInfo);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("debug")) {
+        if (anAttribute->AsString() == "debug") {
             fObject->SetLogVerbosity(eDebug);
             return true;
         }
         return false;
     }
     if (anAttribute->GetName() == "format") {
-        if (anAttribute->AsReference<std::string>() == std::string("fixed")) {
+        if (anAttribute->AsString() == "fixed") {
             fObject->SetFormat(std::ios_base::fixed);
             return true;
         }
-        if (anAttribute->AsReference<std::string>() == std::string("scientific")) {
+        if (anAttribute->AsString() == "scientific") {
             fObject->SetFormat(std::ios_base::scientific);
             return true;
         }
@@ -175,6 +176,10 @@ template<> inline bool KMessageTableBuilder::AddAttribute(KContainer* anAttribut
     }
     if (anAttribute->GetName() == "shutdown_message") {
         fObject->SetShowShutdownMessage(anAttribute->AsReference<bool>());
+        return true;
+    }
+    if (anAttribute->GetName() == "parser_context") {
+        fObject->SetShowParserContext(anAttribute->AsReference<bool>());
         return true;
     }
     return false;
@@ -200,21 +205,23 @@ template<> inline bool KMessageTableBuilder::AddElement(KContainer* anElement)
     }
     if (anElement->GetName() == "message") {
         auto* tMessageData = anElement->AsPointer<KMessageData>();
-        if (tMessageData->fKey == std::string("all")) {
+        if (tMessageData->fKey == "all") {
             KMessageTable::GetInstance().SetTerminalVerbosity(tMessageData->fTerminalVerbosity);
             KMessageTable::GetInstance().SetLogVerbosity(tMessageData->fLogVerbosity);
             KMessageTable::GetInstance().SetFormat(tMessageData->fFormat);
             KMessageTable::GetInstance().SetPrecision(tMessageData->fPrecision);
             KMessageTable::GetInstance().SetShowShutdownMessage(tMessageData->fShowShutdownMessage);
+            KMessageTable::GetInstance().SetShowParserContext(tMessageData->fShowParserContext);
             return true;
         }
-        KMessage* tMessage = KMessageTable::GetInstance().Get(tMessageData->fKey);
-        if (tMessage != nullptr) {
+        auto tMessage = KMessageTable::GetInstance().Get(tMessageData->fKey);
+        if (tMessage) {
             tMessage->SetTerminalVerbosity(tMessageData->fTerminalVerbosity);
             tMessage->SetLogVerbosity(tMessageData->fLogVerbosity);
             tMessage->SetFormat(tMessageData->fFormat);
             tMessage->SetPrecision(tMessageData->fPrecision);
             tMessage->SetShowShutdownMessage(tMessageData->fShowShutdownMessage);
+            tMessage->SetShowParserContext(tMessageData->fShowParserContext);
             return true;
         }
         else {

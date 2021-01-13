@@ -21,7 +21,7 @@ class KSIntCalculatorArgonSet : public KSIntCalculatorSet
     void ReleaseCalculators(KSIntScattering* aScattering) override;
 
   private:
-    K_SET_GET(string, Name)
+    K_SET_GET(std::string, Name)
     K_SET_GET(bool, SingleIonisation)
     K_SET_GET(bool, DoubleIonisation)
     K_SET_GET(bool, Excitation)

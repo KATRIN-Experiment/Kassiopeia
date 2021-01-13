@@ -26,7 +26,8 @@ class KFMElementAspectRatioExtractor :
     public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
 {
   public:
-    KFMElementAspectRatioExtractor(){};
+    KFMElementAspectRatioExtractor() = default;
+    ;
     ~KFMElementAspectRatioExtractor() override
     {
         ;
@@ -88,8 +89,8 @@ class KFMElementAspectRatioExtractor :
     };
 
   private:
-    double TriangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2) const;
-    double RectangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2) const;
+    static double TriangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2);
+    static double RectangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2);
 
 
     bool fIsRecognized;

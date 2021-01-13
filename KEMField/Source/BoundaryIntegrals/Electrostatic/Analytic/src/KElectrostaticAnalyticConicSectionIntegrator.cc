@@ -29,7 +29,8 @@ double KElectrostaticAnalyticConicSectionIntegrator::Potential(const KConicSecti
 {
     static const double ln4 = 1.386294361119890;
 
-    static double (*f[1])(const double*, double*) = {&KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing};
+    static double (*f[1])(const double*,
+                          const double*) = {&KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing};
 
     // integration parameters
     double par[7];  // par[0]: z  par[4]: zB
@@ -110,13 +111,14 @@ double KElectrostaticAnalyticConicSectionIntegrator::Potential(const KConicSecti
 }
 
 
-KThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,
+KFieldVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const KConicSection* source,
                                                                          const KPosition& P) const
 {
     static const double ln4 = 1.386294361119890;
 
-    static double (*f[2])(const double*, double*) = {&KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing,
-                                                     &KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing};
+    static double (*f[2])(const double*,
+                          const double*) = {&KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing,
+                                            &KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing};
 
     // integration parameters
     double par[7];  // par[0]: z  par[4]: zB
@@ -200,7 +202,7 @@ KThreeVector KElectrostaticAnalyticConicSectionIntegrator::ElectricField(const K
     double Er = 1. / (KEMConstants::Pi * KEMConstants::Eps0) * q[0];
     double Ez = 1. / (KEMConstants::Pi * KEMConstants::Eps0) * q[1];
 
-    KThreeVector field;
+    KFieldVector field;
     field[2] = Ez;
 
     if (par[1] < 1.e-14)

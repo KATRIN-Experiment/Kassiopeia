@@ -10,12 +10,12 @@ template<class Basis> class KZonalHarmonicFieldSolver;
 template<class Basis> class KZonalHarmonicComputer
 {
   public:
-    typedef KZonalHarmonicTrait<Basis> ZonalHarmonicType;
-    typedef typename ZonalHarmonicType::Integrator Integrator;
-    typedef KZonalHarmonicContainer<Basis> Container;
-    typedef typename ZonalHarmonicType::Container ElementContainer;
-    typedef std::vector<KZonalHarmonicSourcePoint*> SourcePointVector;
-    typedef std::vector<KZonalHarmonicFieldSolver<Basis>*> FieldSolverVector;
+    using ZonalHarmonicType = KZonalHarmonicTrait<Basis>;
+    using Integrator = typename ZonalHarmonicType::Integrator;
+    using Container = KZonalHarmonicContainer<Basis>;
+    using ElementContainer = typename ZonalHarmonicType::Container;
+    using SourcePointVector = std::vector<KZonalHarmonicSourcePoint*>;
+    using FieldSolverVector = std::vector<KZonalHarmonicFieldSolver<Basis>*>;
 
     void Initialize();
 
@@ -28,7 +28,7 @@ template<class Basis> class KZonalHarmonicComputer
         fCentralFirst(true)
     {}
 
-    virtual ~KZonalHarmonicComputer() {}
+    virtual ~KZonalHarmonicComputer() = default;
 
   public:
     bool UseCentralExpansion(const KPosition& P) const;

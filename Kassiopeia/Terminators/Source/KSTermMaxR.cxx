@@ -6,12 +6,12 @@ namespace Kassiopeia
 {
 
 KSTermMaxR::KSTermMaxR() : fMaxR(0.) {}
-KSTermMaxR::KSTermMaxR(const KSTermMaxR& aCopy) : KSComponent(), fMaxR(aCopy.fMaxR) {}
+KSTermMaxR::KSTermMaxR(const KSTermMaxR& aCopy) : KSComponent(aCopy), fMaxR(aCopy.fMaxR) {}
 KSTermMaxR* KSTermMaxR::Clone() const
 {
     return new KSTermMaxR(*this);
 }
-KSTermMaxR::~KSTermMaxR() {}
+KSTermMaxR::~KSTermMaxR() = default;
 
 void KSTermMaxR::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

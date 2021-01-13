@@ -27,25 +27,25 @@ class KTransformation
     //*****************
 
   public:
-    void SetOrigin(const KThreeVector& origin);
+    void SetOrigin(const KGeoBag::KThreeVector& origin);
     void SetFrameAxisAngle(const double& angle, const double& theta, const double& phi);
     void SetFrameEuler(const double& alpha, const double& beta, const double& gamma);
-    void SetXAxis(const KThreeVector& xaxis);
-    void SetYAxis(const KThreeVector& yaxis);
-    void SetZAxis(const KThreeVector& zaxis);
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
+    void SetXAxis(const KGeoBag::KThreeVector& xaxis);
+    void SetYAxis(const KGeoBag::KThreeVector& yaxis);
+    void SetZAxis(const KGeoBag::KThreeVector& zaxis);
+    const KGeoBag::KThreeVector& GetOrigin() const;
+    const KGeoBag::KThreeVector& GetXAxis() const;
+    const KGeoBag::KThreeVector& GetYAxis() const;
+    const KGeoBag::KThreeVector& GetZAxis() const;
 
   private:
-    void LocalFromGlobal(const KThreeVector& point, KThreeVector& target) const;
-    void GlobalFromLocal(const KThreeVector& point, KThreeVector& target) const;
+    void LocalFromGlobal(const KGeoBag::KThreeVector& point, KGeoBag::KThreeVector& target) const;
+    void GlobalFromLocal(const KGeoBag::KThreeVector& point, KGeoBag::KThreeVector& target) const;
 
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 
     //********
     //rotation
@@ -55,7 +55,8 @@ class KTransformation
     void SetRotationAxisAngle(const double& angle, const double& theta, const double& phi);
     void SetRotationEuler(const double& phi, const double& theta, const double& psi);
     void SetRotationZYZEuler(const double& phi, const double& theta, const double& psi);
-    void SetRotatedFrame(const KThreeVector& x, const KThreeVector& y, const KThreeVector& z);
+    void SetRotatedFrame(const KGeoBag::KThreeVector& x, const KGeoBag::KThreeVector& y,
+                         const KGeoBag::KThreeVector& z);
     const KRotation& GetRotation() const;
 
   private:
@@ -68,31 +69,31 @@ class KTransformation
 
   public:
     void SetDisplacement(const double& xdisp, const double& ydisp, const double& zdisp);
-    void SetDisplacement(const KThreeVector& disp);
-    const KThreeVector& GetDisplacement() const;
+    void SetDisplacement(const KGeoBag::KThreeVector& disp);
+    const KGeoBag::KThreeVector& GetDisplacement() const;
 
   private:
-    KThreeVector fDisplacement;
+    KGeoBag::KThreeVector fDisplacement;
 };
 
-inline const KThreeVector& KTransformation::GetOrigin() const
+inline const KGeoBag::KThreeVector& KTransformation::GetOrigin() const
 {
     return fOrigin;
 }
-inline const KThreeVector& KTransformation::GetXAxis() const
+inline const KGeoBag::KThreeVector& KTransformation::GetXAxis() const
 {
     return fXAxis;
 }
-inline const KThreeVector& KTransformation::GetYAxis() const
+inline const KGeoBag::KThreeVector& KTransformation::GetYAxis() const
 {
     return fYAxis;
 }
-inline const KThreeVector& KTransformation::GetZAxis() const
+inline const KGeoBag::KThreeVector& KTransformation::GetZAxis() const
 {
     return fZAxis;
 }
 
-inline const KThreeVector& KTransformation::GetDisplacement() const
+inline const KGeoBag::KThreeVector& KTransformation::GetDisplacement() const
 {
     return fDisplacement;
 }

@@ -14,10 +14,10 @@ using namespace KEMField;
 
 template<class Typelist> struct OmitAttributeInTypelist
 {
-    OmitAttributeInTypelist(KMD5HashGenerator& hashGenerator, std::string attributeName)
+    OmitAttributeInTypelist(KMD5HashGenerator& hashGenerator, const std::string& attributeName)
     {
         typedef typename Typelist::Head Head;
-        typedef typename Typelist::Tail Tail;
+        using Tail = typename Typelist::Tail;
 
         if (Head::Name() == attributeName)
             hashGenerator.Omit(Type2Type<Head>());
@@ -28,15 +28,15 @@ template<class Typelist> struct OmitAttributeInTypelist
 
 template<> struct OmitAttributeInTypelist<KNullType>
 {
-    OmitAttributeInTypelist(KMD5HashGenerator&, std::string) {}
+    OmitAttributeInTypelist(KMD5HashGenerator& /*unused*/, const std::string& /*unused*/) {}
 };
 
 template<class Typelist> struct AppendNames
 {
-    AppendNames(std::string prefix, std::string suffix, std::string& usage)
+    AppendNames(const std::string& prefix, const std::string& suffix, std::string& usage)
     {
-        typedef typename Typelist::Head Head;
-        typedef typename Typelist::Tail Tail;
+        using Head = typename Typelist::Head;
+        using Tail = typename Typelist::Tail;
 
         usage.append(prefix);
         usage.append(Head::Name());
@@ -47,7 +47,7 @@ template<class Typelist> struct AppendNames
 
 template<> struct AppendNames<KNullType>
 {
-    AppendNames(std::string, std::string, std::string&) {}
+    AppendNames(const std::string& /*unused*/, const std::string& /*unused*/, std::string& /*unused*/) {}
 };
 
 int main(int argc, char* argv[])
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     std::string name = KSurfaceContainer::Name();
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
     }
 
     std::string inFileName = argv[optind];
-    std::string fileSuffix = inFileName.substr(inFileName.find_last_of("."), std::string::npos);
+    std::string fileSuffix = inFileName.substr(inFileName.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (fileSuffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (fileSuffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }

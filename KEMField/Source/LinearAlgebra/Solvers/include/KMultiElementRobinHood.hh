@@ -12,8 +12,8 @@ template<typename ValueType, template<typename> class ParallelTrait = KMultiElem
 class KMultiElementRobinHood : public KIterativeSolver<ValueType>
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KMultiElementRobinHood();
     ~KMultiElementRobinHood() override;
@@ -65,8 +65,7 @@ KMultiElementRobinHood<ValueType, ParallelTrait>::KMultiElementRobinHood() :
 {}
 
 template<typename ValueType, template<typename> class ParallelTrait>
-KMultiElementRobinHood<ValueType, ParallelTrait>::~KMultiElementRobinHood()
-{}
+KMultiElementRobinHood<ValueType, ParallelTrait>::~KMultiElementRobinHood() = default;
 
 template<typename ValueType, template<typename> class ParallelTrait>
 void KMultiElementRobinHood<ValueType, ParallelTrait>::Solve(const Matrix& A, Vector& x, const Vector& b)

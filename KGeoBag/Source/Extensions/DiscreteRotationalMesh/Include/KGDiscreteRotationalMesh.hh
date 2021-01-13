@@ -10,7 +10,7 @@ namespace KGeoBag
 class KGDiscreteRotationalMeshData
 {
   public:
-    KGDiscreteRotationalMeshData() {}
+    KGDiscreteRotationalMeshData() = default;
     KGDiscreteRotationalMeshData(KGSpace*) {}
     KGDiscreteRotationalMeshData(KGSurface*) {}
     KGDiscreteRotationalMeshData(KGSpace*, const KGDiscreteRotationalMeshData& aCopy)
@@ -36,11 +36,11 @@ class KGDiscreteRotationalMesh
 {
   public:
     typedef KGDiscreteRotationalMeshData Surface;
-    typedef KGDiscreteRotationalMeshData Space;
+    using Space = KGDiscreteRotationalMeshData;
 };
 
-typedef KGExtendedSurface<KGDiscreteRotationalMesh> KGDiscreteRotationalMeshSurface;
-typedef KGExtendedSpace<KGDiscreteRotationalMesh> KGDiscreteRotationalMeshSpace;
+using KGDiscreteRotationalMeshSurface = KGExtendedSurface<KGDiscreteRotationalMesh>;
+using KGDiscreteRotationalMeshSpace = KGExtendedSpace<KGDiscreteRotationalMesh>;
 
 }  // namespace KGeoBag
 

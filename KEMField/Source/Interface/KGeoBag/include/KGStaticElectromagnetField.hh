@@ -28,13 +28,15 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     void AddSurface(KGeoBag::KGSurface* aSurface);
     void AddSpace(KGeoBag::KGSpace* aSpace);
 
+    void SetSaveMagfield3(bool aFlag);
+
     KSmartPointer<KGeoBag::KGElectromagnetConverter> GetConverter();
 
   private:
     void InitializeCore() override;
 
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
     void ConfigureSurfaceContainer();
@@ -44,6 +46,8 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     std::vector<KGeoBag::KGSpace*> fSpaces;
 
     KSmartPointer<KGeoBag::KGElectromagnetConverter> fConverter;
+
+    bool fSaveMagfield3;
 };
 
 } /* namespace KEMField */

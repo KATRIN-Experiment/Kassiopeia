@@ -1,14 +1,10 @@
 #ifndef KGVTKAXIALMESHPAINTER_HH_
 #define KGVTKAXIALMESHPAINTER_HH_
 
-#include "KVTKWindow.h"
-using katrin::KVTKWindow;
-
-#include "KVTKPainter.h"
-using katrin::KVTKPainter;
-
 #include "KGAxialMesh.hh"
 #include "KGCore.hh"
+#include "KVTKPainter.h"
+#include "KVTKWindow.h"
 #include "vtkActor.h"
 #include "vtkCellArray.h"
 #include "vtkDoubleArray.h"
@@ -22,7 +18,7 @@ namespace KGeoBag
 {
 
 class KGVTKAxialMeshPainter :
-    public KVTKPainter,
+    public katrin::KVTKPainter,
     public KGVisitor,
     public KGSurface::Visitor,
     public KGExtendedSurface<KGAxialMesh>::Visitor,
@@ -31,17 +27,17 @@ class KGVTKAxialMeshPainter :
 {
   public:
     KGVTKAxialMeshPainter();
-    virtual ~KGVTKAxialMeshPainter();
+    ~KGVTKAxialMeshPainter() override;
 
   public:
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
-    void VisitSurface(KGSurface* aSurface);
-    void VisitExtendedSurface(KGExtendedSurface<KGAxialMesh>* aSurface);
-    void VisitSpace(KGSpace* aSpace);
-    void VisitExtendedSpace(KGExtendedSpace<KGAxialMesh>* aSpace);
+    void VisitSurface(KGSurface* aSurface) override;
+    void VisitExtendedSurface(KGExtendedSurface<KGAxialMesh>* aSurface) override;
+    void VisitSpace(KGSpace* aSpace) override;
+    void VisitExtendedSpace(KGExtendedSpace<KGAxialMesh>* aSpace) override;
 
     void SetFile(const std::string& aName);
     const std::string& GetFile() const;
@@ -59,10 +55,10 @@ class KGVTKAxialMeshPainter :
   private:
     void PaintElements();
 
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
+    KGeoBag::KThreeVector fCurrentOrigin;
+    KGeoBag::KThreeVector fCurrentXAxis;
+    KGeoBag::KThreeVector fCurrentYAxis;
+    KGeoBag::KThreeVector fCurrentZAxis;
 
     KGAxialMeshElementVector* fCurrentElements;
 

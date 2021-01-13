@@ -86,7 +86,7 @@ int main(int argc, char** argv)
             << "electric_potential\t" << endl;
 
     for (size_t tIndex = 2; tIndex < tParameters.size(); tIndex++) {
-        KSGenerator* tGeneratorObject = KToolbox::GetInstance().Get<KSGenerator>(tParameters[tIndex]);
+        auto* tGeneratorObject = KToolbox::GetInstance().Get<KSGenerator>(tParameters[tIndex]);
 
         if (!tGeneratorObject) {
             mainmsg(eError) << "Generator <" << tParameters[tIndex] << "> does not exist in toolbox" << eom;
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
         tGeneratorObject->Initialize();
         tRootGenerator.SetGenerator(tGeneratorObject);
 
-        auto tEvent = new KSEvent();
+        auto* tEvent = new KSEvent();
         ;
         tRootGenerator.SetEvent(tEvent);
 

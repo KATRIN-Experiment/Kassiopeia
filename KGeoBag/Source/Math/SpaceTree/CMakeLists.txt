@@ -41,7 +41,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagMathSpaceTree SHARED
-	${MATH_SPACETREE_SOURCE_FILES}
+	${MATH_SPACETREE_SOURCE_FILES} ${MATH_SPACETREE_HEADER_FILES}
 )
 target_link_libraries( KGeoBagMathSpaceTree
     ${Kommon_LIBRARIES}

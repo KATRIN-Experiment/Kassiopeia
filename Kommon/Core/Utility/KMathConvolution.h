@@ -17,7 +17,7 @@ template<class XKernelType> class KMathConvolution
 {
   public:
     KMathConvolution(const XKernelType& kernel = XKernelType());
-    virtual ~KMathConvolution() {}
+    virtual ~KMathConvolution() = default;
 
     XKernelType& GetKernel()
     {

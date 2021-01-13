@@ -47,8 +47,8 @@ int main(int /*argc*/, char** /*argv*/)
     KFMFastFourierTransformUtilities::FFTRadixThree(N, arr, twiddle);
 
     kfmout << "DFT'd array = " << kfmendl;
-    for (unsigned int i = 0; i < N; i++) {
-        kfmout << arr[i] << kfmendl;
+    for (auto& i : arr) {
+        kfmout << i << kfmendl;
     }
 
     //now we'll do the inverse transform
@@ -60,8 +60,8 @@ int main(int /*argc*/, char** /*argv*/)
     //    }
 
     //conjugate the input
-    for (unsigned int i = 0; i < N; i++) {
-        arr[i] = std::conj(arr[i]);
+    for (auto& i : arr) {
+        i = std::conj(i);
     }
 
 
@@ -73,19 +73,19 @@ int main(int /*argc*/, char** /*argv*/)
     KFMFastFourierTransformUtilities::FFTRadixThree(N, arr, twiddle);
 
     //conjugate the output
-    for (unsigned int i = 0; i < N; i++) {
-        arr[i] = std::conj(arr[i]);
+    for (auto& i : arr) {
+        i = std::conj(i);
     }
 
 
     //normalize
-    for (unsigned int i = 0; i < N; i++) {
-        arr[i] *= 1.0 / ((double) N);
+    for (auto& i : arr) {
+        i *= 1.0 / ((double) N);
     }
 
     kfmout << "IDFT of the DFT'd array = " << kfmendl;
-    for (unsigned int i = 0; i < N; i++) {
-        kfmout << arr[i] << kfmendl;
+    for (auto& i : arr) {
+        kfmout << i << kfmendl;
     }
 
 

@@ -27,8 +27,8 @@ template<class ShapePolicy> class KSymmetryGroup : public KShape
 {
   public:
     typedef std::vector<ShapePolicy*> ShapeArray;
-    typedef typename std::vector<ShapePolicy*>::iterator ShapeIt;
-    typedef typename std::vector<ShapePolicy*>::const_iterator ShapeCIt;
+    using ShapeIt = typename std::vector<ShapePolicy*>::iterator;
+    using ShapeCIt = typename std::vector<ShapePolicy*>::const_iterator;
 
   protected:
     KSymmetryGroup() : fNReflections(0), fNRotations(0), fOther(false) {}
@@ -105,8 +105,8 @@ template<class ShapePolicy> class KSymmetryGroup : public KShape
 
     ShapePolicy* NewElement();
 
-    void AddReflectionThroughPlane(const KThreeVector& planePosition, const KThreeVector& planeNormal);
-    void AddRotationsAboutAxis(const KThreeVector& axisPosition, const KThreeVector& axisDirection,
+    void AddReflectionThroughPlane(const KFieldVector& planePosition, const KFieldVector& planeNormal);
+    void AddRotationsAboutAxis(const KFieldVector& axisPosition, const KFieldVector& axisDirection,
                                unsigned int nRepeatedElements);
 
     unsigned int NumberOfReflections() const
@@ -196,8 +196,8 @@ template<class ShapePolicy> ShapePolicy* KSymmetryGroup<ShapePolicy>::NewElement
 }
 
 template<class ShapePolicy>
-void KSymmetryGroup<ShapePolicy>::AddReflectionThroughPlane(const KThreeVector& planePosition,
-                                                            const KThreeVector& planeNormal)
+void KSymmetryGroup<ShapePolicy>::AddReflectionThroughPlane(const KFieldVector& planePosition,
+                                                            const KFieldVector& planeNormal)
 {
     fNReflections++;
 
@@ -214,8 +214,8 @@ void KSymmetryGroup<ShapePolicy>::AddReflectionThroughPlane(const KThreeVector& 
 }
 
 template<class ShapePolicy>
-void KSymmetryGroup<ShapePolicy>::AddRotationsAboutAxis(const KThreeVector& axisPosition,
-                                                        const KThreeVector& axisDirection,
+void KSymmetryGroup<ShapePolicy>::AddRotationsAboutAxis(const KFieldVector& axisPosition,
+                                                        const KFieldVector& axisDirection,
                                                         unsigned int nRepeatedElements)
 {
     if (fNRotations)

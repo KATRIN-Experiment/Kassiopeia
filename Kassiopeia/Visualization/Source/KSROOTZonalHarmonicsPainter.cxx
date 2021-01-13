@@ -15,6 +15,9 @@
 #include <limits>
 
 using namespace KEMField;
+using namespace KGeoBag;
+using namespace katrin;
+using namespace std;
 
 namespace
 {
@@ -58,7 +61,7 @@ KSROOTZonalHarmonicsPainter::KSROOTZonalHarmonicsPainter() :
 //fRadialSafetyMargin( 0. ),
 //fZRPoints ()
 {}
-KSROOTZonalHarmonicsPainter::~KSROOTZonalHarmonicsPainter() {}
+KSROOTZonalHarmonicsPainter::~KSROOTZonalHarmonicsPainter() = default;
 
 void KSROOTZonalHarmonicsPainter::Render()
 {

@@ -45,14 +45,14 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenGeneratorCompositeBuilder::~KComplexElement() {}
+template<> KSGenGeneratorCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenGeneratorCompositeStructure =
-    KSGenGeneratorCompositeBuilder::Attribute<string>("name") +
-    KSGenGeneratorCompositeBuilder::Attribute<string>("special") +
-    KSGenGeneratorCompositeBuilder::Attribute<string>("creator") +
+    KSGenGeneratorCompositeBuilder::Attribute<std::string>("name") +
+    KSGenGeneratorCompositeBuilder::Attribute<std::string>("special") +
+    KSGenGeneratorCompositeBuilder::Attribute<std::string>("creator") +
     KSGenGeneratorCompositeBuilder::Attribute<double>("pid") +
-    KSGenGeneratorCompositeBuilder::Attribute<string>("string_id") +
+    KSGenGeneratorCompositeBuilder::Attribute<std::string>("string_id") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenEnergyComposite>("energy_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenEnergyBetaDecay>("energy_beta_decay") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenEnergyBetaRecoil>("energy_beta_recoil") +
@@ -71,7 +71,7 @@ STATICINT sKSGenGeneratorCompositeStructure =
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionSphericalComposite>("position_spherical_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionFrustrumComposite>("position_frustrum_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionSpaceRandom>("position_space_random") +
-    //        KSGenGeneratorCompositeBuilder::ComplexElement< KSGenPositionSurfaceRandom >( "position_surface_random" ) +
+    KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionSurfaceRandom>("position_surface_random") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionSurfaceAdjustmentStep>(
         "position_surface_adjustment_step") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenPositionMeshSurfaceRandom>("position_mesh_surface_random") +

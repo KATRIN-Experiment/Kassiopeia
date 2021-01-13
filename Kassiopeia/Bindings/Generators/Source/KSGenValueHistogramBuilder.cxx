@@ -8,12 +8,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueHistogramBuilder::~KComplexElement() {}
+template<> KSGenValueHistogramBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueHistogramStructure =
-    KSGenValueHistogramBuilder::Attribute<string>("name") + KSGenValueHistogramBuilder::Attribute<string>("base") +
-    KSGenValueHistogramBuilder::Attribute<string>("path") + KSGenValueHistogramBuilder::Attribute<string>("histogram") +
-    KSGenValueHistogramBuilder::Attribute<string>("formula");
+STATICINT sKSGenValueHistogramStructure = KSGenValueHistogramBuilder::Attribute<std::string>("name") +
+                                          KSGenValueHistogramBuilder::Attribute<std::string>("base") +
+                                          KSGenValueHistogramBuilder::Attribute<std::string>("path") +
+                                          KSGenValueHistogramBuilder::Attribute<std::string>("histogram") +
+                                          KSGenValueHistogramBuilder::Attribute<std::string>("formula");
 
 STATICINT sKSGenValueHistogram = KSRootBuilder::ComplexElement<KSGenValueHistogram>("ksgen_value_histogram");
 

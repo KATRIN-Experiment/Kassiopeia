@@ -52,7 +52,12 @@ template<class XPathType> class KGShellPathSurface : public KGArea
         fAngleStart(0),
         fAngleStop(360)
     {}
-    ~KGShellPathSurface() override {}
+    ~KGShellPathSurface() override = default;
+
+    static std::string Name()
+    {
+        return "shell_" + XPathType::Name() + "_surface";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -134,7 +139,7 @@ template<class XPathType> class KGShellPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KThreeVector& aPoint) const override
+    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         bool tZRAbove = fPath->Above(tZRPoint);
@@ -145,21 +150,21 @@ template<class XPathType> class KGShellPathSurface : public KGArea
             return false;
         }
     }
-    KThreeVector AreaPoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         NearestPointInfo info = CalculateNearestPointInfo(aPoint);
         KTwoVector tZRNearest = fPath->Point(info.tZRPoint);
-        return KThreeVector(cos(info.tAngleNearest) * tZRNearest.R(),
-                            sin(info.tAngleNearest) * tZRNearest.R(),
-                            tZRNearest.Z());
+        return KGeoBag::KThreeVector(cos(info.tAngleNearest) * tZRNearest.R(),
+                                     sin(info.tAngleNearest) * tZRNearest.R(),
+                                     tZRNearest.Z());
     }
-    KThreeVector AreaNormal(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override
     {
         NearestPointInfo info = CalculateNearestPointInfo(aPoint);
         KTwoVector tZRNormal = fPath->Normal(info.tZRPoint);
-        return fSign * KThreeVector(cos(info.tAngleNearest) * tZRNormal.R(),
-                                    sin(info.tAngleNearest) * tZRNormal.R(),
-                                    tZRNormal.Z());
+        return fSign * KGeoBag::KThreeVector(cos(info.tAngleNearest) * tZRNormal.R(),
+                                             sin(info.tAngleNearest) * tZRNormal.R(),
+                                             tZRNormal.Z());
     }
 
   private:
@@ -169,7 +174,7 @@ template<class XPathType> class KGShellPathSurface : public KGArea
         KTwoVector tZRPoint;
     };
 
-    NearestPointInfo CalculateNearestPointInfo(const KThreeVector& aPoint) const
+    NearestPointInfo CalculateNearestPointInfo(const KGeoBag::KThreeVector& aPoint) const
     {
         NearestPointInfo info;
         double tAnglePoint;

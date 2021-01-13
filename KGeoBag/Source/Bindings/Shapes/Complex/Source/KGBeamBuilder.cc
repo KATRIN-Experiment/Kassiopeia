@@ -18,12 +18,12 @@ STATICINT sKGBeamBuilderStructure =
     KGBeamBuilder::ComplexElement<KGBeamLine>("start_line") + KGBeamBuilder::ComplexElement<KGBeamLine>("end_line");
 
 STATICINT sKGBeamSurfaceBuilderStructure =
-    KGBeamSurfaceBuilder::Attribute<string>("name") + KGBeamSurfaceBuilder::ComplexElement<KGBeam>("beam");
+    KGBeamSurfaceBuilder::Attribute<std::string>("name") + KGBeamSurfaceBuilder::ComplexElement<KGBeam>("beam");
 
 STATICINT sKGBeamSurfaceBuilder = KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGBeam>>("beam_surface");
 
 STATICINT sKGBeamSpaceBuilderStructure =
-    KGBeamSpaceBuilder::Attribute<string>("name") + KGBeamSpaceBuilder::ComplexElement<KGBeam>("beam");
+    KGBeamSpaceBuilder::Attribute<std::string>("name") + KGBeamSpaceBuilder::ComplexElement<KGBeam>("beam");
 
 STATICINT sKGBeamSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGWrappedSpace<KGBeam>>("beam_space");
 

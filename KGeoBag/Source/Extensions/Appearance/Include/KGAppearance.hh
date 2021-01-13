@@ -15,7 +15,7 @@ class KGAppearanceData
     KGAppearanceData(KGSurface*) : fColor(), fArc(120) {}
     KGAppearanceData(KGSpace*, const KGAppearanceData& aCopy) : fColor(aCopy.fColor), fArc(aCopy.fArc) {}
     KGAppearanceData(KGSurface*, const KGAppearanceData& aCopy) : fColor(aCopy.fColor), fArc(aCopy.fArc) {}
-    virtual ~KGAppearanceData() {}
+    virtual ~KGAppearanceData() = default;
 
   public:
     void SetColor(const KGRGBAColor& aColor);
@@ -33,11 +33,11 @@ class KGAppearance
 {
   public:
     typedef KGAppearanceData Surface;
-    typedef KGAppearanceData Space;
+    using Space = KGAppearanceData;
 };
 
-typedef KGExtendedSurface<KGAppearance> KGAppearanceSurface;
-typedef KGExtendedSpace<KGAppearance> KGAppearanceSpace;
+using KGAppearanceSurface = KGExtendedSurface<KGAppearance>;
+using KGAppearanceSpace = KGExtendedSpace<KGAppearance>;
 
 }  // namespace KGeoBag
 

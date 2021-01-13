@@ -54,7 +54,7 @@ set (ELECTROSTATICBOUNDARYINTEGRALS_SOURCEFILES
 
 ##################################################
 
-add_library (KEMElectrostaticBoundaryIntegrals SHARED ${ELECTROSTATICBOUNDARYINTEGRALS_SOURCEFILES})
+add_library (KEMElectrostaticBoundaryIntegrals SHARED ${ELECTROSTATICBOUNDARYINTEGRALS_SOURCEFILES} ${ELECTROSTATICBOUNDARYINTEGRALS_HEADERFILES})
 target_link_libraries (KEMElectrostaticBoundaryIntegrals
     KEMMath
     KEMSurfaces

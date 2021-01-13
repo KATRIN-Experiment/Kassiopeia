@@ -13,7 +13,7 @@ KSReadTrackROOT::KSReadTrackROOT(TFile* aFile) :
     fData->SetBranchAddress("FIRST_STEP_INDEX", &fFirstStepIndex);
     fData->SetBranchAddress("LAST_STEP_INDEX", &fLastStepIndex);
 }
-KSReadTrackROOT::~KSReadTrackROOT() {}
+KSReadTrackROOT::~KSReadTrackROOT() = default;
 
 unsigned int KSReadTrackROOT::GetTrackIndex() const
 {

@@ -27,7 +27,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     double spatial_size = dim_size[1] * dim_size[2] * dim_size[3];
 
-    std::complex<double>* raw_data = new std::complex<double>[total_size];
+    auto* raw_data = new std::complex<double>[total_size];
     KFMArrayWrapper<std::complex<double>, ndim> input(raw_data, dim_size);
 
     //fill up the array with a signal
@@ -62,8 +62,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     //kfmout<<"--------------------------------------------------------------"<<kfmendl;
 
-    KFMBatchedMultidimensionalFastFourierTransform_OpenCL<3>* fft_eng =
-        new KFMBatchedMultidimensionalFastFourierTransform_OpenCL<3>();
+    auto* fft_eng = new KFMBatchedMultidimensionalFastFourierTransform_OpenCL<3>();
 
     fft_eng->SetForward();
     fft_eng->SetInput(&input);

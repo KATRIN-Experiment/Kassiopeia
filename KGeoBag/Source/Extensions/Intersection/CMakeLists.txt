@@ -19,7 +19,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagIntersection SHARED
-	${INTERSECTION_SOURCE_FILES}
+	${INTERSECTION_SOURCE_FILES} ${INTERSECTION_HEADER_FILES}
 )
 target_link_libraries( KGeoBagIntersection
 	KGeoBagCore

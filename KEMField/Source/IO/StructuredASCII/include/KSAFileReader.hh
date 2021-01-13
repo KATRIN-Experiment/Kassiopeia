@@ -38,7 +38,7 @@ class KSAFileReader
     KSAFileReader();
     virtual ~KSAFileReader();
 
-    void SetFileName(std::string filename);
+    void SetFileName(const std::string& filename);
     bool Open();
     void Close();
 

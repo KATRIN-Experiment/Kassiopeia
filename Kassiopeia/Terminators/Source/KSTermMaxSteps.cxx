@@ -5,7 +5,7 @@ namespace Kassiopeia
 
 KSTermMaxSteps::KSTermMaxSteps() : fMaxSteps(0), fSteps(0) {}
 KSTermMaxSteps::KSTermMaxSteps(const KSTermMaxSteps& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fMaxSteps(aCopy.fMaxSteps),
     fSteps(aCopy.fMaxSteps)
 {}
@@ -13,7 +13,7 @@ KSTermMaxSteps* KSTermMaxSteps::Clone() const
 {
     return new KSTermMaxSteps(*this);
 }
-KSTermMaxSteps::~KSTermMaxSteps() {}
+KSTermMaxSteps::~KSTermMaxSteps() = default;
 
 void KSTermMaxSteps::ActivateComponent()
 {

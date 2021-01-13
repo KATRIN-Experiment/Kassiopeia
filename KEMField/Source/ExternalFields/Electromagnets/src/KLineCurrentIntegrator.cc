@@ -5,7 +5,7 @@
 
 namespace KEMField
 {
-KThreeVector KLineCurrentIntegrator::VectorPotential(const KLineCurrent& lineCurrent, const KPosition& P) const
+KFieldVector KLineCurrentIntegrator::VectorPotential(const KLineCurrent& lineCurrent, const KPosition& P) const
 {
     KPosition p = lineCurrent.GetCoordinateSystem().ToLocal(P);
 
@@ -15,17 +15,17 @@ KThreeVector KLineCurrentIntegrator::VectorPotential(const KLineCurrent& lineCur
     KDirection i = (lineCurrent.GetP1() - lineCurrent.GetP0()).Unit();
 
     if (1. - fabs((lineCurrent.GetP0() - p).Unit().Dot(i)) < 1.e-8)
-        return KThreeVector(0., 0., 0.);
+        return KFieldVector(0., 0., 0.);
 
     double l = (lineCurrent.GetP0() - p).Dot(i);
 
     double prefac = (KEMConstants::Mu0OverPi * lineCurrent.GetCurrent() * .25 * log((L + l + r1) / (l + r0)));
-    KThreeVector A = i * prefac;
+    KFieldVector A = i * prefac;
 
     return lineCurrent.GetCoordinateSystem().ToGlobal(A);
 }
 
-KThreeVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurrent, const KPosition& P) const
+KFieldVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurrent, const KPosition& P) const
 {
     KPosition p = lineCurrent.GetCoordinateSystem().ToLocal(P);
 
@@ -34,7 +34,7 @@ KThreeVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurre
     KDirection i = (lineCurrent.GetP1() - lineCurrent.GetP0()).Unit();
 
     if (1. - fabs((lineCurrent.GetP0() - p).Unit().Dot(i)) < 1.e-8)
-        return KThreeVector(0., 0., 0.);
+        return KFieldVector(0., 0., 0.);
 
     double l = r0.Dot(i);
 
@@ -45,7 +45,7 @@ KThreeVector KLineCurrentIntegrator::MagneticField(const KLineCurrent& lineCurre
 
     double prefac = (KEMConstants::Mu0OverPi * lineCurrent.GetCurrent() / (4. * s) * (sinTheta1 - sinTheta0));
 
-    KThreeVector BField = r0.Cross(i).Unit() * prefac;
+    KFieldVector BField = r0.Cross(i).Unit() * prefac;
 
     return lineCurrent.GetCoordinateSystem().ToGlobal(BField);
 }

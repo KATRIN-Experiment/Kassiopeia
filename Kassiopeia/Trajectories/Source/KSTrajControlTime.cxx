@@ -4,12 +4,12 @@ namespace Kassiopeia
 {
 
 KSTrajControlTime::KSTrajControlTime() : fTime(0.) {}
-KSTrajControlTime::KSTrajControlTime(const KSTrajControlTime& aCopy) : KSComponent(), fTime(aCopy.fTime) {}
+KSTrajControlTime::KSTrajControlTime(const KSTrajControlTime& aCopy) : KSComponent(aCopy), fTime(aCopy.fTime) {}
 KSTrajControlTime* KSTrajControlTime::Clone() const
 {
     return new KSTrajControlTime(*this);
 }
-KSTrajControlTime::~KSTrajControlTime() {}
+KSTrajControlTime::~KSTrajControlTime() = default;
 
 void KSTrajControlTime::Calculate(const KSTrajExactParticle&, double& aValue)
 {

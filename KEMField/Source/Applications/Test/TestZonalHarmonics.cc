@@ -15,20 +15,18 @@
 #include "KZonalHarmonicContainer.hh"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 
 using namespace KEMField;
 
-template<class Solver> void ComputeEField(Solver&, KPosition&, KThreeVector&);
+template<class Solver> void ComputeEField(Solver& /*s*/, KPosition& /*P*/, KFieldVector& /*E*/);
 
-template<class Solver> void ComputeBField(Solver&, KPosition&, KThreeVector&);
+template<class Solver> void ComputeBField(Solver& /*s*/, KPosition& /*P*/, KFieldVector& /*B*/);
 
 int main(int /*argc*/, char** /*argv*/)
 {
@@ -49,15 +47,15 @@ int main(int /*argc*/, char** /*argv*/)
     double zMax = 1.;
     double current = 1.;
 
-    KCurrentLoop* currentLoop = new KCurrentLoop();
+    auto* currentLoop = new KCurrentLoop();
     currentLoop->SetValues(rMin, zMin, current);
     currentLoop->GetCoordinateSystem().SetValues(origin, y, z, x);
 
-    KSolenoid* solenoid = new KSolenoid();
+    auto* solenoid = new KSolenoid();
     solenoid->SetValues(rMin, zMin, zMax, current);
     solenoid->GetCoordinateSystem().SetValues(origin, x, y, z);
 
-    KCoil* coil = new KCoil();
+    auto* coil = new KCoil();
     coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
     coil->GetCoordinateSystem().SetValues(newOrigin, x, y, z);
 
@@ -79,9 +77,9 @@ int main(int /*argc*/, char** /*argv*/)
     ring->SetValues(p0);
     ring->SetSolution(charge);
 
-    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KConicSection> ConicSection;
+    using ConicSection = KSurface<KElectrostaticBasis, KDirichletBoundary, KConicSection>;
 
-    ConicSection* conicSection = new ConicSection();
+    auto* conicSection = new ConicSection();
     conicSection->SetValues(p0, p1);
     conicSection->SetSolution(1.e-8);
 
@@ -166,32 +164,32 @@ int main(int /*argc*/, char** /*argv*/)
     KPosition P;
 
     double phi[2];
-    KThreeVector A[2], B[2], E[2];
+    KFieldVector A[2], B[2], E[2];
     KGradient Bp[2];
 
-    KThreeVector E_Numeric;
-    KThreeVector B_Numeric;
+    KFieldVector E_Numeric;
+    KFieldVector B_Numeric;
 
     double deltaPhi = 0.;
-    KThreeVector deltaA, deltaB, deltaE;
+    KFieldVector deltaA, deltaB, deltaE;
     KGradient deltaBp;
 
     double deltaPhi_av = 0.;
-    KThreeVector deltaA_av, deltaB_av, deltaE_av;
+    KFieldVector deltaA_av, deltaB_av, deltaE_av;
     KGradient deltaBp_av;
     double deltaPhi2_av = 0.;
-    KThreeVector deltaA2_av, deltaB2_av, deltaE2_av;
+    KFieldVector deltaA2_av, deltaB2_av, deltaE2_av;
     KGradient deltaBp2_av;
     double deltaPhi_min = 0.;
-    KThreeVector deltaA_min, deltaB_min, deltaE_min;
+    KFieldVector deltaA_min, deltaB_min, deltaE_min;
     KGradient deltaBp_min;
     double deltaPhi_max = 0.;
-    KThreeVector deltaA_max, deltaB_max, deltaE_max;
+    KFieldVector deltaA_max, deltaB_max, deltaE_max;
     KGradient deltaBp_max;
 
     unsigned int nSamples = 1.e3;
 
-    srand((unsigned) time(0));
+    srand((unsigned) time(nullptr));
 
     KTicker ticker;
 
@@ -361,7 +359,7 @@ int main(int /*argc*/, char** /*argv*/)
     return 0;
 }
 
-template<class Solver> void ComputeEField(Solver& s, KPosition& P, KThreeVector& E)
+template<class Solver> void ComputeEField(Solver& s, KPosition& P, KFieldVector& E)
 {
     static KDirection axis[3] = {KDirection(1., 0., 0.), KDirection(0., 1., 0.), KDirection(0., 0., 1.)};
     static double eps = 1.e-6;
@@ -371,12 +369,12 @@ template<class Solver> void ComputeEField(Solver& s, KPosition& P, KThreeVector&
     }
 }
 
-template<class Solver> void ComputeBField(Solver& s, KPosition& P, KThreeVector& B)
+template<class Solver> void ComputeBField(Solver& s, KPosition& P, KFieldVector& B)
 {
     static KDirection axis[3] = {KDirection(1., 0., 0.), KDirection(0., 1., 0.), KDirection(0., 0., 1.)};
     static double eps = 1.e-6;
 
-    KThreeVector partialA[3];
+    KFieldVector partialA[3];
 
     for (unsigned int i = 0; i < 3; i++)
         partialA[i] = (s.VectorPotential(P + eps * axis[i]) - s.VectorPotential(P - eps * axis[i])) / (2. * eps);

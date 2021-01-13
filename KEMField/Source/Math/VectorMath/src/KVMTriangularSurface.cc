@@ -4,7 +4,7 @@
 
 using namespace KEMField;
 
-KVMTriangularSurface::KVMTriangularSurface() : KVMCompactSurface(), KVMSpaceTriangle()
+KVMTriangularSurface::KVMTriangularSurface()
 {
     fLSum = 0.0;
 }

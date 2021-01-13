@@ -24,7 +24,7 @@ class KFundamentalTypeCounter;
 template<typename Type> class KFundamentalTypeCounterType
 {
   public:
-    virtual ~KFundamentalTypeCounterType() {}
+    virtual ~KFundamentalTypeCounterType() = default;
     virtual void IncrementTypeCounter(unsigned int) = 0;
     virtual void IncrementTypesCounter() = 0;
     virtual KFundamentalTypeCounter& Self() = 0;
@@ -42,7 +42,7 @@ class KFundamentalTypeCounter : public KFundamentalTypeCounterTypes
 {
   public:
     KFundamentalTypeCounter() : fTypesCounter(0), fTypeCounter(Length<KEMField::FundamentalTypes>::value, 0) {}
-    ~KFundamentalTypeCounter() override {}
+    ~KFundamentalTypeCounter() override = default;
 
     template<class Streamed> void PreStreamInAction(Streamed&) {}
     template<class Streamed> void PostStreamInAction(Streamed&) {}

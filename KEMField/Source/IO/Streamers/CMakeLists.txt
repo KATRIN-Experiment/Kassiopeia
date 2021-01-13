@@ -22,7 +22,7 @@ set (IO_SOURCEFILES
 
 ##################################################
 
-add_library (KEMIO SHARED ${IO_SOURCEFILES} ${IO_DICT_OUTFILE})
+add_library (KEMIO SHARED ${IO_SOURCEFILES} ${IO_HEADERFILES} ${IO_DICT_OUTFILE})
 target_link_libraries (KEMIO KEMStructuredASCII KEMCore ${GSL_LIBRARIES} ${OPENCL_LIBRARIES})
 
 kasper_install_headers (${IO_HEADERFILES})

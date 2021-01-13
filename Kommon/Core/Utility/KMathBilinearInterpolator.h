@@ -11,7 +11,6 @@
 #include <cassert>
 #include <map>
 #include <vector>
-using namespace std;
 
 namespace katrin
 {
@@ -24,8 +23,8 @@ template<class T = double> class KMathBilinearInterpolator
     typedef std::map<T, std::map<T, T>> PointMap;
 
   public:
-    KMathBilinearInterpolator(){};
-    ~KMathBilinearInterpolator(){};
+    KMathBilinearInterpolator() = default;
+    ~KMathBilinearInterpolator() = default;
 
     /**
 		 * \brief Adds a point. Note, that a regular grid is needed.

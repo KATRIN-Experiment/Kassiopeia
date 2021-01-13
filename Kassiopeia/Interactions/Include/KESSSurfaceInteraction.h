@@ -27,15 +27,14 @@ class KESSSurfaceInteraction : public KSComponentTemplate<KESSSurfaceInteraction
 
     double CalculateTransmissionProbability(const double aKineticEnergy, const double aCosIncidentAngle);
 
-
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eEnteringSilicon,
         eExitingSilicon
     } ElectronDirection;
     ElectronDirection fElectronDirection;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eNormalPointingSilicon,
         eNormalPointingAway

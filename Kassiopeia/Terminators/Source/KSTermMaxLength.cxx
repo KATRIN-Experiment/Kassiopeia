@@ -7,12 +7,12 @@ namespace Kassiopeia
 {
 
 KSTermMaxLength::KSTermMaxLength() : fLength(0.) {}
-KSTermMaxLength::KSTermMaxLength(const KSTermMaxLength& aCopy) : KSComponent(), fLength(aCopy.fLength) {}
+KSTermMaxLength::KSTermMaxLength(const KSTermMaxLength& aCopy) : KSComponent(aCopy), fLength(aCopy.fLength) {}
 KSTermMaxLength* KSTermMaxLength::Clone() const
 {
     return new KSTermMaxLength(*this);
 }
-KSTermMaxLength::~KSTermMaxLength() {}
+KSTermMaxLength::~KSTermMaxLength() = default;
 
 void KSTermMaxLength::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

@@ -44,7 +44,7 @@ class KIterativeKrylovStateReader : public KIterativeSolver<ValueType>::Visitor
     typedef KSimpleIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
 
 
-    KIterativeKrylovStateReader(std::vector<std::string> labels) : KIterativeSolver<ValueType>::Visitor()
+    KIterativeKrylovStateReader(const std::vector<std::string>& labels) : KIterativeSolver<ValueType>::Visitor()
     {
         fVerbosity = 0;
         fLabels = labels;

@@ -58,7 +58,12 @@ template<class XPathType> class KGRotatedOpenPathSpace : public KGVolume
         fFlattenedMeshCount(8),
         fFlattenedMeshPower(1.)
     {}
-    ~KGRotatedOpenPathSpace() override {}
+    ~KGRotatedOpenPathSpace() override = default;
+
+    static std::string Name()
+    {
+        return "rotated_" + XPathType::Name() + "_space";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -176,10 +181,10 @@ template<class XPathType> class KGRotatedOpenPathSpace : public KGVolume
         KGVolume::VolumeAccept(aVisitor);
         return;
     }
-    bool VolumeOutside(const KThreeVector& aQuery) const override
+    bool VolumeOutside(const KGeoBag::KThreeVector& aQuery) const override
     {
-        KThreeVector tPoint = VolumePoint(aQuery);
-        KThreeVector tNormal = VolumeNormal(aQuery);
+        KGeoBag::KThreeVector tPoint = VolumePoint(aQuery);
+        KGeoBag::KThreeVector tNormal = VolumeNormal(aQuery);
 
         if (tNormal.Dot(aQuery - tPoint) > 0.) {
             return true;
@@ -187,27 +192,27 @@ template<class XPathType> class KGRotatedOpenPathSpace : public KGVolume
 
         return false;
     }
-    KThreeVector VolumePoint(const KThreeVector& aQuery) const override
+    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aQuery) const override
     {
         KGFlattenedCircleSurface tTop = KGFlattenedCircleSurface(fTopPath);
         tTop.Sign(1.);
         tTop.Z(fPath->Start().X());
-        KThreeVector tTopPoint = tTop.Point(aQuery);
+        KGeoBag::KThreeVector tTopPoint = tTop.Point(aQuery);
         double tTopDistanceSquared = (aQuery - tTopPoint).MagnitudeSquared();
 
         KGFlattenedCircleSurface tBottom = KGFlattenedCircleSurface(fBottomPath);
         tBottom.Sign(-1.);
         tBottom.Z(fPath->End().X());
-        KThreeVector tBottomPoint = tBottom.Point(aQuery);
+        KGeoBag::KThreeVector tBottomPoint = tBottom.Point(aQuery);
         double tBottomDistanceSquared = (aQuery - tBottomPoint).MagnitudeSquared();
 
         KTwoVector tZRPoint = aQuery.ProjectZR();
         double tAngle = aQuery.AzimuthalAngle();
 
         KTwoVector tJacketZRPoint = fPath->Point(tZRPoint);
-        KThreeVector tJacketPoint(cos(tAngle) * tJacketZRPoint.R(),
-                                  sin(tAngle) * tJacketZRPoint.R(),
-                                  tJacketZRPoint.Z());
+        KGeoBag::KThreeVector tJacketPoint(cos(tAngle) * tJacketZRPoint.R(),
+                                           sin(tAngle) * tJacketZRPoint.R(),
+                                           tJacketZRPoint.Z());
         double tJacketDistanceSquared = (aQuery - tJacketPoint).MagnitudeSquared();
 
         if (tTopDistanceSquared < tJacketDistanceSquared) {
@@ -225,7 +230,7 @@ template<class XPathType> class KGRotatedOpenPathSpace : public KGVolume
             return tJacketPoint;
         }
     }
-    KThreeVector VolumeNormal(const KThreeVector& aQuery) const override
+    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aQuery) const override
     {
         KTwoVector tZRPoint = aQuery.ProjectZR();
         double tAngle = aQuery.AzimuthalAngle();
@@ -233,29 +238,29 @@ template<class XPathType> class KGRotatedOpenPathSpace : public KGVolume
         KGFlattenedCircleSurface tTop = KGFlattenedCircleSurface(fTopPath);
         tTop.Sign(1.);
         tTop.Z(fPath->Start().X());
-        KThreeVector tTopPoint = tTop.Point(aQuery);
-        KThreeVector tTopNormal = tTop.Normal(aQuery);
+        KGeoBag::KThreeVector tTopPoint = tTop.Point(aQuery);
+        KGeoBag::KThreeVector tTopNormal = tTop.Normal(aQuery);
         double tTopDistanceSquared = (aQuery - tTopPoint).MagnitudeSquared();
 
         KGFlattenedCircleSurface tBottom = KGFlattenedCircleSurface(fBottomPath);
         tBottom.Sign(-1.);
         tBottom.Z(fPath->End().X());
-        KThreeVector tBottomPoint = tBottom.Point(aQuery);
-        KThreeVector tBottomNormal = tBottom.Normal(aQuery);
+        KGeoBag::KThreeVector tBottomPoint = tBottom.Point(aQuery);
+        KGeoBag::KThreeVector tBottomNormal = tBottom.Normal(aQuery);
         double tBottomDistanceSquared = (aQuery - tBottomPoint).MagnitudeSquared();
 
         KTwoVector tJacketZRPoint = fPath->Point(tZRPoint);
-        KThreeVector tJacketPoint(cos(tAngle) * tJacketZRPoint.R(),
-                                  sin(tAngle) * tJacketZRPoint.R(),
-                                  tJacketZRPoint.Z());
+        KGeoBag::KThreeVector tJacketPoint(cos(tAngle) * tJacketZRPoint.R(),
+                                           sin(tAngle) * tJacketZRPoint.R(),
+                                           tJacketZRPoint.Z());
         KTwoVector tJacketZRNormal = fPath->Normal(tZRPoint);
-        KThreeVector tJacketNormal(cos(tAngle) * tJacketZRNormal.R(),
-                                   sin(tAngle) * tJacketZRNormal.R(),
-                                   tJacketZRNormal.Z());
+        KGeoBag::KThreeVector tJacketNormal(cos(tAngle) * tJacketZRNormal.R(),
+                                            sin(tAngle) * tJacketZRNormal.R(),
+                                            tJacketZRNormal.Z());
         double tJacketDistanceSquared = (aQuery - tJacketPoint).MagnitudeSquared();
 
-        KThreeVector tAveragePoint;
-        KThreeVector tAverageNormal;
+        KGeoBag::KThreeVector tAveragePoint;
+        KGeoBag::KThreeVector tAverageNormal;
 
         if (tTopDistanceSquared < tBottomDistanceSquared) {
             tAveragePoint = .5 * (tTopPoint + tJacketPoint);

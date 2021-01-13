@@ -24,7 +24,7 @@ template<typename ValueType> class KMatrixPreconditioner : public KPreconditione
 {
   public:
     explicit KMatrixPreconditioner(KSmartPointer<const KSquareMatrix<ValueType>> matrix);
-    ~KMatrixPreconditioner() override {}
+    ~KMatrixPreconditioner() override = default;
 
     std::string Name() override
     {

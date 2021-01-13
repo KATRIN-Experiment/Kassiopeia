@@ -10,7 +10,7 @@
 namespace katrin
 {
 
-template<> KFMElectrostaticParametersBuilder::~KComplexElement() {}
+template<> KFMElectrostaticParametersBuilder::~KComplexElement() = default;
 
 STATICINT sKFMElectrostaticParametersStructure =
     KFMElectrostaticParametersBuilder::Attribute<std::string>("strategy") +

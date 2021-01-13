@@ -10,7 +10,7 @@ template<typename ValueType> class KMatrix
 {
   public:
     KMatrix() : fRow(*this) {}
-    virtual ~KMatrix() {}
+    virtual ~KMatrix() = default;
 
     virtual unsigned int Dimension(unsigned int) const = 0;
     virtual const ValueType& operator()(unsigned int, unsigned int) const = 0;
@@ -20,7 +20,7 @@ template<typename ValueType> class KMatrix
       public:
         friend class KMatrix;
         KMatrixRow(KMatrix& m, unsigned int row = 0) : KVector<ValueType>(), fParent(m), i(row) {}
-        ~KMatrixRow() override {}
+        ~KMatrixRow() override = default;
 
         const ValueType& operator()(unsigned int j) const override
         {
@@ -50,7 +50,7 @@ template<typename ValueType> class KMatrix
       public:
         friend class KMatrix;
         KMatrixColumn(KMatrix& m, unsigned int column = 0) : KVector<ValueType>(), fParent(m), j(column) {}
-        virtual ~KMatrixColumn() {}
+        virtual ~KMatrixColumn() = default;
 
         const ValueType& operator()(unsigned int i) const
         {

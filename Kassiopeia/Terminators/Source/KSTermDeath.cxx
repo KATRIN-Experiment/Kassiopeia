@@ -3,13 +3,13 @@
 namespace Kassiopeia
 {
 
-KSTermDeath::KSTermDeath() {}
+KSTermDeath::KSTermDeath() = default;
 KSTermDeath::KSTermDeath(const KSTermDeath&) : KSComponent() {}
 KSTermDeath* KSTermDeath::Clone() const
 {
     return new KSTermDeath(*this);
 }
-KSTermDeath::~KSTermDeath() {}
+KSTermDeath::~KSTermDeath() = default;
 
 void KSTermDeath::CalculateTermination(const KSParticle& /*anInitialParticle*/, bool& aFlag)
 {

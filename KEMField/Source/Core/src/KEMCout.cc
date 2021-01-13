@@ -15,7 +15,7 @@ KDataDisplay<std::ostream> cout;
 
 namespace
 {
-static bool EnableDebugOutput()
+bool EnableDebugOutput()
 {
 #ifdef KEMFIELD_USE_KMESSAGE
     // applications should set this themselves if that's what they need.

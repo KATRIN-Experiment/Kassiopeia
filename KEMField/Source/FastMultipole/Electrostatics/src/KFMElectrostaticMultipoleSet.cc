@@ -4,9 +4,9 @@
 namespace KEMField
 {
 
-KFMElectrostaticMultipoleSet::KFMElectrostaticMultipoleSet() {}
+KFMElectrostaticMultipoleSet::KFMElectrostaticMultipoleSet() = default;
 
-KFMElectrostaticMultipoleSet::~KFMElectrostaticMultipoleSet() {}
+KFMElectrostaticMultipoleSet::~KFMElectrostaticMultipoleSet() = default;
 
 std::string KFMElectrostaticMultipoleSet::ClassName() const
 {

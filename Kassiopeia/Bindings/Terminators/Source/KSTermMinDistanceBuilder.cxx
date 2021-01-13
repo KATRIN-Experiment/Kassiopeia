@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMinDistanceBuilder::~KComplexElement() {}
+template<> KSTermMinDistanceBuilder::~KComplexElement() = default;
 
-STATICINT sKSTermMinDistanceStructure = KSTermMinDistanceBuilder::Attribute<string>("name") +
-                                        KSTermMinDistanceBuilder::Attribute<string>("surfaces") +
+STATICINT sKSTermMinDistanceStructure = KSTermMinDistanceBuilder::Attribute<std::string>("name") +
+                                        KSTermMinDistanceBuilder::Attribute<std::string>("surfaces") +
                                         KSTermMinDistanceBuilder::Attribute<double>("min_distance");
 
 STATICINT sKSTermMinDistance = KSRootBuilder::ComplexElement<KSTermMinDistance>("ksterm_min_distance");

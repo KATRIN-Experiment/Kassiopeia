@@ -30,7 +30,7 @@ set( MAIN_PATH
 kasper_internal_include_directories()
 foreach( BASENAME ${MAIN_BASENAMES} )
 	add_executable( ${BASENAME} ${MAIN_PATH}/${BASENAME}.cxx )
-	target_link_libraries( ${BASENAME} ${MAIN_LIBRARIES} )
+	target_link_libraries( ${BASENAME} ${MAIN_LIBRARIES} ${EXTERNAL_LIBRARIES} )
 endforeach( BASENAME )
 
 kasper_install_executables( ${MAIN_BASENAMES} )

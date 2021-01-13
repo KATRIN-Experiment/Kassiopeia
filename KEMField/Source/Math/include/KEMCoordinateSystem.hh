@@ -23,7 +23,7 @@ class KEMCoordinateSystem
 {
   public:
     KEMCoordinateSystem() : fOrigin(0., 0., 0.), fXAxis(1., 0., 0.), fYAxis(0., 1., 0.), fZAxis(0., 0., 1.) {}
-    virtual ~KEMCoordinateSystem() {}
+    virtual ~KEMCoordinateSystem() = default;
 
     void SetValues(const KPosition& origin, const KDirection& xAxis, const KDirection& yAxis, const KDirection& zAxis);
 
@@ -34,12 +34,10 @@ class KEMCoordinateSystem
 
     KPosition ToLocal(const KPosition& p) const;
     KDirection ToLocal(const KDirection& d) const;
-    KThreeVector ToLocal(const KThreeVector& v) const;
     KGradient ToLocal(const KGradient& g) const;
 
     KPosition ToGlobal(const KPosition& p) const;
     KDirection ToGlobal(const KDirection& d) const;
-    KThreeVector ToGlobal(const KThreeVector& v) const;
     KGradient ToGlobal(const KGradient& g) const;
 
     void SetOrigin(const KPosition& origin)

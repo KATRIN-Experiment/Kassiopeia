@@ -35,9 +35,9 @@ class KSurface :
     public ShapePolicy
 {
   public:
-    typedef BasisPolicy Basis;
-    typedef KBoundaryType<BasisPolicy, BoundaryPolicy> Boundary;
-    typedef ShapePolicy Shape;
+    using Basis = BasisPolicy;
+    using Boundary = KBoundaryType<BasisPolicy, BoundaryPolicy>;
+    using Shape = ShapePolicy;
 
     KSurface() : KSurfacePrimitive(), Basis(), Boundary(), Shape() {}
     KSurface(const Basis& basis, const Boundary& boundary, const Shape& shape) :
@@ -46,7 +46,7 @@ class KSurface :
         Boundary(boundary),
         Shape(shape)
     {}
-    ~KSurface() override {}
+    ~KSurface() override = default;
 
     KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>* Clone() const override
     {
@@ -113,7 +113,7 @@ KSurfaceID
 template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy, typename Stream>
 Stream& operator>>(Stream& s, KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>& e)
 {
-    typedef KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy> Surface;
+    using Surface = KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>;
     s.PreStreamInAction(e);
     s >> static_cast<typename Surface::Shape&>(e) >> static_cast<typename Surface::Boundary&>(e) >>
         static_cast<typename Surface::Basis&>(e);
@@ -124,7 +124,7 @@ Stream& operator>>(Stream& s, KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>
 template<typename BasisPolicy, typename BoundaryPolicy, typename ShapePolicy, typename Stream>
 Stream& operator<<(Stream& s, const KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>& e)
 {
-    typedef KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy> Surface;
+    using Surface = KSurface<BasisPolicy, BoundaryPolicy, ShapePolicy>;
     s.PreStreamOutAction(e);
     s << static_cast<const typename Surface::Shape&>(e) << static_cast<const typename Surface::Boundary&>(e)
       << static_cast<const typename Surface::Basis&>(e);

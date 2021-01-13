@@ -18,10 +18,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenNCompositeBuilder::~KComplexElement() {}
+template<> KSGenNCompositeBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenNCompositeStructure = KSGenNCompositeBuilder::Attribute<string>("name") +
-                                      KSGenNCompositeBuilder::Attribute<string>("n_value") +
+STATICINT sKSGenNCompositeStructure = KSGenNCompositeBuilder::Attribute<std::string>("name") +
+                                      KSGenNCompositeBuilder::Attribute<std::string>("n_value") +
                                       KSGenNCompositeBuilder::ComplexElement<KSGenValueFix>("n_fix") +
                                       KSGenNCompositeBuilder::ComplexElement<KSGenValueSet>("n_set") +
                                       KSGenNCompositeBuilder::ComplexElement<KSGenValueList>("n_list") +

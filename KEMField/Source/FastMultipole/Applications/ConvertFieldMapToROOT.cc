@@ -52,17 +52,17 @@ int main(int argc, char** argv)
     bool use_z = false;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"file", required_argument, 0, 'f'},
-        {"x_coord", no_argument, 0, 'x'},
-        {"y_coord", no_argument, 0, 'y'},
-        {"z_coord", no_argument, 0, 'z'},
+        {"help", no_argument, nullptr, 'h'},
+        {"file", required_argument, nullptr, 'f'},
+        {"x_coord", no_argument, nullptr, 'x'},
+        {"y_coord", no_argument, nullptr, 'y'},
+        {"z_coord", no_argument, nullptr, 'z'},
     };
 
     static const char* optString = "hf:xyz";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -114,8 +114,7 @@ int main(int argc, char** argv)
         mode = 6;
     };  //2d plot as function of (x,z)
 
-    KSAObjectInputNode<KFMNamedScalarDataCollection>* data_node =
-        new KSAObjectInputNode<KFMNamedScalarDataCollection>("data_collection");
+    auto* data_node = new KSAObjectInputNode<KFMNamedScalarDataCollection>("data_collection");
 
     bool result;
     KEMFileInterface::GetInstance()->ReadKSAFile(data_node, file, result);
@@ -130,9 +129,9 @@ int main(int argc, char** argv)
     //////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////
 
-    KFMNamedScalarData* x_coord = NULL;
-    KFMNamedScalarData* y_coord = NULL;
-    KFMNamedScalarData* z_coord = NULL;
+    KFMNamedScalarData* x_coord = nullptr;
+    KFMNamedScalarData* y_coord = nullptr;
+    KFMNamedScalarData* z_coord = nullptr;
 
     if (use_x) {
         x_coord = data->GetDataWithName(std::string("x_coordinate"));

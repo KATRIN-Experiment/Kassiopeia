@@ -33,9 +33,9 @@ class KFMMultidimensionalFastFourierTransformFFTW : public KFMUnaryArrayOperator
     KFMMultidimensionalFastFourierTransformFFTW()
     {
         fTotalArraySize = 0;
-        fInPtr = NULL;
-        fOutPtr = NULL;
-        fInPlacePtr = NULL;
+        fInPtr = nullptr;
+        fOutPtr = nullptr;
+        fInPlacePtr = nullptr;
         for (unsigned int i = 0; i < NDIM; i++) {
             fDimensionSize[i] = 0;
         }
@@ -158,7 +158,7 @@ class KFMMultidimensionalFastFourierTransformFFTW : public KFMUnaryArrayOperator
 
     bool ConstructPlan()
     {
-        if (fInPtr == NULL || fOutPtr == NULL || fInPlacePtr == NULL) {
+        if (fInPtr == nullptr || fOutPtr == nullptr || fInPlacePtr == nullptr) {
             return false;
         }
 
@@ -212,8 +212,8 @@ class KFMMultidimensionalFastFourierTransformFFTW : public KFMUnaryArrayOperator
                                                   FFTW_BACKWARD,
                                                   FFTW_EXHAUSTIVE);
 
-        if (fPlanForward != NULL && fPlanBackward != NULL && fPlanBackwardInPlace != NULL &&
-            fPlanForwardInPlace != NULL) {
+        if (fPlanForward != nullptr && fPlanBackward != nullptr && fPlanBackwardInPlace != nullptr &&
+            fPlanForwardInPlace != nullptr) {
             return true;
         }
         else {

@@ -29,11 +29,12 @@ template<unsigned int NDIM> class KGSpaceTreeProperties
         };
     };
 
-    virtual ~KGSpaceTreeProperties(){};
+    virtual ~KGSpaceTreeProperties() = default;
+    ;
 
   public:
     //unique id for the entire tree
-    void SetTreeID(std::string tree_id)
+    void SetTreeID(const std::string& tree_id)
     {
         fTreeID = tree_id;
     };

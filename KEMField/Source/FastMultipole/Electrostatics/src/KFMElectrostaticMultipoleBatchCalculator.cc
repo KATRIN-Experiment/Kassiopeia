@@ -7,8 +7,7 @@
 namespace KEMField
 {
 
-KFMElectrostaticMultipoleBatchCalculator::KFMElectrostaticMultipoleBatchCalculator() :
-    KFMElectrostaticMultipoleBatchCalculatorBase()
+KFMElectrostaticMultipoleBatchCalculator::KFMElectrostaticMultipoleBatchCalculator()
 {
     fDegree = 0;
     fNMaxItems = 0;

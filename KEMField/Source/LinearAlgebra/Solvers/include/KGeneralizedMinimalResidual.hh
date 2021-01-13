@@ -41,11 +41,11 @@ namespace KEMField
 template<typename ValueType> class KGeneralizedMinimalResidual
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
-    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleMatrixType = KSimpleMatrix<ValueType>;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
     KGeneralizedMinimalResidual(const Matrix& A, Vector& x, const Vector& b) : fDim(A.Dimension()), fA(A), fX(x), fB(b)
     {
@@ -56,7 +56,8 @@ template<typename ValueType> class KGeneralizedMinimalResidual
         fExternalStateSet = false;
     };
 
-    virtual ~KGeneralizedMinimalResidual(){};
+    virtual ~KGeneralizedMinimalResidual() = default;
+    ;
 
     static std::string Name()
     {

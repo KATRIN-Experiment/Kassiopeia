@@ -20,7 +20,7 @@ cl::Kernel* KOpenCLKernelBuilder::BuildKernel(std::string SourceFileName, std::s
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
     //Make program of the source code in the context
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
     cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source);
 
     //set the build options

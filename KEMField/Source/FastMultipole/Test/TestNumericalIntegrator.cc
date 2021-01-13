@@ -18,21 +18,21 @@ class KVMFieldTest : public KVMField
     {
         ;
     };
-    ~KVMFieldTest()
+    ~KVMFieldTest() override
     {
         ;
     };
 
-    unsigned int GetNDimDomain() const
+    unsigned int GetNDimDomain() const override
     {
         return DIM;
     };
-    unsigned int GetNDimRange() const
+    unsigned int GetNDimRange() const override
     {
         return 1;
     };
 
-    void Evaluate(const double* in, double* out) const
+    void Evaluate(const double* in, double* out) const override
     {
         double r2 = 0;
         for (unsigned int i = 0; i < DIM; i++) {

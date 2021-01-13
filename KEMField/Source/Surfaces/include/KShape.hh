@@ -22,8 +22,8 @@ namespace KEMField
 class KShape
 {
   protected:
-    KShape() {}
-    virtual ~KShape() {}
+    KShape() = default;
+    virtual ~KShape() = default;
 
   public:
     virtual double Area() const = 0;

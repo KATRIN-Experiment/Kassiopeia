@@ -6,6 +6,8 @@
 #include <limits>
 using std::numeric_limits;
 
+using namespace KGeoBag;
+
 namespace Kassiopeia
 {
 
@@ -21,7 +23,7 @@ KSRootElectricField::KSRootElectricField() :
     fGslErrorHandler.Enable();
 }
 KSRootElectricField::KSRootElectricField(const KSRootElectricField& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fCurrentPotential(aCopy.fCurrentPotential),
     fCurrentField(aCopy.fCurrentField),
     fCurrentGradient(aCopy.fCurrentGradient),
@@ -33,7 +35,7 @@ KSRootElectricField* KSRootElectricField::Clone() const
 {
     return new KSRootElectricField(*this);
 }
-KSRootElectricField::~KSRootElectricField() {}
+KSRootElectricField::~KSRootElectricField() = default;
 
 void KSRootElectricField::CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                              double& aPotential)
@@ -111,8 +113,8 @@ void KSRootElectricField::AddElectricField(KSElectricField* anElectricField)
     //check that field is not already present
     for (int tIndex = 0; tIndex < fElectricFields.End(); tIndex++) {
         if (anElectricField == fElectricFields.ElementAt(tIndex)) {
-            fieldmsg_debug("<" << GetName() << "> attempted to add electric field <" << anElectricField->GetName()
-                               << "> which is already present." << eom);
+            fieldmsg(eWarning) << "<" << GetName() << "> attempted to add electric field <"
+                               << anElectricField->GetName() << "> which is already present." << eom;
             return;
         }
     }
@@ -128,8 +130,8 @@ void KSRootElectricField::AddElectricField(KSElectricField* anElectricField)
 void KSRootElectricField::RemoveElectricField(KSElectricField* anElectricField)
 {
     if (fElectricFields.RemoveElement(anElectricField) == -1) {
-        fieldmsg(eError) << "<" << GetName() << "> could not remove electric field <" << anElectricField->GetName()
-                         << ">" << eom;
+        fieldmsg(eWarning) << "<" << GetName() << "> could not remove electric field <" << anElectricField->GetName()
+                           << ">" << eom;
         return;
     }
     fieldmsg_debug("<" << GetName() << "> removing electric field <" << anElectricField->GetName() << ">" << eom);

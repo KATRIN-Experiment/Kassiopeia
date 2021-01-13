@@ -972,7 +972,7 @@ void KFMMath::K_norm_array(int l_max, double h, double* val)
 }
 
 
-void KFMMath::K_norm_array(int l_max, double h, double* plm, double* val)
+void KFMMath::K_norm_array(int l_max, double h, const double* plm, double* val)
 {
     double hpow = h;
     double fac;

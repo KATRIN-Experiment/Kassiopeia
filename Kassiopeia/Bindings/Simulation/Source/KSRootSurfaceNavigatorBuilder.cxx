@@ -8,11 +8,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSRootSurfaceNavigatorBuilder::~KComplexElement() {}
+template<> KSRootSurfaceNavigatorBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootSurfaceNavigator = KSRootBuilder::ComplexElement<KSRootSurfaceNavigator>("ks_root_surface_navigator");
 
-STATICINT sKSRootSurfaceNavigatorStructure = KSRootSurfaceNavigatorBuilder::Attribute<string>("name") +
-                                             KSRootSurfaceNavigatorBuilder::Attribute<string>("set_surface_navigator");
+STATICINT sKSRootSurfaceNavigatorStructure =
+    KSRootSurfaceNavigatorBuilder::Attribute<std::string>("name") +
+    KSRootSurfaceNavigatorBuilder::Attribute<std::string>("set_surface_navigator");
 
 }  // namespace katrin

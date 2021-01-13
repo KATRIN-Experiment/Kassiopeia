@@ -9,7 +9,7 @@ namespace Kassiopeia
 
 KSRootGenerator::KSRootGenerator() : fGenerator(nullptr), fEvent(nullptr) {}
 KSRootGenerator::KSRootGenerator(const KSRootGenerator& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fGenerator(aCopy.fGenerator),
     fEvent(aCopy.fEvent)
 {}
@@ -17,7 +17,7 @@ KSRootGenerator* KSRootGenerator::Clone() const
 {
     return new KSRootGenerator(*this);
 }
-KSRootGenerator::~KSRootGenerator() {}
+KSRootGenerator::~KSRootGenerator() = default;
 
 void KSRootGenerator::SetGenerator(KSGenerator* aGenerator)
 {
@@ -71,8 +71,8 @@ void KSRootGenerator::ExecuteGeneration()
 {
     ExecuteGeneration(fEvent->ParticleQueue());
 
-    KThreeVector tPosition;
-    KThreeVector tCenterPosition(0., 0., 0.);
+    KGeoBag::KThreeVector tPosition;
+    KGeoBag::KThreeVector tCenterPosition(0., 0., 0.);
     double tEnergy;
     double tTotalEnergy = 0;
     double tTime;

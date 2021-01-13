@@ -8,7 +8,7 @@
 
 namespace KEMField
 {
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri4P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri4P(const double* data, double* Q)
 {
     // Calculates the 4 Gaussian points Q[0],...,Q[3]  for the 4-point cubature of the triangle
     //  A=T[0], B=T[1], C=T[2]:  corner points of the triangle
@@ -31,7 +31,7 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri4P(const double* d
     return;
 }
 
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri7P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri7P(const double* data, double* Q)
 {
     // Calculates the 7 Gaussian points Q[0],...,Q[6]  for the 7-point cubature of the triangle
     //  A=T[0], B=T[1], C=T[2]:  corner points of the triangle
@@ -67,7 +67,7 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri7P(const double* d
     return;
 }
 
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri12P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri12P(const double* data, double* Q)
 {
     // Calculates the 12 Gaussian points Q[0],...,Q[11] for the 12-point cubature of the triangle (degree 7)
     // See: K. Gatermann, Computing 40, 229 (1988)
@@ -114,7 +114,7 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri12P(const double* 
     return;
 }
 
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri16P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri16P(const double* data, double* Q)
 {
     // Calculates the 16 Gaussian points Q[0],...,Q[15]  for the 16-point cubature of the triangle
     //  A=T[0], B=T[1], C=T[2]:  corner points of the triangle
@@ -166,7 +166,7 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri16P(const double* 
     }
 }
 
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri19P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri19P(const double* data, double* Q)
 {
     // Calculates the 19 Gaussian points Q[0],...,Q[18]  for the 19-point cubature of the triangle (degree 9).
     // See: Lyness, Jespersen, J. Inst. Math. Applics 15 (1975) 19.
@@ -209,7 +209,7 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri19P(const double* 
     return;
 }
 
-void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri33P(const double* data, double* Q) const
+void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri33P(const double* data, double* Q)
 {
     // Calculates the 33 Gaussian points Q[0],...,Q[32]  for the 33-point cubature of the triangle
     // See: Papanicolopulos 2011
@@ -269,8 +269,8 @@ void KElectrostaticCubatureTriangleIntegrator::GaussPoints_Tri33P(const double* 
 }
 
 double KElectrostaticCubatureTriangleIntegrator::Potential_TriNP(const double* data, const KPosition& P,
-                                                                 const unsigned short noPoints, double* Q,
-                                                                 const double* weights) const
+                                                                 const unsigned short noPoints, const double* Q,
+                                                                 const double* weights)
 {
     // triangle area as defined in class KTriangle: A = 0.5*fA*fB*fN1.Cross(fN2).Magnitude()
     const double area =
@@ -319,9 +319,9 @@ double KElectrostaticCubatureTriangleIntegrator::Potential_TriNP(const double* d
     return (prefac * finalSum);
 }
 
-KThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField_TriNP(const double* data, const KPosition& P,
-                                                                           const unsigned short noPoints, double* Q,
-                                                                           const double* weights) const
+KFieldVector KElectrostaticCubatureTriangleIntegrator::ElectricField_TriNP(
+    const double* data, const KPosition& P, const unsigned short noPoints,
+    const double* Q, const double* weights)
 {
     // triangle area as defined in class KTriangle: A = 0.5*fA*fB*fN1.Cross(fN2).Magnitude()
     const double area =
@@ -377,15 +377,15 @@ KThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField_TriNP(const
         finalSum[2] += partialValue[2];
     } /* Gaussian points */
 
-    for (unsigned short i = 0; i < 3; i++) {
-        finalSum[i] = prefac * finalSum[i];
+    for (double& val : finalSum) {
+        val = prefac * val;
     }
 
-    return KThreeVector(finalSum[0], finalSum[1], finalSum[2]);
+    return KFieldVector(finalSum[0], finalSum[1], finalSum[2]);
 }
 
-std::pair<KThreeVector, double> KElectrostaticCubatureTriangleIntegrator::ElectricFieldAndPotential_TriNP(
-    const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights) const
+std::pair<KFieldVector, double> KElectrostaticCubatureTriangleIntegrator::ElectricFieldAndPotential_TriNP(
+    const double* data, const KPosition& P, const unsigned short noPoints, const double* Q, const double* weights)
 {
     // triangle area as defined in class KTriangle: A = 0.5*fA*fB*fN1.Cross(fN2).Magnitude()
     const double area =
@@ -443,11 +443,11 @@ std::pair<KThreeVector, double> KElectrostaticCubatureTriangleIntegrator::Electr
         finalSum[3] += partialValue[3];
     } /* Gaussian points */
 
-    for (unsigned short i = 0; i < 4; i++) {
-        finalSum[i] = prefac * finalSum[i];
+    for (double& val : finalSum) {
+        val = prefac * val;
     }
 
-    return std::make_pair(KThreeVector(finalSum[0], finalSum[1], finalSum[2]), finalSum[3]);
+    return std::make_pair(KFieldVector(finalSum[0], finalSum[1], finalSum[2]), finalSum[3]);
 }
 
 double KElectrostaticCubatureTriangleIntegrator::Potential(const KTriangle* source, const KPosition& P) const
@@ -521,7 +521,7 @@ double KElectrostaticCubatureTriangleIntegrator::Potential(const KTriangle* sour
     return KElectrostaticRWGTriangleIntegrator::Potential(source, P);
 }
 
-KThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
+KFieldVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
 {
     // save geometry info on triangle into array, same convention as OpenCL implementation
 
@@ -592,7 +592,7 @@ KThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KTria
     return KElectrostaticRWGTriangleIntegrator::ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticCubatureTriangleIntegrator::ElectricFieldAndPotential(const KTriangle* source, const KPosition& P) const
 {
     // save geometry info on triangle into array, same convention as OpenCL implementation
@@ -668,30 +668,30 @@ double KElectrostaticCubatureTriangleIntegrator::Potential(const KSymmetryGroup<
                                                            const KPosition& P) const
 {
     double potential = 0.;
-    for (auto it = source->begin(); it != source->end(); ++it)
-        potential += Potential(*it, P);
+    for (auto* it : *source)
+        potential += Potential(it, P);
     return potential;
 }
 
-KThreeVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
+KFieldVector KElectrostaticCubatureTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
                                                                      const KPosition& P) const
 {
-    KThreeVector electricField(0., 0., 0.);
-    for (auto it = source->begin(); it != source->end(); ++it)
-        electricField += ElectricField(*it, P);
+    KFieldVector electricField(0., 0., 0.);
+    for (auto* it : *source)
+        electricField += ElectricField(it, P);
     return electricField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticCubatureTriangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KTriangle>* source,
                                                                     const KPosition& P) const
 {
-    std::pair<KThreeVector, double> fieldAndPotential;
+    std::pair<KFieldVector, double> fieldAndPotential;
     double potential(0.);
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it) {
-        fieldAndPotential = ElectricFieldAndPotential(*it, P);
+    for (auto* it : *source) {
+        fieldAndPotential = ElectricFieldAndPotential(it, P);
         electricField += fieldAndPotential.first;
         potential += fieldAndPotential.second;
     }

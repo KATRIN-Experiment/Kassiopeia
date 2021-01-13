@@ -3,6 +3,11 @@
 #include "KLogger.h"
 
 #include <gsl/gsl_errno.h>
+
+#ifdef KASPER_USE_BOOST
+#include <boost/stacktrace.hpp>
+#endif
+
 #include <sstream>
 
 KLOGGER("kommon.gsl");
@@ -70,11 +75,30 @@ void KGslErrorHandler::GslErrorHandler(const char* reason, const char* file, int
 
     auto& handler = KGslErrorHandler::GetInstance();
 
-    for (auto& func : handler.fErrorCallbacks)
+    // Callbacks can abort the error handler if they return false
+    for (auto& func : handler.fErrorCallbacks) {
         if (!(*func)(gsl_errno) /*callback*/)
             return;
+    }
 
     KERROR(KGslErrorHandler::AsString());
+
+#ifdef KASPER_USE_BOOST
+    // Show up to 5 stack frames below current function
+    const auto& stackFrames = boost::stacktrace::stacktrace();
+    for (size_t depth = 0; depth < stackFrames.size(); ++depth) {
+        const auto& frame = stackFrames[depth];
+        if (depth == 0 || frame.name().empty())
+            continue;
+        if (depth > 5 || frame.empty())
+            break;
+
+        std::cout << "  " << depth << "# " << frame.name();
+        if (!frame.source_file().empty())
+            std::cout << " [" << frame.source_file() << ":" << frame.source_line() << "]";
+        std::cout << std::endl;
+    }
+#endif
 
     if (handler.fThrowOnError)
         throw KGslException() << KGslErrorHandler::AsString();

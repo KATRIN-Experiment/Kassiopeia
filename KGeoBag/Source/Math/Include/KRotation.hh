@@ -4,7 +4,6 @@
 #include "KThreeMatrix.hh"
 
 #include <vector>
-using std::vector;
 
 namespace KGeoBag
 {
@@ -20,17 +19,21 @@ class KRotation : public KThreeMatrix
     KRotation& operator=(const KThreeMatrix& aMatrix);
 
     void SetIdentity();
-    void SetAxisAngle(const KThreeVector& anAxis, const double& anAngle);
-    void SetAxisAngleInDegrees(const KThreeVector& anAxis, const double& anAngle);
+    void SetAxisAngle(const KGeoBag::KThreeVector& anAxis, const double& anAngle);
+    void SetAxisAngleInDegrees(const KGeoBag::KThreeVector& anAxis, const double& anAngle);
     void SetEulerAngles(const double& anAlpha, const double& aBeta, const double& aGamma);
     void SetEulerAnglesInDegrees(const double& anAlpha, const double& aBeta, const double& aGamma);
-    void SetEulerAngles(const vector<double>& anArray);
-    void SetEulerAnglesInDegrees(const vector<double>& anArray);
+    void SetEulerAngles(const std::vector<double>& anArray);
+    void SetEulerAnglesInDegrees(const std::vector<double>& anArray);
     void SetEulerZYZAngles(const double& anAlpha, const double& aBeta, const double& aGamma);
     void SetEulerZYZAnglesInDegrees(const double& anAlpha, const double& aBeta, const double& aGamma);
-    void SetEulerZYZAngles(const vector<double>& anArray);
-    void SetEulerZYZAnglesInDegrees(const vector<double>& anArray);
-    void SetRotatedFrame(const KThreeVector& x, const KThreeVector& y, const KThreeVector& z);
+    void SetEulerZYZAngles(const std::vector<double>& anArray);
+    void SetEulerZYZAnglesInDegrees(const std::vector<double>& anArray);
+    void SetRotatedFrame(const KGeoBag::KThreeVector& x, const KGeoBag::KThreeVector& y,
+                         const KGeoBag::KThreeVector& z);
+
+    void GetEulerAngles(double& anAlpha, double& aBeta, double& aGamma) const;
+    void GetEulerAnglesInDegrees(double& anAlpha, double& aBeta, double& aGamma) const;
 };
 
 }  // namespace KGeoBag

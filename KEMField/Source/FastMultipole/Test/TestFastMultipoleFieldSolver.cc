@@ -104,17 +104,17 @@ int main(int argc, char** argv)
     unsigned int n_evaluations = 50;
     unsigned int mode = 2;
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"config", required_argument, 0, 'c'},
-                                          {"scale", required_argument, 0, 's'},
-                                          {"geometry", required_argument, 0, 'g'},
-                                          {"n-evaluations", required_argument, 0, 'n'},
-                                          {"mode", required_argument, 0, 'm'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"config", required_argument, nullptr, 'c'},
+                                          {"scale", required_argument, nullptr, 's'},
+                                          {"geometry", required_argument, nullptr, 'g'},
+                                          {"n-evaluations", required_argument, nullptr, 'n'},
+                                          {"mode", required_argument, nullptr, 'm'}};
 
     static const char* optString = "hc:s:g:n:m:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -156,22 +156,20 @@ int main(int argc, char** argv)
 
     //need to read in tree parameters
     bool solver_parameters_present = false;
-    KSAObjectInputNode<KFMElectrostaticParametersConfiguration>* solver_parameter_input =
+    auto* solver_parameter_input =
         new KSAObjectInputNode<KFMElectrostaticParametersConfiguration>(std::string("SolverElectrostaticParameters"));
     KEMFileInterface::GetInstance()->ReadKSAFile(solver_parameter_input, config_file, solver_parameters_present);
 
     //need to read in boundary value problem solver parameters
     bool bvp_parameters_present = false;
-    KSAObjectInputNode<KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration>* bvp_config_input =
-        new KSAObjectInputNode<KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration>(
-            std::string("BoundaryValueSolverConfiguration"));
+    auto* bvp_config_input = new KSAObjectInputNode<KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration>(
+        std::string("BoundaryValueSolverConfiguration"));
     KEMFileInterface::GetInstance()->ReadKSAFile(bvp_config_input, config_file, bvp_parameters_present);
 
     //optionally present in config file
     bool preconditioner_parameters_present = false;
-    KSAObjectInputNode<KFMElectrostaticParametersConfiguration>* preconditioner_parameter_input =
-        new KSAObjectInputNode<KFMElectrostaticParametersConfiguration>(
-            std::string("PreconditionerElectrostaticParameters"));
+    auto* preconditioner_parameter_input = new KSAObjectInputNode<KFMElectrostaticParametersConfiguration>(
+        std::string("PreconditionerElectrostaticParameters"));
     KEMFileInterface::GetInstance()->ReadKSAFile(preconditioner_parameter_input,
                                                  config_file,
                                                  preconditioner_parameters_present);
@@ -201,14 +199,14 @@ int main(int argc, char** argv)
         // Construct the shape
         double p1[2], p2[2];
         double radius = 1.;
-        KGRotatedObject* hemi1 = new KGRotatedObject(scale, 20);
+        auto* hemi1 = new KGRotatedObject(scale, 20);
         p1[0] = -1.;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = 1.;
         hemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* hemi2 = new KGRotatedObject(scale, 20);
+        auto* hemi2 = new KGRotatedObject(scale, 20);
         p2[0] = 1.;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -216,22 +214,22 @@ int main(int argc, char** argv)
         hemi2->AddArc(p1, p2, radius, false);
 
         // Construct shape placement
-        KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
-        KGSurface* hemisphere1 = new KGSurface(h1);
+        auto* h1 = new KGRotatedSurface(hemi1);
+        auto* hemisphere1 = new KGSurface(h1);
         hemisphere1->SetName("hemisphere1");
         hemisphere1->MakeExtension<KGMesh>();
         hemisphere1->MakeExtension<KGElectrostaticDirichlet>();
         hemisphere1->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
-        KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
-        KGSurface* hemisphere2 = new KGSurface(h2);
+        auto* h2 = new KGRotatedSurface(hemi2);
+        auto* hemisphere2 = new KGSurface(h2);
         hemisphere2->SetName("hemisphere2");
         hemisphere2->MakeExtension<KGMesh>();
         hemisphere2->MakeExtension<KGElectrostaticDirichlet>();
         hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         hemisphere1->AcceptNode(mesher);
         hemisphere2->AcceptNode(mesher);
 
@@ -244,7 +242,7 @@ int main(int argc, char** argv)
     if (geometry == 1 || geometry == 2) {
 
         // Construct the shape
-        KGBox* box = new KGBox();
+        auto* box = new KGBox();
         int meshCount = scale;
 
         box->SetX0(-.5);
@@ -262,14 +260,14 @@ int main(int argc, char** argv)
         box->SetZMeshCount(meshCount);
         box->SetZMeshPower(3);
 
-        KGSurface* cube = new KGSurface(box);
+        auto* cube = new KGSurface(box);
         cube->SetName("box");
         cube->MakeExtension<KGMesh>();
         cube->MakeExtension<KGElectrostaticDirichlet>();
         cube->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.0);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         cube->AcceptNode(mesher);
 
         KGBEMMeshConverter geometryConverter(surfaceContainer);
@@ -294,14 +292,14 @@ int main(int argc, char** argv)
         double p1[2], p2[2];
         double radius = radius1;
 
-        KGRotatedObject* innerhemi1 = new KGRotatedObject(scale * 10, 10);
+        auto* innerhemi1 = new KGRotatedObject(scale * 10, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         innerhemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* innerhemi2 = new KGRotatedObject(scale * 10, 10);
+        auto* innerhemi2 = new KGRotatedObject(scale * 10, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -310,14 +308,14 @@ int main(int argc, char** argv)
 
         radius = radius2;
 
-        KGRotatedObject* middlehemi1 = new KGRotatedObject(20 * scale, 10);
+        auto* middlehemi1 = new KGRotatedObject(20 * scale, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         middlehemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* middlehemi2 = new KGRotatedObject(20 * scale, 10);
+        auto* middlehemi2 = new KGRotatedObject(20 * scale, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -326,14 +324,14 @@ int main(int argc, char** argv)
 
         radius = radius3;
 
-        KGRotatedObject* outerhemi1 = new KGRotatedObject(30 * scale, 10);
+        auto* outerhemi1 = new KGRotatedObject(30 * scale, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         outerhemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* outerhemi2 = new KGRotatedObject(30 * scale, 10);
+        auto* outerhemi2 = new KGRotatedObject(30 * scale, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -341,45 +339,45 @@ int main(int argc, char** argv)
         outerhemi2->AddArc(p1, p2, radius, false);
 
         // Construct shape placement
-        KGRotatedSurface* ih1 = new KGRotatedSurface(innerhemi1);
-        KGSurface* innerhemisphere1 = new KGSurface(ih1);
+        auto* ih1 = new KGRotatedSurface(innerhemi1);
+        auto* innerhemisphere1 = new KGSurface(ih1);
         innerhemisphere1->SetName("innerhemisphere1");
         innerhemisphere1->MakeExtension<KGMesh>();
         innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-        KGRotatedSurface* ih2 = new KGRotatedSurface(innerhemi2);
-        KGSurface* innerhemisphere2 = new KGSurface(ih2);
+        auto* ih2 = new KGRotatedSurface(innerhemi2);
+        auto* innerhemisphere2 = new KGSurface(ih2);
         innerhemisphere2->SetName("innerhemisphere2");
         innerhemisphere2->MakeExtension<KGMesh>();
         innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-        KGRotatedSurface* mh1 = new KGRotatedSurface(middlehemi1);
-        KGSurface* middlehemisphere1 = new KGSurface(mh1);
+        auto* mh1 = new KGRotatedSurface(middlehemi1);
+        auto* middlehemisphere1 = new KGSurface(mh1);
         middlehemisphere1->SetName("middlehemisphere1");
         middlehemisphere1->MakeExtension<KGMesh>();
         middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2 /
                                                                                           permittivity1);
 
-        KGRotatedSurface* mh2 = new KGRotatedSurface(middlehemi2);
-        KGSurface* middlehemisphere2 = new KGSurface(mh2);
+        auto* mh2 = new KGRotatedSurface(middlehemi2);
+        auto* middlehemisphere2 = new KGSurface(mh2);
         middlehemisphere2->SetName("middlehemisphere2");
         middlehemisphere2->MakeExtension<KGMesh>();
         middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
                                                                                           permittivity2);
 
-        KGRotatedSurface* oh1 = new KGRotatedSurface(outerhemi1);
-        KGSurface* outerhemisphere1 = new KGSurface(oh1);
+        auto* oh1 = new KGRotatedSurface(outerhemi1);
+        auto* outerhemisphere1 = new KGSurface(oh1);
         outerhemisphere1->SetName("outerhemisphere1");
         outerhemisphere1->MakeExtension<KGMesh>();
         outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-        KGRotatedSurface* oh2 = new KGRotatedSurface(outerhemi2);
-        KGSurface* outerhemisphere2 = new KGSurface(oh2);
+        auto* oh2 = new KGRotatedSurface(outerhemi2);
+        auto* outerhemisphere2 = new KGSurface(oh2);
         outerhemisphere2->SetName("outerhemisphere2");
         outerhemisphere2->MakeExtension<KGMesh>();
         outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         innerhemisphere1->AcceptNode(mesher);
         innerhemisphere2->AcceptNode(mesher);
         middlehemisphere1->AcceptNode(mesher);
@@ -413,7 +411,7 @@ int main(int argc, char** argv)
         precon_params = preconditioner_parameter_input->GetObject()->GetParameters();
     }
 
-    KFMElectrostaticFastMultipoleBoundaryValueSolver* solver = new KFMElectrostaticFastMultipoleBoundaryValueSolver();
+    auto* solver = new KFMElectrostaticFastMultipoleBoundaryValueSolver();
     solver->SetConfigurationObject(bvp_config_input->GetObject());
     solver->SetSolverElectrostaticParameters(solver_params);
     //will not be used unless the preconditioner is the independent_implicit_krylov type
@@ -506,13 +504,13 @@ int main(int argc, char** argv)
         direct_solver->Initialize();
 #else
         KElectrostaticBoundaryIntegrator direct_integrator_single_thread{KEBIFactory::MakeDefault()};
-        KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver =
+        auto* direct_solver =
             new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer,
                                                                           direct_integrator_single_thread);
 #endif
 
         //create a tree
-        KFMElectrostaticTree* tree = new KFMElectrostaticTree();
+        auto* tree = new KFMElectrostaticTree();
         tree->SetParameters(params);
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -531,8 +529,7 @@ int main(int argc, char** argv)
                                                                 *oclSurfaceContainer,
                                                                 *tree);
 #else
-        KFMElectrostaticFastMultipoleFieldSolver* fast_solver =
-            new KFMElectrostaticFastMultipoleFieldSolver(surfaceContainer, *tree);
+        auto* fast_solver = new KFMElectrostaticFastMultipoleFieldSolver(surfaceContainer, *tree);
 #endif
 
         std::cout << "starting field evaluation" << std::endl;
@@ -608,7 +605,7 @@ int main(int argc, char** argv)
         KThreeVector point;
 
         unsigned int n_points = 0;
-        KThreeVector* points = NULL;
+        KThreeVector* points = nullptr;
 
         switch (mode) {
             case 0:  //x-axis
@@ -847,8 +844,7 @@ int main(int argc, char** argv)
         data_collection.AddData(direct_time_per_field_call);
 
 
-        KSAObjectOutputNode<KFMNamedScalarDataCollection>* data =
-            new KSAObjectOutputNode<KFMNamedScalarDataCollection>("data_collection");
+        auto* data = new KSAObjectOutputNode<KFMNamedScalarDataCollection>("data_collection");
         data->AttachObjectToNode(&data_collection);
 
         bool result;

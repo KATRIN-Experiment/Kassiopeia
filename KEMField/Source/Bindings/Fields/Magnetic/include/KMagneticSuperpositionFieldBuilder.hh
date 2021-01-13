@@ -36,7 +36,7 @@ template<> inline bool KMagneticSuperpositionFieldEntryBuilder::AddAttribute(KCo
     return false;
 }
 
-typedef KComplexElement<KEMField::KMagneticSuperpositionField> KMagneticSuperpositionFieldBuilder;
+using KMagneticSuperpositionFieldBuilder = KComplexElement<KEMField::KMagneticSuperpositionField>;
 
 template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContainer* aContainer)
 {

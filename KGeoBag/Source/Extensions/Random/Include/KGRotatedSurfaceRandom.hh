@@ -10,15 +10,15 @@ class KGRotatedSurfaceRandom : virtual public KGShapeRandom, public KGRotatedSur
 {
   public:
     KGRotatedSurfaceRandom() : KGShapeRandom() {}
-    ~KGRotatedSurfaceRandom() override {}
+    ~KGRotatedSurfaceRandom() override = default;
 
     void VisitWrappedSurface(KGRotatedSurface* rotatedSurface) override;
 
     using KGShapeRandom::Random;
 
   private:
-    KThreeVector Random(const KGRotatedObject::Line* line);
-    KThreeVector Random(const KGRotatedObject::Arc* arc);
+    KGeoBag::KThreeVector Random(const KGRotatedObject::Line* line);
+    KGeoBag::KThreeVector Random(const KGRotatedObject::Arc* arc);
 };
 }  // namespace KGeoBag
 

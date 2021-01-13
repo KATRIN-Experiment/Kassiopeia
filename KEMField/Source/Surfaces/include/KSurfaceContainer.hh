@@ -27,14 +27,14 @@ namespace KEMField
 class KSurfaceContainer
 {
   public:
-    typedef std::vector<KEMField::KSurfacePrimitive*> KSurfaceArray;
-    typedef KSurfaceArray::iterator KSurfaceArrayIt;
-    typedef KSurfaceArray::const_iterator KSurfaceArrayCIt;
-    typedef std::vector<KSurfaceArray*> KSurfaceData;
-    typedef KSurfaceData::iterator KSurfaceDataIt;
-    typedef KSurfaceData::const_iterator KSurfaceDataCIt;
+    using KSurfaceArray = std::vector<KEMField::KSurfacePrimitive*>;
+    using KSurfaceArrayIt = KSurfaceArray::iterator;
+    using KSurfaceArrayCIt = KSurfaceArray::const_iterator;
+    using KSurfaceData = std::vector<KSurfaceArray*>;
+    using KSurfaceDataIt = KSurfaceData::iterator;
+    using KSurfaceDataCIt = KSurfaceData::const_iterator;
 
-    typedef KSmartPointer<const KSurfaceData> SmartDataPointer;
+    using SmartDataPointer = KSmartPointer<const KSurfaceData>;
 
     /**
 * @class KSurfaceContainer::iterator
@@ -55,17 +55,17 @@ class KSurfaceContainer
     class iterator : public std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>
     {
       public:
-        typedef std::bidirectional_iterator_tag iterator_category;
-        typedef std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::value_type value_type;
-        typedef std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::reference reference;
-        typedef std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::pointer pointer;
+        using iterator_category = std::bidirectional_iterator_tag;
+        using value_type = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::value_type;
+        using reference = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::reference;
+        using pointer = std::iterator<std::bidirectional_iterator_tag, KSurfacePrimitive*>::pointer;
 
         friend class KSurfaceContainer;
 
-        iterator() {}
+        iterator() = default;
 
         iterator(const iterator& anIt) : fArrayIt(anIt.fArrayIt), fDataIt(anIt.fDataIt), fData(anIt.fData) {}
-        iterator(KSurfaceArrayIt anArrayIt, KSurfaceDataCIt aDataIt, SmartDataPointer aData) :
+        iterator(KSurfaceArrayIt anArrayIt, KSurfaceDataCIt aDataIt, const SmartDataPointer& aData) :
             fArrayIt(anArrayIt),
             fDataIt(aDataIt),
             fData(aData)
@@ -280,12 +280,12 @@ template<class BoundaryPolicy, class ShapePolicy> KSurfacePrimitive* KSurfaceCon
     int boundaryPolicy = IndexOf<KBoundaryTypes, BoundaryPolicy>::value;
     int shapePolicy = IndexOf<KShapeTypes, ShapePolicy>::value;
 
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
-            if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy)
-                if ((*it)->size() > i)
-                    return (*it)->at(i);
+    for (auto it : fSurfaceData)
+        if (it->size() != 0)
+            if (it->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
+                it->operator[](0)->GetID().ShapeID == shapePolicy)
+                if (it->size() > i)
+                    return it->at(i);
     return nullptr;
 }
 
@@ -296,16 +296,16 @@ template<class Policy> KSurfacePrimitive* KSurfaceContainer::operator[](unsigned
     int shapePolicy = IndexOf<KShapeTypes, Policy>::value;
 
     unsigned int j = i;
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it) {
-        if ((*it)->size() != 0) {
-            if ((*it)->operator[](0)->GetID().BasisID == basisPolicy ||
-                (*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy) {
-                if ((*it)->size() < j) {
-                    return (*it)->at(j);
+    for (auto it : fSurfaceData) {
+        if (it->size() != 0) {
+            if (it->operator[](0)->GetID().BasisID == basisPolicy ||
+                it->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
+                it->operator[](0)->GetID().ShapeID == shapePolicy) {
+                if (it->size() < j) {
+                    return it->at(j);
                 }
                 else {
-                    j -= (*it)->size();
+                    j -= it->size();
                 }
             }
         }
@@ -318,11 +318,11 @@ template<class BoundaryPolicy, class ShapePolicy> unsigned int KSurfaceContainer
     int boundaryPolicy = IndexOf<KBoundaryTypes, BoundaryPolicy>::value;
     int shapePolicy = IndexOf<KShapeTypes, ShapePolicy>::value;
 
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
-            if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy)
-                return (*it)->size();
+    for (auto it : fSurfaceData)
+        if (it->size() != 0)
+            if (it->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
+                it->operator[](0)->GetID().ShapeID == shapePolicy)
+                return it->size();
     return 0;
 }
 
@@ -333,12 +333,12 @@ template<class Policy> unsigned int KSurfaceContainer::size() const
     int shapePolicy = IndexOf<KShapeTypes, Policy>::value;
 
     unsigned int i = 0;
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
-            if ((*it)->operator[](0)->GetID().BasisID == basisPolicy ||
-                (*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy)
-                i += (*it)->size();
+    for (auto it : fSurfaceData)
+        if (it->size() != 0)
+            if (it->operator[](0)->GetID().BasisID == basisPolicy ||
+                it->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
+                it->operator[](0)->GetID().ShapeID == shapePolicy)
+                i += it->size();
 
     return i;
 }
@@ -392,15 +392,15 @@ template<class BoundaryPolicy, class ShapePolicy> void KSurfaceContainer::clear(
     int boundaryPolicy = IndexOf<KBoundaryTypes, BoundaryPolicy>::value;
     int shapePolicy = IndexOf<KShapeTypes, ShapePolicy>::value;
 
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
-            if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy) {
+    for (auto& it : fSurfaceData)
+        if (it->size() != 0)
+            if (it->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
+                it->operator[](0)->GetID().ShapeID == shapePolicy) {
                 if (fIsOwner) {
-                    for (auto arrayIt = (*it)->begin(); arrayIt != (*it)->end(); ++arrayIt)
-                        delete *arrayIt;
+                    for (auto& arrayIt : *it)
+                        delete arrayIt;
                 }
-                (*it)->clear();
+                it->clear();
             }
 }
 
@@ -410,16 +410,16 @@ template<class Policy> void KSurfaceContainer::clear()
     int boundaryPolicy = IndexOf<KBoundaryTypes, Policy>::value;
     int shapePolicy = IndexOf<KShapeTypes, Policy>::value;
 
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
-            if ((*it)->operator[](0)->GetID().BasisID == basisPolicy ||
-                (*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
-                (*it)->operator[](0)->GetID().ShapeID == shapePolicy) {
+    for (auto& it : fSurfaceData)
+        if (it->size() != 0)
+            if (it->operator[](0)->GetID().BasisID == basisPolicy ||
+                it->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
+                it->operator[](0)->GetID().ShapeID == shapePolicy) {
                 if (fIsOwner) {
-                    for (auto arrayIt = (*it)->begin(); arrayIt != (*it)->end(); ++arrayIt)
-                        delete *arrayIt;
+                    for (auto& arrayIt : *it)
+                        delete arrayIt;
                 }
-                (*it)->clear();
+                it->clear();
             }
 }
 
@@ -432,11 +432,11 @@ typename KSurfaceContainer::SmartDataPointer KSurfaceContainer::GetSurfaceData()
     if (fPartialSurfaceData[boundaryPolicy][shapePolicy].Null()) {
         auto* data = new KSurfaceContainer::KSurfaceData();
 
-        for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-            if ((*it)->size() != 0)
-                if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
-                    (*it)->operator[](0)->GetID().ShapeID == shapePolicy)
-                    data->push_back(*it);
+        for (auto it : fSurfaceData)
+            if (it->size() != 0)
+                if (it->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
+                    it->operator[](0)->GetID().ShapeID == shapePolicy)
+                    data->push_back(it);
         fPartialSurfaceData[boundaryPolicy][shapePolicy] = SmartDataPointer(data);
     }
     return fPartialSurfaceData[boundaryPolicy][shapePolicy];
@@ -455,12 +455,12 @@ template<class Policy> typename KSurfaceContainer::SmartDataPointer KSurfaceCont
     if (fPartialSurfaceData[boundaryPolicy][shapePolicy].Null()) {
         auto* data = new KSurfaceContainer::KSurfaceData();
 
-        for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-            if ((*it)->size() != 0)
-                if ((*it)->operator[](0)->GetID().BasisID == basisPolicy ||
-                    (*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
-                    (*it)->operator[](0)->GetID().ShapeID == shapePolicy)
-                    data->push_back(*it);
+        for (auto it : fSurfaceData)
+            if (it->size() != 0)
+                if (it->operator[](0)->GetID().BasisID == basisPolicy ||
+                    it->operator[](0)->GetID().BoundaryID == boundaryPolicy ||
+                    it->operator[](0)->GetID().ShapeID == shapePolicy)
+                    data->push_back(it);
         fPartialSurfaceData[boundaryPolicy][shapePolicy] = SmartDataPointer(data);
     }
     return fPartialSurfaceData[boundaryPolicy][shapePolicy];
@@ -497,8 +497,8 @@ template<typename Stream> Stream& operator<<(Stream& s, const typename KSurfaceC
     s << (unsigned int) (anArray.size());
     s << anArray.at(0)->GetID();
 
-    for (auto it = anArray.begin(); it != anArray.end(); ++it)
-        s << *(*it);
+    for (auto it : anArray)
+        s << *it;
 
     s.PostStreamOutAction(anArray);
     return s;
@@ -527,8 +527,8 @@ template<typename Stream> Stream& operator<<(Stream& s, const typename KSurfaceC
 
     s << (unsigned int) (aData.size());
 
-    for (auto it = aData.begin(); it != aData.end(); ++it)
-        s << *(*it);
+    for (auto it : aData)
+        s << *it;
 
     s.PostStreamOutAction(aData);
     return s;

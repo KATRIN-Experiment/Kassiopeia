@@ -12,7 +12,7 @@ KSTrajExactError::KSTrajExactError() :
 
 KSTrajExactError::KSTrajExactError(const KSTrajExactError& anOperand) : KSMathArray<8>(anOperand) {}
 
-KSTrajExactError::~KSTrajExactError() {}
+KSTrajExactError::~KSTrajExactError() = default;
 
 const double& KSTrajExactError::GetTimeError() const
 {
@@ -24,12 +24,12 @@ const double& KSTrajExactError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KThreeVector& KSTrajExactError::GetPositionError() const
+const KGeoBag::KThreeVector& KSTrajExactError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;
 }
-const KThreeVector& KSTrajExactError::GetMomentumError() const
+const KGeoBag::KThreeVector& KSTrajExactError::GetMomentumError() const
 {
     fMomentumError.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentumError;

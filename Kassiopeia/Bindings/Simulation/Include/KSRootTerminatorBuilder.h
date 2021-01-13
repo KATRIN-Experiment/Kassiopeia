@@ -18,7 +18,7 @@ template<> inline bool KSRootTerminatorBuilder::AddAttribute(KContainer* aContai
         return true;
     }
     if (aContainer->GetName() == "add_terminator") {
-        fObject->AddTerminator(KToolbox::GetInstance().Get<KSTerminator>(aContainer->AsReference<std::string>()));
+        fObject->AddTerminator(KToolbox::GetInstance().Get<KSTerminator>(aContainer->AsString()));
         return true;
     }
     return false;

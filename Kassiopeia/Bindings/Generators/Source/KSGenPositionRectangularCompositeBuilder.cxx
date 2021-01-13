@@ -18,15 +18,15 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionRectangularCompositeBuilder::~KComplexElement() {}
+template<> KSGenPositionRectangularCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionRectangularCompositeStructure =
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("name") +
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("surface") +
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("space") +
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("x") +
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("y") +
-    KSGenPositionRectangularCompositeBuilder::Attribute<string>("z") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("name") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("space") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("x") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("y") +
+    KSGenPositionRectangularCompositeBuilder::Attribute<std::string>("z") +
     KSGenPositionRectangularCompositeBuilder::ComplexElement<KSGenValueFix>("x_fix") +
     KSGenPositionRectangularCompositeBuilder::ComplexElement<KSGenValueSet>("x_set") +
     KSGenPositionRectangularCompositeBuilder::ComplexElement<KSGenValueList>("x_list") +

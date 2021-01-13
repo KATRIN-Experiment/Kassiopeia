@@ -12,7 +12,7 @@ STATICINT sKGExtrudedCircleSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGExtrudedCircleSurface>("extruded_circle_surface");
 
 STATICINT sKGExtrudedCircleSurfaceBuilderStructure =
-    KGExtrudedCircleSurfaceBuilder::Attribute<string>("name") +
+    KGExtrudedCircleSurfaceBuilder::Attribute<std::string>("name") +
     KGExtrudedCircleSurfaceBuilder::Attribute<double>("zmin") +
     KGExtrudedCircleSurfaceBuilder::Attribute<double>("zmax") +
     KGExtrudedCircleSurfaceBuilder::Attribute<unsigned int>("extruded_mesh_count") +

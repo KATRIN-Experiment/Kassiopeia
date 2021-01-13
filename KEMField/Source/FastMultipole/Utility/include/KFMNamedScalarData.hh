@@ -34,7 +34,8 @@ class KFMNamedScalarData : public KSAInputOutputObject
         fData = rhs.fData;
     }
 
-    ~KFMNamedScalarData() override{};
+    ~KFMNamedScalarData() override = default;
+    ;
 
     unsigned int GetSize() const
     {

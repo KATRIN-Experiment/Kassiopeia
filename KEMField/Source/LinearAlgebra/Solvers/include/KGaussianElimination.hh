@@ -9,11 +9,11 @@ namespace KEMField
 template<typename ValueType> class KGaussianElimination
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
-    KGaussianElimination() {}
-    virtual ~KGaussianElimination() {}
+    KGaussianElimination() = default;
+    virtual ~KGaussianElimination() = default;
 
     void Solve(const Matrix& A, Vector& x, const Vector& b) const;
 

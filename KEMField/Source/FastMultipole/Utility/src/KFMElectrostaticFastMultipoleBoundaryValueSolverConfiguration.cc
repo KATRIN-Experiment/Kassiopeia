@@ -13,10 +13,8 @@ namespace KEMField
 KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration::
     ~KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration()
 {
-    if (fFFTMParams != nullptr)
-        delete fFFTMParams;
-    if (fPreconditionerFFTMParams != nullptr)
-        delete fPreconditionerFFTMParams;
+    delete fFFTMParams;
+    delete fPreconditionerFFTMParams;
 }
 
 void KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration::SetFFTMParams(KFMElectrostaticParameters* config)

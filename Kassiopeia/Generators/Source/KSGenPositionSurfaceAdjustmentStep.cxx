@@ -14,7 +14,7 @@ KSGenPositionSurfaceAdjustmentStep::KSGenPositionSurfaceAdjustmentStep() : fLeng
 
 KSGenPositionSurfaceAdjustmentStep::KSGenPositionSurfaceAdjustmentStep(
     const KSGenPositionSurfaceAdjustmentStep& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLength(aCopy.fLength)
 {}
 
@@ -23,18 +23,18 @@ KSGenPositionSurfaceAdjustmentStep* KSGenPositionSurfaceAdjustmentStep::Clone() 
     return new KSGenPositionSurfaceAdjustmentStep(*this);
 }
 
-KSGenPositionSurfaceAdjustmentStep::~KSGenPositionSurfaceAdjustmentStep() {}
+KSGenPositionSurfaceAdjustmentStep::~KSGenPositionSurfaceAdjustmentStep() = default;
 
 void KSGenPositionSurfaceAdjustmentStep::Dice(KSParticleQueue* aPrimaries)
 {
-    for (auto tParticleIt = aPrimaries->begin(); tParticleIt != aPrimaries->end(); ++tParticleIt) {
-        genmsg_debug("Position before: <" << (*tParticleIt)->GetPosition() << ">" << eom);
-        KThreeVector tPosition = (*tParticleIt)->GetPosition() + fLength * (*tParticleIt)->GetMomentum().Unit();
+    for (auto& aPrimarie : *aPrimaries) {
+        genmsg_debug("Position before: <" << aPrimarie->GetPosition() << ">" << eom);
+        KGeoBag::KThreeVector tPosition = aPrimarie->GetPosition() + fLength * aPrimarie->GetMomentum().Unit();
         genmsg_debug("KSGenPositionSurfaceAdjustmentStep: <" << GetName() << "> set position <" << tPosition << ">"
                                                              << eom);
-        genmsg_debug("Distance between points: " << ((*tParticleIt)->GetPosition() - tPosition).Magnitude() << eom);
-        genmsg_debug("Radius smaller by: " << (*tParticleIt)->GetPosition().Perp() - tPosition.Perp() << eom);
-        (*tParticleIt)->SetPosition(tPosition);
+        genmsg_debug("Distance between points: " << (aPrimarie->GetPosition() - tPosition).Magnitude() << eom);
+        genmsg_debug("Radius smaller by: " << (aPrimarie->GetPosition().Perp() - tPosition.Perp()) << eom);
+        aPrimarie->SetPosition(tPosition);
     }
 }
 

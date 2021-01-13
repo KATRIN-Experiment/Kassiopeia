@@ -33,7 +33,7 @@ template<class XPathType> class KGRotatedClosedPathSpace : public KGVolume
     {}
     KGRotatedClosedPathSpace(const std::shared_ptr<XPathType>& aPath) : KGVolume(), fPath(aPath), fRotatedMeshCount(64)
     {}
-    ~KGRotatedClosedPathSpace() override {}
+    ~KGRotatedClosedPathSpace() override = default;
 
   public:
     std::shared_ptr<XPathType> Path()
@@ -81,24 +81,24 @@ template<class XPathType> class KGRotatedClosedPathSpace : public KGVolume
         KGVolume::VolumeAccept(aVisitor);
         return;
     }
-    bool VolumeOutside(const KThreeVector& aPoint) const override
+    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         return fPath->Above(tZRPoint);
     }
-    KThreeVector VolumePoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         KTwoVector tZRNearest = fPath->Point(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
+        return KGeoBag::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
     }
-    KThreeVector VolumeNormal(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         KTwoVector tZRNormal = fPath->Normal(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
+        return KGeoBag::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
     }
 
   private:

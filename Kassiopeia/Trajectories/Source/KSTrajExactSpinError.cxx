@@ -14,7 +14,7 @@ KSTrajExactSpinError::KSTrajExactSpinError() :
 
 KSTrajExactSpinError::KSTrajExactSpinError(const KSTrajExactSpinError& anOperand) : KSMathArray<12>(anOperand) {}
 
-KSTrajExactSpinError::~KSTrajExactSpinError() {}
+KSTrajExactSpinError::~KSTrajExactSpinError() = default;
 
 const double& KSTrajExactSpinError::GetTimeError() const
 {
@@ -26,12 +26,12 @@ const double& KSTrajExactSpinError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KThreeVector& KSTrajExactSpinError::GetPositionError() const
+const KGeoBag::KThreeVector& KSTrajExactSpinError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;
 }
-const KThreeVector& KSTrajExactSpinError::GetMomentumError() const
+const KGeoBag::KThreeVector& KSTrajExactSpinError::GetMomentumError() const
 {
     fMomentumError.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentumError;
@@ -41,7 +41,7 @@ const double& KSTrajExactSpinError::GetSpin0Error() const
     fSpin0Error = fData[8];
     return fSpin0Error;
 }
-const KThreeVector& KSTrajExactSpinError::GetSpinError() const
+const KGeoBag::KThreeVector& KSTrajExactSpinError::GetSpinError() const
 {
     fSpinError.SetComponents(fData[9], fData[10], fData[11]);
     return fSpinError;

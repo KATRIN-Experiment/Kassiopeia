@@ -12,7 +12,7 @@ KSComponent::KSComponent(const KSComponent& aCopy) :
     fParentComponent(nullptr),
     fChildComponents()
 {}
-KSComponent::~KSComponent() {}
+KSComponent::~KSComponent() = default;
 
 void KSComponent::TryInitialize()
 {
@@ -26,8 +26,8 @@ void KSComponent::Initialize()
         InitializeComponent();
         fState = eInitialized;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->Initialize();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->Initialize();
         }
 
         return;
@@ -47,8 +47,8 @@ void KSComponent::Deinitialize()
         DeinitializeComponent();
         fState = eIdle;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->Deinitialize();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->Deinitialize();
         }
 
         return;
@@ -74,8 +74,8 @@ void KSComponent::Activate()
         ActivateComponent();
         fState = eActivated;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->Activate();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->Activate();
         }
 
         return;
@@ -95,8 +95,8 @@ void KSComponent::Deactivate()
         DeactivateComponent();
         fState = eInitialized;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->Deactivate();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->Deactivate();
         }
 
         return;
@@ -117,8 +117,8 @@ void KSComponent::PushUpdate()
         PushUpdateComponent();
         fState = eUpdated;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->PushUpdate();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->PushUpdate();
         }
 
         return;
@@ -129,8 +129,8 @@ void KSComponent::PushUpdate()
                          << ">" << eom;
     }
 
-    for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-        (*tIt)->PushUpdate();
+    for (auto& childComponent : fChildComponents) {
+        childComponent->PushUpdate();
     }
 
     return;
@@ -142,8 +142,8 @@ void KSComponent::PushDeupdate()
         PushDeupdateComponent();
         fState = eActivated;
 
-        for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-            (*tIt)->PushDeupdate();
+        for (auto& childComponent : fChildComponents) {
+            childComponent->PushDeupdate();
         }
 
         return;
@@ -154,8 +154,8 @@ void KSComponent::PushDeupdate()
                          << ">" << eom;
     }
 
-    for (auto tIt = fChildComponents.begin(); tIt != fChildComponents.end(); tIt++) {
-        (*tIt)->PushDeupdate();
+    for (auto& childComponent : fChildComponents) {
+        childComponent->PushDeupdate();
     }
 
     return;

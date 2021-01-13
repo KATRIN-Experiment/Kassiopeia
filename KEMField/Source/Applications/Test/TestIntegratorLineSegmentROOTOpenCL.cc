@@ -16,15 +16,13 @@
 #include <cstdlib>
 #include <iostream>
 
-#define POW2(x) ((x) * (x))
-
 // VALUES
 #define NUMLINES 500    // number of line segments for each Dr step
 #define MINDR    2      // minimal distance ratio to be investigated
 #define MAXDR    10000  // maximal distance ratio to be investigated
 #define STEPSDR  500    // steps between given distance ratio range
-#define SEPARATECOMP    // if this variable has been defined potentials and fields will be computed separately,        \
-                        // hence 'ElectricFieldAndPotential' function won't be used                                    \
+#define SEPARATECOMP    // if this variable has been defined potentials and fields will be computed separately,
+                        // hence 'ElectricFieldAndPotential' function won't be used
                         // both options have to produce same values
 
 // ROOT PLOTS AND COLORS (all settings apply for both field and potential)
@@ -43,7 +41,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KEMLineS
 void subrn(double* u, int len);
 double randomnumber();
 
-void printVec(std::string add, KThreeVector input)
+void printVec(std::string add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -58,9 +56,9 @@ class LineSegmentVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(K
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KLineSegment)>::Visit;
 
-    LineSegmentVisitor() {}
+    LineSegmentVisitor() = default;
 
-    void Visit(KLineSegment& t)
+    void Visit(KLineSegment& t) override
     {
         ProcessLineSegment(t);
     }
@@ -78,14 +76,14 @@ class LineSegmentVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(K
     {
         return fLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
 
   private:
     double fLength;
-    KThreeVector fShapeCentroid;
+    KFieldVector fShapeCentroid;
 };
 
 }  // namespace KEMField
@@ -101,30 +99,30 @@ int main()
     double length;
 
     // assign a unique direction vector for field point to each line segment and save into std::vector
-    std::vector<KThreeVector> fPointDirections;
+    std::vector<KFieldVector> fPointDirections;
 
     // 'Num' line segments will be diced in the beginning and added to a surface container
     // This value decides how much 'line segments=field points' will be computed for each distance ratio value
 
-    KSurfaceContainer* container = new KSurfaceContainer();
+    auto* container = new KSurfaceContainer();
     const unsigned int Num(NUMLINES); /* number of line segments */
 
     for (unsigned int i = 0; i < Num; i++) {
         IJKLRANDOM = i + 1;
-        KEMLineSegment* line = new KEMLineSegment();
+        auto* line = new KEMLineSegment();
 
         // dice line segment geometry, diameter fixed ratio to length
-        for (unsigned short l = 0; l < 3; l++)
-            P0[l] = -1. + 2. * randomnumber();
-        for (unsigned short j = 0; j < 3; j++)
-            P1[j] = -1. + 2. * randomnumber();
+        for (double& l : P0)
+            l = -1. + 2. * randomnumber();
+        for (double& j : P1)
+            j = -1. + 2. * randomnumber();
 
         // compute further line segment data
 
         length = sqrt(POW2(P1[0] - P0[0]) + POW2(P1[1] - P0[1]) + POW2(P1[2] - P0[2]));
 
-        line->SetP0(KThreeVector(P0[0], P0[1], P0[2]));
-        line->SetP1(KThreeVector(P1[0], P1[1], P1[2]));
+        line->SetP0(KFieldVector(P0[0], P0[1], P0[2]));
+        line->SetP1(KFieldVector(P1[0], P1[1], P1[2]));
         line->SetDiameter(length * 0.1);
 
         line->SetBoundaryValue(1.);
@@ -136,11 +134,11 @@ int main()
         const double sinthetaFP = sqrt(1. - POW2(costhetaFP));
         const double phiFP = 2. * M_PI * randomnumber();
 
-        fPointDirections.push_back(KThreeVector(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP));
+        fPointDirections.emplace_back(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP);
     }
 
     // OpenCL surface container
-    KOpenCLSurfaceContainer* oclContainer = new KOpenCLSurfaceContainer(*container);
+    auto* oclContainer = new KOpenCLSurfaceContainer(*container);
     KOpenCLInterface::GetInstance()->SetActiveData(oclContainer);
 
     // Quadrature and OpenCL integrator classes
@@ -166,23 +164,23 @@ int main()
                    << " line segments for each dist. ratio value." << KEMField::endl;
 
     // field point
-    KThreeVector fP;
+    KFieldVector fP;
 
-    std::pair<KThreeVector, double> valQuad256;
-    std::pair<KThreeVector, double> valAna;
-    std::pair<KThreeVector, double> valNum;
+    std::pair<KFieldVector, double> valQuad256;
+    std::pair<KFieldVector, double> valAna;
+    std::pair<KFieldVector, double> valNum;
 
     // plot
 
-    TApplication* fAppWindow = new TApplication("fAppWindow", 0, NULL);
+    auto* fAppWindow = new TApplication("fAppWindow", nullptr, nullptr);
 
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetLabelOffset(0.03, "xyz");  // values
     gStyle->SetTitleOffset(1.6, "xyz");   // label
 
-    TMultiGraph* mgPot = new TMultiGraph();
+    auto* mgPot = new TMultiGraph();
 
-    TGraph* plotDrPotAna = new TGraph(kmax + 1);
+    auto* plotDrPotAna = new TGraph(kmax + 1);
     plotDrPotAna->SetTitle("Relative error of analytical line segment potential");
     plotDrPotAna->SetDrawOption("AC");
     plotDrPotAna->SetMarkerColor(COLANA);
@@ -193,7 +191,7 @@ int main()
     if (PLOTANA)
         mgPot->Add(plotDrPotAna);
 
-    TGraph* plotDrPotNum = new TGraph(kmax + 1);
+    auto* plotDrPotNum = new TGraph(kmax + 1);
     plotDrPotNum->SetTitle("Relative error of line segment potential with adjusted numerical integrator");
     plotDrPotNum->SetDrawOption("same");
     plotDrPotNum->SetMarkerColor(COLNUM);
@@ -204,9 +202,9 @@ int main()
     if (PLOTNUM)
         mgPot->Add(plotDrPotNum);
 
-    TMultiGraph* mgField = new TMultiGraph();
+    auto* mgField = new TMultiGraph();
 
-    TGraph* plotDrFieldAna = new TGraph(kmax + 1);
+    auto* plotDrFieldAna = new TGraph(kmax + 1);
     plotDrFieldAna->SetTitle("Relative error of analytical line segment field");
     plotDrFieldAna->SetDrawOption("AC");
     plotDrFieldAna->SetMarkerColor(COLANA);
@@ -217,7 +215,7 @@ int main()
     if (PLOTANA)
         mgField->Add(plotDrFieldAna);
 
-    TGraph* plotDrFieldNum = new TGraph(kmax + 1);
+    auto* plotDrFieldNum = new TGraph(kmax + 1);
     plotDrFieldNum->SetTitle("Relative error of triangle field with adjusted numerical integrator");
     plotDrFieldNum->SetDrawOption("same");
     plotDrFieldNum->SetMarkerColor(COLNUM);

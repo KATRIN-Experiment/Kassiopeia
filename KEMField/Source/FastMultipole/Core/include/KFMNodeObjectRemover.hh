@@ -27,8 +27,10 @@ template<typename ObjectTypeList, typename TypeToRemove>
 class KFMNodeObjectRemover : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMNodeObjectRemover(){};
-    ~KFMNodeObjectRemover() override{};
+    KFMNodeObjectRemover() = default;
+    ;
+    ~KFMNodeObjectRemover() override = default;
+    ;
 
     void ApplyAction(KFMNode<ObjectTypeList>* node) override
     {

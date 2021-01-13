@@ -15,11 +15,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KRampedMagneticFieldBuilder::~KComplexElement() {}
+template<> KRampedMagneticFieldBuilder::~KComplexElement() = default;
 
-STATICINT sKRampedMagneticFieldStructure = KRampedMagneticFieldBuilder::Attribute<string>("name") +
-                                           KRampedMagneticFieldBuilder::Attribute<string>("root_field") +
-                                           KRampedMagneticFieldBuilder::Attribute<string>("ramping_type") +
+STATICINT sKRampedMagneticFieldStructure = KRampedMagneticFieldBuilder::Attribute<std::string>("name") +
+                                           KRampedMagneticFieldBuilder::Attribute<std::string>("root_field") +
+                                           KRampedMagneticFieldBuilder::Attribute<std::string>("ramping_type") +
                                            KRampedMagneticFieldBuilder::Attribute<int>("num_cycles") +
                                            KRampedMagneticFieldBuilder::Attribute<double>("ramp_up_delay") +
                                            KRampedMagneticFieldBuilder::Attribute<double>("ramp_down_delay") +

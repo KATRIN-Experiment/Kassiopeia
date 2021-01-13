@@ -21,16 +21,15 @@ int main()
 {
     double a = 1.5;
     double b = 1.3;
-    KThreeVector p0(0., 0., 0.);
-    KThreeVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
-    KThreeVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
+    KFieldVector p0(0., 0., 0.);
+    KFieldVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
+    KFieldVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
 
     double dirichletValue = 10.2;
 
     double chargeDensity = 4.8;
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* t =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* t = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
 
     std::cout << "\nOriginal element:\n" << std::endl;
 
@@ -56,8 +55,7 @@ int main()
     KEMField::cout << "Using the print method:" << KEMField::endl;
     KEMField::cout << *t << KEMField::endl;
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>* r =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
+    auto* r = new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
 
     r->SetA(a);
     r->SetB(b);
@@ -89,11 +87,10 @@ int main()
     r->SetBoundaryValue(dirichletValue);
     std::cout << "Old Hash for rectangle:  " << hashGenerator.GenerateHash(*r) << std::endl;
 
-    KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>* w =
-        new KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>();
+    auto* w = new KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>();
 
-    w->SetP0(KThreeVector(0., 1., 0.));
-    w->SetP1(KThreeVector(1., 0., 0.));
+    w->SetP0(KFieldVector(0., 1., 0.));
+    w->SetP1(KFieldVector(1., 0., 0.));
     w->SetDiameter(1.e-4);
     w->SetNormalBoundaryFlux(3.3);
     w->SetSolution(12.6);
@@ -122,9 +119,9 @@ int main()
                    << " dirichlet triangles in the container" << KEMField::endl;
 
     delete t;
-    t = 0;
+    t = nullptr;
 
-    KSurfacePrimitive* sP = 0;
+    KSurfacePrimitive* sP = nullptr;
     KEMField::cout << "Pulling from the container" << KEMField::endl;
     sP = surfaceContainer.at(0);
 
@@ -323,8 +320,7 @@ int main()
     KEMField::cout << "done" << KEMField::endl;
     std::cout << "" << std::endl;
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* t3 =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* t3 = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
 
     KSurfacePrimitive* surfacePrim = t3;
 

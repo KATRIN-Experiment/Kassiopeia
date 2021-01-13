@@ -22,6 +22,8 @@ class KFormulaProcessor : public KProcessor
 
   private:
     void Evaluate(KToken* aToken);
+    bool EvaluateTinyExpression(const std::string& anExpr, double& aResult);
+    bool EvaluateRootExpression(const std::string& anExpr, double& aResult);
 
     static const std::string fStartBracket;
     static const std::string fEndBracket;

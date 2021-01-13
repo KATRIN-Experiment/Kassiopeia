@@ -27,13 +27,13 @@ template<int XCondition, class XConditionMet, class XConditionNotMet> class KTyp
 template<class XConditionMet, class XConditionNotMet> class KTypeIf<1, XConditionMet, XConditionNotMet>
 {
   public:
-    typedef XConditionMet Type;
+    using Type = XConditionMet;
 };
 
 template<class XConditionMet, class XConditionNotMet> class KTypeIf<0, XConditionMet, XConditionNotMet>
 {
   public:
-    typedef XConditionNotMet Type;
+    using Type = XConditionNotMet;
 };
 }  // namespace katrin
 

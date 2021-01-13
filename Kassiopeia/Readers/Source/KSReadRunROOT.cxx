@@ -21,7 +21,7 @@ KSReadRunROOT::KSReadRunROOT(TFile* aFile) :
     fData->SetBranchAddress("FIRST_STEP_INDEX", &fFirstStepIndex);
     fData->SetBranchAddress("LAST_STEP_INDEX", &fLastStepIndex);
 }
-KSReadRunROOT::~KSReadRunROOT() {}
+KSReadRunROOT::~KSReadRunROOT() = default;
 
 unsigned int KSReadRunROOT::GetRunIndex() const
 {

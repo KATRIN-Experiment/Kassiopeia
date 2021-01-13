@@ -24,7 +24,8 @@ class KFMNodeIdentityListRange
 {
   public:
     KFMNodeIdentityListRange() : fStartIndex(0), fLength(0){};
-    virtual ~KFMNodeIdentityListRange(){};
+    virtual ~KFMNodeIdentityListRange() = default;
+    ;
 
     void SetStartIndex(unsigned int i)
     {

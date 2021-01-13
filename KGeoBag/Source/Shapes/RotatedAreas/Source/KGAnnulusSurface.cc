@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGAnnulusSurface::Visitor::Visitor() {}
-KGAnnulusSurface::Visitor::~Visitor() {}
+KGAnnulusSurface::Visitor::Visitor() = default;
+KGAnnulusSurface::Visitor::~Visitor() = default;
 
 KGAnnulusSurface::KGAnnulusSurface() :
     fZ(0.),
@@ -14,7 +14,7 @@ KGAnnulusSurface::KGAnnulusSurface() :
     fRadialMeshPower(1.),
     fAxialMeshCount(8)
 {}
-KGAnnulusSurface::~KGAnnulusSurface() {}
+KGAnnulusSurface::~KGAnnulusSurface() = default;
 
 void KGAnnulusSurface::Z(const double& aZ)
 {

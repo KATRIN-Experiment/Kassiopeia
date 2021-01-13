@@ -2,11 +2,13 @@
 # headers
 set( BASIC_VISUALIZATION_HEADER_FILES
     Basic/Include/KGVisualizationMessage.hh
+    Basic/Include/KGGeometryPrinter.hh
 )
 
 # source
 set( BASIC_VISUALIZATION_SOURCE_FILES
     Basic/Source/KGVisualizationMessage.cc
+    Basic/Source/KGGeometryPrinter.cc
 )
 
 
@@ -63,7 +65,7 @@ if( KGeoBag_USE_VTK )
 	# external
 	kasper_find_vtk()
 	if( VTK_MAJOR_VERSION GREATER 5 )
-		set_property( SOURCE ${VTK_VISUALIZATION_SOURCE_FILES} APPEND PROPERTY COMPILE_DEFINITIONS VTK6 )
+		set_property( SOURCE ${VTK_VISUALIZATION_SOURCE_FILES} ${VTK_VISUALIZATION_HEADER_FILES} APPEND PROPERTY COMPILE_DEFINITIONS VTK6 )
 	endif()
 
 	# internal

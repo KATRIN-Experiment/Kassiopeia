@@ -54,8 +54,9 @@
 
 
 #include <algorithm>
-#include <assert.h>
+#include <cassert>
 #include <cmath>
+#include <cstdint>
 
 namespace katrin
 {
@@ -66,10 +67,7 @@ class KMathIntegratorFerenc
     static double GetWeight(uint32_t iStep, uint32_t NSteps);
 
   public:
-    KMathIntegratorFerenc(double xMin = 0.0, double xMax = 1.0, uint32_t nSteps = 25) :
-        fXMin(xMin),
-        fXMax(xMax),
-        fNSteps(nSteps)
+    KMathIntegratorFerenc(double xMin = 0.0, double xMax = 1.0, uint32_t nSteps = 25) : fXMin(xMin), fXMax(xMax)
     {
         SetNSteps(nSteps);
     }

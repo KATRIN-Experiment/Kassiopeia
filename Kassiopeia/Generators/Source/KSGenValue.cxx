@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSGenValue::KSGenValue() {}
+KSGenValue::KSGenValue() = default;
 
-KSGenValue::~KSGenValue() {}
+KSGenValue::~KSGenValue() = default;
 
 }  // namespace Kassiopeia

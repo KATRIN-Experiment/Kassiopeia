@@ -33,21 +33,22 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
   public:
     KFMBoundingBallContainer(const KSurfaceContainer& container) :
         fSurfaceContainer(&container),
-        fSortedSurfaceContainer(NULL)
+        fSortedSurfaceContainer(nullptr)
     {
         fContainerIsSorted = false;
     };
 
     KFMBoundingBallContainer(const KSortedSurfaceContainer& container) :
-        fSurfaceContainer(NULL),
+        fSurfaceContainer(nullptr),
         fSortedSurfaceContainer(&container)
     {
         fContainerIsSorted = true;
     };
 
-    virtual ~KFMBoundingBallContainer(){};
+    ~KFMBoundingBallContainer() override = default;
+    ;
 
-    virtual unsigned int GetNObjects() const
+    unsigned int GetNObjects() const override
     {
         if (fContainerIsSorted) {
             return fSortedSurfaceContainer->size();
@@ -57,12 +58,12 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
         }
     };
 
-    virtual void AddObject(const KFMBall<3>& /*obj*/)
+    void AddObject(const KFMBall<3>& /*obj*/) override
     {
         //warning...cannot add object to a virtual container
     }
 
-    virtual KFMBall<3>* GetObjectWithID(const unsigned int& id)
+    KFMBall<3>* GetObjectWithID(const unsigned int& id) override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
@@ -74,7 +75,7 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
                 return &fCurrentBoundingBall;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
         else {
@@ -87,12 +88,12 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
                 return &fCurrentBoundingBall;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
     }
 
-    virtual const KFMBall<3>* GetObjectWithID(const unsigned int& id) const
+    const KFMBall<3>* GetObjectWithID(const unsigned int& id) const override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
@@ -103,7 +104,7 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
                 return &fCurrentBoundingBall;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
         else {
@@ -115,12 +116,12 @@ class KFMBoundingBallContainer : public KFMBoundingBallContainer3D
                 return &fCurrentBoundingBall;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
     }
 
-    virtual void DeleteAllObjects()
+    void DeleteAllObjects() override
     {
         ;
     };  //does nothing, no objects to delete

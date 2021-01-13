@@ -36,7 +36,7 @@ template<> inline bool KSNavMeshedSpaceBuilder::AddAttribute(KContainer* aContai
         return true;
     }
     if (aContainer->GetName() == "root_space") {
-        fObject->SetRootSpace(KToolbox::GetInstance().Get<KSSpace>(aContainer->AsReference<std::string>()));
+        fObject->SetRootSpace(KToolbox::GetInstance().Get<KSSpace>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "max_octree_depth") {

@@ -24,7 +24,7 @@ class KStreamedSizeOf;
 template<typename Type> class KStreamedSizeOfType
 {
   public:
-    virtual ~KStreamedSizeOfType() {}
+    virtual ~KStreamedSizeOfType() = default;
     virtual void Add(size_t) = 0;
     virtual KStreamedSizeOf& Self() = 0;
     friend inline KStreamedSizeOf& operator<<(KStreamedSizeOfType<Type>& s, const Type&)
@@ -37,7 +37,7 @@ template<typename Type> class KStreamedSizeOfType
 template<> class KStreamedSizeOfType<std::string>
 {
   public:
-    virtual ~KStreamedSizeOfType() {}
+    virtual ~KStreamedSizeOfType() = default;
     virtual void Add(size_t) = 0;
     virtual KStreamedSizeOf& Self() = 0;
     friend inline KStreamedSizeOf& operator<<(KStreamedSizeOfType<std::string>& s, const std::string& str)
@@ -53,8 +53,8 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KStreamedSizeOfType> KS
 class KStreamedSizeOf : public KStreamedSizeOfTypes
 {
   public:
-    KStreamedSizeOf() {}
-    ~KStreamedSizeOf() override {}
+    KStreamedSizeOf() = default;
+    ~KStreamedSizeOf() override = default;
 
     template<class Sized> size_t operator()(const Sized&);
 

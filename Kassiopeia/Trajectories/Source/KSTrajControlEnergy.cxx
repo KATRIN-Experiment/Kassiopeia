@@ -20,7 +20,7 @@ KSTrajControlEnergy::KSTrajControlEnergy() :
     fFirstStep(true)                                 // flag
 {}
 KSTrajControlEnergy::KSTrajControlEnergy(const KSTrajControlEnergy& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLowerLimit(aCopy.fLowerLimit),
     fUpperLimit(aCopy.fUpperLimit),
     fMinLength(aCopy.fMinLength),
@@ -36,7 +36,7 @@ KSTrajControlEnergy* KSTrajControlEnergy::Clone() const
 {
     return new KSTrajControlEnergy(*this);
 }
-KSTrajControlEnergy::~KSTrajControlEnergy() {}
+KSTrajControlEnergy::~KSTrajControlEnergy() = default;
 void KSTrajControlEnergy::ActivateObject()
 {
     trajmsg_debug("stepsize energy resetting, adjustment factor is <" << fAdjustmentFactorUp << "/"

@@ -5,8 +5,8 @@
 namespace KGeoBag
 {
 
-template<> KGRotatedLineSegmentSpace::Visitor::Visitor() {}
+template<> KGRotatedLineSegmentSpace::Visitor::Visitor() = default;
 
-template<> KGRotatedLineSegmentSpace::Visitor::~Visitor() {}
+template<> KGRotatedLineSegmentSpace::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

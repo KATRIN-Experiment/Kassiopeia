@@ -22,8 +22,8 @@ class KBasisVisitor : public KGenLinearHierarchy<KBasisTypes, KVisitorType, KVis
   public:
     typedef KBasisTypes AcceptedTypes;
 
-    KBasisVisitor() {}
-    ~KBasisVisitor() override {}
+    KBasisVisitor() = default;
+    ~KBasisVisitor() override = default;
 };
 
 /**
@@ -39,10 +39,10 @@ class KBasisVisitor : public KGenLinearHierarchy<KBasisTypes, KVisitorType, KVis
 class KBoundaryVisitor : public KGenLinearHierarchy<KBoundaryTypes, KVisitorType, KVisitorBase>
 {
   public:
-    typedef KBoundaryTypes AcceptedTypes;
+    using AcceptedTypes = KBoundaryTypes;
 
-    KBoundaryVisitor() {}
-    ~KBoundaryVisitor() override {}
+    KBoundaryVisitor() = default;
+    ~KBoundaryVisitor() override = default;
 };
 
 /**
@@ -58,10 +58,10 @@ class KBoundaryVisitor : public KGenLinearHierarchy<KBoundaryTypes, KVisitorType
 class KShapeVisitor : public KGenLinearHierarchy<KShapeTypes, KVisitorType, KVisitorBase>
 {
   public:
-    typedef KShapeTypes AcceptedTypes;
+    using AcceptedTypes = KShapeTypes;
 
-    KShapeVisitor() {}
-    ~KShapeVisitor() override {}
+    KShapeVisitor() = default;
+    ~KShapeVisitor() override = default;
 };
 }  // namespace KEMField
 

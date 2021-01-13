@@ -9,9 +9,9 @@
 
 namespace Kassiopeia
 {
-KSGenPositionSpaceRandom::KSGenPositionSpaceRandom() {}
+KSGenPositionSpaceRandom::KSGenPositionSpaceRandom() = default;
 KSGenPositionSpaceRandom::KSGenPositionSpaceRandom(const KSGenPositionSpaceRandom& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSpaces(aCopy.fSpaces)
 {}
 
@@ -20,7 +20,7 @@ KSGenPositionSpaceRandom* KSGenPositionSpaceRandom::Clone() const
     return new KSGenPositionSpaceRandom(*this);
 }
 
-KSGenPositionSpaceRandom::~KSGenPositionSpaceRandom() {}
+KSGenPositionSpaceRandom::~KSGenPositionSpaceRandom() = default;
 
 void KSGenPositionSpaceRandom::InitializeComponent() {}
 void KSGenPositionSpaceRandom::DeinitializeComponent() {}
@@ -44,8 +44,8 @@ bool KSGenPositionSpaceRandom::RemoveSpace(KGeoBag::KGSpace* aSpace)
 
 void KSGenPositionSpaceRandom::Dice(KSParticleQueue* aPrimaries)
 {
-    for (auto p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
-        (*p)->SetPosition(random.Random(fSpaces));
+    for (auto& aPrimarie : *aPrimaries) {
+        aPrimarie->SetPosition(random.Random(fSpaces));
     }
 }
 }  // namespace Kassiopeia

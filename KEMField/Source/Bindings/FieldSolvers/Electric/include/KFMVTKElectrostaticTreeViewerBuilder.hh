@@ -50,9 +50,9 @@ template<> inline bool KFMVTKElectrostaticTreeViewerBuilder::AddAttribute(KConta
 
 template<> inline bool KFMVTKElectrostaticTreeViewerBuilder::End()
 {
-    KEMField::KFMElectrostaticTree* tTree = dynamic_cast<KEMField::KFMElectrostaticTree*>(fParentElement);
+    auto* tTree = dynamic_cast<KEMField::KFMElectrostaticTree*>(fParentElement);
 
-    KEMField::KFMVTKElectrostaticTreeViewer* tViewer = new KEMField::KFMVTKElectrostaticTreeViewer(*tTree);
+    auto* tViewer = new KEMField::KFMVTKElectrostaticTreeViewer(*tTree);
 
     if (fObject->fSaveGeometry) {
         tViewer->GenerateGeometryFile(fObject->fFileName);

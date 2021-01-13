@@ -18,8 +18,7 @@ template<> inline bool KSRootSpaceInteractionBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "add_space_interaction") {
-        fObject->AddSpaceInteraction(
-            KToolbox::GetInstance().Get<KSSpaceInteraction>(aContainer->AsReference<std::string>()));
+        fObject->AddSpaceInteraction(KToolbox::GetInstance().Get<KSSpaceInteraction>(aContainer->AsString()));
         return true;
     }
     return false;

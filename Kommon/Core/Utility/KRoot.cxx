@@ -7,7 +7,7 @@
 
 namespace katrin
 {
-template<> KRootBuilder::~KComplexElement() {}
+template<> KRootBuilder::~KComplexElement() = default;
 
 STATICINT sKRoot = KElementProcessor::ComplexElement<KToolbox>("kasper");
 

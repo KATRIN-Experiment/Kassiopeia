@@ -152,12 +152,12 @@ void KFMScalarMultipoleExpansion::SetDegree(const int& l_max)
 
 void KFMScalarMultipoleExpansion::Clear()
 {
-    for (unsigned int i = 0; i < fMomentsReal.size(); i++) {
-        fMomentsReal[i] = 0;
+    for (double& i : fMomentsReal) {
+        i = 0;
     }
 
-    for (unsigned int i = 0; i < fMomentsImag.size(); i++) {
-        fMomentsImag[i] = 0;
+    for (double& i : fMomentsImag) {
+        i = 0;
     }
 }
 

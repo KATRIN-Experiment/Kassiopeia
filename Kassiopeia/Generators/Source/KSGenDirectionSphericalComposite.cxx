@@ -2,6 +2,9 @@
 
 #include "KSGeneratorsMessage.h"
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -13,7 +16,7 @@ KSGenDirectionSphericalComposite::KSGenDirectionSphericalComposite() :
     fZAxis(KThreeVector::sZUnit)
 {}
 KSGenDirectionSphericalComposite::KSGenDirectionSphericalComposite(const KSGenDirectionSphericalComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fThetaValue(aCopy.fThetaValue),
     fPhiValue(aCopy.fPhiValue),
     fXAxis(aCopy.fXAxis),
@@ -24,7 +27,7 @@ KSGenDirectionSphericalComposite* KSGenDirectionSphericalComposite::Clone() cons
 {
     return new KSGenDirectionSphericalComposite(*this);
 }
-KSGenDirectionSphericalComposite::~KSGenDirectionSphericalComposite() {}
+KSGenDirectionSphericalComposite::~KSGenDirectionSphericalComposite() = default;
 
 void KSGenDirectionSphericalComposite::Dice(KSParticleQueue* aPrimaries)
 {

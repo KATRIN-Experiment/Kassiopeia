@@ -24,7 +24,7 @@ namespace KEMField
  */
 double KElectrostaticAnalyticRectangleIntegrator::Potential(const KRectangle* source, const KPosition& P) const
 {
-    KThreeVector p = P - source->GetP0();
+    KFieldVector p = P - source->GetP0();
     double uP = p.Dot(source->GetN1());
     double vP = p.Dot(source->GetN2());
     double w = p.Dot(source->GetN3());
@@ -41,10 +41,10 @@ double KElectrostaticAnalyticRectangleIntegrator::Potential(const KRectangle* so
     return I / (4. * M_PI * KEMConstants::Eps0);
 }
 
-KThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRectangle* source,
+KFieldVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRectangle* source,
                                                                       const KPosition& P) const
 {
-    KThreeVector p = P - source->GetP0();
+    KFieldVector p = P - source->GetP0();
     double uP = p.Dot(source->GetN1());
     double vP = p.Dot(source->GetN2());
     double w = p.Dot(source->GetN3());
@@ -57,7 +57,7 @@ KThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRec
 
     double prefac = 1. / (4. * KEMConstants::Pi * KEMConstants::Eps0);
 
-    KThreeVector field_local(0., 0., 0.);
+    KFieldVector field_local(0., 0., 0.);
 
     field_local[0] = prefac * EFieldLocalXY(xmin, xmax, ymin, ymax, w);
     field_local[1] = prefac * EFieldLocalXY(ymin, ymax, xmin, xmax, w);
@@ -89,9 +89,9 @@ KThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRec
             field_local[2] = prefac * sign_z * fabs(EFieldLocalZ(xmin, xmax, ymax, ymin, w));
     }
 
-    KThreeVector field(0., 0., 0.);
+    KFieldVector field(0., 0., 0.);
 
-    for (unsigned int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
         field[i] = (source->GetN1()[i] * field_local[0] + source->GetN2()[i] * field_local[1] +
                     source->GetN3()[i] * field_local[2]);
     return field;
@@ -104,7 +104,7 @@ KThreeVector KElectrostaticAnalyticRectangleIntegrator::ElectricField(const KRec
  * \int_t dx \ln(y+r), r = \sqrt{x^{2}+y^{2}+w^{2}}.
  * \f]
  */
-double KElectrostaticAnalyticRectangleIntegrator ::Integral_ln(double x, double y, double w) const
+double KElectrostaticAnalyticRectangleIntegrator ::Integral_ln(double x, double y, double w)
 {
     double r, r0, ret, xa, c1, c2, c3;
     r = sqrt(fabs(x * x + y * y + w * w));
@@ -128,8 +128,7 @@ double KElectrostaticAnalyticRectangleIntegrator ::Integral_ln(double x, double 
     return ret;
 }
 
-double KElectrostaticAnalyticRectangleIntegrator::EFieldLocalXY(double x1, double x2, double y1, double y2,
-                                                                double z) const
+double KElectrostaticAnalyticRectangleIntegrator::EFieldLocalXY(double x1, double x2, double y1, double y2, double z)
 {
     // Computes the x (or y) component of the electric field in local coordinates
     // (where the rectangle lies in the x-y plane, and the field point lies on
@@ -160,8 +159,7 @@ double KElectrostaticAnalyticRectangleIntegrator::EFieldLocalXY(double x1, doubl
     return log((a2 * a3) / (a1 * a4));
 }
 
-double KElectrostaticAnalyticRectangleIntegrator::EFieldLocalZ(double x1, double x2, double y1, double y2,
-                                                               double z) const
+double KElectrostaticAnalyticRectangleIntegrator::EFieldLocalZ(double x1, double x2, double y1, double y2, double z)
 {
     // Computes the z component of the electric field in local coordinates (where
     // the rectangle lies in the x-y plane, and the field point lies on the

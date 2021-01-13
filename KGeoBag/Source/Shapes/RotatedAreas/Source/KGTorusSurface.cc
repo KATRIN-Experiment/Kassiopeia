@@ -3,11 +3,11 @@
 namespace KGeoBag
 {
 
-KGTorusSurface::Visitor::Visitor() {}
-KGTorusSurface::Visitor::~Visitor() {}
+KGTorusSurface::Visitor::Visitor() = default;
+KGTorusSurface::Visitor::~Visitor() = default;
 
 KGTorusSurface::KGTorusSurface() : fZ(0.), fR(0.), fRadius(0.), fToroidalMeshCount(64), fAxialMeshCount(64) {}
-KGTorusSurface::~KGTorusSurface() {}
+KGTorusSurface::~KGTorusSurface() = default;
 
 void KGTorusSurface::Z(const double& aZ)
 {

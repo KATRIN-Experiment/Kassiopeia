@@ -25,7 +25,7 @@ KSGenEnergyLeadEvent::KSGenEnergyLeadEvent() :
     fBismuthConversion(nullptr)
 {}
 KSGenEnergyLeadEvent::KSGenEnergyLeadEvent(const KSGenEnergyLeadEvent& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fForceConversion(aCopy.fForceConversion),
     fDoConversion(aCopy.fDoConversion),
     fDoAuger(aCopy.fDoAuger),
@@ -41,7 +41,7 @@ KSGenEnergyLeadEvent* KSGenEnergyLeadEvent::Clone() const
 {
     return new KSGenEnergyLeadEvent(*this);
 }
-KSGenEnergyLeadEvent::~KSGenEnergyLeadEvent() {}
+KSGenEnergyLeadEvent::~KSGenEnergyLeadEvent() = default;
 
 void KSGenEnergyLeadEvent::Dice(KSParticleQueue* aPrimaries)
 {
@@ -69,8 +69,8 @@ void KSGenEnergyLeadEvent::Dice(KSParticleQueue* aPrimaries)
         //conversions
         //***********
 
-        vector<int> conversionVacancy;
-        vector<double> conversionElectronEnergy;
+        std::vector<int> conversionVacancy;
+        std::vector<double> conversionElectronEnergy;
 
         if (fDoConversion == true) {
             fBismuthConversion->SetForceCreation(fForceConversion);

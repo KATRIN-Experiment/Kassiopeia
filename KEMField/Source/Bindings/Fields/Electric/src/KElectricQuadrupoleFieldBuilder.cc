@@ -15,10 +15,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KElectricQuadrupoleFieldBuilder::~KComplexElement() {}
+template<> KElectricQuadrupoleFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKElectricQuadrupoleFieldStructure =
-    KElectricQuadrupoleFieldBuilder::Attribute<string>("name") +
+    KElectricQuadrupoleFieldBuilder::Attribute<std::string>("name") +
     KElectricQuadrupoleFieldBuilder::Attribute<KEMStreamableThreeVector>("location") +
     KElectricQuadrupoleFieldBuilder::Attribute<double>("strength") +
     KElectricQuadrupoleFieldBuilder::Attribute<double>("length") +

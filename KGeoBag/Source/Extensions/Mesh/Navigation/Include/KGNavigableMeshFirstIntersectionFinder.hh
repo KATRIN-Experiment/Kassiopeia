@@ -55,14 +55,15 @@ class KGNavigableMeshFirstIntersectionFinder : public KGNodeActor<KGMeshNavigati
         fVerbose = true;
     };
 
-    void NearestPointOnLineSegment(const KThreeVector& aPoint, KThreeVector& aNearest, double& t) const;
-    double LineSegmentDistanceToPoint(const KThreeVector& aPoint) const;
+    void NearestPointOnLineSegment(const KGeoBag::KThreeVector& aPoint, KGeoBag::KThreeVector& aNearest,
+                                   double& t) const;
+    double LineSegmentDistanceToPoint(const KGeoBag::KThreeVector& aPoint) const;
     bool LineSegmentIntersectsCube(const KGCube<KGMESH_DIM>& cube, double& distance) const;
 
 
-    void SetLineSegment(const KThreeVector& start, const KThreeVector& end);
+    void SetLineSegment(const KGeoBag::KThreeVector& start, const KGeoBag::KThreeVector& end);
     bool HasIntersectionWithMesh() const;
-    KThreeVector GetIntersection() const;
+    KGeoBag::KThreeVector GetIntersection() const;
     const KGNavigableMeshElement* GetIntersectedMeshElement() const
     {
         return fIntersectedElement;
@@ -105,9 +106,9 @@ class KGNavigableMeshFirstIntersectionFinder : public KGNodeActor<KGMeshNavigati
     };
 
     //parameters of the line segment
-    KThreeVector fStartPoint;
-    KThreeVector fEndPoint;
-    KThreeVector fDirection;
+    KGeoBag::KThreeVector fStartPoint;
+    KGeoBag::KThreeVector fEndPoint;
+    KGeoBag::KThreeVector fDirection;
     double fLength;
 
     KGMeshNavigationNode* fTempNode;
@@ -115,7 +116,7 @@ class KGNavigableMeshFirstIntersectionFinder : public KGNodeActor<KGMeshNavigati
 
     //intersection data
     bool fHaveIntersection;
-    KThreeVector fFirstIntersection;
+    KGeoBag::KThreeVector fFirstIntersection;
     KGNavigableMeshElement* fIntersectedElement;
 };
 

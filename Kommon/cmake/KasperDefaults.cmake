@@ -63,6 +63,9 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
 
     message(STATUS "*** Kasper install path is: ${KASPER_INSTALL_DIR} [${CMAKE_INSTALL_LIBDIR}]")
 
+    # remove old bin/lib install files to avoid conflicts - do NOT touch config/log/scratch/...
+    install(CODE "file(REMOVE_RECURSE ${LIB_INSTALL_DIR} ${BIN_INSTALL_DIR})")
+
     # a temporary fix to Apple's historical exclusion of system includes
     if ( APPLE AND NOT CMAKE_INCLUDE_SYSTEM_FLAG_CXX)
         set (CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem ")
@@ -75,15 +78,14 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     message(STATUS "Using compiler ${COMPILER_ID} ${COMPILER_VERSION}")
 
     set(ROOT_FIND_QUIETLY TRUE)
+    set(HDF5_FIND_QUIETLY TRUE)
     set(Sphinx_FIND_QUIETLY TRUE)
     set(Doxygen_FIND_QUIETLY TRUE)
     set(Boost_FIND_QUIETLY TRUE)
     set(VTK_FIND_QUIETLY TRUE)
 
-    add_custom_target(reference)
-    add_custom_target(doc)
-    add_dependencies(doc reference)
-
+    add_custom_target(doc)        # full docs
+    add_custom_target(reference)  # submodule docs
 else()
     set(STANDALONE false)
 
@@ -91,8 +93,6 @@ else()
     set(MODULE_HEADER_DIRS)
     set(EXTERNAL_INCLUDE_DIRS)
 endif()
-
-set_property(GLOBAL PROPERTY MODULE_TARGETS)
 
 macro(kasper_set_version_numbers VERSION_VAR)
     if( NOT ${VERSION_VAR}_MINOR )
@@ -126,6 +126,9 @@ endmacro()
 if( ${PROJECT_NAME} STREQUAL Kasper )
     kasper_set_version_numbers(KASPER_VERSION)
     message(STATUS "Kasper version is v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
+
+    set_property(GLOBAL PROPERTY MODULE_TARGETS)
+    set_property(GLOBAL PROPERTY MODULE_DIRS)
 
     # git revision (if available)
     set(KASPER_GIT_REVISION "n/a")
@@ -164,6 +167,7 @@ if( ${PROJECT_NAME} STREQUAL Kasper )
 
 else()
     kasper_set_version_numbers(MODULE_VERSION)
+    set_property(GLOBAL APPEND PROPERTY MODULE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
     message(STATUS "Kasper module enabled: ${PROJECT_NAME} v${${PROJECT_NAME}_VERSION} (${${PROJECT_NAME}_VERSION_NUMERICAL})" )
 endif()
 
@@ -507,7 +511,7 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Reference/${DOXYGEN_FILE}
             WORKING_DIRECTORY ${REF_BUILD_DIR}
             COMMENT "Generating API documentation with Doxygen for ${PROJECT_NAME}"
-            VERBATIM
+            VERBATIM USES_TERMINAL
         )
         add_custom_command(TARGET reference-${PROJECT_NAME} POST_BUILD
             COMMAND ln -sf ${REF_BUILD_DIR}/html/index.html ${DOC_INSTALL_DIR}/${PROJECT_NAME}.html
@@ -515,6 +519,9 @@ macro(kasper_add_doc_reference DOXYGEN_FILE)
             COMMENT "Updating documentation symlinks for ${PROJECT_NAME}"
         )
         add_dependencies(reference reference-${PROJECT_NAME})
+        if( ${PROJECT_NAME} STREQUAL Kasper )
+            add_dependencies(doc reference-${PROJECT_NAME})
+        endif()
     endif(DOXYGEN_FOUND)
 endmacro()
 
@@ -537,6 +544,9 @@ macro(kasper_add_doc_reference_sphinx SPHINX_FILE)
             VERBATIM
         )
         add_dependencies(reference reference-${PROJECT_NAME})
+        if( ${PROJECT_NAME} STREQUAL Kasper )
+            add_dependencies(doc reference-${PROJECT_NAME})
+        endif()
     endif(SPHINX_FOUND)
 endmacro()
 
@@ -674,13 +684,12 @@ macro(kasper_find_vtk)
         find_package(Qt5Widgets QUIET)
     endif()
 
-    kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
-
     # VTK_INCLUDE_DIRS is sometimes incorrect (e.g. on Kalinka)
     if(EXISTS "/usr/include/vtk")
-        kasper_external_include_directories( /usr/include/vtk )
+        list(APPEND VTK_INCLUDE_DIRS "/usr/include/vtk")
     endif()
     if(EXISTS "/usr/local/include/vtk")
-        kasper_external_include_directories( /usr/local/include/vtk )
+        list(APPEND VTK_INCLUDE_DIRS "/usr/local/include/vtk")
     endif()
+    kasper_external_include_directories( ${VTK_INCLUDE_DIRS} )
 endmacro()

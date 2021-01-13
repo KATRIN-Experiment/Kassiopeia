@@ -14,7 +14,7 @@ KSTermMagnetron::KSTermMagnetron() :
     fJumpDirection(0)
 {}
 KSTermMagnetron::KSTermMagnetron(const KSTermMagnetron& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fMaxPhi(aCopy.fMaxPhi),
     fFirstStep(aCopy.fFirstStep),
     fPhiFirstStep(aCopy.fPhiFirstStep),
@@ -26,7 +26,7 @@ KSTermMagnetron* KSTermMagnetron::Clone() const
 {
     return new KSTermMagnetron(*this);
 }
-KSTermMagnetron::~KSTermMagnetron() {}
+KSTermMagnetron::~KSTermMagnetron() = default;
 
 void KSTermMagnetron::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

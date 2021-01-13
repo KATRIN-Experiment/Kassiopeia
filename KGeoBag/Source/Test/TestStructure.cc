@@ -10,7 +10,7 @@ class TestSurface
 {
   public:
     TestSurface() : fArea(0.) {}
-    virtual ~TestSurface() {}
+    virtual ~TestSurface() = default;
 
     double fArea;
 };
@@ -19,7 +19,7 @@ class TestSpace
 {
   public:
     TestSpace() : fVolume(0.) {}
-    virtual ~TestSpace() {}
+    virtual ~TestSpace() = default;
 
     double fVolume;
 };
@@ -28,11 +28,11 @@ class Test
 {
   public:
     typedef TestSurface Surface;
-    typedef TestSpace Space;
+    using Space = TestSpace;
 };
 
-typedef KGExtendedSpace<Test> KGTestSpace;
-typedef KGExtendedSurface<Test> KGTestSurface;
+using KGTestSpace = KGExtendedSpace<Test>;
+using KGTestSurface = KGExtendedSurface<Test>;
 
 }  // namespace KGeoBag
 
@@ -54,47 +54,47 @@ int main(int anArgc, char** anArgv)
     //    tCylinder->SetZ1( -0.1 );
     //    tCylinder->SetZ2( 0.25 );
 
-    KGVolume* tCylinder = NULL;
+    KGVolume* tCylinder = nullptr;
 
-    KGSpace* tRoot = new KGSpace(tCylinder);
+    auto* tRoot = new KGSpace(tCylinder);
 
     tRoot->AsExtension<Test>()->fVolume = 3.2;
     tRoot->SetName("root");
     tRoot->AddTag("all");
 
-    KGSpace* tLeft = new KGSpace(tCylinder);
+    auto* tLeft = new KGSpace(tCylinder);
     tLeft->AsExtension<Test>()->fVolume = 3.2;
     tLeft->SetName("left");
     tLeft->AddTag("all");
     tLeft->AddTag("active");
     tRoot->AddChildSpace(tLeft);
 
-    KGSpace* tLeftOne = new KGSpace(tCylinder);
+    auto* tLeftOne = new KGSpace(tCylinder);
     tLeftOne->SetName("left_one");
     tLeftOne->AddTag("all");
     tLeftOne->AddTag("active");
     tLeft->AddChildSpace(tLeftOne);
 
-    KGSpace* tLeftTwo = new KGSpace(tCylinder);
+    auto* tLeftTwo = new KGSpace(tCylinder);
     tLeftTwo->SetName("left_two");
     tLeftTwo->AddTag("all");
     tLeftTwo->AddTag("active");
     tLeft->AddChildSpace(tLeftTwo);
 
-    KGSpace* tRight = new KGSpace(tCylinder);
+    auto* tRight = new KGSpace(tCylinder);
     tRight->SetName("right");
     tRight->AddTag("all");
     tRight->AddTag("inactive");
     tRoot->AddChildSpace(tRight);
 
-    KGSpace* tRightOne = new KGSpace(tCylinder);
+    auto* tRightOne = new KGSpace(tCylinder);
     tRightOne->AsExtension<Test>()->fVolume = 3.2;
     tRightOne->SetName("right_one");
     tRightOne->AddTag("all");
     tRightOne->AddTag("inactive");
     tRight->AddChildSpace(tRightOne);
 
-    KGSpace* tRightTwo = new KGSpace(tCylinder);
+    auto* tRightTwo = new KGSpace(tCylinder);
     tRightTwo->AsExtension<Test>()->fVolume = 3.2;
     tRightTwo->SetName("right_two");
     tRightTwo->AddTag("all");

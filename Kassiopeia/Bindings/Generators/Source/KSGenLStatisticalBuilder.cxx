@@ -12,9 +12,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenLStatisticalBuilder::~KComplexElement() {}
+template<> KSGenLStatisticalBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenLStatisticalStructure = KSGenLStatisticalBuilder::Attribute<string>("name");
+STATICINT sKSGenLStatisticalStructure = KSGenLStatisticalBuilder::Attribute<std::string>("name");
 
 STATICINT sKSGenLStatistical = KSRootBuilder::ComplexElement<KSGenLStatistical>("ksgen_l_statistical");
 }  // namespace katrin

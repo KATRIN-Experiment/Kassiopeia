@@ -63,7 +63,7 @@ set (TREE_SOURCEFILES
 
 ##################################################
 
-add_library (KFMTree SHARED ${TREE_SOURCEFILES})
+add_library (KFMTree SHARED ${TREE_SOURCEFILES} ${TREE_HEADERFILES})
 target_link_libraries (KFMTree KFMCore KFMMath KFMMathUtilities KFMKernel KEMStructuredASCII)
 
 kasper_install_headers (${TREE_HEADERFILES})

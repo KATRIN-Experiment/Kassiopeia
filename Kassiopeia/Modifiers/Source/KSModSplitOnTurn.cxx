@@ -8,7 +8,7 @@ namespace Kassiopeia
 KSModSplitOnTurn::KSModSplitOnTurn() : fDirection(eForward | eBackward), fCurrentDotProduct(0.) {}
 
 KSModSplitOnTurn::KSModSplitOnTurn(const KSModSplitOnTurn& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fDirection(aCopy.fDirection),
     fCurrentDotProduct(aCopy.fCurrentDotProduct)
 {}
@@ -18,7 +18,7 @@ KSModSplitOnTurn* KSModSplitOnTurn::Clone() const
     return new KSModSplitOnTurn(*this);
 }
 
-KSModSplitOnTurn::~KSModSplitOnTurn() {}
+KSModSplitOnTurn::~KSModSplitOnTurn() = default;
 
 bool KSModSplitOnTurn::ExecutePreStepModification(KSParticle& /*anInitialParticle*/, KSParticleQueue& /*aQueue*/)
 {

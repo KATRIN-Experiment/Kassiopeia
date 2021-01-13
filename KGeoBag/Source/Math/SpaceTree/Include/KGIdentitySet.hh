@@ -30,7 +30,8 @@ class KGIdentitySet
         fIDSet = copyObject.fIDSet;
         fIsSorted = copyObject.fIsSorted;
     }
-    virtual ~KGIdentitySet(){};
+    virtual ~KGIdentitySet() = default;
+    ;
 
     unsigned int GetSize() const;
 

@@ -9,6 +9,7 @@
 #include "KElectricField.hh"
 
 using namespace KEMField;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -20,7 +21,7 @@ KSElectricKEMField* KSElectricKEMField::Clone() const
     return new KSElectricKEMField(*this);
 }
 
-KSElectricKEMField::~KSElectricKEMField() {}
+KSElectricKEMField::~KSElectricKEMField() = default;
 
 KSElectricKEMField::KSElectricKEMField(const KSElectricKEMField& aCopy) : KSComponent(aCopy), fField(aCopy.fField) {}
 
@@ -39,23 +40,22 @@ const KEMField::KElectricField* KSElectricKEMField::GetElectricField()
     return fField;
 }
 
-void KSElectricKEMField::CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+void KSElectricKEMField::CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                             double& aPotential)
 {
     aPotential = fField->Potential(aSamplePoint, aSampleTime);
 }
 
-void KSElectricKEMField::CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                        KGeoBag::KThreeVector& aField)
+void KSElectricKEMField::CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime,
+                                        KThreeVector& aField)
 {
     aField = fField->ElectricField(aSamplePoint, aSampleTime);
 }
 
-void KSElectricKEMField::CalculateFieldAndPotential(const KGeoBag::KThreeVector& aSamplePoint,
-                                                    const double& aSampleTime, KGeoBag::KThreeVector& aField,
-                                                    double& aPotential)
+void KSElectricKEMField::CalculateFieldAndPotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
+                                                    KThreeVector& aField, double& aPotential)
 {
-    std::pair<KThreeVector, double> potential_field_pair = fField->ElectricFieldAndPotential(aSamplePoint, aSampleTime);
+    std::pair<KFieldVector, double> potential_field_pair = fField->ElectricFieldAndPotential(aSamplePoint, aSampleTime);
     aPotential = potential_field_pair.second;
     aField = potential_field_pair.first;
 }

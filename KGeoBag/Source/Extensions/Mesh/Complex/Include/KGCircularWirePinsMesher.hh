@@ -13,8 +13,8 @@ class KGCircularWirePinsMesher : virtual public KGComplexMesher, public KGWrappe
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGCircularWirePinsMesher() {}
-    ~KGCircularWirePinsMesher() override {}
+    KGCircularWirePinsMesher() = default;
+    ~KGCircularWirePinsMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGCircularWirePins>* circularWirePinsSurface) override;

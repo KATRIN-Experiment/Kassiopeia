@@ -27,9 +27,9 @@ template<typename T> struct is_container
                                typename A::value_type* /*pv*/ = nullptr)
     {
 
-        typedef typename A::iterator iterator;
-        typedef typename A::const_iterator const_iterator;
-        typedef typename A::value_type value_type;
+        using iterator = typename A::iterator;
+        using const_iterator = typename A::const_iterator;
+        using value_type = typename A::value_type;
 
         return (std::is_same<decltype(pt->begin()), iterator>::value ||
                 std::is_same<decltype(pt->begin()), const_iterator>::value) &&

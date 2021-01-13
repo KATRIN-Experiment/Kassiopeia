@@ -15,14 +15,14 @@ STATICINT sKGQuadraticWireGridBuilderStructure =
     KGQuadraticWireGridBuilder::Attribute<bool>("add_outer_circle");
 
 STATICINT sKGQuadraticWireGridSurfaceBuilderStructure =
-    KGQuadraticWireGridSurfaceBuilder::Attribute<string>("name") +
+    KGQuadraticWireGridSurfaceBuilder::Attribute<std::string>("name") +
     KGQuadraticWireGridSurfaceBuilder::ComplexElement<KGQuadraticWireGrid>("quadratic_wire_grid");
 
 STATICINT sKGQuadraticWireGridSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGQuadraticWireGrid>>("quadratic_wire_grid_surface");
 
 STATICINT sKGQuadraticWireGridSpaceBuilderStructure =
-    KGQuadraticWireGridSpaceBuilder::Attribute<string>("name") +
+    KGQuadraticWireGridSpaceBuilder::Attribute<std::string>("name") +
     KGQuadraticWireGridSpaceBuilder::ComplexElement<KGQuadraticWireGrid>("quadratic_wire_grid");
 
 STATICINT sKGQuadraticWireGridSpaceBuilder =

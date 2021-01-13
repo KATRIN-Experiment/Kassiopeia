@@ -45,8 +45,10 @@ namespace KEMField
 class KFMMath
 {
   public:
-    KFMMath(){};
-    virtual ~KFMMath(){};
+    KFMMath() = default;
+    ;
+    virtual ~KFMMath() = default;
+    ;
 
     //factorial of integers up to 170 (overflow after this)
     static double Factorial(int arg);
@@ -200,7 +202,7 @@ class KFMMath
     //evaluate K_norm for all values of (l,m) from 0 up to and including l_max, using a pre-evaluated array
     //of the associated legendre polynomials evaluated at 0 (plm) and return results in val array
     //val array must have size (l_max+1)*(l_max+2)/2
-    static void K_norm_array(int l_max, double h, double* plm, double* val);
+    static void K_norm_array(int l_max, double h, const double* plm, double* val);
 
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -20,7 +20,7 @@ template<> inline bool KSGenPositionCylindricalCompositeBuilder::AddAttribute(KC
         return true;
     }
     if (aContainer->GetName() == "surface") {
-        KGSurface* tSurface = KGInterface::GetInstance()->RetrieveSurface(aContainer->AsReference<std::string>());
+        KGSurface* tSurface = KGInterface::GetInstance()->RetrieveSurface(aContainer->AsString());
         fObject->SetOrigin(tSurface->GetOrigin());
         fObject->SetXAxis(tSurface->GetXAxis());
         fObject->SetYAxis(tSurface->GetYAxis());
@@ -28,7 +28,7 @@ template<> inline bool KSGenPositionCylindricalCompositeBuilder::AddAttribute(KC
         return true;
     }
     if (aContainer->GetName() == "space") {
-        KGSpace* tSpace = KGInterface::GetInstance()->RetrieveSpace(aContainer->AsReference<std::string>());
+        KGSpace* tSpace = KGInterface::GetInstance()->RetrieveSpace(aContainer->AsString());
         fObject->SetOrigin(tSpace->GetOrigin());
         fObject->SetXAxis(tSpace->GetXAxis());
         fObject->SetYAxis(tSpace->GetYAxis());
@@ -36,15 +36,15 @@ template<> inline bool KSGenPositionCylindricalCompositeBuilder::AddAttribute(KC
         return true;
     }
     if (aContainer->GetName() == "r") {
-        fObject->SetRValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetRValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "phi") {
-        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "z") {
-        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

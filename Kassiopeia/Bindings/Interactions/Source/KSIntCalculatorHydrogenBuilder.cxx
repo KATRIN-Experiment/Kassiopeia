@@ -18,8 +18,8 @@ KSIntCalculatorHydrogenSet::KSIntCalculatorHydrogenSet() :
 {}
 KSIntCalculatorHydrogenSet::~KSIntCalculatorHydrogenSet()
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        delete (*tIt);
+    for (auto& calculator : fCalculators) {
+        delete calculator;
     }
 }
 
@@ -33,19 +33,19 @@ void KSIntCalculatorHydrogenSet::AddCalculator(KSIntCalculator* aCalculator)
 
 void KSIntCalculatorHydrogenSet::ReleaseCalculators(KSIntScattering* aScattering)
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        aScattering->AddCalculator(*tIt);
+    for (auto& calculator : fCalculators) {
+        aScattering->AddCalculator(calculator);
     }
     fCalculators.clear();
     return;
 }
 
-template<> KSIntCalculatorHydrogenSetBuilder::~KComplexElement() {}
+template<> KSIntCalculatorHydrogenSetBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenSetBuilder::Attribute<string>("name") +
+STATICINT sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenSetBuilder::Attribute<std::string>("name") +
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("elastic") +
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("excitation") +
                                               KSIntCalculatorHydrogenSetBuilder::Attribute<bool>("ionisation") +
-                                              KSIntCalculatorHydrogenSetBuilder::Attribute<string>("molecule");
+                                              KSIntCalculatorHydrogenSetBuilder::Attribute<std::string>("molecule");
 
 }  // namespace katrin

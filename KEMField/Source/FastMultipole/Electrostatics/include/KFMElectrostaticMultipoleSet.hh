@@ -29,11 +29,8 @@ class KFMElectrostaticMultipoleSet : public KFMScalarMultipoleExpansion
     {
         ;
     };
-    KFMElectrostaticMultipoleSet& operator=(const KFMElectrostaticMultipoleSet& copyObject)
-    {
-        KFMScalarMultipoleExpansion::operator=(copyObject);
-        return *this;
-    };
+    KFMElectrostaticMultipoleSet& operator=(const KFMElectrostaticMultipoleSet& copyObject) = default;
+    ;
 
     std::string ClassName() const override;
 

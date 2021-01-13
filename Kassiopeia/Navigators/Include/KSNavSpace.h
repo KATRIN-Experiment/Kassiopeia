@@ -3,7 +3,6 @@
 
 #include "KMathBracketingSolver.h"
 #include "KSSpaceNavigator.h"
-using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -33,7 +32,7 @@ class KSNavSpace : public KSComponentTemplate<KSNavSpace, KSSpaceNavigator>
 
   public:
     void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                             const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
+                             const KSParticle& aTrajectoryFinalParticle, const KGeoBag::KThreeVector& aTrajectoryCenter,
                              const double& aTrajectoryRadius, const double& aTrajectoryStep,
                              KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag) override;
     void ExecuteNavigation(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
@@ -47,28 +46,28 @@ class KSNavSpace : public KSComponentTemplate<KSNavSpace, KSSpaceNavigator>
     const KSSpace* fCurrentSpace;
 
     mutable KSSpace* fParentSpace;
-    KThreeVector fParentSpaceAnchor;
+    KGeoBag::KThreeVector fParentSpaceAnchor;
     double fParentSpaceDistance;
     bool fParentSpaceRecalculate;
 
     mutable KSSpace* fChildSpace;
-    KThreeVector fChildSpaceAnchor;
+    KGeoBag::KThreeVector fChildSpaceAnchor;
     double fChildSpaceDistance;
     bool fChildSpaceRecalculate;
 
     mutable KSSide* fParentSide;
-    KThreeVector fParentSideAnchor;
+    KGeoBag::KThreeVector fParentSideAnchor;
     double fParentSideDistance;
     bool fParentSideRecalculate;
 
     mutable KSSide* fChildSide;
-    KThreeVector fChildSideAnchor;
+    KGeoBag::KThreeVector fChildSideAnchor;
     double fChildSideDistance;
     bool fChildSideRecalculate;
 
     mutable KSSurface* fChildSurface;
     mutable KSSurface* fLastStepSurface;
-    KThreeVector fChildSurfaceAnchor;
+    KGeoBag::KThreeVector fChildSurfaceAnchor;
     double fChildSurfaceDistance;
     bool fChildSurfaceRecalculate;
 
@@ -78,7 +77,8 @@ class KSNavSpace : public KSComponentTemplate<KSNavSpace, KSSpaceNavigator>
     double SpaceIntersectionFunction(const double& anIntersection);
     double SurfaceIntersectionFunction(const double& anIntersection);
     double SideIntersectionFunction(const double& anIntersection);
-    KMathBracketingSolver fSolver;
+
+    katrin::KMathBracketingSolver fSolver;
     KSParticle fIntermediateParticle;
 };
 

@@ -17,7 +17,7 @@ template<> inline bool KSRootStepModifierBuilder::AddAttribute(KContainer* aCont
         return true;
     }
     if (aContainer->GetName() == "add_modifier") {
-        fObject->AddModifier(KToolbox::GetInstance().Get<KSStepModifier>(aContainer->AsReference<std::string>()));
+        fObject->AddModifier(KToolbox::GetInstance().Get<KSStepModifier>(aContainer->AsString()));
         return true;
     }
     return false;

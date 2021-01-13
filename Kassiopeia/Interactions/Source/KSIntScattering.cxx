@@ -9,6 +9,8 @@ using katrin::KRandom;
 #include <limits>
 using std::numeric_limits;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -21,7 +23,7 @@ KSIntScattering::KSIntScattering() :
     fEnhancement(1.)
 {}
 KSIntScattering::KSIntScattering(const KSIntScattering& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     KSComponentTemplate<KSIntScattering, KSSpaceInteraction>(aCopy),
     fSplit(aCopy.fSplit),
     fDensity(aCopy.fDensity),
@@ -34,14 +36,14 @@ KSIntScattering* KSIntScattering::Clone() const
 {
     return new KSIntScattering(*this);
 }
-KSIntScattering::~KSIntScattering()
-{
-    //        for( unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++ )
-    //        {
-    //            delete (fCalculators.at( tIndex ));
-    //        }
-    //        fCalculators.clear();
-}
+KSIntScattering::~KSIntScattering() = default;
+//{
+//        for( unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++ )
+//        {
+//            delete (fCalculators.at( tIndex ));
+//        }
+//        fCalculators.clear();
+//}
 
 
 void KSIntScattering::CalculateAverageCrossSection(const KSParticle& aTrajectoryInitialParticle,
@@ -206,7 +208,7 @@ void KSIntScattering::ClearDensity(KSIntDensity* aDensityCalculator)
 void KSIntScattering::AddCalculator(KSIntCalculator* aScatteringCalculator)
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator == aScatteringCalculator) {
@@ -224,7 +226,7 @@ void KSIntScattering::AddCalculator(KSIntCalculator* aScatteringCalculator)
 void KSIntScattering::RemoveCalculator(KSIntCalculator* aScatteringCalculator)
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator == aScatteringCalculator) {
@@ -248,7 +250,7 @@ void KSIntScattering::SetEnhancement(double anEnhancement)
 void KSIntScattering::InitializeComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -264,7 +266,7 @@ void KSIntScattering::InitializeComponent()
 void KSIntScattering::DeinitializeComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -280,7 +282,7 @@ void KSIntScattering::DeinitializeComponent()
 void KSIntScattering::ActivateComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -296,7 +298,7 @@ void KSIntScattering::ActivateComponent()
 void KSIntScattering::DeactivateComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -312,7 +314,7 @@ void KSIntScattering::DeactivateComponent()
 void KSIntScattering::PushUpdateComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -328,7 +330,7 @@ void KSIntScattering::PushUpdateComponent()
 void KSIntScattering::PushDeupdateComponent()
 {
     KSIntCalculator* tCalculator;
-    vector<KSIntCalculator*>::iterator tIt;
+    std::vector<KSIntCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {

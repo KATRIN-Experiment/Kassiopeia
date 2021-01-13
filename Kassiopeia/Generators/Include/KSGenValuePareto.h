@@ -4,7 +4,6 @@
 #include "KField.h"
 #include "KMathBracketingSolver.h"
 #include "KSGenValue.h"
-using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {

@@ -34,10 +34,12 @@ namespace KEMField
 template<typename ValueType> class KGeneralizedMinimalResidualState
 {
   public:
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
-    KGeneralizedMinimalResidualState(){};
-    virtual ~KGeneralizedMinimalResidualState(){};
+    KGeneralizedMinimalResidualState() = default;
+    ;
+    virtual ~KGeneralizedMinimalResidualState() = default;
+    ;
 
     static std::string Name()
     {

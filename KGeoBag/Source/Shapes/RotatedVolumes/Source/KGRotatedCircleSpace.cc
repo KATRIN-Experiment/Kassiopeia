@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGRotatedCircleSpace::Visitor::Visitor() {}
+template<> KGRotatedCircleSpace::Visitor::Visitor() = default;
 
-template<> KGRotatedCircleSpace::Visitor::~Visitor() {}
+template<> KGRotatedCircleSpace::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

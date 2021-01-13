@@ -28,7 +28,7 @@ class KOpenCLAction
 {
   public:
     KOpenCLAction(KOpenCLData& data, bool enabled = true);
-    virtual ~KOpenCLAction() {}
+    virtual ~KOpenCLAction() = default;
 
     virtual void Initialize();
 

@@ -22,7 +22,7 @@ class KGGenericSpaceRandom : virtual public KGShapeRandom, public KGVolume::Visi
 {
   public:
     KGGenericSpaceRandom() : KGShapeRandom() {}
-    ~KGGenericSpaceRandom() override {}
+    ~KGGenericSpaceRandom() override = default;
 
     /**
      * \brief Visitor function to dice the point inside

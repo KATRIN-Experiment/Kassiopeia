@@ -24,7 +24,8 @@ class KFMExternalIdentitySet : public KFMIdentitySet
 {
   public:
     KFMExternalIdentitySet() : KFMIdentitySet(){};
-    ~KFMExternalIdentitySet() override{};
+    ~KFMExternalIdentitySet() override = default;
+    ;
 
     //IO
     std::string ClassName() override

@@ -17,10 +17,10 @@ template<class XSystemType> class KSMathSym4 : public KSMathIntegrator<XSystemTy
 {
   public:
     typedef XSystemType SystemType;
-    typedef KSMathDifferentiator<SystemType> DifferentiatorType;
-    typedef typename SystemType::ValueType ValueType;
-    typedef typename SystemType::DerivativeType DerivativeType;
-    typedef typename SystemType::ErrorType ErrorType;
+    using DifferentiatorType = KSMathDifferentiator<SystemType>;
+    using ValueType = typename SystemType::ValueType;
+    using DerivativeType = typename SystemType::DerivativeType;
+    using ErrorType = typename SystemType::ErrorType;
 
   public:
     KSMathSym4();
@@ -43,9 +43,9 @@ template<class XSystemType> class KSMathSym4 : public KSMathIntegrator<XSystemTy
     static const double fV[KSMATHSYM4_STAGE];
 };
 
-template<class XSystemType> KSMathSym4<XSystemType>::KSMathSym4() {}
+template<class XSystemType> KSMathSym4<XSystemType>::KSMathSym4() = default;
 
-template<class XSystemType> KSMathSym4<XSystemType>::~KSMathSym4() {}
+template<class XSystemType> KSMathSym4<XSystemType>::~KSMathSym4() = default;
 
 template<class XSystemType>
 void KSMathSym4<XSystemType>::Integrate(double /*aTime*/, const DifferentiatorType& aTerm,

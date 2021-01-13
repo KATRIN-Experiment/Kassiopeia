@@ -8,7 +8,7 @@ namespace KEMField
 {
 double KElectrostaticQuadratureLineSegmentIntegrator::Potential_nNodes(const double* data, const KPosition& P,
                                                                        const unsigned short halfNoNodes,
-                                                                       const double* nodes, const double* weights) const
+                                                                       const double* nodes, const double* weights)
 {
     const double lineCenter[3] = {0.5 * (data[0] + data[3]), 0.5 * (data[1] + data[4]), 0.5 * (data[2] + data[5])};
 
@@ -60,10 +60,10 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential_nNodes(const dou
     return (0.25 * oneOverEps0 * sum * data[6]);
 }
 
-KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNodes(const double* data, const KPosition& P,
+KFieldVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNodes(const double* data, const KPosition& P,
                                                                                  const unsigned short halfNoNodes,
                                                                                  const double* nodes,
-                                                                                 const double* weights) const
+                                                                                 const double* weights)
 {
     const double lineCenter[3] = {0.5 * (data[0] + data[3]), 0.5 * (data[1] + data[4]), 0.5 * (data[2] + data[5])};
 
@@ -120,12 +120,12 @@ KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField_nNodes
         EField[l] = prefac * sum[l];
     }
 
-    return KThreeVector(EField[0], EField[1], EField[2]);
+    return KFieldVector(EField[0], EField[1], EField[2]);
 }
 
-std::pair<KThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential_nNodes(
+std::pair<KFieldVector, double> KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential_nNodes(
     const double* data, const KPosition& P, const unsigned short halfNoNodes, const double* nodes,
-    const double* weights) const
+    const double* weights)
 {
     const double lineCenter[3] = {0.5 * (data[0] + data[3]), 0.5 * (data[1] + data[4]), 0.5 * (data[2] + data[5])};
 
@@ -187,7 +187,7 @@ std::pair<KThreeVector, double> KElectrostaticQuadratureLineSegmentIntegrator::E
         EField[l] = prefac * sumField[l];
     }
     Phi = prefac * sumPhi;
-    return std::make_pair(KThreeVector(EField[0], EField[1], EField[2]), Phi);
+    return std::make_pair(KFieldVector(EField[0], EField[1], EField[2]), Phi);
 }
 
 double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegment* source, const KPosition& P) const
@@ -230,7 +230,7 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KLineSegme
 }
 
 
-KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KLineSegment* source,
+KFieldVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KLineSegment* source,
                                                                           const KPosition& P) const
 {
     // save geometry info on triangle into array, same convention as OpenCL implementation
@@ -270,7 +270,7 @@ KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const 
     return KElectrostaticAnalyticLineSegmentIntegrator::ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential(const KLineSegment* source,
                                                                          const KPosition& P) const
 {
@@ -315,30 +315,30 @@ double KElectrostaticQuadratureLineSegmentIntegrator::Potential(const KSymmetryG
                                                                 const KPosition& P) const
 {
     double potential = 0.;
-    for (auto it = source->begin(); it != source->end(); ++it)
-        potential += Potential(*it, P);
+    for (auto* it : *source)
+        potential += Potential(it, P);
     return potential;
 }
 
-KThreeVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source,
+KFieldVector KElectrostaticQuadratureLineSegmentIntegrator::ElectricField(const KSymmetryGroup<KLineSegment>* source,
                                                                           const KPosition& P) const
 {
-    KThreeVector electricField(0., 0., 0.);
-    for (auto it = source->begin(); it != source->end(); ++it)
-        electricField += ElectricField(*it, P);
+    KFieldVector electricField(0., 0., 0.);
+    for (auto* it : *source)
+        electricField += ElectricField(it, P);
     return electricField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticQuadratureLineSegmentIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KLineSegment>* source,
                                                                          const KPosition& P) const
 {
-    std::pair<KThreeVector, double> fieldAndPotential;
+    std::pair<KFieldVector, double> fieldAndPotential;
     double potential(0.);
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it) {
-        fieldAndPotential = ElectricFieldAndPotential(*it, P);
+    for (auto* it : *source) {
+        fieldAndPotential = ElectricFieldAndPotential(it, P);
         electricField += fieldAndPotential.first;
         potential += fieldAndPotential.second;
     }

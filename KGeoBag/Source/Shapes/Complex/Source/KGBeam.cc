@@ -6,8 +6,8 @@ namespace KGeoBag
 {
 KGBeam::~KGBeam()
 {
-    if (f2DTransform)
-        delete f2DTransform;
+
+    delete f2DTransform;
 }
 
 KGBeam* KGBeam::Clone() const
@@ -17,14 +17,14 @@ KGBeam* KGBeam::Clone() const
     b->fNDiscRad = fNDiscRad;
     b->fNDiscLong = fNDiscLong;
 
-    for (unsigned int i = 0; i < fRadialDisc.size(); i++)
-        b->fRadialDisc.push_back(fRadialDisc.at(i));
-    for (unsigned int i = 0; i < fStartCoords.size(); i++)
-        b->fStartCoords.push_back(fStartCoords.at(i));
-    for (unsigned int i = 0; i < fEndCoords.size(); i++)
-        b->fEndCoords.push_back(fEndCoords.at(i));
-    for (unsigned int i = 0; i < f2DCoords.size(); i++)
-        b->f2DCoords.push_back(f2DCoords.at(i));
+    for (unsigned int& i : fRadialDisc)
+        b->fRadialDisc.push_back(i);
+    for (const auto& coord : fStartCoords)
+        b->fStartCoords.push_back(coord);
+    for (const auto& coord : fEndCoords)
+        b->fEndCoords.push_back(coord);
+    for (auto& coord : f2DCoords)
+        b->f2DCoords.push_back(coord);
 
     b->f2DTransform = new KGCoordinateTransform(*f2DTransform);
 
@@ -55,8 +55,8 @@ void KGBeam::Initialize() const
         len += fUnit[i] * fUnit[i];
     }
 
-    for (unsigned int i = 0; i < 3; i++)
-        fUnit[i] /= len;
+    for (double& i : fUnit)
+        i /= len;
 
     // then, we compute the unit vector normal to the start coordinate plane
 
@@ -72,8 +72,8 @@ void KGBeam::Initialize() const
         len += fPlane1Norm[i] * fPlane1Norm[i];
     }
 
-    for (unsigned int i = 0; i < 3; i++)
-        fPlane1Norm[i] /= len;
+    for (double& i : fPlane1Norm)
+        i /= len;
 
     // then, we compute the unit vector normal to the end coordinate plane
 
@@ -89,8 +89,8 @@ void KGBeam::Initialize() const
         len += fPlane2Norm[i] * fPlane2Norm[i];
     }
 
-    for (unsigned int i = 0; i < 3; i++)
-        fPlane1Norm[i] /= len;
+    for (double& i : fPlane1Norm)
+        i /= len;
 
     // next, we compute the 2-dimensional coordinates for the polygon
     // cross-section
@@ -100,8 +100,8 @@ void KGBeam::Initialize() const
         x_loc[i] = fStartCoords.at(1).at(i) - fStartCoords.at(0).at(i);
         len += x_loc[i] * x_loc[i];
     }
-    for (unsigned int i = 0; i < 3; i++)
-        x_loc[i] /= len;
+    for (double& i : x_loc)
+        i /= len;
 
     double z_loc[3] = {fPlane1Norm[0], fPlane1Norm[1], fPlane1Norm[2]};
 
@@ -113,8 +113,8 @@ void KGBeam::Initialize() const
     f2DTransform = new KGCoordinateTransform(&(fStartCoords.at(0).at(0)), x_loc, y_loc, z_loc);
 
     double tmp[3];
-    for (unsigned int i = 0; i < fStartCoords.size(); i++) {
-        f2DTransform->ConvertToLocalCoords(&(fStartCoords.at(i).at(0)), tmp, false);
+    for (const auto& coord : fStartCoords) {
+        f2DTransform->ConvertToLocalCoords(&(coord.at(0)), tmp, false);
         std::vector<double> tmpVec;
         tmpVec.push_back(tmp[0]);
         tmpVec.push_back(tmp[1]);
@@ -126,9 +126,9 @@ void KGBeam::Initialize() const
     SetRadialDiscretization();
 }
 
-void KGBeam::AddStartLine(double p1[3], double p2[3])
+void KGBeam::AddStartLine(double p1[3], const double p2[3])
 {
-    if (fStartCoords.size() == 0) {
+    if (fStartCoords.empty()) {
         std::vector<double> tmp(3);
         for (unsigned int i = 0; i < 3; i++)
             tmp[i] = p1[i];
@@ -149,9 +149,9 @@ void KGBeam::AddStartLine(double p1[3], double p2[3])
     fStartCoords.push_back(tmp);
 }
 
-void KGBeam::AddEndLine(double p1[3], double p2[3])
+void KGBeam::AddEndLine(double p1[3], const double p2[3])
 {
-    if (fEndCoords.size() == 0) {
+    if (fEndCoords.empty()) {
         std::vector<double> tmp(3);
         for (unsigned int i = 0; i < 3; i++)
             tmp[i] = p1[i];
@@ -191,8 +191,8 @@ void KGBeam::SetRadialDiscretization() const
         totalLength += len;
     }
 
-    for (unsigned int i = 0; i < lengths.size(); i++) {
-        auto radDisc = (unsigned int) (lengths.at(i) * fNDiscRad / totalLength);
+    for (double length : lengths) {
+        auto radDisc = (unsigned int) (length * fNDiscRad / totalLength);
         if (radDisc < 1)
             radDisc = 1;
         fRadialDisc.push_back(radDisc);

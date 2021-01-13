@@ -7,12 +7,12 @@ namespace Kassiopeia
 {
 
 KSRootWriter::KSRootWriter() : fWriters(128) {}
-KSRootWriter::KSRootWriter(const KSRootWriter& aCopy) : KSComponent(), fWriters(aCopy.fWriters) {}
+KSRootWriter::KSRootWriter(const KSRootWriter& aCopy) : KSComponent(aCopy), fWriters(aCopy.fWriters) {}
 KSRootWriter* KSRootWriter::Clone() const
 {
     return new KSRootWriter(*this);
 }
-KSRootWriter::~KSRootWriter() {}
+KSRootWriter::~KSRootWriter() = default;
 
 void KSRootWriter::AddWriter(KSWriter* aWriter)
 {

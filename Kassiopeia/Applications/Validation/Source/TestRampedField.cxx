@@ -103,9 +103,9 @@ int main(int argc, char** argv)
         tRootElectricField->Activate();
     }
 
-    KThreeVector tPoint, tMagneticPotential, tElectricField, tMagneticField;
+    KGeoBag::KThreeVector tPoint, tMagneticPotential, tElectricField, tMagneticField;
     double tElectricPotential;
-    KThreeMatrix tMagneticGradient;
+    KGeoBag::KThreeMatrix tMagneticGradient;
 
     // initialize root
     TApplication tApplication("TestRampedField", nullptr, nullptr);

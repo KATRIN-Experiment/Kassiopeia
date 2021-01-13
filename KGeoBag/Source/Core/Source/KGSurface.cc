@@ -6,20 +6,17 @@ using namespace std;
 namespace KGeoBag
 {
 
-KGSurface::Visitor::Visitor() {}
-KGSurface::Visitor::~Visitor() {}
+KGSurface::Visitor::Visitor() = default;
+KGSurface::Visitor::~Visitor() = default;
 
 KGSurface::KGSurface() :
-    fExtensions(),
     fParent(nullptr),
     fOrigin(KThreeVector::sZero),
     fXAxis(KThreeVector::sXUnit),
     fYAxis(KThreeVector::sYUnit),
-    fZAxis(KThreeVector::sZUnit),
-    fArea()
+    fZAxis(KThreeVector::sZUnit)
 {}
 KGSurface::KGSurface(KGArea* anArea) :
-    fExtensions(),
     fParent(nullptr),
     fOrigin(KThreeVector::sZero),
     fXAxis(KThreeVector::sXUnit),
@@ -86,23 +83,33 @@ std::string KGSurface::GetPath() const
 void KGSurface::Transform(const KTransformation* aTransform)
 {
     //transform the local frame
-    coremsg_debug("starting transformation on surface <" << GetName() << ">" << eom;)
-        coremsg_debug("transformation has rotation of " << aTransform->GetRotation() << ret;)
-            coremsg_debug("and displacement of " << aTransform->GetDisplacement() << eom;)
+    coremsg_debug("starting transformation on surface <" << GetName() << ">" << eom);
+    coremsg_debug("transformation has rotation of " << aTransform->GetRotation() << ret);
+    coremsg_debug("and displacement of " << aTransform->GetDisplacement() << eom);
 
-                coremsg_debug("applying transformation on origin " << fOrigin << eom;) aTransform->Apply(fOrigin);
-    coremsg_debug("transformation on origin done, new value " << fOrigin << eom;)
+    coremsg_debug("applying transformation on origin " << fOrigin << eom);
+    aTransform->Apply(fOrigin);
+    coremsg_debug("transformation on origin done, new value " << fOrigin << eom);
 
-        coremsg_debug("applying rotation on x axis " << fXAxis << eom;) aTransform->ApplyRotation(fXAxis);
-    coremsg_debug("rotation on x axis done, new value " << fXAxis << eom;)
+    coremsg_debug("applying rotation on x axis " << fXAxis << eom);
+    aTransform->ApplyRotation(fXAxis);
+    coremsg_debug("rotation on x axis done, new value " << fXAxis << eom);
 
-        coremsg_debug("applying rotation on y axis " << fYAxis << eom;) aTransform->ApplyRotation(fYAxis);
-    coremsg_debug("rotation on y axis done, new value " << fYAxis << eom;)
+    coremsg_debug("applying rotation on y axis " << fYAxis << eom);
+    aTransform->ApplyRotation(fYAxis);
+    coremsg_debug("rotation on y axis done, new value " << fYAxis << eom);
 
-        coremsg_debug("applying rotation on z axis " << fZAxis << eom;) aTransform->ApplyRotation(fZAxis);
-    coremsg_debug("rotation on z axis done, new value " << fZAxis << eom;)
+    coremsg_debug("applying rotation on z axis " << fZAxis << eom);
+    aTransform->ApplyRotation(fZAxis);
+    coremsg_debug("rotation on z axis done, new value " << fZAxis << eom);
 
-        return;
+#ifdef KGeoBag_ENABLE_DEBUG
+    double tEulerAlpha, tEulerBeta, tEulerGamma;
+    aTransform->GetRotation().GetEulerAnglesInDegrees(tEulerAlpha, tEulerBeta, tEulerGamma);
+    coremsg_debug("new euler angles are " << tEulerAlpha << " " << tEulerBeta << " " << tEulerGamma << eom);
+#endif
+
+    return;
 }
 
 const KThreeVector& KGSurface::GetOrigin() const

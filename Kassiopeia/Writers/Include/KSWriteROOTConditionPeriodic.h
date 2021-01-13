@@ -44,7 +44,7 @@ class KSWriteROOTConditionPeriodic :
     {
         return new KSWriteROOTConditionPeriodic(*this);
     }
-    ~KSWriteROOTConditionPeriodic() override {}
+    ~KSWriteROOTConditionPeriodic() override = default;
 
     void CalculateWriteCondition(bool& aFlag) override
     {

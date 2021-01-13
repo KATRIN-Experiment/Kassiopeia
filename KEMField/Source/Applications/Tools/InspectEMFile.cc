@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     static const char* optString = "h";
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
     std::string inFileName = argv[optind];
 
-    std::string suffix = inFileName.substr(inFileName.find_last_of("."), std::string::npos);
+    std::string suffix = inFileName.substr(inFileName.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }

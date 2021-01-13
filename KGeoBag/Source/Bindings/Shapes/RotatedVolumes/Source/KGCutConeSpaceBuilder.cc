@@ -11,7 +11,7 @@ namespace katrin
 STATICINT sKGCutConeSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGCutConeSpace>("cut_cone_space");
 
 STATICINT sKGCutConeSpaceBuilderStructure =
-    KGCutConeSpaceBuilder::Attribute<string>("name") + KGCutConeSpaceBuilder::Attribute<double>("z1") +
+    KGCutConeSpaceBuilder::Attribute<std::string>("name") + KGCutConeSpaceBuilder::Attribute<double>("z1") +
     KGCutConeSpaceBuilder::Attribute<double>("z2") + KGCutConeSpaceBuilder::Attribute<double>("r1") +
     KGCutConeSpaceBuilder::Attribute<double>("r2") +
     KGCutConeSpaceBuilder::Attribute<unsigned int>("longitudinal_mesh_count") +

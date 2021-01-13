@@ -55,38 +55,8 @@ KSTrajExactSpinParticle::KSTrajExactSpinParticle() :
     fGetMagneticGradientPtr(&KSTrajExactSpinParticle::RecalculateMagneticGradient),
     fGetElectricPotentialPtr(&KSTrajExactSpinParticle::RecalculateElectricPotential)
 {}
-KSTrajExactSpinParticle::KSTrajExactSpinParticle(const KSTrajExactSpinParticle& aParticle) :
-    KSMathArray<12>(aParticle),
-    fTime(aParticle.fTime),
-    fLength(aParticle.fLength),
-    fPosition(aParticle.fPosition),
-    fMomentum(aParticle.fMomentum),
-    fVelocity(aParticle.fVelocity),
-    fSpin0(aParticle.fSpin0),
-    fSpin(aParticle.fSpin),
-    fLorentzFactor(aParticle.fLorentzFactor),
-    fKineticEnergy(aParticle.fKineticEnergy),
-
-    fMagneticField(aParticle.fMagneticField),
-    fElectricField(aParticle.fElectricField),
-    fMagneticGradient(aParticle.fMagneticGradient),
-    fElectricPotential(aParticle.fElectricPotential),
-
-    fGuidingCenter(aParticle.fGuidingCenter),
-    fLongMomentum(aParticle.fLongMomentum),
-    fTransMomentum(aParticle.fTransMomentum),
-    fLongVelocity(aParticle.fLongVelocity),
-    fTransVelocity(aParticle.fTransVelocity),
-    fCyclotronFrequency(aParticle.fCyclotronFrequency),
-    fSpinPrecessionFrequency(aParticle.fSpinPrecessionFrequency),
-    fOrbitalMagneticMoment(aParticle.fOrbitalMagneticMoment),
-
-    fGetMagneticFieldPtr(aParticle.fGetMagneticFieldPtr),
-    fGetElectricFieldPtr(aParticle.fGetElectricFieldPtr),
-    fGetMagneticGradientPtr(aParticle.fGetMagneticGradientPtr),
-    fGetElectricPotentialPtr(aParticle.fGetElectricPotentialPtr)
-{}
-KSTrajExactSpinParticle::~KSTrajExactSpinParticle() {}
+KSTrajExactSpinParticle::KSTrajExactSpinParticle(const KSTrajExactSpinParticle&) = default;
+KSTrajExactSpinParticle::~KSTrajExactSpinParticle() = default;
 
 //**********
 //assignment
@@ -292,17 +262,17 @@ const double& KSTrajExactSpinParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KThreeVector& KSTrajExactSpinParticle::GetPosition() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KThreeVector& KSTrajExactSpinParticle::GetMomentum() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetMomentum() const
 {
     fMomentum.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentum;
 }
-const KThreeVector& KSTrajExactSpinParticle::GetVelocity() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -312,7 +282,7 @@ const double& KSTrajExactSpinParticle::GetSpin0() const
     fSpin0 = fData[8];
     return fSpin0;
 }
-const KThreeVector& KSTrajExactSpinParticle::GetSpin() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetSpin() const
 {
     fSpin.SetComponents(fData[9], fData[10], fData[11]);
     return fSpin;
@@ -329,17 +299,17 @@ const double& KSTrajExactSpinParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KThreeVector& KSTrajExactSpinParticle::GetMagneticField() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KThreeVector& KSTrajExactSpinParticle::GetElectricField() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KThreeMatrix& KSTrajExactSpinParticle::GetMagneticGradient() const
+const KGeoBag::KThreeMatrix& KSTrajExactSpinParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
@@ -350,7 +320,7 @@ const double& KSTrajExactSpinParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KThreeVector& KSTrajExactSpinParticle::GetGuidingCenter() const
+const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition() + (1. / (GetCharge() * GetMagneticField().MagnitudeSquared())) *
                                          (GetMomentum().Cross(GetMagneticField()));

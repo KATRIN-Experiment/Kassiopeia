@@ -9,10 +9,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntDecayCalculatorDeathConstRateBuilder::~KComplexElement() {}
+template<> KSIntDecayCalculatorDeathConstRateBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntDecayCalculatorDeathConstRateBuilderStructure =
-    KSIntDecayCalculatorDeathConstRateBuilder::Attribute<string>("name") +
+    KSIntDecayCalculatorDeathConstRateBuilder::Attribute<std::string>("name") +
     KSIntDecayCalculatorDeathConstRateBuilder::Attribute<double>("life_time") +
     KSIntDecayCalculatorDeathConstRateBuilder::Attribute<long long>("target_pid") +
     KSIntDecayCalculatorDeathConstRateBuilder::Attribute<long long>("min_pid") +

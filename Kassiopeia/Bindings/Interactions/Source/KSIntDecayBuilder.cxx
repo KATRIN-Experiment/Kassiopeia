@@ -16,14 +16,14 @@ using namespace std;
 namespace katrin
 {
 
-KSIntDecayCalculatorSet::KSIntDecayCalculatorSet() {}
-KSIntDecayCalculatorSet::~KSIntDecayCalculatorSet() {}
+KSIntDecayCalculatorSet::KSIntDecayCalculatorSet() = default;
+KSIntDecayCalculatorSet::~KSIntDecayCalculatorSet() = default;
 
-template<> KSIntDecayBuilder::~KComplexElement() {}
+template<> KSIntDecayBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntDecayStructure =
-    KSIntDecayBuilder::Attribute<string>("name") + KSIntDecayBuilder::Attribute<string>("calculator") +
-    KSIntDecayBuilder::Attribute<string>("calculators") + KSIntDecayBuilder::Attribute<double>("enhancement") +
+    KSIntDecayBuilder::Attribute<std::string>("name") + KSIntDecayBuilder::Attribute<std::string>("calculator") +
+    KSIntDecayBuilder::Attribute<std::string>("calculators") + KSIntDecayBuilder::Attribute<double>("enhancement") +
     KSIntDecayBuilder::ComplexElement<KSIntDecayCalculatorDeathConstRate>("decay_death_const_rate") +
     KSIntDecayBuilder::ComplexElement<KSIntDecayCalculatorGlukhovSpontaneous>("decay_glukhov_spontaneous") +
     KSIntDecayBuilder::ComplexElement<KSIntDecayCalculatorGlukhovIonisation>("decay_glukhov_ionisation") +

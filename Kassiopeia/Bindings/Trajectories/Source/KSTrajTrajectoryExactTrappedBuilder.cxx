@@ -17,10 +17,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryExactTrappedBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryExactTrappedBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryExactTrappedStructure =
-    KSTrajTrajectoryExactTrappedBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryExactTrappedBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryExactTrappedBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryExactTrappedBuilder::ComplexElement<KSTrajIntegratorSym4>("integrator_sym4") +
     KSTrajTrajectoryExactTrappedBuilder::ComplexElement<KSTrajIntegratorRK8>("integrator_rk8") +

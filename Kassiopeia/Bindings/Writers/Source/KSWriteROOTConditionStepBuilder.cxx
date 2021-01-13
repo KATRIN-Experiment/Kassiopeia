@@ -8,12 +8,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSWriteROOTConditionStepBuilder::~KComplexElement() {}
+template<> KSWriteROOTConditionStepBuilder::~KComplexElement() = default;
 
-STATICINT sKSWriteROOTConditionStepStructure = KSWriteROOTConditionStepBuilder::Attribute<string>("name") +
+STATICINT sKSWriteROOTConditionStepStructure = KSWriteROOTConditionStepBuilder::Attribute<std::string>("name") +
                                                KSWriteROOTConditionStepBuilder::Attribute<int>("nth_step") +
-                                               KSWriteROOTConditionStepBuilder::Attribute<string>("group") +
-                                               KSWriteROOTConditionStepBuilder::Attribute<string>("parent");
+                                               KSWriteROOTConditionStepBuilder::Attribute<std::string>("group") +
+                                               KSWriteROOTConditionStepBuilder::Attribute<std::string>("parent");
 
 
 STATICINT sKSWriteROOTConditionStep =

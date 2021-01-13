@@ -2,7 +2,12 @@
 
 #include "KInitializationMessage.hh"
 
+// use TinyExpr for fast & simple evaluations
+#include "tinyexpr.h"
+
+// use ROOT Formula for advanced expressions (but it is slow)
 #include <TFormula.h>
+
 #include <cstdlib>
 #include <iomanip>
 #include <memory>
@@ -23,6 +28,74 @@ const string KFormulaProcessor::fGreaterEqual = string("ge");
 const string KFormulaProcessor::fLessEqual = string("le");
 const string KFormulaProcessor::fModulo = string("mod");
 
+bool KFormulaProcessor::EvaluateTinyExpression(const std::string& tExpr, double& tResult)
+{
+    string tSimpleExpr = tExpr;
+
+    // replace some ROOT::TMath functions by STL equivalents
+    const vector<pair<string,string>> tStandardFunctions = {
+        // standard functions
+        {"TMath::Abs", "fabs"},
+        {"TMath::ACos", "acos"},
+        {"TMath::ASin", "asin"},
+        {"TMath::ATan", "atan"},
+        {"TMath::ATan2", "atan2"},
+        {"TMath::Ceil", "ceil"},
+        {"TMath::Cos", "cos"},
+        {"TMath::CosH", "cosh"},
+        {"TMath::Exp", "exp"},
+        {"TMath::Floor", "floor"},
+        {"TMath::Log", "ln"},
+        {"TMath::Log10", "log10"},
+        {"TMath::Pow", "pow"},
+        {"TMath::Sin", "sin"},
+        {"TMath::SinH", "sinh"},
+        {"TMath::Tan", "tan"},
+        {"TMath::TanH", "tanh"},
+        // additional constants (provided by TinyExpr)
+        {"TMath::Pi()", "pi"},
+        {"TMath::E()", "e"},
+    };
+
+    for (auto & func : tStandardFunctions) {
+        while (tSimpleExpr.find(func.first) != string::npos) {
+            tSimpleExpr.replace(tSimpleExpr.find(func.first), func.first.length(), func.second);
+        }
+    }
+
+#ifdef Kommon_ENABLE_DEBUG
+    if (tSimpleExpr != tExpr)
+        initmsg(eDebug) << "formula '" << tExpr << "' simplifies to '" << tSimpleExpr << "'" << eom;
+#endif
+
+    // NOTE: It would be nice if TinyExpr supported logical operators, but for new we have to fall back to ROOT for that.
+
+    const double x = 0;
+    const te_variable tVars[] = {{"x", &x, TE_VARIABLE, nullptr}};
+
+    te_expr* expr = te_compile(tSimpleExpr.c_str(), tVars, 1, nullptr);
+
+    if (expr) {
+        tResult = te_eval(expr);
+        initmsg_debug("formula '" << tSimpleExpr << "' evaluates to " << tResult << " (via TinyExpr)" << eom);
+        te_free(expr);
+        return true;
+    }
+
+    return false;
+}
+
+bool KFormulaProcessor::EvaluateRootExpression(const std::string& tExpr, double& tResult)
+{
+    if (fFormulaParser->Compile(tExpr.c_str()) == 0) {
+        tResult = fFormulaParser->Eval(0.);
+        initmsg_debug("formula '" << tExpr << "' evaluates to " << tResult << " (via ROOT::TFormula)" << eom);
+        fFormulaParser->Clear();
+        return true;
+    }
+
+    return false;
+}
 
 KFormulaProcessor::KFormulaProcessor()
 {
@@ -89,7 +162,7 @@ void KFormulaProcessor::Evaluate(KToken* aToken)
                 tBufferStack.top() += tBuffer;
                 tBufferStack.top() += ")";
             }
-            else {
+            else if (! tBuffer.empty()) {
                 //conversions for logical operations
                 while (tBuffer.find(fGreaterEqual) != string::npos) {
                     tBuffer.replace(tBuffer.find(fGreaterEqual), fGreaterEqual.length(), string(">="));
@@ -114,15 +187,16 @@ void KFormulaProcessor::Evaluate(KToken* aToken)
                     tBuffer.replace(tBuffer.find(fModulo), fModulo.length(), string("%"));
                 }
 
-                //TFormula formulaParser("(anonymous)", tBuffer.c_str());
-                //tResultConverter.str("");
-                //tResultConverter << std::setprecision( 15 ) << formulaParser.Eval( 0.0 );
+                double tResult;
 
-                fFormulaParser->Compile(tBuffer.c_str());
+                if (! EvaluateTinyExpression(tBuffer, tResult)) {
+                    if (! EvaluateRootExpression(tBuffer, tResult)) {
+                        initmsg(eError) << "could not evaluate formula '" << tBuffer << "'" << eom;
+                    }
+                }
+
                 tResultConverter.str("");
-                tResultConverter << std::setprecision(15) << fFormulaParser->Eval(0.0);
-                fFormulaParser->Clear();
-
+                tResultConverter << std::setprecision(15) << tResult;
                 tBuffer = tResultConverter.str();
                 tBufferStack.top() += tBuffer;
             }

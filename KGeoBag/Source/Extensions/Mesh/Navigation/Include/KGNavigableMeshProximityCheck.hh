@@ -48,14 +48,14 @@ class KGNavigableMeshProximityCheck : public KGNodeActor<KGMeshNavigationNode>
         fContainer = container;
     };
 
-    void SetPointAndRadius(const KThreeVector& point, double radius);
+    void SetPointAndRadius(const KGeoBag::KThreeVector& point, double radius);
     bool SphereIntersectsMesh() const
     {
         return fSphereIntersectsMesh;
     };
 
-    bool BallIntersectsCube(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube) const;
-    bool CubeEnclosedByBall(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube) const;
+    static bool BallIntersectsCube(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube);
+    static bool CubeEnclosedByBall(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube);
 
     void ApplyAction(KGMeshNavigationNode* node) override;
 
@@ -82,7 +82,7 @@ class KGNavigableMeshProximityCheck : public KGNodeActor<KGMeshNavigationNode>
     static const double fCubeLengthToRadius;
 
     //parameters of the line segment
-    KThreeVector fPoint;
+    KGeoBag::KThreeVector fPoint;
     double fRadius;
     KGBall<KGMESH_DIM> fBall;
 

@@ -48,6 +48,11 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
         return fVerbosityLevel;
     }
 
+    const KXMLTokenizer* GetContext() const
+    {
+        return fTokenizer;
+    }
+
     KXMLTokenizer* Configure(int argc = 0, char** argv = nullptr, bool processConfig = true);
 
     void UpdateVariables(const KArgumentList& args);

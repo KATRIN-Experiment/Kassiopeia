@@ -6,6 +6,8 @@ using katrin::KRandom;
 
 #include "KConst.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -18,7 +20,7 @@ KSIntSurfaceUCN::KSIntSurfaceUCN() :
     fExpThetaCoef(0.)
 {}
 KSIntSurfaceUCN::KSIntSurfaceUCN(const KSIntSurfaceUCN& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEta(aCopy.fEta),
     fAlpha(aCopy.fAlpha),
     fRealOpticalPotential(aCopy.fRealOpticalPotential),
@@ -30,7 +32,7 @@ KSIntSurfaceUCN* KSIntSurfaceUCN::Clone() const
 {
     return new KSIntSurfaceUCN(*this);
 }
-KSIntSurfaceUCN::~KSIntSurfaceUCN() {}
+KSIntSurfaceUCN::~KSIntSurfaceUCN() = default;
 
 void KSIntSurfaceUCN::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                          KSParticleQueue& aQueue)
@@ -123,7 +125,7 @@ void KSIntSurfaceUCN::ExecuteReflection(const KSParticle& anInitialParticle, KSP
     double tValueMin = ValueFunction(-thetaIn);
     double tValueMax = ValueFunction(katrin::KConst::Pi() / 2 - thetaIn);
     double tValue = KRandom::GetInstance().Uniform(tValueMin, tValueMax);
-    fSolver.Solve(KMathBracketingSolver::eBrent,
+    fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                   this,
                   &KSIntSurfaceUCN::ValueFunction,
                   tValue,

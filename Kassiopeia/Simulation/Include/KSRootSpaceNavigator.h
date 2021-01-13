@@ -6,7 +6,6 @@
 #include "KSSpaceNavigator.h"
 #include "KSStep.h"
 #include "KSTrajectory.h"
-using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {
@@ -25,7 +24,7 @@ class KSRootSpaceNavigator : public KSComponentTemplate<KSRootSpaceNavigator, KS
 
   protected:
     void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                             const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
+                             const KSParticle& aTrajectoryFinalParticle, const KGeoBag::KThreeVector& aTrajectoryCenter,
                              const double& aTrajectoryRadius, const double& aTrajectoryStep,
                              KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag) override;
     void ExecuteNavigation(const KSParticle& anNavigationParticle, KSParticle& aFinalParticle,

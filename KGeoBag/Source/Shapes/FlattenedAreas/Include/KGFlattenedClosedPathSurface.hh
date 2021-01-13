@@ -50,7 +50,12 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
         fFlattenedMeshCount(8),
         fFlattenedMeshPower(1.)
     {}
-    ~KGFlattenedClosedPathSurface() override {}
+    ~KGFlattenedClosedPathSurface() override = default;
+
+    static std::string Name()
+    {
+        return "flattened_" + XPathType::Name() + "_surface";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -125,7 +130,7 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KThreeVector& aPoint) const override
+    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
     {
         double tZ = aPoint.Z();
 
@@ -136,7 +141,7 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
             return false;
         }
     }
-    KThreeVector AreaPoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
 
@@ -148,11 +153,11 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
             tXYNearest = tXYPoint;
         }
 
-        return KThreeVector(tXYNearest.X(), tXYNearest.Y(), fZ);
+        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), fZ);
     }
-    KThreeVector AreaNormal(const KThreeVector& /*aPoint*/) const override
+    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& /*aPoint*/) const override
     {
-        return KThreeVector(0., 0., fSign);
+        return KGeoBag::KThreeVector(0., 0., fSign);
     }
 
   private:

@@ -3,7 +3,7 @@
 namespace KEMField
 {
 
-const KFMNamedScalarData* KFMNamedScalarDataCollection::GetDataWithName(std::string name) const
+const KFMNamedScalarData* KFMNamedScalarDataCollection::GetDataWithName(const std::string& name) const
 {
     unsigned int n = fData.size();
     for (unsigned int i = 0; i < n; i++) {
@@ -15,7 +15,7 @@ const KFMNamedScalarData* KFMNamedScalarDataCollection::GetDataWithName(std::str
     return nullptr;
 }
 
-KFMNamedScalarData* KFMNamedScalarDataCollection::GetDataWithName(std::string name)
+KFMNamedScalarData* KFMNamedScalarDataCollection::GetDataWithName(const std::string& name)
 {
     unsigned int n = fData.size();
     for (unsigned int i = 0; i < n; i++) {

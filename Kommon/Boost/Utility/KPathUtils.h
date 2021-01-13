@@ -126,10 +126,12 @@ inline std::vector<std::string> KPathUtils::ListFilesRecursive(const std::string
 
 inline bool KPathUtils::MakeDirectory(const std::string& aPath)
 {
-    boost::filesystem::path tPath(aPath);
-    if (tPath.empty()) {
+    if (aPath.empty())
         return false;
-    }
+
+    boost::filesystem::path tPath(aPath);
+    if (tPath.empty())
+        return false;  // invalid path
 
     if (boost::filesystem::exists(tPath)) {
         if (!boost::filesystem::is_directory(tPath)) {
@@ -141,7 +143,13 @@ inline bool KPathUtils::MakeDirectory(const std::string& aPath)
     }
 
     utilmsg_debug("creating directory <" << tPath.string() << ">" << eom);
-    return boost::filesystem::create_directory(tPath);
+    try {
+        return boost::filesystem::create_directory(tPath);
+    }
+    catch (boost::filesystem::filesystem_error& e) {
+        utilmsg(eWarning) << "could not create directory <" << tPath.string() << ">" << eom;
+        return false;
+    }
 }
 
 }  // namespace katrin

@@ -26,7 +26,7 @@ template<typename ValueType> class KVTKIterationPlotter : public KIterativeSolve
     {
         KIterativeSolver<ValueType>::Visitor::Interval(i);
     }
-    virtual ~KVTKIterationPlotter() {}
+    virtual ~KVTKIterationPlotter() = default;
 
     void InitializePlot();
     void CreatePlot();

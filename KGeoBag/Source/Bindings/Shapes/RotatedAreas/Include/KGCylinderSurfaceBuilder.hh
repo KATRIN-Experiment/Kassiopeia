@@ -10,7 +10,7 @@ namespace katrin
 
 typedef KComplexElement<KGCylinderSurface> KGCylinderSurfaceBuilder;
 
-template<> bool KGCylinderSurfaceBuilder::AddAttribute(KContainer* anAttribute)
+template<> inline bool KGCylinderSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
     if (anAttribute->GetName() == "name") {
         anAttribute->CopyTo(fObject, &KNamed::SetName);

@@ -12,9 +12,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyBetaDecayBuilder::~KComplexElement() {}
+template<> KSGenEnergyBetaDecayBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyBetaDecayStructure = KSGenEnergyBetaDecayBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyBetaDecayStructure = KSGenEnergyBetaDecayBuilder::Attribute<std::string>("name") +
                                            KSGenEnergyBetaDecayBuilder::Attribute<int>("daughter_z") +
                                            KSGenEnergyBetaDecayBuilder::Attribute<int>("nmax") +
                                            KSGenEnergyBetaDecayBuilder::Attribute<double>("endpoint_ev") +

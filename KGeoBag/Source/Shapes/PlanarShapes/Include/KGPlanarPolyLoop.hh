@@ -6,7 +6,6 @@
 #include "KGPlanarLineSegment.hh"
 
 #include <list>
-using std::list;
 
 namespace KGeoBag
 {
@@ -14,14 +13,19 @@ namespace KGeoBag
 class KGPlanarPolyLoop : public KGPlanarClosedPath
 {
   public:
-    typedef deque<const KGPlanarOpenPath*> Set;
-    typedef Set::iterator It;
-    typedef Set::const_iterator CIt;
+    typedef std::deque<const KGPlanarOpenPath*> Set;
+    using It = Set::iterator;
+    using CIt = Set::const_iterator;
 
   public:
     KGPlanarPolyLoop();
     KGPlanarPolyLoop(const KGPlanarPolyLoop& aCopy);
     ~KGPlanarPolyLoop() override;
+
+    static std::string Name()
+    {
+        return "poly_loop";
+    }
 
     KGPlanarPolyLoop* Clone() const override;
     void CopyFrom(const KGPlanarPolyLoop& aCopy);
@@ -70,7 +74,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     {
       public:
         StartPointArguments() : fPoint(0., 0.) {}
-        ~StartPointArguments() {}
+        ~StartPointArguments() = default;
 
         KTwoVector fPoint;
     };
@@ -79,7 +83,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     {
       public:
         LineArguments() : fVertex(0., 0.), fMeshCount(1), fMeshPower(1.) {}
-        ~LineArguments() {}
+        ~LineArguments() = default;
 
         KTwoVector fVertex;
         unsigned int fMeshCount;
@@ -90,7 +94,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     {
       public:
         ArcArguments() : fVertex(0., 0.), fRadius(0.), fRight(true), fShort(true), fMeshCount(64) {}
-        ~ArcArguments() {}
+        ~ArcArguments() = default;
 
         KTwoVector fVertex;
         double fRadius;
@@ -103,7 +107,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     {
       public:
         LastLineArguments() : fMeshCount(1), fMeshPower(1.) {}
-        ~LastLineArguments() {}
+        ~LastLineArguments() = default;
 
         unsigned int fMeshCount;
         double fMeshPower;
@@ -113,7 +117,7 @@ class KGPlanarPolyLoop : public KGPlanarClosedPath
     {
       public:
         LastArcArguments() : fRadius(0.), fRight(true), fShort(true), fMeshCount(64) {}
-        ~LastArcArguments() {}
+        ~LastArcArguments() = default;
 
         double fRadius;
         bool fRight;

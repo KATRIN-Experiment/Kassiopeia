@@ -3,13 +3,13 @@
 namespace Kassiopeia
 {
 
-KSTermSecondaries::KSTermSecondaries() {}
+KSTermSecondaries::KSTermSecondaries() = default;
 KSTermSecondaries::KSTermSecondaries(const KSTermSecondaries& /*aCopy*/) : KSComponent() {}
 KSTermSecondaries* KSTermSecondaries::Clone() const
 {
     return new KSTermSecondaries(*this);
 }
-KSTermSecondaries::~KSTermSecondaries() {}
+KSTermSecondaries::~KSTermSecondaries() = default;
 
 void KSTermSecondaries::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

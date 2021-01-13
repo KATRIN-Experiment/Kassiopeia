@@ -15,6 +15,11 @@ class KGPlanarCircle : public KGPlanarClosedPath
     KGPlanarCircle(const double& anX, const double& aY, const double& aRadius, const unsigned int aCount = 32);
     ~KGPlanarCircle() override;
 
+    static std::string Name()
+    {
+        return "circle";
+    }
+
     KGPlanarCircle* Clone() const override;
     void CopyFrom(const KGPlanarCircle& aCopy);
 

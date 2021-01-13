@@ -9,9 +9,9 @@
 
 #include "KRandom.h"
 #include "KSGeneratorsMessage.h"
-using katrin::KRandom;
 
 using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -111,23 +111,23 @@ bool KSGenConversion::ReadData()
     int shell, doubleconv, transition;
 
     if (fIsotope == 219) {
-        fDataFile = katrin::CreateDataTextFile("ConversionRn219.dat");
+        fDataFile = KTextFile::CreateDataTextFile("ConversionRn219.dat");
     }
     else if (fIsotope == 220) {
-        fDataFile = katrin::CreateDataTextFile("ConversionRn220.dat");
+        fDataFile = KTextFile::CreateDataTextFile("ConversionRn220.dat");
     }
     else if (fIsotope == 83) {
-        fDataFile = katrin::CreateDataTextFile("ConversionKr83.dat");
+        fDataFile = KTextFile::CreateDataTextFile("ConversionKr83.dat");
     }
     else if (fIsotope == 210) {
-        fDataFile = katrin::CreateDataTextFile("ConversionPb210.dat");
+        fDataFile = KTextFile::CreateDataTextFile("ConversionPb210.dat");
     }
     else {
         genmsg(eError) << "KSGenConversion::ReadData" << ret;
         genmsg << "Isotope " << fIsotope << " not supported by conversion process!" << eom;
     }
 
-    if (fDataFile->Open(katrin::KFile::eRead) == true) {
+    if (fDataFile->Open(KFile::eRead) == true) {
 
         fstream& inputfile = *(fDataFile->File());
 
@@ -172,13 +172,13 @@ bool KSGenConversion::ReadData()
     }
     fDataFile->Close();
 
-    double total;
+    double total = 0;
 
-    for (unsigned int j = 0; j < fConvProb.size(); j++) {
+    for (auto& j : fConvProb) {
         vector<double> tempvec4;
         fConvProbNorm.push_back(tempvec4);
-        for (unsigned int i = 0; i < fConvProb.at(j).size(); i++) {
-            probNorm = fConvProb.at(j).at(i) / probTotal;
+        for (double i : j) {
+            probNorm = i / probTotal;
             fConvProbNorm.back().push_back(probNorm);
             total = total + probNorm;
         }

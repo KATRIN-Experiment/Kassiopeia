@@ -1,6 +1,6 @@
 #include "KOpenCLInterface.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KOpenCLData.hh"
 
 #include <sstream>
@@ -11,7 +11,13 @@
 #include "KMPIInterface.hh"
 #endif
 
+#ifndef KEMFIELD_DEFAULT_GPU_ID
 #define KEMFIELD_DEFAULT_GPU_ID 0
+#endif
+
+#ifndef KEMFIELD_USE_DOUBLE_PRECISION
+#pragma warning "KEMField OpenCL will not use double precision! This can limit the accuracy of results."
+#endif
 
 #ifndef DEFAULT_KERNEL_DIR
 #define DEFAULT_KERNEL_DIR "."
@@ -55,25 +61,40 @@ void KOpenCLInterface::InitializeOpenCL()
     // Get available platforms
     cl::Platform::get(&fPlatforms);
 
+    if (fPlatforms.size() == 0) {
+        kem_cout(eError) << "There are no OpenCL platforms available on this system." << eom;
+        return;
+    }
+    else if (fPlatforms.size() <= KEMFIELD_OPENCL_PLATFORM) {
+        kem_cout(eError) << "Cannot select platform ID # " << KEMFIELD_OPENCL_PLATFORM
+                         << ", since there are only " << fPlatforms.size() << " platforms available." << eom;
+        return;
+    }
+
+    cl::string name = fPlatforms[KEMFIELD_OPENCL_PLATFORM].getInfo<CL_PLATFORM_NAME>();
+    kem_cout(eInfo) << "Selecting platform ID # " << KEMFIELD_OPENCL_PLATFORM << " (" << name << ") of " << fPlatforms.size()
+                    << " available platforms." << eom;
+
     // Select the default platform and create a context using this platform and
     // the GPU
     cl_context_properties cps[3] = {CL_CONTEXT_PLATFORM,
                                     (cl_context_properties)(fPlatforms[KEMFIELD_OPENCL_PLATFORM])(),
                                     0};
 
-    unsigned int deviceType = KEMFIELD_OPENCL_DEVICE_TYPE;
+    int deviceType = KEMFIELD_OPENCL_DEVICE_TYPE;
 
-
+    if (deviceType == -1)
+    {
+        fContext = new cl::Context(CL_DEVICE_TYPE_ALL, cps);
+    }
     if (deviceType == 0)  //we have a GPU
     {
         fContext = new cl::Context(CL_DEVICE_TYPE_GPU, cps);
     }
-
     if (deviceType == 1)  //we have a CPU
     {
         fContext = new cl::Context(CL_DEVICE_TYPE_CPU, cps);
     }
-
     if (deviceType == 2)  //we have an accelerator device
     {
         fContext = new cl::Context(CL_DEVICE_TYPE_ACCELERATOR, cps);
@@ -81,12 +102,19 @@ void KOpenCLInterface::InitializeOpenCL()
 
     CL_VECTOR_TYPE<cl::Device> availableDevices = fContext->getInfo<CL_CONTEXT_DEVICES>();
 
-    fCLDeviceID = KEMFIELD_DEFAULT_GPU_ID;
     fDevices.clear();
     fDevices = availableDevices;
     fQueues.resize(fDevices.size(), NULL);
 
+    if (fDevices.size() == 0) {
+        kem_cout(eError) << "There are no OpenCL devices available on this platform." << eom;
+        return;
+    }
+
+    fCLDeviceID = 0;
     fKernelPath = DEFAULT_KERNEL_DIR;
+
+    SetGPU(KEMFIELD_DEFAULT_GPU_ID);
 }
 
 /**
@@ -95,51 +123,44 @@ void KOpenCLInterface::InitializeOpenCL()
 void KOpenCLInterface::SetGPU(unsigned int i)
 {
     if (i >= fDevices.size()) {
-        KEMField::cout << "Cannot set GPU device to ID # " << i << ", since there are only " << fDevices.size()
-                       << " devices available." << KEMField::endl;
+        kem_cout(eWarning) << "Cannot set GPU device to ID # " << i
+                           << ", since there are only " << fDevices.size() << " devices available." << eom;
         return;
     }
 #ifdef KEMFIELD_USE_DOUBLE_PRECISION
-    cl::STRING_CLASS extensions;
-    fDevices[i].getInfo(CL_DEVICE_EXTENSIONS, &extensions);
-    if ((extensions.find("cl_khr_fp64") == std::string::npos) &&
-        (extensions.find("cl_amd_fp64") == std::string::npos)) {
-        KEMField::cout
-            << "Cannot set GPU device to ID # " << i
-            << ", since it does not support double precision (and this program was built with double precision enabled)."
-            << KEMField::endl;
+    cl::string extensions = fDevices[i].getInfo<CL_DEVICE_EXTENSIONS>();
+    if ((std::strstr(extensions.c_str(), "cl_khr_fp64") == nullptr) &&
+        (std::strstr(extensions.c_str(), "cl_amd_fp64") == nullptr)) {
+        kem_cout(eWarning) << "Cannot set GPU device to ID # " << i
+                           << ", since it does not support double precision (and this program was built with double precision enabled)." << eom;
         return;
     }
 #endif /* KEMFIELD_USE_DOUBLE_PRECISION */
 
 
+    cl::string name = fDevices[i].getInfo<CL_DEVICE_NAME>();
+
 #ifdef KEMFIELD_USE_MPI
 
-    cl::STRING_CLASS name;
     int process_id = KMPIInterface::GetInstance()->GetProcess();
-    fDevices[i].getInfo(CL_DEVICE_NAME, &name);
     std::stringstream msg;
-    msg << "Process #" << process_id << ", Setting GPU device to ID # " << i << " (" << name << ") of "
+    msg << "Process #" << process_id << ": Setting GPU device to ID # " << i << " (" << name << ") of "
         << fDevices.size() << " available devices on host: " << KMPIInterface::GetInstance()->GetHostName();
 #ifdef KEMFIELD_USE_DOUBLE_PRECISION
     msg << " (double precision enabled)." << std::endl;
 #else
     msg << "." << std::endl;
 #endif
-
     KMPIInterface::GetInstance()->PrintMessage(msg.str());
 
-
 #else
 
-    cl::STRING_CLASS name;
-    fDevices[i].getInfo(CL_DEVICE_NAME, &name);
-    KEMField::cout << "Setting GPU device to ID # " << i << " (" << name << ") of " << fDevices.size()
-                   << " available devices";
+    kem_cout() << "Setting GPU device to ID # " << i << " (" << name << ") of " << fDevices.size()
+               << " available devices";
 #ifdef KEMFIELD_USE_DOUBLE_PRECISION
-    KEMField::cout << " (double precision enabled)." << KEMField::endl;
+    kem_cout() << " (double precision enabled)." << eom;
 #else
-    KEMField::cout << "." << KEMField::endl;
+    kem_cout() << "." << eom;
 #endif
 
 #endif

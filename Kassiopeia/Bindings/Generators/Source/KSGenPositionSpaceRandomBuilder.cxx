@@ -12,10 +12,10 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSGenPositionSpaceRandomBuilder::~KComplexElement() {}
+template<> KSGenPositionSpaceRandomBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenPositionSpaceRandomStructure = KSGenPositionSpaceRandomBuilder::Attribute<string>("name") +
-                                               KSGenPositionSpaceRandomBuilder::Attribute<string>("spaces");
+STATICINT sKSGenPositionSpaceRandomStructure = KSGenPositionSpaceRandomBuilder::Attribute<std::string>("name") +
+                                               KSGenPositionSpaceRandomBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKSGenPositionSpaceRandom =
     KSRootBuilder::ComplexElement<KSGenPositionSpaceRandom>("ksgen_position_space_random");

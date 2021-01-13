@@ -2,9 +2,9 @@
 
 using namespace KEMField;
 
-KVMFluxIntegral::KVMFluxIntegral() : KVMSurfaceIntegral<1>() {}
+KVMFluxIntegral::KVMFluxIntegral() = default;
 
-KVMFluxIntegral::~KVMFluxIntegral() {}
+KVMFluxIntegral::~KVMFluxIntegral() = default;
 
 void KVMFluxIntegral::SetField(const KVMField* aField)
 {

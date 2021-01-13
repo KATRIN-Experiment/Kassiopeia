@@ -20,10 +20,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyCompositeBuilder::~KComplexElement() {}
+template<> KSGenEnergyCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenEnergyCompositeStructure =
-    KSGenEnergyCompositeBuilder::Attribute<string>("name") + KSGenEnergyCompositeBuilder::Attribute<string>("energy") +
+    KSGenEnergyCompositeBuilder::Attribute<std::string>("name") +
+    KSGenEnergyCompositeBuilder::Attribute<std::string>("energy") +
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueFix>("energy_fix") +
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueSet>("energy_set") +
     KSGenEnergyCompositeBuilder::ComplexElement<KSGenValueList>("energy_list") +

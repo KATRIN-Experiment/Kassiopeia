@@ -3,7 +3,7 @@
 namespace katrin
 {
 
-template<> KGTransformationBuilder::~KComplexElement() {}
+template<> KGTransformationBuilder::~KComplexElement() = default;
 
 STATICINT sTransformationBuilderStructure = KGTransformationBuilder::Attribute<KThreeVector>("displacement") +
                                             KGTransformationBuilder::Attribute<KThreeVector>("d") +

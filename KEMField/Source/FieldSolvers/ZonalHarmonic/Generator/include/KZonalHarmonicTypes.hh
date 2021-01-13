@@ -10,16 +10,17 @@ namespace KEMField
 class KConicSection;
 class KRing;
 
-typedef KTYPELIST_2(KConicSection, KRing) KZHElectrostaticSurfaceTypes_;
+using KZHElectrostaticSurfaceTypes_ = KTYPELIST_2(KConicSection, KRing);
 
 class KCurrentLoop;
 class KSolenoid;
 class KCoil;
 
-typedef KTYPELIST_3(KCurrentLoop, KSolenoid, KCoil) KZHElectromagnetTypes_;
+using KZHElectromagnetTypes_ =
+    KEMField::KTypelist<KCurrentLoop, KEMField::KTypelist<KSolenoid, KEMField::KTypelist<KCoil, KEMField::KNullType>>>;
 
-typedef NoDuplicates<KZHElectrostaticSurfaceTypes_>::Result KZHElectrostaticSurfaceTypes;
-typedef NoDuplicates<KZHElectromagnetTypes_>::Result KZHElectromagnetTypes;
+using KZHElectrostaticSurfaceTypes = NoDuplicates<KZHElectrostaticSurfaceTypes_>::Result;
+using KZHElectromagnetTypes = NoDuplicates<KZHElectromagnetTypes_>::Result;
 }  // namespace KEMField
 
 #include "KElectromagnetContainer.hh"
@@ -42,11 +43,11 @@ template<> struct KZonalHarmonicTrait<KMagnetostaticBasis>
     {
         return "KZHElectromagnet";
     }
-    typedef KElectromagnet BaseElement;
-    typedef KElectromagnetContainer Container;
-    typedef KElectromagnetIntegrator Integrator;
-    typedef KZHElectromagnetTypes Types;
-    typedef KElectromagnetVisitor Visitor;
+    using BaseElement = KElectromagnet;
+    using Container = KElectromagnetContainer;
+    using Integrator = KElectromagnetIntegrator;
+    using Types = KZHElectromagnetTypes;
+    using Visitor = KElectromagnetVisitor;
 };
 
 template<> struct KZonalHarmonicTrait<KElectrostaticBasis>
@@ -55,11 +56,11 @@ template<> struct KZonalHarmonicTrait<KElectrostaticBasis>
     {
         return "KZHElectrostaticSurface";
     }
-    typedef KSurfacePrimitive BaseElement;
-    typedef KSurfaceContainer Container;
-    typedef KElectrostaticBoundaryIntegrator Integrator;
-    typedef KZHElectrostaticSurfaceTypes Types;
-    typedef KShapeVisitor Visitor;
+    using BaseElement = KSurfacePrimitive;
+    using Container = KSurfaceContainer;
+    using Integrator = KElectrostaticBoundaryIntegrator;
+    using Types = KZHElectrostaticSurfaceTypes;
+    using Visitor = KShapeVisitor;
 };
 }  // namespace KEMField
 

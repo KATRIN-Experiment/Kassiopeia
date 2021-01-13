@@ -928,7 +928,7 @@ namespace katrin
 
 template<> KSIntCalculatorHydrogenBuilder::~KComplexElement() {}
 
-static int sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenBuilder::Attribute<string>("name") +
+static int sKSIntCalculatorHydrogenStructure = KSIntCalculatorHydrogenBuilder::Attribute<std::string>("name") +
                                                KSIntCalculatorHydrogenBuilder::Attribute<bool>("elastic") +
                                                KSIntCalculatorHydrogenBuilder::Attribute<bool>("excitation") +
                                                KSIntCalculatorHydrogenBuilder::Attribute<bool>("ionisation");

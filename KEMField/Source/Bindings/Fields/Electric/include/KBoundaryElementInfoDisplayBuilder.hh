@@ -16,12 +16,12 @@ namespace katrin
 
 typedef KComplexElement<KEMField::KBoundaryElementInfoDisplay> KBoundaryElementInfoDisplayBuilder;
 
-template<> bool KBoundaryElementInfoDisplayBuilder::AddAttribute(KContainer*)
+template<> inline bool KBoundaryElementInfoDisplayBuilder::AddAttribute(KContainer*)
 {
     return false;
 }
 
-template<> bool KBoundaryElementInfoDisplayBuilder::AddElement(KContainer*)
+template<> inline bool KBoundaryElementInfoDisplayBuilder::AddElement(KContainer*)
 {
     return false;
 }

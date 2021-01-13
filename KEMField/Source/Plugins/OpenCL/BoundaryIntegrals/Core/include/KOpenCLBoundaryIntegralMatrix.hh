@@ -22,7 +22,7 @@ class KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>> :
 
     KBoundaryIntegralMatrix(KOpenCLSurfaceContainer& c, KOpenCLBoundaryIntegrator<BasisPolicy>& integrator);
 
-    ~KBoundaryIntegralMatrix();
+    ~KBoundaryIntegralMatrix() override;
 
     unsigned int Dimension() const
     {
@@ -45,7 +45,7 @@ class KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>> :
         return fIntegrator;
     }
 
-    std::string GetOpenCLFlags() const;
+    std::string GetOpenCLFlags() const override;
 
   private:
     KOpenCLSurfaceContainer& fContainer;
@@ -53,8 +53,8 @@ class KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>> :
 
     const unsigned int fDimension;
 
-    void ConstructOpenCLKernels() const;
-    void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override;
+    void AssignBuffers() const override;
 
     mutable int fNLocal;
 
@@ -76,9 +76,9 @@ KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>>::KBoundaryIntegr
     fIntegrator(integrator),
     fDimension(c.size() * BasisPolicy::Dimension),
     fNLocal(-1),
-    fGetMatrixElementKernel(NULL),
-    fBufferIJ(NULL),
-    fBufferValue(NULL)
+    fGetMatrixElementKernel(nullptr),
+    fBufferIJ(nullptr),
+    fBufferValue(nullptr)
 {}
 
 template<class BasisPolicy> KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>>::~KBoundaryIntegralMatrix()
@@ -149,10 +149,10 @@ void KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>>::ConstructO
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
-    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, 0);
+    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, nullptr);
 
     // if (fVerbose>1 && fRank == 0)
     // {

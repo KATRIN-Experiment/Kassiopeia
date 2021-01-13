@@ -23,7 +23,8 @@ class KFMElementLocalInfluenceRange
 {
   public:
     KFMElementLocalInfluenceRange() : fTotalSize(0){};
-    virtual ~KFMElementLocalInfluenceRange(){};
+    virtual ~KFMElementLocalInfluenceRange() = default;
+    ;
 
     bool IsEmpty()
     {

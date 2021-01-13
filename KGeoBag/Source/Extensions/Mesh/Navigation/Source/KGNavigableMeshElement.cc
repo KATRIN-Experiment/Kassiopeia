@@ -34,7 +34,7 @@ void KGNavigableMeshElement::SetMeshElement(KGMeshWire* wire)
     fType = KGMESH_WIRE_ID;
 }
 
-short KGNavigableMeshElement::GetMeshElementType()
+short KGNavigableMeshElement::GetMeshElementType() const
 {
     return fType;
 }

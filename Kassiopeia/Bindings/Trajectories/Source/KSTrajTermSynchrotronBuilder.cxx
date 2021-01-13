@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTermSynchrotronBuilder::~KComplexElement() {}
+template<> KSTrajTermSynchrotronBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajTermSynchrotronStructure = KSTrajTermSynchrotronBuilder::Attribute<string>("name") +
+STATICINT sKSTrajTermSynchrotronStructure = KSTrajTermSynchrotronBuilder::Attribute<std::string>("name") +
                                             KSTrajTermSynchrotronBuilder::Attribute<double>("enhancement") +
                                             KSTrajTermSynchrotronBuilder::Attribute<bool>("old_methode");
 

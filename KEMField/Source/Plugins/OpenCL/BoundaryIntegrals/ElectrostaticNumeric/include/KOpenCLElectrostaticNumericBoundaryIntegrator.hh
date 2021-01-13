@@ -14,33 +14,33 @@ class KOpenCLElectrostaticNumericBoundaryIntegrator :
     public KSelectiveVisitor<KShapeVisitor, KTYPELIST_4(KTriangle, KRectangle, KLineSegment, KConicSection)>
 {
   public:
-    typedef KElectrostaticBasis Basis;
-    typedef Basis::ValueType ValueType;
-    typedef KBoundaryType<Basis, KDirichletBoundary> DirichletBoundary;
-    typedef KBoundaryType<Basis, KNeumannBoundary> NeumannBoundary;
+    using Basis = KElectrostaticBasis;
+    using ValueType = Basis::ValueType;
+    using DirichletBoundary = KBoundaryType<Basis, KDirichletBoundary>;
+    using NeumannBoundary = KBoundaryType<Basis, KNeumannBoundary>;
 
     // for selection of the correct KIntegratingFieldSolver template and possibly elsewhere
-    typedef ElectrostaticOpenCL Kind;
-    typedef KElectrostaticBoundaryIntegrator IntegratorSingleThread;
+    using Kind = ElectrostaticOpenCL;
+    using IntegratorSingleThread = KElectrostaticBoundaryIntegrator;
 
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_4(KTriangle, KRectangle, KLineSegment, KConicSection)>::Visit;
 
     KOpenCLElectrostaticNumericBoundaryIntegrator(KOpenCLSurfaceContainer& c);
-    ~KOpenCLElectrostaticNumericBoundaryIntegrator();
+    ~KOpenCLElectrostaticNumericBoundaryIntegrator() override;
 
-    void Visit(KTriangle& t)
+    void Visit(KTriangle& t) override
     {
         ComputeBoundaryIntegral(t);
     }
-    void Visit(KRectangle& r)
+    void Visit(KRectangle& r) override
     {
         ComputeBoundaryIntegral(r);
     }
-    void Visit(KLineSegment& l)
+    void Visit(KLineSegment& l) override
     {
         ComputeBoundaryIntegral(l);
     }
-    void Visit(KConicSection& c)
+    void Visit(KConicSection& c) override
     {
         ComputeBoundaryIntegral(c);
     }
@@ -50,11 +50,11 @@ class KOpenCLElectrostaticNumericBoundaryIntegrator :
     ValueType& BasisValue(KSurfacePrimitive* surface, unsigned int);
 
     template<class SourceShape> double Potential(const SourceShape*, const KPosition&) const;
-    template<class SourceShape> KThreeVector ElectricField(const SourceShape*, const KPosition&) const;
+    template<class SourceShape> KFieldVector ElectricField(const SourceShape*, const KPosition&) const;
     template<class SourceShape>
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
 
-    std::string OpenCLFile() const
+    std::string OpenCLFile() const override
     {
         return "kEMField_ElectrostaticNumericBoundaryIntegrals.cl";
     }
@@ -66,11 +66,11 @@ class KOpenCLElectrostaticNumericBoundaryIntegrator :
       public:
         using KSelectiveVisitor<KBoundaryVisitor, KTYPELIST_2(KDirichletBoundary, KNeumannBoundary)>::Visit;
 
-        BoundaryVisitor() {}
-        virtual ~BoundaryVisitor() {}
+        BoundaryVisitor() = default;
+        ~BoundaryVisitor() override = default;
 
-        void Visit(KDirichletBoundary&);
-        void Visit(KNeumannBoundary&);
+        void Visit(KDirichletBoundary&) override;
+        void Visit(KNeumannBoundary&) override;
 
         bool IsDirichlet() const
         {
@@ -96,10 +96,10 @@ class KOpenCLElectrostaticNumericBoundaryIntegrator :
       public:
         using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>::Visit;
 
-        BasisVisitor() : fBasisValue(NULL) {}
-        virtual ~BasisVisitor() {}
+        BasisVisitor() : fBasisValue(nullptr) {}
+        ~BasisVisitor() override = default;
 
-        void Visit(KElectrostaticBasis&);
+        void Visit(KElectrostaticBasis&) override;
 
         ValueType& GetBasisValue() const
         {
@@ -118,8 +118,8 @@ class KOpenCLElectrostaticNumericBoundaryIntegrator :
     ValueType fValue;
 
   private:
-    void ConstructOpenCLKernels() const;
-    void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override;
+    void AssignBuffers() const override;
 
     mutable cl::Kernel* fPhiKernel;
     mutable cl::Kernel* fEFieldKernel;
@@ -153,7 +153,7 @@ double KOpenCLElectrostaticNumericBoundaryIntegrator::Potential(const SourceShap
 }
 
 template<class SourceShape>
-KThreeVector KOpenCLElectrostaticNumericBoundaryIntegrator::ElectricField(const SourceShape* source,
+KFieldVector KOpenCLElectrostaticNumericBoundaryIntegrator::ElectricField(const SourceShape* source,
                                                                           const KPosition& aPosition) const
 {
     StreamSourceToBuffer(source);
@@ -175,11 +175,11 @@ KThreeVector KOpenCLElectrostaticNumericBoundaryIntegrator::ElectricField(const 
                                                                   sizeof(CL_TYPE4),
                                                                   &eField);
 
-    return KThreeVector(eField.s[0], eField.s[1], eField.s[2]);
+    return KFieldVector(eField.s[0], eField.s[1], eField.s[2]);
 }
 
 template<class SourceShape>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KOpenCLElectrostaticNumericBoundaryIntegrator::ElectricFieldAndPotential(const SourceShape* source,
                                                                          const KPosition& aPosition) const
 {
@@ -205,7 +205,7 @@ KOpenCLElectrostaticNumericBoundaryIntegrator::ElectricFieldAndPotential(const S
                                                                   sizeof(CL_TYPE4),
                                                                   &eFieldAndPhi);
 
-    return std::make_pair(KThreeVector(eFieldAndPhi.s[0], eFieldAndPhi.s[1], eFieldAndPhi.s[2]), eFieldAndPhi.s[3]);
+    return std::make_pair(KFieldVector(eFieldAndPhi.s[0], eFieldAndPhi.s[1], eFieldAndPhi.s[2]), eFieldAndPhi.s[3]);
 }
 
 template<class SourceShape>
@@ -218,7 +218,7 @@ void KOpenCLElectrostaticNumericBoundaryIntegrator::ComputeBoundaryIntegral(Sour
         double dist = (source.Centroid() - fTarget->GetShape()->Centroid()).Magnitude();
 
         if (dist >= 1.e-12) {
-            KThreeVector field = this->ElectricField(&source, fTarget->GetShape()->Centroid());
+            KFieldVector field = this->ElectricField(&source, fTarget->GetShape()->Centroid());
             fValue = field.Dot(fTarget->GetShape()->Normal());
         }
         else {

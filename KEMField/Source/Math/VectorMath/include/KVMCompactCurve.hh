@@ -70,9 +70,7 @@ class KVMCompactCurve : public KVMMap<KVMCurveDDim, KVMCurveRDim>
     virtual double z(const double& /*u*/) const = 0;
 };
 
-inline KVMCompactCurve::KVMCompactCurve(const KVMCompactCurve& copyObject) :
-    KVMMap<KVMCurveDDim, KVMCurveRDim>(copyObject)
-{}
+inline KVMCompactCurve::KVMCompactCurve(const KVMCompactCurve& copyObject) = default;
 
 }  // namespace KEMField
 

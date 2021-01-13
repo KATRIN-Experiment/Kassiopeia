@@ -73,7 +73,7 @@ inline KSCyclicIterator<XType>::KSCyclicIterator(const KSCyclicIterator<XType>& 
     fMarkedIndex(source.fMarkedIndex),
     fCurrentIndex(source.fCurrentIndex)
 {}
-template<class XType> inline KSCyclicIterator<XType>::~KSCyclicIterator() {}
+template<class XType> inline KSCyclicIterator<XType>::~KSCyclicIterator() = default;
 
 template<class XType> inline void KSCyclicIterator<XType>::SetArray(XType* const block, const UInt_t size)
 {

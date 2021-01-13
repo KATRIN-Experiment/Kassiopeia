@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGRotatedCircleSurfaceAxialMesher::KGRotatedCircleSurfaceAxialMesher() : KGSimpleAxialMesher() {}
-KGRotatedCircleSurfaceAxialMesher::~KGRotatedCircleSurfaceAxialMesher() {}
+KGRotatedCircleSurfaceAxialMesher::KGRotatedCircleSurfaceAxialMesher() = default;
+KGRotatedCircleSurfaceAxialMesher::~KGRotatedCircleSurfaceAxialMesher() = default;
 
 void KGRotatedCircleSurfaceAxialMesher::VisitRotatedPathSurface(KGRotatedCircleSurface* aRotatedCircleSurface)
 {

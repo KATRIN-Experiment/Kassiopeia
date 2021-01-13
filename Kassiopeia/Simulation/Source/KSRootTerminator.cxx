@@ -16,7 +16,7 @@ KSRootTerminator::KSRootTerminator() :
     fParticleQueue(nullptr)
 {}
 KSRootTerminator::KSRootTerminator(const KSRootTerminator& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTerminators(aCopy.fTerminators),
     fTerminator(aCopy.fTerminator),
     fStep(aCopy.fStep),
@@ -29,7 +29,7 @@ KSRootTerminator* KSRootTerminator::Clone() const
 {
     return new KSRootTerminator(*this);
 }
-KSRootTerminator::~KSRootTerminator() {}
+KSRootTerminator::~KSRootTerminator() = default;
 
 void KSRootTerminator::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {
@@ -111,103 +111,91 @@ void KSRootTerminator::CalculateTermination()
     fStep->TerminatorFlag() = false;
 
     if (fTerminators.End() == 0) {
-        termmsg_debug("terminator calculation:" << eom) termmsg_debug("  no terminators active" << eom)
-            termmsg_debug("  terminator name: <" << fStep->GetTerminatorName() << ">" << eom) termmsg_debug(
-                "  terminator flag: <" << fStep->GetTerminatorFlag() << ">" << eom)
+        termmsg_debug("terminator calculation:" << eom);
+        termmsg_debug("  no terminators active" << eom);
+        termmsg_debug("  terminator name: <" << fStep->GetTerminatorName() << ">" << eom);
+        termmsg_debug("  terminator flag: <" << fStep->GetTerminatorFlag() << ">" << eom);
 
-                termmsg_debug("terminator calculation terminator particle state: " << eom) termmsg_debug(
-                    "  terminator particle space: <"
-                    << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "")
-                    << ">" << eom) termmsg_debug("  terminator particle surface: <"
-                                                 << (fTerminatorParticle->GetCurrentSurface()
-                                                         ? fTerminatorParticle->GetCurrentSurface()->GetName()
-                                                         : "")
-                                                 << ">" << eom) termmsg_debug("  terminator particle time: <"
-                                                                              << fTerminatorParticle->GetTime() << ">"
-                                                                              << eom)
-                    termmsg_debug("  terminator particle length: <" << fTerminatorParticle->GetLength() << ">" << eom)
-                        termmsg_debug("  terminator particle position: <"
-                                      << fTerminatorParticle->GetPosition().X() << ", "
-                                      << fTerminatorParticle->GetPosition().Y() << ", "
-                                      << fTerminatorParticle->GetPosition().Z() << ">"
-                                      << eom) termmsg_debug("  terminator particle momentum: <"
-                                                            << fTerminatorParticle->GetMomentum().X() << ", "
-                                                            << fTerminatorParticle->GetMomentum().Y() << ", "
-                                                            << fTerminatorParticle->GetMomentum().Z() << ">" << eom)
-                            termmsg_debug("  terminator particle kinetic energy: <"
-                                          << fTerminatorParticle->GetKineticEnergy_eV() << ">" << eom)
-                                termmsg_debug("  terminator particle electric field: <"
-                                              << fTerminatorParticle->GetElectricField().X() << ","
-                                              << fTerminatorParticle->GetElectricField().Y() << ","
-                                              << fTerminatorParticle->GetElectricField().Z() << ">" << eom)
-                                    termmsg_debug("  terminator particle magnetic field: <"
-                                                  << fTerminatorParticle->GetMagneticField().X() << ","
-                                                  << fTerminatorParticle->GetMagneticField().Y() << ","
-                                                  << fTerminatorParticle->GetMagneticField().Z() << ">" << eom)
-                                        termmsg_debug("  terminator particle angle to magnetic field: <"
-                                                      << fTerminatorParticle->GetPolarAngleToB() << ">"
-                                                      << eom) termmsg_debug("  terminator particle spin: "
-                                                                            << fTerminatorParticle->GetSpin() << eom)
-                                            termmsg_debug("  terminator particle spin0: <"
-                                                          << fTerminatorParticle->GetSpin0() << ">" << eom)
-                                                termmsg_debug("  terminator particle aligned spin: <"
-                                                              << fTerminatorParticle->GetAlignedSpin() << ">" << eom)
-                                                    termmsg_debug("  terminator particle spin angle: <"
-                                                                  << fTerminatorParticle->GetSpinAngle() << ">" << eom)
+        termmsg_debug("terminator calculation terminator particle state: " << eom);
+        termmsg_debug(
+            "  terminator particle space: <"
+            << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "") << ">"
+            << eom);
+        termmsg_debug(
+            "  terminator particle surface: <"
+            << (fTerminatorParticle->GetCurrentSurface() ? fTerminatorParticle->GetCurrentSurface()->GetName() : "")
+            << ">" << eom);
+        termmsg_debug("  terminator particle time: <" << fTerminatorParticle->GetTime() << ">" << eom);
+        termmsg_debug("  terminator particle length: <" << fTerminatorParticle->GetLength() << ">" << eom);
+        termmsg_debug("  terminator particle position: <" << fTerminatorParticle->GetPosition().X() << ", "
+                                                          << fTerminatorParticle->GetPosition().Y() << ", "
+                                                          << fTerminatorParticle->GetPosition().Z() << ">" << eom);
+        termmsg_debug("  terminator particle momentum: <" << fTerminatorParticle->GetMomentum().X() << ", "
+                                                          << fTerminatorParticle->GetMomentum().Y() << ", "
+                                                          << fTerminatorParticle->GetMomentum().Z() << ">" << eom);
+        termmsg_debug("  terminator particle kinetic energy: <" << fTerminatorParticle->GetKineticEnergy_eV() << ">"
+                                                                << eom);
+        termmsg_debug("  terminator particle electric field: <" << fTerminatorParticle->GetElectricField().X() << ","
+                                                                << fTerminatorParticle->GetElectricField().Y() << ","
+                                                                << fTerminatorParticle->GetElectricField().Z() << ">"
+                                                                << eom);
+        termmsg_debug("  terminator particle magnetic field: <" << fTerminatorParticle->GetMagneticField().X() << ","
+                                                                << fTerminatorParticle->GetMagneticField().Y() << ","
+                                                                << fTerminatorParticle->GetMagneticField().Z() << ">"
+                                                                << eom);
+        termmsg_debug("  terminator particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB()
+                                                                         << ">" << eom);
+        termmsg_debug("  terminator particle spin: " << fTerminatorParticle->GetSpin() << eom);
+        termmsg_debug("  terminator particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom);
+        termmsg_debug("  terminator particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom);
+        termmsg_debug("  terminator particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom);
 
-                                                        return;
+        return;
     }
 
     CalculateTermination(*fTerminatorParticle, fStep->TerminatorFlag());
 
     if (fStep->TerminatorFlag() == true) {
-        termmsg_debug("terminator calculation:" << eom) termmsg_debug("  terminator may occur" << eom)
+        termmsg_debug("terminator calculation:" << eom);
+        termmsg_debug("  terminator may occur" << eom);
     }
     else {
-        termmsg_debug("terminator calculation:" << eom) termmsg_debug("  terminator will not occur" << eom)
+        termmsg_debug("terminator calculation:" << eom);
+        termmsg_debug("  terminator will not occur" << eom);
     }
 
-    termmsg_debug("terminator calculation terminator particle state: " << eom)
-        termmsg_debug(
-            "  terminator particle space: <"
-            << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "") << ">"
-            << eom)
-            termmsg_debug(
-                "  terminator particle surface: <"
-                << (fTerminatorParticle->GetCurrentSurface() ? fTerminatorParticle->GetCurrentSurface()->GetName() : "")
-                << ">"
-                << eom) termmsg_debug("  terminator particle time: <" << fTerminatorParticle->GetTime() << ">" << eom)
-                termmsg_debug("  terminator particle length: <" << fTerminatorParticle->GetLength() << ">" << eom)
-                    termmsg_debug("  terminator particle position: <"
-                                  << fTerminatorParticle->GetPosition().X() << ", "
-                                  << fTerminatorParticle->GetPosition().Y() << ", "
-                                  << fTerminatorParticle->GetPosition().Z() << ">"
-                                  << eom) termmsg_debug("  terminator particle momentum: <"
-                                                        << fTerminatorParticle->GetMomentum().X() << ", "
-                                                        << fTerminatorParticle->GetMomentum().Y() << ", "
-                                                        << fTerminatorParticle->GetMomentum().Z() << ">" << eom)
-                        termmsg_debug("  terminator particle kinetic energy: <"
-                                      << fTerminatorParticle->GetKineticEnergy_eV() << ">" << eom)
-                            termmsg_debug("  terminator particle electric field: <"
-                                          << fTerminatorParticle->GetElectricField().X() << ","
-                                          << fTerminatorParticle->GetElectricField().Y() << ","
-                                          << fTerminatorParticle->GetElectricField().Z() << ">" << eom)
-                                termmsg_debug("  terminator particle magnetic field: <"
-                                              << fTerminatorParticle->GetMagneticField().X() << ","
-                                              << fTerminatorParticle->GetMagneticField().Y() << ","
-                                              << fTerminatorParticle->GetMagneticField().Z() << ">" << eom)
-                                    termmsg_debug("  terminator particle angle to magnetic field: <"
-                                                  << fTerminatorParticle->GetPolarAngleToB() << ">" << eom)
-                                        termmsg_debug("  terminator particle spin: " << fTerminatorParticle->GetSpin()
-                                                                                     << eom)
-                                            termmsg_debug("  terminator particle spin0: <"
-                                                          << fTerminatorParticle->GetSpin0() << ">" << eom)
-                                                termmsg_debug("  terminator particle aligned spin: <"
-                                                              << fTerminatorParticle->GetAlignedSpin() << ">" << eom)
-                                                    termmsg_debug("  terminator particle spin angle: <"
-                                                                  << fTerminatorParticle->GetSpinAngle() << ">" << eom)
+    termmsg_debug("terminator calculation terminator particle state: " << eom);
+    termmsg_debug("  terminator particle space: <"
+                  << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "")
+                  << ">" << eom);
+    termmsg_debug(
+        "  terminator particle surface: <"
+        << (fTerminatorParticle->GetCurrentSurface() ? fTerminatorParticle->GetCurrentSurface()->GetName() : "") << ">"
+        << eom);
+    termmsg_debug("  terminator particle time: <" << fTerminatorParticle->GetTime() << ">" << eom);
+    termmsg_debug("  terminator particle length: <" << fTerminatorParticle->GetLength() << ">" << eom);
+    termmsg_debug("  terminator particle position: <" << fTerminatorParticle->GetPosition().X() << ", "
+                                                      << fTerminatorParticle->GetPosition().Y() << ", "
+                                                      << fTerminatorParticle->GetPosition().Z() << ">" << eom);
+    termmsg_debug("  terminator particle momentum: <" << fTerminatorParticle->GetMomentum().X() << ", "
+                                                      << fTerminatorParticle->GetMomentum().Y() << ", "
+                                                      << fTerminatorParticle->GetMomentum().Z() << ">" << eom);
+    termmsg_debug("  terminator particle kinetic energy: <" << fTerminatorParticle->GetKineticEnergy_eV() << ">"
+                                                            << eom);
+    termmsg_debug("  terminator particle electric field: <"
+                  << fTerminatorParticle->GetElectricField().X() << "," << fTerminatorParticle->GetElectricField().Y()
+                  << "," << fTerminatorParticle->GetElectricField().Z() << ">" << eom);
+    termmsg_debug("  terminator particle magnetic field: <"
+                  << fTerminatorParticle->GetMagneticField().X() << "," << fTerminatorParticle->GetMagneticField().Y()
+                  << "," << fTerminatorParticle->GetMagneticField().Z() << ">" << eom);
+    termmsg_debug("  terminator particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB() << ">"
+                                                                     << eom);
+    termmsg_debug("  terminator particle spin: " << fTerminatorParticle->GetSpin() << eom);
+    termmsg_debug("  terminator particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom);
+    termmsg_debug("  terminator particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom);
+    termmsg_debug("  terminator particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom);
 
-                                                        return;
+    return;
 }
 
 void KSRootTerminator::ExecuteTermination()
@@ -223,63 +211,47 @@ void KSRootTerminator::ExecuteTermination()
     fStep->DiscreteEnergyChange() = 0.;
     fStep->DiscreteMomentumChange() = 0.;
 
-    termmsg_debug("terminator execution:" << eom) termmsg_debug("  terminator name: <" << fStep->TerminatorName() << ">"
-                                                                                       << eom)
-        termmsg_debug("  step continuous time: <" << fStep->ContinuousTime() << ">" << eom) termmsg_debug(
-            "  step continuous length: <"
-            << fStep->ContinuousLength() << ">"
-            << eom) termmsg_debug("  step continuous energy change: <"
-                                  << fStep->ContinuousEnergyChange() << ">"
-                                  << eom) termmsg_debug("  step continuous momentum change: <"
-                                                        << fStep->ContinuousMomentumChange() << ">" << eom)
-            termmsg_debug("  step discrete secondaries: <" << fStep->DiscreteSecondaries() << ">" << eom) termmsg_debug(
-                "  step discrete energy change: <"
-                << fStep->DiscreteEnergyChange() << ">"
-                << eom) termmsg_debug("  step discrete momentum change: <" << fStep->DiscreteMomentumChange() << ">"
-                                                                           << eom)
+    termmsg_debug("terminator execution:" << eom);
+    termmsg_debug("  terminator name: <" << fStep->TerminatorName() << ">" << eom);
+    termmsg_debug("  step continuous time: <" << fStep->ContinuousTime() << ">" << eom);
+    termmsg_debug("  step continuous length: <" << fStep->ContinuousLength() << ">" << eom);
+    termmsg_debug("  step continuous energy change: <" << fStep->ContinuousEnergyChange() << ">" << eom);
+    termmsg_debug("  step continuous momentum change: <" << fStep->ContinuousMomentumChange() << ">" << eom);
+    termmsg_debug("  step discrete secondaries: <" << fStep->DiscreteSecondaries() << ">" << eom);
+    termmsg_debug("  step discrete energy change: <" << fStep->DiscreteEnergyChange() << ">" << eom);
+    termmsg_debug("  step discrete momentum change: <" << fStep->DiscreteMomentumChange() << ">" << eom);
 
-                termmsg_debug("terminator final particle state: " << eom) termmsg_debug(
-                    "  final particle space: <"
-                    << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "")
-                    << ">" << eom) termmsg_debug("  final particle surface: <"
-                                                 << (fTerminatorParticle->GetCurrentSurface()
-                                                         ? fTerminatorParticle->GetCurrentSurface()->GetName()
-                                                         : "")
-                                                 << ">" << eom)
-                    termmsg_debug("  final particle time: <" << fTerminatorParticle->GetTime() << ">" << eom)
-                        termmsg_debug("  final particle length: <" << fTerminatorParticle->GetLength() << ">" << eom)
-                            termmsg_debug("  final particle position: <"
-                                          << fTerminatorParticle->GetPosition().X() << ", "
-                                          << fTerminatorParticle->GetPosition().Y() << ", "
-                                          << fTerminatorParticle->GetPosition().Z() << ">" << eom)
-                                termmsg_debug("  final particle momentum: <"
-                                              << fTerminatorParticle->GetMomentum().X() << ", "
-                                              << fTerminatorParticle->GetMomentum().Y() << ", "
-                                              << fTerminatorParticle->GetMomentum().Z() << ">" << eom)
-                                    termmsg_debug("  final particle kinetic energy: <"
-                                                  << fTerminatorParticle->GetKineticEnergy_eV() << ">" << eom)
-                                        termmsg_debug("  final particle electric field: <"
-                                                      << fTerminatorParticle->GetElectricField().X() << ","
-                                                      << fTerminatorParticle->GetElectricField().Y() << ","
-                                                      << fTerminatorParticle->GetElectricField().Z() << ">" << eom)
-                                            termmsg_debug("  final particle magnetic field: <"
-                                                          << fTerminatorParticle->GetMagneticField().X() << ","
-                                                          << fTerminatorParticle->GetMagneticField().Y() << ","
-                                                          << fTerminatorParticle->GetMagneticField().Z() << ">" << eom)
-                                                termmsg_debug("  final particle angle to magnetic field: <"
-                                                              << fTerminatorParticle->GetPolarAngleToB() << ">" << eom)
-                                                    termmsg_debug("  final particle spin: "
-                                                                  << fTerminatorParticle->GetSpin() << eom)
-                                                        termmsg_debug("  final particle spin0: <"
-                                                                      << fTerminatorParticle->GetSpin0() << ">" << eom)
-                                                            termmsg_debug("  final particle aligned spin: <"
-                                                                          << fTerminatorParticle->GetAlignedSpin()
-                                                                          << ">" << eom)
-                                                                termmsg_debug("  final particle spin angle: <"
-                                                                              << fTerminatorParticle->GetSpinAngle()
-                                                                              << ">" << eom)
+    termmsg_debug("terminator final particle state: " << eom);
+    termmsg_debug("  final particle space: <"
+                  << (fTerminatorParticle->GetCurrentSpace() ? fTerminatorParticle->GetCurrentSpace()->GetName() : "")
+                  << ">" << eom);
+    termmsg_debug("  final particle surface: <"
+                  << (fTerminatorParticle->GetCurrentSurface() ? fTerminatorParticle->GetCurrentSurface()->GetName()
+                                                               : "")
+                  << ">" << eom);
+    termmsg_debug("  final particle time: <" << fTerminatorParticle->GetTime() << ">" << eom);
+    termmsg_debug("  final particle length: <" << fTerminatorParticle->GetLength() << ">" << eom);
+    termmsg_debug("  final particle position: <" << fTerminatorParticle->GetPosition().X() << ", "
+                                                 << fTerminatorParticle->GetPosition().Y() << ", "
+                                                 << fTerminatorParticle->GetPosition().Z() << ">" << eom);
+    termmsg_debug("  final particle momentum: <" << fTerminatorParticle->GetMomentum().X() << ", "
+                                                 << fTerminatorParticle->GetMomentum().Y() << ", "
+                                                 << fTerminatorParticle->GetMomentum().Z() << ">" << eom);
+    termmsg_debug("  final particle kinetic energy: <" << fTerminatorParticle->GetKineticEnergy_eV() << ">" << eom);
+    termmsg_debug("  final particle electric field: <" << fTerminatorParticle->GetElectricField().X() << ","
+                                                       << fTerminatorParticle->GetElectricField().Y() << ","
+                                                       << fTerminatorParticle->GetElectricField().Z() << ">" << eom);
+    termmsg_debug("  final particle magnetic field: <" << fTerminatorParticle->GetMagneticField().X() << ","
+                                                       << fTerminatorParticle->GetMagneticField().Y() << ","
+                                                       << fTerminatorParticle->GetMagneticField().Z() << ">" << eom);
+    termmsg_debug("  final particle angle to magnetic field: <" << fTerminatorParticle->GetPolarAngleToB() << ">"
+                                                                << eom);
+    termmsg_debug("  final particle spin: " << fTerminatorParticle->GetSpin() << eom);
+    termmsg_debug("  final particle spin0: <" << fTerminatorParticle->GetSpin0() << ">" << eom);
+    termmsg_debug("  final particle aligned spin: <" << fTerminatorParticle->GetAlignedSpin() << ">" << eom);
+    termmsg_debug("  final particle spin angle: <" << fTerminatorParticle->GetSpinAngle() << ">" << eom);
 
-                                                                    return;
+    return;
 }
 
 STATICINT sKSRootTerminatorDict = KSDictionary<KSRootTerminator>::AddCommand(

@@ -78,7 +78,7 @@ template<int NDIM> inline void KMathShepardInterpolator<NDIM>::AddValue(const st
 
 template<int NDIM> inline void KMathShepardInterpolator<NDIM>::AddValue(const double* point, double value)
 {
-    assert(point != 0);
+    assert(point != nullptr);
     std::array<double, NDIM> newPoint;
     std::copy(point, point + NDIM, newPoint.begin());
     fPoints.push_back(newPoint);
@@ -99,7 +99,7 @@ template<int NDIM> inline double KMathShepardInterpolator<NDIM>::Calculate(const
 
 template<int NDIM> inline double KMathShepardInterpolator<NDIM>::Calculate(const double* point) const
 {
-    assert(point != 0);
+    assert(point != nullptr);
     return Interpolate(point);
 }
 

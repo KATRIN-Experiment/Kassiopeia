@@ -18,7 +18,7 @@ class KSolenoid : public KElectromagnet
 {
   public:
     KSolenoid() : KElectromagnet(), fP0(0., 0., 0.), fP1(0., 0., 0.), fCurrent(0.) {}
-    ~KSolenoid() override {}
+    ~KSolenoid() override = default;
 
     static std::string Name()
     {

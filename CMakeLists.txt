@@ -4,17 +4,26 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 # project version
 set(KASPER_VERSION_MAJOR 3)
 set(KASPER_VERSION_MINOR 7)
-set(KASPER_VERSION_PATCH 5)
+set(KASPER_VERSION_PATCH 7)
 set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}")
 
 #project( Kasper VERSION ${KASPER_VERSION} )
 project( Kasper )
+
+# Silently try to find major dependencies. This list is not be complete!
+# (Somehow, CMake behaves better if this is done in the root scope before adding modules...)
+find_package(Boost QUIET)
+find_package(HDF5 COMPONENTS CXX QUIET)
+find_package(MPI QUIET)
+find_package(ROOT QUIET)
+find_package(VTK QUIET)
 
 set( BUILD_SHARED_LIBS ON )
 
 set( CMAKE_CXX_STANDARD 14 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_EXTENSIONS OFF )
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 # Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
 if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
@@ -205,7 +214,7 @@ if( BUILD_KGEOBAG )
 endif( BUILD_KGEOBAG )
 
 # Build modules
-# The order seems to matter! Please place dependent modules at the end.
+# NOTE: The order matters! Please place dependent modules at the end.
 
 if( BUILD_KOMMON )
     add_subdirectory( Kommon )
@@ -227,9 +236,51 @@ if( BUILD_UNIT_TESTS )
     add_subdirectory( UnitTest )
 endif()
 
-#add_subdirectory( Documentation )
+add_subdirectory( Documentation )
 
-install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/{PROJECT_NAME} )
+# Print some warnings
+
+if( BUILD_KASSIOPEIA OR BUILD_KEMFIELD OR BUILD_KGEOBAG )
+    if( NOT KASPER_USE_VTK )
+        message(WARNING "*** Building without VTK support ***\n"
+            "You won't be able to use 3D visualization tools. Set KASPER_USE_VTK=ON to change this.")
+    endif( NOT KASPER_USE_VTK )
+endif()
+
+if( BUILD_KASSIOPEIA )
+    if( NOT KASPER_USE_ROOT )
+        message(WARNING "*** Building without ROOT support ***\n"
+            "You won't be able to read/write ROOT files. Set KASPER_USE_ROOT=ON to change this.")
+    endif( NOT KASPER_USE_ROOT )
+endif()
+
+if( KASPER_EXPERIMENTAL )
+    message(WARNING "*** Building with experimental code ***\n"
+    "Experimental code is not fully tested and shouldn't be used unless you know what you're doing. Set KASPER_EXPERIMENTAL=OFF to change this.")
+endif( KASPER_EXPERIMENTAL )
+
+if( KASPER_DEPRECATED )
+    message(WARNING "*** Building with deprecated code ***\n"
+    "Deprecated code is no longer maintained and shouldn't be used. Set KASPER_DEPRECATED=OFF to change this.")
+endif( KASPER_DEPRECATED )
+
+get_filename_component(CMAKE_MAKE_PROGRAM_NAME ${CMAKE_MAKE_PROGRAM} NAME)
+message("\n   Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start the build,\n"
+    "   `${CMAKE_MAKE_PROGRAM_NAME} install` to install in ${KASPER_INSTALL_DIR},\n"
+    "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate documentation.\n")
+
+# Install common project files
+
+install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME} )
+
+configure_file( KasperVersion.h.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h @ONLY )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h DESTINATION ${INCLUDE_INSTALL_DIR} )
+
+configure_file( KasperVersion.json.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json @ONLY )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json DESTINATION ${CONFIG_INSTALL_DIR} )
+
+configure_file( KasperVersion.xml.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml @ONLY )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml DESTINATION ${CONFIG_INSTALL_DIR} )
 
 configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
 configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )

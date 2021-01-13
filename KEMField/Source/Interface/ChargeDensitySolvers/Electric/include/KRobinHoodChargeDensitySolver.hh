@@ -9,7 +9,7 @@
 #define KROBINHOODCHARGEDENSITYSOLVER_HH_
 
 #include "KChargeDensitySolver.hh"
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KElectrostaticBoundaryIntegratorPolicy.hh"
 
 namespace KEMField
@@ -58,9 +58,9 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
             fUseOpenCL = choice;
             return;
 #endif
-            KEMField::cout << "WARNING: cannot use OpenCl in robin hood without"
-                              " KEMField being built with OpenCl, using defaults."
-                           << endl;
+            kem_cout(eWarning) << "WARNING: cannot use OpenCl in robin hood without"
+                                  " KEMField being built with OpenCl, using defaults."
+                               << eom;
         }
         fUseOpenCL = false;
         return;
@@ -72,9 +72,9 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
             fUseVTK = choice;
             return;
 #endif
-            KEMField::cout << "WARNING: cannot use vtk in robin hood without"
-                              " KEMField being built with vtk, using defaults."
-                           << endl;
+            kem_cout(eWarning) << "WARNING: cannot use vtk in robin hood without"
+                                  " KEMField being built with vtk, using defaults."
+                               << eom;
         }
         fUseVTK = false;
         return;

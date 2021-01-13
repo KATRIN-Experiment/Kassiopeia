@@ -35,11 +35,11 @@ template<typename ValueType> class KBlockJacobiPreconditioner : public KPrecondi
         fZero(0)
     {
         fBlockIndexLists.clear();
-        for (unsigned int i = 0; i < block_index_lists->size(); i++) {
+        for (auto block_index_list : *block_index_lists) {
             std::vector<unsigned int> block_list;
             block_list.clear();
-            for (unsigned int j = 0; j < block_index_lists->at(i)->size(); j++) {
-                block_list.push_back(block_index_lists->at(i)->at(j));
+            for (unsigned int j : *block_index_list) {
+                block_list.push_back(j);
             }
 
             if (block_list.size() != 0) {

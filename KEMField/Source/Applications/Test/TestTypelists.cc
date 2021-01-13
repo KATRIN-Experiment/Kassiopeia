@@ -35,10 +35,7 @@ template<class TList> struct ListClassNames_trait;
 
 template<> struct ListClassNames_trait<KEMField::KNullType>
 {
-    static void ListClassNames()
-    {
-        return;
-    }
+    static void ListClassNames() {}
 };
 
 template<class T, class U> struct ListClassNames_trait<KEMField::KTypelist<T, U>>
@@ -53,8 +50,8 @@ template<class T, class U> struct ListClassNames_trait<KEMField::KTypelist<T, U>
 class A
 {
   public:
-    A() {}
-    ~A() {}
+    A() = default;
+    ~A() = default;
     static std::string ClassName()
     {
         return std::string("A");
@@ -64,8 +61,8 @@ class A
 class B
 {
   public:
-    B() {}
-    ~B() {}
+    B() = default;
+    ~B() = default;
     static std::string ClassName()
     {
         return std::string("B");
@@ -75,8 +72,8 @@ class B
 class C
 {
   public:
-    C() {}
-    ~C() {}
+    C() = default;
+    ~C() = default;
     static std::string ClassName()
     {
         return std::string("C");
@@ -97,7 +94,8 @@ int main()
 
     ListClassNames_trait<MyList>::ListClassNames();
 
-    typedef KTYPELIST_3(int, float, std::string) List0;
+    using List0 =
+        KEMField::KTypelist<int, KEMField::KTypelist<float, KEMField::KTypelist<std::string, KEMField::KNullType>>>;
 
     // show the usage of Length<...>::value
     //
@@ -119,7 +117,7 @@ int main()
     // show the usage of Append<..., T>::Result
     // List1 is <int, float, std::string, bool>
     //
-    typedef KEMField::Append<List0, bool>::Result List1;
+    using List1 = KEMField::Append<List0, bool>::Result;
 
     std::cout << "Append<(I,S,F),B>          IndexOf<(I,F,S,B), B>: 3 - " << KEMField::IndexOf<List1, bool>::value
               << "\n";
@@ -129,22 +127,23 @@ int main()
     //
     // N.B. EraseAll works as well (erases all the occurrencies of a type)
     //
-    typedef KEMField::Erase<List1, std::string>::Result List2;
+    using List2 = KEMField::Erase<List1, std::string>::Result;
     std::cout << "Erase<(I,F,S,B),S>         IndexOf<(I,F,B), B>: 2 - " << KEMField::IndexOf<List2, bool>::value
               << "\n";
 
     // List3  is <int, float, std::string, float, bool>
     // List4  is <bool, float, std::string, float, bool>
     // List5  is <int, float, std::string, bool>
-    typedef KEMField::Append<List0, KTYPELIST_2(float, bool)>::Result List3;
+    using List3 =
+        KEMField::Append<List0, KEMField::KTypelist<float, KEMField::KTypelist<bool, KEMField::KNullType>>>::Result;
     std::cout << "Append<(I,F,S),(F,B)>      IndexOf<(I,F,S,F,B), B>: 4 - " << KEMField::IndexOf<List3, bool>::value
               << "\n";
 
-    typedef KEMField::Replace<List3, int, bool>::Result List4;
+    using List4 = KEMField::Replace<List3, int, bool>::Result;
     std::cout << "Replace<(I,F,S,F,B),I,B>   IndexOf<(B,F,S,F,B), B>: 0 - " << KEMField::IndexOf<List4, bool>::value
               << "\n";
 
-    typedef KEMField::NoDuplicates<List3>::Result List5;
+    using List5 = KEMField::NoDuplicates<List3>::Result;
     std::cout << "NoDuplicates<((I,F,S,F,B)> IndexOf<(I,F,S,B), B>: 3 - " << KEMField::IndexOf<List5, bool>::value
               << "\n";
 

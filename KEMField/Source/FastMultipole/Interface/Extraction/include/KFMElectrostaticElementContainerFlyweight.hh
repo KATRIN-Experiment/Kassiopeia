@@ -37,30 +37,31 @@ class KFMElectrostaticElementContainerFlyweight : public KFMElectrostaticElement
   public:
     KFMElectrostaticElementContainerFlyweight(const KSurfaceContainer& container);
     KFMElectrostaticElementContainerFlyweight(const KSortedSurfaceContainer& container);
-    virtual ~KFMElectrostaticElementContainerFlyweight(){};
+    ~KFMElectrostaticElementContainerFlyweight() override = default;
+    ;
 
-    virtual unsigned int GetNElements() const;
+    unsigned int GetNElements() const override;
 
-    virtual void AddElectrostaticElement(const KFMElectrostaticElement<3, 1>& /*elem*/);
+    void AddElectrostaticElement(const KFMElectrostaticElement<3, 1>& /*elem*/) override;
 
-    virtual KFMElectrostaticElement<3, 1> GetElectrostaticElement(unsigned int id);
+    KFMElectrostaticElement<3, 1> GetElectrostaticElement(unsigned int id) override;
 
-    virtual KFMPointCloud<3>* GetPointCloud(unsigned int id);
-    virtual KFMBall<3>* GetBoundingBall(unsigned int id);
-    virtual KFMBasisData<1>* GetBasisData(unsigned int id);
+    KFMPointCloud<3>* GetPointCloud(unsigned int id) override;
+    KFMBall<3>* GetBoundingBall(unsigned int id) override;
+    KFMBasisData<1>* GetBasisData(unsigned int id) override;
 
-    virtual const KFMPointCloud<3>* GetPointCloud(unsigned int id) const;
-    virtual const KFMBall<3>* GetBoundingBall(unsigned int id) const;
-    virtual const KFMBasisData<1>* GetBasisData(unsigned int id) const;
-    virtual double GetAspectRatio(unsigned int id) const;
+    const KFMPointCloud<3>* GetPointCloud(unsigned int id) const override;
+    const KFMBall<3>* GetBoundingBall(unsigned int id) const override;
+    const KFMBasisData<1>* GetBasisData(unsigned int id) const override;
+    double GetAspectRatio(unsigned int id) const override;
 
-    virtual KFMObjectContainer<KFMPointCloud<3>>* GetPointCloudContainer();
-    virtual KFMObjectContainer<KFMBall<3>>* GetBoundingBallContainer();
-    virtual KFMObjectContainer<KFMBasisData<1>>* GetChargeDensityContainer();
+    KFMObjectContainer<KFMPointCloud<3>>* GetPointCloudContainer() override;
+    KFMObjectContainer<KFMBall<3>>* GetBoundingBallContainer() override;
+    KFMObjectContainer<KFMBasisData<1>>* GetChargeDensityContainer() override;
 
-    virtual const KFMObjectContainer<KFMPointCloud<3>>* GetPointCloudContainer() const;
-    virtual const KFMObjectContainer<KFMBall<3>>* GetBoundingBallContainer() const;
-    virtual const KFMObjectContainer<KFMBasisData<1>>* GetChargeDensityContainer() const;
+    const KFMObjectContainer<KFMPointCloud<3>>* GetPointCloudContainer() const override;
+    const KFMObjectContainer<KFMBall<3>>* GetBoundingBallContainer() const override;
+    const KFMObjectContainer<KFMBasisData<1>>* GetChargeDensityContainer() const override;
 
 
   private:

@@ -34,7 +34,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${FIELDS_HEADER_PATH} )
-add_library( KassiopeiaFields SHARED ${FIELDS_SOURCE_FILENAMES} )
+add_library( KassiopeiaFields SHARED ${FIELDS_SOURCE_FILENAMES} ${FIELDS_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaFields PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaFields
     ${Kommon_LIBRARIES}

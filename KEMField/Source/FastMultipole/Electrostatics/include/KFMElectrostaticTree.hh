@@ -51,45 +51,43 @@ namespace KEMField
 typedef KFMNearbyElementCounter<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
     KFMElectrostaticNearbyElementCounter;
 
-typedef KFMElementNodeAssociator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticElementNodeAssociator;
+using KFMElectrostaticElementNodeAssociator = KFMElementNodeAssociator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>;
 
-typedef KFMIdentitySetListCreator<KFMElectrostaticNodeObjects> KFMElectrostaticIdentitySetListCreator;
+using KFMElectrostaticIdentitySetListCreator = KFMIdentitySetListCreator<KFMElectrostaticNodeObjects>;
 
 //distributor of element moments
-typedef KFMElementScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
-                                          KFMELECTROSTATICS_DIM>
-    KFMElectrostaticElementMultipoleDistributor;
+using KFMElectrostaticElementMultipoleDistributor =
+    KFMElementScalarMomentDistributor<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet, KFMELECTROSTATICS_DIM>;
 
 
 //initializers
-typedef KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>
-    KFMElectrostaticMultipoleInitializer;
+using KFMElectrostaticMultipoleInitializer =
+    KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>;
 
-typedef KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>
-    KFMElectrostaticLocalCoefficientInitializer;
+using KFMElectrostaticLocalCoefficientInitializer =
+    KFMScalarMomentInitializer<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>;
 
 //resetters
-typedef KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>
-    KFMElectrostaticMultipoleResetter;
+using KFMElectrostaticMultipoleResetter =
+    KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>;
 
-typedef KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>
-    KFMElectrostaticLocalCoefficientResetter;
+using KFMElectrostaticLocalCoefficientResetter =
+    KFMScalarMomentResetter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>;
 
 //moment converters
-typedef KFMScalarMomentRemoteToRemoteConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
-                                               KFMResponseKernel_3DLaplaceM2M, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticRemoteToRemoteConverter;
+using KFMElectrostaticRemoteToRemoteConverter =
+    KFMScalarMomentRemoteToRemoteConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                           KFMResponseKernel_3DLaplaceM2M, KFMELECTROSTATICS_DIM>;
 
-typedef KFMScalarMomentLocalToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet,
-                                             KFMResponseKernel_3DLaplaceL2L, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticLocalToLocalConverter;
+using KFMElectrostaticLocalToLocalConverter =
+    KFMScalarMomentLocalToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet,
+                                         KFMResponseKernel_3DLaplaceL2L, KFMELECTROSTATICS_DIM>;
 
 #ifdef USE_REDUCED_M2L
-typedef KFMReducedScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
-                                                     KFMElectrostaticLocalCoefficientSet,
-                                                     KFMResponseKernel_3DLaplaceM2L, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticRemoteToLocalConverter;
+using KFMElectrostaticRemoteToLocalConverter =
+    KFMReducedScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
+                                                 KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L,
+                                                 KFMELECTROSTATICS_DIM>;
 #else
 typedef KFMScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet,
                                               KFMElectrostaticLocalCoefficientSet, KFMResponseKernel_3DLaplaceM2L,
@@ -98,39 +96,37 @@ typedef KFMScalarMomentRemoteToLocalConverter<KFMElectrostaticNodeObjects, KFMEl
 #endif
 
 //interface to m2l converters to handle different divisions on top level
-typedef KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM,
-                                           KFMElectrostaticRemoteToLocalConverter>
-    KFMElectrostaticRemoteToLocalConverterInterface;
+using KFMElectrostaticRemoteToLocalConverterInterface =
+    KFMRemoteToLocalConverterInterface<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM, KFMElectrostaticRemoteToLocalConverter>;
 
 //navigator
-typedef KFMCubicSpaceTreeNavigator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM> KFMElectrostaticTreeNavigator;
+using KFMElectrostaticTreeNavigator = KFMCubicSpaceTreeNavigator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>;
 
 //id set collector
-typedef KFMIdentitySetMerger<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentitySetMerger;
+using KFMElectrostaticNodeIdentitySetMerger = KFMIdentitySetMerger<KFMElectrostaticNodeObjects>;
 
 //inspector to determine node primacy
-typedef KFMCubicSpaceNodeAdjacencyProgenitor<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticAdjacencyProgenitor;
+using KFMElectrostaticAdjacencyProgenitor = KFMCubicSpaceNodeAdjacencyProgenitor<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>;
 
 
 //sorters for the identity set, and external identity set
-typedef KFMIdentitySetSorter<KFMElectrostaticNodeObjects> KFMElectrostaticIdentitySetSorter;
+using KFMElectrostaticIdentitySetSorter = KFMIdentitySetSorter<KFMElectrostaticNodeObjects>;
 
-typedef KFMExternalIdentitySetSorter<KFMElectrostaticNodeObjects> KFMElectrostaticExternalIdentitySetSorter;
+using KFMElectrostaticExternalIdentitySetSorter = KFMExternalIdentitySetSorter<KFMElectrostaticNodeObjects>;
 
-typedef KFMElementLocator<KFMElectrostaticNodeObjects> KFMElectrostaticElementLocator;
+using KFMElectrostaticElementLocator = KFMElementLocator<KFMElectrostaticNodeObjects>;
 
-typedef KFMNodeIdentityListCreator<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentityListCreator;
+using KFMElectrostaticNodeIdentityListCreator = KFMNodeIdentityListCreator<KFMElectrostaticNodeObjects>;
 
-typedef KFMNodeIdentityListRangeAssociator<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentityListRangeAssociator;
+using KFMElectrostaticNodeIdentityListRangeAssociator = KFMNodeIdentityListRangeAssociator<KFMElectrostaticNodeObjects>;
 
-typedef KFMElementInfluenceRangeCollector<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>
-    KFMElectrostaticElementInfluenceRangeCollector;
+using KFMElectrostaticElementInfluenceRangeCollector =
+    KFMElementInfluenceRangeCollector<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>;
 
-typedef KFMIdentitySetCollector<KFMElectrostaticNodeObjects> KFMElectrostaticNodeIdentitySetCollector;
+using KFMElectrostaticNodeIdentitySetCollector = KFMIdentitySetCollector<KFMElectrostaticNodeObjects>;
 
-typedef KFMCollocationPointIdentitySetCreator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>
-    KFMElectrostaticCollocationPointIdentitySetCreator;
+using KFMElectrostaticCollocationPointIdentitySetCreator =
+    KFMCollocationPointIdentitySetCreator<KFMElectrostaticNodeObjects, KFMELECTROSTATICS_DIM>;
 
 //the local coefficient calculator
 //KFMLocalCoefficientCalculator* fLocalCoeffCalculator;
@@ -157,9 +153,10 @@ class KFMElectrostaticTree : public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFM
     {
         ;
     }
-    ~KFMElectrostaticTree() override{};
+    ~KFMElectrostaticTree() override = default;
+    ;
 
-    void SetParameters(KFMElectrostaticParameters params)
+    void SetParameters(const KFMElectrostaticParameters& params)
     {
         fParameters = params;
     }
@@ -173,7 +170,7 @@ class KFMElectrostaticTree : public KFMCubicSpaceTree<KFMELECTROSTATICS_DIM, KFM
     {
         return fUniqueID;
     };
-    void SetUniqueID(std::string unique_id)
+    void SetUniqueID(const std::string& unique_id)
     {
         fUniqueID = unique_id;
     };

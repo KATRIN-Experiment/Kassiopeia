@@ -2,9 +2,9 @@
 
 #include "KFileMessage.h"
 
+#include <climits>
 #include <cstdio>
-#include <limits.h>
-#include <stdlib.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -24,7 +24,7 @@ KFile::KFile() :
     fUsingDefaultPath(false),
     fState(eClosed)
 {}
-KFile::~KFile() {}
+KFile::~KFile() = default;
 
 void KFile::AddToPaths(const string& aPath)
 {
@@ -67,7 +67,7 @@ const string& KFile::GetName() const
 
 std::string KFile::GetAbsoluteName() const
 {
-    char tAbsPath[PATH_MAX];
+    char tAbsPath[PATH_MAX];  // NOLINT
     if (!realpath(fResolvedName.c_str(), tAbsPath))
         return "";
     return tAbsPath;

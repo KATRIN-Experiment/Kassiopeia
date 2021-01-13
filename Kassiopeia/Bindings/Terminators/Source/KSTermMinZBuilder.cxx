@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMinZBuilder::~KComplexElement() {}
+template<> KSTermMinZBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMinZStructure =
-    KSTermMinZBuilder::Attribute<string>("name") + KSTermMinZBuilder::Attribute<double>("z");
+    KSTermMinZBuilder::Attribute<std::string>("name") + KSTermMinZBuilder::Attribute<double>("z");
 
 STATICINT sKSTermMinZ = KSRootBuilder::ComplexElement<KSTermMinZ>("ksterm_min_z");
 

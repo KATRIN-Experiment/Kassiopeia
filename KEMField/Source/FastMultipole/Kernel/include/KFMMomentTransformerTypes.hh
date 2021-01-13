@@ -21,9 +21,9 @@ namespace KEMField
 *
 */
 
-typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2M> KFMMomentTransformer_3DLaplaceM2M;
-typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2L> KFMMomentTransformer_3DLaplaceM2L;
-typedef KFMMomentTransformer<KFMResponseKernel_3DLaplaceL2L> KFMMomentTransformer_3DLaplaceL2L;
+using KFMMomentTransformer_3DLaplaceM2M = KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2M>;
+using KFMMomentTransformer_3DLaplaceM2L = KFMMomentTransformer<KFMResponseKernel_3DLaplaceM2L>;
+using KFMMomentTransformer_3DLaplaceL2L = KFMMomentTransformer<KFMResponseKernel_3DLaplaceL2L>;
 
 }  // namespace KEMField
 

@@ -27,30 +27,30 @@ template<> inline bool KRampedElectric2FieldBuilder::AddAttribute(KContainer* aC
         return true;
     }
     if (aContainer->GetName() == "root_field_1") {
-        std::string fieldName = aContainer->AsReference<std::string>();
+        std::string fieldName = aContainer->AsString();
         auto* field = katrin::KToolbox::GetInstance().Get<KEMField::KElectricField>(fieldName);
         fObject->SetRootElectricField1(field);
         return true;
     }
     if (aContainer->GetName() == "root_field_2") {
-        std::string fieldName = aContainer->AsReference<std::string>();
+        std::string fieldName = aContainer->AsString();
         auto* field = katrin::KToolbox::GetInstance().Get<KEMField::KElectricField>(fieldName);
         fObject->SetRootElectricField2(field);
         return true;
     }
     if (aContainer->GetName() == "ramping_type") {
-        std::string tFlag = aContainer->AsReference<std::string>();
-        if (tFlag == std::string("linear"))
+        std::string tFlag = aContainer->AsString();
+        if (tFlag == "linear")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtLinear);
-        else if (tFlag == std::string("exponential"))
+        else if (tFlag == "exponential")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtExponential);
-        else if (tFlag == std::string("sinus"))
+        else if (tFlag == "sinus")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtSinus);
-        else if (tFlag == std::string("square"))
+        else if (tFlag == "square")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtSquare);
-        else if (tFlag == std::string("focus"))
+        else if (tFlag == "focus")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtFocus);
-        else if (tFlag == std::string("focus_experimental"))
+        else if (tFlag == "focus_experimental")
             fObject->SetRampingType(KEMField::KRampedElectric2Field::rtFocusExperimental);
         return true;
     }

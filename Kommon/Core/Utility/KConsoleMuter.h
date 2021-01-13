@@ -9,8 +9,8 @@
 
 #include "KNonCopyable.h"
 
+#include <cstdio>
 #include <fstream>
-#include <stdio.h>
 #include <vector>
 
 namespace katrin
@@ -19,7 +19,7 @@ namespace katrin
 class KConsoleMuter : KNonCopyable
 {
   public:
-    KConsoleMuter() {}
+    KConsoleMuter() = default;
     KConsoleMuter(std::ostream& stream);
     KConsoleMuter(FILE* stream);
     virtual ~KConsoleMuter();
@@ -78,8 +78,8 @@ inline void KConsoleMuter::UnMute()
     fBackupStreamBufs.clear();
 
     // this might not restore the C streams correctly:
-    for (size_t i = 0; i < fMutedCStreams.size(); ++i) {
-        freopen("/dev/tty", "a", fMutedCStreams[i]);
+    for (auto& stream : fMutedCStreams) {
+        freopen("/dev/tty", "a", stream);
     }
     fMutedCStreams.clear();
 

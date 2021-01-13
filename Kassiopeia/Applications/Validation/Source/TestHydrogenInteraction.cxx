@@ -154,7 +154,7 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     tFinalParticle->SetLength(tLength);
 
 
-    KThreeVector tDirection = KThreeVector(0., 0., 1.);
+    KGeoBag::KThreeVector tDirection(0., 0., 1.);
 
     double tEnergy = tLowEnergy;
     int tIndex = 0;

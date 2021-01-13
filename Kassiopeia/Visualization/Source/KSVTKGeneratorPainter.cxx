@@ -19,8 +19,9 @@
 #include <algorithm>
 #include <limits>
 
-using namespace std;
+using namespace KGeoBag;
 using namespace katrin;
+using namespace std;
 
 namespace Kassiopeia
 {
@@ -76,7 +77,7 @@ KSVTKGeneratorPainter::KSVTKGeneratorPainter() :
     //fMapper->SetColorModeToMapScalars();
     fActor->SetMapper(fMapper);
 }
-KSVTKGeneratorPainter::~KSVTKGeneratorPainter() {}
+KSVTKGeneratorPainter::~KSVTKGeneratorPainter() = default;
 
 void KSVTKGeneratorPainter::AddElectricField(KSElectricField* aField)
 {

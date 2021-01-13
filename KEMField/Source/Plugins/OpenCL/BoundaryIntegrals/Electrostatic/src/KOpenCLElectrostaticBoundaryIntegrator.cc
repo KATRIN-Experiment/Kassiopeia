@@ -13,12 +13,12 @@ KOpenCLElectrostaticBoundaryIntegrator::KOpenCLElectrostaticBoundaryIntegrator(
     const KOpenCLElectrostaticBoundaryIntegratorConfig& config, KOpenCLSurfaceContainer& c) :
     KOpenCLBoundaryIntegrator<KElectrostaticBasis>(c),
     fConfig(config),
-    fPhiKernel(NULL),
-    fEFieldKernel(NULL),
-    fEFieldAndPhiKernel(NULL),
-    fBufferPhi(NULL),
-    fBufferEField(NULL),
-    fBufferEFieldAndPhi(NULL)
+    fPhiKernel(nullptr),
+    fEFieldKernel(nullptr),
+    fEFieldAndPhiKernel(nullptr),
+    fBufferPhi(nullptr),
+    fBufferEField(nullptr),
+    fBufferEFieldAndPhi(nullptr)
 {
     std::stringstream options;
     options << GetOpenCLFlags() << " -DKEMFIELD_INTEGRATORFILE_CL=<" << OpenCLFile() << ">";
@@ -106,7 +106,7 @@ void KOpenCLElectrostaticBoundaryIntegrator::ConstructOpenCLKernels() const
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
     cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source);

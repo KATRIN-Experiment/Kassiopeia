@@ -54,9 +54,8 @@ class KSATestB : public KSAInputOutputObject
         return *this;
     }
 
-    ~KSATestB() override{
-
-    };
+    ~KSATestB() override = default;
+    ;
 
     virtual const char* GetName() const;
 

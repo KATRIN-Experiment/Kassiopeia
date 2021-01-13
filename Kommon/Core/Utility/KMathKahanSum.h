@@ -23,7 +23,7 @@ template<class FloatT = double> class KMathKahanSum
     {
         Add(initialValue);
     }
-    virtual ~KMathKahanSum() {}
+    virtual ~KMathKahanSum() = default;
 
     KMathKahanSum& Add(FloatT summand);
     KMathKahanSum& Subtract(FloatT summand)

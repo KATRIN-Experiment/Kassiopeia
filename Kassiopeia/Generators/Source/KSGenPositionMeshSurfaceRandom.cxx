@@ -15,11 +15,13 @@
 #include "KRandom.h"
 using katrin::KRandom;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 KSGenPositionMeshSurfaceRandom::KSGenPositionMeshSurfaceRandom() : fTotalArea(0.) {}
 KSGenPositionMeshSurfaceRandom::KSGenPositionMeshSurfaceRandom(const KSGenPositionMeshSurfaceRandom& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTotalArea(aCopy.fTotalArea),
     fElementsystems(aCopy.fElementsystems)
 {}
@@ -29,7 +31,7 @@ KSGenPositionMeshSurfaceRandom* KSGenPositionMeshSurfaceRandom::Clone() const
     return new KSGenPositionMeshSurfaceRandom(*this);
 }
 
-KSGenPositionMeshSurfaceRandom::~KSGenPositionMeshSurfaceRandom() {}
+KSGenPositionMeshSurfaceRandom::~KSGenPositionMeshSurfaceRandom() = default;
 
 void KSGenPositionMeshSurfaceRandom::VisitSurface(KGeoBag::KGSurface* aSurface)
 {
@@ -56,7 +58,7 @@ void KSGenPositionMeshSurfaceRandom::VisitExtendedSurface(
 
 void KSGenPositionMeshSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
 {
-    for (auto tParticleIt = aPrimaries->begin(); tParticleIt != aPrimaries->end(); ++tParticleIt) {
+    for (auto& aPrimarie : *aPrimaries) {
         double tDecision = KRandom::GetInstance().Uniform() * fTotalArea;
         std::vector<KSGenMeshElementSystem>::iterator tSysIt;
         KGeoBag::KGMeshElementCIt tElementIt;
@@ -83,7 +85,7 @@ void KSGenPositionMeshSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
                 tSysIt->first.fOrigin + tInternalRandomPosition.X() * tSysIt->first.fXAxis +
                 tInternalRandomPosition.Y() * tSysIt->first.fYAxis + tInternalRandomPosition.Z() * tSysIt->first.fZAxis;
 
-            (*tParticleIt)->SetPosition(tExternalRandomPosition);
+            aPrimarie->SetPosition(tExternalRandomPosition);
             genmsg(eDebug) << "surface random position generator <" << GetName() << "> diced position "
                            << tExternalRandomPosition << " on rectangle" << eom;
             continue;
@@ -102,7 +104,7 @@ void KSGenPositionMeshSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
                 tSysIt->first.fOrigin + tInternalRandomPosition.X() * tSysIt->first.fXAxis +
                 tInternalRandomPosition.Y() * tSysIt->first.fYAxis + tInternalRandomPosition.Z() * tSysIt->first.fZAxis;
 
-            (*tParticleIt)->SetPosition(tExternalRandomPosition);
+            aPrimarie->SetPosition(tExternalRandomPosition);
             genmsg(eDebug) << "surface random position generator <" << GetName() << "> diced position "
                            << tExternalRandomPosition << " on triangle" << eom;
             continue;
@@ -126,7 +128,7 @@ void KSGenPositionMeshSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
                 tSysIt->first.fOrigin + tInternalRandomPosition.X() * tSysIt->first.fXAxis +
                 tInternalRandomPosition.Y() * tSysIt->first.fYAxis + tInternalRandomPosition.Z() * tSysIt->first.fZAxis;
 
-            (*tParticleIt)->SetPosition(tExternalRandomPosition);
+            aPrimarie->SetPosition(tExternalRandomPosition);
             genmsg(eDebug) << "surface random position generator <" << GetName() << "> diced position "
                            << tExternalRandomPosition << " on wire" << eom;
             continue;
@@ -139,15 +141,14 @@ void KSGenPositionMeshSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
 void KSGenPositionMeshSurfaceRandom::InitializeComponent()
 {
 
-    for (auto tSysIt = fElementsystems.begin(); tSysIt != fElementsystems.end(); ++tSysIt) {
-        if ((tSysIt->second) == NULL) {
+    for (auto& system : fElementsystems) {
+        if ((system.second) == NULL) {
             genmsg(eError) << "Mesh has not been defined for all surfaces specified in KSGenPositionMeshSurfaceRandom"
                            << eom;
         }
 
-        for (KGeoBag::KGMeshElementCIt tElementIt = tSysIt->second->begin(); tElementIt != tSysIt->second->end();
-             ++tElementIt) {
-            fTotalArea += (*tElementIt)->Area();
+        for (auto tElementIt : *system.second) {
+            fTotalArea += tElementIt->Area();
         }
     }
 

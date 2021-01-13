@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 KGArea::KGArea() : fInitialized(false) {}
-KGArea::KGArea(const KGArea& aCopy) : KGBoundary(), fInitialized(aCopy.fInitialized) {}
-KGArea::~KGArea() {}
+KGArea::KGArea(const KGArea&) = default;
+KGArea::~KGArea() = default;
 
 void KGArea::Accept(KGVisitor* aVisitor)
 {

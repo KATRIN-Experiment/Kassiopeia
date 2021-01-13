@@ -14,7 +14,8 @@ KGNavigableMeshProximityCheck::KGNavigableMeshProximityCheck() :
     fPreallocatedStack.resize(fDefaultStackSize, nullptr);
 };
 
-KGNavigableMeshProximityCheck::~KGNavigableMeshProximityCheck(){};
+KGNavigableMeshProximityCheck::~KGNavigableMeshProximityCheck() = default;
+;
 
 void KGNavigableMeshProximityCheck::SetPointAndRadius(const KThreeVector& point, double radius)
 {
@@ -25,8 +26,7 @@ void KGNavigableMeshProximityCheck::SetPointAndRadius(const KThreeVector& point,
     fSphereIntersectsMesh = false;
 }
 
-bool KGNavigableMeshProximityCheck::BallIntersectsCube(const KGBall<KGMESH_DIM>& ball,
-                                                       const KGCube<KGMESH_DIM>& cube) const
+bool KGNavigableMeshProximityCheck::BallIntersectsCube(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube)
 {
     //uses 'Avro's algorithm to check if axis aligned bounding box intersects a sphere
     //as specified in chapter 11.12 of Geometric Tools for Computer Graphics
@@ -63,8 +63,7 @@ bool KGNavigableMeshProximityCheck::BallIntersectsCube(const KGBall<KGMESH_DIM>&
     return false;
 }
 
-bool KGNavigableMeshProximityCheck::CubeEnclosedByBall(const KGBall<KGMESH_DIM>& ball,
-                                                       const KGCube<KGMESH_DIM>& cube) const
+bool KGNavigableMeshProximityCheck::CubeEnclosedByBall(const KGBall<KGMESH_DIM>& ball, const KGCube<KGMESH_DIM>& cube)
 {
     //this is not a strict check (we only compare the two bounding balls)
     //if bounding ball of the cube is inside the test ball, then it is definitely contained
@@ -153,17 +152,17 @@ void KGNavigableMeshProximityCheck::ApplyAction(KGMeshNavigationNode* node)
 
         //no leaf nodes which contain elements intersect the bounding ball
         //so there is no possible intersection with the mesh
-        if (fLeafNodes.size() == 0) {
+        if (fLeafNodes.empty()) {
             fSphereIntersectsMesh = false;
             return;
         }
 
         //now we have a list of all the leaf nodes which intersect the bounding ball
         //and also contain mesh elements, now we need to check if any of these elements are inside the ball
-        for (unsigned int i = 0; i < fLeafNodes.size(); i++) {
+        for (auto& node : fLeafNodes) {
             //get the cube
             KGCube<KGMESH_DIM>* cube =
-                KGObjectRetriever<KGMeshNavigationNodeObjects, KGCube<KGMESH_DIM>>::GetNodeObject(fLeafNodes[i]);
+                KGObjectRetriever<KGMeshNavigationNodeObjects, KGCube<KGMESH_DIM>>::GetNodeObject(node);
 
             //first we can perform a quick culling if there is a cube that
             //contains elements and lies entirely within the bounding ball
@@ -175,10 +174,10 @@ void KGNavigableMeshProximityCheck::ApplyAction(KGMeshNavigationNode* node)
 
         //culling didn't find a quick intersection, so we need to loop over the leaf nodes
         //and inspect their elements direcly to see if they intersect the ball
-        for (unsigned int i = 0; i < fLeafNodes.size(); i++) {
+        for (auto& node : fLeafNodes) {
             //get the element id set of this node
             KGIdentitySet* element_list =
-                KGObjectRetriever<KGMeshNavigationNodeObjects, KGIdentitySet>::GetNodeObject(fLeafNodes[i]);
+                KGObjectRetriever<KGMeshNavigationNodeObjects, KGIdentitySet>::GetNodeObject(node);
 
             unsigned int n_elem = element_list->GetSize();
             for (unsigned int j = 0; j < n_elem; j++) {

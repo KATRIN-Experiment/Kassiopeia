@@ -16,7 +16,7 @@ KSIntSpinRotateYPulse::KSIntSpinRotateYPulse() :
 {}
 
 KSIntSpinRotateYPulse::KSIntSpinRotateYPulse(const KSIntSpinRotateYPulse& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     KSComponentTemplate<KSIntSpinRotateYPulse, KSSpaceInteraction>(aCopy),
     fDone(aCopy.fDone),
     fTime(aCopy.fTime),
@@ -29,13 +29,13 @@ KSIntSpinRotateYPulse* KSIntSpinRotateYPulse::Clone() const
     return new KSIntSpinRotateYPulse(*this);
 }
 
-KSIntSpinRotateYPulse::~KSIntSpinRotateYPulse() {}
+KSIntSpinRotateYPulse::~KSIntSpinRotateYPulse() = default;
 
 
 void KSIntSpinRotateYPulse::CalculateInteraction(const KSTrajectory& /*aTrajectory*/,
                                                  const KSParticle& aTrajectoryInitialParticle,
                                                  const KSParticle& aTrajectoryFinalParticle,
-                                                 const KThreeVector& /*aTrajectoryCenter*/,
+                                                 const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
                                                  const double& /*aTrajectoryRadius*/,
                                                  const double& /*aTrajectoryTimeStep*/,
                                                  KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag)

@@ -23,8 +23,8 @@ namespace KEMField
 class KBasis
 {
   protected:
-    KBasis() {}
-    virtual ~KBasis() {}
+    KBasis() = default;
+    virtual ~KBasis() = default;
 };
 
 // Template for bases
@@ -39,7 +39,7 @@ template<typename Type, unsigned int Dim> class KBasisType : public KBasis
 
   protected:
     KBasisType() : fSolution(Dim, 0.) {}
-    ~KBasisType() override {}
+    ~KBasisType() override = default;
 
   public:
     void SetSolution(ValueType v)

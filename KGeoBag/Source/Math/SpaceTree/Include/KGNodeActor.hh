@@ -20,8 +20,10 @@ namespace KGeoBag
 template<typename NodeType> class KGNodeActor
 {
   public:
-    KGNodeActor(){};
-    virtual ~KGNodeActor(){};
+    KGNodeActor() = default;
+    ;
+    virtual ~KGNodeActor() = default;
+    ;
 
     virtual void ApplyAction(NodeType* node) = 0;
 

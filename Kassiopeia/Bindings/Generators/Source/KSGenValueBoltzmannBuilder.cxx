@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueBoltzmannBuilder::~KComplexElement() {}
+template<> KSGenValueBoltzmannBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueBoltzmannStructure = KSGenValueBoltzmannBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueBoltzmannStructure = KSGenValueBoltzmannBuilder::Attribute<std::string>("name") +
                                           KSGenValueBoltzmannBuilder::Attribute<double>("value_mass") +
                                           KSGenValueBoltzmannBuilder::Attribute<double>("value_kT") +
                                           KSGenValueBoltzmannBuilder::Attribute<bool>("unit_eV");

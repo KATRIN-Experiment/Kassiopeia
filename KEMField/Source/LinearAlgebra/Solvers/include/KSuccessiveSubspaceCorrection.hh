@@ -12,8 +12,8 @@ template<typename ValueType, template<typename> class ParallelTrait = KSuccessiv
 class KSuccessiveSubspaceCorrection : public KIterativeSolver<ValueType>
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KSuccessiveSubspaceCorrection();
     ~KSuccessiveSubspaceCorrection() override;
@@ -65,8 +65,7 @@ KSuccessiveSubspaceCorrection<ValueType, ParallelTrait>::KSuccessiveSubspaceCorr
 {}
 
 template<typename ValueType, template<typename> class ParallelTrait>
-KSuccessiveSubspaceCorrection<ValueType, ParallelTrait>::~KSuccessiveSubspaceCorrection()
-{}
+KSuccessiveSubspaceCorrection<ValueType, ParallelTrait>::~KSuccessiveSubspaceCorrection() = default;
 
 template<typename ValueType, template<typename> class ParallelTrait>
 void KSuccessiveSubspaceCorrection<ValueType, ParallelTrait>::Solve(const Matrix& A, Vector& x, const Vector& b)

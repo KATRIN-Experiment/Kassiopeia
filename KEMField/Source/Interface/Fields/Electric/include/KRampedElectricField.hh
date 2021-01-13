@@ -30,7 +30,7 @@ class KRampedElectricField : public KElectricField
 
   private:
     double PotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
-    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KFieldVector ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
   public:
     double GetModulationFactor(const double& aTime) const;

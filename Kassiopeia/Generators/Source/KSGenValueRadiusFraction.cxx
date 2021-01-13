@@ -9,16 +9,16 @@ using katrin::KRandom;
 namespace Kassiopeia
 {
 
-KSGenValueRadiusFraction::KSGenValueRadiusFraction() {}
+KSGenValueRadiusFraction::KSGenValueRadiusFraction() = default;
 
 KSGenValueRadiusFraction::KSGenValueRadiusFraction(const KSGenValueRadiusFraction& /*aCopy*/) : KSComponent() {}
 KSGenValueRadiusFraction* KSGenValueRadiusFraction::Clone() const
 {
     return new KSGenValueRadiusFraction(*this);
 }
-KSGenValueRadiusFraction::~KSGenValueRadiusFraction() {}
+KSGenValueRadiusFraction::~KSGenValueRadiusFraction() = default;
 
-void KSGenValueRadiusFraction::DiceValue(vector<double>& aDicedValues)
+void KSGenValueRadiusFraction::DiceValue(std::vector<double>& aDicedValues)
 {
 
     double tRadiusF = std::pow(KRandom::GetInstance().Uniform(0., 1.), (1. / 2.));

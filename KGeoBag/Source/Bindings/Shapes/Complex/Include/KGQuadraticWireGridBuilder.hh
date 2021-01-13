@@ -37,7 +37,7 @@ template<> inline bool KGQuadraticWireGridBuilder::AddAttribute(KContainer* anAt
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGQuadraticWireGrid>> KGQuadraticWireGridSurfaceBuilder;
+using KGQuadraticWireGridSurfaceBuilder = KComplexElement<KGWrappedSurface<KGQuadraticWireGrid>>;
 
 template<> inline bool KGQuadraticWireGridSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -62,7 +62,7 @@ template<> inline bool KGQuadraticWireGridSurfaceBuilder::AddElement(KContainer*
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGQuadraticWireGrid>> KGQuadraticWireGridSpaceBuilder;
+using KGQuadraticWireGridSpaceBuilder = KComplexElement<KGWrappedSpace<KGQuadraticWireGrid>>;
 
 template<> inline bool KGQuadraticWireGridSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

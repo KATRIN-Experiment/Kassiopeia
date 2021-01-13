@@ -19,7 +19,7 @@ template<> inline bool KSRootElectricFieldBuilder::AddAttribute(KContainer* aCon
         return true;
     }
     if (aContainer->GetName() == "add_electric_field") {
-        fObject->AddElectricField(getElectricField(aContainer->AsReference<std::string>()));
+        fObject->AddElectricField(getElectricField(aContainer->AsString()));
         return true;
     }
     return false;

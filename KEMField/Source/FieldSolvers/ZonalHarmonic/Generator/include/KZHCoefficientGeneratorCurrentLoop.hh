@@ -9,10 +9,10 @@ namespace KEMField
 template<> class KZHCoefficientGenerator<KCurrentLoop> : public KZHCoefficientGeneratorElement
 {
   public:
-    typedef KCurrentLoop ElementType;
+    using ElementType = KCurrentLoop;
 
     KZHCoefficientGenerator() : KZHCoefficientGeneratorElement() {}
-    ~KZHCoefficientGenerator() override {}
+    ~KZHCoefficientGenerator() override = default;
 
     void SetElement(const KCurrentLoop* c)
     {

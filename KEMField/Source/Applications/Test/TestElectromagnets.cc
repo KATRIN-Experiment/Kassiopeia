@@ -15,12 +15,10 @@
 #include "KZonalHarmonicTypes.hh"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 using namespace KEMField;
@@ -69,7 +67,7 @@ int main(int /*argc*/, char** /*argv*/)
         double z = 0.;
         double current = 1.;
 
-        KCurrentLoop* currentLoop = new KCurrentLoop();
+        auto* currentLoop = new KCurrentLoop();
         currentLoop->SetValues(r, z, current);
 
         std::vector<KLineCurrent*> lineCurrents;
@@ -103,8 +101,8 @@ int main(int /*argc*/, char** /*argv*/)
         KEMField::cout << "CURRENT LOOP:  vector potential at " << P << " is "
                        << currentLoopIntegrator.VectorPotential(*currentLoop, P) << KEMField::endl;
 
-        KThreeVector B(0., 0., 0.);
-        KThreeVector A(0., 0., 0.);
+        KFieldVector B(0., 0., 0.);
+        KFieldVector A(0., 0., 0.);
 
         for (unsigned int i = 0; i < nDisc; i++) {
             B += lineCurrentIntegrator.MagneticField(*lineCurrents.at(i), P);
@@ -127,7 +125,7 @@ int main(int /*argc*/, char** /*argv*/)
         double zMax = 1.;
         double current = 1.;
 
-        KSolenoid* solenoid = new KSolenoid();
+        auto* solenoid = new KSolenoid();
         solenoid->SetValues(r, zMin, zMax, current);
 
         std::vector<KCurrentLoop*> currentLoops;
@@ -149,8 +147,8 @@ int main(int /*argc*/, char** /*argv*/)
         KEMField::cout << "SOLENOID:  vector potential at " << P << " is "
                        << solenoidIntegrator.VectorPotential(*solenoid, P) << KEMField::endl;
 
-        KThreeVector B(0., 0., 0.);
-        KThreeVector A(0., 0., 0.);
+        KFieldVector B(0., 0., 0.);
+        KFieldVector A(0., 0., 0.);
 
         for (unsigned int i = 0; i < nDisc; i++) {
             B += currentLoopIntegrator.MagneticField(*currentLoops.at(i), P);
@@ -174,7 +172,7 @@ int main(int /*argc*/, char** /*argv*/)
         double zMax = 1.;
         double current = 1.;
 
-        KCoil* coil = new KCoil();
+        auto* coil = new KCoil();
         coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
         std::vector<KSolenoid*> solenoids;
@@ -196,8 +194,8 @@ int main(int /*argc*/, char** /*argv*/)
         KEMField::cout << "COIL:  vector potential at " << P << " is " << coilIntegrator.VectorPotential(*coil, P)
                        << KEMField::endl;
 
-        KThreeVector B(0., 0., 0.);
-        KThreeVector A(0., 0., 0.);
+        KFieldVector B(0., 0., 0.);
+        KFieldVector A(0., 0., 0.);
 
         for (unsigned int i = 0; i < nDisc; i++) {
             B += solenoidIntegrator.MagneticField(*solenoids.at(i), P);
@@ -223,10 +221,10 @@ int main(int /*argc*/, char** /*argv*/)
         double zMax = 1.;
         double current = 1.;
 
-        KCoil* coil = new KCoil();
+        auto* coil = new KCoil();
         coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
-        KSolenoid* solenoid = new KSolenoid();
+        auto* solenoid = new KSolenoid();
         solenoid->SetValues(rMin, zMin, zMax, current);
 
         KEMField::cout << "container size (empty): " << container.size() << KEMField::endl;
@@ -237,7 +235,7 @@ int main(int /*argc*/, char** /*argv*/)
 
         KEMField::cout << container << KEMField::endl;
 
-        KElectromagnetContainer* anotherContainer = new KElectromagnetContainer(container);
+        auto* anotherContainer = new KElectromagnetContainer(container);
         anotherContainer->IsOwner(false);
         KEMField::cout << *anotherContainer << KEMField::endl;
         delete anotherContainer;
@@ -255,10 +253,10 @@ int main(int /*argc*/, char** /*argv*/)
         double zMax = 1.;
         double current = 1.;
 
-        KCoil* coil = new KCoil();
+        auto* coil = new KCoil();
         coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
-        KSolenoid* solenoid = new KSolenoid();
+        auto* solenoid = new KSolenoid();
         solenoid->SetValues(rMin, zMin, zMax, current);
 
         container.push_back(coil);
@@ -287,7 +285,7 @@ int main(int /*argc*/, char** /*argv*/)
         double z = 0.;
         double current = 1.;
 
-        KCurrentLoop* currentLoop = new KCurrentLoop();
+        auto* currentLoop = new KCurrentLoop();
         currentLoop->SetValues(r, z, current);
 
         currentLoops.push_back(currentLoop);
@@ -344,7 +342,7 @@ int main(int /*argc*/, char** /*argv*/)
         double zMax = 1.;
         double current = 1.;
 
-        KCoil* coil = new KCoil();
+        auto* coil = new KCoil();
         coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
         coil->GetCoordinateSystem().SetValues(KPosition(0., 0., 0.),
@@ -352,7 +350,7 @@ int main(int /*argc*/, char** /*argv*/)
                                               KDirection(0., 1., 0.),
                                               KDirection(0., 0., 1.));
 
-        KCoil* coil2 = new KCoil();
+        auto* coil2 = new KCoil();
         coil2->SetValues(rMin, rMax, zMin - 1, zMax, current, nDisc);
 
         coil2->GetCoordinateSystem().SetValues(KPosition(0., 0., -4.),
@@ -360,7 +358,7 @@ int main(int /*argc*/, char** /*argv*/)
                                                KDirection(0., 1., 0.),
                                                KDirection(0., 0., 1.));
 
-        KCoil* coil3 = new KCoil();
+        auto* coil3 = new KCoil();
         coil3->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
         coil3->GetCoordinateSystem().SetValues(KPosition(1., 2., 3.),

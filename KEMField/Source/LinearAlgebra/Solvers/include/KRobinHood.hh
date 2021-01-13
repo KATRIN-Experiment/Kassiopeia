@@ -12,8 +12,8 @@ template<typename ValueType, template<typename> class ParallelTrait = KRobinHood
 class KRobinHood : public KIterativeSolver<ValueType>
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KRobinHood();
     ~KRobinHood() override;

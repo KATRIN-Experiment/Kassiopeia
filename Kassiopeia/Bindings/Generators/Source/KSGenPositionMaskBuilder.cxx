@@ -19,12 +19,12 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSGenPositionMaskBuilder::~KComplexElement() {}
+template<> KSGenPositionMaskBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionMaskStructure =
-    KSGenPositionMaskBuilder::Attribute<string>("name") +
-    KSGenPositionMaskBuilder::Attribute<string>("spaces_allowed") +
-    KSGenPositionMaskBuilder::Attribute<string>("spaces_forbidden") +
+    KSGenPositionMaskBuilder::Attribute<std::string>("name") +
+    KSGenPositionMaskBuilder::Attribute<std::string>("spaces_allowed") +
+    KSGenPositionMaskBuilder::Attribute<std::string>("spaces_forbidden") +
     KSGenPositionMaskBuilder::Attribute<unsigned int>("max_retries") +
     KSGenPositionMaskBuilder::ComplexElement<KSGenPositionRectangularComposite>("position_rectangular_composite") +
     KSGenPositionMaskBuilder::ComplexElement<KSGenPositionCylindricalComposite>("position_cylindrical_composite") +

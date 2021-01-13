@@ -12,7 +12,7 @@
 namespace katrin
 {
 
-template<> KEMToolboxBuilder::~KComplexElement() {}
+template<> KEMToolboxBuilder::~KComplexElement() = default;
 
 STATICINT sKEMRoot = KRootBuilder::ComplexElement<KEMRoot>("kemfield");
 

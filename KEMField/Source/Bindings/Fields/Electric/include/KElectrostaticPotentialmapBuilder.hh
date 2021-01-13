@@ -103,13 +103,12 @@ template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute
     }
     if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 
@@ -162,10 +161,10 @@ class KElectrostaticPotentialmap : public KElectrostaticField
     {
         return std::numeric_limits<double>::quiet_NaN();
     }
-    KThreeVector ElectricFieldCore(const KPosition& /*P*/) const override
+    KFieldVector ElectricFieldCore(const KPosition& /*P*/) const override
     {
         double nan = std::numeric_limits<double>::quiet_NaN();
-        return KThreeVector(nan, nan, nan);
+        return KFieldVector(nan, nan, nan);
     }
 };
 class KElectrostaticPotentialmapCalculator
@@ -188,7 +187,7 @@ template<> inline bool KElectrostaticPotentialmapBuilder::End()
     return true;
 }
 
-typedef KComplexElement<KEMField::KElectrostaticPotentialmapCalculator> KElectrostaticPotentialmapCalculatorBuilder;
+using KElectrostaticPotentialmapCalculatorBuilder = KComplexElement<KEMField::KElectrostaticPotentialmapCalculator>;
 
 template<> inline bool KElectrostaticPotentialmapCalculatorBuilder::AddAttribute(KContainer* /*aContainer*/)
 {

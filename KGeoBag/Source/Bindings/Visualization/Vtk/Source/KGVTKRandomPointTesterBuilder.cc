@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-STATICINT sKGVTKRandomPointTesterStructure = KGVTKRandomPointTesterBuilder::Attribute<string>("name") +
-                                             KGVTKRandomPointTesterBuilder::Attribute<string>("surfaces") +
-                                             KGVTKRandomPointTesterBuilder::Attribute<string>("spaces") +
+STATICINT sKGVTKRandomPointTesterStructure = KGVTKRandomPointTesterBuilder::Attribute<std::string>("name") +
+                                             KGVTKRandomPointTesterBuilder::Attribute<std::string>("surfaces") +
+                                             KGVTKRandomPointTesterBuilder::Attribute<std::string>("spaces") +
                                              KGVTKRandomPointTesterBuilder::Attribute<KGRGBColor>("sample_color") +
                                              KGVTKRandomPointTesterBuilder::Attribute<double>("vertex_size");
 

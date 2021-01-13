@@ -27,10 +27,10 @@ template<class XSystemType> class KSMathRK86 : public KSMathIntegrator<XSystemTy
 
   public:
     typedef XSystemType SystemType;
-    typedef KSMathDifferentiator<SystemType> DifferentiatorType;
-    typedef typename SystemType::ValueType ValueType;
-    typedef typename SystemType::DerivativeType DerivativeType;
-    typedef typename SystemType::ErrorType ErrorType;
+    using DifferentiatorType = KSMathDifferentiator<SystemType>;
+    using ValueType = typename SystemType::ValueType;
+    using DerivativeType = typename SystemType::DerivativeType;
+    using ErrorType = typename SystemType::ErrorType;
 
   public:
     void Integrate(double aTime, const DifferentiatorType& aTerm, const ValueType& anInitialValue, const double& aStep,
@@ -88,7 +88,7 @@ template<class XSystemType> KSMathRK86<XSystemType>::KSMathRK86()
     fHaveCachedDerivative = false;
 }
 
-template<class XSystemType> KSMathRK86<XSystemType>::~KSMathRK86() {}
+template<class XSystemType> KSMathRK86<XSystemType>::~KSMathRK86() = default;
 
 template<class XSystemType>
 void KSMathRK86<XSystemType>::Integrate(double aTime, const DifferentiatorType& aTerm, const ValueType& anInitialValue,

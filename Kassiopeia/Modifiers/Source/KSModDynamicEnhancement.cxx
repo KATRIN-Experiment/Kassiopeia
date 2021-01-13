@@ -16,7 +16,7 @@ KSModDynamicEnhancement::KSModDynamicEnhancement() :
 {}
 
 KSModDynamicEnhancement::KSModDynamicEnhancement(const KSModDynamicEnhancement& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEnhancement(1.),
     fStaticEnhancement(aCopy.fStaticEnhancement),
     fDynamic(aCopy.fDynamic),
@@ -31,7 +31,7 @@ KSModDynamicEnhancement* KSModDynamicEnhancement::Clone() const
     return new KSModDynamicEnhancement(*this);
 }
 
-KSModDynamicEnhancement::~KSModDynamicEnhancement() {}
+KSModDynamicEnhancement::~KSModDynamicEnhancement() = default;
 
 bool KSModDynamicEnhancement::ExecutePreStepModification(KSParticle& anInitialParticle, KSParticleQueue& /*aQueue*/)
 {

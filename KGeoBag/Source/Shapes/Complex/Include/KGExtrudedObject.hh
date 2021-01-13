@@ -42,7 +42,7 @@ class KGExtrudedObject : public KGBoundary
     }
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -120,10 +120,10 @@ class KGExtrudedObject : public KGBoundary
     class Line
     {
       public:
-        Line() {}
-        Line(KGExtrudedObject* eS, double p1[2], double p2[2]);
+        Line() = default;
+        Line(KGExtrudedObject* eS, const double p1[2], const double p2[2]);
 
-        virtual ~Line() {}
+        virtual ~Line() = default;
 
         virtual Line* Clone(KGExtrudedObject* eO) const;
 
@@ -216,10 +216,10 @@ class KGExtrudedObject : public KGBoundary
     class Arc : public Line
     {
       public:
-        Arc() {}
+        Arc() = default;
         Arc(KGExtrudedObject* eS, double p1[2], double p2[2], double radius, bool positiveOrientation = true);
 
-        ~Arc() override {}
+        ~Arc() override = default;
 
         void Initialize() const override;
 
@@ -253,7 +253,7 @@ class KGExtrudedObject : public KGBoundary
 
         double GetLength() const override;
 
-        double NormalizeAngle(double angle) const;
+        static double NormalizeAngle(double angle);
 
         double GetAngularSpread() const;
 

@@ -7,7 +7,7 @@
 
 #include "KMagneticSuperpositionField.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KMagnetostaticField.hh"
 
 using namespace std;
@@ -15,19 +15,11 @@ using namespace std;
 namespace KEMField
 {
 
-KMagneticSuperpositionField::KMagneticSuperpositionField() :
-    fMagneticFields(),
-    fEnhancements(),
-    fUseCaching(false),
-    fCachingBlock(false),
-    fPotentialCache(),
-    fFieldCache(),
-    fGradientCache()
-{}
+KMagneticSuperpositionField::KMagneticSuperpositionField() : fUseCaching(false), fCachingBlock(false) {}
 
-KMagneticSuperpositionField::~KMagneticSuperpositionField() {}
+KMagneticSuperpositionField::~KMagneticSuperpositionField() = default;
 
-KThreeVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition& aSamplePoint,
                                                                 const double& aSampleTime) const
 {
     CheckAndPrintCachingDisabledWarning();
@@ -37,7 +29,7 @@ KThreeVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition&
     return CalculateDirectPotential(aSamplePoint, aSampleTime);
 }
 
-KThreeVector KMagneticSuperpositionField::MagneticFieldCore(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::MagneticFieldCore(const KPosition& aSamplePoint,
                                                             const double& aSampleTime) const
 {
     CheckAndPrintCachingDisabledWarning();
@@ -56,10 +48,10 @@ KGradient KMagneticSuperpositionField::MagneticGradientCore(const KPosition& aSa
     return CalculateDirectGradient(aSamplePoint, aSampleTime);
 }
 
-KThreeVector KMagneticSuperpositionField::CalculateCachedPotential(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::CalculateCachedPotential(const KPosition& aSamplePoint,
                                                                    const double& aSampleTime) const
 {
-    KThreeVector aPotential(KThreeVector::sZero);
+    KFieldVector aPotential(KFieldVector::sZero);
     //looking in cache for aSamplePoint
     auto potentialVector = fPotentialCache.find(aSamplePoint);
     if (potentialVector != fPotentialCache.end()) {
@@ -70,8 +62,8 @@ KThreeVector KMagneticSuperpositionField::CalculateCachedPotential(const KPositi
     }
 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
-    vector<KThreeVector> tPotentials;
-    KThreeVector tCurrentPotential;
+    vector<KFieldVector> tPotentials;
+    KFieldVector tCurrentPotential;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
         tCurrentPotential = fMagneticFields.at(tIndex)->MagneticPotential(aSamplePoint, aSampleTime);
         aPotential += tCurrentPotential * fEnhancements.at(tIndex);
@@ -81,10 +73,10 @@ KThreeVector KMagneticSuperpositionField::CalculateCachedPotential(const KPositi
     return aPotential;
 }
 
-KThreeVector KMagneticSuperpositionField::CalculateCachedField(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::CalculateCachedField(const KPosition& aSamplePoint,
                                                                const double& aSampleTime) const
 {
-    KThreeVector aField(KThreeVector::sZero);
+    KFieldVector aField(KFieldVector::sZero);
     //looking in cache for aSamplePoint
     auto fieldVector = fFieldCache.find(aSamplePoint);
     if (fieldVector != fFieldCache.end()) {
@@ -95,8 +87,8 @@ KThreeVector KMagneticSuperpositionField::CalculateCachedField(const KPosition& 
     }
 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
-    vector<KThreeVector> tFields;
-    KThreeVector tCurrentField;
+    vector<KFieldVector> tFields;
+    KFieldVector tCurrentField;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
         tCurrentField = fMagneticFields.at(tIndex)->MagneticField(aSamplePoint, aSampleTime);
         aField += tCurrentField * fEnhancements.at(tIndex);
@@ -131,11 +123,11 @@ KGradient KMagneticSuperpositionField::CalculateCachedGradient(const KPosition& 
     return aGradient;
 }
 
-void KMagneticSuperpositionField::SetEnhancements(std::vector<double> aEnhancementVector)
+void KMagneticSuperpositionField::SetEnhancements(const std::vector<double>& aEnhancementVector)
 {
     if (aEnhancementVector.size() != fEnhancements.size()) {
-        KEMField::cout << "EnhancementVector has not the same size <" << aEnhancementVector.size()
-                       << "> as fEnhancements <" << fEnhancements.size() << ">" << KEMField::endl;
+        kem_cout(eError) << "EnhancementVector has not the same size <" << aEnhancementVector.size()
+                         << "> as fEnhancements <" << fEnhancements.size() << ">" << eom;
         exit(-1);
     }
     fEnhancements = aEnhancementVector;
@@ -157,15 +149,15 @@ void KMagneticSuperpositionField::AddMagneticField(KMagneticField* aField, doubl
 
 void KMagneticSuperpositionField::InitializeCore()
 {
-    for (auto field : fMagneticFields) {
+    for (auto* field : fMagneticFields) {
         field->Initialize();
     }
 }
 
-KThreeVector KMagneticSuperpositionField::CalculateDirectPotential(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::CalculateDirectPotential(const KPosition& aSamplePoint,
                                                                    const double& aSampleTime) const
 {
-    KThreeVector potential(KThreeVector::sZero);
+    KFieldVector potential(KFieldVector::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
         potential +=
             fEnhancements.at(tIndex) * fMagneticFields.at(tIndex)->MagneticPotential(aSamplePoint, aSampleTime);
@@ -173,10 +165,10 @@ KThreeVector KMagneticSuperpositionField::CalculateDirectPotential(const KPositi
     return potential;
 }
 
-KThreeVector KMagneticSuperpositionField::CalculateDirectField(const KPosition& aSamplePoint,
+KFieldVector KMagneticSuperpositionField::CalculateDirectField(const KPosition& aSamplePoint,
                                                                const double& aSampleTime) const
 {
-    KThreeVector field(KThreeVector::sZero);
+    KFieldVector field(KFieldVector::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
         field += fEnhancements.at(tIndex) * fMagneticFields.at(tIndex)->MagneticField(aSamplePoint, aSampleTime);
     }
@@ -196,7 +188,7 @@ KGradient KMagneticSuperpositionField::CalculateDirectGradient(const KPosition& 
 bool KMagneticSuperpositionField::AreAllFieldsStatic()
 {
     bool allStatic(true);
-    for (auto field : fMagneticFields) {
+    for (auto* field : fMagneticFields) {
         if (!dynamic_cast<KMagnetostaticField*>(field))
             allStatic = false;
     }
@@ -206,9 +198,9 @@ bool KMagneticSuperpositionField::AreAllFieldsStatic()
 void KMagneticSuperpositionField::CheckAndPrintCachingDisabledWarning() const
 {
     if (fCachingBlock && fUseCaching) {
-        KEMField::cout << "MagneticSuperpostionField supports caching only with static fields."
-                          " Caching is disabled."
-                       << KEMField::endl;
+        kem_cout(eWarning) << "MagneticSuperpostionField supports caching only with static fields."
+                              " Caching is disabled."
+                           << eom;
     }
 }
 

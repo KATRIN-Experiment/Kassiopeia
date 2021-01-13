@@ -18,14 +18,14 @@ STATICINT sKGConicalWireArrayBuilderStructure =
     KGConicalWireArrayBuilder::Attribute<double>("longitudinal_mesh_power");
 
 STATICINT sKGConicalWireArraySurfaceBuilderStructure =
-    KGConicalWireArraySurfaceBuilder::Attribute<string>("name") +
+    KGConicalWireArraySurfaceBuilder::Attribute<std::string>("name") +
     KGConicalWireArraySurfaceBuilder::ComplexElement<KGConicalWireArray>("conical_wire_array");
 
 STATICINT sKGConicalWireArraySurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGConicalWireArray>>("conical_wire_array_surface");
 
 STATICINT sKGConicalWireArraySpaceBuilderStructure =
-    KGConicalWireArraySpaceBuilder::Attribute<string>("name") +
+    KGConicalWireArraySpaceBuilder::Attribute<std::string>("name") +
     KGConicalWireArraySpaceBuilder::ComplexElement<KGConicalWireArray>("conical_wire_array");
 
 STATICINT sKGConicalWireArraySpaceBuilder =

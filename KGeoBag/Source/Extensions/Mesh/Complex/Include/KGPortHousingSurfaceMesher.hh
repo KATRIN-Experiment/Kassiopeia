@@ -13,8 +13,8 @@ class KGPortHousingSurfaceMesher : virtual public KGComplexMesher, public KGWrap
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGPortHousingSurfaceMesher() {}
-    ~KGPortHousingSurfaceMesher() override {}
+    KGPortHousingSurfaceMesher() = default;
+    ~KGPortHousingSurfaceMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGPortHousing>* portHousingSurface) override;
@@ -38,7 +38,7 @@ class KGPortHousingSurfaceMesher : virtual public KGComplexMesher, public KGWrap
       public:
         RectangularPortDiscretizer(KGPortHousingSurfaceMesher* d) : PortDiscretizer(d), fRectangularPort(nullptr) {}
 
-        virtual ~RectangularPortDiscretizer() {}
+        virtual ~RectangularPortDiscretizer() = default;
 
         void DiscretizePort(const KGPortHousing::RectangularPort* rectangularPort);
 
@@ -58,7 +58,7 @@ class KGPortHousingSurfaceMesher : virtual public KGComplexMesher, public KGWrap
       public:
         CircularPortDiscretizer(KGPortHousingSurfaceMesher* d) : PortDiscretizer(d), fCircularPort(nullptr) {}
 
-        virtual ~CircularPortDiscretizer() {}
+        virtual ~CircularPortDiscretizer() = default;
 
         void DiscretizePort(const KGPortHousing::CircularPort* circularPort);
 
@@ -70,9 +70,9 @@ class KGPortHousingSurfaceMesher : virtual public KGComplexMesher, public KGWrap
 
         double Transition_theta(double r, int i);
 
-        void Circle_coord(double r, double theta, double p[3]);
+        static void Circle_coord(double r, double theta, double p[3]);
 
-        void Rect_coord(double r, double theta, double p[3]);
+        static void Rect_coord(double r, double theta, double p[3]);
 
         void Transition_coord(double r, double theta, double p[3]);
 
@@ -80,8 +80,8 @@ class KGPortHousingSurfaceMesher : virtual public KGComplexMesher, public KGWrap
     };
 
   protected:
-    bool ChordsIntersect(double theta1min, double theta1max, double theta2min, double theta2max);
-    bool LengthsIntersect(double x1min, double x1max, double x2min, double x2max);
+    static bool ChordsIntersect(double theta1min, double theta1max, double theta2min, double theta2max);
+    static bool LengthsIntersect(double x1min, double x1max, double x2min, double x2max);
 
     std::shared_ptr<KGPortHousing> fPortHousing;
 };

@@ -41,9 +41,8 @@ void KFMElectrostaticLocalCoefficientCalculatorNumeric::SetDegree(int l_max)
     fDegree = std::abs(l_max);
     fSize = (fDegree + 1) * (fDegree + 1);
     fMoments.resize(fSize);
-    if (fSolidHarmonics) {
-        delete[] fSolidHarmonics;
-    };
+
+    delete[] fSolidHarmonics;
     fSolidHarmonics = new std::complex<double>[fSize];
 }
 
@@ -65,7 +64,7 @@ bool KFMElectrostaticLocalCoefficientCalculatorNumeric::ConstructExpansion(doubl
     //construct the wire/triangle/rectangle, and then compute its moments
     if (vertices != nullptr && moments != nullptr) {
         moments->Clear();
-        int n_vertices = vertices->GetNPoints();
+        unsigned int n_vertices = vertices->GetNPoints();
 
         if (n_vertices == 1)  //we have a point
         {

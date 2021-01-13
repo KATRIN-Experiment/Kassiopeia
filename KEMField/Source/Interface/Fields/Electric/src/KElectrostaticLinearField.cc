@@ -7,14 +7,7 @@
 namespace KEMField
 {
 
-KElectrostaticLinearField::KElectrostaticLinearField() :
-    KElectrostaticField(),
-    fU1(0),
-    fU2(0),
-    fZ1(0),
-    fZ2(0),
-    fSurface(nullptr)
-{}
+KElectrostaticLinearField::KElectrostaticLinearField() : fU1(0), fU2(0), fZ1(0), fZ2(0), fSurface(nullptr) {}
 
 double KElectrostaticLinearField::PotentialCore(const KPosition& aSamplePoint) const
 {
@@ -28,16 +21,16 @@ double KElectrostaticLinearField::PotentialCore(const KPosition& aSamplePoint) c
     return (aSamplePoint.Z() - fZ1) * E + fU1;
 }
 
-KThreeVector KElectrostaticLinearField::ElectricFieldCore(const KPosition& aSamplePoint) const
+KFieldVector KElectrostaticLinearField::ElectricFieldCore(const KPosition& aSamplePoint) const
 {
     // TODO: coordinate transform
 
     if ((aSamplePoint.Z() < fZ1) || (aSamplePoint.Z()) > fZ2)
-        return KThreeVector::sZero;
+        return KFieldVector::sZero;
 
     auto E = (fU2 - fU1) / (fZ2 - fZ1);
 
-    return KThreeVector(0, 0, E);
+    return KFieldVector(0, 0, E);
 }
 
 void KElectrostaticLinearField::SetPotential1(double aPotential)

@@ -20,7 +20,7 @@ void RandomArray(size_t aN, double* aArray)
 
 namespace Kassiopeia
 {
-ElasticFerencCalculator::ElasticFerencCalculator() {}
+ElasticFerencCalculator::ElasticFerencCalculator() = default;
 
 ElasticFerencCalculator::~ElasticFerencCalculator()
 {

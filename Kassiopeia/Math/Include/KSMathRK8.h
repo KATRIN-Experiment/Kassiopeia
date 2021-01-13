@@ -12,10 +12,10 @@ template<class XSystemType> class KSMathRK8 : public KSMathIntegrator<XSystemTyp
 {
   public:
     typedef XSystemType SystemType;
-    typedef KSMathDifferentiator<SystemType> DifferentiatorType;
-    typedef typename SystemType::ValueType ValueType;
-    typedef typename SystemType::DerivativeType DerivativeType;
-    typedef typename SystemType::ErrorType ErrorType;
+    using DifferentiatorType = KSMathDifferentiator<SystemType>;
+    using ValueType = typename SystemType::ValueType;
+    using DerivativeType = typename SystemType::DerivativeType;
+    using ErrorType = typename SystemType::ErrorType;
 
   public:
     KSMathRK8();
@@ -38,9 +38,9 @@ template<class XSystemType> class KSMathRK8 : public KSMathIntegrator<XSystemTyp
     static const double fA[eSubsteps][eSubsteps];
 };
 
-template<class XSystemType> KSMathRK8<XSystemType>::KSMathRK8() {}
+template<class XSystemType> KSMathRK8<XSystemType>::KSMathRK8() = default;
 
-template<class XSystemType> KSMathRK8<XSystemType>::~KSMathRK8() {}
+template<class XSystemType> KSMathRK8<XSystemType>::~KSMathRK8() = default;
 
 template<class XSystemType>
 void KSMathRK8<XSystemType>::Integrate(double /*aTime*/, const DifferentiatorType& aTerm,

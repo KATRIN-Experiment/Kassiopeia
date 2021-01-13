@@ -25,8 +25,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMExternalIdentitySetSorter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMExternalIdentitySetSorter(){};
-    virtual ~KFMExternalIdentitySetSorter(){};
+    KFMExternalIdentitySetSorter() = default;
+    ;
+    virtual ~KFMExternalIdentitySetSorter() = default;
+    ;
 
     virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
     {

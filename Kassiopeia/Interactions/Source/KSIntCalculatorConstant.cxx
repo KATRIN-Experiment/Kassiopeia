@@ -5,19 +5,21 @@ using katrin::KRandom;
 
 #include "KConst.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSIntCalculatorConstant::KSIntCalculatorConstant() : fCrossSection(0.) {}
 KSIntCalculatorConstant::KSIntCalculatorConstant(const KSIntCalculatorConstant& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fCrossSection(aCopy.fCrossSection)
 {}
 KSIntCalculatorConstant* KSIntCalculatorConstant::Clone() const
 {
     return new KSIntCalculatorConstant(*this);
 }
-KSIntCalculatorConstant::~KSIntCalculatorConstant() {}
+KSIntCalculatorConstant::~KSIntCalculatorConstant() = default;
 
 void KSIntCalculatorConstant::CalculateCrossSection(const KSParticle& /*aParticle*/, double& aCrossSection)
 {

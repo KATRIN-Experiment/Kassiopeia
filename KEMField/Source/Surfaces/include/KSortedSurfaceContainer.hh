@@ -73,10 +73,10 @@ class KSortedSurfaceContainer
 inline KSurfacePrimitive* KSortedSurfaceContainer::operator[](unsigned int i) const
 {
     unsigned int j = i;
-    for (auto it = fSortedSurfaces.begin(); it != fSortedSurfaces.end(); ++it) {
-        if ((*it)->size() > j)
-            return (*it)->at(j);
-        j -= (*it)->size();
+    for (auto surface : fSortedSurfaces) {
+        if (surface->size() > j)
+            return surface->at(j);
+        j -= surface->size();
     }
     return nullptr;
 }
@@ -84,8 +84,8 @@ inline KSurfacePrimitive* KSortedSurfaceContainer::operator[](unsigned int i) co
 inline unsigned int KSortedSurfaceContainer::size() const
 {
     unsigned int i = 0;
-    for (auto it = fSortedSurfaces.begin(); it != fSortedSurfaces.end(); ++it)
-        i += (*it)->size();
+    for (auto surface : fSortedSurfaces)
+        i += surface->size();
     return i;
 }
 }  // namespace KEMField

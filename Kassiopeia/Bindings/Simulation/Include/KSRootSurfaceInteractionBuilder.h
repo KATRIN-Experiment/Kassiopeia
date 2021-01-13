@@ -18,8 +18,7 @@ template<> inline bool KSRootSurfaceInteractionBuilder::AddAttribute(KContainer*
         return true;
     }
     if (aContainer->GetName() == "set_surface_interaction") {
-        fObject->SetSurfaceInteraction(
-            KToolbox::GetInstance().Get<KSSurfaceInteraction>(aContainer->AsReference<std::string>()));
+        fObject->SetSurfaceInteraction(KToolbox::GetInstance().Get<KSSurfaceInteraction>(aContainer->AsString()));
         return true;
     }
     return false;

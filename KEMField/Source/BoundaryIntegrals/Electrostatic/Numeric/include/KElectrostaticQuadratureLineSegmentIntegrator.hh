@@ -12,28 +12,28 @@ namespace KEMField
 class KElectrostaticQuadratureLineSegmentIntegrator : public KElectrostaticAnalyticLineSegmentIntegrator
 {
   public:
-    typedef KLineSegment Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KLineSegment;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticQuadratureLineSegmentIntegrator() {}
-    ~KElectrostaticQuadratureLineSegmentIntegrator() override {}
+    KElectrostaticQuadratureLineSegmentIntegrator() = default;
+    ~KElectrostaticQuadratureLineSegmentIntegrator() override = default;
 
-    double Potential_nNodes(const double* data, const KPosition& P, const unsigned short halfNoNodes,
-                            const double* nodes, const double* weights) const;
-    KThreeVector ElectricField_nNodes(const double* data, const KPosition& P, const unsigned short halfNoNodes,
-                                      const double* nodes, const double* weights) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential_nNodes(const double* data, const KPosition& P,
-                                                                     const unsigned short halfNoNodes,
-                                                                     const double* nodes, const double* weights) const;
+    static double Potential_nNodes(const double* data, const KPosition& P, const unsigned short halfNoNodes,
+                                   const double* nodes, const double* weights);
+    static KFieldVector ElectricField_nNodes(const double* data, const KPosition& P, const unsigned short halfNoNodes,
+                                             const double* nodes, const double* weights);
+    static std::pair<KFieldVector, double> ElectricFieldAndPotential_nNodes(const double* data, const KPosition& P,
+                                                                            const unsigned short halfNoNodes,
+                                                                            const double* nodes, const double* weights);
 
     double Potential(const KLineSegment* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KLineSegment* source,
+    KFieldVector ElectricField(const KLineSegment* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KLineSegment* source,
                                                               const KPosition& P) const override;
 
     double Potential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KLineSegment>* source,
+    KFieldVector ElectricField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KLineSegment>* source,
                                                               const KPosition& P) const override;
 
   private:

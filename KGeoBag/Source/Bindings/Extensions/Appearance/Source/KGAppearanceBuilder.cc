@@ -6,21 +6,21 @@ using namespace KGeoBag;
 namespace KGeoBag
 {
 
-KGAppearanceAttributor::KGAppearanceAttributor() : fSurfaces(), fSpaces() {}
+KGAppearanceAttributor::KGAppearanceAttributor() = default;
 
 KGAppearanceAttributor::~KGAppearanceAttributor()
 {
     KGAppearanceSurface* tAppearanceSurface;
-    for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-        tAppearanceSurface = (*tIt)->MakeExtension<KGAppearance>();
+    for (auto& surface : fSurfaces) {
+        tAppearanceSurface = surface->MakeExtension<KGAppearance>();
         tAppearanceSurface->SetName(GetName());
         tAppearanceSurface->SetTags(GetTags());
         tAppearanceSurface->SetColor(GetColor());
         tAppearanceSurface->SetArc(GetArc());
     }
     KGAppearanceSpace* tAppearanceSpace;
-    for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-        tAppearanceSpace = (*tIt)->MakeExtension<KGAppearance>();
+    for (auto& space : fSpaces) {
+        tAppearanceSpace = space->MakeExtension<KGAppearance>();
         tAppearanceSpace->SetName(GetName());
         tAppearanceSpace->SetTags(GetTags());
         tAppearanceSpace->SetColor(GetColor());
@@ -46,12 +46,12 @@ void KGAppearanceAttributor::AddSpace(KGSpace* aSpace)
 namespace katrin
 {
 
-template<> KGAppearanceBuilder::~KComplexElement() {}
+template<> KGAppearanceBuilder::~KComplexElement() = default;
 
 STATICINT sKGAppearanceStructure =
-    KGAppearanceBuilder::Attribute<string>("name") + KGAppearanceBuilder::Attribute<KGRGBAColor>("color") +
-    KGAppearanceBuilder::Attribute<unsigned int>("arc") + KGAppearanceBuilder::Attribute<string>("surfaces") +
-    KGAppearanceBuilder::Attribute<string>("spaces");
+    KGAppearanceBuilder::Attribute<std::string>("name") + KGAppearanceBuilder::Attribute<KGRGBAColor>("color") +
+    KGAppearanceBuilder::Attribute<unsigned int>("arc") + KGAppearanceBuilder::Attribute<std::string>("surfaces") +
+    KGAppearanceBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKGAppearance = KGInterfaceBuilder::ComplexElement<KGAppearanceAttributor>("appearance");
 

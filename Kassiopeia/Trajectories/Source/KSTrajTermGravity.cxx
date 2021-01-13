@@ -2,16 +2,18 @@
 
 #include "KConst.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSTrajTermGravity::KSTrajTermGravity() : fGravity(KThreeVector(0., 0., 0.)) {}
-KSTrajTermGravity::KSTrajTermGravity(const KSTrajTermGravity& aCopy) : KSComponent(), fGravity(aCopy.fGravity) {}
+KSTrajTermGravity::KSTrajTermGravity(const KSTrajTermGravity& aCopy) : KSComponent(aCopy), fGravity(aCopy.fGravity) {}
 KSTrajTermGravity* KSTrajTermGravity::Clone() const
 {
     return new KSTrajTermGravity(*this);
 }
-KSTrajTermGravity::~KSTrajTermGravity() {}
+KSTrajTermGravity::~KSTrajTermGravity() = default;
 
 void KSTrajTermGravity::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                       KSTrajExactDerivative& aDerivative) const

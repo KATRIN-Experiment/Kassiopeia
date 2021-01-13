@@ -25,8 +25,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMEmptyIdentitySetRemover : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMEmptyIdentitySetRemover(){};
-    ~KFMEmptyIdentitySetRemover() override{};
+    KFMEmptyIdentitySetRemover() = default;
+    ;
+    ~KFMEmptyIdentitySetRemover() override = default;
+    ;
 
 
     void ApplyAction(KFMNode<ObjectTypeList>* node) override

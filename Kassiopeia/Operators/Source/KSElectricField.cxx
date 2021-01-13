@@ -1,11 +1,14 @@
 #include "KSElectricField.h"
 
+using KGeoBag::KThreeMatrix;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
-KSElectricField::KSElectricField() {}
+KSElectricField::KSElectricField() = default;
 
-KSElectricField::~KSElectricField() {}
+KSElectricField::~KSElectricField() = default;
 
 void KSElectricField::CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                         KThreeMatrix& aGradient)

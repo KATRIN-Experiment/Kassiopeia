@@ -30,7 +30,7 @@ class KVTKViewerAsBoundaryFieldVisitor : public KElectrostaticBoundaryField::Vis
         fSaveGeometry = choice;
     }
 
-    void SetFile(string file)
+    void SetFile(const std::string& file)
     {
         fFile = file;
     }

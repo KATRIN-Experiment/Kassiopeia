@@ -8,7 +8,7 @@ namespace Kassiopeia
 KSRootTrackModifier::KSRootTrackModifier() : fModifiers(128), fModifier(nullptr), fTrack(nullptr) {}
 
 KSRootTrackModifier::KSRootTrackModifier(const KSRootTrackModifier& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fModifiers(aCopy.fModifiers),
     fModifier(aCopy.fModifier),
     fTrack(aCopy.fTrack)
@@ -19,7 +19,7 @@ KSRootTrackModifier* KSRootTrackModifier::Clone() const
     return new KSRootTrackModifier(*this);
 }
 
-KSRootTrackModifier::~KSRootTrackModifier() {}
+KSRootTrackModifier::~KSRootTrackModifier() = default;
 
 void KSRootTrackModifier::AddModifier(KSTrackModifier* aModifier)
 {

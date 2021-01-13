@@ -3,13 +3,15 @@
 #include "KSReadersMessage.h"
 #include "TFile.h"
 
+using namespace katrin;
+
 namespace Kassiopeia
 {
 
 KSReadFileROOT::KSReadFileROOT() : fRootFile(nullptr), fRun(nullptr), fEvent(nullptr), fTrack(nullptr), fStep(nullptr)
 {}
 
-KSReadFileROOT::~KSReadFileROOT() {}
+KSReadFileROOT::~KSReadFileROOT() = default;
 
 bool KSReadFileROOT::TryFile(KRootFile* aFile)
 {

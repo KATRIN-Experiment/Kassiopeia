@@ -8,13 +8,13 @@ using namespace std;
 namespace Kassiopeia
 {
 
-KSRootSpace::KSRootSpace() {}
+KSRootSpace::KSRootSpace() = default;
 KSRootSpace::KSRootSpace(const KSRootSpace&) : KSComponent() {}
 KSRootSpace* KSRootSpace::Clone() const
 {
     return new KSRootSpace(*this);
 }
-KSRootSpace::~KSRootSpace() {}
+KSRootSpace::~KSRootSpace() = default;
 
 void KSRootSpace::Enter() const
 {
@@ -25,17 +25,17 @@ void KSRootSpace::Exit() const
     return;
 }
 
-bool KSRootSpace::Outside(const KThreeVector&) const
+bool KSRootSpace::Outside(const KGeoBag::KThreeVector&) const
 {
     return false;
 }
-KThreeVector KSRootSpace::Point(const KThreeVector&) const
+KGeoBag::KThreeVector KSRootSpace::Point(const KGeoBag::KThreeVector&) const
 {
-    return KThreeVector(0., 0., 1.e30);
+    return KGeoBag::KThreeVector(0., 0., 1.e30);
 }
-KThreeVector KSRootSpace::Normal(const KThreeVector&) const
+KGeoBag::KThreeVector KSRootSpace::Normal(const KGeoBag::KThreeVector&) const
 {
-    return KThreeVector(0., 0., 1.);
+    return KGeoBag::KThreeVector(0., 0., 1.);
 }
 
 void KSRootSpace::AddSpace(KSSpace* aSpace)

@@ -20,7 +20,7 @@ template<class T> struct EnableIf<true, T>
 
 template<typename T> struct Type2Type
 {
-    typedef T OriginalType;
+    using OriginalType = T;
 };
 
 template<int i> struct Int2Type

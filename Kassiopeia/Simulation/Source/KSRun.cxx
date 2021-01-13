@@ -21,7 +21,7 @@ KSRun::KSRun() :
     fNumberOfTurns(0)
 {}
 KSRun::KSRun(const KSRun& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fRunId(aCopy.fRunId),
     fRunCount(aCopy.fRunCount),
     fTotalEvents(aCopy.fTotalEvents),
@@ -57,7 +57,7 @@ KSRun* KSRun::Clone() const
 {
     return new KSRun(*this);
 }
-KSRun::~KSRun() {}
+KSRun::~KSRun() = default;
 
 STATICINT sKSRunDict =
     KSDictionary<KSRun>::AddComponent(&KSRun::GetRunId, "run_id") +

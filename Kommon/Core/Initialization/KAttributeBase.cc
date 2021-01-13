@@ -6,7 +6,7 @@ namespace katrin
 {
 
 KAttributeBase::KAttributeBase() : fParentElement(nullptr) {}
-KAttributeBase::~KAttributeBase() {}
+KAttributeBase::~KAttributeBase() = default;
 
 void KAttributeBase::ProcessToken(KAttributeDataToken* aToken)
 {

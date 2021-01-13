@@ -33,7 +33,7 @@ void KZHCoefficientGenerator<KRing>::ComputeCentralCoefficients(double z0, doubl
     Phi_cen *= rho_ratio;
     coeff[1] += Phi_cen * P1[1];
 
-    for (unsigned int i = 2; i < coeff.size(); i++) {
+    for (int i = 2; i < (int) coeff.size(); i++) {
         Phi_cen *= rho_ratio;
         P1[i] = (KZHLegendreCoefficients::GetInstance()->Get(0, i) * P1[1] * P1[i - 1] -
                  KZHLegendreCoefficients::GetInstance()->Get(1, i) * P1[i - 2]);
@@ -62,7 +62,7 @@ void KZHCoefficientGenerator<KRing>::ComputeRemoteCoefficients(double z0, double
     Phi_rem *= rho_ratio;
     coeff[1] += Phi_rem * P1[1];
 
-    for (unsigned int i = 2; i < coeff.size(); i++) {
+    for (int i = 2; i < (int) coeff.size(); i++) {
         Phi_rem *= rho_ratio;
         P1[i] = (KZHLegendreCoefficients::GetInstance()->Get(0, i) * P1[1] * P1[i - 1] -
                  KZHLegendreCoefficients::GetInstance()->Get(1, i) * P1[i - 2]);

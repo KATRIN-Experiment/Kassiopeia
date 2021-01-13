@@ -5,7 +5,7 @@
 namespace KEMField
 {
 
-double KElectrostaticRWGTriangleIntegrator::LogArgTaylor(const double sMin, const double dist) const
+double KElectrostaticRWGTriangleIntegrator::LogArgTaylor(const double sMin, const double dist)
 {
     double quotient = fabs(dist / sMin);
     if (quotient < 1.e-14)
@@ -207,7 +207,7 @@ double KElectrostaticRWGTriangleIntegrator::IqLPotential(const double* data, con
     return iL;
 }
 
-KThreeVector KElectrostaticRWGTriangleIntegrator::IqLField(const double* data, const double* P,
+KFieldVector KElectrostaticRWGTriangleIntegrator::IqLField(const double* data, const double* P,
                                                            const unsigned short countCross,
                                                            const unsigned short lineIndex, const double dist) const
 {
@@ -386,10 +386,10 @@ KThreeVector KElectrostaticRWGTriangleIntegrator::IqLField(const double* data, c
         iL[2] += (m2[2] * tmpScalar);
     }
 
-    return KThreeVector(iL[0], iL[1], iL[2]);
+    return KFieldVector(iL[0], iL[1], iL[2]);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticRWGTriangleIntegrator::IqLFieldAndPotential(const double* data, const double* P,
                                                           const unsigned short countCross,
                                                           const unsigned short lineIndex, const double dist) const
@@ -601,7 +601,7 @@ KElectrostaticRWGTriangleIntegrator::IqLFieldAndPotential(const double* data, co
         iLPhi += (t2 * tmpScalar);
     }
 
-    return std::make_pair(KThreeVector(iLField[0], iLField[1], iLField[2]), iLPhi);
+    return std::make_pair(KFieldVector(iLField[0], iLField[1], iLField[2]), iLPhi);
 }
 
 double KElectrostaticRWGTriangleIntegrator::Potential(const KTriangle* source, const KPosition& P) const
@@ -814,7 +814,7 @@ double KElectrostaticRWGTriangleIntegrator::Potential(const KTriangle* source, c
 }
 
 
-KThreeVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
+KFieldVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
 {
     // save triangle data into double array
 
@@ -987,10 +987,10 @@ KThreeVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KTriangle*
 
         // compute IqL
 
-        const KThreeVector IqLUp = IqLField(triData, upEps, 9, 9, 9);     /* no line correction */
-        const KThreeVector IqLDown = IqLField(triData, downEps, 9, 9, 9); /* no line correction */
+        const KFieldVector IqLUp = IqLField(triData, upEps, 9, 9, 9);     /* no line correction */
+        const KFieldVector IqLDown = IqLField(triData, downEps, 9, 9, 9); /* no line correction */
 
-        const KThreeVector finalResult((triN3[0] * solidAngleUp + IqLUp[0]) + (triN3[0] * solidAngleDown + IqLDown[0]),
+        const KFieldVector finalResult((triN3[0] * solidAngleUp + IqLUp[0]) + (triN3[0] * solidAngleDown + IqLDown[0]),
                                        (triN3[1] * solidAngleUp + IqLUp[1]) + (triN3[1] * solidAngleDown + IqLDown[1]),
                                        (triN3[2] * solidAngleUp + IqLUp[2]) + (triN3[2] * solidAngleDown + IqLDown[2]));
 
@@ -1001,16 +1001,16 @@ KThreeVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KTriangle*
 
     const double triSolidAngle = solidAngle.SolidAngleTriangleAsArray(triData, fieldPoint);
 
-    const KThreeVector IqLEField = IqLField(triData, fieldPoint, correctionCounter, correctionLineIndex, distToLineMin);
+    const KFieldVector IqLEField = IqLField(triData, fieldPoint, correctionCounter, correctionLineIndex, distToLineMin);
 
-    const KThreeVector finalResult((triN3[0] * triSolidAngle + IqLEField.X()),
+    const KFieldVector finalResult((triN3[0] * triSolidAngle + IqLEField.X()),
                                    (triN3[1] * triSolidAngle + IqLEField.Y()),
                                    (triN3[2] * triSolidAngle + IqLEField.Z()));
 
     return finalResult * KEMConstants::OneOverFourPiEps0;
 }
 
-std::pair<KThreeVector, double> KElectrostaticRWGTriangleIntegrator::ElectricFieldAndPotential(const KTriangle* source,
+std::pair<KFieldVector, double> KElectrostaticRWGTriangleIntegrator::ElectricFieldAndPotential(const KTriangle* source,
                                                                                                const KPosition& P) const
 {
     // save triangle data into double array
@@ -1196,13 +1196,13 @@ std::pair<KThreeVector, double> KElectrostaticRWGTriangleIntegrator::ElectricFie
 
         // compute IqL
 
-        std::pair<KThreeVector, double> IqLFieldAndPotentialUp =
+        std::pair<KFieldVector, double> IqLFieldAndPotentialUp =
             IqLFieldAndPotential(triData, upEps, 9, 9, 9); /* no line correction */
 
-        std::pair<KThreeVector, double> IqLFieldAndPotentialDown =
+        std::pair<KFieldVector, double> IqLFieldAndPotentialDown =
             IqLFieldAndPotential(triData, downEps, 9, 9, 9); /* no line correction */
 
-        const KThreeVector finalField(KEMConstants::OneOverFourPiEps0 * 0.5 *
+        const KFieldVector finalField(KEMConstants::OneOverFourPiEps0 * 0.5 *
                                           ((triN3[0] * solidAngleUp + IqLFieldAndPotentialUp.first[0]) +
                                            (triN3[0] * solidAngleDown + IqLFieldAndPotentialDown.first[0])),
                                       KEMConstants::OneOverFourPiEps0 * 0.5 *
@@ -1226,10 +1226,10 @@ std::pair<KThreeVector, double> KElectrostaticRWGTriangleIntegrator::ElectricFie
 
     const double triSolidAngle = solidAngle.SolidAngleTriangleAsArray(triData, fieldPoint);
 
-    std::pair<KThreeVector, double> IqLFieldAndPhi =
+    std::pair<KFieldVector, double> IqLFieldAndPhi =
         IqLFieldAndPotential(triData, fieldPoint, correctionCounter, correctionLineIndex, distToLineMin);
 
-    const KThreeVector finalField(
+    const KFieldVector finalField(
         KEMConstants::OneOverFourPiEps0 * (triN3[0] * triSolidAngle + IqLFieldAndPhi.first[0]),
         KEMConstants::OneOverFourPiEps0 * (triN3[1] * triSolidAngle + IqLFieldAndPhi.first[1]),
         KEMConstants::OneOverFourPiEps0 * (triN3[2] * triSolidAngle + IqLFieldAndPhi.first[2]));
@@ -1243,34 +1243,34 @@ double KElectrostaticRWGTriangleIntegrator::Potential(const KSymmetryGroup<KTria
 {
     double potential(0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it)
-        potential += Potential(*it, P);
+    for (auto* it : *source)
+        potential += Potential(it, P);
 
     return potential;
 }
 
 
-KThreeVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
+KFieldVector KElectrostaticRWGTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
                                                                 const KPosition& P) const
 {
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it)
-        electricField += ElectricField(*it, P);
+    for (auto* it : *source)
+        electricField += ElectricField(it, P);
 
     return electricField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticRWGTriangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KTriangle>* source,
                                                                const KPosition& P) const
 {
-    std::pair<KThreeVector, double> fieldAndPotential;
+    std::pair<KFieldVector, double> fieldAndPotential;
     double potential(0.);
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it) {
-        fieldAndPotential = ElectricFieldAndPotential(*it, P);
+    for (auto* it : *source) {
+        fieldAndPotential = ElectricFieldAndPotential(it, P);
         electricField += fieldAndPotential.first;
         potential += fieldAndPotential.second;
     }

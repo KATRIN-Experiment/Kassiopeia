@@ -41,8 +41,8 @@ template<size_t NDIM> class KGBallSupportSet
 
     virtual ~KGBallSupportSet()
     {
-        for (size_t i = 0; i < fSolvers.size(); i++) {
-            delete fSolvers[i];
+        for (auto& solver : fSolvers) {
+            delete solver;
         }
     };
 

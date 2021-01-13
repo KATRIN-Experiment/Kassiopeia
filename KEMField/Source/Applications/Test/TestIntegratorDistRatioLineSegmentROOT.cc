@@ -24,8 +24,8 @@
 #define MAXDR    10000   // maximal distance ratio to be investigated
 #define STEPSDR  1000    // steps between given distance ratio range
 #define ACCURACY 1.E-15  // targeted accuracy for both electric potential and field
-#define SEPARATECOMP     // if this variable has been defined potentials and fields will be computed separately,       \
-                         // hence 'ElectricFieldAndPotential' function won't be used                                   \
+#define SEPARATECOMP     // if this variable has been defined potentials and fields will be computed separately,
+                         // hence 'ElectricFieldAndPotential' function won't be used
                          // both options have to produce same values
 #define DRADDPERC 15     // additional fraction of distance ratio value at given accuracy to be added
 
@@ -59,7 +59,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KEMLineS
 void subrn(double* u, int len);
 double randomnumber();
 
-void printVec(std::string add, KThreeVector input)
+void printVec(const std::string& add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -74,9 +74,9 @@ class LineSegmentVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(K
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KLineSegment)>::Visit;
 
-    LineSegmentVisitor() {}
+    LineSegmentVisitor() = default;
 
-    void Visit(KLineSegment& t)
+    void Visit(KLineSegment& t) override
     {
         ProcessLineSegment(t);
     }
@@ -90,18 +90,18 @@ class LineSegmentVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(K
         fShapeCentroid = l.Centroid();
     }
 
-    double GetLength()
+    double GetLength() const
     {
         return fLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
 
   private:
     double fLength;
-    KThreeVector fShapeCentroid;
+    KFieldVector fShapeCentroid;
 };
 
 // visitor for computing fields and potentials
@@ -112,9 +112,9 @@ class LineSegmentVisitorForElectricFieldAndPotential :
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KLineSegment)>::Visit;
 
-    LineSegmentVisitorForElectricFieldAndPotential() {}
+    LineSegmentVisitorForElectricFieldAndPotential() = default;
 
-    void Visit(KLineSegment& l)
+    void Visit(KLineSegment& l) override
     {
         ComputeElectricFieldAndPotential(l);
     }
@@ -189,46 +189,46 @@ class LineSegmentVisitorForElectricFieldAndPotential :
         fP = p;
     }
 
-    std::pair<KThreeVector, double>& GetQuad256ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad256ElectricFieldAndPotential() const
     {
         return fQuad256ElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetAnaElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetAnaElectricFieldAndPotential() const
     {
         return fAnaElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetQuad2ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad2ElectricFieldAndPotential() const
     {
         return fQuad2ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad3ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad3ElectricFieldAndPotential() const
     {
         return fQuad3ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad4ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad4ElectricFieldAndPotential() const
     {
         return fQuad4ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad6ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad6ElectricFieldAndPotential() const
     {
         return fQuad6ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad8ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad8ElectricFieldAndPotential() const
     {
         return fQuad8ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad16ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad16ElectricFieldAndPotential() const
     {
         return fQuad16ElectricFieldAndPotential;
     }
-    std::pair<KThreeVector, double>& GetQuad32ElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetQuad32ElectricFieldAndPotential() const
     {
         return fQuad32ElectricFieldAndPotential;
     }
 
-    std::pair<KThreeVector, double>& GetNumElectricFieldAndPotential() const
+    std::pair<KFieldVector, double>& GetNumElectricFieldAndPotential() const
     {
         return fNumElectricFieldAndPotential;
     }
@@ -237,25 +237,25 @@ class LineSegmentVisitorForElectricFieldAndPotential :
     mutable KPosition fP;
 
     // 256-point quadrature as reference
-    mutable std::pair<KThreeVector, double> fQuad256ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad256ElectricFieldAndPotential;
     KElectrostatic256NodeQuadratureLineSegmentIntegrator fQuad256Integrator;
 
     // analytical integration
-    mutable std::pair<KThreeVector, double> fAnaElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fAnaElectricFieldAndPotential;
     KElectrostaticAnalyticLineSegmentIntegrator fAnaIntegrator;
 
     // quadrature n-node integration rules
-    mutable std::pair<KThreeVector, double> fQuad2ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad3ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad4ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad6ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad8ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad16ElectricFieldAndPotential;
-    mutable std::pair<KThreeVector, double> fQuad32ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad2ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad3ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad4ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad6ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad8ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad16ElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fQuad32ElectricFieldAndPotential;
     KElectrostaticQuadratureLineSegmentIntegrator fQuadIntegrator;
 
     // adjusted quadrature integrator dependent from distance ratio
-    mutable std::pair<KThreeVector, double> fNumElectricFieldAndPotential;
+    mutable std::pair<KFieldVector, double> fNumElectricFieldAndPotential;
 };
 
 }  // namespace KEMField
@@ -271,30 +271,30 @@ int main()
     double length;
 
     // assign a unique direction vector for field point to each line segment and save into std::vector
-    std::vector<KThreeVector> fPointDirections;
+    std::vector<KFieldVector> fPointDirections;
 
     // 'Num' line segments will be diced in the beginning and added to a surface container
     // This value decides how much 'line segments=field points' will be computed for each distance ratio value
 
-    KSurfaceContainer* container = new KSurfaceContainer();
+    auto* container = new KSurfaceContainer();
     const unsigned int Num(NUMLINES); /* number of line segments */
 
     for (unsigned int i = 0; i < Num; i++) {
         IJKLRANDOM = i + 1;
-        KEMLineSegment* line = new KEMLineSegment();
+        auto* line = new KEMLineSegment();
 
         // dice line segment geometry, diameter fixed ratio to length
-        for (unsigned short l = 0; l < 3; l++)
-            P0[l] = -1. + 2. * randomnumber();
-        for (unsigned short j = 0; j < 3; j++)
-            P1[j] = -1. + 2. * randomnumber();
+        for (double& l : P0)
+            l = -1. + 2. * randomnumber();
+        for (double& j : P1)
+            j = -1. + 2. * randomnumber();
 
         // compute further line segment data
 
         length = sqrt(POW2(P1[0] - P0[0]) + POW2(P1[1] - P0[1]) + POW2(P1[2] - P0[2]));
 
-        line->SetP0(KThreeVector(P0[0], P0[1], P0[2]));
-        line->SetP1(KThreeVector(P1[0], P1[1], P1[2]));
+        line->SetP0(KFieldVector(P0[0], P0[1], P0[2]));
+        line->SetP1(KFieldVector(P1[0], P1[1], P1[2]));
         line->SetDiameter(length * 0.1);
 
         line->SetBoundaryValue(1.);
@@ -306,7 +306,7 @@ int main()
         const double sinthetaFP = sqrt(1. - POW2(costhetaFP));
         const double phiFP = 2. * M_PI * randomnumber();
 
-        fPointDirections.push_back(KThreeVector(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP));
+        fPointDirections.emplace_back(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP);
     }
 
     // visitor for elements
@@ -328,12 +328,12 @@ int main()
                    << " line segments for each dist. ratio value." << KEMField::endl;
 
     // field point
-    KThreeVector fP;
+    KFieldVector fP;
 
-    std::pair<KThreeVector, double> valQuad256;
-    std::pair<KThreeVector, double> valAna;
-    std::pair<KThreeVector, double> valQuad[7];
-    std::pair<KThreeVector, double> valNum;
+    std::pair<KFieldVector, double> valQuad256;
+    std::pair<KFieldVector, double> valAna;
+    std::pair<KFieldVector, double> valQuad[7];
+    std::pair<KFieldVector, double> valNum;
 
     // variables for accuracy check of n-node quadrature integration
 
@@ -371,15 +371,15 @@ int main()
 
     // plot
 
-    TApplication* fAppWindow = new TApplication("fAppWindow", 0, NULL);
+    auto* fAppWindow = new TApplication("fAppWindow", nullptr, nullptr);
 
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetLabelOffset(0.03, "xyz");  // values
     gStyle->SetTitleOffset(1.6, "xyz");   // label
 
-    TMultiGraph* mgPot = new TMultiGraph();
+    auto* mgPot = new TMultiGraph();
 
-    TGraph* plotDrPotAna = new TGraph(kmax + 1);
+    auto* plotDrPotAna = new TGraph(kmax + 1);
     plotDrPotAna->SetTitle("Relative error of analytical line segment potential");
     plotDrPotAna->SetDrawOption("AC");
     plotDrPotAna->SetMarkerColor(COLANA);
@@ -390,7 +390,7 @@ int main()
     if (PLOTANA)
         mgPot->Add(plotDrPotAna);
 
-    TGraph* plotDrPotQuad2 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad2 = new TGraph(kmax + 1);
     plotDrPotQuad2->SetTitle("Relative error of line segment 2-node quadrature potential");
     plotDrPotQuad2->SetDrawOption("same");
     plotDrPotQuad2->SetMarkerColor(COLQUAD2);
@@ -401,7 +401,7 @@ int main()
     if (PLOTQUAD2)
         mgPot->Add(plotDrPotQuad2);
 
-    TGraph* plotDrPotQuad3 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad3 = new TGraph(kmax + 1);
     plotDrPotQuad3->SetTitle("Relative error of line segment 3-node quadrature potential");
     plotDrPotQuad3->SetDrawOption("same");
     plotDrPotQuad3->SetMarkerColor(COLQUAD3);
@@ -412,7 +412,7 @@ int main()
     if (PLOTQUAD3)
         mgPot->Add(plotDrPotQuad3);
 
-    TGraph* plotDrPotQuad4 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad4 = new TGraph(kmax + 1);
     plotDrPotQuad4->SetTitle("Relative error of line segment 4-node quadrature potential");
     plotDrPotQuad4->SetDrawOption("same");
     plotDrPotQuad4->SetMarkerColor(COLQUAD4);
@@ -423,7 +423,7 @@ int main()
     if (PLOTQUAD4)
         mgPot->Add(plotDrPotQuad4);
 
-    TGraph* plotDrPotQuad6 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad6 = new TGraph(kmax + 1);
     plotDrPotQuad6->SetTitle("Relative error of line segment 6-node quadrature potential");
     plotDrPotQuad6->SetDrawOption("same");
     plotDrPotQuad6->SetMarkerColor(COLQUAD6);
@@ -434,7 +434,7 @@ int main()
     if (PLOTQUAD6)
         mgPot->Add(plotDrPotQuad6);
 
-    TGraph* plotDrPotQuad8 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad8 = new TGraph(kmax + 1);
     plotDrPotQuad8->SetTitle("Relative error of line segment 8-node quadrature potential");
     plotDrPotQuad8->SetDrawOption("same");
     plotDrPotQuad8->SetMarkerColor(COLQUAD8);
@@ -445,7 +445,7 @@ int main()
     if (PLOTQUAD8)
         mgPot->Add(plotDrPotQuad8);
 
-    TGraph* plotDrPotQuad16 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad16 = new TGraph(kmax + 1);
     plotDrPotQuad16->SetTitle("Relative error of line segment 16-node quadrature potential");
     plotDrPotQuad16->SetDrawOption("same");
     plotDrPotQuad16->SetMarkerColor(COLQUAD16);
@@ -456,7 +456,7 @@ int main()
     if (PLOTQUAD16)
         mgPot->Add(plotDrPotQuad16);
 
-    TGraph* plotDrPotQuad32 = new TGraph(kmax + 1);
+    auto* plotDrPotQuad32 = new TGraph(kmax + 1);
     plotDrPotQuad32->SetTitle("Relative error of line segment 32-node quadrature potential");
     plotDrPotQuad32->SetDrawOption("same");
     plotDrPotQuad32->SetMarkerColor(COLQUAD32);
@@ -467,7 +467,7 @@ int main()
     if (PLOTQUAD32)
         mgPot->Add(plotDrPotQuad32);
 
-    TGraph* plotDrPotNum = new TGraph(kmax + 1);
+    auto* plotDrPotNum = new TGraph(kmax + 1);
     plotDrPotNum->SetTitle("Relative error of line segment potential with adjusted numerical integrator");
     plotDrPotNum->SetDrawOption("same");
     plotDrPotNum->SetMarkerColor(COLNUM);
@@ -478,9 +478,9 @@ int main()
     if (PLOTNUM)
         mgPot->Add(plotDrPotNum);
 
-    TMultiGraph* mgField = new TMultiGraph();
+    auto* mgField = new TMultiGraph();
 
-    TGraph* plotDrFieldAna = new TGraph(kmax + 1);
+    auto* plotDrFieldAna = new TGraph(kmax + 1);
     plotDrFieldAna->SetTitle("Relative error of analytical line segment field");
     plotDrFieldAna->SetDrawOption("AC");
     plotDrFieldAna->SetMarkerColor(COLANA);
@@ -491,7 +491,7 @@ int main()
     if (PLOTANA)
         mgField->Add(plotDrFieldAna);
 
-    TGraph* plotDrFieldQuad2 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad2 = new TGraph(kmax + 1);
     plotDrFieldQuad2->SetTitle("Relative error of line segment 2-node quadrature field");
     plotDrFieldQuad2->SetDrawOption("same");
     plotDrFieldQuad2->SetMarkerColor(COLQUAD2);
@@ -502,7 +502,7 @@ int main()
     if (PLOTQUAD2)
         mgField->Add(plotDrFieldQuad2);
 
-    TGraph* plotDrFieldQuad3 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad3 = new TGraph(kmax + 1);
     plotDrFieldQuad3->SetTitle("Relative error of line segment 3-node quadrature field");
     plotDrFieldQuad3->SetDrawOption("same");
     plotDrFieldQuad3->SetMarkerColor(COLQUAD3);
@@ -513,7 +513,7 @@ int main()
     if (PLOTQUAD3)
         mgField->Add(plotDrFieldQuad3);
 
-    TGraph* plotDrFieldQuad4 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad4 = new TGraph(kmax + 1);
     plotDrFieldQuad4->SetTitle("Relative error of line segment 4-node quadrature field");
     plotDrFieldQuad4->SetDrawOption("same");
     plotDrFieldQuad4->SetMarkerColor(COLQUAD4);
@@ -524,7 +524,7 @@ int main()
     if (PLOTQUAD4)
         mgField->Add(plotDrFieldQuad4);
 
-    TGraph* plotDrFieldQuad6 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad6 = new TGraph(kmax + 1);
     plotDrFieldQuad6->SetTitle("Relative error of line segment 6-node quadrature field");
     plotDrFieldQuad6->SetDrawOption("same");
     plotDrFieldQuad6->SetMarkerColor(COLQUAD6);
@@ -535,7 +535,7 @@ int main()
     if (PLOTQUAD6)
         mgField->Add(plotDrFieldQuad6);
 
-    TGraph* plotDrFieldQuad8 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad8 = new TGraph(kmax + 1);
     plotDrFieldQuad8->SetTitle("Relative error of line segment 8-node quadrature field");
     plotDrFieldQuad8->SetDrawOption("same");
     plotDrFieldQuad8->SetMarkerColor(COLQUAD8);
@@ -546,7 +546,7 @@ int main()
     if (PLOTQUAD8)
         mgField->Add(plotDrFieldQuad8);
 
-    TGraph* plotDrFieldQuad16 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad16 = new TGraph(kmax + 1);
     plotDrFieldQuad16->SetTitle("Relative error of line segment 16-node quadrature field");
     plotDrFieldQuad16->SetDrawOption("same");
     plotDrFieldQuad16->SetMarkerColor(COLQUAD16);
@@ -557,7 +557,7 @@ int main()
     if (PLOTQUAD16)
         mgField->Add(plotDrFieldQuad16);
 
-    TGraph* plotDrFieldQuad32 = new TGraph(kmax + 1);
+    auto* plotDrFieldQuad32 = new TGraph(kmax + 1);
     plotDrFieldQuad32->SetTitle("Relative error of line segment 32-node quadrature field");
     plotDrFieldQuad32->SetDrawOption("same");
     plotDrFieldQuad32->SetMarkerColor(COLQUAD32);
@@ -568,7 +568,7 @@ int main()
     if (PLOTQUAD32)
         mgField->Add(plotDrFieldQuad32);
 
-    TGraph* plotDrFieldNum = new TGraph(kmax + 1);
+    auto* plotDrFieldNum = new TGraph(kmax + 1);
     plotDrFieldNum->SetTitle("Relative error of triangle field with adjusted numerical integrator");
     plotDrFieldNum->SetDrawOption("same");
     plotDrFieldNum->SetMarkerColor(COLNUM);
@@ -1063,7 +1063,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 ////////////////////////////////////////////////////////////////

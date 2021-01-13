@@ -102,7 +102,7 @@ class Configure_AccuracyComparisonFastMultipole : public KSAInputOutputObject
         fDataOutputFileName = "";
     }
 
-    virtual ~Configure_AccuracyComparisonFastMultipole()
+    ~Configure_AccuracyComparisonFastMultipole() override
     {
         ;
     };
@@ -269,7 +269,7 @@ class Configure_AccuracyComparisonFastMultipole : public KSAInputOutputObject
         fDataOutputFileName = outfile;
     };
 
-    void DefineOutputNode(KSAOutputNode* node) const
+    void DefineOutputNode(KSAOutputNode* node) const override
     {
         AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole, Verbosity, int);
         AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole, TopLevelDivisions, int);
@@ -294,7 +294,7 @@ class Configure_AccuracyComparisonFastMultipole : public KSAInputOutputObject
         AddKSAOutputFor(Configure_AccuracyComparisonFastMultipole, DataOutputFileName, std::string);
     }
 
-    void DefineInputNode(KSAInputNode* node)
+    void DefineInputNode(KSAInputNode* node) override
     {
         AddKSAInputFor(Configure_AccuracyComparisonFastMultipole, Verbosity, int);
         AddKSAInputFor(Configure_AccuracyComparisonFastMultipole, TopLevelDivisions, int);
@@ -350,8 +350,8 @@ DefineKSAClassName(Configure_AccuracyComparisonFastMultipole);
 class SelectBoundaryElements : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>
 {
   public:
-    SelectBoundaryElements() : fAllowedElementMode(0), fMaxAspectRatio(100), fTarget(NULL), fSource(NULL){};
-    ~SelectBoundaryElements()
+    SelectBoundaryElements() : fAllowedElementMode(0), fMaxAspectRatio(100), fTarget(nullptr), fSource(nullptr){};
+    ~SelectBoundaryElements() override
     {
         ;
     };
@@ -379,7 +379,7 @@ class SelectBoundaryElements : public KSelectiveVisitor<KShapeVisitor, KTYPELIST
         fSource = c;
     }
 
-    void Visit(KTriangle& /*t*/)
+    void Visit(KTriangle& /*t*/) override
     {
         if (fAllowedElementMode == 0 || fAllowedElementMode == 1) {
             fSource->at(fID)->Accept(fAspectRatioExtractor);
@@ -391,7 +391,7 @@ class SelectBoundaryElements : public KSelectiveVisitor<KShapeVisitor, KTYPELIST
         }
     };
 
-    void Visit(KRectangle& /*r*/)
+    void Visit(KRectangle& /*r*/) override
     {
         if (fAllowedElementMode == 0 || fAllowedElementMode == 2) {
             fSource->at(fID)->Accept(fAspectRatioExtractor);
@@ -403,7 +403,7 @@ class SelectBoundaryElements : public KSelectiveVisitor<KShapeVisitor, KTYPELIST
         }
     };
 
-    void Visit(KLineSegment& /*l*/)
+    void Visit(KLineSegment& /*l*/) override
     {
         if (fAllowedElementMode == 0 || fAllowedElementMode == 3) {
             //no aspect ratio test for wires currently
@@ -438,12 +438,11 @@ int main(int argc, char* argv[])
     KSAFileReader reader;
     reader.SetFileName(input_file);
 
-    KSAInputCollector* in_collector = new KSAInputCollector();
+    auto* in_collector = new KSAInputCollector();
     in_collector->SetFileReader(&reader);
 
-    KSAObjectInputNode<Configure_AccuracyComparisonFastMultipole>* config_input =
-        new KSAObjectInputNode<Configure_AccuracyComparisonFastMultipole>(
-            std::string("Configure_AccuracyComparisonFastMultipole"));
+    auto* config_input = new KSAObjectInputNode<Configure_AccuracyComparisonFastMultipole>(
+        std::string("Configure_AccuracyComparisonFastMultipole"));
 
     kfmout << "Reading configuration file. " << kfmendl;
 
@@ -540,7 +539,7 @@ int main(int argc, char* argv[])
     }
 
     KSurfaceContainer surfaceContainer;
-    KSurfaceContainer* proxy_surfaceContainer = new KSurfaceContainer();
+    auto* proxy_surfaceContainer = new KSurfaceContainer();
 
     KEMFileInterface::GetInstance()->Read(geometry_file_name, *proxy_surfaceContainer, container_name);
 
@@ -598,8 +597,8 @@ int main(int argc, char* argv[])
     fmContainerLabels.push_back(solutionHash);
     fmContainerLabels.push_back(parameterHash);
 
-    KFMElectrostaticTreeData* tree_data = new KFMElectrostaticTreeData();
-    KFMElectrostaticTree* tree = new KFMElectrostaticTree();
+    auto* tree_data = new KFMElectrostaticTreeData();
+    auto* tree = new KFMElectrostaticTree();
 
     bool containerFound = false;
     KEMFileInterface::GetInstance()->FindByLabels(*tree_data, fmContainerLabels, 0, containerFound);
@@ -714,7 +713,7 @@ int main(int argc, char* argv[])
     KThreeVector point;
 
     unsigned int n_points = 0;
-    KThreeVector* points = NULL;
+    KThreeVector* points = nullptr;
 
     switch (mode) {
         case 0:
@@ -1026,8 +1025,7 @@ int main(int argc, char* argv[])
     data_collection.AddData(direct_time_per_field_call);
 
 
-    KSAObjectOutputNode<KFMNamedScalarDataCollection>* data =
-        new KSAObjectOutputNode<KFMNamedScalarDataCollection>("data_collection");
+    auto* data = new KSAObjectOutputNode<KFMNamedScalarDataCollection>("data_collection");
     data->AttachObjectToNode(&data_collection);
 
     bool result;

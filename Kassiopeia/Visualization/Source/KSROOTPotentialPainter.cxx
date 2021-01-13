@@ -14,7 +14,7 @@ namespace Kassiopeia
 {
 KSROOTPotentialPainter::KSROOTPotentialPainter() : fXAxis("z"), fYAxis("y"), fCalcPot(true), fMap(), fComparison(false)
 {}
-KSROOTPotentialPainter::~KSROOTPotentialPainter() {}
+KSROOTPotentialPainter::~KSROOTPotentialPainter() = default;
 
 void KSROOTPotentialPainter::Render()
 {
@@ -42,12 +42,12 @@ void KSROOTPotentialPainter::Render()
     double tDeltaR = fabs(fRmax) / fRsteps;
     double tZ, tR;
     auto* Map = new TH2D("Map", "Map", fZsteps, fZmin, fZmax, 2 * fRsteps, -fRmax, fRmax);
-    KThreeVector tPosition;
+    KGeoBag::KThreeVector tPosition;
 
-    KThreeVector ElectricField;
+    KGeoBag::KThreeVector ElectricField;
     Double_t tPotential;
 
-    KThreeVector tRefElectricField;
+    KGeoBag::KThreeVector tRefElectricField;
     Double_t tRefPotential;
 
     Double_t tRelError = 0.;

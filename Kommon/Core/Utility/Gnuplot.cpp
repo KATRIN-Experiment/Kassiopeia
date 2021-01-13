@@ -1088,7 +1088,7 @@ std::string Gnuplot::create_tmpfile(std::ofstream& tmp)
     //
     // Save the temporary filename
     //
-    tmpfile_list.push_back(name);
+    tmpfile_list.emplace_back(name);
     Gnuplot::tmpfile_num++;
 
     return name;
@@ -1097,11 +1097,11 @@ std::string Gnuplot::create_tmpfile(std::ofstream& tmp)
 void Gnuplot::remove_tmpfiles()
 {
     if ((tmpfile_list).size() > 0) {
-        for (unsigned int i = 0; i < tmpfile_list.size(); i++) {
+        for (auto& i : tmpfile_list) {
 
-            if (remove(tmpfile_list[i].c_str()) != 0) {
+            if (remove(i.c_str()) != 0) {
                 std::ostringstream except;
-                except << "Cannot remove temporary file \"" << tmpfile_list[i] << "\"";
+                except << "Cannot remove temporary file \"" << i << "\"";
                 throw GnuplotException(except.str());
             }
         }

@@ -40,7 +40,7 @@ void KZHCoefficientGenerator<KSolenoid>::ComputeCentralCoefficients(double z0, d
     double psi_cen_za = prefactor * (1. - u_za * u_za);
     double psi_cen_zb = prefactor * (1. - u_zb * u_zb);
 
-    for (unsigned int i = 1; i < coeff.size() - 1; i++) {
+    for (int i = 1; i < (int) coeff.size() - 1; i++) {
         P1p_za[i + 1] = (KZHLegendreCoefficients::GetInstance()->Get(2, i + 1) * u_za * P1p_za.at(i) -
                          KZHLegendreCoefficients::GetInstance()->Get(3, i + 1) * P1p_za.at(i - 1));
         P1p_zb[i + 1] = (KZHLegendreCoefficients::GetInstance()->Get(2, i + 1) * u_zb * P1p_zb.at(i) -
@@ -79,7 +79,7 @@ void KZHCoefficientGenerator<KSolenoid>::ComputeRemoteCoefficients(double z0, do
     double psi_cen_za = prefactor * (1. - u_za * u_za) * rho_ratio_za;
     double psi_cen_zb = prefactor * (1. - u_zb * u_zb) * rho_ratio_zb;
 
-    for (unsigned int i = 1; i < coeff.size() - 1; i++) {
+    for (int i = 1; i < (int) coeff.size() - 1; i++) {
         P1p_za[i + 1] = (KZHLegendreCoefficients::GetInstance()->Get(2, i + 1) * u_za * P1p_za.at(i) -
                          KZHLegendreCoefficients::GetInstance()->Get(3, i + 1) * P1p_za.at(i - 1));
         P1p_zb[i + 1] = (KZHLegendreCoefficients::GetInstance()->Get(2, i + 1) * u_zb * P1p_zb.at(i) -

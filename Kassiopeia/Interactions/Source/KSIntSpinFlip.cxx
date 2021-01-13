@@ -10,19 +10,22 @@ using std::numeric_limits;
 
 #include <cmath>
 
+using KGeoBag::KThreeMatrix;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
-KSIntSpinFlip::KSIntSpinFlip() {}
+KSIntSpinFlip::KSIntSpinFlip() = default;
 KSIntSpinFlip::KSIntSpinFlip(const KSIntSpinFlip& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     KSComponentTemplate<KSIntSpinFlip, KSSpaceInteraction>(aCopy)
 {}
 KSIntSpinFlip* KSIntSpinFlip::Clone() const
 {
     return new KSIntSpinFlip(*this);
 }
-KSIntSpinFlip::~KSIntSpinFlip() {}
+KSIntSpinFlip::~KSIntSpinFlip() = default;
 
 void KSIntSpinFlip::CalculateTransitionRate(const KSParticle& aParticle, double& aTransitionRate)
 {

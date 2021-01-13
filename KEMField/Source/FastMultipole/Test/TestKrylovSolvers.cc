@@ -57,16 +57,16 @@ int main(int argc, char** argv)
     int method = 0;
     int type = 0;
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"accuracy", required_argument, 0, 'a'},
-                                          {"size", required_argument, 0, 's'},
-                                          {"type", required_argument, 0, 't'},
-                                          {"method", required_argument, 0, 'm'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"accuracy", required_argument, nullptr, 'a'},
+                                          {"size", required_argument, nullptr, 's'},
+                                          {"type", required_argument, nullptr, 't'},
+                                          {"method", required_argument, nullptr, 'm'}};
 
     static const char* optString = "ha:t:s:m:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {

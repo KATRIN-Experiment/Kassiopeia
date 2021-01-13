@@ -39,7 +39,7 @@ double KElectrostaticAnalyticRingIntegrator::Potential(const KRing* source, cons
 }
 
 
-KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source, const KPosition& P) const
+KFieldVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* source, const KPosition& P) const
 {
     double par[7];
 
@@ -51,7 +51,7 @@ KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* so
 
     double c = 1. / (par[3] * 2. * KEMConstants::Pi * KEMConstants::Pi * KEMConstants::Eps0);
 
-    KThreeVector field;
+    KFieldVector field;
 
     field[2] = c * EFieldZFromChargedRing(P, par);
     double Er = c * EFieldRFromChargedRing(P, par);
@@ -94,7 +94,7 @@ KThreeVector KElectrostaticAnalyticRingIntegrator::ElectricField(const KRing* so
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const double* P, double* par)
+double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const double* P, const double* par)
 {
     static KCompleteEllipticIntegral1stKind K_elliptic;
 
@@ -140,7 +140,7 @@ double KElectrostaticAnalyticRingIntegrator::PotentialFromChargedRing(const doub
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double* P, double* par)
+double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double* P, const double* par)
 {
     static KCompleteEllipticIntegral2ndKind E_elliptic;
     static KEllipticEMinusKOverkSquared EK_elliptic;
@@ -189,7 +189,7 @@ double KElectrostaticAnalyticRingIntegrator::EFieldRFromChargedRing(const double
  *     - R(p) = rA+p/L*(rB-rA)
  * @endcode
  */
-double KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing(const double* P, double* par)
+double KElectrostaticAnalyticRingIntegrator::EFieldZFromChargedRing(const double* P, const double* par)
 {
     static KCompleteEllipticIntegral2ndKind E_elliptic;
     double Z = par[2] + P[0] / par[6] * (par[4] - par[2]);

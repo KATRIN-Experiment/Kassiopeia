@@ -14,6 +14,7 @@
 #include "KException.h"
 #endif
 
+#include <algorithm>
 #include <chrono>
 #include <iomanip>
 
@@ -43,7 +44,6 @@ inline const char* level2Color(KLogger::ELevel level)
         case KLogger::eInfo:
             return skInfoColor;
         case KLogger::eDebug:
-            return skDebugColor;
         case KLogger::eTrace:
             return skDebugColor;
         default:
@@ -129,12 +129,12 @@ class LOG4CXX_EXPORT ColoredPatternLayout : public PatternLayout
     DECLARE_LOG4CXX_OBJECT(ColoredPatternLayout)
     BEGIN_LOG4CXX_CAST_MAP()
     LOG4CXX_CAST_ENTRY(ColoredPatternLayout)
-    LOG4CXX_CAST_ENTRY_CHAIN(Layout)
+    LOG4CXX_CAST_ENTRY_CHAIN(Layout)  // NOLINT
     END_LOG4CXX_CAST_MAP()
 
     ColoredPatternLayout() : PatternLayout() {}
     ColoredPatternLayout(const LogString& pattern) : PatternLayout(pattern) {}
-    ~ColoredPatternLayout() override {}
+    ~ColoredPatternLayout() override = default;
 
   protected:
     void format(LogString& output, const spi::LoggingEventPtr& event, helpers::Pool& pool) const override;
@@ -200,23 +200,38 @@ struct KLogger::Private
     }
 
     LoggerPtr fLogger;
+    string fLoggerName;
 };
 
 KLogger::KLogger(const char* name) : fPrivate(new Private())
 {
+    fPrivate->fLoggerName = (name == nullptr) ? "root" : name;
     fPrivate->fLogger = (name == nullptr) ? Logger::getRootLogger() : Logger::getLogger(name);
+
+    KLoggerTable::GetInstance().Add(this);
 }
 
 KLogger::KLogger(const std::string& name) : fPrivate(new Private())
 {
+    fPrivate->fLoggerName = name;
     fPrivate->fLogger = Logger::getLogger(name);
+
+    KLoggerTable::GetInstance().Add(this);
 }
 
 KLogger::~KLogger()
 {
+    if (KLoggerTable::IsInitialized())
+        KLoggerTable::GetInstance().Remove(this);
+
     if (fPrivate)
         //delete fPrivate;  // BUG: should be deleted, but causes segfault in log4cxx:~Logger()
         fPrivate = nullptr;
+}
+
+const string& KLogger::GetName() const
+{
+    return fPrivate->fLoggerName;
 }
 
 bool KLogger::IsLevelEnabled(ELevel level) const
@@ -247,7 +262,7 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
 }
 
 
-#else
+#else  // LOG4CXX
 
 /**
  * Fallback solution for systems without log4cxx.
@@ -352,13 +367,27 @@ struct KLogger::Private
     }
 };
 
-KLogger::KLogger(const char* name) : fPrivate(new Private(name == 0 ? "root" : name)) {}
+KLogger::KLogger(const char* name) : fPrivate(new Private(name == nullptr ? "root" : name))
+{
+    KLoggerTable::GetInstance().Add(this);
+}
 
-KLogger::KLogger(const std::string& name) : fPrivate(new Private(name.empty() ? "root" : name)) {}
+KLogger::KLogger(const std::string& name) : fPrivate(new Private(name.empty() ? "root" : name))
+{
+    KLoggerTable::GetInstance().Add(this);
+}
 
 KLogger::~KLogger()
 {
+    if (KLoggerTable::IsInitialized())
+        KLoggerTable::GetInstance().Remove(this);
+
     delete fPrivate;
+}
+
+const string& KLogger::GetName() const
+{
+    return fPrivate->fLoggerName;
 }
 
 bool KLogger::IsLevelEnabled(ELevel level) const
@@ -397,5 +426,51 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
         throw KException() << "error in " << loc.fFunctionName;
 #endif
 }
+#endif  // LOG4CXX
 
-#endif
+KLoggerTable::KLoggerTable() : fLoggerMap() {}
+
+KLoggerTable::~KLoggerTable() = default;
+
+void KLoggerTable::Add(KLogger* logger)
+{
+    const string& name = logger->GetName();
+    fLoggerMap[name].push_front(logger);
+}
+
+list<KLogger*> KLoggerTable::Get(const string& name)
+{
+    auto mapIt = fLoggerMap.find(name);
+    if (mapIt != fLoggerMap.end())
+        return mapIt->second;
+    return {};
+}
+
+void KLoggerTable::Remove(const string& name)
+{
+    fLoggerMap.erase(name);
+}
+
+void KLoggerTable::Remove(KLogger* logger)
+{
+    for (auto & mapIt : fLoggerMap) {
+        mapIt.second.remove(logger);
+    }
+}
+
+void KLoggerTable::SetLevel(const KLogger::ELevel& level)
+{
+    for (auto& mapIt : fLoggerMap) {
+        for (auto& logger : mapIt.second)
+            logger->SetLevel(level);
+    }
+}
+
+void KLoggerTable::SetLevel(const KLogger::ELevel& level, const string& name)
+{
+    auto mapIt = fLoggerMap.find(name);
+    if (mapIt != fLoggerMap.end()) {
+        for (auto& logger : mapIt->second)
+            logger->SetLevel(level);
+    }
+}

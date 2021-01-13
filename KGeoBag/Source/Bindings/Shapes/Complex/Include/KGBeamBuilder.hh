@@ -51,7 +51,7 @@ template<> inline bool KGBeamLineBuilder::AddAttribute(KContainer* anAttribute)
     return false;
 }
 
-typedef KComplexElement<KGBeam> KGBeamBuilder;
+using KGBeamBuilder = KComplexElement<KGBeam>;
 
 template<> inline bool KGBeamBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -85,7 +85,7 @@ template<> inline bool KGBeamBuilder::AddElement(KContainer* anElement)
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGBeam>> KGBeamSurfaceBuilder;
+using KGBeamSurfaceBuilder = KComplexElement<KGWrappedSurface<KGBeam>>;
 
 template<> inline bool KGBeamSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -110,7 +110,7 @@ template<> inline bool KGBeamSurfaceBuilder::AddElement(KContainer* anElement)
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGBeam>> KGBeamSpaceBuilder;
+using KGBeamSpaceBuilder = KComplexElement<KGWrappedSpace<KGBeam>>;
 
 template<> inline bool KGBeamSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

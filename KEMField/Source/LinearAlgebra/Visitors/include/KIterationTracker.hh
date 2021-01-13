@@ -21,7 +21,7 @@ template<typename ValueType> class KIterationTracker : public KIterativeSolver<V
     {
         KIterativeSolver<ValueType>::Visitor::Interval(1);
     }
-    ~KIterationTracker() override {}
+    ~KIterationTracker() override = default;
 
     void WriteInterval(unsigned int i)
     {
@@ -31,7 +31,7 @@ template<typename ValueType> class KIterationTracker : public KIterativeSolver<V
     {
         fMaxIterationStamps = i;
     }
-    void SaveName(std::string fileName)
+    void SaveName(const std::string& fileName)
     {
         fSaveName = fileName;
     }

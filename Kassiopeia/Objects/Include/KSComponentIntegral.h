@@ -25,7 +25,7 @@ template<class XValueType> class KSComponentIntegral : public KSComponent
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentIntegral() override {}
+    ~KSComponentIntegral() override = default;
 
     //***********
     //KSComponent

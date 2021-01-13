@@ -22,19 +22,19 @@ namespace KEMField
 *
 */
 
-typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>
-    KFMKernelResponseArray_3DLaplaceM2M;  //inward response
-typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>
-    KFMKernelResponseArray_3DLaplaceM2L;  //outward response
-typedef KFMKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>
-    KFMKernelResponseArray_3DLaplaceL2L;  //outward response
+using KFMKernelResponseArray_3DLaplaceM2M =
+    KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>;  //inward response
+using KFMKernelResponseArray_3DLaplaceM2L =
+    KFMKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>;  //outward response
+using KFMKernelResponseArray_3DLaplaceL2L =
+    KFMKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>;  //outward response
 
-typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>
-    KFMKernelReducedResponseArray_3DLaplaceM2M;  //inward response
-typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>
-    KFMKernelReducedResponseArray_3DLaplaceM2L;  //outward response
-typedef KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>
-    KFMKernelReducedResponseArray_3DLaplaceL2L;  //outward response
+using KFMKernelReducedResponseArray_3DLaplaceM2M =
+    KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2M, false, 3>;  //inward response
+using KFMKernelReducedResponseArray_3DLaplaceM2L =
+    KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceM2L, true, 3>;  //outward response
+using KFMKernelReducedResponseArray_3DLaplaceL2L =
+    KFMReducedKernelResponseArray<KFMResponseKernel_3DLaplaceL2L, true, 3>;  //outward response
 
 }  // namespace KEMField
 

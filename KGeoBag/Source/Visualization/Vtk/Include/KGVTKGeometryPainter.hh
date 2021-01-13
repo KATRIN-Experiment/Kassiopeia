@@ -1,12 +1,6 @@
 #ifndef KGVTKGEOMETRYPAINTER_HH_
 #define KGVTKGEOMETRYPAINTER_HH_
 
-#include "KVTKWindow.h"
-using katrin::KVTKWindow;
-
-#include "KVTKPainter.h"
-using katrin::KVTKPainter;
-
 #include "KGAppearance.hh"
 #include "KGConicalWireArraySurface.hh"
 #include "KGCore.hh"
@@ -36,6 +30,8 @@ using katrin::KVTKPainter;
 #include "KGShellLineSegmentSurface.hh"
 #include "KGShellPolyLineSurface.hh"
 #include "KGShellPolyLoopSurface.hh"
+#include "KVTKPainter.h"
+#include "KVTKWindow.h"
 #include "vtkActor.h"
 #include "vtkCellArray.h"
 #include "vtkCellData.h"
@@ -51,7 +47,7 @@ namespace KGeoBag
 {
 
 class KGVTKGeometryPainter :
-    public KVTKPainter,
+    public katrin::KVTKPainter,
     public KGVisitor,
     public KGSurface::Visitor,
     public KGFlattenedCircleSurface::Visitor,
@@ -85,12 +81,12 @@ class KGVTKGeometryPainter :
 {
   public:
     KGVTKGeometryPainter();
-    virtual ~KGVTKGeometryPainter();
+    ~KGVTKGeometryPainter() override;
 
   public:
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
   protected:
     void WriteVTK();
@@ -121,44 +117,44 @@ class KGVTKGeometryPainter :
     //****************
 
   protected:
-    virtual void VisitSurface(KGSurface* aSurface);
-    virtual void VisitFlattenedClosedPathSurface(KGFlattenedCircleSurface* aFlattenedCircleSurface);
-    virtual void VisitFlattenedClosedPathSurface(KGFlattenedPolyLoopSurface* aFlattenedPolyLoopSurface);
-    virtual void VisitRotatedPathSurface(KGRotatedLineSegmentSurface* aRotatedLineSegmentSurface);
-    virtual void VisitRotatedPathSurface(KGRotatedArcSegmentSurface* aRotatedArcSegmentSurface);
-    virtual void VisitRotatedPathSurface(KGRotatedPolyLineSurface* aRotatedPolyLineSurface);
-    virtual void VisitRotatedPathSurface(KGRotatedCircleSurface* aRotatedCircleSurface);
-    virtual void VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface);
-    virtual void VisitShellPathSurface(KGShellLineSegmentSurface* aShellLineSegmentSurface);
-    virtual void VisitShellPathSurface(KGShellArcSegmentSurface* aShellArcSegmentSurface);
-    virtual void VisitShellPathSurface(KGShellPolyLineSurface* aShellPolyLineSurface);
-    virtual void VisitShellPathSurface(KGShellPolyLoopSurface* aShellPolyLoopSurface);
-    virtual void VisitShellPathSurface(KGShellCircleSurface* aShellCircleSurface);
-    virtual void VisitExtrudedPathSurface(KGExtrudedLineSegmentSurface* aExtrudedLineSegmentSurface);
-    virtual void VisitExtrudedPathSurface(KGExtrudedArcSegmentSurface* aExtrudedArcSegmentSurface);
-    virtual void VisitExtrudedPathSurface(KGExtrudedPolyLineSurface* aExtrudedPolyLineSurface);
-    virtual void VisitExtrudedPathSurface(KGExtrudedCircleSurface* aExtrudedCircleSurface);
-    virtual void VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface);
-    virtual void VisitWrappedSurface(KGConicalWireArraySurface* aConicalWireArraySurface);
-    virtual void VisitWrappedSurface(KGRodSurface* aRodSurface);
+    void VisitSurface(KGSurface* aSurface) override;
+    void VisitFlattenedClosedPathSurface(KGFlattenedCircleSurface* aFlattenedCircleSurface) override;
+    void VisitFlattenedClosedPathSurface(KGFlattenedPolyLoopSurface* aFlattenedPolyLoopSurface) override;
+    void VisitRotatedPathSurface(KGRotatedLineSegmentSurface* aRotatedLineSegmentSurface) override;
+    void VisitRotatedPathSurface(KGRotatedArcSegmentSurface* aRotatedArcSegmentSurface) override;
+    void VisitRotatedPathSurface(KGRotatedPolyLineSurface* aRotatedPolyLineSurface) override;
+    void VisitRotatedPathSurface(KGRotatedCircleSurface* aRotatedCircleSurface) override;
+    void VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aRotatedPolyLoopSurface) override;
+    void VisitShellPathSurface(KGShellLineSegmentSurface* aShellLineSegmentSurface) override;
+    void VisitShellPathSurface(KGShellArcSegmentSurface* aShellArcSegmentSurface) override;
+    void VisitShellPathSurface(KGShellPolyLineSurface* aShellPolyLineSurface) override;
+    void VisitShellPathSurface(KGShellPolyLoopSurface* aShellPolyLoopSurface) override;
+    void VisitShellPathSurface(KGShellCircleSurface* aShellCircleSurface) override;
+    void VisitExtrudedPathSurface(KGExtrudedLineSegmentSurface* aExtrudedLineSegmentSurface) override;
+    void VisitExtrudedPathSurface(KGExtrudedArcSegmentSurface* aExtrudedArcSegmentSurface) override;
+    void VisitExtrudedPathSurface(KGExtrudedPolyLineSurface* aExtrudedPolyLineSurface) override;
+    void VisitExtrudedPathSurface(KGExtrudedCircleSurface* aExtrudedCircleSurface) override;
+    void VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface) override;
+    void VisitWrappedSurface(KGConicalWireArraySurface* aConicalWireArraySurface) override;
+    void VisitWrappedSurface(KGRodSurface* aRodSurface) override;
 
     //**************
     //space visitors
     //**************
 
   protected:
-    virtual void VisitSpace(KGSpace* aSpace);
-    virtual void VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace* aRotatedLineSegmentSpace);
-    virtual void VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* aRotatedArcSegmentSpace);
-    virtual void VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aRotatedPolyLineSpace);
-    virtual void VisitRotatedClosedPathSpace(KGRotatedCircleSpace* aRotatedCircleSpace);
-    virtual void VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* aRotatedPolyLoopSpace);
-    virtual void VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace* aExtrudedCircleSpace);
-    virtual void VisitExtrudedClosedPathSpace(KGExtrudedPolyLoopSpace* aExtrudedPolyLoopSpace);
-    virtual void VisitWrappedSpace(KGRodSpace* aRodSpace);
+    void VisitSpace(KGSpace* aSpace) override;
+    void VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace* aRotatedLineSegmentSpace) override;
+    void VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* aRotatedArcSegmentSpace) override;
+    void VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aRotatedPolyLineSpace) override;
+    void VisitRotatedClosedPathSpace(KGRotatedCircleSpace* aRotatedCircleSpace) override;
+    void VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* aRotatedPolyLoopSpace) override;
+    void VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace* aExtrudedCircleSpace) override;
+    void VisitExtrudedClosedPathSpace(KGExtrudedPolyLoopSpace* aExtrudedPolyLoopSpace) override;
+    void VisitWrappedSpace(KGRodSpace* aRodSpace) override;
 
   private:
-    void LocalToGlobal(const KThreeVector& aLocal, KThreeVector& aGlobal);
+    void LocalToGlobal(const KGeoBag::KThreeVector& aLocal, KGeoBag::KThreeVector& aGlobal);
 
     //**********
     //data types
@@ -168,9 +164,9 @@ class KGVTKGeometryPainter :
     {
       public:
         typedef double Value;
-        typedef deque<Value> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Set = std::deque<Value>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -179,10 +175,10 @@ class KGVTKGeometryPainter :
     class Points
     {
       public:
-        typedef KTwoVector Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Element = KTwoVector;
+        using Set = std::deque<Element>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -197,10 +193,10 @@ class KGVTKGeometryPainter :
     class ThreePoints
     {
       public:
-        typedef KThreeVector Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Element = KGeoBag::KThreeVector;
+        using Set = std::deque<Element>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -209,13 +205,13 @@ class KGVTKGeometryPainter :
     class Mesh
     {
       public:
-        typedef KThreeVector Element;
-        typedef deque<KThreeVector> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef deque<Group> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = KGeoBag::KThreeVector;
+        using Group = std::deque<KThreeVector>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+        using Set = std::deque<Group>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -236,31 +232,33 @@ class KGVTKGeometryPainter :
     //points functions
     //****************
 
-    void LineSegmentToOpenPoints(const KGPlanarLineSegment* aLineSegment, OpenPoints& aPoints);
+    static void LineSegmentToOpenPoints(const KGPlanarLineSegment* aLineSegment, OpenPoints& aPoints);
     void ArcSegmentToOpenPoints(const KGPlanarArcSegment* anArcSegment, OpenPoints& aPoints);
     void PolyLineToOpenPoints(const KGPlanarPolyLine* aPolyLine, OpenPoints& aPoints);
     void CircleToClosedPoints(const KGPlanarCircle* aCircle, ClosedPoints& aPoints);
     void PolyLoopToClosedPoints(const KGPlanarPolyLoop* aPolyLoop, ClosedPoints& aPoints);
-    void RodsToThreePoints(const KGRodSpace* aRodSpace, ThreePoints& aThreePoints);
-    void RodsToThreePoints(const KGRodSurface* aRodSurface, ThreePoints& aThreePoints);
-    void WireArrayToThreePoints(const KGConicalWireArraySurface* aConicalWireArraySurface, ThreePoints& aThreePoints);
+    static void RodsToThreePoints(const KGRodSpace* aRodSpace, ThreePoints& aThreePoints);
+    static void RodsToThreePoints(const KGRodSurface* aRodSurface, ThreePoints& aThreePoints);
+    static void WireArrayToThreePoints(const KGConicalWireArraySurface* aConicalWireArraySurface,
+                                       ThreePoints& aThreePoints);
 
     //**************
     //mesh functions
     //**************
 
-    void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
-                                                const double& aZ, TubeMesh& aMesh, KThreeVector& anApex);
+    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
+                                                       const double& aZ, TubeMesh& aMesh,
+                                                       KGeoBag::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, TubeMesh& aMesh);
     void OpenPointsRotatedToShellMesh(const OpenPoints& aPoints, ShellMesh& aMesh, const double& aAngleStart,
                                       const double& aAngleStop);
     void ClosedPointsRotatedToShellMesh(const ClosedPoints& aPoints, ShellMesh& aMesh, const double& aAngleStart,
                                         const double& aAngleStop);
     void ClosedPointsRotatedToTorusMesh(const ClosedPoints& aPoints, TorusMesh& aMesh);
-    void OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, const double& aZMin, const double& aZMax,
-                                      FlatMesh& aMesh);
-    void ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aPoints, const double& aZMin, const double& aZMax,
-                                        TubeMesh& aMesh);
+    static void OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, const double& aZMin, const double& aZMax,
+                                             FlatMesh& aMesh);
+    static void ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aPoints, const double& aZMin, const double& aZMax,
+                                               TubeMesh& aMesh);
     void ThreePointsToTubeMesh(const ThreePoints& aThreePoints, TubeMesh& aMesh, const double& aTubeRadius);
 
     //****************************
@@ -275,9 +273,10 @@ class KGVTKGeometryPainter :
 
     void FlatMeshToVTK(const FlatMesh& aMesh);
     void TubeMeshToVTK(const TubeMesh& aMesh);
-    void TubeMeshToVTK(const TubeMesh& aMesh, const KThreeVector& anApexEnd);
-    void TubeMeshToVTK(const KThreeVector& anApexStart, const TubeMesh& aMesh);
-    void TubeMeshToVTK(const KThreeVector& anApexStart, const TubeMesh& aMesh, const KThreeVector& anApexEnd);
+    void TubeMeshToVTK(const TubeMesh& aMesh, const KGeoBag::KThreeVector& anApexEnd);
+    void TubeMeshToVTK(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh);
+    void TubeMeshToVTK(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh,
+                       const KGeoBag::KThreeVector& anApexEnd);
     void ShellMeshToVTK(const ShellMesh& aMesh);
     void ClosedShellMeshToVTK(const ShellMesh& aMesh);
     void TorusMeshToVTK(const TorusMesh& aMesh);
@@ -293,10 +292,10 @@ class KGVTKGeometryPainter :
     KGSpace* fCurrentSpace;
     KGSurface* fCurrentSurface;
     KGAppearanceData* fCurrentData;
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
+    KGeoBag::KThreeVector fCurrentOrigin;
+    KGeoBag::KThreeVector fCurrentXAxis;
+    KGeoBag::KThreeVector fCurrentYAxis;
+    KGeoBag::KThreeVector fCurrentZAxis;
     bool fIgnore;
 };
 

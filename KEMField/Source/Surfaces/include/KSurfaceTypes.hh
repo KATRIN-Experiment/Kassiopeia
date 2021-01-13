@@ -24,8 +24,13 @@ struct KRobinBoundary;
 struct KIsolatedBoundary;
 
 // A list of all of the boundary types
-typedef KTYPELIST_5(KDirichletBoundary, KNeumannBoundary, KCauchyBoundary, KRobinBoundary,
-                    KIsolatedBoundary) KBoundaryTypes_;
+using KBoundaryTypes_ = KEMField::KTypelist<
+    KDirichletBoundary,
+    KEMField::KTypelist<
+        KNeumannBoundary,
+        KEMField::KTypelist<
+            KCauchyBoundary,
+            KEMField::KTypelist<KRobinBoundary, KEMField::KTypelist<KIsolatedBoundary, KEMField::KNullType>>>>>;
 }  // namespace KEMField
 
 namespace KEMField
@@ -37,15 +42,31 @@ class KConicSection;
 class KRing;
 template<class ShapePolicy> class KSymmetryGroup;
 
-typedef KSymmetryGroup<KTriangle> KTriangleGroup;
-typedef KSymmetryGroup<KRectangle> KRectangleGroup;
-typedef KSymmetryGroup<KLineSegment> KLineSegmentGroup;
-typedef KSymmetryGroup<KConicSection> KConicSectionGroup;
-typedef KSymmetryGroup<KRing> KRingGroup;
+using KTriangleGroup = KSymmetryGroup<KTriangle>;
+using KRectangleGroup = KSymmetryGroup<KRectangle>;
+using KLineSegmentGroup = KSymmetryGroup<KLineSegment>;
+using KConicSectionGroup = KSymmetryGroup<KConicSection>;
+using KRingGroup = KSymmetryGroup<KRing>;
 
 // A list of all of the shape types
-typedef KTYPELIST_10(KTriangle, KRectangle, KLineSegment, KConicSection, KRing, KRectangleGroup, KLineSegmentGroup,
-                     KTriangleGroup, KConicSectionGroup, KRingGroup) KShapeTypes_;
+using KShapeTypes_ = KEMField::KTypelist<
+    KTriangle,
+    KEMField::KTypelist<
+        KRectangle,
+        KEMField::KTypelist<
+            KLineSegment,
+            KEMField::KTypelist<
+                KConicSection,
+                KEMField::KTypelist<
+                    KRing,
+                    KEMField::KTypelist<
+                        KRectangleGroup,
+                        KEMField::KTypelist<
+                            KLineSegmentGroup,
+                            KEMField::KTypelist<
+                                KTriangleGroup,
+                                KEMField::KTypelist<KConicSectionGroup,
+                                                    KEMField::KTypelist<KRingGroup, KEMField::KNullType>>>>>>>>>>;
 }  // namespace KEMField
 
 namespace KEMField
@@ -53,15 +74,15 @@ namespace KEMField
 /**
 * KBasisTypes is a typelist of all available basis types.
 */
-typedef NoDuplicates<KBasisTypes_>::Result KBasisTypes;
+using KBasisTypes = NoDuplicates<KBasisTypes_>::Result;
 /**
 * KBoundaryTypes is a typelist of all available boundary types.
 */
-typedef NoDuplicates<KBoundaryTypes_>::Result KBoundaryTypes;
+using KBoundaryTypes = NoDuplicates<KBoundaryTypes_>::Result;
 /**
 * KShapeTypes is a typelist of all available shape types.
 */
-typedef NoDuplicates<KShapeTypes_>::Result KShapeTypes;
+using KShapeTypes = NoDuplicates<KShapeTypes_>::Result;
 }  // namespace KEMField
 
 #include "../../../Surfaces/include/KBoundary.hh"

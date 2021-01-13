@@ -23,8 +23,8 @@ namespace KEMField
 class KEMTransformation : public KTransitiveStreamer<KEMTransformation>
 {
   public:
-    KEMTransformation() {}
-    ~KEMTransformation() override {}
+    KEMTransformation() = default;
+    ~KEMTransformation() override = default;
 
     template<class Object> void Transform(Object& object);
 
@@ -55,7 +55,7 @@ class KRotation : public KEMTransformation
 {
   public:
     KRotation() : KEMTransformation(), fOrigin(0., 0., 0.), fAxis(0., 0., 1.), fAngle(0.) {}
-    ~KRotation() override {}
+    ~KRotation() override = default;
 
     using KEMTransformation::Transform;
 
@@ -91,7 +91,7 @@ class KTranslation : public KEMTransformation
 {
   public:
     KTranslation() : KEMTransformation(), fTranslation(0., 0., 0.) {}
-    ~KTranslation() override {}
+    ~KTranslation() override = default;
 
     using KEMTransformation::Transform;
 
@@ -114,7 +114,7 @@ class KReflection : public KEMTransformation
 {
   public:
     KReflection() : KEMTransformation(), fOrigin(0., 0., 0.), fNormal(0., 0., 1.) {}
-    ~KReflection() override {}
+    ~KReflection() override = default;
 
     using KEMTransformation::Transform;
 

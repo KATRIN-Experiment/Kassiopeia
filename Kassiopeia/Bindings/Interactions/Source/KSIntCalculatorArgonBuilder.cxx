@@ -18,8 +18,8 @@ KSIntCalculatorArgonSet::KSIntCalculatorArgonSet() :
 
 KSIntCalculatorArgonSet::~KSIntCalculatorArgonSet()
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        delete (*tIt);
+    for (auto& calculator : fCalculators) {
+        delete calculator;
     }
 }
 
@@ -32,16 +32,16 @@ void KSIntCalculatorArgonSet::AddCalculator(KSIntCalculator* aCalculator)
 
 void KSIntCalculatorArgonSet::ReleaseCalculators(KSIntScattering* aScattering)
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        aScattering->AddCalculator(*tIt);
+    for (auto& calculator : fCalculators) {
+        aScattering->AddCalculator(calculator);
     }
     fCalculators.clear();
     return;
 }
 
-template<> KSIntCalculatorArgonSetBuilder::~KComplexElement() {}
+template<> KSIntCalculatorArgonSetBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntCalculatorArgonStructure = KSIntCalculatorArgonSetBuilder::Attribute<string>("name") +
+STATICINT sKSIntCalculatorArgonStructure = KSIntCalculatorArgonSetBuilder::Attribute<std::string>("name") +
                                            KSIntCalculatorArgonSetBuilder::Attribute<bool>("elastic") +
                                            KSIntCalculatorArgonSetBuilder::Attribute<bool>("excitation") +
                                            KSIntCalculatorArgonSetBuilder::Attribute<bool>("single_ionisation") +

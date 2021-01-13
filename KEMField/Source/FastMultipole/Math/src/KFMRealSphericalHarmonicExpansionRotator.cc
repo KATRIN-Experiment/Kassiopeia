@@ -311,17 +311,16 @@ void KFMRealSphericalHarmonicExpansionRotator::GetRotatedMoments(std::vector<dou
 
 void KFMRealSphericalHarmonicExpansionRotator::DeallocateMomentSpace()
 {
-    for (unsigned int l = 0; l < fMoments.size(); l++) {
-        kfm_vector_free(fMoments[l]);
+    for (auto& m : fMoments) {
+        kfm_vector_free(m);
     }
 
-
-    for (unsigned int l = 0; l < fRotatedMoments.size(); l++) {
-        kfm_vector_free(fRotatedMoments[l]);
+    for (auto& m : fRotatedMoments) {
+        kfm_vector_free(m);
     }
 
-    for (unsigned int l = 0; l < fTemp.size(); l++) {
-        kfm_vector_free(fTemp[l]);
+    for (auto& l : fTemp) {
+        kfm_vector_free(l);
     }
 
     fMoments.clear();

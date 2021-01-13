@@ -5,8 +5,16 @@
 
 #include "gtest/gtest.h"
 
-//using namespace KEMField;
+#ifdef KEMFIELD_USE_MPI
+#include "KMPIInterface.hh"
+#define MPI_SINGLE_PROCESS if (KEMField::KMPIInterface::GetInstance()->GetProcess() == 0)
+#else
+#define MPI_SINGLE_PROCESS
+#endif
 
+#ifdef KEMFIELD_USE_PETSC
+#include "KPETScInterface.hh"
+#endif
 
 /* Use fixture to set up tracks used in several test cases */
 class KEMFieldTest : public TimeoutTest
@@ -15,10 +23,23 @@ class KEMFieldTest : public TimeoutTest
     void SetUp() override
     {
         TimeoutTest::SetUp();
+
+#ifdef KEMFIELD_USE_PETSC
+        KEMField::KPETScInterface::GetInstance()->Initialize(0, nullptr);
+#elif KEMFIELD_USE_MPI
+        KEMField::KMPIInterface::GetInstance()->Initialize(0, nullptr);
+#endif
     }
 
     void TearDown() override
     {
+        // we cannot call Finalize() here because it will mess up subsequent tests
+#ifdef KEMFIELD_USE_PETSC
+        //KEMField::KPETScInterface::GetInstance()->Finalize();
+#elif KEMFIELD_USE_MPI
+        //KEMField::KMPIInterface::GetInstance()->Finalize();
+#endif
+
         TimeoutTest::TearDown();
     }
 };

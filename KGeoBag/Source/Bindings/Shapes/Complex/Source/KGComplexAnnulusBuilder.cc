@@ -18,7 +18,7 @@ STATICINT sKGComplexAnnulusBuilderStructure = KGComplexAnnulusBuilder::Attribute
                                               KGComplexAnnulusBuilder::ComplexElement<KGComplexAnnulus::Ring>("ring");
 
 STATICINT sKGComplexAnnulusSurfaceBuilderStructure =
-    KGComplexAnnulusSurfaceBuilder::Attribute<string>("name") +
+    KGComplexAnnulusSurfaceBuilder::Attribute<std::string>("name") +
     KGComplexAnnulusSurfaceBuilder::ComplexElement<KGComplexAnnulus>("complex_annulus");
 
 STATICINT sKGComplexAnnulusSurfaceBuilder =

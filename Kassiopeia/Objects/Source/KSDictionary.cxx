@@ -3,10 +3,10 @@
 namespace Kassiopeia
 {
 
-KSCommandFactory::KSCommandFactory() {}
-KSCommandFactory::~KSCommandFactory() {}
+KSCommandFactory::KSCommandFactory() = default;
+KSCommandFactory::~KSCommandFactory() = default;
 
-KSComponentFactory::KSComponentFactory() {}
-KSComponentFactory::~KSComponentFactory() {}
+KSComponentFactory::KSComponentFactory() = default;
+KSComponentFactory::~KSComponentFactory() = default;
 
 }  // namespace Kassiopeia

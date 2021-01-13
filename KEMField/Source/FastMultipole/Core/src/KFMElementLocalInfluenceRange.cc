@@ -8,8 +8,8 @@ void KFMElementLocalInfluenceRange::AddRange(unsigned int start_index, unsigned 
 {
     std::vector<std::pair<unsigned int, unsigned int>>::iterator it;
 
-    if (fRangeList.size() == 0) {
-        fRangeList.push_back(std::pair<unsigned int, unsigned int>(start_index, size));
+    if (fRangeList.empty()) {
+        fRangeList.emplace_back(start_index, size);
         return;
     }
 
@@ -37,7 +37,7 @@ void KFMElementLocalInfluenceRange::AddRange(unsigned int start_index, unsigned 
     }
 
     //hasn't already found a place in the list, then insert it at the end
-    fRangeList.push_back(std::pair<unsigned int, unsigned int>(start_index, size));
+    fRangeList.emplace_back(start_index, size);
 }
 
 

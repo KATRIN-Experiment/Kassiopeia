@@ -11,6 +11,9 @@
 #include "KSNumerical.h"
 #include "KTransformation.hh"
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -20,7 +23,7 @@ KSGenDirectionSurfaceComposite::KSGenDirectionSurfaceComposite() :
     fOutside(false)
 {}
 KSGenDirectionSurfaceComposite::KSGenDirectionSurfaceComposite(const KSGenDirectionSurfaceComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSurfaces(aCopy.fSurfaces),
     fThetaValue(aCopy.fThetaValue),
     fPhiValue(aCopy.fPhiValue),
@@ -30,7 +33,7 @@ KSGenDirectionSurfaceComposite* KSGenDirectionSurfaceComposite::Clone() const
 {
     return new KSGenDirectionSurfaceComposite(*this);
 }
-KSGenDirectionSurfaceComposite::~KSGenDirectionSurfaceComposite() {}
+KSGenDirectionSurfaceComposite::~KSGenDirectionSurfaceComposite() = default;
 
 void KSGenDirectionSurfaceComposite::Dice(KSParticleQueue* aPrimaries)
 {

@@ -22,8 +22,8 @@ template<class XValueType> class KSComponentMath : public KSComponent
     {
         Set(&fResult);
         this->SetParent(aParentComponents.at(0));
-        for (size_t tIndex = 0; tIndex < aParentComponents.size(); tIndex++) {
-            aParentComponents.at(tIndex)->AddChild(this);
+        for (auto& aParentComponent : aParentComponents) {
+            aParentComponent->AddChild(this);
         }
 
         for (size_t tIndex = 0; tIndex < fParents.size(); tIndex++) {
@@ -68,7 +68,7 @@ template<class XValueType> class KSComponentMath : public KSComponent
             aCopy.fParentComponents.at(tIndex)->AddChild(this);
         }
     }
-    ~KSComponentMath() override {}
+    ~KSComponentMath() override = default;
 
     //***********
     //KSComponent

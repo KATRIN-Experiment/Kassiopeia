@@ -1,15 +1,13 @@
 #ifndef Kassiopeia_KSObject_h_
 #define Kassiopeia_KSObject_h_
 
-#include "KTagged.h"
-using katrin::KTagged;
-
 #include "KSObjectsMessage.h"
+#include "KTagged.h"
 
 namespace Kassiopeia
 {
 
-class KSObject : public KTagged
+class KSObject : public katrin::KTagged
 {
   public:
     KSObject();
@@ -58,11 +56,11 @@ class KSObject : public KTagged
     mutable KSHolder* fHolder;
 };
 
-inline KSObject::KSHolder::KSHolder() {}
-inline KSObject::KSHolder::~KSHolder() {}
+inline KSObject::KSHolder::KSHolder() = default;
+inline KSObject::KSHolder::~KSHolder() = default;
 
 template<class XType> inline KSObject::KSHolderTemplate<XType>::KSHolderTemplate(XType* anObject) : fObject(anObject) {}
-template<class XType> inline KSObject::KSHolderTemplate<XType>::~KSHolderTemplate() {}
+template<class XType> inline KSObject::KSHolderTemplate<XType>::~KSHolderTemplate() = default;
 template<class XType> inline void KSObject::KSHolderTemplate<XType>::Type()
 {
     throw fObject;

@@ -8,11 +8,11 @@ namespace KEMField
 class KCoilIntegrator
 {
   public:
-    KCoilIntegrator() {}
-    virtual ~KCoilIntegrator() {}
+    KCoilIntegrator() = default;
+    virtual ~KCoilIntegrator() = default;
 
-    KThreeVector VectorPotential(const KCoil& coil, const KPosition& P) const;
-    KThreeVector MagneticField(const KCoil& coil, const KPosition& P) const;
+    KFieldVector VectorPotential(const KCoil& coil, const KPosition& P) const;
+    KFieldVector MagneticField(const KCoil& coil, const KPosition& P) const;
 };
 }  // namespace KEMField
 

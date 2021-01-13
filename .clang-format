@@ -4,7 +4,7 @@ BasedOnStyle: LLVM
 # To see all the default values of the base style, run: clang-format --style=LLVM --dump-config
 
 Language: Cpp
-Standard: Cpp11
+Standard: c++14
 ColumnLimit: 120
 IndentWidth: 4
 
@@ -17,6 +17,7 @@ AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
 AlwaysBreakTemplateDeclarations: MultiLine
 BinPackArguments: false
 BraceWrapping:

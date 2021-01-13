@@ -37,7 +37,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagCore SHARED
-	${CORE_SOURCE_FILES}
+	${CORE_SOURCE_FILES} ${CORE_HEADER_FILES}
 )
 target_link_libraries( KGeoBagCore
     KGeoBagMath

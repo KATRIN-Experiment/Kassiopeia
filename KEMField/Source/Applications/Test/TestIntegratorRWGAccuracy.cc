@@ -12,16 +12,15 @@
 #include "KThreeVector_KEMField.hh"
 
 #include <cstdlib>
+#include <ctime>
 #include <getopt.h>
 #include <iomanip>
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
 
 using namespace KEMField;
 
 typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KEMTriangle;
-typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KEMRectangle;
+using KEMRectangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>;
 
 double IJKLRANDOM;
 void subrn(double* u, int len);
@@ -31,23 +30,22 @@ double randomnumber();
 
 double fToleranceLambda = 1.E-15; /* tolerance for determining if field point is on vertex */
 
-void AddTriangle(std::vector<KEMTriangle>& v, KThreeVector triP0, KThreeVector triP1, KThreeVector triP2)
+void AddTriangle(std::vector<KEMTriangle>& v, KFieldVector triP0, KFieldVector triP1, KFieldVector triP2)
 {
     KEMTriangle newTri;
     newTri.SetA(sqrt(POW2(triP1[0] - triP0[0]) + POW2(triP1[1] - triP0[1]) + POW2(triP1[2] - triP0[2])));
     newTri.SetB(sqrt(POW2(triP2[0] - triP0[0]) + POW2(triP2[1] - triP0[1]) + POW2(triP2[2] - triP0[2])));
     newTri.SetP0(triP0);
 
-    newTri.SetN1(KThreeVector((triP1[0] - triP0[0]) / newTri.GetA(),
+    newTri.SetN1(KFieldVector((triP1[0] - triP0[0]) / newTri.GetA(),
                               (triP1[1] - triP0[1]) / newTri.GetA(),
                               (triP1[2] - triP0[2]) / newTri.GetA()));
 
-    newTri.SetN2(KThreeVector((triP2[0] - triP0[0]) / newTri.GetB(),
+    newTri.SetN2(KFieldVector((triP2[0] - triP0[0]) / newTri.GetB(),
                               (triP2[1] - triP0[1]) / newTri.GetB(),
                               (triP2[2] - triP0[2]) / newTri.GetB()));
 
     v.push_back(newTri);
-    return;
 }
 
 int main()
@@ -80,24 +78,24 @@ int main()
 
         if (print)
             std::cout << "P0 = ";
-        for (unsigned short l = 0; l < 3; l++) {
-            triP0[l] = -1. + (2. * randomnumber());
+        for (double& l : triP0) {
+            l = -1. + (2. * randomnumber());
             if (print)
-                std::cout << triP0[l] << "  ";
+                std::cout << l << "  ";
         }
         if (print)
             std::cout << "  P1 = ";
-        for (unsigned short j = 0; j < 3; j++) {
-            triP1[j] = -1. + (2. * randomnumber());  // = fP0 + fN1*fA
+        for (double& j : triP1) {
+            j = -1. + (2. * randomnumber());  // = fP0 + fN1*fA
             if (print)
-                std::cout << triP1[j] << "  ";
+                std::cout << j << "  ";
         }
         if (print)
             std::cout << "  P2 = ";
-        for (unsigned short k = 0; k < 3; k++) {
-            triP2[k] = -1. + (2. * randomnumber());  // = fP0 + fN2*fB
+        for (double& k : triP2) {
+            k = -1. + (2. * randomnumber());  // = fP0 + fN2*fB
             if (print)
-                std::cout << triP2[k] << "  ";
+                std::cout << k << "  ";
         }
         std::cout << std::endl;
 
@@ -175,12 +173,12 @@ int main()
         // TRIANGLE OBJECT //
         /////////////////////
 
-        KEMTriangle* triangle = new KEMTriangle();
+        auto* triangle = new KEMTriangle();
         triangle->SetA(triData[0]);
         triangle->SetB(triData[1]);
-        triangle->SetP0(KThreeVector(triP0[0], triP0[1], triP0[2]));
-        triangle->SetN1(KThreeVector(triData[5], triData[6], triData[7]));
-        triangle->SetN2(KThreeVector(triData[8], triData[9], triData[10]));
+        triangle->SetP0(KFieldVector(triP0[0], triP0[1], triP0[2]));
+        triangle->SetN1(KFieldVector(triData[5], triData[6], triData[7]));
+        triangle->SetN2(KFieldVector(triData[8], triData[9], triData[10]));
 
         triangle->SetBoundaryValue(1.);
         triangle->SetSolution(1.);
@@ -196,15 +194,15 @@ int main()
         double averageSideLength = (triAlongSideLengthP0P1 + triAlongSideLengthP1P2 + triAlongSideLengthP2P0) / 3.;
         double dirN3 = 2. * averageSideLength * randomnumber();
 
-        KThreeVector fP(0., 0., 0.);
-        fP = KThreeVector(triData[2], triData[3], triData[4]) +
-             (dirN1 * KThreeVector(triData[5], triData[6], triData[7])) +
-             (dirN2 * KThreeVector(triData[8], triData[9], triData[10]));
+        KFieldVector fP(0., 0., 0.);
+        fP = KFieldVector(triData[2], triData[3], triData[4]) +
+             (dirN1 * KFieldVector(triData[5], triData[6], triData[7])) +
+             (dirN2 * KFieldVector(triData[8], triData[9], triData[10]));
 
         if (print)
             std::cout << "fP = " << fP[0] << "  " << fP[1] << "  " << fP[2] << std::endl;
 
-        KThreeVector fPN3(0., 0., 0.);
+        KFieldVector fPN3(0., 0., 0.);
         fPN3 = fP + (dirN3 * (triangle->GetN3()));
 
         // compute distance ratio
@@ -335,28 +333,28 @@ int main()
 
         // m = unit vector as cross product of two perpendicular unit vectors
 
-        KThreeVector goOut;
+        KFieldVector goOut;
 
         // decide which m has to be taken
         if (lineIndex == 0)
-            goOut = KThreeVector(m0[0], m0[1], m0[2]);  // Unit vectors ???????
+            goOut = KFieldVector(m0[0], m0[1], m0[2]);  // Unit vectors ???????
         if (lineIndex == 1)
-            goOut = KThreeVector(m1[0], m1[1], m1[2]);
+            goOut = KFieldVector(m1[0], m1[1], m1[2]);
         if (lineIndex == 2)
-            goOut = KThreeVector(m2[0], m2[1], m2[2]);
+            goOut = KFieldVector(m2[0], m2[1], m2[2]);
 
-        KThreeVector goAlong;
+        KFieldVector goAlong;
 
         if (lineIndex == 0)
-            goAlong = KThreeVector(triAlongSideP0P1Unit[0], triAlongSideP0P1Unit[1], triAlongSideP0P1Unit[2]);
+            goAlong = KFieldVector(triAlongSideP0P1Unit[0], triAlongSideP0P1Unit[1], triAlongSideP0P1Unit[2]);
         if (lineIndex == 1)
-            goAlong = KThreeVector(triAlongSideP1P2Unit[0], triAlongSideP1P2Unit[1], triAlongSideP1P2Unit[2]);
+            goAlong = KFieldVector(triAlongSideP1P2Unit[0], triAlongSideP1P2Unit[1], triAlongSideP1P2Unit[2]);
         if (lineIndex == 2)
-            goAlong = KThreeVector(triAlongSideP2P0Unit[0], triAlongSideP2P0Unit[1], triAlongSideP2P0Unit[2]);
+            goAlong = KFieldVector(triAlongSideP2P0Unit[0], triAlongSideP2P0Unit[1], triAlongSideP2P0Unit[2]);
 
         // save rectangle points
 
-        std::vector<KThreeVector> rect;
+        std::vector<KFieldVector> rect;
 
         rect.push_back(fP + (distToLineMin * goOut));
         rect.push_back(fP + (distToLineMin * goAlong));
@@ -366,9 +364,9 @@ int main()
 
         // define triangle corner points relatively to side with min distance
 
-        KThreeVector p0Rel;
-        KThreeVector p1Rel;
-        KThreeVector p2Rel;
+        KFieldVector p0Rel;
+        KFieldVector p1Rel;
+        KFieldVector p2Rel;
 
         if (lineIndex == 0) {
             p0Rel = triP0;
@@ -399,11 +397,11 @@ int main()
         // compute field/potential via Gauss Legendre and sum up values !!
 
         double triPotential = 0.;
-        KThreeVector triField;
+        KFieldVector triField;
 
-        for (unsigned int i = 0; i < triCont.size(); i++) {
-            triPotential += intTriQuad.Potential(triCont.at(i).GetShape(), fP);
-            triField += intTriQuad.ElectricField(triCont.at(i).GetShape(), fP);
+        for (auto& i : triCont) {
+            triPotential += intTriQuad.Potential(i.GetShape(), fP);
+            triField += intTriQuad.ElectricField(i.GetShape(), fP);
         }
 
         // add field and potential for rectangle
@@ -512,7 +510,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 ////////////////////////////////////////////////////////////////

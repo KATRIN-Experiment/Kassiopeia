@@ -8,7 +8,7 @@ namespace Kassiopeia
 KSRootEventModifier::KSRootEventModifier() : fModifiers(128), fModifier(nullptr), fEvent(nullptr) {}
 
 KSRootEventModifier::KSRootEventModifier(const KSRootEventModifier& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fModifiers(aCopy.fModifiers),
     fModifier(aCopy.fModifier),
     fEvent(aCopy.fEvent)
@@ -19,7 +19,7 @@ KSRootEventModifier* KSRootEventModifier::Clone() const
     return new KSRootEventModifier(*this);
 }
 
-KSRootEventModifier::~KSRootEventModifier() {}
+KSRootEventModifier::~KSRootEventModifier() = default;
 
 void KSRootEventModifier::AddModifier(KSEventModifier* aModifier)
 {

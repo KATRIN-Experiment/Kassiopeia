@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGVisitor::KGVisitor() {}
+KGVisitor::KGVisitor() = default;
 
-KGVisitor::~KGVisitor() {}
+KGVisitor::~KGVisitor() = default;
 
 }  // namespace KGeoBag

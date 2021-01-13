@@ -12,20 +12,20 @@ namespace KEMField
 class KElectrostaticBiQuadratureRectangleIntegrator : public KElectrostaticElementIntegrator<KRectangle>
 {
   public:
-    typedef KRectangle Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KRectangle;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticBiQuadratureRectangleIntegrator() {}
-    ~KElectrostaticBiQuadratureRectangleIntegrator() override {}
+    KElectrostaticBiQuadratureRectangleIntegrator() = default;
+    ~KElectrostaticBiQuadratureRectangleIntegrator() override = default;
 
     double Potential(const KRectangle* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KRectangle* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KRectangle* source,
+    KFieldVector ElectricField(const KRectangle* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KRectangle* source,
                                                               const KPosition& P) const override;
 
     double Potential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
+    KFieldVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
                                                               const KPosition& P) const override;
 
   private:

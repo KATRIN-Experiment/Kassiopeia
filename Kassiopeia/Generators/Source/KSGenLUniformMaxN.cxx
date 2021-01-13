@@ -9,7 +9,7 @@ using katrin::KRandom;
 
 namespace Kassiopeia
 {
-KSGenLUniformMaxN::KSGenLUniformMaxN() {}
+KSGenLUniformMaxN::KSGenLUniformMaxN() = default;
 
 KSGenLUniformMaxN::KSGenLUniformMaxN(const KSGenLUniformMaxN& /*aCopy*/) : KSComponent() {}
 
@@ -18,7 +18,7 @@ KSGenLUniformMaxN* KSGenLUniformMaxN::Clone() const
     return new KSGenLUniformMaxN(*this);
 }
 
-KSGenLUniformMaxN::~KSGenLUniformMaxN() {}
+KSGenLUniformMaxN::~KSGenLUniformMaxN() = default;
 
 void KSGenLUniformMaxN::InitializeComponent() {}
 
@@ -27,8 +27,8 @@ void KSGenLUniformMaxN::DeinitializeComponent() {}
 void KSGenLUniformMaxN::Dice(KSParticleQueue* aPrimaries)
 {
 
-    for (auto p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
-        (*p)->SetSecondQuantumNumber(KRandom::GetInstance().Uniform(0, (*p)->GetMainQuantumNumber() - 1));
+    for (auto& aPrimarie : *aPrimaries) {
+        aPrimarie->SetSecondQuantumNumber(KRandom::GetInstance().Uniform(0, aPrimarie->GetMainQuantumNumber() - 1));
     }
 }
 }  // namespace Kassiopeia

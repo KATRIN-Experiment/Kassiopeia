@@ -51,6 +51,8 @@
 // INCLUDES
 
 #include <iostream>
+#include <list>
+#include <map>
 #include <sstream>
 #include <string>
 
@@ -142,7 +144,14 @@ class KLogger
     /// @overload
     KLogger(const std::string& name);
 
+    KLogger& operator=(const KLogger& other) = delete;
     virtual ~KLogger();
+
+    /**
+         * Get a loggers name
+         * @return name identifiying the logger
+         */
+    const std::string& GetName() const;
 
     /**
          * Check whether a certain log-level is enabled.
@@ -241,6 +250,40 @@ class KLogger
 
 }  // namespace katrin
 
+#include "KSingleton.h"
+
+namespace katrin
+{
+
+class KLoggerTable : public KSingleton<KLoggerTable>
+{
+  public:
+    friend class KSingleton<KLoggerTable>;
+
+  private:
+    KLoggerTable();
+    ~KLoggerTable() override;
+
+  public:
+    void Add(KLogger* logger);
+    void Remove(KLogger* logger);
+    void Remove(const std::string& name);
+    std::list<KLogger*> Get(const std::string& name);
+
+    void SetLevel(const KLogger::ELevel& level);
+    void SetLevel(const KLogger::ELevel& level, const std::string& name);
+
+  private:
+    using LoggerMap = std::map<std::string, std::list<KLogger*>>;
+    using LoggerEntry = LoggerMap::value_type;
+    using LoggerIt = LoggerMap::iterator;
+    using LoggerCIt = LoggerMap::const_iterator;
+
+    LoggerMap fLoggerMap;
+};
+
+}  // namespace katrin
+
 // PRIVATE MACROS
 
 #define __KLOG_LOCATION katrin::KLogger::Location(__FILE__, __FUNC__, __LINE__)
@@ -252,7 +295,7 @@ class KLogger
     {                                                                                                                  \
         if (I.IsLevelEnabled(katrin::KLogger::e##L)) {                                                                 \
             static bool _sLoggerMarker = false;                                                                        \
-            if (!O || !_sLoggerMarker) {                                                                               \
+            if (!(O) || !_sLoggerMarker) {                                                                             \
                 _sLoggerMarker = true;                                                                                 \
                 std::ostringstream stream;                                                                             \
                 stream << M;                                                                                           \

@@ -21,19 +21,19 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionFrustrumCompositeBuilder::~KComplexElement() {}
+template<> KSGenPositionFrustrumCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionFrustrumCompositeStructure =
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("name") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("surface") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("space") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("r") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("phi") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("z") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("r1") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("r2") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("z1") +
-    KSGenPositionFrustrumCompositeBuilder::Attribute<string>("z2") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("name") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("space") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("r") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("phi") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("z") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("r1") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("r2") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("z1") +
+    KSGenPositionFrustrumCompositeBuilder::Attribute<std::string>("z2") +
     KSGenPositionFrustrumCompositeBuilder::ComplexElement<KSGenValueFix>("r_fix") +
     KSGenPositionFrustrumCompositeBuilder::ComplexElement<KSGenValueFix>("r1_fix") +
     KSGenPositionFrustrumCompositeBuilder::ComplexElement<KSGenValueFix>("r2_fix") +

@@ -9,10 +9,10 @@ using namespace std;
 namespace katrin
 {
 
-STATICINT sKSROOTPotentialPainterStructure = KSROOTPotentialPainterBuilder::Attribute<string>("name") +
-                                             KSROOTPotentialPainterBuilder::Attribute<string>("x_axis") +
-                                             KSROOTPotentialPainterBuilder::Attribute<string>("y_axis") +
-                                             KSROOTPotentialPainterBuilder::Attribute<string>("electric_field") +
+STATICINT sKSROOTPotentialPainterStructure = KSROOTPotentialPainterBuilder::Attribute<std::string>("name") +
+                                             KSROOTPotentialPainterBuilder::Attribute<std::string>("x_axis") +
+                                             KSROOTPotentialPainterBuilder::Attribute<std::string>("y_axis") +
+                                             KSROOTPotentialPainterBuilder::Attribute<std::string>("electric_field") +
                                              KSROOTPotentialPainterBuilder::Attribute<double>("r_max") +
                                              KSROOTPotentialPainterBuilder::Attribute<double>("z_min") +
                                              KSROOTPotentialPainterBuilder::Attribute<double>("z_max") +
@@ -20,7 +20,7 @@ STATICINT sKSROOTPotentialPainterStructure = KSROOTPotentialPainterBuilder::Attr
                                              KSROOTPotentialPainterBuilder::Attribute<int>("z_steps") +
                                              KSROOTPotentialPainterBuilder::Attribute<bool>("calc_pot") +
                                              KSROOTPotentialPainterBuilder::Attribute<bool>("compare_fields") +
-                                             KSROOTPotentialPainterBuilder::Attribute<string>("reference_field");
+                                             KSROOTPotentialPainterBuilder::Attribute<std::string>("reference_field");
 
 
 STATICINT sKSROOTPotentialPainterWindow =

@@ -129,37 +129,16 @@ void KFMElectrostaticMultipoleCalculatorAnalytic::SetDegree(int l_max)
     }
 
 
-    if (fCheb1Arr != nullptr) {
-        delete[] fCheb1Arr;
-    };
-    if (fCheb2Arr != nullptr) {
-        delete[] fCheb2Arr;
-    };
-    if (fPlmZeroArr != nullptr) {
-        delete[] fPlmZeroArr;
-    };
-    if (fNormArr != nullptr) {
-        delete[] fNormArr;
-    };
-    if (fPlmArr != nullptr) {
-        delete[] fPlmArr;
-    };
-    if (fCosMPhiArr != nullptr) {
-        delete[] fCosMPhiArr;
-    };
-    if (fSinMPhiArr != nullptr) {
-        delete[] fSinMPhiArr;
-    };
-    if (fACoefficient != nullptr) {
-        delete[] fACoefficient;
-    };
-    if (fSolidHarmonics != nullptr) {
-        delete[] fSolidHarmonics;
-    };
-    if (fScratch != nullptr) {
-        delete[] fScratch;
-    };
-
+    delete[] fCheb1Arr;
+    delete[] fCheb2Arr;
+    delete[] fPlmZeroArr;
+    delete[] fNormArr;
+    delete[] fPlmArr;
+    delete[] fCosMPhiArr;
+    delete[] fSinMPhiArr;
+    delete[] fACoefficient;
+    delete[] fSolidHarmonics;
+    delete[] fScratch;
 
     fCheb1Arr = new double[fSize];
     fCheb2Arr = new double[fSize];
@@ -196,7 +175,7 @@ bool KFMElectrostaticMultipoleCalculatorAnalytic::ConstructExpansion(double* tar
 {
     if (vertices != nullptr && moments != nullptr) {
         moments->Clear();
-        int n_vertices = vertices->GetNPoints();
+        unsigned int n_vertices = vertices->GetNPoints();
 
         if (n_vertices == 1)  //we have a point
         {
@@ -212,7 +191,6 @@ bool KFMElectrostaticMultipoleCalculatorAnalytic::ConstructExpansion(double* tar
             }
 
             moments->SetMoments(&fMomentsA);
-
             return true;
         }
         if (n_vertices == 2)  //we have a wire
@@ -245,7 +223,7 @@ bool KFMElectrostaticMultipoleCalculatorAnalytic::ConstructExpansion(double* tar
     }
 }
 
-void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMomentsSlow(double* target_origin,
+void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMomentsSlow(const double* target_origin,
                                                                              const KFMPointCloud<3>* vertices,
                                                                              KFMScalarMultipoleExpansion* moments) const
 {
@@ -305,7 +283,7 @@ void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMomentsSlow(dou
 }
 
 
-void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMoments(double* target_origin,
+void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMoments(const double* target_origin,
                                                                          const KFMPointCloud<3>* vertices,
                                                                          KFMScalarMultipoleExpansion* moments) const
 {
@@ -378,7 +356,7 @@ void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMoments(double*
     moments->SetMoments(&fMomentsA);
 }
 
-void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeRectangleMoments(double* target_origin,
+void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeRectangleMoments(const double* target_origin,
                                                                           const KFMPointCloud<3>* vertices,
                                                                           KFMScalarMultipoleExpansion* moments) const
 {
@@ -721,7 +699,7 @@ void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeTriangleMomentAnalyticT
 }
 
 
-void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeWireMoments(double* target_origin,
+void KFMElectrostaticMultipoleCalculatorAnalytic::ComputeWireMoments(const double* target_origin,
                                                                      const KFMPointCloud<3>* vertices,
                                                                      KFMScalarMultipoleExpansion* moments) const
 {

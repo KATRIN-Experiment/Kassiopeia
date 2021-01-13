@@ -11,17 +11,17 @@ namespace katrin
 class KAttributeBase;
 class KElementBase;
 
-typedef std::map<std::string, KAttributeBase* (*) (KElementBase*)> KAttributeMap;
-typedef KAttributeMap::value_type KAttributeEntry;
-typedef KAttributeMap::iterator KAttributeIt;
-typedef KAttributeMap::const_iterator KAttributeCIt;
-typedef std::vector<KAttributeMap::key_type> KAttributeList;
+using KAttributeMap = std::map<std::string, KAttributeBase* (*) (KElementBase*)>;
+using KAttributeEntry = KAttributeMap::value_type;
+using KAttributeIt = KAttributeMap::iterator;
+using KAttributeCIt = KAttributeMap::const_iterator;
+using KAttributeList = std::vector<KAttributeMap::key_type>;
 
-typedef std::map<std::string, KElementBase* (*) (KElementBase*)> KElementMap;
-typedef KElementMap::value_type KElementEntry;
-typedef KElementMap::iterator KElementIt;
-typedef KElementMap::const_iterator KElementCIt;
-typedef std::vector<KElementMap::key_type> KElementList;
+using KElementMap = std::map<std::string, KElementBase* (*) (KElementBase*)>;
+using KElementEntry = KElementMap::value_type;
+using KElementIt = KElementMap::iterator;
+using KElementCIt = KElementMap::const_iterator;
+using KElementList = std::vector<KElementMap::key_type>;
 
 
 class KElementBase : public KContainer, public KProcessor

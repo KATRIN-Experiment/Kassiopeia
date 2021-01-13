@@ -18,7 +18,7 @@ template<> inline bool KSRootWriterBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "add_writer") {
-        fObject->AddWriter(KToolbox::GetInstance().Get<KSWriter>(aContainer->AsReference<std::string>()));
+        fObject->AddWriter(KToolbox::GetInstance().Get<KSWriter>(aContainer->AsString()));
         return true;
     }
     return false;

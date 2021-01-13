@@ -16,33 +16,33 @@ KGCircleWire* KGCircleWire::Clone() const
     return w;
 }
 
-double KGCircleWire::GetLength() const
+double KGCircleWire::GetLength()
 {
     // TODO
     return 0.;
 }
 
 
-double KGCircleWire::Area() const
+double KGCircleWire::Area()
 {
     // TODO
     return 0.;
 }
 
-double KGCircleWire::Volume() const
+double KGCircleWire::Volume()
 {
     // TODO
     return 0.;
 }
 
-bool KGCircleWire::ContainsPoint(const double* P) const
+bool KGCircleWire::ContainsPoint(const double* P)
 {
     // TODO
     (void) P;
     return true;
 }
 
-double KGCircleWire::DistanceTo(const double* P, double* P_in, double* P_norm) const
+double KGCircleWire::DistanceTo(const double* P, const double* P_in, const double* P_norm)
 {
     // TODO
     (void) P;

@@ -16,24 +16,19 @@ class KAxis
     KAxis& operator=(const KAxis& anAxis);
 
     bool EqualTo(const KAxis& anAxis) const;
-    bool ParallelTo(const KThreeVector& aVector) const;
+    bool ParallelTo(const KGeoBag::KThreeVector& aVector) const;
 
   public:
-    void SetPoints(const KThreeVector& aPointOne, const KThreeVector& aPointTwo);
-    const KThreeVector& GetCenter() const;
-    const KThreeVector& GetDirection() const;
+    void SetPoints(const KGeoBag::KThreeVector& aPointOne, const KGeoBag::KThreeVector& aPointTwo);
+    const KGeoBag::KThreeVector& GetCenter() const;
+    const KGeoBag::KThreeVector& GetDirection() const;
 
   private:
-    KThreeVector fCenter;
-    KThreeVector fDirection;
+    KGeoBag::KThreeVector fCenter;
+    KGeoBag::KThreeVector fDirection;
 };
 
-inline KAxis& KAxis::operator=(const KAxis& anAxis)
-{
-    fCenter = anAxis.fCenter;
-    fDirection = anAxis.fDirection;
-    return *this;
-}
+inline KAxis& KAxis::operator=(const KAxis& anAxis) = default;
 
 }  // namespace KGeoBag
 

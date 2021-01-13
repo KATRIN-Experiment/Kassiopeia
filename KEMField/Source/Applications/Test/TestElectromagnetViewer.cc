@@ -8,12 +8,10 @@
 #include "KThreeVector_KEMField.hh"
 
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 #ifdef KEMFIELD_USE_VTK
@@ -32,10 +30,10 @@ int main(int /*argc*/, char** /*argv*/)
     double zMax = 1.;
     double current = 1.;
 
-    KCoil* coil = new KCoil();
+    auto* coil = new KCoil();
     coil->SetValues(rMin, rMax, zMin, zMax, current, nDisc);
 
-    KSolenoid* solenoid = new KSolenoid();
+    auto* solenoid = new KSolenoid();
     solenoid->SetValues(rMin, zMin, zMax, current);
 
     KElectromagnetContainer container;

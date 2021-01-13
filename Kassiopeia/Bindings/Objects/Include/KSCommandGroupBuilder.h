@@ -14,12 +14,12 @@ typedef KComplexElement<KSCommandGroup> KSCommandGroupBuilder;
 template<> inline bool KSCommandGroupBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->SetName(tName);
         return true;
     }
     if (aContainer->GetName() == "command") {
-        KSCommand* tCommand = KToolbox::GetInstance().Get<KSCommand>(aContainer->AsReference<std::string>());
+        auto* tCommand = KToolbox::GetInstance().Get<KSCommand>(aContainer->AsString());
         fObject->AddCommand(tCommand->Clone());
         return true;
     }

@@ -11,7 +11,7 @@ namespace katrin
 STATICINT sKGCylinderTubeSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGCylinderTubeSpace>("cylinder_tube_space");
 
 STATICINT sKGCylinderTubeSpaceBuilderStructure =
-    KGCylinderTubeSpaceBuilder::Attribute<string>("name") + KGCylinderTubeSpaceBuilder::Attribute<double>("z1") +
+    KGCylinderTubeSpaceBuilder::Attribute<std::string>("name") + KGCylinderTubeSpaceBuilder::Attribute<double>("z1") +
     KGCylinderTubeSpaceBuilder::Attribute<double>("z2") + KGCylinderTubeSpaceBuilder::Attribute<double>("length") +
     KGCylinderTubeSpaceBuilder::Attribute<double>("r1") + KGCylinderTubeSpaceBuilder::Attribute<double>("r2") +
     KGCylinderTubeSpaceBuilder::Attribute<unsigned int>("longitudinal_mesh_count") +

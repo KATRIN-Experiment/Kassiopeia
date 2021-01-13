@@ -24,7 +24,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagMathLinearAlgebra SHARED
-	${MATH_LINALG_SOURCE_FILES}
+	${MATH_LINALG_SOURCE_FILES} ${MATH_LINALG_HEADER_FILES}
 )
 target_link_libraries( KGeoBagMathLinearAlgebra
     KGeoBagMath

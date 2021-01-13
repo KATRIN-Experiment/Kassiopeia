@@ -7,18 +7,20 @@
 
 #include "KKeyNotFoundException.hh"
 
+#include <utility>
+
 using namespace std;
 
 namespace KEMField
 {
 
-KKeyNotFoundException::KKeyNotFoundException(string container, string key, ErrorCode errorCode) :
-    fContainer(container),
-    fKey(key),
+KKeyNotFoundException::KKeyNotFoundException(const string& container, const string& key, ErrorCode errorCode) :
+    fContainer(std::move(container)),
+    fKey(std::move(key)),
     fErrorCode(errorCode)
 {}
 
-KKeyNotFoundException::~KKeyNotFoundException() noexcept {}
+KKeyNotFoundException::~KKeyNotFoundException() noexcept = default;
 
 const char* KKeyNotFoundException::what() const noexcept
 {

@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGConeSpace::Visitor::Visitor() {}
-KGConeSpace::Visitor::~Visitor() {}
+KGConeSpace::Visitor::Visitor() = default;
+KGConeSpace::Visitor::~Visitor() = default;
 
 KGConeSpace::KGConeSpace() :
     fZA(0.),
@@ -16,7 +16,7 @@ KGConeSpace::KGConeSpace() :
     fRadialMeshPower(1.),
     fAxialMeshCount(64)
 {}
-KGConeSpace::~KGConeSpace() {}
+KGConeSpace::~KGConeSpace() = default;
 
 void KGConeSpace::ZA(const double& aZA)
 {

@@ -18,7 +18,7 @@ template<> inline bool KSRootTrajectoryBuilder::AddAttribute(KContainer* aContai
         return true;
     }
     if (aContainer->GetName() == "set_trajectory") {
-        fObject->SetTrajectory(KToolbox::GetInstance().Get<KSTrajectory>(aContainer->AsReference<std::string>()));
+        fObject->SetTrajectory(KToolbox::GetInstance().Get<KSTrajectory>(aContainer->AsString()));
         return true;
     }
     return false;

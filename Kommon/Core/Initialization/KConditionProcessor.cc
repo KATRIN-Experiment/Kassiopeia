@@ -22,7 +22,7 @@ KConditionProcessor::KConditionProcessor() :
     fOldParent(nullptr)
 {}
 
-KConditionProcessor::~KConditionProcessor() {}
+KConditionProcessor::~KConditionProcessor() = default;
 
 void KConditionProcessor::ProcessToken(KBeginElementToken* aToken)
 {
@@ -257,26 +257,26 @@ void KConditionProcessor::ProcessToken(KEndElementToken* aToken)
                 KToken* tToken;
 
                 if (tCondition == true) {
-                    for (auto It = tIfTokens.begin(); It != tIfTokens.end(); It++) {
-                        tToken = (*It)->Clone();
+                    for (auto& ifToken : tIfTokens) {
+                        tToken = ifToken->Clone();
                         Dispatch(tToken);
                         delete tToken;
                     }
                 }
                 else {
-                    for (auto It = tElseTokens.begin(); It != tElseTokens.end(); It++) {
-                        tToken = (*It)->Clone();
+                    for (auto& elseToken : tElseTokens) {
+                        tToken = elseToken->Clone();
                         Dispatch(tToken);
                         delete tToken;
                     }
                 }
 
                 //delete the old tokens (made with new during collection)
-                for (auto It = tIfTokens.begin(); It != tIfTokens.end(); It++) {
-                    delete *It;
+                for (auto& ifToken : tIfTokens) {
+                    delete ifToken;
                 }
-                for (auto It = tElseTokens.begin(); It != tElseTokens.end(); It++) {
-                    delete *It;
+                for (auto& elseToken : tElseTokens) {
+                    delete elseToken;
                 }
                 return;
             }

@@ -10,6 +10,7 @@
 #include "KMagneticField.hh"
 
 using namespace KEMField;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -21,7 +22,7 @@ KSMagneticKEMField* KSMagneticKEMField::Clone() const
     return new KSMagneticKEMField(*this);
 }
 
-KSMagneticKEMField::~KSMagneticKEMField() {}
+KSMagneticKEMField::~KSMagneticKEMField() = default;
 
 KSMagneticKEMField::KSMagneticKEMField(const KSMagneticKEMField& aCopy) : KSComponent(aCopy), fField(aCopy.fField) {}
 
@@ -61,7 +62,7 @@ void KSMagneticKEMField::CalculateGradient(const KThreeVector& aSamplePoint, con
 void KSMagneticKEMField::CalculateFieldAndGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                                    KThreeVector& aField, KThreeMatrix& aGradient)
 {
-    std::pair<KThreeVector, KGradient> field_gradient_pair =
+    std::pair<KFieldVector, KGradient> field_gradient_pair =
         fField->MagneticFieldAndGradient(aSamplePoint, aSampleTime);
     aField = field_gradient_pair.first;
     aGradient = field_gradient_pair.second;

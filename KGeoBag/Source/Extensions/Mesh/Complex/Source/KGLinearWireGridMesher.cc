@@ -42,15 +42,15 @@ void KGLinearWireGridMesher::VisitWrappedSurface(KGWrappedSurface<KGLinearWireGr
 
     double minimumSegment = maxR;
 
-    for (unsigned int i = 0; i < segments.size(); i++) {
-        endPoint.SetComponents(startPoint.GetX() + segments.at(i), 0., 0.);
+    for (double segment : segments) {
+        endPoint.SetComponents(startPoint.GetX() + segment, 0., 0.);
 
         // add element
         KGMeshWire singleWire(startPoint, endPoint, wireDiameter);
         auto* w = new KGMeshWire(singleWire);
         AddElement(w);
-        if (segments[i] < minimumSegment)
-            minimumSegment = segments[i];
+        if (segment < minimumSegment)
+            minimumSegment = segment;
         startPoint = endPoint;
     }
 
@@ -85,12 +85,12 @@ void KGLinearWireGridMesher::VisitWrappedSurface(KGWrappedSurface<KGLinearWireGr
 
 
         // iteration over segment vector
-        for (unsigned int xIt = 0; xIt < xSegmentsIt.size(); xIt++) {
+        for (double xIt : xSegmentsIt) {
             // draw wire at y>0 (iteration over segments)
 
-            endPointYP.SetComponents(startPointYP.GetX() + xSegmentsIt.at(xIt), yIt, 0.);
-            if (xSegmentsIt[xIt] < minimumSegment)
-                minimumSegment = xSegmentsIt[xIt];
+            endPointYP.SetComponents(startPointYP.GetX() + xIt, yIt, 0.);
+            if (xIt < minimumSegment)
+                minimumSegment = xIt;
 
             // add element
             KGMeshWire singleWireYP(startPointYP, endPointYP, linearWireGridSurface->GetObject()->GetDiameter());
@@ -101,7 +101,7 @@ void KGLinearWireGridMesher::VisitWrappedSurface(KGWrappedSurface<KGLinearWireGr
 
             // draw wire at y<0 (iteration over segments)
 
-            endPointYN.SetComponents(startPointYN.GetX() + xSegmentsIt.at(xIt), -yIt, 0.);
+            endPointYN.SetComponents(startPointYN.GetX() + xIt, -yIt, 0.);
 
             // add element
             KGMeshWire singleWireYN(startPointYN, endPointYN, linearWireGridSurface->GetObject()->GetDiameter());

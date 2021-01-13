@@ -42,7 +42,8 @@ class KFMElectrostaticTreeInformationExtractor : public KFMNodeActor<KFMElectros
         fLocalCoeffFlagCondition.SetFlagValue(1);
     };
 
-    ~KFMElectrostaticTreeInformationExtractor() override{};
+    ~KFMElectrostaticTreeInformationExtractor() override = default;
+    ;
 
     void SetDegree(unsigned int degree)
     {
@@ -274,13 +275,12 @@ class KFMElectrostaticTreeInformationExtractor : public KFMNodeActor<KFMElectros
                 KFMCubicSpaceNodeNeighborFinder<3, KFMElectrostaticNodeObjects>::GetAllNeighbors(fNodeList[i],
                                                                                                  fZeroMaskSize,
                                                                                                  &fNodeNeighborList);
-                for (unsigned int j = 0; j < fNodeNeighborList.size(); j++) {
-                    if (fNodeNeighborList[j] != nullptr) {
-                        if (KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(
-                                fNodeNeighborList[j]) != nullptr) {
+                for (auto& j : fNodeNeighborList) {
+                    if (j != nullptr) {
+                        if (KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(j) !=
+                            nullptr) {
                             level_count +=
-                                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(
-                                    fNodeNeighborList[j])
+                                KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(j)
                                     ->GetSize();
                         }
                     }

@@ -9,7 +9,7 @@ KSTrajMagneticError::KSTrajMagneticError() : fTimeError(0.), fLengthError(0.), f
 
 KSTrajMagneticError::KSTrajMagneticError(const KSTrajMagneticError& anOperand) : KSMathArray<5>(anOperand) {}
 
-KSTrajMagneticError::~KSTrajMagneticError() {}
+KSTrajMagneticError::~KSTrajMagneticError() = default;
 
 const double& KSTrajMagneticError::GetTimeError() const
 {
@@ -21,7 +21,7 @@ const double& KSTrajMagneticError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KThreeVector& KSTrajMagneticError::GetPositionError() const
+const KGeoBag::KThreeVector& KSTrajMagneticError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;

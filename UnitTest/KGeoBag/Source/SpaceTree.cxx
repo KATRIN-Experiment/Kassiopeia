@@ -24,7 +24,7 @@ TEST(KGeoBagSpaceTreeTest, KGPoint)
 
     EXPECT_EQ(0.0, p.Magnitude());
 
-    const double a[] = {1.0, 2.0, 3.0, 99999.9};
+    const double a[] = {1.0, 2.0, 3.0, 99999.9};  // NOLINT
     p = a;
 
     EXPECT_NEAR(14.0, p.MagnitudeSquared(), 1E-5);

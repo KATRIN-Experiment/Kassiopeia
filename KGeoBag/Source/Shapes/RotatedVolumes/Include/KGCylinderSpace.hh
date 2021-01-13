@@ -12,6 +12,11 @@ class KGCylinderSpace : public KGRotatedLineSegmentSpace
     KGCylinderSpace();
     ~KGCylinderSpace() override;
 
+    static std::string Name()
+    {
+        return "cylinder_space";
+    }
+
   public:
     void Z1(const double& aZ1);
     void Z2(const double& aZ2);

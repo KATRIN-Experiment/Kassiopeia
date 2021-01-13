@@ -20,7 +20,7 @@ const unsigned int KGVTKAxialMeshPainter::sAspect = 1;
 const unsigned int KGVTKAxialMeshPainter::sModulo = 2;
 
 KGVTKAxialMeshPainter::KGVTKAxialMeshPainter() :
-    fCurrentElements(NULL),
+    fCurrentElements(nullptr),
 
     fColorTable(vtkSmartPointer<vtkLookupTable>::New()),
     fAreaData(vtkSmartPointer<vtkDoubleArray>::New()),
@@ -32,7 +32,6 @@ KGVTKAxialMeshPainter::KGVTKAxialMeshPainter() :
     fPolyData(vtkSmartPointer<vtkPolyData>::New()),
     fMapper(vtkSmartPointer<vtkPolyDataMapper>::New()),
     fActor(vtkSmartPointer<vtkActor>::New()),
-    fFile(),
     fArcCount(128),
     fColorMode(sModulo)
 {
@@ -64,7 +63,7 @@ KGVTKAxialMeshPainter::KGVTKAxialMeshPainter() :
     fMapper->ScalarVisibilityOn();
     fActor->SetMapper(fMapper);
 }
-KGVTKAxialMeshPainter::~KGVTKAxialMeshPainter() {}
+KGVTKAxialMeshPainter::~KGVTKAxialMeshPainter() = default;
 
 void KGVTKAxialMeshPainter::Render()
 {
@@ -199,9 +198,8 @@ void KGVTKAxialMeshPainter::PaintElements()
     KThreeVector tNextThisPoint;
     KThreeVector tNextNextPoint;
 
-    for (KGAxialMeshElementCIt elementIt = fCurrentElements->begin(); elementIt != fCurrentElements->end();
-         ++elementIt) {
-        if (KGAxialMeshLoop* tLoop = dynamic_cast<KGAxialMeshLoop*>(*elementIt)) {
+    for (auto* element : *fCurrentElements) {
+        if (auto* tLoop = dynamic_cast<KGAxialMeshLoop*>(element)) {
             for (unsigned int tIndex = 0; tIndex < fArcCount; tIndex++) {
                 tThisPhi = tIndex * tDeltaPhi;
                 tNextPhi = (tIndex + 1) * tDeltaPhi;
@@ -238,7 +236,7 @@ void KGVTKAxialMeshPainter::PaintElements()
             continue;
         }
 
-        if (KGAxialMeshRing* tRing = dynamic_cast<KGAxialMeshRing*>(*elementIt)) {
+        if (auto* tRing = dynamic_cast<KGAxialMeshRing*>(element)) {
             for (unsigned int tIndex = 0; tIndex < fArcCount; tIndex++) {
                 tThisPhi = tIndex * tDeltaPhi;
                 tNextPhi = (tIndex + 1) * tDeltaPhi;

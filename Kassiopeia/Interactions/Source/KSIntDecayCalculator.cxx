@@ -6,7 +6,7 @@ namespace Kassiopeia
 
 KSIntDecayCalculator::KSIntDecayCalculator() : fStepNDecays(0), fStepEnergyLoss(0.0) {}
 
-KSIntDecayCalculator::~KSIntDecayCalculator() {}
+KSIntDecayCalculator::~KSIntDecayCalculator() = default;
 
 void KSIntDecayCalculator::PullDeupdateComponent()
 {

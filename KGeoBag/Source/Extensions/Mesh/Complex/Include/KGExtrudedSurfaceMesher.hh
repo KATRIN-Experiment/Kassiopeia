@@ -14,7 +14,7 @@ class KGExtrudedSurfaceMesher : virtual public KGComplexMesher, public KGExtrude
 
   public:
     KGExtrudedSurfaceMesher() : fExtrudedObject(nullptr), fIsModifiable(false) {}
-    ~KGExtrudedSurfaceMesher() override {}
+    ~KGExtrudedSurfaceMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGExtrudedSurface* extrudedSurface) override;

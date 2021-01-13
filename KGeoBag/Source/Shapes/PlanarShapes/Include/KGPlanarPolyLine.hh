@@ -11,14 +11,19 @@ namespace KGeoBag
 class KGPlanarPolyLine : public KGPlanarOpenPath
 {
   public:
-    typedef deque<const KGPlanarOpenPath*> Set;
-    typedef Set::iterator It;
-    typedef Set::const_iterator CIt;
+    typedef std::deque<const KGPlanarOpenPath*> Set;
+    using It = Set::iterator;
+    using CIt = Set::const_iterator;
 
   public:
     KGPlanarPolyLine();
     KGPlanarPolyLine(const KGPlanarPolyLine& aCopy);
     ~KGPlanarPolyLine() override;
+
+    static std::string Name()
+    {
+        return "poly_line";
+    }
 
     KGPlanarPolyLine* Clone() const override;
     void CopyFrom(const KGPlanarPolyLine& aCopy);
@@ -61,7 +66,7 @@ class KGPlanarPolyLine : public KGPlanarOpenPath
     {
       public:
         StartPointArguments() : fPoint(0., 0.) {}
-        ~StartPointArguments() {}
+        ~StartPointArguments() = default;
 
         KTwoVector fPoint;
     };
@@ -70,7 +75,7 @@ class KGPlanarPolyLine : public KGPlanarOpenPath
     {
       public:
         LineArguments() : fVertex(0., 0.), fMeshCount(1), fMeshPower(1.) {}
-        ~LineArguments() {}
+        ~LineArguments() = default;
 
         KTwoVector fVertex;
         unsigned int fMeshCount;
@@ -81,7 +86,7 @@ class KGPlanarPolyLine : public KGPlanarOpenPath
     {
       public:
         ArcArguments() : fVertex(0., 0.), fRadius(0.), fRight(true), fShort(true), fMeshCount(64) {}
-        ~ArcArguments() {}
+        ~ArcArguments() = default;
 
         KTwoVector fVertex;
         double fRadius;

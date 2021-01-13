@@ -8,7 +8,7 @@ namespace Kassiopeia
 {
 
 KSSurface::KSSurface() : fParent(nullptr) {}
-KSSurface::~KSSurface() {}
+KSSurface::~KSSurface() = default;
 
 const KSSpace* KSSurface::GetParent() const
 {

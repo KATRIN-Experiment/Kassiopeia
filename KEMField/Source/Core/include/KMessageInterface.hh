@@ -28,15 +28,8 @@ class KMessage_KEMField : public katrin::KMessage
     }
 };
 
-using katrin::eDebug;
-using katrin::eError;
-using katrin::eNormal;
-using katrin::eWarning;
 
 using katrin::eom;
-using katrin::reom;
-using katrin::ret;
-using katrin::rret;
 
 // define the custom endl for this stream
 template<> inline KDataDisplay<KMessage_KEMField>& endl(KDataDisplay<KMessage_KEMField>& myDisplay)

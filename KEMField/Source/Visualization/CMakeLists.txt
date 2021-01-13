@@ -13,7 +13,7 @@ set (KEMVISUALIZATION_SOURCEFILES
 
 ##################################################
 
-add_library (KEMVisualization SHARED ${KEMVISUALIZATION_SOURCEFILES})
+add_library (KEMVisualization SHARED ${KEMVISUALIZATION_SOURCEFILES} ${KEMVISUALIZATION_HEADERFILES})
 target_link_libraries (KEMVisualization KEMCore)
 
 kasper_install_headers (${KEMVISUALIZATION_HEADERFILES})

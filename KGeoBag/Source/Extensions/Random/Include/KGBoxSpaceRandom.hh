@@ -20,7 +20,7 @@ class KGBoxSpaceRandom : virtual public KGShapeRandom, public KGBoxSpace::Visito
 {
   public:
     KGBoxSpaceRandom() : KGShapeRandom() {}
-    ~KGBoxSpaceRandom() override {}
+    ~KGBoxSpaceRandom() override = default;
 
     /**
 	 * \brief Visitor function for dicing a point inside

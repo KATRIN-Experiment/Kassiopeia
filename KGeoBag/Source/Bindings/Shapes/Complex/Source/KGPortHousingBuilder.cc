@@ -30,14 +30,14 @@ STATICINT sKGPortHousingBuilderStructure =
     KGPortHousingBuilder::ComplexElement<KGPortHousing::CircularPort>("circular_port");
 
 STATICINT sKGPortHousingSurfaceBuilderStructure =
-    KGPortHousingSurfaceBuilder::Attribute<string>("name") +
+    KGPortHousingSurfaceBuilder::Attribute<std::string>("name") +
     KGPortHousingSurfaceBuilder::ComplexElement<KGPortHousing>("port_housing");
 
 STATICINT sKGPortHousingSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGPortHousing>>("port_housing_surface");
 
 STATICINT sKGPortHousingSpaceBuilderStructure =
-    KGPortHousingSpaceBuilder::Attribute<string>("name") +
+    KGPortHousingSpaceBuilder::Attribute<std::string>("name") +
     KGPortHousingSpaceBuilder::ComplexElement<KGPortHousing>("port_housing");
 
 STATICINT sKGPortHousingSpaceBuilder =

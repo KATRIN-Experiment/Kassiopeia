@@ -175,7 +175,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${TRAJECTORIES_HEADER_PATH} )
-add_library( KassiopeiaTrajectories SHARED ${TRAJECTORIES_SOURCE_FILENAMES} )
+add_library( KassiopeiaTrajectories SHARED ${TRAJECTORIES_SOURCE_FILENAMES} ${TRAJECTORIES_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaTrajectories PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaTrajectories
     ${Kommon_LIBRARIES}

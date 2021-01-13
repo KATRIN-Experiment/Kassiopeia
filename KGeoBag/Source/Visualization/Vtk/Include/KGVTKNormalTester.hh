@@ -1,15 +1,11 @@
 #ifndef KGVTKNEARESTNORMALPAINTER_HH_
 #define KGVTKNEARESTNORMALPAINTER_HH_
 
-#include "KVTKWindow.h"
-using katrin::KVTKWindow;
-
-#include "KVTKPainter.h"
-using katrin::KVTKPainter;
-
 #include "KField.h"
 #include "KGCore.hh"
 #include "KGRGBColor.hh"
+#include "KVTKPainter.h"
+#include "KVTKWindow.h"
 #include "vtkActor.h"
 #include "vtkCellArray.h"
 #include "vtkPoints.h"
@@ -21,15 +17,15 @@ using katrin::KVTKPainter;
 namespace KGeoBag
 {
 
-class KGVTKNormalTester : public KVTKPainter
+class KGVTKNormalTester : public katrin::KVTKPainter
 {
   public:
     KGVTKNormalTester();
-    virtual ~KGVTKNormalTester();
+    ~KGVTKNormalTester() override;
 
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
     void AddSurface(const KGSurface* aSurface);
     void AddSpace(const KGSpace* aSpace);

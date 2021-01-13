@@ -47,7 +47,7 @@ class KIterativeKrylovStateWriter : public KIterativeSolver<ValueType>::Visitor
   public:
     typedef KSimpleIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
 
-    KIterativeKrylovStateWriter(std::vector<std::string> labels) : KIterativeSolver<ValueType>::Visitor()
+    KIterativeKrylovStateWriter(const std::vector<std::string>& labels) : KIterativeSolver<ValueType>::Visitor()
     {
         fLabels = labels;
 

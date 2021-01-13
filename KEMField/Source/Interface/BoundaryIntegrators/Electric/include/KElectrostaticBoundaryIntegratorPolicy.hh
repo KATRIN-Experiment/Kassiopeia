@@ -33,7 +33,7 @@ class KElectrostaticBoundaryIntegratorPolicy
 {
   public:
     KElectrostaticBoundaryIntegratorPolicy();
-    KElectrostaticBoundaryIntegratorPolicy(std::string name);
+    KElectrostaticBoundaryIntegratorPolicy(const std::string& name);
 
     KElectrostaticBoundaryIntegrator CreateIntegrator();
 #ifdef KEMFIELD_USE_OPENCL

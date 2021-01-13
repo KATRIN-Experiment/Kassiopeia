@@ -54,11 +54,11 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
         fTrait(NULL)
     {
         fUniqueID = "INVALID_ID";
-        fTree = NULL;
-        fElementContainer = NULL;
+        fTree = nullptr;
+        fElementContainer = nullptr;
         fTreeIsOwned = true;
         fDimension = fSurfaceContainer.size();
-        fSubdivisionCondition = NULL;
+        fSubdivisionCondition = nullptr;
 
         if (KMPIInterface::GetInstance()->SplitMode()) {
             if (KMPIInterface::GetInstance()->IsEvenGroupMember()) {
@@ -78,11 +78,11 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
         fTrait(NULL)
     {
         fUniqueID = "INVALID_ID";
-        fTree = NULL;
-        fElementContainer = NULL;
+        fTree = nullptr;
+        fElementContainer = nullptr;
         fTreeIsOwned = true;
         fDimension = fSurfaceContainer.size();
-        fSubdivisionCondition = NULL;
+        fSubdivisionCondition = nullptr;
 
         if (KMPIInterface::GetInstance()->SplitMode()) {
             if (KMPIInterface::GetInstance()->IsEvenGroupMember()) {
@@ -95,7 +95,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
     };
 
 
-    virtual ~KFMElectrostaticBoundaryIntegrator_MPI()
+    ~KFMElectrostaticBoundaryIntegrator_MPI() override
     {
         if (fTreeIsOwned) {
             //reset the node's ptr to the element container to null
@@ -223,8 +223,8 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             fTreeBuilder.GetSourceNodeIndexes(&fSourceNodeIndexes);
             for (unsigned int i = 0; i < fNChildren; i++) {
                 bool is_present = false;
-                for (unsigned int j = 0; j < fSourceNodeIndexes.size(); j++) {
-                    if (i == fSourceNodeIndexes[j]) {
+                for (unsigned int sourceNodeIndex : fSourceNodeIndexes) {
+                    if (i == sourceNodeIndex) {
                         is_present = true;
                     }
                 }
@@ -237,8 +237,8 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             fTreeBuilder.GetTargetNodeIndexes(&fTargetNodeIndexes);
             for (unsigned int i = 0; i < fNChildren; i++) {
                 bool is_present = false;
-                for (unsigned int j = 0; j < fTargetNodeIndexes.size(); j++) {
-                    if (i == fTargetNodeIndexes[j]) {
+                for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+                    if (i == targetNodeIndex) {
                         is_present = true;
                     }
                 }
@@ -268,7 +268,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             unsigned int n_nodes = tlpni.size();
             unsigned int n_processes = 0;
             unsigned int process_id = 0;
-            MPI_Comm* subgroup_comm = NULL;
+            MPI_Comm* subgroup_comm = nullptr;
             if (KMPIInterface::GetInstance()->SplitMode()) {
                 n_processes = KMPIInterface::GetInstance()->GetNSubGroupProcesses();
                 process_id = KMPIInterface::GetInstance()->GetSubGroupRank();
@@ -282,8 +282,8 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             for (unsigned int i = 0; i < n_processes; i++) {
                 if (process_id == i) {
                     for (unsigned int x = 0; x < n_nodes; x++) {
-                        for (unsigned int y = 0; y < fTargetNodeIndexes.size(); y++) {
-                            if (tlpni[x] == fTargetNodeIndexes[y]) {
+                        for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+                            if (tlpni[x] == targetNodeIndex) {
                                 fOwnedTargetNodeIndexes.push_back(tlpni[x]);
                                 tlpni[x] = fNChildren + 1;
                                 break;
@@ -488,16 +488,16 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
 
             //in this function we collect the neighbors of the source nodes
             fTargetNodeIndexes.clear();
-            for (unsigned int i = 0; i < fSourceNodeIndexes.size(); i++) {
+            for (unsigned int sourceNodeIndex : fSourceNodeIndexes) {
                 neighbors.clear();
-                KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(fSourceNodeIndexes[i]);
+                KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(sourceNodeIndex);
                 neighbor_finder.GetAllNeighbors(node, fParameters.zeromask, &neighbors);
-                for (unsigned int j = 0; j < neighbors.size(); j++) {
-                    if (neighbors[j] != NULL) {
-                        unsigned int index = neighbors[j]->GetIndex();
+                for (auto& neighbor : neighbors) {
+                    if (neighbor != nullptr) {
+                        unsigned int index = neighbor->GetIndex();
                         bool is_present = false;
-                        for (unsigned int n = 0; n < fTargetNodeIndexes.size(); n++) {
-                            if (index == fTargetNodeIndexes[n]) {
+                        for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+                            if (index == targetNodeIndex) {
                                 is_present = true;
                                 break;
                             }
@@ -513,8 +513,8 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             //now determine the non-target node indexes
             for (unsigned int i = 0; i < fNChildren; i++) {
                 bool is_present = false;
-                for (unsigned int j = 0; j < fTargetNodeIndexes.size(); j++) {
-                    if (i == fTargetNodeIndexes[j]) {
+                for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+                    if (i == targetNodeIndex) {
                         is_present = true;
                     }
                 }
@@ -544,7 +544,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             unsigned int n_nodes = tlpni.size();
             unsigned int n_processes = 0;
             unsigned int process_id = 0;
-            MPI_Comm* subgroup_comm = NULL;
+            MPI_Comm* subgroup_comm = nullptr;
 
             if (KMPIInterface::GetInstance()->SplitMode()) {
                 n_processes = KMPIInterface::GetInstance()->GetNSubGroupProcesses();
@@ -559,8 +559,8 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             for (unsigned int i = 0; i < n_processes; i++) {
                 if (process_id == i) {
                     for (unsigned int x = 0; x < n_nodes; x++) {
-                        for (unsigned int y = 0; y < fTargetNodeIndexes.size(); y++) {
-                            if (tlpni[x] == fTargetNodeIndexes[y]) {
+                        for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+                            if (tlpni[x] == targetNodeIndex) {
                                 fOwnedTargetNodeIndexes.push_back(tlpni[x]);
                                 tlpni[x] = fNChildren + 1;
                                 break;
@@ -712,7 +712,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
     {
         //construct the subdivision condition
         if (fParameters.strategy == KFMSubdivisionStrategy::Balanced) {
-            KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* balancedSubdivision =
+            auto* balancedSubdivision =
                 new KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
 
             double disk_weight = 0;
@@ -749,7 +749,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
             fSubdivisionCondition = balancedSubdivision;
         }
         else if (fParameters.strategy == KFMSubdivisionStrategy::Guided) {
-            KFMSubdivisionConditionGuided<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* guidedSubdivision =
+            auto* guidedSubdivision =
                 new KFMSubdivisionConditionGuided<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>();
             guidedSubdivision->SetFractionForDivision(fParameters.allowed_fraction);
             guidedSubdivision->SetAllowedNumberOfElements(fParameters.allowed_number);
@@ -779,15 +779,14 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
 
         //get top level local coefficients from tree
         //ONLY FROM NODES THAT ARE NOT IN THE TARGET REGION!! (avoid double counting)
-        for (unsigned int i = 0; i < fNonTargetNodeIndexes.size(); i++) {
-            unsigned int index = fNonTargetNodeIndexes[i];
+        for (unsigned int index : fNonTargetNodeIndexes) {
             KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(index);
 
-            KFMElectrostaticLocalCoefficientSet* set = NULL;
+            KFMElectrostaticLocalCoefficientSet* set = nullptr;
             set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>::GetNodeObject(
                 node);
 
-            if (set != NULL) {
+            if (set != nullptr) {
                 unsigned int offset = index * fMomentSize;
                 for (unsigned int n = 0; n < fMomentSize; n++) {
                     fLocalCoeffRealIn[offset + n] = (*(set->GetRealMoments()))[n];
@@ -829,15 +828,14 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
                           MPI_COMM_WORLD);
         }
 
-        for (unsigned int i = 0; i < fOwnedTargetNodeIndexes.size(); i++) {
-            unsigned int index = fOwnedTargetNodeIndexes[i];
+        for (unsigned int index : fOwnedTargetNodeIndexes) {
             KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(index);
 
-            KFMElectrostaticLocalCoefficientSet* set = NULL;
+            KFMElectrostaticLocalCoefficientSet* set = nullptr;
             set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>::GetNodeObject(
                 node);
 
-            if (set != NULL) {
+            if (set != nullptr) {
                 unsigned int offset = index * fMomentSize;
                 for (unsigned int n = 0; n < fMomentSize; n++) {
                     (*(set->GetRealMoments()))[n] += fLocalCoeffRealOut[offset + n];
@@ -856,13 +854,13 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
     {
         //construct the target volume from the appropriate nodes
         fTargetVolume.Clear();
-        for (unsigned int i = 0; i < fTargetNodeIndexes.size(); i++) {
-            KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(fTargetNodeIndexes[i]);
+        for (unsigned int targetNodeIndex : fTargetNodeIndexes) {
+            KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(targetNodeIndex);
 
-            KFMCube<KFMELECTROSTATICS_DIM>* cube = NULL;
+            KFMCube<KFMELECTROSTATICS_DIM>* cube = nullptr;
             cube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM>>::GetNodeObject(node);
 
-            if (cube != NULL) {
+            if (cube != nullptr) {
                 fTargetVolume.AddCube(cube);
             }
         }
@@ -940,7 +938,7 @@ class KFMElectrostaticBoundaryIntegrator_MPI : public KElectrostaticBoundaryInte
                 ret_val = fFastFieldSolver.Potential(fSurfaceContainer.at(id)->GetShape()->Centroid());
             }
             else {
-                KThreeVector field;
+                KFieldVector field;
                 fFastFieldSolver.ElectricField(fSurfaceContainer.at(id)->GetShape()->Centroid(), field);
                 ret_val = field.Dot(fSurfaceContainer.at(id)->GetShape()->Normal());
             }

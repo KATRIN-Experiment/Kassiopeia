@@ -3,7 +3,7 @@
 namespace KGeoBag
 {
 
-KGExtensibleSpace::KGExtensibleSpace() {}
-KGExtensibleSpace::~KGExtensibleSpace() {}
+KGExtensibleSpace::KGExtensibleSpace() = default;
+KGExtensibleSpace::~KGExtensibleSpace() = default;
 
 }  // namespace KGeoBag

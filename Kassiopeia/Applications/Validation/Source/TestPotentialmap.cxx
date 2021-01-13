@@ -149,7 +149,7 @@ int main(int argc, char** argv)
         double dz = 1.e-4;
 
         if (tPlotPotential) {
-            KEMField::KEMFieldCanvas* fieldCanvas = NULL;
+            KEMField::KEMFieldCanvas* fieldCanvas = nullptr;
 
             fieldCanvas = new KEMField::KEMVTKFieldCanvas(z1, z2, x1, x2, 1.e30, true);
 
@@ -229,7 +229,7 @@ int main(int argc, char** argv)
         }
 
         if (tPlotField) {
-            KEMField::KEMFieldCanvas* fieldCanvas = NULL;
+            KEMField::KEMFieldCanvas* fieldCanvas = nullptr;
 
             fieldCanvas = new KEMField::KEMVTKFieldCanvas(z1, z2, x1, x2, 1.e30, true);
 

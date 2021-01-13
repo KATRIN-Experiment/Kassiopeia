@@ -1,10 +1,13 @@
 #include "KEMFile.hh"
+#include "KEMCout.hh"  // for Inspect()
+#include "KEMCoreMessage.hh"
 
 #include <algorithm>
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <sys/stat.h>
+#include <utility>
 
 #ifndef DEFAULT_SAVED_FILE_DIR
 #define DEFAULT_SAVED_FILE_DIR "."
@@ -17,18 +20,21 @@ KEMFile::KEMFile()
     time_t t = time(nullptr);
     struct tm* now = localtime(&t);
     std::stringstream s;
-    s << DEFAULT_SAVED_FILE_DIR << "/KEM_" << (now->tm_year + 1900) << '-' << std::setfill('0') << std::setw(2)
-      << (now->tm_mon + 1) << '-' << std::setfill('0') << std::setw(2) << now->tm_mday << "_" << std::setfill('0')
-      << std::setw(2) << now->tm_hour << "-" << std::setfill('0') << std::setw(2) << now->tm_min << "-"
-      << std::setfill('0') << std::setw(2) << now->tm_sec << ".kbd";
+    s << DEFAULT_SAVED_FILE_DIR << "/KEM_" << (now->tm_year + 1900) << '-'
+      << std::setfill('0') << std::setw(2) << (now->tm_mon + 1) << '-'
+      << std::setfill('0') << std::setw(2) << now->tm_mday << "_"
+      << std::setfill('0') << std::setw(2) << now->tm_hour << "-"
+      << std::setfill('0') << std::setw(2) << now->tm_min << "-"
+      << std::setfill('0') << std::setw(2) << now->tm_sec
+      << ".kbd";
     fFileName = s.str();
 }
 
-KEMFile::KEMFile(std::string fileName) : fFileName(fileName) {}
+KEMFile::KEMFile(const std::string& fileName) : fFileName(std::move(fileName)) {}
 
-KEMFile::~KEMFile() {}
+KEMFile::~KEMFile() = default;
 
-void KEMFile::Inspect(std::string fileName) const
+void KEMFile::Inspect(const std::string& fileName) const
 {
     fStreamer.open(fileName, "read");
 
@@ -40,18 +46,28 @@ void KEMFile::Inspect(std::string fileName) const
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
+
         fStreamer >> key;
         KEMField::cout << key << KEMField::endl;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
 }
 
-bool KEMFile::HasElement(std::string fileName, std::string name) const
+bool KEMFile::HasElement(const std::string& fileName, const std::string& name) const
 {
+    kem_cout_debug("Checking for a label in file <" << fileName << ">" << eom);
+
     fStreamer.open(fileName, "read");
 
     // Pull and check the keys sequentially
@@ -63,23 +79,31 @@ bool KEMFile::HasElement(std::string fileName, std::string name) const
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
     bool hasElement = false;
-
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
         if (key.fObjectName == name || key.fObjectHash == name) {
             hasElement = true;
             break;
         }
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
     return hasElement;
 }
 
-bool KEMFile::HasLabeled(std::string fileName, std::vector<std::string> labels) const
+bool KEMFile::HasLabeled(const std::string& fileName, const std::vector<std::string>& labels) const
 {
+    kem_cout_debug("Checking for " << labels.size() << " labels in file <" << fileName << ">" << eom);
+
     fStreamer.open(fileName, "read");
 
     // Pull and check the keys sequentially
@@ -91,13 +115,12 @@ bool KEMFile::HasLabeled(std::string fileName, std::vector<std::string> labels) 
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
     bool hasLabeled = false;
-
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
         hasLabeled = true;
-        for (auto it = labels.begin(); it != labels.end(); ++it) {
-            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), *it);
+        for (auto& label : labels) {
+            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), label);
             if (it2 == key.fLabels.end()) {
                 hasLabeled = false;
                 break;
@@ -105,15 +128,24 @@ bool KEMFile::HasLabeled(std::string fileName, std::vector<std::string> labels) 
         }
         if (hasLabeled)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
     return hasLabeled;
 }
 
-unsigned int KEMFile::NumberOfLabeled(std::string fileName, std::string label) const
+unsigned int KEMFile::NumberOfLabeled(const std::string& fileName, const std::string& label) const
 {
+    kem_cout_debug("Checking for a label in file <" << fileName << ">" << eom);
+
     unsigned int value = 0;
     fStreamer.open(fileName, "read");
 
@@ -125,25 +157,33 @@ unsigned int KEMFile::NumberOfLabeled(std::string fileName, std::string label) c
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
-        for (auto it = key.fLabels.begin(); it != key.fLabels.end(); ++it) {
-            if (*it == label) {
+        for (auto& l : key.fLabels) {
+            if (l == label) {
                 value++;
                 break;
             }
         }
 
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
     return value;
 }
 
-unsigned int KEMFile::NumberOfLabeled(std::string fileName, std::vector<std::string> labels) const
+unsigned int KEMFile::NumberOfLabeled(const std::string& fileName, const std::vector<std::string>& labels) const
 {
+    kem_cout_debug("Checking for " << labels.size() << " labels in file <" << fileName << ">" << eom);
+
     unsigned int value = 0;
     fStreamer.open(fileName, "read");
 
@@ -155,13 +195,12 @@ unsigned int KEMFile::NumberOfLabeled(std::string fileName, std::vector<std::str
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    bool hasLabeled = false;
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
-        hasLabeled = true;
-        for (auto it = labels.begin(); it != labels.end(); ++it) {
-            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), *it);
+        bool hasLabeled = true;
+        for (auto& label : labels) {
+            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), label);
             if (it2 == key.fLabels.end()) {
                 hasLabeled = false;
                 break;
@@ -169,15 +208,24 @@ unsigned int KEMFile::NumberOfLabeled(std::string fileName, std::vector<std::str
         }
         if (hasLabeled)
             value++;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
     return value;
 }
 
-std::vector<std::string> KEMFile::LabelsForElement(std::string fileName, std::string name) const
+std::vector<std::string> KEMFile::LabelsForElement(const std::string& fileName, const std::string& name) const
 {
+    kem_cout_debug("Reading element labels from file <" << fileName << ">" << eom);
+
     fStreamer.open(fileName, "read");
 
     // Pull and check the keys sequentially
@@ -188,12 +236,19 @@ std::vector<std::string> KEMFile::LabelsForElement(std::string fileName, std::st
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
         if (key.fObjectName == name)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
         key.clear();
     }
 
@@ -201,16 +256,16 @@ std::vector<std::string> KEMFile::LabelsForElement(std::string fileName, std::st
     return key.fLabels;
 }
 
-bool KEMFile::ElementHasLabel(std::string fileName, std::string name, std::string label) const
+bool KEMFile::ElementHasLabel(const std::string& fileName, const std::string& name, const std::string& label) const
 {
-    std::vector<std::string> labels = LabelsForElement(fileName, name);
-    for (auto it = labels.begin(); it != labels.end(); ++it)
-        if (*it == label)
+    std::vector<std::string> labels = LabelsForElement(std::move(fileName), std::move(name));
+    for (auto& it : labels)
+        if (it == label)
             return true;
     return false;
 }
 
-bool KEMFile::FileExists(std::string fileName)
+bool KEMFile::FileExists(const std::string& fileName)
 {
     struct stat fileInfo;
     int fileStat;
@@ -222,8 +277,10 @@ bool KEMFile::FileExists(std::string fileName)
         return false;
 }
 
-KEMFile::Key KEMFile::KeyForElement(std::string fileName, std::string name)
+KEMFile::Key KEMFile::KeyForElement(const std::string& fileName, const std::string& name)
 {
+    kem_cout_debug("Reading an element key from file <" << fileName << ">" << eom);
+
     fStreamer.open(fileName, "read");
 
     // Pull and check the keys sequentially
@@ -234,20 +291,30 @@ KEMFile::Key KEMFile::KeyForElement(std::string fileName, std::string name)
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
         if (key.fObjectName == name)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
+        key.clear();
     }
 
     fStreamer.close();
     return key;
 }
 
-KEMFile::Key KEMFile::KeyForHashed(std::string fileName, std::string hash)
+KEMFile::Key KEMFile::KeyForHashed(const std::string& fileName, const std::string& hash)
 {
+    kem_cout_debug("Reading a hashed key from file <" << fileName << ">" << eom);
+
     fStreamer.open(fileName, "read");
 
     // Pull and check the keys sequentially
@@ -258,20 +325,30 @@ KEMFile::Key KEMFile::KeyForHashed(std::string fileName, std::string hash)
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
         if (key.fObjectHash == hash)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
+        key.clear();
     }
 
     fStreamer.close();
     return key;
 }
 
-KEMFile::Key KEMFile::KeyForLabeled(std::string fileName, std::string label, unsigned int index)
+KEMFile::Key KEMFile::KeyForLabeled(const std::string& fileName, const std::string& label, unsigned int index)
 {
+    kem_cout_debug("Reading a labeled key from file <" << fileName << ">" << eom);
+
     unsigned int index_ = 0;
     fStreamer.open(fileName, "read");
 
@@ -284,12 +361,11 @@ KEMFile::Key KEMFile::KeyForLabeled(std::string fileName, std::string label, uns
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
     bool found = false;
-
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
-        for (auto it = key.fLabels.begin(); it != key.fLabels.end(); ++it)
-            if (*it == label) {
+        for (auto& l : key.fLabels)
+            if (l == label) {
                 if (index != index_) {
                     index_++;
                     break;
@@ -299,7 +375,15 @@ KEMFile::Key KEMFile::KeyForLabeled(std::string fileName, std::string label, uns
             }
         if (found)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
+        key.clear();
     }
 
     fStreamer.close();

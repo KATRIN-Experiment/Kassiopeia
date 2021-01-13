@@ -7,11 +7,14 @@
 
 #include "KSGenPositionSurfaceRandom.h"
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
-KSGenPositionSurfaceRandom::KSGenPositionSurfaceRandom() {}
+KSGenPositionSurfaceRandom::KSGenPositionSurfaceRandom() = default;
 KSGenPositionSurfaceRandom::KSGenPositionSurfaceRandom(const KSGenPositionSurfaceRandom& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSurfaces(aCopy.fSurfaces)
 {}
 
@@ -20,7 +23,7 @@ KSGenPositionSurfaceRandom* KSGenPositionSurfaceRandom::Clone() const
     return new KSGenPositionSurfaceRandom(*this);
 }
 
-KSGenPositionSurfaceRandom::~KSGenPositionSurfaceRandom() {}
+KSGenPositionSurfaceRandom::~KSGenPositionSurfaceRandom() = default;
 
 void KSGenPositionSurfaceRandom::AddSurface(KGeoBag::KGSurface* aSurface)
 {
@@ -41,10 +44,10 @@ bool KSGenPositionSurfaceRandom::RemoveSurface(KGeoBag::KGSurface* aSurface)
 
 void KSGenPositionSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
 {
-    for (auto p = aPrimaries->begin(); p != aPrimaries->end(); ++p) {
+    for (auto& aPrimarie : *aPrimaries) {
         KThreeVector pos = random.Random(fSurfaces);
-        genmsg_debug("surface random position generator <" << GetName() << "> diced position <" << pos << ">" << eom);
-        (*p)->SetPosition(pos);
+        genmsg_debug("surface random position generator <" << GetName() << "> diced position " << pos << eom);
+        aPrimarie->SetPosition(pos);
     }
 }
 

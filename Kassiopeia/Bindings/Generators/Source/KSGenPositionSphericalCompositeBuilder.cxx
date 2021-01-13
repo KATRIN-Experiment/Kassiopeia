@@ -20,15 +20,15 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionSphericalCompositeBuilder::~KComplexElement() {}
+template<> KSGenPositionSphericalCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionSphericalCompositeStructure =
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("name") +
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("surface") +
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("space") +
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("r") +
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("theta") +
-    KSGenPositionSphericalCompositeBuilder::Attribute<string>("phi") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("name") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("space") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("r") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("theta") +
+    KSGenPositionSphericalCompositeBuilder::Attribute<std::string>("phi") +
     KSGenPositionSphericalCompositeBuilder::ComplexElement<KSGenValueFix>("r_fix") +
     KSGenPositionSphericalCompositeBuilder::ComplexElement<KSGenValueSet>("r_set") +
     KSGenPositionSphericalCompositeBuilder::ComplexElement<KSGenValueList>("r_list") +

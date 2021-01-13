@@ -226,10 +226,10 @@ template<typename U> class KSAPODConverter<std::vector<U>>
 
         value.clear();
         U TempVal;
-        for (unsigned int i = 0; i < fTokens.size(); i++) {
+        for (auto& token : fTokens) {
             fStream->str("");
             fStream->clear();
-            *fStream << fTokens[i];
+            *fStream << token;
             *fStream >> TempVal;
             value.push_back(TempVal);
         }
@@ -476,10 +476,10 @@ template<typename U> class KSAPODConverter<std::list<U>>
 
         value.clear();
         U TempVal;
-        for (unsigned int i = 0; i < fTokens.size(); i++) {
+        for (auto& fToken : fTokens) {
             fStream->str("");
             fStream->clear();
-            *fStream << fTokens[i];
+            *fStream << fToken;
             *fStream >> TempVal;
             value.push_back(TempVal);
         }

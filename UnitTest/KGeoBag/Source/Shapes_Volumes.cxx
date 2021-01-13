@@ -32,7 +32,7 @@ TEST_F(KGeoBagShapeTest, KGBox)
 
     delete tSurface1;
 
-    KGBox* tSurface2 = new KGBox(KThreeVector(0.1, 0.2, 0.3), KThreeVector(1., 2., 3.));
+    auto* tSurface2 = new KGBox(KThreeVector(0.1, 0.2, 0.3), KThreeVector(1., 2., 3.));
 
     EXPECT_EQ(tSurface2->GetP0(), KThreeVector(0.1, 0.2, 0.3));
     EXPECT_EQ(tSurface2->GetP1(), KThreeVector(1., 2., 3.));

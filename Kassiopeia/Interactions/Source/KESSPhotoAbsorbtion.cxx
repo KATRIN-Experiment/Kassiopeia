@@ -32,7 +32,7 @@ KESSPhotoAbsorbtion::KESSPhotoAbsorbtion() :
     this->ReadIonisationPDF("PhotoAbsorbtion.txt");
 }
 
-KESSPhotoAbsorbtion::~KESSPhotoAbsorbtion() {}
+KESSPhotoAbsorbtion::~KESSPhotoAbsorbtion() = default;
 
 void KESSPhotoAbsorbtion::ReadIonisationPDF(std::string data_filename)
 {

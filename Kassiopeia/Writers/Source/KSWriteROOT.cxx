@@ -4,13 +4,14 @@
 #include "KSWritersMessage.h"
 
 #ifdef Kassiopeia_USE_BOOST
-//#include "KPathUtils.h"
-//using katrin::KPathUtils;
+#include "KPathUtils.h"
+using katrin::KPathUtils;
 #endif
 
 #include "TObjString.h"
 
 using namespace std;
+using namespace KGeoBag;
 
 namespace Kassiopeia
 {
@@ -309,7 +310,7 @@ KSWriteROOT::KSWriteROOT() :
     fStepIndex(0)
 {}
 KSWriteROOT::KSWriteROOT(const KSWriteROOT& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBase(aCopy.fBase),
     fPath(aCopy.fPath),
     fStepIteration(aCopy.fStepIteration),
@@ -357,7 +358,7 @@ KSWriteROOT* KSWriteROOT::Clone() const
 {
     return new KSWriteROOT(*this);
 }
-KSWriteROOT::~KSWriteROOT() {}
+KSWriteROOT::~KSWriteROOT() = default;
 
 
 void KSWriteROOT::AddRunWriteCondition(KSWriteROOTCondition* aWriteCondition)
@@ -512,8 +513,8 @@ void KSWriteROOT::ExecuteRun()
     }
 
     if (tWriteCondition == true) {
-        for (auto tIt = fActiveRunComponents.begin(); tIt != fActiveRunComponents.end(); tIt++) {
-            tIt->second->Fill();
+        for (auto& activeRunComponent : fActiveRunComponents) {
+            activeRunComponent.second->Fill();
         }
     }
     fRunData->Fill();
@@ -549,8 +550,8 @@ void KSWriteROOT::ExecuteEvent()
     }
 
     if (tWriteCondition == true) {
-        for (auto tIt = fActiveEventComponents.begin(); tIt != fActiveEventComponents.end(); tIt++) {
-            tIt->second->Fill();
+        for (auto& activeEventComponent : fActiveEventComponents) {
+            activeEventComponent.second->Fill();
         }
     }
     fEventData->Fill();
@@ -582,8 +583,8 @@ void KSWriteROOT::ExecuteTrack()
     }
 
     if (tWriteCondition == true) {
-        for (auto tIt = fActiveTrackComponents.begin(); tIt != fActiveTrackComponents.end(); tIt++) {
-            tIt->second->Fill();
+        for (auto& activeTrackComponent : fActiveTrackComponents) {
+            activeTrackComponent.second->Fill();
         }
     }
     fTrackData->Fill();
@@ -618,8 +619,8 @@ void KSWriteROOT::ExecuteStep()
         wtrmsg_debug("ROOT writer <" << GetName() << "> is filling a step" << eom);
 
         if (tWriteCondition == true) {
-            for (auto tIt = fActiveStepComponents.begin(); tIt != fActiveStepComponents.end(); tIt++) {
-                tIt->second->Fill();
+            for (auto& activeStepComponent : fActiveStepComponents) {
+                activeStepComponent.second->Fill();
             }
         }
         fStepData->Fill();
@@ -789,15 +790,14 @@ void KSWriteROOT::InitializeComponent()
 {
     wtrmsg_debug("starting ROOT writer" << eom);
 
-    fFile = KRootFile::CreateOutputRootFile(fBase);
-    if (!fPath.empty()) {
-#ifdef Kassiopeia_USE_BOOST
-//            KPathUtils::MakeDirectory( fPath );
-#endif
-        fFile->AddToPaths(fPath);
-    }
+    string tPath = fPath.empty() ? OUTPUT_DEFAULT_DIR : fPath;
 
-    if (fFile->Open(KFile::eWrite) == true) {
+#ifdef Kassiopeia_USE_BOOST
+    KPathUtils::MakeDirectory(tPath);
+#endif
+    fFile = katrin::KRootFile::CreateOutputRootFile(tPath, fBase);
+
+    if (fFile->Open(katrin::KFile::eWrite) == true) {
         auto* tLabel = new TObjString(fLabel.c_str());
         tLabel->Write("LABEL", TObject::kOverwrite);
         fFile->File()->cd();
@@ -858,6 +858,9 @@ void KSWriteROOT::InitializeComponent()
         fStepData->Branch("STEP_INDEX", &fStepIndex, fBufferSize, fSplitLevel);
 
         fStepIndex = 0;
+    }
+    else {
+        wtrmsg(eError) << "could not open ROOT output file" << eom;
     }
 
     return;

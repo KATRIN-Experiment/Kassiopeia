@@ -5,6 +5,7 @@
 #include <limits>
 
 using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -42,7 +43,7 @@ KSNavSpace::KSNavSpace() :
     fIntermediateParticle()
 {}
 KSNavSpace::KSNavSpace(const KSNavSpace& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEnterSplit(aCopy.fEnterSplit),
     fExitSplit(aCopy.fExitSplit),
     fFailCheck(aCopy.fFailCheck),
@@ -78,7 +79,7 @@ KSNavSpace* KSNavSpace::Clone() const
 {
     return new KSNavSpace(*this);
 }
-KSNavSpace::~KSNavSpace() {}
+KSNavSpace::~KSNavSpace() = default;
 
 void KSNavSpace::SetEnterSplit(const bool& aEnterSplit)
 {
@@ -247,7 +248,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
                 }
                 // calculate intersection time
                 fIntermediateParticle.SetCurrentSpace(tSpace);
-                fSolver.Solve(KMathBracketingSolver::eBrent,
+                fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                               this,
                               &KSNavSpace::SpaceIntersectionFunction,
                               0.,
@@ -343,7 +344,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
 
                 // calculate intersection time
                 fIntermediateParticle.SetCurrentSpace(tSpace);
-                fSolver.Solve(KMathBracketingSolver::eBrent,
+                fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                               this,
                               &KSNavSpace::SpaceIntersectionFunction,
                               0.,
@@ -451,7 +452,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
                 }
                 // calculate intersection time
                 fIntermediateParticle.SetCurrentSide(tSide);
-                fSolver.Solve(KMathBracketingSolver::eBrent,
+                fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                               this,
                               &KSNavSpace::SideIntersectionFunction,
                               0.,
@@ -469,7 +470,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
 
             // calculate intersection time
             fIntermediateParticle.SetCurrentSide(tSide);
-            fSolver.Solve(KMathBracketingSolver::eBrent,
+            fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                           this,
                           &KSNavSpace::SideIntersectionFunction,
                           0.,
@@ -567,7 +568,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
 
                     // calculate intersection time
                     fIntermediateParticle.SetCurrentSide(tSide);
-                    fSolver.Solve(KMathBracketingSolver::eBrent,
+                    fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                                   this,
                                   &KSNavSpace::SideIntersectionFunction,
                                   0.,
@@ -676,7 +677,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
                         //find second crossing point (first one is at the start, increase lower boundary artificially
                         double tLowerBoundary = aTrajectoryStep / 100.0;
                         fIntermediateParticle.SetCurrentSurface(tSurface);
-                        fSolver.Solve(KMathBracketingSolver::eBrent,
+                        fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                                       this,
                                       &KSNavSpace::SurfaceIntersectionFunction,
                                       0.,
@@ -700,7 +701,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
                         //find second crossing point (first one is at the start, increase lower boundary artificially
                         double tLowerBoundary = aTrajectoryStep / 100.0;
                         fIntermediateParticle.SetCurrentSurface(tSurface);
-                        fSolver.Solve(KMathBracketingSolver::eBrent,
+                        fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                                       this,
                                       &KSNavSpace::SurfaceIntersectionFunction,
                                       0.,
@@ -730,7 +731,7 @@ void KSNavSpace::CalculateNavigation(const KSTrajectory& aTrajectory, const KSPa
 
                 // calculate intersection time
                 fIntermediateParticle.SetCurrentSurface(tSurface);
-                fSolver.Solve(KMathBracketingSolver::eBrent,
+                fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                               this,
                               &KSNavSpace::SurfaceIntersectionFunction,
                               0.,
@@ -1034,8 +1035,8 @@ void KSNavSpace::StartNavigation(KSParticle& aParticle, KSSpace* aRoot)
             tSequence.push_front(tSpace);
             tSpace = tSpace->GetParent();
         }
-        for (auto tIt = tSequence.begin(); tIt != tSequence.end(); tIt++) {
-            tSpace = *tIt;
+        for (auto& tIt : tSequence) {
+            tSpace = tIt;
 
             navmsg_debug("  entering space <" << tSpace->GetName() << ">" << eom);
 
@@ -1100,8 +1101,8 @@ void KSNavSpace::StopNavigation(KSParticle& aParticle, KSSpace* aRoot)
         tSpaces.push_back(tSpace);
         tSpace = tSpace->GetParent();
     }
-    for (auto tIt = tSpaces.begin(); tIt != tSpaces.end(); tIt++) {
-        tSpace = *tIt;
+    for (auto& tIt : tSpaces) {
+        tSpace = tIt;
 
         navmsg_debug("  deactivating space <" << tSpace->GetName() << ">" << eom);
 

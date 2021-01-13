@@ -16,10 +16,10 @@ class KSSpaceNavigator : public KSComponentTemplate<KSSpaceNavigator>
 
   public:
     virtual void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                                     const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
-                                     const double& aTrajectoryRadius, const double& aTrajectoryStep,
-                                     KSParticle& aNavigationParticle, double& aNavigationStep,
-                                     bool& aNavigationFlag) = 0;
+                                     const KSParticle& aTrajectoryFinalParticle,
+                                     const KGeoBag::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
+                                     const double& aTrajectoryStep, KSParticle& aNavigationParticle,
+                                     double& aNavigationStep, bool& aNavigationFlag) = 0;
 
     virtual void ExecuteNavigation(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                    KSParticleQueue& aSecondaries) const = 0;

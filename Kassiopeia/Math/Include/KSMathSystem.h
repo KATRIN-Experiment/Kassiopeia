@@ -10,8 +10,8 @@ template<class XValueType, class XDerivativeType, class XErrorType> class KSMath
 {
   public:
     typedef XValueType ValueType;
-    typedef XDerivativeType DerivativeType;
-    typedef XErrorType ErrorType;
+    using DerivativeType = XDerivativeType;
+    using ErrorType = XErrorType;
 
   public:
     KSMathSystem();
@@ -29,8 +29,7 @@ KSMathSystem<XValueType, XDerivativeType, XErrorType>::KSMathSystem()
 }
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathSystem<XValueType, XDerivativeType, XErrorType>::~KSMathSystem()
-{}
+KSMathSystem<XValueType, XDerivativeType, XErrorType>::~KSMathSystem() = default;
 
 }  // namespace Kassiopeia
 

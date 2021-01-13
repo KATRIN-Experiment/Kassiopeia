@@ -245,7 +245,6 @@ class KSIntCalculatorArgonData
 #include "KSInteractionsMessage.h"
 #include "KToolbox.h"
 
-using namespace Kassiopeia;
 namespace katrin
 {
 typedef KComplexElement<KSIntCalculatorArgonData> KSIntCalculatorArgonBuilder;

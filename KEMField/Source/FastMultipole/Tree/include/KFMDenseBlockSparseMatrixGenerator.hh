@@ -177,9 +177,8 @@ class KFMDenseBlockSparseMatrixGenerator : public KFMNodeActor<KFMNode<ObjectTyp
                 kfmout << "Saving sparse matrix structure to " << fStructureFileName << kfmendl;
             }
 
-            KSAObjectOutputNode<KFMDenseBlockSparseMatrixStructure>* structure_node =
-                new KSAObjectOutputNode<KFMDenseBlockSparseMatrixStructure>(
-                    KSAClassName<KFMDenseBlockSparseMatrixStructure>::name());
+            auto* structure_node = new KSAObjectOutputNode<KFMDenseBlockSparseMatrixStructure>(
+                KSAClassName<KFMDenseBlockSparseMatrixStructure>::name());
             structure_node->AttachObjectToNode(&fMatrixStructure);
             KEMFileInterface::GetInstance()->SaveKSAFileToActiveDirectory(structure_node, fStructureFileName, result);
             delete structure_node;

@@ -18,7 +18,7 @@ template<> inline bool KSRootGeneratorBuilder::AddAttribute(KContainer* aContain
         return true;
     }
     if (aContainer->GetName() == "set_generator") {
-        fObject->SetGenerator(KToolbox::GetInstance().Get<KSGenerator>(aContainer->AsReference<std::string>()));
+        fObject->SetGenerator(KToolbox::GetInstance().Get<KSGenerator>(aContainer->AsString()));
         return true;
     }
     return false;

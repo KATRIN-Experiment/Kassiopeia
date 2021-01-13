@@ -15,8 +15,8 @@ class KGConicSectPortHousingSurfaceMesher :
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGConicSectPortHousingSurfaceMesher() {}
-    ~KGConicSectPortHousingSurfaceMesher() override {}
+    KGConicSectPortHousingSurfaceMesher() = default;
+    ~KGConicSectPortHousingSurfaceMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGConicSectPortHousingSurface* conicSectPortHousingSurface) override;
@@ -40,7 +40,7 @@ class KGConicSectPortHousingSurfaceMesher :
       public:
         ParaxialPortDiscretizer(KGConicSectPortHousingSurfaceMesher* d) : PortDiscretizer(d), fParaxialPort(nullptr) {}
 
-        virtual ~ParaxialPortDiscretizer() {}
+        virtual ~ParaxialPortDiscretizer() = default;
 
         void DiscretizePort(const KGConicSectPortHousing::ParaxialPort* paraxialPort);
 
@@ -61,14 +61,14 @@ class KGConicSectPortHousingSurfaceMesher :
         OrthogonalPortDiscretizer(KGConicSectPortHousingSurfaceMesher* d) : PortDiscretizer(d), fOrthogonalPort(nullptr)
         {}
 
-        virtual ~OrthogonalPortDiscretizer() {}
+        virtual ~OrthogonalPortDiscretizer() = default;
 
         void DiscretizePort(const KGConicSectPortHousing::OrthogonalPort* orthogonalPort);
 
       private:
         OrthogonalPortDiscretizer() : PortDiscretizer(), fOrthogonalPort(nullptr) {}
-        void Circle_coord(int i, double /*r*/, double p[3], std::vector<double>& x_int, std::vector<double>& y_int,
-                          std::vector<double>& z_int);
+        static void Circle_coord(int i, double /*r*/, double p[3], std::vector<double>& x_int,
+                                 std::vector<double>& y_int, std::vector<double>& z_int);
 
         void Fan_coord(int i, double /*r*/, double p[3]);
 
@@ -79,9 +79,9 @@ class KGConicSectPortHousingSurfaceMesher :
     };
 
   protected:
-    bool ChordsIntersect(double theta1min, double theta1max, double theta2min, double theta2max);
+    static bool ChordsIntersect(double theta1min, double theta1max, double theta2min, double theta2max);
 
-    bool LengthsIntersect(double x1min, double x1max, double x2min, double x2max);
+    static bool LengthsIntersect(double x1min, double x1max, double x2min, double x2max);
 
     std::shared_ptr<KGConicSectPortHousing> fConicSectPortHousing;
 };

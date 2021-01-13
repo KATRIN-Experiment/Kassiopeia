@@ -15,12 +15,12 @@ template<> inline bool KGMeshDeformerBuilder::AddAttribute(KContainer* aContaine
     using namespace KGeoBag;
 
     if (aContainer->GetName() == "surfaces") {
-        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         vector<KGSurface*>::iterator tSurfaceIt;
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -31,12 +31,12 @@ template<> inline bool KGMeshDeformerBuilder::AddAttribute(KContainer* aContaine
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         vector<KGSpace*>::iterator tSpaceIt;
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

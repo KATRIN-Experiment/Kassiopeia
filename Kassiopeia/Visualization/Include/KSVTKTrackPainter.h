@@ -1,13 +1,9 @@
 #ifndef _Kassiopeia_KSVTKTrackPainter_h_
 #define _Kassiopeia_KSVTKTrackPainter_h_
 
-#include "KVTKWindow.h"
-using katrin::KVTKWindow;
-
-#include "KVTKPainter.h"
-using katrin::KVTKPainter;
-
 #include "KField.h"
+#include "KVTKPainter.h"
+#include "KVTKWindow.h"
 #include "vtkActor.h"
 #include "vtkCellArray.h"
 #include "vtkDoubleArray.h"
@@ -20,15 +16,15 @@ using katrin::KVTKPainter;
 namespace Kassiopeia
 {
 
-class KSVTKTrackPainter : public KVTKPainter
+class KSVTKTrackPainter : public katrin::KVTKPainter
 {
   public:
     KSVTKTrackPainter();
-    ~KSVTKTrackPainter();
+    ~KSVTKTrackPainter() override;
 
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
     ;
     K_SET(std::string, File);

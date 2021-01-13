@@ -3,6 +3,9 @@
 #include "KSGeneratorsMessage.h"
 #include "KSParticleFactory.h"
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -13,7 +16,7 @@ KSGenGeneratorComposite::KSGenGeneratorComposite() :
     fCreators(128)
 {}
 KSGenGeneratorComposite::KSGenGeneratorComposite(const KSGenGeneratorComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fPidValue(aCopy.fPidValue),
     fStringIdValue(aCopy.fStringIdValue),
     fSpecials(aCopy.fSpecials),
@@ -23,7 +26,7 @@ KSGenGeneratorComposite* KSGenGeneratorComposite::Clone() const
 {
     return new KSGenGeneratorComposite(*this);
 }
-KSGenGeneratorComposite::~KSGenGeneratorComposite() {}
+KSGenGeneratorComposite::~KSGenGeneratorComposite() = default;
 
 void KSGenGeneratorComposite::SetPid(KSGenValue* aPidValue)
 {

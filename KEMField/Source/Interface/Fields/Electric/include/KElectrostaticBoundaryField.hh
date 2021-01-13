@@ -24,14 +24,14 @@ class KElectrostaticBoundaryField : public KElectrostaticField
 
     KElectrostaticBoundaryField();
     ~KElectrostaticBoundaryField() override;
-    void SetChargeDensitySolver(KSmartPointer<KChargeDensitySolver> solver);
+    void SetChargeDensitySolver(const KSmartPointer<KChargeDensitySolver>& solver);
     KSmartPointer<KChargeDensitySolver> GetChargeDensitySolver();
-    void SetFieldSolver(KSmartPointer<KElectricFieldSolver> solver);
+    void SetFieldSolver(const KSmartPointer<KElectricFieldSolver>& solver);
     KSmartPointer<KElectricFieldSolver> GetFieldSolver();
-    void SetContainer(KSmartPointer<KSurfaceContainer> container);
+    void SetContainer(const KSmartPointer<KSurfaceContainer>& container);
     KSmartPointer<KSurfaceContainer> GetContainer() const;
 
-    void AddVisitor(KSmartPointer<Visitor> visitor);
+    void AddVisitor(const KSmartPointer<Visitor>& visitor);
     std::vector<KSmartPointer<Visitor>> GetVisitors();
 
     void SetDirectory(const std::string& aDirectory);
@@ -44,7 +44,7 @@ class KElectrostaticBoundaryField : public KElectrostaticField
     {
       public:
         Visitor();
-        virtual ~Visitor() {}
+        virtual ~Visitor() = default;
         void Preprocessing(bool choice);
         void Postprocessing(bool choice);
         void InBetweenProcessing(bool choice);
@@ -67,8 +67,8 @@ class KElectrostaticBoundaryField : public KElectrostaticField
     void InitializeCore() override;
 
     double PotentialCore(const KPosition& P) const override;
-    KThreeVector ElectricFieldCore(const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const override;
 
   private:
     void VisitorPreprocessing();

@@ -27,14 +27,13 @@ template<> inline bool KSGenPositionSpaceRandomBuilder::AddAttribute(KContainer*
     }
 
     if (aContainer->GetName() == "spaces") {
-        vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
-        vector<KGeoBag::KGSpace*>::iterator tSpaceIt;
+        std::vector<KGeoBag::KGSpace*> tSpaces =
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
+        std::vector<KGeoBag::KGSpace*>::iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

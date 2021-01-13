@@ -23,7 +23,7 @@ template<> inline bool KGPlanarPolyLoopStartPointArgumentsBuilder::AddAttribute(
     return false;
 }
 
-typedef KComplexElement<KGPlanarPolyLoop::LineArguments> KGPlanarPolyLoopLineArgumentsBuilder;
+using KGPlanarPolyLoopLineArgumentsBuilder = KComplexElement<KGPlanarPolyLoop::LineArguments>;
 
 template<> inline bool KGPlanarPolyLoopLineArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -47,7 +47,7 @@ template<> inline bool KGPlanarPolyLoopLineArgumentsBuilder::AddAttribute(KConta
 }
 
 
-typedef KComplexElement<KGPlanarPolyLoop::ArcArguments> KGPlanarPolyLoopArcArgumentsBuilder;
+using KGPlanarPolyLoopArcArgumentsBuilder = KComplexElement<KGPlanarPolyLoop::ArcArguments>;
 
 template<> inline bool KGPlanarPolyLoopArcArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -79,7 +79,7 @@ template<> inline bool KGPlanarPolyLoopArcArgumentsBuilder::AddAttribute(KContai
 }
 
 
-typedef KComplexElement<KGPlanarPolyLoop::LastLineArguments> KGPlanarPolyLoopLastLineArgumentsBuilder;
+using KGPlanarPolyLoopLastLineArgumentsBuilder = KComplexElement<KGPlanarPolyLoop::LastLineArguments>;
 
 template<> inline bool KGPlanarPolyLoopLastLineArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -95,7 +95,7 @@ template<> inline bool KGPlanarPolyLoopLastLineArgumentsBuilder::AddAttribute(KC
 }
 
 
-typedef KComplexElement<KGPlanarPolyLoop::LastArcArguments> KGPlanarPolyLoopLastArcArgumentsBuilder;
+using KGPlanarPolyLoopLastArcArgumentsBuilder = KComplexElement<KGPlanarPolyLoop::LastArcArguments>;
 
 template<> inline bool KGPlanarPolyLoopLastArcArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -119,7 +119,7 @@ template<> inline bool KGPlanarPolyLoopLastArcArgumentsBuilder::AddAttribute(KCo
 }
 
 
-typedef KComplexElement<KGPlanarPolyLoop> KGPlanarPolyLoopBuilder;
+using KGPlanarPolyLoopBuilder = KComplexElement<KGPlanarPolyLoop>;
 
 template<> inline bool KGPlanarPolyLoopBuilder::AddAttribute(KContainer* /*anAttribute*/)
 {

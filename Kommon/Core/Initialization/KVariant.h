@@ -35,8 +35,8 @@ class KUnknown
 {
   public:
     // use RTTI to get actual type //
-    KUnknown() {}
-    virtual ~KUnknown() {}
+    KUnknown() = default;
+    virtual ~KUnknown() = default;
     virtual KUnknown* Clone() const = 0;
 };
 
@@ -261,6 +261,16 @@ template<> struct KVariantDecoder<const KUnknown&>
     }
 };
 
+template<> struct KVariantDecoder<KVariant>
+{
+    static const KVariant& As(const KVariant& Value)
+    {
+        return Value;
+    }
+};
+
+
+int compare(const KVariant& id1, const KVariant& id2);
 
 KVariant::KVariant() : fType(Type_Void) {}
 
@@ -494,7 +504,6 @@ inline KVariant KVariant::Or(const KVariant& DefaultValue) const
     }
 }
 
-
 inline std::ostream& operator<<(std::ostream& os, const KVariant& Value)
 {
     if (Value.IsInteger()) {
@@ -627,6 +636,23 @@ template<typename T> inline bool operator==(KVariant& This, const T& Value)
 inline bool operator==(KVariant& This, const char Value[])
 {
     return This.As<std::string>() == std::string(Value);
+}
+
+inline bool operator==(const KVariant& This, const KVariant& Other)
+{
+    if (This.IsVoid() && Other.IsVoid())
+        return true;
+    else if (This.IsBool() && Other.IsBool())
+        return This.AsBool() == Other.AsBool();
+    else if (This.IsInteger() && Other.IsInteger())
+        return This.AsLong() == Other.AsLong();
+    else if (This.IsNumeric() && Other.IsNumeric())
+        return This.AsDouble() == Other.AsDouble();
+    else if (This.IsString() && Other.IsString())
+        return This.AsString() == Other.AsString();
+    else if (This.IsUnknown() && Other.IsUnknown())
+        return This.AsUnknown() == Other.AsUnknown();
+    return false;
 }
 
 template<typename T> inline bool operator!=(KVariant& This, const T& Value)

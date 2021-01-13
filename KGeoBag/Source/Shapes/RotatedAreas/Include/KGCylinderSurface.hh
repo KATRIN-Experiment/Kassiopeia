@@ -12,6 +12,11 @@ class KGCylinderSurface : public KGRotatedLineSegmentSurface
     KGCylinderSurface();
     ~KGCylinderSurface() override;
 
+    static std::string Name()
+    {
+        return "cylinder_surface";
+    }
+
   public:
     void Z1(const double& aZ1);
     void Z2(const double& aZ2);

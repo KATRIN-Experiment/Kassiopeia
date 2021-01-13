@@ -9,6 +9,9 @@
 
 #include <limits>
 
+using namespace katrin;
+using namespace std;
+
 namespace Kassiopeia
 {
 KSROOTTrackPainter::KSROOTTrackPainter() :
@@ -29,7 +32,7 @@ KSROOTTrackPainter::KSROOTTrackPainter() :
     fBaseColors(),
     fColorVector()
 {}
-KSROOTTrackPainter::~KSROOTTrackPainter() {}
+KSROOTTrackPainter::~KSROOTTrackPainter() = default;
 
 void KSROOTTrackPainter::Render()
 {
@@ -206,6 +209,8 @@ void KSROOTTrackPainter::Render()
             }
         }
     }
+
+    vismsg(eNormal) << "root track painter found " << fMultigraph->GetListOfGraphs()->GetSize() << " tracks " << eom;
 
     tReader.CloseFile();
     delete tRootFile;

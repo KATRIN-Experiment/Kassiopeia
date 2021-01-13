@@ -31,7 +31,7 @@ template<class XValueType, class XValueTypeSource> class KSComponentMinimumAt : 
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentMinimumAt() override {}
+    ~KSComponentMinimumAt() override = default;
 
     //***********
     //KSComponent

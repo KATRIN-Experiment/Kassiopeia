@@ -24,7 +24,7 @@ KSGenEnergyBetaDecay::KSGenEnergyBetaDecay() :
     fMaxEnergy(-1.)
 {}
 KSGenEnergyBetaDecay::KSGenEnergyBetaDecay(const KSGenEnergyBetaDecay& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fZDaughter(aCopy.fZDaughter),
     fnmax(aCopy.fnmax),
     fFermiMax(aCopy.fFermiMax),
@@ -37,7 +37,7 @@ KSGenEnergyBetaDecay* KSGenEnergyBetaDecay::Clone() const
 {
     return new KSGenEnergyBetaDecay(*this);
 }
-KSGenEnergyBetaDecay::~KSGenEnergyBetaDecay() {}
+KSGenEnergyBetaDecay::~KSGenEnergyBetaDecay() = default;
 
 void KSGenEnergyBetaDecay::Dice(KSParticleQueue* aPrimaries)
 {

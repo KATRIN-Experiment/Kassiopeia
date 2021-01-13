@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMaxZBuilder::~KComplexElement() {}
+template<> KSTermMaxZBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxZStructure =
-    KSTermMaxZBuilder::Attribute<string>("name") + KSTermMaxZBuilder::Attribute<double>("z");
+    KSTermMaxZBuilder::Attribute<std::string>("name") + KSTermMaxZBuilder::Attribute<double>("z");
 
 STATICINT sToolboxKSTermMaxZ = KSRootBuilder::ComplexElement<KSTermMaxZ>("ksterm_max_z");
 

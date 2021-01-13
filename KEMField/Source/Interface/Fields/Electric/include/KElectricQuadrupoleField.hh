@@ -26,7 +26,7 @@ class KElectricQuadrupoleField : public KElectrostaticField
 
   private:
     double PotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
 
     KPosition fLocation;
     double fStrength;

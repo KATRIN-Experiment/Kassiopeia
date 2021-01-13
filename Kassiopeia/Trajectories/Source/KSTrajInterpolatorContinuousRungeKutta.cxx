@@ -2,10 +2,12 @@
 
 #include "KSTrajectoriesMessage.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
-KSTrajInterpolatorContinuousRungeKutta::KSTrajInterpolatorContinuousRungeKutta() {}
+KSTrajInterpolatorContinuousRungeKutta::KSTrajInterpolatorContinuousRungeKutta() = default;
 KSTrajInterpolatorContinuousRungeKutta::KSTrajInterpolatorContinuousRungeKutta(
     const KSTrajInterpolatorContinuousRungeKutta&) :
     KSComponent()
@@ -14,7 +16,7 @@ KSTrajInterpolatorContinuousRungeKutta* KSTrajInterpolatorContinuousRungeKutta::
 {
     return new KSTrajInterpolatorContinuousRungeKutta(*this);
 }
-KSTrajInterpolatorContinuousRungeKutta::~KSTrajInterpolatorContinuousRungeKutta() {}
+KSTrajInterpolatorContinuousRungeKutta::~KSTrajInterpolatorContinuousRungeKutta() = default;
 
 void KSTrajInterpolatorContinuousRungeKutta::Interpolate(double aTime, const KSTrajExactIntegrator& anIntegrator,
                                                          const KSTrajExactDifferentiator& aDifferentiator,

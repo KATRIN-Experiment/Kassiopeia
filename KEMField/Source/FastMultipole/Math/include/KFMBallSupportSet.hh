@@ -41,8 +41,8 @@ template<unsigned int NDIM> class KFMBallSupportSet
 
     virtual ~KFMBallSupportSet()
     {
-        for (unsigned int i = 0; i < fSolvers.size(); i++) {
-            delete fSolvers[i];
+        for (auto& solver : fSolvers) {
+            delete solver;
         }
     };
 

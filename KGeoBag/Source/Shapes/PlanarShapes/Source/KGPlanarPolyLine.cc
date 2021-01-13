@@ -5,16 +5,9 @@
 namespace KGeoBag
 {
 
-KGPlanarPolyLine::KGPlanarPolyLine() :
-    fElements(),
-    fLength(0.),
-    fCentroid(0., 0.),
-    fStart(0., 0.),
-    fEnd(0., 0.),
-    fInitialized(false)
+KGPlanarPolyLine::KGPlanarPolyLine() : fLength(0.), fCentroid(0., 0.), fStart(0., 0.), fEnd(0., 0.), fInitialized(false)
 {}
 KGPlanarPolyLine::KGPlanarPolyLine(const KGPlanarPolyLine& aCopy) :
-    fElements(),
     fLength(aCopy.fLength),
     fCentroid(aCopy.fCentroid),
     fStart(aCopy.fStart),
@@ -24,8 +17,8 @@ KGPlanarPolyLine::KGPlanarPolyLine(const KGPlanarPolyLine& aCopy) :
     const KGPlanarOpenPath* tElement;
     const KGPlanarLineSegment* tLineSegment;
     const KGPlanarArcSegment* tArcSegment;
-    for (auto tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++) {
-        tElement = *tIt;
+    for (const auto* element : aCopy.fElements) {
+        tElement = element;
 
         tLineSegment = dynamic_cast<const KGPlanarLineSegment*>(tElement);
         if (tLineSegment != nullptr) {
@@ -45,8 +38,8 @@ KGPlanarPolyLine::~KGPlanarPolyLine()
     shapemsg_debug("destroying a planar poly line" << eom);
 
     const KGPlanarOpenPath* tElement;
-    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
-        tElement = *tIt;
+    for (auto& element : fElements) {
+        tElement = element;
         delete tElement;
     }
 }
@@ -64,16 +57,16 @@ void KGPlanarPolyLine::CopyFrom(const KGPlanarPolyLine& aCopy)
     fInitialized = aCopy.fInitialized;
 
     const KGPlanarOpenPath* tElement;
-    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
-        tElement = *tIt;
+    for (auto& element : fElements) {
+        tElement = element;
         delete tElement;
     }
     fElements.clear();
 
     const KGPlanarLineSegment* tLineSegment;
     const KGPlanarArcSegment* tArcSegment;
-    for (auto tIt = aCopy.fElements.begin(); tIt != aCopy.fElements.end(); tIt++) {
-        tElement = *tIt;
+    for (const auto* element : aCopy.fElements) {
+        tElement = element;
 
         tLineSegment = dynamic_cast<const KGPlanarLineSegment*>(tElement);
         if (tLineSegment != nullptr) {
@@ -97,8 +90,8 @@ void KGPlanarPolyLine::StartPoint(const KTwoVector& aPoint)
     fInitialized = false;
 
     const KGPlanarOpenPath* tElement;
-    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
-        tElement = *tIt;
+    for (auto& element : fElements) {
+        tElement = element;
         delete tElement;
     }
     fElements.clear();
@@ -207,11 +200,11 @@ KTwoVector KGPlanarPolyLine::At(const double& aLength) const
         return fEnd;
     }
 
-    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
-        if ((*tIt)->Length() > tLength) {
-            return (*tIt)->At(tLength);
+    for (const auto* element : fElements) {
+        if (element->Length() > tLength) {
+            return element->At(tLength);
         }
-        tLength -= (*tIt)->Length();
+        tLength -= element->Length();
     }
     return fEnd;
 }
@@ -367,9 +360,9 @@ void KGPlanarPolyLine::Initialize() const
     fCentroid.X() = 0;
     fCentroid.Y() = 0;
 
-    for (auto tIt = fElements.begin(); tIt != fElements.end(); tIt++) {
-        fLength += (*tIt)->Length();
-        fCentroid += (*tIt)->Length() * (*tIt)->Centroid();
+    for (const auto* element : fElements) {
+        fLength += element->Length();
+        fCentroid += element->Length() * element->Centroid();
     }
     fCentroid /= fLength;
 

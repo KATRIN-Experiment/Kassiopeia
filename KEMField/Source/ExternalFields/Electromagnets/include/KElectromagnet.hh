@@ -11,7 +11,7 @@ class KElectromagnet
 {
   public:
     KElectromagnet() : fCoordinateSystem() {}
-    virtual ~KElectromagnet() {}
+    virtual ~KElectromagnet() = default;
     static std::string Name()
     {
         return "Electromagnet";

@@ -9,11 +9,11 @@ namespace KEMField
 template<typename ValueType> class KSuccessiveSubspaceCorrection_SingleThread
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KSuccessiveSubspaceCorrection_SingleThread(const Matrix& A, Vector& x, const Vector& b);
-    ~KSuccessiveSubspaceCorrection_SingleThread() {}
+    ~KSuccessiveSubspaceCorrection_SingleThread() = default;
 
     void Initialize();
     void FindResidual();
@@ -57,7 +57,7 @@ template<typename ValueType> class KSuccessiveSubspaceCorrection_SingleThread
             fSubspace(subspace),
             fParentMatrix(parentMatrix)
         {}
-        ~SubMatrix() override {}
+        ~SubMatrix() override = default;
 
         unsigned int Dimension() const override
         {
@@ -77,7 +77,7 @@ template<typename ValueType> class KSuccessiveSubspaceCorrection_SingleThread
             fSubspace(subspace),
             fParentVector(parentVector)
         {}
-        ~SubVector() override {}
+        ~SubVector() override = default;
 
         unsigned int Dimension() const override
         {

@@ -21,7 +21,7 @@ class KGCutConeSurfaceRandom : virtual public KGShapeRandom, public KGCutConeSur
 {
   public:
     KGCutConeSurfaceRandom() : KGShapeRandom() {}
-    ~KGCutConeSurfaceRandom() override {}
+    ~KGCutConeSurfaceRandom() override = default;
 
     /**
      * \brief Visitor function to dice a point

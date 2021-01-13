@@ -45,7 +45,8 @@ template<unsigned int NDIM> class KFMPoint
         }
     }
 
-    virtual ~KFMPoint(){};
+    virtual ~KFMPoint() = default;
+    ;
 
     unsigned int GetDimension() const
     {

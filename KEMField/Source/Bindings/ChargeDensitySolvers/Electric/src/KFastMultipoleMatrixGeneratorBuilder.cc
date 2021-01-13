@@ -15,7 +15,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KFastMultipoleMatrixGeneratorBuilder::~KComplexElement() {}
+template<> KFastMultipoleMatrixGeneratorBuilder::~KComplexElement() = default;
 
 STATICINT sKFastMultipoleMatrixGeneratorStructure =
     KFastMultipoleMatrixGeneratorBuilder::Attribute<std::string>("integrator") +

@@ -27,7 +27,7 @@ class KGslErrorHandler : public KSingleton<KGslErrorHandler>
 {
   public:
     KGslErrorHandler();
-    ~KGslErrorHandler();
+    ~KGslErrorHandler() override;
 
     /**
          * @brief Enable GSL error handling.

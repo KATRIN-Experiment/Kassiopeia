@@ -3,7 +3,7 @@
 namespace KGeoBag
 {
 
-KGMeshElement::KGMeshElement() {}
-KGMeshElement::~KGMeshElement() {}
+KGMeshElement::KGMeshElement() = default;
+KGMeshElement::~KGMeshElement() = default;
 
 }  // namespace KGeoBag

@@ -68,7 +68,7 @@ KFMVTKElectrostaticTreeViewer::KFMVTKElectrostaticTreeViewer(KFMElectrostaticTre
 
 void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
 {
-    if (node != NULL && !(node->HasChildren()))  //we only visit leaf nodes
+    if (node != nullptr && !(node->HasChildren()))  //we only visit leaf nodes
     {
         //get owned element ids
         KFMIdentitySet* id_set = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySet>::GetNodeObject(node);
@@ -78,10 +78,10 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
         unsigned int subset_size = 0;
         KFMElectrostaticNode* temp_node = node;
         do {
-            if (temp_node != NULL) {
+            if (temp_node != nullptr) {
                 KFMIdentitySetList* id_set_list =
                     KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMIdentitySetList>::GetNodeObject(temp_node);
-                if (id_set_list != NULL) {
+                if (id_set_list != nullptr) {
                     unsigned int n_sets = id_set_list->GetNumberOfSets();
                     for (unsigned int j = 0; j < n_sets; j++) {
                         const std::vector<unsigned int>* set = id_set_list->GetSet(j);
@@ -90,13 +90,13 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
                 }
                 temp_node = temp_node->GetParent();
             }
-        } while (temp_node != NULL);
+        } while (temp_node != nullptr);
 
         //get multipole moments if they exist
         KFMElectrostaticMultipoleSet* mult_mom =
             KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticMultipoleSet>::GetNodeObject(node);
         double monopole_moment = 0.0;
-        if (mult_mom != NULL) {
+        if (mult_mom != nullptr) {
             std::vector<std::complex<double>> moments;
             mult_mom->GetMoments(&moments);
             monopole_moment = moments[0].real();
@@ -106,7 +106,7 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
         KFMElectrostaticLocalCoefficientSet* local_coeff =
             KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMElectrostaticLocalCoefficientSet>::GetNodeObject(node);
         double monopole_coeff = 0.0;
-        if (local_coeff != NULL) {
+        if (local_coeff != nullptr) {
             std::vector<std::complex<double>> coeffs;
             local_coeff->GetMoments(&coeffs);
             monopole_coeff = coeffs[0].real();
@@ -146,21 +146,21 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
         };
 
         //create a quad for each face of the node's cube
-        for (unsigned int f = 0; f < 6; f++) {
+        for (auto& face_id : face_ids) {
             //face cells from the corner points
             vtkSmartPointer<vtkQuad> face = vtkSmartPointer<vtkQuad>::New();
 
             for (unsigned int i = 0; i < 4; i++) {
                 // KFMPoint<3> corner = cube->GetCorner(face_ids[f][i]);
                 // fPoints->InsertNextPoint(corner[0], corner[1], corner[2]);
-                face->GetPointIds()->SetId(i, cube_start_index + face_ids[f][i]);
+                face->GetPointIds()->SetId(i, cube_start_index + face_id[i]);
             }
             //now insert the new hexahedron into the cell array
             fCells->InsertNextCell(face);
 
             //add the data for this cell
             fTreeLevel->InsertNextValue(node->GetLevel());
-            if (id_set != NULL) {
+            if (id_set != nullptr) {
                 fOwnedElements->InsertNextValue(id_set->GetSize());
             }
             else {
@@ -182,7 +182,7 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
     }
 }
 
-void KFMVTKElectrostaticTreeViewer::GenerateGeometryFile(std::string fileName)
+void KFMVTKElectrostaticTreeViewer::GenerateGeometryFile(const std::string& fileName)
 {
     vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
     polydata->SetPoints(fPoints);
@@ -219,7 +219,7 @@ void KFMVTKElectrostaticTreeViewer::GenerateGeometryFile(std::string fileName)
     writer->Write();
 }
 
-void KFMVTKElectrostaticTreeViewer::GenerateGridFile(std::string fileName)
+void KFMVTKElectrostaticTreeViewer::GenerateGridFile(const std::string& fileName)
 {
     // Write file
     vtkSmartPointer<vtkXMLUnstructuredGridWriter> writer = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();

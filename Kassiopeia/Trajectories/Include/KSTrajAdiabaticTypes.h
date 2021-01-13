@@ -14,10 +14,10 @@ namespace Kassiopeia
 {
 
 typedef KSMathSystem<KSTrajAdiabaticParticle, KSTrajAdiabaticDerivative, KSTrajAdiabaticError> KSTrajAdiabaticSystem;
-typedef KSMathControl<KSTrajAdiabaticSystem> KSTrajAdiabaticControl;
-typedef KSMathDifferentiator<KSTrajAdiabaticSystem> KSTrajAdiabaticDifferentiator;
-typedef KSMathIntegrator<KSTrajAdiabaticSystem> KSTrajAdiabaticIntegrator;
-typedef KSMathInterpolator<KSTrajAdiabaticSystem> KSTrajAdiabaticInterpolator;
+using KSTrajAdiabaticControl = KSMathControl<KSTrajAdiabaticSystem>;
+using KSTrajAdiabaticDifferentiator = KSMathDifferentiator<KSTrajAdiabaticSystem>;
+using KSTrajAdiabaticIntegrator = KSMathIntegrator<KSTrajAdiabaticSystem>;
+using KSTrajAdiabaticInterpolator = KSMathInterpolator<KSTrajAdiabaticSystem>;
 
 }  // namespace Kassiopeia
 

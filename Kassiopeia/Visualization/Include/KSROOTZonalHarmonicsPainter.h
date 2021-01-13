@@ -1,20 +1,16 @@
 #ifndef KSROOTZONALHARMONICSPAINTER_H
 #define KSROOTZONALHARMONICSPAINTER_H
 
-#include "KROOTWindow.h"
-using katrin::KROOTWindow;
-
-#include "KROOTPainter.h"
-using katrin::KROOTPainter;
-
 #include "KField.h"
+#include "KROOTPainter.h"
+#include "KROOTWindow.h"
 #include "TGraph.h"
 #include "TPolyMarker.h"
 
 namespace Kassiopeia
 {
 
-class KSROOTZonalHarmonicsPainter : public KROOTPainter
+class KSROOTZonalHarmonicsPainter : public katrin::KROOTPainter
 {
   public:
     KSROOTZonalHarmonicsPainter();

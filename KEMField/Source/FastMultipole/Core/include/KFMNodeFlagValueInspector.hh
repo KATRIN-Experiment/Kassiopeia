@@ -32,7 +32,8 @@ class KFMNodeFlagValueInspector : public KFMInspectingActor<KFMNode<ObjectTypeLi
         fValue = 0;
     };
 
-    ~KFMNodeFlagValueInspector() override{};
+    ~KFMNodeFlagValueInspector() override = default;
+    ;
 
     void SetFlagIndex(unsigned int flag_index)
     {

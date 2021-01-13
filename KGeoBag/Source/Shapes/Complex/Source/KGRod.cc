@@ -9,8 +9,8 @@ KGRod* KGRod::Clone() const
 {
     auto* r = new KGRod();
 
-    for (unsigned int i = 0; i < fCoords.size(); i++)
-        r->fCoords.push_back(fCoords.at(i));
+    for (const auto& coord : fCoords)
+        r->fCoords.push_back(coord);
 
     r->fRadius = fRadius;
     r->fNDiscRad = fNDiscRad;
@@ -40,7 +40,7 @@ double KGRod::Volume() const
     return M_PI * GetRadius() * GetRadius() * GetLength();
 }
 
-void KGRod::AddPoint(double p[3])
+void KGRod::AddPoint(const double p[3])
 {
     std::vector<double> tmp(3);
     for (unsigned int i = 0; i < 3; i++)
@@ -83,15 +83,15 @@ void KGRod::GetNormal(const double* p1, const double* p2, const double* oldNorma
         len += n[i] * n[i];
     }
     len = sqrt(len);
-    for (unsigned int i = 0; i < 3; i++)
-        n[i] /= len;
+    for (double& i : n)
+        i /= len;
 
     if (oldNormal == nullptr) {
         // we then start with a normal vector whose sole component lies in the
         // direction of the smallest magnitude of n
         int iSmallest = 0;
         double smallest = 2.;
-        for (unsigned int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             if (smallest > fabs(n[i])) {
                 smallest = fabs(n[i]);
                 iSmallest = i;
@@ -101,7 +101,7 @@ void KGRod::GetNormal(const double* p1, const double* p2, const double* oldNorma
         normal[iSmallest] = 1.;
     }
     else {
-        for (unsigned int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
             normal[i] = oldNormal[i];
     }
 
@@ -175,8 +175,8 @@ double KGRod::DistanceTo(const double* P, double* P_in, double* P_norm) const
         }
         len2 = sqrt(len2);
 
-        for (unsigned int j = 0; j < 3; j++)
-            n2[j] /= len2;
+        for (double& j : n2)
+            j /= len2;
 
         double P1[3];  // starting point of line
         double P2[3];  // ending point of line

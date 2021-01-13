@@ -49,7 +49,7 @@ class KFMElectrostaticFieldMapper_SingleThread
 
   protected:
     //operations
-    void SetParameters(KFMElectrostaticParameters params);
+    void SetParameters(const KFMElectrostaticParameters& params);
     void AssociateElementsAndNodes();
     void InitializeMultipoleMoments();
     void ComputeMultipoleMoments();

@@ -8,16 +8,16 @@
 #ifndef KEMSIMPLEEXCEPTION_HH_
 #define KEMSIMPLEEXCEPTION_HH_
 
-#include <exception>
+#include <KException.h>
 #include <string>
 
 namespace KEMField
 {
 
-class KEMSimpleException : public std::exception
+class KEMSimpleException : public katrin::KException
 {
   public:
-    KEMSimpleException(std::string information);
+    KEMSimpleException(const std::string& information);
     ~KEMSimpleException() noexcept override;
 
     const char* what() const noexcept override;

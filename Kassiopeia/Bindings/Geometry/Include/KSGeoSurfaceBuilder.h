@@ -19,14 +19,13 @@ template<> inline bool KSGeoSurfaceBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "surfaces") {
-        std::vector<KGSurface*> tSurfaces =
-            KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<std::string>());
-        std::vector<KGSurface*>::const_iterator tSurfaceIt;
-        KGSurface* tSurface;
+        std::vector<KGeoBag::KGSurface*> tSurfaces =
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
+        std::vector<KGeoBag::KGSurface*>::const_iterator tSurfaceIt;
+        KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            oprmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            oprmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -37,17 +36,16 @@ template<> inline bool KSGeoSurfaceBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        std::vector<KGSpace*> tSpaces =
-            KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
-        std::vector<KGSpace*>::const_iterator tSpaceIt;
-        KGSpace* tSpace;
-        const std::vector<KGSurface*>* tSurfaces;
-        std::vector<KGSurface*>::const_iterator tSurfaceIt;
-        KGSurface* tSurface;
+        std::vector<KGeoBag::KGSpace*> tSpaces =
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
+        std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
+        KGeoBag::KGSpace* tSpace;
+        const std::vector<KGeoBag::KGSurface*>* tSurfaces;
+        std::vector<KGeoBag::KGSurface*>::const_iterator tSurfaceIt;
+        KGeoBag::KGSurface* tSurface;
 
         if (tSpaces.size() == 0) {
-            oprmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            oprmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

@@ -32,7 +32,7 @@ template<typename Type, class Derived> class KTransitiveStreamerType : public st
         return t.Self();
     }
 
-    virtual ~KTransitiveStreamerType() {}
+    virtual ~KTransitiveStreamerType() = default;
 
   protected:
     virtual Derived& Self() = 0;
@@ -43,8 +43,8 @@ class KTransitiveStreamer :
     public KGenScatterHierarchyWithParameter<KEMField::FundamentalTypes, Derived, KTransitiveStreamerType>
 {
   public:
-    KTransitiveStreamer() {}
-    ~KTransitiveStreamer() override {}
+    KTransitiveStreamer() = default;
+    ~KTransitiveStreamer() override = default;
 
   protected:
     Derived& Self() override

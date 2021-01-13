@@ -31,7 +31,7 @@ template<class XValueType> class KSTermOutput : public KSComponentTemplate<KSTer
     {
         return new KSTermOutput(*this);
     }
-    ~KSTermOutput() override {}
+    ~KSTermOutput() override = default;
 
     void CalculateTermination(const KSParticle& /*anInitialParticle*/, bool& aFlag) override
     {

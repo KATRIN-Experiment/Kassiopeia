@@ -13,8 +13,8 @@ class KGLinearWireGridMesher : virtual public KGComplexMesher, public KGWrappedS
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGLinearWireGridMesher() {}
-    ~KGLinearWireGridMesher() override {}
+    KGLinearWireGridMesher() = default;
+    ~KGLinearWireGridMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGLinearWireGrid>* linearWireGridSurface) override;

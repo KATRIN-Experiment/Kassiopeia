@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectricZHFieldSolverBuilder::~KComplexElement() {}
+template<> KElectricZHFieldSolverBuilder::~KComplexElement() = default;
 
 STATICINT sKElectricZHFieldSolverBuilderStructure =
     KElectricZHFieldSolverBuilder::Attribute<unsigned int>("number_of_bifurcations") +

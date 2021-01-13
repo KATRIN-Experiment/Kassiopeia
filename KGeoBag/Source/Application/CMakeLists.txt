@@ -4,6 +4,7 @@ set( APPLICATION_NAMES
 	RandomExtensionTester
 	MetricsExtensionTester
     EulerAngles
+	GeometryDump
 )
 
 # libraries
@@ -22,7 +23,6 @@ set( APPLICATION_LIBRARIES
 if( KGeoBag_USE_VTK )
 	list( APPEND APPLICATION_NAMES
 		GeometryViewer
-		GeometryPrinter
 		MeshViewer
 		AxialMeshViewer
 		PointTester

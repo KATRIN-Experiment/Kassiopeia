@@ -5,8 +5,8 @@
 namespace katrin
 {
 
-KChattyProcessor::KChattyProcessor() {}
-KChattyProcessor::~KChattyProcessor() {}
+KChattyProcessor::KChattyProcessor() = default;
+KChattyProcessor::~KChattyProcessor() = default;
 
 void KChattyProcessor::ProcessToken(KBeginParsingToken* aToken)
 {

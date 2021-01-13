@@ -12,7 +12,7 @@ template<unsigned int Dimension = 1> class KGDataPoint
   public:
     KGDataPoint();
     KGDataPoint(double, ...);
-    ~KGDataPoint() {}
+    ~KGDataPoint() = default;
 
     double& operator[](unsigned int i)
     {

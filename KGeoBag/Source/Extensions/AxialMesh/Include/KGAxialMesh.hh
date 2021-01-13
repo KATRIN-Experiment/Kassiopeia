@@ -10,7 +10,7 @@ namespace KGeoBag
 class KGAxialMeshData
 {
   public:
-    KGAxialMeshData() {}
+    KGAxialMeshData() = default;
     KGAxialMeshData(KGSurface*) {}
     KGAxialMeshData(KGSpace*) {}
     KGAxialMeshData(KGSurface*, const KGAxialMeshData& aCopy)
@@ -36,11 +36,11 @@ class KGAxialMesh
 {
   public:
     typedef KGAxialMeshData Surface;
-    typedef KGAxialMeshData Space;
+    using Space = KGAxialMeshData;
 };
 
-typedef KGExtendedSurface<KGAxialMesh> KGAxialMeshSurface;
-typedef KGExtendedSpace<KGAxialMesh> KGAxialMeshSpace;
+using KGAxialMeshSurface = KGExtendedSurface<KGAxialMesh>;
+using KGAxialMeshSpace = KGExtendedSpace<KGAxialMesh>;
 
 }  // namespace KGeoBag
 

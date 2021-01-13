@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueGaussBuilder::~KComplexElement() {}
+template<> KSGenValueGaussBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueGaussStructure =
-    KSGenValueGaussBuilder::Attribute<string>("name") + KSGenValueGaussBuilder::Attribute<double>("value_min") +
+    KSGenValueGaussBuilder::Attribute<std::string>("name") + KSGenValueGaussBuilder::Attribute<double>("value_min") +
     KSGenValueGaussBuilder::Attribute<double>("value_max") + KSGenValueGaussBuilder::Attribute<double>("value_mean") +
     KSGenValueGaussBuilder::Attribute<double>("value_sigma");
 

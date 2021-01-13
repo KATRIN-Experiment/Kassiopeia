@@ -11,7 +11,7 @@ class KGLinearSplineInterpolator : public KGInterpolator
 {
   public:
     KGLinearSplineInterpolator() : KGInterpolator() {}
-    ~KGLinearSplineInterpolator() override {}
+    ~KGLinearSplineInterpolator() override = default;
 
     void Initialize(DataSet& data) override;
 

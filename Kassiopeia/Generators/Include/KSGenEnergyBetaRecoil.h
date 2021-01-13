@@ -15,15 +15,15 @@ class KSGenEnergyBetaRecoil : public KSComponentTemplate<KSGenEnergyBetaRecoil, 
   public:
     KSGenEnergyBetaRecoil();
     KSGenEnergyBetaRecoil(const KSGenEnergyBetaRecoil& aCopy);
-    KSGenEnergyBetaRecoil* Clone() const;
-    virtual ~KSGenEnergyBetaRecoil();
+    KSGenEnergyBetaRecoil* Clone() const override;
+    ~KSGenEnergyBetaRecoil() override;
 
     //******
     //action
     //******
 
   public:
-    void Dice(KSParticleQueue* aPrimaries);
+    void Dice(KSParticleQueue* aPrimaries) override;
 
     //*************
     //configuration
@@ -54,8 +54,8 @@ class KSGenEnergyBetaRecoil : public KSComponentTemplate<KSGenEnergyBetaRecoil, 
     //**********
 
   public:
-    void InitializeComponent();
-    void DeinitializeComponent();
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 };
 
 }  // namespace Kassiopeia

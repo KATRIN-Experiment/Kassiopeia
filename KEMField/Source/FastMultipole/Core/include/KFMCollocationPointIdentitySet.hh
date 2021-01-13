@@ -24,7 +24,8 @@ class KFMCollocationPointIdentitySet : public KFMIdentitySet
 {
   public:
     KFMCollocationPointIdentitySet() : KFMIdentitySet(){};
-    ~KFMCollocationPointIdentitySet() override{};
+    ~KFMCollocationPointIdentitySet() override = default;
+    ;
 
     //IO
     std::string ClassName() override

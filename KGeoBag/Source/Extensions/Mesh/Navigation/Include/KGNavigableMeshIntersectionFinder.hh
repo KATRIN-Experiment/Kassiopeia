@@ -50,11 +50,12 @@ class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNod
         fContainer = container;
     };
 
-    void NearestPointOnLineSegment(const KThreeVector& aPoint, KThreeVector& aNearest, double& t) const;
-    double LineSegmentDistanceToPoint(const KThreeVector& aPoint) const;
+    void NearestPointOnLineSegment(const KGeoBag::KThreeVector& aPoint, KGeoBag::KThreeVector& aNearest,
+                                   double& t) const;
+    double LineSegmentDistanceToPoint(const KGeoBag::KThreeVector& aPoint) const;
     bool LineSegmentIntersectsCube(const KGCube<KGMESH_DIM>* cube, double& distance) const;
 
-    void SetLineSegment(const KThreeVector& start, const KThreeVector& end);
+    void SetLineSegment(const KGeoBag::KThreeVector& start, const KGeoBag::KThreeVector& end);
     bool HasIntersectionWithMesh() const;
     unsigned int GetNIntersections() const
     {
@@ -78,9 +79,9 @@ class KGNavigableMeshIntersectionFinder : public KGNodeActor<KGMeshNavigationNod
     KGNavigableMeshElementContainer* fContainer;
 
     //parameters of the line segment
-    KThreeVector fStartPoint;
-    KThreeVector fEndPoint;
-    KThreeVector fDirection;
+    KGeoBag::KThreeVector fStartPoint;
+    KGeoBag::KThreeVector fEndPoint;
+    KGeoBag::KThreeVector fDirection;
     double fLength;
 
     //needed for recursive access to tree

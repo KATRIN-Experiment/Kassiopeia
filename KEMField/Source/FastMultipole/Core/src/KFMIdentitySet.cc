@@ -37,8 +37,8 @@ void KFMIdentitySet::Sort()
 
 void KFMIdentitySet::Print() const
 {
-    for (unsigned int i = 0; i < fIDSet.size(); i++) {
-        std::cout << fIDSet[i] << ", ";
+    for (unsigned int i : fIDSet) {
+        std::cout << i << ", ";
     }
     std::cout << std::endl;
 }

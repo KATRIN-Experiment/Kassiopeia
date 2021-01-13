@@ -17,7 +17,7 @@ set (ZONALHARMONICSOLVER_SOURCEFILES
 
 ##################################################
 
-add_library (KEMZHSolver SHARED ${ZONALHARMONICSOLVER_SOURCEFILES})
+add_library (KEMZHSolver SHARED ${ZONALHARMONICSOLVER_SOURCEFILES} ${ZONALHARMONICSOLVER_HEADERFILES})
 target_link_libraries (KEMZHSolver KEMCore KEMSurfaces
 KEMElectromagnets KEMZHGenerator KEMElectrostaticBoundaryIntegrals 
 KEMMath KEMSurfaces KEMCore KEMFieldExceptions ${GSL_LIBRARIES})

@@ -24,8 +24,8 @@ class KSPathResolver
 {
 
   protected:
-    KSPathResolver(){};
-    virtual ~KSPathResolver(){};
+    KSPathResolver() = default;
+    virtual ~KSPathResolver() = default;
 
   public:
     enum class EDirectory

@@ -16,6 +16,7 @@ class KXMLTokenizer : public KProcessor
 {
   public:
     KXMLTokenizer();
+    KXMLTokenizer& operator=(const KXMLTokenizer& other) = delete;
     ~KXMLTokenizer() override;
 
     //**********
@@ -33,6 +34,10 @@ class KXMLTokenizer : public KProcessor
     {
         return fName;
     }
+    std::string GetElement() const
+    {
+        return fNames.empty() ? "" : fNames.top();
+    }
     int GetLine() const
     {
         return fLine;
@@ -44,6 +49,12 @@ class KXMLTokenizer : public KProcessor
     char GetChar() const
     {
         return fChar;
+    }
+    bool IsValid() const
+    {
+        if ((fState == fInitialState) || (fState == fFinalState) || (fNames.empty()))
+            return false;
+        return true;
     }
 
     //*******

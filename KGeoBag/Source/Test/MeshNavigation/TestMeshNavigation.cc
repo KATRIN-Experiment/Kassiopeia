@@ -52,14 +52,14 @@ int main(int argc, char** argv)
     unsigned int scale = 20;
     unsigned int geometry = 0;
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"scale", required_argument, 0, 's'},
-                                          {"geometry", required_argument, 0, 'g'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"scale", required_argument, nullptr, 's'},
+                                          {"geometry", required_argument, nullptr, 'g'}};
 
     static const char* optString = "hs:g:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -81,22 +81,22 @@ int main(int argc, char** argv)
     //we need a container to store all of the mesh elements
 
 
-    vector<KGSurface*> tSurfaces;
-    vector<KGSurface*>::iterator tSurfaceIt;
+    std::vector<KGSurface*> tSurfaces;
+    std::vector<KGSurface*>::iterator tSurfaceIt;
 
 
     if (geometry == 0 || geometry == 2) {
         // Construct the shape
         double p1[2], p2[2];
         double radius = 1.;
-        KGRotatedObject* hemi1 = new KGRotatedObject(scale, 20);
+        auto* hemi1 = new KGRotatedObject(scale, 20);
         p1[0] = -1.;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = 1.;
         hemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* hemi2 = new KGRotatedObject(scale, 20);
+        auto* hemi2 = new KGRotatedObject(scale, 20);
         p2[0] = 1.;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -104,13 +104,13 @@ int main(int argc, char** argv)
         hemi2->AddArc(p1, p2, radius, false);
 
         // Construct shape placement
-        KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
-        KGSurface* hemisphere1 = new KGSurface(h1);
+        auto* h1 = new KGRotatedSurface(hemi1);
+        auto* hemisphere1 = new KGSurface(h1);
         hemisphere1->SetName("hemisphere1");
         hemisphere1->MakeExtension<KGMesh>();
 
-        KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
-        KGSurface* hemisphere2 = new KGSurface(h2);
+        auto* h2 = new KGRotatedSurface(hemi2);
+        auto* hemisphere2 = new KGSurface(h2);
         hemisphere2->SetName("hemisphere2");
         hemisphere2->MakeExtension<KGMesh>();
 
@@ -121,8 +121,8 @@ int main(int argc, char** argv)
     if (geometry == 1 || geometry == 2) {
 
         // Construct the shape
-        KGBox* box = new KGBox();
-        int meshCount = scale;
+        auto* box = new KGBox();
+        unsigned int meshCount = scale;
 
         box->SetX0(-.5);
         box->SetX1(.5);
@@ -139,7 +139,7 @@ int main(int argc, char** argv)
         box->SetZMeshCount(meshCount);
         box->SetZMeshPower(3);
 
-        KGSurface* cube = new KGSurface(box);
+        auto* cube = new KGSurface(box);
         cube->SetName("box");
         cube->MakeExtension<KGMesh>();
 
@@ -153,7 +153,7 @@ int main(int argc, char** argv)
     tCollector.SetMeshElementContainer(&tContainer);
 
 
-    KVTKWindow tWindow;
+    katrin::KVTKWindow tWindow;
     tWindow.SetName("KGeoBag Mesh Viewer");
     tWindow.SetFrameColorRed(0.);
     tWindow.SetFrameColorGreen(0.);

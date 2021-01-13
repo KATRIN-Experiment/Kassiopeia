@@ -9,27 +9,32 @@
 namespace KGeoBag
 {
 
-class KGVolume : public KTagged
+class KGVolume : public katrin::KTagged
 {
   public:
     class Visitor
     {
       public:
-        Visitor() {}
-        virtual ~Visitor() {}
+        Visitor() = default;
+        virtual ~Visitor() = default;
         virtual void VisitVolume(KGVolume*) = 0;
     };
 
   public:
     typedef std::shared_ptr<KGBoundary> BoundaryPointer;
-    typedef std::vector<BoundaryPointer> BoundaryContainer;
-    typedef BoundaryContainer::iterator BoundaryIt;
-    typedef BoundaryContainer::const_iterator BoundaryCIt;
+    using BoundaryContainer = std::vector<BoundaryPointer>;
+    using BoundaryIt = BoundaryContainer::iterator;
+    using BoundaryCIt = BoundaryContainer::const_iterator;
 
   public:
     KGVolume();
     KGVolume(const KGVolume& aVolume);
     ~KGVolume() override;
+
+    static std::string Name()
+    {
+        return "volume";
+    }
 
   public:
     const BoundaryContainer& Boundaries() const;
@@ -41,14 +46,14 @@ class KGVolume : public KTagged
     virtual void VolumeAccept(KGVisitor* aVisitor);
 
   public:
-    bool Outside(const KThreeVector& aPoint) const;
-    KThreeVector Point(const KThreeVector& aPoint) const;
-    KThreeVector Normal(const KThreeVector& aPoint) const;
+    bool Outside(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
 
   protected:
-    virtual bool VolumeOutside(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector VolumePoint(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector VolumeNormal(const KThreeVector& aPoint) const = 0;
+    virtual bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const = 0;
 
   protected:
     void Check() const;

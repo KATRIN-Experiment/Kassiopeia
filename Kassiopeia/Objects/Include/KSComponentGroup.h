@@ -28,8 +28,8 @@ class KSComponentGroup : public KSComponent
 
   private:
     typedef std::vector<KSComponent*> ComponentVector;
-    typedef ComponentVector::iterator ComponentIt;
-    typedef ComponentVector::const_iterator ComponentCIt;
+    using ComponentIt = ComponentVector::iterator;
+    using ComponentCIt = ComponentVector::const_iterator;
 
     ComponentVector fComponents;
 };

@@ -23,14 +23,14 @@ class KEMStreamableThreeVector
         fData[1] = 0;
         fData[2] = 0;
     }
-    explicit KEMStreamableThreeVector(const KThreeVector& vec)
+    explicit KEMStreamableThreeVector(const KFieldVector& vec)
     {
         fData[0] = vec.X();
         fData[1] = vec.Y();
         fData[2] = vec.Z();
     }
 
-    KThreeVector GetThreeVector()
+    KFieldVector GetThreeVector()
     {
         return fData;
     }
@@ -55,7 +55,7 @@ class KEMStreamableThreeVector
     }
 
   private:
-    KThreeVector fData;
+    KFieldVector fData;
 };
 
 

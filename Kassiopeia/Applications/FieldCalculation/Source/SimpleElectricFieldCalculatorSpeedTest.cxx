@@ -19,7 +19,7 @@
 
 /* Remove if already defined */
 typedef long long int64;
-typedef unsigned long long uint64;
+using uint64 = unsigned long long;
 
 /* Returns the amount of milliseconds elapsed since the UNIX epoch. Works on both
  * windows and linux. */
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 
         double x = r * cos(phi);
         double y = r * sin(phi);
-        tPositions.push_back(KThreeVector(x, y, z));
+        tPositions.emplace_back(x, y, z);
     }
 
     for (auto& tFieldObject : tElectricFields) {

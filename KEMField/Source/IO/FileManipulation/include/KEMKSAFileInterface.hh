@@ -25,11 +25,14 @@ namespace KEMField
 class KEMKSAFileInterface
 {
   public:
-    KEMKSAFileInterface(){};
-    virtual ~KEMKSAFileInterface(){};
+    KEMKSAFileInterface() = default;
+    ;
+    virtual ~KEMKSAFileInterface() = default;
+    ;
 
-    static void ReadKSAFile(KSAInputNode* node, string file_name, bool& result);
-    static void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite = false);
+    static void ReadKSAFile(KSAInputNode* node, const std::string& file_name, bool& result);
+    static void SaveKSAFile(KSAOutputNode* node, const std::string& file_name, bool& result,
+                            bool forceOverwrite = false);
 
   protected:
     /* data */

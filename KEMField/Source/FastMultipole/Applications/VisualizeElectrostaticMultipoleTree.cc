@@ -37,9 +37,9 @@ int main(int argc, char* argv[])
     }
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"name", required_argument, 0, 'n'},
-        {"display", no_argument, 0, 'd'},
+        {"help", no_argument, nullptr, 'h'},
+        {"name", required_argument, nullptr, 'n'},
+        {"display", no_argument, nullptr, 'd'},
     };
 
     static const char* optString = "hn:";
@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
     string name = KFMElectrostaticTreeData::Name();
     bool display = false;
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
     if (optind != argc - 1)
         outFileName = argv[optind + 1];
 
-    KFMElectrostaticTreeData* tree_data = new KFMElectrostaticTreeData();
-    KFMElectrostaticTree* tree = new KFMElectrostaticTree();
+    auto* tree_data = new KFMElectrostaticTreeData();
+    auto* tree = new KFMElectrostaticTree();
 
     KEMFileInterface::GetInstance()->Read(inFileName, *tree_data, name);
 

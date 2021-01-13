@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSNavSurfaceBuilder::~KComplexElement() {}
+template<> KSNavSurfaceBuilder::~KComplexElement() = default;
 
-STATICINT sKSNavSurfaceStructure = KSNavSurfaceBuilder::Attribute<string>("name") +
+STATICINT sKSNavSurfaceStructure = KSNavSurfaceBuilder::Attribute<std::string>("name") +
                                    KSNavSurfaceBuilder::Attribute<bool>("transmission_split") +
                                    KSNavSurfaceBuilder::Attribute<bool>("reflection_split");
 

@@ -7,6 +7,7 @@
 
 #include "KGElectrostaticBoundaryField.hh"
 
+#include "KEMCoreMessage.hh"
 #include "KFile.h"
 #include "KSADataStreamer.hh"
 
@@ -16,17 +17,14 @@ namespace KEMField
 {
 
 KGElectrostaticBoundaryField::KGElectrostaticBoundaryField() :
-    KElectrostaticBoundaryField(),
     fMinimumElementArea(0.0),
     fMaximumElementAspectRatio(1e100),
     fSystem(nullptr),
-    fSurfaces(),
-    fSpaces(),
     fSymmetry(NoSymmetry),
     fConverter(nullptr)
 {}
 
-KGElectrostaticBoundaryField::~KGElectrostaticBoundaryField() {}
+KGElectrostaticBoundaryField::~KGElectrostaticBoundaryField() = default;
 
 double KGElectrostaticBoundaryField::PotentialCore(const KPosition& P) const
 {
@@ -36,11 +34,11 @@ double KGElectrostaticBoundaryField::PotentialCore(const KPosition& P) const
     return aPotential;
 }
 
-KThreeVector KGElectrostaticBoundaryField::ElectricFieldCore(const KPosition& P) const
+KFieldVector KGElectrostaticBoundaryField::ElectricFieldCore(const KPosition& P) const
 {
     KPosition internal = fConverter->GlobalToInternalPosition(P);
-    KThreeVector internalField = KElectrostaticBoundaryField::ElectricFieldCore(internal);
-    KThreeVector aField = fConverter->InternalToGlobalVector(internalField);
+    KFieldVector internalField = KElectrostaticBoundaryField::ElectricFieldCore(internal);
+    KFieldVector aField = fConverter->InternalToGlobalVector(internalField);
     //bindingmsg_debug( "electric field at " << P << " is " << aField <<eom);
     return aField;
 }
@@ -107,7 +105,7 @@ void KGElectrostaticBoundaryField::ConfigureSurfaceContainer()
             break;
 
         default:
-            cout << "ERROR: boundary field got unknown symmetry flag <" << fSymmetry << ">" << endl;
+            kem_cout(eError) << "ERROR: boundary field got unknown symmetry flag <" << fSymmetry << ">" << eom;
             break;
     }
     fConverter->SetMinimumArea(fMinimumElementArea);
@@ -119,17 +117,17 @@ void KGElectrostaticBoundaryField::ConfigureSurfaceContainer()
         fConverter->SetSystem(fSystem->GetOrigin(), fSystem->GetXAxis(), fSystem->GetYAxis(), fSystem->GetZAxis());
     }
 
-    for (auto tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end(); tSurfaceIt++) {
-        (*tSurfaceIt)->AcceptNode(&(*fConverter));
+    for (auto& surface : fSurfaces) {
+        surface->AcceptNode(&(*fConverter));
     }
 
-    for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-        (*tSpaceIt)->AcceptNode(&(*fConverter));
+    for (auto& space : fSpaces) {
+        space->AcceptNode(&(*fConverter));
     }
 
     if (container->empty()) {
-        cout << "WARNING:"
-             << "electrostatic field solver <" << GetName() << "> has zero surface elements" << endl;
+        kem_cout(eWarning) << "WARNING:"
+                           << "electrostatic field solver <" << GetName() << "> has zero surface elements" << eom;
         //std::exit(-1);
     }
 

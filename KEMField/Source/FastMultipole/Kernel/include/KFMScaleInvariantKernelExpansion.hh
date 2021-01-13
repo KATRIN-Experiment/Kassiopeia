@@ -27,7 +27,8 @@ class KFMScaleInvariantKernelExpansion : public KFMKernelExpansion<NDIM>
     {
         ;
     };
-    ~KFMScaleInvariantKernelExpansion() override{};
+    ~KFMScaleInvariantKernelExpansion() override = default;
+    ;
 
     bool IsScaleInvariant() const override
     {

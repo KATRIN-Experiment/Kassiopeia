@@ -29,17 +29,18 @@ class KGInfinitePlane
     ///default constructor makes the untranslated/unrotated x-y plane
     KGInfinitePlane()
     {
-        fOrigin = KThreeVector(0, 0, 0);
-        fXAxis = KThreeVector(1, 0, 0);
-        fYAxis = KThreeVector(0, 1, 0);
-        fZAxis = KThreeVector(0, 0, 1);
+        fOrigin = KGeoBag::KThreeVector(0, 0, 0);
+        fXAxis = KGeoBag::KThreeVector(1, 0, 0);
+        fYAxis = KGeoBag::KThreeVector(0, 1, 0);
+        fZAxis = KGeoBag::KThreeVector(0, 0, 1);
     };
 
     ///construct a plane from a point and normal vector
-    KGInfinitePlane(const KThreeVector& point, const KThreeVector& normal);
+    KGInfinitePlane(const KGeoBag::KThreeVector& point, const KGeoBag::KThreeVector& normal);
 
     //construct a plane from three points
-    KGInfinitePlane(const KThreeVector& point0, const KThreeVector& point1, const KThreeVector& point2);
+    KGInfinitePlane(const KGeoBag::KThreeVector& point0, const KGeoBag::KThreeVector& point1,
+                    const KGeoBag::KThreeVector& point2);
     virtual ~KGInfinitePlane()
     {
         ;
@@ -51,68 +52,69 @@ class KGInfinitePlane
         ;
     };
 
-    bool IsAbove(const KThreeVector vec) const;
+    bool IsAbove(const KGeoBag::KThreeVector& vec) const;
 
-    virtual void NearestDistance(const KThreeVector& aPoint, double& aDistance) const;
-    virtual void NearestPoint(const KThreeVector& aPoint, KThreeVector& aNearest) const;
-    virtual void NearestNormal(const KThreeVector& /*aPoint*/, KThreeVector& aNormal) const;
-    virtual void NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd, bool& aResult,
-                                     KThreeVector& anIntersection) const;
+    virtual void NearestDistance(const KGeoBag::KThreeVector& aPoint, double& aDistance) const;
+    virtual void NearestPoint(const KGeoBag::KThreeVector& aPoint, KGeoBag::KThreeVector& aNearest) const;
+    virtual void NearestNormal(const KGeoBag::KThreeVector& /*aPoint*/, KGeoBag::KThreeVector& aNormal) const;
+    virtual void NearestIntersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
+                                     bool& aResult, KGeoBag::KThreeVector& anIntersection) const;
 
-    KTwoVector Project(const KThreeVector& aPoint) const;
+    KTwoVector Project(const KGeoBag::KThreeVector& aPoint) const;
 
-    KThreeVector GetOrigin() const
+    KGeoBag::KThreeVector GetOrigin() const
     {
         return fOrigin;
     }
-    KThreeVector GetXAxis() const
+    KGeoBag::KThreeVector GetXAxis() const
     {
         return fXAxis;
     };
-    KThreeVector GetYAxis() const
+    KGeoBag::KThreeVector GetYAxis() const
     {
         return fYAxis;
     };
-    KThreeVector GetZAxis() const
+    KGeoBag::KThreeVector GetZAxis() const
     {
         return fZAxis;
     };
 
-    void SetOrigin(const KThreeVector& origin)
+    void SetOrigin(const KGeoBag::KThreeVector& origin)
     {
         fOrigin = origin;
     }
-    void SetXAxis(const KThreeVector x_axis)
+    void SetXAxis(const KGeoBag::KThreeVector& x_axis)
     {
         fXAxis = x_axis;
     };
-    void SetYAxis(const KThreeVector y_axis)
+    void SetYAxis(const KGeoBag::KThreeVector& y_axis)
     {
         fYAxis = y_axis;
     };
-    void SetZAxis(const KThreeVector z_axis)
+    void SetZAxis(const KGeoBag::KThreeVector& z_axis)
     {
         fZAxis = z_axis;
     };
 
 
     //static utility function for point-normal defined planes
-    static double NearestDistance(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                  const KThreeVector& aPoint);
+    static double NearestDistance(const KGeoBag::KThreeVector& origin, const KGeoBag::KThreeVector& unit_normal,
+                                  const KGeoBag::KThreeVector& aPoint);
 
-    static KThreeVector NearestPoint(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                     const KThreeVector& aPoint);
+    static KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& origin,
+                                              const KGeoBag::KThreeVector& unit_normal,
+                                              const KGeoBag::KThreeVector& aPoint);
 
-    static bool NearestIntersection(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                    const KThreeVector& aStart, const KThreeVector& anEnd, KThreeVector& anIntersection,
-                                    double& distance);
+    static bool NearestIntersection(const KGeoBag::KThreeVector& origin, const KGeoBag::KThreeVector& unit_normal,
+                                    const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
+                                    KGeoBag::KThreeVector& anIntersection, double& distance);
 
 
   protected:
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 };
 
 }  // namespace KGeoBag

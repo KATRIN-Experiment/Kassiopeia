@@ -8,7 +8,8 @@ KGNavigableMeshIntersectionFinder::KGNavigableMeshIntersectionFinder() :
 
     };
 
-KGNavigableMeshIntersectionFinder::~KGNavigableMeshIntersectionFinder(){};
+KGNavigableMeshIntersectionFinder::~KGNavigableMeshIntersectionFinder() = default;
+;
 
 void KGNavigableMeshIntersectionFinder::SetLineSegment(const KThreeVector& start, const KThreeVector& end)
 {
@@ -193,7 +194,7 @@ void KGNavigableMeshIntersectionFinder::ApplyAction(KGMeshNavigationNode* node)
                         //check if the line segment intersects the cube
                         double dist;
                         if (LineSegmentIntersectsCube(child_cube, dist)) {
-                            fOrderedChildren.push_back(std::pair<KGMeshNavigationNode*, double>(child, dist));
+                            fOrderedChildren.emplace_back(child, dist);
                         }
                     }
                 }
@@ -201,8 +202,8 @@ void KGNavigableMeshIntersectionFinder::ApplyAction(KGMeshNavigationNode* node)
                 //sort the child nodes by their distance to the begining of the line segment
                 std::sort(fOrderedChildren.begin(), fOrderedChildren.end(), fOrderingPredicate);
 
-                for (unsigned int i = 0; i < fOrderedChildren.size(); i++) {
-                    fNodeStack.push(fOrderedChildren[i].first);
+                for (auto& i : fOrderedChildren) {
+                    fNodeStack.push(i.first);
                 }
             }
             else {
@@ -242,7 +243,7 @@ void KGNavigableMeshIntersectionFinder::ApplyAction(KGMeshNavigationNode* node)
                 }
                 fNodeStack.pop();
             }
-        } while (fNodeStack.size() != 0);
+        } while (!fNodeStack.empty());
     }
 }
 

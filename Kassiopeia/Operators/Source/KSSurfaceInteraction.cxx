@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSSurfaceInteraction::KSSurfaceInteraction() {}
+KSSurfaceInteraction::KSSurfaceInteraction() = default;
 
-KSSurfaceInteraction::~KSSurfaceInteraction() {}
+KSSurfaceInteraction::~KSSurfaceInteraction() = default;
 
 }  // namespace Kassiopeia

@@ -17,10 +17,10 @@ template<class BasisPolicy> class KOpenCLBoundaryIntegrator : public KOpenCLActi
 
   protected:
     KOpenCLBoundaryIntegrator(KOpenCLSurfaceContainer&);
-    virtual ~KOpenCLBoundaryIntegrator();
+    ~KOpenCLBoundaryIntegrator() override;
 
   public:
-    std::string GetOpenCLFlags() const
+    std::string GetOpenCLFlags() const override
     {
         return fOpenCLFlags;
     }
@@ -30,8 +30,8 @@ template<class BasisPolicy> class KOpenCLBoundaryIntegrator : public KOpenCLActi
   protected:
     template<class SourceShape> void StreamSourceToBuffer(const SourceShape* source) const;
 
-    virtual void ConstructOpenCLKernels() const {}
-    virtual void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override {}
+    void AssignBuffers() const override;
 
     mutable cl_short fShapeInfo;
 #pragma GCC diagnostic push
@@ -48,9 +48,9 @@ template<class BasisPolicy> class KOpenCLBoundaryIntegrator : public KOpenCLActi
 template<class BasisPolicy>
 KOpenCLBoundaryIntegrator<BasisPolicy>::KOpenCLBoundaryIntegrator(KOpenCLSurfaceContainer& c) :
     KOpenCLAction(c),
-    fBufferP(NULL),
-    fBufferShapeInfo(NULL),
-    fBufferShapeData(NULL)
+    fBufferP(nullptr),
+    fBufferShapeInfo(nullptr),
+    fBufferShapeData(nullptr)
 {
     std::stringstream options;
     options << "-I " << KOpenCLInterface::GetInstance()->GetKernelPath() << "/";

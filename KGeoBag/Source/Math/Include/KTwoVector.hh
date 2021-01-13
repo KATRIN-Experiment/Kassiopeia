@@ -2,18 +2,13 @@
 #define KTWOVECTOR_H_
 
 #include "KConst.h"
-
-#include <istream>
-using std::istream;
-
-#include <ostream>
-using std::ostream;
-
-#include <vector>
-using std::vector;
+#include "KHash.h"
 
 #include <cassert>
 #include <cmath>
+#include <istream>
+#include <ostream>
+#include <vector>
 
 namespace KGeoBag
 {
@@ -34,6 +29,11 @@ class KTwoVector
     KTwoVector();
     virtual ~KTwoVector() = default;
 
+    static std::string Name()
+    {
+        return "KTwoVector";
+    }
+
     //assignment
 
     KTwoVector(const KTwoVector& aVector);
@@ -45,8 +45,10 @@ class KTwoVector
     KTwoVector(const double& anX, const double& aY);
     void SetComponents(const double& anX, const double& aY);
     void SetComponents(const double aData[2]);
-    void SetComponents(const vector<double>& aData);
+    void SetComponents(const std::vector<double>& aData);
     void SetMagnitude(const double& aMagnitude);
+    void SetX(const double& aX);
+    void SetY(const double& aY);
 
     //cast
 
@@ -60,13 +62,26 @@ class KTwoVector
 
     double& X();
     const double& X() const;
+    const double& GetX() const;
     double& Y();
     const double& Y() const;
+    const double& GetY() const;
 
     double& Z();
     const double& Z() const;
+    const double& GetZ() const;
     double& R();
     const double& R() const;
+    const double& GetR() const;
+
+    const double* Components() const;
+    const std::vector<double> ComponentVector() const;
+
+    //comparison
+
+    bool operator==(const KTwoVector& aVector) const;
+    bool operator!=(const KTwoVector& aVector) const;
+    bool operator<(const KTwoVector& aVector) const;
 
     //properties
 
@@ -74,6 +89,7 @@ class KTwoVector
     double Magnitude() const;
     double MagnitudeSquared() const;
     double PolarAngle() const;
+    double PolarAngleInDegrees() const;
     KTwoVector Unit() const;
     KTwoVector Orthogonal(bool aTwist = true) const;
 
@@ -88,6 +104,9 @@ inline KTwoVector::KTwoVector(const KTwoVector& aVector)
 }
 inline KTwoVector& KTwoVector::operator=(const KTwoVector& aVector)
 {
+    if (this == &aVector)
+        return *this;
+
     fData[0] = aVector.fData[0];
     fData[1] = aVector.fData[1];
     return *this;
@@ -120,7 +139,7 @@ inline void KTwoVector::SetComponents(const double aData[2])
     fData[0] = aData[0];
     fData[1] = aData[1];
 }
-inline void KTwoVector::SetComponents(const vector<double>& aData)
+inline void KTwoVector::SetComponents(const std::vector<double>& aData)
 {
     assert(aData.size() == 2);
     fData[0] = aData[0];
@@ -133,6 +152,14 @@ inline void KTwoVector::SetMagnitude(const double& aMagnitude)
     fData[0] *= tRatio;
     fData[1] *= tRatio;
     return;
+}
+inline void KTwoVector::SetX(const double& aX)
+{
+    fData[0] = aX;
+}
+inline void KTwoVector::SetY(const double& aY)
+{
+    fData[1] = aY;
 }
 
 inline KTwoVector::operator double*()
@@ -160,11 +187,19 @@ inline const double& KTwoVector::X() const
 {
     return fData[0];
 }
+inline const double& KTwoVector::GetX() const
+{
+    return fData[0];
+}
 inline double& KTwoVector::Y()
 {
     return fData[1];
 }
 inline const double& KTwoVector::Y() const
+{
+    return fData[1];
+}
+inline const double& KTwoVector::GetY() const
 {
     return fData[1];
 }
@@ -176,6 +211,10 @@ inline const double& KTwoVector::Z() const
 {
     return fData[0];
 }
+inline const double& KTwoVector::GetZ() const
+{
+    return fData[0];
+}
 inline double& KTwoVector::R()
 {
     return fData[1];
@@ -183,6 +222,19 @@ inline double& KTwoVector::R()
 inline const double& KTwoVector::R() const
 {
     return fData[1];
+}
+inline const double& KTwoVector::GetR() const
+{
+    return fData[1];
+}
+inline const double* KTwoVector::Components() const
+{
+    return (const double*) fData;
+}
+inline const std::vector<double> KTwoVector::ComponentVector() const
+{
+    std::vector<double> tData = {fData[0], fData[1]};
+    return tData;
 }
 
 inline double KTwoVector::Dot(const KTwoVector& aVector) const
@@ -205,6 +257,10 @@ inline double KTwoVector::PolarAngle() const
     }
     return tAngle;
 }
+inline double KTwoVector::PolarAngleInDegrees() const
+{
+    return PolarAngle() * 180. / katrin::KConst::Pi();
+}
 
 inline KTwoVector KTwoVector::Unit() const
 {
@@ -219,6 +275,19 @@ inline KTwoVector KTwoVector::Orthogonal(bool aTwist) const
     else {
         return KTwoVector(fData[1], -fData[0]);
     }
+}
+
+inline bool KTwoVector::operator==(const KTwoVector& aVector) const
+{
+    return (aVector.fData[0] == fData[0] && aVector.fData[1] == fData[1]) ? true : false;
+}
+inline bool KTwoVector::operator!=(const KTwoVector& aVector) const
+{
+    return (aVector.fData[0] != fData[0] || aVector.fData[1] != fData[1]) ? true : false;
+}
+inline bool KTwoVector::operator<(const KTwoVector& aVector) const
+{
+    return Magnitude() < aVector.Magnitude();
 }
 
 inline double operator*(const KTwoVector& aLeft, const KTwoVector& aRight)
@@ -293,17 +362,32 @@ inline KTwoVector& operator/=(KTwoVector& aVector, const double aScalar)
     return aVector;
 }
 
-inline istream& operator>>(istream& aStream, KTwoVector& aVector)
+inline std::istream& operator>>(std::istream& aStream, KTwoVector& aVector)
 {
     aStream >> aVector[0] >> aVector[1];
     return aStream;
 }
-inline ostream& operator<<(ostream& aStream, const KTwoVector& aVector)
+inline std::ostream& operator<<(std::ostream& aStream, const KTwoVector& aVector)
 {
-    aStream << aVector[0] << " " << aVector[1];
+    aStream << "<" << aVector[0] << " " << aVector[1] << ">";
     return aStream;
 }
 
 }  // namespace KGeoBag
+
+namespace std
+{
+
+template<> struct hash<KGeoBag::KTwoVector>
+{
+    size_t operator()(const KGeoBag::KTwoVector& vec) const
+    {
+        size_t seed = 0;
+        katrin::hash_range(seed, vec.Components(), vec.Components() + 2);
+        return seed;
+    }
+};
+
+}  // namespace std
 
 #endif

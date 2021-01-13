@@ -18,7 +18,7 @@ KBoundaryElementInfoDisplay::KBoundaryElementInfoDisplay()
     Preprocessing(true);
 }
 
-KBoundaryElementInfoDisplay::~KBoundaryElementInfoDisplay() {}
+KBoundaryElementInfoDisplay::~KBoundaryElementInfoDisplay() = default;
 
 void KBoundaryElementInfoDisplay::PreVisit(KElectrostaticBoundaryField& field)
 {

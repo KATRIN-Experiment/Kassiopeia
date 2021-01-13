@@ -19,7 +19,7 @@ template<class XLeft, class XRight> class KPlus;
 template<int XLeftValue, int XRightValue> class KPlus<KTypeInteger<XLeftValue>, KTypeInteger<XRightValue>>
 {
   public:
-    typedef KTypeInteger<XLeftValue + XRightValue> Type;
+    using Type = KTypeInteger<XLeftValue + XRightValue>;
 };
 
 
@@ -28,7 +28,7 @@ template<class XLeft, class XRight> class KMinus;
 template<int XLeftValue, int XRightValue> class KMinus<KTypeInteger<XLeftValue>, KTypeInteger<XRightValue>>
 {
   public:
-    typedef KTypeInteger<XLeftValue - XRightValue> Type;
+    using Type = KTypeInteger<XLeftValue - XRightValue>;
 };
 
 

@@ -29,11 +29,8 @@ class KFMElectrostaticLocalCoefficientSet : public KFMScalarMultipoleExpansion
     {
         ;
     };
-    KFMElectrostaticLocalCoefficientSet& operator=(const KFMElectrostaticLocalCoefficientSet& copyObject)
-    {
-        KFMScalarMultipoleExpansion::operator=(copyObject);
-        return *this;
-    };
+    KFMElectrostaticLocalCoefficientSet& operator=(const KFMElectrostaticLocalCoefficientSet& copyObject) = default;
+    ;
 
     std::string ClassName() const override;
 

@@ -7,12 +7,14 @@
 
 #include "KSGenPositionMask.h"
 
+using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 KSGenPositionMask::KSGenPositionMask() : fGenerator(nullptr), fMaxRetries(10000) {}
 KSGenPositionMask::KSGenPositionMask(const KSGenPositionMask& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fAllowedSpaces(aCopy.fAllowedSpaces),
     fForbiddenSpaces(aCopy.fForbiddenSpaces),
     fGenerator(aCopy.fGenerator),
@@ -22,14 +24,14 @@ KSGenPositionMask* KSGenPositionMask::Clone() const
 {
     return new KSGenPositionMask(*this);
 }
-KSGenPositionMask::~KSGenPositionMask() {}
+KSGenPositionMask::~KSGenPositionMask() = default;
 
 void KSGenPositionMask::Dice(KSParticleQueue* aPrimaries)
 {
     auto* tTempQueue = new KSParticleQueue();
     tTempQueue->push_back(new KSParticle());
 
-    for (auto tParticleIt = aPrimaries->begin(); tParticleIt != aPrimaries->end(); ++tParticleIt) {
+    for (auto& aPrimarie : *aPrimaries) {
         KThreeVector tPosition;
         bool tPositionValid = false;
         unsigned int tNumRetries = 0;
@@ -49,8 +51,8 @@ void KSGenPositionMask::Dice(KSParticleQueue* aPrimaries)
             // check if position is not inside any of the forbidden spaces
             if (fForbiddenSpaces.size() > 0) {
                 tPositionValid = true;
-                for (auto tSpaceIt = fForbiddenSpaces.begin(); tSpaceIt != fForbiddenSpaces.end(); ++tSpaceIt) {
-                    if ((*tSpaceIt)->Outside(tPosition) == false)  // inside forbidden space
+                for (auto& forbiddenSpace : fForbiddenSpaces) {
+                    if (forbiddenSpace->Outside(tPosition) == false)  // inside forbidden space
                     {
                         tPositionValid = false;
                         break;
@@ -67,8 +69,8 @@ void KSGenPositionMask::Dice(KSParticleQueue* aPrimaries)
             // check if position is inside at least one of the allowed spaces
             if (fAllowedSpaces.size() > 0) {
                 tPositionValid = false;
-                for (auto tSpaceIt = fAllowedSpaces.begin(); tSpaceIt != fAllowedSpaces.end(); ++tSpaceIt) {
-                    if ((*tSpaceIt)->Outside(tPosition) == false)  // inside allowed space
+                for (auto& allowedSpace : fAllowedSpaces) {
+                    if (allowedSpace->Outside(tPosition) == false)  // inside allowed space
                     {
                         tPositionValid = true;
                         break;
@@ -85,7 +87,7 @@ void KSGenPositionMask::Dice(KSParticleQueue* aPrimaries)
 
         genmsg(eNormal) << "found valid position " << tPosition << " after " << tNumRetries
                         << (tNumRetries > 1 ? " tries" : " try") << eom;
-        (*tParticleIt)->SetPosition(tPosition);
+        aPrimarie->SetPosition(tPosition);
     }
 
     delete tTempQueue;

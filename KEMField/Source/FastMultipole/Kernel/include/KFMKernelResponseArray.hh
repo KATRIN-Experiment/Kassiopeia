@@ -54,7 +54,7 @@ class KFMKernelResponseArray : public KFMArrayFillingOperator<std::complex<doubl
         fZeroMaskSize = 0;
     }
 
-    ~KFMKernelResponseArray() override {}
+    ~KFMKernelResponseArray() override = default;
 
     KernelType* GetKernel()
     {

@@ -24,7 +24,7 @@ class KThreeMatrix
 
     static const KThreeMatrix sIdentity;
 
-    static KThreeMatrix OuterProduct(const KThreeVector& vector1, const KThreeVector& vector2);
+    static KThreeMatrix OuterProduct(const KGeoBag::KThreeVector& vector1, const KGeoBag::KThreeVector& vector2);
 
   public:
     KThreeMatrix();
@@ -51,7 +51,7 @@ class KThreeMatrix
     void SetComponents(const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY,
                        const double& aYZ, const double& aZX, const double& aZY, const double& aZZ);
     void SetComponents(const double anArray[9]);
-    void SetComponents(const vector<double>& anArray);
+    void SetComponents(const std::vector<double>& anArray);
 
     //cast
 
@@ -68,6 +68,7 @@ class KThreeMatrix
 
     //properties
 
+    bool IsValid() const;
     KThreeMatrix Inverse() const;
     KThreeMatrix Transpose() const;
     KThreeMatrix Multiply(const KThreeMatrix&) const;
@@ -95,6 +96,9 @@ inline KThreeMatrix::KThreeMatrix(const KThreeMatrix& aMatrix)
 }
 inline KThreeMatrix& KThreeMatrix::operator=(const KThreeMatrix& aMatrix)
 {
+    if (this == &aMatrix)
+        return *this;
+
     fData[0] = aMatrix.fData[0];
     fData[1] = aMatrix.fData[1];
     fData[2] = aMatrix.fData[2];
@@ -222,7 +226,7 @@ inline void KThreeMatrix::SetComponents(const double anArray[9])
 
     return;
 }
-inline void KThreeMatrix::SetComponents(const vector<double>& anArray)
+inline void KThreeMatrix::SetComponents(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 9);
 
@@ -266,6 +270,15 @@ inline double& KThreeMatrix::operator()(int aRow, int aColumn)
 inline const double& KThreeMatrix::operator()(int aRow, int aColumn) const
 {
     return fData[3 * aRow + aColumn];
+}
+
+inline bool KThreeMatrix::IsValid() const
+{
+    if (std::isfinite(fData[0]) && std::isfinite(fData[1]) && std::isfinite(fData[2]) && std::isfinite(fData[3]) &&
+        std::isfinite(fData[4]) && std::isfinite(fData[5]) && std::isfinite(fData[6]) && std::isfinite(fData[7]) &&
+        std::isfinite(fData[8]))
+        return true;
+    return false;
 }
 
 inline KThreeMatrix KThreeMatrix::Inverse() const
@@ -450,17 +463,17 @@ inline KThreeMatrix operator/=(KThreeMatrix& aMatrix, const double& aScalar)
     return aMatrix;
 }
 
-inline KThreeVector operator*(const KThreeMatrix& aLeft, const KThreeVector& aRight)
+inline KGeoBag::KThreeVector operator*(const KThreeMatrix& aLeft, const KGeoBag::KThreeVector& aRight)
 {
-    KThreeVector Result;
+    KGeoBag::KThreeVector Result;
     Result[0] = aLeft[0] * aRight[0] + aLeft[1] * aRight[1] + aLeft[2] * aRight[2];
     Result[1] = aLeft[3] * aRight[0] + aLeft[4] * aRight[1] + aLeft[5] * aRight[2];
     Result[2] = aLeft[6] * aRight[0] + aLeft[7] * aRight[1] + aLeft[8] * aRight[2];
     return Result;
 }
-inline KThreeVector operator*(const KThreeVector& aLeft, const KThreeMatrix& aRight)
+inline KGeoBag::KThreeVector operator*(const KGeoBag::KThreeVector& aLeft, const KThreeMatrix& aRight)
 {
-    KThreeVector Result;
+    KGeoBag::KThreeVector Result;
     Result[0] = aLeft[0] * aRight[0] + aLeft[1] * aRight[3] + aLeft[2] * aRight[6];
     Result[1] = aLeft[0] * aRight[1] + aLeft[1] * aRight[4] + aLeft[2] * aRight[7];
     Result[2] = aLeft[0] * aRight[2] + aLeft[1] * aRight[5] + aLeft[2] * aRight[8];
@@ -481,13 +494,13 @@ inline KThreeMatrix operator*(const KThreeMatrix& aLeft, const KThreeMatrix& aRi
     return Result;
 }
 
-inline istream& operator>>(istream& aStream, KThreeMatrix& aMatrix)
+inline std::istream& operator>>(std::istream& aStream, KThreeMatrix& aMatrix)
 {
     aStream >> aMatrix[0] >> aMatrix[1] >> aMatrix[2] >> aMatrix[3] >> aMatrix[4] >> aMatrix[5] >> aMatrix[6] >>
         aMatrix[7] >> aMatrix[8];
     return aStream;
 }
-inline ostream& operator<<(ostream& aStream, const KThreeMatrix& aMatrix)
+inline std::ostream& operator<<(std::ostream& aStream, const KThreeMatrix& aMatrix)
 {
     aStream << "<" << aMatrix[0] << " " << aMatrix[1] << " " << aMatrix[2] << " " << aMatrix[3] << " " << aMatrix[4]
             << " " << aMatrix[5] << " " << aMatrix[6] << " " << aMatrix[7] << " " << aMatrix[8] << ">";

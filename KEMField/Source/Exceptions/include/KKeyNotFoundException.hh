@@ -9,13 +9,13 @@
 #ifndef KKEYNOTFOUNDEXCEPTION_HH_
 #define KKEYNOTFOUNDEXCEPTION_HH_
 
-#include <exception>
+#include <KException.h>
 #include <string>
 
 namespace KEMField
 {
 
-class KKeyNotFoundException : public std::exception
+class KKeyNotFoundException : public katrin::KException
 {
   public:
     enum ErrorCode
@@ -24,7 +24,7 @@ class KKeyNotFoundException : public std::exception
         wrongType
     };
 
-    KKeyNotFoundException(std::string container, std::string key, ErrorCode errorCode);
+    KKeyNotFoundException(const std::string& container, const std::string& key, ErrorCode errorCode);
     ~KKeyNotFoundException() noexcept override;
 
     const char* what() const noexcept override;

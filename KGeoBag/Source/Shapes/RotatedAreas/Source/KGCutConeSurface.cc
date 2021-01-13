@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGCutConeSurface::Visitor::Visitor() {}
-KGCutConeSurface::Visitor::~Visitor() {}
+KGCutConeSurface::Visitor::Visitor() = default;
+KGCutConeSurface::Visitor::~Visitor() = default;
 
 KGCutConeSurface::KGCutConeSurface() :
     fZ1(0.),
@@ -15,7 +15,7 @@ KGCutConeSurface::KGCutConeSurface() :
     fLongitudinalMeshPower(1.),
     fAxialMeshCount(8)
 {}
-KGCutConeSurface::~KGCutConeSurface() {}
+KGCutConeSurface::~KGCutConeSurface() = default;
 
 void KGCutConeSurface::Z1(const double& aZ1)
 {

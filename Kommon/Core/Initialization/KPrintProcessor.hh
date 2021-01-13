@@ -25,26 +25,31 @@ class KPrintProcessor : public KProcessor
     void ProcessToken(KEndElementToken* aToken) override;
 
   private:
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eElementInactive,
         eElementActive,
+        eElementAssertActive,
         eElementComplete
     } ElementState;
-    typedef enum
+
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eAttributeInactive,
         eActiveName,
         eActiveValue,
+        eActiveAssertCondition,
         eAttributeComplete
     } AttributeState;
 
     ElementState fElementState;
     AttributeState fAttributeState;
     KMessageSeverity fMessageType;
+    bool fCheckAssertCondition;
 
     std::string fName;
     std::string fValue;
+    bool fAssertCondition;
 };
 
 }  // namespace katrin

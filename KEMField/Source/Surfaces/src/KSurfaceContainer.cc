@@ -4,9 +4,9 @@ namespace KEMField
 {
 KSurfaceContainer::KSurfaceContainer() : fIsOwner(true)
 {
-    for (unsigned int i = 0; i < Length<KEMField::KBoundaryTypes>::value + 1; i++)
-        for (unsigned int j = 0; j < Length<KEMField::KShapeTypes>::value + 1; j++)
-            fPartialSurfaceData[i][j] = nullptr;
+    for (auto& i : fPartialSurfaceData)
+        for (auto& j : i)
+            j = nullptr;
 }
 
 KSurfaceContainer::~KSurfaceContainer()
@@ -37,7 +37,7 @@ void KSurfaceContainer::push_back(KSurfacePrimitive* aSurface)
 
     auto it = fSurfaceData.begin();
     for (; it != fSurfaceData.end(); ++it)
-        if ((*it)->size() != 0)
+        if (!(*it)->empty())
             if ((*it)->operator[](0)->GetID().BoundaryID == boundaryPolicy &&
                 (*it)->operator[](0)->GetID().ShapeID == shapePolicy) {
                 (*it)->push_back(aSurface);
@@ -83,8 +83,8 @@ KSurfacePrimitive* KSurfaceContainer::operator[](const unsigned int& i) const
 unsigned int KSurfaceContainer::size() const
 {
     unsigned int i = 0;
-    for (auto it = fSurfaceData.begin(); it != fSurfaceData.end(); ++it)
-        i += (*it)->size();
+    for (auto* it : fSurfaceData)
+        i += it->size();
     return i;
 }
 

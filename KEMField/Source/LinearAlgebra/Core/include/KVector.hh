@@ -8,8 +8,8 @@ namespace KEMField
 template<typename ValueType> class KVector
 {
   public:
-    KVector() {}
-    virtual ~KVector() {}
+    KVector() = default;
+    virtual ~KVector() = default;
 
     virtual const ValueType& operator()(unsigned int) const = 0;
     virtual ValueType& operator[](unsigned int) = 0;

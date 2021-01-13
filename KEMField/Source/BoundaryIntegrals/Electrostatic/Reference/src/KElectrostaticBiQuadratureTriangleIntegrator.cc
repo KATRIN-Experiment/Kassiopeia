@@ -3,18 +3,18 @@
 namespace KEMField
 {
 
-KThreeVector triCommonFieldPoint;  // = Pcommon
+KFieldVector triCommonFieldPoint;  // = Pcommon
 
-KThreeVector triCommonP1;  // Bcommon
+KFieldVector triCommonP1;  // Bcommon
 
-KThreeVector triCommonAlongSideP2P0;      // = acommon
-KThreeVector triCommonAlongSideP2P1;      // = bcommon
-KThreeVector triCommonAlongSideP2P0Unit;  // = uacommon
+KFieldVector triCommonAlongSideP2P0;      // = acommon
+KFieldVector triCommonAlongSideP2P1;      // = bcommon
+KFieldVector triCommonAlongSideP2P0Unit;  // = uacommon
 
 double triCommonHeightP2onP0P1;       // = hcommon
-KThreeVector triCommonAlongSideP0P1;  // = ccommon
+KFieldVector triCommonAlongSideP0P1;  // = ccommon
 
-KThreeVector triCommonHeightIterSideP2P1;  // = Ecommon
+KFieldVector triCommonHeightIterSideP2P1;  // = Ecommon
 
 unsigned short triComputationFlag;  // 0: Ex,  1:  Ey,  2:  Ez,  3:  Phi
 
@@ -24,8 +24,8 @@ unsigned int triIntNodes = 32;
 
 double KElectrostaticBiQuadratureTriangleIntegrator::triF1(double y)
 {
-    KThreeVector triHeightIterSideP2P1;  // = E
-    KThreeVector triHeightIterSideP0P1;  // = F
+    KFieldVector triHeightIterSideP2P1;  // = E
+    KFieldVector triHeightIterSideP0P1;  // = F
     double triLengthConnectSideIter;     // = L
 
     triCommonHeightIterSideP2P1 = triCommonP1 - ((y / triCommonHeightP2onP0P1) * triCommonAlongSideP2P1);
@@ -42,14 +42,14 @@ double KElectrostaticBiQuadratureTriangleIntegrator::triF1(double y)
 
 double KElectrostaticBiQuadratureTriangleIntegrator::triF2(double x)
 {
-    KThreeVector Q = triCommonHeightIterSideP2P1 + x * triCommonAlongSideP2P0Unit;
+    KFieldVector Q = triCommonHeightIterSideP2P1 + x * triCommonAlongSideP2P0Unit;
     return KElectrostaticBiQuadratureTriangleIntegrator::triF(Q, triCommonFieldPoint);
 }
 
-double KElectrostaticBiQuadratureTriangleIntegrator::triF(KThreeVector Q, KThreeVector P)
+double KElectrostaticBiQuadratureTriangleIntegrator::triF(const KFieldVector& Q, const KFieldVector& P)
 {
     double R, C3, C;
-    KThreeVector QP;
+    KFieldVector QP;
     QP = P - Q;
     R = QP.Magnitude();
     C = 1. / R;
@@ -95,17 +95,17 @@ double KElectrostaticBiQuadratureTriangleIntegrator::Potential(const KTriangle* 
     triComputationFlag = 3;
 
     // corner points of the triangle
-    const KThreeVector triP0 = source->GetP0();  // = A
+    const KFieldVector& triP0 = source->GetP0();  // = A
 
-    const KThreeVector triP1 = source->GetP1();  // = B
+    const KFieldVector triP1 = source->GetP1();  // = B
     triCommonP1 = triP1;                         // = Bcommon
 
-    const KThreeVector triP2 = source->GetP2();  // = C
+    const KFieldVector triP2 = source->GetP2();  // = C
 
-    const KThreeVector triAlongSideP2P0 = triP0 - triP2;  // = a
+    const KFieldVector triAlongSideP2P0 = triP0 - triP2;  // = a
     triCommonAlongSideP2P0 = triAlongSideP2P0;            // set global value
 
-    const KThreeVector triAlongSideP2P1 = triP1 - triP2;  // = b
+    const KFieldVector triAlongSideP2P1 = triP1 - triP2;  // = b
     triCommonAlongSideP2P1 = triAlongSideP2P1;            // set global value
 
     const double triAlongSideP2P0Length = triAlongSideP2P0.Magnitude();  // = absa
@@ -114,13 +114,13 @@ double KElectrostaticBiQuadratureTriangleIntegrator::Potential(const KTriangle* 
     triCommonAlongSideP2P0Unit = (1. / triAlongSideP2P0Length) * triAlongSideP2P0;  // = uacommon
 
     const double cosgamma = triAlongSideP2P0.Dot(triAlongSideP2P1) / (triAlongSideP2P0Length * triAlongSideP2P1Length);
-    const KThreeVector triProjP2onP0P1 =
+    const KFieldVector triProjP2onP0P1 =
         triP2 + (triAlongSideP2P1Length * cosgamma) * triCommonAlongSideP2P0Unit;  // = D
 
     const double triHeightP2onP0P1 = (triProjP2onP0P1 - triP1).Magnitude();  // = h
     triCommonHeightP2onP0P1 = triHeightP2onP0P1;                             // = hcommon
 
-    const KThreeVector triAlongSideP0P1 = triP1 - triP0;  // = c
+    const KFieldVector triAlongSideP0P1 = triP1 - triP0;  // = c
     triCommonAlongSideP0P1 = triAlongSideP0P1;            // = ccommon
 
     phi = triQuadGaussLegendreVarN(&KElectrostaticBiQuadratureTriangleIntegrator::triF1,
@@ -131,21 +131,21 @@ double KElectrostaticBiQuadratureTriangleIntegrator::Potential(const KTriangle* 
     return phi;
 }
 
-KThreeVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const KTriangle* source,
+KFieldVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const KTriangle* source,
                                                                          const KPosition& P) const
 {
     triCommonFieldPoint = P;
-    KThreeVector eField(0., 0., 0.);
+    KFieldVector eField(0., 0., 0.);
 
     // corner points of the triangle
-    const KThreeVector triP0 = source->GetP0();  // A
-    const KThreeVector triP1 = source->GetP1();  // B
-    const KThreeVector triP2 = source->GetP2();  // C
+    const KFieldVector& triP0 = source->GetP0();  // A
+    const KFieldVector triP1 = source->GetP1();   // B
+    const KFieldVector triP2 = source->GetP2();   // C
 
-    KThreeVector triAlongSideP2P0 = triP0 - triP2;  // = a
+    KFieldVector triAlongSideP2P0 = triP0 - triP2;  // = a
     triCommonAlongSideP2P0 = triAlongSideP2P0;      // set global value
 
-    KThreeVector triAlongSideP2P1 = triP1 - triP2;  // = b
+    KFieldVector triAlongSideP2P1 = triP1 - triP2;  // = b
     triCommonAlongSideP2P1 = triAlongSideP2P1;      // set global value
 
     const double triAlongSideP2P0Length = triAlongSideP2P0.Magnitude();  // = absa
@@ -154,13 +154,13 @@ KThreeVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const K
     triCommonAlongSideP2P0Unit = (1 / triAlongSideP2P0Length) * triAlongSideP2P0;  // = uacommon
 
     const double cosgamma = triAlongSideP2P0.Dot(triAlongSideP2P1) / (triAlongSideP2P0Length * triAlongSideP2P1Length);
-    const KThreeVector triProjP2onP0P1 =
+    const KFieldVector triProjP2onP0P1 =
         triP2 + (triAlongSideP2P1Length * cosgamma) * triCommonAlongSideP2P0Unit;  // = D
 
     const double triHeightP2onP0P1 = (triProjP2onP0P1 - triP1).Magnitude();  // = h
     triCommonHeightP2onP0P1 = triHeightP2onP0P1;                             // = hcommon
 
-    KThreeVector triAlongSideP0P1 = triP1 - triP0;  // = c
+    KFieldVector triAlongSideP0P1 = triP1 - triP0;  // = c
     triCommonAlongSideP0P1 = triAlongSideP0P1;      // = ccommon
 
     for (unsigned short i = 0; i < 3; i++) {
@@ -173,7 +173,7 @@ KThreeVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const K
     return eField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBiQuadratureTriangleIntegrator::ElectricFieldAndPotential(const KTriangle* source,
                                                                         const KPosition& P) const
 {
@@ -184,30 +184,30 @@ double KElectrostaticBiQuadratureTriangleIntegrator::Potential(const KSymmetryGr
                                                                const KPosition& P) const
 {
     double potential = 0.;
-    for (auto it = source->begin(); it != source->end(); ++it)
-        potential += Potential(*it, P);
+    for (auto* it : *source)
+        potential += Potential(it, P);
     return potential;
 }
 
-KThreeVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
+KFieldVector KElectrostaticBiQuadratureTriangleIntegrator::ElectricField(const KSymmetryGroup<KTriangle>* source,
                                                                          const KPosition& P) const
 {
-    KThreeVector electricField(0., 0., 0.);
-    for (auto it = source->begin(); it != source->end(); ++it)
-        electricField += ElectricField(*it, P);
+    KFieldVector electricField(0., 0., 0.);
+    for (auto* it : *source)
+        electricField += ElectricField(it, P);
     return electricField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBiQuadratureTriangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KTriangle>* source,
                                                                         const KPosition& P) const
 {
-    std::pair<KThreeVector, double> fieldAndPotential;
+    std::pair<KFieldVector, double> fieldAndPotential;
     double potential(0.);
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it) {
-        fieldAndPotential = ElectricFieldAndPotential(*it, P);
+    for (auto* it : *source) {
+        fieldAndPotential = ElectricFieldAndPotential(it, P);
         electricField += fieldAndPotential.first;
         potential += fieldAndPotential.second;
     }

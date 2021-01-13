@@ -29,17 +29,17 @@ template<> inline bool KSComponentBuilder::Begin()
 template<> inline bool KSComponentBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
     if (aContainer->GetName() == "parent") {
-        std::string tParent = aContainer->AsReference<std::string>();
+        std::string tParent = aContainer->AsString();
         fObject->fParentName = tParent;
         return true;
     }
     if (aContainer->GetName() == "field") {
-        std::string tField = aContainer->AsReference<std::string>();
+        std::string tField = aContainer->AsString();
         fObject->fFieldName = tField;
         return true;
     }

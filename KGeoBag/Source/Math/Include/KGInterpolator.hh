@@ -11,10 +11,10 @@ class KGInterpolator
 {
   public:
     typedef KGDataPoint<1> DataPoint;
-    typedef std::vector<DataPoint> DataSet;
+    using DataSet = std::vector<DataPoint>;
 
-    KGInterpolator() {}
-    virtual ~KGInterpolator() {}
+    KGInterpolator() = default;
+    virtual ~KGInterpolator() = default;
 
     void Initialize(std::vector<double>&, std::vector<double>&);
 
