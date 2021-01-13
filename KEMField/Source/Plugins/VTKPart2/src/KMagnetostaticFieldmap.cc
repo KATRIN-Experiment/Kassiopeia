@@ -43,6 +43,7 @@ KMagfieldMapVTK::~KMagfieldMapVTK() {}
 bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of closest mesh point
     vtkIdType center = fImageData->FindPoint((double*) (aSamplePoint.Components()));
@@ -90,6 +91,7 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPo
                                                   double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[8][3] = {
@@ -156,6 +158,7 @@ bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPos
                                                  double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[64][3] = {
