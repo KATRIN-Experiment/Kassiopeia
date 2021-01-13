@@ -1,6 +1,4 @@
-<!-- Note that this file uses Markdown syntax for display, so please avoid any special characters. -->
-
-# Kasper Changelog
+# Kassiopeia Changelog
 
 <!--
 Please update the version info when a new Kasper release is published.
@@ -10,25 +8,14 @@ When bumping a module version, also provide a date to indicate the last update.
 
 ## Current version
 
-The current Kasper version is v3.7 released on May 1, 2020.
-The latest update v3.7.4 was released on June 19, 2020 (Juneteenth).
+The current Kassiopeia version is v3.7 released on May 1, 2020.
+The latest update v3.7.7 was released on January 13, 2021.
 
 Module versions:
-* **Desaster**         1.0.0 (Feb 19, 2018)
-* **Idle**             1.0.0 (Feb 19, 2018)
-* **KaFit**            2.4.0 (Apr 30, 2020)
-* **KaLi**             2.4.5 (Nov 30, 2020)
-* **Kassiopeia**       3.7.5 (Nov 30, 2020)
-* **Kebap**            1.0.0 (Dec  4, 2014)
-* **KELoss**           0.1.0 (Jan 13, 2017)
-* **KEMField**         3.7.5 (Nov 30, 2020)
-* **KGeoBag**          3.7.5 (Nov 30, 2020)
-* **Kommon**           1.4.1 (Nov 30, 2020)
-* **KSC**              0.5.5 (Nov 30, 2020)
-* **KTrAP**            1.0.0 (Mar 17, 2015)
-* **SSC**              2.4.0 (Apr 30, 2020)
-* **Tabree**           1.0.0 (Jul  9, 2012)
-* **Peaberry**         0.4.2 (Apr 30, 2020)
+* **Kassiopeia**       3.7.5 (Jan 13, 2021)
+* **KEMField**         3.7.5 (Jan 13, 2021)
+* **KGeoBag**          3.7.5 (Jan 13, 2021)
+* **Kommon**           1.4.1 (Jan 13, 2021)
 * **UnitTest**         0.2.5 (Nov 30, 2020)
 
 

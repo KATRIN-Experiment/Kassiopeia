@@ -1,4 +1,5 @@
 # Kassiopeia
+
 This Simulation package allows to run highly customizable particle tracking simulations
 along with calculations of electric and magnetic fields.
 
