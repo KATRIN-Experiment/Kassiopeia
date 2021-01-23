@@ -17,6 +17,12 @@ namespace Kassiopeia
 KSROOTTrackPainter::KSROOTTrackPainter() :
     fPath(""),
     fBase(""),
+    fPlaneNormal(0.0, 1.0, 0.0),
+    fPlanePoint(0.0, 0.0, 0.0),
+    fSwapAxis(false),
+    fPlaneVectorA(0.0, 0.0, 1.0),
+    fPlaneVectorB(1.0, 0.0, 0.0),
+    fEpsilon(1.0e-10),
     fXAxis("z"),
     fYAxis("y"),
     fStepOutputGroupName("output_step_world"),
