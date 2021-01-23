@@ -35,6 +35,13 @@ class KSROOTTrackPainter : public katrin::KROOTPainter
     std::string GetXAxisLabel() override;
     std::string GetYAxisLabel() override;
 
+  private:
+    std::string GetAxisLabel(KThreeVector anAxis);
+
+  public:
+    void CalculatePlaneCoordinateSystem();
+    void TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint);
+
     void AddBaseColor(TColor aColor, double aFraction);
 
     typedef enum  // NOLINT(modernize-use-using)

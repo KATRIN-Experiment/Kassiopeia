@@ -40,8 +40,225 @@ KSROOTTrackPainter::KSROOTTrackPainter() :
 {}
 KSROOTTrackPainter::~KSROOTTrackPainter() = default;
 
+std::string KSROOTTrackPainter::GetAxisLabel(KThreeVector anAxis)
+{
+    if (anAxis.Y() < fEpsilon && anAxis.Y() > -fEpsilon && anAxis.Z() < fEpsilon && anAxis.Z() > -fEpsilon) {
+        if (anAxis.X() < 1.0 + fEpsilon && anAxis.X() > 1.0 - fEpsilon) {
+            return string("x");
+        }
+        if (anAxis.X() < -1.0 + fEpsilon && anAxis.X() > -1.0 - fEpsilon) {
+            return string("-x");
+        }
+    }
+
+    if (anAxis.X() < fEpsilon && anAxis.X() > -fEpsilon && anAxis.Z() < fEpsilon && anAxis.Z() > -fEpsilon) {
+        if (anAxis.Y() < 1.0 + fEpsilon && anAxis.Y() > 1.0 - fEpsilon) {
+            return string("y");
+        }
+        if (anAxis.Y() < -1.0 + fEpsilon && anAxis.Y() > -1.0 - fEpsilon) {
+            return string("-y");
+        }
+    }
+
+    if (anAxis.X() < fEpsilon && anAxis.X() > -fEpsilon && anAxis.Y() < fEpsilon && anAxis.Y() > -fEpsilon) {
+        if (anAxis.Z() < 1.0 + fEpsilon && anAxis.Z() > 1.0 - fEpsilon) {
+            return string("z");
+        }
+        if (anAxis.Z() < -1.0 + fEpsilon && anAxis.Z() > -1.0 - fEpsilon) {
+            return string("-z");
+        }
+    }
+
+    string tLabel;
+    std::stringstream ss;
+    ss << anAxis.X();
+    tLabel += ss.str();
+    tLabel += string("/");
+    ss.str("");
+    ss << anAxis.Y();
+    tLabel += ss.str();
+    tLabel += string("/");
+    ss.str("");
+    ss << anAxis.Z();
+    tLabel += ss.str();
+    return tLabel;
+}
+
+void KSROOTTrackPainter::CalculatePlaneCoordinateSystem()
+{
+    fPlaneNormal = fPlaneNormal.Unit();
+    double tDirectionMagX = fabs(fPlaneNormal.X());
+    double tDirectionMagY = fabs(fPlaneNormal.Y());
+    double tDirectionMagZ = fabs(fPlaneNormal.Z());
+
+    //plane normal looks in x direction
+    if (tDirectionMagX >= tDirectionMagY && tDirectionMagX >= tDirectionMagZ) {
+        fPlaneVectorA.SetX(0.0);
+        fPlaneVectorA.SetY(1.0);
+        fPlaneVectorA.SetZ(0.0);
+
+        if (fPlaneNormal.X() > fEpsilon || fPlaneNormal.X() < -1. * fEpsilon) {
+            fPlaneVectorA.SetX(-1.0 * fPlaneNormal.Y() / fPlaneNormal.X());
+        }
+
+        fPlaneVectorB.SetX(fPlaneNormal.Y() * fPlaneVectorA.Z() - fPlaneNormal.Z() * fPlaneVectorA.Y());
+        fPlaneVectorB.SetY(fPlaneNormal.Z() * fPlaneVectorA.X() - fPlaneNormal.X() * fPlaneVectorA.Z());
+        fPlaneVectorB.SetZ(fPlaneNormal.X() * fPlaneVectorA.Y() - fPlaneNormal.Y() * fPlaneVectorA.X());
+
+        fPlaneVectorA = fPlaneVectorA.Unit();
+        fPlaneVectorB = fPlaneVectorB.Unit();
+
+        if (fSwapAxis) {
+            swap(fPlaneVectorA, fPlaneVectorB);
+        }
+        vismsg(eInfo) << "Plane vectors are: " << fPlaneVectorA << " and " << fPlaneVectorB << eom;
+
+        if (fPlaneVectorA.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorA.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector A and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        if (fPlaneVectorB.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorB.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector B and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        return;
+    }
+
+    //plane normal looks in y direction
+    if (tDirectionMagY >= tDirectionMagX && tDirectionMagY >= tDirectionMagZ) {
+        fPlaneVectorA.SetX(0.0);
+        fPlaneVectorA.SetY(0.0);
+        fPlaneVectorA.SetZ(1.0);
+
+        if (fPlaneNormal.Y() > fEpsilon || fPlaneNormal.Y() < -1. * fEpsilon) {
+            fPlaneVectorA.SetY(-1.0 * fPlaneNormal.Z() / fPlaneNormal.Y());
+        }
+
+        fPlaneVectorB.SetX(fPlaneNormal.Y() * fPlaneVectorA.Z() - fPlaneNormal.Z() * fPlaneVectorA.Y());
+        fPlaneVectorB.SetY(fPlaneNormal.Z() * fPlaneVectorA.X() - fPlaneNormal.X() * fPlaneVectorA.Z());
+        fPlaneVectorB.SetZ(fPlaneNormal.X() * fPlaneVectorA.Y() - fPlaneNormal.Y() * fPlaneVectorA.X());
+
+        fPlaneVectorA = fPlaneVectorA.Unit();
+        fPlaneVectorB = fPlaneVectorB.Unit();
+
+        if (fSwapAxis) {
+            swap(fPlaneVectorA, fPlaneVectorB);
+        }
+        vismsg(eInfo) << "Plane vectors are: " << fPlaneVectorA << " and " << fPlaneVectorB << eom;
+
+        if (fPlaneVectorA.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorA.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector A and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        if (fPlaneVectorB.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorB.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector B and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        return;
+    }
+
+    //plane normal looks in z direction
+    if (tDirectionMagZ >= tDirectionMagX && tDirectionMagZ >= tDirectionMagY) {
+        fPlaneVectorA.SetX(1.0);
+        fPlaneVectorA.SetY(0.0);
+        fPlaneVectorA.SetZ(0.0);
+
+        if (fPlaneNormal.Z() > fEpsilon || fPlaneNormal.Z() < -1. * fEpsilon) {
+            fPlaneVectorA.SetZ(-1.0 * fPlaneNormal.X() / fPlaneNormal.Z());
+        }
+
+        fPlaneVectorB.SetX(fPlaneNormal.Y() * fPlaneVectorA.Z() - fPlaneNormal.Z() * fPlaneVectorA.Y());
+        fPlaneVectorB.SetY(fPlaneNormal.Z() * fPlaneVectorA.X() - fPlaneNormal.X() * fPlaneVectorA.Z());
+        fPlaneVectorB.SetZ(fPlaneNormal.X() * fPlaneVectorA.Y() - fPlaneNormal.Y() * fPlaneVectorA.X());
+
+        fPlaneVectorA = fPlaneVectorA.Unit();
+        fPlaneVectorB = fPlaneVectorB.Unit();
+
+        if (fSwapAxis) {
+            swap(fPlaneVectorA, fPlaneVectorB);
+        }
+        vismsg(eInfo) << "Plane vectors are: " << fPlaneVectorA << " and " << fPlaneVectorB << eom;
+
+        if (fPlaneVectorA.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorA.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector A and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        if (fPlaneVectorB.Dot(fPlaneNormal) > fEpsilon || fPlaneVectorB.Dot(fPlaneNormal) < -1. * fEpsilon) {
+            vismsg(eWarning) << "Scalar product of PlaneVector B and NormalVector is "
+                             << fPlaneVectorA.Dot(fPlaneNormal) << eom;
+        }
+        return;
+    }
+}
+
+void KSROOTTrackPainter::TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint)
+{
+    //solve aPoint = fPlanePoint + alpha * fPlaneA + beta * fPlaneB for alpha and beta
+    double tAlpha, tBeta;
+
+    if ((fPlaneVectorA.X() * fPlaneVectorB.Y() - fPlaneVectorA.Y() * fPlaneVectorB.X()) != 0.0) {
+        tAlpha = ((aPoint.X() - fPlanePoint.X()) * fPlaneVectorB.Y() -
+                  (aPoint.Y() - fPlanePoint.Y()) * fPlaneVectorB.X()) /
+                 (fPlaneVectorA.X() * fPlaneVectorB.Y() - fPlaneVectorA.Y() * fPlaneVectorB.X());
+
+        if (fPlaneVectorB.Y() != 0) {
+            //tBeta = (aPoint.Y() - fPlanePoint.Y() - tAlpha * fPlaneVectorA.Y()) / fPlaneVectorB.Y();
+            tBeta = (aPoint.X() - fPlanePoint.X() - tAlpha * fPlaneVectorA.X()) * fPlaneVectorB.X() +
+                    (aPoint.Y() - fPlanePoint.Y() - tAlpha * fPlaneVectorA.Y()) * fPlaneVectorB.Y() +
+                    (aPoint.Z() - fPlanePoint.Z() - tAlpha * fPlaneVectorA.Z()) * fPlaneVectorB.Z();
+        }
+        else {
+            tBeta = (aPoint.X() - fPlanePoint.X() - tAlpha * fPlaneVectorA.X()) / fPlaneVectorB.X();
+        }
+
+        aPlanePoint.SetComponents(tAlpha, tBeta);
+        vismsg(eInfo) << "Converting " << aPoint << " to " << aPlanePoint << eom;
+        return;
+    }
+
+    if ((fPlaneVectorA.Y() * fPlaneVectorB.Z() - fPlaneVectorA.Z() * fPlaneVectorB.Y()) != 0.0) {
+        tAlpha = ((aPoint.Y() - fPlanePoint.Y()) * fPlaneVectorB.Z() - aPoint.Z() * fPlaneVectorB.Y() +
+                  fPlanePoint.Z() * fPlaneVectorB.Y()) /
+                 (fPlaneVectorA.Y() * fPlaneVectorB.Z() - fPlaneVectorA.Z() * fPlaneVectorB.Y());
+
+        if (fPlaneVectorB.Z() != 0) {
+            tBeta = (aPoint.Z() - fPlanePoint.Z() - tAlpha * fPlaneVectorA.Z()) / fPlaneVectorB.Z();
+        }
+        else {
+            tBeta = (aPoint.Y() - fPlanePoint.Y() - tAlpha * fPlaneVectorA.Y()) / fPlaneVectorB.Y();
+        }
+
+        aPlanePoint.SetComponents(tAlpha, tBeta);
+        vismsg(eInfo) << "Converting " << aPoint << " to " << aPlanePoint << eom;
+        return;
+    }
+
+    if ((fPlaneVectorA.X() * fPlaneVectorB.Z() - fPlaneVectorA.Z() * fPlaneVectorB.X()) != 0.0) {
+        tAlpha = ((aPoint.X() - fPlanePoint.X()) * fPlaneVectorB.Z() - aPoint.Z() * fPlaneVectorB.X() +
+                  fPlanePoint.Z() * fPlaneVectorB.X()) /
+                 (fPlaneVectorA.X() * fPlaneVectorB.Z() - fPlaneVectorA.Z() * fPlaneVectorB.X());
+
+        if (fPlaneVectorB.Z() != 0) {
+            tBeta = (aPoint.Z() - fPlanePoint.Z() - tAlpha * fPlaneVectorA.Z()) / fPlaneVectorB.Z();
+        }
+        else {
+            tBeta = (aPoint.X() - fPlanePoint.X() - tAlpha * fPlaneVectorA.X()) / fPlaneVectorB.X();
+        }
+
+        aPlanePoint.SetComponents(tAlpha, tBeta);
+        vismsg(eInfo) << "Converting " << aPoint << " to " << aPlanePoint << eom;
+        return;
+    }
+
+    vismsg(eWarning) << "this should never be called - problem in TransformToPlaneSystem function" << eom;
+    return;
+}
+
+
 void KSROOTTrackPainter::Render()
 {
+    CalculatePlaneCoordinateSystem();
+
     fMultigraph = new TMultiGraph();
 
     KRootFile* tRootFile = KRootFile::CreateOutputRootFile(fBase);
@@ -106,6 +323,16 @@ void KSROOTTrackPainter::Render()
                             if (fXAxis == string("z") || fXAxis == string("Z")) {
                                 tXValue = tPosition.Value().Z();
                             }
+                            if (fXAxis == string("a") || fXAxis == string("A")) {
+                                KTwoVector tPlanePoint;
+                                TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                                tXValue = tPlanePoint.X();
+                            }
+                            if (fXAxis == string("b") || fXAxis == string("B")) {
+                                KTwoVector tPlanePoint;
+                                TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                                tXValue = tPlanePoint.Y();
+                            }
                             double tYValue = 0.;
                             if (fYAxis == string("x") || fYAxis == string("X")) {
                                 tYValue = tPosition.Value().X();
@@ -118,6 +345,16 @@ void KSROOTTrackPainter::Render()
                             }
                             if (fYAxis == string("r") || fYAxis == string("R")) {
                                 tYValue = tPosition.Value().Perp();
+                            }
+                            if (fYAxis == string("a") || fYAxis == string("A")) {
+                                KTwoVector tPlanePoint;
+                                TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                                tYValue = tPlanePoint.X();
+                            }
+                            if (fYAxis == string("b") || fYAxis == string("B")) {
+                                KTwoVector tPlanePoint;
+                                TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                                tYValue = tPlanePoint.Y();
                             }
 
                             if (fColorMode == eColorStep) {
@@ -182,7 +419,6 @@ void KSROOTTrackPainter::Render()
                         myGraph->SetMarkerColor(*tColorIterator);
                         tColorIterator++;
                     }
-
                     double tXValue = 0.;
                     if (fXAxis == string("x") || fXAxis == string("X")) {
                         tXValue = tPosition.Value().X();
@@ -192,6 +428,16 @@ void KSROOTTrackPainter::Render()
                     }
                     if (fXAxis == string("z") || fXAxis == string("Z")) {
                         tXValue = tPosition.Value().Z();
+                    }
+                    if (fXAxis == string("a") || fXAxis == string("A")) {
+                        KTwoVector tPlanePoint;
+                        TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                        tXValue = tPlanePoint.X();
+                    }
+                    if (fXAxis == string("b") || fXAxis == string("B")) {
+                        KTwoVector tPlanePoint;
+                        TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                        tXValue = tPlanePoint.Y();
                     }
                     double tYValue = 0.;
                     if (fYAxis == string("x") || fYAxis == string("X")) {
@@ -205,6 +451,16 @@ void KSROOTTrackPainter::Render()
                     }
                     if (fYAxis == string("r") || fYAxis == string("R")) {
                         tYValue = tPosition.Value().Perp();
+                    }
+                    if (fYAxis == string("a") || fYAxis == string("A")) {
+                        KTwoVector tPlanePoint;
+                        TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                        tYValue = tPlanePoint.X();
+                    }
+                    if (fYAxis == string("b") || fYAxis == string("B")) {
+                        KTwoVector tPlanePoint;
+                        TransformToPlaneSystem(tPosition.Value(), tPlanePoint);
+                        tYValue = tPlanePoint.Y();
                     }
 
                     myGraph->SetPoint(myGraph->GetN(), tXValue, tYValue);
