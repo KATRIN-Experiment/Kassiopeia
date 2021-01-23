@@ -31,9 +31,9 @@ KGElectromagnetConverter::~KGElectromagnetConverter()
         fMagfield3File->Close();
 }
 
-void KGElectromagnetConverter::SetDumpMagfield3ToFile(const std::string& aFileName)
+void KGElectromagnetConverter::SetDumpMagfield3ToFile(const std::string& aDirectory, const std::string& aFileName)
 {
-    fMagfield3File = katrin::KTextFile::CreateOutputTextFile(aFileName);
+    fMagfield3File = katrin::KTextFile::CreateOutputTextFile(aDirectory, aFileName);
     if (!fMagfield3File)
         return;
 

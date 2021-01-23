@@ -33,7 +33,7 @@ class KGElectromagnetConverter :
         return;
     }
 
-    void SetDumpMagfield3ToFile(const std::string& aFileName);
+    void SetDumpMagfield3ToFile(const std::string& aDirectory, const std::string& aFileName);
 
   protected:
     KEMField::KElectromagnetContainer* fElectromagnetContainer;

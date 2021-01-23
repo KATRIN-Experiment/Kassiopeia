@@ -81,7 +81,7 @@ void KGStaticElectromagnetField::ConfigureSurfaceContainer()
 
     if (fSaveMagfield3) {
         string tFileName = GetName() + string(".mag3");
-        GetConverter()->SetDumpMagfield3ToFile(tFileName);
+        GetConverter()->SetDumpMagfield3ToFile(GetDirectory(), tFileName);
     }
 
     if (fSystem != nullptr) {
