@@ -146,7 +146,7 @@ class KMagfieldMapVTK
     virtual ~KMagfieldMapVTK();
 
   protected:
-    virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+    virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue, bool gradient = false) const;
 
   public:
     virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
@@ -163,7 +163,12 @@ class KLinearInterpolationMagfieldMapVTK : public KMagfieldMapVTK
     ~KLinearInterpolationMagfieldMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue, bool gradient = false) const override;
+
+  protected:
+    static double _linearInterpolate(double p[], int d[], double x);
+    static double _bilinearInterpolate(double p[], int d[], double x, double y);
+    static double _trilinearInterpolate(double p[], int d[], double x, double y, double z);
 };
 
 class KCubicInterpolationMagfieldMapVTK : public KMagfieldMapVTK
@@ -173,12 +178,12 @@ class KCubicInterpolationMagfieldMapVTK : public KMagfieldMapVTK
     ~KCubicInterpolationMagfieldMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue, bool gradient = false) const override;
 
   protected:
-    static double _cubicInterpolate(double p[], double x);
-    static double _bicubicInterpolate(double p[], double x, double y);
-    static double _tricubicInterpolate(double p[], double x, double y, double z);
+    static double _cubicInterpolate(double p[], int d[], double x);
+    static double _bicubicInterpolate(double p[], int d[], double x, double y);
+    static double _tricubicInterpolate(double p[], int d[], double x, double y, double z);
 };
 
 ////////////////////////////////////////////////////////////////////
