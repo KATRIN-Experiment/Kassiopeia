@@ -8,7 +8,7 @@ env:
 
 jobs:
   build:
-    runs-on: fedora:31
+    runs-on: fedora:latest
 
     steps:
     - uses: actions/checkout@v2
