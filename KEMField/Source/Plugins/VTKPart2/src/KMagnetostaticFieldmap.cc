@@ -151,7 +151,6 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPo
         double c = c0 * (1 - zd) + c1 * zd;
 
         aValue[k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd);
-        cout << "direct - convolution = " << (aValue[k] - c) << endl;
     }
 
     return true;
