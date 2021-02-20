@@ -22,6 +22,8 @@ class KMagneticSuperpositionField : public KMagneticField
     KMagneticSuperpositionField();
     ~KMagneticSuperpositionField() override;
 
+    bool CheckCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+
     KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
     KFieldVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;

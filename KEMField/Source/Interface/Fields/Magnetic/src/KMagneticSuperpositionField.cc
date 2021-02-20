@@ -22,9 +22,36 @@ KMagneticSuperpositionField::KMagneticSuperpositionField() : fUseCaching(false),
 
 KMagneticSuperpositionField::~KMagneticSuperpositionField() = default;
 
+bool KMagneticSuperpositionField::CheckCore(const KPosition& aSamplePoint,
+                                            const double& aSampleTime) const
+{
+    bool check_all = true;
+    bool check_any = false;
+    bool check_one = false;
+    for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) {
+            check_all = false;
+            continue;
+        }
+        check_one = ! check_one && ! check_any;
+        check_any = true;
+    }
+    if (fRequireAll && ! check_all)
+        kem_cout(eWarning) << "MagneticSuperpositionField: at least one field not available at point <"
+                           << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
+    if (fRequireAny && ! check_any)
+        kem_cout(eWarning) << "MagneticSuperpositionField: not any fields available at point <"
+                           << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
+    if (fRequireOne && ! check_one)
+        kem_cout(eWarning) << "MagneticSuperpositionField: not exactly one field available at point <"
+                           << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
+    return (fRequireAll && check_all) || (fRequireAny && check_any) || (fRequireOne && check_one);
+}
+
 KFieldVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition& aSamplePoint,
                                                                 const double& aSampleTime) const
 {
+    CheckCore(aSamplePoint, aSampleTime);
     CheckAndPrintCachingDisabledWarning();
     if (fUseCaching && !fCachingBlock)
         return CalculateCachedPotential(aSamplePoint, aSampleTime);
@@ -35,6 +62,7 @@ KFieldVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition&
 KFieldVector KMagneticSuperpositionField::MagneticFieldCore(const KPosition& aSamplePoint,
                                                             const double& aSampleTime) const
 {
+    CheckCore(aSamplePoint, aSampleTime);
     CheckAndPrintCachingDisabledWarning();
     if (fUseCaching && !fCachingBlock)
         return CalculateCachedField(aSamplePoint, aSampleTime);
@@ -45,6 +73,7 @@ KFieldVector KMagneticSuperpositionField::MagneticFieldCore(const KPosition& aSa
 KGradient KMagneticSuperpositionField::MagneticGradientCore(const KPosition& aSamplePoint,
                                                             const double& aSampleTime) const
 {
+    CheckCore(aSamplePoint, aSampleTime);
     CheckAndPrintCachingDisabledWarning();
     if (fUseCaching && !fCachingBlock)
         return CalculateCachedGradient(aSamplePoint, aSampleTime);
@@ -92,26 +121,12 @@ KFieldVector KMagneticSuperpositionField::CalculateCachedField(const KPosition& 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
     vector<KFieldVector> tFields;
     KFieldVector tCurrentField;
-    bool check_all = true;
-    bool check_any = false;
-    bool check_one = false;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
-        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) {
-            check_all = false;
-            continue;
-        }
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) continue;
         tCurrentField = fMagneticFields.at(tIndex)->MagneticField(aSamplePoint, aSampleTime);
         aField += tCurrentField * fEnhancements.at(tIndex);
         tFields.push_back(tCurrentField);
-        check_one = ! check_one && ! check_any;
-        check_any = true;
     }
-    if (fRequireAll && ! check_all)
-        kem_cout(eWarning) << "MagneticField not available: at least one field not available at point" << eom;
-    if (fRequireAny && ! check_any)
-        kem_cout(eWarning) << "MagneticField not available: not any fields available at point" << eom;
-    if (fRequireOne && ! check_one)
-        kem_cout(eWarning) << "MagneticField not available: not exactly one field available at point" << eom;
     fFieldCache.insert(make_pair(aSamplePoint, tFields));
     return aField;
 }
@@ -132,26 +147,12 @@ KGradient KMagneticSuperpositionField::CalculateCachedGradient(const KPosition& 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
     vector<KGradient> tGradients;
     KGradient tCurrentGradient;
-    bool check_all = true;
-    bool check_any = false;
-    bool check_one = false;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
-        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) {
-            check_all = false;
-            continue;
-        }
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) continue;
         tCurrentGradient = fMagneticFields.at(tIndex)->MagneticGradient(aSamplePoint, aSampleTime);
         aGradient += tCurrentGradient * fEnhancements.at(tIndex);
         tGradients.push_back(tCurrentGradient);
-        check_one = ! check_one && ! check_any;
-        check_any = true;
     }
-    if (fRequireAll && ! check_all)
-        kem_cout(eWarning) << "MagneticField not available: at least one field not available at point" << eom;
-    if (fRequireAny && ! check_any)
-        kem_cout(eWarning) << "MagneticField not available: not any fields available at point" << eom;
-    if (fRequireOne && ! check_one)
-        kem_cout(eWarning) << "MagneticField not available: not exactly one field available at point" << eom;
     fGradientCache.insert(make_pair(aSamplePoint, tGradients));
     return aGradient;
 }
@@ -203,6 +204,7 @@ KFieldVector KMagneticSuperpositionField::CalculateDirectField(const KPosition& 
 {
     KFieldVector field(KFieldVector::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) continue;
         field += fEnhancements.at(tIndex) * fMagneticFields.at(tIndex)->MagneticField(aSamplePoint, aSampleTime);
     }
     return field;
@@ -213,6 +215,7 @@ KGradient KMagneticSuperpositionField::CalculateDirectGradient(const KPosition& 
 {
     KGradient gradient(KGradient::sZero);
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) continue;
         gradient += fEnhancements.at(tIndex) * fMagneticFields.at(tIndex)->MagneticGradient(aSamplePoint, aSampleTime);
     }
     return gradient;
