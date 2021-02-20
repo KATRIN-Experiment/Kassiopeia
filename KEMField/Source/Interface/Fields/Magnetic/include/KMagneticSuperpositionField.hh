@@ -36,6 +36,16 @@ class KMagneticSuperpositionField : public KMagneticField
         fUseCaching = useCaching;
     }
 
+    void SetRequire(const std::string& require)
+    {
+        if (require == "all") fRequireAll = true;
+        else fRequireAll = false;
+        if (require == "one") fRequireOne = true;
+        else fRequireOne = false;
+        if (require == "any") fRequireAny = true;
+        else fRequireAny = false;
+    }
+
   private:
     void InitializeCore() override;
 
@@ -55,6 +65,9 @@ class KMagneticSuperpositionField : public KMagneticField
 
     bool fUseCaching;
     bool fCachingBlock;
+    bool fRequireAll;
+    bool fRequireOne;
+    bool fRequireAny;
     mutable std::map<KPosition, std::vector<KFieldVector>> fPotentialCache;
     mutable std::map<KPosition, std::vector<KFieldVector>> fFieldCache;
     mutable std::map<KPosition, std::vector<KGradient>> fGradientCache;

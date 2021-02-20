@@ -146,9 +146,12 @@ class KMagfieldMapVTK
     virtual ~KMagfieldMapVTK();
 
   protected:
+    virtual bool CheckValue(const std::string& array, const KPosition& aSamplePoint) const;
     virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
 
   public:
+    virtual bool CheckField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    virtual bool CheckGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
     virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
     virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient) const;
 
@@ -198,6 +201,7 @@ class KMagnetostaticFieldmap : public KMagnetostaticField
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
     KFieldVector MagneticFieldCore(const KPosition& P) const override;
     KGradient MagneticGradientCore(const KPosition& P) const override;
+    bool CheckCore(const KPosition& P) const;
     void InitializeCore() override;
 
   private:

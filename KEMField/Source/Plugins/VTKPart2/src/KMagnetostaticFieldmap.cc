@@ -42,6 +42,19 @@ KMagfieldMapVTK::KMagfieldMapVTK(const string& aFilename)
 
 KMagfieldMapVTK::~KMagfieldMapVTK() = default;
 
+bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePoint) const
+{
+    vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
+
+    // get coordinates of closest mesh point
+    vtkIdType center = fImageData->FindPoint((double*) (aSamplePoint.Components()));
+    if (center < 0)
+        return false;
+    else
+        return true;
+}
+
 bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
@@ -58,6 +71,11 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
     return true;
 }
 
+bool KMagfieldMapVTK::CheckField(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic field", aSamplePoint);
+}
+
 bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/, KFieldVector& aField) const
 {
     //fieldmsg_debug( "sampling magnetic field at point " << aSamplePoint << eom);
@@ -68,6 +86,11 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
         return true;
     }
     return false;
+}
+
+bool KMagfieldMapVTK::CheckGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic gradient", aSamplePoint);
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
@@ -367,6 +390,12 @@ void KMagnetostaticFieldmap::SetInterpolation(const string& aMode)
     else
         fInterpolation = -1;
     return;
+}
+
+bool KMagnetostaticFieldmap::CheckCore(const KPosition& P) const
+{
+    double aRandomTime = 0;
+    return fFieldMap->CheckField(P, aRandomTime) && fFieldMap->CheckGradient(P, aRandomTime);
 }
 
 void KMagnetostaticFieldmap::InitializeCore()

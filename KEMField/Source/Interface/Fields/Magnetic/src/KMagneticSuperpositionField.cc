@@ -15,7 +15,10 @@ using namespace std;
 namespace KEMField
 {
 
-KMagneticSuperpositionField::KMagneticSuperpositionField() : fUseCaching(false), fCachingBlock(false) {}
+KMagneticSuperpositionField::KMagneticSuperpositionField() : fUseCaching(false), fCachingBlock(false)
+{
+  SetRequire("all");
+}
 
 KMagneticSuperpositionField::~KMagneticSuperpositionField() = default;
 
@@ -89,11 +92,26 @@ KFieldVector KMagneticSuperpositionField::CalculateCachedField(const KPosition& 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
     vector<KFieldVector> tFields;
     KFieldVector tCurrentField;
+    bool check_all = true;
+    bool check_any = false;
+    bool check_one = false;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) {
+            check_all = false;
+            continue;
+        }
         tCurrentField = fMagneticFields.at(tIndex)->MagneticField(aSamplePoint, aSampleTime);
         aField += tCurrentField * fEnhancements.at(tIndex);
         tFields.push_back(tCurrentField);
+        check_one = ! check_one && ! check_any;
+        check_any = true;
     }
+    if (fRequireAll && ! check_all)
+        kem_cout(eWarning) << "MagneticField not available: at least one field not available at point" << eom;
+    if (fRequireAny && ! check_any)
+        kem_cout(eWarning) << "MagneticField not available: not any fields available at point" << eom;
+    if (fRequireOne && ! check_one)
+        kem_cout(eWarning) << "MagneticField not available: not exactly one field available at point" << eom;
     fFieldCache.insert(make_pair(aSamplePoint, tFields));
     return aField;
 }
@@ -114,11 +132,26 @@ KGradient KMagneticSuperpositionField::CalculateCachedGradient(const KPosition& 
     //Calculating Fields without Enhancement for aSamplePoint and insert it into the cache
     vector<KGradient> tGradients;
     KGradient tCurrentGradient;
+    bool check_all = true;
+    bool check_any = false;
+    bool check_one = false;
     for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
+        if (! fMagneticFields.at(tIndex)->Check(aSamplePoint, aSampleTime)) {
+            check_all = false;
+            continue;
+        }
         tCurrentGradient = fMagneticFields.at(tIndex)->MagneticGradient(aSamplePoint, aSampleTime);
         aGradient += tCurrentGradient * fEnhancements.at(tIndex);
         tGradients.push_back(tCurrentGradient);
+        check_one = ! check_one && ! check_any;
+        check_any = true;
     }
+    if (fRequireAll && ! check_all)
+        kem_cout(eWarning) << "MagneticField not available: at least one field not available at point" << eom;
+    if (fRequireAny && ! check_any)
+        kem_cout(eWarning) << "MagneticField not available: not any fields available at point" << eom;
+    if (fRequireOne && ! check_one)
+        kem_cout(eWarning) << "MagneticField not available: not exactly one field available at point" << eom;
     fGradientCache.insert(make_pair(aSamplePoint, tGradients));
     return aGradient;
 }
