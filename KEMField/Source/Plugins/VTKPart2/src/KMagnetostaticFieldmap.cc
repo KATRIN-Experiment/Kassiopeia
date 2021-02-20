@@ -47,12 +47,17 @@ bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePo
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
 
-    // get coordinates of closest mesh point
-    vtkIdType center = fImageData->FindPoint((double*) (aSamplePoint.Components()));
-    if (center < 0)
+    // get bounds of data set (FindPoint returns nearest point even outside bounds)
+    double bounds[6];
+    fImageData->GetBounds(bounds);
+    if (aSamplePoint.X() < bounds[0] || aSamplePoint.X() > bounds[1])
         return false;
-    else
-        return true;
+    if (aSamplePoint.Y() < bounds[2] || aSamplePoint.Y() > bounds[3])
+        return false;
+    if (aSamplePoint.Z() < bounds[4] || aSamplePoint.Z() > bounds[5])
+        return false;
+
+    return true;
 }
 
 bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
