@@ -42,6 +42,10 @@ template<> inline bool KMagnetostaticFieldmapBuilder::AddAttribute(KContainer* a
         aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmap::SetInterpolation);
         return true;
     }
+    if (aContainer->GetName() == "magnetic_gradient_numerical") {
+        aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmap::SetGradNumerical);
+        return true;
+    }
     return false;
 }
 

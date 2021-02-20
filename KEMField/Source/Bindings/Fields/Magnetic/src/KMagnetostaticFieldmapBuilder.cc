@@ -21,7 +21,8 @@ template<> KMagnetostaticFieldmapBuilder::~KComplexElement() = default;
 STATICINT sKMagnetostaticFieldmapStructure = KMagnetostaticFieldmapBuilder::Attribute<std::string>("name") +
                                              KMagnetostaticFieldmapBuilder::Attribute<std::string>("directory") +
                                              KMagnetostaticFieldmapBuilder::Attribute<std::string>("file") +
-                                             KMagnetostaticFieldmapBuilder::Attribute<std::string>("interpolation");
+                                             KMagnetostaticFieldmapBuilder::Attribute<std::string>("interpolation") +
+                                             KMagnetostaticFieldmapBuilder::Attribute<bool>("magnetic_gradient_numerical");
 
 STATICINT sKMagnetostaticFieldmap = KEMToolboxBuilder::ComplexElement<KMagnetostaticFieldmap>("magnetic_fieldmap");
 

@@ -334,6 +334,7 @@ double KCubicInterpolationMagfieldMapVTK::_tricubicInterpolate(double p[], doubl
 KMagnetostaticFieldmap::KMagnetostaticFieldmap() :
     fDirectory(SCRATCH_DEFAULT_DIR),
     fInterpolation(0),
+    fGradNumerical(false),
     fFieldMap(nullptr)
 {}
 
@@ -392,10 +393,16 @@ void KMagnetostaticFieldmap::SetInterpolation(const string& aMode)
     return;
 }
 
+void KMagnetostaticFieldmap::SetGradNumerical(bool aFlag)
+{
+    fGradNumerical = aFlag;
+}
+
 bool KMagnetostaticFieldmap::CheckCore(const KPosition& P) const
 {
     double aRandomTime = 0;
-    return fFieldMap->CheckField(P, aRandomTime) && fFieldMap->CheckGradient(P, aRandomTime);
+    return fFieldMap->CheckField(P, aRandomTime) &&
+          (fFieldMap->CheckGradient(P, aRandomTime) || fGradNumerical);
 }
 
 void KMagnetostaticFieldmap::InitializeCore()
