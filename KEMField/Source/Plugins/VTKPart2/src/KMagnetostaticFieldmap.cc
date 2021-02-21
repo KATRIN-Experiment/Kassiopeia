@@ -77,11 +77,12 @@ bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /
     //fieldmsg_debug( "sampling magnetic gradient at point " << aSamplePoint << eom);
 
     double value[9];
-    if (GetValue("magnetic gradient", aSamplePoint, value)) {
-        aGradient.SetComponents(value);
-        return true;
-    }
-    if (GetValue("magnetic field", aSamplePoint, value, true)) {
+    bool success = false;
+    if (grad_numerical)
+        success = GetValue("magnetic field", aSamplePoint, value, true);
+    else
+        success = GetValue("magnetic gradient", aSamplePoint, value);
+    if (success) {
         aGradient.SetComponents(value);
         return true;
     }
