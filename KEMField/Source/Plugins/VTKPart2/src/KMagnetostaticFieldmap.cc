@@ -95,7 +95,7 @@ KLinearInterpolationMagfieldMapVTK::KLinearInterpolationMagfieldMapVTK(const str
 KLinearInterpolationMagfieldMapVTK::~KLinearInterpolationMagfieldMapVTK() = default;
 
 bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
-                                                  double* aValue, bool /* gradient */) const
+                                                  double* aValue, bool gradient) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
@@ -138,19 +138,19 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPo
     double xd = (aSamplePoint.X() - vertices[0][0]) / spacing[0];
     double yd = (aSamplePoint.Y() - vertices[0][1]) / spacing[1];
     double zd = (aSamplePoint.Z() - vertices[0][2]) / spacing[2];
-    static int d[3] = {0, 0, 0};
-    for (int k = 0; k < data->GetNumberOfComponents(); k++) {
-        double c00 = values[k][0] * (1 - xd) + values[k][1] * xd;
-        double c10 = values[k][2] * (1 - xd) + values[k][3] * xd;
-        double c01 = values[k][4] * (1 - xd) + values[k][5] * xd;
-        double c11 = values[k][6] * (1 - xd) + values[k][7] * xd;
-
-        double c0 = c00 * (1 - yd) + c10 * yd;
-        double c1 = c01 * (1 - yd) + c11 * yd;
-
-        double c = c0 * (1 - zd) + c1 * zd;
-
-        aValue[k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd);
+    if (! gradient) {
+        static int d[3] = {0, 0, 0};
+        for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+            aValue[k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd);
+        }
+    } else {
+        for (int l = 0; l < data->GetNumberOfComponents(); l++) {
+            int d[3] = {0, 0, 0};
+            d[l] = 1; // 1st derivative in component l
+            for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+                aValue[3*l+k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd) / spacing[l];
+            }
+        }
     }
 
     return true;
