@@ -72,7 +72,7 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
-                                  KGradient& aGradient) const
+                                  KGradient& aGradient, bool grad_numerical) const
 {
     //fieldmsg_debug( "sampling magnetic gradient at point " << aSamplePoint << eom);
 
@@ -382,7 +382,7 @@ KGradient KMagnetostaticFieldmap::MagneticGradientCore(const KPosition& P) const
 {
     KGradient tGradient(KGradient::sZero);
     double aRandomTime = 0;
-    if (!fFieldMap->GetGradient(P, aRandomTime, tGradient))
+    if (!fFieldMap->GetGradient(P, aRandomTime, tGradient, fGradNumerical))
         cout << "WARNING: could not compute magnetic gradient at sample point " << P << endl;
 
     return tGradient;

@@ -150,7 +150,7 @@ class KMagfieldMapVTK
 
   public:
     virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
-    virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient) const;
+    virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient, bool grad_numerical) const;
 
   protected:
     vtkImageData* fImageData;
