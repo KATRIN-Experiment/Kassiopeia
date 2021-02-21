@@ -198,6 +198,7 @@ class KMagnetostaticFieldmap : public KMagnetostaticField
     void SetDirectory(const std::string& aDirectory);
     void SetFile(const std::string& aFile);
     void SetInterpolation(const std::string& aMode);
+    void SetGradNumerical(bool aFlag);
 
   private:
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
@@ -209,6 +210,7 @@ class KMagnetostaticFieldmap : public KMagnetostaticField
     std::string fDirectory;
     std::string fFile;
     int fInterpolation;
+    bool fGradNumerical;
     std::shared_ptr<KMagfieldMapVTK> fFieldMap;
 };
 
