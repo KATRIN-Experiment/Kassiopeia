@@ -29,6 +29,22 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPath);
         return true;
     }
+    if (aContainer->GetName() == "plane_normal") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPlaneNormal);
+        return true;
+    }
+    if (aContainer->GetName() == "plane_point") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPlanePoint);
+        return true;
+    }
+    if (aContainer->GetName() == "swap_axis") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetSwapAxis);
+        return true;
+    }
+    if (aContainer->GetName() == "epsilon") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetEpsilon);
+        return true;
+    }
     if (aContainer->GetName() == "x_axis") {
         aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetXAxis);
         return true;

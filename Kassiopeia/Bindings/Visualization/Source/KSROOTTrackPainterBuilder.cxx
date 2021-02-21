@@ -15,6 +15,10 @@ STATICINT sKSROOTTrackPainterStructure = KSROOTTrackPainterBuilder::Attribute<st
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("base") +
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("x_axis") +
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("y_axis") +
+                                         KSROOTTrackPainterBuilder::Attribute<KThreeVector>("plane_normal") +
+                                         KSROOTTrackPainterBuilder::Attribute<KThreeVector>("plane_point") +
+                                         KSROOTTrackPainterBuilder::Attribute<bool>("swap_axis") +
+                                         KSROOTTrackPainterBuilder::Attribute<double>("epsilon") +
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("step_output_group_name") +
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("position_name") +
                                          KSROOTTrackPainterBuilder::Attribute<std::string>("track_output_group_name") +
