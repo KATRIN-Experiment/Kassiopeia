@@ -55,6 +55,8 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
     // get value at center
     if (!gradient)
         data->GetTuple(center, aValue);
+    else
+        return false;
 
     return true;
 }
