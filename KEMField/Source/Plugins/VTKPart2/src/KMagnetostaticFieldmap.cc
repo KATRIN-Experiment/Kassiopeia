@@ -371,9 +371,8 @@ KFieldVector KMagnetostaticFieldmap::MagneticFieldCore(const KPosition& P) const
     KFieldVector tField;
     tField.SetComponents(0., 0., 0.);
     double aRandomTime = 0;
-    //if (!fFieldMap->GetField(P, aRandomTime, tField))
-    //    cout << "WARNING: could not compute magnetic field at sample point " << P << endl;
-    fFieldMap->GetField(P, aRandomTime, tField);
+    if (!fFieldMap->GetField(P, aRandomTime, tField))
+        cout << "WARNING: could not compute magnetic field at sample point " << P << endl;
 
     return tField;
 }
