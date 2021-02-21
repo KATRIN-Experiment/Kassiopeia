@@ -189,7 +189,7 @@ KCubicInterpolationMagfieldMapVTK::KCubicInterpolationMagfieldMapVTK(const strin
 KCubicInterpolationMagfieldMapVTK::~KCubicInterpolationMagfieldMapVTK() = default;
 
 bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
-                                                 double* aValue, bool /* gradient */) const
+                                                 double* aValue, bool gradient) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
@@ -304,9 +304,19 @@ bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPos
         (aSamplePoint.X() - vertices[21][0]) / spacing[0];  // point index 21 is at -1/-1/-1 coords = "lower" corner
     double yd = (aSamplePoint.Y() - vertices[21][1]) / spacing[1];
     double zd = (aSamplePoint.Z() - vertices[21][2]) / spacing[2];
-    static int d[3] = {0, 0, 0};
-    for (int k = 0; k < data->GetNumberOfComponents(); k++) {
-        aValue[k] = _tricubicInterpolate(&(values[k][0]), d, xd, yd, zd);
+    if (! gradient) {
+        static int d[3] = {0, 0, 0};
+        for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+            aValue[k] = _tricubicInterpolate(&(values[k][0]), d, xd, yd, zd);
+        }
+    } else {
+        for (int l = 0; l < data->GetNumberOfComponents(); l++) {
+            int d[3] = {0, 0, 0};
+            d[l] = 1; // 1st derivative in component l
+            for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+                aValue[3*l+k] = _tricubicInterpolate(&(values[k][0]), d, xd, yd, zd) / spacing[l];
+            }
+        }
     }
 
     return true;
