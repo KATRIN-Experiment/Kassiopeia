@@ -42,6 +42,24 @@ KMagfieldMapVTK::KMagfieldMapVTK(const string& aFilename)
 
 KMagfieldMapVTK::~KMagfieldMapVTK() = default;
 
+bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePoint) const
+{
+    vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
+
+    // get bounds of data set (FindPoint returns nearest point even outside bounds)
+    double bounds[6];
+    fImageData->GetBounds(bounds);
+    if (aSamplePoint.X() < bounds[0] || aSamplePoint.X() > bounds[1])
+        return false;
+    if (aSamplePoint.Y() < bounds[2] || aSamplePoint.Y() > bounds[3])
+        return false;
+    if (aSamplePoint.Z() < bounds[4] || aSamplePoint.Z() > bounds[5])
+        return false;
+
+    return true;
+}
+
 bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
@@ -58,6 +76,11 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
     return true;
 }
 
+bool KMagfieldMapVTK::CheckField(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic field", aSamplePoint);
+}
+
 bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/, KFieldVector& aField) const
 {
     //fieldmsg_debug( "sampling magnetic field at point " << aSamplePoint << eom);
@@ -68,6 +91,11 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
         return true;
     }
     return false;
+}
+
+bool KMagfieldMapVTK::CheckGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic gradient", aSamplePoint);
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
@@ -311,6 +339,7 @@ double KCubicInterpolationMagfieldMapVTK::_tricubicInterpolate(double p[], doubl
 KMagnetostaticFieldmap::KMagnetostaticFieldmap() :
     fDirectory(SCRATCH_DEFAULT_DIR),
     fInterpolation(0),
+    fGradNumerical(false),
     fFieldMap(nullptr)
 {}
 
@@ -367,6 +396,18 @@ void KMagnetostaticFieldmap::SetInterpolation(const string& aMode)
     else
         fInterpolation = -1;
     return;
+}
+
+void KMagnetostaticFieldmap::SetGradNumerical(bool aFlag)
+{
+    fGradNumerical = aFlag;
+}
+
+bool KMagnetostaticFieldmap::CheckCore(const KPosition& P) const
+{
+    double aRandomTime = 0;
+    return fFieldMap->CheckField(P, aRandomTime) &&
+          (fFieldMap->CheckGradient(P, aRandomTime) || fGradNumerical);
 }
 
 void KMagnetostaticFieldmap::InitializeCore()

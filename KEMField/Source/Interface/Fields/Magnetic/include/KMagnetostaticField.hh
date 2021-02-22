@@ -41,6 +41,11 @@ class KMagnetostaticField : public KMagneticField
         return MagneticGradientCore(P);
     }
 
+    bool Check(const KPosition& P) const
+    {
+        return CheckCore(P);
+    }
+
   private:
     KFieldVector MagneticPotentialCore(const KPosition& P, const double& /*time*/) const override
     {
@@ -63,6 +68,11 @@ class KMagnetostaticField : public KMagneticField
         return MagneticFieldAndGradientCore(P);
     }
 
+    bool CheckCore(const KPosition& P, const double& /*time*/) const override
+    {
+        return CheckCore(P);
+    }
+
     virtual KFieldVector MagneticPotentialCore(const KPosition& P) const = 0;
     virtual KFieldVector MagneticFieldCore(const KPosition& P) const = 0;
     virtual KGradient MagneticGradientCore(const KPosition& P) const = 0;
@@ -74,6 +84,11 @@ class KMagnetostaticField : public KMagneticField
         KGradient grad = MagneticGradientCore(P);
 
         return std::pair<KFieldVector, KGradient>(field, grad);
+    }
+    virtual bool CheckCore(const KPosition& /*P*/) const
+    {
+        //default behavior is to assume all points are valid
+        return true;
     }
 };
 }  // namespace KEMField
