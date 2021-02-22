@@ -49,9 +49,19 @@ void KStaticElectromagnetField::SetDirectory(const std::string& aDirectory)
     fDirectory = aDirectory;
 }
 
+std::string KStaticElectromagnetField::GetDirectory() const
+{
+    return fDirectory;
+}
+
 void KStaticElectromagnetField::SetFile(const std::string& aFile)
 {
     fFile = aFile;
+}
+
+std::string KStaticElectromagnetField::GetFile() const
+{
+    return fFile;
 }
 
 void KStaticElectromagnetField::SetFieldSolver(const KSmartPointer<KMagneticFieldSolver>& solver)
