@@ -27,7 +27,7 @@ KGElectromagnetConverter::KGElectromagnetConverter() :
 {}
 KGElectromagnetConverter::~KGElectromagnetConverter()
 {
-    if (fMagfield3File)
+    if (fMagfield3File && fMagfield3File->IsOpen())
         fMagfield3File->Close();
 }
 
@@ -231,7 +231,7 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
                                               GlobalToInternalVector(fCurrentZAxis));
         fElectromagnetContainer->push_back(coil);
 
-        if (fMagfield3File->IsOpen()) {
+        if (fMagfield3File && fMagfield3File->IsOpen()) {
             auto* tStream = fMagfield3File->File();
 
             // do not use coil->GetP0|P1() because it is defined as (r,0,z)
