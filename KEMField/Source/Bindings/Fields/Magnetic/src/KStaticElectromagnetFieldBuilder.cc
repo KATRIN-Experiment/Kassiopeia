@@ -21,6 +21,7 @@ STATICINT sKStaticElectromagnetFieldStructure = KStaticElectromagnetFieldBuilder
                                                 KStaticElectromagnetFieldBuilder::Attribute<std::string>("file") +
                                                 KStaticElectromagnetFieldBuilder::Attribute<std::string>("directory") +
                                                 KStaticElectromagnetFieldBuilder::Attribute<bool>("save_magfield3") +
+                                                KStaticElectromagnetFieldBuilder::Attribute<std::string>("directory_magfield3") +
                                                 KStaticElectromagnetFieldBuilder::Attribute<std::string>("system") +
                                                 KStaticElectromagnetFieldBuilder::Attribute<std::string>("surfaces") +
                                                 KStaticElectromagnetFieldBuilder::Attribute<std::string>("spaces");

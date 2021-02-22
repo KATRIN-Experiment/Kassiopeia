@@ -39,6 +39,10 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddAttribute(KContainer
         aContainer->CopyTo(fObject, &KEMField::KGStaticElectromagnetField::SetSaveMagfield3);
         return true;
     }
+    if (aContainer->GetName() == "directory_magfield3") {
+        aContainer->CopyTo(fObject, &KEMField::KGStaticElectromagnetField::SetDirectoryMagfield3);
+        return true;
+    }
     if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
             KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
