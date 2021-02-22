@@ -19,6 +19,15 @@ namespace KEMField
 class KMagneticSuperpositionField : public KMagneticField
 {
   public:
+    enum RequirementType
+    {
+        rtNone, // no requirements on fields
+        rtAll,  // require all fields to be valid
+        rtAny,  // require one or more fields to be valid
+        rtOne   // require exactly one field to be valid
+    };
+
+  public:
     KMagneticSuperpositionField();
     ~KMagneticSuperpositionField() override;
 
@@ -38,15 +47,7 @@ class KMagneticSuperpositionField : public KMagneticField
         fUseCaching = useCaching;
     }
 
-    void SetRequire(const std::string& require)
-    {
-        if (require == "all") fRequireAll = true;
-        else fRequireAll = false;
-        if (require == "one") fRequireOne = true;
-        else fRequireOne = false;
-        if (require == "any") fRequireAny = true;
-        else fRequireAny = false;
-    }
+    void SetRequire(const std::string& require);
 
   private:
     void InitializeCore() override;
@@ -67,9 +68,7 @@ class KMagneticSuperpositionField : public KMagneticField
 
     bool fUseCaching;
     bool fCachingBlock;
-    bool fRequireAll;
-    bool fRequireOne;
-    bool fRequireAny;
+    RequirementType fRequire;
     mutable std::map<KPosition, std::vector<KFieldVector>> fPotentialCache;
     mutable std::map<KPosition, std::vector<KFieldVector>> fFieldCache;
     mutable std::map<KPosition, std::vector<KGradient>> fGradientCache;

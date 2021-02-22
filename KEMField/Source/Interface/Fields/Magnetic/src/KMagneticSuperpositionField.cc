@@ -15,12 +15,23 @@ using namespace std;
 namespace KEMField
 {
 
-KMagneticSuperpositionField::KMagneticSuperpositionField() : fUseCaching(false), fCachingBlock(false)
-{
-  SetRequire("all");
-}
+KMagneticSuperpositionField::KMagneticSuperpositionField() :
+    fUseCaching(false), fCachingBlock(false), fRequire(rtAll)
+{}
 
 KMagneticSuperpositionField::~KMagneticSuperpositionField() = default;
+
+void KMagneticSuperpositionField::SetRequire(const std::string& require)
+{
+    if (require == "none") fRequire = rtNone;
+    else if (require == "all") fRequire = rtAll;
+    else if (require == "one") fRequire = rtOne;
+    else if (require == "any") fRequire = rtAny;
+    else {
+        kem_cout(eWarning) << "Superposition requirement <" << require << "> unknown; assuming all are required." << eom;
+        fRequire = rtAll;
+    }
+}
 
 bool KMagneticSuperpositionField::CheckCore(const KPosition& aSamplePoint,
                                             const double& aSampleTime) const
@@ -36,16 +47,24 @@ bool KMagneticSuperpositionField::CheckCore(const KPosition& aSamplePoint,
         check_one = ! check_one && ! check_any;
         check_any = true;
     }
-    if (fRequireAll && ! check_all)
+
+    if (fRequire == rtAll && ! check_all) {
         kem_cout(eWarning) << "MagneticSuperpositionField: at least one field not available at point <"
                            << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
-    if (fRequireAny && ! check_any)
+        return false;
+    }
+    if (fRequire == rtAny && ! check_any) {
         kem_cout(eWarning) << "MagneticSuperpositionField: not any fields available at point <"
                            << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
-    if (fRequireOne && ! check_one)
+        return false;
+    }
+    if (fRequire == rtOne && ! check_one) {
         kem_cout(eWarning) << "MagneticSuperpositionField: not exactly one field available at point <"
                            << aSamplePoint.X() << "," << aSamplePoint.Y() << "," << aSamplePoint.Z() << ">" << eom;
-    return (fRequireAll && check_all) || (fRequireAny && check_any) || (fRequireOne && check_one);
+        return false;
+    }
+
+    return true;
 }
 
 KFieldVector KMagneticSuperpositionField::MagneticPotentialCore(const KPosition& aSamplePoint,
