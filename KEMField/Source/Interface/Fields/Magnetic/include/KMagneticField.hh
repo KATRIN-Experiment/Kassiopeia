@@ -45,7 +45,7 @@ class KMagneticField : public katrin::KNamed
         return MagneticFieldAndGradientCore(P, time);
     }
 
-    virtual bool Check(const KPosition& P, const double& time) const
+    bool Check(const KPosition& P, const double& time) const
     {
         return CheckCore(P, time);
     }

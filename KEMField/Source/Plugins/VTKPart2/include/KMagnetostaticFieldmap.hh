@@ -202,7 +202,7 @@ class KMagnetostaticFieldmap : public KMagnetostaticField
     KFieldVector MagneticPotentialCore(const KPosition& P) const override;
     KFieldVector MagneticFieldCore(const KPosition& P) const override;
     KGradient MagneticGradientCore(const KPosition& P) const override;
-    bool CheckCore(const KPosition& P) const;
+    bool CheckCore(const KPosition& P) const override;
     void InitializeCore() override;
 
   private:
