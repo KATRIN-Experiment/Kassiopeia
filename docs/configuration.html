@@ -1,0 +1,1483 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>
+      Configuring Your Own Simulation | Kassiopeia Docs 3.7 documentation
+    </title>
+<link href="_static/pygments.css" rel="stylesheet"/>
+<link href="_static/theme.css" rel="stylesheet"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="kgeobag_basic.html" rel="next" title="Basic Shapes in KGeoBag"/>
+<link href="examples.html" rel="prev" title="Examples and Tests"/>
+</head><body class="text-gray-900 antialiased min-h-screen md:h-screen flex flex-col">
+<a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#configuring-your-own-simulation" title="Skip navigation links">Skip to content</a>
+<header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
+<img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
+</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia Docs 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+<input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+</header>
+<div class="md:overflow-hidden flex flex-col md:flex-row flex-1"><nav class="h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 bg-white text-gray-700 border-r overflow-x-hidden pt-16 print:hidden flex flex-col" data-menu="closed" role="navigation" style="width: 270px;">
+<div class="nav-toc"><ul class="current">
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="introduction.html"> Introduction</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html"> Getting Started</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html"> Examples and Tests</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Configuring Your Own Simulation</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#overview-and-units">Overview and Units</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#xml-parsing-and-features">XML Parsing and Features</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#variables">Variables</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#including-external-files">Including external files</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#expressions">Expressions</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#conditional-expressions-and-looping">Conditional Expressions and Looping</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#messaging">Messaging</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#geometry">Geometry</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#shapes-and-placement">Shapes and Placement</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#extensions">Extensions</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#kassiopeia">Kassiopeia</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#fields">Fields</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#electric">Electric</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#magnetic">Magnetic</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#generation">Generation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#termination">Termination</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#interactions">Interactions</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#volume-interactions">Volume Interactions</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#surface-interactions">Surface Interactions</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#output">Output</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#writers">Writers</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#output-description">Output description</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#propagation">Propagation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#navigation">Navigation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#navigation-and-commands">Navigation and Commands</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#simulation">Simulation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#visualization">Visualization</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#common-pitfalls-and-problems">Common Pitfalls and Problems</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html"> Basic KGeoBag Shapes</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html"> Complex KGeoBag Shapes</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#pump-port">Pump Port</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port">Conic section pump port</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#beam">Beam</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rod">Rod</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#extruded-surfaces-with-holes">Extruded surfaces with holes</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rotated-surface">Rotated surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#pump-port-space">Pump Port Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port-space">Conic Section Pump Port Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#beam-space">Beam Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rod-space">Rod Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#extruded-space">Extruded Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rotated-space">Rotated Space</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
+</ul>
+</div>
+<button aria-label="Close menu" class="text-4xl text-gray-800 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeNavBtn" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
+<main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
+<a class="text-blue-700" href="index.html">Kassiopeia Docs 3.7 documentation</a>
+<span class="text-gray-700 mr-1"> • </span><span aria-current="page">Configuring Your Own Simulation</span>
+</nav>
+<section id="configuring-your-own-simulation">
+<h1>Configuring Your Own Simulation<a aria-label="Copy link to section: Configuring Your Own Simulation." class="headerlink tooltipped tooltipped-ne" href="#configuring-your-own-simulation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>This section gives a brief overview of what you need to know to configure your own <em>Kassiopeia</em>
+simulation.</p>
+<section id="overview-and-units">
+<h2>Overview and Units<a aria-label="Copy link to section: Overview and Units." class="headerlink tooltipped tooltipped-ne" href="#overview-and-units" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The configuration of <em>Kassiopeia</em> is done in three main sections, plus an optional
+fourth. These are the <code class="docutils literal notranslate">&lt;messages&gt;</code> section which describes global message verbosity, the <code class="docutils literal notranslate">&lt;geometry&gt;</code> section
+which describes the system geometry and its extensions, and the <code class="docutils literal notranslate">&lt;kassiopeia&gt;</code> section which
+contains the elements needed for the particle tracking simulation. The optional fourth section
+relates to the specification of a VTK or ROOT window for the visualization of aspects of a completed simulation.
+A complete simulation file can thus be broken down into something which looks like the following:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;messages&gt;
+    &lt;!-- specification of the messaging configuration here --&gt;
+&lt;/messages&gt;
+
+&lt;geometry&gt;
+    &lt;!-- specification of the geometry and geometry extensions here --&gt;
+&lt;/geometry&gt;
+
+&lt;kassiopeia&gt;
+    &lt;!-- specification of the simulation elements and parameters here --&gt;
+&lt;/kassiopeia&gt;
+
+&lt;!-- optional VTK window <span class="o">(</span>requires VTK<span class="o">)</span> --&gt;
+&lt;vtk_window&gt;
+    &lt;!-- specification of the VTK window display here --&gt;
+&lt;/vtk_window&gt;
+
+&lt;!-- optional ROOT window <span class="o">(</span>requires ROOT<span class="o">)</span> --&gt;
+&lt;root_window&gt;
+    &lt;!-- specification of a ROOT display window here
+&lt;/root_window&gt;
+</code></pre></div>
+<p>The XML based interface of <em>Kassiopeia</em> allows for a very flexible way in which to modify and configure
+particle tracking simulations. Throughout the geometry, field, and simulation configuration
+all physical quantities are specified
+using MKS and their derived units. The exception to this rule is energy, which is specified
+using electron volts (eV). It should be noted that XML elements are parsed in order, and elements
+which are referenced by other elements must be declared before their first use.</p>
+</section>
+<section id="xml-parsing-and-features">
+<h2>XML Parsing and Features<a aria-label="Copy link to section: XML Parsing and Features." class="headerlink tooltipped tooltipped-ne" href="#xml-parsing-and-features" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The document language used for describing a Kassiopeia simulation configuration is based on standard
+XML, but has been augmented with several additional features to aid in complicated or repetitive tasks.
+For a full description of this language and its features, see [1].</p>
+<section id="variables">
+<h3>Variables<a aria-label="Copy link to section: Variables." class="headerlink tooltipped tooltipped-ne" href="#variables" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>A local variable may be defined with a particular value
+(integer,floating point type, string, etc.) with the following syntax:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"my_variable"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"1.3e-5"</span>/&gt;
+</code></pre></div>
+<p>and may be reference by any other subsequent (using a local variable before it
+is defined is not allowed) element in the document through
+the use of the square brackets <code class="docutils literal notranslate">[]</code> in the following manner:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;some_element <span class="nv">name</span><span class="o">=</span><span class="s2">"my_element"</span> <span class="nv">some_property</span><span class="o">=</span><span class="s2">"[my_variable]"</span>/&gt;
+</code></pre></div>
+<p>Global variables which persist across any subsequently included files may be specified through:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;global_define <span class="nv">name</span><span class="o">=</span><span class="s2">"my_global_variable"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"an_important_value"</span>/&gt;
+</code></pre></div>
+<p>Both local and global variables my be undefined (removed from the parser’s scope)
+in the following manner:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;undefine <span class="nv">name</span><span class="o">=</span><span class="s2">"my_variable"</span>/&gt;
+&lt;global_undefine <span class="nv">name</span><span class="o">=</span><span class="s2">"my_global_variable"</span>/&gt;
+</code></pre></div>
+<p>Occasionally the user may wish to specify a variable which can be modified from the command
+line as an argument passed to <em>Kassiopeia</em>. To do this for a variable called <code class="docutils literal notranslate">my_random_seed</code>
+the syntax is:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;external_define <span class="nv">name</span><span class="o">=</span><span class="s2">"my_random_seed"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"123"</span>/&gt;
+</code></pre></div>
+<p>This is useful for running large batches of similar simulations. For example, to simulate many
+independent tracks the user might want to run the same simulation repeatedly, but use a different
+random seed when starting the simulation. The value of <code class="docutils literal notranslate">my_random_seed</code> can be changed
+from its default value of 123 from the command line call to <em>Kassiopeia</em> in the following manner:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>Kassiopeia ./my_simulation.xml -r <span class="nv">my_random_seed</span><span class="o">=</span><span class="m">456</span>
+</code></pre></div>
+</section>
+<section id="including-external-files">
+<h3>Including external files<a aria-label="Copy link to section: Including external files." class="headerlink tooltipped tooltipped-ne" href="#including-external-files" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Including external XML files is also supported through a relatively simple syntax.
+This is helpful when a simulation is too complex to be managed by a single file.
+A separate XML file can be included using the following:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;include <span class="nv">name</span><span class="o">=</span><span class="s2">"/path/to/file/my_file.xml"</span>/&gt;
+</code></pre></div>
+<p>This include expression may also be readily reconfigured through the use of a variable,
+for example:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;external_define <span class="nv">name</span><span class="o">=</span><span class="s2">"my_file_name"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"my_file.xml"</span>/&gt;
+&lt;include <span class="nv">name</span><span class="o">=</span><span class="s2">"/path/to/file/[my_file_name]"</span>/&gt;
+</code></pre></div>
+<p>could be modified to include an entirely different file by passing another file name
+argument to <em>Kassiopeia</em> using:</p>
+<blockquote>
+<div><p>Kassiopeia ./my_simulation.xml -r my_file_name=my_other_file.xml</p>
+</div></blockquote>
+<p>This feature is particularly useful and enables the user to swap in an
+entirely different configuration for some portion of the simulation
+by passing a single command line variable.</p>
+</section>
+<section id="expressions">
+<h3>Expressions<a aria-label="Copy link to section: Expressions." class="headerlink tooltipped tooltipped-ne" href="#expressions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The ability to calculate in-line formulas is another useful feature. However, is only available when
+<em>Kassiopeia</em> is linked against ROOT. Currently, the underlying implementation of the formula
+processor relys on ROOT’s <a class="reference external" href="https://root.cern.ch/doc/master/classTFormula.html">TFormula<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> class, and as such can process any expression which is valid
+syntax for a TFormula. In order to active the formula mode, the relevant expression must
+be enclosed in curly braces <code class="docutils literal notranslate">{}</code>. Variables may also be used within a formula.
+An example of the formula syntax is given in
+the following variable definition:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"my_variable"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"4.0"</span>/&gt;
+&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"length"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"{2.3 + 2.0/sqrt([my_variable])}"</span>/&gt;
+</code></pre></div>
+<p>This example results in the variable <code class="docutils literal notranslate">[length]</code> taking the value of 3.3.</p>
+</section>
+<section id="conditional-expressions-and-looping">
+<h3>Conditional Expressions and Looping<a aria-label="Copy link to section: Conditional Expressions and Looping." class="headerlink tooltipped tooltipped-ne" href="#conditional-expressions-and-looping" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>In addition to mathematical expressions simple boolean conditions can be specified.
+These are often helpful for swapping or toggling on/off different features. An
+example showing the inclusion/exclusion of a brief section of XML is shown below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"var1"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"1"</span>/&gt;
+&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"var2"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"0"</span>/&gt;
+&lt;<span class="k">if</span> <span class="nv">condition</span><span class="o">=</span><span class="s2">"{[var1] eq [var2]"</span>&gt;
+    &lt;!-- intervening section of xml to be included/excluded --&gt;
+&lt;/if&gt;
+</code></pre></div>
+<p>Another feature which is indispensable when assembling complicated or repetitive geometries
+is the the ability to insert multiple copies of an XML fragment with slight modifications.
+This is called looping and is somewhat similar to the way a <code class="docutils literal notranslate">for</code> loop functions in C++. It is
+however, a purely static construct intended only to reduce the amount text needed to describe a
+geometry or other feature. An example of its use can be found in the <code class="docutils literal notranslate">DipoleTrapMeshedSpaceSimulation.xml</code>
+example. The example of the loop syntax showing the placement of several copies of a surface
+with the name <code class="docutils literal notranslate">intermediate_z_surface</code> is given below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;loop <span class="nv">variable</span><span class="o">=</span><span class="s2">"i"</span> <span class="nv">start</span><span class="o">=</span><span class="s2">"0"</span> <span class="nv">end</span><span class="o">=</span><span class="s2">"10"</span> <span class="nv">step</span><span class="o">=</span><span class="s2">"1"</span>&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"intermediate_z[i]"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"intermediate_z_surface"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. {-0.5 + [i]*(0.4/10.)}"</span>/&gt;
+    &lt;/surface&gt;
+&lt;/loop&gt;
+</code></pre></div>
+<p>Loops may also be nested when needed.</p>
+</section>
+</section>
+<section id="messaging">
+<h2>Messaging<a aria-label="Copy link to section: Messaging." class="headerlink tooltipped tooltipped-ne" href="#messaging" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p><em>Kassiopeia</em> provides a very granular means of reporting and logging simulation details of interest.
+This feature is particularly useful when modifying the code and debugging specific features.
+For example, in the file <code class="docutils literal notranslate">QuadrupoleTrapSimulation.xml</code> begins with a section describing the
+verbosity of each simulation element and the location of the logging file (described by
+the variable <code class="docutils literal notranslate">log_path</code> and the <code class="docutils literal notranslate">file</code> element):</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;define <span class="nv">name</span><span class="o">=</span><span class="s2">"log_path"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"[KASPERSYS]/log/Kassiopeia"</span>/&gt;
+
+&lt;messages&gt;
+
+    &lt;file <span class="nv">path</span><span class="o">=</span><span class="s2">"[log_path]"</span> <span class="nv">base</span><span class="o">=</span><span class="s2">"QuadrupoleTrapLog.txt"</span>/&gt;
+
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"k_file"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"k_initialization"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"kg_core"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"kg_shape"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"kg_mesh"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"kg_axial_mesh"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"normal"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"warning"</span>/&gt;
+
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_object"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_operator"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_field"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_geometry"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_generator"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_trajectory"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_interaction"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_navigator"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_terminator"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_writer"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_main"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_run"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_event"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_track"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+    &lt;message <span class="nv">key</span><span class="o">=</span><span class="s2">"ks_step"</span> <span class="nv">terminal</span><span class="o">=</span><span class="s2">"debug"</span> <span class="nv">log</span><span class="o">=</span><span class="s2">"normal"</span>/&gt;
+
+&lt;/messages&gt;
+</code></pre></div>
+<p>For the verbosity settings, you can independently set the verbosity that you see
+in the terminal and the verbosity that is put into log files.
+Furthermore, you can do that for each different part of Kassiopeia.
+That way, for example, if you want a lot of detail on what’s happening in
+the navigation routines, you can increase the verbosity from only that part
+of Kassiopeia, without being flooded with messages from everything else.
+There are three possible verbosity levels, they are <code class="docutils literal notranslate">debug</code>, <code class="docutils literal notranslate">normal</code>, and <code class="docutils literal notranslate">warning</code>.
+Of the three, <code class="docutils literal notranslate">warning</code> is the least verbose, only reporting on non-fatal errors that
+may be encountered during tracking. The <code class="docutils literal notranslate">normal</code> mode will include a relatively small
+set of details in addition to any warnings, while <code class="docutils literal notranslate">debug</code> will provide an extremely extensive
+description of the state of the simulation as it progresses.</p>
+<p>Since there is so much information provided by the <code class="docutils literal notranslate">debug</code> setting it substantially
+slows down the speed of the simulation. In fact, in order to avoid unnecessarily slowing
+down <em>Kassiopeia</em>, this option is completely disabled unless it is explicitly compiled into
+the code by enabling the cmake option <code class="docutils literal notranslate">Kassiopeia_ENABLE_DEBUG</code> during configuration.</p>
+</section>
+<section id="geometry">
+<h2>Geometry<a aria-label="Copy link to section: Geometry." class="headerlink tooltipped tooltipped-ne" href="#geometry" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The geometry section of the configuration file the first piece needed in order
+to assemble a simulation. At its first and most basic level it is responsible for
+defining all the different shapes that will be used, and placing them with respect
+to one another in order to construct the arrangement that is needed.
+For a full a description of all of the shape objects (surfaces and spaces)
+which maybe constructed in <em>KGeoBag</em> see <a class="reference internal" href="kgeobag_basic.html#basic-kgeobag-label"><span class="std std-ref">Basic Shapes in KGeoBag</span></a> and <a class="reference internal" href="kgeobag_complex.html#complex-kgeobag-label"><span class="std std-ref">Complex Shapes in KGeoBag</span></a>.
+The abstract base classes which serve as the interface between <em>KGeoBag</em> and <em>Kassiopiea</em>
+are <a href="#id1"><span class="problematic" id="id2">:kassiopeia:`KSSurface`</span></a>, <a href="#id3"><span class="problematic" id="id4">:kassiopeia:`KSSpace`</span></a>, and <a href="#id5"><span class="problematic" id="id6">:kassiopeia:`KSSide`</span></a>.</p>
+<p>The second half of the geometry section is responsible for adding
+“extended” information to the previously described geometry elements.
+These extensions can be properties such as colors for visualization
+or boundary conditions and meshing details for the electromagnetic simulations.</p>
+<p>Every relevant to the geometry description is processed by KGeoBag and must appear
+between the start and end brackets:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;geometry&gt;
+&lt;!-- fill <span class="k">in</span> geometry description here --&gt;
+&lt;/geometry&gt;
+</code></pre></div>
+<p>It should be noted, that the full description of the geometry need not lie within the same
+pair of <code class="docutils literal notranslate">&lt;geometry&gt;</code> and <code class="docutils literal notranslate">&lt;/geometry&gt;</code> brackets. This facilitates the description of
+separate geometry pieces in different files which may then be included and used in the final
+assembly.</p>
+<section id="shapes-and-placement">
+<h3>Shapes and Placement<a aria-label="Copy link to section: Shapes and Placement." class="headerlink tooltipped tooltipped-ne" href="#shapes-and-placement" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Of the example files provided, the <code class="docutils literal notranslate">DipoleTrapSimulation.xml</code> has the simplest geometry. It
+starts off with a description of each shapes involved:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;!-- world --&gt;
+
+&lt;cylinder_space <span class="nv">name</span><span class="o">=</span><span class="s2">"world_space"</span> <span class="nv">z1</span><span class="o">=</span><span class="s2">"-2."</span> <span class="nv">z2</span><span class="o">=</span><span class="s2">"2."</span> <span class="nv">r</span><span class="o">=</span><span class="s2">"2."</span>/&gt;
+
+&lt;!-- solenoid --&gt;
+
+&lt;tag <span class="nv">name</span><span class="o">=</span><span class="s2">"magnet_tag"</span>&gt;
+    &lt;cylinder_tube_space
+        <span class="nv">name</span><span class="o">=</span><span class="s2">"solenoid_space"</span>
+        <span class="nv">z1</span><span class="o">=</span><span class="s2">"-1.e-2"</span>
+        <span class="nv">z2</span><span class="o">=</span><span class="s2">"1.e-2"</span>
+        <span class="nv">r1</span><span class="o">=</span><span class="s2">"0.5e-2"</span>
+        <span class="nv">r2</span><span class="o">=</span><span class="s2">"1.5e-2"</span>
+        <span class="nv">radial_mesh_count</span><span class="o">=</span><span class="s2">"30"</span>
+    /&gt;
+&lt;/tag&gt;
+
+&lt;!-- ring --&gt;
+
+&lt;tag <span class="nv">name</span><span class="o">=</span><span class="s2">"electrode_tag"</span>&gt;
+    &lt;cylinder_surface
+        <span class="nv">name</span><span class="o">=</span><span class="s2">"ring_surface"</span>
+        <span class="nv">z1</span><span class="o">=</span><span class="s2">"-2.0e-2"</span>
+        <span class="nv">z2</span><span class="o">=</span><span class="s2">"2.0e-2"</span>
+        <span class="nv">r</span><span class="o">=</span><span class="s2">"2.5e-1"</span>
+        <span class="nv">longitudinal_mesh_count</span><span class="o">=</span><span class="s2">"200"</span>
+        <span class="nv">longitudinal_mesh_power</span><span class="o">=</span><span class="s2">"3."</span>
+        <span class="nv">axial_mesh_count</span><span class="o">=</span><span class="s2">"128"</span>
+    /&gt;
+&lt;/tag&gt;
+
+&lt;!-- tube --&gt;
+
+&lt;tag <span class="nv">name</span><span class="o">=</span><span class="s2">"electrode_tag"</span>&gt;
+    &lt;cylinder_surface
+        <span class="nv">name</span><span class="o">=</span><span class="s2">"tube_surface"</span>
+        <span class="nv">z1</span><span class="o">=</span><span class="s2">"-1.e-2"</span>
+        <span class="nv">z2</span><span class="o">=</span><span class="s2">"1.e-2"</span>
+        <span class="nv">r</span><span class="o">=</span><span class="s2">"0.5e-2"</span>
+        <span class="nv">longitudinal_mesh_count</span><span class="o">=</span><span class="s2">"200"</span>
+        <span class="nv">longitudinal_mesh_power</span><span class="o">=</span><span class="s2">"3."</span>
+        <span class="nv">axial_mesh_count</span><span class="o">=</span><span class="s2">"128"</span>
+    /&gt;
+&lt;/tag&gt;
+
+&lt;!-- target --&gt;
+
+&lt;tag <span class="nv">name</span><span class="o">=</span><span class="s2">"target_tag"</span>&gt;
+    &lt;disk_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"target_surface"</span> <span class="nv">r</span><span class="o">=</span><span class="s2">"1.0e-2"</span> <span class="nv">z</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+&lt;/tag&gt;
+
+&lt;!-- center --&gt;
+
+&lt;tag <span class="nv">name</span><span class="o">=</span><span class="s2">"center_tag"</span>&gt;
+    &lt;disk_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"center_surface"</span> <span class="nv">r</span><span class="o">=</span><span class="s2">"2.5e-1"</span> <span class="nv">z</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+&lt;/tag&gt;
+</code></pre></div>
+<p>These shapes are then placed into an assembly of the experiment
+geometry. Geometric objects are placed by referencing each shape by its given (unique!!) name
+and specifying a transformation (relative the assembly origin) defining the location
+and orientation of each object. The transformation types are displacements (specified by
+a vector), and rotations (specified by an axis-angle pair or a
+series of Euler angles using the Z-Y’-Z’’ convention):</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"dipole_trap_assembly"</span>&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"ring"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"ring_surface"</span>/&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"center"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"center_surface"</span>/&gt;
+    &lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"downstream_solenoid"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"solenoid_space"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. -0.5"</span>/&gt;
+    &lt;/space&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"downstream_tube"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"tube_surface"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. -0.5"</span>/&gt;
+    &lt;/surface&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"upstream_target"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"target_surface"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. -0.48"</span>/&gt;
+    &lt;/surface&gt;
+    &lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"upstream_solenoid"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"solenoid_space"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. 0.5"</span>/&gt;
+    &lt;/space&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"upstream_tube"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"tube_surface"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. 0.5"</span>/&gt;
+    &lt;/surface&gt;
+    &lt;surface <span class="nv">name</span><span class="o">=</span><span class="s2">"downstream_target"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"target_surface"</span>&gt;
+        &lt;transformation <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0. 0. 0.48"</span>/&gt;
+    &lt;/surface&gt;
+&lt;/space&gt;
+</code></pre></div>
+<p>Finally, the full assembly is placed within the world volume:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"world"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"world_space"</span>&gt;
+    &lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"dipole_trap"</span> <span class="nv">tree</span><span class="o">=</span><span class="s2">"dipole_trap_assembly"</span>/&gt;
+&lt;/space&gt;
+</code></pre></div>
+<p>It should be noted that transformations applied to an assembly are collectively applied
+to all of the geometric elements within the assembly. For example, placing
+the dipole trap assembly within the world volume as:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"world"</span> <span class="nv">node</span><span class="o">=</span><span class="s2">"world_space"</span>&gt;
+    &lt;space <span class="nv">name</span><span class="o">=</span><span class="s2">"dipole_trap"</span> <span class="nv">tree</span><span class="o">=</span><span class="s2">"dipole_trap_assembly"</span>
+        &lt;transformation <span class="nv">rotation_euler</span><span class="o">=</span><span class="s2">"90. 0. 0."</span> <span class="nv">displacement</span><span class="o">=</span><span class="s2">"0 0 1.0"</span>/&gt;
+    &lt;/space&gt;
+&lt;/space&gt;
+</code></pre></div>
+<p>which would rotate the whole assembly by 90 degrees about the z-axis, and then displace it by 1 meter
+along the z-axis. Assemblies may be nested within each other and the coordinate transformations
+which are associated with the placement each assembly will be appropriately
+applied to all of the elements they contain.</p>
+</section>
+<section id="extensions">
+<h3>Extensions<a aria-label="Copy link to section: Extensions." class="headerlink tooltipped tooltipped-ne" href="#extensions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>In order to give physical properties to the geometry elements that have been constructed
+and placed they must be associated with extensions. The currently available extensions are
+axial (rotationally symmetric) or non-symmetric meshing, visualization properties, electrostatic
+boundary conditions (Dirichlet or Neuman surfaces), and electromagnet properties such as current density.</p>
+<p>A simple extension example is specifying the color and opacity
+of a shape for its display in a VTK visualization window is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;appearance <span class="nv">name</span><span class="o">=</span><span class="s2">"app_magnet"</span> <span class="nv">color</span><span class="o">=</span><span class="s2">"0 255 127 127"</span> <span class="nv">arc</span><span class="o">=</span><span class="s2">"72"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/@magnet_tag"</span>/&gt;
+</code></pre></div>
+<p>This example tells the visualization that any shape given the tag <code class="docutils literal notranslate">magnet_tag</code> should be colored
+with an RGBA color value of (0,255,127,127). If you have VTK enabled you may wish to experiment
+with the changes introduced by modifying these parameters.</p>
+<p>Extensions may be attached to a shape object, either by specifying its name or location within
+the geometry tree, or by giving a tag that is associated with it. The location of objects within
+the geometry tree uses an XPath like syntax augmented with tagging. The tagging feature is very useful
+for applying properties to many different elements at once. To do this, each element which is to
+receive the same extension must share the same tag. There is no limit to the number of tags an geometric
+element may be given, and tags may be nested. For example, given the dipole trap geometry as specified, one
+may associate an axially symmetric mesh with all elements that share the tag <code class="docutils literal notranslate">electrode_tag</code> with:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;axial_mesh <span class="nv">name</span><span class="o">=</span><span class="s2">"mesh_electrode"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/@electrode_tag"</span>/&gt;
+</code></pre></div>
+<p>The <code class="docutils literal notranslate">@</code> symbol signifies that any geometric shape with the tag <code class="docutils literal notranslate">electrode_tag</code>
+that is found within <code class="docutils literal notranslate">world/dipole</code> trap should be giving an axial mesh extension (i.e. it will
+be divided into a collection of axially symmetric objects, cones, cylinders, etc.). The axial mesh
+will be later used by the field solving routines. However, a tag is not strictly necessary to
+apply an extension, for example, if we wished to generate an axial mesh for everything within the world
+we would write:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;axial_mesh <span class="nv">name</span><span class="o">=</span><span class="s2">"mesh_electrode"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/@"</span>/&gt;
+</code></pre></div>
+<p>or, if we wished to single out the <code class="docutils literal notranslate">ring_surface</code> shape exactly we would write:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;axial_mesh <span class="nv">name</span><span class="o">=</span><span class="s2">"mesh_electrode"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/ring"</span>/&gt;
+</code></pre></div>
+<p>Meshing is critical for any problem with involves electrostatic fields. The type of mesh depends on
+the symmetry of the geometry. For completely axially-symmetric geometries, the <code class="docutils literal notranslate">axial_mesh</code> is recommended
+so that the zonal harmonics field computation method may be used. For completely non-symmetric (3D) geometries
+the mesh type would be specified as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;mesh <span class="nv">name</span><span class="o">=</span><span class="s2">"mesh_electrode"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/@electrode_tag"</span>/&gt;
+</code></pre></div>
+<p>Because of the very shape-specific nature of the deterministic meshing which is provided by KGeoBag,
+parameters (<code class="docutils literal notranslate">mesh_count</code> and <code class="docutils literal notranslate">mesh_power</code>) describing how the mesh is to be constructed
+are given when specifying the shapes themselves. That being said, the mesh associated with a
+specific shape will not be constructed unless the extension statement is present.</p>
+<p>Another important extension for field solving is the specification of boundary conditions. For example
+when solving the Laplace boundary value problem, one may specify that a particular surface exhibit
+Dirichlet boundary conditions with a particular voltage through the use of the following extension:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;electrostatic_dirichlet <span class="nv">name</span><span class="o">=</span><span class="s2">"electrode_ring"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/ring"</span> <span class="nv">value</span><span class="o">=</span><span class="s2">"-10."</span>/&gt;
+</code></pre></div>
+<p>Where <code class="docutils literal notranslate">value="-10"</code> signifies that this surface has a potential of -10 volts.</p>
+<p>For further demonstrations of the possible geometry extensions please see the provided example XML files.</p>
+</section>
+</section>
+<section id="kassiopeia">
+<h2>Kassiopeia<a aria-label="Copy link to section: Kassiopeia." class="headerlink tooltipped tooltipped-ne" href="#kassiopeia" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The remaining elements all live within the <em>Kassiopeia</em> element and must be placed with
+start and end tags of the form:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;kassiopeia&gt;
+&lt;!-- <span class="nb">complete</span> description of the kassiopeia simulation element here --&gt;
+&lt;/kassiopeia&gt;
+</code></pre></div>
+<p>The elements which must be described within the <em>Kassiopeia</em> namespace include the specification
+of the fields, propagation, interactions, termination, navigation, output, and simulation.</p>
+</section>
+<section id="fields">
+<h2>Fields<a aria-label="Copy link to section: Fields." class="headerlink tooltipped tooltipped-ne" href="#fields" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Once the simulation geometry has been specified the user may describe the types of electric and
+magnetic fields they wish associate with each geometric object. The field package <em>KEMField</em>
+takes care of solving the boundary value problem and computing the fields for electrostatic problems.
+It also handles the magnetic field computation from static current distributions. Fast field calculation
+methods are available for axially symmetric (zonal harmonics) and
+three dimensional problems (fast multipole method). The abstract base classes responsible for
+electric and magnetic fields in <em>Kassiopeia</em> are <a href="#id7"><span class="problematic" id="id8">:kassiopeia:`KSElectricField`</span></a> and
+<a href="#id9"><span class="problematic" id="id10">:kassiopeia:`KSMagneticField`</span></a> respectively.</p>
+<p>For example, in the <code class="docutils literal notranslate">DipoleTrapSimulation.xml</code> example the electric and magnetic fields are axially
+symmetric and can be computed using the zonal harmonics expansion.</p>
+<section id="electric">
+<h3>Electric<a aria-label="Copy link to section: Electric." class="headerlink tooltipped tooltipped-ne" href="#electric" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>To specify the electric field, the geometric surfaces which are electrically
+active must be listed in the <code class="docutils literal notranslate">surfaces</code> element. It is important that the surfaces which are specified have a mesh extension
+and a boundary type extension. If either of these extensions are missing from the specified
+surface, they will not be included in the electrostatics problem. A boundary element
+mesh is needed to solve the Laplace equation using the boundary element method. Each element
+of the mesh inherits its parent surface’s boundary condition type.</p>
+<p>Both a method to solve the Laplace boundary value problem (a <code class="docutils literal notranslate">bem_solver</code>), and a method by which to compute
+the fields from the resulting charge densities must be given (a <code class="docutils literal notranslate">field_sovler</code>). In
+the following example we use a <code class="docutils literal notranslate">robin_hood_bem_solver</code> and a <code class="docutils literal notranslate">zonal_harmonic_field_solver</code>:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksfield_electrostatic
+    <span class="nv">name</span><span class="o">=</span><span class="s2">"field_electrostatic"</span>
+    <span class="nv">directory</span><span class="o">=</span><span class="s2">"[KEMFIELD_CACHE]"</span>
+    <span class="nv">file</span><span class="o">=</span><span class="s2">"DipoleTrapElectrodes.kbd"</span>
+    <span class="nv">system</span><span class="o">=</span><span class="s2">"world/dipole_trap"</span>
+    <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/@electrode_tag"</span>
+    <span class="nv">symmetry</span><span class="o">=</span><span class="s2">"axial"</span>
+&gt;
+    &lt;robin_hood_bem_solver
+        <span class="nv">tolerance</span><span class="o">=</span><span class="s2">"1.e-10"</span>
+        <span class="nv">check_sub_interval</span><span class="o">=</span><span class="s2">"100"</span>
+        <span class="nv">display_interval</span><span class="o">=</span><span class="s2">"1"</span>
+        <span class="nv">cache_matrix_elements</span><span class="o">=</span><span class="s2">"true"</span>
+    /&gt;
+    &lt;zonal_harmonic_field_solver
+        <span class="nv">number_of_bifurcations</span><span class="o">=</span><span class="s2">"-1"</span>
+        <span class="nv">convergence_ratio</span><span class="o">=</span><span class="s2">".99"</span>
+        <span class="nv">convergence_parameter</span><span class="o">=</span><span class="s2">"1.e-15"</span>
+        <span class="nv">proximity_to_sourcepoint</span><span class="o">=</span><span class="s2">"1.e-12"</span>
+        <span class="nv">number_of_central_coefficients</span><span class="o">=</span><span class="s2">"500"</span>
+        <span class="nv">use_fractional_central_sourcepoint_spacing</span><span class="o">=</span><span class="s2">"false"</span>
+        <span class="nv">central_sourcepoint_spacing</span><span class="o">=</span><span class="s2">"1.e-3"</span>
+        <span class="nv">central_sourcepoint_start</span><span class="o">=</span><span class="s2">"-5.2e-1"</span>
+        <span class="nv">central_sourcepoint_end</span><span class="o">=</span><span class="s2">"5.2e-1"</span>
+        <span class="nv">number_of_remote_coefficients</span><span class="o">=</span><span class="s2">"200"</span>
+        <span class="nv">remote_sourcepoint_start</span><span class="o">=</span><span class="s2">"-5.e-2"</span>
+        <span class="nv">remote_sourcepoint_end</span><span class="o">=</span><span class="s2">"5.e-2"</span>
+    /&gt;
+</code></pre></div>
+<p>It is also important that geometric elements be meshed appropriately with respect to symmetry.
+In the case that the user wishes to use zonal harmonic field calculation routines,
+an <code class="docutils literal notranslate">axial_mesh</code> must be used.
+If a normal (3D) mesh is used, zonal harmonics cannot function. Different mesh/symmetry
+types cannot be combined within the same electric field solving element.</p>
+<p>In the three-dimensional mesh case, either an integrating field solver, or a fast multipole field solver
+may be used. The integrating field solver may be specified through inclusion of the
+element:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;integrating_field_solver/&gt;
+</code></pre></div>
+<p>within the the <code class="docutils literal notranslate">ksfield_electrostatic</code> element. As the integrating field solver
+is quite simple, it does not require additional parameters.
+The fast multipole field solver on the other hand is
+somewhat more complex and requires a relatively large set of additional parameters to be specified in
+order to configure its use according to the user’s desired level of accuracy and computational effort.</p>
+<p>For a complete list and description of the XML bindings available for the electric field solving routines,
+navigate to the directory <code class="docutils literal notranslate">$KASPERSYS/config/KEMField/Complete</code>. The file <code class="docutils literal notranslate">ElectricFields.xml</code>
+has examples of the binding for initializing electric field problems.</p>
+</section>
+<section id="magnetic">
+<h3>Magnetic<a aria-label="Copy link to section: Magnetic." class="headerlink tooltipped tooltipped-ne" href="#magnetic" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The specification of the magnetic field solving routines is considerably simpler since there is no
+need to solve a boundary value problem before hand. There are essentially two choices for solving magnetic
+fields from static current distributions. These are; the zonal harmonics method for use with axially
+symmetric current sources, and the integrating magnetic field solver which can be used on geometries
+with more arbitrary distributions of current. Unlike electric fields, magnetic fields can
+contain components with both axially symmetric and non-axially symmetric elements
+within the same region with no adverse effects.</p>
+<p>A complete list and set of examples of the XML bindings for magnetic fields can be found
+in the file <code class="docutils literal notranslate">$KASPERSYS/config/KEMField/Complete/MagneticFields.xml</code>.</p>
+<p>Further documentation on the exact methods and parameters
+used in <em>KEMField</em> can be found in [2] and [3].</p>
+</section>
+</section>
+<section id="generation">
+<h2>Generation<a aria-label="Copy link to section: Generation." class="headerlink tooltipped tooltipped-ne" href="#generation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The intial state of particle’s to be tracked is set up using the generator mechanism. The
+abstract base class of all particle generators is <a href="#id11"><span class="problematic" id="id12">:kassiopeia:`KSGenerator`</span></a>.
+When generating a particle, there are five important initial parameters:</p>
+<ul class="simple">
+<li><p>PID: What is the particle type? For particle ID values, see the <a class="reference external" href="http://pdg.lbl.gov/mc_particle_id_contents.html">PDG<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> numbering scheme.</p></li>
+<li><p>Energy: What is the initial energy of the particle?</p></li>
+<li><p>Position: What is the initial position of the particle?</p></li>
+<li><p>Direction: In what direction is the particle traveling?</p></li>
+<li><p>Time: How is the production of particles distributed in time during the simulation?</p></li>
+</ul>
+<p>Each of the dynamic components (energy, position, direction, time) can be draw
+from a selected probability distribution. In some scenarios a dedicated particle generator
+may be need which produces with a very specific and well defined particle state as the
+result of some physical process (e.g. electron shake off in Radon decay). However,
+as is often the case, the user may wish to modify each dynamic component in a specific
+way in order to see what effect this has on the rest of the simulation. To
+draw each dynamic component from an independent distribution a composite
+generator is used. This type of generator combines a set of user selected distributions
+to produce the initial energy, position, direction, and time parameters.
+The following composite generator example is taken from the DipoleTrapSimulation.xml:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;!-- <span class="nv">pid</span><span class="o">=</span><span class="m">11</span> implies that electrons will be generated --&gt;
+&lt;ksgen_generator_composite <span class="nv">name</span><span class="o">=</span><span class="s2">"generator_uniform"</span> <span class="nv">pid</span><span class="o">=</span><span class="s2">"11"</span>&gt;
+    &lt;energy_composite&gt;
+        &lt;energy_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"1."</span>/&gt;
+    &lt;/energy_composite&gt;
+    &lt;position_cylindrical_composite <span class="nv">surface</span><span class="o">=</span><span class="s2">"world/dipole_trap/center"</span>&gt;
+        &lt;r_cylindrical <span class="nv">radius_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">radius_max</span><span class="o">=</span><span class="s2">"2.0e-1"</span>/&gt;
+        &lt;phi_uniform <span class="nv">value_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">value_max</span><span class="o">=</span><span class="s2">"360."</span>/&gt;
+        &lt;z_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+    &lt;/position_cylindrical_composite&gt;
+    &lt;direction_spherical_composite <span class="nv">surface</span><span class="o">=</span><span class="s2">"world/dipole_trap/center"</span>&gt;
+        &lt;theta_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+        &lt;phi_uniform <span class="nv">value_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">value_max</span><span class="o">=</span><span class="s2">"360"</span>/&gt;
+    &lt;/direction_spherical_composite&gt;
+    &lt;time_composite&gt;
+        &lt;time_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+    &lt;/time_composite&gt;
+&lt;/ksgen_generator_composite&gt;
+</code></pre></div>
+<p>In this example of the composite generator, the initial kinetic
+energy of the particle is fixed to 1 eV and its position is drawn uniformly within a cylindrical
+volume. Its initial starting time is fixed to zero, while its initial momentum direction is fixed
+along the z-axis. All of the fixed values used in this composite generator may be replaced by
+probability distributions. The available probability distributions depend on the quantity they are
+intended to generator, but included uniform, gaussian, pareto, cosine, etc. Also available
+is the ability to generate values at fix intervals throughout a limited range. For example
+this can be done for energy as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;energy_composite&gt;
+    &lt;energy_set <span class="nv">name</span><span class="o">=</span><span class="s2">"e_set"</span> <span class="nv">value_start</span><span class="o">=</span><span class="s2">"1"</span> <span class="nv">value_stop</span><span class="o">=</span><span class="s2">"10"</span> <span class="nv">value_count</span><span class="o">=</span><span class="s2">"3"</span>/&gt;
+&lt;/energy_composite&gt;
+</code></pre></div>
+<p>which would generate 3 electrons with energies equally spaced between 1 and 10 eV.
+Alternatively, as specific list of values can also be used:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;energy_composite&gt;
+    &lt;energy_list
+       <span class="nv">add_value</span><span class="o">=</span><span class="s2">"11.8"</span>
+       <span class="nv">add_value</span><span class="o">=</span><span class="s2">"20.5"</span>
+       <span class="nv">add_value</span><span class="o">=</span><span class="s2">"33.1"</span>
+    /&gt;
+&lt;/energy_composite&gt;
+</code></pre></div>
+<p>Keep in mind that if a <code class="docutils literal notranslate">list</code> of <code class="docutils literal notranslate">set</code> is used within a composite generator, the number of particles
+produced in an “event” will be equal to multiplicative combination of all possible particle states.
+For example, the following generator specification:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>    &lt;ksgen_generator_composite <span class="nv">name</span><span class="o">=</span><span class="s2">"generator_uniform"</span> <span class="nv">pid</span><span class="o">=</span><span class="s2">"11"</span>&gt;
+    &lt;energy_composite&gt;
+        &lt;energy_set <span class="nv">name</span><span class="o">=</span><span class="s2">"e_set"</span> <span class="nv">value_start</span><span class="o">=</span><span class="s2">"1"</span> <span class="nv">value_stop</span><span class="o">=</span><span class="s2">"200"</span> <span class="nv">value_count</span><span class="o">=</span><span class="s2">"10"</span>/&gt;
+    &lt;/energy_composite&gt;
+    &lt;position_cylindrical_composite <span class="nv">surface</span><span class="o">=</span><span class="s2">"world/dipole_trap/center"</span>&gt;
+        &lt;r_cylindrical <span class="nv">radius_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">radius_max</span><span class="o">=</span><span class="s2">"2.0e-1"</span>/&gt;
+        &lt;phi_uniform <span class="nv">value_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">value_max</span><span class="o">=</span><span class="s2">"360."</span>/&gt;
+        &lt;z_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+    &lt;/position_cylindrical_composite&gt;
+    &lt;direction_spherical_composite <span class="nv">surface</span><span class="o">=</span><span class="s2">"world/dipole_trap/center"</span>&gt;
+        &lt;theta_set <span class="nv">name</span><span class="o">=</span><span class="s2">"e_set"</span> <span class="nv">value_start</span><span class="o">=</span><span class="s2">"0"</span> <span class="nv">value_stop</span><span class="o">=</span><span class="s2">"90"</span> <span class="nv">values_count</span><span class="o">=</span><span class="s2">"10"</span>/&gt;
+        &lt;phi_uniform <span class="nv">value_min</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">value_max</span><span class="o">=</span><span class="s2">"360"</span>/&gt;
+    &lt;/direction_spherical_composite&gt;
+    &lt;time_composite&gt;
+        &lt;time_fix <span class="nv">value</span><span class="o">=</span><span class="s2">"0."</span>/&gt;
+    &lt;/time_composite&gt;
+&lt;/ksgen_generator_composite&gt;
+</code></pre></div>
+<p>results in a total of 100 particles being generated in a single event (as a combination of
+possible energies and momentum direction theta coordinate). To see other generator examples please
+see the included example XML files.</p>
+</section>
+<section id="termination">
+<h2>Termination<a aria-label="Copy link to section: Termination." class="headerlink tooltipped tooltipped-ne" href="#termination" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The converse to particle generation is termination. The abstract base class of
+all particle terminators is <a href="#id13"><span class="problematic" id="id14">:kassiopeia:`KSTerminator`</span></a>. Terminators are used to kill particle tracks
+in situations where further simulation of the particle is of no further interest. Terminators
+typically operate on very simple conditional logic. For example, a particle track may be terminated
+if the particle’s kinetic energy drops below some set value, or if it intersects a particular surface.</p>
+<p>An example of a terminator which kills particle tracks which exceed a certain number (1000)
+of allowed steps is given as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksterm_max_steps <span class="nv">name</span><span class="o">=</span><span class="s2">"term_max_steps"</span> <span class="nv">steps</span><span class="o">=</span><span class="s2">"1000"</span>/&gt;
+</code></pre></div>
+<p>A pair of terminators which will kill a particle that exceeds an allowed range
+for the z-coordinate is given in the following example:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksterm_max_z <span class="nv">name</span><span class="o">=</span><span class="s2">"term_max_z"</span> <span class="nv">z</span><span class="o">=</span><span class="s2">"1.0"</span>/&gt;
+&lt;ksterm_min_z <span class="nv">name</span><span class="o">=</span><span class="s2">"term_min_z"</span> <span class="nv">z</span><span class="o">=</span><span class="s2">"-1.0"</span>/&gt;
+</code></pre></div>
+<p>There are a wide variety of terminators currently avaiable, and the user is encourages to peruse
+the XML example files as well as the source code to determine what (if any)
+type of pre-existing terminator might be useful for their purpose.</p>
+</section>
+<section id="interactions">
+<h2>Interactions<a aria-label="Copy link to section: Interactions." class="headerlink tooltipped tooltipped-ne" href="#interactions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>In between generation and termination discrete stochastic interactions involving
+the particle of interest may be applied during tracking. These interactions are divided
+according to whether they are active in a volume, or on a surface.</p>
+<section id="volume-interactions">
+<h3>Volume Interactions<a aria-label="Copy link to section: Volume Interactions." class="headerlink tooltipped tooltipped-ne" href="#volume-interactions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Volume interactions typically involve scattering off of a gas. The
+abstract base class of all volume interactions is <a href="#id15"><span class="problematic" id="id16">:kassiopeia:`KSSpaceInteraction`</span></a>.
+Simple situations where the scattering interactions is treated
+approximately by a constant density and cross section can be
+constructed as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksint_scattering <span class="nv">name</span><span class="o">=</span><span class="s2">"int_scattering"</span> <span class="nv">split</span><span class="o">=</span><span class="s2">"true"</span>&gt;
+    &lt;density_constant <span class="nv">temperature</span><span class="o">=</span><span class="s2">"300."</span> <span class="nv">pressure</span><span class="o">=</span><span class="s2">"3.e0"</span>/&gt;
+    &lt;calculator_constant <span class="nv">cross_section</span><span class="o">=</span><span class="s2">"1.e-18"</span>/&gt;
+&lt;/ksint_scattering&gt;
+</code></pre></div>
+<p>In this example the density is computed according to the ideal gas law from the temperature (Kelvin)
+and pressure (Pascal) and the cross section is treated as a constant (independent of particle energy).
+For more complicated interaction (e.g. involving differential or energy dependent cross sections) the user
+may need to devise their own interaction class. Volume interactions must be associated with a particular
+volume when describing the simulation structure.</p>
+</section>
+<section id="surface-interactions">
+<h3>Surface Interactions<a aria-label="Copy link to section: Surface Interactions." class="headerlink tooltipped tooltipped-ne" href="#surface-interactions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Surface interactions are much more limited in their scope and only
+occur when the track of a particle passes through a surface. The
+abstract base class of all surface interactions is <a href="#id17"><span class="problematic" id="id18">:kassiopeia:`KSSurfaceInteraction`</span></a>.</p>
+<p>For example, to cause a particle to be reflected diffusely (Lambertian)
+from a surface the user can specify an interaction of the following type:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksint_surface_diffuse <span class="nv">name</span><span class="o">=</span><span class="s2">"int_surface_diffuse"</span> <span class="nv">probability</span><span class="o">=</span><span class="s2">".3"</span> <span class="nv">reflection_loss</span><span class="o">=</span><span class="s2">"0."</span> <span class="nv">transmission_loss</span><span class="o">=</span><span class="s2">"1."</span>/&gt;
+</code></pre></div>
+<p>In order for this interaction to operate on any particles it must be associated with a surface
+in the simulation command structure.</p>
+</section>
+</section>
+<section id="output">
+<h2>Output<a aria-label="Copy link to section: Output." class="headerlink tooltipped tooltipped-ne" href="#output" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The data which is saved as output from the simulation requires two pieces: a file writer
+and a description of the data to be saved. The abstract base class of all
+file writers is <a href="#id19"><span class="problematic" id="id20">:kassiopeia:`KSWriter`</span></a>.</p>
+<section id="writers">
+<h3>Writers<a aria-label="Copy link to section: Writers." class="headerlink tooltipped tooltipped-ne" href="#writers" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The file writer is responsible for buffering and writing the desired information to disk. The default writer
+is based on <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>, and stores the output in a TTree:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;kswrite_root
+    <span class="nv">name</span><span class="o">=</span><span class="s2">"write_root"</span>
+    <span class="nv">path</span><span class="o">=</span><span class="s2">"/path/to/desired/output/directory"</span>
+    <span class="nv">base</span><span class="o">=</span><span class="s2">"my_filename.root"</span>
+/&gt;
+</code></pre></div>
+<p>If <em>Kassiopeia</em> is linked against VTK, an additional writer will be made available which can save
+track and step information to a .vtp (VTK polydata file). This data is useful for visualalization
+in external tools such as <a class="reference external" href="http://www.paraview.org">Paraview<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>. This write may be created using the following statement:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;kswrite_vtk
+    <span class="nv">name</span><span class="o">=</span><span class="s2">"write_vtk"</span>
+    <span class="nv">path</span><span class="o">=</span><span class="s2">"/path/to/desired/output/directory"</span>
+    <span class="nv">base</span><span class="o">=</span><span class="s2">"my_filename_base.vtp"</span>
+/&gt;
+</code></pre></div>
+</section>
+<section id="output-description">
+<h3>Output description<a aria-label="Copy link to section: Output description." class="headerlink tooltipped tooltipped-ne" href="#output-description" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The user may tailor the data written to disk to keep precisely the quantities of interest
+and no more. To do this a description of the data components to be kept at the track
+and step level must be given. An example of this (taken from the QuadrupoleTrapSimulation.xml example)
+is shown below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"final_particle"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"step"</span>/&gt;
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_step_position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_step_length"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"length"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+
+&lt;ks_component_group <span class="nv">name</span><span class="o">=</span><span class="s2">"component_step_world"</span>&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"step_id"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"step_id"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"step"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"continuous_time"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"continuous_time"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"step"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"continuous_length"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"continuous_length"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"step"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"time"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"time"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"momentum"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"momentum"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"magnetic_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"magnetic_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"electric_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"electric_potential"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_potential"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"kinetic_energy"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"kinetic_energy_ev"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+&lt;/ks_component_group&gt;
+
+&lt;ks_component_group <span class="nv">name</span><span class="o">=</span><span class="s2">"component_step_cell"</span>&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"polar_angle_to_z"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_z"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"polar_angle_to_b"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_b"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"guiding_center_position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"guiding_center_position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"orbital_magnetic_moment"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"orbital_magnetic_moment"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_step_final_particle"</span>/&gt;
+&lt;/ks_component_group&gt;
+
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"initial_particle"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"final_particle"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_track_position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"component_track_length"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"length"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+
+&lt;ks_component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"z_length"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"continuous_length"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"step"</span>/&gt;
+&lt;ks_component_group <span class="nv">name</span><span class="o">=</span><span class="s2">"component_track_world"</span>&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"creator_name"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"creator_name"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"terminator_name"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"terminator_name"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"total_steps"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"total_steps"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_time"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"time"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_momentum"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"momentum"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_magnetic_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"magnetic_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_electric_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_electric_potential"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_potential"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_kinetic_energy"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"kinetic_energy_ev"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_polar_angle_to_z"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_z"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_azimuthal_angle_to_x"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"azimuthal_angle_to_x"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_polar_angle_to_b"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_b"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"initial_orbital_magnetic_moment"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"orbital_magnetic_moment"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_initial_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_time"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"time"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_position"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"position"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_momentum"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"momentum"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_magnetic_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"magnetic_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_electric_field"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_field"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_electric_potential"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"electric_potential"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_kinetic_energy"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"kinetic_energy_ev"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_polar_angle_to_z"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_z"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_azimuthal_angle_to_x"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"azimuthal_angle_to_x"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_polar_angle_to_b"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"polar_angle_to_b"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"final_orbital_magnetic_moment"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"orbital_magnetic_moment"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"component_track_final_particle"</span>/&gt;
+    &lt;component_member <span class="nv">name</span><span class="o">=</span><span class="s2">"z_length_internal"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"continuous_length"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"track"</span>/&gt;
+    &lt;component_integral <span class="nv">name</span><span class="o">=</span><span class="s2">"z_length_integral"</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"z_length"</span>/&gt;
+&lt;/ks_component_group&gt;
+</code></pre></div>
+</section>
+</section>
+<section id="propagation">
+<h2>Propagation<a aria-label="Copy link to section: Propagation." class="headerlink tooltipped tooltipped-ne" href="#propagation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The propagation section is used to describe the physical process which is associated
+with the movement of a particle, and also the means by which the equations of motion are solved.
+The equations of motions are solved numerically with various control methods for the time step
+used during integration of a specific particle trajectory. The
+abstract base class of all particle trajectories is <a href="#id21"><span class="problematic" id="id22">:kassiopeia:`KSTrajectory`</span></a>.</p>
+<p>There are essential four different equations of motion (trajectories) available for particle tracking in <em>Kassiopeia</em>.
+These are, exact, adiabatic, electric, and magnetic.</p>
+<p>The first trajectory type is the so-called exact method, which solves the Lorentz equation for charged
+particles exactly without approximations. The second method is the adiabatic method, which is useful
+for solving charged particle motion in the presence of smoothly varying magnetic fields. The last two
+types, electric and magnetic, are used for tracing the field lines of static electric and
+magnetic fields respectively.</p>
+<p>The exact tracking method can be used where accuracy is of the utmost importance, but requires
+a large number of steps in order propagate a particle for a long time or distance. An example
+of its use is given below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;kstraj_trajectory_exact <span class="nv">name</span><span class="o">=</span><span class="s2">"trajectory_exact"</span> <span class="nv">attempt_limit</span><span class="o">=</span><span class="s2">"8"</span>&gt;
+    &lt;interpolator_crk <span class="nv">name</span><span class="o">=</span><span class="s2">"interpolator_crk"</span>/&gt;
+    &lt;integrator_rkdp853 <span class="nv">name</span><span class="o">=</span><span class="s2">"integrator_rkdp853"</span>/&gt;
+    &lt;term_propagation <span class="nv">name</span><span class="o">=</span><span class="s2">"term_propagation"</span>/&gt;
+    &lt;control_position_error <span class="nv">name</span><span class="o">=</span><span class="s2">"control_position_error"</span> <span class="nv">absolute_position_error</span><span class="o">=</span><span class="s2">"1e-12"</span> <span class="nv">safety_factor</span><span class="o">=</span><span class="s2">"0.75"</span> <span class="nv">solver_order</span><span class="o">=</span><span class="s2">"8"</span>/&gt;
+    &lt;control_length <span class="nv">name</span><span class="o">=</span><span class="s2">"stepsizelength"</span> <span class="nv">length</span><span class="o">=</span><span class="s2">"1e-4"</span> /&gt;
+    &lt;control_time <span class="nv">name</span><span class="o">=</span><span class="s2">"stepsizetime"</span> <span class="nv">time</span><span class="o">=</span><span class="s2">"1e-6"</span> /&gt;
+&lt;/kstraj_trajectory_exact&gt;
+</code></pre></div>
+<p>In the above example, the integrator type specified <code class="docutils literal notranslate">integrator_rkdp853</code> is an 8-th order Runge-Kutta
+integrator with a 7-th order dense output interpolant (specified by <code class="docutils literal notranslate">interpolator_crk</code>). The step-size
+control is accomplished through the combination of three different methods. Two of them <code class="docutils literal notranslate">control_length</code>
+and <code class="docutils literal notranslate">control_time</code> place a fixed limit on the step-size, while the third <code class="docutils literal notranslate">control_position_error</code> dynamically
+attempts to limit the local numerical error on the particle’s position below some limit.</p>
+<p>All of the trajectories take an optional parameter <code class="docutils literal notranslate">attempt_limit</code> which limits the
+number of tries an integration step will be re-attempted if a step-size control determines
+that the step has failed. The default number of maximum number of attempts is 32. If a trajectory
+makes no progress after the maximum number of allowed attempts, the track will be terminated
+with a <code class="docutils literal notranslate">trajectory_fail</code> flag.</p>
+<p>An example of the adiabatic trajectory is specified in the following:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;!--  adiabatic trajectory --&gt;
+&lt;kstraj_trajectory_adiabatic <span class="nv">name</span><span class="o">=</span><span class="s2">"trajectory_adiabatic"</span> <span class="nv">piecewise_tolerance</span><span class="o">=</span><span class="s2">"1e-6"</span> <span class="nv">max_segments</span><span class="o">=</span><span class="s2">"130"</span> <span class="nv">use_true_position</span><span class="o">=</span><span class="s2">"true"</span> <span class="nv">cyclotron_fraction</span><span class="o">=</span><span class="s2">"{1.0/64.0}"</span> <span class="nv">attempt_limit</span><span class="o">=</span><span class="s2">"8"</span>&gt;
+    &lt;interpolator_crk <span class="nv">name</span><span class="o">=</span><span class="s2">"interpolator_crk"</span>/&gt;
+    &lt;integrator_rkdp853 <span class="nv">name</span><span class="o">=</span><span class="s2">"integrator_rkdp853"</span>/&gt;
+    &lt;term_propagation <span class="nv">name</span><span class="o">=</span><span class="s2">"term_propagation"</span>/&gt;
+    &lt;term_drift <span class="nv">name</span><span class="o">=</span><span class="s2">"term_drift"</span>/&gt;
+    &lt;term_gyration <span class="nv">name</span><span class="o">=</span><span class="s2">"term_gyration"</span>/&gt;
+    &lt;control_time <span class="nv">name</span><span class="o">=</span><span class="s2">"control_time_adiab"</span> <span class="nv">time</span><span class="o">=</span><span class="s2">"1e-6"</span>/&gt;
+    &lt;control_position_error <span class="nv">name</span><span class="o">=</span><span class="s2">"control_position_error"</span> <span class="nv">absolute_position_error</span><span class="o">=</span><span class="s2">"1e-9"</span> <span class="nv">safety_factor</span><span class="o">=</span><span class="s2">"0.75"</span> <span class="nv">solver_order</span><span class="o">=</span><span class="s2">"8"</span>/&gt;
+&lt;/kstraj_trajectory_adiabatic&gt;
+</code></pre></div>
+<p>In this example, both the motion of the particle’s guiding center drift (<code class="docutils literal notranslate">term_drift</code>) and the
+particle’s local gyration (<code class="docutils literal notranslate">term_gyration</code>) itself are included in the equations of motion and computed.
+It is important to note that the adiabatic trajectory cannot be use if there is no magnetic field present.</p>
+<p>The last two trajectory types can be specfified as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;!--  magnetic trajectory --&gt;
+&lt;kstraj_trajectory_magnetic <span class="nv">name</span><span class="o">=</span><span class="s2">"trajectory_magnetic"</span> <span class="nv">piecewise_tolerance</span><span class="o">=</span><span class="s2">"1e-12"</span> <span class="nv">max_segments</span><span class="o">=</span><span class="s2">"128"</span>&gt;
+    &lt;interpolator_crk <span class="nv">name</span><span class="o">=</span><span class="s2">"interpolator_crk"</span>/&gt;
+    &lt;integrator_rkdp54 <span class="nv">name</span><span class="o">=</span><span class="s2">"integrator_rkdp54"</span>/&gt;
+    &lt;term_propagation <span class="nv">name</span><span class="o">=</span><span class="s2">"term_propagation"</span> <span class="nv">direction</span><span class="o">=</span><span class="s2">"forward"</span>/&gt;
+    &lt;control_time <span class="nv">name</span><span class="o">=</span><span class="s2">"control_time"</span> <span class="nv">time</span><span class="o">=</span><span class="s2">"1.e-4"</span>/&gt;
+    &lt;control_length <span class="nv">name</span><span class="o">=</span><span class="s2">"control_length"</span> <span class="nv">length</span><span class="o">=</span><span class="s2">"1e-2"</span>/&gt;
+&lt;/kstraj_trajectory_magnetic&gt;
+
+&lt;!--  electric trajectory --&gt;
+&lt;kstraj_trajectory_electric <span class="nv">name</span><span class="o">=</span><span class="s2">"trajectory_electric"</span> <span class="nv">piecewise_tolerance</span><span class="o">=</span><span class="s2">"1e-12"</span> <span class="nv">max_segments</span><span class="o">=</span><span class="s2">"128"</span>&gt;
+    &lt;interpolator_crk <span class="nv">name</span><span class="o">=</span><span class="s2">"interpolator_crk"</span>/&gt;
+    &lt;integrator_rkdp54 <span class="nv">name</span><span class="o">=</span><span class="s2">"integrator_rkdp54"</span>/&gt;
+    &lt;term_propagation <span class="nv">name</span><span class="o">=</span><span class="s2">"term_propagation"</span> <span class="nv">direction</span><span class="o">=</span><span class="s2">"backward"</span>/&gt;
+    &lt;control_time <span class="nv">name</span><span class="o">=</span><span class="s2">"control_time"</span> <span class="nv">time</span><span class="o">=</span><span class="s2">"1.e-4"</span>/&gt;
+    &lt;control_length <span class="nv">name</span><span class="o">=</span><span class="s2">"control_length"</span> <span class="nv">length</span><span class="o">=</span><span class="s2">"1e-2"</span>/&gt;
+&lt;/kstraj_trajectory_electric&gt;
+</code></pre></div>
+<p>The electric and magnetic field line trajectories are useful for visualization and during
+the design stages of an experiment or simulation. Note that in the above examples we have used a faster but less
+accurate Runge-Kutta integrator <code class="docutils literal notranslate">integrator_rkdp54</code>. The property <code class="docutils literal notranslate">direction</code> in <code class="docutils literal notranslate">term_propagation</code>
+can be used to specify the direction in which field lines are tracked (positive-to-negative or north-to-south).</p>
+<p>In all of the trajectories (exact, adiabatic, electric, magnetic) the parameters <code class="docutils literal notranslate">piecewise_tolerance</code> and <code class="docutils literal notranslate">max_segments</code> are optional.
+They dictate how a particles trajectory (in between steps) should be approximated by piecewise linear segments
+when determining surface and volume intersections. These parameters are only used
+when the <code class="docutils literal notranslate">ksnav_meshed_space</code> navigator is in use, and determine how accurately intersections
+are found. The default <code class="docutils literal notranslate">ksnav_space</code> navigator ignores these parameters, since it
+uses a faster but less accurate approximation by linearly interpolating a
+particle’s intermediate state and position.</p>
+<p>The adiabatic trajectory also takes the additional parameters
+<code class="docutils literal notranslate">use_true_position</code> and <code class="docutils literal notranslate">cyclotron_fraction</code> when the <code class="docutils literal notranslate">mesh_spaced_navigator</code>
+is in use. The parameter <code class="docutils literal notranslate">use_true_position</code> determines whether the particle or its
+guiding center position is used for the purpose of finding intersections. If the particle’s
+true position is used, then the parameter <code class="docutils literal notranslate">cyclotron_fraction</code> dictates the number of linear
+segments the semi-helical path is broken into.</p>
+</section>
+<section id="navigation">
+<h2>Navigation<a aria-label="Copy link to section: Navigation." class="headerlink tooltipped tooltipped-ne" href="#navigation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The navigation of a particle is split into two components, surface navigation and space
+navigation. Surface navigation is very simple and only takes place when a particle
+has intersected an active surface. The surface navigator determines whether the state
+of the particle is modified on the surface and whether it is reflected or transmitted.
+It is very simple and can be made available for use with the declaration:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksnav_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"nav_surface"</span>/&gt;
+</code></pre></div>
+<p>The space navigator more complex since it is responsible for determine the location of the particle
+and any possible intersections it may have with real of virtual boundaries. It
+is also responsible for ensuring that the current simulation state matches the configuration
+specified by the user. The spaces that the navigator considers may be real objects (such as a vacuum chamber wall) or
+virtual (which only modify the state of the simulation, e.g. exchanging a trajectory method).</p>
+<p>For space navigation there are two options. The first is the default <code class="docutils literal notranslate">ksnav_space</code> navigator
+which can be specified as below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksnav_space <span class="nv">name</span><span class="o">=</span><span class="s2">"nav_space"</span> <span class="nv">enter_split</span><span class="o">=</span><span class="s2">"false"</span> <span class="nv">exit_split</span><span class="o">=</span><span class="s2">"false"</span>/&gt;
+</code></pre></div>
+<p>As this navigator is very simple, it does not take many additional parameters.
+The parameters <code class="docutils literal notranslate">enter_split</code> and <code class="docutils literal notranslate">exit_split</code> determine whether or not a track
+is split in two (for the purposes of output/saving data) upon entrance or exit of a geometric space.</p>
+<p>The second is the <code class="docutils literal notranslate">ksnav_meshed_space</code> navigator which is intended to be used
+in complex three-dimensional geometries where it has better performance over the default navigator.
+An example of this is shown in the PhotoMultplierTube.xml file. Its configuration is somewhat
+more complicated as it performs the navigations on the meshed boundaries of spaces and surfaces.
+This navigation method requires the construction of an octree spatial partition (which is cached for later
+re-use). The use must specify the depth of the octree (<code class="docutils literal notranslate">max_octree_depth</code>) and the number of elements
+allowed in a octree node before a subdivision is required (<code class="docutils literal notranslate">n_allowed_elements</code>). In addition,
+the root of the geometry tree must also be specified with the parameter <code class="docutils literal notranslate">root_space</code>,
+this is typically the world volume:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksnav_meshed_space <span class="nv">name</span><span class="o">=</span><span class="s2">"nav_meshed_space"</span> <span class="nv">root_space</span><span class="o">=</span><span class="s2">"space_world"</span> <span class="nv">max_octree_depth</span><span class="o">=</span><span class="s2">"9"</span> <span class="nv">n_allowed_elements</span><span class="o">=</span><span class="s2">"1"</span>/&gt;
+</code></pre></div>
+<p>Though they are not shown (they default to false) the exit and entrance split
+parameters may also be set for the <code class="docutils literal notranslate">ksnav_meshed_space</code> navigator.
+Because the <code class="docutils literal notranslate">ksnav_meshed_space</code> navigator requires a boundary mesh in
+order to operate, all geometric objects (spaces, sufaces)
+which have navigation commands attached to them must also have a mesh extension in the geometry specification.
+Furthermore, since <code class="docutils literal notranslate">ksnav_meshed_space</code> requires access to the root space <code class="docutils literal notranslate">space_world</code>
+and all of the navigation commands associated with the shapes it contains,
+it must be declared after the definition of the simulation command structure element <code class="docutils literal notranslate">ksgeo_space</code>.</p>
+</section>
+<section id="navigation-and-commands">
+<h2>Navigation and Commands<a aria-label="Copy link to section: Navigation and Commands." class="headerlink tooltipped tooltipped-ne" href="#navigation-and-commands" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The commands which are associated with particular surfaces and spaces are what governs
+the state of a <em>Kassiopeia</em> simulation as a particle is tracked. They are declared
+through the specification of a <code class="docutils literal notranslate">ksgeo_space</code>. A very simple example of the declaration
+of the command structure can be seen in the DipoleTrapSimulation.xml as shown below:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ksgeo_space <span class="nv">name</span><span class="o">=</span><span class="s2">"space_world"</span> <span class="nv">spaces</span><span class="o">=</span><span class="s2">"world"</span>&gt;
+    &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"root_terminator"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"add_terminator"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"term_max_steps"</span>/&gt;
+    &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"root_terminator"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"remove_terminator"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"term_world"</span>/&gt;
+    &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"write_root"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"add_track_output"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"component_track_world"</span>/&gt;
+    &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"write_root"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"add_step_output"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"component_step_world"</span>/&gt;
+    &lt;geo_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"surface_upstream_target"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/upstream_target"</span>&gt;
+        &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"root_terminator"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"add_terminator"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"term_upstream_target"</span>/&gt;
+    &lt;/geo_surface&gt;
+    &lt;geo_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"surface_downstream_target"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/downstream_target"</span>&gt;
+        &lt;<span class="nb">command</span> <span class="nv">parent</span><span class="o">=</span><span class="s2">"root_terminator"</span> <span class="nv">field</span><span class="o">=</span><span class="s2">"add_terminator"</span> <span class="nv">child</span><span class="o">=</span><span class="s2">"term_downstream_target"</span>/&gt;
+    &lt;/geo_surface&gt;
+    &lt;geo_surface <span class="nv">name</span><span class="o">=</span><span class="s2">"surface_center"</span> <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/dipole_trap/center"</span>/&gt;
+&lt;/ksgeo_space&gt;
+</code></pre></div>
+<p>In this example we create a <code class="docutils literal notranslate">ksgeo_space</code> navigation space using the <code class="docutils literal notranslate">world</code> space
+geometric object. Inside of this world volume we declare a series of command which will be
+executed any time a particle enters or is initialized within the world volume. The first two
+commands add and remove specific terminators, while the next two declare what sort of output
+should be written down within the world volume. Following that, there are commands which are
+attached to specific surfaces which are present. For example, attaching the terminator <code class="docutils literal notranslate">term_upstream_target</code>
+ensures that a particle impinging on the surface <code class="docutils literal notranslate">surface_upstream_target</code> will be killed.
+Commands can used to change the active field calculation method,
+swap trajectory types, or add/remove interactions, etc. Various spaces and
+their associated commands can be nested within each other allowing for a very
+flexible and dynamic simulation configuration.</p>
+</section>
+<section id="simulation">
+<h2>Simulation<a aria-label="Copy link to section: Simulation." class="headerlink tooltipped tooltipped-ne" href="#simulation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The final object to be declared within <code class="docutils literal notranslate">&lt;kassiopeia&gt;</code> is the simulation element. This describes
+the simulation object <a href="#id23"><span class="problematic" id="id24">:kassiopeia:`KSSimulation`</span></a>, which is then executed by <a href="#id25"><span class="problematic" id="id26">:kassiopeia:`KSRoot`</span></a>.
+The simulation element specifies the global and initial properties of the simulation as a whole.
+For example in the QuadrupoleTrapSimulation.xml example, the simulation element
+is declared as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;ks_simulation
+    <span class="nv">name</span><span class="o">=</span><span class="s2">"quadrupole_trap_simulation"</span>
+    <span class="nv">run</span><span class="o">=</span><span class="s2">"1"</span>
+    <span class="nv">seed</span><span class="o">=</span><span class="s2">"51385"</span>
+    <span class="nv">events</span><span class="o">=</span><span class="s2">"10"</span>
+    <span class="nv">magnetic_field</span><span class="o">=</span><span class="s2">"field_electromagnet"</span>
+    <span class="nv">electric_field</span><span class="o">=</span><span class="s2">"field_electrostatic"</span>
+    <span class="nv">space</span><span class="o">=</span><span class="s2">"space_world"</span>
+    <span class="nv">generator</span><span class="o">=</span><span class="s2">"generator_uniform"</span>
+    <span class="nv">trajectory</span><span class="o">=</span><span class="s2">"trajectory_exact"</span>
+    <span class="nv">space_navigator</span><span class="o">=</span><span class="s2">"nav_space"</span>
+    <span class="nv">surface_navigator</span><span class="o">=</span><span class="s2">"nav_surface"</span>
+    <span class="nv">writer</span><span class="o">=</span><span class="s2">"write_root"</span>
+/&gt;
+</code></pre></div>
+<p>The <code class="docutils literal notranslate">run</code> is simply a user provided identifier. The <code class="docutils literal notranslate">seed</code> is the value provided to
+the global (singleton) random number generator. Simulations with the same configuration and same seed
+should provide identical results. If the user is interested in running <em>Kassiopeia</em> on many machines
+in order to achieve high throughput particle tracking,
+care must be taken to ensure that the <code class="docutils literal notranslate">seed</code> value is different
+for each run of the simulation. The parameter <code class="docutils literal notranslate">events</code> determines the total number of times that
+the generator is run (but this is not necessarily the number of particles that will be tracked).
+The remaining parameters <code class="docutils literal notranslate">magnetic_field</code>, <code class="docutils literal notranslate">space</code>, <code class="docutils literal notranslate">generator</code>, etc. all specify the default
+objects to be used for the initial state of the simulation (commands specified within <code class="docutils literal notranslate">ksgeo_space</code>)
+may modify the actual objects used during the course of a simulation.</p>
+<p>Following the declaration of <code class="docutils literal notranslate">ks_simulation</code>, the closing tag <code class="docutils literal notranslate">&lt;/kassiopeia&gt;</code> is placed
+to complete the simulation configuration. When this tag is encountered by the XML parser, it triggers
+the simulation to run.</p>
+</section>
+<section id="visualization">
+<h2>Visualization<a aria-label="Copy link to section: Visualization." class="headerlink tooltipped tooltipped-ne" href="#visualization" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>If <em>Kassiopeia</em> has been linked against, simple visualization of the simulation may be made available.
+By adding the <cite>vtk_window</cite> tag we enable a VTK window that will open when the simulation is complete.
+This element needs a <code class="docutils literal notranslate">vtk_geometry_painter</code> and the <code class="docutils literal notranslate">`vtk_track_painter</code> to draw the geometry
+and tracks, respectively. An example of this type of visualization from the
+QuadurpoleTrapSimulation.xml file is a follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>&lt;vtk_window
+    <span class="nv">name</span><span class="o">=</span><span class="s2">"vtk_window"</span>
+    <span class="nv">enable_display</span><span class="o">=</span><span class="s2">"true"</span>
+    <span class="nv">enable_write</span><span class="o">=</span><span class="s2">"true"</span>
+    <span class="nv">frame_title</span><span class="o">=</span><span class="s2">"KGeoBag Visualization"</span>
+    <span class="nv">frame_size_x</span><span class="o">=</span><span class="s2">"1024"</span>
+    <span class="nv">frame_size_y</span><span class="o">=</span><span class="s2">"768"</span>
+    <span class="nv">frame_color_red</span><span class="o">=</span><span class="s2">".2"</span>
+    <span class="nv">frame_color_green</span><span class="o">=</span><span class="s2">".2"</span>
+    <span class="nv">frame_color_blue</span><span class="o">=</span><span class="s2">".2"</span>
+    <span class="nv">view_angle</span><span class="o">=</span><span class="s2">"45"</span>
+    <span class="nv">eye_angle</span><span class="o">=</span><span class="s2">"0.5"</span>
+    <span class="nv">multi_samples</span><span class="o">=</span><span class="s2">"4"</span>
+    <span class="nv">depth_peeling</span><span class="o">=</span><span class="s2">"10"</span>
+&gt;
+    &lt;vtk_geometry_painter
+        <span class="nv">name</span><span class="o">=</span><span class="s2">"geometry_painter"</span>
+        <span class="nv">surfaces</span><span class="o">=</span><span class="s2">"world/quadrupole_trap/#"</span>
+    /&gt;
+    &lt;vtk_track_painter
+        <span class="nv">name</span><span class="o">=</span><span class="s2">"track_painter"</span>
+        <span class="nv">path</span><span class="o">=</span><span class="s2">"[output_path]"</span>
+        <span class="nv">file</span><span class="o">=</span><span class="s2">"QuadrupoleTrapSimulation.root"</span>
+        <span class="nv">point_object</span><span class="o">=</span><span class="s2">"component_step_world"</span>
+        <span class="nv">point_variable</span><span class="o">=</span><span class="s2">"position"</span>
+        <span class="nv">color_object</span><span class="o">=</span><span class="s2">"component_step_cell"</span>
+        <span class="nv">color_variable</span><span class="o">=</span><span class="s2">"polar_angle_to_b"</span>
+    /&gt;
+&lt;/vtk_window&gt;
+</code></pre></div>
+<p>Note that the visualization window must be placed outside of the <code class="docutils literal notranslate">&lt;kassiopeia&gt;</code>…``&lt;/kassiopiea&gt;``
+environment tags.</p>
+</section>
+<section id="common-pitfalls-and-problems">
+<h2>Common Pitfalls and Problems<a aria-label="Copy link to section: Common Pitfalls and Problems." class="headerlink tooltipped tooltipped-ne" href="#common-pitfalls-and-problems" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The XML parse does have some ability to recognize simple errors in a configuration file
+and will generally report the location of an element which it is not able to process.</p>
+<p>Some errors which might occur if a file is improperly configured are:</p>
+<ul class="simple">
+<li><p>Multiple objects which share the same name at the same scope.</p></li>
+<li><p>Misspelled element types.</p></li>
+<li><p>Missing closing brackets.</p></li>
+<li><p>Undefined variables.</p></li>
+<li><p>Undeclared (but used) elements.</p></li>
+</ul>
+<p>In the case of more than one copy of the same object with the name &lt;X&gt;, the XML parser will fail with
+with an error along the lines of:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="o">[</span>INITIALIZATION ERROR MESSAGE<span class="o">]</span> Multiple instances of object with name &lt;X&gt;.
+</code></pre></div>
+<p>In the case where an element’s type name is misspelled the parser will fail with
+an unreconized element error. For example if we misspelled <code class="docutils literal notranslate">ksterm_max_z</code> as <code class="docutils literal notranslate">kterm_max_z</code>
+we would recieve the following error:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="o">[</span>INITIALIZATION ERROR MESSAGE<span class="o">]</span> nothing registered <span class="k">for</span> element &lt;kterm_max_z&gt; <span class="k">in</span> element &lt;kassiopeia&gt;
+</code></pre></div>
+<p>If there is a mis-matched bracket the intialization will usually fail with an unrecongnized
+character error, such as:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="o">[</span>INITIALIZATION ERROR MESSAGE<span class="o">]</span> element &lt;X&gt; encountered an error &lt;got unknown character &lt;&lt;&gt;&gt;
+</code></pre></div>
+<p>If a variable “[X]” is used without being previously defined, and undefined error will be reported
+as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="o">[</span>INITIALIZATION ERROR MESSAGE<span class="o">]</span> variable &lt;X&gt; is not defined
+</code></pre></div>
+<p>If there is an attempt to retrieve/reference and element which has not been declared the
+the simulation will fail with the message:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="o">[</span>INITIALIZATION WARNING MESSAGE<span class="o">]</span> No suitable Object called &lt;X&gt; <span class="k">in</span> Toolbox
+</code></pre></div>
+<p class="rubric">Footnotes</p>
+<p>[1] Daniel Lawrence Furse. Techniques for direct neutrino mass measurement utilizing tritium [beta]-decay. PhD thesis, Massachusetts Institute of Technology, 2015.</p>
+<p>[2] Thomas Corona. Methodology and application of high performance electrostatic field simulation in the KATRIN experiment. PhD thesis, University of North Carolina, Chapel Hill, 2014.</p>
+<p>[3] John P. Barrett. A Spatially Resolved Study of the KATRIN Main Spectrometer Using a Novel Fast Multipole Method. PhD thesis, Massachusetts Institute of Technology, 2016.</p>
+</section>
+</section>
+<section class="flex justify-between pt-4 mt-12">
+<div class="mr-auto">
+<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2">Previous</span>
+<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="examples.html" title="Go to previous page">← Examples and Tests</a>
+</div>
+<div class="ml-auto">
+<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2 text-right">Next</span>
+<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="kgeobag_basic.html" title="Go to next page">Basic Shapes in KGeoBag →</a>
+</div>
+</section>
+</main>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.4.3</a></footer>
+</div>
+<div class="sticky bottom-0 md:hidden print:hidden bg-white">
+<div class="flex justify-center items-center">
+<button aria-labelledby="menuLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openNavBtn">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="menuLabel">Menu</span>
+</button><button aria-labelledby="searchLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openSearchBtn">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="searchLabel">Search</span>
+</button>
+</div>
+</div>
+<div class="w-full fixed bottom-0 left-0 z-10 bg-gray-900 overflow-x-hidden pt-10 flex flex-col items-center md:hidden" data-menu="closed" id="search-pane">
+<h4 class="text-xl text-white mb-4" id="search-label">Enter search term</h4><form action="search.html" class="flex w-full justify-between items-center max-w-sm px-12" id="searchbox" method="get">
+<input aria-labelledby="search-label" class="p-2 flex-1" name="q" placeholder="Search the docs" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+<button aria-label="Close menu" class="text-4xl text-gray-200 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeSearchBtn" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</div>
+<div class="fixed bottom-0 right-0 opacity-0 p-4 m-4 bg-gray-900 text-gray-100 transition transform duration-500 translate-y-full" id="snackbar"></div>
+<div class="fixed inset-0 bg-black bg-opacity-50" id="screen" style="display: none;"></div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+</script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/doctools.js"></script>
+<script defer="" src="_static/theme.js"></script>
+</body>
+</html>

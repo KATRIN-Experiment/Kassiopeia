@@ -1,0 +1,9 @@
+<map id="Kassiopeia::KSTrajInterpolatorHermite" name="Kassiopeia::KSTrajInterpolatorHermite">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajInterpolatorHermite \&gt;" alt="" coords="5,5,236,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajExactInterpolator" alt="" coords="41,71,200,98"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajExactSpinInterpolator" alt="" coords="28,122,213,149"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajAdiabaticSpinInterpolator" alt="" coords="17,173,224,199"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajAdiabaticInterpolator" alt="" coords="30,223,211,250"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajMagneticInterpolator" alt="" coords="31,274,211,301"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSMathInterpolator.html" title="KSTrajElectricInterpolator" alt="" coords="35,325,206,351"/>
+</map>

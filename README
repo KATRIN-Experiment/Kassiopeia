@@ -1,0 +1,10 @@
+Kassiopeia documentation
+========================
+
+This uses Sphinx. The provided Makefile rebuilds the GitHub HTML pages:
+
+    make github
+
+The used Sphinx theme is 'awesome'. It can be installed via:
+
+    pip install sphinxawesome-theme

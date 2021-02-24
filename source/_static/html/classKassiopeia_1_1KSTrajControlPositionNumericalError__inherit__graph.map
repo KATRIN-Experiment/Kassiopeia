@@ -1,0 +1,7 @@
+<map id="Kassiopeia::KSTrajControlPositionNumericalError" name="Kassiopeia::KSTrajControlPositionNumericalError">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSComponentTemplate.html" title="Kassiopeia::KSComponentTemplate\l\&lt; KSTrajControlPositionNumericalError \&gt;" alt="" coords="5,5,264,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactControl" alt="" coords="67,71,202,98"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajExactSpinControl" alt="" coords="54,122,215,149"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajAdiabaticSpinControl" alt="" coords="43,173,226,199"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSMathControl.html" title="KSTrajAdiabaticControl" alt="" coords="56,223,213,250"/>
+</map>

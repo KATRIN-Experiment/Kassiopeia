@@ -1,0 +1,12 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classKassiopeia_1_1KSMathArray.html" title="Kassiopeia::KSMathArray\&lt; 8 \&gt;" alt="" coords="5,253,204,279"/>
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSTrajAdiabaticDerivative.html" title="Kassiopeia::KSTrajAdiabatic\lDerivative" alt="" coords="270,5,457,47"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSTrajAdiabaticError.html" title="Kassiopeia::KSTrajAdiabatic\lError" alt="" coords="270,71,457,112"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSTrajAdiabaticParticle.html" title="Kassiopeia::KSTrajAdiabatic\lParticle" alt="" coords="270,136,457,177"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSTrajExactDerivative.html" title="Kassiopeia::KSTrajExactDerivative" alt="" coords="252,202,475,229"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSTrajExactError.html" title="Kassiopeia::KSTrajExactError" alt="" coords="268,253,459,279"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSTrajExactParticle.html" title="Kassiopeia::KSTrajExactParticle" alt="" coords="259,303,467,330"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSTrajExactTrappedDerivative.html" title="Kassiopeia::KSTrajExactTrapped\lDerivative" alt="" coords="258,355,469,396"/>
+<area shape="rect" id="node9" href="$classKassiopeia_1_1KSTrajExactTrappedError.html" title="Kassiopeia::KSTrajExactTrapped\lError" alt="" coords="258,420,469,461"/>
+<area shape="rect" id="node10" href="$classKassiopeia_1_1KSTrajExactTrappedParticle.html" title="Kassiopeia::KSTrajExactTrapped\lParticle" alt="" coords="258,485,469,527"/>
+</map>

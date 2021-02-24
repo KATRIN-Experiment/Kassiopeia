@@ -1,0 +1,20 @@
+<map id="Kassiopeia::KSMathInterpolator&lt; XType &gt;" name="Kassiopeia::KSMathInterpolator&lt; XType &gt;">
+<area shape="rect" id="node2" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajElectric\lSystem \&gt;" alt="" coords="263,5,512,61"/>
+<area shape="rect" id="node3" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajMagnetic\lSystem \&gt;" alt="" coords="258,85,517,141"/>
+<area shape="rect" id="node4" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajAdiabatic\lSystem \&gt;" alt="" coords="257,165,517,221"/>
+<area shape="rect" id="node5" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajAdiabatic\lSpinSystem \&gt;" alt="" coords="257,245,517,301"/>
+<area shape="rect" id="node6" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajExact\lSpinSystem \&gt;" alt="" coords="268,325,507,381"/>
+<area shape="rect" id="node7" href="$classKassiopeia_1_1KSTrajInterpolatorContinuousRungeKutta.html" title="Kassiopeia::KSTrajInterpolator\lContinuousRungeKutta\&lt; KSTrajExact\lSystem \&gt;" alt="" coords="268,405,507,461"/>
+<area shape="rect" id="node8" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="284,485,491,526"/>
+<area shape="rect" id="node9" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajElectricSystem \&gt;" alt="" coords="289,550,486,591"/>
+<area shape="rect" id="node10" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="283,615,491,657"/>
+<area shape="rect" id="node11" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="270,681,505,722"/>
+<area shape="rect" id="node12" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="281,746,493,787"/>
+<area shape="rect" id="node13" href="$classKassiopeia_1_1KSTrajInterpolatorFast.html" title="Kassiopeia::KSTrajInterpolator\lFast\&lt; KSTrajExactSystem \&gt;" alt="" coords="289,811,486,853"/>
+<area shape="rect" id="node14" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajElectricSystem \&gt;" alt="" coords="279,877,496,918"/>
+<area shape="rect" id="node15" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajMagneticSystem \&gt;" alt="" coords="274,942,501,983"/>
+<area shape="rect" id="node16" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajAdiabaticSystem \&gt;" alt="" coords="273,1007,501,1049"/>
+<area shape="rect" id="node17" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajAdiabaticSpinSystem \&gt;" alt="" coords="260,1073,515,1114"/>
+<area shape="rect" id="node18" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajExactSpinSystem \&gt;" alt="" coords="271,1138,503,1179"/>
+<area shape="rect" id="node19" href="$classKassiopeia_1_1KSTrajInterpolatorHermite.html" title="Kassiopeia::KSTrajInterpolator\lHermite\&lt; KSTrajExactSystem \&gt;" alt="" coords="284,1203,491,1245"/>
+</map>

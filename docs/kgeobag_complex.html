@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<title>
+      Complex Shapes in KGeoBag | Kassiopeia Docs 3.7 documentation
+    </title>
+<link href="_static/pygments.css" rel="stylesheet"/>
+<link href="_static/theme.css" rel="stylesheet"/>
+<link href="search.html" rel="search" title="Search"/>
+<link href="genindex.html" rel="index" title="Index"/>
+<link href="output.html" rel="next" title="Understanding Simulation Output"/>
+<link href="kgeobag_basic.html" rel="prev" title="Basic Shapes in KGeoBag"/>
+</head><body class="text-gray-900 antialiased min-h-screen md:h-screen flex flex-col">
+<a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#complex-shapes-in-kgeobag" title="Skip navigation links">Skip to content</a>
+<header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
+<img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
+</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia Docs 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+<input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+</header>
+<div class="md:overflow-hidden flex flex-col md:flex-row flex-1"><nav class="h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 bg-white text-gray-700 border-r overflow-x-hidden pt-16 print:hidden flex flex-col" data-menu="closed" role="navigation" style="width: 270px;">
+<div class="nav-toc"><ul class="current">
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="introduction.html"> Introduction</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html"> Getting Started</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html"> Examples and Tests</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#overview-and-units">Overview and Units</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#variables">Variables</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#expressions">Expressions</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#messaging">Messaging</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#geometry">Geometry</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#shapes-and-placement">Shapes and Placement</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#extensions">Extensions</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#kassiopeia">Kassiopeia</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#fields">Fields</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#electric">Electric</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#magnetic">Magnetic</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#generation">Generation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#termination">Termination</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#interactions">Interactions</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#volume-interactions">Volume Interactions</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#surface-interactions">Surface Interactions</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#output">Output</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#writers">Writers</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#output-description">Output description</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#propagation">Propagation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#navigation">Navigation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#navigation-and-commands">Navigation and Commands</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#simulation">Simulation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#visualization">Visualization</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#common-pitfalls-and-problems">Common Pitfalls and Problems</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html"> Basic KGeoBag Shapes</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Complex KGeoBag Shapes</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#surfaces">Surfaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#pump-port">Pump Port</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#conic-section-pump-port">Conic section pump port</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#beam">Beam</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#rod">Rod</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#extruded-surfaces-with-holes">Extruded surfaces with holes</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#rotated-surface">Rotated surface</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#spaces">Spaces</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#pump-port-space">Pump Port Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#conic-section-pump-port-space">Conic Section Pump Port Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#beam-space">Beam Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#rod-space">Rod Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#extruded-space">Extruded Space</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#rotated-space">Rotated Space</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
+</ul>
+</div>
+<button aria-label="Close menu" class="text-4xl text-gray-800 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeNavBtn" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
+<main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
+<a class="text-blue-700" href="index.html">Kassiopeia Docs 3.7 documentation</a>
+<span class="text-gray-700 mr-1"> • </span><span aria-current="page">Complex Shapes in KGeoBag</span>
+</nav>
+<section id="complex-shapes-in-kgeobag">
+<span id="complex-kgeobag-label"></span><h1>Complex Shapes in KGeoBag<a aria-label="Copy link to section: Complex Shapes in KGeoBag." class="headerlink tooltipped tooltipped-ne" href="#complex-shapes-in-kgeobag" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>This section describes the more complicated shapes available in KGeoBag. Since as of yet, KGeoBag
+lacks the ability to perform boolean operations on solids (constructive solid geometry), shapes
+which cannot be represented as an assembly of basic shapes must be explicitly defined in C++.
+However, to augment the basic shapes, KGeoBag provides some addition complex shapes
+that are commonly encountered in experimental structures such as vacuum chambers, etc.</p>
+<p>Some of the examples in this section make use of the the more advanced features of the XML
+parser, including loops, conditional statements, and equation evaluation.</p>
+<section id="surfaces">
+<h2>Surfaces<a aria-label="Copy link to section: Surfaces." class="headerlink tooltipped tooltipped-ne" href="#surfaces" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<section id="pump-port">
+<h3>Pump Port<a aria-label="Copy link to section: Pump Port." class="headerlink tooltipped tooltipped-ne" href="#pump-port" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers).
+The coordinates x,y,z are the end points of the ports. The ports can only be created in radial direction.</p>
+<a class="reference internal image-reference" href="_images/port_housing_surface_model.png"><img alt="_images/port_housing_surface_model.png" src="_images/port_housing_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;port_housing_surface</span> <span class="na">name=</span><span class="s">"example_port_housing_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;port_housing</span> <span class="na">x1=</span><span class="s">"0."</span> <span class="na">y1=</span><span class="s">"0."</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"0."</span> <span class="na">y2=</span><span class="s">"0."</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">"0.4"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"50"</span> <span class="na">axial_mesh_count=</span><span class="s">"50"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;circular_port</span> <span class="na">x=</span><span class="s">"1.5"</span> <span class="na">y=</span><span class="s">"1.5"</span> <span class="na">z=</span><span class="s">"-.3"</span> <span class="na">radius=</span><span class="s">"0.33"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;rectangular_port</span> <span class="na">x=</span><span class="s">"0."</span> <span class="na">y=</span><span class="s">"1."</span> <span class="na">z=</span><span class="s">".3"</span> <span class="na">length=</span><span class="s">"0.3"</span> <span class="na">width=</span><span class="s">".15"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;circular_port</span> <span class="na">x=</span><span class="s">"-1./sqrt(2.)"</span> <span class="na">y=</span><span class="s">"-1./sqrt(2.)"</span> <span class="na">z=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"0.053"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/port_housing&gt;</span>
+<span class="nt">&lt;/port_housing_surface&gt;</span>
+</code></pre></div>
+</section>
+<section id="conic-section-pump-port">
+<h3>Conic section pump port<a aria-label="Copy link to section: Conic section pump port." class="headerlink tooltipped tooltipped-ne" href="#conic-section-pump-port" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>This shape is a cut cone surface with circular ports.
+The ports can be created either orthogonal to the surface or parallel to the cone axis (paraxial).
+The coordinates x,y,z are the end points of the port.</p>
+<a class="reference internal image-reference" href="_images/conic_section_port_housing_surface_model.png"><img alt="_images/conic_section_port_housing_surface_model.png" src="_images/conic_section_port_housing_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;conic_section_port_housing_surface</span> <span class="na">name=</span><span class="s">"example_conic_section_port_housing_surface"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;conic_section_port_housing</span> <span class="na">r1=</span><span class="s">"2.75"</span> <span class="na">z1=</span><span class="s">"-1.79675"</span> <span class="na">r2=</span><span class="s">"0.25"</span> <span class="na">z2=</span><span class="s">"-0.067"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"100"</span> <span class="na">axial_mesh_count=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"offset"</span> <span class="na">value=</span><span class="s">"2."</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"nPorts"</span> <span class="na">value=</span><span class="s">"6"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"{[nPorts]-1}"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;if</span> <span class="na">condition=</span><span class="s">"{([i] mod 2) eq 0}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;orthogonal_port</span> <span class="na">x=</span><span class="s">"{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}"</span> <span class="na">y=</span><span class="s">"{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}"</span> <span class="na">z=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"{.05 + .05*([i]+1)}"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/if&gt;</span>
+      <span class="nt">&lt;if</span> <span class="na">condition=</span><span class="s">"{([i] mod 2) eq 1}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;paraxial_port</span> <span class="na">x=</span><span class="s">"{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}"</span> <span class="na">y=</span><span class="s">"{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}"</span> <span class="na">z=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"{.05 + .05*([i]+1)}"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/if&gt;</span>
+    <span class="nt">&lt;/loop&gt;</span>
+  <span class="nt">&lt;/conic_section_port_housing&gt;</span>
+<span class="nt">&lt;/conic_section_port_housing_surface&gt;</span>
+</code></pre></div>
+</section>
+<section id="beam">
+<h3>Beam<a aria-label="Copy link to section: Beam." class="headerlink tooltipped tooltipped-ne" href="#beam" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>A beam creates a pipe which connects two polygons at each end.
+The polygons must have the same number of vertices but may lie in planes which are not parallel to each other.
+For the description of the parameters involved see the images below.</p>
+<a class="reference internal image-reference" href="_images/kgeobag_shapes/beam_description.png"><img alt="_images/kgeobag_shapes/beam_description.png" src="_images/kgeobag_shapes/beam_description.png" style="width: 500pt;"/></a>
+<p>In the following example, the variable <code class="docutils literal notranslate">[poly]</code> dictates the the number of
+vertexes in each polygon at the ends of the beam.</p>
+<a class="reference internal image-reference" href="_images/beam_surface_model.png"><img alt="_images/beam_surface_model.png" src="_images/beam_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;beam_surface</span> <span class="na">name=</span><span class="s">"example_beam_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;beam</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"20"</span> <span class="na">axial_mesh_count=</span><span class="s">"20"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"poly"</span> <span class="na">value=</span><span class="s">"50"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"radius"</span> <span class="na">value=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_start_max"</span> <span class="na">value=</span><span class="s">"-.25"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_start_min"</span> <span class="na">value=</span><span class="s">"-.75"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_end_max"</span> <span class="na">value=</span><span class="s">".75"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_end_min"</span> <span class="na">value=</span><span class="s">".25"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"[poly]"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;start_line</span> <span class="na">x1=</span><span class="s">"{[radius]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">y1=</span><span class="s">"{[radius]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">z1=</span><span class="s">"{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">x2=</span><span class="s">"{[radius]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span> <span class="na">y2=</span><span class="s">"{[radius]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span> <span class="na">z2=</span><span class="s">"{([z_start_max]+[z_start_min])*.5 + ([z_start_max]-[z_start_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;end_line</span> <span class="na">x1=</span><span class="s">"{[radius]*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">y1=</span><span class="s">"{[radius]*TMath::Sin(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">z1=</span><span class="s">"{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*[i]/[poly])}"</span> <span class="na">x2=</span><span class="s">"{[radius]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span> <span class="na">y2=</span><span class="s">"{[radius]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span> <span class="na">z2=</span><span class="s">"{([z_end_max]+[z_end_min])*.5 + ([z_end_max]-[z_end_min])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly])/[poly])}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/beam&gt;</span>
+<span class="nt">&lt;/beam_surface&gt;</span>
+</code></pre></div>
+<p>The beam shape can also be used to create more complex objects, such as a cut cone with two more cuts at both ends.</p>
+<a class="reference internal image-reference" href="_images/multicut_surface_model.png"><img alt="_images/multicut_surface_model.png" src="_images/multicut_surface_model.png" style="width: 500pt;"/></a>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;beam_surface</span> <span class="na">name=</span><span class="s">"example_multicut_surface"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;beam</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"60"</span> <span class="na">axial_mesh_count=</span><span class="s">"60"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_start"</span> <span class="na">value=</span><span class="s">"-1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_end"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"radius_start"</span> <span class="na">value=</span><span class="s">"2."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"radius_end"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"phi_start"</span> <span class="na">value=</span><span class="s">"0."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"theta_start"</span> <span class="na">value=</span><span class="s">"30."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"phi_end"</span> <span class="na">value=</span><span class="s">"90."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"theta_end"</span> <span class="na">value=</span><span class="s">"30."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"poly"</span> <span class="na">value=</span><span class="s">"100"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"[poly]"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;start_line</span> <span class="na">x1=</span><span class="s">"{[radius_start]*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()) - sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()))}"</span>
+                            <span class="na">y1=</span><span class="s">"{[radius_start]*cos([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))}"</span>
+                            <span class="na">z1=</span><span class="s">"{[radius_start]*sin([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))+[z_start]}"</span>
+                            <span class="na">x2=</span><span class="s">"{[radius_start]*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()) -sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()))}"</span>
+                            <span class="na">y2=</span><span class="s">"{[radius_start]*cos([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))}"</span>
+                            <span class="na">z2=</span><span class="s">"{[radius_start]*sin([theta_start]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*sin([phi_start]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_start]/360.))*cos([phi_start]/180.*TMath::Pi()))+[z_start]}"</span>
+            <span class="nt">/&gt;</span>
+            <span class="nt">&lt;end_line</span> <span class="na">x1=</span><span class="s">"{[radius_end]*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()) -sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()))}"</span>
+                      <span class="na">y1=</span><span class="s">"{[radius_end]*cos([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))}"</span>
+                      <span class="na">z1=</span><span class="s">"{[radius_end]*sin([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) +sin(2.*TMath::Pi()*([i]/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))+[z_end]}"</span>
+                      <span class="na">x2=</span><span class="s">"{[radius_end]*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()) - sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()))}"</span>
+                      <span class="na">y2=</span><span class="s">"{[radius_end]*cos([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))}"</span>
+                      <span class="na">z2=</span><span class="s">"{[radius_end]*sin([theta_end]/180.*TMath::Pi())*(cos(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*sin([phi_end]/180.*TMath::Pi()) + sin(2.*TMath::Pi()*((([i]+1) mod [poly])/[poly]-[phi_end]/360.))*cos([phi_end]/180.*TMath::Pi()))+[z_end]}"</span>
+            <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/beam&gt;</span>
+<span class="nt">&lt;/beam_surface&gt;</span>
+</code></pre></div>
+</section>
+<section id="rod">
+<h3>Rod<a aria-label="Copy link to section: Rod." class="headerlink tooltipped tooltipped-ne" href="#rod" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The rod element can be used to create a rod like structure along
+a series of linear segments in three dimensional space. The rod has a circular
+cross section which is approximated by a polygon (governed by the <code class="docutils literal notranslate">axial_mesh_count</code> parameter).
+This shape is defined by a radius (thickness of the rod) and
+a piecewise linear path specified by a by a list of in-order vertexes.</p>
+<a class="reference internal image-reference" href="_images/rod_surface_model.png"><img alt="_images/rod_surface_model.png" src="_images/rod_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>The following XML example creates a helix shaped rod surface, as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;rod_surface</span> <span class="na">name=</span><span class="s">"example_rod_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rod</span> <span class="na">radius=</span><span class="s">"0.2"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"100"</span> <span class="na">axial_mesh_count=</span><span class="s">"12"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"n_turns"</span> <span class="na">value=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"n_segments_per_turn"</span> <span class="na">value=</span><span class="s">"36"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"coil_radius"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"height_per_turn"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"{[n_turns]*[n_segments_per_turn]}"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;vertex</span> <span class="na">x=</span><span class="s">"{[coil_radius]*TMath::Cos(2.*TMath::Pi()*([i] mod [n_segments_per_turn])/[n_segments_per_turn])}"</span> <span class="na">y=</span><span class="s">"{[coil_radius]*TMath::Sin(2.*TMath::Pi()*([i] mod [n_segments_per_turn])/[n_segments_per_turn])}"</span> <span class="na">z=</span><span class="s">"{[i]*[height_per_turn]/[n_segments_per_turn]}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/rod&gt;</span>
+<span class="nt">&lt;/rod_surface&gt;</span>
+</code></pre></div>
+</section>
+<section id="extruded-surfaces-with-holes">
+<h3>Extruded surfaces with holes<a aria-label="Copy link to section: Extruded surfaces with holes." class="headerlink tooltipped tooltipped-ne" href="#extruded-surfaces-with-holes" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>With this element it is possible to create an extruded surface (from a poly-loop like curve) with arbitrary holes in it.
+The commands &lt;inner line/arc …&gt;/&lt;outer line/arc …&gt; define whether the extruded path will
+produce an outer or an inner surface. So &lt;inner line/arc …&gt; defines if
+there will be a hole and what it will look like.</p>
+<a class="reference internal image-reference" href="_images/extruded_surface_model.png"><img alt="_images/extruded_surface_model.png" src="_images/extruded_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;extruded_surface</span> <span class="na">name=</span><span class="s">"example_extruded_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;extruded_object</span> <span class="na">z_min=</span><span class="s">"-1."</span> <span class="na">z_max=</span><span class="s">"1."</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"40"</span> <span class="na">longitudinal_mesh_power=</span><span class="s">"2."</span> <span class="na">closed_form=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;inner_line</span> <span class="na">x1=</span><span class="s">"-.5"</span> <span class="na">y1=</span><span class="s">"-.5"</span> <span class="na">x2=</span><span class="s">"-.5"</span> <span class="na">y2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">"-.5"</span> <span class="na">y1=</span><span class="s">".5"</span> <span class="na">x2=</span><span class="s">".5"</span> <span class="na">y2=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">".5"</span> <span class="na">y1=</span><span class="s">".5"</span> <span class="na">x2=</span><span class="s">".5"</span> <span class="na">y2=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">".5"</span> <span class="na">y1=</span><span class="s">"-.5"</span> <span class="na">x2=</span><span class="s">"-.5"</span> <span class="na">y2=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_arc</span> <span class="na">x1=</span><span class="s">"-1."</span> <span class="na">y1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"-1."</span> <span class="na">y2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">"{TMath::Sqrt(2.)}"</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"-1."</span> <span class="na">y1=</span><span class="s">"1."</span> <span class="na">x2=</span><span class="s">"1."</span> <span class="na">y2=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"1."</span> <span class="na">y1=</span><span class="s">"1."</span> <span class="na">x2=</span><span class="s">"1."</span> <span class="na">y2=</span><span class="s">"-1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"1."</span> <span class="na">y1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"-1."</span> <span class="na">y2=</span><span class="s">"-1."</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/extruded_object&gt;</span>
+<span class="nt">&lt;/extruded_surface&gt;</span>
+</code></pre></div>
+</section>
+<section id="rotated-surface">
+<h3>Rotated surface<a aria-label="Copy link to section: Rotated surface." class="headerlink tooltipped tooltipped-ne" href="#rotated-surface" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>This shape is very similar to rotated poly-line surface in <a class="reference internal" href="kgeobag_basic.html#basic-kgeobag-label"><span class="std std-ref">Basic Shapes in KGeoBag</span></a>
+but with other variables. The coordinates in use in this shape are cylindrical. (z,r)</p>
+<a class="reference internal image-reference" href="_images/rotated_surface_model.png"><img alt="_images/rotated_surface_model.png" src="_images/rotated_surface_model.png" style="width: 500pt;"/></a>
+<p>Works with MeshViewer: Yes.
+Works with GeometryViewer: No.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;rotated_surface</span> <span class="na">name=</span><span class="s">"example_rotated_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rotated_object</span> <span class="na">longitudinal_mesh_count_start=</span><span class="s">"10"</span> <span class="na">longitudinal_mesh_count_end=</span><span class="s">"20"</span> <span class="na">longitudinal_mesh_power=</span><span class="s">"2."</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">r1=</span><span class="s">"0."</span> <span class="na">z2=</span><span class="s">"-1."</span> <span class="na">r2=</span><span class="s">"1.5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">r1=</span><span class="s">"1.5"</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">"1.5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"0."</span> <span class="na">r1=</span><span class="s">"1.5"</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"0."</span> <span class="na">r1=</span><span class="s">".5"</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">r2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arc</span> <span class="na">z1=</span><span class="s">"1."</span> <span class="na">r1=</span><span class="s">".5"</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">r2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">".5"</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"1."</span> <span class="na">r1=</span><span class="s">"1."</span> <span class="na">z2=</span><span class="s">"2."</span> <span class="na">r2=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arc</span> <span class="na">z1=</span><span class="s">"2."</span> <span class="na">r1=</span><span class="s">"1."</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">"2."</span> <span class="na">radius=</span><span class="s">"2"</span> <span class="na">positive_orientation=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/rotated_object&gt;</span>
+<span class="nt">&lt;/rotated_surface&gt;</span>
+</code></pre></div>
+</section>
+</section>
+<section id="spaces">
+<h2>Spaces<a aria-label="Copy link to section: Spaces." class="headerlink tooltipped tooltipped-ne" href="#spaces" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>These elements generate volume (filled) objects.
+The for the following geometries is not supported at the moment.
+For the definition of the variables see the corresponding surfaces above.</p>
+<section id="pump-port-space">
+<h3>Pump Port Space<a aria-label="Copy link to section: Pump Port Space." class="headerlink tooltipped tooltipped-ne" href="#pump-port-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization, see the above pump port surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;port_housing_space</span> <span class="na">name=</span><span class="s">"example_port_housing_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;port_housing</span> <span class="na">x1=</span><span class="s">"0."</span> <span class="na">y1=</span><span class="s">"0."</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"0."</span> <span class="na">y2=</span><span class="s">"0."</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">"0.4"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"50"</span> <span class="na">axial_mesh_count=</span><span class="s">"50"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;circular_port</span> <span class="na">x=</span><span class="s">"1.5"</span> <span class="na">y=</span><span class="s">"1.5"</span> <span class="na">z=</span><span class="s">"-.3"</span> <span class="na">radius=</span><span class="s">"0.33"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;rectangular_port</span> <span class="na">x=</span><span class="s">"0."</span> <span class="na">y=</span><span class="s">"1."</span> <span class="na">z=</span><span class="s">".3"</span> <span class="na">length=</span><span class="s">"0.3"</span> <span class="na">width=</span><span class="s">".15"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;circular_port</span> <span class="na">x=</span><span class="s">"-1./sqrt(2.)"</span> <span class="na">y=</span><span class="s">"-1./sqrt(2.)"</span> <span class="na">z=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"0.053"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/port_housing&gt;</span>
+<span class="nt">&lt;/port_housing_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+<section id="conic-section-pump-port-space">
+<h3>Conic Section Pump Port Space<a aria-label="Copy link to section: Conic Section Pump Port Space." class="headerlink tooltipped tooltipped-ne" href="#conic-section-pump-port-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization, see the above conic section pump port surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;conic_section_port_housing_space</span> <span class="na">name=</span><span class="s">"example_conic_section_port_housing_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;conic_section_port_housing</span> <span class="na">r1=</span><span class="s">"2.75"</span> <span class="na">z1=</span><span class="s">"-1.79675"</span> <span class="na">r2=</span><span class="s">"0.25"</span> <span class="na">z2=</span><span class="s">"-0.067"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"100"</span> <span class="na">axial_mesh_count=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"offset_"</span> <span class="na">value=</span><span class="s">"2."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"nPorts_"</span> <span class="na">value=</span><span class="s">"6"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"{[nPorts_]-1}"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;if</span> <span class="na">condition=</span><span class="s">"{([i] mod 2) eq 0}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;orthogonal_port</span> <span class="na">x=</span><span class="s">"{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}"</span> <span class="na">y=</span><span class="s">"{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}"</span> <span class="na">z=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"{.05 + .05*([i]+1)}"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/if&gt;</span>
+            <span class="nt">&lt;if</span> <span class="na">condition=</span><span class="s">"{([i] mod 2) eq 1}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;paraxial_port</span> <span class="na">x=</span><span class="s">"{[offset_]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts_])}"</span> <span class="na">y=</span><span class="s">"{[offset_]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts_])}"</span> <span class="na">z=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"{.05 + .05*([i]+1)}"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/if&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/conic_section_port_housing&gt;</span>
+<span class="nt">&lt;/conic_section_port_housing_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+<section id="beam-space">
+<h3>Beam Space<a aria-label="Copy link to section: Beam Space." class="headerlink tooltipped tooltipped-ne" href="#beam-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization, see the beam surface above.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;beam_space</span> <span class="na">name=</span><span class="s">"example_beam_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;beam</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"20"</span> <span class="na">axial_mesh_count=</span><span class="s">"20"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"poly_"</span> <span class="na">value=</span><span class="s">"50"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"radius_"</span> <span class="na">value=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_start_max_"</span> <span class="na">value=</span><span class="s">"-.25"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_start_min_"</span> <span class="na">value=</span><span class="s">"-.75"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_end_max_"</span> <span class="na">value=</span><span class="s">".75"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"z_end_min_"</span> <span class="na">value=</span><span class="s">".25"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"[poly_]"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;start_line</span> <span class="na">x1=</span><span class="s">"{[radius_]*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">y1=</span><span class="s">"{[radius_]*TMath::Sin(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">z1=</span><span class="s">"{([z_start_max_]+[z_start_min_])*.5 + ([z_start_max_]-[z_start_min_])*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">x2=</span><span class="s">"{[radius_]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span> <span class="na">y2=</span><span class="s">"{[radius_]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span> <span class="na">z2=</span><span class="s">"{([z_start_max_]+[z_start_min_])*.5 + ([z_start_max_]-[z_start_min_])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;end_line</span> <span class="na">x1=</span><span class="s">"{[radius_]*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">y1=</span><span class="s">"{[radius_]*TMath::Sin(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">z1=</span><span class="s">"{([z_end_max_]+[z_end_min_])*.5 + ([z_end_max_]-[z_end_min_])*TMath::Cos(2.*TMath::Pi()*[i]/[poly_])}"</span> <span class="na">x2=</span><span class="s">"{[radius_]*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span> <span class="na">y2=</span><span class="s">"{[radius_]*TMath::Sin(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span> <span class="na">z2=</span><span class="s">"{([z_end_max_]+[z_end_min_])*.5 + ([z_end_max_]-[z_end_min_])*TMath::Cos(2.*TMath::Pi()*(([i]+1) mod [poly_])/[poly_])}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/beam&gt;</span>
+<span class="nt">&lt;/beam_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+<section id="rod-space">
+<h3>Rod Space<a aria-label="Copy link to section: Rod Space." class="headerlink tooltipped tooltipped-ne" href="#rod-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization, see the above rod surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;rod_space</span> <span class="na">name=</span><span class="s">"example_rod_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rod</span> <span class="na">radius=</span><span class="s">"0.2"</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"100"</span> <span class="na">axial_mesh_count=</span><span class="s">"12"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"n_turns_"</span> <span class="na">value=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"n_segments_per_turn_"</span> <span class="na">value=</span><span class="s">"36"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"coil_radius_"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;define</span> <span class="na">name=</span><span class="s">"height_per_turn_"</span> <span class="na">value=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;loop</span> <span class="na">variable=</span><span class="s">"i"</span> <span class="na">start=</span><span class="s">"0"</span> <span class="na">end=</span><span class="s">"{[n_turns_]*[n_segments_per_turn_]}"</span> <span class="na">step=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;vertex</span> <span class="na">x=</span><span class="s">"{[coil_radius_]*TMath::Cos(2.*TMath::Pi()*([i] mod [n_segments_per_turn_])/[n_segments_per_turn_])}"</span> <span class="na">y=</span><span class="s">"{[coil_radius_]*TMath::Sin(2.*TMath::Pi()*([i] mod [n_segments_per_turn_])/[n_segments_per_turn_])}"</span> <span class="na">z=</span><span class="s">"{[i]*[height_per_turn_]/[n_segments_per_turn_]}"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/loop&gt;</span>
+    <span class="nt">&lt;/rod&gt;</span>
+<span class="nt">&lt;/rod_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+<section id="extruded-space">
+<h3>Extruded Space<a aria-label="Copy link to section: Extruded Space." class="headerlink tooltipped tooltipped-ne" href="#extruded-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization see the above extruded space.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;extruded_space</span> <span class="na">name=</span><span class="s">"example_extruded_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;extruded_object</span> <span class="na">z_min=</span><span class="s">"-1."</span> <span class="na">z_max=</span><span class="s">"1."</span> <span class="na">longitudinal_mesh_count=</span><span class="s">"40"</span> <span class="na">longitudinal_mesh_power=</span><span class="s">"2."</span> <span class="na">closed_form=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;inner_line</span> <span class="na">x1=</span><span class="s">"-.5"</span> <span class="na">y1=</span><span class="s">"-.5"</span> <span class="na">x2=</span><span class="s">"-.5"</span> <span class="na">y2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">"-.5"</span> <span class="na">y1=</span><span class="s">".5"</span> <span class="na">x2=</span><span class="s">".5"</span> <span class="na">y2=</span><span class="s">".5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">".5"</span> <span class="na">y1=</span><span class="s">".5"</span> <span class="na">x2=</span><span class="s">".5"</span> <span class="na">y2=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;inner_arc</span> <span class="na">x1=</span><span class="s">".5"</span> <span class="na">y1=</span><span class="s">"-.5"</span> <span class="na">x2=</span><span class="s">"-.5"</span> <span class="na">y2=</span><span class="s">"-.5"</span> <span class="na">radius=</span><span class="s">"1."</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_arc</span> <span class="na">x1=</span><span class="s">"-1."</span> <span class="na">y1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"-1."</span> <span class="na">y2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">"{TMath::Sqrt(2.)}"</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"-1."</span> <span class="na">y1=</span><span class="s">"1."</span> <span class="na">x2=</span><span class="s">"1."</span> <span class="na">y2=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"1."</span> <span class="na">y1=</span><span class="s">"1."</span> <span class="na">x2=</span><span class="s">"1."</span> <span class="na">y2=</span><span class="s">"-1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;outer_line</span> <span class="na">x1=</span><span class="s">"1."</span> <span class="na">y1=</span><span class="s">"-1."</span> <span class="na">x2=</span><span class="s">"-1."</span> <span class="na">y2=</span><span class="s">"-1."</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/extruded_object&gt;</span>
+<span class="nt">&lt;/extruded_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+<section id="rotated-space">
+<h3>Rotated Space<a aria-label="Copy link to section: Rotated Space." class="headerlink tooltipped tooltipped-ne" href="#rotated-space" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>For visualization see the above rotated surface.</p>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;rotated_space</span> <span class="na">name=</span><span class="s">"example_rotated_space"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rotated_object</span> <span class="na">longitudinal_mesh_count_start=</span><span class="s">"10"</span> <span class="na">longitudinal_mesh_count_end=</span><span class="s">"20"</span> <span class="na">longitudinal_mesh_power=</span><span class="s">"2."</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">r1=</span><span class="s">"0."</span> <span class="na">z2=</span><span class="s">"-1."</span> <span class="na">r2=</span><span class="s">"1.5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"-1."</span> <span class="na">r1=</span><span class="s">"1.5"</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">"1.5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"0."</span> <span class="na">r1=</span><span class="s">"1.5"</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"0."</span> <span class="na">r1=</span><span class="s">".5"</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">r2=</span><span class="s">".5"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arc</span> <span class="na">z1=</span><span class="s">"1."</span> <span class="na">r1=</span><span class="s">".5"</span> <span class="na">z2=</span><span class="s">"1."</span> <span class="na">r2=</span><span class="s">"1."</span> <span class="na">radius=</span><span class="s">".5"</span> <span class="na">positive_orientation=</span><span class="s">"0"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;line</span> <span class="na">z1=</span><span class="s">"1."</span> <span class="na">r1=</span><span class="s">"1."</span> <span class="na">z2=</span><span class="s">"2."</span> <span class="na">r2=</span><span class="s">"1."</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arc</span> <span class="na">z1=</span><span class="s">"2."</span> <span class="na">r1=</span><span class="s">"1."</span> <span class="na">z2=</span><span class="s">"0."</span> <span class="na">r2=</span><span class="s">"2."</span> <span class="na">radius=</span><span class="s">"2"</span> <span class="na">positive_orientation=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/rotated_object&gt;</span>
+<span class="nt">&lt;/rotated_space&gt;</span>
+</code></pre></div>
+<p>Works with GeometryViewer: No.
+Works with MeshViewer: No.</p>
+</section>
+</section>
+</section>
+<section class="flex justify-between pt-4 mt-12">
+<div class="mr-auto">
+<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2">Previous</span>
+<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="kgeobag_basic.html" title="Go to previous page">← Basic Shapes in KGeoBag</a>
+</div>
+<div class="ml-auto">
+<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2 text-right">Next</span>
+<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="output.html" title="Go to next page">Understanding Simulation Output →</a>
+</div>
+</section>
+</main>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.4.3</a></footer>
+</div>
+<div class="sticky bottom-0 md:hidden print:hidden bg-white">
+<div class="flex justify-center items-center">
+<button aria-labelledby="menuLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openNavBtn">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="menuLabel">Menu</span>
+</button><button aria-labelledby="searchLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openSearchBtn">
+<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="searchLabel">Search</span>
+</button>
+</div>
+</div>
+<div class="w-full fixed bottom-0 left-0 z-10 bg-gray-900 overflow-x-hidden pt-10 flex flex-col items-center md:hidden" data-menu="closed" id="search-pane">
+<h4 class="text-xl text-white mb-4" id="search-label">Enter search term</h4><form action="search.html" class="flex w-full justify-between items-center max-w-sm px-12" id="searchbox" method="get">
+<input aria-labelledby="search-label" class="p-2 flex-1" name="q" placeholder="Search the docs" type="search"/>
+<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+</button>
+</form>
+<button aria-label="Close menu" class="text-4xl text-gray-200 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeSearchBtn" title="Close menu">
+<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</div>
+<div class="fixed bottom-0 right-0 opacity-0 p-4 m-4 bg-gray-900 text-gray-100 transition transform duration-500 translate-y-full" id="snackbar"></div>
+<div class="fixed inset-0 bg-black bg-opacity-50" id="screen" style="display: none;"></div>
+</div>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+</script>
+<script src="_static/jquery.js"></script>
+<script src="_static/underscore.js"></script>
+<script src="_static/doctools.js"></script>
+<script defer="" src="_static/theme.js"></script>
+</body>
+</html>
