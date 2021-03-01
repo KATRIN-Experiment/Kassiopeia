@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta charset="utf-8"/>
 <title>
-      Introduction | Kassiopeia Docs 3.7 documentation
+      Introduction | Kassiopeia 3.7 documentation
     </title>
 <link href="_static/pygments.css" rel="stylesheet"/>
 <link href="_static/theme.css" rel="stylesheet"/>
@@ -19,7 +19,7 @@
 <a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#introduction" title="Skip navigation links">Skip to content</a>
 <header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
 <img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
-</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia Docs 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
 <input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
 <button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
 <svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
@@ -28,15 +28,42 @@
 </header>
 <div class="md:overflow-hidden flex flex-col md:flex-row flex-1"><nav class="h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 bg-white text-gray-700 border-r overflow-x-hidden pt-16 print:hidden flex flex-col" data-menu="closed" role="navigation" style="width: 270px;">
 <div class="nav-toc"><ul class="current">
-<li class="toctree-l1 current expanded"><div class="nav-link"><a class="current reference internal" href="#"> Introduction</a></div></li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div></li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Introduction</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#the-kasper-framework">The Kasper framework</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#extending-functionality">Extending Functionality</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#external-references">External references</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#developer-contact">Developer contact</a></div></li>
+</ul>
+</li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html"> Getting Started</a></div><ul>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></div></li>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#docker-image">Docker image</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#minimum-requirements">Minimum requirements</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#required-dependencies">Required dependencies</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#optional-dependencies">Optional dependencies</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#external-libraries">External libraries</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#environment-variables">Environment variables</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#executing-kassiopeia">Executing Kassiopeia</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html"> Examples and Tests</a></div><ul>
@@ -183,30 +210,43 @@
 </nav>
 <div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
 <main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
-<a class="text-blue-700" href="index.html">Kassiopeia Docs 3.7 documentation</a>
+<a class="text-blue-700" href="index.html">Kassiopeia 3.7 documentation</a>
 <span class="text-gray-700 mr-1"> • </span><span aria-current="page">Introduction</span>
 </nav>
 <section id="introduction">
 <h1>Introduction<a aria-label="Copy link to section: Introduction." class="headerlink tooltipped tooltipped-ne" href="#introduction" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<p><em>Kassiopeia</em> is a software package for the purpose of tracking particles in complex geometries and electromagnetic fields.
-It was originally developed for the simulation of the <a class="reference external" href="https://www.katrin.kit.edu">KATRIN<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> experiment, but was designed to be extremely flexible
-and has broad applicability to systems with similar problems. It is primarily of interest for examining the behavior
-of particles in electrostatic and magnetostatic systems at relative low energy scales (&lt;100keV). It also provides a mechanism
-to incorporate scattering interactions with dilute gases and offers specialized treatment of electron transport in silicon
-based detectors.</p>
-<p><em>Kassiopeia</em> relies upon three separate but concurrently distributed libraries. These are <em>Kommon</em>, <em>KGeoBag</em>, and <em>KEMField</em>.
-<em>Kommon</em> contains a collection of commonly used and very basic utilities which are used by the other three packages. It also contains a unique
-system for parsing and constructing objects from an XML file. <em>KGeoBag</em> is the library responsible for geometric calculations. It models
-an experiment’s physical geometry using a boundary representation (B-REP) method, and is also entrusted with answering navigation queries
-as well as generating the mesh used by the boundary element method (BEM). <em>KEMField</em> handles all of the field related tasks. These include solving
-the Laplace boundary value problem using BEM, solving for the field at arbitrary locations from charges and currents, and constructing field
-maps for fast evaluation. <em>Kassiopeia</em> incorporates these three libraries in order to solve the equation of motion of a particle and
-deal with any stochastic interactions to which it might be subjected.</p>
-<p>Using <em>Kassiopeia</em> and its associated libraries can involve varying levels of complexity depending on the end users needs. If
-the pre-existing features of <em>Kassiopeia</em> are sufficient, no additional code is needed and a simulation can be configured entirely
-through an XML file. If a user needs a special physics process which has not yet incorporated (e.g scattering on neon), it is relatively
-straightforward to create and include a new module for this process. Furthermore, the object oriented approach of <em>Kassiopeia</em> provides
-a clear path for advanced users who wish to use certain specific features in their own novel applications.</p>
+<p><strong>Kassiopeia</strong> is a software package for the purpose of tracking particles in complex geometries and electromagnetic
+fields. It was originally developed for the simulation of the <a class="reference external" href="https://www.katrin.kit.edu">KATRIN<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> experiment, but was designed to be extremely
+flexible and has broad applicability to systems with similar problems.</p>
+<p>It is primarily of interest for examining the behavior of particles in electrostatic and magnetostatic systems at
+relatively low energy scales (&lt;100keV). It also provides a mechanism to incorporate scattering interactions with dilute
+gases and offers specialized treatment of electron transport in silicon baseddetectors.</p>
+<section id="the-kasper-framework">
+<h2>The Kasper framework<a aria-label="Copy link to section: The Kasper framework." class="headerlink tooltipped tooltipped-ne" href="#the-kasper-framework" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The <em>Kassiopeia</em> software relies upon three separate, but concurrently distributed libraries. These are <em>Kommon</em>,
+<em>KGeoBag</em>, and <em>KEMField</em> and part of the <strong>Kasper</strong> framework.</p>
+<ul class="simple">
+<li><p><em>Kommon</em> contains a collection of commonly used and very basic utilities which are used by the other three
+packages. It also contains a unique system for parsing and constructing objects from an XML file.</p></li>
+<li><p><em>KGeoBag</em> is the library responsible for geometric calculations. It models an experiment’s physical geometry using
+a boundary representation (B-REP) method, and is also entrusted with answering navigation queries as well as
+generating the mesh used by the boundary element method (BEM).</p></li>
+<li><p><em>KEMField</em> handles all of the field related tasks. These include solving the Laplace boundary value problem using
+a bounary element method (BEM), solving for the field at arbitrary locations from charges and currents, and
+constructing field maps for fast evaluation. <em>Kassiopeia</em> incorporates these three libraries in order to solve the
+equation of motion of a particle and deal with any stochastic interactions to which it might be subjected.</p></li>
+</ul>
+</section>
+<section id="extending-functionality">
+<h2>Extending Functionality<a aria-label="Copy link to section: Extending Functionality." class="headerlink tooltipped tooltipped-ne" href="#extending-functionality" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Using <em>Kassiopeia</em> and its associated libraries can involve varying levels of complexity, depending on the end users
+needs. If the pre-existing features of <em>Kassiopeia</em> are sufficient, no additional code is needed and a simulation can be
+configured entirely through a plain text XML file. If a user needs a physics process which is not yet incorporated (e.g
+scattering on neon), it is relatively straightforward to create and include a new module for this process.</p>
+<p>Furthermore, the object oriented approach of <em>Kassiopeia</em> provides a clear path for advanced users who wish to use
+certain specific features in their own novel applications. Code contributions that extend <em>Kassiopeia’s</em> functionality
+can be submitted through GitHub and are always welcome.</p>
+</section>
 </section>
 <section class="flex justify-between pt-4 mt-12">
 <div class="mr-auto">

@@ -7,7 +7,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta charset="utf-8"/>
 <title>
-      Getting starting with Kassiopiea | Kassiopeia Docs 3.7 documentation
+      Getting starting with Kassiopiea | Kassiopeia 3.7 documentation
     </title>
 <link href="_static/pygments.css" rel="stylesheet"/>
 <link href="_static/theme.css" rel="stylesheet"/>
@@ -19,7 +19,7 @@
 <a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#getting-starting-with-kassiopiea" title="Skip navigation links">Skip to content</a>
 <header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
 <img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
-</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia Docs 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
 <input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
 <button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
 <svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
@@ -28,15 +28,44 @@
 </header>
 <div class="md:overflow-hidden flex flex-col md:flex-row flex-1"><nav class="h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 bg-white text-gray-700 border-r overflow-x-hidden pt-16 print:hidden flex flex-col" data-menu="closed" role="navigation" style="width: 270px;">
 <div class="nav-toc"><ul class="current">
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="introduction.html"> Introduction</a></div></li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="introduction.html"> Introduction</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="introduction.html#the-kasper-framework">The Kasper framework</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="introduction.html#extending-functionality">Extending Functionality</a></div></li>
+</ul>
+</li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#external-references">External references</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#developer-contact">Developer contact</a></div></li>
+</ul>
+</li>
 <li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Getting Started</a></div><ul>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#downloading-the-code">Downloading the code</a></div></li>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#required-software-dependencies">Required software dependencies</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#compiling-the-code-using-cmake">Compiling the code using CMake</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#configuring-optional-dependencies">Configuring optional dependencies</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#docker-image">Docker image</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#required-software-dependencies">Required software dependencies</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#minimum-requirements">Minimum requirements</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#required-dependencies">Required dependencies</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#optional-dependencies">Optional dependencies</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#external-libraries">External libraries</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#compiling-the-code-using-cmake">Compiling the code using CMake</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#environment-variables">Environment variables</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#executing-kassiopeia">Executing Kassiopeia</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#configuring-optional-dependencies">Configuring optional dependencies</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#build-options">Build options</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#kassiopeia-module">Kassiopeia module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#kemfield-module">KEMField module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#kgeobag-module">KGeoBag module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#kommon-module">Kommon module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#miscellaneous-options">Miscellaneous options</a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html"> Examples and Tests</a></div><ul>
@@ -183,17 +212,16 @@
 </nav>
 <div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
 <main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
-<a class="text-blue-700" href="index.html">Kassiopeia Docs 3.7 documentation</a>
+<a class="text-blue-700" href="index.html">Kassiopeia 3.7 documentation</a>
 <span class="text-gray-700 mr-1"> • </span><span aria-current="page">Getting starting with Kassiopiea</span>
 </nav>
 <section id="getting-starting-with-kassiopiea">
 <h1>Getting starting with Kassiopiea<a aria-label="Copy link to section: Getting starting with Kassiopiea." class="headerlink tooltipped tooltipped-ne" href="#getting-starting-with-kassiopiea" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
 <section id="downloading-the-code">
 <h2>Downloading the code<a aria-label="Copy link to section: Downloading the code." class="headerlink tooltipped tooltipped-ne" href="#downloading-the-code" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p>The most recent version of <em>Kassiopeia</em> and its accompanying libraries can be found on its public github page
-located at:</p>
+<p>The most recent version of <em>Kassiopeia</em> and its accompanying libraries can be found on its public github page:</p>
 <p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia">https://github.com/KATRIN-Experiment/Kassiopeia<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
-<p>To obtain the code you may either download a .zip file containing the compressed source files from:</p>
+<p>To obtain the code, you may either download a .zip file containing the compressed source files from:</p>
 <p><a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip">https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
 <p>or, alternatively, use git to clone the repository with the following command:</p>
 <div class="highlight">
@@ -203,27 +231,24 @@ located at:</p>
 </div>
 <pre><code>$ git clone https://github.com/KATRIN-Experiment/Kassiopeia.git
 </code></pre></div>
-<p>The use of git is generally the preferred method as this will allow you to easily obtain updates
-and bug fixes without needing to download a fresh copy of the source.
-This can be done simply by executing the command::
-$ git pull
-from within the source directory. If you do not have the git software you may
-install it on a Debian/Ubuntu Linux system through the package manager with
-the the following command:</p>
+<p>The use of git is generally the preferred method as this will allow you to easily obtain updates and bug fixes without
+needing to download a fresh copy of the source. This can be done simply by executing the command:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ sudo apt-get install git
+<pre><code>$ git pull
 </code></pre></div>
+<p>from within the source directory. For a quick-start guide to git, please refere to the GitHub documentation:</p>
+<p><a class="reference external" href="https://docs.github.com/en/github/getting-started-with-github">https://docs.github.com/en/github/getting-started-with-github<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
 </section>
 <section id="supported-operating-systems-and-hardware-requirements">
 <h2>Supported operating systems and hardware requirements<a aria-label="Copy link to section: Supported operating systems and hardware requirements." class="headerlink tooltipped tooltipped-ne" href="#supported-operating-systems-and-hardware-requirements" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p><em>Kassiopeia</em> is supported and intended to run on systems running either Linux or MacOS X. Currently, it
-has been compiled and tested to run on fresh installations of the Linux distributions Debian 8.6 and Ubuntu 16.04.1 LTS.
-It is also expected to compile and run on other Linux distributions, however this has not been tested, and
-the steps needed to compile <em>Kassiopeia</em> may deviate from what is outlined here.</p>
+<p><em>Kassiopeia</em> is supported and intended to run on systems running either Linux or MacOS X. Currently, it has been
+compiled and tested to run on fresh installations of the Linux distributions Fedora 31 and Ubuntu 20.04 LTS. It is also
+expected to compile and run on other Linux distributions, however this has not been tested, and the steps needed to
+compile <em>Kassiopeia</em> may deviate from what is outlined here.</p>
 <p>For minimal functionality and the ability to run the included example programs and simulations the following
 computer specifications or better are recommended:</p>
 <ul class="simple">
@@ -233,18 +258,48 @@ computer specifications or better are recommended:</p>
 <li><p>Free Disk Space: 10 GB</p></li>
 </ul>
 </section>
+<section id="docker-image">
+<h2>Docker image<a aria-label="Copy link to section: Docker image." class="headerlink tooltipped tooltipped-ne" href="#docker-image" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The section below outlines the necessary steps to build <em>Kassiopeia</em> on a local Linux/MacOS system. Due the the number
+of external dependencies that may conflict with what is available, it is often more feasible to use the <a class="reference external" href="https://www.docker.com/">Docker<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> image
+that is provided for the recent <em>Kassiopeia</em> releases. The images can be downloaded from one of the two locations:</p>
+<p><a class="reference external" href="https://hub.docker.com/r/katrinexperiment/kassiopeia">https://hub.docker.com/r/katrinexperiment/kassiopeia<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
+<p><a class="reference external" href="https://github.com/orgs/KATRIN-Experiment/packages">https://github.com/orgs/KATRIN-Experiment/packages<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
+<p>If you have <a class="reference external" href="https://www.docker.com/">Docker<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> installed on your system, you can simply pull the image:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>$ sudo docker pull katrinexperiment/kassiopeia
+</code></pre></div>
+<p>and open a shell inside the container from where you can run <em>Kassiopeia</em> or other commands:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>$ sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
+</code></pre></div>
+<p>Please note that by default, changes inside the container are not saved and will be lost once the container is closed.
+In order to use the <a class="reference external" href="https://www.docker.com/">Docker<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> image for scientific simulations, some additional steps are necessary.</p>
+<p>For instructions on how to use Docker containers and how to set up persistent storage, refer to the Docker manual:</p>
+<p><a class="reference external" href="https://docs.docker.com/">https://docs.docker.com/<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p>
+</section>
 <section id="required-software-dependencies">
 <h2>Required software dependencies<a aria-label="Copy link to section: Required software dependencies." class="headerlink tooltipped tooltipped-ne" href="#required-software-dependencies" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p><em>Kassiopeia</em> has been designed with an eye towards keeping reliance on external
-software packages and libraries to a minimum. That being said, there are a few packages which are required
-in order to build the software the comes in <em>Kassiopeia</em> distribution.
-The first and most obvious is a C/C++ compiler which is new enough
-to support the C++11 standard. The two recommended compilers are gcc/g++ and clang. The minimum required
-versions are gcc 4.6 and clang 3.0.
-Secondly, in order to build <em>Kassiopeia</em>, GNU make and cmake version 2.8.6 or greater is needed.
-The <em>Kassiopeia</em> build system is based on the flexible cmake system which can be configured by
-the command line. However, it is extremely useful to install the command line
-curses-based cmake GUI interface in order to easily configure optional dependencies.</p>
+<p><em>Kassiopeia</em> has been designed with an eye towards keeping reliance on external software packages and libraries to a
+minimum. That being said, there are a few packages which are required in order to build the software.</p>
+<p>The first and most obvious is a C/C++ compiler which is new enough to support the C++14 standard. The two recommended
+compilers are GCC and Clang. The minimum required versions are gcc 5.0 and clang 3.4.</p>
+<p>Secondly, in order to build <em>Kassiopeia</em>, CMake version 3.13 or greater is needed, along with a suitable build tool such
+as GNU make or Ninja. The <em>Kassiopeia</em> build system is based on the flexible CMake system which can be configured by
+the command line. However, it is extremely useful to install the command line curses-based CMake GUI interface (ccmake)
+in order to easily configure optional dependencies.</p>
+<p>Thirdly, <em>Kassiopeia</em> requires the <a class="reference external" href="http://www.boost.org/">Boost<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> framework to be available for extended compilation features. It is not
+possible to compile <em>Kassiopeia</em> without a recent version of <a class="reference external" href="http://www.boost.org/">Boost<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>! The minimum required version is 1.61.</p>
+<section id="minimum-requirements">
+<h3>Minimum requirements<a aria-label="Copy link to section: Minimum requirements." class="headerlink tooltipped tooltipped-ne" href="#minimum-requirements" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
 build system can be installed through the use of the package manager through the following command:</p>
 <div class="highlight">
@@ -252,42 +307,97 @@ build system can be installed through the use of the package manager through the
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ sudo apt-get install build-essential cmake cmake-curses-gui
+<pre><code>$ apt-get update -y <span class="o">&amp;&amp;</span> apt-get install -y <span class="se">\</span>
+    build-essential cmake cmake-curses-gui <span class="se">\</span>
+    libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev <span class="se">\</span>
+    libpcl-dev libsqlite3-dev libssl-dev libtbb-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
 </code></pre></div>
-<p>Beyond the build system, there are only two software packages which could be considered absolutely
-required dependencies, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> (though this is not strictly true, if the user only wishes to compile <em>KEMField</em>).</p>
-<p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>), which is a collection of extremely useful numerical routines.
-We recommend compiling and installing <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> from the source if possible.
-However, the necessary libraries can be installed on Debian/Ubuntu linux with following command:</p>
+<p>On a RedHat/Fedora Linux system, the packages can be installed through the command:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ sudo apt-get install libgsl-dev
+<pre><code>$ dnf install -y <span class="se">\</span>
+    @development-tools cmake cmake-gui <span class="se">\</span>
+    root-core root-io-xmlparser root-minuit2 root-spectrum <span class="se">\</span>
+    vtk vtk-qt vtk-java <span class="se">\</span>
+    boost-devel fftw-devel gsl-devel hdf5-devel libomp-devel libxml2-devel log4cxx-devel <span class="se">\</span>
+    ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
 </code></pre></div>
-<p>The second required dependency is the <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> software from CERN. While <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> is not strictly required (e.g. if you
-are only interested in using <em>Kassiopeia</em> as a library for some external application), it does feature
-quite heavily as a means of saving simulation output data. Therefore, if you plan on saving the results
-and performing any analysis of <em>Kassiopeia</em> simulation results you will need to install <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>.</p>
+</section>
+<section id="required-dependencies">
+<h3>Required dependencies<a aria-label="Copy link to section: Required dependencies." class="headerlink tooltipped tooltipped-ne" href="#required-dependencies" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.cmake.org/">CMake<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> version 3.13 or higher</p></li>
+<li><p>g++ version 6.1 or higher (if compiling with <a class="reference external" href="https://gcc.gnu.org/">GCC<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></li>
+<li><p>clang++ version 3.4 or higher (if compiling with <a class="reference external" href="https://clang.llvm.org/">Clang<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></li>
+<li><p><a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> version 6.0 or higher</dt><dd><ul>
+<li><p><code class="docutils literal notranslate">--enable-minuit2</code> (if you want to use KaFit)</p></li>
+<li><p><code class="docutils literal notranslate">--enable-fftw3</code> (if you want to use KEMField)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="optional-dependencies">
+<h3>Optional dependencies<a aria-label="Copy link to section: Optional dependencies." class="headerlink tooltipped tooltipped-ne" href="#optional-dependencies" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<ul class="simple">
+<li><p>Boost_version 1.61 or higher</p></li>
+<li><p><a class="reference external" href="http://www.fftw.org/">FFTW<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> version 3.3.4 or higher</p></li>
+<li><p><a class="reference external" href="https://support.hdfgroup.org/HDF5/">HDF5<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://www.xmlsoft.org/">LibXml2<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://logging.apache.org/log4cxx/latest_stable/">Log4CXX<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://www.open-mpi.org/">OpenMPI<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or <a class="reference external" href="http://www.mpich.org/">MPICH<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://www.khronos.org/opencl/">OpenCL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>, installation details depend on your system</p></li>
+<li><p><a class="reference external" href="https://www.pointclouds.org/">PCL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://mcs.anl.gov/petsc/">PETSc<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://www.threadingbuildingblocks.org/">TBB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="http://www.zlib.net/">ZLIB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p><a class="reference external" href="https://www.doxygen.nl/">DoxyGen<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> for building the documentation</p></li>
+</ul>
+</section>
+<section id="external-libraries">
+<h3>External libraries<a aria-label="Copy link to section: External libraries." class="headerlink tooltipped tooltipped-ne" href="#external-libraries" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Beyond the build system, there are only two software packages which could be considered absolutely required
+dependencies, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> (though this is not strictly true, if the user only wishes to compile <em>KEMField</em>).</p>
+<p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>) is a collection of useful numerical routines. In the commands shown above, <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> was
+already installed through the package manager. It is also possible to install <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> from source.</p>
+<p>The second required dependency is the <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> software from CERN. While <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> is not strictly required (e.g. if you are
+only interested in using <em>Kassiopeia</em> as a library for some external application), it does feature quite heavily as a
+means of saving simulation output data. Therefore, if you plan on saving the results and performing any analysis of
+<em>Kassiopeia</em> simulation results you will need to install <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>.</p>
 <p>It is recommended that you install <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> by downloading and compiling the source code according
 to the instructions on the CERN website. <em>Kassiopeia</em> requires <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> to be built with XML support,
-and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> itself requires the X11, Xft, Xpm, and Xext development libraries. You may install
-the minimal set of development packages needed by ROOT on Debian/Ubuntu Linux by running the following command:</p>
+and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> itself requires the X11, Xft, Xpm, and Xext development libraries.</p>
+<p>You may install the development packages needed by ROOT on Debian/Ubuntu Linux by running the following command:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ sudo apt-get install libx11-dev libxpm-dev libxft-dev libxext-dev libxml2-dev
+<pre><code>$ sudo apt-get install -y libqt4-dev libx11-dev libxext-dev libxft-dev libxpm-dev
 </code></pre></div>
-<p>After compiling and installing ROOT, in order to compile <em>Kassiopeia</em> on Linux,
-your <code class="docutils literal notranslate">$PATH</code> and <code class="docutils literal notranslate">$LD_LIBRARY_PATH</code> environmental variables should be configured such that you can
-run the executables <code class="docutils literal notranslate">root</code> and <code class="docutils literal notranslate">root-config</code> from the command line. The configuration of
-these environmental variables is typically handled by ensuring that
-the script <code class="docutils literal notranslate">thisroot.sh</code> (distributed with the ROOT source code) is executed upon login. On Linux
-this an be done by adding the following (with the appropriate change to the file path)
-to your login script (<code class="docutils literal notranslate">~/.bashrc</code> file):</p>
+<p>On RedHat/Fedora Linux, <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> can be installed through the package manager:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>$ dnf install -y root-core root-io-xmlparser root-minuit2 root-spectrum
+</code></pre></div>
+<p>Instead of building the <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> libraries yourself, you can also download the binary release for your corresponding
+Linux distribution. The download links can be found on the CERN website.</p>
+<p>After compiling and installing ROOT, in order to compile <em>Kassiopeia</em> on Linux, your <code class="docutils literal notranslate">$PATH</code> and <code class="docutils literal notranslate">$LD_LIBRARY_PATH</code>
+environmental variables should be configured such that you can run the executables <code class="docutils literal notranslate">root</code> and <code class="docutils literal notranslate">root-config</code> from the
+command line.</p>
+<p>The configuration of these environmental variables is typically handled in a way to ensure that the script
+<code class="docutils literal notranslate">thisroot.sh</code> (distributed with the ROOT source code) is executed upon login. On Linux this an be done by adding the
+following (with the appropriate change to the file path) to your login script (<code class="docutils literal notranslate">~/.bashrc</code> file or similar):</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
@@ -296,47 +406,45 @@ to your login script (<code class="docutils literal notranslate">~/.bashrc</code
 <pre><code><span class="c1">#Set up the ROOT environmental variables</span>
 <span class="nb">source</span> &lt;path-to-ROOT-install&gt;/bin/thisroot.sh
 </code></pre></div>
-<p>Once you have <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> installed, if you do not require any additional features,
-you can then proceed with configuring and compiling <em>Kassiopeia</em>.</p>
+<p>Once you have <a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> installed, if you do not require any additional features, you can then proceed with
+configuring and compiling <em>Kassiopeia</em>.</p>
+<p>A third important dependency, which however is completely optional, is <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>. The <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> libraries are used to provide
+visualization methods directly in <em>Kassiopeia</em>, and to write output files that can be used with external software.
+On most platforms, <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> can be easily installed through the package manager, as shown above.</p>
+</section>
 </section>
 <section id="compiling-the-code-using-cmake">
 <h2>Compiling the code using CMake<a aria-label="Copy link to section: Compiling the code using CMake." class="headerlink tooltipped tooltipped-ne" href="#compiling-the-code-using-cmake" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p>After installing the required dependencies,
-compiling a basic plain-vanilla version of <em>Kassiopeia</em>, with no extra features
-is a relatively simple process. For the sake of simplicity, this guide will
-assume that the <em>Kassiopeia</em> source code is located in the user’s home directory
-in <code class="docutils literal notranslate">~/Kassiopeia</code>.</p>
-<p>To start, first <code class="docutils literal notranslate">cd</code> into Kassiopeia’s source directory
-and create a <code class="docutils literal notranslate">build</code> folder to hold the temporary files that will be created during compilation
-by executing the commands:</p>
+<p>After installing the required dependencies, compiling a basic plain-vanilla version of <em>Kassiopeia</em>, with no extra
+features is a relatively simple process. For the sake of simplicity, this guide will assume that the <em>Kassiopeia</em> source
+code is located in the user’s home directory in <code class="docutils literal notranslate">~/kassiopeia</code>.</p>
+<p>To start, first <code class="docutils literal notranslate">cd</code> into Kassiopeia’s source directory and create a <code class="docutils literal notranslate">build</code> folder to hold the temporary files that
+will be created during compilation by executing the commands:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ <span class="nb">cd</span> ~/Kassiopeia
+<pre><code>$ <span class="nb">cd</span> ~/kassiopeia
 $ mkdir ./build
 $ <span class="nb">cd</span> ./build
 </code></pre></div>
-<p>Before running cmake, consider if you have a preference for which compiler is used.
-You may select the compiler by setting the environmental variables <code class="docutils literal notranslate">CXX</code> and <code class="docutils literal notranslate">CC</code>.
-For example, for clang you should set them to:</p>
+<p>Before running CMake, consider if you have a preference for which compiler is used. You may select the compiler by
+setting the environmental variables <code class="docutils literal notranslate">CXX</code> and <code class="docutils literal notranslate">CC</code>. For example, for Clang you should set them to:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>clang++
-<span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span>clang
+<pre><code>$ <span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>clang++  <span class="nv">CC</span><span class="o">=</span>clang
 </code></pre></div>
-<p>while for the gcc toolchain use:</p>
+<p>while for the GCC toolchain use:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>g++
-<span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span>gcc
+<pre><code>$ <span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>g++ <span class="nv">CC</span><span class="o">=</span>gcc
 </code></pre></div>
 <p>Once you are within the build directory, you may bring up the cmake configuration GUI by typing:</p>
 <div class="highlight">
@@ -344,7 +452,7 @@ For example, for clang you should set them to:</p>
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>$ ccmake ../
+<pre><code>$ ccmake ..
 </code></pre></div>
 <p>You will be presented with screen which looks like this:</p>
 <a class="reference internal image-reference" href="_images/cmake_empty_cache.png"><img alt="_images/cmake_empty_cache.png" src="_images/cmake_empty_cache.png" style="width: 500pt;"/></a>
@@ -353,29 +461,51 @@ For example, for clang you should set them to:</p>
 <p>The cmake output might contain important information about your build configuration and its dependencies. Look at
 the messages carefully. Then press <code class="docutils literal notranslate">e</code> to go back to the menu, this will lead to a screen as below.</p>
 <a class="reference internal image-reference" href="_images/cmake_initial_config.png"><img alt="_images/cmake_initial_config.png" src="_images/cmake_initial_config.png" style="width: 500pt;"/></a>
-<p>At this point you may either accept the default values or
-use the arrow keys to select which option you wish to change. Press the <code class="docutils literal notranslate">enter</code> key
-to activate/deactive an option for modification. The installation directory
-for the <em>Kassiopeia</em> software can be specified by setting the value of
-the option CMAKE_INSTALL_PREFIX. Once the configuration variable are set
-or if you accept the defaults, hit <code class="docutils literal notranslate">c</code> to configure again, and then <code class="docutils literal notranslate">g</code> to generate
-the make file and exit. Once the make file
-is generated, you can compile and install <em>Kassiopeia</em> by simply executing:</p>
+<p>At this point you may either accept the default values or use the arrow keys to select which option you wish to change.
+Press the <code class="docutils literal notranslate">enter</code> key to activate/deactive an option for modification. The installation directory for the <em>Kassiopeia</em>
+software can be specified by setting the value of the option CMAKE_INSTALL_PREFIX. Once the configuration variables are
+set (or if you accept the defaults), hit <code class="docutils literal notranslate">c</code> to configure again, and then <code class="docutils literal notranslate">g</code> to generate the make file and exit.</p>
+<p>Once the build files are generated, you can compile and install <em>Kassiopeia</em> by simply executing:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>make <span class="o">&amp;&amp;</span> make install
+<pre><code>$ make <span class="o">&amp;&amp;</span> make install
 </code></pre></div>
-<p>As compilation can take some time, you may use multiple CPU cores to accelerate the compilation,
-by passing <code class="docutils literal notranslate">make</code> the <code class="docutils literal notranslate">-j</code> option (e.g <code class="docutils literal notranslate">make -j 4 install</code> to compile using four CPU cores).</p>
+<p>or using the corresponding command for the build tool of your choice (e.g. <code class="docutils literal notranslate">ninja</code>).</p>
+<p>As compilation can take some time, you may use multiple CPU cores to accelerate the compilation (e.g run
+<code class="docutils literal notranslate">make -j 4 install</code> to compile using four CPU cores).</p>
+<section id="environment-variables">
+<h3>Environment variables<a aria-label="Copy link to section: Environment variables." class="headerlink tooltipped tooltipped-ne" href="#environment-variables" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>After the compilation is completed and <em>Kassiopeia</em> has been installed to the installation directory, it is useful to
+set up some environment variables that allow you ton run <code class="docutils literal notranslate">Kassiopeia</code> and other commands from any location. A script
+is provided that provides a similar functionality to the <code class="docutils literal notranslate">thisroot.sh</code> script explained above. To set up <em>Kassiopeia</em>
+with the script, copy the following lines to your <code class="docutils literal notranslate">~/.bashrc</code> (or similar), then logout and login again:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="c1">#Set up the Kassiopeia environmental variables</span>
+<span class="nb">source</span> ~/kassiopeia/install/bin/kasperenv.sh
+</code></pre></div>
+<p>The script will define a few environment variables that can be used outside of <em>Kassiopeia</em>:</p>
+<ul class="simple">
+<li><p>KASPERSYS - the location of <em>Kassiopeia</em> binaries, libraries and configuration files.</p></li>
+<li><p>KEMFIELD_CACHE - the location of the <em>KEMField</em> cache directory</p></li>
+<li><p>KASPER_SOURCE - the location of the <em>Kassiopeia</em> source directory</p></li>
+<li><p>KASPER_INSTALL - the location of the <em>Kassiopeia</em> installation directory</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate">KASPERSYS</code> and <code class="docutils literal notranslate">KEMFIELD_CACHE</code> can, in principle, be changed to different locations before running
+simulations. This is intended to allow more flexible configurations on multi-user systems, or when multiple independent
+instances of the <em>Kassiopeia</em> software are installed. For the typical user, the variables can be left as they are.</p>
+</section>
 </section>
 <section id="directory-structure-and-environmental-variables">
 <h2>Directory structure and environmental variables<a aria-label="Copy link to section: Directory structure and environmental variables." class="headerlink tooltipped tooltipped-ne" href="#directory-structure-and-environmental-variables" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p>Once compiled, the complete set of <em>Kassiopiea</em> executables and configuration files will be
-found in the specified installation directory. The installation directory is broken
-down into several components, these are:</p>
+<p>Once compiled, the complete set of <em>Kassiopiea</em> executables and configuration files will be found in the specified
+installation directory. The installation directory is broken down into several components, these are:</p>
 <ul class="simple">
 <li><p>bin</p></li>
 <li><p>cache</p></li>
@@ -388,69 +518,58 @@ down into several components, these are:</p>
 <li><p>output</p></li>
 <li><p>scratch</p></li>
 </ul>
-<p>The <em>Kassiopeia</em> executable can be found under the <code class="docutils literal notranslate">bin</code> directory. Also in this directory
-is the script <code class="docutils literal notranslate">kasperenv.sh</code>, which can be used to configure all the necessary environmental variables
-needed to run <em>Kassiopeia</em>, by executing <code class="docutils literal notranslate">source ./kasperenv.sh</code> at the command prompt.</p>
-<p>The <code class="docutils literal notranslate">bin</code> directory also contains other executables useful for interacting with the sub-components of
-<em>Kassiopeia</em> such as the <em>KEMField</em> or <em>KGeoBag</em> libraries.</p>
-<p>The <code class="docutils literal notranslate">lib</code> directory contains all of the compiled libraries, as well as cmake and pkgconfig modules to enable
-linking against <em>Kassiopeia</em> by external programs. The <code class="docutils literal notranslate">include</code> directory contains all of the header files
-of the compiled program.</p>
-<p>The other directories: <code class="docutils literal notranslate">cache, config, data, doc, log, output,</code> and <code class="docutils literal notranslate">scratch</code> are all further sub-divided
-into parts which relate to each sub-module of the code: <em>Kassiopeia</em>, <em>Kommon</em>, <em>KGeoBag</em>, or <em>KEMField</em>. The
-<code class="docutils literal notranslate">cache</code> and <code class="docutils literal notranslate">scratch</code> directories are responsible for storing temporary files needed during run time for
-later reuse. The <code class="docutils literal notranslate">data</code> directory contains raw data distributed with <em>Kassiopeia</em> needed for certain calculations
-(e.g. molecular hydrogen scattering cross sections). The <code class="docutils literal notranslate">log</code> directory provides space to collect logging output
-from simulations, while the <code class="docutils literal notranslate">output</code> directory is where simulation output is saved unless otherwise specified.</p>
-<p>Once you have finished installing <em>Kassiopeia</em> and setting up
-the appropriate environmental variables you can attempt to run it (without arguments)
-by doing:</p>
+<p>The <em>Kassiopeia</em> executable can be found under the <code class="docutils literal notranslate">bin</code> directory. Also in this directory is the script
+<code class="docutils literal notranslate">kasperenv.sh</code> that was mentioned above.</p>
+<p>The <code class="docutils literal notranslate">bin</code> directory also contains other executables useful for interacting with the sub-components of <em>Kassiopeia</em>
+such as the <em>KEMField</em> or <em>KGeoBag</em> libraries. This included tools for generating particles without running a full
+simulation, for calculating electromagnetic fields, or for visualizing the simulation geometry.</p>
+<p>The <code class="docutils literal notranslate">lib</code> directory contains all of the compiled libraries, as well as cmake and pkgconfig modules to enable linking
+against <em>Kassiopeia</em> by external programs. The <code class="docutils literal notranslate">include</code> directory contains all of the header files of the compiled
+programs and libraries.</p>
+<p>The other directories: <code class="docutils literal notranslate">cache</code>, <code class="docutils literal notranslate">config</code>, <code class="docutils literal notranslate">data</code>, <code class="docutils literal notranslate">doc</code>, <code class="docutils literal notranslate">log</code>, <code class="docutils literal notranslate">output</code>, and <code class="docutils literal notranslate">scratch</code> are all further
+sub-divided into parts which relate to each sub-module of the code: <em>Kassiopeia</em>, <em>Kommon</em>, <em>KGeoBag</em>, or <em>KEMField</em>.
+The <code class="docutils literal notranslate">cache</code> and <code class="docutils literal notranslate">scratch</code> directories are responsible for storing temporary files needed during run time for later
+reuse. The <code class="docutils literal notranslate">data</code> directory contains raw data distributed with <em>Kassiopeia</em> needed for certain calculations (e.g.
+molecular hydrogen scattering cross sections). The <code class="docutils literal notranslate">log</code> directory provides space to collect logging output from
+simulations, while the <code class="docutils literal notranslate">output</code> directory is where simulation output is saved, unless otherwise specified.</p>
+<section id="executing-kassiopeia">
+<h3>Executing Kassiopeia<a aria-label="Copy link to section: Executing Kassiopeia." class="headerlink tooltipped tooltipped-ne" href="#executing-kassiopeia" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Once you have finished installing <em>Kassiopeia</em> and setting up the appropriate environmental variables you can attempt to
+run it (without arguments) by executing:</p>
 <div class="highlight">
 <div class="code-header">
 <span class="code-lang">bash</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="nb">cd</span> &lt;path-to-Kassiopeia-install&gt;/bin/
-./Kassiopeia
+<pre><code>$ <span class="nb">cd</span> ~/kassiopeia/install/bin/
+$ ./Kassiopeia
 </code></pre></div>
 <p>The output of which should be:</p>
 <div class="highlight">
 <div class="code-header">
-<span class="code-lang">bash</span>
+<span class="code-lang"></span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code>usage: ./Kassiopeia &lt;config_file_one.xml&gt; <span class="o">[</span>&lt;config_file_one.xml&gt; &lt;...&gt;<span class="o">]</span> <span class="o">[</span> -r <span class="nv">variable1</span><span class="o">=</span>value1 <span class="nv">variable2</span><span class="o">=</span>value ... <span class="o">]</span>
+<pre><code>usage: ./Kassiopeia &lt;config_file_one.xml&gt; [&lt;config_file_one.xml&gt; &lt;...&gt;] [ -r variable1=value1 variable2=value ... ]
 </code></pre></div>
 <p>If you receive error (either immediately, or at some later time) starting with the following:</p>
 <div class="highlight">
 <div class="code-header">
-<span class="code-lang">bash</span>
+<span class="code-lang"></span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="o">[</span>INITIALIZATION ERROR MESSAGE<span class="o">]</span> variable &lt;KASPERSYS&gt; is not defined
+<pre><code>[INITIALIZATION ERROR MESSAGE] variable &lt;KASPERSYS&gt; is not defined
 </code></pre></div>
-<p>then you need to (re)execute the <code class="docutils literal notranslate">kasperenv.sh</code> script to ensure the environmental variables are set up properly.
-In order to auto-initialize these environmental variables upon login, the user
-may add the following:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code><span class="c1">#Set up the Kassiopeia environmental variables</span>
-<span class="nb">source</span> &lt;path-to-Kassiopeia-install&gt;/bin/kasperenv.sh
-</code></pre></div>
-<p>to their login (<code class="docutils literal notranslate">~/.bashrc</code>) script.</p>
+<p>then you need to (re)execute the <code class="docutils literal notranslate">kasperenv.sh</code> script to ensure the environmental variables are set up properly.</p>
+</section>
 </section>
 <section id="configuring-optional-dependencies">
 <h2>Configuring optional dependencies<a aria-label="Copy link to section: Configuring optional dependencies." class="headerlink tooltipped tooltipped-ne" href="#configuring-optional-dependencies" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
-<p><em>Kassiopeia</em> has a plethora of optional dependencies which provide additional
-capabilities and enhance the performance of the software. This optional dependencies
-are configurable through the cmake GUI interface. However, some of these optional
-settings require additional libraries or special hardware in order to operate.</p>
-<p>The use of some external libraries, (e.g. <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>) is collectively toggled
-for all sub-modules at once. The <em>Kassiopeia</em> simulation software can link against
-these libraries using the <em>Kasper</em> flags outlined in the table below:</p>
+<p><em>Kassiopeia</em> has a plethora of optional dependencies which provide additional capabilities and enhance the performance
+of the software. This optional dependencies are configurable through the cmake GUI interface. However, some of these
+optional settings require additional libraries or special hardware in order to operate.</p>
+<p>The use of some external libraries, (e.g. <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>) is collectively toggled for all sub-modules at once. The
+<em>Kassiopeia</em> simulation software can link against these libraries using the <em>Kasper</em> flags outlined in the table below:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%"/>
@@ -466,43 +585,95 @@ these libraries using the <em>Kasper</em> flags outlined in the table below:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-odd"><td><p>Kasper_USE_BOOST</p></td>
+<tr class="row-odd"><td><p>KASPER_EXPERIMENTAL</p></td>
+<td><p>None</p></td>
+<td><p>Enable experimental code. Use with care!</p></td>
+</tr>
+<tr class="row-even"><td><p>KASPER_USE_BOOST</p></td>
 <td><p><a class="reference external" href="http://www.boost.org/">Boost<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> developer libraries</p></td>
 <td><p>Build Boost dependent extensions.</p></td>
 </tr>
-<tr class="row-even"><td><p>Kasper_USE_GSL</p></td>
+<tr class="row-odd"><td><p>KASPER_USE_GSL</p></td>
 <td><p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></td>
 <td><p>Build GSL dependent extensions</p></td>
 </tr>
-<tr class="row-odd"><td><p>Kasper_USE_ROOT</p></td>
+<tr class="row-even"><td><p>KASPER_USE_ROOT</p></td>
 <td><p>The CERN <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> libraries</p></td>
 <td><p>Build ROOT dependent extensions.</p></td>
 </tr>
-<tr class="row-even"><td><p>Kasper_USE_TBB</p></td>
+<tr class="row-odd"><td><p>KASPER_USE_TBB</p></td>
 <td><p>Intel (<a class="reference external" href="https://www.threadingbuildingblocks.org/">TBB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>) thread building blocks</p></td>
-<td><p>Build <a class="reference external" href="https://www.threadingbuildingblocks.org/">TBB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> based parallel processing tools.</p></td>
+<td><p>Build TBB based parallel processing tools.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Kasper_USE_VTK</p></td>
+<tr class="row-even"><td><p>KASPER_USE_VTK</p></td>
 <td><p>Kitware’s visualization toolkit <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></td>
 <td><p>Build advanced tools for visualization.</p></td>
 </tr>
 </tbody>
 </table>
-<p>By default, the <code class="docutils literal notranslate">Kasper_USE_ROOT</code> and <code class="docutils literal notranslate">Kasper_USE_GSL</code> flags are turned on,
-reflecting their importance for the default configuration of <em>Kassiopeia</em>.</p>
-<p>Toggling of additional optional dependencies is very granular and may be enabled/disabled
-for the individual sub-modules: (<em>Kassiopeia</em>, <em>Kommon</em>, <em>KEMField, or *KGeoBag</em>). It is important
-to note changes in one sub-module may affect others since there is some interdependence between optional
-features across sub-modules. This is automatically
-accounted for by the cmake system in order to prevent situations where prerequisites are missing.
-To summarize the possible optional dependencies that are available, they
-have been divided according to the sub-module(s) which they modify. For performance reasons
-all of the sub-modules explicitly allow the toggling of debugging
-messages (which are disabled by default).</p>
+<p>By default, the <code class="docutils literal notranslate">KASPER_USE_ROOT</code> and <code class="docutils literal notranslate">KASPER_USE_GSL</code> flags are turned on, reflecting their importance for the
+default configuration of <em>Kassiopeia</em>. The <code class="docutils literal notranslate">KASPER_USE_BOOST</code> flag cannot be turned off when building <em>Kassiopeia</em>,
+although it is not required for <em>KEMField</em>.</p>
+<p>The <code class="docutils literal notranslate">KASPER_USE_VTK</code> flag enables the use of <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> for additional visualization tools. It should be noted that if you
+have any interest in visualizing the data output from a Kassiopiea simulation, the use of <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> is highly recommended.</p>
+<p>Toggling of additional optional dependencies is very granular and may be enabled/disabled for the individual
+sub-modules. It is important to note changes in one sub-module may affect others since there is some interdependence
+between optional features across sub-modules. This is automatically accounted for by the CMake system in order to
+prevent situations where prerequisites are missing. To summarize the possible optional dependencies that are available,
+they have been divided according to the sub-module(s) which they modify.</p>
+<p>For performance reasons, all of the sub-modules explicitly allow the toggling of debugging messages (which are disabled
+by default). If the corresponding flags (see below) are turned on, the software may run at reduced speed, but allows
+to enable printing of additional messages during execution. This is mostly useful for in-depth debugging.</p>
+<section id="build-options">
+<h3>Build options<a aria-label="Copy link to section: Build options." class="headerlink tooltipped tooltipped-ne" href="#build-options" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The following options control the overall build process:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%"/>
+<col style="width: 36%"/>
+<col style="width: 41%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Build options</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>CMake option name</p></th>
+<th class="head"><p>Required sub-modules</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>BUILD_KASSIOPEIA</p></td>
+<td><p>Kommon, KGeoBag, KEMField</p></td>
+<td><p>Build the <em>Kassiopeia</em> sub-module.</p></td>
+</tr>
+<tr class="row-even"><td><p>BUILD_KEMFIELD</p></td>
+<td><p>Kommon, KGeoBag</p></td>
+<td><p>Build the <em>KEMField</em> sub-module.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BUILD_KGEOBAG</p></td>
+<td><p>Kommon</p></td>
+<td><p>Build the <em>KGeoBag</em> sub-module.</p></td>
+</tr>
+<tr class="row-even"><td><p>BUILD_KOMMON</p></td>
+<td><p>None</p></td>
+<td><p>Build the <em>Kommon</em> sub-module.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BUILD_UNIT_TESTS</p></td>
+<td><p>(Any active)</p></td>
+<td><p>Build unit tests for active sub-modules.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate">BUILD_UNIT_TESTS</code> flag enables the compilation of additional unit tests for some parts of the code. The tests
+only built for the active sub-modules. The unit tests uses the <a class="reference external" href="https://github.com/google/googletest/">GoogleTest<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> suite, which is embedded in the sources
+so that not external dependencies are required.</p>
+</section>
+<section id="kassiopeia-module">
+<h3>Kassiopeia module<a aria-label="Copy link to section: Kassiopeia module." class="headerlink tooltipped tooltipped-ne" href="#kassiopeia-module" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>The <em>Kassiopeia</em> sub-module has a rather limited set of additional options, which is:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 22%"/>
+<col style="width: 23%"/>
 <col style="width: 36%"/>
 <col style="width: 41%"/>
 </colgroup>
@@ -521,32 +692,71 @@ messages (which are disabled by default).</p>
 </tr>
 </tbody>
 </table>
-<p>The optional dependencies the <em>Kommon</em> sub-module are given in the following table:</p>
+</section>
+<section id="kemfield-module">
+<h3>KEMField module<a aria-label="Copy link to section: KEMField module." class="headerlink tooltipped tooltipped-ne" href="#kemfield-module" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>KEMField has a rather extensive set of additional compiler options so that it maybe adapted for
+use on special purpose machines (computing clusters, GPUs, etc.) for field solving tasks.
+These are listed as follows:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 19%"/>
+<col style="width: 20%"/>
+<col style="width: 4%"/>
 <col style="width: 38%"/>
-<col style="width: 43%"/>
+<col style="width: 38%"/>
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head" colspan="3"><p>Kommon options</p></th>
+<tr class="row-odd"><th class="head" colspan="4"><p>KEMField options</p></th>
 </tr>
-<tr class="row-even"><th class="head"><p>CMake option name</p></th>
+<tr class="row-even"><th class="head" colspan="2"><p>CMake option name</p></th>
 <th class="head"><p>Required software</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-odd"><td><p>Kommon_ENABLE_DEBUG</p></td>
-<td><p>None</p></td>
-<td><p>Enable Kommon debugging messages.</p></td>
+<tr class="row-odd"><td colspan="3"><p>KEMField_ENABLE_DEBUG         | None</p></td>
+<td><p>Enable KEMField debugging messages.</p></td>
 </tr>
-<tr class="row-even"><td><p>Kommon_USE_Log4CXX</p></td>
-<td><p>Apache <a class="reference external" href="https://logging.apache.org/log4cxx/latest_stable/">Log4CXX<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> library</p></td>
-<td><p>Enable enhanced logging tools.</p></td>
+<tr class="row-even"><td colspan="3"><p>KEMField_ENABLE_FM_APP        | None</p></td>
+<td><p>Build fast-multipole library applications.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>KEMField_ENABLE_FM_TEST</p></td>
+<td><p>None</p></td>
+<td><p>Build fast-multipole developter tests.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>KEMField_ENABLE_TEST</p></td>
+<td><p>None</p></td>
+<td><p>Build developer tests.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>KEMField_USE_CUDA</p></td>
+<td><p>The <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> developer toolkit</p></td>
+<td><p>Enable CUDA extensions for NVidia GPUs.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>KEMField_USE_FFTW</p></td>
+<td><p>The <a class="reference external" href="http://www.fftw.org/">FFTW<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> fast Fourier transform library</p></td>
+<td><p>Enable use of FFTW (conflicts with OpenCL).</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>KEMField_USE_GSL</p></td>
+<td><p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></td>
+<td><p>Enable GSL dependent extensions, enables CBLAS.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>KEMField_USE_MPI</p></td>
+<td><p>An MPI implementation (e.g. <a class="reference external" href="https://www.open-mpi.org/">OpenMPI<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or <a class="reference external" href="http://www.mpich.org/">MPICH<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></td>
+<td><p>Enable multi-processing using MPI.</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>KEMField_USE_OPENCL</p></td>
+<td><p>The <a class="reference external" href="https://www.khronos.org/opencl/">OpenCL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> headers and library</p></td>
+<td><p>Enable use of GPU/Accelerator devices.</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>KEMField_USE_ZLIB</p></td>
+<td><p>The <a class="reference external" href="http://www.zlib.net/">ZLIB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> compression library</p></td>
+<td><p>Use ZLIB for compression, default is <a class="reference external" href="https://code.google.com/archive/p/miniz/">miniz<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>.</p></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="kgeobag-module">
+<h3>KGeoBag module<a aria-label="Copy link to section: KGeoBag module." class="headerlink tooltipped tooltipped-ne" href="#kgeobag-module" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>The additional optional dependencies of the <em>KGeoBag</em> module are as follows:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -573,17 +783,18 @@ messages (which are disabled by default).</p>
 </tr>
 </tbody>
 </table>
-<p>KEMField has a rather extensive set of additional compiler options so that it maybe adapted for
-use on special purpose machines (computing clusters, GPUs, etc.) for field solving tasks.
-These are listed as follows:</p>
+</section>
+<section id="kommon-module">
+<h3>Kommon module<a aria-label="Copy link to section: Kommon module." class="headerlink tooltipped tooltipped-ne" href="#kommon-module" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>The optional dependencies the <em>Kommon</em> sub-module are given in the following table:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 24%"/>
+<col style="width: 19%"/>
 <col style="width: 38%"/>
-<col style="width: 38%"/>
+<col style="width: 43%"/>
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head" colspan="3"><p>KEMField options</p></th>
+<tr class="row-odd"><th class="head" colspan="3"><p>Kommon options</p></th>
 </tr>
 <tr class="row-even"><th class="head"><p>CMake option name</p></th>
 <th class="head"><p>Required software</p></th>
@@ -591,66 +802,57 @@ These are listed as follows:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-odd"><td><p>KEMField_ENABLE_FM_APP</p></td>
+<tr class="row-odd"><td><p>Kommon_ENABLE_DEBUG</p></td>
 <td><p>None</p></td>
-<td><p>Build fast-multipole library applications.</p></td>
+<td><p>Enable Kommon debugging messages.</p></td>
 </tr>
-<tr class="row-even"><td><p>KEMField_ENABLE_FM_TEST</p></td>
-<td><p>None</p></td>
-<td><p>Build fast-multipole developter tests.</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_ENABLE_TEST</p></td>
-<td><p>None</p></td>
-<td><p>Build developer tests.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_SILENT</p></td>
-<td><p>None</p></td>
-<td><p>Suppress all debugging output.</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_USE_CUDA</p></td>
-<td><p>The <a class="reference external" href="https://developer.nvidia.com/cuda-toolkit">CUDA<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> developer toolkit</p></td>
-<td><p>Enable CUDA extensions for NVidia GPUs.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_USE_FFTW</p></td>
-<td><p>The <a class="reference external" href="http://www.fftw.org/">FFTW<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> fast Fourier transform library</p></td>
-<td><p>Enable use of FFTW (conflicts with OpenCL).</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_USE_GSL</p></td>
-<td><p>The GNU scientific library (<a class="reference external" href="https://www.gnu.org/software/gsl/">GSL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></td>
-<td><p>Enable GSL dependent extensions, enables CBLAS.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_USE_KGEOBAG</p></td>
-<td><p>KGeoBag</p></td>
-<td><p>Enable geometric modeling and boundary meshing.</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_USE_KMESSAGE</p></td>
-<td><p>Kommon</p></td>
-<td><p>Fancy debugging messages from Kommon.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_USE_KOMMON</p></td>
-<td><p>Kommon</p></td>
-<td><p>Enable Kommon dependent extensions.</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_USE_KOMMON_BINDINGS</p></td>
-<td><p>Kommon</p></td>
-<td><p>Enable XML bindings.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_USE_MPI</p></td>
-<td><p>An MPI implementation (e.g. <a class="reference external" href="https://www.open-mpi.org/">OpenMPI<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or <a class="reference external" href="http://www.mpich.org/">MPICH<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>)</p></td>
-<td><p>Enable multi-processing using MPI.</p></td>
-</tr>
-<tr class="row-odd"><td><p>KEMField_USE_OPENCL</p></td>
-<td><p>The <a class="reference external" href="https://www.khronos.org/opencl/">OpenCL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> headers and library</p></td>
-<td><p>Enable use of GPU/Accelerator devices.</p></td>
-</tr>
-<tr class="row-even"><td><p>KEMField_USE_ZLIB</p></td>
-<td><p>The <a class="reference external" href="http://www.zlib.net/">ZLIB<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> compression library</p></td>
-<td><p>Use ZLIB for compression, default is <a class="reference external" href="https://code.google.com/archive/p/miniz/">miniz<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>.</p></td>
+<tr class="row-even"><td><p>Kommon_USE_Log4CXX</p></td>
+<td><p>Apache <a class="reference external" href="https://logging.apache.org/log4cxx/latest_stable/">Log4CXX<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> library</p></td>
+<td><p>Enable enhanced logging tools.</p></td>
 </tr>
 </tbody>
 </table>
-<p>It should be noted that if you have any interest in visualizing the data output from a Kassiopiea simulation,
-the use of the <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> toolkit is highly recommended.</p>
+</section>
+<section id="miscellaneous-options">
+<h3>Miscellaneous options<a aria-label="Copy link to section: Miscellaneous options." class="headerlink tooltipped tooltipped-ne" href="#miscellaneous-options" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Some of the miscellaneous not specific to a sub-module are given below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%"/>
+<col style="width: 28%"/>
+<col style="width: 51%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Miscellaneous options</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>CMake option name</p></th>
+<th class="head"><p>Default setting</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>CMAKE_BUILD_TYPE</p></td>
+<td><p>RelWithDebInfo</p></td>
+<td><p>Build type; other options are Debug or Release.</p></td>
+</tr>
+<tr class="row-even"><td><p>CMAKE_INSTALL_PREFIX</p></td>
+<td><p>&lt;path-to-source-dir&gt;/install</p></td>
+<td><p>Target directory for the installation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ENABLE_PROFILING</p></td>
+<td><p>OFF</p></td>
+<td><p>Allow code profiling with the <a class="reference external" href="https://github.com/gperftools/gperftools/">gperftools<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> framework.</p></td>
+</tr>
+<tr class="row-even"><td><p>COMPILER_TUNE_OPTIONS</p></td>
+<td><p>OFF</p></td>
+<td><p>Activate some compiler flags to improve performance.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate">COMPILER_TUNE_OPTIONS</code> flag activates the compiler options: <code class="docutils literal notranslate">-march=native -mfpmath=sse -funroll-loops</code>. Since
+this produces code compiled for the current CPU, this option should not be used on a computing cluster or other
+architectures where compiled code is shared between different machines. Be aware that this option is largely untested.</p>
+</section>
 </section>
 </section>
 <section class="flex justify-between pt-4 mt-12">

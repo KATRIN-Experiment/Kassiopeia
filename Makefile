@@ -14,8 +14,8 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 github:
-	@rm -rf "$(HTMLDIR)"
 	@make html
+	@rm -rf "$(HTMLDIR)"
 	@mv "$(BUILDDIR)/html" "$(HTMLDIR)"
 	@touch "$(HTMLDIR)/.nojekyll"
 

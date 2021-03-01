@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Kassiopeia Docs'
+project = 'Kassiopeia'
 copyright = '2021, The Kassiopeia developers.'
 author = 'The Kassiopeia developers'
 
@@ -55,7 +55,7 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-highlight_language = 'bash'
+highlight_language = ''
 
 
 # -- Options for HTML output -------------------------------------------------
