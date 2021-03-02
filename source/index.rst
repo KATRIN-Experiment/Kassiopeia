@@ -22,6 +22,7 @@ Contents:
     Basic KGeoBag Shapes <kgeobag_basic.rst>
     Complex KGeoBag Shapes <kgeobag_complex.rst>
     Understanding Simulation Output <output.rst>
+    Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
     License <license.rst>
     Authors <authors.rst>

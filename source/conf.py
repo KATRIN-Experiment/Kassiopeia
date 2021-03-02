@@ -41,10 +41,13 @@ extensions = [
     'sphinx.ext.mathjax',
 ]
 
-extlinks = {'gh-issue': ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',
-                         'issue '),
-            'gh-file':  ('https://github.com/KATRIN-Experiment/Kassiopeia/tree/master/%s',
-                         'file'),
+extlinks = {
+    'gh-issue':     ('https://github.com/KATRIN-Experiment/Kassiopeia/issues/%s',
+                     'Issue '),
+    'gh-pull':      ('https://github.com/KATRIN-Experiment/Kassiopeia/pull/%s',
+                     'Pull request '),
+    'gh-code':      ('https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/%s',
+                     'GitHub: '),
 }
 
 # Add any paths that contain templates here, relative to this directory.

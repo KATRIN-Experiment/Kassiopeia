@@ -60,6 +60,10 @@ Next in this section, we will investigate a number of pre-configured example fil
 These files serve as a working example of various features of the simulation, but also as a reference for your own
 configurations. Please take some time to investigate these example files.
 
+The example configurations can be found online at :gh-code:`Kassiopeia/XML/Examples` and are installed to:
+
+    ``$KASPERSYS/config/Kassiopeia/Examples/``
+
 The Dipole Trap Example
 """""""""""""""""""""""
 
