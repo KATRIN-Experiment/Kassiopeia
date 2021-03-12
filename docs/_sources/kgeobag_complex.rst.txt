@@ -3,14 +3,13 @@
 Complex Shapes in KGeoBag
 *************************
 
-This section describes the more complicated shapes available in KGeoBag. Since as of yet, KGeoBag
-lacks the ability to perform boolean operations on solids (constructive solid geometry), shapes
-which cannot be represented as an assembly of basic shapes must be explicitly defined in C++.
-However, to augment the basic shapes, KGeoBag provides some addition complex shapes
-that are commonly encountered in experimental structures such as vacuum chambers, etc.
+This section describes the more complicated shapes available in *KGeoBag*. Since as of yet, *KGeoBag* lacks the ability
+to perform boolean operations on solids (constructive solid geometry), shapes which cannot be represented as an assembly
+of basic shapes must be explicitly defined in C++. However, to augment the basic shapes, *KGeoBag* provides some
+additional complex shapes that are commonly encountered in experimental structures such as vacuum chambers, etc.
 
-Some of the examples in this section make use of the the more advanced features of the XML
-parser, including loops, conditional statements, and equation evaluation.
+Some of the examples in this section make use of the the more advanced features of the XML parser, including loops,
+conditional statements, and equation evaluation.
 
 Surfaces
 --------
@@ -18,14 +17,14 @@ Surfaces
 Pump Port
 ~~~~~~~~~
 
-The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers).
-The coordinates x,y,z are the end points of the ports. The ports can only be created in radial direction.
+The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers). The
+coordinates (x,y,z) are the end points of the ports. The ports can only be created in radial direction.
 
-.. image:: _images/kgeobag_shapes/port_housing_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_port_housing_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 An XML example is as follows:
 
@@ -42,15 +41,14 @@ An XML example is as follows:
 Conic section pump port
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This shape is a cut cone surface with circular ports.
-The ports can be created either orthogonal to the surface or parallel to the cone axis (paraxial).
-The coordinates x,y,z are the end points of the port.
+This shape is a cut cone surface with circular ports. The ports can be created either orthogonal to the surface or
+parallel to the cone axis (paraxial). The coordinates (x,y,z) are the end points of the port.
 
-.. image:: _images/kgeobag_shapes/conic_section_port_housing_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_conic_section_port_housing_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 An XML example is as follows:
 
@@ -58,37 +56,37 @@ An XML example is as follows:
 
     <conic_section_port_housing_surface name="example_conic_section_port_housing_surface">
       <conic_section_port_housing r1="2.75" z1="-1.79675" r2="0.25" z2="-0.067" longitudinal_mesh_count="100" axial_mesh_count="100">
-	<define name="offset" value="2."/>
-	<define name="nPorts" value="6"/>
-	<loop variable="i" start="0" end="{[nPorts]-1}" step="1">
-	  <if condition="{([i] mod 2) eq 0}">
-	    <orthogonal_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
-	  </if>
-	  <if condition="{([i] mod 2) eq 1}">
-	    <paraxial_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
-	  </if>
-	</loop>
+    <define name="offset" value="2."/>
+    <define name="nPorts" value="6"/>
+    <loop variable="i" start="0" end="{[nPorts]-1}" step="1">
+      <if condition="{([i] mod 2) eq 0}">
+        <orthogonal_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+      </if>
+      <if condition="{([i] mod 2) eq 1}">
+        <paraxial_port x="{[offset]*TMath::Cos(2.*TMath::Pi()*[i]/[nPorts])}" y="{[offset]*TMath::Sin(2.*TMath::Pi()*[i]/[nPorts])}" z=".5" radius="{.05 + .05*([i]+1)}"/>
+      </if>
+    </loop>
       </conic_section_port_housing>
     </conic_section_port_housing_surface>
 
 Beam
 ~~~~
 
-A beam creates a pipe which connects two polygons at each end.
-The polygons must have the same number of vertices but may lie in planes which are not parallel to each other.
-For the description of the parameters involved see the images below.
+A beam creates a pipe which connects two polygons at each end. The polygons must have the same number of vertices but
+may lie in planes which are not parallel to each other. For the description of the parameters involved see the images
+below.
 
-.. image:: _images/kgeobag_shapes/beam_description.png
-   :width: 500pt
+.. image:: _images/beam_description.png
+   :width: 250pt
 
-In the following example, the variable ``[poly]`` dictates the the number of
-vertexes in each polygon at the ends of the beam.
+In the following example, the variable ``[poly]`` dictates the the number of vertexes in each polygon at the ends of the
+beam.
 
-.. image:: _images/kgeobag_shapes/beam_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_beam_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 An XML example is as follows:
 
@@ -111,8 +109,8 @@ An XML example is as follows:
 
 The beam shape can also be used to create more complex objects, such as a cut cone with two more cuts at both ends.
 
-.. image:: _images/kgeobag_shapes/multicut_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_multicut_surface_model.png
+   :width: 400pt
 
 An XML example is as follows:
 
@@ -151,17 +149,16 @@ An XML example is as follows:
 Rod
 ~~~
 
-The rod element can be used to create a rod like structure along
-a series of linear segments in three dimensional space. The rod has a circular
-cross section which is approximated by a polygon (governed by the ``axial_mesh_count`` parameter).
-This shape is defined by a radius (thickness of the rod) and
-a piecewise linear path specified by a by a list of in-order vertexes.
+The rod element can be used to create a rod like structure along a series of linear segments in three dimensional space.
+The rod has a circular cross section which is approximated by a polygon (governed by the ``axial_mesh_count``
+parameter). This shape is defined by a radius (thickness of the rod) and a piecewise linear path specified by a by a
+list of in-order vertexes.
 
-.. image:: _images/kgeobag_shapes/rod_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rod_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 The following XML example creates a helix shaped rod surface, as follows:
 
@@ -183,15 +180,14 @@ Extruded surfaces with holes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 With this element it is possible to create an extruded surface (from a poly-loop like curve) with arbitrary holes in it.
-The commands <inner line/arc ...>/<outer line/arc ...> define whether the extruded path will
-produce an outer or an inner surface. So <inner line/arc ...> defines if
-there will be a hole and what it will look like.
+The commands ``<inner_...>`` and ``<outer_...>`` define whether the extruded path will produce an outer or an inner
+surface. Therefore, they define if there will be a hole in the surface and its shape.
 
-.. image:: _images/kgeobag_shapes/extruded_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_extruded_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 An XML example is as follows:
 
@@ -213,14 +209,14 @@ An XML example is as follows:
 Rotated surface
 ~~~~~~~~~~~~~~~
 
-This shape is very similar to rotated poly-line surface in :ref:`basic-kgeobag-label`
-but with other variables. The coordinates in use in this shape are cylindrical. (z,r)
+This shape is very similar to rotated poly-line surface in :ref:`basic-kgeobag-label` but with other variables. The
+coordinates in use in this shape are cylindrical. (z,r)
 
-.. image:: _images/kgeobag_shapes/rotated_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
 
 An XML example is as follows:
 
@@ -241,14 +237,16 @@ An XML example is as follows:
 Spaces
 ------
 
-These elements generate volume (filled) objects.
-The for the following geometries is not supported at the moment.
-For the definition of the variables see the corresponding surfaces above.
+These elements generate volume (filled) objects. The for the following geometries is not supported at the moment. For
+the definition of the variables see the corresponding surfaces above.
 
 Pump Port Space
 ~~~~~~~~~~~~~~~
 
 For visualization, see the above pump port surface.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -262,13 +260,13 @@ An XML example is as follows:
         </port_housing>
     </port_housing_space>
 
-Works with GeometryViewer: No.
-Works with MeshViewer: No.
-
 Conic Section Pump Port Space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For visualization, see the above conic section pump port surface.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -289,13 +287,13 @@ An XML example is as follows:
         </conic_section_port_housing>
     </conic_section_port_housing_space>
 
-Works with GeometryViewer: No.
-Works with MeshViewer: No.
-
 Beam Space
 ~~~~~~~~~~
 
 For visualization, see the beam surface above.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -316,13 +314,13 @@ An XML example is as follows:
         </beam>
     </beam_space>
 
-Works with GeometryViewer: No.
-Works with MeshViewer: No.
-
 Rod Space
 ~~~~~~~~~
 
 For visualization, see the above rod surface.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -340,15 +338,13 @@ An XML example is as follows:
         </rod>
     </rod_space>
 
-
-
-Works with GeometryViewer: No.
-Works with MeshViewer: No.
-
 Extruded Space
 ~~~~~~~~~~~~~~
 
 For visualization see the above extruded space.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -367,13 +363,13 @@ An XML example is as follows:
         </extruded_object>
     </extruded_space>
 
-Works with GeometryViewer: No.
-Works with MeshViewer: No.
-
 Rotated Space
 ~~~~~~~~~~~~~
 
 For visualization see the above rotated surface.
+
+- Works with GeometryViewer: No.
+- Works with MeshViewer: No.
 
 An XML example is as follows:
 
@@ -390,6 +386,3 @@ An XML example is as follows:
             <arc z1="2." r1="1." z2="0." r2="2." radius="2" positive_orientation="1"/>
         </rotated_object>
     </rotated_space>
-
-Works with GeometryViewer: No.
-Works with MeshViewer: No.

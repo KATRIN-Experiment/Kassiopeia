@@ -3,65 +3,66 @@
 Basic Shapes in KGeoBag
 ***********************
 
-This section is a description of the basic spaces and surfaces which can be constructed
-using KGeoBag. All of the following shapes can be displayed by
-the executables ``MeshViewer`` and ``GeometryViewer``. These executables
-are built and installed along with KGeoBag when it is linked against VTK.
+This section is a description of the basic spaces and surfaces which can be constructed using *KGeoBag*. All of the
+following shapes can be displayed by the executables ``MeshViewer`` and ``GeometryViewer`` (see :ref:`visualization-label`).
+These executables are built and installed along with *KGeoBag* when it is linked against VTK_.
 
-In order to view a geometry you can execute GeometryViewer from the directory
-``$KASPERSYS/install/bin`` with the path to your geometry file (.xml)
-and the name of the geometry element you want to display as the arguments, as follows::
+In order to view a geometry you can execute ``GeometryViewer`` from the directory ``$KASPERSYS/install/bin`` with the
+path to your geometry file (.xml) and the name of the geometry element you want to display as the arguments:
+
+.. code-block:: bash
 
     ./GeometryViewer ../config/TheBag/Examples/ExampleShapes.xml example_rotated_surface
 
 An example of the geometry view is shown below:
 
 .. image:: _images/geometryviewer.png
-   :width: 500pt
+   :width: 400pt
 
-To visualized the mesh of a geometric element execute MeshViewer
-in ``$KASPERSYS/install/bin`` with the path to your geometry file (.xml) and the
-name of the geometry element you want to display as follows::
+To visualized the mesh of a geometric element execute MeshViewer in ``$KASPERSYS/install/bin`` with the path to your
+geometry file (.xml) and the name of the geometry element you want to display:
+
+.. code-block:: bash
 
     ./MeshViewer <../config/TheBag/Examples/ExampleShapes.xml> <example_rotated_surface>
 
-The geometric element can be a specific element or several elements collected into
-a group. To display a single element use its name, to show a tagged group the argument is written as ``@tag_group``.
-An example of the mesh viewer being usd on a rod surface is shown below:
+There is also an ``AxialMeshViewer`` available, which displays the axial mesh (if defined) in the same way. The
+geometric element can be a specific element or several elements collected into a group. To display a single element use
+its name, to show a tagged group the argument is written as ``@tag_group``. An example of the mesh viewer being used on
+a rod surface is shown below:
 
 .. image:: _images/meshviewer.png
-   :width: 500pt
+   :width: 400pt
 
-The GeometryViewer and MeshViewer will also produce a VTK poly-data file (.vtp) which
-can then be open in the external application Paraview_ for more advanced visualization.
+The ``GeometryViewer`` and ``MeshViewer`` will also produce a VTK poly-data file (.vtp) which can then be open in the
+external application Paraview_ for more advanced visualization.
 
-The parameters specifying the way a geometric element is meshed must be given
-at the time that its shape is described. If no mesh is desired for some object,
-the mesh parameters may be ignored and the defaults will be used.
+The parameters specifying the method by which a geometric element is meshed must be given in the geometry file when the
+shape is described. If no mesh is desired for some object, the mesh parameters may be ignored and the defaults will be
+used. The commands above may also be tried with one of the *Kassiopeia* simulation examples.
 
-The mesh parameters vary for each object, but essentially describe two properties (for each meshable dimension).
-These are the ``mesh_count`` and the ``mesh_power``. If the ``mesh_power`` is set equal to 1.0, then the ``mesh_count``
-simply specifies the number of (equally sized) pieces a shape will be chopped into along a particular dimension. If the ``mesh_power``
-is greater than 1.0, then the number of elements will increase, and the size of the mesh element which are closest
-to edges will be reduced. The ``mesh_power`` property is useful for tailoring the accuracy of mesh descriptions
-for Laplace boundary value problems, where quantities such as charge density may vary considerably near the
-sharp edges of an object.
+The mesh parameters vary for each object, but essentially describe two properties (for each meshable dimension). These
+are the ``mesh_count`` and the ``mesh_power``. If the ``mesh_power`` is set equal to 1.0, then the ``mesh_count`` simply
+specifies the number of equally sized segments that a shape will be chopped into, along a particular dimension. If the
+``mesh_power`` is greater than 1.0, then the density of segments will increase towards the edges of the shape while
+keeping the number of elements the same. The ``mesh_power`` property is useful for tailoring the accuracy of mesh
+descriptions for Laplace boundary value problems, where quantities such as charge density may vary considerably near the
+sharp edges of an object. Therefore, this parameter is mainly used for electrode meshes.
 
-The follow provides examples and brief descriptions of some of the basic shapes available for use in KGeoBag.
+The following sections provide examples and brief descriptions of some basic shapes available for use in *KGeoBag*.
 
 Basic elements
 --------------
 
-The following elements (poly-loop and poly-line) are internal descriptors.
-They can't be used by themselves outside a geometry element.
-This section serves as a brief explanation for these commands.
+The following elements (poly-loop and poly-line) are internal descriptors. They can't be used by themselves outside a
+geometry element. This section serves as a brief explanation for the structure of these shapes.
 
 Poly-loop
 ---------
 
-A poly-loop is a closed chain consisting of several lines and/or arcs that forms a polygon.
-It starts with <start_point ...> and ends with ``<last_line ...>`` or ``<last_arc ...>``.
-An example of a poly-loop element is as follows:
+A poly-loop is a closed sequence consisting of several lines and/or arcs that form a polygonal shape. The aequence
+starts with ``<start_point ...>`` and ends with ``<last_line ...>`` or ``<last_arc ...>``, and multiple ``<next_line
+...>`` or ``<next_arc ...>`` elements can be put in between. An example of a poly-loop element is as follows:
 
 .. code-block:: xml
 
@@ -72,35 +73,38 @@ An example of a poly-loop element is as follows:
         <last_line line_mesh_count="10" line_mesh_power="2.5"/>
     </poly_loop>
 
-where the line goes from (x1,y1,z) to (x2,y2,z).
-The line that is created by the ``<next_...>``
-command goes from the end-point of the previous line to the coordinate
-used in the ``<next_...>`` command.
-The arc elements are described with the boolean parameters ``right`` and ``short``, as shown below.
+which creates a line from (0,0) to (0.4,-0.1) followed by an arc to (-0.1,0.4), and then the loop is closed by a line
+back to the starting point. Note that poly-loop and poly-line are two-dimensional objects that operate in (x,y)
+coordinates. Any line that is created by a ``<next_...>`` command goes from the end-point of the previous line to the
+specified coordinate. The directive ``<last_line ...>`` or ``<last_arc ...>`` connects the first and last points with
+the specified segment type.
 
-.. image:: _images/kgeobag_shapes/short_true_false.png
+The arc elements are described with the boolean parameters ``right`` and ``short``, as shown here:
 
-``right="true"`` means that the circle segment will be drawn clockwise and vice versa. ``short="true"``
-implies that the arc will be the short one. The directive ``<last_line ...>`` or ``<last_arc ...>``
-connects the first and last points with the specified segment type.
+.. image:: _images/short_true_false.png
+
+where ``right="true"`` means that the circle segment will be drawn clockwise, and vice versa. ``short="true"`` means
+that the arc will be the shorter one of the two possiblities.
 
 Poly-line
 ---------
 
-This element is desribed using the same procedure as in poly-loop. However,
-the first and last points are not necessarily connected. An XML example is below:
+This element is desribed using the same procedure as in poly-loop. However, the first and last points are not
+necessarily connected. An XML example is below:
 
 .. code-block:: xml
 
-    <rotated_poly_line_surface name="rotated_poly_line_forward_surface" rotated_mesh_count="64">
-        <poly_line>
-            <start_point x="0.2" y="0.3"/>
-            <next_line x="0.1" y="0.1" line_mesh_count="36" line_mesh_power="4.5"/>
-            <next_arc x="-0.1" y="0.1" radius="0.2" right="true" short="true" arc_mesh_count="96"/>
-            <next_line x="-0.2" y="0.2" line_mesh_count="36" line_mesh_power="1."/>
-            <next_line x="-0.3" y="0.1" line_mesh_count="24" line_mesh_power="4.5"/>
-        </poly_line>
-    </rotated_poly_line_surface>
+    <poly_line>
+        <start_point x="0.2" y="0.3"/>
+        <next_line x="0.1" y="0.1" line_mesh_count="36" line_mesh_power="4.5"/>
+        <next_arc x="-0.1" y="0.1" radius="0.2" right="true" short="true" arc_mesh_count="96"/>
+        <next_line x="-0.2" y="0.2" line_mesh_count="36" line_mesh_power="1."/>
+        <next_line x="-0.3" y="0.1" line_mesh_count="24" line_mesh_power="4.5"/>
+    </poly_line>
+
+In this case, the sequence progresses through five (x,y) points but does not connect back to the starting point. Hence,
+it does not form a closed loop like the poly-loop element does, and does not need a ``<last_...>`` command. Otherwise,
+the parameters for poly-line are the same as for poly-loop.
 
 Surfaces
 --------
@@ -108,14 +112,14 @@ Surfaces
 Flattened circle surface
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-A flattened circle surface is just a surface with circular shape, where x,y,z are
-the coordinates for the center of the circle and r is the radius.
+A flattened circle surface is just a surface with circular shape, where (x,y,z) are the coordinates for the center of
+the circle and r is the radius:
 
-.. image:: _images/kgeobag_shapes/flattened_circle_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_flattened_circle_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -128,14 +132,15 @@ An XML example is as follows:
 Flattened poly-loop surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A flattened poly loop surface is a surface consisting of several lines, arcs or both,
-creating a polygon of your desired shape. The first line and the last line are connected automatically.
+A flattened poly loop surface is a surface consisting of several lines, arcs or both, creating a polygon of your desired
+shape. The first line and the last line are connected automatically. By using the features of the poly-loop outlined
+above, this provides a very flexible method of designing surface elements.
 
-.. image:: _images/kgeobag_shapes/flattened_poly_loop_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_flattened_poly_loop_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -153,19 +158,19 @@ An XML example is as follows:
 Rotated Surfaces
 ~~~~~~~~~~~~~~~~
 
-All rotated surfaces are constructed from lines, arcs, poly-lines, or poly-loops which are then
-rotated around the local x-axis.
+All rotated surfaces are constructed from lines, arcs, poly-lines, or poly-loops which are then rotated around the local
+x-axis.
 
 Rotated line segment surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This type generates the surface of revolution formed by a line that is rotated around the x-axis.
 
-.. image:: _images/kgeobag_shapes/rotated_line_segment_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_line_segment_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -180,11 +185,11 @@ Rotated arc segment surface
 
 This type generates the surface of revolution formed by an arc that is rotated around the x-axis.
 
-.. image:: _images/kgeobag_shapes/rotated_arc_segment_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_arc_segment_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -195,16 +200,15 @@ An XML example is as follows:
     </rotated_arc_segment_surface>
 
 Rotated poly-line surface
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This type generates the surface of revolution created by rotating a poly-line around the local x-axis.
 
-.. image:: _images/kgeobag_shapes/rotated_poly_line_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_poly_line_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -224,14 +228,14 @@ An XML example is as follows:
 Rotated circle surface
 ~~~~~~~~~~~~~~~~~~~~~~
 
-This type generates the surface of revolution created by rotating a circle around the local x-axis.
-This shape is essentially or torus or section of a torus.
+This type generates the surface of revolution created by rotating a circle around the local x-axis. This shape is
+essentially or torus, or a section of a torus.
 
-.. image:: _images/kgeobag_shapes/rotated_circle_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_circle_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -246,11 +250,11 @@ Rotated poly loop surface
 
 This type generates the surface of revolution created by rotating a poly-loop around the local x-axis.
 
-.. image:: _images/kgeobag_shapes/rotated_poly_loop_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_poly_loop_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -273,20 +277,20 @@ An XML example is as follows:
 Shell Surfaces
 ~~~~~~~~~~~~~~
 
-All shell surfaces are lines, arcs or surfaces that are rotated around the x-axis between
-some start angle and stop angle.
+All shell surfaces are lines, arcs or surfaces that are rotated around the x-axis between a given start angle
+(angle_start) and stop angle (angle_stop).
 
 Shell line segment surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This produces an angularly limited portion of a surface of revolution from
-a line that is rotated around the local x-axis.
+This produces an angularly limited portion of a surface of revolution from a line that is rotated around the local
+x-axis.
 
-.. image:: _images/kgeobag_shapes/shell_line_segment_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_shell_line_segment_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -299,14 +303,14 @@ An XML example is as follows:
 Shell arc segment surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This produces an angularly limited portion of a surface of revolution from
-an arc that is rotated around the local x-axis.
+This produces an angularly limited portion of a surface of revolution from an arc that is rotated around the local
+x-axis.
 
-.. image:: _images/kgeobag_shapes/shell_arc_segment_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_shell_arc_segment_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -319,20 +323,20 @@ An XML example is as follows:
 Shell poly-line surface
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This produces an angularly limited portion of a surface of revolution from
-a poly-line that is rotated around the local x-axis.
+This produces an angularly limited portion of a surface of revolution from a poly-line that is rotated around the local
+x-axis.
 
-.. image:: _images/kgeobag_shapes/shell_poly_line_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_shell_poly_line_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
 .. code-block:: xml
 
-    <shell_poly_line_surface name="shell_poly_line_forward_surface"  angle_start="270" angle_stop="120" shell_mesh_count="64" shell_mesh_power="6">
+    <shell_poly_line_surface name="shell_poly_line_forward_surface" angle_start="270" angle_stop="120" shell_mesh_count="64" shell_mesh_power="6">
         <poly_line>
             <start_point x="0.2" y="0.3"/>
             <next_line x="0.1" y="0.1" line_mesh_count="36" line_mesh_power="4.5"/>
@@ -345,14 +349,14 @@ An XML example is as follows:
 Shell circle surface
 ~~~~~~~~~~~~~~~~~~~~
 
-This produces an angularly limited portion of a surface of revolution from
-a circle that is rotated around the local x-axis.
+This produces an angularly limited portion of a surface of revolution from a circle that is rotated around the local
+x-axis.
 
-.. image:: _images/kgeobag_shapes/shell_circle_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_shell_circle_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -365,14 +369,14 @@ An XML example is as follows:
 Shell poly-loop surface
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This produces an angularly limited portion of a surface of revolution from
-a poly-loop that is rotated around the local x-axis.
+This produces an angularly limited portion of a surface of revolution from a poly-loop that is rotated around the local
+x-axis.
 
-.. image:: _images/kgeobag_shapes/shell_poly_loop_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_shell_poly_loop_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -395,8 +399,8 @@ An XML example is as follows:
 Extruded Surfaces
 -----------------
 
-Extruded surfaces are surfaces that are extruded along the direction
-of the local z-axis from a minimum z-position (zmin) to a maximum z-position (zmax).
+Extruded surfaces are surfaces that are extruded along the direction of the local z-axis from a minimum z-position
+(zmin) to a maximum z-position (zmax).
 
 Extruded poly-line surface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -423,11 +427,11 @@ Extruded circle surface
 
 This generates the surfaced produced by extruding a circle (this is the same as a cylinder).
 
-.. image:: _images/kgeobag_shapes/extruded_circle_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_extruded_circle_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -442,11 +446,11 @@ Extruded poly-loop surface
 
 This generates a surface by extruding a poly-loop.
 
-.. image:: _images/kgeobag_shapes/extruded_poly_loop_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_extruded_poly_loop_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -469,19 +473,20 @@ An XML example is as follows:
 Special Surfaces
 ----------------
 
-These surfaces are just specific cases of the more general surface types already listed.
-However, since their use is extremely common, they have been made available as unique, special types.
+These surfaces are just specific cases of the more general surface types already listed. However, since their use is
+extremely common, they have been made available as unique, special types. For many simple simulations, it is possible
+to design the geometry entirely using these elements.
 
 Disk surface
 ~~~~~~~~~~~~
 
 This produces a disk centered on the local z-axis.
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+.. image:: _images/kgeobag_disk_surface_model.png
+   :width: 400pt
 
-.. image:: _images/kgeobag_shapes/disk_surface_model.png
-   :width: 500pt
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -489,7 +494,7 @@ An XML example is as follows:
 
     <disk_surface name="disk_surface" z=".01" r=".35" radial_mesh_count="14" radial_mesh_power="5" axial_mesh_count="20"/>
 
-The parameters are as follows.
+The parameters are:
 
 - z: z-position in meters
 - r: radius in meters
@@ -502,11 +507,11 @@ Annulus surface
 
 This produces an annulus centered on the z axis.
 
-.. image:: _images/kgeobag_shapes/annulus_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_annulus_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -529,11 +534,11 @@ Cylinder surface
 
 Generates a cylinder centered on the z axis.
 
-.. image:: _images/kgeobag_shapes/cylinder_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cylinder_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -555,11 +560,11 @@ Cone Surface
 
 Generates a cone centered on the z axis.
 
-.. image:: _images/kgeobag_shapes/cone_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cone_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -581,11 +586,11 @@ Cut Cone Surface
 
 Produces a truncated cone centered on the local z-axis.
 
-.. image:: _images/kgeobag_shapes/cut_cone_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cut_cone_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -608,11 +613,11 @@ Torus Surface
 
 Generates a torus centered on the local z axis.
 
-.. image:: _images/kgeobag_shapes/torus_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_torus_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -633,11 +638,11 @@ Cut Torus Surface
 
 Produces an angularly limited toroidal section centered on the z axis.
 
-.. image:: _images/kgeobag_shapes/cut_torus_surface_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cut_torus_surface_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -657,28 +662,30 @@ The parameters are:
 - toroidal_mesh_count: toroidal mesh parameter (default is 64)
 - axial_mesh_count: axial mesh parameter (default is 64)
 
+
 Spaces
 ------
 
-Spaces are considered distinct from surfaces as they are (water-tight) volumes. The cannot
-be open or have holes which puncture their boundaries.
+Spaces are considered distinct from surfaces as they are (water-tight) volumes. The cannot be open or have holes which
+puncture their boundaries. In the *Kassiopeia* interface, spaces are treated very differently than surfaces and have
+different features on purposes.
 
 Extruded Spaces
 ---------------
 
-Extruded spaces are from in a manner similar to extruded surfaces, the only difference being
-that they also provide planar caps to fully enclose a central volume.
+Extruded spaces are from in a manner similar to extruded surfaces, the only difference being that they also provide
+planar caps to fully enclose a central volume.
 
 Extruded Circle Space
 ~~~~~~~~~~~~~~~~~~~~~
 
 Generates a volume by extruding a cycle (cynlinder).
 
-.. image:: _images/kgeobag_shapes/extruded_circle_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_extruded_circle_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -693,11 +700,11 @@ Extruded Poly-Loop Space
 
 Generates a volume by extruding a poly-loop.
 
-.. image:: _images/kgeobag_shapes/extruded_poly_loop_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_extruded_poly_loop_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -725,11 +732,11 @@ Rotated Line Segment
 
 Generates a volume enclosed by a surface of revolution produced from rotating a line segement.
 
-.. image:: _images/kgeobag_shapes/rotated_line_segment_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_line_segment_space_model.png
+   :width: 400pt
 
-Works with GeometryViewer: Yes.
-Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
 
 An XML example is as follows:
 
@@ -744,11 +751,11 @@ Rotated Arc Segment
 
 Generates a volume enclosed by a surface of revolution produced from rotating an arc segment.
 
-.. image:: _images/kgeobag_shapes/rotated_arc_segment_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_arc_segment_space_model.png
+   :width: 400pt
 
-Works with GeometryViewer: Yes.
-Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
 
 An XML example is as follows:
 
@@ -763,11 +770,11 @@ Rotated Poly-Line Space
 
 Generates a volume enclosed by a surface of revolution produced from rotating a poly-line.
 
-.. image:: _images/kgeobag_shapes/rotated_poly_line_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_poly_line_space_model.png
+   :width: 400pt
 
-Works with GeometryViewer: Yes.
-Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
 
 An XML example is as follows:
 
@@ -788,11 +795,11 @@ Rotated Circle Space
 
 Generates a volume by rotating a circle (torus).
 
-.. image:: _images/kgeobag_shapes/rotated_circle_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_circle_space_model.png
+   :width: 400pt
 
-Works with GeometryViewer: Yes.
-Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
 
 An XML example is as follows:
 
@@ -807,11 +814,11 @@ Rotated Poly-Loop Space
 
 Generates a volume enclosed by a surface of revolution produced from rotating a poly-loop
 
-.. image:: _images/kgeobag_shapes/rotated_poly_loop_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_rotated_poly_loop_space_model.png
+   :width: 400pt
 
-Works with GeometryViewer: No.
-Works with MeshViewer: Yes.
+- Works with GeometryViewer: No.
+- Works with MeshViewer: Yes.
 
 An XML example is as follows:
 
@@ -834,19 +841,20 @@ An XML example is as follows:
 Special Spaces
 --------------
 
-These spaces are just specific cases of the more general space types already listed.
-They have been made separately available because of their common use.
+These spaces are just specific cases of the more general space types already listed. They have been made separately
+available because of their common use. As with the special surfaces, these elements may be used to design a simple
+simulation geometry.
 
 Cylinder Space
 ~~~~~~~~~~~~~~
 
 Produces a cylinder space centered on the local z axis.
 
-.. image:: _images/kgeobag_shapes/cylinder_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cylinder_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -869,11 +877,11 @@ Cone Space
 
 Generates a conical space centered on the local z axis.
 
-.. image:: _images/kgeobag_shapes/cone_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cone_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -897,8 +905,11 @@ Cut Cone Space
 
 Produces a cut cone volume (frustrum).
 
-.. image:: _images/kgeobag_shapes/cut_cone_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cut_cone_space_model.png
+   :width: 400pt
+
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -918,19 +929,19 @@ The parameters are:
 - radial_mesh_power: radial meshing power (default is 1.)
 - axial_mesh_count: axial mesh parameter (default is 16)
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 Torus Space
 ~~~~~~~~~~~
 
 Produces a torus centered on the local z axis.
 
-.. image:: _images/kgeobag_shapes/torus_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_torus_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -952,11 +963,11 @@ Cylinder Tube Space
 
 Creates a tube, (a hollow cylinder with finite wall thickness).
 
-.. image:: _images/kgeobag_shapes/cylinder_tube_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cylinder_tube_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -981,11 +992,11 @@ Cut Cone Tube Space
 
 Generates a tubular frustrum (a cut cone with central axially symmetric void).
 
-.. image:: _images/kgeobag_shapes/cut_cone_tube_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_cut_cone_tube_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: Yes.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -1012,11 +1023,11 @@ Box Space
 
 Produces an axis aligned rectangular prism.
 
-.. image:: _images/kgeobag_shapes/box_space_model.png
-   :width: 500pt
+.. image:: _images/kgeobag_box_space_model.png
+   :width: 400pt
 
-Works with MeshViewer: No.
-Works With GeometryViewer: Yes.
+- Works with MeshViewer: No.
+- Works with GeometryViewer: Yes.
 
 An XML example is as follows:
 
@@ -1040,3 +1051,4 @@ The parameters are:
 - z_mesh_power: z mesh power
 
 .. _Paraview: http://www.paraview.org
+.. _VTK: http://www.vtk.org

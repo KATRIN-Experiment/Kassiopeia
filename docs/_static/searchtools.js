@@ -10,7 +10,7 @@
  */
 
 
-/* Non-minified version JS is _stemmer.js if file is provided */ 
+/* Non-minified version JS is _stemmer.js if file is provided */
 /**
  * Porter Stemmer
  */
@@ -425,7 +425,7 @@ var Search = {
         } else {
           // normal html builders
           listItem.append($('<a/>').attr('href',
-            item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
+            item[0].replace('.rst','') + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
             highlightstring + item[2]).html(item[1]));
         }
         if (item[3]) {
