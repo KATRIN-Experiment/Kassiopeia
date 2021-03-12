@@ -1,18 +1,19 @@
 Configuring Your Own Simulation
 *******************************
 
-This section gives a brief overview of what you need to know to configure your own *Kassiopeia*
-simulation.
+This section gives a brief overview of what you need to know to configure your own *Kassiopeia* simulation.
 
 Overview and Units
 ------------------
 
-The configuration of *Kassiopeia* is done in three main sections, plus an optional
-fourth. These are the ``<messages>`` section which describes global message verbosity, the ``<geometry>`` section
-which describes the system geometry and its extensions, and the ``<kassiopeia>`` section which
-contains the elements needed for the particle tracking simulation. The optional fourth section
-relates to the specification of a VTK or ROOT window for the visualization of aspects of a completed simulation.
-A complete simulation file can thus be broken down into something which looks like the following::
+The configuration of *Kassiopeia* is done in three main sections, plus an optional fourth. These are the ``<messages>``
+section which describes global message verbosity, the ``<geometry>`` section which describes the system geometry and its
+extensions, the ``<kemfield>`` section which defines the electromagnetic field elements, and the ``<kassiopeia>``
+section which contains the elements needed for the particle tracking simulation. The optional fourth section relates to
+the specification of a VTK_ or ROOT_ window for the visualization of aspects of a completed simulation. A complete
+simulation file can thus be broken down into something which looks like the following:
+
+.. code-block:: xml
 
     <messages>
         <!-- specification of the messaging configuration here -->
@@ -21,6 +22,10 @@ A complete simulation file can thus be broken down into something which looks li
     <geometry>
         <!-- specification of the geometry and geometry extensions here -->
     </geometry>
+
+    <kemfield>
+        <!-- specification of the field elements and parameters here -->
+    </kemfield>
 
     <kassiopeia>
         <!-- specification of the simulation elements and parameters here -->
@@ -36,118 +41,326 @@ A complete simulation file can thus be broken down into something which looks li
         <!-- specification of a ROOT display window here
     </root_window>
 
-The XML based interface of *Kassiopeia* allows for a very flexible way in which to modify and configure
-particle tracking simulations. Throughout the geometry, field, and simulation configuration
-all physical quantities are specified
-using MKS and their derived units. The exception to this rule is energy, which is specified
-using electron volts (eV). It should be noted that XML elements are parsed in order, and elements
-which are referenced by other elements must be declared before their first use.
+The XML based interface of *Kassiopeia* allows for a very flexible way in which to modify and configure particle
+tracking simulations. Throughout the geometry, field, and simulation configuration all physical quantities are specified
+using MKS_ and their derived units. The exception to this rule is energy, which is specified using electron volts (eV).
+It should be noted that XML elements are parsed in order, and elements which are referenced by other elements must be
+declared before their first use.
 
 XML Parsing and Features
 ------------------------
 
-The document language used for describing a Kassiopeia simulation configuration is based on standard
-XML, but has been augmented with several additional features to aid in complicated or repetitive tasks.
-For a full description of this language and its features, see [1].
+The document language used for describing a Kassiopeia simulation configuration is based on standard XML_, but has been
+augmented with several additional features to aid in complicated or repetitive tasks. For a full description of this
+language and its features, see [1].
+
+The general XML syntax is:
+
+.. code-block:: xml
+
+    <element atrribute1="value1" atrribute2="value2">
+        <child_element atrribute="value"/>
+    </element>
+
+where ``<element>`` defines an `element` that corresponds to an object of *Kassiopeia* or one of the other modules. Each
+element can have an unlimited number of `attrbutes`, each with its own `value`. Attributes are passed on to the
+corresponding object during initialization. XML allows nesting of elements, and therefore some elements can have child
+elements with the same syntax.
+
+All elements must end with a closing statement, like ``<element> ... </element>``. For elements without children, the
+syntax can be shortened to the single statement ``<element ... />``.
 
 Variables
 ~~~~~~~~~
 
-A local variable may be defined with a particular value
-(integer,floating point type, string, etc.) with the following syntax::
+A local variable may be defined with a particular value (integer,floating point type, string, etc.) with the following
+syntax:
+
+.. code-block:: xml
 
     <define name="my_variable" value="1.3e-5"/>
 
-and may be reference by any other subsequent (using a local variable before it
-is defined is not allowed) element in the document through
-the use of the square brackets ``[]`` in the following manner::
+and may be reference by any other subsequent (using a local variable before it is defined is not allowed) element in the
+document through the use of the square brackets ``[...]`` in the following manner:
+
+.. code-block:: xml
 
     <some_element name="my_element" some_property="[my_variable]"/>
 
-Global variables which persist across any subsequently included files may be specified through::
+Note that all variables are defined as strings, but can be interpreted as other types (such as numbers, lists, etc.)
+by during initialization of the element. The details depend on the element's implementation.
+
+Normal variables are defined only for the scope of the current file. Global variables, on the other hand, persist across
+any subsequently included files. These may be specified through:
+
+.. code-block:: xml
 
     <global_define name="my_global_variable" value="an_important_value"/>
 
-Both local and global variables my be undefined (removed from the parser's scope)
-in the following manner::
+Both local and global variables my be undefined (removed from the parser's scope) in the following manner:
+
+.. code-block:: xml
 
     <undefine name="my_variable"/>
     <global_undefine name="my_global_variable"/>
 
-Occasionally the user may wish to specify a variable which can be modified from the command
-line as an argument passed to *Kassiopeia*. To do this for a variable called ``my_random_seed``
-the syntax is::
+It is also possible to reassign a variable (changing their value) with the syntax:
+
+.. code-block:: xml
+
+    <redefine name="my_variable" value="1.35e-5"/>
+    <global_redefine name="my_global_variable" value="another_important_value"/>
+
+Occasionally the user may wish to specify a variable which can be modified from the command line as an argument passed
+to *Kassiopeia*. These variables are called `external variables` and they behave in the same way as global variables,
+except that their first definition sets their value and other definitions are ignored. Hence, if an external variable
+is defined in multiple included files, only the first occurence matters. If the variable is defined on the command line,
+its definition precedes any of the included files.
+
+To define an external variable called ``my_random_seed`` the syntax is:
+
+.. code-block:: xml
 
     <external_define name="my_random_seed" value="123"/>
 
-This is useful for running large batches of similar simulations. For example, to simulate many
-independent tracks the user might want to run the same simulation repeatedly, but use a different
-random seed when starting the simulation. The value of ``my_random_seed`` can be changed
-from its default value of 123 from the command line call to *Kassiopeia* in the following manner::
+This particular example is useful for running large batches of similar simulations. For example, to simulate many
+independent tracks the user might want to run the same simulation repeatedly, but use a different random seed when
+starting the simulation. The value of ``my_random_seed`` can be changed from its default value of 123 from the command
+line call to *Kassiopeia* in the following manner:
+
+.. code-block:: bash
 
     Kassiopeia ./my_simulation.xml -r my_random_seed=456
 
+or with the alternate syntax:
+
+.. code-block:: bash
+
+    Kassiopeia ./my_simulation.xml --my_random_seed=456
+
+Note that this applies to other applications that belong to *Kassiopeia* or the other modules as well.
 
 Including external files
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Including external XML files is also supported through a relatively simple syntax.
-This is helpful when a simulation is too complex to be managed by a single file.
-A separate XML file can be included using the following::
+Including external XML files is also supported through a relatively simple syntax. This is helpful when a simulation is
+too complex to be managed by a single file. A separate XML file can be included using the following:
+
+.. code-block:: xml
 
     <include name="/path/to/file/my_file.xml"/>
 
-This include expression may also be readily reconfigured through the use of a variable,
-for example::
+This include expression may also be configured dynamically through the use of a variable, for example:
+
+.. code-block:: xml
 
     <external_define name="my_file_name" value="my_file.xml"/>
     <include name="/path/to/file/[my_file_name]"/>
 
-could be modified to include an entirely different file by passing another file name
-argument to *Kassiopeia* using:
+could be modified to include an entirely different file by passing another file name argument to *Kassiopeia* using::
 
     Kassiopeia ./my_simulation.xml -r my_file_name=my_other_file.xml
 
-This feature is particularly useful and enables the user to swap in an
-entirely different configuration for some portion of the simulation
-by passing a single command line variable.
+This feature is particularly useful and enables the user to swap in an entirely different configuration for some portion
+of the simulation by passing a single command line variable.
 
-Expressions
-~~~~~~~~~~~
+Lastly, it is possible to mark an included file as optional so that no error will be thrown if the files does not exist.
+This is sometimes useful when a file with variable definitions should be included before the main configuration. The
+syntax in this case is:
 
-The ability to calculate in-line formulas is another useful feature. However, is only available when
-*Kassiopeia* is linked against ROOT. Currently, the underlying implementation of the formula
-processor relys on ROOT's TFormula_ class, and as such can process any expression which is valid
-syntax for a TFormula. In order to active the formula mode, the relevant expression must
-be enclosed in curly braces ``{}``. Variables may also be used within a formula.
-An example of the formula syntax is given in
-the following variable definition::
+.. code-block:: xml
 
-<define name="my_variable" value="4.0"/>
-<define name="length" value="{2.3 + 2.0/sqrt([my_variable])}"/>
+    <include name="/path/to/file/another_file.xml" optional="true"/>
 
-This example results in the variable ``[length]`` taking the value of 3.3.
+Print statements
+~~~~~~~~~~~~~~~~
+
+The XML initializer allows to print the current value of a variable, or any sort of text message. The message will be
+shown during XML initialization, and it is useful for debugging and checking correct initialization. The syntax is:
+
+.. code-block:: xml
+
+    <define name="my_variable" value="42"/>
+    <print name="my_variable" value="[my_variable]"/>
+
+where the message content is set to the current value of the variable through the ``[...]`` syntax.
+
+To show a general informative message without a variable name, use the syntax:
+
+.. code-block:: xml
+
+    <print value="This is a test message."/>
+
+Both examples together will yield the output::
+
+    [INITIALIZATION NORMAL MESSAGE] value of <my_variable> is <42>
+    [INITIALIZATION NORMAL MESSAGE] This is a test message.
+
+Instead of showing normal messages, it is also possible to show a warning or an error message. An error message will
+terminate the prgogram, so it is most useful in combination with the conditional expressions described below:
+
+.. code-block:: xml
+
+    <warning value="This is a warning message."/>
+    <error value="This is an error message. Goodbye!"/>
+
+Finally, an assertion statement can be used that checks if a condition is true, and shows an error otherwise. See below
+for an explanation of conditional expressions. The syntax for the assert statement is:
+
+.. code-block:: xml
+
+    <define name="my_variable" value="42"/>
+    <assert name="my_variable" condition="{[my_variable] eq 42}"/>
+
+Formula Expressions
+~~~~~~~~~~~~~~~~~~~
+
+The ability to calculate in-line formulas is another useful feature. The underlying implementation of the formula
+processor relies on two external libraries. First, formulas are interpreted with the TinyExpr_ parser. This is a very
+fast implementation that works for most simple expressions. If parsing fails, the formula is interpreted by the ROOT
+TFormula_ class, which is slower but more versatile. To the user, the switching between both parsers is completely
+transparent and no extra steps have to be taken.
+
+In order to active the formula mode, the relevant expression must be enclosed in curly braces ``{...}``. Variables may
+also be used within a formula, and all variable replacements will be done before the formula parsing (meaning that
+the current value of the variable will be used in the formula.) An example of the formula syntax is given in the
+following variable definition:
+
+.. code-block:: xml
+
+    <define name="my_variable" value="4.0"/>
+    <define name="length" value="{2.3 + 2.0/sqrt([my_variable])}"/>
+    <print name="length" value="[length]"/>
+
+This example results in the variable ``length`` taking the value of 3.3.
+
+Note that this example uses a standard function ``sqrt(x)`` that is supported by TinyExpr_. In general, any formulas
+using advanced TMath_ functions or other complex syntax will use the TFormula_ parser. Simple TMath_ functions like
+``TMath::Sqrt(x)`` or ``TMath::Sin(x)`` are mapped to their equivalent standard function (``sqrt(x)``, ``sin(x)``) that is
+natively understood by TinyExpr_. The standard functions (and mathematical constants) are listed in the table below.
+
++---------------------------------------------------------------------------------------------------------+
+| Standard functions and constants                                                                        |
++-------------+---------------+--------------------------+------------------------------------------------+
+| XML syntax  | C++ function  | ROOT equivalent          | Description                                    |
++=============+===============+==========================+================================================+
+| ``abs(x)``  | ``fabs(x)``   | ``TMath::Abs()``         | Compute absolute value.                        |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``acos(x)`` | ``acos(x)``   | ``TMath::ACos(x)``       | Compute arc cosine.                            |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``asin(x)`` | ``asin(x)``   | ``TMath::ASin(x)``       | Compute arc sine.                              |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``atan(x)`` | ``atan(x)``   | ``TMath::ATan(x)``       | Compute arc tangent.                           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``atan2(x)``| ``atan2(x)``  | ``TMath::ATan2(x)``      | Compute arc tangent with two parameters.       |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ceil(x)`` | ``ceil(x)``   | ``TMath::Ceil(x)``       | Round up value.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``cos(x)``  | ``cos(x)``    | ``TMath::Cos(x)``        | Compute cosine.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``cosh(x)`` | ``cosh(x)``   | ``TMath::CosH(x)``       | Compute hyperbolic cosine.                     |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``exp(x)``  | ``exp(x)``    | ``TMath::Exp(x)``        | Compute exponential function.                  |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``fac(x)``  |               | ``TMath::Factorial(x)``  | Compute factorial.                             |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``floor(x)``| ``floor(x)``  | ``TMath::Floor(x)``      | Round down value.                              |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ln(x)``   | ``log(x)``    | ``TMath::Log(x)``        | Compute natural logarithm.                     |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``log(x)``  | ``log10(x)``  |                          | Compute common logarithm.                      |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``log10(x)``| ``log10(x)``  | ``TMath::Log10(x)``      | Compute common logarithm.                      |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ncr(n,r)``|               | ``TMath::Binomial(n,r)`` | Compute combinations of `n` over `r`.          |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``npr(n,r)``|               |                          | Compute permuations of `n` over `r`.           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``pow(x)``  | ``pow(x)``    | ``TMath::Pow(x)``        | Raise to power.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sin(x)``  | ``sin(x)``    | ``TMath::Sin(x)``        | Compute sine.                                  |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sinh(x)`` | ``sinh(x)``   | ``TMath::SinH(x)``       | Compute hyperbolic sine.                       |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sqrt(x)`` | ``sqrt(x)``   | ``TMath::Sqrt(x)``       | Compute square root.                           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``tan(x)``  | ``tan(x)``    | ``TMath::Tan(x)``        | Compute tangent.                               |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``tanh(x)`` | ``tanh(x)``   | ``TMath::TanH(x)``       | Compute hyperbolic tangent.                    |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``e``       |               | ``TMath::Pi()``          | Fundamental constant.                          |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``pi``      | ``M_PI``      | ``TMath::E()``           | Fundamental constant.                          |
++-------------+---------------+--------------------------+------------------------------------------------+
+
 
 Conditional Expressions and Looping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to mathematical expressions simple boolean conditions can be specified.
-These are often helpful for swapping or toggling on/off different features. An
-example showing the inclusion/exclusion of a brief section of XML is shown below::
+In addition to mathematical expressions, simple boolean conditions can be specified. These are often helpful for
+swapping or toggling on/off different features, but also for setting several variables depending on the value of a "meta
+variable". An example showing the inclusion/exclusion of a brief section of XML is shown below:
+
+.. code-block:: xml
 
     <define name="var1" value="1"/>
     <define name="var2" value="0"/>
-    <if condition="{[var1] eq [var2]">
+    <if condition="{[var1] eq [var2]}">
         <!-- intervening section of xml to be included/excluded -->
     </if>
 
-Another feature which is indispensable when assembling complicated or repetitive geometries
-is the the ability to insert multiple copies of an XML fragment with slight modifications.
-This is called looping and is somewhat similar to the way a ``for`` loop functions in C++. It is
-however, a purely static construct intended only to reduce the amount text needed to describe a
-geometry or other feature. An example of its use can be found in the ``DipoleTrapMeshedSpaceSimulation.xml``
-example. The example of the loop syntax showing the placement of several copies of a surface
-with the name ``intermediate_z_surface`` is given below::
+Note that this uses the formula syntax ``{...}`` in the condition. The operator ``eq`` checks for equality between the
+two variables. Other allowed operators are listed in the table below. To combine multiple conditions into one
+expression, use brackets like ``([var1] eq [var2]) && ([var3] eq [var4])``.
+
++------------------------------------------------------------------------------------------------+
+| Conditional operators                                                                          |
++-------------+-------------+-------------------+------------------------------------------------+
+| XML syntax  | C++ operator| Operator          | Description                                    |
++=============+=============+===================+================================================+
+| ``! A``     | ``!``       | Logical "not"     | False if statement A is true.                  |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A && B``  | ``&&``      | Logical "and"     | True if both statements A and B are true.      |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A || B``  | ``||``      | Logical "or"      | True if one of the statements A and B is true. |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A eq B``  | ``==``      | Equal-to          | True if both values A and B are equal.         |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A ne B``  | ``!=``      | Not-equal         | True if both values A and B are not equal.     |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A gt B``  | ``<``       | Greater-than      | True if value A is greater than value B.       |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A lt B``  | ``>``       | Less-than         | True if value A is less than value B.          |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A ge B``  | ``>=``      | Greater-or-equal  | True if value A is greater or equal to value B.|
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A le B``  | ``<=``      | Less-or-equal     | True if value A is less or equal to value B.   |
++-------------+-------------+-------------------+------------------------------------------------+
+| ``A mod B`` | ``%``       | Modulo            | Return remainder of value A divided by value B.|
++-------------+-------------+-------------------+------------------------------------------------+
+
+It is also possible to check directly if a variable has been set to a "true" value (i.e. not 0, false, or an empty
+string.) The syntax in this case is:
+
+.. code-block:: xml
+
+    <external_define name="var1" value=""/>
+    <if condition="[var1]">
+        <!-- intervening section of xml to be included/excluded -->
+    </if>
+
+The conditional expression does not support if-else blocks, so in order to define an alternate conditional branch one
+has to add another if-statement in the XML file.
+
+Another feature which is indispensable when assembling complicated or repetitive geometries is the the ability to insert
+multiple copies of an XML fragment with slight modifications. This is called looping and is somewhat similar to the way
+a for-loop works in C++ or Python. However, it is a purely static construct intended that is only evaluated during XML
+initialization to reduce the amount of code needed to describe a geometry (or other XML feature.)
+
+An example of its use can be found in the ``DipoleTrapMeshedSpaceSimulation.xml`` example. The example of the loop
+syntax for the placement of several copies of a surface with the name ``intermediate_z_surface`` is given below:
+
+.. code-block:: xml
 
     <loop variable="i" start="0" end="10" step="1">
         <surface name="intermediate_z[i]" node="intermediate_z_surface">
@@ -155,16 +368,33 @@ with the name ``intermediate_z_surface`` is given below::
         </surface>
     </loop>
 
-Loops may also be nested when needed.
+In this case, the loop variable ``[i]`` is used to define the name of the copy and its displacement.
 
-Messaging
----------
+Loops and conditional expressions may also be nested when needed.
 
-*Kassiopeia* provides a very granular means of reporting and logging simulation details of interest.
-This feature is particularly useful when modifying the code and debugging specific features.
-For example, in the file ``QuadrupoleTrapSimulation.xml`` begins with a section describing the
-verbosity of each simulation element and the location of the logging file (described by
-the variable ``log_path`` and the ``file`` element)::
+Comments
+~~~~~~~~
+
+It is wise to include comments in the XML files to explain certain structures or their behavior. Comment blocks are
+included by the syntax:
+
+.. code-block:: xml
+
+    <!-- This is a multi-line comment
+         that provides useful information. -->
+
+As shown above, a comment can span multiple lines. Any text between ``<!-- ... -->`` is ignored by the XML initializer,
+including any XML elements. This makes it possible to quickly comment out parts of the file, e.g. for debugging.
+
+Messaging System
+----------------
+
+*Kassiopeia* provides a very granular means of reporting and logging simulation details of interest. This feature is
+particularly useful when modifying the code and debugging specific features. For example, at the top of the file
+``QuadrupoleTrapSimulation.xml`` you can find section describing the verbosity of each simulation element and the
+location of the logging file (as defined by the variable ``log_path`` and the ``<file>`` element):
+
+.. code-block:: xml
 
     <define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
 
@@ -173,82 +403,186 @@ the variable ``log_path`` and the ``file`` element)::
         <file path="[log_path]" base="QuadrupoleTrapLog.txt"/>
 
         <message key="k_file" terminal="normal" log="warning"/>
-    	<message key="k_initialization" terminal="normal" log="warning"/>
+        <message key="k_initialization" terminal="normal" log="warning"/>
 
         <message key="kg_core" terminal="normal" log="warning"/>
-    	<message key="kg_shape" terminal="normal" log="warning"/>
+        <message key="kg_shape" terminal="normal" log="warning"/>
         <message key="kg_mesh" terminal="normal" log="warning"/>
         <message key="kg_axial_mesh" terminal="normal" log="warning"/>
 
-    	<message key="ks_object" terminal="debug" log="normal"/>
+        <message key="ks_object" terminal="debug" log="normal"/>
         <message key="ks_operator" terminal="debug" log="normal"/>
-    	<message key="ks_field" terminal="debug" log="normal"/>
-    	<message key="ks_geometry" terminal="debug" log="normal"/>
+        <message key="ks_field" terminal="debug" log="normal"/>
+        <message key="ks_geometry" terminal="debug" log="normal"/>
         <message key="ks_generator" terminal="debug" log="normal"/>
-    	<message key="ks_trajectory" terminal="debug" log="normal"/>
-    	<message key="ks_interaction" terminal="debug" log="normal"/>
+        <message key="ks_trajectory" terminal="debug" log="normal"/>
+        <message key="ks_interaction" terminal="debug" log="normal"/>
         <message key="ks_navigator" terminal="debug" log="normal"/>
-    	<message key="ks_terminator" terminal="debug" log="normal"/>
-    	<message key="ks_writer" terminal="debug" log="normal"/>
-    	<message key="ks_main" terminal="debug" log="normal"/>
-    	<message key="ks_run" terminal="debug" log="normal"/>
-    	<message key="ks_event" terminal="debug" log="normal"/>
-    	<message key="ks_track" terminal="debug" log="normal"/>
-    	<message key="ks_step" terminal="debug" log="normal"/>
+        <message key="ks_terminator" terminal="debug" log="normal"/>
+        <message key="ks_writer" terminal="debug" log="normal"/>
+        <message key="ks_main" terminal="debug" log="normal"/>
+        <message key="ks_run" terminal="debug" log="normal"/>
+        <message key="ks_event" terminal="debug" log="normal"/>
+        <message key="ks_track" terminal="debug" log="normal"/>
+        <message key="ks_step" terminal="debug" log="normal"/>
 
     </messages>
 
-For the verbosity settings, you can independently set the verbosity that you see
-in the terminal and the verbosity that is put into log files.
-Furthermore, you can do that for each different part of Kassiopeia.
-That way, for example, if you want a lot of detail on what's happening in
-the navigation routines, you can increase the verbosity from only that part
-of Kassiopeia, without being flooded with messages from everything else.
-There are three possible verbosity levels, they are ``debug``, ``normal``, and ``warning``.
-Of the three, ``warning`` is the least verbose, only reporting on non-fatal errors that
-may be encountered during tracking. The ``normal`` mode will include a relatively small
-set of details in addition to any warnings, while ``debug`` will provide an extremely extensive
-description of the state of the simulation as it progresses.
+For the verbosity settings, you can independently set the verbosity that you see in the terminal and the verbosity that
+is put into log files. Furthermore, you can do that for each different part of *Kassiopeia* and the other modules. For
+example, if you want a lot of detail on what's happening in the navigation routines, you can increase the verbosity for
+only that part of *Kassiopeia*, without being flooded with messages from everything else. The different sources are
+define by the ``key`` attribute of the ``<message>`` element, and explained in the table below.
 
-Since there is so much information provided by the ``debug`` setting it substantially
-slows down the speed of the simulation. In fact, in order to avoid unnecessarily slowing
-down *Kassiopeia*, this option is completely disabled unless it is explicitly compiled into
-the code by enabling the cmake option ``Kassiopeia_ENABLE_DEBUG`` during configuration.
++--------------------------------------------------------------------------------------------------------------------------+
+| Message sources                                                                                                          |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| Key                   | Module      | Location                          | Description                                    |
++=======================+=============+===================================+================================================+
+| ``k_file``            | Kommon      | File                              | File handling                                  |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``k_initialization``  | Kommon      | Initialization                    | XML initialization and processing              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``k_utility``         | Kommon      | Utility                           | Utility functions                              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kem_bindings``      | KEMField    | Bindings                          | XML bindings                                   |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kem_core``          | KEMField    | Core                              | Core functionality                             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_bindings``       | KGeoBag     | Bindings                          | XML bindings                                   |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_core``           | KGeoBag     | Core                              | Core functionality                             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_axial_mesh``     | KGeoBag     | Extensions/AxialMesh              | Axially symmetric meshing                      |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_drmesh``         | KGeoBag     | Extensions/DiscreteRotationalMesh | Rotationally discrete meshing                  |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_mesh``           | KGeoBag     | Extensions/Mesh                   | Asymmetric meshing                             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_metrics``        | KGeoBag     | Extensions/Metrics                | Metrics calculation (volumes & areas)          |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_random``         | KGeoBag     | Extensions/Random                 | Random generator functions                     |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_math``           | KGeoBag     | Math                              | Mathematical functions                         |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_shape``          | KGeoBag     | Shapes                            | Geometric shapes                               |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``kg_vis``            | KGeoBag     | Visualization                     | Visualization (VTK_, ROOT_)                    |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_bindings``       | Kassiopeia  | Bindings                          | XML bindings                                   |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_field``          | Kassiopeia  | Fields                            | Field calculation                              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_generator``      | Kassiopeia  | Generators                        | Particle generation                            |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_geometry``       | Kassiopeia  | Geometry                          | Geometry handling                              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_interaction``    | Kassiopeia  | Interactions                      | Particle interactions                          |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_math``           | Kassiopeia  | Math                              | Mathematical functions                         |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_modifier``       | Kassiopeia  | Modifiers                         | Trajectory modifiers                           |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_navigator``      | Kassiopeia  | Navigators                        | Particle navigation                            |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_object``         | Kassiopeia  | Objects                           | Dynamic command interface                      |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_operator``       | Kassiopeia  | Operators                         | Core functionality, particle state             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_reader``         | Kassiopeia  | Readers                           | File reading                                   |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_main``           | Kassiopeia  | Simulation                        | Simulation execution                           |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_run``            | Kassiopeia  | Simulation                        | Simulation progress, "run" level               |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_event``          | Kassiopeia  | Simulation                        | Simulation progress, "event" level             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_track``          | Kassiopeia  | Simulation                        | Simulation progress, "track" level             |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_step``           | Kassiopeia  | Simulation                        | Simulation progress, "step" level              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_terminator``     | Kassiopeia  | Terminators                       | Particle termination                           |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_trajectory``     | Kassiopeia  | Trajectories                      | Trajectory calculation                         |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_utility``        | Kassiopeia  | Utility                           | Utility functions                              |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_vis``            | Kassiopeia  | Visualization                     | Visualization (VTK_, ROOT_)                    |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+| ``ks_writer``         | Kassiopeia  | Writers                           | File writing                                   |
++-----------------------+-------------+-----------------------------------+------------------------------------------------+
+
+The different parts of the code are explained further below, along with XML configuration examples.
+
+Verbosity levels
+~~~~~~~~~~~~~~~~
+
+There are five possible verbosity levels, they are ``debug``, ``info``, ``normal``, ``warning`` and ``error``. Of these,
+``error`` is the least verbose, only reporting on fatal errors that terminate the simulation. The ``normal`` mode will
+include a relatively small set of details in addition to any warnings (this is the default), while ``debug`` will
+provide an extremely extensive description of the state of the simulation as it progresses.
+
+Note that the ``debug`` setting is a special case: Since there is so much additional information provided by this
+setting, it substantially slows down the speed of the simulation even when the messages are not printed or saved to the
+log file. In order to avoid unnecessarily slowing down *Kassiopeia*, the debug output is completely disabled unless it
+is explicitly enabled in the build by enabling the CMake option ``Kassiopeia_ENABLE_DEBUG`` during configuration (and
+the corresponding options for other modules.)
+
+As mentioned earlier, the verbosity level can also be changed by the command line arguments ``-v`` and ``-q``, which
+raise or lower the verbosity level. However, this only works for sources that have not been configured explicitely
+in the ``<messages>`` section.
+
+Additional logging
+~~~~~~~~~~~~~~~~~~
+
+The description above applies to the *KMessage* interface, which is configured through XML files. In addition, some code
+uses the independent *KLogger* interface. If *Kassiopeia* was compiled with Log4CXX_ enabled at build time, the KLogger
+interface can be configured through its own configuration file, which is located at:
+
+    ``$KASPERSYS/config/Kommon/log4cxx.properties``
+
+It allows flexible logging configuration of different parts of the code, including changing the verbosity level,
+redirecting output to a log file, or customizing the message format.
+
+In *Kassiopeia*, *KEMField* and *KGeoBag*, most messages use the *KMessage* interface.
+
 
 Geometry
 --------
 
-The geometry section of the configuration file the first piece needed in order
-to assemble a simulation. At its first and most basic level it is responsible for
-defining all the different shapes that will be used, and placing them with respect
-to one another in order to construct the arrangement that is needed.
-For a full a description of all of the shape objects (surfaces and spaces)
-which maybe constructed in *KGeoBag* see :ref:`basic-kgeobag-label` and :ref:`complex-kgeobag-label`.
-The abstract base classes which serve as the interface between *KGeoBag* and *Kassiopiea*
-are :kassiopeia:`KSSurface`, :kassiopeia:`KSSpace`, and :kassiopeia:`KSSide`.
+The geometry section of the configuration file is the first piece needed in order to assemble a simulation. At its first
+and most basic level it is responsible for defining all the different shapes that will be used, and placing them with
+respect to one another in order to construct the arrangement (often called `assembly`) that is needed.
 
-The second half of the geometry section is responsible for adding
-"extended" information to the previously described geometry elements.
-These extensions can be properties such as colors for visualization
-or boundary conditions and meshing details for the electromagnetic simulations.
+For a full a description of all of the shape objects (surfaces and spaces) which maybe constructed in *KGeoBag* see
+:ref:`basic-kgeobag-label` and :ref:`complex-kgeobag-label`. The abstract base classes which serve as the interface
+between *KGeoBag* and *Kassiopeia* are ``KSSpace``, ``KSSurface``, and ``KSSide`` (see :gh-code:`Kassiopeia/Operators`).
 
-Every relevant to the geometry description is processed by KGeoBag and must appear
-between the start and end brackets::
+The geometry section is also responsible for adding "extended" information to the defined geometry elements. These
+extensions can be properties such as colors for visualization, or boundary conditions and meshing details for the
+electromagnetic simulations.
+
+Every relevant to the geometry description is processed by *KGeoBag* and must appear between the start and end brackets:
+
+.. code-block:: xml
 
     <geometry>
-    <!-- fill in geometry description here -->
+        <!-- fill in geometry description here -->
     </geometry>
 
-It should be noted, that the full description of the geometry need not lie within the same
-pair of ``<geometry>`` and ``</geometry>`` brackets. This facilitates the description of
-separate geometry pieces in different files which may then be included and used in the final
-assembly.
+It should be noted, that the full description of the geometry need not lie within the same pair of ``<geometry>`` and
+``</geometry>`` brackets. This facilitates the description of separate geometry pieces in different files, which may
+then be included and used in the final assembly.
 
-Shapes and Placement
-~~~~~~~~~~~~~~~~~~~~
+Shapes and assemblies
+~~~~~~~~~~~~~~~~~~~~~
 
-Of the example files provided, the ``DipoleTrapSimulation.xml`` has the simplest geometry. It
-starts off with a description of each shapes involved::
+Of the example files provided, the ``DipoleTrapSimulation.xml`` has the simplest geometry. It will be explained in
+detail below, in order to walk you through a typical geometry configuration.
+
+The geometry section starts off with a description of each shapes involved:
+
+.. code-block:: xml
 
     <!-- world -->
 
@@ -307,12 +641,41 @@ starts off with a description of each shapes involved::
         <disk_surface name="center_surface" r="2.5e-1" z="0."/>
     </tag>
 
-These shapes are then placed into an assembly of the experiment
-geometry. Geometric objects are placed by referencing each shape by its given (unique!!) name
-and specifying a transformation (relative the assembly origin) defining the location
-and orientation of each object. The transformation types are displacements (specified by
-a vector), and rotations (specified by an axis-angle pair or a
-series of Euler angles using the Z-Y'-Z'' convention)::
+The individual shapes are defined by elements of the common structure:
+
+.. code-block:: xml
+
+    <some_space name="my_space"/>
+    <some_surface name="my_surface"/>
+
+where each element is given a name, which it can be referenced with, and additional parameters dependeing on the shape.
+For example, the disk surface is defined by only two parameters `r` and `z`, while other shapes differ.
+
+Tagging system
+~~~~~~~~~~~~~~
+
+The tagging system is used to group different elements together, for example by distinguishng between magnet and
+electrode shapes. These tags will be used later to retrieve elements and pass them to the *KEMField* module. The
+general syntax is:
+
+.. code-block:: xml
+
+    <tag name="my_tag" name="another_tag">
+        <shape name="my_shape"/>
+    </tag>
+
+and tags can be freely combined or re-used.
+
+Assembling elements
+~~~~~~~~~~~~~~~~~~~
+
+The defined shapes are then placed into an assembly of the experiment geometry. Geometric objects are placed by
+referencing each shape by its given (and *unique*) name and placing it inside a space. This can be combined with
+specifying a transformation (relative to the assembly origin) defining the location and orientation of each object. The
+available transformation types are displacements (defined by a 3-vector), and rotations (defined by an axis-angle
+pair, or a series of Euler angles using the *Z-Y'-Z''* convention):
+
+.. code-block:: xml
 
     <space name="dipole_trap_assembly">
         <surface name="ring" node="ring_surface"/>
@@ -337,88 +700,182 @@ series of Euler angles using the Z-Y'-Z'' convention)::
         </surface>
     </space>
 
-Finally, the full assembly is placed within the world volume::
+Here the individual named shapes that were defined earlier are referenced, using the general syntax:
+
+.. code-block:: xml
+
+    <space name="my_assembly">
+        <space name="my_placed_space" node="my_space"/>
+    </space>
+
+and spaces can be freely nested, which is one of the key features of *KGeoBag*. Note the difference between the first
+space, which does not refer to any shape and just holds the child elements, and the second space which refers to the
+shape named ``my_space`` through the `node` attribute. The ``my_assembly`` space can be though of as a "virtual space",
+without any reference to a real geometric object.
+
+Finally in the ``DipoleTrapSimulation.xml`` file, the full assembly is placed within the world volume:
+
+.. code-block:: xml
 
     <space name="world" node="world_space">
         <space name="dipole_trap" tree="dipole_trap_assembly"/>
     </space>
 
-It should be noted that transformations applied to an assembly are collectively applied
-to all of the geometric elements within the assembly. For example, placing
-the dipole trap assembly within the world volume as::
+The world volume is a crucial part of any geometry, since it defines the outermost "root" space in which all other
+elements must be placed. Note that in this case, the space named ``dipole_trap_assembly`` is referenced through the
+`tree` attribute (and not `node`, as you might expect.) This is due to the fact that the assembly is a "virtual" space
+that just holds its child elements, but does not refer to an actual object. Make sure to keep this in mind for your
+own geometry configurations!
+
+Transformations
+~~~~~~~~~~~~~~~
+
+It should be noted that transformations applied to an assembly are collectively applied to all of the geometric elements
+within the assembly. For example, placing the dipole trap assembly within the world volume as:
+
+.. code-block:: xml
 
     <space name="world" node="world_space">
-        <space name="dipole_trap" tree="dipole_trap_assembly"
+        <space name="dipole_trap" tree="dipole_trap_assembly">
             <transformation rotation_euler="90. 0. 0." displacement="0 0 1.0"/>
         </space>
     </space>
 
-which would rotate the whole assembly by 90 degrees about the z-axis, and then displace it by 1 meter
-along the z-axis. Assemblies may be nested within each other and the coordinate transformations
-which are associated with the placement each assembly will be appropriately
-applied to all of the elements they contain.
+would rotate the whole assembly by 90 degrees about the z-axis, and then displace it by 1 meter along the z-axis.
+
+Assemblies may be nested within each other, and the coordinate transformations which are associated with the placement
+of each assembly will be appropriately applied to all of the elements they contain. This makes it very intuitive to
+create complex geometries with multiple displacements and rotations, because it resembles the behavior of real-world
+objects (i.e. turning an assemble object by some amount will also turn all parts inside by the same amount, relative
+to the outside coordinate system.)
+
+Especially for rotations, it should be noted that it makes a difference if they are applied in the assembly before or
+after placing child elements. Consider the following example:
+
+.. code-block:: xml
+
+    <disk_surface name="disk_surface" r="1.0" z="0."/>
+
+    <space name="world">
+        <space name="assembly_1">
+            <surface name="placed_disk" node="disk_surface"/>
+            <transformation rotation_euler="0. 30. 0." displacement="0 0 -1.0"/>
+        </space>
+        <space name="assembly_2">
+            <transformation rotation_euler="0. 30. 0." displacement="0 0 1.0"/>
+            <surface name="placed_disk" node="disk_surface"/>
+        </space>
+    </space>
+
+In this case, the ``placed_disk`` in in the first assembly will be tilted relative to the world volume, while the
+disk in the second assembly will not! This can be verified easily with one of the geometry viewers, which are explained
+in section  :ref:`visualization-label`. The reason for this behavior is that in the second case, the rotation was
+applied before placing the surface inside the assembly, and so it is not propagated to the shape. This is on purpose,
+because it allows to transform the origin and orientation of the reference system before assembling elements.
+
+It is best to think of the ``<transformation>`` elements as commands that are executed during XML initialization, while
+the geometry is assembled. It should be clear then that the two example assemblies yield different results.
 
 Extensions
 ~~~~~~~~~~
 
-In order to give physical properties to the geometry elements that have been constructed
-and placed they must be associated with extensions. The currently available extensions are
-axial (rotationally symmetric) or non-symmetric meshing, visualization properties, electrostatic
-boundary conditions (Dirichlet or Neuman surfaces), and electromagnet properties such as current density.
+In order to give physical properties to the geometry elements that have been constructed and placed, they must be
+associated with extensions. The currently available extensions are *meshing* (axially or rotationally symmetric, or
+non-symmetric), *visualization* properties, electrostatic *boundary conditions* (Dirichlet or Neumann surfaces), and
+magnetostatic properties of *solenoids and coils* (current density and number of windings.)
 
-A simple extension example is specifying the color and opacity
-of a shape for its display in a VTK visualization window is as follows::
+A simple extension example is specifying the color and opacity of a shape for its display in a VTK_ visualization window
+as follows:
+
+.. code-block:: xml
 
     <appearance name="app_magnet" color="0 255 127 127" arc="72" surfaces="world/dipole_trap/@magnet_tag"/>
 
-This example tells the visualization that any shape given the tag ``magnet_tag`` should be colored
-with an RGBA color value of (0,255,127,127). If you have VTK enabled you may wish to experiment
-with the changes introduced by modifying these parameters.
+This example tells the visualization that any shape given the tag ``magnet_tag`` should be colored with an RGBA color
+value of (0,255,127,127), where all values are given in the range 0..255 and the fourth value defines the shape's
+opacity. If you have VTK enabled you may wish to experiment with the changes introduced by modifying these parameters.
+When using the ROOT_ visualization, the appearance settings will be ignored.
 
-Extensions may be attached to a shape object, either by specifying its name or location within
-the geometry tree, or by giving a tag that is associated with it. The location of objects within
-the geometry tree uses an XPath like syntax augmented with tagging. The tagging feature is very useful
-for applying properties to many different elements at once. To do this, each element which is to
-receive the same extension must share the same tag. There is no limit to the number of tags an geometric
-element may be given, and tags may be nested. For example, given the dipole trap geometry as specified, one
-may associate an axially symmetric mesh with all elements that share the tag ``electrode_tag`` with::
+In the line above, you also find an example of referencing tags throught the ``@tag_name`` syntax. Generally the
+placed shapes can be referenced through a XPath_-like syntax that defines the location in the geometry tree, starting
+at the "root" volume (which is typically called `world`.) This usually works with all `spaces` and `surfaces`
+attributes of the XML elements.
+
+The tagging feature is very useful for applying properties to many different elements at once. To do this, each element
+which is to receive the same extension must share the same tag. There is no limit to the number of tags an geometric
+element may be given. For example, given the dipole trap geometry as specified, one may associate an axially symmetric
+mesh with all elements that share the tag ``electrode_tag`` with the line:
+
+.. code-block:: xml
 
     <axial_mesh name="mesh_electrode" surfaces="world/dipole_trap/@electrode_tag"/>
 
-The ``@`` symbol signifies that any geometric shape with the tag ``electrode_tag``
-that is found within ``world/dipole`` trap should be giving an axial mesh extension (i.e. it will
-be divided into a collection of axially symmetric objects, cones, cylinders, etc.). The axial mesh
-will be later used by the field solving routines. However, a tag is not strictly necessary to
-apply an extension, for example, if we wished to generate an axial mesh for everything within the world
-we would write::
+This specifies that any geometric shape with the tag ``electrode_tag`` that is found within the ``world/dipole_trap``
+space should be giving an axial mesh extension (i.e. it will be divided into a collection of axially symmetric objects
+like cones, cylinders, etc.) This axial mesh will be later used by the field solving routines in *KEMField*. However, a
+tag is not strictly necessary to apply an extension. For example, if we wished to generate an axial mesh for everything
+within the world volume we would write:
 
-    <axial_mesh name="mesh_electrode" surfaces="world/@"/>
+.. code-block:: xml
 
-or, if we wished to single out the ``ring_surface`` shape exactly we would write::
+    <axial_mesh name="mesh_electrode" surfaces="world/#"/>
+
+or, if we wished to single out the ``ring_surface`` shape by specifying its full path we would write:
+
+.. code-block:: xml
 
      <axial_mesh name="mesh_electrode" surfaces="world/dipole_trap/ring"/>
 
-Meshing is critical for any problem with involves electrostatic fields. The type of mesh depends on
-the symmetry of the geometry. For completely axially-symmetric geometries, the ``axial_mesh`` is recommended
-so that the zonal harmonics field computation method may be used. For completely non-symmetric (3D) geometries
-the mesh type would be specified as follows::
+Meshing is critical for any problem with involves electrostatic fields. The type of mesh depends on the symmetry of the
+geometry. For completely axially-symmetric geometries, the ``axial_mesh`` is recommended so that the zonal harmonics
+field computation method may be used. For completely non-symmetric (3D) geometries, the mesh type would be specified as
+follows:
+
+.. code-block:: xml
 
     <mesh name="mesh_electrode" surfaces="world/dipole_trap/@electrode_tag"/>
 
-Because of the very shape-specific nature of the deterministic meshing which is provided by KGeoBag,
-parameters (``mesh_count`` and ``mesh_power``) describing how the mesh is to be constructed
-are given when specifying the shapes themselves. That being said, the mesh associated with a
-specific shape will not be constructed unless the extension statement is present.
+Because of the very shape-specific nature of the deterministic meshing which is provided by *KGeoBag*, parameters
+(``mesh_count`` and ``mesh_power``) describing how the mesh is to be constructed are given when specifying the shapes
+themselves. That being said, the mesh associated with a specific shape will not be constructed unless the extension
+statement is present.
 
-Another important extension for field solving is the specification of boundary conditions. For example
-when solving the Laplace boundary value problem, one may specify that a particular surface exhibit
-Dirichlet boundary conditions with a particular voltage through the use of the following extension::
+It is possible to define multiple meshes side by side, e.g. if the simulation can be configured axially-symmetric or
+non-symmetric. In this case, both meshes will be available for *KEMField* calculations regardless of the symmetry
+setting. Note that the axial mesh cannot handle any non-symmetric elements, and these will be simply ignored.
+
+Another important extension for field calculations is the specification of boundary conditions. For example, when
+solving the Laplace boundary value problem via *KEMField*, one may specify that a particular surface exhibit Dirichlet
+boundary conditions where a particular voltage is applied to the surface through the use of the following extension:
+
+.. code-block:: xml
 
     <electrostatic_dirichlet name="electrode_ring" surfaces="world/dipole_trap/ring" value="-10."/>
 
-Where ``value="-10"`` signifies that this surface has a potential of -10 volts.
+Where ``value="-10"`` signifies that this surface has a potential of -10 volts. This is the standard case for defining
+(metallic) electrode surfaces in a simulation, and a typical scenario for the boundary-element method (BEM). It is also
+possible to define Neumann boundary conditions, which are typically used for insulating materials.
 
-For further demonstrations of the possible geometry extensions please see the provided example XML files.
+Similar to the electrode setup, one can define a magnet system that provides a magnetostatic field for the simulation.
+For example, one may specify a solenoid electromagnet with the appropriate parameters:
+
+.. code-block:: xml
+
+    <electromagnet name="electromagnet_upstream_solenoid" spaces="world/dipole_trap/upstream_solenoid" current="{22.3047 * 20000}"/>
+
+which references a space named ``upstream_solenoid`` with a total current of 22.3047 amps times 20000 turns. The
+electric current and the number of turns can also be specified separately for added clarity:
+
+.. code-block:: xml
+
+    <electromagnet name="electromagnet_upstream_solenoid" spaces="world/dipole_trap/upstream_solenoid" current="22.3047" num_turns="20000"/>
+
+The cylinder tube space is one of the supported shapes for electromagnets and describes a solenoid geometry. Other
+supported shapes are the cylinder surface, describing a simple coil, and the rod space, describing a single wire.
+
+For further demonstrations of the possible geometry extensions please see the provided example XML files located
+at :gh-code:`KGeoBag/Source/XML/Examples`.
+
 
 Kassiopeia
 ----------
@@ -426,8 +883,10 @@ Kassiopeia
 The remaining elements all live within the *Kassiopeia* element and must be placed with
 start and end tags of the form::
 
+.. code-block:: xml
+
     <kassiopeia>
-    <!-- complete description of the kassiopeia simulation element here -->
+        <!-- complete description of the kassiopeia simulation element here -->
     </kassiopeia>
 
 The elements which must be described within the *Kassiopeia* namespace include the specification
@@ -1094,11 +1553,17 @@ the simulation will fail with the message::
 [INITIALIZATION WARNING MESSAGE] No suitable Object called <X> in Toolbox
 
 
-.. _TFormula: https://root.cern.ch/doc/master/classTFormula.html
+.. _TFormula: http://root.cern.ch/root/htmldoc/TFormula.html
+.. _TMath: http://root.cern.ch/root/htmldoc/TMath.html
 .. _PDG: http://pdg.lbl.gov/mc_particle_id_contents.html
-.. _Paraview: http://www.paraview.org
+.. _Paraview: http://www.paraview.org/
 .. _ROOT: https://root.cern.ch/
-
+.. _VTK: http://www.vtk.org/
+.. _MKS: https://scienceworld.wolfram.com/physics/MKS.html
+.. _XML: https://www.w3.org/TR/xml11/
+.. _Xpath: https://www.w3.org/TR/xpath-10/
+.. _TinyExpr: https://github.com/codeplea/tinyexpr/
+.. _Log4CXX: https://logging.apache.org/log4cxx/
 
 .. rubric:: Footnotes
 

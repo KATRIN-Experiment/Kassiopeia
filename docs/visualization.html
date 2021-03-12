@@ -14,7 +14,7 @@
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
 <link href="license.html" rel="next" title="License"/>
-<link href="output.html" rel="prev" title="Understanding Simulation Output"/>
+<link href="tools.html" rel="prev" title="Additional Simulation Tools"/>
 </head><body class="text-gray-900 antialiased min-h-screen md:h-screen flex flex-col">
 <a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#visualization-techniques" title="Skip navigation links">Skip to content</a>
 <header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
@@ -58,20 +58,29 @@
 </ul>
 </li>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#build-options">Build options</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#miscellaneous-options">Miscellaneous options</a></div></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html"> Examples and Tests</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#verbosity-levels">Verbosity levels</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#output-files">Output files</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="examples.html#example-configurations">Example configurations</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a></div><ul>
@@ -79,11 +88,17 @@
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a></div><ul>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#variables">Variables</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#expressions">Expressions</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#print-statements">Print statements</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#formula-expressions">Formula Expressions</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#comments">Comments</a></div></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#messaging">Messaging</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#verbosity-levels">Verbosity levels</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#additional-logging">Additional logging</a></div></li>
+</ul>
+</li>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#geometry">Geometry</a></div><ul>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#shapes-and-placement">Shapes and Placement</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#extensions">Extensions</a></div></li>
@@ -199,6 +214,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div></li>
 <li class="toctree-l1 current expanded"><div class="nav-link"><a class="current reference internal" href="#"> Visualization Techniques</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
@@ -219,7 +235,7 @@
 <section class="flex justify-between pt-4 mt-12">
 <div class="mr-auto">
 <span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2">Previous</span>
-<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="output.html" title="Go to previous page">← Understanding Simulation Output</a>
+<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="tools.html" title="Go to previous page">← Additional Simulation Tools</a>
 </div>
 <div class="ml-auto">
 <span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2 text-right">Next</span>

@@ -6,28 +6,29 @@ Downloading the code
 
 The most recent version of *Kassiopeia* and its accompanying libraries can be found on its public github page:
 
-https://github.com/KATRIN-Experiment/Kassiopeia
+    https://github.com/KATRIN-Experiment/Kassiopeia
 
 To obtain the code, you may either download a .zip file containing the compressed source files from:
 
-https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip
+    https://github.com/KATRIN-Experiment/Kassiopeia/archive/master.zip
 
 or, alternatively, use git to clone the repository with the following command:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/KATRIN-Experiment/Kassiopeia.git
+    git clone https://github.com/KATRIN-Experiment/Kassiopeia.git
 
 The use of git is generally the preferred method as this will allow you to easily obtain updates and bug fixes without
 needing to download a fresh copy of the source. This can be done simply by executing the command:
 
 .. code-block:: bash
 
-    $ git pull
+    git pull
 
 from within the source directory. For a quick-start guide to git, please refere to the GitHub documentation:
 
-https://docs.github.com/en/github/getting-started-with-github
+    https://docs.github.com/en/github/getting-started-with-github
+
 
 Supported operating systems and hardware requirements
 =====================================================
@@ -53,28 +54,28 @@ The section below outlines the necessary steps to build *Kassiopeia* on a local 
 of external dependencies that may conflict with what is available, it is often more feasible to use the Docker_ image
 that is provided for the recent *Kassiopeia* releases. The images can be downloaded from one of the two locations:
 
-https://hub.docker.com/r/katrinexperiment/kassiopeia
+    https://hub.docker.com/r/katrinexperiment/kassiopeia
 
-https://github.com/orgs/KATRIN-Experiment/packages
+    https://github.com/orgs/KATRIN-Experiment/packages
 
 If you have Docker_ installed on your system, you can simply pull the image:
 
 .. code-block:: bash
 
-    $ sudo docker pull katrinexperiment/kassiopeia
+    sudo docker pull katrinexperiment/kassiopeia
 
 and open a shell inside the container from where you can run *Kassiopeia* or other commands:
 
 .. code-block:: bash
 
-    $ sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
+    sudo docker run --rm -it katrinexperiment/kassiopeia /bin/bash
 
 Please note that by default, changes inside the container are not saved and will be lost once the container is closed.
 In order to use the Docker_ image for scientific simulations, some additional steps are necessary.
 
 For instructions on how to use Docker containers and how to set up persistent storage, refer to the Docker manual:
 
-https://docs.docker.com/
+    https://docs.docker.com/
 
 
 Required software dependencies
@@ -102,7 +103,7 @@ build system can be installed through the use of the package manager through the
 
 .. code-block:: bash
 
-    $ apt-get update -y && apt-get install -y \
+    apt-get update -y && apt-get install -y \
         build-essential cmake cmake-curses-gui \
         libboost-all-dev libfftw3-dev libgsl0-dev libhdf5-dev liblog4cxx-dev libomp-dev libopenmpi-dev \
         libpcl-dev libsqlite3-dev libssl-dev libtbb-dev libvtk6-dev libxml2-dev ocl-icd-opencl-dev zlib1g-dev
@@ -111,7 +112,7 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
 
 .. code-block:: bash
 
-    $ dnf install -y \
+    dnf install -y \
         @development-tools cmake cmake-gui \
         root-core root-io-xmlparser root-minuit2 root-spectrum \
         vtk vtk-qt vtk-java \
@@ -125,14 +126,12 @@ Required dependencies
 - g++ version 6.1 or higher (if compiling with GCC_)
 - clang++ version 3.4 or higher (if compiling with Clang_)
 - GSL_
-- ROOT_ version 6.0 or higher
-    - ``--enable-minuit2`` (if you want to use KaFit)
-    - ``--enable-fftw3`` (if you want to use KEMField)
+- ROOT_ version 6.16 or higher
 
 Optional dependencies
 """""""""""""""""""""
 
-- Boost_version 1.61 or higher
+- Boost_ version 1.61 or higher
 - FFTW_ version 3.3.4 or higher
 - HDF5_
 - LibXml2_
@@ -168,13 +167,13 @@ You may install the development packages needed by ROOT on Debian/Ubuntu Linux b
 
 .. code-block:: bash
 
-    $ sudo apt-get install -y libqt4-dev libx11-dev libxext-dev libxft-dev libxpm-dev
+    sudo apt-get install -y libqt4-dev libx11-dev libxext-dev libxft-dev libxpm-dev
 
 On RedHat/Fedora Linux, ROOT_ can be installed through the package manager:
 
 .. code-block:: bash
 
-    $ dnf install -y root-core root-io-xmlparser root-minuit2 root-spectrum
+    dnf install -y root-core root-io-xmlparser root-minuit2 root-spectrum
 
 Instead of building the ROOT_ libraries yourself, you can also download the binary release for your corresponding
 Linux distribution. The download links can be found on the CERN website.
@@ -212,28 +211,28 @@ will be created during compilation by executing the commands:
 
 .. code-block:: bash
 
-    $ cd ~/kassiopeia
-    $ mkdir ./build
-    $ cd ./build
+    cd ~/kassiopeia
+    mkdir ./build
+    cd ./build
 
 Before running CMake, consider if you have a preference for which compiler is used. You may select the compiler by
 setting the environmental variables ``CXX`` and ``CC``. For example, for Clang you should set them to:
 
 .. code-block:: bash
 
-    $ export CXX=clang++  CC=clang
+    export CXX=clang++  CC=clang
 
 while for the GCC toolchain use:
 
 .. code-block:: bash
 
-    $ export CXX=g++ CC=gcc
+    export CXX=g++ CC=gcc
 
 Once you are within the build directory, you may bring up the cmake configuration GUI by typing:
 
 .. code-block:: bash
 
-    $ ccmake ..
+    ccmake ..
 
 You will be presented with screen which looks like this:
 
@@ -253,14 +252,14 @@ the messages carefully. Then press ``e`` to go back to the menu, this will lead 
 
 At this point you may either accept the default values or use the arrow keys to select which option you wish to change.
 Press the ``enter`` key to activate/deactive an option for modification. The installation directory for the *Kassiopeia*
-software can be specified by setting the value of the option CMAKE_INSTALL_PREFIX. Once the configuration variables are
-set (or if you accept the defaults), hit ``c`` to configure again, and then ``g`` to generate the make file and exit.
+software can be specified by setting the value of the option ``CMAKE_INSTALL_PREFIX``. Once the configuration variables
+are set (or if you accept the defaults), hit ``c`` to configure again, then ``g`` to generate the build files and exit.
 
 Once the build files are generated, you can compile and install *Kassiopeia* by simply executing:
 
 .. code-block:: bash
 
-    $ make && make install
+    make && make install
 
 or using the corresponding command for the build tool of your choice (e.g. ``ninja``).
 
@@ -335,8 +334,8 @@ run it (without arguments) by executing:
 
 .. code-block:: bash
 
-    $ cd ~/kassiopeia/install/bin/
-    $ ./Kassiopeia
+    cd ~/kassiopeia/install/bin/
+    ./Kassiopeia
 
 The output of which should be::
 
@@ -445,7 +444,7 @@ These are listed as follows:
 | CMake option name             | Required software                               | Description                                     |
 +===============================+=================================================+=================================================+
 | KEMField_ENABLE_DEBUG         | None                                            | Enable KEMField debugging messages.             |
-+-------------------------+-------------------------------------------------------+-------------------------------------------------+
++-------------------------------+-------------------------------------------------+-------------------------------------------------+
 | KEMField_ENABLE_FM_APP        | None                                            | Build fast-multipole library applications.      |
 +-------------------------------+-------------------------------------------------+-------------------------------------------------+
 | KEMField_ENABLE_FM_TEST       | None                                            | Build fast-multipole developter tests.          |
@@ -514,8 +513,11 @@ Some of the miscellaneous not specific to a sub-module are given below:
 | COMPILER_TUNE_OPTIONS| OFF                         | Activate some compiler flags to improve performance. |
 +----------------------+-----------------------------+------------------------------------------------------+
 
-The ``COMPILER_TUNE_OPTIONS`` flag activates the compiler options: ``-march=native -mfpmath=sse -funroll-loops``. Since
-this produces code compiled for the current CPU, this option should not be used on a computing cluster or other
+The ``COMPILER_TUNE_OPTIONS`` flag activates the compiler options:
+
+    ``-march=native -mfpmath=sse -funroll-loops``.
+
+Since this produces code compiled for the current CPU, this option should not be used on a computing cluster or other
 architectures where compiled code is shared between different machines. Be aware that this option is largely untested.
 
 
