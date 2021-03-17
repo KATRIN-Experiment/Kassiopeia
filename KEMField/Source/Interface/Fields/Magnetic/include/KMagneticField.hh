@@ -45,6 +45,10 @@ class KMagneticField : public katrin::KNamed
         return MagneticFieldAndGradientCore(P, time);
     }
 
+    bool Check(const KPosition& P, const double& time) const
+    {
+        return CheckCore(P, time);
+    }
 
     void Initialize()
     {
@@ -70,6 +74,12 @@ class KMagneticField : public katrin::KNamed
         KGradient grad = MagneticGradientCore(P, time);
 
         return std::pair<KFieldVector, KGradient>(field, grad);
+    }
+
+    virtual bool CheckCore(const KPosition& /*P*/, const double& /*time*/) const
+    {
+        //default behavior is to assume all points are valid
+        return true;
     }
 
     virtual void InitializeCore() {}

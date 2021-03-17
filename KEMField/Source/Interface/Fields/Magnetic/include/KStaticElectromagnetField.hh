@@ -22,7 +22,10 @@ class KStaticElectromagnetField : public KMagnetostaticField
     ~KStaticElectromagnetField() override;
 
     void SetDirectory(const std::string& aDirectory);
+    std::string GetDirectory() const;
+
     void SetFile(const std::string& aFile);
+    std::string GetFile() const;
 
     void SetFieldSolver(const KSmartPointer<KMagneticFieldSolver>& solver);
     KSmartPointer<KMagneticFieldSolver> GetFieldSolver();

@@ -23,6 +23,7 @@ STATICINT sKMagneticSuperpositionFieldEntryStructure =
 STATICINT sKMagneticSuperpositionFieldStructure =
     KMagneticSuperpositionFieldBuilder::Attribute<std::string>("name") +
     KMagneticSuperpositionFieldBuilder::Attribute<bool>("use_caching") +
+    KMagneticSuperpositionFieldBuilder::Attribute<std::string>("require") +
     KMagneticSuperpositionFieldBuilder::ComplexElement<KMagneticSuperpositionFieldEntry>("add_field");
 
 

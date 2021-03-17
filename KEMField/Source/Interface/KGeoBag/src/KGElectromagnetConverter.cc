@@ -27,17 +27,22 @@ KGElectromagnetConverter::KGElectromagnetConverter() :
 {}
 KGElectromagnetConverter::~KGElectromagnetConverter()
 {
-    if (fMagfield3File)
+    if (fMagfield3File && fMagfield3File->IsOpen())
         fMagfield3File->Close();
 }
 
-void KGElectromagnetConverter::SetDumpMagfield3ToFile(const std::string& aFileName)
+void KGElectromagnetConverter::SetDumpMagfield3ToFile(const std::string& aDirectory, const std::string& aFileName)
 {
-    fMagfield3File = katrin::KTextFile::CreateOutputTextFile(aFileName);
+    fMagfield3File = katrin::KTextFile::CreateOutputTextFile(aDirectory, aFileName);
     if (!fMagfield3File)
         return;
 
     fMagfield3File->Open(katrin::KFile::eWrite);
+    if (!fMagfield3File->IsOpen()) {
+        kem_cout(eWarning) << "magfield3 file could not be opened" << eom;
+        return;
+    }
+
     kem_cout() << "Saving magfield3 geometry to file: " << fMagfield3File->GetName() << eom;
 
     auto* tStream = fMagfield3File->File();
@@ -226,7 +231,7 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
                                               GlobalToInternalVector(fCurrentZAxis));
         fElectromagnetContainer->push_back(coil);
 
-        if (fMagfield3File) {
+        if (fMagfield3File && fMagfield3File->IsOpen()) {
             auto* tStream = fMagfield3File->File();
 
             // do not use coil->GetP0|P1() because it is defined as (r,0,z)

@@ -49,6 +49,9 @@ template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContain
     else if (aContainer->GetName() == "use_caching") {
         aContainer->CopyTo(fObject, &KEMField::KMagneticSuperpositionField::SetUseCaching);
     }
+    else if (aContainer->GetName() == "require") {
+        aContainer->CopyTo(fObject, &KEMField::KMagneticSuperpositionField::SetRequire);
+    }
     else
         return false;
     return true;

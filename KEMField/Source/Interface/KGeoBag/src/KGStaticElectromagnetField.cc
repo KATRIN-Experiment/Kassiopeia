@@ -15,7 +15,12 @@ using namespace std;
 namespace KEMField
 {
 
-KGStaticElectromagnetField::KGStaticElectromagnetField() : fSystem(nullptr), fConverter(nullptr) {}
+KGStaticElectromagnetField::KGStaticElectromagnetField() :
+    fSystem(nullptr),
+    fConverter(nullptr),
+    fSaveMagfield3(true),
+    fDirectoryMagfield3(SCRATCH_DEFAULT_DIR)
+{}
 
 KGStaticElectromagnetField::~KGStaticElectromagnetField() = default;
 
@@ -37,6 +42,11 @@ void KGStaticElectromagnetField::AddSpace(KGeoBag::KGSpace* aSpace)
 void KGStaticElectromagnetField::SetSaveMagfield3(bool aFlag)
 {
     fSaveMagfield3 = aFlag;
+}
+
+void KGStaticElectromagnetField::SetDirectoryMagfield3(const string& aDirectory)
+{
+    fDirectoryMagfield3 = aDirectory;
 }
 
 KSmartPointer<KGeoBag::KGElectromagnetConverter> KGStaticElectromagnetField::GetConverter()
@@ -81,7 +91,7 @@ void KGStaticElectromagnetField::ConfigureSurfaceContainer()
 
     if (fSaveMagfield3) {
         string tFileName = GetName() + string(".mag3");
-        GetConverter()->SetDumpMagfield3ToFile(tFileName);
+        GetConverter()->SetDumpMagfield3ToFile(fDirectoryMagfield3, tFileName);
     }
 
     if (fSystem != nullptr) {

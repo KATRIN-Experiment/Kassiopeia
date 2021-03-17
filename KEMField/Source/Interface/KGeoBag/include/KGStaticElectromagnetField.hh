@@ -29,6 +29,7 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     void AddSpace(KGeoBag::KGSpace* aSpace);
 
     void SetSaveMagfield3(bool aFlag);
+    void SetDirectoryMagfield3(const std::string& aDirectory);
 
     KSmartPointer<KGeoBag::KGElectromagnetConverter> GetConverter();
 
@@ -48,6 +49,7 @@ class KGStaticElectromagnetField : public KStaticElectromagnetField
     KSmartPointer<KGeoBag::KGElectromagnetConverter> fConverter;
 
     bool fSaveMagfield3;
+    std::string fDirectoryMagfield3;
 };
 
 } /* namespace KEMField */
