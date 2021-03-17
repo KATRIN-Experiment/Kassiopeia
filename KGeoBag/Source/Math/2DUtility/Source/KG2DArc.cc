@@ -482,7 +482,7 @@ void KG2DArc::NearestIntersection(const KG2DArc* arc, int& flag, std::vector<KTw
 }
 
 
-bool KG2DArc::IsInsideCircularSegment(const KTwoVector aPoint) const
+bool KG2DArc::IsInsideCircularSegment(const KTwoVector& aPoint) const
 {
     KTwoVector del = aPoint - fCenter;
     if (del.MagnitudeSquared() > fRadius2) {
@@ -495,7 +495,7 @@ bool KG2DArc::IsInsideCircularSegment(const KTwoVector aPoint) const
 }
 
 
-bool KG2DArc::IsInsideWedge(const KTwoVector aPoint) const
+bool KG2DArc::IsInsideWedge(const KTwoVector& aPoint) const
 {
     KTwoVector del = aPoint - fCenter;
     double MagnitudeSquared = del.MagnitudeSquared();
@@ -582,7 +582,7 @@ bool KG2DArc::IsInAngularRange(const double& angle1, const double& angle2, const
     }
 }
 
-bool KG2DArc::IsSameSideOfChordAsArc(const KTwoVector aPoint) const
+bool KG2DArc::IsSameSideOfChordAsArc(const KTwoVector& aPoint) const
 {
     KTwoVector test = aPoint - fHalfwayPoint;
     //    std::cout<<" point = "<<aPoint.X()<<", "<<aPoint.Y()<<std::endl;

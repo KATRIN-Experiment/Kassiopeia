@@ -40,7 +40,7 @@ void KSAOutputCollector::CollectOutput(KSAOutputNode* node)
         else {
             //break, error
         }
-    } while (fNodeStack.size() != 0);
+    } while (!fNodeStack.empty());
 }
 
 void KSAOutputCollector::CollectNodeOutput(KSAOutputNode* node)

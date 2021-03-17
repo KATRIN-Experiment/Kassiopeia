@@ -116,15 +116,15 @@ int main(int /*argc*/, char** /*argv*/)
     KFMFastFourierTransformUtilities::FFTRadixTwo_DIT(N, (double*) &(arr[0]), (double*) &(twiddle[0]));
 
     kfmout << "DFT'd array = " << kfmendl;
-    for (unsigned int i = 0; i < N; i++) {
-        kfmout << arr[i] << kfmendl;
+    for (auto& i : arr) {
+        kfmout << i << kfmendl;
     }
 
     //now we'll do the inverse transform
 
     //conjugate the twiddle factors
-    for (unsigned int i = 0; i < N; i++) {
-        twiddle[i] = std::conj(twiddle[i]);
+    for (auto& i : twiddle) {
+        i = std::conj(i);
     }
 
     //do the radix-2 FFT
@@ -133,8 +133,8 @@ int main(int /*argc*/, char** /*argv*/)
     KFMBitReversalPermutation::PermuteArray<std::complex<double>>(N, index_arr, arr);
 
     //normalize
-    for (unsigned int i = 0; i < N; i++) {
-        arr[i] *= 1.0 / ((double) N);
+    for (auto& i : arr) {
+        i *= 1.0 / ((double) N);
     }
 
     kfmout << "difference between original and IDFT of the DFT'd array = " << kfmendl;
@@ -172,23 +172,23 @@ int main(int /*argc*/, char** /*argv*/)
     KFMFastFourierTransformUtilities::FFTRadixTwo_DIF(N, (double*) &(arr[0]), (double*) &(twiddle[0]));
 
     kfmout << "DFT'd array = " << kfmendl;
-    for (unsigned int i = 0; i < N; i++) {
-        kfmout << arr[i] << kfmendl;
+    for (auto& i : arr) {
+        kfmout << i << kfmendl;
     }
 
     //now we'll do the inverse transform
 
     //conjugate the twiddle factors
-    for (unsigned int i = 0; i < N; i++) {
-        twiddle[i] = std::conj(twiddle[i]);
+    for (auto& i : twiddle) {
+        i = std::conj(i);
     }
 
     //do the radix-2 FFT
     KFMFastFourierTransformUtilities::FFTRadixTwo_DIT(N, (double*) &(arr[0]), (double*) &(twiddle[0]));
 
     //normalize
-    for (unsigned int i = 0; i < N; i++) {
-        arr[i] *= 1.0 / ((double) N);
+    for (auto& i : arr) {
+        i *= 1.0 / ((double) N);
     }
 
     kfmout << "difference between original and IDFT of the DFT'd array = " << kfmendl;

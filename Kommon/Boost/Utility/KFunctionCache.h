@@ -45,12 +45,12 @@ template<size_t D = 1, typename IndexT = int32_t> class KFunctionCache
     };
 
     typedef KHashMap<std::array<IndexT, D>, double, katrin::hash_container<std::array<IndexT, D>>> ValueCache_t;
-    typedef std::function<double(const std::array<double, D>&)> Function_t;
+    using Function_t = std::function<double(const std::array<double, D>&)>;
 
   public:
     KFunctionCache(EInterpolationMethod method = EInterpolationMethod::Spline, uint32_t maxCacheSize = 1048576,
                    double maxLoadFactor = 2.0);
-    ~KFunctionCache() {}
+    ~KFunctionCache() = default;
 
     void SetMaxCacheSize(size_t maxCacheSize)
     {

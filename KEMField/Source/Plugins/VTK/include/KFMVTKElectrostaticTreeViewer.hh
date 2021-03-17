@@ -60,8 +60,8 @@ class KFMVTKElectrostaticTreeViewer : public KFMNodeActor<KFMElectrostaticNode>
 
     void ApplyAction(KFMElectrostaticNode* node);
 
-    void GenerateGeometryFile(std::string fileName = "FastMultipoleTreeData.vtp");
-    void GenerateGridFile(std::string fileName = "FastMultipoleTreeData.vtu");
+    void GenerateGeometryFile(const std::string& fileName = "FastMultipoleTreeData.vtp");
+    void GenerateGridFile(const std::string& fileName = "FastMultipoleTreeData.vtu");
 
     void ViewGeometry();
 

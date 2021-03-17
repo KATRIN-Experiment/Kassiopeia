@@ -8,7 +8,7 @@
 
 namespace KEMField
 {
-typedef KGeoBag::KThreeMatrix KThreeMatrix;
+using KThreeMatrix = KGeoBag::KThreeMatrix;
 
 template<typename Stream> Stream& operator>>(Stream& s, KThreeMatrix& aThreeMatrix)
 {
@@ -45,7 +45,7 @@ class KGradient : public KThreeMatrix
         KThreeMatrix(anXX, anXY, anXZ, aYX, aYY, aYZ, aZX, aZY, aZZ)
     {}
 
-    ~KGradient() override {}
+    ~KGradient() override = default;
 
     static std::string Name()
     {

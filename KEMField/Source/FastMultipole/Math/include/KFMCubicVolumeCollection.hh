@@ -30,7 +30,8 @@ template<unsigned int NDIM> class KFMCubicVolumeCollection
         fCubes.clear();
     };
 
-    virtual ~KFMCubicVolumeCollection(){};
+    virtual ~KFMCubicVolumeCollection() = default;
+    ;
 
     void Clear()
     {

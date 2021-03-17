@@ -3,7 +3,6 @@
 
 #include "KGCore.hh"
 #include "KSSurface.h"
-using namespace KGeoBag;
 
 namespace Kassiopeia
 {
@@ -25,13 +24,13 @@ class KSGeoSurface : public KSComponentTemplate<KSGeoSurface, KSSurface>
     void On() const override;
     void Off() const override;
 
-    KThreeVector Point(const KThreeVector& aPoint) const override;
-    KThreeVector Normal(const KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const override;
 
   public:
-    void AddContent(KGSurface* aSurface);
-    void RemoveContent(KGSurface* aSurface);
-    std::vector<KGSurface*> GetContent();
+    void AddContent(KGeoBag::KGSurface* aSurface);
+    void RemoveContent(KGeoBag::KGSurface* aSurface);
+    std::vector<KGeoBag::KGSurface*> GetContent();
 
     void AddCommand(KSCommand* anCommand);
     void RemoveCommand(KSCommand* anCommand);
@@ -43,7 +42,7 @@ class KSGeoSurface : public KSComponentTemplate<KSGeoSurface, KSSurface>
   private:
     KSGeoSpace* fParent;
 
-    mutable std::vector<KGSurface*> fContents;
+    mutable std::vector<KGeoBag::KGSurface*> fContents;
     mutable std::vector<KSCommand*> fCommands;
 };
 

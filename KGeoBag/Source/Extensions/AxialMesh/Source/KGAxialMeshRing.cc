@@ -6,7 +6,7 @@ namespace KGeoBag
 {
 
 KGAxialMeshRing::KGAxialMeshRing(const double& aD, const KTwoVector& aP0) : fD(aD), fP0(aP0) {}
-KGAxialMeshRing::~KGAxialMeshRing() {}
+KGAxialMeshRing::~KGAxialMeshRing() = default;
 
 double KGAxialMeshRing::Area() const
 {

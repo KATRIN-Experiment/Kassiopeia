@@ -8,7 +8,7 @@ using namespace Kassiopeia;
 namespace katrin
 {
 
-template<> KSModEventReportBuilder::~KComplexElement() {}
+template<> KSModEventReportBuilder::~KComplexElement() = default;
 
 STATICINT sKSModEventReportStructure = KSModEventReportBuilder::Attribute<std::string>("name");
 

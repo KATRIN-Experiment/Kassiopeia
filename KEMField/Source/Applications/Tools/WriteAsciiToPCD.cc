@@ -35,10 +35,10 @@ int main(int argc, char* argv[])
 
     static const char* optString = "ha:b:n:m:s:";
 
-    std::string inFile = "";
+    std::string inFile;
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1) {
             break;
         }
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string suffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    if (suffix.compare(".txt") != 0) {
+    if (suffix != ".txt") {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }

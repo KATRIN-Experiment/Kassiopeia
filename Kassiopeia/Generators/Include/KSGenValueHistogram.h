@@ -3,12 +3,8 @@
 
 #include "KField.h"
 #include "KFile.h"
-#include "KSGenValue.h"
-using katrin::KFile;
-
 #include "KRootFile.h"
-using katrin::KRootFile;
-
+#include "KSGenValue.h"
 #include "TF1.h"
 #include "TH1.h"
 
@@ -40,7 +36,7 @@ class KSGenValueHistogram : public KSComponentTemplate<KSGenValueHistogram, KSGe
     void DeinitializeComponent() override;
 
   private:
-    KRootFile* fRootFile;
+    katrin::KRootFile* fRootFile;
     TH1* fValueHistogram;
     TF1* fValueFunction;
 };

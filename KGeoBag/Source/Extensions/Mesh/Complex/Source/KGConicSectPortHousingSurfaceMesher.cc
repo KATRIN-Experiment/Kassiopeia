@@ -817,7 +817,7 @@ void KGConicSectPortHousingSurfaceMesher::ParaxialPortDiscretizer::DiscretizePor
     // cylindrical portion of the valve
 
     if (paraxialPort->GetAsymmetricLength() < paraxialPort->GetSymmetricLength()) {
-        dz.empty();
+        dz.clear();
         dz.resize(2 * paraxialPort->GetCylDisc());
         DiscretizeInterval(2. * (paraxialPort->GetSymmetricLength() - paraxialPort->GetAsymmetricLength() / 2.),
                            2 * paraxialPort->GetCylDisc(),
@@ -1236,7 +1236,7 @@ void KGConicSectPortHousingSurfaceMesher::OrthogonalPortDiscretizer::DiscretizeP
     // now that the tricky part's over, we have only to finish discretizing the
     // cylindrical portion of the valve
 
-    dz.empty();
+    dz.clear();
     dz.resize(2 * orthogonalPort->GetCylDisc());
     DiscretizeInterval(2. * (orthogonalPort->GetLength() - merge_length), 2 * orthogonalPort->GetCylDisc(), 1.25, dz);
 

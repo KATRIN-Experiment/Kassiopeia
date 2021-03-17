@@ -9,7 +9,7 @@ namespace Kassiopeia
 {
 
 KSSpace::KSSpace() : fParent(nullptr), fSpaces(), fSurfaces(), fSides() {}
-KSSpace::~KSSpace() {}
+KSSpace::~KSSpace() = default;
 
 const KSSpace* KSSpace::GetParent() const
 {
@@ -32,8 +32,8 @@ void KSSpace::SetParent(KSSpace* aParent)
 
     this->fParent = aParent;
 
-    for (auto tSideIt = this->fSides.begin(); tSideIt != this->fSides.end(); tSideIt++) {
-        (*tSideIt)->fOutsideParent = aParent;
+    for (auto& side : this->fSides) {
+        side->fOutsideParent = aParent;
     }
 
     return;

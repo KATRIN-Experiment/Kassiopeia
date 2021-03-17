@@ -1,6 +1,7 @@
 #include "KZHLegendreCoefficients.hh"
 
 #include <cstddef>
+#include <iostream>
 
 namespace KEMField
 {
@@ -15,22 +16,23 @@ KZHLegendreCoefficients* KZHLegendreCoefficients::GetInstance()
 
 /**
    * Initializes recursive coefficients for computing SourcePoint coefficients.
+   * @see http://www.jpier.org/PIERB/pierb32/17.11042106.pdf
    */
-void KZHLegendreCoefficients::InitializeLegendrePolynomialArrays(int coeff_num)
+void KZHLegendreCoefficients::InitializeLegendrePolynomialArrays(unsigned coeff_num)
 {
-    if (c.at(0).size() >= (unsigned int) coeff_num)
+    if (c.at(0).size() >= coeff_num)
         return;
 
-    int existingSize = 0;
-    if (c.size() > 0)
+    size_t existingSize = 0;
+    if (!c.empty())
         existingSize = c.at(0).size();
 
-    for (int i = 0; i < 12; i++)
+    for (size_t i = 0; i < 12; i++)
         c.at(i).resize(coeff_num, 0);
 
-    int m, M, Mp, A, Ap, B, Bp, C, Cp;
+    double m, M, Mp, A, Ap, B, Bp, C, Cp;
 
-    for (int n = (2 > existingSize ? 2 : existingSize); n < coeff_num; n++) {
+    for (unsigned n = (2 > existingSize ? 2 : existingSize); n < coeff_num; n++) {
         c.at(0).at(n) = (2. * n - 1.) / (1. * n);
         c.at(1).at(n) = (n - 1.) / (1. * n);
         c.at(2).at(n) = (2. * n - 1.) / (1. * (n - 1.));

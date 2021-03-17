@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KKrylovPreconditionerGeneratorBuilder::~KComplexElement() {}
+template<> KKrylovPreconditionerGeneratorBuilder::~KComplexElement() = default;
 
 STATICINT sKKrylovPreconditionerGeneratorStructure =
     KKrylovPreconditionerGeneratorBuilder::Attribute<std::string>("solver_name") +

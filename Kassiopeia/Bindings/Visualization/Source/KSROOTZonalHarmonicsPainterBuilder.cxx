@@ -10,11 +10,11 @@ namespace katrin
 {
 
 STATICINT sKSROOTZonalHarmonicsPainterStructure =
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("name") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("x_axis") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("y_axis") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("electric_field") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("magnetic_field") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("name") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("x_axis") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("y_axis") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("electric_field") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("magnetic_field") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<double>("r_min") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<double>("r_max") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<double>("z_min") +
@@ -23,8 +23,8 @@ STATICINT sKSROOTZonalHarmonicsPainterStructure =
     KSROOTZonalHarmonicsPainterBuilder::Attribute<double>("r_dist") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<int>("r_steps") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<int>("z_steps") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("path") +
-    KSROOTZonalHarmonicsPainterBuilder::Attribute<string>("file") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("path") +
+    KSROOTZonalHarmonicsPainterBuilder::Attribute<std::string>("file") +
     KSROOTZonalHarmonicsPainterBuilder::Attribute<bool>("write");
 //KSROOTZonalHarmonicsPainterBuilder::Attribute< string >("geometry_type" ) +
 //KSROOTZonalHarmonicsPainterBuilder::Attribute< double >( "radial_safety_margin" );

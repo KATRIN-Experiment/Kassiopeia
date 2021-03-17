@@ -14,7 +14,7 @@ KSTrajAdiabaticSpinError::KSTrajAdiabaticSpinError(const KSTrajAdiabaticSpinErro
     KSMathArray<10>(anOperand)
 {}
 
-KSTrajAdiabaticSpinError::~KSTrajAdiabaticSpinError() {}
+KSTrajAdiabaticSpinError::~KSTrajAdiabaticSpinError() = default;
 
 const double& KSTrajAdiabaticSpinError::GetTimeError() const
 {
@@ -26,12 +26,12 @@ const double& KSTrajAdiabaticSpinError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KThreeVector& KSTrajAdiabaticSpinError::GetPositionError() const
+const KGeoBag::KThreeVector& KSTrajAdiabaticSpinError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;
 }
-const KThreeVector& KSTrajAdiabaticSpinError::GetMomentumError() const
+const KGeoBag::KThreeVector& KSTrajAdiabaticSpinError::GetMomentumError() const
 {
     fMomentumError.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentumError;

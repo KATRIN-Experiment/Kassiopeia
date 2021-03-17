@@ -31,21 +31,22 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
   public:
     KFMPointCloudContainer(const KSurfaceContainer& container) :
         fSurfaceContainer(&container),
-        fSortedSurfaceContainer(NULL)
+        fSortedSurfaceContainer(nullptr)
     {
         fContainerIsSorted = false;
     };
 
     KFMPointCloudContainer(const KSortedSurfaceContainer& container) :
-        fSurfaceContainer(NULL),
+        fSurfaceContainer(nullptr),
         fSortedSurfaceContainer(&container)
     {
         fContainerIsSorted = true;
     };
 
-    virtual ~KFMPointCloudContainer(){};
+    ~KFMPointCloudContainer() override = default;
+    ;
 
-    virtual unsigned int GetNObjects() const
+    unsigned int GetNObjects() const override
     {
         if (fContainerIsSorted) {
             return fSortedSurfaceContainer->size();
@@ -55,12 +56,12 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
         }
     };
 
-    virtual void AddObject(const KFMPointCloud<3>& /*obj*/)
+    void AddObject(const KFMPointCloud<3>& /*obj*/) override
     {
         //warning...cannot add object to a virtual container
     }
 
-    virtual KFMPointCloud<3>* GetObjectWithID(const unsigned int& id)
+    KFMPointCloud<3>* GetObjectWithID(const unsigned int& id) override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
@@ -71,7 +72,7 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
                 return &fCurrentPointCloud;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
         else {
@@ -83,12 +84,12 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
                 return &fCurrentPointCloud;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
     }
 
-    virtual const KFMPointCloud<3>* GetObjectWithID(const unsigned int& id) const
+    const KFMPointCloud<3>* GetObjectWithID(const unsigned int& id) const override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fPointCloudGenerator);
@@ -99,7 +100,7 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
                 return &fCurrentPointCloud;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
         else {
@@ -111,12 +112,12 @@ class KFMPointCloudContainer : public KFMPointCloudContainer3D
                 return &fCurrentPointCloud;
             }
             else {
-                return NULL;
+                return nullptr;
             }
         }
     }
 
-    virtual void DeleteAllObjects()
+    void DeleteAllObjects() override
     {
         ;
     };  //does nothing, no objects to delete

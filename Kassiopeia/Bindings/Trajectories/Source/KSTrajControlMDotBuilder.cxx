@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlMDotBuilder::~KComplexElement() {}
+template<> KSTrajControlMDotBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajControlMDotStructure =
-    KSTrajControlMDotBuilder::Attribute<string>("name") + KSTrajControlMDotBuilder::Attribute<double>("fraction");
+    KSTrajControlMDotBuilder::Attribute<std::string>("name") + KSTrajControlMDotBuilder::Attribute<double>("fraction");
 
 STATICINT sToolboxKSTrajControlMDot = KSRootBuilder::ComplexElement<KSTrajControlMDot>("kstraj_control_m_dot");
 

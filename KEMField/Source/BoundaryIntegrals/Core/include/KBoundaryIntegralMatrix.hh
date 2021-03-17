@@ -1,7 +1,7 @@
 #ifndef KBOUNDARYINTEGRALMATRIX_DEF
 #define KBOUNDARYINTEGRALMATRIX_DEF
 
-#include "KDataDisplay.hh"
+#include "KEMCoreMessage.hh"
 #include "KMessageInterface.hh"
 #include "KSquareMatrix.hh"
 #include "KSurface.hh"
@@ -19,7 +19,7 @@ class KBoundaryIntegralMatrix : public KSquareMatrix<typename Integrator::Basis:
 
     KBoundaryIntegralMatrix(const KSurfaceContainer& c, Integrator& integrator);
 
-    ~KBoundaryIntegralMatrix() override {}
+    ~KBoundaryIntegralMatrix() override = default;
 
     unsigned int Dimension() const override
     {
@@ -73,9 +73,7 @@ KBoundaryIntegralMatrix<Integrator, enableCaching>::KBoundaryIntegralMatrix(cons
 
         if (num_elements > 16384)  // this would use about 2 GiB of RAM
         {
-            KDataDisplay<KMessage_KEMField> kem_cout;
-            kem_cout.GetStream().SetSeverity(katrin::eWarning);
-            kem_cout << "Resizing matrix cache to " << num_elements << " elements" << KEMField::endl;
+            kem_cout(eWarning) << "Resizing matrix cache to " << num_elements << " elements" << eom;
         }
 
         fValueIsCached.resize(num_elements * basisDim2, false);

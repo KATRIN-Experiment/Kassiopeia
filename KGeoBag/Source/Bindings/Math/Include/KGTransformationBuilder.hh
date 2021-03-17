@@ -13,7 +13,7 @@ typedef KComplexElement<KTransformation> KGTransformationBuilder;
 template<> inline bool KGTransformationBuilder::AddAttribute(KContainer* aContainer)
 {
     if ((aContainer->GetName() == "displacement") || (aContainer->GetName() == "d")) {
-        KThreeVector* tVector = nullptr;
+        KGeoBag::KThreeVector* tVector = nullptr;
         aContainer->ReleaseTo(tVector);
         fObject->SetDisplacement(tVector->X(), tVector->Y(), tVector->Z());
         delete tVector;

@@ -95,17 +95,17 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
     // unsigned int n_evaluations = 50;
     // unsigned int mode = 2;
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"config", required_argument, 0, 'c'},
-                                          {"scale", required_argument, 0, 's'},
-                                          {"geometry", required_argument, 0, 'g'},
-                                          {"n-evaluations", required_argument, 0, 'n'},
-                                          {"mode", required_argument, 0, 'm'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"config", required_argument, nullptr, 'c'},
+                                          {"scale", required_argument, nullptr, 's'},
+                                          {"geometry", required_argument, nullptr, 'g'},
+                                          {"n-evaluations", required_argument, nullptr, 'n'},
+                                          {"mode", required_argument, nullptr, 'm'}};
 
     static const char* optString = "hc:s:g:n:m:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -117,7 +117,7 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
 #ifdef KEMFIELD_USE_MPI
                 KMPIInterface::GetInstance()->Finalize();
 #endif
-                return 0;
+                return nullptr;
             case ('c'):
                 config_file = std::string(optarg);
                 break;
@@ -145,21 +145,21 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
         }
     }
 
-    KSurfaceContainer* surfaceContainer = new KSurfaceContainer;
+    auto* surfaceContainer = new KSurfaceContainer;
 
     if (fGeometry == 0 || fGeometry == 2) {
 
         // Construct the shape
         double p1[2], p2[2];
         double radius = 1.;
-        KGRotatedObject* hemi1 = new KGRotatedObject(scale, 20);
+        auto* hemi1 = new KGRotatedObject(scale, 20);
         p1[0] = -1.;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = 1.;
         hemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* hemi2 = new KGRotatedObject(scale, 20);
+        auto* hemi2 = new KGRotatedObject(scale, 20);
         p2[0] = 1.;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -167,22 +167,22 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
         hemi2->AddArc(p1, p2, radius, false);
 
         // Construct shape placement
-        KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
-        KGSurface* hemisphere1 = new KGSurface(h1);
+        auto* h1 = new KGRotatedSurface(hemi1);
+        auto* hemisphere1 = new KGSurface(h1);
         hemisphere1->SetName("hemisphere1");
         hemisphere1->MakeExtension<KGMesh>();
         hemisphere1->MakeExtension<KGElectrostaticDirichlet>();
         hemisphere1->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
-        KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
-        KGSurface* hemisphere2 = new KGSurface(h2);
+        auto* h2 = new KGRotatedSurface(hemi2);
+        auto* hemisphere2 = new KGSurface(h2);
         hemisphere2->SetName("hemisphere2");
         hemisphere2->MakeExtension<KGMesh>();
         hemisphere2->MakeExtension<KGElectrostaticDirichlet>();
         hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(-1.);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         hemisphere1->AcceptNode(mesher);
         hemisphere2->AcceptNode(mesher);
 
@@ -195,7 +195,7 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
     if (fGeometry == 1 || fGeometry == 2) {
 
         // Construct the shape
-        KGBox* box = new KGBox();
+        auto* box = new KGBox();
         int meshCount = scale;
 
         box->SetX0(-.5);
@@ -213,14 +213,14 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
         box->SetZMeshCount(meshCount);
         box->SetZMeshPower(3);
 
-        KGSurface* cube = new KGSurface(box);
+        auto* cube = new KGSurface(box);
         cube->SetName("box");
         cube->MakeExtension<KGMesh>();
         cube->MakeExtension<KGElectrostaticDirichlet>();
         cube->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.0);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         cube->AcceptNode(mesher);
 
         KGBEMMeshConverter geometryConverter(*surfaceContainer);
@@ -245,14 +245,14 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
         double p1[2], p2[2];
         double radius = radius1;
 
-        KGRotatedObject* innerhemi1 = new KGRotatedObject(scale * 10, 10);
+        auto* innerhemi1 = new KGRotatedObject(scale * 10, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         innerhemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* innerhemi2 = new KGRotatedObject(scale * 10, 10);
+        auto* innerhemi2 = new KGRotatedObject(scale * 10, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -261,14 +261,14 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
 
         radius = radius2;
 
-        KGRotatedObject* middlehemi1 = new KGRotatedObject(20 * scale, 10);
+        auto* middlehemi1 = new KGRotatedObject(20 * scale, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         middlehemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* middlehemi2 = new KGRotatedObject(20 * scale, 10);
+        auto* middlehemi2 = new KGRotatedObject(20 * scale, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -277,14 +277,14 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
 
         radius = radius3;
 
-        KGRotatedObject* outerhemi1 = new KGRotatedObject(30 * scale, 10);
+        auto* outerhemi1 = new KGRotatedObject(30 * scale, 10);
         p1[0] = -radius;
         p1[1] = 0.;
         p2[0] = 0.;
         p2[1] = radius;
         outerhemi1->AddArc(p2, p1, radius, true);
 
-        KGRotatedObject* outerhemi2 = new KGRotatedObject(30 * scale, 10);
+        auto* outerhemi2 = new KGRotatedObject(30 * scale, 10);
         p2[0] = radius;
         p2[1] = 0.;
         p1[0] = 0.;
@@ -292,45 +292,45 @@ KSurfaceContainer* FastMultipoleOptionLoader::getGeometryFromOptions(int argc, c
         outerhemi2->AddArc(p1, p2, radius, false);
 
         // Construct shape placement
-        KGRotatedSurface* ih1 = new KGRotatedSurface(innerhemi1);
-        KGSurface* innerhemisphere1 = new KGSurface(ih1);
+        auto* ih1 = new KGRotatedSurface(innerhemi1);
+        auto* innerhemisphere1 = new KGSurface(ih1);
         innerhemisphere1->SetName("innerhemisphere1");
         innerhemisphere1->MakeExtension<KGMesh>();
         innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-        KGRotatedSurface* ih2 = new KGRotatedSurface(innerhemi2);
-        KGSurface* innerhemisphere2 = new KGSurface(ih2);
+        auto* ih2 = new KGRotatedSurface(innerhemi2);
+        auto* innerhemisphere2 = new KGSurface(ih2);
         innerhemisphere2->SetName("innerhemisphere2");
         innerhemisphere2->MakeExtension<KGMesh>();
         innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-        KGRotatedSurface* mh1 = new KGRotatedSurface(middlehemi1);
-        KGSurface* middlehemisphere1 = new KGSurface(mh1);
+        auto* mh1 = new KGRotatedSurface(middlehemi1);
+        auto* middlehemisphere1 = new KGSurface(mh1);
         middlehemisphere1->SetName("middlehemisphere1");
         middlehemisphere1->MakeExtension<KGMesh>();
         middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity2 /
                                                                                           permittivity1);
 
-        KGRotatedSurface* mh2 = new KGRotatedSurface(middlehemi2);
-        KGSurface* middlehemisphere2 = new KGSurface(mh2);
+        auto* mh2 = new KGRotatedSurface(middlehemi2);
+        auto* middlehemisphere2 = new KGSurface(mh2);
         middlehemisphere2->SetName("middlehemisphere2");
         middlehemisphere2->MakeExtension<KGMesh>();
         middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
                                                                                           permittivity2);
 
-        KGRotatedSurface* oh1 = new KGRotatedSurface(outerhemi1);
-        KGSurface* outerhemisphere1 = new KGSurface(oh1);
+        auto* oh1 = new KGRotatedSurface(outerhemi1);
+        auto* outerhemisphere1 = new KGSurface(oh1);
         outerhemisphere1->SetName("outerhemisphere1");
         outerhemisphere1->MakeExtension<KGMesh>();
         outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-        KGRotatedSurface* oh2 = new KGRotatedSurface(outerhemi2);
-        KGSurface* outerhemisphere2 = new KGSurface(oh2);
+        auto* oh2 = new KGRotatedSurface(outerhemi2);
+        auto* outerhemisphere2 = new KGSurface(oh2);
         outerhemisphere2->SetName("outerhemisphere2");
         outerhemisphere2->MakeExtension<KGMesh>();
         outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
 
         // Mesh the elements
-        KGMesher* mesher = new KGMesher();
+        auto* mesher = new KGMesher();
         innerhemisphere1->AcceptNode(mesher);
         innerhemisphere2->AcceptNode(mesher);
         middlehemisphere1->AcceptNode(mesher);
@@ -401,17 +401,14 @@ int main(int argc, char** argv)
 
     namespace KET = KFMElectrostaticTypes;
 
-    KET::FastMultipoleEBI* fm_integrator =
-        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
+    auto* fm_integrator = new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     fm_integrator->Initialize(solver_params);
 
 
-    KET::FastMultipoleEBI* precon_1_fm_integrator =
-        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
+    auto* precon_1_fm_integrator = new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     precon_1_fm_integrator->Initialize(precon_1_params, fm_integrator->GetTree());
 
-    KET::FastMultipoleEBI* precon_2_fm_integrator =
-        new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
+    auto* precon_2_fm_integrator = new KET::FastMultipoleEBI(KEBIFactory::MakeDefaultForFFTM(), *surfaceContainer);
     precon_2_fm_integrator->Initialize(precon_2_params, fm_integrator->GetTree());
 
     KET::FastMultipoleSparseMatrix sparseA(*surfaceContainer, *fm_integrator);

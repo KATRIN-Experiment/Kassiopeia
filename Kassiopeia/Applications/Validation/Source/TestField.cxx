@@ -128,7 +128,7 @@ int main(int anArgc, char** anArgv)
         double dx = 1.e-4;
         double dz = 1.e-4;
 
-        KEMField::KEMFieldCanvas* fieldCanvas = NULL;
+        KEMField::KEMFieldCanvas* fieldCanvas = nullptr;
 
         // fieldCanvas = new KEMField::KEMRootFieldCanvas(z1,z2,x1,x2,1.e30,true);
         fieldCanvas = new KEMField::KEMVTKFieldCanvas(z1, z2, x1, x2, 1.e30, true);

@@ -1,7 +1,12 @@
 #ifndef KTEXTFILE_H_
 #define KTEXTFILE_H_
 
+#include "KException.h"
 #include "KFile.h"
+
+#ifdef KASPER_USE_BOOST
+#include "KPathUtils.h"
+#endif
 
 #include <fstream>
 
@@ -10,6 +15,13 @@ namespace katrin
 
 class KTextFile : public KFile
 {
+  public:
+    static KTextFile* CreateConfigTextFile(const std::string& aBase);
+    static KTextFile* CreateScratchTextFile(const std::string& aBase);
+    static KTextFile* CreateDataTextFile(const std::string& aBase);
+    static KTextFile* CreateOutputTextFile(const std::string& aBase);
+    static KTextFile* CreateOutputTextFile(const std::string& aPath, const std::string& aBase);
+
   public:
     KTextFile();
     ~KTextFile() override;
@@ -25,7 +37,7 @@ class KTextFile : public KFile
     std::fstream* fFile;
 };
 
-inline KTextFile* CreateConfigTextFile(const std::string& aBase)
+inline KTextFile* KTextFile::CreateConfigTextFile(const std::string& aBase)
 {
     auto* tFile = new KTextFile();
     tFile->SetDefaultPath(CONFIG_DEFAULT_DIR);
@@ -33,7 +45,7 @@ inline KTextFile* CreateConfigTextFile(const std::string& aBase)
     return tFile;
 }
 
-inline KTextFile* CreateScratchTextFile(const std::string& aBase)
+inline KTextFile* KTextFile::CreateScratchTextFile(const std::string& aBase)
 {
     auto* tFile = new KTextFile();
     tFile->SetDefaultPath(SCRATCH_DEFAULT_DIR);
@@ -41,7 +53,7 @@ inline KTextFile* CreateScratchTextFile(const std::string& aBase)
     return tFile;
 }
 
-inline KTextFile* CreateDataTextFile(const std::string& aBase)
+inline KTextFile* KTextFile::CreateDataTextFile(const std::string& aBase)
 {
     auto* tFile = new KTextFile();
     tFile->SetDefaultPath(DATA_DEFAULT_DIR);
@@ -49,10 +61,23 @@ inline KTextFile* CreateDataTextFile(const std::string& aBase)
     return tFile;
 }
 
-inline KTextFile* CreateOutputTextFile(const std::string& aBase)
+inline KTextFile* KTextFile::CreateOutputTextFile(const std::string& aBase)
 {
     auto* tFile = new KTextFile();
     tFile->SetDefaultPath(OUTPUT_DEFAULT_DIR);
+    tFile->SetDefaultBase(aBase);
+    return tFile;
+}
+
+inline KTextFile* KTextFile::CreateOutputTextFile(const std::string& aPath, const std::string& aBase)
+{
+#ifdef KASPER_USE_BOOST
+    if (katrin::KPathUtils::IsDirectory(aPath) == false)
+        throw KException() << "not a directory: " << aPath;
+#endif
+
+    auto* tFile = new KTextFile();
+    tFile->SetDefaultPath(aPath);
     tFile->SetDefaultBase(aBase);
     return tFile;
 }

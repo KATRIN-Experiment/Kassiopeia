@@ -7,14 +7,14 @@ namespace Kassiopeia
 
 KSGenEnergyComposite::KSGenEnergyComposite() : fEnergyValue(nullptr) {}
 KSGenEnergyComposite::KSGenEnergyComposite(const KSGenEnergyComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEnergyValue(aCopy.fEnergyValue)
 {}
 KSGenEnergyComposite* KSGenEnergyComposite::Clone() const
 {
     return new KSGenEnergyComposite(*this);
 }
-KSGenEnergyComposite::~KSGenEnergyComposite() {}
+KSGenEnergyComposite::~KSGenEnergyComposite() = default;
 
 void KSGenEnergyComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -23,8 +23,8 @@ void KSGenEnergyComposite::Dice(KSParticleQueue* aPrimaries)
     KSParticleIt tParticleIt;
 
     double tEnergyValue;
-    vector<double> tEnergyValues;
-    vector<double>::iterator tEnergyValueIt;
+    std::vector<double> tEnergyValues;
+    std::vector<double>::iterator tEnergyValueIt;
 
     if (!fEnergyValue)
         genmsg(eError) << "energy value undefined in composite position creator <" << this->GetName() << ">" << eom;

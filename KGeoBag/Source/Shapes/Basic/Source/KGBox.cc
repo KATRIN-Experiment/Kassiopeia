@@ -2,13 +2,13 @@
 
 namespace KGeoBag
 {
-KGBox::KGBox() : KGArea()
+KGBox::KGBox()
 {
     fMeshCount[0] = fMeshCount[1] = fMeshCount[2] = 0;
     fMeshPower[0] = fMeshPower[1] = fMeshPower[2] = 1.;
 }
 
-KGBox::KGBox(double x0, double x1, double y0, double y1, double z0, double z1) : KGArea()
+KGBox::KGBox(double x0, double x1, double y0, double y1, double z0, double z1)
 {
     fMeshCount[0] = fMeshCount[1] = fMeshCount[2] = 0;
     fMeshPower[0] = fMeshPower[1] = fMeshPower[2] = 1.;
@@ -35,7 +35,7 @@ KGBox::KGBox(double x0, double x1, double y0, double y1, double z0, double z1) :
     }
 }
 
-KGBox::KGBox(const KThreeVector& p0, const KThreeVector& p1) : KGArea()
+KGBox::KGBox(const KThreeVector& p0, const KThreeVector& p1)
 {
     fMeshCount[0] = fMeshCount[1] = fMeshCount[2] = 0;
     fMeshPower[0] = fMeshPower[1] = fMeshPower[2] = 1.;

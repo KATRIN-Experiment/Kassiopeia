@@ -2,14 +2,16 @@
 #define KGAUSSSEIDEL_MPI_DEF
 
 #include "KMPIInterface.hh"
+#include "KSquareMatrix.hh"
+#include "KVector.hh"
 
 namespace KEMField
 {
 template<typename ValueType> class KGaussSeidel_MPI
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector =  KVector<ValueType>;
 
     KGaussSeidel_MPI(const Matrix& A, Vector& x, const Vector& b);
     ~KGaussSeidel_MPI();

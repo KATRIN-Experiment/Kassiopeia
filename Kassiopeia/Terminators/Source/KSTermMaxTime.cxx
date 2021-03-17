@@ -7,12 +7,12 @@ namespace Kassiopeia
 {
 
 KSTermMaxTime::KSTermMaxTime() : fTime(0.) {}
-KSTermMaxTime::KSTermMaxTime(const KSTermMaxTime& aCopy) : KSComponent(), fTime(aCopy.fTime) {}
+KSTermMaxTime::KSTermMaxTime(const KSTermMaxTime& aCopy) : KSComponent(aCopy), fTime(aCopy.fTime) {}
 KSTermMaxTime* KSTermMaxTime::Clone() const
 {
     return new KSTermMaxTime(*this);
 }
-KSTermMaxTime::~KSTermMaxTime() {}
+KSTermMaxTime::~KSTermMaxTime() = default;
 
 void KSTermMaxTime::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

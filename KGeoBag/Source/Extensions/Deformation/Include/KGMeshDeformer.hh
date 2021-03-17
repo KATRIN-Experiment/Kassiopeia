@@ -19,8 +19,8 @@ class KGMeshDeformer :
     public KGExtendedSurface<KGMesh>::Visitor
 {
   public:
-    KGMeshDeformer() {}
-    ~KGMeshDeformer() override {}
+    KGMeshDeformer() = default;
+    ~KGMeshDeformer() override = default;
 
     void VisitSurface(KGSurface*) {}
     void VisitExtendedSpace(KGExtendedSpace<KGDeformed>* deformedSpace) override;

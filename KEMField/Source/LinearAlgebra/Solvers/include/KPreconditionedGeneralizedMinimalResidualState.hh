@@ -36,7 +36,8 @@ class KPreconditionedGeneralizedMinimalResidualState : public KGeneralizedMinima
     typedef KSimpleVector<ValueType> KSimpleVectorType;
 
     KPreconditionedGeneralizedMinimalResidualState() : KGeneralizedMinimalResidualState<ValueType>(){};
-    ~KPreconditionedGeneralizedMinimalResidualState() override{};
+    ~KPreconditionedGeneralizedMinimalResidualState() override = default;
+    ;
 
     static std::string Name()
     {

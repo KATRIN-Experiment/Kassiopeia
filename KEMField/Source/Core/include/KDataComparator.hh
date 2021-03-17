@@ -32,7 +32,7 @@ template<typename Type> class KDataComparatorType
         return c.Self();
     }
 
-    virtual ~KDataComparatorType() {}
+    virtual ~KDataComparatorType() = default;
     bool Comparison() const
     {
         return fComparison;
@@ -65,8 +65,8 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KDataComparatorType> KD
 class KDataComparator : public KDataComparatorFundamentalTypes
 {
   public:
-    KDataComparator() {}
-    ~KDataComparator() override {}
+    KDataComparator() = default;
+    ~KDataComparator() override = default;
 
     template<class Streamed> void PreStreamInAction(const Streamed&) {}
     template<class Streamed> void PostStreamInAction(const Streamed&) {}

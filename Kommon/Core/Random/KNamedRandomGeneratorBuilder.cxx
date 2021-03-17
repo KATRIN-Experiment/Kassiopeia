@@ -14,8 +14,8 @@ STATICINT sKommonNamedRandomGeneratorRoot =
 STATICINT sKommonNamedRandomGeneratorElement =
     KElementProcessor::ComplexElement<Kommon::NamedRandomGenerator>("NamedRandomGenerator");
 
-STATICINT sKommonNamedRandomGeneratorStructure =
-    NamedRandomGeneratorBuilder::Attribute<string>("Name") + NamedRandomGeneratorBuilder::Attribute<SeedType>("Seed");
+STATICINT sKommonNamedRandomGeneratorStructure = NamedRandomGeneratorBuilder::Attribute<std::string>("Name") +
+                                                 NamedRandomGeneratorBuilder::Attribute<SeedType>("Seed");
 
 template<> bool NamedRandomGeneratorBuilder::AddAttribute(KContainer* aContainer)
 {

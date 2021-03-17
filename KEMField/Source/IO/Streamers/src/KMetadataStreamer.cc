@@ -10,7 +10,7 @@ bool CompareClassOrdering_weak(KMetadataStreamer::ClassOrdering::value_type i,
     // is i a member of j?
     KMetadataStreamer::ClassContent::const_iterator it;
     for (it = j.second->second.begin(); it != j.second->second.end(); ++it)
-        if (i.second->first.compare(it->first) == 0)
+        if (i.second->first == it->first)
             return true;
     return false;
 }
@@ -28,16 +28,16 @@ void KMetadataStreamer::open(const std::string& fileName, const std::string& act
 
     std::transform(action.begin(), action.end(), action_.begin(), ::toupper);
 
-    if (action_.compare("READ") == 0) {
+    if (action_ == "READ") {
         fIsReading = true;
         fFile.open(fileName.c_str(), std::fstream::in);
     }
-    if (action_.compare("UPDATE") == 0) {
+    if (action_ == "UPDATE") {
         fIsReading = false;
         fFile.open(fileName.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
         fFile.seekg(0, std::fstream::beg);
     }
-    if (action_.compare("OVERWRITE") == 0) {
+    if (action_ == "OVERWRITE") {
         fIsReading = false;
         fFile.open(fileName.c_str(), std::fstream::out);
     }
@@ -125,13 +125,13 @@ void KMetadataStreamer::clear()
 
 void KMetadataStreamer::AddType(ClassName className)
 {
-    if (fHierarchy.data.size() == 0)
+    if (fHierarchy.data.empty())
         return;
 
     bool newType = true;
 
-    if (fHierarchy.data.front()->size() != 0)
-        if (className.compare(fHierarchy.data.front()->back().first) == 0)
+    if (!fHierarchy.data.front()->empty())
+        if (className == fHierarchy.data.front()->back().first)
             newType = false;
 
     if (!newType)

@@ -19,11 +19,11 @@ template<> inline bool KSGenPositionFluxTubeBuilder::AddAttribute(KContainer* aC
         return true;
     }
     if (aContainer->GetName() == "phi") {
-        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "z") {
-        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetZValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "flux") {
@@ -39,7 +39,7 @@ template<> inline bool KSGenPositionFluxTubeBuilder::AddAttribute(KContainer* aC
         return true;
     }
     if (aContainer->GetName() == "magnetic_field_name") {
-        fObject->AddMagneticField(getMagneticField(aContainer->AsReference<std::string>()));
+        fObject->AddMagneticField(getMagneticField(aContainer->AsString()));
         return true;
     }
     return false;

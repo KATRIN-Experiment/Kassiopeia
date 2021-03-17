@@ -11,14 +11,13 @@
 
 // c++
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
 #include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include <vector>
 
 // kemfield
@@ -77,9 +76,9 @@ using namespace std;
 
 // typedefs for Dirichlet and Neumann elements
 typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KRectangle> KEMBoundary;
-typedef KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle> KEMBoundaryTriangle;
-typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KEMRectangle;
-typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KEMWire;
+using KEMBoundaryTriangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
+using KEMRectangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>;
+using KEMWire = KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>;
 
 
 // Multi-Element Robin Hood
@@ -88,7 +87,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KEMWire;
 // Use triangles instead of rectangles for Neumann boundary
 #define USENEUMANNTRI
 
-bool StrToBool(std::string s)
+bool StrToBool(const std::string& s)
 {
     bool b;
     std::stringstream ss(s);  //turn the string into a stream
@@ -128,7 +127,6 @@ void DiscretizeInterval(double interval, int nSegments, double power, std::vecto
             segments[i] = segments[nSegments - (i + 1)] = mid * (inc2 - inc1);
         }
     }
-    return;
 }
 
 
@@ -137,8 +135,8 @@ void DiscretizeInterval(double interval, int nSegments, double power, std::vecto
  * the rectangle into smaller rectangles, where the
  * approximation of constant charge density is more reasonable.
  */
-void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KThreeVector fP0,
-             KThreeVector fN1, KThreeVector fN2, double fU, /* potential */
+void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
+             KFieldVector fN1, KFieldVector fN2, double fU, /* potential */
              double fNRot, int fNumDiscA, int fNumDiscB)
 {
     fNRot++;
@@ -146,7 +144,7 @@ void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA,
 
     // do not discretize if discretization parameters are set to 0
     if (fNumDiscA == 0 || fNumDiscB == 0) {
-        KEMRectangle* rectangle = new KEMRectangle();
+        auto* rectangle = new KEMRectangle();
 
         rectangle->SetA(fA);
         rectangle->SetB(fB);
@@ -184,7 +182,7 @@ void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA,
         dB = 0;
 
         for (int j = 0; j < fNumDiscB; j++) {
-            KEMRectangle* rectangle = new KEMRectangle();
+            auto* rectangle = new KEMRectangle();
             rectangle->SetN1(fN1);
             rectangle->SetN2(fN2);
             rectangle->SetBoundaryValue(fU);
@@ -212,7 +210,6 @@ void AddRect(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA,
     //std::cout << fContainer.size() << std::endl;
 
     fGroup++;
-    return;
 }
 
 
@@ -229,7 +226,7 @@ void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition 
 
     // do not discretize if discretization parameter is set to 0
     if (fNumDisc == 0) {
-        KEMWire* wire = new KEMWire();
+        auto* wire = new KEMWire();
 
         wire->SetP0(fPA);
         wire->SetP1(fPB);
@@ -264,7 +261,7 @@ void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition 
         B[i] = fPA[i];
 
     for (int i = 0; i < nIncrements / 2; i++) {
-        KEMWire* wire = new KEMWire();
+        auto* wire = new KEMWire();
         wire->SetDiameter(fD);
         wire->SetBoundaryValue(fU);
 
@@ -286,7 +283,7 @@ void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition 
 
     // Change: Added "-1" to calculate with the right number of wires.
     for (int i = nIncrements - 1; i >= nIncrements / 2; i--) {
-        KEMWire* wire = new KEMWire();
+        auto* wire = new KEMWire();
         wire->SetDiameter(fD);
         wire->SetBoundaryValue(fU);
 
@@ -304,13 +301,12 @@ void AddWire(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, KPosition 
     }
 
     fGroup++;
-    return;
 }
 
 #ifdef USENEUMANNTRI
-void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KThreeVector fP0,
-                 KThreeVector fN1, KThreeVector fN2, double fEpsRAbove, double fEpsRBelow, double fNRot, int fNumDiscA,
-                 int fNumDiscB)
+void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, const KFieldVector& fP0,
+                 const KFieldVector& fN1, const KFieldVector& fN2, double fEpsRAbove, double fEpsRBelow, double fNRot,
+                 int fNumDiscA, int fNumDiscB)
 {
     (void) fNRot;
     fChDen += (fNumDiscA * fNumDiscB);
@@ -344,8 +340,8 @@ void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double
         dB = 0;
 
         for (int j = 0; j < fNumDiscB; j++) {
-            KEMBoundaryTriangle* tri1 = new KEMBoundaryTriangle();
-            KEMBoundaryTriangle* tri2 = new KEMBoundaryTriangle();
+            auto* tri1 = new KEMBoundaryTriangle();
+            auto* tri2 = new KEMBoundaryTriangle();
 
             tri1->SetP0(fP0 + dA * fN1 + dB * fN2);
             tri1->SetN1(fN1);
@@ -389,11 +385,10 @@ void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double
     } /*A direction*/
 
     fGroup++;
-    return;
 }
 #else
-void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KThreeVector fP0,
-                 KThreeVector fN1, KThreeVector fN2, double fEpsRAbove, double fEpsRBelow, double fNRot, int fNumDiscA,
+void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double fA, double fB, KFieldVector fP0,
+                 KFieldVector fN1, KFieldVector fN2, double fEpsRAbove, double fEpsRBelow, double fNRot, int fNumDiscA,
                  int fNumDiscB)
 {
     (void) fNRot;
@@ -485,11 +480,11 @@ void AddBoundary(KSurfaceContainer& fContainer, int& fGroup, int& fChDen, double
 }
 #endif
 
-KThreeVector CalcTime(double fDuration)
+KFieldVector CalcTime(double fDuration)
 {
     // Calculating a time, given in seconds, in hours, minutes and seconds.
     // Result will be written into a vector.
-    KThreeVector fTime;
+    KFieldVector fTime;
 
     int fSecondsTotal(fDuration);
 
@@ -518,15 +513,15 @@ int main(int argc, char* argv[])
     // ----------------------------------------------------------------------------
 
     // Technical definitions:
-    std::string fModelName("");
-    std::string fMainDir("");
+    std::string fModelName;
+    std::string fMainDir;
     std::string ftextinput;
     int fGroupIndex(0);
     int fChDensities(0);
     int k(0);
     bool fFixedPoints(false);
     (void) fFixedPoints;
-    KThreeVector gLocation(0., 0., -0.25);
+    KFieldVector gLocation(0., 0., -0.25);
     int gSteps(5000);
     double gStepsize(0.0001);
     vector<double> v;
@@ -632,22 +627,22 @@ int main(int argc, char* argv[])
     // ----------------------------------------------------------------------------
 
     // Start- and endpoints:
-    KThreeVector fWireAnodePA(fWireLengthX, fRunAbsY, fLayerDistanceZ);
-    KThreeVector fWireAnodePB(-fWireLengthX, fRunAbsY, fLayerDistanceZ);
-    KThreeVector fWireCathodePA(fWireLengthX, fRunAbsY, -fLayerDistanceZ);
-    KThreeVector fWireCathodePB(-fWireLengthX, fRunAbsY, -fLayerDistanceZ);
+    KFieldVector fWireAnodePA(fWireLengthX, fRunAbsY, fLayerDistanceZ);
+    KFieldVector fWireAnodePB(-fWireLengthX, fRunAbsY, fLayerDistanceZ);
+    KFieldVector fWireCathodePA(fWireLengthX, fRunAbsY, -fLayerDistanceZ);
+    KFieldVector fWireCathodePB(-fWireLengthX, fRunAbsY, -fLayerDistanceZ);
 
     // End points of connecting wires:
-    KThreeVector fWireConnectPA;
-    KThreeVector fWireConnectPB;
+    KFieldVector fWireConnectPA;
+    KFieldVector fWireConnectPB;
 
     // Normal vectors:
-    KThreeVector fNx(1., 0., 0.);
-    KThreeVector fNy(0., 1., 0.);
-    KThreeVector fNz(0., 0., 1.);
+    KFieldVector fNx(1., 0., 0.);
+    KFieldVector fNy(0., 1., 0.);
+    KFieldVector fNz(0., 0., 1.);
 
     // Common P0 vector for rectangles:
-    KThreeVector fP0(0., 0., 0.);
+    KFieldVector fP0(0., 0., 0.);
 
     // ----------------------------------------------------------------------------
 
@@ -1022,8 +1017,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fAnodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., -fWireLengthX, fLayerDistanceZ);
@@ -1036,8 +1031,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fAnodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(-fWireLengthX, 0., fLayerDistanceZ);
@@ -1050,8 +1045,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fAnodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., 0., fLayerDistanceZ);
@@ -1064,8 +1059,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fAnodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
         }
 
@@ -1080,8 +1075,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fCathodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., -fWireLengthX, -fLayerDistanceZ);
@@ -1094,8 +1089,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fCathodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(-fWireLengthX, 0., -fLayerDistanceZ);
@@ -1108,8 +1103,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fCathodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
 
             fP0.SetComponents(0., 0., -fLayerDistanceZ);
@@ -1122,8 +1117,8 @@ int main(int argc, char* argv[])
                     fNx,
                     fNy,
                     fCathodeU,
-                    1,
                     fRectElectrodeDisc,
+                    1,
                     fRectElectrodeDisc);
         }
     }
@@ -2333,14 +2328,12 @@ int main(int argc, char* argv[])
 
     robinHood.AddVisitor(new KIterationDisplay<KElectrostaticBoundaryIntegrator::ValueType>());
 
-    KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>* tracker =
-        new KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>();
+    auto* tracker = new KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>();
     tracker->Interval(1);
     tracker->WriteInterval(100);
     tracker->MaxIterationStamps(1.e6);
     robinHood.AddVisitor(tracker);
-    KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>* stateWriter =
-        new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
+    auto* stateWriter = new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
     stateWriter->Interval(50000);
     stateWriter->SaveNameRoot("TestDielectrics");
     robinHood.AddVisitor(stateWriter);
@@ -2353,7 +2346,7 @@ int main(int argc, char* argv[])
     clock_t fTimeChDenEnd(0);
 
     double fTimeChDen1(0.);
-    KThreeVector fTimeChDen2(0., 0., 0.);
+    KFieldVector fTimeChDen2(0., 0., 0.);
 
     fTimeChDenStart = clock();
 
@@ -2367,8 +2360,7 @@ int main(int argc, char* argv[])
         new KIntegratingFieldSolver<KOpenCLElectrostaticBoundaryIntegrator>(*oclContainer2, *fOCLIntegrator2);
     direct_solver->Initialize();
 #else
-    KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* direct_solver =
-        new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer, integrator);
+    auto* direct_solver = new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(surfaceContainer, integrator);
 #endif
 
 
@@ -2392,20 +2384,20 @@ int main(int argc, char* argv[])
     clock_t fTimeFieldEnd(0);
 
     double fTimeField1(0.);
-    KThreeVector fTimeField2(0., 0., 0.);
+    KFieldVector fTimeField2(0., 0., 0.);
 
     fTimeFieldStart = clock();
 
 
-    KThreeVector gEField(0., 0., 0.);
+    KFieldVector gEField(0., 0., 0.);
     double gPotential(0.);
 
 
-    TFile* gROOTFile = new TFile(fFieldOutput.c_str(), "RECREATE");
-    TGraph* gGraphEField = new TGraph(gSteps);
-    TGraph* gGraphPot = new TGraph(gSteps);
-    TGraph* gGraphEFieldR = new TGraph(gSteps);
-    TGraph* gGraphD = new TGraph(gSteps);
+    auto* gROOTFile = new TFile(fFieldOutput.c_str(), "RECREATE");
+    auto* gGraphEField = new TGraph(gSteps);
+    auto* gGraphPot = new TGraph(gSteps);
+    auto* gGraphEFieldR = new TGraph(gSteps);
+    auto* gGraphD = new TGraph(gSteps);
 
     TCanvas gCanvas("gCanvas", "Electrostatics of two-phase cube", 0, 0, 800, 600);
     gCanvas.SetTitle("TestDielectrics");
@@ -2415,7 +2407,7 @@ int main(int argc, char* argv[])
     gGraphD->SetTitle("Electric displacement field in z-Direction;z [m];D_z [V/m]");
 
     double Er(0.);
-    std::pair<KThreeVector, double> result;
+    std::pair<KFieldVector, double> result;
 
     for (int i = 0; i < gSteps; i++) {
 

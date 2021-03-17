@@ -10,14 +10,14 @@ namespace KEMField
 class KElectrostaticAnalyticLineSegmentIntegrator : public KElectrostaticElementIntegrator<KLineSegment>
 {
   public:
-    typedef KLineSegment Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KLineSegment;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticAnalyticLineSegmentIntegrator() {}
-    ~KElectrostaticAnalyticLineSegmentIntegrator() override {}
+    KElectrostaticAnalyticLineSegmentIntegrator() = default;
+    ~KElectrostaticAnalyticLineSegmentIntegrator() override = default;
 
     double Potential(const KLineSegment* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KLineSegment* source, const KPosition& P) const override;
+    KFieldVector ElectricField(const KLineSegment* source, const KPosition& P) const override;
     using KElectrostaticElementIntegrator<KLineSegment>::Potential;
     using KElectrostaticElementIntegrator<KLineSegment>::ElectricField;
 };

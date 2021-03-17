@@ -8,11 +8,11 @@ namespace KEMField
 class KCurrentLoopIntegrator
 {
   public:
-    KCurrentLoopIntegrator() {}
-    virtual ~KCurrentLoopIntegrator() {}
+    KCurrentLoopIntegrator() = default;
+    virtual ~KCurrentLoopIntegrator() = default;
 
-    KThreeVector VectorPotential(const KCurrentLoop& currentLoop, const KPosition& P) const;
-    KThreeVector MagneticField(const KCurrentLoop& currentLoop, const KPosition& P) const;
+    KFieldVector VectorPotential(const KCurrentLoop& currentLoop, const KPosition& P) const;
+    KFieldVector MagneticField(const KCurrentLoop& currentLoop, const KPosition& P) const;
 };
 }  // namespace KEMField
 

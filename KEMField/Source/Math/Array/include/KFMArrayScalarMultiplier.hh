@@ -23,8 +23,10 @@ template<typename ArrayType, unsigned int NDIM>
 class KFMArrayScalarMultiplier : public KFMUnaryArrayOperator<ArrayType, NDIM>
 {
   public:
-    KFMArrayScalarMultiplier(){};
-    ~KFMArrayScalarMultiplier() override{};
+    KFMArrayScalarMultiplier() = default;
+    ;
+    ~KFMArrayScalarMultiplier() override = default;
+    ;
 
     void SetScalarMultiplicationFactor(const ArrayType& fac)
     {

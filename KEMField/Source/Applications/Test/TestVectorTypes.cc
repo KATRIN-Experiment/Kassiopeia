@@ -1,9 +1,9 @@
 #include "KThreeVector_KEMField.hh"
 #include "TVector3.h"
 
+#include <ctime>
 #include <iomanip>
 #include <iostream>
-#include <time.h>
 #include <vector>
 
 // This program tests speed of different classes for math. vectors,
@@ -51,7 +51,7 @@ int main()
     (void) dblVector;
     std::vector<double> coDbl;
 
-    double* coAr = new double[3 * N]; /*  save double values on heap */
+    auto* coAr = new double[3 * N]; /*  save double values on heap */
 
     std::cout << "(0) Initialization of data ... " << std::endl;
 
@@ -84,8 +84,8 @@ int main()
     TVector3 rootCross;
     KThreeVector kasperCross;
 #ifdef USEHEAP
-    double* dblCross = new double[3];
-    double* arrayCross = new double[3];
+    auto* dblCross = new double[3];
+    auto* arrayCross = new double[3];
 #else
     double dblCross[3];
     (void) *dblCross;
@@ -123,8 +123,8 @@ int main()
     TVector3 rootSc;
     KThreeVector kasperSc;
 #ifdef USEHEAP
-    double* dblSc = new double[3];
-    double* arraySc = new double[3];
+    auto* dblSc = new double[3];
+    auto* arraySc = new double[3];
 #else
     double dblSc[3];
     (void) *dblSc;
@@ -162,8 +162,8 @@ int main()
     TVector3 rootAdd;
     KThreeVector kasperAdd;
 #ifdef USEHEAP
-    double* dblAdd = new double[3];
-    double* arrayAdd = new double[3];
+    auto* dblAdd = new double[3];
+    auto* arrayAdd = new double[3];
 #else
     double dblAdd[3];
     (void) *dblAdd;

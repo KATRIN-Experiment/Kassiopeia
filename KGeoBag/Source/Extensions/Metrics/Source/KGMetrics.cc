@@ -105,7 +105,7 @@ double KGMetricsVolumeData::GetVolume() const
 
 void KGMetricsVolumeData::CalculateVolume() const
 {
-    assert(0 != fSpace);
+    assert(nullptr != fSpace);
     if (fVolume < 0) {
         fSpace->AcceptNode(const_cast<KGMetricsVolumeData*>(this));
     }
@@ -119,7 +119,7 @@ double KGMetricsAreaData::GetArea() const
 
 void KGMetricsAreaData::CalculateArea() const
 {
-    assert(0 != fSurface);
+    assert(nullptr != fSurface);
     if (fArea < 0) {
         fSurface->AcceptNode(const_cast<KGMetricsAreaData*>(this));
     }

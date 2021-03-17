@@ -22,7 +22,7 @@ template<> inline bool KFMElectrostaticParametersBuilder::AddAttribute(KContaine
 {
     if (aContainer->GetName() == "strategy") {
         int val = KEMField::KFMSubdivisionStrategy::Aggressive;
-        std::string strategy_name = aContainer->AsReference<std::string>();
+        std::string strategy_name = aContainer->AsString();
         if (strategy_name == "aggressive") {
             val = KEMField::KFMSubdivisionStrategy::Aggressive;
         }

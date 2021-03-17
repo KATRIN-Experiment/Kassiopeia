@@ -36,7 +36,7 @@ template<> inline bool KGComplexAnnulusRingBuilder::AddAttribute(KContainer* anA
 }
 
 
-typedef KComplexElement<KGComplexAnnulus> KGComplexAnnulusBuilder;
+using KGComplexAnnulusBuilder = KComplexElement<KGComplexAnnulus>;
 
 template<> inline bool KGComplexAnnulusBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -68,7 +68,7 @@ template<> inline bool KGComplexAnnulusBuilder::AddElement(KContainer* anElement
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGComplexAnnulus>> KGComplexAnnulusSurfaceBuilder;
+using KGComplexAnnulusSurfaceBuilder = KComplexElement<KGWrappedSurface<KGComplexAnnulus>>;
 
 template<> inline bool KGComplexAnnulusSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {

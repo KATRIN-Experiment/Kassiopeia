@@ -151,8 +151,8 @@ class KGSpaceTreeNavigator : public KGNodeActor<KGNode<ObjectTypeList>>
                     //if(fFound){std::cout<<"found point!"<<std::endl;}
                 }
                 else {
-                    KGout << "KGSpaceTreeNavigator::ApplyAction(): Warning, point:" << fPoint[0] << ", " << fPoint[1]
-                          << ", " << fPoint[2] << " not found in root node." << KGendl;
+                    //KGout << "KGSpaceTreeNavigator::ApplyAction(): Warning, point:" << fPoint[0] << ", " << fPoint[1]
+                    //      << ", " << fPoint[2] << " not found in root node." << KGendl;
                 }
             }
             else {
@@ -207,8 +207,8 @@ class KGSpaceTreeNavigator : public KGNodeActor<KGNode<ObjectTypeList>>
             ss << fDelIndex[i] << ", ";
         }
         ss << ") \n";
-        KGout << "KGSpaceTreeNavigator::ApplyAction()" << KGendl;
-        KGout << ss.str() << KGendl;
+        //KGout << "KGSpaceTreeNavigator::ApplyAction()" << KGendl;
+        std::cout << ss.str() << std::endl;
     }
 };
 

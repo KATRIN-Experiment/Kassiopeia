@@ -4,6 +4,9 @@
 
 #include <cmath>
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -15,7 +18,7 @@ KSGenSpinComposite::KSGenSpinComposite() :
     fZAxis(KThreeVector::sZUnit)
 {}
 KSGenSpinComposite::KSGenSpinComposite(const KSGenSpinComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fThetaValue(aCopy.fThetaValue),
     fPhiValue(aCopy.fPhiValue),
     fXAxis(aCopy.fXAxis),
@@ -26,7 +29,7 @@ KSGenSpinComposite* KSGenSpinComposite::Clone() const
 {
     return new KSGenSpinComposite(*this);
 }
-KSGenSpinComposite::~KSGenSpinComposite() {}
+KSGenSpinComposite::~KSGenSpinComposite() = default;
 
 void KSGenSpinComposite::Dice(KSParticleQueue* aPrimaries)
 {

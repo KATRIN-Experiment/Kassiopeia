@@ -20,7 +20,7 @@ namespace KEMField
 class KZonalHarmonicSourcePoint
 {
   public:
-    KZonalHarmonicSourcePoint() {}
+    KZonalHarmonicSourcePoint() = default;
 
     static std::string Name()
     {
@@ -62,11 +62,11 @@ class KZonalHarmonicSourcePoint
     {
         return fRho;
     }
-    float GetRhosquared() const
+    double GetRhosquared() const
     {
         return fRhosquared;
     }
-    float Get1overRhosquared() const
+    double Get1overRhosquared() const
     {
         return f1overRhosquared;
     }
@@ -84,8 +84,8 @@ class KZonalHarmonicSourcePoint
     double fZ0;  ///< Z-coordinate for source point.
     float fFloatZ0;
     double fRho;  ///< Rho values for source point.
-    float fRhosquared;
-    float f1overRhosquared;
+    double fRhosquared;
+    double f1overRhosquared;
     std::vector<double> fCoeffVec;  ///< Vector of coefficients.
 
   public:
@@ -113,8 +113,8 @@ class KZonalHarmonicSourcePoint
         s << sp.fZ0;
         s << sp.fRho;
         s << (unsigned int) (sp.fCoeffVec.size());
-        for (unsigned int i = 0; i < sp.fCoeffVec.size(); i++)
-            s << sp.fCoeffVec.at(i);
+        for (double i : sp.fCoeffVec)
+            s << i;
         s.PostStreamOutAction(sp);
         return s;
     }

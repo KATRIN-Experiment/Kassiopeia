@@ -16,7 +16,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KKrylovChargeDensitySolverOldBuilder::~KComplexElement() {}
+template<> KKrylovChargeDensitySolverOldBuilder::~KComplexElement() = default;
 
 STATICINT sKKrylovChargeDensitySolverOldStructure =
     KKrylovChargeDensitySolverOldBuilder::Attribute<std::string>("solver_name") +

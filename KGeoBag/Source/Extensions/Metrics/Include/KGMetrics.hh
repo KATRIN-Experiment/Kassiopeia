@@ -49,7 +49,7 @@ class KGMetricsVolumeData :
     KGMetricsVolumeData(const KGMetricsVolumeData& aCopy) : fVolume(aCopy.fVolume), fSpace(aCopy.fSpace) {}
     KGMetricsVolumeData(KGSpace* aSpace) : fVolume(-1), fSpace(aSpace) {}
     KGMetricsVolumeData(KGSpace* aSpace, const KGMetricsVolumeData&) : fVolume(-1), fSpace(aSpace) {}
-    ~KGMetricsVolumeData() override {}
+    ~KGMetricsVolumeData() override = default;
 
   public:
     /**
@@ -143,7 +143,7 @@ class KGMetricsAreaData :
     KGMetricsAreaData(const KGMetricsAreaData& aCopy) : fArea(aCopy.fArea), fSurface(aCopy.fSurface) {}
     KGMetricsAreaData(KGSurface* aSurface) : fArea(-1), fSurface(aSurface) {}
     KGMetricsAreaData(KGSurface* aSurface, const KGMetricsAreaData&) : fArea(-1), fSurface(aSurface) {}
-    ~KGMetricsAreaData() override {}
+    ~KGMetricsAreaData() override = default;
 
   public:
     /**
@@ -207,11 +207,11 @@ class KGMetrics
 {
   public:
     typedef KGMetricsAreaData Surface;
-    typedef KGMetricsVolumeData Space;
+    using Space = KGMetricsVolumeData;
 };
 
-typedef KGExtendedSurface<KGMetrics> KGMetricsSurface;
-typedef KGExtendedSpace<KGMetrics> KGMetricsSpace;
+using KGMetricsSurface = KGExtendedSurface<KGMetrics>;
+using KGMetricsSpace = KGExtendedSpace<KGMetrics>;
 }  // namespace KGeoBag
 
 #endif /* KGGEOMETRYPROPERTIESVOLUME_HH_ */

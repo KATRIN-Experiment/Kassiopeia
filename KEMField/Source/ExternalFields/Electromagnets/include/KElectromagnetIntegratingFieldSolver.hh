@@ -16,10 +16,10 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
         fContainer(container),
         fIntegrator(integrator)
     {}
-    virtual ~KIntegratingFieldSolver() {}
+    virtual ~KIntegratingFieldSolver() = default;
 
-    KThreeVector VectorPotential(const KPosition& P) const;
-    KThreeVector MagneticField(const KPosition& P) const;
+    KFieldVector VectorPotential(const KPosition& P) const;
+    KFieldVector MagneticField(const KPosition& P) const;
     KGradient MagneticFieldGradient(const KPosition& P) const;
 
     const KElectromagnetContainer& GetContainer() const
@@ -38,9 +38,9 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
             fP(P),
             fVectorPotential(0., 0., 0.)
         {}
-        ~VectorPotentialAction() {}
+        ~VectorPotentialAction() = default;
 
-        KThreeVector GetVectorPotential() const
+        KFieldVector GetVectorPotential() const
         {
             return fVectorPotential;
         }
@@ -56,7 +56,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
         const KElectromagnetContainer& fContainer;
         const Integrator& fIntegrator;
         const KPosition& fP;
-        KThreeVector fVectorPotential;
+        KFieldVector fVectorPotential;
     };
 
     class MagneticFieldAction
@@ -69,9 +69,9 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
             fP(P),
             fMagneticField(0., 0., 0.)
         {}
-        ~MagneticFieldAction() {}
+        ~MagneticFieldAction() = default;
 
-        KThreeVector GetMagneticField() const
+        KFieldVector GetMagneticField() const
         {
             return fMagneticField;
         }
@@ -87,7 +87,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
         const KElectromagnetContainer& fContainer;
         const Integrator& fIntegrator;
         const KPosition& fP;
-        KThreeVector fMagneticField;
+        KFieldVector fMagneticField;
     };
 
     KElectromagnetContainer& fContainer;
@@ -96,7 +96,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electromagn
 
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::VectorPotential(const KPosition& P) const
+KFieldVector KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::VectorPotential(const KPosition& P) const
 {
     VectorPotentialAction action(fContainer, fIntegrator, P);
 
@@ -106,7 +106,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::Vec
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::MagneticField(const KPosition& P) const
+KFieldVector KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::MagneticField(const KPosition& P) const
 {
     MagneticFieldAction action(fContainer, fIntegrator, P);
 
@@ -126,8 +126,8 @@ KIntegratingFieldSolver<Integrator, ElectromagnetSingleThread>::MagneticFieldGra
         Pplus[i] += epsilon;
         KPosition Pminus = P;
         Pminus[i] -= epsilon;
-        KThreeVector Bplus = MagneticField(Pplus);
-        KThreeVector Bminus = MagneticField(Pminus);
+        KFieldVector Bplus = MagneticField(Pplus);
+        KFieldVector Bminus = MagneticField(Pminus);
         for (unsigned int j = 0; j < 3; j++)
             g[j + 3 * i] = (Bplus[j] - Bminus[j]) / (2. * epsilon);
     }

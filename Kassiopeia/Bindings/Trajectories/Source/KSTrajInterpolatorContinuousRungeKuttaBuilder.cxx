@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajInterpolatorContinuousRungeKuttaBuilder::~KComplexElement() {}
+template<> KSTrajInterpolatorContinuousRungeKuttaBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajInterpolatorContinuousRungeKuttaStructure =
-    KSTrajInterpolatorContinuousRungeKuttaBuilder::Attribute<string>("name");
+    KSTrajInterpolatorContinuousRungeKuttaBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajInterpolatorContinuousRungeKutta =
     KSRootBuilder::ComplexElement<KSTrajInterpolatorContinuousRungeKutta>("kstraj_interpolator_crk");

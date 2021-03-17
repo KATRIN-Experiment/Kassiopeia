@@ -32,7 +32,8 @@ class KFMNodeParentToChildFlagValueInspector : public KFMInspectingActor<KFMNode
         fAndOr = true;
     };
 
-    ~KFMNodeParentToChildFlagValueInspector() override{};
+    ~KFMNodeParentToChildFlagValueInspector() override = default;
+    ;
 
     void UseAndCondition()
     {

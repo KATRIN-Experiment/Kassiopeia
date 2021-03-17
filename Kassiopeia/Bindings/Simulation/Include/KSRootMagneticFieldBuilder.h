@@ -19,7 +19,7 @@ template<> inline bool KSRootMagneticFieldBuilder::AddAttribute(KContainer* aCon
         return true;
     }
     if (aContainer->GetName() == "add_magnetic_field") {
-        fObject->AddMagneticField(getMagneticField(aContainer->AsReference<std::string>()));
+        fObject->AddMagneticField(getMagneticField(aContainer->AsString()));
         return true;
     }
     return false;

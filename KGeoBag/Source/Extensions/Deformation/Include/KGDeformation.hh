@@ -8,8 +8,8 @@ namespace KGeoBag
 class KGDeformation
 {
   public:
-    KGDeformation() {}
-    virtual ~KGDeformation() {}
+    KGDeformation() = default;
+    virtual ~KGDeformation() = default;
 
     virtual void Apply(KThreeVector& point) const = 0;
 };

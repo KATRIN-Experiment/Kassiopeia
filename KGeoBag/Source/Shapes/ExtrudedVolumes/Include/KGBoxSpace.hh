@@ -12,6 +12,12 @@ class KGBoxSpace : public KGExtrudedPolyLoopSpace
     KGBoxSpace();
     ~KGBoxSpace() override;
 
+    static std::string Name()
+    {
+        return "box_space";
+    }
+
+
   public:
     void XA(const double& aXA);
     void XB(const double& aXB);

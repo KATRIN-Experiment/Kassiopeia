@@ -32,7 +32,7 @@ class KSWriteROOTConditionOutput :
     {
         return new KSWriteROOTConditionOutput(*this);
     }
-    ~KSWriteROOTConditionOutput() override {}
+    ~KSWriteROOTConditionOutput() override = default;
 
     void CalculateWriteCondition(bool& aFlag) override
     {

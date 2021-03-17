@@ -12,17 +12,18 @@ namespace katrin
 class KVariableProcessor : public KProcessor
 {
   private:
-    typedef std::map<std::string, std::string> VariableMap;
-    typedef VariableMap::value_type VariableEntry;
-    typedef VariableMap::iterator VariableIt;
-    typedef VariableMap::const_iterator VariableCIt;
+    using VariableMap = std::map<std::string, std::string>;
+    using VariableEntry = VariableMap::value_type;
+    using VariableIt = VariableMap::iterator;
+    using VariableCIt = VariableMap::const_iterator;
 
-    typedef std::map<std::string, std::uint32_t> VariableCountMap;
-    typedef VariableCountMap::value_type VariableCountEntry;
+    using VariableCountMap = std::map<std::string, std::uint32_t>;
+    using VariableCountEntry = VariableCountMap::value_type;
 
   public:
     KVariableProcessor();
     KVariableProcessor(const VariableMap& anExternalMap);
+    KVariableProcessor& operator=(const KVariableProcessor& other) = delete;
     ~KVariableProcessor() override;
 
     void ProcessToken(KBeginFileToken* aToken) override;
@@ -38,7 +39,7 @@ class KVariableProcessor : public KProcessor
   private:
     void Evaluate(KToken* aToken);
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         /*  0 */ eElementInactive,
         /*  1 */ eActiveLocalDefine,
@@ -58,7 +59,8 @@ class KVariableProcessor : public KProcessor
         eActiveExternalPrepend,
         /* -1 */ eElementComplete = -1
     } ElementState;
-    typedef enum
+
+    typedef enum  // NOLINT(modernize-use-using)
     {
         /*  0 */ eAttributeInactive,
         /*  1 */ eActiveName,

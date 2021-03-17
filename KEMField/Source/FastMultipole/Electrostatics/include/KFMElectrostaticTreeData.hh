@@ -39,7 +39,8 @@ class KFMElectrostaticTreeData : public KSAInputOutputObject
         fInsertionRatio = 0;
         fNNodes = 0;
     };
-    ~KFMElectrostaticTreeData() override{};
+    ~KFMElectrostaticTreeData() override = default;
+    ;
 
     std::string GetTreeID() const
     {

@@ -10,8 +10,9 @@ class KElectrostaticConstantField : public KElectrostaticField
 {
   public:
     KElectrostaticConstantField();
-    KElectrostaticConstantField(const KThreeVector& field);
-    ~KElectrostaticConstantField() override{};
+    KElectrostaticConstantField(const KFieldVector& field);
+    ~KElectrostaticConstantField() override = default;
+    ;
 
     static std::string Name()
     {
@@ -20,21 +21,21 @@ class KElectrostaticConstantField : public KElectrostaticField
 
   private:
     double PotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
 
   public:
-    void SetField(KThreeVector aField);
-    KThreeVector GetField() const;
+    void SetField(const KFieldVector& aField);
+    KFieldVector GetField() const;
 
     void SetLocation(const KPosition& aLocation);
-    KThreeVector GetLocation() const;
+    KFieldVector GetLocation() const;
 
     void SetPotentialOffset(const double& aPotential);
     const double& GetPotentialOffset() const;
 
   protected:
-    KThreeVector fField;
-    KThreeVector fLocation;
+    KFieldVector fField;
+    KFieldVector fLocation;
     double fPotentialOffset;
 };
 

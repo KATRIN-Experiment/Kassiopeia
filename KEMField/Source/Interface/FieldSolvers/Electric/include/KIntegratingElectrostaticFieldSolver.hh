@@ -41,7 +41,7 @@ class KIntegratingElectrostaticFieldSolver : public KElectricFieldSolver
     void InitializeCore(KSurfaceContainer& container) override;
 
     double PotentialCore(const KPosition& P) const override;
-    KThreeVector ElectricFieldCore(const KPosition& P) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P) const override;
 
     KElectrostaticBoundaryIntegrator* fIntegrator;
     KEBIPolicy fIntegratorPolicy;

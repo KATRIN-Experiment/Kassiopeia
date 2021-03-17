@@ -9,8 +9,8 @@ namespace KGeoBag
 class KGRadialDeformation : public KGDeformation
 {
   public:
-    KGRadialDeformation() {}
-    ~KGRadialDeformation() override {}
+    KGRadialDeformation() = default;
+    ~KGRadialDeformation() override = default;
 
     void Apply(KThreeVector& point) const override;
 

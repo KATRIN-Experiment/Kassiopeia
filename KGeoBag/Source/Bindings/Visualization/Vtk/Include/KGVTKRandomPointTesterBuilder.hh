@@ -20,16 +20,16 @@ template<> inline bool KGVTKRandomPointTesterBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "surfaces") {
-        if (aContainer->AsReference<string>().size() == 0) {
+        if (aContainer->AsString().size() == 0) {
             return true;
         }
 
-        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         vector<KGSurface*>::const_iterator tSurfaceIt;
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -40,16 +40,16 @@ template<> inline bool KGVTKRandomPointTesterBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        if (aContainer->AsReference<string>().size() == 0) {
+        if (aContainer->AsString().size() == 0) {
             return true;
         }
 
-        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         vector<KGSpace*>::const_iterator tSpaceIt;
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

@@ -8,7 +8,7 @@ namespace Kassiopeia
 
 KSTermMaxStepTime::KSTermMaxStepTime() : fTime(0.), fLastClock(0) {}
 KSTermMaxStepTime::KSTermMaxStepTime(const KSTermMaxStepTime& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTime(aCopy.fTime),
     fLastClock(aCopy.fLastClock)
 {}
@@ -16,7 +16,7 @@ KSTermMaxStepTime* KSTermMaxStepTime::Clone() const
 {
     return new KSTermMaxStepTime(*this);
 }
-KSTermMaxStepTime::~KSTermMaxStepTime() {}
+KSTermMaxStepTime::~KSTermMaxStepTime() = default;
 
 void KSTermMaxStepTime::CalculateTermination(const KSParticle& /*anInitialParticle*/, bool& aFlag)
 {

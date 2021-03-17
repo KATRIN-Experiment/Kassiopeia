@@ -1,25 +1,29 @@
 #include "KEMFileInterface.hh"
 
+#include "KEMCoreMessage.hh"
 #include "KSAStructuredASCIIHeaders.hh"
 
 #include <cstdio>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <utility>
 
 #ifndef DEFAULT_SAVED_FILE_DIR
 #define DEFAULT_SAVED_FILE_DIR "."
 #endif /* !DEFAULT_SAVED_FILE_DIR */
 
+using std::set;
 using std::string;
 using std::vector;
 
 namespace KEMField
 {
 KEMFileInterface* KEMFileInterface::fEMFileInterface = nullptr;
+string KEMFileInterface::fEmptyString = "";
 bool KEMFileInterface::fNullResult = false;
 
-KEMFileInterface::KEMFileInterface() : KEMFile()
+KEMFileInterface::KEMFileInterface()
 {
     ActiveDirectory(DEFAULT_SAVED_FILE_DIR);
 }
@@ -34,34 +38,34 @@ KEMFileInterface* KEMFileInterface::GetInstance()
     return fEMFileInterface;
 }
 
-unsigned int KEMFileInterface::NumberWithLabel(string label) const
+unsigned int KEMFileInterface::NumberWithLabel(const string& label) const
 {
     unsigned int value = 0;
     set<string> fileList = FileList();
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it)
-        value += NumberOfLabeled(*it, label);
+    for (const auto& it : fileList)
+        value += NumberOfLabeled(it, label);
     return value;
 }
 
-unsigned int KEMFileInterface::NumberWithLabels(vector<string> labels) const
+unsigned int KEMFileInterface::NumberWithLabels(const vector<string>& labels) const
 {
     unsigned int value = 0;
     set<string> fileList = FileList();
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it)
-        value += NumberOfLabeled(*it, labels);
+    for (const auto& it : fileList)
+        value += NumberOfLabeled(it, labels);
     return value;
 }
 
-set<string> KEMFileInterface::FileNamesWithLabels(vector<string> labels) const
+set<string> KEMFileInterface::FileNamesWithLabels(const vector<string>& labels) const
 {
     set<string> fileList = FileList();
     set<string> labeledFileList;
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (NumberOfLabeled(*it, labels)) {
-            labeledFileList.insert(*it);
+    for (const auto& it : fileList) {
+        if (NumberOfLabeled(it, labels)) {
+            labeledFileList.insert(it);
         }
     }
     return labeledFileList;
@@ -70,7 +74,7 @@ set<string> KEMFileInterface::FileNamesWithLabels(vector<string> labels) const
 
 set<string> KEMFileInterface::FileList(string directory) const
 {
-    if (directory == "")
+    if (directory.empty())
         directory = fActiveDirectory;
 
     set<string> fileList;
@@ -80,9 +84,9 @@ set<string> KEMFileInterface::FileList(string directory) const
     if ((dir = opendir(directory.c_str())) != nullptr) {
         while ((ent = readdir(dir)) != nullptr) {
             string entry(ent->d_name);
-            if (entry.find_last_of(".") == string::npos)
+            if (entry.find_last_of('.') == string::npos)
                 continue;
-            string suffix = entry.substr(entry.find_last_of("."), string::npos);
+            string suffix = entry.substr(entry.find_last_of('.'), string::npos);
             if (suffix == fStreamer.GetFileSuffix())
                 fileList.insert(directory + "/" + entry);
         }
@@ -93,7 +97,7 @@ set<string> KEMFileInterface::FileList(string directory) const
 
 set<string> KEMFileInterface::CompleteFileList(string directory) const
 {
-    if (directory == "")
+    if (directory.empty())
         directory = fActiveDirectory;
 
     set<string> fileList;
@@ -103,7 +107,7 @@ set<string> KEMFileInterface::CompleteFileList(string directory) const
     if ((dir = opendir(directory.c_str())) != nullptr) {
         while ((ent = readdir(dir)) != nullptr) {
             string entry(ent->d_name);
-            if (entry.find_last_of(".") == string::npos)
+            if (entry.find_last_of('.') == string::npos)
                 continue;
             fileList.insert(directory + "/" + entry);
         }
@@ -112,17 +116,17 @@ set<string> KEMFileInterface::CompleteFileList(string directory) const
     return fileList;
 }
 
-void KEMFileInterface::ActiveDirectory(string directory)
+void KEMFileInterface::ActiveDirectory(const string& directory)
 {
     if (!DirectoryExists(directory))
         CreateDirectory(directory);
     if (DirectoryExists(directory))
         fActiveDirectory = directory;
     else
-        KEMField::cout << "Cannot access directory " << directory << KEMField::endl;
+        kem_cout(eError) << "Cannot access directory " << directory << eom;
 }
 
-bool KEMFileInterface::DirectoryExists(string directory)
+bool KEMFileInterface::DirectoryExists(const string& directory)
 {
     DIR* dir;
     if ((dir = opendir(directory.c_str())) != nullptr) {
@@ -132,40 +136,40 @@ bool KEMFileInterface::DirectoryExists(string directory)
     return false;
 }
 
-bool KEMFileInterface::CreateDirectory(string directory)
+bool KEMFileInterface::CreateDirectory(const string& directory)
 {
     return mkdir(directory.c_str(), S_IRWXU);
 }
 
-bool KEMFileInterface::RemoveDirectory(string directory)
+bool KEMFileInterface::RemoveDirectory(const string& directory)
 {
     return rmdir(directory.c_str());
 }
 
-bool KEMFileInterface::RemoveFileFromActiveDirectory(string file_name)
+bool KEMFileInterface::RemoveFileFromActiveDirectory(const string& file_name)
 {
     string full_file_name = fActiveDirectory + "/" + file_name;
     return std::remove(full_file_name.c_str());
 }
 
-bool KEMFileInterface::DoesFileExist(std::string file_name)
+bool KEMFileInterface::DoesFileExist(const std::string& file_name)
 {
     std::string full_file_name = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_name;
     std::set<std::string> file_list = KEMFileInterface::GetInstance()->CompleteFileList();
-    for (auto it = file_list.begin(); it != file_list.end(); ++it) {
-        if (full_file_name == *it) {
+    for (const auto& it : file_list) {
+        if (full_file_name == it) {
             return true;
         };
     }
     return false;
 }
 
-void KEMFileInterface::ReadKSAFile(KSAInputNode* node, string file_name, bool& result)
+void KEMFileInterface::ReadKSAFile(KSAInputNode* node, const string& file_name, bool& result)
 {
     result = false;
     KSAFileReader reader;
 
-    reader.SetFileName(file_name);
+    reader.SetFileName(std::move(file_name));
     if (reader.Open()) {
         KSAInputCollector collector;
         collector.SetFileReader(&reader);
@@ -178,7 +182,7 @@ void KEMFileInterface::ReadKSAFile(KSAInputNode* node, string file_name, bool& r
     return;
 }
 
-void KEMFileInterface::ReadKSAFileFromActiveDirectory(KSAInputNode* node, string file_name, bool& result)
+void KEMFileInterface::ReadKSAFileFromActiveDirectory(KSAInputNode* node, const string& file_name, bool& result) const
 {
     std::string full_file_name = ActiveDirectory() + "/";
     full_file_name += file_name;
@@ -198,13 +202,13 @@ void KEMFileInterface::ReadKSAFileFromActiveDirectory(KSAInputNode* node, string
     return;
 }
 
-void KEMFileInterface::SaveKSAFile(KSAOutputNode* node, string file_name, bool& result)
+void KEMFileInterface::SaveKSAFile(KSAOutputNode* node, const string& file_name, bool& result)
 {
     //now stream the data out to file
     KSAFileWriter writer;
     KSAOutputCollector collector;
     collector.SetUseTabbingFalse();
-    writer.SetFileName(file_name);
+    writer.SetFileName(std::move(file_name));
 
     if (writer.Open()) {
         collector.SetFileWriter(&writer);
@@ -218,15 +222,15 @@ void KEMFileInterface::SaveKSAFile(KSAOutputNode* node, string file_name, bool& 
     //failure to open file for writing
 }
 
-void KEMFileInterface::SaveKSAFileToActiveDirectory(KSAOutputNode* node, string file_name, bool& result,
-                                                    bool forceOverwrite)
+void KEMFileInterface::SaveKSAFileToActiveDirectory(KSAOutputNode* node, const string& file_name, bool& result,
+                                                    bool forceOverwrite) const
 {
     result = false;
     set<string> fileList = CompleteFileList();
     std::string full_file_name = ActiveDirectory() + "/" + file_name;
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (*it == full_file_name) {
+    for (const auto& it : fileList) {
+        if (it == full_file_name) {
             if (!forceOverwrite) {
                 //file already exists, and we do not want to overwrite it
                 result = false;

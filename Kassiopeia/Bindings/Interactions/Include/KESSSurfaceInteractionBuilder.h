@@ -19,10 +19,10 @@ template<> inline bool KESSSurfaceInteractionBuilder::AddAttribute(KContainer* a
     }
 
     if (aContainer->GetName() == "siliconside") {
-        if (aContainer->AsReference<std::string>() == "inside") {
+        if (aContainer->AsString() == "inside") {
             fObject->SetSurfaceOrientation(KESSSurfaceInteraction::eNormalPointingAway);
         }
-        else if (aContainer->AsReference<std::string>() == "outside") {
+        else if (aContainer->AsString() == "outside") {
             fObject->SetSurfaceOrientation(KESSSurfaceInteraction::eNormalPointingSilicon);
         }
         else {

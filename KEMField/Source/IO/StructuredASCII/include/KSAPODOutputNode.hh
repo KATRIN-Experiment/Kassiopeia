@@ -26,7 +26,7 @@ namespace KEMField
 template<typename U> class KSAPODOutputNode : public KSAOutputNode
 {
   public:
-    KSAPODOutputNode(std::string name) : KSAOutputNode(name)
+    KSAPODOutputNode(const std::string& name) : KSAOutputNode(name)
     {
         fConverter = new KSAPODConverter<U>();
         fStringValue = "INVALID";

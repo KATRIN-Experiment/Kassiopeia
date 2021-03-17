@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMaxEnergyBuilder::~KComplexElement() {}
+template<> KSTermMaxEnergyBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxEnergyStructure =
-    KSTermMaxEnergyBuilder::Attribute<string>("name") + KSTermMaxEnergyBuilder::Attribute<double>("energy");
+    KSTermMaxEnergyBuilder::Attribute<std::string>("name") + KSTermMaxEnergyBuilder::Attribute<double>("energy");
 
 STATICINT sKSTermMaxEnergy = KSRootBuilder::ComplexElement<KSTermMaxEnergy>("ksterm_max_energy");
 

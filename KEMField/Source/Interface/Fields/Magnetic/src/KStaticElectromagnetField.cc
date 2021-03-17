@@ -16,21 +16,20 @@ namespace KEMField
 KStaticElectromagnetField::KStaticElectromagnetField() :
     fContainer(nullptr),
     fFieldSolver(nullptr),
-    fFile(),
     fDirectory(KEMFileInterface::GetInstance()->ActiveDirectory())
 {
     fFile = KEMFileInterface::GetInstance()->GetActiveFileName();
-    fFile = fFile.substr(fFile.find_last_of("/") + 1, std::string::npos);
+    fFile = fFile.substr(fFile.find_last_of('/') + 1, std::string::npos);
 }
 
-KStaticElectromagnetField::~KStaticElectromagnetField() {}
+KStaticElectromagnetField::~KStaticElectromagnetField() = default;
 
-KThreeVector KStaticElectromagnetField::MagneticPotentialCore(const KPosition& aSamplePoint) const
+KFieldVector KStaticElectromagnetField::MagneticPotentialCore(const KPosition& aSamplePoint) const
 {
     return fFieldSolver->MagneticPotential(aSamplePoint);
 }
 
-KThreeVector KStaticElectromagnetField::MagneticFieldCore(const KPosition& aSamplePoint) const
+KFieldVector KStaticElectromagnetField::MagneticFieldCore(const KPosition& aSamplePoint) const
 {
     return fFieldSolver->MagneticField(aSamplePoint);
 }
@@ -40,7 +39,7 @@ KGradient KStaticElectromagnetField::MagneticGradientCore(const KPosition& aSamp
     return fFieldSolver->MagneticGradient(aSamplePoint);
 }
 
-std::pair<KThreeVector, KGradient> KStaticElectromagnetField::MagneticFieldAndGradientCore(const KPosition& P) const
+std::pair<KFieldVector, KGradient> KStaticElectromagnetField::MagneticFieldAndGradientCore(const KPosition& P) const
 {
     return fFieldSolver->MagneticFieldAndGradient(P);
 }
@@ -50,12 +49,22 @@ void KStaticElectromagnetField::SetDirectory(const std::string& aDirectory)
     fDirectory = aDirectory;
 }
 
+std::string KStaticElectromagnetField::GetDirectory() const
+{
+    return fDirectory;
+}
+
 void KStaticElectromagnetField::SetFile(const std::string& aFile)
 {
     fFile = aFile;
 }
 
-void KStaticElectromagnetField::SetFieldSolver(KSmartPointer<KMagneticFieldSolver> solver)
+std::string KStaticElectromagnetField::GetFile() const
+{
+    return fFile;
+}
+
+void KStaticElectromagnetField::SetFieldSolver(const KSmartPointer<KMagneticFieldSolver>& solver)
 {
     fFieldSolver = solver;
 }
@@ -65,7 +74,7 @@ KSmartPointer<KMagneticFieldSolver> KStaticElectromagnetField::GetFieldSolver()
     return fFieldSolver;
 }
 
-void KStaticElectromagnetField::SetContainer(KSmartPointer<KElectromagnetContainer> aContainer)
+void KStaticElectromagnetField::SetContainer(const KSmartPointer<KElectromagnetContainer>& aContainer)
 {
     fContainer = aContainer;
 }

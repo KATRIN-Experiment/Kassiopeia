@@ -1,6 +1,7 @@
 #include "KMessage.h"
 
 #include "KException.h"
+#include "KXMLInitializer.hh"
 
 #include <iomanip>
 #include <ostream>
@@ -56,6 +57,7 @@ KMessage::KMessage(const string& aKey, const string& aDescription, const string&
     fMessageLines(),
 
     fShowShutdownMessage(false),
+    fShowParserContext(false),
     fTerminalVerbosity(KMessageTable::GetInstance().GetTerminalVerbosity()),
     fTerminalStream(KMessageTable::GetInstance().GetTerminalStream()),
     fLogVerbosity(KMessageTable::GetInstance().GetLogVerbosity()),
@@ -116,17 +118,30 @@ void KMessage::SetSeverity(const KMessageSeverity& aSeverity)
             break;
 
         case eDebug:
-            fColorPrefix = &KMessage::fDebugColorPrefix;
-            fDescription = &KMessage::fDebugDescription;
-            fColorSuffix = &KMessage::fDebugColorSuffix;
-            break;
-
         default:
             fColorPrefix = &KMessage::fDebugColorPrefix;
             fDescription = &KMessage::fDebugDescription;
             fColorSuffix = &KMessage::fDebugColorSuffix;
             break;
     }
+
+    return;
+}
+
+void KMessage::EndLine(const KMessageLineEnd& aLineEnd)
+{
+    switch (aLineEnd) {
+        case eNewline:
+        case eNewlineEnd:
+            fMessageLines.emplace_back(fMessageLine.str(), NewLine);
+            break;
+        case eOverline:
+        case eOverlineEnd:
+            fMessageLines.emplace_back(fMessageLine.str(), OverLine);
+            break;
+    }
+    fMessageLine.clear();
+    fMessageLine.str("");
 
     return;
 }
@@ -162,8 +177,8 @@ void KMessage::Stacktrace(std::ostream& aStream)
 {
     aStream << Prefix() << "stack trace:" << Suffix() << NewLine;
 #ifdef KASPER_USE_BOOST
-    boost::stacktrace::detail::to_string_impl impl;
     for (auto& frame : boost::stacktrace::stacktrace()) {
+        boost::stacktrace::detail::to_string_impl impl;
         aStream << Prefix() << TabIndent << impl(frame.address()) << " [" << frame.address() << "]" << Suffix()
                 << NewLine;
     }
@@ -181,20 +196,39 @@ void KMessage::Stacktrace(std::ostream& aStream)
 #endif
 }
 
+void KMessage::ParserContext(std::ostream& aStream)
+{
+    const auto* ctx = KXMLInitializer::GetInstance().GetContext();
+    if (ctx && ctx->IsValid()) {
+        aStream << Prefix() << TabIndent << "while parsing element <" << ctx->GetElement() << "> in file <"
+                << ctx->GetName() << "> at line <" << ctx->GetLine() << ">, column <" << ctx->GetColumn() << ">"
+                << NewLine;
+    }
+}
+
 void KMessage::Shutdown()
 {
-    if (fShowShutdownMessage) {
-        if ((fSeverity <= fTerminalVerbosity) && (fTerminalStream != nullptr) && (fTerminalStream->good() == true)) {
+
+    if ((fSeverity <= fTerminalVerbosity) && (fTerminalStream != nullptr) && (fTerminalStream->good() == true)) {
+        if (fShowParserContext) {
+            ParserContext(*fTerminalStream);
+        }
+        if (fShowShutdownMessage) {
             (*fTerminalStream) << Prefix() << "shutting down..." << Suffix() << NewLine;
             Stacktrace(*fTerminalStream);
-            (*fTerminalStream).flush();
         }
+        (*fTerminalStream).flush();
+    }
 
-        if ((fSeverity <= fLogVerbosity) && (fLogStream != nullptr) && (fLogStream->good() == true)) {
+    if ((fSeverity <= fLogVerbosity) && (fLogStream != nullptr) && (fLogStream->good() == true)) {
+        if (fShowParserContext) {
+            ParserContext(*fLogStream);
+        }
+        if (fShowShutdownMessage) {
             (*fLogStream) << Prefix() << "shutting down..." << Suffix() << NewLine;
             Stacktrace(*fLogStream);
-            (*fLogStream).flush();
         }
+        (*fLogStream).flush();
     }
 
     string tWhat = "runtime error";
@@ -224,6 +258,11 @@ void KMessage::SetShowShutdownMessage(bool aFlag)
     fShowShutdownMessage = aFlag;
     return;
 }
+void KMessage::SetShowParserContext(bool aFlag)
+{
+    fShowParserContext = aFlag;
+    return;
+}
 void KMessage::SetTerminalVerbosity(const KMessageSeverity& aVerbosity)
 {
     fTerminalVerbosity = aVerbosity;
@@ -245,6 +284,23 @@ void KMessage::SetLogStream(ostream* aLogStream)
     return;
 }
 
+const KMessageSeverity& KMessage::GetTerminalVerbosity()
+{
+    return fTerminalVerbosity;
+}
+std::ostream* KMessage::GetTerminalStream()
+{
+    return fTerminalStream;
+}
+const KMessageSeverity& KMessage::GetLogVerbosity()
+{
+    return fLogVerbosity;
+}
+std::ostream* KMessage::GetLogStream()
+{
+    return fLogStream;
+}
+
 }  // namespace katrin
 
 namespace katrin
@@ -260,7 +316,7 @@ KMessageTable::KMessageTable() :
     fLogStream(nullptr)
 {}
 
-KMessageTable::~KMessageTable() {}
+KMessageTable::~KMessageTable() = default;
 
 //********
 //messages
@@ -284,10 +340,12 @@ KMessage* KMessageTable::Get(const string& aKey)
 }
 void KMessageTable::Remove(KMessage* aMessage)
 {
-    auto tIter = fMessageMap.find(aMessage->GetKey());
-    if (tIter != fMessageMap.end()) {
-        fMessageMap.erase(tIter);
-    }
+    Remove(aMessage->GetKey());
+    return;
+}
+void KMessageTable::Remove(const string& aKey)
+{
+    fMessageMap.erase(aKey);
     return;
 }
 
@@ -331,6 +389,20 @@ void KMessageTable::SetShowShutdownMessage(bool aFlag)
 bool KMessageTable::GetShowShutdownMessage() const
 {
     return fShowShutdownMessage;
+}
+
+void KMessageTable::SetShowParserContext(bool aFlag)
+{
+    fShowParserContext = aFlag;
+    MessageIt tIter;
+    for (tIter = fMessageMap.begin(); tIter != fMessageMap.end(); tIter++) {
+        tIter->second->SetShowParserContext(fShowParserContext);
+    }
+    return;
+}
+bool KMessageTable::GetShowParserContext() const
+{
+    return fShowParserContext;
 }
 
 void KMessageTable::SetTerminalVerbosity(const KMessageSeverity& aVerbosity)

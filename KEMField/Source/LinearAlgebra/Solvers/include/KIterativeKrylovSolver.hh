@@ -31,10 +31,10 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
         //create a default restart condition
         fRestartCondition = new KIterativeKrylovRestartCondition();
     }
-    ~KIterativeKrylovSolver() override {}
+    ~KIterativeKrylovSolver() override = default;
 
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     void Solve(Vector& x, const Vector& b)
     {
@@ -50,7 +50,7 @@ template<typename ValueType> class KIterativeKrylovSolver : public KIterativeSol
     {
         fMaxIterations = i;
     }
-    void SetRestartCondition(KSmartPointer<KIterativeKrylovRestartCondition> restart)
+    void SetRestartCondition(const KSmartPointer<KIterativeKrylovRestartCondition>& restart)
     {
         fRestartCondition = restart;
     }

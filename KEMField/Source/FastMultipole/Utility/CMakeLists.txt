@@ -52,7 +52,7 @@ if (${PROJECT_NAME}_USE_VTK)
     add_cflag (KEMFIELD_USE_VTK)
 endif (${PROJECT_NAME}_USE_VTK)
 
-add_library (KFMUtility SHARED ${KFM_UTIL_SOURCEFILES})
+add_library (KFMUtility SHARED ${KFM_UTIL_SOURCEFILES} ${KFM_UTIL_HEADERFILES})
 target_link_libraries (KFMUtility ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${KFM_UTIL_LIBS})
 
 kasper_install_headers (${KFM_UTIL_HEADERFILES})

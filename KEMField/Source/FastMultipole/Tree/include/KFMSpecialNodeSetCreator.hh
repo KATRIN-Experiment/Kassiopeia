@@ -28,8 +28,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMSpecialNodeSetCreator : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMSpecialNodeSetCreator(){};
-    virtual ~KFMSpecialNodeSetCreator(){};
+    KFMSpecialNodeSetCreator() = default;
+    ;
+    virtual ~KFMSpecialNodeSetCreator() = default;
+    ;
 
     void SetSpecialNodeSet(KFMSpecialNodeSet<ObjectTypeList>* node_set)
     {

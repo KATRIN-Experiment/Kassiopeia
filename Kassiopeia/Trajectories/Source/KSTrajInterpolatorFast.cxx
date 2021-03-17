@@ -2,16 +2,18 @@
 
 #include "KSTrajectoriesMessage.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
-KSTrajInterpolatorFast::KSTrajInterpolatorFast() {}
+KSTrajInterpolatorFast::KSTrajInterpolatorFast() = default;
 KSTrajInterpolatorFast::KSTrajInterpolatorFast(const KSTrajInterpolatorFast&) : KSComponent() {}
 KSTrajInterpolatorFast* KSTrajInterpolatorFast::Clone() const
 {
     return new KSTrajInterpolatorFast(*this);
 }
-KSTrajInterpolatorFast::~KSTrajInterpolatorFast() {}
+KSTrajInterpolatorFast::~KSTrajInterpolatorFast() = default;
 
 void KSTrajInterpolatorFast::Interpolate(double /*aTime*/, const KSTrajExactIntegrator& /*anIntegrator*/,
                                          const KSTrajExactDifferentiator& /*aDifferentiator*/,

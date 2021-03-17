@@ -146,10 +146,13 @@ class KMagfieldMapVTK
     virtual ~KMagfieldMapVTK();
 
   protected:
+    virtual bool CheckValue(const std::string& array, const KPosition& aSamplePoint) const;
     virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
 
   public:
-    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField) const;
+    virtual bool CheckField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    virtual bool CheckGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
     virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient) const;
 
   protected:
@@ -160,20 +163,20 @@ class KLinearInterpolationMagfieldMapVTK : public KMagfieldMapVTK
 {
   public:
     KLinearInterpolationMagfieldMapVTK(const std::string& aFilename);
-    virtual ~KLinearInterpolationMagfieldMapVTK();
+    ~KLinearInterpolationMagfieldMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
 };
 
 class KCubicInterpolationMagfieldMapVTK : public KMagfieldMapVTK
 {
   public:
     KCubicInterpolationMagfieldMapVTK(const std::string& aFilename);
-    virtual ~KCubicInterpolationMagfieldMapVTK();
+    ~KCubicInterpolationMagfieldMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
 
   protected:
     static double _cubicInterpolate(double p[], double x);
@@ -187,23 +190,26 @@ class KMagnetostaticFieldmap : public KMagnetostaticField
 {
   public:
     KMagnetostaticFieldmap();
-    virtual ~KMagnetostaticFieldmap();
+    ~KMagnetostaticFieldmap() override;
 
   public:
     void SetDirectory(const std::string& aDirectory);
     void SetFile(const std::string& aFile);
     void SetInterpolation(const std::string& aMode);
+    void SetGradNumerical(bool aFlag);
 
   private:
-    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const;
-    virtual KThreeVector MagneticFieldCore(const KPosition& P) const;
-    virtual KGradient MagneticGradientCore(const KPosition& P) const;
-    virtual void InitializeCore();
+    KFieldVector MagneticPotentialCore(const KPosition& P) const override;
+    KFieldVector MagneticFieldCore(const KPosition& P) const override;
+    KGradient MagneticGradientCore(const KPosition& P) const override;
+    bool CheckCore(const KPosition& P) const override;
+    void InitializeCore() override;
 
   private:
     std::string fDirectory;
     std::string fFile;
     int fInterpolation;
+    bool fGradNumerical;
     std::shared_ptr<KMagfieldMapVTK> fFieldMap;
 };
 
@@ -232,11 +238,11 @@ class KMagnetostaticFieldmapCalculator
     {
         fComputeGradient = aFlag;
     }
-    void SetCenter(KPosition aCenter)
+    void SetCenter(const KPosition& aCenter)
     {
         fCenter = aCenter;
     }
-    void SetLength(KThreeVector aLength)
+    void SetLength(const KFieldVector& aLength)
     {
         fLength = aLength;
     }
@@ -260,7 +266,7 @@ class KMagnetostaticFieldmapCalculator
     {
         fMagneticFields[aField->GetName()] = aField;
     }
-    void SetName(std::string aName)
+    void SetName(const std::string& aName)
     {
         fName = aName;
     }
@@ -305,7 +311,7 @@ class KMagnetostaticFieldmapCalculator
     bool fForceUpdate;
     bool fComputeGradient;
     KPosition fCenter;
-    KThreeVector fLength;
+    KFieldVector fLength;
     bool fMirrorX, fMirrorY, fMirrorZ;
     double fSpacing;
     std::map<std::string, KMagnetostaticField*> fMagneticFields;

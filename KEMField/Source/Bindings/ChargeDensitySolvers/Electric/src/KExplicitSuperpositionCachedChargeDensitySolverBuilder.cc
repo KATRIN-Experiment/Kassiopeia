@@ -15,7 +15,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KExplicitSuperpositionCachedChargeDensitySolverBuilder::~KComplexElement() {}
+template<> KExplicitSuperpositionCachedChargeDensitySolverBuilder::~KComplexElement() = default;
 
 STATICINT sKExplicitSuperpositionCachedChargeDensitySolverStructure =
     KExplicitSuperpositionCachedChargeDensitySolverBuilder::Attribute<std::string>("name") +

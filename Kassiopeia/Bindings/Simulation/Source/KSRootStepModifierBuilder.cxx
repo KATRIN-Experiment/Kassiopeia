@@ -7,10 +7,10 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSRootStepModifierBuilder::~KComplexElement() {}
+template<> KSRootStepModifierBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootStepModifier = KSRootBuilder::ComplexElement<KSRootStepModifier>("ks_root_step_modifier");
 
-STATICINT sKSRootStepModifierStructure =
-    KSRootStepModifierBuilder::Attribute<string>("name") + KSRootStepModifierBuilder::Attribute<string>("add_modifier");
+STATICINT sKSRootStepModifierStructure = KSRootStepModifierBuilder::Attribute<std::string>("name") +
+                                         KSRootStepModifierBuilder::Attribute<std::string>("add_modifier");
 }  // namespace katrin

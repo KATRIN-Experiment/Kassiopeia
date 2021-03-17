@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueSetBuilder::~KComplexElement() {}
+template<> KSGenValueSetBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueSetStructure =
-    KSGenValueSetBuilder::Attribute<string>("name") + KSGenValueSetBuilder::Attribute<double>("value_start") +
+    KSGenValueSetBuilder::Attribute<std::string>("name") + KSGenValueSetBuilder::Attribute<double>("value_start") +
     KSGenValueSetBuilder::Attribute<double>("value_stop") + KSGenValueSetBuilder::Attribute<double>("value_increment") +
     KSGenValueSetBuilder::Attribute<unsigned int>("value_count");
 

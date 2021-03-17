@@ -17,8 +17,9 @@ class KMagnetostaticConstantField : public KEMField::KMagnetostaticField
 {
   public:
     KMagnetostaticConstantField();
-    KMagnetostaticConstantField(const KThreeVector& aField);
-    ~KMagnetostaticConstantField() override{};
+    KMagnetostaticConstantField(const KFieldVector& aField);
+    ~KMagnetostaticConstantField() override = default;
+    ;
 
     static std::string Name()
     {
@@ -26,20 +27,20 @@ class KMagnetostaticConstantField : public KEMField::KMagnetostaticField
     }
 
   private:
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
 
   public:
-    void SetField(const KThreeVector& aFieldVector);
-    KThreeVector GetField() const;
+    void SetField(const KFieldVector& aFieldVector);
+    KFieldVector GetField() const;
 
     void SetLocation(const KPosition& aLocation);
-    KThreeVector GetLocation() const;
+    KFieldVector GetLocation() const;
 
   private:
-    KThreeVector fFieldVector;
-    KThreeVector fLocation;
+    KFieldVector fFieldVector;
+    KFieldVector fLocation;
 };
 
 }  // namespace KEMField

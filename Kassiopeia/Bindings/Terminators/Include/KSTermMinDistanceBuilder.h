@@ -20,13 +20,12 @@ template<> inline bool KSTermMinDistanceBuilder::AddAttribute(KContainer* aConta
     }
     if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         std::vector<KGeoBag::KGSurface*>::const_iterator tSurfaceIt;
         KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            oprmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            oprmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -38,13 +37,12 @@ template<> inline bool KSTermMinDistanceBuilder::AddAttribute(KContainer* aConta
     }
     if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            oprmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            oprmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

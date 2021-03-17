@@ -25,8 +25,10 @@ template<typename ObjectTypeList, unsigned int NFLAGS>
 class KFMNodeFlagInitializer : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMNodeFlagInitializer(){};
-    virtual ~KFMNodeFlagInitializer(){};
+    KFMNodeFlagInitializer() = default;
+    ;
+    virtual ~KFMNodeFlagInitializer() = default;
+    ;
 
     virtual void ApplyAction(KFMNode<ObjectTypeList>* node)
     {

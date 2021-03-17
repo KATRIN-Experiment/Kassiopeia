@@ -21,10 +21,10 @@ class KSTrajTermConstantForcePropagation :
   public:
     void Differentiate(double /*aTime*/, const KSTrajExactParticle& aValue,
                        KSTrajExactDerivative& aDerivative) const override;
-    void SetForce(const KThreeVector& aForce);
+    void SetForce(const KGeoBag::KThreeVector& aForce);
 
   private:
-    KThreeVector fForce;
+    KGeoBag::KThreeVector fForce;
 };
 
 }  // namespace Kassiopeia

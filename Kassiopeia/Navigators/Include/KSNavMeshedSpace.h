@@ -17,10 +17,6 @@
 #include <utility>
 #include <vector>
 
-
-using namespace KGeoBag;
-using namespace katrin;
-
 #define KSNAVMESHEDSPACE_SPACE   0
 #define KSNAVMESHEDSPACE_SIDE    1
 #define KSNAVMESHEDSPACE_SURFACE 2
@@ -164,7 +160,7 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
 
   public:
     void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                             const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
+                             const KSParticle& aTrajectoryFinalParticle, const KGeoBag::KThreeVector& aTrajectoryCenter,
                              const double& aTrajectoryRadius, const double& aTrajectoryStep,
                              KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag) override;
     void ExecuteNavigation(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
@@ -209,7 +205,7 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
     bool fSpecifyAllowedElements;
 
     //container to hold all of the mesh elements (with global coordinates)
-    KGNavigableMeshElementContainer fElementContainer;
+    KGeoBag::KGNavigableMeshElementContainer fElementContainer;
 
     //data stuct so we can associate each mesh element with its parent space/side/surface
     //for navigation actions
@@ -237,11 +233,11 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
 
     //private class to do the collection with a specific post collection action
     //this helps us construct the element -> parent map
-    class KSMeshElementCollector : public KGMeshElementCollector
+    class KSMeshElementCollector : public KGeoBag::KGMeshElementCollector
     {
       public:
         KSMeshElementCollector() : fType(0), fSpace(nullptr), fSide(nullptr), fSurface(nullptr), fMap(nullptr) {}
-        ~KSMeshElementCollector() override {}
+        ~KSMeshElementCollector() override = default;
 
         void SetSpace(KSGeoSpace* space)
         {
@@ -272,12 +268,12 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
             fMap = element_map;
         };
 
-        void PreCollectionActionExecute(KGMeshData* aData) override
+        void PreCollectionActionExecute(KGeoBag::KGMeshData* aData) override
         {
             unsigned int n_elem = aData->Elements()->size();
             double sum_area = 0.0;
-            for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
-                sum_area += (*tElementIt)->Area();
+            for (auto& tElementIt : *aData->Elements()) {
+                sum_area += tElementIt->Area();
             }
 
             if (n_elem == 1) {
@@ -316,7 +312,7 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
             }
         }
 
-        void PostCollectionActionExecute(KGNavigableMeshElement* /*element */) override
+        void PostCollectionActionExecute(KGeoBag::KGNavigableMeshElement* /*element */) override
         {
             MeshElementAssociation temp;
             temp.fElementID = fMap->size();
@@ -346,11 +342,11 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
     std::vector<KSGeoSurface*> fSurfaces;
 
     //the octree and its builder and parameters
-    KGNavigableMeshTree fTree;
-    KGNavigableMeshTreeBuilder fTreeBuilder;
-    KGNavigableMeshFirstIntersectionFinder fFirstIntersectionFinder;
-    KGNavigableMeshProximityCheck fProximityChecker;
-    KGCube<KGMESH_DIM>* fWorldCube;
+    KGeoBag::KGNavigableMeshTree fTree;
+    KGeoBag::KGNavigableMeshTreeBuilder fTreeBuilder;
+    KGeoBag::KGNavigableMeshFirstIntersectionFinder fFirstIntersectionFinder;
+    KGeoBag::KGNavigableMeshProximityCheck fProximityChecker;
+    KGeoBag::KGCube<KGMESH_DIM>* fWorldCube;
 
     //temp entity the mesh element belongs to
     mutable unsigned int fMeshElementID;
@@ -372,8 +368,8 @@ class KSNavMeshedSpace : public KSComponentTemplate<KSNavMeshedSpace, KSSpaceNav
     mutable KSSpace* fLastSpaceEntity;
     mutable KSSide* fLastSideEntity;
     mutable KSSurface* fLastSurfaceEntity;
-    mutable KThreeVector fLastIntersection;
-    mutable KThreeVector fLastDirection;
+    mutable KGeoBag::KThreeVector fLastIntersection;
+    mutable KGeoBag::KThreeVector fLastDirection;
     mutable long fLastSpaceCount;
     mutable long fLastSideCount;
     mutable long fLastSurfaceCount;

@@ -72,19 +72,19 @@ class KSNavOctreeData
         return fNNodes;
     };
 
-    void GetFlattenedTree(std::vector<KGNodeData>* node_data) const
+    void GetFlattenedTree(std::vector<KGeoBag::KGNodeData>* node_data) const
     {
         *node_data = fFlattenedTree;
     };
-    void SetFlattenedTree(const std::vector<KGNodeData>* node_data)
+    void SetFlattenedTree(const std::vector<KGeoBag::KGNodeData>* node_data)
     {
         fFlattenedTree = *node_data;
     };
-    const std::vector<KGNodeData>* GetFlattenedTreePointer() const
+    const std::vector<KGeoBag::KGNodeData>* GetFlattenedTreePointer() const
     {
         return &fFlattenedTree;
     };
-    std::vector<KGNodeData>* GetFlattenedTreePointer()
+    std::vector<KGeoBag::KGNodeData>* GetFlattenedTreePointer()
     {
         return &fFlattenedTree;
     };
@@ -106,19 +106,19 @@ class KSNavOctreeData
         return &fIdentitySetNodeIDs;
     };
 
-    void GetIdentitySets(std::vector<KGIdentitySet*>* id_sets) const
+    void GetIdentitySets(std::vector<KGeoBag::KGIdentitySet*>* id_sets) const
     {
         *id_sets = fIdentitySets;
     };
-    void SetIdentitySets(const std::vector<KGIdentitySet*>* id_sets)
+    void SetIdentitySets(const std::vector<KGeoBag::KGIdentitySet*>* id_sets)
     {
         fIdentitySets = *id_sets;
     };
-    const std::vector<KGIdentitySet*>* GetIdentitySetPointer() const
+    const std::vector<KGeoBag::KGIdentitySet*>* GetIdentitySetPointer() const
     {
         return &fIdentitySets;
     };
-    std::vector<KGIdentitySet*>* GetIdentitySetPointer()
+    std::vector<KGeoBag::KGIdentitySet*>* GetIdentitySetPointer()
     {
         return &fIdentitySets;
     };
@@ -140,19 +140,19 @@ class KSNavOctreeData
         return &fCubeNodeIDs;
     };
 
-    void GetCubes(std::vector<KGCube<KGMESH_DIM>*>* cubes) const
+    void GetCubes(std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* cubes) const
     {
         *cubes = fCubes;
     };
-    void SetCubes(const std::vector<KGCube<KGMESH_DIM>*>* cubes)
+    void SetCubes(const std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* cubes)
     {
         fCubes = *cubes;
     };
-    const std::vector<KGCube<KGMESH_DIM>*>* GetCubePointer() const
+    const std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* GetCubePointer() const
     {
         return &fCubes;
     };
-    std::vector<KGCube<KGMESH_DIM>*>* GetCubePointer()
+    std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* GetCubePointer()
     {
         return &fCubes;
     };
@@ -244,15 +244,15 @@ class KSNavOctreeData
     //storage for the tree structure (parent to child links)
     std::string fTreeID;
     unsigned int fNNodes;
-    std::vector<KGNodeData> fFlattenedTree;
+    std::vector<KGeoBag::KGNodeData> fFlattenedTree;
 
     //list of mesh elements mappedd to each node
     std::vector<int> fIdentitySetNodeIDs;
-    std::vector<KGIdentitySet*> fIdentitySets;
+    std::vector<KGeoBag::KGIdentitySet*> fIdentitySets;
 
     //list of cubes mapped to each node
     std::vector<int> fCubeNodeIDs;
-    std::vector<KGCube<KGMESH_DIM>*> fCubes;
+    std::vector<KGeoBag::KGCube<KGMESH_DIM>*> fCubes;
 };
 
 
@@ -288,13 +288,13 @@ template<typename Stream> Stream& operator>>(Stream& s, KSNavOctreeData& aData)
     s >> n_nodes;
     aData.SetNumberOfTreeNodes(n_nodes);
 
-    std::vector<KGNodeData>* flattened_tree = aData.GetFlattenedTreePointer();
+    std::vector<KGeoBag::KGNodeData>* flattened_tree = aData.GetFlattenedTreePointer();
     unsigned int n_flattened_nodes;
     s >> n_flattened_nodes;
     flattened_tree->resize(0);
     flattened_tree->reserve(n_flattened_nodes);
     for (unsigned int i = 0; i < n_flattened_nodes; i++) {
-        KGNodeData node_data;
+        KGeoBag::KGNodeData node_data;
         s >> node_data;
         flattened_tree->push_back(node_data);
     }
@@ -311,13 +311,13 @@ template<typename Stream> Stream& operator>>(Stream& s, KSNavOctreeData& aData)
         id_set_node_ids->push_back(id);
     }
 
-    std::vector<KGIdentitySet*>* id_set = aData.GetIdentitySetPointer();
+    std::vector<KGeoBag::KGIdentitySet*>* id_set = aData.GetIdentitySetPointer();
     unsigned int id_set_size;
     s >> id_set_size;
     id_set->resize(0);
     id_set->reserve(id_set_size);
     for (unsigned int i = 0; i < id_set_size; i++) {
-        auto* set = new KGIdentitySet();
+        auto* set = new KGeoBag::KGIdentitySet();
         s >> *set;
         id_set->push_back(set);
     }
@@ -333,13 +333,13 @@ template<typename Stream> Stream& operator>>(Stream& s, KSNavOctreeData& aData)
         cube_node_ids->push_back(id);
     }
 
-    std::vector<KGCube<KGMESH_DIM>*>* cubes = aData.GetCubePointer();
+    std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* cubes = aData.GetCubePointer();
     unsigned int cube_size;
     s >> cube_size;
     cubes->resize(0);
     cubes->reserve(cube_size);
     for (unsigned int i = 0; i < cube_size; i++) {
-        auto* cube = new KGCube<KGMESH_DIM>();
+        auto* cube = new KGeoBag::KGCube<KGMESH_DIM>();
         s >> *cube;
         cubes->push_back(cube);
     }
@@ -360,7 +360,7 @@ template<typename Stream> Stream& operator<<(Stream& s, const KSNavOctreeData& a
     s << aData.GetSpecifyNumberOfAllowedElements();
     s << aData.GetNumberOfTreeNodes();
 
-    const std::vector<KGNodeData>* flattened_tree = aData.GetFlattenedTreePointer();
+    const std::vector<KGeoBag::KGNodeData>* flattened_tree = aData.GetFlattenedTreePointer();
     unsigned int n_flattened_nodes = flattened_tree->size();
     s << n_flattened_nodes;
     for (unsigned int i = 0; i < n_flattened_nodes; i++) {
@@ -374,7 +374,7 @@ template<typename Stream> Stream& operator<<(Stream& s, const KSNavOctreeData& a
         s << (*id_set_node_ids)[i];
     }
 
-    const std::vector<KGIdentitySet*>* id_set = aData.GetIdentitySetPointer();
+    const std::vector<KGeoBag::KGIdentitySet*>* id_set = aData.GetIdentitySetPointer();
     unsigned int id_set_size = id_set->size();
     s << id_set_size;
     for (unsigned int i = 0; i < id_set_size; i++) {
@@ -388,7 +388,7 @@ template<typename Stream> Stream& operator<<(Stream& s, const KSNavOctreeData& a
         s << (*cube_node_ids)[i];
     }
 
-    const std::vector<KGCube<KGMESH_DIM>*>* cubes = aData.GetCubePointer();
+    const std::vector<KGeoBag::KGCube<KGMESH_DIM>*>* cubes = aData.GetCubePointer();
     unsigned int cube_size = cubes->size();
     s << cube_size;
     for (unsigned int i = 0; i < cube_size; i++) {

@@ -5,8 +5,6 @@
 
 #include <vector>
 
-using std::vector;
-
 namespace katrin
 {
 
@@ -14,7 +12,7 @@ class KApplicationRunner : public KApplication
 {
   public:
     KApplicationRunner();
-    KApplicationRunner(const KApplicationRunner& aCopy);
+    KApplicationRunner(const KApplicationRunner&);
     ~KApplicationRunner() override;
 
     bool Execute() override;

@@ -10,7 +10,7 @@ namespace katrin
 
 typedef KComplexElement<KGTorusSurface> KGTorusSurfaceBuilder;
 
-template<> bool KGTorusSurfaceBuilder::AddAttribute(KContainer* anAttribute)
+template<> inline bool KGTorusSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
     if (anAttribute->GetName() == "name") {
         anAttribute->CopyTo(fObject, &KNamed::SetName);

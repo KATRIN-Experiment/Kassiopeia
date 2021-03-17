@@ -7,7 +7,7 @@ namespace Kassiopeia
 
 KSIntDensityConstant::KSIntDensityConstant() : fTemperature(0.), fPressure(0.), fDensity(-1.) {}
 KSIntDensityConstant::KSIntDensityConstant(const KSIntDensityConstant& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTemperature(aCopy.fTemperature),
     fPressure(aCopy.fPressure),
     fDensity(aCopy.fDensity)
@@ -16,7 +16,7 @@ KSIntDensityConstant* KSIntDensityConstant::Clone() const
 {
     return new KSIntDensityConstant(*this);
 }
-KSIntDensityConstant::~KSIntDensityConstant() {}
+KSIntDensityConstant::~KSIntDensityConstant() = default;
 
 void KSIntDensityConstant::CalculateDensity(const KSParticle&, double& aDensity)
 {

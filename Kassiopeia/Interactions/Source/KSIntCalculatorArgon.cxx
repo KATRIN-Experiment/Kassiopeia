@@ -3,20 +3,19 @@
 #include "KSInteractionsMessage.h"
 #include "KSParticleFactory.h"
 #include "KTextFile.h"
+#include "KThreeVector.hh"
 
 #include <cassert>
 #include <cmath>
 #include <fstream>
 #include <limits>
 #include <sstream>
-using katrin::KTextFile;
-
-#include "KThreeVector.hh"
 using KGeoBag::KThreeVector;
 
 #include "KConst.h"
 #include "KRandom.h"
-using katrin::KRandom;
+
+using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -28,7 +27,7 @@ KSIntCalculatorArgon::KSIntCalculatorArgon()
 {
     fSupportingPointsTotalCrossSection = new std::map<double, double>();
     fParametersTotalCrossSection = new std::vector<double>();
-    fDifferentialCrossSectionInterpolator = new katrin::KMathBilinearInterpolator<double>();
+    fDifferentialCrossSectionInterpolator = new KMathBilinearInterpolator<double>();
 }
 
 KSIntCalculatorArgon::~KSIntCalculatorArgon()
@@ -85,7 +84,7 @@ double KSIntCalculatorArgon::GetTheta(const double& anEnergy) const
             break;
     }
 
-    return tTheta_deg * katrin::KConst::Pi() / 180.;
+    return tTheta_deg * KConst::Pi() / 180.;
 }
 
 double KSIntCalculatorArgon::GetTotalCrossSectionAt(const double& anEnergy) const
@@ -119,8 +118,8 @@ double KSIntCalculatorArgon::GetDifferentialCrossSectionAt(const double& anEnerg
     double maxEnergy = (--fDifferentialCrossSectionInterpolator->GetPoints()->end())->first;
 
     if (anEnergy > maxEnergy) {
-        double t = anEnergy / (2. * katrin::KConst::ERyd_eV());
-        double c = cos(anAngle * katrin::KConst::Pi() / 180.);
+        double t = anEnergy / (2. * KConst::ERyd_eV());
+        double c = cos(anAngle * KConst::Pi() / 180.);
         double k2 = 4. * (t * (1. - c));
 
         return 1.85099E-19 * 4.0 * (8.0 + k2) * (8.0 + k2) / pow(4.0 + k2, 4.0);
@@ -136,9 +135,9 @@ void KSIntCalculatorArgon::InitializeDifferentialCrossSection(unsigned int numOf
     fDifferentialCrossSectionInterpolator->Reset();
 
     // Now read in
-    KTextFile* tInputFile = katrin::CreateDataTextFile(fDataFileDifferentialCrossSection);
+    KTextFile* tInputFile = KTextFile::CreateDataTextFile(fDataFileDifferentialCrossSection);
 
-    if (tInputFile->Open(katrin::KFile::eRead)) {
+    if (tInputFile->Open(KFile::eRead)) {
         KSIntCalculatorArgonDifferentialCrossSectionReader reader(tInputFile->File(), numOfParameters);
         if (!reader.Read()) {
             intmsg(eError) << "KIntCalculatorArgon::InitializeDifferentialCrossSection " << ret;
@@ -152,8 +151,8 @@ void KSIntCalculatorArgon::InitializeDifferentialCrossSection(unsigned int numOf
                 // Copy data to the interpolation
                 std::map<double*, double>* data = reader.GetData();
 
-                for (auto i = data->begin(); i != data->end(); ++i) {
-                    fDifferentialCrossSectionInterpolator->AddPoint(i->first[0], i->first[1], i->second);
+                for (auto& i : *data) {
+                    fDifferentialCrossSectionInterpolator->AddPoint(i.first[0], i.first[1], i.second);
                 }
             }
             else {
@@ -177,9 +176,9 @@ void KSIntCalculatorArgon::InitializeTotalCrossSection(unsigned int numOfParamet
     fSupportingPointsTotalCrossSection->clear();
 
     // New read in
-    KTextFile* tInputFile = katrin::CreateDataTextFile(fDataFileTotalCrossSection);
+    KTextFile* tInputFile = KTextFile::CreateDataTextFile(fDataFileTotalCrossSection);
 
-    if (tInputFile->Open(katrin::KFile::eRead)) {
+    if (tInputFile->Open(KFile::eRead)) {
         KSIntCalculatorArgonTotalCrossSectionReader reader(tInputFile->File(), numOfParameters);
         if (!reader.Read()) {
             intmsg(eError) << "KIntCalculatorArgon::InitializeTotalCrossSection " << ret;
@@ -229,7 +228,7 @@ KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation()
 {
     fSupportingPointsTotalCrossSection = new std::map<double, double>();
     fParametersTotalCrossSection = new std::vector<double>();
-    fDifferentialCrossSectionInterpolator = new katrin::KMathBilinearInterpolator<double>();
+    fDifferentialCrossSectionInterpolator = new KMathBilinearInterpolator<double>();
     fExcitationState = 0;
     fDataFileTotalCrossSection = std::string("No file selected");
 
@@ -237,7 +236,7 @@ KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation()
 }
 
 KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation(const KSIntCalculatorArgonExcitation& aCopy) :
-    KSComponent()
+    KSComponent(aCopy)
 {
     delete fSupportingPointsTotalCrossSection;
     delete fParametersTotalCrossSection;
@@ -249,7 +248,7 @@ KSIntCalculatorArgonExcitation::KSIntCalculatorArgonExcitation(const KSIntCalcul
     fDataFileDifferentialCrossSection = aCopy.fDataFileDifferentialCrossSection;
 }
 
-KSIntCalculatorArgonExcitation::~KSIntCalculatorArgonExcitation() {}
+KSIntCalculatorArgonExcitation::~KSIntCalculatorArgonExcitation() = default;
 
 KSIntCalculatorArgonExcitation* KSIntCalculatorArgonExcitation::Clone() const
 {
@@ -306,7 +305,7 @@ void KSIntCalculatorArgonExcitation::ExecuteInteraction(const KSParticle& anInit
     intmsg_debug("tLostKineticEnergy: " << tLostKineticEnergy << ret);
     assert(tLostKineticEnergy == tLostKineticEnergy);
     assert(tLostKineticEnergy >= 0.);
-    double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+    double tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
     intmsg_debug("tPhi: " << tPhi << ret << ret);
 
     KThreeVector tOrthogonalOne = tInitialDirection.Orthogonal();
@@ -324,7 +323,7 @@ void KSIntCalculatorArgonExcitation::ExecuteInteraction(const KSParticle& anInit
 
     fStepNInteractions = 1;
     fStepEnergyLoss = tLostKineticEnergy;
-    fStepAngularChange = tTheta * 180. / katrin::KConst::Pi();
+    fStepAngularChange = tTheta * 180. / KConst::Pi();
 
     intmsg_debug("FinalParticle: " << ret);
     intmsg_debug("Time: " << aFinalParticle.GetTime() << ret);
@@ -371,9 +370,9 @@ void KSIntCalculatorArgonExcitation::InitializeDifferentialCrossSection(unsigned
     fDifferentialCrossSectionInterpolator->Reset();
 
     // Now read in
-    KTextFile* tInputFile = katrin::CreateDataTextFile(fDataFileDifferentialCrossSection);
+    KTextFile* tInputFile = KTextFile::CreateDataTextFile(fDataFileDifferentialCrossSection);
 
-    if (tInputFile->Open(katrin::KFile::eRead)) {
+    if (tInputFile->Open(KFile::eRead)) {
         KSIntCalculatorArgonDifferentialCrossSectionReader reader(tInputFile->File(), numOfParameters);
         if (!reader.Readlx()) {
             intmsg(eError) << "KIntCalculatorArgon::InitializeDifferentialCrossSection " << ret;
@@ -387,8 +386,8 @@ void KSIntCalculatorArgonExcitation::InitializeDifferentialCrossSection(unsigned
                 // Copy data to the interpolation
                 std::map<double*, double>* data = reader.GetData();
 
-                for (auto i = data->begin(); i != data->end(); ++i) {
-                    fDifferentialCrossSectionInterpolator->AddPoint(i->first[0], i->first[1], i->second);
+                for (auto& i : *data) {
+                    fDifferentialCrossSectionInterpolator->AddPoint(i.first[0], i.first[1], i.second);
                 }
             }
             else {
@@ -415,7 +414,7 @@ KSIntCalculatorArgonElastic::KSIntCalculatorArgonElastic()
     fDataFileDifferentialCrossSection = std::string("argon_differential_elastic_cross-section.txt");
 }
 
-KSIntCalculatorArgonElastic::KSIntCalculatorArgonElastic(const KSIntCalculatorArgonElastic& aCopy) : KSComponent()
+KSIntCalculatorArgonElastic::KSIntCalculatorArgonElastic(const KSIntCalculatorArgonElastic& aCopy) : KSComponent(aCopy)
 {
     delete fSupportingPointsTotalCrossSection;
     delete fParametersTotalCrossSection;
@@ -431,7 +430,7 @@ KSIntCalculatorArgonElastic* KSIntCalculatorArgonElastic::Clone() const
     return new KSIntCalculatorArgonElastic(*this);
 }
 
-KSIntCalculatorArgonElastic::~KSIntCalculatorArgonElastic() {}
+KSIntCalculatorArgonElastic::~KSIntCalculatorArgonElastic() = default;
 
 void KSIntCalculatorArgonElastic::InitializeComponent()
 {
@@ -450,8 +449,7 @@ double KSIntCalculatorArgonElastic::GetDifferentialCrossSectionAt(const double& 
     double maxEnergy = (--fDifferentialCrossSectionInterpolator->GetPoints()->end())->first;
 
     if (anEnergy > maxEnergy) {
-        double k2 =
-            4. * anEnergy / (2. * katrin::KConst::ERyd_eV()) * (1. - cos(anAngle * katrin::KConst::Pi() / 180.));
+        double k2 = 4. * anEnergy / (2. * KConst::ERyd_eV()) * (1. - cos(anAngle * KConst::Pi() / 180.));
 
         return 1.85099E-19 * 4.0 * (8.0 + k2) * (8.0 + k2) / pow(4.0 + k2, 4.0);
     }
@@ -470,7 +468,7 @@ double KSIntCalculatorArgonElastic::GetEnergyLoss(const double& anEnergy, const 
     double anEloss = 0;
     // ArMolMass = 1/alpha^2 * #nuclei * m_p/m_e
     double ArMolMass = 1.38e9;
-    double emass = 1. / (katrin::KConst::Alpha() * katrin::KConst::Alpha());
+    double emass = 1. / (KConst::Alpha() * KConst::Alpha());
     double cosTheta = cos(aTheta);
 
     anEloss = 2. * emass / ArMolMass * (1. - cosTheta) * anEnergy;
@@ -501,7 +499,7 @@ void KSIntCalculatorArgonElastic::ExecuteInteraction(const KSParticle& anInitial
     intmsg_debug("tTheta: " << tTheta << ret);
     double tLostKineticEnergy = GetEnergyLoss(tInitialKineticEnergy, tTheta);
     intmsg_debug("tLostKineticEnergy: " << tLostKineticEnergy << ret);
-    double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+    double tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
     intmsg_debug("tPhi: " << tPhi << ret << ret);
 
     KThreeVector tOrthogonalOne = tInitialDirection.Orthogonal();
@@ -547,7 +545,7 @@ KSIntCalculatorArgonSingleIonisation::KSIntCalculatorArgonSingleIonisation()
 
 KSIntCalculatorArgonSingleIonisation::KSIntCalculatorArgonSingleIonisation(
     const KSIntCalculatorArgonSingleIonisation& aCopy) :
-    KSComponent()
+    KSComponent(aCopy)
 {
     delete fSupportingPointsTotalCrossSection;
     delete fParametersTotalCrossSection;
@@ -566,7 +564,7 @@ KSIntCalculatorArgonSingleIonisation* KSIntCalculatorArgonSingleIonisation::Clon
     return new KSIntCalculatorArgonSingleIonisation(*this);
 }
 
-KSIntCalculatorArgonSingleIonisation::~KSIntCalculatorArgonSingleIonisation() {}
+KSIntCalculatorArgonSingleIonisation::~KSIntCalculatorArgonSingleIonisation() = default;
 
 void KSIntCalculatorArgonSingleIonisation::InitializeComponent()
 {
@@ -597,7 +595,7 @@ void KSIntCalculatorArgonSingleIonisation::ExecuteInteraction(const KSParticle& 
     intmsg_debug("tLostKineticEnergy: " << tLostKineticEnergy << ret);
     tTheta = GetTheta(tInitialKineticEnergy, tLostKineticEnergy);
     intmsg_debug("tTheta: " << tTheta << ret);
-    double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+    double tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
     intmsg_debug("tPhi: " << tPhi << ret << ret);
 
     KThreeVector tOrthogonalOne = tInitialDirection.Orthogonal();
@@ -621,7 +619,7 @@ void KSIntCalculatorArgonSingleIonisation::ExecuteInteraction(const KSParticle& 
 
     // Outgoing secondary
     tTheta = acos(KRandom::GetInstance().Uniform(-1., 1.));
-    tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+    tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
 
     tOrthogonalOne = tInitialDirection.Orthogonal();
     tOrthogonalTwo = tInitialDirection.Cross(tOrthogonalOne);
@@ -656,14 +654,13 @@ double KSIntCalculatorArgonSingleIonisation::GetEnergyLoss(const double& anEnerg
     assert(anEnergy > fIonizationEnergy);
 
     double tmpSecEnergy;
-    double tmpMaxCross = katrin::KConst::BohrRadiusSquared() * 13.2 / anEnergy *
-                         log((anEnergy + 120.0 / anEnergy) / 15.76) * 10.3 * 10.3 /
-                         (pow(0. - 2. + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
+    double tmpMaxCross = KConst::BohrRadiusSquared() * 13.2 / anEnergy * log((anEnergy + 120.0 / anEnergy) / 15.76) *
+                         10.3 * 10.3 / (pow(0. - 2. + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
 
     while (true) {
         tmpSecEnergy = KRandom::GetInstance().Uniform(0., (anEnergy - fIonizationEnergy) / 2., false, true);
 
-        double tmpDiffCross = katrin::KConst::BohrRadiusSquared() * 13.2 / anEnergy *
+        double tmpDiffCross = KConst::BohrRadiusSquared() * 13.2 / anEnergy *
                               log((anEnergy + 120.0 / anEnergy) / 15.76) * 10.3 * 10.3 /
                               (pow(tmpSecEnergy - 2. + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
 
@@ -700,7 +697,7 @@ double KSIntCalculatorArgonSingleIonisation::GetTheta(const double& anEnergy, co
     assert(tTheta_deg == tTheta_deg);
     assert(tTheta_deg >= 0. && tTheta_deg <= 180.);
 
-    return tTheta_deg * katrin::KConst::Pi() / 180.;
+    return tTheta_deg * KConst::Pi() / 180.;
 }
 
 double KSIntCalculatorArgonSingleIonisation::GetDifferentialCrossSectionAt(const double& anEnergy,
@@ -717,7 +714,7 @@ double KSIntCalculatorArgonSingleIonisation::GetDifferentialCrossSectionAt(const
     double aCrossection;
     DiffCrossCalculator->CalculateDoublyDifferentialCrossSection(anEnergy / fIonizationEnergy,
                                                                  (anEnergy - anEloss) / fIonizationEnergy,
-                                                                 cos(anAngle * katrin::KConst::Pi() / 180.),
+                                                                 cos(anAngle * KConst::Pi() / 180.),
                                                                  aCrossection);
 
     double wrongtotalcross;
@@ -738,7 +735,7 @@ KSIntCalculatorArgonDoubleIonisation::KSIntCalculatorArgonDoubleIonisation()
 
 KSIntCalculatorArgonDoubleIonisation::KSIntCalculatorArgonDoubleIonisation(
     const KSIntCalculatorArgonDoubleIonisation& aCopy) :
-    KSComponent()
+    KSComponent(aCopy)
 {
     delete fSupportingPointsTotalCrossSection;
     delete fParametersTotalCrossSection;
@@ -799,7 +796,7 @@ void KSIntCalculatorArgonDoubleIonisation::ExecuteInteraction(const KSParticle& 
     intmsg_debug("tLostKineticEnergy: " << tLostKineticEnergy << ret);
     tTheta = GetTheta(tInitialKineticEnergy, tLostKineticEnergy);
     intmsg_debug("tTheta: " << tTheta << ret);
-    double tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+    double tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
     intmsg_debug("tPhi: " << tPhi << ret << ret);
 
     KThreeVector tOrthogonalOne = tInitialDirection.Orthogonal();
@@ -824,7 +821,7 @@ void KSIntCalculatorArgonDoubleIonisation::ExecuteInteraction(const KSParticle& 
     // Outgoing secondaries
     for (int i = 0; i < 2; ++i) {
         tTheta = acos(KRandom::GetInstance().Uniform(-1., 1.));
-        tPhi = KRandom::GetInstance().Uniform(0., 2. * katrin::KConst::Pi());
+        tPhi = KRandom::GetInstance().Uniform(0., 2. * KConst::Pi());
 
         tOrthogonalOne = tInitialDirection.Orthogonal();
         tOrthogonalTwo = tInitialDirection.Cross(tOrthogonalOne);
@@ -862,9 +859,8 @@ double KSIntCalculatorArgonDoubleIonisation::GetEnergyLoss(const double& anEnerg
     assert(anEnergy >= 0.);
 
     double tmpSecEnergy;
-    double tmpMaxCross = katrin::KConst::BohrRadiusSquared() * 13.2 / anEnergy *
-                         log((anEnergy + 120.0 / anEnergy) / 15.76) * 10.3 * 10.3 /
-                         (pow(0. - 2 + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
+    double tmpMaxCross = KConst::BohrRadiusSquared() * 13.2 / anEnergy * log((anEnergy + 120.0 / anEnergy) / 15.76) *
+                         10.3 * 10.3 / (pow(0. - 2 + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
 
     while (true) {
         tmpSecEnergy =
@@ -873,7 +869,7 @@ double KSIntCalculatorArgonDoubleIonisation::GetEnergyLoss(const double& anEnerg
                                            false,
                                            true);
 
-        double tmpDiffCross = katrin::KConst::BohrRadiusSquared() * 13.2 / anEnergy *
+        double tmpDiffCross = KConst::BohrRadiusSquared() * 13.2 / anEnergy *
                               log((anEnergy + 120.0 / anEnergy) / 15.76) * 10.3 * 10.3 /
                               (pow(tmpSecEnergy - 2. + 100. / (10. + anEnergy), 2) + 10.3 * 10.3);
 
@@ -911,7 +907,7 @@ double KSIntCalculatorArgonDoubleIonisation::GetTheta(const double& anEnergy, co
     assert(tTheta_deg == tTheta_deg);
     assert(tTheta_deg >= 0. && tTheta_deg <= 180.);
 
-    return tTheta_deg * katrin::KConst::Pi() / 180.;
+    return tTheta_deg * KConst::Pi() / 180.;
 }
 
 double KSIntCalculatorArgonDoubleIonisation::GetDifferentialCrossSectionAt(const double& anEnergy,
@@ -932,7 +928,7 @@ double KSIntCalculatorArgonDoubleIonisation::GetDifferentialCrossSectionAt(const
 
     DiffCrossCalculator->CalculateDoublyDifferentialCrossSection(aReducedInitialEnergy,
                                                                  aReducedFinalEnergy,
-                                                                 cos(anAngle * katrin::KConst::Pi() / 180.),
+                                                                 cos(anAngle * KConst::Pi() / 180.),
                                                                  aCrossection);
 
     DiffCrossCalculator->CalculateCrossSection(anEnergy, wrongtotalcross);

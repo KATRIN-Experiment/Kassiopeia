@@ -13,8 +13,8 @@ class KGCylinderMesher : virtual public KGComplexMesher, public KGCylinder::Visi
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGCylinderMesher() {}
-    ~KGCylinderMesher() override {}
+    KGCylinderMesher() = default;
+    ~KGCylinderMesher() override = default;
 
   protected:
     void VisitCylinder(KGCylinder* cylinder) override;

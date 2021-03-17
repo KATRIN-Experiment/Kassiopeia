@@ -19,7 +19,7 @@ if (${PROJECT_NAME}_USE_ROOT)
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMRootSVDSolver.cc
   )
 
-  add_library (KEMRootPlugin SHARED ${KEMROOT_SOURCEFILES})
+  add_library (KEMRootPlugin SHARED ${KEMROOT_SOURCEFILES} ${KEMROOT_HEADERFILES})
   target_link_libraries (KEMRootPlugin KEMVisualization
     KEMMath KEMCore ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${GSL_LIBRARIES} ${ROOT_LIBRARIES} )
 

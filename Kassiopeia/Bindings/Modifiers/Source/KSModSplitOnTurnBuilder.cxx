@@ -7,10 +7,10 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSModSplitOnTurnBuilder::~KComplexElement() {}
+template<> KSModSplitOnTurnBuilder::~KComplexElement() = default;
 
-STATICINT SKSModSplitOnTurnStructure =
-    KSModSplitOnTurnBuilder::Attribute<string>("name") + KSModSplitOnTurnBuilder::Attribute<string>("direction");
+STATICINT SKSModSplitOnTurnStructure = KSModSplitOnTurnBuilder::Attribute<std::string>("name") +
+                                       KSModSplitOnTurnBuilder::Attribute<std::string>("direction");
 
 STATICINT sKSModSplitOnTurn = KSRootBuilder::ComplexElement<KSModSplitOnTurn>("ksmod_split_on_turn");
 }  // namespace katrin

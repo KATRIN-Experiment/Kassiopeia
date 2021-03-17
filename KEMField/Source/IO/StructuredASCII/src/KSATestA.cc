@@ -69,9 +69,8 @@ void KSATestA::DefineInputNode(KSAInputNode* node)
             new KSAAssociatedPointerPODInputNode<KSATestA, std::vector<double>, &KSATestA::SetData>(std::string("data"),
                                                                                                     this));
 
-        typedef std::vector<std::vector<KSATestB*>> Bvecvec;
-        KSAObjectInputNode<Bvecvec>* complicated_node =
-            new KSAObjectInputNode<Bvecvec>(KSAClassName<Bvecvec>::name(), &fBVec);
+        using Bvecvec = std::vector<std::vector<KSATestB*>>;
+        auto* complicated_node = new KSAObjectInputNode<Bvecvec>(KSAClassName<Bvecvec>::name(), &fBVec);
         complicated_node->AddChild<std::vector<KSATestB*>, KSATestD>(
             new KSAAssociatedAllocatedToVectorPointerObjectInputNode<std::vector<KSATestB*>, KSATestD>(
                 KSAClassName<KSATestD>::name()));

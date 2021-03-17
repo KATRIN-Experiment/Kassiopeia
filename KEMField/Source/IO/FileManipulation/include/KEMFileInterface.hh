@@ -7,11 +7,6 @@
 
 #include <set>
 
-
-using std::set;
-using std::string;
-using std::vector;
-
 namespace KEMField
 {
 
@@ -31,91 +26,124 @@ class KEMFileInterface : public KEMFile
     static KEMFileInterface* GetInstance();
 
     template<class Readable>
-    void FindByName(Readable& readable, string name, bool& result = KEMFileInterface::fNullResult);
+    void FindByName(Readable& readable, const std::string& name, bool& result = KEMFileInterface::fNullResult,
+                    std::string& resultFile = KEMFileInterface::fEmptyString);
 
     template<class Readable>
-    void FindByHash(Readable& readable, string hash, bool& result = KEMFileInterface::fNullResult);
+    void FindByHash(Readable& readable, const std::string& hash, bool& result = KEMFileInterface::fNullResult,
+                    std::string& resultFile = KEMFileInterface::fEmptyString);
 
     template<class Readable>
-    void FindByLabel(Readable& readable, string label, unsigned int index = 0,
-                     bool& result = KEMFileInterface::fNullResult);
+    void FindByLabel(Readable& readable, const std::string& label, unsigned int index = 0,
+                     bool& result = KEMFileInterface::fNullResult,
+                     std::string& resultFile = KEMFileInterface::fEmptyString);
 
     template<class Readable>
-    void FindByLabels(Readable& readable, vector<string> labels, unsigned int index = 0,
-                      bool& result = KEMFileInterface::fNullResult);
+    void FindByLabels(Readable& readable, const std::vector<std::string>& labels, unsigned int index = 0,
+                      bool& result = KEMFileInterface::fNullResult,
+                      std::string& resultFile = KEMFileInterface::fEmptyString);
 
-    void ReadKSAFileFromActiveDirectory(KSAInputNode* node, string file_name,
-                                        bool& result = KEMFileInterface::fNullResult);
-    void SaveKSAFileToActiveDirectory(KSAOutputNode* node, string file_name,
-                                      bool& result = KEMFileInterface::fNullResult, bool forceOverwrite = false);
+    void ReadKSAFileFromActiveDirectory(KSAInputNode* node, const std::string& file_name,
+                                        bool& result = KEMFileInterface::fNullResult) const;
+    void SaveKSAFileToActiveDirectory(KSAOutputNode* node, const std::string& file_name,
+                                      bool& result = KEMFileInterface::fNullResult, bool forceOverwrite = false) const;
 
-    void ReadKSAFile(KSAInputNode* node, string file_name, bool& result = KEMFileInterface::fNullResult);
-    void SaveKSAFile(KSAOutputNode* node, string file_name, bool& result = KEMFileInterface::fNullResult);
+    static void ReadKSAFile(KSAInputNode* node, const std::string& file_name,
+                            bool& result = KEMFileInterface::fNullResult);
+    static void SaveKSAFile(KSAOutputNode* node, const std::string& file_name,
+                            bool& result = KEMFileInterface::fNullResult);
 
-    unsigned int NumberWithLabel(string label) const;
-    unsigned int NumberWithLabels(vector<string> labels) const;
+    unsigned int NumberWithLabel(const std::string& label) const;
+    unsigned int NumberWithLabels(const std::vector<std::string>& labels) const;
 
-    set<string> FileNamesWithLabels(vector<string> labels) const;
-    set<string> FileList(string directory = "") const;
-    set<string> CompleteFileList(string directory = "") const;
+    std::set<std::string> FileNamesWithLabels(const std::vector<std::string>& labels) const;
+    std::set<std::string> FileList(std::string directory = "") const;
+    std::set<std::string> CompleteFileList(std::string directory = "") const;
 
-    bool DirectoryExists(string directory);
-    bool CreateDirectory(string directory);
-    bool RemoveDirectory(string directory);
-    bool RemoveFileFromActiveDirectory(string file_name);
-    bool DoesFileExist(std::string file_name);
+    static bool DirectoryExists(const std::string& directory);
+    static bool CreateDirectory(const std::string& directory);
+    static bool RemoveDirectory(const std::string& directory);
+    bool RemoveFileFromActiveDirectory(const std::string& file_name);
+    static bool DoesFileExist(const std::string& file_name);
 
-    void ActiveDirectory(string directory);
-    string ActiveDirectory() const
+    void ActiveDirectory(const std::string& directory);
+    std::string ActiveDirectory() const
     {
         return fActiveDirectory;
     }
 
   private:
     KEMFileInterface();
-    ~KEMFileInterface() override {}
+    ~KEMFileInterface() override = default;
 
     static KEMFileInterface* fEMFileInterface;
 
-    string fActiveDirectory;
+    std::string fActiveDirectory;
 
+    static std::string fEmptyString;
     static bool fNullResult;
 };
 
-template<class Readable> void KEMFileInterface::FindByName(Readable& readable, string name, bool& result)
+template<class Readable>
+void KEMFileInterface::FindByName(Readable& readable, const std::string& name, bool& result, std::string& resultFile)
 {
     result = true;
-    set<string> fileList = FileList();
+    std::set<std::string> fileList = FileList();
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (HasElement(*it, name))
-            return Read(*it, readable, name);
+    // move active file name to the front
+    if (!fFileName.empty()) {
+        fileList.erase(fFileName);
+        fileList.insert(fFileName);
     }
-    result = false;
-}
 
-template<class Readable> void KEMFileInterface::FindByHash(Readable& readable, string hash, bool& result)
-{
-    result = true;
-    set<string> fileList = FileList();
-
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (HasElement(*it, hash))
-            return ReadHashed(*it, readable, hash);
+    for (const auto& it : fileList) {
+        if (HasElement(it, name)) {
+            resultFile = it;
+            return Read(it, readable, name);
+        }
     }
     result = false;
 }
 
 template<class Readable>
-void KEMFileInterface::FindByLabel(Readable& readable, string label, unsigned int index, bool& result)
+void KEMFileInterface::FindByHash(Readable& readable, const std::string& hash, bool& result, std::string& resultFile)
 {
     result = true;
-    set<string> fileList = FileList();
+    std::set<std::string> fileList = FileList();
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        unsigned int nLabeled = NumberOfLabeled(*it, label);
+    // move active file name to the front
+    if (!fFileName.empty()) {
+        fileList.erase(fFileName);
+        fileList.insert(fFileName);
+    }
+
+    for (const auto& it : fileList) {
+        if (HasElement(it, hash)) {
+            resultFile = it;
+            return ReadHashed(it, readable, hash);
+        }
+    }
+    result = false;
+}
+
+template<class Readable>
+void KEMFileInterface::FindByLabel(Readable& readable, const std::string& label, unsigned int index, bool& result,
+                                   std::string& resultFile)
+{
+    result = true;
+    std::set<std::string> fileList = FileList();
+
+    // move active file name to the front
+    if (!fFileName.empty()) {
+        fileList.erase(fFileName);
+        fileList.insert(fFileName);
+    }
+
+    for (const auto& it : fileList) {
+        unsigned int nLabeled = NumberOfLabeled(it, label);
         if (index < nLabeled) {
-            return ReadLabeled(*it, readable, label, index);
+            resultFile = it;
+            return ReadLabeled(it, readable, label, index);
         }
         else
             index -= nLabeled;
@@ -124,15 +152,23 @@ void KEMFileInterface::FindByLabel(Readable& readable, string label, unsigned in
 }
 
 template<class Readable>
-void KEMFileInterface::FindByLabels(Readable& readable, vector<string> labels, unsigned int index, bool& result)
+void KEMFileInterface::FindByLabels(Readable& readable, const std::vector<std::string>& labels, unsigned int index,
+                                    bool& result, std::string& resultFile)
 {
     result = true;
-    set<string> fileList = FileList();
+    std::set<std::string> fileList = FileList();
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        unsigned int nLabeled = NumberOfLabeled(*it, labels);
+    // move active file name to the front
+    if (!fFileName.empty()) {
+        fileList.erase(fFileName);
+        fileList.insert(fFileName);
+    }
+
+    for (const auto& it : fileList) {
+        unsigned int nLabeled = NumberOfLabeled(it, labels);
         if (index < nLabeled) {
-            return ReadLabeled(*it, readable, labels, index);
+            resultFile = it;
+            return ReadLabeled(it, readable, labels, index);
         }
         else
             index -= nLabeled;

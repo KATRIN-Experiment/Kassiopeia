@@ -1,10 +1,8 @@
 #include "KGVTKDistanceTester.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 #include "KRandom.h"
 using katrin::KRandom;
 
@@ -53,7 +51,7 @@ KGVTKDistanceTester::KGVTKDistanceTester() :
     fActor->SetMapper(fMapper);
 }
 
-KGVTKDistanceTester::~KGVTKDistanceTester() {}
+KGVTKDistanceTester::~KGVTKDistanceTester() = default;
 
 void KGVTKDistanceTester::Render()
 {
@@ -73,17 +71,16 @@ void KGVTKDistanceTester::Render()
         tPhi = tRandom.Uniform(0., 2. * katrin::KConst::Pi());
         tPoint = fSampleDiskOrigin + tRadius * (cos(tPhi) * tUnitOne + sin(tPhi) * tUnitTwo);
 
-        for (vector<const KGSurface*>::iterator tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end();
-             tSurfaceIt++) {
-            tNearestPoint = (*tSurfaceIt)->Point(tPoint);
+        for (auto& surface : fSurfaces) {
+            tNearestPoint = surface->Point(tPoint);
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
             fValues->InsertNextTuple1((tPoint - tNearestPoint).Magnitude());
             fCells->InsertNextCell(1, &vPointId);
         }
 
-        for (vector<const KGSpace*>::iterator tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-            tNearestPoint = (*tSpaceIt)->Point(tPoint);
+        for (auto& space : fSpaces) {
+            tNearestPoint = space->Point(tPoint);
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
             fValues->InsertNextTuple1((tPoint - tNearestPoint).Magnitude());

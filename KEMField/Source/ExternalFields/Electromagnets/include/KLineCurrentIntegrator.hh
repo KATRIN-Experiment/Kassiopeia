@@ -8,11 +8,11 @@ namespace KEMField
 class KLineCurrentIntegrator
 {
   public:
-    KLineCurrentIntegrator() {}
-    virtual ~KLineCurrentIntegrator() {}
+    KLineCurrentIntegrator() = default;
+    virtual ~KLineCurrentIntegrator() = default;
 
-    KThreeVector VectorPotential(const KLineCurrent& lineCurrent, const KPosition& P) const;
-    KThreeVector MagneticField(const KLineCurrent& lineCurrent, const KPosition& P) const;
+    KFieldVector VectorPotential(const KLineCurrent& lineCurrent, const KPosition& P) const;
+    KFieldVector MagneticField(const KLineCurrent& lineCurrent, const KPosition& P) const;
 };
 }  // namespace KEMField
 

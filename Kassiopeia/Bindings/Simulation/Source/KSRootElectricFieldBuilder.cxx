@@ -8,11 +8,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSRootElectricFieldBuilder::~KComplexElement() {}
+template<> KSRootElectricFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootElectricField = KSRootBuilder::ComplexElement<KSRootElectricField>("ks_root_electric_field");
 
-STATICINT sKSRootElectricFieldStructure = KSRootElectricFieldBuilder::Attribute<string>("name") +
-                                          KSRootElectricFieldBuilder::Attribute<string>("add_electric_field");
+STATICINT sKSRootElectricFieldStructure = KSRootElectricFieldBuilder::Attribute<std::string>("name") +
+                                          KSRootElectricFieldBuilder::Attribute<std::string>("add_electric_field");
 
 }  // namespace katrin

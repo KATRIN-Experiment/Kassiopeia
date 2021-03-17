@@ -4,7 +4,7 @@
 
 namespace KGeoBag
 {
-KGTrigonometricInterpolator::KGTrigonometricInterpolator() : KGInterpolator(), fOrder(3), fXMin(0.), fXMax(2. * M_PI) {}
+KGTrigonometricInterpolator::KGTrigonometricInterpolator() : fOrder(3), fXMin(0.), fXMax(2. * M_PI) {}
 
 void KGTrigonometricInterpolator::Initialize(DataSet& data)
 {
@@ -22,9 +22,9 @@ void KGTrigonometricInterpolator::Initialize(DataSet& data)
 
     for (unsigned int k = 0; k <= fOrder; k++) {
         fA[k] = fB[k] = 0.;
-        for (unsigned int i = 0; i < data.size(); i++) {
-            x_i = data[i][0];
-            y_i = data[i][1];
+        for (auto& i : data) {
+            x_i = i[0];
+            y_i = i[1];
 
             for (unsigned int j = 0; j < k; j++)
                 y_i -= fA[j] * sin(j * x_i) + fB[j] * cos(j * x_i);

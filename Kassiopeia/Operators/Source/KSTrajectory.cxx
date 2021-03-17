@@ -5,7 +5,7 @@ namespace Kassiopeia
 
 bool KSTrajectory::fAbortSignal = false;
 
-KSTrajectory::KSTrajectory() {}
-KSTrajectory::~KSTrajectory() {}
+KSTrajectory::KSTrajectory() = default;
+KSTrajectory::~KSTrajectory() = default;
 
 }  // namespace Kassiopeia

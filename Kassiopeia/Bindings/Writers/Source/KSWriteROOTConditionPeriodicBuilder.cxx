@@ -8,17 +8,17 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSWriteROOTConditionPeriodicBuilder::~KComplexElement() {}
+template<> KSWriteROOTConditionPeriodicBuilder::~KComplexElement() = default;
 
 STATICINT sKSWriteROOTConditionPeriodicStructure =
-    KSWriteROOTConditionPeriodicBuilder::Attribute<string>("name") +
+    KSWriteROOTConditionPeriodicBuilder::Attribute<std::string>("name") +
     KSWriteROOTConditionPeriodicBuilder::Attribute<double>("initial_min") +
     KSWriteROOTConditionPeriodicBuilder::Attribute<double>("initial_max") +
     KSWriteROOTConditionPeriodicBuilder::Attribute<double>("increment") +
     KSWriteROOTConditionPeriodicBuilder::Attribute<double>("reset_min") +
     KSWriteROOTConditionPeriodicBuilder::Attribute<double>("reset_max") +
-    KSWriteROOTConditionPeriodicBuilder::Attribute<string>("group") +
-    KSWriteROOTConditionPeriodicBuilder::Attribute<string>("parent");
+    KSWriteROOTConditionPeriodicBuilder::Attribute<std::string>("group") +
+    KSWriteROOTConditionPeriodicBuilder::Attribute<std::string>("parent");
 
 
 STATICINT sKSWriteROOTConditionPeriodic =

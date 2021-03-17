@@ -11,8 +11,6 @@
 #include "KSurfaceContainer.hh"
 #include "KThreeVector_KEMField.hh"
 
-using namespace KGeoBag;
-
 namespace KEMField
 {
 
@@ -20,7 +18,7 @@ class KChargeDensitySolver
 {
   public:
     KChargeDensitySolver() : fInitialized(false) {}
-    virtual ~KChargeDensitySolver() {}
+    virtual ~KChargeDensitySolver() = default;
 
     void Initialize(KSurfaceContainer& container)
     {
@@ -34,7 +32,7 @@ class KChargeDensitySolver
 
   protected:
     virtual bool FindSolution(double threshold, KSurfaceContainer& container);
-    void SaveSolution(double threshold, KSurfaceContainer& container);
+    void SaveSolution(double threshold, KSurfaceContainer& container) const;
 
   private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;

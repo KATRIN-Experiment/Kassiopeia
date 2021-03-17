@@ -62,7 +62,7 @@ template<> inline bool KGConicSectPortHousingOrthogonalPortBuilder::AddAttribute
     return false;
 }
 
-typedef KComplexElement<KGConicSectPortHousing::ParaxialPort> KGConicSectPortHousingParaxialPortBuilder;
+using KGConicSectPortHousingParaxialPortBuilder = KComplexElement<KGConicSectPortHousing::ParaxialPort>;
 
 template<> inline bool KGConicSectPortHousingParaxialPortBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -113,7 +113,7 @@ template<> inline bool KGConicSectPortHousingParaxialPortBuilder::AddAttribute(K
     return false;
 }
 
-typedef KComplexElement<KGConicSectPortHousing> KGConicSectPortHousingBuilder;
+using KGConicSectPortHousingBuilder = KComplexElement<KGConicSectPortHousing>;
 
 template<> inline bool KGConicSectPortHousingBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -163,7 +163,7 @@ template<> inline bool KGConicSectPortHousingBuilder::AddElement(KContainer* anE
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGConicSectPortHousing>> KGConicSectPortHousingSurfaceBuilder;
+using KGConicSectPortHousingSurfaceBuilder = KComplexElement<KGWrappedSurface<KGConicSectPortHousing>>;
 
 template<> inline bool KGConicSectPortHousingSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -187,7 +187,7 @@ template<> inline bool KGConicSectPortHousingSurfaceBuilder::AddElement(KContain
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGConicSectPortHousing>> KGConicSectPortHousingSpaceBuilder;
+using KGConicSectPortHousingSpaceBuilder = KComplexElement<KGWrappedSpace<KGConicSectPortHousing>>;
 
 template<> inline bool KGConicSectPortHousingSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

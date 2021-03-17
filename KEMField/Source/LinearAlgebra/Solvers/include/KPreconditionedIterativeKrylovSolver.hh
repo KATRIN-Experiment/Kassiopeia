@@ -110,7 +110,8 @@ KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait>::KPreconditionedI
 };
 
 template<typename ValueType, template<typename> class ParallelTrait>
-KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait>::~KPreconditionedIterativeKrylovSolver(){};
+KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait>::~KPreconditionedIterativeKrylovSolver() = default;
+;
 
 template<typename ValueType, template<typename> class ParallelTrait>
 void KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait>::Solve(const Matrix& A, Preconditioner& P,

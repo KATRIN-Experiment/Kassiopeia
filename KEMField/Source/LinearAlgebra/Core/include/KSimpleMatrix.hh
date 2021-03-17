@@ -11,14 +11,14 @@ template<typename ValueType> class KSimpleMatrix : public KMatrix<ValueType>
 {
   public:
     KSimpleMatrix(unsigned int nrows, unsigned int ncols);
-    virtual ~KSimpleMatrix() {}
+    virtual ~KSimpleMatrix() = default;
 
     unsigned int Dimension(unsigned int) const;
     const ValueType& operator()(unsigned int, unsigned int) const;
     ValueType& operator()(unsigned int, unsigned int);
 
   protected:
-    KSimpleMatrix() {}
+    KSimpleMatrix() = default;
 
     std::vector<std::vector<ValueType>> fElements;
 };

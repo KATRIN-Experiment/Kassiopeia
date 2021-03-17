@@ -8,7 +8,8 @@
 namespace Kassiopeia
 {
 
-KSModEventReport::KSModEventReport(){};
+KSModEventReport::KSModEventReport() = default;
+;
 
 KSModEventReport::KSModEventReport(const KSModEventReport& /*aCopy*/) : KSComponent(){};
 
@@ -18,7 +19,8 @@ KSModEventReport* KSModEventReport::Clone() const
     return new KSModEventReport(*this);
 }
 
-KSModEventReport::~KSModEventReport(){};
+KSModEventReport::~KSModEventReport() = default;
+;
 
 bool KSModEventReport::ExecutePreEventModification(KSEvent& /*anEvent */)
 {

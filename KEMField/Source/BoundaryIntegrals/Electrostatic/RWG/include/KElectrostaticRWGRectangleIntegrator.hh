@@ -14,32 +14,32 @@ namespace KEMField
 class KElectrostaticRWGRectangleIntegrator : public KElectrostaticElementIntegrator<KRectangle>
 {
   public:
-    typedef KRectangle Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KRectangle;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticRWGRectangleIntegrator() {}
-    ~KElectrostaticRWGRectangleIntegrator() override {}
+    KElectrostaticRWGRectangleIntegrator() = default;
+    ~KElectrostaticRWGRectangleIntegrator() override = default;
 
     double Potential(const KRectangle* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KRectangle* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KRectangle* source,
+    KFieldVector ElectricField(const KRectangle* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KRectangle* source,
                                                               const KPosition& P) const override;
 
     double Potential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
+    KFieldVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
                                                               const KPosition& P) const override;
 
   private:
-    double LogArgTaylor(const double sMin, const double dist) const;
+    static double LogArgTaylor(const double sMin, const double dist);
 
     double IqLPotential(const double* data, const double* P, const unsigned short countCross,
                         const unsigned short lineIndex, const double dist) const;
 
-    KThreeVector IqLField(const double* data, const double* P, const unsigned short countCross,
+    KFieldVector IqLField(const double* data, const double* P, const unsigned short countCross,
                           const unsigned short lineIndex, const double dist) const;
 
-    std::pair<KThreeVector, double> IqLFieldAndPotential(const double* data, const double* P,
+    std::pair<KFieldVector, double> IqLFieldAndPotential(const double* data, const double* P,
                                                          const unsigned short countCross,
                                                          const unsigned short lineIndex, const double dist) const;
 

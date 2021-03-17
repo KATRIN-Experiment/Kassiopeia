@@ -6,17 +6,20 @@
 #include <limits>
 
 using namespace std;
+using KGeoBag::KGSurface;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 
 KSGeoSurface::KSGeoSurface() : fParent(nullptr), fContents() {}
-KSGeoSurface::KSGeoSurface(const KSGeoSurface& aCopy) : KSComponent(), fParent(nullptr), fContents(aCopy.fContents) {}
+KSGeoSurface::KSGeoSurface(const KSGeoSurface& aCopy) : KSComponent(aCopy), fParent(nullptr), fContents(aCopy.fContents)
+{}
 KSGeoSurface* KSGeoSurface::Clone() const
 {
     return new KSGeoSurface(*this);
 }
-KSGeoSurface::~KSGeoSurface() {}
+KSGeoSurface::~KSGeoSurface() = default;
 
 void KSGeoSurface::On() const
 {
@@ -39,7 +42,7 @@ KThreeVector KSGeoSurface::Point(const KThreeVector& aPoint) const
 {
     double tDistance;
     KThreeVector tPoint;
-    vector<KGSurface*>::const_iterator tSurface;
+    std::vector<KGSurface*>::const_iterator tSurface;
 
     double tNearestDistance = std::numeric_limits<double>::max();
     KThreeVector tNearestPoint;

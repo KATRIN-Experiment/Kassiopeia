@@ -184,7 +184,7 @@ void KFMElectrostaticTreeBuilder_MPI::ConstructRootNode()
         root);
 
     //add the complete id set of all elements to the root node
-    KFMIdentitySet* root_list = new KFMIdentitySet();
+    auto* root_list = new KFMIdentitySet();
     for (unsigned int i = 0; i < n_elements; i++) {
         root_list->AddID(i);
     }
@@ -195,7 +195,7 @@ void KFMElectrostaticTreeBuilder_MPI::ConstructRootNode()
     //set basis node properties
     root->SetID(tree_prop->RegisterNode());
     root->SetIndex(0);
-    root->SetParent(NULL);
+    root->SetParent(nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -209,7 +209,7 @@ void KFMElectrostaticTreeBuilder_MPI::PerformSpatialSubdivision()
     KFMInsertionCondition<3> basic_insertion_condition;
     basic_insertion_condition.SetInsertionRatio(fInsertionRatio);
 
-    if (fSubdivisionCondition == NULL) {
+    if (fSubdivisionCondition == nullptr) {
         //subdivision condition was unset, so we default to aggressive
         //since it is the only one which takes no paramters
         fSubdivisionCondition =
@@ -414,7 +414,7 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineSourceNodes()
     score_calc.SetSparseMatrixWeight(0.0);
 
     if (fSubdivisionCondition->Name() == std::string("balanced")) {
-        KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* sbdc = NULL;
+        KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* sbdc = nullptr;
         sbdc = dynamic_cast<KFMSubdivisionConditionBalanced<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>*>(
             fSubdivisionCondition);
         double bd = sbdc->GetBiasDegree();
@@ -549,8 +549,8 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineSourceNodes()
 
     //now we decide which top level nodes are handled by this process
     fSourceNodeCollection.clear();
-    for (unsigned int j = 0; j < process_block_ids.size(); j++) {
-        fSourceNodeCollection.push_back(fTree->GetRootNode()->GetChild(process_block_ids[j]));
+    for (unsigned int process_block_id : process_block_ids) {
+        fSourceNodeCollection.push_back(fTree->GetRootNode()->GetChild(process_block_id));
     }
 
     fNSourceNodes = fSourceNodeCollection.size();
@@ -583,7 +583,7 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineSourceNodes()
     //determine the source region
     fSourceVolume.Clear();
     for (unsigned int i = 0; i < fNSourceNodes; i++) {
-        KFMCube<KFMELECTROSTATICS_DIM>* cube = NULL;
+        KFMCube<KFMELECTROSTATICS_DIM>* cube = nullptr;
         cube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM>>::GetNodeObject(
             fSourceNodeCollection[i]);
         fSourceVolume.AddCube(cube);
@@ -593,8 +593,8 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineSourceNodes()
     for (unsigned int i = 0; i < n_children; i++) {
         KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(i);
         bool non_source = true;
-        for (unsigned int j = 0; j < fSourceNodeCollection.size(); j++) {
-            if (fSourceNodeCollection[j] == node) {
+        for (auto& j : fSourceNodeCollection) {
+            if (j == node) {
                 non_source = false;
             };
         }
@@ -643,22 +643,22 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineTargetNodes()
 
     //in this function we collect the neighbors of the source nodes
     fTargetNodeCollection.clear();
-    for (unsigned int i = 0; i < fSourceNodeCollection.size(); i++) {
+    for (auto& i : fSourceNodeCollection) {
         neighbors.clear();
-        neighbor_finder.GetAllNeighbors(fSourceNodeCollection[i], fZeroMaskSize, &neighbors);
-        for (unsigned int j = 0; j < neighbors.size(); j++) {
-            if (neighbors[j] != NULL) {
-                if (primacy_inspector.ConditionIsSatisfied(neighbors[j])) {
+        neighbor_finder.GetAllNeighbors(i, fZeroMaskSize, &neighbors);
+        for (auto& neighbor : neighbors) {
+            if (neighbor != nullptr) {
+                if (primacy_inspector.ConditionIsSatisfied(neighbor)) {
                     bool is_present = false;
-                    for (unsigned int n = 0; n < fTargetNodeCollection.size(); n++) {
-                        if (fTargetNodeCollection[n] == neighbors[j]) {
+                    for (auto& n : fTargetNodeCollection) {
+                        if (n == neighbor) {
                             is_present = true;
                             break;
                         }
                     }
 
                     if (!is_present) {
-                        fTargetNodeCollection.push_back(neighbors[j]);
+                        fTargetNodeCollection.push_back(neighbor);
                     }
                 }
             }
@@ -684,7 +684,7 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineTargetNodes()
     //determine the target region
     fTargetVolume.Clear();
     for (unsigned int i = 0; i < fNTargetNodes; i++) {
-        KFMCube<KFMELECTROSTATICS_DIM>* cube = NULL;
+        KFMCube<KFMELECTROSTATICS_DIM>* cube = nullptr;
         cube = KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCube<KFMELECTROSTATICS_DIM>>::GetNodeObject(
             fTargetNodeCollection[i]);
         fTargetVolume.AddCube(cube);
@@ -696,8 +696,8 @@ void KFMElectrostaticTreeBuilder_MPI::DetermineTargetNodes()
     for (unsigned int i = 0; i < n_children; i++) {
         KFMElectrostaticNode* node = fTree->GetRootNode()->GetChild(i);
         bool non_target = true;
-        for (unsigned int j = 0; j < fTargetNodeCollection.size(); j++) {
-            if (fTargetNodeCollection[j] == node) {
+        for (auto& j : fTargetNodeCollection) {
+            if (j == node) {
                 non_target = false;
             };
         }
@@ -783,30 +783,30 @@ void KFMElectrostaticTreeBuilder_MPI::RemoveExtraneousData()
 
     KFMRecursiveActor<KFMElectrostaticNode> recursiveActor;
 
-    for (unsigned int i = 0; i < fNonTargetNodeCollection.size(); i++) {
+    for (auto& i : fNonTargetNodeCollection) {
         //have to null out the pointer to the element container
         //so the node's do not try to delete it when they are destroyed
         recursiveActor.SetOperationalActor(&elementContainerNullifier);
-        recursiveActor.ApplyAction(fNonTargetNodeCollection[i]);
+        recursiveActor.ApplyAction(i);
 
         recursiveActor.SetOperationalActor(&treePropertyNullifier);
-        recursiveActor.ApplyAction(fNonTargetNodeCollection[i]);
+        recursiveActor.ApplyAction(i);
 
         //now delete all of the children of this node_collection
-        fNonTargetNodeCollection[i]->DeleteChildren();
+        i->DeleteChildren();
 
         //reset the pointer to the element container for the top level nodes
         KFMObjectRetriever<KFMElectrostaticNodeObjects,
-                           KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM, KFMELECTROSTATICS_BASIS>>::
-            SetNodeObject(fContainer, fNonTargetNodeCollection[i]);
+                           KFMElectrostaticElementContainerBase<KFMELECTROSTATICS_DIM,
+                                                                KFMELECTROSTATICS_BASIS>>::SetNodeObject(fContainer, i);
 
         //reset the pointer to the cubic space tree properties for the top level nodes
-        KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM>* tree_prop = NULL;
+        KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM>* tree_prop = nullptr;
         tree_prop =
             KFMObjectRetriever<KFMElectrostaticNodeObjects,
                                KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM>>::GetNodeObject(fTree->GetRootNode());
-        KFMObjectRetriever<KFMElectrostaticNodeObjects, KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM>>::
-            SetNodeObject(tree_prop, fNonTargetNodeCollection[i]);
+        KFMObjectRetriever<KFMElectrostaticNodeObjects,
+                           KFMCubicSpaceTreeProperties<KFMELECTROSTATICS_DIM>>::SetNodeObject(tree_prop, i);
     }
 }
 

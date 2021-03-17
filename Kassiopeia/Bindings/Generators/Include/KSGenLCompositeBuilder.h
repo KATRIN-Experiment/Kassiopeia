@@ -18,7 +18,7 @@ template<> inline bool KSGenLCompositeBuilder::AddAttribute(KContainer* aContain
         return true;
     }
     if (aContainer->GetName() == "l_value") {
-        fObject->SetLValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetLValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

@@ -2,6 +2,6 @@
 
 namespace Kassiopeia
 {
-KSEventModifier::KSEventModifier() {}
-KSEventModifier::~KSEventModifier() {}
+KSEventModifier::KSEventModifier() = default;
+KSEventModifier::~KSEventModifier() = default;
 }  // namespace Kassiopeia

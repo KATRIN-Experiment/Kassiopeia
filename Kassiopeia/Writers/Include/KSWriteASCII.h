@@ -3,17 +3,9 @@
 
 #include "KFile.h"
 #include "KSWriter.h"
-using katrin::KFile;
-
 #include "KTextFile.h"
-using katrin::CreateOutputTextFile;
-using katrin::KTextFile;
-
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
 #include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
 
 #include <map>
 
@@ -58,10 +50,10 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
         std::vector<Objekt*> fObjekts;
     };
 
-    typedef std::map<KSComponent*, Data*> KSComponentMap;
-    typedef KSComponentMap::iterator ComponentIt;
-    typedef KSComponentMap::const_iterator ComponentCIt;
-    typedef KSComponentMap::value_type ComponentEntry;
+    using KSComponentMap = std::map<KSComponent*, Data*>;
+    using ComponentIt = KSComponentMap::iterator;
+    using ComponentCIt = KSComponentMap::const_iterator;
+    using ComponentEntry = KSComponentMap::value_type;
 
   public:
     KSWriteASCII();
@@ -75,9 +67,11 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     void SetStepIteration(const unsigned int& aValue);
     void SetPrecision(const unsigned int& aValue);
 
-    KTextFile* TextFile();
+    katrin::KTextFile* TextFile();
     int Precision() const;
 
+  protected:
+    katrin::KTextFile* MakeOutputFile(int anIndex) const;
 
   private:
     std::string fBase;
@@ -109,7 +103,7 @@ class KSWriteASCII : public KSComponentTemplate<KSWriteASCII, KSWriter>
     void DeinitializeComponent() override;
 
   private:
-    KTextFile* fTextFile;
+    katrin::KTextFile* fTextFile;
 
     std::string fKey;
     KSComponentMap fRunComponents;
@@ -168,9 +162,8 @@ inline void KSWriteASCII::SetPrecision(const unsigned int& aValue)
     return;
 }
 
-inline KTextFile* KSWriteASCII::TextFile()
+inline katrin::KTextFile* KSWriteASCII::TextFile()
 {
-
     return fTextFile;
 }
 

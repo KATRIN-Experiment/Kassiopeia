@@ -8,11 +8,8 @@
 #include "KSReadFileROOT.h"
 #include "TFormula.h"
 
-#include <vector>
-using std::vector;
-
 #include <string>
-using std::string;
+#include <vector>
 
 namespace Kassiopeia
 {
@@ -71,9 +68,9 @@ class KSGenGeneratorSimulation : public KSComponentTemplate<KSGenGeneratorSimula
     ;
     K_SET_GET(std::string, PIDName);
     ;
-    K_SET_GET(KThreeVector, DefaultPosition);
+    K_SET_GET(KGeoBag::KThreeVector, DefaultPosition);
     ;
-    K_SET_GET(KThreeVector, DefaultDirection);
+    K_SET_GET(KGeoBag::KThreeVector, DefaultDirection);
     ;
     K_SET_GET(double, DefaultEnergy);
     ;
@@ -88,7 +85,7 @@ class KSGenGeneratorSimulation : public KSComponentTemplate<KSGenGeneratorSimula
     void GenerateParticlesFromFile(KSParticleQueue& aParticleQueue);
 
   private:
-    KRootFile* fRootFile;
+    katrin::KRootFile* fRootFile;
 
     TFormula* fFormulaPositionX;
     TFormula* fFormulaPositionY;

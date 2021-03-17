@@ -26,12 +26,14 @@ namespace KEMField
 class KFMIdentitySet : public KSAFixedSizeInputOutputObject
 {
   public:
-    KFMIdentitySet(){};
+    KFMIdentitySet() = default;
+    ;
     KFMIdentitySet(const KFMIdentitySet& copyObject) : KSAFixedSizeInputOutputObject()
     {
         fIDSet = copyObject.fIDSet;
     }
-    ~KFMIdentitySet() override{};
+    ~KFMIdentitySet() override = default;
+    ;
 
     unsigned int GetSize() const;
 

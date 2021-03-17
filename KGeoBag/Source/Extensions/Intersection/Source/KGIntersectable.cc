@@ -6,8 +6,8 @@ KGIntersectableSurface::KGIntersectableSurface() : fIntersector(nullptr) {}
 
 KGIntersectableSurface::~KGIntersectableSurface()
 {
-    if (fIntersector)
-        delete fIntersector;
+
+    delete fIntersector;
 }
 
 void KGIntersectableSurface::SetSurface(const KGSurface& surface)
@@ -59,7 +59,7 @@ bool KGIntersectableSurface::Intersection(const KThreeVector& aStart, const KThr
 }
 
 bool KGIntersectableSurface::NumericIntersection(const KThreeVector& aLocalStart, const KThreeVector& aLocalEnd,
-                                                 KThreeVector& aLocalResult) const
+                                                 KThreeVector& aLocalResult)
 {
     // Default numeric intersection algorithm
 

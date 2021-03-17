@@ -18,6 +18,11 @@ class KGPlanarLineSegment : public KGPlanarOpenPath
                         const unsigned int aCount = 2, const double aPower = 1.);
     ~KGPlanarLineSegment() override;
 
+    static std::string Name()
+    {
+        return "line_segment";
+    }
+
     KGPlanarLineSegment* Clone() const override;
     void CopyFrom(const KGPlanarLineSegment& aCopy);
 

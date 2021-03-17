@@ -20,7 +20,7 @@ class KGConeSpaceRandom : virtual public KGShapeRandom, public KGConeSpace::Visi
 {
   public:
     KGConeSpaceRandom() : KGShapeRandom() {}
-    ~KGConeSpaceRandom() override {}
+    ~KGConeSpaceRandom() override = default;
 
     /**
      * \brief Visitor function to dice a point

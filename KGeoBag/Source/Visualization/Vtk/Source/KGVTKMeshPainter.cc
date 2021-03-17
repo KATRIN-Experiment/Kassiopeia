@@ -27,7 +27,7 @@ KGVTKMeshPainter::KGVTKMeshPainter() :
     fCurrentXAxis(KThreeVector::sXUnit),
     fCurrentYAxis(KThreeVector::sYUnit),
     fCurrentZAxis(KThreeVector::sZUnit),
-    fCurrentElements(NULL),
+    fCurrentElements(nullptr),
     fColorTable(vtkSmartPointer<vtkLookupTable>::New()),
     fAreaData(vtkSmartPointer<vtkDoubleArray>::New()),
     fAspectData(vtkSmartPointer<vtkDoubleArray>::New()),
@@ -38,7 +38,6 @@ KGVTKMeshPainter::KGVTKMeshPainter() :
     fPolyData(vtkSmartPointer<vtkPolyData>::New()),
     fMapper(vtkSmartPointer<vtkPolyDataMapper>::New()),
     fActor(vtkSmartPointer<vtkActor>::New()),
-    fFile(),
     fArcCount(6),
     fColorMode(sModulo)
 {
@@ -70,7 +69,7 @@ KGVTKMeshPainter::KGVTKMeshPainter() :
     fMapper->ScalarVisibilityOn();
     fActor->SetMapper(fMapper);
 }
-KGVTKMeshPainter::~KGVTKMeshPainter() {}
+KGVTKMeshPainter::~KGVTKMeshPainter() = default;
 
 void KGVTKMeshPainter::Render()
 {
@@ -205,10 +204,10 @@ void KGVTKMeshPainter::PaintElements()
     const unsigned int tModBase = 13;
 
     unsigned int count = 0;
-    for (KGMeshElementCIt elementIt = fCurrentElements->begin(); elementIt != fCurrentElements->end(); ++elementIt) {
+    for (auto* element : *fCurrentElements) {
         count++;
 
-        if (KGMeshRectangle* tMeshRectangle = dynamic_cast<KGMeshRectangle*>(*elementIt)) {
+        if (auto* tMeshRectangle = dynamic_cast<KGMeshRectangle*>(element)) {
             KThreeVector tPoint0 = fCurrentOrigin + tMeshRectangle->GetP0().X() * fCurrentXAxis +
                                    tMeshRectangle->GetP0().Y() * fCurrentYAxis +
                                    tMeshRectangle->GetP0().Z() * fCurrentZAxis;
@@ -240,7 +239,7 @@ void KGVTKMeshPainter::PaintElements()
             tMod++;
         }
 
-        if (KGMeshTriangle* tMeshTriangle = dynamic_cast<KGMeshTriangle*>(*elementIt)) {
+        if (auto* tMeshTriangle = dynamic_cast<KGMeshTriangle*>(element)) {
             KThreeVector tPoint0 = fCurrentOrigin + tMeshTriangle->GetP0().X() * fCurrentXAxis +
                                    tMeshTriangle->GetP0().Y() * fCurrentYAxis +
                                    tMeshTriangle->GetP0().Z() * fCurrentZAxis;
@@ -267,7 +266,7 @@ void KGVTKMeshPainter::PaintElements()
             tMod++;
         }
 
-        if (KGMeshWire* tMeshWire = dynamic_cast<KGMeshWire*>(*elementIt)) {
+        if (auto* tMeshWire = dynamic_cast<KGMeshWire*>(element)) {
             KThreeVector tStart = fCurrentOrigin + tMeshWire->GetP1().X() * fCurrentXAxis +
                                   tMeshWire->GetP1().Y() * fCurrentYAxis + tMeshWire->GetP1().Z() * fCurrentZAxis;
             KThreeVector tEnd = fCurrentOrigin + tMeshWire->GetP0().X() * fCurrentXAxis +

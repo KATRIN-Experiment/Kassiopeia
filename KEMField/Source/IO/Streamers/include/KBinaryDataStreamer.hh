@@ -13,7 +13,7 @@ namespace KEMField
 /**
 * @class KBinaryDataStreamer
 *
-* @brief A streamer class for raw binary I/O. 
+* @brief A streamer class for raw binary I/O.
 *
 * KBinaryDataStreamer is a class for streaming raw binary data.
 *
@@ -35,7 +35,7 @@ template<typename Type> struct KBinaryDataStreamerType
         d.Stream().write(reinterpret_cast<const char*>(&x), sizeof(Type));
         return d.Self();
     }
-    virtual ~KBinaryDataStreamerType() {}
+    virtual ~KBinaryDataStreamerType() = default;
     virtual std::fstream& Stream() = 0;
     virtual KBinaryDataStreamer& Self() = 0;
 };
@@ -58,7 +58,7 @@ template<> struct KBinaryDataStreamerType<std::string>
         d.Stream().write(x.c_str(), size);
         return d.Self();
     }
-    virtual ~KBinaryDataStreamerType() {}
+    virtual ~KBinaryDataStreamerType() = default;
     virtual std::fstream& Stream() = 0;
     virtual KBinaryDataStreamer& Self() = 0;
 };
@@ -68,14 +68,11 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KBinaryDataStreamerType
 class KBinaryDataStreamer : public KBinaryDataStreamerFundamentalTypes
 {
   public:
-    KBinaryDataStreamer() {}
-    ~KBinaryDataStreamer() override {}
+    KBinaryDataStreamer() = default;
+    ~KBinaryDataStreamer() override = default;
 
     void open(const std::string& fileName, const std::string& action = "update");
-    void close()
-    {
-        fFile.close();
-    }
+    void close();
 
     template<class Streamed> void PreStreamInAction(Streamed&) {}
     template<class Streamed> void PostStreamInAction(Streamed&) {}

@@ -15,13 +15,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSFieldMagneticConstantBuilder::~KComplexElement() {}
+template<> KSFieldMagneticConstantBuilder::~KComplexElement() = default;
 
 STATICINT sKSFieldMagneticConstant =
     KEMToolboxBuilder::ComplexElement<KMagnetostaticConstantField>("constant_magnetic_field");
 
 STATICINT sKSFieldMagneticConstantStructure =
-    KSFieldMagneticConstantBuilder::Attribute<string>("name") +
+    KSFieldMagneticConstantBuilder::Attribute<std::string>("name") +
     KSFieldMagneticConstantBuilder::Attribute<KEMStreamableThreeVector>("field") +
     KSFieldMagneticConstantBuilder::Attribute<KEMStreamableThreeVector>("location");
 

@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueGeneralizedGaussBuilder::~KComplexElement() {}
+template<> KSGenValueGeneralizedGaussBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueGeneralizedGaussStructure = KSGenValueGeneralizedGaussBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueGeneralizedGaussStructure = KSGenValueGeneralizedGaussBuilder::Attribute<std::string>("name") +
                                                  KSGenValueGeneralizedGaussBuilder::Attribute<double>("value_min") +
                                                  KSGenValueGeneralizedGaussBuilder::Attribute<double>("value_max") +
                                                  KSGenValueGeneralizedGaussBuilder::Attribute<double>("value_mean") +

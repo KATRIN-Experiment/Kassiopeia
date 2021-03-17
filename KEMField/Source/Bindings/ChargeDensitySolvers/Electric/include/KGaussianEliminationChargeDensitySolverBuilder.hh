@@ -20,7 +20,7 @@ namespace katrin
 typedef KComplexElement<KEMField::KGaussianEliminationChargeDensitySolver>
     KGaussianEliminationChargeDensitySolverBuilder;
 
-template<> bool KGaussianEliminationChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
+template<> inline bool KGaussianEliminationChargeDensitySolverBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "integrator")
         return AddElectrostaticIntegratorPolicy(fObject, aContainer);

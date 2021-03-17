@@ -12,7 +12,7 @@
  */
 
 #include <iomanip>
-#include <ostream>
+#include <iostream>
 
 namespace katrin
 {

@@ -13,13 +13,13 @@ STATICINT sKGCircleWireBuilderStructure = KGCircleWireBuilder::Attribute<double>
                                           KGCircleWireBuilder::Attribute<unsigned int>("mesh_count");
 
 STATICINT sKGCircleWireSurfaceBuilderStructure =
-    KGCircleWireSurfaceBuilder::Attribute<string>("name") +
+    KGCircleWireSurfaceBuilder::Attribute<std::string>("name") +
     KGCircleWireSurfaceBuilder::ComplexElement<KGCircleWire>("circle_wire");
 
 STATICINT sKGCircleWireSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGCircleWire>>("circle_wire_surface");
 
-STATICINT sKGCircleWireSpaceBuilderStructure = KGCircleWireSpaceBuilder::Attribute<string>("name") +
+STATICINT sKGCircleWireSpaceBuilderStructure = KGCircleWireSpaceBuilder::Attribute<std::string>("name") +
                                                KGCircleWireSpaceBuilder::ComplexElement<KGCircleWire>("circle_wire");
 
 STATICINT sKGCircleWireSpaceBuilder =

@@ -78,8 +78,8 @@ int main(int /*argc*/, char** /*argv*/)
 
     //lets factor the number 900 into factors of 2/3/5
     unsigned int n_factors = 3;
-    unsigned int* factors = new unsigned int[3];
-    unsigned int* powers = new unsigned int[3];
+    auto* factors = new unsigned int[3];
+    auto* powers = new unsigned int[3];
     factors[0] = 2;
     factors[1] = 3;
     factors[2] = 5;

@@ -24,7 +24,7 @@ KSIntDecayCalculatorFerencBBRTransition::KSIntDecayCalculatorFerencBBRTransition
 
 KSIntDecayCalculatorFerencBBRTransition::KSIntDecayCalculatorFerencBBRTransition(
     const KSIntDecayCalculatorFerencBBRTransition& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
     fmaxPID(aCopy.fmaxPID),

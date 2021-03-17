@@ -6,7 +6,6 @@
 #include "KSStep.h"
 #include "KSSurfaceNavigator.h"
 #include "KSTrajectory.h"
-using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {

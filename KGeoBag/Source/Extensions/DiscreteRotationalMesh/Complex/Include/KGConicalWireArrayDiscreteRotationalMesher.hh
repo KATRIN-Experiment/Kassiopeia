@@ -11,8 +11,8 @@ class KGConicalWireArrayDiscreteRotationalMesher :
     public KGWrappedSurface<KGConicalWireArray>::Visitor
 {
   public:
-    KGConicalWireArrayDiscreteRotationalMesher() {}
-    ~KGConicalWireArrayDiscreteRotationalMesher() override {}
+    KGConicalWireArrayDiscreteRotationalMesher() = default;
+    ~KGConicalWireArrayDiscreteRotationalMesher() override = default;
 
   public:
     void VisitWrappedSurface(KGWrappedSurface<KGConicalWireArray>* conicalWireArraySurface) override;

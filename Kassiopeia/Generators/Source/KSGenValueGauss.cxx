@@ -9,7 +9,7 @@ namespace Kassiopeia
 
 KSGenValueGauss::KSGenValueGauss() : fValueMin(0.), fValueMax(0.), fValueMean(0.), fValueSigma(0.), fSolver() {}
 KSGenValueGauss::KSGenValueGauss(const KSGenValueGauss& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueMin(aCopy.fValueMin),
     fValueMax(aCopy.fValueMax),
     fValueMean(aCopy.fValueMean),
@@ -20,9 +20,9 @@ KSGenValueGauss* KSGenValueGauss::Clone() const
 {
     return new KSGenValueGauss(*this);
 }
-KSGenValueGauss::~KSGenValueGauss() {}
+KSGenValueGauss::~KSGenValueGauss() = default;
 
-void KSGenValueGauss::DiceValue(vector<double>& aDicedValues)
+void KSGenValueGauss::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 
@@ -33,7 +33,7 @@ void KSGenValueGauss::DiceValue(vector<double>& aDicedValues)
         double tValueGaussMin = ValueFunction(fValueMin);
         double tValueGaussMax = ValueFunction(fValueMax);
         double tValueGauss = KRandom::GetInstance().Uniform(tValueGaussMin, tValueGaussMax);
-        fSolver.Solve(KMathBracketingSolver::eBrent,
+        fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                       this,
                       &KSGenValueGauss::ValueFunction,
                       tValueGauss,

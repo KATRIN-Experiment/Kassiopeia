@@ -49,9 +49,9 @@ class KToolbox : public KSingleton<KToolbox>
 
   protected:
     typedef std::shared_ptr<KContainer> ContainerPtr;
-    typedef std::map<std::string, ContainerPtr> ContainerMap;
-    typedef std::set<ContainerPtr> ContainerSet;
-    typedef std::map<std::string, std::shared_ptr<ContainerSet>> TagContainerMap;
+    using ContainerMap = std::map<std::string, ContainerPtr>;
+    using ContainerSet = std::set<ContainerPtr>;
+    using TagContainerMap = std::map<std::string, std::shared_ptr<ContainerSet>>;
 
     KToolbox();
     ~KToolbox() override;

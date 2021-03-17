@@ -12,6 +12,11 @@ class KGDiskSurface : public KGRotatedLineSegmentSurface
     KGDiskSurface();
     ~KGDiskSurface() override;
 
+    static std::string Name()
+    {
+        return "disk_surface";
+    }
+
   public:
     void Z(const double& aZ);
     void R(const double& anR);

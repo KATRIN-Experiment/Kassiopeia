@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGShellCircleSurfaceMesher::KGShellCircleSurfaceMesher() : KGSimpleMesher() {}
-KGShellCircleSurfaceMesher::~KGShellCircleSurfaceMesher() {}
+KGShellCircleSurfaceMesher::KGShellCircleSurfaceMesher() = default;
+KGShellCircleSurfaceMesher::~KGShellCircleSurfaceMesher() = default;
 
 void KGShellCircleSurfaceMesher::VisitShellPathSurface(KGShellCircleSurface* aShellCircleSurface)
 {

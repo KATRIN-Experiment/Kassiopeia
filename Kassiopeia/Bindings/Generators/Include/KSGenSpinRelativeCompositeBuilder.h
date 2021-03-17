@@ -20,11 +20,11 @@ template<> inline bool KSGenSpinRelativeCompositeBuilder::AddAttribute(KContaine
         return true;
     }
     if (aContainer->GetName() == "theta") {
-        fObject->SetThetaValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetThetaValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "phi") {
-        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

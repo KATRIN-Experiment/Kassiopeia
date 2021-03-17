@@ -9,11 +9,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSComponentDeltaBuilder::~KComplexElement() {}
+template<> KSComponentDeltaBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentDeltaStructure =
-    KSComponentDeltaBuilder::Attribute<string>("name") + KSComponentDeltaBuilder::Attribute<string>("group") +
-    KSComponentDeltaBuilder::Attribute<string>("component") + KSComponentDeltaBuilder::Attribute<string>("parent");
+STATICINT sKSComponentDeltaStructure = KSComponentDeltaBuilder::Attribute<std::string>("name") +
+                                       KSComponentDeltaBuilder::Attribute<std::string>("group") +
+                                       KSComponentDeltaBuilder::Attribute<std::string>("component") +
+                                       KSComponentDeltaBuilder::Attribute<std::string>("parent");
 
 
 STATICINT sKSComponentDelta = KSComponentGroupBuilder::ComplexElement<KSComponentDeltaData>("component_delta") +

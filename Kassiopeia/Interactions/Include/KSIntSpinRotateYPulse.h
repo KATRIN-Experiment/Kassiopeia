@@ -4,7 +4,6 @@
 #include "KSSpaceInteraction.h"
 
 #include <vector>
-using std::vector;
 
 namespace Kassiopeia
 {
@@ -19,9 +18,10 @@ class KSIntSpinRotateYPulse : public KSComponentTemplate<KSIntSpinRotateYPulse, 
 
   public:
     void CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                              const KSParticle& aTrajectoryFinalParticle, const KThreeVector& aTrajectoryCenter,
-                              const double& aTrajectoryRadius, const double& aTrajectoryTimeStep,
-                              KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag) override;
+                              const KSParticle& aTrajectoryFinalParticle,
+                              const KGeoBag::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
+                              const double& aTrajectoryTimeStep, KSParticle& anInteractionParticle, double& aTimeStep,
+                              bool& aFlag) override;
 
     void ExecuteInteraction(const KSParticle& anInteractionParticle, KSParticle& aFinalParticle,
                             KSParticleQueue& aSecondaries) const override;

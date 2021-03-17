@@ -3,6 +3,7 @@
 #include "KBoundaryIntegralSolutionVector.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KDataDisplay.hh"
+#include "KEMCout.hh"
 #include "KEMFieldCanvas.hh"
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
@@ -102,16 +103,16 @@ int main(int argc, char* argv[])
     int integrator_type = 2;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"verbose", required_argument, 0, 'v'},
-        {"scale", required_argument, 0, 's'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"increment", required_argument, 0, 'i'},
+        {"help", no_argument, nullptr, 'h'},
+        {"verbose", required_argument, nullptr, 'v'},
+        {"scale", required_argument, nullptr, 's'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"increment", required_argument, nullptr, 'i'},
 #ifdef KEMFIELD_USE_VTK
-        {"with-plot", no_argument, 0, 'e'},
+        {"with-plot", no_argument, nullptr, 'e'},
 #endif
-        {"method", required_argument, 0, 'm'},
-        {"integrator_type", required_argument, 0, 'b'},
+        {"method", required_argument, nullptr, 'm'},
+        {"integrator_type", required_argument, nullptr, 'b'},
     };
 
 #ifdef KEMFIELD_USE_VTK
@@ -120,8 +121,8 @@ int main(int argc, char* argv[])
     static const char* optString = "hv:s:a:i:m:b:";
 #endif
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -181,7 +182,7 @@ int main(int argc, char* argv[])
     KEMField::cout.Verbose(false);
 
     MPI_SINGLE_PROCESS
-    KEMField::cout.Verbose(verbose);
+    KEMField::cout.Verbose(verbose != 0);
 
 #if defined(KEMFIELD_USE_MPI) && defined(KEMFIELD_USE_OPENCL)
     KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess() + 1);
@@ -190,14 +191,14 @@ int main(int argc, char* argv[])
     // Construct the shape
     double p1[2], p2[2];
     double radius = 1.;
-    KGRotatedObject* hemi1 = new KGRotatedObject(scale, 20);
+    auto* hemi1 = new KGRotatedObject(scale, 20);
     p1[0] = -1.;
     p1[1] = 0.;
     p2[0] = 0.;
     p2[1] = 1.;
     hemi1->AddArc(p2, p1, radius, true);
 
-    KGRotatedObject* hemi2 = new KGRotatedObject(scale, 20);
+    auto* hemi2 = new KGRotatedObject(scale, 20);
     p2[0] = 1.;
     p2[1] = 0.;
     p1[0] = 0.;
@@ -205,22 +206,22 @@ int main(int argc, char* argv[])
     hemi2->AddArc(p1, p2, radius, false);
 
     // Construct shape placement
-    KGRotatedSurface* h1 = new KGRotatedSurface(hemi1);
-    KGSurface* hemisphere1 = new KGSurface(h1);
+    auto* h1 = new KGRotatedSurface(hemi1);
+    auto* hemisphere1 = new KGSurface(h1);
     hemisphere1->SetName("hemisphere1");
     hemisphere1->MakeExtension<KGMesh>();
     hemisphere1->MakeExtension<KGElectrostaticDirichlet>();
     hemisphere1->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.);
 
-    KGRotatedSurface* h2 = new KGRotatedSurface(hemi2);
-    KGSurface* hemisphere2 = new KGSurface(h2);
+    auto* h2 = new KGRotatedSurface(hemi2);
+    auto* hemisphere2 = new KGSurface(h2);
     hemisphere2->SetName("hemisphere2");
     hemisphere2->MakeExtension<KGMesh>();
     hemisphere2->MakeExtension<KGElectrostaticDirichlet>();
     hemisphere2->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.);
 
     // Mesh the elements
-    KGMesher* mesher = new KGMesher();
+    auto* mesher = new KGMesher();
     hemisphere1->AcceptNode(mesher);
     hemisphere2->AcceptNode(mesher);
 
@@ -331,13 +332,13 @@ int main(int argc, char* argv[])
         KElectrostaticBoundaryIntegrator integrator{integratorSelection.Create()};
         KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
 
-        KEMFieldCanvas* fieldCanvas = NULL;
+        KEMFieldCanvas* fieldCanvas = nullptr;
 
 #if defined(KEMFIELD_USE_VTK)
         fieldCanvas = new KEMVTKFieldCanvas(0., double(A.Dimension()), 0., double(A.Dimension()), 1.e30, true);
 #endif
 
-        if (fieldCanvas) {
+        if (fieldCanvas != nullptr) {
             std::vector<double> x_;
             std::vector<double> y_;
             std::vector<double> V_;

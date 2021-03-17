@@ -50,7 +50,7 @@ class KOpenCLElectrostaticRWGBoundaryIntegrator :
     ValueType& BasisValue(KSurfacePrimitive* surface, unsigned int);
 
     template<class SourceShape> double Potential(const SourceShape*, const KPosition&) const;
-    template<class SourceShape> KThreeVector ElectricField(const SourceShape*, const KPosition&) const;
+    template<class SourceShape> KFieldVector ElectricField(const SourceShape*, const KPosition&) const;
     template<class SourceShape>
     std::pair<KThreeVector, double> ElectricFieldAndPotential(const SourceShape*, const KPosition&) const;
 
@@ -175,7 +175,7 @@ KThreeVector KOpenCLElectrostaticRWGBoundaryIntegrator::ElectricField(const Sour
                                                                   sizeof(CL_TYPE4),
                                                                   &eField);
 
-    return KThreeVector(eField.s[0], eField.s[1], eField.s[2]);
+    return KFieldVector(eField.s[0], eField.s[1], eField.s[2]);
 }
 
 template<class SourceShape>
@@ -217,7 +217,7 @@ template<class SourceShape> void KOpenCLElectrostaticRWGBoundaryIntegrator::Comp
         double dist = (source.Centroid() - fTarget->GetShape()->Centroid()).Magnitude();
 
         if (dist >= 1.e-12) {
-            KThreeVector field = this->ElectricField(&source, fTarget->GetShape()->Centroid());
+            KFieldVector field = this->ElectricField(&source, fTarget->GetShape()->Centroid());
             fValue = field.Dot(fTarget->GetShape()->Normal());
         }
         else {

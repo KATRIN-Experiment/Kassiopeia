@@ -9,55 +9,13 @@ set(${PROJECT_NAME}_OPENCL_PLATFORM "0" CACHE STRING "OpenCL platform ID number.
 mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_PLATFORM)
 add_cflag(KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM})
 
-set(${PROJECT_NAME}_OPENCL_DEVICE_TYPE "0" CACHE STRING "OpenCL device type; GPU=0, CPU=1, Accelerator=2.")
+set(${PROJECT_NAME}_OPENCL_DEVICE_TYPE "0" CACHE STRING "OpenCL device type; GPU=0, CPU=1, Accelerator=2; Any=-1.")
 mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_DEVICE_TYPE)
 add_cflag(KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE})
 
 set(${PROJECT_NAME}_OPENCL_FASTDIELECTRICS "0" CACHE STRING "Choose the check method of Neumann boundary elements in Robin Hood; 0 (check interval equal to Dirichlet elements), 1 (decrease checked accuracy of Neumann elements by 1/20), 2 (counter technique with the function RH_BoundaryRatioExceeded)")
 mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_FASTDIELECTRICS)
 add_cflag(KEMFIELD_FASTDIELECTRICS_VALUE=${${PROJECT_NAME}_OPENCL_FASTDIELECTRICS})
-
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API "Use deprecated OpenCL 1.1 API" OFF
-  ${PROJECT_NAME}_USE_OPENCL OFF)
-mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
-if (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
-  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DCL_USE_DEPRECATED_OPENCL_1_1_APIS)
-  add_cflag (CL_USE_DEPRECATED_OPENCL_1_1_APIS)
-endif (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
-
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR "Use deprecated cl::vector in place of std::vector" OFF
-  ${PROJECT_NAME}_USE_OPENCL OFF)
-mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
-if (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
-  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DKEMFIELD_USE_CL_VECTOR)
-  add_cflag (KEMFIELD_USE_CL_VECTOR)
-endif (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
-
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM "Enable use of OpenCL device constant memory by FFT kernel." ON
-  ${PROJECT_NAME}_USE_OPENCL OFF)
-mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
-if (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
-  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DKEMFIELD_OPENCL_FFT_CONST_MEM)
-  add_cflag (KEMFIELD_OPENCL_FFT_CONST_MEM)
-endif (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
-
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_1 "Use internally packaged OpenCL 1.1 headers" OFF
-  ${PROJECT_NAME}_USE_OPENCL OFF)
-mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
-if (${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
-  set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.1\")
-  string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
-  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
-endif (${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
-
-cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_2 "Use internally packaged OpenCL 1.2 headers" OFF
-  ${PROJECT_NAME}_USE_OPENCL OFF)
-mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
-if (${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
-    set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.2\")
-    string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
-  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
-endif (${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
 
 cmake_dependent_option (${PROJECT_NAME}_OPENCL_FASTRWG "Activate the fast evaluation of electrostatic boundary integrals in RWG basis if no field point has to be computed on any surface." OFF ${PROJECT_NAME}_USE_OPENCL OFF)
 mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_FASTRWG)
@@ -67,17 +25,78 @@ else (${PROJECT_NAME}_OPENCL_FASTRWG)
   add_cflag(KEMFIELD_FASTRWG_VALUE=0)
 endif (${PROJECT_NAME}_OPENCL_FASTRWG)
 
+cmake_dependent_option (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM "Enable use of OpenCL device constant memory by FFT kernel." ON
+  ${PROJECT_NAME}_USE_OPENCL OFF)
+mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
+if (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
+  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DKEMFIELD_OPENCL_FFT_CONST_MEM)
+  add_cflag (KEMFIELD_OPENCL_FFT_CONST_MEM)
+endif (${PROJECT_NAME}_OPENCL_FFT_CONST_MEM)
+
+# cmake_dependent_option (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API "Use deprecated OpenCL 1.1 API" OFF
+#   ${PROJECT_NAME}_USE_OPENCL OFF)
+# mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
+# if (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
+#   set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DCL_USE_DEPRECATED_OPENCL_1_1_APIS)
+#   add_cflag (CL_USE_DEPRECATED_OPENCL_1_1_APIS)
+# endif (${PROJECT_NAME}_OPENCL_USE_DEPRECATED_API)
+
+cmake_dependent_option (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR "Use deprecated cl::vector in place of std::vector" OFF
+  ${PROJECT_NAME}_USE_OPENCL OFF)
+mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
+if (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
+  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -DKEMFIELD_USE_CL_VECTOR)
+  add_cflag (KEMFIELD_USE_CL_VECTOR)
+endif (${PROJECT_NAME}_OPENCL_USE_CL_VECTOR)
+
+#cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_1 "Use internally packaged OpenCL 1.1 headers" OFF
+#  ${PROJECT_NAME}_USE_OPENCL OFF)
+#mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
+#if (${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
+#  set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.1\")
+#  string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
+#  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
+#endif (${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
+
+#cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_1_2 "Use internally packaged OpenCL 1.2 headers" OFF
+#  ${PROJECT_NAME}_USE_OPENCL OFF)
+#mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
+#if (${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
+#    set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.2\")
+#    string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
+#  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
+#endif (${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
+
+cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_2_2 "Use internally packaged OpenCL 2.2 headers" OFF
+  ${PROJECT_NAME}_USE_OPENCL OFF)
+mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+if (${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+    set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/2.2\")
+    string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
+  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
+endif (${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+
+cmake_dependent_option (${PROJECT_NAME}_OPENCL_INTERNAL_2_2 "Use internally packaged OpenCL 2.2 headers" OFF
+  ${PROJECT_NAME}_USE_OPENCL OFF)
+mark_as_advanced(FORCE ${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+if (${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+    set (${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR \"${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/2.2\")
+    string (REPLACE "\"" "" ${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_STR} )
+  set (${PROJECT_NAME}_OPENCL_CFLAGS ${${PROJECT_NAME}_OPENCL_CFLAGS} -isystem ${${PROJECT_NAME}_OPENCL_TEMP_INCLUDE_DIR_VAR})
+endif (${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
 
 option (${PROJECT_NAME}_USE_OPENCL "Use OpenCL via C++ wrapper API." OFF)
 if (${PROJECT_NAME}_USE_OPENCL)
+
+  message(STATUS "${PROJECT_NAME} is looking for compatbile OpenCL devices ...")
 
   # force deactivation of FFTW because it permutes FFT outputs in a different way
   # than the native FFT, which leads to incorrect fast multipole response functions
   set( KEMField_USE_FFTW OFF CACHE BOOL "(Required)" FORCE)
 
   find_package (OpenCL REQUIRED)
-
   kasper_external_include_directories(${OpenCL_INCLUDE_DIRS})
+  add_cflag (KEMFIELD_USE_OPENCL)
 
   if(${PROJECT_NAME}_OPENCL_INTERNAL_1_1)
     kasper_internal_include_directories(SYSTEM ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.1)
@@ -87,51 +106,65 @@ if (${PROJECT_NAME}_USE_OPENCL)
     kasper_internal_include_directories(SYSTEM ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/1.2)
   endif(${PROJECT_NAME}_OPENCL_INTERNAL_1_2)
 
-  add_cflag (KEMFIELD_USE_OPENCL)
+  if(${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
+    kasper_internal_include_directories(SYSTEM ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/opencl/2.2)
+  endif(${PROJECT_NAME}_OPENCL_INTERNAL_2_2)
 
   get_filename_component(OPENCL_LIBDIR ${OpenCL_LIBRARIES} PATH)
 
   if (APPLE)
     execute_process(COMMAND ${CMAKE_CXX_COMPILER}
-      -D KEMFIELD_OPENCL_PLATFORM=${KEMField_OPENCL_PLATFORM}
+      -D KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM}
       -D KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}
-      -o GenerateOpenCLHeader
+      -o ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
       -I${OpenCL_INCLUDE_DIRS}
       ${${PROJECT_NAME}_OPENCL_CFLAGS}
       -framework OpenCL
       ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-  else (APPLE)
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      RESULT_VARIABLE COMPILE_STATUS)
 
+  else (APPLE)
     execute_process(COMMAND ${CMAKE_CXX_COMPILER}
       -D KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM}
       -D KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}
-      -o GenerateOpenCLHeader
+      -o ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
       -I${OpenCL_INCLUDE_DIRS}
       ${${PROJECT_NAME}_OPENCL_CFLAGS}
       ${SOURCE}/Plugins/OpenCL/Core/src/GenerateOpenCLHeader.cc
       ${OpenCL_LIBRARIES}
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      RESULT_VARIABLE COMPILE_STATUS)
 
   endif (APPLE)
 
-  execute_process(COMMAND ./GenerateOpenCLHeader
-    OUTPUT_FILE ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/kEMField_opencl_defines.h
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    RESULT_VARIABLE USE_DOUBLE_PRECISION_GPU)
+  if(COMPILE_STATUS AND NOT COMPILE_STATUS EQUAL 0)
+    message(FATAL_ERROR " *** Could not build \"GenerateOpenCLHeader\" ***\n"
+        " There was an error compiling an OpenCL program. Please check your config.\n"
+        "   KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM}\n"
+        "   KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}")
+  endif()
 
-  if (USE_DOUBLE_PRECISION_GPU STREQUAL "255")
-    add_definitions (-DKEMFIELD_DEFAULT_GPU_ID=0)
-  else (USE_DOUBLE_PRECISION_GPU STREQUAL "255")
-    add_definitions (-DKEMFIELD_USE_DOUBLE_PRECISION)
-    add_definitions (-DKEMFIELD_DEFAULT_GPU_ID=${USE_DOUBLE_PRECISION_GPU})
-    add_cflag (KEMFIELD_USE_DOUBLE_PRECISION)
-    add_cflag(KEMFIELD_DEFAULT_GPU_ID=${USE_DOUBLE_PRECISION_GPU})
-  endif (USE_DOUBLE_PRECISION_GPU STREQUAL "255")
+  set(OPENCLPLUGIN_GENERATED_HEADER  ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/kEMField_opencl_defines.h)
+  execute_process(COMMAND ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/GenerateOpenCLHeader
+    OUTPUT_FILE ${OPENCLPLUGIN_GENERATED_HEADER}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    RESULT_VARIABLE EXEC_STATUS)
+
+  if(EXEC_STATUS AND NOT EXEC_STATUS EQUAL 0)
+    file(REMOVE ${OPENCLPLUGIN_GENERATED_HEADER})
+    message(FATAL_ERROR " *** Could not run \"GenerateOpenCLHeader\"  ***\n"
+        " There was an error generating the OpenCL headers. Please check your config.\n"
+        "   KEMFIELD_OPENCL_PLATFORM=${${PROJECT_NAME}_OPENCL_PLATFORM}\n"
+        "   KEMFIELD_OPENCL_DEVICE_TYPE=${${PROJECT_NAME}_OPENCL_DEVICE_TYPE}")
+  else()
+    message(STATUS "OpenCL header was generated: ${OPENCLPLUGIN_GENERATED_HEADER}")
+  endif()
 
 #leave this binary around since it is useful for debugging if things go wrong
 #execute_process(COMMAND rm GenerateOpenCLHeader WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
+  kasper_internal_include_directories(${CMAKE_BINARY_DIR}/${PROJECT_NAME})
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Core/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/IO/include)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Surfaces/include)
@@ -146,6 +179,8 @@ if (${PROJECT_NAME}_USE_OPENCL)
   kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FastMultipole/Tree/include)
 
   set (OPENCLPLUGIN_HEADERFILES
+    ${OPENCLPLUGIN_GENERATED_HEADER}
+    #
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/include/KOpenCLHeaderWrapper.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/include/KOpenCLAction.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/Core/include/KOpenCLData.hh
@@ -240,7 +275,7 @@ if (${PROJECT_NAME}_USE_OPENCL)
     )
 
   set (OPENCLPLUGIN_CLFILES
-    ${CMAKE_BINARY_DIR}/${PROJECT_NAME}/kEMField_opencl_defines.h
+    ${OPENCLPLUGIN_GENERATED_HEADER}
     #
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/cl/kEMField_GaussianQuadrature.cl
     ${CMAKE_CURRENT_SOURCE_DIR}/Math/cl/kEMField_GaussianCubature.cl
@@ -334,7 +369,7 @@ if (${PROJECT_NAME}_USE_OPENCL)
     ${CMAKE_CURRENT_SOURCE_DIR}/FastMultipole/Tree/cl/kEMField_KFMScalarMomentArrayReduction_kernel.cl
     )
 
-  add_library (KEMOpenCLPlugin SHARED ${OPENCLPLUGIN_SOURCEFILES})
+  add_library (KEMOpenCLPlugin SHARED ${OPENCLPLUGIN_SOURCEFILES} ${OPENCLPLUGIN_HEADERFILES})
   target_link_libraries (KEMOpenCLPlugin
     KEMCore
     KEMSurfaces

@@ -11,7 +11,8 @@ class KElectrostaticLinearField : public KElectrostaticField
 {
   public:
     KElectrostaticLinearField();
-    ~KElectrostaticLinearField() override{};
+    ~KElectrostaticLinearField() override = default;
+    ;
 
     static std::string Name()
     {
@@ -20,7 +21,7 @@ class KElectrostaticLinearField : public KElectrostaticField
 
   private:
     double PotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector ElectricFieldCore(const KPosition& aSamplePoint) const override;
 
   public:
     void SetPotential1(double aPotential);

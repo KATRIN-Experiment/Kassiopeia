@@ -18,15 +18,15 @@ template<> inline bool KSModSplitOnTurnBuilder::AddAttribute(KContainer* aContai
         return true;
     }
     if (aContainer->GetName() == "direction") {
-        if (aContainer->AsReference<std::string>() == "forward") {
+        if (aContainer->AsString() == "forward") {
             fObject->SetDirection(KSModSplitOnTurn::eForward);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == "backward") {
+        if (aContainer->AsString() == "backward") {
             fObject->SetDirection(KSModSplitOnTurn::eBackward);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == "both") {
+        if (aContainer->AsString() == "both") {
             fObject->SetDirection(KSModSplitOnTurn::eForward | KSModSplitOnTurn::eBackward);
             return true;
         }

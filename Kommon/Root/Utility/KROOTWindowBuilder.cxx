@@ -14,9 +14,9 @@ namespace katrin
 {
 
 STATICINT sKROOTWindowStructure =
-    KROOTWindowBuilder::Attribute<string>("name") + KROOTWindowBuilder::Attribute<unsigned int>("canvas_width") +
+    KROOTWindowBuilder::Attribute<std::string>("name") + KROOTWindowBuilder::Attribute<unsigned int>("canvas_width") +
     KROOTWindowBuilder::Attribute<unsigned int>("canvas_height") + KROOTWindowBuilder::Attribute<bool>("active") +
-    KROOTWindowBuilder::Attribute<bool>("write_enabled") + KROOTWindowBuilder::Attribute<string>("path") +
+    KROOTWindowBuilder::Attribute<bool>("write_enabled") + KROOTWindowBuilder::Attribute<std::string>("path") +
     KROOTWindowBuilder::ComplexElement<KROOTPad>("root_pad");
 
 STATICINT sKROOTWindow = KRootBuilder::ComplexElement<KROOTWindow>("root_window");

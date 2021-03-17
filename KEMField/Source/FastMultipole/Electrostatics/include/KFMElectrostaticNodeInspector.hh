@@ -31,9 +31,9 @@ class KFMElectrostaticNodeInspector : public KFMNodeActor<KFMElectrostaticNode>
 {
   public:
     KFMElectrostaticNodeInspector();
-    virtual ~KFMElectrostaticNodeInspector();
+    ~KFMElectrostaticNodeInspector() override;
 
-    virtual void ApplyAction(KFMElectrostaticNode* node);
+    void ApplyAction(KFMElectrostaticNode* node) override;
     void Print();
 
   private:

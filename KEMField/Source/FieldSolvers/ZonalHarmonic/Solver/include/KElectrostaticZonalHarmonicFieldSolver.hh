@@ -12,8 +12,8 @@ template<class Basis> class KZonalHarmonicFieldSolver;
 template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalHarmonicComputer<KElectrostaticBasis>
 {
   public:
-    typedef KZonalHarmonicContainer<KElectrostaticBasis> Container;
-    typedef KZonalHarmonicTrait<KElectrostaticBasis>::Integrator Integrator;
+    using Container = KZonalHarmonicContainer<KElectrostaticBasis>;
+    using Integrator = KZonalHarmonicTrait<KElectrostaticBasis>::Integrator;
 
     KZonalHarmonicFieldSolver(Container& container, Integrator& integrator) :
         KZonalHarmonicComputer<KElectrostaticBasis>(container, integrator),
@@ -22,14 +22,14 @@ template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalH
         fZHCoeffSingleton = KZHLegendreCoefficients::GetInstance();
     }
 
-    ~KZonalHarmonicFieldSolver() override {}
+    ~KZonalHarmonicFieldSolver() override = default;
 
     bool CentralExpansion(const KPosition& P) const;
     bool RemoteExpansion(const KPosition& P) const;
 
     double Potential(const KPosition& P) const;
-    KThreeVector ElectricField(const KPosition& P) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P) const;
+    KFieldVector ElectricField(const KPosition& P) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KPosition& P) const;
 
 
   private:
@@ -38,11 +38,11 @@ template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalH
     bool CentralExpansionPotential(const KPosition& P, double& potential) const;
     bool RemoteExpansionPotential(const KPosition& P, double& potential) const;
 
-    bool CentralExpansionField(const KPosition& P, KThreeVector& electricField) const;
-    bool RemoteExpansionField(const KPosition& P, KThreeVector& electricField) const;
+    bool CentralExpansionField(const KPosition& P, KFieldVector& electricField) const;
+    bool RemoteExpansionField(const KPosition& P, KFieldVector& electricField) const;
 
-    bool CentralExpansionFieldAndPotential(const KPosition& P, KThreeVector& electricField, double& potential) const;
-    bool RemoteExpansionFieldAndPotential(const KPosition& P, KThreeVector& electricField, double& potential) const;
+    bool CentralExpansionFieldAndPotential(const KPosition& P, KFieldVector& electricField, double& potential) const;
+    bool RemoteExpansionFieldAndPotential(const KPosition& P, KFieldVector& electricField, double& potential) const;
 
     KIntegratingFieldSolver<Integrator> fIntegratingFieldSolver;
 
@@ -63,7 +63,7 @@ template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalH
     {
       public:
         ElectricFieldAccumulator(const KPosition& P) : fP(P) {}
-        KThreeVector operator()(KThreeVector electricField, KZonalHarmonicFieldSolver<KElectrostaticBasis>* c)
+        KFieldVector operator()(const KFieldVector& electricField, KZonalHarmonicFieldSolver<KElectrostaticBasis>* c)
         {
             return electricField + c->ElectricField(fP);
         }
@@ -76,10 +76,10 @@ template<> class KZonalHarmonicFieldSolver<KElectrostaticBasis> : public KZonalH
     {
       public:
         ElectricFieldAndPotentialAccumulator(const KPosition& P) : fP(P) {}
-        std::pair<KThreeVector, double> operator()(std::pair<KThreeVector, double> FieldandPotential,
+        std::pair<KFieldVector, double> operator()(const std::pair<KFieldVector, double>& FieldandPotential,
                                                    KZonalHarmonicFieldSolver<KElectrostaticBasis>* c)
         {
-            std::pair<KThreeVector, double> pair = c->ElectricFieldAndPotential(fP);
+            std::pair<KFieldVector, double> pair = c->ElectricFieldAndPotential(fP);
             return std::make_pair(FieldandPotential.first + pair.first, FieldandPotential.second + pair.second);
         }
 

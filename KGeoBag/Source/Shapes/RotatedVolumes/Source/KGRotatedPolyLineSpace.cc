@@ -5,8 +5,8 @@
 namespace KGeoBag
 {
 
-template<> KGRotatedPolyLineSpace::Visitor::Visitor() {}
+template<> KGRotatedPolyLineSpace::Visitor::Visitor() = default;
 
-template<> KGRotatedPolyLineSpace::Visitor::~Visitor() {}
+template<> KGRotatedPolyLineSpace::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

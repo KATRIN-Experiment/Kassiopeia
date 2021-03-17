@@ -21,10 +21,10 @@ namespace katrin
 class TestChild
 {
   public:
-    TestChild() : fName("(anonymous)"), fValue(0) {}
+    TestChild() : fName("(anonymous)") {}
     virtual ~TestChild()
     {
-        std::cout << "a test child is destroyed" << endl;
+        std::cout << "a test child is destroyed" << std::endl;
     }
 
     void SetName(const std::string& aName)
@@ -41,13 +41,13 @@ class TestChild
 
     void Print(std::ostream& output) const
     {
-        output << "  *" << fName << ", " << fValue << endl;
+        output << "  *" << fName << ", " << fValue << std::endl;
         return;
     }
 
   private:
     std::string fName;
-    int fValue;
+    int fValue{0};
 };
 
 typedef KComplexElement<TestChild> KiTestChildElement;
@@ -77,14 +77,13 @@ static const int __attribute__((unused)) sTestChildElementStructure =
 class TestParent : public KContainer
 {
   public:
-    TestParent() {}
+    TestParent() = default;
     ~TestParent() override
     {
-        for (std::vector<const TestChild*>::const_iterator tIter = fChildren.begin(); tIter != fChildren.end();
-             tIter++) {
-            delete *tIter;
+        for (auto tIter : fChildren) {
+            delete tIter;
         }
-        cout << "a test parent is destroyed" << endl;
+        std::cout << "a test parent is destroyed" << std::endl;
     }
 
     void SetName(const std::string& aName)
@@ -99,9 +98,9 @@ class TestParent : public KContainer
 
     void Print(std::ostream& output) const override
     {
-        output << "*" << fName << endl;
-        for (auto tIter = fChildren.begin(); tIter != fChildren.end(); tIter++) {
-            (*tIter)->Print(output);
+        output << "*" << fName << std::endl;
+        for (auto tIter : fChildren) {
+            tIter->Print(output);
         }
         return;
     }
@@ -111,7 +110,7 @@ class TestParent : public KContainer
     std::vector<const TestChild*> fChildren;
 };
 
-typedef KComplexElement<TestParent> KiTestParentElement;
+using KiTestParentElement = KComplexElement<TestParent>;
 
 template<> bool KiTestParentElement::AddAttribute(KContainer* anAttribute)
 {
@@ -148,7 +147,7 @@ TEST(XML, Includes)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLIncludes.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLIncludes.xml");
 
     // resolve file path
     tFile->Open(KFile::eRead);
@@ -174,7 +173,7 @@ TEST(XML, Loops)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLLoops.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLLoops.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;
@@ -194,7 +193,7 @@ TEST(XML, Serialization)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLSerialization.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLSerialization.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;
@@ -210,7 +209,7 @@ TEST(XML, Tokenizer)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLTokenizer.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLTokenizer.xml");
 
     KXMLTokenizer tTokenizer;
     KChattyProcessor tChattyProcessor;
@@ -223,7 +222,7 @@ TEST(XML, Variables)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eNormal);
     KMessageTable::GetInstance().SetLogVerbosity(eNormal);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLVariables.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLVariables.xml");
 
     KCommandLineTokenizer tCommandLine;
     tCommandLine.ProcessCommandLine();
@@ -246,7 +245,7 @@ TEST(XML, Formulas)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLFormulas.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLFormulas.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;
@@ -264,7 +263,7 @@ TEST(XML, Print)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLPrint.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLPrint.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;
@@ -282,7 +281,7 @@ TEST(XML, Conditions)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLConditions.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLConditions.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;
@@ -304,7 +303,7 @@ TEST(XML, Elements)
 {
     KMessageTable::GetInstance().SetTerminalVerbosity(eDebug);
     KMessageTable::GetInstance().SetLogVerbosity(eDebug);
-    KTextFile* tFile = CreateConfigTextFile("TestXMLElements.xml");
+    KTextFile* tFile = KTextFile::CreateConfigTextFile("TestXMLElements.xml");
 
     KXMLTokenizer tTokenizer;
     KVariableProcessor tVariableProcessor;

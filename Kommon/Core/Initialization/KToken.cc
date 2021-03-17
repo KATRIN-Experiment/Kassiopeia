@@ -6,14 +6,8 @@ namespace katrin
 {
 
 KToken::KToken() : fValue(""), fPath(""), fFile(""), fLine(0), fColumn(0) {}
-KToken::KToken(const KToken& aToken) :
-    fValue(aToken.fValue),
-    fPath(aToken.fPath),
-    fFile(aToken.fFile),
-    fLine(aToken.fLine),
-    fColumn(aToken.fColumn)
-{}
-KToken::~KToken() {}
+KToken::KToken(const KToken&) = default;
+KToken::~KToken() = default;
 
 void KToken::SetValue(const std::string& aValue)
 {

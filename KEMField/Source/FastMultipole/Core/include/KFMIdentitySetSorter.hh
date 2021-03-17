@@ -25,8 +25,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMIdentitySetSorter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMIdentitySetSorter(){};
-    ~KFMIdentitySetSorter() override{};
+    KFMIdentitySetSorter() = default;
+    ;
+    ~KFMIdentitySetSorter() override = default;
+    ;
 
     void ApplyAction(KFMNode<ObjectTypeList>* node) override
     {

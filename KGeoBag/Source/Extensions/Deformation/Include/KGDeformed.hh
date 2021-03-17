@@ -15,7 +15,7 @@ class KGDeformedObject
     KGDeformedObject(KGSpace*) {}
     KGDeformedObject(KGSurface*, const KGDeformedObject& aCopy) : fDeformation(aCopy.fDeformation) {}
     KGDeformedObject(KGSpace*, const KGDeformedObject& aCopy) : fDeformation(aCopy.fDeformation) {}
-    virtual ~KGDeformedObject() {}
+    virtual ~KGDeformedObject() = default;
 
     void SetDeformation(KGDeformationPtr deformation);
 
@@ -28,8 +28,8 @@ class KGDeformedObject
 class KGDeformed
 {
   public:
-    typedef KGDeformedObject Surface;
-    typedef KGDeformedObject Space;
+    using Surface = KGDeformedObject;
+    using Space = KGDeformedObject;
 };
 }  // namespace KGeoBag
 

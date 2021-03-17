@@ -16,13 +16,13 @@ int main(int /*argc*/, char** /*argv*/)
     kfmout << "N = " << N << " and M = " << M << kfmendl;
 
     unsigned int permutation[M];
-    std::complex<double>* data = new std::complex<double>[N];
-    std::complex<double>* original_data = new std::complex<double>[N];
-    std::complex<double>* scale = new std::complex<double>[N];
-    std::complex<double>* twiddle = new std::complex<double>[M];
-    std::complex<double>* conj_twiddle = new std::complex<double>[M];
-    std::complex<double>* circulant = new std::complex<double>[M];
-    std::complex<double>* workspace = new std::complex<double>[M];
+    auto* data = new std::complex<double>[N];
+    auto* original_data = new std::complex<double>[N];
+    auto* scale = new std::complex<double>[N];
+    auto* twiddle = new std::complex<double>[M];
+    auto* conj_twiddle = new std::complex<double>[M];
+    auto* circulant = new std::complex<double>[M];
+    auto* workspace = new std::complex<double>[M];
 
     //compute bit reversed address permutation
     KFMBitReversalPermutation::ComputeBitReversedIndicesBaseTwo(M, permutation);

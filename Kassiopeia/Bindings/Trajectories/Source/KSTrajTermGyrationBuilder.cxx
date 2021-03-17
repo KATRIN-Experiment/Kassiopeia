@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTermGyrationBuilder::~KComplexElement() {}
+template<> KSTrajTermGyrationBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajTermGyrationStructure = KSTrajTermGyrationBuilder::Attribute<string>("name");
+STATICINT sKSTrajTermGyrationStructure = KSTrajTermGyrationBuilder::Attribute<std::string>("name");
 
 STATICINT sToolboxKSTrajTermGyration = KSRootBuilder::ComplexElement<KSTrajTermGyration>("kstraj_term_gyration");
 

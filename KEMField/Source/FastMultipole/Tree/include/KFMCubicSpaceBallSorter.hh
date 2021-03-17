@@ -31,8 +31,10 @@ template<unsigned int NDIM, typename ObjectTypeList>
 class KFMCubicSpaceBallSorter : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMCubicSpaceBallSorter(){};
-    ~KFMCubicSpaceBallSorter() override{};
+    KFMCubicSpaceBallSorter() = default;
+    ;
+    ~KFMCubicSpaceBallSorter() override = default;
+    ;
 
     void SetInsertionCondition(const KFMInsertionCondition<NDIM>* cond)
     {

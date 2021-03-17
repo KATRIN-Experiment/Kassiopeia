@@ -12,7 +12,7 @@
 namespace katrin
 {
 
-template<> KFMVTKElectrostaticTreeViewerBuilder::~KComplexElement() {}
+template<> KFMVTKElectrostaticTreeViewerBuilder::~KComplexElement() = default;
 
 STATICINT sKFMVTKElectrostaticTreeViewerBuilderStructure =
     KFMVTKElectrostaticTreeViewerBuilder::Attribute<std::string>("file") +

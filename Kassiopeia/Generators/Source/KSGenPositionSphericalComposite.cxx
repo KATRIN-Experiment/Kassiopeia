@@ -3,6 +3,7 @@
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -18,7 +19,7 @@ KSGenPositionSphericalComposite::KSGenPositionSphericalComposite() :
     fCoordinateMap[ePhi] = 2;
 }
 KSGenPositionSphericalComposite::KSGenPositionSphericalComposite(const KSGenPositionSphericalComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fOrigin(aCopy.fOrigin),
     fXAxis(aCopy.fXAxis),
     fYAxis(aCopy.fYAxis),
@@ -30,7 +31,7 @@ KSGenPositionSphericalComposite* KSGenPositionSphericalComposite::Clone() const
 {
     return new KSGenPositionSphericalComposite(*this);
 }
-KSGenPositionSphericalComposite::~KSGenPositionSphericalComposite() {}
+KSGenPositionSphericalComposite::~KSGenPositionSphericalComposite() = default;
 
 void KSGenPositionSphericalComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -38,10 +39,10 @@ void KSGenPositionSphericalComposite::Dice(KSParticleQueue* aPrimaries)
     bool tHasThetaValue = false;
     bool tHasPhiValue = false;
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        tHasRValue = tHasRValue | ((*tIt).first == eRadius);
-        tHasThetaValue = tHasThetaValue | ((*tIt).first == eTheta);
-        tHasPhiValue = tHasPhiValue | ((*tIt).first == ePhi);
+    for (auto& value : fValues) {
+        tHasRValue = tHasRValue | (value.first == eRadius);
+        tHasThetaValue = tHasThetaValue | (value.first == eTheta);
+        tHasPhiValue = tHasPhiValue | (value.first == ePhi);
     }
 
     if (!tHasRValue | !tHasThetaValue | !tHasPhiValue)
@@ -126,14 +127,14 @@ void KSGenPositionSphericalComposite::SetZAxis(const KThreeVector& anZAxis)
 
 void KSGenPositionSphericalComposite::SetRValue(KSGenValue* anRValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eRadius) {
+    for (auto& value : fValues) {
+        if (value.first == eRadius) {
             genmsg(eError) << "cannot set r value <" << anRValue->GetName()
                            << "> to composite position spherical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eRadius, anRValue));
+    fValues.emplace_back(eRadius, anRValue);
 }
 void KSGenPositionSphericalComposite::ClearRValue(KSGenValue* anRValue)
 {
@@ -151,14 +152,14 @@ void KSGenPositionSphericalComposite::ClearRValue(KSGenValue* anRValue)
 
 void KSGenPositionSphericalComposite::SetThetaValue(KSGenValue* anThetaValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eTheta) {
+    for (auto& value : fValues) {
+        if (value.first == eTheta) {
             genmsg(eError) << "cannot set theta value <" << anThetaValue->GetName()
                            << "> to composite position spherical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eTheta, anThetaValue));
+    fValues.emplace_back(eTheta, anThetaValue);
     return;
 }
 void KSGenPositionSphericalComposite::ClearThetaValue(KSGenValue* anThetaValue)
@@ -177,14 +178,14 @@ void KSGenPositionSphericalComposite::ClearThetaValue(KSGenValue* anThetaValue)
 
 void KSGenPositionSphericalComposite::SetPhiValue(KSGenValue* aPhiValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == ePhi) {
+    for (auto& value : fValues) {
+        if (value.first == ePhi) {
             genmsg(eError) << "cannot set phi value <" << aPhiValue->GetName()
                            << "> to composite position spherical creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(ePhi, aPhiValue));
+    fValues.emplace_back(ePhi, aPhiValue);
     return;
 }
 void KSGenPositionSphericalComposite::ClearPhiValue(KSGenValue* anPhiValue)
@@ -203,15 +204,15 @@ void KSGenPositionSphericalComposite::ClearPhiValue(KSGenValue* anPhiValue)
 
 void KSGenPositionSphericalComposite::InitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Initialize();
+    for (auto& value : fValues) {
+        value.second->Initialize();
     }
     return;
 }
 void KSGenPositionSphericalComposite::DeinitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Deinitialize();
+    for (auto& value : fValues) {
+        value.second->Deinitialize();
     }
     return;
 }

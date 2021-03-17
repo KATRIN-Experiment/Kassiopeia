@@ -25,8 +25,10 @@ namespace KEMField
 template<unsigned int NDIM> class KFMBallCloud
 {
   public:
-    KFMBallCloud(){};
-    virtual ~KFMBallCloud(){};
+    KFMBallCloud() = default;
+    ;
+    virtual ~KFMBallCloud() = default;
+    ;
 
     unsigned int GetNBalls() const
     {

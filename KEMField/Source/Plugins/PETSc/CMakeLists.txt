@@ -25,7 +25,7 @@ if (${PROJECT_NAME}_USE_PETSc)
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KPETScInterface.cc
     )
 
-  add_library (KEMPETScPlugin SHARED ${PETSCPLUGIN_SOURCEFILES})
+  add_library (KEMPETScPlugin SHARED ${PETSCPLUGIN_SOURCEFILES} ${PETSCPLUGIN_HEADERFILES})
   target_link_libraries (KEMPETScPlugin
     KEMCore
     KEMSurfaces

@@ -13,7 +13,7 @@ class KRing : public KShape
 
   protected:
     KRing() : fP(0., 0., 0.) {}
-    ~KRing() override {}
+    ~KRing() override = default;
 
   public:
     static std::string Name()

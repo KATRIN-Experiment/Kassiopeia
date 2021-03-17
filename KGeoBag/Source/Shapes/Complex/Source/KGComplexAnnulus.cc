@@ -14,12 +14,10 @@ KGComplexAnnulus::KGComplexAnnulus(double rmain) : fCoordTransform(nullptr)
 
 KGComplexAnnulus::~KGComplexAnnulus()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+    delete fCoordTransform;
 
-    for (unsigned int i = 0; i < fRings.size(); i++) {
-        if (fRings.at(i))
-            delete fRings.at(i);
+    for (auto& ring : fRings) {
+        delete ring;
     }
 }
 
@@ -48,8 +46,8 @@ KGComplexAnnulus* KGComplexAnnulus::Clone() const
 
     a->fCoordTransform = new KGCoordinateTransform(*fCoordTransform);
 
-    for (unsigned int i = 0; i < fRings.size(); i++)
-        a->fRings.push_back(fRings.at(i)->Clone(a));
+    for (auto* ring : fRings)
+        a->fRings.push_back(ring->Clone(a));
     return a;
 }
 
@@ -59,8 +57,8 @@ void KGComplexAnnulus::Initialize() const
     fPolyMain = 120;
 
     fCoordTransform = new KGCoordinateTransform();
-    for (unsigned int i = 0; i < fRings.size(); i++)
-        fRings.at(i)->Initialize();
+    for (auto* ring : fRings)
+        ring->Initialize();
 }
 
 bool KGComplexAnnulus::ContainsPoint(const double* P) const
@@ -79,8 +77,8 @@ bool KGComplexAnnulus::ContainsPoint(const double* P) const
     }
 
     //Is the point in a hole?
-    for (unsigned int i = 0; i < fRings.size(); i++) {
-        if (fRings.at(i)->ContainsPoint(P))
+    for (auto* ring : fRings) {
+        if (ring->ContainsPoint(P))
             return false;
     }
 
@@ -90,6 +88,9 @@ bool KGComplexAnnulus::ContainsPoint(const double* P) const
 
 double KGComplexAnnulus::DistanceTo(const double* P, double* P_in, double* P_norm) const
 {
+    if (!P_in || !P_norm)
+        return NAN;
+
     //Compute the closest point P_in to Point P as well as the norm vector pointing from point to closest point and returns the distance between them.
 
     double dist_main = 0;
@@ -130,8 +131,8 @@ double KGComplexAnnulus::DistanceTo(const double* P, double* P_in, double* P_nor
 
     //continuation of normal case.
 
-    for (unsigned int i = 0; i < 3; i++) {
-        PO[i] /= PO_Norm;
+    for (double& i : PO) {
+        i /= PO_Norm;
     }
 
     double t = fRMain;
@@ -154,7 +155,7 @@ double KGComplexAnnulus::DistanceTo(const double* P, double* P_in, double* P_nor
     return dist_main;
 }
 
-KGComplexAnnulus::Ring::Ring(KGComplexAnnulus* complexAnnulus, double ASub[2], double RSub) : Ring(complexAnnulus)
+KGComplexAnnulus::Ring::Ring(KGComplexAnnulus* complexAnnulus, const double ASub[2], double RSub) : Ring(complexAnnulus)
 {
     for (unsigned int i = 0; i < 2; i++) {
         fASub[i] = ASub[i];
@@ -167,8 +168,8 @@ KGComplexAnnulus::Ring::Ring(KGComplexAnnulus* complexAnnulus, double ASub[2], d
 
 KGComplexAnnulus::Ring::~Ring()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+
+    delete fCoordTransform;
 }
 
 void KGComplexAnnulus::Ring::Initialize()
@@ -191,8 +192,8 @@ void KGComplexAnnulus::Ring::Initialize()
     }
 
     double Length = sqrt(LengthSq);
-    for (int i = 0; i < 3; i++)
-        fNorm[i] /= Length;
+    for (double& i : fNorm)
+        i /= Length;
 }
 
 KGComplexAnnulus::Ring* KGComplexAnnulus::Ring::Clone(KGComplexAnnulus* a) const
@@ -252,6 +253,8 @@ bool KGComplexAnnulus::Ring::ContainsPoint(const double* P) const
 
 double KGComplexAnnulus::Ring::DistanceTo(const double* P, double* P_in, double* P_norm) const
 {
+    if (!P_in || !P_norm)
+        return NAN;
 
     //Let's first transform to local coordinates:
 
@@ -307,8 +310,8 @@ double KGComplexAnnulus::Ring::DistanceTo(const double* P, double* P_in, double*
 
     //continuation of normal case.
 
-    for (unsigned int i = 0; i < 3; i++) {
-        PO[i] /= PO_Norm;
+    for (double& i : PO) {
+        i /= PO_Norm;
     }
 
     double t = fRSub;
@@ -324,8 +327,8 @@ double KGComplexAnnulus::Ring::DistanceTo(const double* P, double* P_in, double*
 
     double Normalize = sqrt(NormSq);
 
-    for (unsigned int i = 0; i < 3; i++) {
-        P_norm_loc[i] /= Normalize;
+    for (double& i : P_norm_loc) {
+        i /= Normalize;
     }
 
     fCoordTransform->ConvertToGlobalCoords(P_in_loc, P_in, false);

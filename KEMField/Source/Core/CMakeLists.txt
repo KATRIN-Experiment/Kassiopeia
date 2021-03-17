@@ -22,36 +22,25 @@ option (${PROJECT_NAME}_USE_MPI "Use MPI to accelerate calculations using multip
 if (${PROJECT_NAME}_USE_MPI)
   find_package(MPI)
   if (MPI_CXX_FOUND)
-    if (MPI_CXX_COMPILER)  # MPICH2 style
+    if (MPI_COMPILER)  # MPICH2 style
       set (CMAKE_C_COMPILER ${MPI_COMPILER})
       set (CMAKE_CXX_COMPILER ${MPI_COMPILER})
-    else (MPI_CXX_COMPILER)  # OpenMPI style
+    else (MPI_COMPILER)  # OpenMPI style
       set (CMAKE_C_COMPILER ${MPI_C_COMPILER})
       set (CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
-    endif (MPI_CXX_COMPILER)
+    endif (MPI_COMPILER)
   else (MPI_CXX_FOUND)
-    message( "Warning: MPI not found on your system, using default compiler" )
+    message(WARNING "Warning: MPI not found on your system, using default compiler" )
     set (CMAKE_C_COMPILER mpicc)
     set (CMAKE_CXX_COMPILER mpicxx)
   endif (MPI_CXX_FOUND)
   add_cflag (KEMFIELD_USE_MPI)
-  set (STATIC_LIBRARY_SUFFIX _mpi)
-  set (SHARED_LIBRARY_SUFFIX _mpi)
-  set (CMAKE_STATIC_LIBRARY_SUFFIX ${STATIC_LIBRARY_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX})
-  set (CMAKE_SHARED_LIBRARY_SUFFIX ${SHARED_LIBRARY_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX})
-  set (CMAKE_EXECUTABLE_SUFFIX ${SHARED_LIBRARY_SUFFIX}${CMAKE_EXECUTABLE_SUFFIX})
 
   set (CMAKE_C_COMPILER ${CMAKE_C_COMPILER} PARENT_SCOPE)
   set (CMAKE_CXX_COMPILER ${CMAKE_CXX_COMPILER} PARENT_SCOPE)
-  set (STATIC_LIBRARY_SUFFIX ${STATIC_SUFFIX_LIBRARY} PARENT_SCOPE)
-  set (SHARED_LIBRARY_SUFFIX ${SHARED_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_STATIC_LIBRARY_SUFFIX ${CMAKE_STATIC_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_SHARED_LIBRARY_SUFFIX ${CMAKE_SHARED_LIBRARY_SUFFIX} PARENT_SCOPE)
   set (CMAKE_EXECUTABLE_SUFFIX ${CMAKE_EXECUTABLE_SUFFIX} PARENT_SCOPE)
-
-#  set( ${PROJECT_NAME}_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
-    set( ${PROJECT_NAME}_USE_ROOT ${KASPER_USE_ROOT} )
-
 endif (${PROJECT_NAME}_USE_MPI)
 
 option(${PROJECT_NAME}_USE_REALTIME_CLOCK "Use real time clock for timing applications." OFF)
@@ -60,6 +49,9 @@ if (${PROJECT_NAME}_USE_REALTIME_CLOCK)
   add_cflag (KEMFIELD_USE_REALTIME_CLOCK)
 endif (${PROJECT_NAME}_USE_REALTIME_CLOCK)
 
+#set( ${PROJECT_NAME}_USE_ROOT OFF CACHE BOOL "(Required)" FORCE )
+set( ${PROJECT_NAME}_USE_ROOT ${KASPER_USE_ROOT} )
+
 kasper_internal_include_directories (${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (KEMCORE_HEADERFILES
@@ -67,6 +59,7 @@ set (KEMCORE_HEADERFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KDataComparator.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KDataDisplay.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMCout.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMCoreMessage.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMConstants.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMStringUtils.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/include/KEMTicker.hh
@@ -82,6 +75,7 @@ set (KEMCORE_HEADERFILES
 set (KEMCORE_SOURCEFILES
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMConstants.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMCout.cc
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMCoreMessage.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMStringUtils.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KEMTicker.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/src/KFundamentalTypes.cc
@@ -106,13 +100,13 @@ endif (${PROJECT_NAME}_USE_MPI)
     )
 #endif (${PROJECT_NAME}_USE_KMESSAGE)
 
-add_library (KEMCore SHARED ${KEMCORE_SOURCEFILES})
+add_library (KEMCore SHARED ${KEMCORE_SOURCEFILES} ${KEMCORE_HEADERFILES})
 target_link_libraries (KEMCore ${Kommon_LIBRARIES})
 
 add_executable( KSmartPointer_test test/KSmartPointer_test.cc )
   target_link_libraries( KSmartPointer_test KEMCore
   )
-  
+
   kasper_install_executables( KSmartPointer_test )
 
 kasper_install_headers (${KEMCORE_HEADERFILES})

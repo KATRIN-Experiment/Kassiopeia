@@ -11,6 +11,8 @@
 using namespace std;
 using namespace katrin;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -22,7 +24,7 @@ KESSElasticElsepa::KESSElasticElsepa()
 }
 
 KESSElasticElsepa::KESSElasticElsepa(const KESSElasticElsepa& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fElScMFPMap(aCopy.fElScMFPMap),
     fElScMap(aCopy.fElScMap)
 {
@@ -34,7 +36,7 @@ KESSElasticElsepa* KESSElasticElsepa::Clone() const
     return new KESSElasticElsepa(*this);
 }
 
-KESSElasticElsepa::~KESSElasticElsepa() {}
+KESSElasticElsepa::~KESSElasticElsepa() = default;
 
 void KESSElasticElsepa::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {

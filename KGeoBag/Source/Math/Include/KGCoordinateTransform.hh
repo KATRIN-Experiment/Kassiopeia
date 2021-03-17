@@ -12,13 +12,15 @@ class KGCoordinateTransform
 
     KGCoordinateTransform(const double* p, const double* x, const double* y, const double* z);
 
-    ~KGCoordinateTransform() {}
+    ~KGCoordinateTransform() = default;
 
     void ConvertToLocalCoords(const double* global, double* local, const bool isVec) const;
     void ConvertToGlobalCoords(const double* local, double* global, const bool isVec) const;
 
-    void ConvertToLocalCoords(const KThreeVector global, KThreeVector& local, const bool isVec) const;
-    void ConvertToGlobalCoords(const KThreeVector local, KThreeVector& global, const bool isVec) const;
+    void ConvertToLocalCoords(const KGeoBag::KThreeVector& global, KGeoBag::KThreeVector& local,
+                              const bool isVec) const;
+    void ConvertToGlobalCoords(const KGeoBag::KThreeVector& local, KGeoBag::KThreeVector& global,
+                               const bool isVec) const;
 
   protected:
     double fP[3];  ///< Global (x,y,z) of local (0,0,0).

@@ -14,14 +14,17 @@ KPrintProcessor::KPrintProcessor() :
     fElementState(eElementInactive),
     fAttributeState(eAttributeInactive),
     fMessageType(eNormal),
+    fCheckAssertCondition(false),
     fName(""),
-    fValue("")
+    fValue(""),
+    fAssertCondition(false)
 {}
 
-KPrintProcessor::~KPrintProcessor() {}
+KPrintProcessor::~KPrintProcessor() = default;
 
 void KPrintProcessor::ProcessToken(KBeginElementToken* aToken)
 {
+    fCheckAssertCondition = false;
     if (fElementState == eElementInactive) {
         if (aToken->GetValue() == string("print")) {
             fElementState = eElementActive;
@@ -36,6 +39,12 @@ void KPrintProcessor::ProcessToken(KBeginElementToken* aToken)
         if (aToken->GetValue() == string("error")) {
             fElementState = eElementActive;
             fMessageType = eError;
+            return;
+        }
+        if (aToken->GetValue() == string("assert")) {
+            fCheckAssertCondition = true;
+            fElementState = eElementActive;
+            fMessageType = eDebug;
             return;
         }
 
@@ -57,9 +66,17 @@ void KPrintProcessor::ProcessToken(KBeginAttributeToken* aToken)
             fAttributeState = eActiveName;
             return;
         }
-        if (aToken->GetValue() == "value") {
-            fAttributeState = eActiveValue;
-            return;
+        if (!fCheckAssertCondition) {
+            if (aToken->GetValue() == "value") {
+                fAttributeState = eActiveValue;
+                return;
+            }
+        }
+        else {
+            if (aToken->GetValue() == "condition") {
+                fAttributeState = eActiveAssertCondition;
+                return;
+            }
         }
 
         initmsg(eError) << "got unknown attribute <" << aToken->GetValue() << ">" << ret;
@@ -86,6 +103,25 @@ void KPrintProcessor::ProcessToken(KAttributeDataToken* aToken)
         }
         if (fAttributeState == eActiveValue) {
             fValue = aToken->GetValue<string>();
+            fAttributeState = eAttributeComplete;
+            return;
+        }
+        if (fAttributeState == eActiveAssertCondition) {
+            fAssertCondition = false;
+            const string condStr = aToken->GetValue();
+            if (condStr.find_first_of("{}[]") != string::npos) {
+                initmsg(eError) << "A condition containing an unevaluated "
+                                << "formula {} or variable [] could not be interpreted." << eom;
+                fAssertCondition = false;
+            }
+            else {
+                if (aToken->GetValue<string>().empty()) {
+                    fAssertCondition = false;
+                }
+                else {
+                    fAssertCondition = aToken->GetValue<bool>();
+                }
+            }
             fAttributeState = eAttributeComplete;
             return;
         }
@@ -148,11 +184,26 @@ void KPrintProcessor::ProcessToken(KEndElementToken* aToken)
     }
 
     if (fElementState == eElementComplete) {
-        if (fName.empty()) {
-            initmsg(fMessageType) << fValue;
+        if (!fCheckAssertCondition) {
+            if (fName.empty()) {
+                initmsg(fMessageType) << fValue;
+            }
+            else {
+                initmsg(fMessageType) << "value of <" << fName << "> is <" << fValue << ">";
+            }
         }
         else {
-            initmsg(fMessageType) << "value of <" << fName << "> is <" << fValue << ">";
+            if (fName.empty()) {
+                initmsg(fMessageType) << "assertion is ";
+            }
+            else {
+                initmsg(fMessageType) << "assertion of <" << fName << "> is ";
+            }
+            initmsg(fMessageType) << (fAssertCondition ? "true" : "false");
+
+            if (!fAssertCondition) {
+                fMessageType = eError;
+            }
         }
 
         if (fMessageType == eError) {
@@ -166,6 +217,8 @@ void KPrintProcessor::ProcessToken(KEndElementToken* aToken)
 
         fName.clear();
         fValue.clear();
+        fAssertCondition = false;
+        fCheckAssertCondition = false;
         fElementState = eElementInactive;
         fMessageType = eNormal;
         return;

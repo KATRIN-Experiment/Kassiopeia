@@ -15,7 +15,7 @@ using namespace std;
 class A
 {
   public:
-    virtual ~A() {}
+    virtual ~A() = default;
     virtual void printName()
     {
         cout << "Class A" << endl;
@@ -25,14 +25,14 @@ class A
 class B : public A
 {
   public:
-    ~B() override {}
+    ~B() override = default;
     void printName() override
     {
         cout << "Class B" << endl;
     }
 };
 
-int main(int, char**)
+int main(int /*unused*/, char** /*unused*/)
 {
     KSmartPointer<A> ptr = nullptr;
     ptr = new A;

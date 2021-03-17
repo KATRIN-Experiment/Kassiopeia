@@ -4,16 +4,19 @@
 
 #include <cmath>
 
+using KGeoBag::KThreeMatrix;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSTrajControlMDot::KSTrajControlMDot() : fFraction(1. / 16.) {}
-KSTrajControlMDot::KSTrajControlMDot(const KSTrajControlMDot& aCopy) : KSComponent(), fFraction(aCopy.fFraction) {}
+KSTrajControlMDot::KSTrajControlMDot(const KSTrajControlMDot& aCopy) : KSComponent(aCopy), fFraction(aCopy.fFraction) {}
 KSTrajControlMDot* KSTrajControlMDot::Clone() const
 {
     return new KSTrajControlMDot(*this);
 }
-KSTrajControlMDot::~KSTrajControlMDot() {}
+KSTrajControlMDot::~KSTrajControlMDot() = default;
 
 void KSTrajControlMDot::Calculate(const KSTrajAdiabaticSpinParticle& aParticle, double& aValue)
 {

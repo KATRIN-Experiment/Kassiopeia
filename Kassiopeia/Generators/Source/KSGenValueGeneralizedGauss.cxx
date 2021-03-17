@@ -16,7 +16,7 @@ KSGenValueGeneralizedGauss::KSGenValueGeneralizedGauss() :
     fSolver()
 {}
 KSGenValueGeneralizedGauss::KSGenValueGeneralizedGauss(const KSGenValueGeneralizedGauss& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueMin(aCopy.fValueMin),
     fValueMax(aCopy.fValueMax),
     fValueMean(aCopy.fValueMean),
@@ -28,15 +28,15 @@ KSGenValueGeneralizedGauss* KSGenValueGeneralizedGauss::Clone() const
 {
     return new KSGenValueGeneralizedGauss(*this);
 }
-KSGenValueGeneralizedGauss::~KSGenValueGeneralizedGauss() {}
+KSGenValueGeneralizedGauss::~KSGenValueGeneralizedGauss() = default;
 
-void KSGenValueGeneralizedGauss::DiceValue(vector<double>& aDicedValues)
+void KSGenValueGeneralizedGauss::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 
     if (fValueMin == fValueMax) {
         double tValueGauss = KRandom::GetInstance().Uniform(0., 1.);
-        fSolver.Solve(KMathBracketingSolver::eBrent,
+        fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                       this,
                       &KSGenValueGeneralizedGauss::ValueFunction,
                       tValueGauss,
@@ -48,7 +48,7 @@ void KSGenValueGeneralizedGauss::DiceValue(vector<double>& aDicedValues)
         double tValueGaussMin = ValueFunction(fValueMin);
         double tValueGaussMax = ValueFunction(fValueMax);
         double tValueGauss = KRandom::GetInstance().Uniform(tValueGaussMin, tValueGaussMax);
-        fSolver.Solve(KMathBracketingSolver::eBrent,
+        fSolver.Solve(katrin::KMathBracketingSolver::eBrent,
                       this,
                       &KSGenValueGeneralizedGauss::ValueFunction,
                       tValueGauss,

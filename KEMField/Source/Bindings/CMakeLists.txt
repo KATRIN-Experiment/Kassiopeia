@@ -108,7 +108,7 @@ add_cflag (KEMFIELD_USE_KOMMON_BINDINGS)
         )
     endif (${PROJECT_NAME}_USE_VTK)
 
-  add_library (KEMFieldBindings SHARED ${KEMFIELD_BINDINGS_SOURCEFILES})
+  add_library (KEMFieldBindings SHARED ${KEMFIELD_BINDINGS_SOURCEFILES} ${KEMFIELD_BINDINGS_HEADERFILES})
   target_link_libraries (KEMFieldBindings
       ${Kommon_LIBRARIES}
       ${KGeoBag_LIBRARIES}

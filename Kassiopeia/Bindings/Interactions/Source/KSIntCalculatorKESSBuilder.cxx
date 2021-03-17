@@ -17,8 +17,8 @@ KSIntCalculatorKESSSet::KSIntCalculatorKESSSet() :
 {}
 KSIntCalculatorKESSSet::~KSIntCalculatorKESSSet()
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        delete (*tIt);
+    for (auto& calculator : fCalculators) {
+        delete calculator;
     }
 }
 
@@ -32,20 +32,20 @@ void KSIntCalculatorKESSSet::AddCalculator(KSIntCalculator* aCalculator)
 
 void KSIntCalculatorKESSSet::ReleaseCalculators(KSIntScattering* aScattering)
 {
-    for (auto tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
-        aScattering->AddCalculator(*tIt);
+    for (auto& calculator : fCalculators) {
+        aScattering->AddCalculator(calculator);
     }
     fCalculators.clear();
     return;
 }
 
-template<> KSIntCalculatorKESSSetBuilder::~KComplexElement() {}
+template<> KSIntCalculatorKESSSetBuilder::~KComplexElement() = default;
 
 static int __attribute__((__unused__)) sKSIntCalculatorKESSStructure =
-    KSIntCalculatorKESSSetBuilder::Attribute<string>("name") +
+    KSIntCalculatorKESSSetBuilder::Attribute<std::string>("name") +
     KSIntCalculatorKESSSetBuilder::Attribute<bool>("elastic") +
-    KSIntCalculatorKESSSetBuilder::Attribute<string>("inelastic") +
+    KSIntCalculatorKESSSetBuilder::Attribute<std::string>("inelastic") +
     KSIntCalculatorKESSSetBuilder::Attribute<bool>("photo_absorbtion") +
-    KSIntCalculatorKESSSetBuilder::Attribute<string>("auger_relaxation");
+    KSIntCalculatorKESSSetBuilder::Attribute<std::string>("auger_relaxation");
 
 }  // namespace katrin

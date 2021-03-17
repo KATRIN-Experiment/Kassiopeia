@@ -22,12 +22,10 @@ class KSMathControl<KSMathSystem<XValueType, XDerivativeType, XErrorType>>
 };
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathControl<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathControl()
-{}
+KSMathControl<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathControl() = default;
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathControl<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathControl()
-{}
+KSMathControl<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathControl() = default;
 
 }  // namespace Kassiopeia
 

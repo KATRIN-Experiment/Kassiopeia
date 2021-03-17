@@ -12,7 +12,7 @@ using namespace KEMField;
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    KFMGaussLegendreQuadratureTableCalculator* calc = new KFMGaussLegendreQuadratureTableCalculator();
+    auto* calc = new KFMGaussLegendreQuadratureTableCalculator();
 
     std::vector<double> w;
     std::vector<double> x;

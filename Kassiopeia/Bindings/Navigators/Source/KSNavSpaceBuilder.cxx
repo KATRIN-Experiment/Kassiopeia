@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSNavSpaceBuilder::~KComplexElement() {}
+template<> KSNavSpaceBuilder::~KComplexElement() = default;
 
 STATICINT sKSNavSpaceStructure =
-    KSNavSpaceBuilder::Attribute<string>("name") + KSNavSpaceBuilder::Attribute<bool>("enter_split") +
+    KSNavSpaceBuilder::Attribute<std::string>("name") + KSNavSpaceBuilder::Attribute<bool>("enter_split") +
     KSNavSpaceBuilder::Attribute<bool>("exit_split") + KSNavSpaceBuilder::Attribute<bool>("fail_check") +
     KSNavSpaceBuilder::Attribute<double>("tolerance");
 

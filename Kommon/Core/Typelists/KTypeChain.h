@@ -16,14 +16,14 @@ class KSingleChain<XContainer, KTypeList<XType, XNextType>> :
 {
   public:
     KSingleChain() : XContainer<XType>(), KSingleChain<XContainer, XNextType>() {}
-    virtual ~KSingleChain() {}
+    virtual ~KSingleChain() = default;
 };
 
 template<template<class> class XContainer> class KSingleChain<XContainer, KTypeNull>
 {
   public:
-    KSingleChain() {}
-    virtual ~KSingleChain() {}
+    KSingleChain() = default;
+    virtual ~KSingleChain() = default;
 };
 
 
@@ -39,7 +39,7 @@ class KSingleChainSingleParameter<XContainer, XParameter, KTypeList<XType, XNext
         XContainer<XParameter, XType>(),
         KSingleChainSingleParameter<XContainer, XParameter, XNextType>()
     {}
-    virtual ~KSingleChainSingleParameter() {}
+    virtual ~KSingleChainSingleParameter() = default;
 };
 
 template<template<class, class> class XContainer, class XParameter, class XType>
@@ -48,7 +48,7 @@ class KSingleChainSingleParameter<XContainer, XParameter, KTypeList<XType, KType
 {
   public:
     KSingleChainSingleParameter() : XContainer<XParameter, XType>() {}
-    virtual ~KSingleChainSingleParameter() {}
+    virtual ~KSingleChainSingleParameter() = default;
 };
 
 
@@ -64,7 +64,7 @@ class KSingleChainDoubleParameter<XContainer, XParameter, KTypeList<XType, XNext
         XContainer<XParameter, XType>(),
         KSingleChainDoubleParameter<XContainer, XParameter, XNextType>()
     {}
-    virtual ~KSingleChainDoubleParameter() {}
+    virtual ~KSingleChainDoubleParameter() = default;
 };
 
 template<template<class, class> class XContainer, class XParameter, class XType>
@@ -73,7 +73,7 @@ class KSingleChainDoubleParameter<XContainer, XParameter, KTypeList<XType, KType
 {
   public:
     KSingleChainDoubleParameter() : XContainer<XParameter, XType>() {}
-    virtual ~KSingleChainDoubleParameter() {}
+    virtual ~KSingleChainDoubleParameter() = default;
 };
 
 }  // namespace katrin

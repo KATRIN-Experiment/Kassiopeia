@@ -89,7 +89,7 @@ double kfm_vector_norm(const kfm_vector* a)
 
 kfm_vector* kfm_vector_alloc(unsigned int n)
 {
-    kfm_vector* v = new kfm_vector();
+    auto* v = new kfm_vector();
     v->size = n;
     v->data = new double[n];
     return v;
@@ -98,9 +98,9 @@ kfm_vector* kfm_vector_alloc(unsigned int n)
 
 kfm_vector* kfm_vector_calloc(unsigned int n)
 {
-    kfm_vector* v = new kfm_vector();
+    auto* v = new kfm_vector();
     v->size = n;
-    double* d = new double[n];
+    auto* d = new double[n];
     for (unsigned int i = 0; i < n; i++) {
         d[i] = 0.;
     }

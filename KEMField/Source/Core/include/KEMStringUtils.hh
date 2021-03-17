@@ -13,7 +13,7 @@
 namespace KEMField
 {
 
-bool endsWith(std::string aString, std::string ending);
+bool endsWith(const std::string& aString, const std::string& ending);
 
 } /* namespace KEMField */
 

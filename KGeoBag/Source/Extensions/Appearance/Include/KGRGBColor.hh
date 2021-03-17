@@ -2,13 +2,8 @@
 #define KGRBGCOLOR_HH_
 
 #include <istream>
-using std::istream;
-
 #include <ostream>
-using std::ostream;
-
 #include <sstream>
-using std::stringstream;
 
 namespace KGeoBag
 {
@@ -47,7 +42,7 @@ class KGRGBColor
     unsigned char fBlue;
 };
 
-inline istream& operator>>(istream& aStream, KGRGBColor& aColor)
+inline std::istream& operator>>(std::istream& aStream, KGRGBColor& aColor)
 {
     unsigned int tRed;
     unsigned int tGreen;
@@ -61,7 +56,7 @@ inline istream& operator>>(istream& aStream, KGRGBColor& aColor)
 
     return aStream;
 }
-inline ostream& operator<<(ostream& aStream, const KGRGBColor& aColor)
+inline std::ostream& operator<<(std::ostream& aStream, const KGRGBColor& aColor)
 {
     unsigned int tRed = aColor.GetRed();
     unsigned int tGreen = aColor.GetGreen();

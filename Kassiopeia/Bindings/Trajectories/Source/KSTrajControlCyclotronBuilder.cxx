@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlCyclotronBuilder::~KComplexElement() {}
+template<> KSTrajControlCyclotronBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajControlCyclotronStructure = KSTrajControlCyclotronBuilder::Attribute<string>("name") +
+STATICINT sKSTrajControlCyclotronStructure = KSTrajControlCyclotronBuilder::Attribute<std::string>("name") +
                                              KSTrajControlCyclotronBuilder::Attribute<double>("fraction");
 
 STATICINT sToolboxKSTrajControlCyclotron =

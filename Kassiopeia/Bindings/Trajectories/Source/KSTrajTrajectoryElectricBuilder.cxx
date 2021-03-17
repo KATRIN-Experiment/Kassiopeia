@@ -23,10 +23,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryElectricBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryElectricBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryElectricStructure =
-    KSTrajTrajectoryElectricBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryElectricBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryElectricBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryElectricBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +
     KSTrajTrajectoryElectricBuilder::ComplexElement<KSTrajIntegratorRKDP54>("integrator_rkdp54") +

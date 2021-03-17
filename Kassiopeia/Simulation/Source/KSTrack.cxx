@@ -25,7 +25,7 @@ KSTrack::KSTrack() :
     fParticleQueue()
 {}
 KSTrack::KSTrack(const KSTrack& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTrackId(aCopy.fTrackId),
     fTrackCount(aCopy.fTrackCount),
     fParentEventId(aCopy.fParentEventId),
@@ -69,7 +69,7 @@ KSTrack* KSTrack::Clone() const
 {
     return new KSTrack(*this);
 }
-KSTrack::~KSTrack() {}
+KSTrack::~KSTrack() = default;
 
 STATICINT sKSTrackDict =
     KSDictionary<KSTrack>::AddComponent(&KSTrack::GetTrackId, "track_id") +

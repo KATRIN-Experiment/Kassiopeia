@@ -6,7 +6,7 @@ namespace KGeoBag
 {
 
 KGAxialMeshLoop::KGAxialMeshLoop(const KTwoVector& aP0, const KTwoVector& aP1) : fP0(aP0), fP1(aP1) {}
-KGAxialMeshLoop::~KGAxialMeshLoop() {}
+KGAxialMeshLoop::~KGAxialMeshLoop() = default;
 
 double KGAxialMeshLoop::Area() const
 {

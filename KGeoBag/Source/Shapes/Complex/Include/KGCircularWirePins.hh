@@ -17,7 +17,7 @@ class KGCircularWirePins : public KGBoundary
 	 A class describing circular wire pins with a flat section profile
 	 */
   public:
-    KGCircularWirePins() {}
+    KGCircularWirePins() = default;
     KGCircularWirePins(double r1, double r2, unsigned int nPins, double diameter, double rotationAngle,
                        unsigned int nDisc, unsigned int nDiscPower) :
         fR1(r1),
@@ -29,7 +29,7 @@ class KGCircularWirePins : public KGBoundary
         fNDiscPower(nDiscPower)
     {}
 
-    ~KGCircularWirePins() override {}
+    ~KGCircularWirePins() override = default;
 
     static std::string Name()
     {
@@ -39,17 +39,17 @@ class KGCircularWirePins : public KGBoundary
     virtual KGCircularWirePins* Clone() const;
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
 
-    bool ContainsPoint(const double* P) const;
-    double DistanceTo(const double* P, double* P_in = nullptr, double* P_norm = nullptr) const;
+    static bool ContainsPoint(const double* P);
+    static double DistanceTo(const double* P, const double* P_in = nullptr, const double* P_norm = nullptr);
 
-    double GetLength() const;
-    double Area() const;
-    double Volume() const;
+    static double GetLength();
+    static double Area();
+    static double Volume();
 
     void SetR1(double d)
     {

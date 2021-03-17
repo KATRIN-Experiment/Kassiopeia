@@ -13,7 +13,7 @@
 #include "KOpenCLElectrostaticBoundaryIntegratorFactory.hh"
 #endif
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {
@@ -26,14 +26,14 @@ KElectrostaticBoundaryIntegratorPolicy::KElectrostaticBoundaryIntegratorPolicy()
 #endif
 {}
 
-KElectrostaticBoundaryIntegratorPolicy::KElectrostaticBoundaryIntegratorPolicy(std::string name) :
+KElectrostaticBoundaryIntegratorPolicy::KElectrostaticBoundaryIntegratorPolicy(const std::string& name) :
     fIntegratorCPU(KEBIFactory::Make(name))
 #ifdef KEMFIELD_USE_OPENCL
     ,
     fOpenCLIntegratorConfig(KOpenCLElectrostaticBoundaryIntegratorFactory::MakeConfig(name))
 #endif
 {
-    KEMField::cout << "Using boundary integrator policy: " << name << KEMField::endl;
+    kem_cout() << "Using boundary integrator policy: " << name << eom;
 }
 
 KElectrostaticBoundaryIntegrator KElectrostaticBoundaryIntegratorPolicy::CreateIntegrator()

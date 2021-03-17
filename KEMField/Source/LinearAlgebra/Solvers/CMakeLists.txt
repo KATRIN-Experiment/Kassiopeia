@@ -43,7 +43,7 @@ set( LINEARALGEBRASOLVERS_SOURCEFILES
 )
 
 # library
-add_library( KEMLinearAlgebraSolvers SHARED ${LINEARALGEBRASOLVERS_SOURCEFILES} )
+add_library( KEMLinearAlgebraSolvers SHARED ${LINEARALGEBRASOLVERS_SOURCEFILES} ${LINEARALGEBRASOLVERS_HEADERFILES} )
 set_target_properties( KEMLinearAlgebraSolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KEMLinearAlgebraSolvers 
     ${LINEARALGEBRASOLVERS_LIBRARIES}

@@ -12,7 +12,7 @@ STATICINT sKGShellArcSegmentSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGShellArcSegmentSurface>("shell_arc_segment_surface");
 
 STATICINT sKGShellArcSegmentSurfaceBuilderStructure =
-    KGShellArcSegmentSurfaceBuilder::Attribute<string>("name") +
+    KGShellArcSegmentSurfaceBuilder::Attribute<std::string>("name") +
     KGShellArcSegmentSurfaceBuilder::Attribute<double>("angle_start") +
     KGShellArcSegmentSurfaceBuilder::Attribute<double>("angle_stop") +
     KGShellArcSegmentSurfaceBuilder::Attribute<unsigned int>("shell_mesh_count") +

@@ -11,6 +11,10 @@
 #include <iostream>
 #include <limits>
 
+using namespace KGeoBag;
+using namespace katrin;
+using namespace std;
+
 namespace Kassiopeia
 {
 KSROOTMagFieldPainter::KSROOTMagFieldPainter() :
@@ -24,7 +28,7 @@ KSROOTMagFieldPainter::KSROOTMagFieldPainter() :
     fDraw("COLZ"),
     fMap()
 {}
-KSROOTMagFieldPainter::~KSROOTMagFieldPainter() {}
+KSROOTMagFieldPainter::~KSROOTMagFieldPainter() = default;
 
 void KSROOTMagFieldPainter::FieldMapZ(KSMagneticField* tMagField, double tDeltaZ, double tDeltaR)
 {
@@ -131,7 +135,8 @@ void KSROOTMagFieldPainter::FieldMapZ(KSMagneticField* tMagField, double tDeltaZ
                                     tMagneticField.Z() * tGradient[5]);
                         tGradB.SetZ(tMagneticField.X() * tGradient[6] + tMagneticField.Y() * tGradient[7] +
                                     tMagneticField.Z() * tGradient[8]);
-                        tGradB *= tMagneticField.Magnitude();
+                        if (tMagneticField.Magnitude() > 0)
+                            tGradB /= tMagneticField.Magnitude();
                         if (fPlot == "magnetic_gradient_abs") {
                             Map->SetBinContent(i + 1, fRsteps - j + 1, tGradB.Magnitude());
                             Map->SetBinContent(i + 1, fRsteps + j + 1, tGradB.Magnitude());
@@ -271,7 +276,8 @@ void KSROOTMagFieldPainter::FieldMapZ(KSMagneticField* tMagField, double tDeltaZ
                                     tMagneticField.Z() * tGradient[5]);
                         tGradB.SetZ(tMagneticField.X() * tGradient[6] + tMagneticField.Y() * tGradient[7] +
                                     tMagneticField.Z() * tGradient[8]);
-                        tGradB *= tMagneticField.Magnitude();
+                        if (tMagneticField.Magnitude() > 0)
+                            tGradB /= tMagneticField.Magnitude();
                         if (fPlot == "magnetic_gradient_abs") {
                             Map->SetBinContent(i + 1, fRsteps + j + 1, tGradB.Magnitude());
                         }

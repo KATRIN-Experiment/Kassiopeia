@@ -26,7 +26,7 @@ KLoopProcessor::KLoopProcessor() :
     fOldParent(nullptr)
 {}
 
-KLoopProcessor::~KLoopProcessor() {}
+KLoopProcessor::~KLoopProcessor() = default;
 
 void KLoopProcessor::ProcessToken(KBeginElementToken* aToken)
 {
@@ -259,8 +259,8 @@ void KLoopProcessor::ProcessToken(KEndElementToken* aToken)
                     tConverter.str("");
                     tConverter << tIndex;
 
-                    for (auto It = tTokens.begin(); It != tTokens.end(); It++) {
-                        tToken = (*It)->Clone();
+                    for (auto& It : tTokens) {
+                        tToken = It->Clone();
                         Evaluate(tToken, tVariable, tConverter.str());
                         Dispatch(tToken);
                         delete tToken;
@@ -278,8 +278,8 @@ void KLoopProcessor::ProcessToken(KEndElementToken* aToken)
                 }
 
                 //delete the old tokens (made with new during collection)
-                for (auto It = tTokens.begin(); It != tTokens.end(); It++) {
-                    delete *It;
+                for (auto& tToken : tTokens) {
+                    delete tToken;
                 }
 
                 return;

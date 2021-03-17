@@ -12,6 +12,11 @@ class KGAnnulusSurface : public KGRotatedLineSegmentSurface
     KGAnnulusSurface();
     ~KGAnnulusSurface() override;
 
+    static std::string Name()
+    {
+        return "annulus_surface";
+    }
+
   public:
     void Z(const double& aZ);
     void R1(const double& anR);

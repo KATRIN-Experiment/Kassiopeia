@@ -5,6 +5,7 @@
 #include "KBoundaryIntegralVector.hh"
 #include "KDataDisplay.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
 #include "KGBox.hh"
@@ -99,7 +100,7 @@ int main(int argc, char* argv[])
 #endif
     "\t -b, --integrator_type         (integrator_type 0=analytic, 1=RWG, 2=numeric)\n";
 
-    bool verbose = 1;
+    bool verbose = true;
     int scale = 1;
     int power = 1;
     double accuracy = 1.e-8;
@@ -111,18 +112,18 @@ int main(int argc, char* argv[])
     int integrator_type = 2;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"verbose", required_argument, 0, 'v'},
-        {"scale", required_argument, 0, 's'},
-        {"power", required_argument, 0, 'p'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"increment", required_argument, 0, 'i'},
-        {"save-increment", required_argument, 0, 'j'},
+        {"help", no_argument, nullptr, 'h'},
+        {"verbose", required_argument, nullptr, 'v'},
+        {"scale", required_argument, nullptr, 's'},
+        {"power", required_argument, nullptr, 'p'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"increment", required_argument, nullptr, 'i'},
+        {"save-increment", required_argument, nullptr, 'j'},
 #ifdef KEMFIELD_USE_VTK
-        {"with-plot", no_argument, 0, 'e'},
+        {"with-plot", no_argument, nullptr, 'e'},
 #endif
-        {"method", required_argument, 0, 'm'},
-        {"integrator_type", required_argument, 0, 'b'},
+        {"method", required_argument, nullptr, 'm'},
+        {"integrator_type", required_argument, nullptr, 'b'},
     };
 
 #ifdef KEMFIELD_USE_VTK
@@ -131,8 +132,8 @@ int main(int argc, char* argv[])
     static const char* optString = "hv:s:p:a:i:j:m:";
 #endif
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -144,7 +145,7 @@ int main(int argc, char* argv[])
 #endif
                 return 0;
             case ('v'):  // verbose
-                verbose = atoi(optarg);
+                verbose = (atoi(optarg) != 0);
                 break;
             case ('s'):
                 scale = atoi(optarg);
@@ -199,7 +200,7 @@ int main(int argc, char* argv[])
 #endif
 
     // Construct the shape
-    KGBox* box = new KGBox();
+    auto* box = new KGBox();
 
     box->SetX0(-.5);
     box->SetX1(.5);
@@ -216,14 +217,14 @@ int main(int argc, char* argv[])
     box->SetZMeshCount(scale);
     box->SetZMeshPower(power);
 
-    KGSurface* cube = new KGSurface(box);
+    auto* cube = new KGSurface(box);
     cube->SetName("box");
     cube->MakeExtension<KGMesh>();
     cube->MakeExtension<KGElectrostaticDirichlet>();
     cube->AsExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(1.);
 
     // Mesh the elements
-    KGMesher* mesher = new KGMesher();
+    auto* mesher = new KGMesher();
     cube->AcceptNode(mesher);
 
     KSurfaceContainer surfaceContainer;
@@ -291,16 +292,14 @@ int main(int argc, char* argv[])
 
         MPI_SINGLE_PROCESS
         {
-            KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>* tracker =
-                new KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>();
+            auto* tracker = new KIterationTracker<KElectrostaticBoundaryIntegrator::ValueType>();
             tracker->Interval(1);
             tracker->WriteInterval(5);
             tracker->MaxIterationStamps(10);
             robinHood.AddVisitor(tracker);
         }
 
-        KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>* stateWriter =
-            new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
+        auto* stateWriter = new KIterativeStateWriter<KElectrostaticBoundaryIntegrator::ValueType>(surfaceContainer);
         stateWriter->Interval(saveIncrement);
         robinHood.AddVisitor(stateWriter);
 
@@ -331,13 +330,13 @@ int main(int argc, char* argv[])
         KElectrostaticBoundaryIntegrator integrator{integratorSelection.Create()};
         KBoundaryIntegralMatrix<KElectrostaticBoundaryIntegrator> A(surfaceContainer, integrator);
 
-        KEMFieldCanvas* fieldCanvas = NULL;
+        KEMFieldCanvas* fieldCanvas = nullptr;
 
 #if defined(KEMFIELD_USE_VTK)
         fieldCanvas = new KEMVTKFieldCanvas(0., double(A.Dimension()), 0., double(A.Dimension()), 1.e30, true);
 #endif
 
-        if (fieldCanvas) {
+        if (fieldCanvas != nullptr) {
             std::vector<double> x_;
             std::vector<double> y_;
             std::vector<double> V_;

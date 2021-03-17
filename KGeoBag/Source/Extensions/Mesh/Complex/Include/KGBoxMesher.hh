@@ -13,8 +13,8 @@ class KGBoxMesher : virtual public KGComplexMesher, public KGBox::Visitor
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGBoxMesher() {}
-    ~KGBoxMesher() override {}
+    KGBoxMesher() = default;
+    ~KGBoxMesher() override = default;
 
   protected:
     void VisitBox(KGBox* box) override;

@@ -30,10 +30,11 @@ class KFMNamedScalarDataCollection : public KSAInputOutputObject
     {
         fCollectionName = "data";
     };
-    ~KFMNamedScalarDataCollection() override{};
+    ~KFMNamedScalarDataCollection() override = default;
+    ;
 
-    const KFMNamedScalarData* GetDataWithName(std::string name) const;
-    KFMNamedScalarData* GetDataWithName(std::string name);
+    const KFMNamedScalarData* GetDataWithName(const std::string& name) const;
+    KFMNamedScalarData* GetDataWithName(const std::string& name);
     void AddData(const KFMNamedScalarData& data);
 
     unsigned int GetNDataSets() const

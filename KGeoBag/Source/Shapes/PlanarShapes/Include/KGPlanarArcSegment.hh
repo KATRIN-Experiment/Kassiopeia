@@ -17,6 +17,11 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
                        const double& aRadius, const bool& isRight, const bool& isShort, const unsigned int aCount = 16);
     ~KGPlanarArcSegment() override;
 
+    static std::string Name()
+    {
+        return "arc_segment";
+    }
+
     KGPlanarArcSegment* Clone() const override;
     void CopyFrom(const KGPlanarArcSegment& aCopy);
 

@@ -31,8 +31,8 @@ class KFMSparseBoundaryIntegralMatrix_BlockCompressedRow : public KBoundaryInteg
 {
   public:
     typedef typename FastMultipoleIntegrator::Basis::ValueType ValueType;
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KFMSparseBoundaryIntegralMatrix_BlockCompressedRow(const KSurfaceContainer& c,
                                                        KSmartPointer<FastMultipoleIntegrator> integrator) :

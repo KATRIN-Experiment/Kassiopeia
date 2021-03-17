@@ -3,13 +3,9 @@
 namespace KEMField
 {
 
-KElectrostaticConstantField::KElectrostaticConstantField() : KElectrostaticField(), fField(), fLocation() {}
+KElectrostaticConstantField::KElectrostaticConstantField() = default;
 
-KElectrostaticConstantField::KElectrostaticConstantField(const KThreeVector& field) :
-    KElectrostaticField(),
-    fField(field),
-    fLocation()
-{}
+KElectrostaticConstantField::KElectrostaticConstantField(const KFieldVector& field) : fField(field) {}
 
 double KElectrostaticConstantField::PotentialCore(const KPosition& aSamplePoint) const
 {
@@ -17,16 +13,16 @@ double KElectrostaticConstantField::PotentialCore(const KPosition& aSamplePoint)
     return fField.Dot(FieldPoint) + fPotentialOffset;
 }
 
-KThreeVector KElectrostaticConstantField::ElectricFieldCore(const KPosition& /*aSamplePoint*/) const
+KFieldVector KElectrostaticConstantField::ElectricFieldCore(const KPosition& /*aSamplePoint*/) const
 {
     return fField;
 }
 
-void KElectrostaticConstantField::SetField(KThreeVector field)
+void KElectrostaticConstantField::SetField(const KFieldVector& field)
 {
     fField = field;
 }
-KThreeVector KElectrostaticConstantField::GetField() const
+KFieldVector KElectrostaticConstantField::GetField() const
 {
     return fField;
 }
@@ -35,7 +31,7 @@ void KElectrostaticConstantField::SetLocation(const KPosition& aLocation)
 {
     fLocation = aLocation;
 }
-KThreeVector KElectrostaticConstantField::GetLocation() const
+KFieldVector KElectrostaticConstantField::GetLocation() const
 {
     return fLocation;
 }

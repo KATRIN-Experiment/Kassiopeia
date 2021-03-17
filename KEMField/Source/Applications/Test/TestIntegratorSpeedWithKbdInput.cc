@@ -5,6 +5,7 @@
 
 #include "KBinaryDataStreamer.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KSADataStreamer.hh"
@@ -13,13 +14,13 @@
 #include "KTypelist.hh"
 
 #include <cstdlib>
+#include <ctime>
 #include <getopt.h>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
-#include <time.h>
 #include <vector>
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -66,17 +67,17 @@ int main(int argc, char* argv[])
                         "\t -n, --name               (name of the surface container inside kbd file)\n"
                         "\n";
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"file", required_argument, 0, 'f'},
-                                          {"name", required_argument, 0, 'n'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"file", required_argument, nullptr, 'f'},
+                                          {"name", required_argument, nullptr, 'n'}};
 
     static const char* optString = "h:f:n:";
 
-    std::string inFile = "";
+    std::string inFile;
     std::string containerName = "surfaceContainer";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -95,7 +96,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string suffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -115,7 +116,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }
@@ -124,7 +125,7 @@ int main(int argc, char* argv[])
     KEMFileInterface::GetInstance()->Inspect(inFile);
 
     // now read in the surface containers
-    KSurfaceContainer* surfaceContainer = new KSurfaceContainer();
+    auto* surfaceContainer = new KSurfaceContainer();
     KEMFileInterface::GetInstance()->Read(inFile, *surfaceContainer, containerName);
 
     std::cout << "Surface container with name " << containerName << " in file has size: " << surfaceContainer->size()
@@ -136,7 +137,7 @@ int main(int argc, char* argv[])
     const double cylR(3.5);
     const unsigned int noPoints(100);
 
-    double* fieldPoints = new double[3 * noPoints];
+    auto* fieldPoints = new double[3 * noPoints];
 
     for (unsigned int i = 0; i < noPoints; i++) {
         IJKLRANDOM = i + 1;
@@ -149,7 +150,7 @@ int main(int argc, char* argv[])
         fieldPoints[(i * 3) + 1] = sin(phi) * r;                       // y
         fieldPoints[(i * 3) + 2] = cylZmin + z * (cylZmax - cylZmin);  // z
 
-        //KEMField::cout << KThreeVector(fieldPoints[(i*3)],fieldPoints[(i*3)+1],fieldPoints[(i*3)+2]) << KEMField::endl;
+        //KEMField::cout << KFieldVector(fieldPoints[(i*3)],fieldPoints[(i*3)+1],fieldPoints[(i*3)+2]) << KEMField::endl;
     }
 
 #ifdef KEMFIELD_USE_OPENCL
@@ -171,7 +172,7 @@ int main(int argc, char* argv[])
     fOpenCLIntegratingFieldSolver->Initialize();
 #else
     KElectrostaticBoundaryIntegrator intNum{KEBIFactory::MakeRWG()};
-    KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>* fIntegratingFieldSolver =
+    auto* fIntegratingFieldSolver =
         new KIntegratingFieldSolver<KElectrostaticBoundaryIntegrator>(*surfaceContainer, intNum);
 #endif
     double totalTime = 0.;
@@ -179,11 +180,11 @@ int main(int argc, char* argv[])
         StartTimer();
 #ifdef KEMFIELD_USE_OPENCL
         fOpenCLIntegratingFieldSolver->ElectricFieldAndPotential(
-            KThreeVector(fieldPoints[(i * 3)], fieldPoints[(i * 3) + 1], fieldPoints[(i * 3) + 2]));
-        //fOpenCLIntegratingFieldSolver->Potential( KThreeVector(fieldPoints[(i*3)],fieldPoints[(i*3)+1],fieldPoints[(i*3)+2]) );
+            KFieldVector(fieldPoints[(i * 3)], fieldPoints[(i * 3) + 1], fieldPoints[(i * 3) + 2]));
+        //fOpenCLIntegratingFieldSolver->Potential( KFieldVector(fieldPoints[(i*3)],fieldPoints[(i*3)+1],fieldPoints[(i*3)+2]) );
 #else
         fIntegratingFieldSolver->ElectricFieldAndPotentialNoKahanSum(
-            KThreeVector(fieldPoints[(i * 3)], fieldPoints[(i * 3) + 1], fieldPoints[(i * 3) + 2]));
+            KFieldVector(fieldPoints[(i * 3)], fieldPoints[(i * 3) + 1], fieldPoints[(i * 3) + 2]));
         totalTime += Time();
 #endif
     }
@@ -272,7 +273,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 ////////////////////////////////////////////////////////////////

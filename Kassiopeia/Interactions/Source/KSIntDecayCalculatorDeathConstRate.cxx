@@ -19,7 +19,7 @@ KSIntDecayCalculatorDeathConstRate::KSIntDecayCalculatorDeathConstRate() :
 
 KSIntDecayCalculatorDeathConstRate::KSIntDecayCalculatorDeathConstRate(
     const KSIntDecayCalculatorDeathConstRate& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLifeTime(aCopy.fLifeTime),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
@@ -32,7 +32,7 @@ KSIntDecayCalculatorDeathConstRate* KSIntDecayCalculatorDeathConstRate::Clone() 
     return new KSIntDecayCalculatorDeathConstRate(*this);
 }
 
-KSIntDecayCalculatorDeathConstRate::~KSIntDecayCalculatorDeathConstRate() {}
+KSIntDecayCalculatorDeathConstRate::~KSIntDecayCalculatorDeathConstRate() = default;
 
 void KSIntDecayCalculatorDeathConstRate::CalculateLifeTime(const KSParticle& aParticle, double& aLifeTime)
 {
@@ -56,7 +56,7 @@ void KSIntDecayCalculatorDeathConstRate::ExecuteInteraction(const KSParticle& an
     if ((anInitialParticle.GetPID() == fTargetPID && fTargetPID != 0) ||
         ((anInitialParticle.GetPID() >= fminPID) && (anInitialParticle.GetPID() <= fmaxPID))) {
         double tTime = aFinalParticle.GetTime();
-        KThreeVector tPosition = aFinalParticle.GetPosition();
+        KGeoBag::KThreeVector tPosition = aFinalParticle.GetPosition();
 
         aFinalParticle.SetLabel(GetName());
         aFinalParticle.SetActive(false);

@@ -17,7 +17,7 @@ namespace KEMField
 class KTimer
 {
   public:
-    KTimer(std::string timedActionDescription);
+    KTimer(const std::string& timedActionDescription);
     virtual ~KTimer();
     void start();
     void end();

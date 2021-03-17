@@ -6,13 +6,15 @@
 #include <limits>
 
 using namespace std;
+using KGeoBag::KGSurface;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 
 KSGeoSide::KSGeoSide() : fOutsideParent(nullptr), fInsideParent(nullptr), fContents() {}
 KSGeoSide::KSGeoSide(const KSGeoSide& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fOutsideParent(nullptr),
     fInsideParent(nullptr),
     fContents(aCopy.fContents)
@@ -21,7 +23,7 @@ KSGeoSide* KSGeoSide::Clone() const
 {
     return new KSGeoSide(*this);
 }
-KSGeoSide::~KSGeoSide() {}
+KSGeoSide::~KSGeoSide() = default;
 
 void KSGeoSide::On() const
 {

@@ -25,7 +25,7 @@ class KGNavigableMeshElement
     void SetMeshElement(KGMeshRectangle* rectange);
     void SetMeshElement(KGMeshWire* wire);
 
-    short GetMeshElementType();
+    short GetMeshElementType() const;
     const KGMeshElement* GetMeshElement() const;
 
     void SetID(unsigned int id)

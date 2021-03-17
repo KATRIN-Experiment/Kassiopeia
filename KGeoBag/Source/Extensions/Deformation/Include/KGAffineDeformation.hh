@@ -13,13 +13,13 @@ class KGAffineDeformation : public KGDeformation
     KGAffineDeformation();
     KGAffineDeformation(const KGAffineDeformation& affine);
 
-    ~KGAffineDeformation() override {}
+    ~KGAffineDeformation() override = default;
 
     void SetLinearMap(const KThreeMatrix& map)
     {
         fLinearMap = map;
     }
-    void SetTranslation(const KThreeVector& t)
+    void SetTranslation(const KGeoBag::KThreeVector& t)
     {
         fTranslation = t;
     }
@@ -28,7 +28,7 @@ class KGAffineDeformation : public KGDeformation
 
   private:
     KThreeMatrix fLinearMap;
-    KThreeVector fTranslation;
+    KGeoBag::KThreeVector fTranslation;
 };
 }  // namespace KGeoBag
 

@@ -5,8 +5,8 @@ namespace KGeoBag
 
 KGRGBColor::KGRGBColor() : fRed(127), fGreen(127), fBlue(127) {}
 KGRGBColor::KGRGBColor(int aRed, int aGreen, int aBlue) : fRed(aRed), fGreen(aGreen), fBlue(aBlue) {}
-KGRGBColor::KGRGBColor(const KGRGBColor& aColor) : fRed(aColor.fRed), fGreen(aColor.fGreen), fBlue(aColor.fBlue) {}
-KGRGBColor::~KGRGBColor() {}
+KGRGBColor::KGRGBColor(const KGRGBColor&) = default;
+KGRGBColor::~KGRGBColor() = default;
 
 void KGRGBColor::SetRed(const unsigned char& aRed)
 {

@@ -9,7 +9,7 @@ KSReadStepROOT::KSReadStepROOT(TFile* aFile) :
 {
     fData->SetBranchAddress("STEP_INDEX", &fStepIndex);
 }
-KSReadStepROOT::~KSReadStepROOT() {}
+KSReadStepROOT::~KSReadStepROOT() = default;
 
 unsigned int KSReadStepROOT::GetStepIndex() const
 {

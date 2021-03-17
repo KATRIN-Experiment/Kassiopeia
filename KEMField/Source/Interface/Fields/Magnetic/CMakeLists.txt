@@ -37,7 +37,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${FIELDS_MAGNETIC_HEADER_PATH} )
-add_library( KEMFieldsMagnetic SHARED ${FIELDS_MAGNETIC_SOURCE_FILENAMES} )
+add_library( KEMFieldsMagnetic SHARED ${FIELDS_MAGNETIC_SOURCE_FILENAMES} ${FIELDS_MAGNETIC_HEADER_FILENAMES} )
 set_target_properties( KEMFieldsMagnetic PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KEMFieldsMagnetic
     KEMFieldChargeDensitySolvers

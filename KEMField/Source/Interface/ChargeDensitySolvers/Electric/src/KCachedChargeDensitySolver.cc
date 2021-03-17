@@ -13,20 +13,22 @@
 namespace KEMField
 {
 
-KCachedChargeDensitySolver::KCachedChargeDensitySolver() : fName(), fHash() {}
-KCachedChargeDensitySolver::~KCachedChargeDensitySolver() {}
+KCachedChargeDensitySolver::KCachedChargeDensitySolver() = default;
+KCachedChargeDensitySolver::~KCachedChargeDensitySolver() = default;
 void KCachedChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
     bool tSolution = false;
 
-    if ((fName.size() == 0) && (fHash.size() == 0)) {
+    if ((fName.empty()) && (fHash.empty())) {
         throw KEMSimpleException("must provide a name or a hash for cached bem solution");
     }
 
-    if (fName.size() != 0) {
+    if (!fName.empty()) {
+        kem_cout_debug("cached charge density solver looking for solution with name <" << fName << "> ..." << eom);
         KEMFileInterface::GetInstance()->FindByName(container, fName, tSolution);
     }
-    else if (fHash.size() != 0) {
+    else if (!fHash.empty()) {
+        kem_cout_debug("cached charge density solver looking for solution with hash <" << fHash << "> ..." << eom);
         KEMFileInterface::GetInstance()->FindByHash(container, fHash, tSolution);
     }
 

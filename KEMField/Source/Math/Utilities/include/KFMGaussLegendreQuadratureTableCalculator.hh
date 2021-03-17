@@ -53,7 +53,7 @@ class KFMGaussLegendreQuadratureTableCalculator
     };
 
   private:
-    double Beta(unsigned int i);
+    static double Beta(unsigned int i);
 
     unsigned int fN;  //number terms in weight
     kfm_matrix* fJ;   //symmetric matrix to be decomposed

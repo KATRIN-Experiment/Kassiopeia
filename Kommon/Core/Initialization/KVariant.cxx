@@ -94,7 +94,7 @@ double KVariant::AsDouble() const
         return fPrimitive.fBoolValue ? 1 : 0;
     }
     else if (fType == Type_Long) {
-        return (long double) fPrimitive.fLongValue;
+        return (double) fPrimitive.fLongValue;
     }
     else if (fType == Type_Double) {
         return fPrimitive.fDoubleValue;

@@ -8,8 +8,8 @@
 namespace KGeoBag
 {
 
-KGComplexMesher::KGComplexMesher() : KGMesherBase() {}
-KGComplexMesher::~KGComplexMesher() {}
+KGComplexMesher::KGComplexMesher() = default;
+KGComplexMesher::~KGComplexMesher() = default;
 
 void KGComplexMesher::AddElement(KGMeshElement* e)
 {
@@ -105,8 +105,8 @@ void KGComplexMesher::DiscretizeInterval(double interval, int nSegments, double 
         }
 
         for (int i = 0; i < nSegments / 2; i++) {
-            inc1 = ((double) i) / (nSegments / 2);
-            inc2 = ((double) (i + 1)) / (nSegments / 2);
+            inc1 = ((double) i) / (int) (nSegments / 2);
+            inc2 = ((double) (i + 1)) / (int) (nSegments / 2);
 
             inc1 = pow(inc1, power);
             inc2 = pow(inc2, power);
@@ -153,8 +153,7 @@ void KGComplexMesher::RefineAndAddElement(KGMeshRectangle* rectangle, int nEleme
             dB += b[j];
 
             // add r to the vector
-            KGMeshRectangle* newRectangle =
-                new KGMeshRectangle(a_new, b_new, p0_new, rectangle->GetN1(), rectangle->GetN2());
+            auto* newRectangle = new KGMeshRectangle(a_new, b_new, p0_new, rectangle->GetN1(), rectangle->GetN2());
             AddElement(newRectangle);
         }
         dA += a[i];
@@ -196,7 +195,7 @@ void KGComplexMesher::RefineAndAddElement(KGMeshTriangle* triangle, int nElement
 
         // loop over the B dimension (n2)
         for (int j = 0; j < nElements - i; j++) {
-            KGMeshTriangle* newTriangle = new KGMeshTriangle(P0, P1, P2);
+            auto* newTriangle = new KGMeshTriangle(P0, P1, P2);
             AddElement(newTriangle);
 
             // if we are not at the top of the column, there is an inverted triangle
@@ -205,7 +204,7 @@ void KGComplexMesher::RefineAndAddElement(KGMeshTriangle* triangle, int nElement
                 for (int k = 0; k < 3; k++)
                     P0[k] += a.at(i) * triangle->GetN1()[k] + b.at(j) * triangle->GetN2()[k];
 
-                KGMeshTriangle* newTriangle2 = new KGMeshTriangle(P0, P1, P2);
+                auto* newTriangle2 = new KGMeshTriangle(P0, P1, P2);
                 AddElement(newTriangle2);
 
                 for (int k = 0; k < 3; k++) {
@@ -245,7 +244,7 @@ void KGComplexMesher::RefineAndAddElement(KGMeshWire* wire, int nElements, doubl
             A[j] = B[j];
             B[j] += inc[j][i];
         }
-        KGMeshWire* newWire = new KGMeshWire(A, B, wire->GetDiameter());
+        auto* newWire = new KGMeshWire(A, B, wire->GetDiameter());
         AddElement(newWire);
     }
 
@@ -256,7 +255,7 @@ void KGComplexMesher::RefineAndAddElement(KGMeshWire* wire, int nElements, doubl
             B[j] = A[j];
             A[j] -= inc[j][i];
         }
-        KGMeshWire* newWire = new KGMeshWire(A, B, wire->GetDiameter());
+        auto* newWire = new KGMeshWire(A, B, wire->GetDiameter());
         AddElement(newWire);
     }
 

@@ -4,16 +4,13 @@
 #include "KField.h"
 #include "KFile.h"
 #include "KWindow.h"
-
-#include <vector>
-using std::vector;
-
 #include "TApplication.h"
 #include "TCanvas.h"
 #include "TH2F.h"
 
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 
 namespace katrin
 {
@@ -41,11 +38,11 @@ class KROOTWindow : public KWindow
     TPad* GetPad();
 
   private:
-    typedef vector<KROOTPainter*> PainterVector;
-    typedef PainterVector::iterator PainterIt;
+    typedef std::vector<KROOTPainter*> PainterVector;
+    using PainterIt = PainterVector::iterator;
     PainterVector fPainters;
-    typedef vector<KROOTPad*> PadVector;
-    typedef PadVector::iterator PadIt;
+    using PadVector = std::vector<KROOTPad*>;
+    using PadIt = PadVector::iterator;
     PadVector fPads;
     TH2F* fFrame;
     TApplication* fApplication;

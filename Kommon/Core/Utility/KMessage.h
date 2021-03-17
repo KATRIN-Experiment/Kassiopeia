@@ -17,18 +17,13 @@
 
 namespace katrin
 {
-
-class KMessageNewline
-{};
-
-class KMessageOverline
-{};
-
-class KMessageNewlineEnd
-{};
-
-class KMessageOverlineEnd
-{};
+enum KMessageLineEnd : int
+{
+    eNewline = 0,
+    eOverline = 1,
+    eNewlineEnd = 10,
+    eOverlineEnd = 11,
+};
 
 enum KMessageSeverity : int
 {
@@ -39,21 +34,22 @@ enum KMessageSeverity : int
     eDebugMessage = 4,
 };
 
-typedef std::ios_base::fmtflags KMessageFormat;
-typedef std::streamsize KMessagePrecision;
-typedef std::pair<std::string, char> KMessageLine;
+using KMessageFormat = std::ios_base::fmtflags;
+using KMessagePrecision = std::streamsize;
+using KMessageLine = std::pair<std::string, std::string>;
 
 static const KMessageSeverity eError = KMessageSeverity::eErrorMessage;
 static const KMessageSeverity eWarning = KMessageSeverity::eWarningMessage;
 static const KMessageSeverity eNormal = KMessageSeverity::eNormalMessage;
 static const KMessageSeverity eInfo = KMessageSeverity::eInfoMessage;
 static const KMessageSeverity eDebug = KMessageSeverity::eDebugMessage;
-static const KMessageNewline ret = KMessageNewline();
-static const KMessageOverline rret = KMessageOverline();
-static const KMessageNewlineEnd eom = KMessageNewlineEnd();
-static const KMessageOverlineEnd reom = KMessageOverlineEnd();
+static const KMessageLineEnd ret = KMessageLineEnd::eNewline;
+static const KMessageLineEnd rret = KMessageLineEnd::eOverline;
+static const KMessageLineEnd eom = KMessageLineEnd::eNewlineEnd;
+static const KMessageLineEnd reom = KMessageLineEnd::eOverlineEnd;
 
 static const std::string NewLine = "\n";
+static const std::string OverLine = "\r";
 static const std::string TabIndent = "    ";
 
 class KMessage
@@ -84,27 +80,26 @@ class KMessage
 
   public:
     /**
-         * Helper function to convert typename to human-readable string, see: http://stackoverflow.com/a/19123821
-         */
+     * Helper function to convert typename to human-readable string, see: http://stackoverflow.com/a/19123821
+     */
     template<typename XDataType> static std::string TypeName();
 
   public:
-    KMessage& operator()(const KMessageSeverity&);
+    KMessage& operator()(const KMessageSeverity& = KMessageSeverity::eNormalMessage);
+    KMessage& operator<<(const KMessageSeverity& aSeverity);
+    KMessage& operator<<(const KMessageLineEnd& aLineEnd);
 
     template<class XPrintable> KMessage& operator<<(const XPrintable& aFragment);
-    KMessage& operator<<(const KMessageNewline&);
-    KMessage& operator<<(const KMessageOverline&);
-    KMessage& operator<<(const KMessageNewlineEnd&);
-    KMessage& operator<<(const KMessageOverlineEnd&);
 
   public:
     void SetSeverity(const KMessageSeverity& aSeverity);
+    void EndLine(const KMessageLineEnd& aLineEnd);
     void Flush();
 
   private:
     void Shutdown();
     void Stacktrace(std::ostream& aStream);
-
+    void ParserContext(std::ostream& aStream);
     std::string Prefix() const;
     std::string Suffix() const;
 
@@ -155,13 +150,20 @@ class KMessage
     void SetFormat(const KMessageFormat& aFormat);
     void SetPrecision(const KMessagePrecision& aPrecision);
     void SetShowShutdownMessage(bool aFlag = true);
+    void SetShowParserContext(bool aFlag = true);
     void SetTerminalVerbosity(const KMessageSeverity& aVerbosity);
     void SetTerminalStream(std::ostream* aTerminalStream);
     void SetLogVerbosity(const KMessageSeverity& aVerbosity);
     void SetLogStream(std::ostream* aLogStream);
 
+    const KMessageSeverity& GetTerminalVerbosity();
+    std::ostream* GetTerminalStream();
+    const KMessageSeverity& GetLogVerbosity();
+    std::ostream* GetLogStream();
+
   private:
     bool fShowShutdownMessage;
+    bool fShowParserContext;
     KMessageSeverity fTerminalVerbosity;
     std::ostream* fTerminalStream;
     KMessageSeverity fLogVerbosity;
@@ -185,40 +187,21 @@ inline KMessage& KMessage::operator()(const KMessageSeverity& aSeverity)
     SetSeverity(aSeverity);
     return *this;
 }
-
+inline KMessage& KMessage::operator<<(const KMessageSeverity& aSeverity)
+{
+    SetSeverity(aSeverity);
+    return *this;
+}
+inline KMessage& KMessage::operator<<(const KMessageLineEnd& aLineEnd)
+{
+    EndLine(aLineEnd);
+    if (aLineEnd >= eNewlineEnd)
+        Flush();
+    return *this;
+}
 template<class XPrintable> KMessage& KMessage::operator<<(const XPrintable& aFragment)
 {
     fMessageLine << aFragment;
-    return *this;
-}
-inline KMessage& KMessage::operator<<(const KMessageNewline&)
-{
-    fMessageLines.push_back(std::pair<std::string, char>(fMessageLine.str(), '\n'));
-    fMessageLine.clear();
-    fMessageLine.str("");
-    return *this;
-}
-inline KMessage& KMessage::operator<<(const KMessageOverline&)
-{
-    fMessageLines.push_back(std::pair<std::string, char>(fMessageLine.str(), '\r'));
-    fMessageLine.clear();
-    fMessageLine.str("");
-    return *this;
-}
-inline KMessage& KMessage::operator<<(const KMessageNewlineEnd&)
-{
-    fMessageLines.push_back(std::pair<std::string, char>(fMessageLine.str(), '\n'));
-    fMessageLine.clear();
-    fMessageLine.str("");
-    Flush();
-    return *this;
-}
-inline KMessage& KMessage::operator<<(const KMessageOverlineEnd&)
-{
-    fMessageLines.push_back(std::pair<std::string, char>(fMessageLine.str(), '\r'));
-    fMessageLine.clear();
-    fMessageLine.str("");
-    Flush();
     return *this;
 }
 
@@ -255,8 +238,9 @@ class KMessageTable : public KSingleton<KMessageTable>
 
   public:
     void Add(KMessage* aMessage);
-    KMessage* Get(const std::string& aKey);
     void Remove(KMessage* aMessage);
+    void Remove(const std::string& aKey);
+    KMessage* Get(const std::string& aKey);
 
     void SetFormat(const KMessageFormat& aFormat);
     const KMessageFormat& GetFormat() const;
@@ -266,6 +250,9 @@ class KMessageTable : public KSingleton<KMessageTable>
 
     void SetShowShutdownMessage(bool aFlag = true);
     bool GetShowShutdownMessage() const;
+
+    void SetShowParserContext(bool aFlag = true);
+    bool GetShowParserContext() const;
 
     void SetTerminalVerbosity(const KMessageSeverity& aVerbosity);
     const KMessageSeverity& GetTerminalVerbosity() const;
@@ -280,16 +267,17 @@ class KMessageTable : public KSingleton<KMessageTable>
     std::ostream* GetLogStream();
 
   private:
-    typedef std::map<std::string, KMessage*> MessageMap;
-    typedef MessageMap::value_type MessageEntry;
-    typedef MessageMap::iterator MessageIt;
-    typedef MessageMap::const_iterator MessageCIt;
+    using MessageMap = std::map<std::string, KMessage*>;
+    using MessageEntry = MessageMap::value_type;
+    using MessageIt = MessageMap::iterator;
+    using MessageCIt = MessageMap::const_iterator;
 
     MessageMap fMessageMap;
 
     KMessageFormat fFormat;
     KMessagePrecision fPrecision;
     bool fShowShutdownMessage;
+    bool fShowParserContext;
     KMessageSeverity fTerminalVerbosity;
     std::ostream* fTerminalStream;
     KMessageSeverity fLogVerbosity;

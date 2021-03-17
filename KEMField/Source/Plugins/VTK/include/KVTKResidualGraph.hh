@@ -27,7 +27,7 @@ template<typename ValueType> class KVTKResidualGraph : public KIterativeSolver<V
     {
         KIterativeSolver<ValueType>::Visitor::Interval(i);
     }
-    virtual ~KVTKResidualGraph() {}
+    virtual ~KVTKResidualGraph() = default;
 
     void InitializeGraph(unsigned int);
     void CreateGraph();

@@ -11,7 +11,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansion(const KPos
     if (UseCentralExpansion(P))
         return true;
 
-    for (auto& sub : fSubsetFieldSolvers) {
+    for (const auto& sub : fSubsetFieldSolvers) {
         if (sub->CentralExpansion(P))
             return true;
     }
@@ -24,7 +24,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansion(const KPosi
     if (UseRemoteExpansion(P))
         return true;
 
-    for (auto& sub : fSubsetFieldSolvers) {
+    for (const auto& sub : fSubsetFieldSolvers) {
         if (sub->UseRemoteExpansion(P))
             return true;
     }
@@ -44,7 +44,7 @@ double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition
         if (RemoteExpansionPotential(P, phi))
             return phi;
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         PotentialAccumulator accumulator(P);
 
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), phi, accumulator);
@@ -53,9 +53,9 @@ double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition
     return fIntegratingFieldSolver.Potential(P);
 }
 
-KThreeVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const KPosition& P) const
+KFieldVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const KPosition& P) const
 {
-    KThreeVector E;
+    KFieldVector E;
 
     if (UseCentralExpansion(P))
         if (CentralExpansionField(P, E))
@@ -65,7 +65,7 @@ KThreeVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const
         if (RemoteExpansionField(P, E))
             return E;
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         ElectricFieldAccumulator accumulator(P);
 
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), E, accumulator);
@@ -74,10 +74,10 @@ KThreeVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const
     return fIntegratingFieldSolver.ElectricField(P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const KPosition& P) const
 {
-    KThreeVector E;
+    KFieldVector E;
     double phi = 0;
 
     if (UseCentralExpansion(P))
@@ -88,7 +88,7 @@ KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const 
         if (RemoteExpansionFieldAndPotential(P, E, phi))
             return std::make_pair(E, phi);
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         ElectricFieldAndPotentialAccumulator accumulator(P);
 
         return std::accumulate(fSubsetFieldSolvers.begin(),
@@ -207,7 +207,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionPotential(c
 }
 
 bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionField(const KPosition& P,
-                                                                           KThreeVector& electricField) const
+                                                                           KFieldVector& electricField) const
 {
     if (fContainer.GetCentralSourcePoints().empty()) {
         electricField[0] = electricField[1] = electricField[2] = 0.;
@@ -336,7 +336,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionField(const
 }
 
 bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::CentralExpansionFieldAndPotential(const KPosition& P,
-                                                                                       KThreeVector& electricField,
+                                                                                       KFieldVector& electricField,
                                                                                        double& potential) const
 {
     if (fContainer.GetCentralSourcePoints().empty()) {
@@ -579,7 +579,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionPotential(co
 
 
 bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionField(const KPosition& P,
-                                                                          KThreeVector& electricField) const
+                                                                          KFieldVector& electricField) const
 {
     if (fContainer.GetRemoteSourcePoints().empty()) {
         electricField[0] = electricField[1] = electricField[2] = 0.;
@@ -705,7 +705,7 @@ bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionField(const 
 }
 
 bool KZonalHarmonicFieldSolver<KElectrostaticBasis>::RemoteExpansionFieldAndPotential(const KPosition& P,
-                                                                                      KThreeVector& electricField,
+                                                                                      KFieldVector& electricField,
                                                                                       double& potential) const
 {
     if (fContainer.GetRemoteSourcePoints().empty()) {

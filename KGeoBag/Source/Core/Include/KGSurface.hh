@@ -5,7 +5,7 @@
 namespace KGeoBag
 {
 
-class KGSurface : public KTagged
+class KGSurface : public katrin::KTagged
 {
   public:
     friend class KGSpace;
@@ -23,6 +23,11 @@ class KGSurface : public KTagged
     KGSurface();
     KGSurface(KGArea* anArea);
     ~KGSurface() override;
+
+    static std::string Name()
+    {
+        return "surface";
+    }
 
     //**********
     //extensible
@@ -62,16 +67,16 @@ class KGSurface : public KTagged
   public:
     void Transform(const KTransformation* aTransformation);
 
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
+    const KGeoBag::KThreeVector& GetOrigin() const;
+    const KGeoBag::KThreeVector& GetXAxis() const;
+    const KGeoBag::KThreeVector& GetYAxis() const;
+    const KGeoBag::KThreeVector& GetZAxis() const;
 
   protected:
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 
     //********
     //clonable
@@ -95,9 +100,9 @@ class KGSurface : public KTagged
     void Area(const std::shared_ptr<KGArea>& anArea);
     const std::shared_ptr<KGArea>& Area() const;
 
-    bool Above(const KThreeVector& aPoint) const;
-    KThreeVector Point(const KThreeVector& aPoint) const;
-    KThreeVector Normal(const KThreeVector& aPoint) const;
+    bool Above(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
 
   private:
     std::shared_ptr<KGArea> fArea;

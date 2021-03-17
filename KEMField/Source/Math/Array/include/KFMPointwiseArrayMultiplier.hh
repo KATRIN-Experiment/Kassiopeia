@@ -23,8 +23,10 @@ template<typename ArrayType, unsigned int NDIM>
 class KFMPointwiseArrayMultiplier : public KFMBinaryArrayOperator<ArrayType, NDIM>
 {
   public:
-    KFMPointwiseArrayMultiplier(){};
-    ~KFMPointwiseArrayMultiplier() override{};
+    KFMPointwiseArrayMultiplier() = default;
+    ;
+    ~KFMPointwiseArrayMultiplier() override = default;
+    ;
 
     void Initialize() override
     {

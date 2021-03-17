@@ -7,14 +7,16 @@
 
 #include "KEMSimpleException.hh"
 
+#include <utility>
+
 using namespace std;
 
 namespace KEMField
 {
 
-KEMSimpleException::KEMSimpleException(string information) : fInformation(information) {}
+KEMSimpleException::KEMSimpleException(const string& information) : fInformation(std::move(information)) {}
 
-KEMSimpleException::~KEMSimpleException() noexcept {}
+KEMSimpleException::~KEMSimpleException() noexcept = default;
 
 const char* KEMSimpleException::what() const noexcept
 {

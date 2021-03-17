@@ -40,7 +40,7 @@ template<size_t NDIM = 3> class KGPoint
         fData = p.fData;
     }
 
-    virtual ~KGPoint() {}
+    virtual ~KGPoint() = default;
 
     size_t GetDimension() const
     {

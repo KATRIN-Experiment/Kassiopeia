@@ -1,6 +1,9 @@
 #include "KEMTicker.hh"
 
+#include "KEMCoreMessage.hh"
+
 #include <cmath>
+#include <string>
 
 namespace KEMField
 {
@@ -10,6 +13,11 @@ void KTicker::StartTicker(double goal)
     fCounter = 0;
     if (fabs(goal) < 1.e-10)
         fNoGoal = true;
+
+    if (fNoGoal)
+        kem_cout(eNormal) << "[ ]" << reom;
+    else
+        kem_cout(eNormal) << "[0%]" << reom;
 }
 
 void KTicker::Tick(double progress) const
@@ -18,13 +26,13 @@ void KTicker::Tick(double progress) const
 
     if (fNoGoal) {
         if (fCounter % 4 == 0)
-            tickMark = "[|]\r";
+            tickMark = "[|]";
         else if (fCounter % 4 == 1)
-            tickMark = "[/]\r";
+            tickMark = "[/]";
         else if (fCounter % 4 == 2)
-            tickMark = "[-]\r";
+            tickMark = "[-]";
         else
-            tickMark = "[\\]\r";
+            tickMark = "[\\]";
         fCounter++;
     }
     else {
@@ -37,17 +45,16 @@ void KTicker::Tick(double progress) const
                 s << "  ";
             else if (counter < 100)
                 s << " ";
-            s << counter << "%]  \r";
+            s << counter << "%]  ";
             tickMark = s.str();
         }
     }
 
-    KEMField::cout << tickMark;
-    KEMField::cout.flush();
+    kem_cout(eNormal) << tickMark << reom;
 }
 
 void KTicker::EndTicker() const
 {
-    KEMField::cout << "[100%]" << KEMField::endl;
+    kem_cout(eNormal) << "[100%]" << eom;
 }
 }  // namespace KEMField

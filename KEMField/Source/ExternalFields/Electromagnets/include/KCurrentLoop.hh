@@ -19,7 +19,7 @@ class KCurrentLoop : public KElectromagnet
 {
   public:
     KCurrentLoop() : KElectromagnet(), fP(0., 0., 0.), fCurrent(0.) {}
-    ~KCurrentLoop() override {}
+    ~KCurrentLoop() override = default;
 
     static std::string Name()
     {

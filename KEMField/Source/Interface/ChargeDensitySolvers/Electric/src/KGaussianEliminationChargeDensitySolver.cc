@@ -17,9 +17,9 @@
 namespace KEMField
 {
 
-KGaussianEliminationChargeDensitySolver::KGaussianEliminationChargeDensitySolver() {}
+KGaussianEliminationChargeDensitySolver::KGaussianEliminationChargeDensitySolver() = default;
 
-KGaussianEliminationChargeDensitySolver::~KGaussianEliminationChargeDensitySolver() {}
+KGaussianEliminationChargeDensitySolver::~KGaussianEliminationChargeDensitySolver() = default;
 
 void KGaussianEliminationChargeDensitySolver::SetIntegratorPolicy(const KEBIPolicy& policy)
 {

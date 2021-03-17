@@ -32,14 +32,14 @@ class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
 
     void InitializeCore(KElectromagnetContainer& container) override;
 
-    KThreeVector MagneticPotentialCore(const KPosition& P) const override;
-    KThreeVector MagneticFieldCore(const KPosition& P) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& P) const override;
+    KFieldVector MagneticFieldCore(const KPosition& P) const override;
     KGradient MagneticGradientCore(const KPosition& P) const override;
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
+    std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
 
     KZonalHarmonicParameters* GetParameters()
     {
-        return fParameters;
+        return fParameters.get();
     }
 
 
@@ -47,7 +47,7 @@ class KZonalHarmonicMagnetostaticFieldSolver : public KMagneticFieldSolver
     KElectromagnetIntegrator fIntegrator;
     KZonalHarmonicContainer<KMagnetostaticBasis>* fZHContainer;
     KZonalHarmonicFieldSolver<KMagnetostaticBasis>* fZonalHarmonicFieldSolver;
-    KZonalHarmonicParameters* fParameters;
+    std::shared_ptr<KZonalHarmonicParameters> fParameters;
 };
 
 } /* namespace KEMField */

@@ -19,10 +19,10 @@ KFastMultipoleMatrixGenerator::KFastMultipoleMatrixGenerator() : fDirectIntegrat
     // TODO Auto-generated constructor stub
 }
 
-KFastMultipoleMatrixGenerator::~KFastMultipoleMatrixGenerator()
-{
-    // TODO Auto-generated destructor stub
-}
+KFastMultipoleMatrixGenerator::~KFastMultipoleMatrixGenerator() = default;
+//{
+//    TODO Auto-generated destructor stub
+//}
 
 KSmartPointer<KSquareMatrix<KFastMultipoleMatrixGenerator::ValueType>>
 KFastMultipoleMatrixGenerator::Build(const KSurfaceContainer& container) const
@@ -34,7 +34,7 @@ KFastMultipoleMatrixGenerator::Build(const KSurfaceContainer& container) const
 
 KSmartPointer<FastMultipoleMatrix>
 KFastMultipoleMatrixGenerator::CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                                            KSmartPointer<FastMultipoleEBI> fm_integrator) const
+                                            const KSmartPointer<FastMultipoleEBI>& fm_integrator) const
 {
     fm_integrator->Initialize(fParameters);
 

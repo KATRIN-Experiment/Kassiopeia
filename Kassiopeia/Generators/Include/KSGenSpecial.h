@@ -5,7 +5,6 @@
 #include "KSParticle.h"
 
 #include <vector>
-using std::vector;
 
 namespace Kassiopeia
 {

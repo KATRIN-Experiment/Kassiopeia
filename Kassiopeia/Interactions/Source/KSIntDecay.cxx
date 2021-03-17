@@ -15,7 +15,7 @@ namespace Kassiopeia
 KSIntDecay::KSIntDecay() : fSplit(false), fCalculator(nullptr), fCalculators(), fLifeTimes(), fEnhancement(1.) {}
 
 KSIntDecay::KSIntDecay(const KSIntDecay& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     KSComponentTemplate<KSIntDecay, KSSpaceInteraction>(aCopy),
     fSplit(aCopy.fSplit),
     fCalculator(aCopy.fCalculator),
@@ -29,19 +29,19 @@ KSIntDecay* KSIntDecay::Clone() const
     return new KSIntDecay(*this);
 }
 
-KSIntDecay::~KSIntDecay()
-{
-    //        for( unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++ )
-    //        {
-    //            delete (fCalculators.at( tIndex ));
-    //        }
-    //        fCalculators.clear();
-}
+KSIntDecay::~KSIntDecay() = default;
+//{
+//        for( unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++ )
+//        {
+//            delete (fCalculators.at( tIndex ));
+//        }
+//        fCalculators.clear();
+//}
 
-vector<double> KSIntDecay::CalculateLifetimes(const KSParticle& aTrajectoryInitialParticle)
+std::vector<double> KSIntDecay::CalculateLifetimes(const KSParticle& aTrajectoryInitialParticle)
 {
     double tInitialLifeTime;
-    vector<double> tLifetimes(fCalculators.size(), std::numeric_limits<double>::max());
+    std::vector<double> tLifetimes(fCalculators.size(), std::numeric_limits<double>::max());
 
     for (unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++) {
         fCalculators.at(tIndex)->CalculateLifeTime(aTrajectoryInitialParticle, tInitialLifeTime);
@@ -55,14 +55,14 @@ vector<double> KSIntDecay::CalculateLifetimes(const KSParticle& aTrajectoryIniti
 
 void KSIntDecay::CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
                                       const KSParticle& aTrajectoryFinalParticle,
-                                      const KThreeVector& /*aTrajectoryCenter*/, const double& /*aTrajectoryRadius*/,
-                                      const double& aTrajectoryTimeStep, KSParticle& anInteractionParticle,
-                                      double& aTimeStep, bool& aFlag)
+                                      const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
+                                      const double& /*aTrajectoryRadius*/, const double& aTrajectoryTimeStep,
+                                      KSParticle& anInteractionParticle, double& aTimeStep, bool& aFlag)
 {
     intmsg_debug("decay interaction <" << this->GetName() << "> calculating interaction:" << eom);
 
-    vector<double> tLifetimes = CalculateLifetimes(aTrajectoryInitialParticle);
-    vector<double> tTimes(fCalculators.size(), numeric_limits<double>::max());
+    std::vector<double> tLifetimes = CalculateLifetimes(aTrajectoryInitialParticle);
+    std::vector<double> tTimes(fCalculators.size(), numeric_limits<double>::max());
     for (unsigned int tIndex = 0; tIndex < fCalculators.size(); tIndex++) {
         tTimes.at(tIndex) = -1. * log(KRandom::GetInstance().Uniform(0., 1.)) * tLifetimes.at(tIndex) / fEnhancement;
         intmsg_debug("  decay time " << fCalculators.at(tIndex)->GetName() << ": " << tTimes.at(tIndex) << eom);
@@ -133,7 +133,7 @@ const bool& KSIntDecay::GetSplit() const
 void KSIntDecay::AddCalculator(KSIntDecayCalculator* aScatteringCalculator)
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator == aScatteringCalculator) {
@@ -152,7 +152,7 @@ void KSIntDecay::AddCalculator(KSIntDecayCalculator* aScatteringCalculator)
 void KSIntDecay::RemoveCalculator(KSIntDecayCalculator* aScatteringCalculator)
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator == aScatteringCalculator) {
@@ -176,7 +176,7 @@ void KSIntDecay::SetEnhancement(double anEnhancement)
 void KSIntDecay::InitializeComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -189,7 +189,7 @@ void KSIntDecay::InitializeComponent()
 void KSIntDecay::DeinitializeComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -202,7 +202,7 @@ void KSIntDecay::DeinitializeComponent()
 void KSIntDecay::ActivateComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -215,7 +215,7 @@ void KSIntDecay::ActivateComponent()
 void KSIntDecay::DeactivateComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -228,7 +228,7 @@ void KSIntDecay::DeactivateComponent()
 void KSIntDecay::PushUpdateComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {
@@ -241,7 +241,7 @@ void KSIntDecay::PushUpdateComponent()
 void KSIntDecay::PushDeupdateComponent()
 {
     KSIntDecayCalculator* tCalculator;
-    vector<KSIntDecayCalculator*>::iterator tIt;
+    std::vector<KSIntDecayCalculator*>::iterator tIt;
     for (tIt = fCalculators.begin(); tIt != fCalculators.end(); tIt++) {
         tCalculator = (*tIt);
         if (tCalculator != nullptr) {

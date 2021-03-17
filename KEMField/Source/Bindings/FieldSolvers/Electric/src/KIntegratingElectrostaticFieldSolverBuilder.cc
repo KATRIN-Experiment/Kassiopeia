@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KIntegratingElectrostaticFieldSolverBuilder::~KComplexElement() {}
+template<> KIntegratingElectrostaticFieldSolverBuilder::~KComplexElement() = default;
 
 STATICINT sKIntegratingElectrostaticFieldSolverStructure =
     KIntegratingElectrostaticFieldSolverBuilder::Attribute<std::string>("integrator") +

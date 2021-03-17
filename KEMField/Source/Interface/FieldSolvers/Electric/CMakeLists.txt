@@ -64,7 +64,7 @@ endif (${PROJECT_NAME}_USE_VTK)
 
 # library
 kasper_internal_include_directories( ${FIELDSOLVER_ELECTRIC_HEADER_PATH} )
-add_library( KEMElectricFieldSolvers SHARED ${FIELDSOLVER_ELECTRIC_SOURCE_FILENAMES} )
+add_library( KEMElectricFieldSolvers SHARED ${FIELDSOLVER_ELECTRIC_SOURCE_FILENAMES} ${FIELDSOLVER_ELECTRIC_HEADER_FILENAMES} )
 set_target_properties( KEMElectricFieldSolvers PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KEMElectricFieldSolvers
     ${FIELDSOLVER_ELECTRIC_LINK_LIBRARIES}

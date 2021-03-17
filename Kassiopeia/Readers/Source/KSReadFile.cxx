@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSReadFile::KSReadFile() {}
+KSReadFile::KSReadFile() = default;
 
-KSReadFile::~KSReadFile() {}
+KSReadFile::~KSReadFile() = default;
 
 }  // namespace Kassiopeia

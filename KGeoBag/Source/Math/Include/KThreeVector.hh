@@ -5,17 +5,11 @@
 #include "KHash.h"
 #include "KTwoVector.hh"
 
-#include <istream>
-using std::istream;
-
-#include <ostream>
-using std::ostream;
-
-#include <vector>
-using std::vector;
-
 #include <cassert>
 #include <cmath>
+#include <istream>
+#include <ostream>
+#include <vector>
 
 namespace KGeoBag
 {
@@ -47,13 +41,13 @@ class KThreeVector
     KThreeVector(const double anArray[3]);
     KThreeVector& operator=(const double anArray[3]);
 
-    KThreeVector(const vector<double>& aVector);
-    KThreeVector& operator=(const vector<double>& aVector);
+    KThreeVector(const std::vector<double>& aVector);
+    KThreeVector& operator=(const std::vector<double>& aVector);
 
     KThreeVector(const double& aX, const double& aY, const double& aZ);
     void SetComponents(const double& aX, const double& aY, const double& aZ);
     void SetComponents(const double aData[3]);
-    void SetComponents(const vector<double>& aData);
+    void SetComponents(const std::vector<double>& aData);
     void SetMagnitude(const double& aMagnitude);
     void SetX(const double& aX);
     void SetY(const double& aY);
@@ -84,7 +78,7 @@ class KThreeVector
     const double& GetZ() const;
 
     const double* Components() const;
-    const vector<double> ComponentVector() const;
+    const std::vector<double> ComponentVector() const;
 
     //comparison
 
@@ -94,6 +88,7 @@ class KThreeVector
 
     //properties
 
+    bool IsValid() const;
     double Dot(const KThreeVector& aVector) const;
     double Magnitude() const;
     double MagnitudeSquared() const;
@@ -127,6 +122,9 @@ inline KThreeVector::KThreeVector(const KThreeVector& aVector)
 }
 inline KThreeVector& KThreeVector::operator=(const KThreeVector& aVector)
 {
+    if (this == &aVector)
+        return *this;
+
     fData[0] = aVector.fData[0];
     fData[1] = aVector.fData[1];
     fData[2] = aVector.fData[2];
@@ -147,14 +145,14 @@ inline KThreeVector& KThreeVector::operator=(const double anArray[3])
     return *this;
 }
 
-inline KThreeVector::KThreeVector(const vector<double>& aVector)
+inline KThreeVector::KThreeVector(const std::vector<double>& aVector)
 {
     assert(aVector.size() == 3);
     fData[0] = aVector[0];
     fData[1] = aVector[1];
     fData[2] = aVector[2];
 }
-inline KThreeVector& KThreeVector::operator=(const vector<double>& aVector)
+inline KThreeVector& KThreeVector::operator=(const std::vector<double>& aVector)
 {
     assert(aVector.size() == 3);
     fData[0] = aVector[0];
@@ -181,7 +179,7 @@ inline void KThreeVector::SetComponents(const double aData[3])
     fData[1] = aData[1];
     fData[2] = aData[2];
 }
-inline void KThreeVector::SetComponents(const vector<double>& aData)
+inline void KThreeVector::SetComponents(const std::vector<double>& aData)
 {
     assert(aData.size() == 3);
     fData[0] = aData[0];
@@ -288,12 +286,18 @@ inline const double* KThreeVector::Components() const
 {
     return (const double*) fData;
 }
-inline const vector<double> KThreeVector::ComponentVector() const
+inline const std::vector<double> KThreeVector::ComponentVector() const
 {
-    vector<double> tData = {fData[0], fData[1], fData[2]};
+    std::vector<double> tData = {fData[0], fData[1], fData[2]};
     return tData;
 }
 
+inline bool KThreeVector::IsValid() const
+{
+    if (std::isfinite(fData[0]) && std::isfinite(fData[1]) && std::isfinite(fData[2]))
+        return true;
+    return false;
+}
 inline double KThreeVector::Dot(const KThreeVector& aVector) const
 {
     return (fData[0] * aVector.fData[0] + fData[1] * aVector.fData[1] + fData[2] * aVector.fData[2]);
@@ -482,12 +486,12 @@ inline KThreeVector& operator/=(KThreeVector& aVector, const double aScalar)
     return aVector;
 }
 
-inline istream& operator>>(istream& aStream, KThreeVector& aVector)
+inline std::istream& operator>>(std::istream& aStream, KThreeVector& aVector)
 {
     aStream >> aVector[0] >> aVector[1] >> aVector[2];
     return aStream;
 }
-inline ostream& operator<<(ostream& aStream, const KThreeVector& aVector)
+inline std::ostream& operator<<(std::ostream& aStream, const KThreeVector& aVector)
 {
     aStream << "<" << aVector[0] << " " << aVector[1] << " " << aVector[2] << ">";
     return aStream;

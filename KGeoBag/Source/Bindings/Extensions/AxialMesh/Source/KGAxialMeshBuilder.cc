@@ -8,23 +8,23 @@ using namespace KGeoBag;
 namespace KGeoBag
 {
 
-KGAxialMeshAttributor::KGAxialMeshAttributor() : fSurfaces(), fSpaces() {}
+KGAxialMeshAttributor::KGAxialMeshAttributor() = default;
 
 KGAxialMeshAttributor::~KGAxialMeshAttributor()
 {
     KGAxialMesher tMesher;
 
     KGAxialMeshSurface* tAxialMeshSurface;
-    for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-        tAxialMeshSurface = (*tIt)->MakeExtension<KGAxialMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& surface : fSurfaces) {
+        tAxialMeshSurface = surface->MakeExtension<KGAxialMesh>();
+        surface->AcceptNode(&tMesher);
         tAxialMeshSurface->SetName(GetName());
         tAxialMeshSurface->SetTags(GetTags());
     }
     KGAxialMeshSpace* tAxialMeshSpace;
-    for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-        tAxialMeshSpace = (*tIt)->MakeExtension<KGAxialMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& space : fSpaces) {
+        tAxialMeshSpace = space->MakeExtension<KGAxialMesh>();
+        space->AcceptNode(&tMesher);
         tAxialMeshSpace->SetName(GetName());
         tAxialMeshSpace->SetTags(GetTags());
     }
@@ -48,11 +48,11 @@ void KGAxialMeshAttributor::AddSpace(KGSpace* aSpace)
 namespace katrin
 {
 
-template<> KGAxialMeshBuilder::~KComplexElement() {}
+template<> KGAxialMeshBuilder::~KComplexElement() = default;
 
-STATICINT sKGAxialMeshStructure = KGAxialMeshBuilder::Attribute<string>("name") +
-                                  KGAxialMeshBuilder::Attribute<string>("surfaces") +
-                                  KGAxialMeshBuilder::Attribute<string>("spaces");
+STATICINT sKGAxialMeshStructure = KGAxialMeshBuilder::Attribute<std::string>("name") +
+                                  KGAxialMeshBuilder::Attribute<std::string>("surfaces") +
+                                  KGAxialMeshBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKGAxialMesh = KGInterfaceBuilder::ComplexElement<KGAxialMeshAttributor>("axial_mesh");
 

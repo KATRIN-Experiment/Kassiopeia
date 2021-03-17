@@ -27,7 +27,7 @@ class KSWriteROOTConditionTerminator : public KSComponentTemplate<KSWriteROOTCon
     {
         return new KSWriteROOTConditionTerminator(*this);
     }
-    ~KSWriteROOTConditionTerminator() override {}
+    ~KSWriteROOTConditionTerminator() override = default;
 
     void CalculateWriteCondition(bool& aFlag) override
     {

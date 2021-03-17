@@ -14,7 +14,7 @@ KElementBase::KElementBase() :
     fChildElement(nullptr),
     fElementDepth(0)
 {}
-KElementBase::~KElementBase() {}
+KElementBase::~KElementBase() = default;
 
 void KElementBase::ProcessToken(KBeginElementToken* aToken)
 {

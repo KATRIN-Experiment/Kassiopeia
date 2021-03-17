@@ -7,7 +7,7 @@
 
 #include "KElectricZHFieldSolver.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KEMFileInterface.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KElectrostaticZonalHarmonicFieldSolver.hh"
@@ -45,14 +45,15 @@ KElectricZHFieldSolver::KElectricZHFieldSolver() :
     fZHContainer(nullptr),
     fZonalHarmonicFieldSolver(nullptr)
 {
-    fParameters = new KZonalHarmonicParameters();
+    fParameters = std::make_shared<KZonalHarmonicParameters>();
 }
 
 KElectricZHFieldSolver::~KElectricZHFieldSolver()
 {
+
     delete fZHContainer;
+
     delete fZonalHarmonicFieldSolver;
-    delete fParameters;
 }
 
 void KElectricZHFieldSolver::InitializeCore(KSurfaceContainer& container)
@@ -61,13 +62,13 @@ void KElectricZHFieldSolver::InitializeCore(KSurfaceContainer& container)
     KMD5HashGenerator solutionHashGenerator;
     string solutionHash = solutionHashGenerator.GenerateHash(container);
 
-    //KEMField::cout << "<shape+boundary+solution> hash is <" << solutionHash << ">" << KEMField::endl;
+    kem_cout_debug("<shape+boundary+solution> hash is <" << solutionHash << ">" << eom);
 
     // compute hash of the parameter values on the bare geometry
     KMD5HashGenerator parameterHashGenerator;
     string parameterHash = parameterHashGenerator.GenerateHash(*fParameters);
 
-    //KEMField::cout << "<parameter> hash is <" << parameterHash << ">" << KEMField::endl;
+    kem_cout_debug("<parameter> hash is <" << parameterHash << ">" << eom);
 
     // create label set for zh container object
     string zhContainerBase(KZonalHarmonicContainer<KElectrostaticBasis>::Name());
@@ -77,17 +78,23 @@ void KElectricZHFieldSolver::InitializeCore(KSurfaceContainer& container)
     zhContainerLabels.push_back(solutionHash);
     zhContainerLabels.push_back(parameterHash);
 
+    // BUG: KZonalHarmonicContainer might delete fParameters
     fZHContainer = new KZonalHarmonicContainer<KElectrostaticBasis>(container, fParameters);
 
     bool containerFound = false;
+    string containerFilename;
 
-    KEMFileInterface::GetInstance()->FindByLabels(*fZHContainer, zhContainerLabels, 0, containerFound);
+    KEMFileInterface::GetInstance()->FindByLabels(*fZHContainer,
+                                                  zhContainerLabels,
+                                                  0,
+                                                  containerFound,
+                                                  containerFilename);
 
     if (containerFound == true) {
-        KEMField::cout << "zonal harmonic container found." << KEMField::endl;
+        kem_cout() << "zonal harmonic container found in file <" << containerFilename << ">" << eom;
     }
     else {
-        //KEMField::cout << "no zonal harmonic container found." << KEMField::endl;
+        kem_cout(eInfo) << "no zonal harmonic container found." << eom;
 
         fZHContainer->ComputeCoefficients();
 
@@ -109,12 +116,12 @@ double KElectricZHFieldSolver::PotentialCore(const KPosition& P) const
     return fZonalHarmonicFieldSolver->Potential(P);
 }
 
-KThreeVector KElectricZHFieldSolver::ElectricFieldCore(const KPosition& P) const
+KFieldVector KElectricZHFieldSolver::ElectricFieldCore(const KPosition& P) const
 {
     return fZonalHarmonicFieldSolver->ElectricField(P);
 }
 
-std::pair<KThreeVector, double> KElectricZHFieldSolver::ElectricFieldAndPotentialCore(const KPosition& P) const
+std::pair<KFieldVector, double> KElectricZHFieldSolver::ElectricFieldAndPotentialCore(const KPosition& P) const
 {
     return fZonalHarmonicFieldSolver->ElectricFieldAndPotential(P);
 }

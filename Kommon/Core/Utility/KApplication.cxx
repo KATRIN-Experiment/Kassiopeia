@@ -5,8 +5,8 @@ namespace katrin
 
 KApplication::KApplication() : KTagged() {}
 
-KApplication::KApplication(const KApplication& aCopy) : KTagged(aCopy) {}
+KApplication::KApplication(const KApplication&) = default;
 
-KApplication::~KApplication() {}
+KApplication::~KApplication() = default;
 
 }  // namespace katrin

@@ -28,7 +28,7 @@ template<> inline bool KInducedAzimuthalElectricFieldBuilder::AddAttribute(KCont
         fObject->SetName(name);
     }
     else if (aContainer->GetName() == "root_field") {
-        std::string fieldName = aContainer->AsReference<std::string>();
+        std::string fieldName = aContainer->AsString();
         // toolbox contains only entries of type KMagneticField, so we have to
         // do an ugly downcast
         auto* magneticField = katrin::KToolbox::GetInstance().Get<KEMField::KMagneticField>(fieldName);

@@ -21,7 +21,7 @@ class KGCutConeTubeSpaceRandom : virtual public KGShapeRandom, public KGCutConeT
 {
   public:
     KGCutConeTubeSpaceRandom() : KGShapeRandom() {}
-    ~KGCutConeTubeSpaceRandom() override {}
+    ~KGCutConeTubeSpaceRandom() override = default;
 
     /**
      * \brief Visitor function for dicing the point
@@ -32,7 +32,8 @@ class KGCutConeTubeSpaceRandom : virtual public KGShapeRandom, public KGCutConeT
     void VisitCutConeTubeSpace(KGCutConeTubeSpace* aCutConeTubeSpace) override;
 
   private:
-    double LinearInterpolation(double zInput, const double z1, const double r1, const double z2, const double r2);
+    static double LinearInterpolation(double zInput, const double z1, const double r1, const double z2,
+                                      const double r2);
 };
 }  // namespace KGeoBag
 

@@ -12,9 +12,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyRydbergBuilder::~KComplexElement() {}
+template<> KSGenEnergyRydbergBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyRydbergStructure = KSGenEnergyRydbergBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyRydbergStructure = KSGenEnergyRydbergBuilder::Attribute<std::string>("name") +
                                          KSGenEnergyRydbergBuilder::Attribute<double>("ionization_energy") +
                                          KSGenEnergyRydbergBuilder::Attribute<double>("deposited_energy");
 

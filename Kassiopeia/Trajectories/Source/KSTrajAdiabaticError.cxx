@@ -14,7 +14,7 @@ KSTrajAdiabaticError::KSTrajAdiabaticError() :
     fPhaseError(0.)
 {}
 KSTrajAdiabaticError::KSTrajAdiabaticError(const KSTrajAdiabaticError& anOperand) : KSMathArray<8>(anOperand) {}
-KSTrajAdiabaticError::~KSTrajAdiabaticError() {}
+KSTrajAdiabaticError::~KSTrajAdiabaticError() = default;
 
 const double& KSTrajAdiabaticError::GetTimeError() const
 {
@@ -26,7 +26,7 @@ const double& KSTrajAdiabaticError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KThreeVector& KSTrajAdiabaticError::GetGuidingCenterPositionError() const
+const KGeoBag::KThreeVector& KSTrajAdiabaticError::GetGuidingCenterPositionError() const
 {
     fGuidingCenterPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fGuidingCenterPositionError;

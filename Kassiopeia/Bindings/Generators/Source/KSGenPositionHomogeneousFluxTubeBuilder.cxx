@@ -9,10 +9,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionHomogeneousFluxTubeBuilder::~KComplexElement() {}
+template<> KSGenPositionHomogeneousFluxTubeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionHomogeneousFluxTubeStructure =
-    KSGenPositionHomogeneousFluxTubeBuilder::Attribute<string>("name") +
+    KSGenPositionHomogeneousFluxTubeBuilder::Attribute<std::string>("name") +
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<double>("flux") +
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<double>("r_max") +
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<double>("z_min") +
@@ -20,7 +20,7 @@ STATICINT sKSGenPositionHomogeneousFluxTubeStructure =
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<double>("phi_min") +
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<double>("phi_max") +
     KSGenPositionHomogeneousFluxTubeBuilder::Attribute<int>("n_integration_step") +
-    KSGenPositionHomogeneousFluxTubeBuilder::Attribute<string>("magnetic_field_name");
+    KSGenPositionHomogeneousFluxTubeBuilder::Attribute<std::string>("magnetic_field_name");
 
 STATICINT sToolboxKSGenPositionHomogeneousFluxTube =
     KSRootBuilder::ComplexElement<KSGenPositionHomogeneousFluxTube>("ksgen_position_homogeneous_flux_tube");

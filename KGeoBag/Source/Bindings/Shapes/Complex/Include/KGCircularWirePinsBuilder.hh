@@ -46,7 +46,7 @@ template<> inline bool KGCircularWirePinsBuilder::AddAttribute(KContainer* anAtt
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGCircularWirePins>> KGCircularWirePinsSurfaceBuilder;
+using KGCircularWirePinsSurfaceBuilder = KComplexElement<KGWrappedSurface<KGCircularWirePins>>;
 
 template<> inline bool KGCircularWirePinsSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -71,7 +71,7 @@ template<> inline bool KGCircularWirePinsSurfaceBuilder::AddElement(KContainer* 
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGCircularWirePins>> KGCircularWirePinsSpaceBuilder;
+using KGCircularWirePinsSpaceBuilder = KComplexElement<KGWrappedSpace<KGCircularWirePins>>;
 
 template<> inline bool KGCircularWirePinsSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

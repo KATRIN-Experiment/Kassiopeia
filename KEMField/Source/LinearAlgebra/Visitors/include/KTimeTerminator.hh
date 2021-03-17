@@ -57,7 +57,8 @@ template<typename ValueType> class KTimeTerminator : public KIterativeSolver<Val
         this->fInterval = interval;
     };
 
-    ~KTimeTerminator() override{};
+    ~KTimeTerminator() override = default;
+    ;
 
     void SetMaximumAllowedTime(double time_sec)
     {

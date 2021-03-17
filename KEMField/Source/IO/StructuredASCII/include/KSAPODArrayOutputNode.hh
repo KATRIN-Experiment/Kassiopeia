@@ -25,7 +25,7 @@ namespace KEMField
 template<typename U> class KSAPODArrayOutputNode : public KSAOutputNode
 {
   public:
-    KSAPODArrayOutputNode(std::string name, unsigned int arr_size) : KSAOutputNode(name), fArraySize(arr_size)
+    KSAPODArrayOutputNode(const std::string& name, unsigned int arr_size) : KSAOutputNode(name), fArraySize(arr_size)
     {
         fConverter = new KSAPODConverter<std::vector<U>>();
         fStringValue = "INVALID";

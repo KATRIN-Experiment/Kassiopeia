@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermTrappedBuilder::~KComplexElement() {}
+template<> KSTermTrappedBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermTrappedStructure =
-    KSTermTrappedBuilder::Attribute<string>("name") + KSTermTrappedBuilder::Attribute<int>("max_turns");
+    KSTermTrappedBuilder::Attribute<std::string>("name") + KSTermTrappedBuilder::Attribute<int>("max_turns");
 
 STATICINT sKSTermTrapped = KSRootBuilder::ComplexElement<KSTermTrapped>("ksterm_trapped");
 

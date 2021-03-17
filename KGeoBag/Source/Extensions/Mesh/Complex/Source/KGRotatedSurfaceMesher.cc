@@ -84,7 +84,7 @@ void KGRotatedSurfaceMesher::DiscretizeSegment(const KGRotatedObject::Line* line
 
     // We use alpha to figure out the nPoly array
     for (int i = 0; i < nDisc; i++)
-        nPoly[i] = nPolyEnd * alpha[i] + nPolyBegin * (1. - alpha[i]) + .5;
+        nPoly[i] = lround(nPolyEnd * alpha[i] + nPolyBegin * (1. - alpha[i]));
 
     if (nDisc > 3) {
         nPoly[1] = nPoly[0] = nPolyBegin;
@@ -205,7 +205,7 @@ void KGRotatedSurfaceMesher::DiscretizeSegment(const KGRotatedObject::Arc* arc, 
 
     std::vector<int> nPoly(nDisc, 0);
     for (int i = 0; i < nDisc; i++)
-        nPoly[i] = nPolyEnd * i / (nDisc - 1.) + nPolyBegin * (1. - i / (nDisc - 1.)) + .5;
+        nPoly[i] = lround(nPolyEnd * i / (nDisc - 1.) + nPolyBegin * (1. - i / (nDisc - 1.)));
 
     // Now, we create our triangles
 

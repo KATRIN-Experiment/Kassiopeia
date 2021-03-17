@@ -27,17 +27,17 @@ class KEMVTKElectromagnetViewer : public KElectromagnetVisitor
 {
   public:
     KEMVTKElectromagnetViewer(KElectromagnetContainer& anElectromagnetContainer);
-    ~KEMVTKElectromagnetViewer() {}
+    ~KEMVTKElectromagnetViewer() override = default;
 
-    void GenerateGeometryFile(std::string fileName = "Electromagnets.vtp");
+    void GenerateGeometryFile(const std::string& fileName = "Electromagnets.vtp");
 
     void ViewGeometry();
 
   private:
-    void Visit(KLineCurrent&);
-    void Visit(KCurrentLoop&);
-    void Visit(KSolenoid&);
-    void Visit(KCoil&);
+    void Visit(KLineCurrent&) override;
+    void Visit(KCurrentLoop&) override;
+    void Visit(KSolenoid&) override;
+    void Visit(KCoil&) override;
 };
 
 }  // namespace KEMField

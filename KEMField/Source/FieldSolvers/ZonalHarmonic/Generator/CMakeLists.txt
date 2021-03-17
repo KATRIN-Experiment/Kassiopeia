@@ -32,7 +32,7 @@ set (ZONALHARMONICGENERATOR_SOURCEFILES
 
 ##################################################
 
-add_library (KEMZHGenerator SHARED ${ZONALHARMONICGENERATOR_SOURCEFILES})
+add_library (KEMZHGenerator SHARED ${ZONALHARMONICGENERATOR_SOURCEFILES} ${ZONALHARMONICGENERATOR_HEADERFILES})
 target_link_libraries (KEMZHGenerator KEMCore KEMSurfaces KEMElectromagnets)
 
 kasper_install_headers (${ZONALHARMONICGENERATOR_HEADERFILES})

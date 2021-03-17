@@ -11,7 +11,7 @@ namespace katrin
 STATICINT sKGCutTorusSurfaceBuilder = KGInterfaceBuilder::ComplexElement<KGCutTorusSurface>("cut_torus_surface");
 
 STATICINT sKGCutTorusSurfaceBuilderStructure =
-    KGCutTorusSurfaceBuilder::Attribute<string>("name") + KGCutTorusSurfaceBuilder::Attribute<double>("z1") +
+    KGCutTorusSurfaceBuilder::Attribute<std::string>("name") + KGCutTorusSurfaceBuilder::Attribute<double>("z1") +
     KGCutTorusSurfaceBuilder::Attribute<double>("r1") + KGCutTorusSurfaceBuilder::Attribute<double>("z2") +
     KGCutTorusSurfaceBuilder::Attribute<double>("r2") + KGCutTorusSurfaceBuilder::Attribute<double>("radius") +
     KGCutTorusSurfaceBuilder::Attribute<bool>("right") + KGCutTorusSurfaceBuilder::Attribute<bool>("short") +

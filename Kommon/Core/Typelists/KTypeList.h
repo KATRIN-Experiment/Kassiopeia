@@ -17,16 +17,16 @@ template<class XHeadType, class XNextHeadType, class XNextTailType>
 class KTypeList<XHeadType, KTypeList<XNextHeadType, XNextTailType>>
 {
   public:
-    typedef XHeadType HeadType;
-    typedef KTypeList<XNextHeadType, XNextTailType> TailTypes;
+    using HeadType = XHeadType;
+    using TailTypes = KTypeList<XNextHeadType, XNextTailType>;
 };
 
 //terminal definiton
 template<class XHeadType> class KTypeList<XHeadType, KTypeNull>
 {
   public:
-    typedef XHeadType HeadType;
-    typedef KTypeNull TailTypes;
+    using HeadType = XHeadType;
+    using TailTypes = KTypeNull;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,21 +45,21 @@ class KGenScatterHierarchy<KTypeList<T1, T2>, Unit> :
     public KGenScatterHierarchy<T2, Unit>
 {
   public:
-    typedef KTypeList<T1, T2> TList;
-    typedef KGenScatterHierarchy<T1, Unit> LeftBase;
-    typedef KGenScatterHierarchy<T2, Unit> RightBase;
+    using TList = KTypeList<T1, T2>;
+    using LeftBase = KGenScatterHierarchy<T1, Unit>;
+    using RightBase = KGenScatterHierarchy<T2, Unit>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 // Pass an atomic type (non-typelist) to Unit
 template<class AtomicType, template<class> class Unit> class KGenScatterHierarchy : public Unit<AtomicType>
 {
-    typedef Unit<AtomicType> LeftBase;
+    using LeftBase = Unit<AtomicType>;
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 // Do nothing for NullType
@@ -67,7 +67,7 @@ template<template<class> class Unit> class KGenScatterHierarchy<KTypeNull, Unit>
 {
     template<typename T> struct Rebind
     {
-        typedef Unit<T> Result;
+        using Result = Unit<T>;
     };
 };
 

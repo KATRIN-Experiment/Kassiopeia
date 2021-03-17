@@ -8,8 +8,8 @@ namespace KEMField
 class KElectrostaticField : public KElectricField
 {
   public:
-    KElectrostaticField() {}
-    ~KElectrostaticField() override {}
+    KElectrostaticField() = default;
+    ~KElectrostaticField() override = default;
 
     static std::string Name()
     {
@@ -25,7 +25,7 @@ class KElectrostaticField : public KElectricField
 
     using KElectricField::ElectricField;  // don't hide time specifying ElectricField call with the overload below
 
-    KThreeVector ElectricField(const KPosition& P) const
+    KFieldVector ElectricField(const KPosition& P) const
     {
         return ElectricFieldCore(P);
     }
@@ -36,12 +36,12 @@ class KElectrostaticField : public KElectricField
         return PotentialCore(P);
     }
 
-    KThreeVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const override
+    KFieldVector ElectricFieldCore(const KPosition& P, const double& /*time*/) const override
     {
         return ElectricFieldCore(P);
     }
 
-    std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P,
+    std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P,
                                                                   const double& /*time*/) const override
     {
         return ElectricFieldAndPotentialCore(P);
@@ -49,9 +49,9 @@ class KElectrostaticField : public KElectricField
 
     virtual double PotentialCore(const KPosition& P) const = 0;
 
-    virtual KThreeVector ElectricFieldCore(const KPosition&) const = 0;
+    virtual KFieldVector ElectricFieldCore(const KPosition&) const = 0;
 
-    virtual std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -60,9 +60,9 @@ class KElectrostaticField : public KElectricField
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P);
-        KThreeVector field = ElectricFieldCore(P);
+        KFieldVector field = ElectricFieldCore(P);
 
-        return std::pair<KThreeVector, double>(field, potential);
+        return std::pair<KFieldVector, double>(field, potential);
     }
 };
 

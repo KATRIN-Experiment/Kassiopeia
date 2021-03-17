@@ -67,8 +67,8 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     tScattering->AddCalculator(elasticCalculator);
     tScattering->AddCalculator(IonIntCalculator);
     tScattering->AddCalculator(DoubleIonIntCalculator);
-    for (unsigned int i = 0; i < 25; ++i) {
-        tScattering->AddCalculator(ExcitationCalculators[i]);
+    for (auto& ExcitationCalculator : ExcitationCalculators) {
+        tScattering->AddCalculator(ExcitationCalculator);
     }
 
 
@@ -138,7 +138,7 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     }
 
     tEnergy = 500.;
-    KThreeVector tDirection = KThreeVector(0., 0., 1.);
+    KGeoBag::KThreeVector tDirection(0., 0., 1.);
     tInitialParticle->SetMomentum(tDirection);
     tInteractionParticle->SetMomentum(tDirection);
     tFinalParticle->SetMomentum(tDirection);
@@ -197,12 +197,12 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     tElCrossSectionGraph.SetLineWidth(1);
     tElCrossSectionGraph.Draw("same");
 
-    for (unsigned int i = 0; i < 25; ++i) {
-        tExcitationGraphs[i].SetMarkerColor(kYellow);
-        tExcitationGraphs[i].SetMarkerStyle(20);
-        tExcitationGraphs[i].SetMarkerSize(0.5);
-        tExcitationGraphs[i].SetLineWidth(1);
-        tExcitationGraphs[i].Draw("same");
+    for (auto& tExcitationGraph : tExcitationGraphs) {
+        tExcitationGraph.SetMarkerColor(kYellow);
+        tExcitationGraph.SetMarkerStyle(20);
+        tExcitationGraph.SetMarkerSize(0.5);
+        tExcitationGraph.SetLineWidth(1);
+        tExcitationGraph.Draw("same");
     }
 
 

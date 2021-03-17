@@ -38,9 +38,8 @@ class KSATestC : public KSATestA
         fCData = copyObject.fCData;
     }
 
-    ~KSATestC() override{
-
-    };
+    ~KSATestC() override = default;
+    ;
 
     const char* GetName() const override;
 

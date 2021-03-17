@@ -28,7 +28,7 @@ template<> void KGWrappedSpace<KGConicSectPortHousing>::VolumeInitialize(Boundar
         aBoundaryContainer.push_back(disk);
     }
 
-    for (unsigned int i = 0; i < fObject->GetNPorts(); i++) {
+    for (int i = 0; i < (int) fObject->GetNPorts(); i++) {
         const KGConicSectPortHousing::Port* p = fObject->GetPort(i);
 
         if (const auto* o = dynamic_cast<const KGConicSectPortHousing::OrthogonalPort*>(p)) {

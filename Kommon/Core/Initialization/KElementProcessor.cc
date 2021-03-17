@@ -3,6 +3,6 @@
 namespace katrin
 {
 
-template<> KElementProcessor::~KComplexElement() {}
+template<> KElementProcessor::~KComplexElement() = default;
 
 }  // namespace katrin

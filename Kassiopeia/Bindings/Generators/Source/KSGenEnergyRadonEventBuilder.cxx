@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyRadonEventBuilder::~KComplexElement() {}
+template<> KSGenEnergyRadonEventBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyRadonEventStructure = KSGenEnergyRadonEventBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyRadonEventStructure = KSGenEnergyRadonEventBuilder::Attribute<std::string>("name") +
                                             KSGenEnergyRadonEventBuilder::Attribute<bool>("force_shake_off") +
                                             KSGenEnergyRadonEventBuilder::Attribute<bool>("force_conversion") +
                                             KSGenEnergyRadonEventBuilder::Attribute<bool>("do_shake_off") +

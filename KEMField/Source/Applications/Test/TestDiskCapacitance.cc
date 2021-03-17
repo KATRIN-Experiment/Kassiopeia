@@ -3,6 +3,7 @@
 #include "KBoundaryIntegralSolutionVector.hh"
 #include "KBoundaryIntegralVector.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KGaussianElimination.hh"
 #include "KRobinHood.hh"
 #include "KSurface.hh"
@@ -88,17 +89,17 @@ int main(int argc, char* argv[])
     int integrator_type = 2;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"verbose", required_argument, 0, 'v'},
-        {"scale", required_argument, 0, 's'},
-        {"power", required_argument, 0, 'p'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"increment", required_argument, 0, 'i'},
+        {"help", no_argument, nullptr, 'h'},
+        {"verbose", required_argument, nullptr, 'v'},
+        {"scale", required_argument, nullptr, 's'},
+        {"power", required_argument, nullptr, 'p'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"increment", required_argument, nullptr, 'i'},
 #ifdef KEMFIELD_USE_VTK
-        {"with-plot", no_argument, 0, 'e'},
+        {"with-plot", no_argument, nullptr, 'e'},
 #endif
-        {"method", required_argument, 0, 'm'},
-        {"integrator_type", required_argument, 0, 'b'},
+        {"method", required_argument, nullptr, 'm'},
+        {"integrator_type", required_argument, nullptr, 'b'},
     };
 
 #ifdef KEMFIELD_USE_VTK
@@ -107,8 +108,8 @@ int main(int argc, char* argv[])
     static const char* optString = "hv:s:p:t:a:i:m:b:";
 #endif
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -171,7 +172,7 @@ int main(int argc, char* argv[])
     KEMField::cout.Verbose(false);
 
     MPI_SINGLE_PROCESS
-    KEMField::cout.Verbose(verbose);
+    KEMField::cout.Verbose(verbose != 0);
 
 #if defined(KEMFIELD_USE_MPI) && defined(KEMFIELD_USE_OPENCL)
     KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess());
@@ -189,7 +190,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < scale; i++) {
         r1 -= segments.at(i);
 
-        KEMConicSection* cs = new KEMConicSection();
+        auto* cs = new KEMConicSection();
         cs->SetR0(r0);
         cs->SetZ0(0.);
         cs->SetR1(r1);
@@ -330,5 +331,4 @@ void DiscretizeInterval(double interval, int nSegments, double power, std::vecto
             segments[i] = segments[nSegments - (i + 1)] = mid * (inc2 - inc1);
         }
     }
-    return;
 }

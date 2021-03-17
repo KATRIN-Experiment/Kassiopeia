@@ -26,7 +26,7 @@ namespace KEMField
 template<typename U> class KSAPODInputNode : public KSAInputNode
 {
   public:
-    KSAPODInputNode(std::string name) : KSAInputNode(name)
+    KSAPODInputNode(const std::string& name) : KSAInputNode(name)
     {
         fConverter = new KSAPODConverter<U>();
         fChildren.clear();

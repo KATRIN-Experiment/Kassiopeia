@@ -4,7 +4,6 @@
 #include "KSNavigatorsMessage.h"
 
 #include <limits>
-using std::numeric_limits;
 
 namespace Kassiopeia
 {
@@ -18,7 +17,7 @@ KSRootSurfaceNavigator::KSRootSurfaceNavigator() :
     fParticleQueue(nullptr)
 {}
 KSRootSurfaceNavigator::KSRootSurfaceNavigator(const KSRootSurfaceNavigator& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSurfaceNavigator(aCopy.fSurfaceNavigator),
     fStep(aCopy.fStep),
     fTerminatorParticle(aCopy.fTerminatorParticle),
@@ -30,7 +29,7 @@ KSRootSurfaceNavigator* KSRootSurfaceNavigator::Clone() const
 {
     return new KSRootSurfaceNavigator(*this);
 }
-KSRootSurfaceNavigator::~KSRootSurfaceNavigator() {}
+KSRootSurfaceNavigator::~KSRootSurfaceNavigator() = default;
 
 void KSRootSurfaceNavigator::ExecuteNavigation(const KSParticle& anInitialParticle,
                                                const KSParticle& aNavigationParticle, KSParticle& aFinalParticle,

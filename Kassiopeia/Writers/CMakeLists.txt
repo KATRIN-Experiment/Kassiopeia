@@ -54,7 +54,7 @@ endforeach( BASENAME )
 
 if( Kassiopeia_USE_VTK )
 	if( VTK_MAJOR_VERSION GREATER 5 )
-		set_property( SOURCE ${WRITERS_SOURCE_FILENAMES} APPEND PROPERTY
+		set_property( SOURCE ${WRITERS_SOURCE_FILENAMES} ${WRITERS_HEADER_FILENAMES} APPEND PROPERTY
 	COMPILE_DEFINITIONS VTK6 )
 	endif()
 endif( Kassiopeia_USE_VTK )
@@ -71,7 +71,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${WRITERS_HEADER_PATH} )
-add_library( KassiopeiaWriters SHARED ${WRITERS_SOURCE_FILENAMES} )
+add_library( KassiopeiaWriters SHARED ${WRITERS_SOURCE_FILENAMES} ${WRITERS_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaWriters PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaWriters
     ${Kommon_LIBRARIES}

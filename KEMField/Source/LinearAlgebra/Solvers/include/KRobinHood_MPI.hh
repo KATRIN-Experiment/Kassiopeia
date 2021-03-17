@@ -8,8 +8,8 @@ namespace KEMField
 template<typename ValueType> class KRobinHood_MPI
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KRobinHood_MPI(const Matrix& A, Vector& x, const Vector& b);
     ~KRobinHood_MPI();

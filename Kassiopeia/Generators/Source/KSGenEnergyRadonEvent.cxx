@@ -23,7 +23,7 @@ KSGenEnergyRadonEvent::KSGenEnergyRadonEvent() :
     fMyConversion(nullptr)
 {}
 KSGenEnergyRadonEvent::KSGenEnergyRadonEvent(const KSGenEnergyRadonEvent& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fForceConversion(aCopy.fForceConversion),
     fForceShakeOff(aCopy.fForceShakeOff),
     fDoConversion(aCopy.fDoConversion),
@@ -38,7 +38,7 @@ KSGenEnergyRadonEvent* KSGenEnergyRadonEvent::Clone() const
 {
     return new KSGenEnergyRadonEvent(*this);
 }
-KSGenEnergyRadonEvent::~KSGenEnergyRadonEvent() {}
+KSGenEnergyRadonEvent::~KSGenEnergyRadonEvent() = default;
 
 void KSGenEnergyRadonEvent::Dice(KSParticleQueue* aPrimaries)
 {
@@ -52,8 +52,8 @@ void KSGenEnergyRadonEvent::Dice(KSParticleQueue* aPrimaries)
         //shake offs
         //**********
 
-        vector<int> shakeOffVacancy;
-        vector<double> shakeOffElectronEnergy;
+        std::vector<int> shakeOffVacancy;
+        std::vector<double> shakeOffElectronEnergy;
 
         if (fDoShakeOff == true) {
             fMyShakeOff->SetForceCreation(fForceShakeOff);
@@ -109,8 +109,8 @@ void KSGenEnergyRadonEvent::Dice(KSParticleQueue* aPrimaries)
         //conversions
         //***********
 
-        vector<int> conversionVacancy;
-        vector<double> conversionElectronEnergy;
+        std::vector<int> conversionVacancy;
+        std::vector<double> conversionElectronEnergy;
 
         if (fDoConversion == true) {
             fMyConversion->SetForceCreation(fForceConversion);

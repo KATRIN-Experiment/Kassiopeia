@@ -1,10 +1,8 @@
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 #ifdef KEMFIELD_USE_GSL
@@ -123,7 +121,7 @@ class ConfigureTestSingleTriangleMultipole : public KSAInputOutputObject
         fDegree.clear();
     }
 
-    virtual ~ConfigureTestSingleTriangleMultipole()
+    ~ConfigureTestSingleTriangleMultipole() override
     {
         ;
     };
@@ -196,7 +194,7 @@ class ConfigureTestSingleTriangleMultipole : public KSAInputOutputObject
         fNQuadratureTerms = std::fabs(r);
     };
 
-    void DefineOutputNode(KSAOutputNode* node) const
+    void DefineOutputNode(KSAOutputNode* node) const override
     {
         AddKSAOutputFor(ConfigureTestSingleTriangleMultipole, UseAnalyticCalculator, int);
         AddKSAOutputFor(ConfigureTestSingleTriangleMultipole, NTriangles, int);
@@ -211,7 +209,7 @@ class ConfigureTestSingleTriangleMultipole : public KSAInputOutputObject
             this));
     }
 
-    void DefineInputNode(KSAInputNode* node)
+    void DefineInputNode(KSAInputNode* node) override
     {
         AddKSAInputFor(ConfigureTestSingleTriangleMultipole, UseAnalyticCalculator, int);
         AddKSAInputFor(ConfigureTestSingleTriangleMultipole, NTriangles, int);

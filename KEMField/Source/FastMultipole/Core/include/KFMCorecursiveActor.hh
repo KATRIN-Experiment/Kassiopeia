@@ -28,7 +28,8 @@ template<typename NodeType> class KFMCorecursiveActor : public KFMNodeActor<Node
 {
   public:
     KFMCorecursiveActor() : fOperationalActor(nullptr), fVisitingOrderForward(true){};
-    ~KFMCorecursiveActor() override{};
+    ~KFMCorecursiveActor() override = default;
+    ;
 
     void VisitParentBeforeChildren()
     {

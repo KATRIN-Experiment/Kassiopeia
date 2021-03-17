@@ -9,7 +9,7 @@ template<typename ValueType> class KSquareMatrix : public KMatrix<ValueType>
 {
   public:
     KSquareMatrix() : KMatrix<ValueType>() {}
-    ~KSquareMatrix() override {}
+    ~KSquareMatrix() override = default;
 
     virtual unsigned int Dimension() const = 0;
     const ValueType& operator()(unsigned int, unsigned int) const override = 0;

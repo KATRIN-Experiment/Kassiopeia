@@ -9,7 +9,6 @@
 #include "KGPlanarPolyLoop.hh"
 
 #include <deque>
-using std::deque;
 
 namespace KGeoBag
 {
@@ -33,9 +32,9 @@ class KGSimpleMesher : virtual public KGMesherBase
     {
       public:
         typedef double Value;
-        typedef deque<Value> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Set = std::deque<Value>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -44,10 +43,10 @@ class KGSimpleMesher : virtual public KGMesherBase
     class Points
     {
       public:
-        typedef KTwoVector Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Element = KTwoVector;
+        using Set = std::deque<Element>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -62,13 +61,13 @@ class KGSimpleMesher : virtual public KGMesherBase
     class Mesh
     {
       public:
-        typedef KThreeVector Element;
-        typedef deque<KThreeVector> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef deque<Group> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = KGeoBag::KThreeVector;
+        using Group = std::deque<KThreeVector>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+        using Set = std::deque<Group>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -91,12 +90,12 @@ class KGSimpleMesher : virtual public KGMesherBase
     //*******************
 
   protected:
-    void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                            Partition& aPartition);
-    void ForwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                          Partition& aPartition);
-    void BackwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                           Partition& aPartition);
+    static void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                   const double& aPower, Partition& aPartition);
+    static void ForwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                 const double& aPower, Partition& aPartition);
+    static void BackwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                  const double& aPower, Partition& aPartition);
 
     //****************
     //points functions
@@ -116,7 +115,7 @@ class KGSimpleMesher : virtual public KGMesherBase
   protected:
     void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
                                                 const double& aZ, const unsigned int& aCount, const double& aPower,
-                                                TubeMesh& aMesh, KThreeVector& anApex);
+                                                TubeMesh& aMesh, KGeoBag::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, const unsigned int& aCount, TubeMesh& aMesh);
     void OpenPointsRotatedToShellMesh(const OpenPoints& aPoints, const unsigned int& aCount, const double& aPower,
                                       ShellMesh& aMesh, const double& aAngleStart, const double& aAngleStop);
@@ -135,9 +134,10 @@ class KGSimpleMesher : virtual public KGMesherBase
   protected:
     void FlatMeshToTriangles(const FlatMesh& aMesh);
     void TubeMeshToTriangles(const TubeMesh& aMesh);
-    void TubeMeshToTriangles(const TubeMesh& aMesh, const KThreeVector& anApexEnd);
-    void TubeMeshToTriangles(const KThreeVector& anApexStart, const TubeMesh& aMesh);
-    void TubeMeshToTriangles(const KThreeVector& anApexStart, const TubeMesh& aMesh, const KThreeVector& anApexEnd);
+    void TubeMeshToTriangles(const TubeMesh& aMesh, const KGeoBag::KThreeVector& anApexEnd);
+    void TubeMeshToTriangles(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh);
+    void TubeMeshToTriangles(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh,
+                             const KGeoBag::KThreeVector& anApexEnd);
     void ShellMeshToTriangles(const ShellMesh& aMesh);
     void ClosedShellMeshToTriangles(const ShellMesh& aMesh);
     void TorusMeshToTriangles(const TorusMesh& aMesh);
@@ -147,7 +147,8 @@ class KGSimpleMesher : virtual public KGMesherBase
     //*****************
 
   protected:
-    void Triangle(const KThreeVector& aFirst, const KThreeVector& aSecond, const KThreeVector& aThird);
+    void Triangle(const KGeoBag::KThreeVector& aFirst, const KGeoBag::KThreeVector& aSecond,
+                  const KGeoBag::KThreeVector& aThird);
 };
 
 }  // namespace KGeoBag

@@ -7,7 +7,7 @@
 
 namespace KEMField
 {
-KThreeVector KSolenoidIntegrator::VectorPotential(const KSolenoid& solenoid, const KPosition& P) const
+KFieldVector KSolenoidIntegrator::VectorPotential(const KSolenoid& solenoid, const KPosition& P) const
 {
     KPosition localP = solenoid.GetCoordinateSystem().ToLocal(P);
     double p[1] = {solenoid.GetP0()[0]};
@@ -26,10 +26,10 @@ KThreeVector KSolenoidIntegrator::VectorPotential(const KSolenoid& solenoid, con
         sine = localP[1] / par[1];
     }
 
-    return solenoid.GetCoordinateSystem().ToGlobal(KThreeVector(-sine * a_theta, cosine * a_theta, 0.));
+    return solenoid.GetCoordinateSystem().ToGlobal(KFieldVector(-sine * a_theta, cosine * a_theta, 0.));
 }
 
-KThreeVector KSolenoidIntegrator::MagneticField(const KSolenoid& solenoid, const KPosition& P) const
+KFieldVector KSolenoidIntegrator::MagneticField(const KSolenoid& solenoid, const KPosition& P) const
 {
     KPosition localP = solenoid.GetCoordinateSystem().ToLocal(P);
     double p[1] = {solenoid.GetP0()[0]};
@@ -51,10 +51,10 @@ KThreeVector KSolenoidIntegrator::MagneticField(const KSolenoid& solenoid, const
         sine = localP[1] / par[1];
     }
 
-    return solenoid.GetCoordinateSystem().ToGlobal(KThreeVector(cosine * b_r, sine * b_r, b_z));
+    return solenoid.GetCoordinateSystem().ToGlobal(KFieldVector(cosine * b_r, sine * b_r, b_z));
 }
 
-double KSolenoidIntegrator::A_theta(const double* p, double* par)
+double KSolenoidIntegrator::A_theta(const double* p, const double* par)
 {
     static KEllipticCarlsonSymmetricRD ellipticCarlsonSymmetricRD;
     static KEllipticCarlsonSymmetricRJ ellipticCarlsonSymmetricRJ;
@@ -85,7 +85,7 @@ double KSolenoidIntegrator::A_theta(const double* p, double* par)
     return (A_theta[1] - A_theta[0]);
 }
 
-double KSolenoidIntegrator::B_r(const double* p, double* par)
+double KSolenoidIntegrator::B_r(const double* p, const double* par)
 {
     static KEllipticCarlsonSymmetricRF ellipticCarlsonSymmetricRF;
     static KEllipticCarlsonSymmetricRD ellipticCarlsonSymmetricRD;
@@ -111,7 +111,7 @@ double KSolenoidIntegrator::B_r(const double* p, double* par)
     return (Br[1] - Br[0]);
 }
 
-double KSolenoidIntegrator::B_z(const double* p, double* par)
+double KSolenoidIntegrator::B_z(const double* p, const double* par)
 {
     static KEllipticCarlsonSymmetricRF ellipticCarlsonSymmetricRF;
     static KEllipticCarlsonSymmetricRJ ellipticCarlsonSymmetricRJ;

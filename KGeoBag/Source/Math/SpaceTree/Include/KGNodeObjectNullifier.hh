@@ -27,8 +27,10 @@ template<typename ObjectTypeList, typename TypeToRemove>
 class KGNodeObjectNullifier : public KGNodeActor<KGNode<ObjectTypeList>>
 {
   public:
-    KGNodeObjectNullifier(){};
-    ~KGNodeObjectNullifier() override{};
+    KGNodeObjectNullifier() = default;
+    ;
+    ~KGNodeObjectNullifier() override = default;
+    ;
 
     void ApplyAction(KGNode<ObjectTypeList>* node) override
     {

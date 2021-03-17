@@ -22,7 +22,7 @@ class KGGenericSurfaceRandom : virtual public KGShapeRandom, public KGArea::Visi
 {
   public:
     KGGenericSurfaceRandom() : KGShapeRandom() {}
-    ~KGGenericSurfaceRandom() override {}
+    ~KGGenericSurfaceRandom() override = default;
 
     /**
 	 * \brief Visitor function to dice the point on

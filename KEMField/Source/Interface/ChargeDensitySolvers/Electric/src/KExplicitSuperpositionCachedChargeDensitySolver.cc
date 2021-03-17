@@ -8,11 +8,14 @@
 #include "KExplicitSuperpositionCachedChargeDensitySolver.hh"
 
 #include "KBoundaryIntegralSolutionVector.hh"
-#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KEMSimpleException.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KIterativeStateWriter.hh"
+#include "KStringUtils.h"
+
+#include "KEMCoreMessage.hh"
+#include "KStringUtils.h"
 
 namespace KEMField
 {
@@ -25,14 +28,14 @@ KExplicitSuperpositionCachedChargeDensitySolver::KExplicitSuperpositionCachedCha
     fHashLabels.clear();
 }
 
-KExplicitSuperpositionCachedChargeDensitySolver::~KExplicitSuperpositionCachedChargeDensitySolver() {}
+KExplicitSuperpositionCachedChargeDensitySolver::~KExplicitSuperpositionCachedChargeDensitySolver() = default;
 
 void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 {
     bool tSolution = false;
     bool tCompleteSolution = false;
 
-    if ((fScaleFactors.size() == 0) && (fHashLabels.size() == 0)) {
+    if ((fScaleFactors.empty()) && (fHashLabels.empty())) {
         throw KEMSimpleException(
             "must provide a set of scale factors and hash labels for explicit cached bem solution");
     }
@@ -51,6 +54,10 @@ void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceCon
         x[i] = 0;
     }
 
+    kem_cout_debug("explicit superposition charge density solver <" << fName << "> looking for "
+                   << geometry_dim << "-dimensional solution ..." << eom);
+
+    std::vector<std::string> tSolutionFilenames = {""};
     unsigned int found_count = 0;
     KResidualThreshold tMaxResidualThreshold;
     tMaxResidualThreshold.fResidualThreshold = 0;
@@ -58,7 +65,10 @@ void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceCon
         tSolution = false;
 
         auto* tempContainer = new KSurfaceContainer();
-        KEMFileInterface::GetInstance()->FindByHash(*tempContainer, fHashLabels[n], tSolution);
+        KEMFileInterface::GetInstance()->FindByHash(*tempContainer,
+                                                    fHashLabels[n],
+                                                    tSolution,
+                                                    tSolutionFilenames.back());
 
         KResidualThreshold tResidualThreshold;
         std::vector<std::string> labels;
@@ -78,8 +88,8 @@ void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceCon
             //match geometrically (i.e coordinate transformation).
             //However, this check is better than nothing, and should catch obvious errors.
             if (geometry_dim == temp_x.Dimension()) {
-                cout << "adding scaled solution with factor <" << fScaleFactors[n] << "> for geometry with name <"
-                     << fNames[n] << ">" << endl;
+                kem_cout(eDebug) << "adding scaled solution with factor <" << fScaleFactors[n]
+                                 << "> for geometry with name <" << fNames[n] << ">" << eom;
                 //sum in the scaled contribution from this solution
                 double scale = fScaleFactors[n];
                 for (unsigned int i = 0; i < x.Dimension(); i++) {
@@ -90,19 +100,20 @@ void KExplicitSuperpositionCachedChargeDensitySolver::InitializeCore(KSurfaceCon
             else {
                 throw KEMSimpleException("problem dimension does not match that of geometry <" + fNames[n] +
                                          "> with hash label <" + fHashLabels[n] + ">.");
-                break;
             }
             delete tempContainer;
         }
         else {
             throw KEMSimpleException("no matching solution with hash <" + fHashLabels[n] + "> for <" + fNames[n] +
                                      ">.");
-            break;
         }
+
+        tSolutionFilenames.push_back("");
     }
 
     if (found_count == fScaleFactors.size()) {
         tCompleteSolution = true;
+        kem_cout() << "superposition of previously computed charge density solutions found in " << tSolutionFilenames.size() << " files" << eom;
         SaveSolution(tMaxResidualThreshold.fResidualThreshold, container);
     }
 

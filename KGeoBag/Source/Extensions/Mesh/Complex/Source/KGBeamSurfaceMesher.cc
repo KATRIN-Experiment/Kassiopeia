@@ -95,7 +95,7 @@ void KGBeamSurfaceMesher::VisitWrappedSurface(KGBeamSurface* beamSurface)
                 for (unsigned int j = 0; j < 3; j++)
                     tmp[j] = p3[j] - n23[j] * len34 * sin(theta341 - M_PI / 2.);
 
-                KGMeshTriangle* t = new KGMeshTriangle(p4, p3, tmp);
+                auto* t = new KGMeshTriangle(p4, p3, tmp);
                 RefineAndAddElement(t, beam->GetRadialDiscretization(i), 2);
 
                 for (unsigned int j = 0; j < 3; j++)
@@ -105,7 +105,7 @@ void KGBeamSurfaceMesher::VisitWrappedSurface(KGBeamSurface* beamSurface)
                 for (unsigned int j = 0; j < 3; j++)
                     tmp[j] = p4[j] - n14[j] * len34 * sin(M_PI / 2. - theta341);
 
-                KGMeshTriangle* t = new KGMeshTriangle(p4, p3, tmp);
+                auto* t = new KGMeshTriangle(p4, p3, tmp);
                 RefineAndAddElement(t, beam->GetRadialDiscretization(i), 2);
 
                 for (unsigned int j = 0; j < 3; j++)
@@ -133,7 +133,7 @@ void KGBeamSurfaceMesher::VisitWrappedSurface(KGBeamSurface* beamSurface)
             n2[j] /= d2;
         }
 
-        KGMeshRectangle* r = new KGMeshRectangle(d1, d2, p1, n1, n2);
+        auto* r = new KGMeshRectangle(d1, d2, p1, n1, n2);
         RefineAndAddElement(r, beam->GetLongitudinalDiscretization(), 2, beam->GetRadialDiscretization(i), 2);
     }
 }

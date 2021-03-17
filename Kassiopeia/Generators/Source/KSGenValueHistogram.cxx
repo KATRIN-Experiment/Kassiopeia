@@ -15,7 +15,7 @@ KSGenValueHistogram::KSGenValueHistogram() :
     fValueFunction(nullptr)
 {}
 KSGenValueHistogram::KSGenValueHistogram(const KSGenValueHistogram& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBase(aCopy.fBase),
     fPath(aCopy.fPath),
     fHistogram(aCopy.fHistogram),
@@ -28,9 +28,9 @@ KSGenValueHistogram* KSGenValueHistogram::Clone() const
 {
     return new KSGenValueHistogram(*this);
 }
-KSGenValueHistogram::~KSGenValueHistogram() {}
+KSGenValueHistogram::~KSGenValueHistogram() = default;
 
-void KSGenValueHistogram::DiceValue(vector<double>& aDicedValues)
+void KSGenValueHistogram::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 
@@ -49,11 +49,11 @@ void KSGenValueHistogram::DiceValue(vector<double>& aDicedValues)
 
 void KSGenValueHistogram::InitializeComponent()
 {
-    fRootFile = KRootFile::CreateDataRootFile(fBase);
+    fRootFile = katrin::KRootFile::CreateDataRootFile(fBase);
     if (!fPath.empty()) {
         fRootFile->AddToPaths(fPath);
     }
-    if (fRootFile->Open(KFile::eRead) == false) {
+    if (fRootFile->Open(katrin::KFile::eRead) == false) {
         genmsg(eError) << "histogram generator <" << GetName() << "> could not open file <" << fBase << "> at path <"
                        << fPath << ">" << eom;
     }

@@ -12,7 +12,7 @@ STATICINT sKGRotatedArcSegmentSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGRotatedArcSegmentSpace>("rotated_arc_segment_space");
 
 STATICINT sKGRotatedArcSegmentSpaceBuilderStructure =
-    KGRotatedArcSegmentSpaceBuilder::Attribute<string>("name") +
+    KGRotatedArcSegmentSpaceBuilder::Attribute<std::string>("name") +
     KGRotatedArcSegmentSpaceBuilder::Attribute<unsigned int>("rotated_mesh_count") +
     KGRotatedArcSegmentSpaceBuilder::Attribute<unsigned int>("flattened_mesh_count") +
     KGRotatedArcSegmentSpaceBuilder::Attribute<double>("flattened_mesh_power") +

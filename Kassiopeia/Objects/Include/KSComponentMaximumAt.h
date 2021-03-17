@@ -30,7 +30,7 @@ template<class XValueType, class XValueTypeSource> class KSComponentMaximumAt : 
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentMaximumAt() override {}
+    ~KSComponentMaximumAt() override = default;
 
     //***********
     //KSComponent

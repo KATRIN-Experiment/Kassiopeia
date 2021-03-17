@@ -55,12 +55,10 @@ class KSMathIntegrator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>
 };
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathIntegrator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathIntegrator()
-{}
+KSMathIntegrator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathIntegrator() = default;
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathIntegrator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathIntegrator()
-{}
+KSMathIntegrator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathIntegrator() = default;
 
 }  // namespace Kassiopeia
 

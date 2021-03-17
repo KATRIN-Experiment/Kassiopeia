@@ -41,14 +41,15 @@ set (STRUCTUREDASCII_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSATestD.hh
 )
 
-option (KEMField_USE_ZLIB "Use ZLib compression" OFF)
+find_package(ZLIB QUIET)
+option (KEMField_USE_ZLIB "Use ZLib compression" ${ZLIB_FOUND})
 if (KEMField_USE_ZLIB)
   find_package(ZLIB REQUIRED)
   kasper_external_include_directories (${ZLIB_INCLUDE_DIRS})
   add_cflag(KEMFIELD_USE_ZLIB)
 else (KEMField_USE_ZLIB)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
-list (APPEND STRUCTUREDASCII_HEADERFILES
+  set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
+  list (APPEND STRUCTUREDASCII_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh
     )
 endif (KEMField_USE_ZLIB)

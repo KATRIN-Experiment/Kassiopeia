@@ -38,18 +38,18 @@ class KGMeshElementCollector : public KGVisitor, public KGSurface::Visitor, publ
         fMeshContainer = aContainer;
     }
 
-    void SetSystem(const KThreeVector& anOrigin, const KThreeVector& aXAxis, const KThreeVector& aYAxis,
-                   const KThreeVector& aZAxis);
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
+    void SetSystem(const KGeoBag::KThreeVector& anOrigin, const KGeoBag::KThreeVector& aXAxis,
+                   const KGeoBag::KThreeVector& aYAxis, const KGeoBag::KThreeVector& aZAxis);
+    const KGeoBag::KThreeVector& GetOrigin() const;
+    const KGeoBag::KThreeVector& GetXAxis() const;
+    const KGeoBag::KThreeVector& GetYAxis() const;
+    const KGeoBag::KThreeVector& GetZAxis() const;
 
     void VisitSurface(KGSurface* aSurface) override;
     void VisitSpace(KGSpace* aSpace) override;
 
   protected:
-    KThreeVector LocalToInternal(const KThreeVector& aVector);
+    KGeoBag::KThreeVector LocalToInternal(const KGeoBag::KThreeVector& aVector);
     void Add(KGMeshData* aData);
 
     void PreCollectionAction(KGMeshData* aData)
@@ -74,15 +74,15 @@ class KGMeshElementCollector : public KGVisitor, public KGSurface::Visitor, publ
 
     KGNavigableMeshElementContainer* fMeshContainer;
 
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    KGeoBag::KThreeVector fOrigin;
+    KGeoBag::KThreeVector fXAxis;
+    KGeoBag::KThreeVector fYAxis;
+    KGeoBag::KThreeVector fZAxis;
 
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
+    KGeoBag::KThreeVector fCurrentOrigin;
+    KGeoBag::KThreeVector fCurrentXAxis;
+    KGeoBag::KThreeVector fCurrentYAxis;
+    KGeoBag::KThreeVector fCurrentZAxis;
 
     KGSurface* fCurrentSurface;
     KGSpace* fCurrentSpace;

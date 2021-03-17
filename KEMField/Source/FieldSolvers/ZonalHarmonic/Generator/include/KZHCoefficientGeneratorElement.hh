@@ -12,8 +12,8 @@ template<class Element> class KZHCoefficientGenerator;
 class KZHCoefficientGeneratorElement
 {
   public:
-    KZHCoefficientGeneratorElement() {}
-    virtual ~KZHCoefficientGeneratorElement() {}
+    KZHCoefficientGeneratorElement() = default;
+    virtual ~KZHCoefficientGeneratorElement() = default;
 
     bool IsCoaxial(const KEMCoordinateSystem& coordinateSystem, double coaxialityTolerance) const;
 

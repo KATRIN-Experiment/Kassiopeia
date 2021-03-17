@@ -27,14 +27,14 @@ template<> const KSFloat KSFloat::sZero(0.);
 
 template<> const KSDouble KSDouble::sZero(0);
 
-template<> const KSThreeVector KSThreeVector::sZero(KThreeVector(0., 0., 0.));
+template<> const KSThreeVector KSThreeVector::sZero(KGeoBag::KThreeVector(0., 0., 0.));
 
-template<> const KSTwoVector KSTwoVector::sZero(KTwoVector(0., 0.));
+template<> const KSTwoVector KSTwoVector::sZero(KGeoBag::KTwoVector(0., 0.));
 
-template<> const KSString KSString::sZero(string(""));
+template<> const KSString KSString::sZero(std::string(""));
 
-KSReadIterator::KSReadIterator() {}
+KSReadIterator::KSReadIterator() = default;
 
-KSReadIterator::~KSReadIterator() {}
+KSReadIterator::~KSReadIterator() = default;
 
 }  // namespace Kassiopeia

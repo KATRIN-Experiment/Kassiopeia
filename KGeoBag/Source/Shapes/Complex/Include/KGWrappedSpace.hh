@@ -14,8 +14,8 @@ template<class XObject> class KGWrappedSpace : public KGVolume
     class Visitor
     {
       public:
-        Visitor() {}
-        virtual ~Visitor() {}
+        Visitor() = default;
+        virtual ~Visitor() = default;
 
         virtual void VisitWrappedSpace(KGWrappedSpace<XObject>* aWrappedSpace) = 0;
     };
@@ -27,6 +27,11 @@ template<class XObject> class KGWrappedSpace : public KGVolume
     KGWrappedSpace(const KGWrappedSpace& aCopy);
     ~KGWrappedSpace() override;
 
+    static std::string Name()
+    {
+        return "wrapped_" + XObject::Name() + "_space";
+    }
+
   public:
     void SetObject(std::shared_ptr<XObject> anObject);
     std::shared_ptr<XObject> GetObject() const;
@@ -34,9 +39,9 @@ template<class XObject> class KGWrappedSpace : public KGVolume
   public:
     void VolumeInitialize(BoundaryContainer& aBoundaryContainer) const override;
     void VolumeAccept(KGVisitor* aVisitor) override;
-    bool VolumeOutside(const KThreeVector& aPoint) const override;
-    KThreeVector VolumePoint(const KThreeVector& aPoint) const override;
-    KThreeVector VolumeNormal(const KThreeVector& aPoint) const override;
+    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override;
 
   protected:
     std::shared_ptr<XObject> fObject;
@@ -56,7 +61,7 @@ template<class XObject> KGWrappedSpace<XObject>::KGWrappedSpace(const KGWrappedS
     fObject = aCopy.fObject;
 }
 
-template<class XObject> KGWrappedSpace<XObject>::~KGWrappedSpace() {}
+template<class XObject> KGWrappedSpace<XObject>::~KGWrappedSpace() = default;
 
 template<class XObject> void KGWrappedSpace<XObject>::SetObject(std::shared_ptr<XObject> anObject)
 {
@@ -88,7 +93,7 @@ template<class XObject> void KGWrappedSpace<XObject>::VolumeAccept(KGVisitor* aV
     return;
 }
 
-template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const KThreeVector& aQuery) const
+template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const KGeoBag::KThreeVector& aQuery) const
 {
     if (fObject->ContainsPoint((const double*) (aQuery)) == true) {
         return false;
@@ -96,17 +101,19 @@ template<class XObject> bool KGWrappedSpace<XObject>::VolumeOutside(const KThree
     return true;
 }
 
-template<class XObject> KThreeVector KGWrappedSpace<XObject>::VolumePoint(const KThreeVector& aQuery) const
+template<class XObject>
+KGeoBag::KThreeVector KGWrappedSpace<XObject>::VolumePoint(const KGeoBag::KThreeVector& aQuery) const
 {
-    KThreeVector tPoint;
+    KGeoBag::KThreeVector tPoint;
     fObject->DistanceTo((const double*) (aQuery), (double*) (tPoint));
 
     return tPoint;
 }
 
-template<class XObject> KThreeVector KGWrappedSpace<XObject>::VolumeNormal(const KThreeVector& aQuery) const
+template<class XObject>
+KGeoBag::KThreeVector KGWrappedSpace<XObject>::VolumeNormal(const KGeoBag::KThreeVector& aQuery) const
 {
-    KThreeVector tNormal;
+    KGeoBag::KThreeVector tNormal;
     fObject->DistanceTo((const double*) (aQuery), nullptr, (double*) (tNormal));
 
     return tNormal;

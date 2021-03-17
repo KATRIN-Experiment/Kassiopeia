@@ -19,7 +19,7 @@ class KMagneticFieldSolver
 {
   public:
     KMagneticFieldSolver() : fInitialized(false) {}
-    virtual ~KMagneticFieldSolver() {}
+    virtual ~KMagneticFieldSolver() = default;
 
     void Initialize(KElectromagnetContainer& container)
     {
@@ -29,12 +29,12 @@ class KMagneticFieldSolver
         }
     }
 
-    KThreeVector MagneticPotential(const KPosition& P) const
+    KFieldVector MagneticPotential(const KPosition& P) const
     {
         return MagneticPotentialCore(P);
     }
 
-    KThreeVector MagneticField(const KPosition& P) const
+    KFieldVector MagneticField(const KPosition& P) const
     {
         return MagneticFieldCore(P);
     }
@@ -44,7 +44,7 @@ class KMagneticFieldSolver
         return MagneticGradientCore(P);
     }
 
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const
+    std::pair<KFieldVector, KGradient> MagneticFieldAndGradient(const KPosition& P) const
     {
         return MagneticFieldAndGradientCore(P);
     }
@@ -52,11 +52,11 @@ class KMagneticFieldSolver
   private:
     virtual void InitializeCore(KElectromagnetContainer& container) = 0;
 
-    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const = 0;
-    virtual KThreeVector MagneticFieldCore(const KPosition& P) const = 0;
+    virtual KFieldVector MagneticPotentialCore(const KPosition& P) const = 0;
+    virtual KFieldVector MagneticFieldCore(const KPosition& P) const = 0;
     virtual KGradient MagneticGradientCore(const KPosition& P) const = 0;
 
-    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
+    virtual std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
     {
         return std::make_pair(MagneticFieldCore(P), MagneticGradientCore(P));
     }

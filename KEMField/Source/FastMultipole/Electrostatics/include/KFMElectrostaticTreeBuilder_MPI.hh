@@ -41,7 +41,7 @@ class KFMElectrostaticTreeBuilder_MPI
   public:
     KFMElectrostaticTreeBuilder_MPI()
     {
-        fSubdivisionCondition = NULL;
+        fSubdivisionCondition = nullptr;
         fSubdivisionConditionIsOwned = false;
     };
 
@@ -64,7 +64,7 @@ class KFMElectrostaticTreeBuilder_MPI
 
     void SetSubdivisionCondition(KFMSubdivisionCondition<KFMELECTROSTATICS_DIM, KFMElectrostaticNodeObjects>* subdiv)
     {
-        if (subdiv != NULL) {
+        if (subdiv != nullptr) {
             fSubdivisionCondition = subdiv;
             fSubdivisionConditionIsOwned = false;
         }

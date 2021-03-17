@@ -1,11 +1,9 @@
 #include "KGVTKMeshIntersectionTester.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGMesher.hh"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 #include "KRandom.h"
 using katrin::KRandom;
 
@@ -20,9 +18,6 @@ using namespace std;
 namespace KGeoBag
 {
 KGVTKMeshIntersectionTester::KGVTKMeshIntersectionTester() :
-    fContainer(),
-    fTree(),
-    fIntersectionCalculator(),
     fSampleCount(1000),
     fSampleColor(255, 0, 0),
     fPointColor(0, 255, 0),
@@ -52,7 +47,7 @@ KGVTKMeshIntersectionTester::KGVTKMeshIntersectionTester() :
     fActor->SetMapper(fMapper);
 }
 
-KGVTKMeshIntersectionTester::~KGVTKMeshIntersectionTester() {}
+KGVTKMeshIntersectionTester::~KGVTKMeshIntersectionTester() = default;
 
 void KGVTKMeshIntersectionTester::Construct()
 {

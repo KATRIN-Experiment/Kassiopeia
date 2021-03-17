@@ -5,9 +5,7 @@
 namespace KEMField
 {
 
-KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator() :
-    fRecursiveActor(),
-    fSingleNodeActor()
+KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator()
 {
     fNTerms = 0;
     fDivisions = 0;
@@ -33,9 +31,8 @@ KFMElectrostaticNodeWorkScoreCalculator::KFMElectrostaticNodeWorkScoreCalculator
     fRecursiveActor.SetOperationalActor(&fSingleNodeActor);
 };
 
-KFMElectrostaticNodeWorkScoreCalculator::~KFMElectrostaticNodeWorkScoreCalculator(){
-
-};
+KFMElectrostaticNodeWorkScoreCalculator::~KFMElectrostaticNodeWorkScoreCalculator() = default;
+;
 
 void KFMElectrostaticNodeWorkScoreCalculator::ApplyAction(KFMNode<KFMElectrostaticNodeObjects>* node)
 {

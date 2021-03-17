@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSSurfaceNavigator::KSSurfaceNavigator() {}
+KSSurfaceNavigator::KSSurfaceNavigator() = default;
 
-KSSurfaceNavigator::~KSSurfaceNavigator() {}
+KSSurfaceNavigator::~KSSurfaceNavigator() = default;
 
 }  // namespace Kassiopeia

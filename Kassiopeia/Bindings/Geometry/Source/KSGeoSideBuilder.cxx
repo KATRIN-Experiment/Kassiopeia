@@ -9,8 +9,9 @@ namespace katrin
 {
 
 STATICINT sKSGeoSideStructure =
-    KSGeoSideBuilder::Attribute<string>("name") + KSGeoSideBuilder::Attribute<string>("surfaces") +
-    KSGeoSideBuilder::Attribute<string>("spaces") + KSGeoSideBuilder::ComplexElement<KSCommandMemberData>("command") +
+    KSGeoSideBuilder::Attribute<std::string>("name") + KSGeoSideBuilder::Attribute<std::string>("surfaces") +
+    KSGeoSideBuilder::Attribute<std::string>("spaces") +
+    KSGeoSideBuilder::ComplexElement<KSCommandMemberData>("command") +
     KSGeoSideBuilder::ComplexElement<KSCommandMemberAddTerminatorData>("add_terminator") +
     KSGeoSideBuilder::ComplexElement<KSCommandMemberRemoveTerminatorData>("remove_terminator") +
     KSGeoSideBuilder::ComplexElement<KSCommandMemberAddMagneticFieldData>("add_magnetic_field") +

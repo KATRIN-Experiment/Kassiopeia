@@ -25,7 +25,7 @@ class KSWriteROOTConditionStep : public KSComponentTemplate<KSWriteROOTCondition
     {
         return new KSWriteROOTConditionStep(*this);
     }
-    ~KSWriteROOTConditionStep() override {}
+    ~KSWriteROOTConditionStep() override = default;
 
     void CalculateWriteCondition(bool& aFlag) override
     {

@@ -37,7 +37,7 @@ KSNavMeshedSpace::KSNavMeshedSpace() :
 {}
 
 KSNavMeshedSpace::KSNavMeshedSpace(const KSNavMeshedSpace& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fFileName(aCopy.fFileName),
     fExitSplit(aCopy.fExitSplit),
     fEnterSplit(aCopy.fEnterSplit),
@@ -61,7 +61,7 @@ KSNavMeshedSpace* KSNavMeshedSpace::Clone() const
     return new KSNavMeshedSpace(*this);
 }
 
-KSNavMeshedSpace::~KSNavMeshedSpace() {}
+KSNavMeshedSpace::~KSNavMeshedSpace() = default;
 
 void KSNavMeshedSpace::CollectMeshElements()
 {
@@ -130,47 +130,47 @@ void KSNavMeshedSpace::CollectMeshElements()
     fCollector.SetElementMap(&fElementMap);
     fCollector.SetMeshElementContainer(&fElementContainer);
     //do spaces
-    for (unsigned int i = 0; i < fSpaces.size(); i++) {
-        fCollector.SetSpace(fSpaces[i]);
-        std::vector<KGSpace*> spaces = fSpaces[i]->GetContent();
-        for (unsigned int j = 0; j < spaces.size(); j++) {
-            if (!(spaces[j]->HasExtension<KGMesh>())) {
+    for (auto& outerSpace : fSpaces) {
+        fCollector.SetSpace(outerSpace);
+        std::vector<KGSpace*> spaces = outerSpace->GetContent();
+        for (auto& space : spaces) {
+            if (!(space->HasExtension<KGMesh>())) {
                 //no mesh extension, better make it first
-                spaces[j]->MakeExtension<KGMesh>();
-                spaces[j]->AcceptNode(&tMesher);
+                space->MakeExtension<KGMesh>();
+                space->AcceptNode(&tMesher);
             }
 
             //now collect the mesh and map the elements to the KSSpace
-            spaces[j]->AcceptNode(&fCollector);
+            space->AcceptNode(&fCollector);
         }
     }
 
     //do sides
-    for (unsigned int i = 0; i < fSides.size(); i++) {
-        fCollector.SetSide(fSides[i]);
-        std::vector<KGSurface*> sides = fSides[i]->GetContent();
-        for (unsigned int j = 0; j < sides.size(); j++) {
-            if (!(sides[j]->HasExtension<KGMesh>())) {
+    for (auto& outerSide : fSides) {
+        fCollector.SetSide(outerSide);
+        std::vector<KGSurface*> sides = outerSide->GetContent();
+        for (auto& side : sides) {
+            if (!(side->HasExtension<KGMesh>())) {
                 //no mesh extension, better make it first
-                sides[j]->MakeExtension<KGMesh>();
-                sides[j]->AcceptNode(&tMesher);
+                side->MakeExtension<KGMesh>();
+                side->AcceptNode(&tMesher);
             }
             //now collect the mesh and map the elements to the KSSide
-            sides[j]->AcceptNode(&fCollector);
+            side->AcceptNode(&fCollector);
         }
     }
 
-    for (unsigned int i = 0; i < fSurfaces.size(); i++) {
-        fCollector.SetSurface(fSurfaces[i]);
-        std::vector<KGSurface*> surfaces = fSurfaces[i]->GetContent();
-        for (unsigned int j = 0; j < surfaces.size(); j++) {
-            if (!(surfaces[j]->HasExtension<KGMesh>())) {
+    for (auto& outerSurface : fSurfaces) {
+        fCollector.SetSurface(outerSurface);
+        std::vector<KGSurface*> surfaces = outerSurface->GetContent();
+        for (auto& surface : surfaces) {
+            if (!(surface->HasExtension<KGMesh>())) {
                 //no mesh extension, better make it first
-                surfaces[j]->MakeExtension<KGMesh>();
-                surfaces[j]->AcceptNode(&tMesher);
+                surface->MakeExtension<KGMesh>();
+                surface->AcceptNode(&tMesher);
             }
             //now collect the mesh and map the elements to the KSSurface
-            surfaces[j]->AcceptNode(&fCollector);
+            surface->AcceptNode(&fCollector);
         }
     }
 }
@@ -226,14 +226,14 @@ void KSNavMeshedSpace::SaveTree()
     //based on entity names, tree parameters and number of mesh elements
 
     std::stringstream se;
-    for (unsigned int i = 0; i < fSpaces.size(); i++) {
-        se << fSpaces[i]->GetName();
+    for (auto& space : fSpaces) {
+        se << space->GetName();
     }
-    for (unsigned int i = 0; i < fSides.size(); i++) {
-        se << fSides[i]->GetName();
+    for (auto& side : fSides) {
+        se << side->GetName();
     }
-    for (unsigned int i = 0; i < fSurfaces.size(); i++) {
-        se << fSurfaces[i]->GetName();
+    for (auto& surface : fSurfaces) {
+        se << surface->GetName();
     }
     se << fElementMap.size();
     std::string temp = se.str();
@@ -343,14 +343,14 @@ bool KSNavMeshedSpace::RetrieveTree()
     fLabels.clear();
 
     std::stringstream se;
-    for (unsigned int i = 0; i < fSpaces.size(); i++) {
-        se << fSpaces[i]->GetName();
+    for (auto& space : fSpaces) {
+        se << space->GetName();
     }
-    for (unsigned int i = 0; i < fSides.size(); i++) {
-        se << fSides[i]->GetName();
+    for (auto& side : fSides) {
+        se << side->GetName();
     }
-    for (unsigned int i = 0; i < fSurfaces.size(); i++) {
-        se << fSurfaces[i]->GetName();
+    for (auto& surface : fSurfaces) {
+        se << surface->GetName();
     }
     se << fElementMap.size();
     std::string temp = se.str();
@@ -416,8 +416,8 @@ bool KSNavMeshedSpace::RetrieveTree()
         KGSpaceTreeProperties<KGMESH_DIM>* tree_prop = fTree.GetTreeProperties();
         tree_prop->SetMaxTreeDepth(fMaxDepth);
         unsigned int dim[KGMESH_DIM];
-        for (unsigned int i = 0; i < KGMESH_DIM; i++) {
-            dim[i] = 2;
+        for (unsigned int& i : dim) {
+            i = 2;
         };  //we use an octtree in 3d
         tree_prop->SetDimensions(dim);
         tree_prop->SetNeighborOrder(0);
@@ -444,14 +444,14 @@ bool KSNavMeshedSpace::RetrieveTree()
         std::vector<KGNodeData> tree_structure_data;
         data.GetFlattenedTree(&tree_structure_data);
 
-        for (unsigned int i = 0; i < tree_structure_data.size(); i++) {
-            KGMeshNavigationNode* current_node = tree_nodes[tree_structure_data[i].GetID()];
+        for (auto& i : tree_structure_data) {
+            KGMeshNavigationNode* current_node = tree_nodes[i.GetID()];
 
             //link the children of this current node
             std::vector<unsigned int> child_ids;
-            tree_structure_data[i].GetChildIDs(&child_ids);
-            for (unsigned int j = 0; j < child_ids.size(); j++) {
-                current_node->AddChild(tree_nodes[child_ids[j]]);
+            i.GetChildIDs(&child_ids);
+            for (unsigned int child_id : child_ids) {
+                current_node->AddChild(tree_nodes[child_id]);
             }
         }
 
@@ -1073,7 +1073,7 @@ void KSNavMeshedSpace::StartNavigation(KSParticle& aParticle, KSSpace* aRoot)
         KSSpace* tSpace = aParticle.GetCurrentSpace();
         KSSurface* tSurface = aParticle.GetCurrentSurface();
         KSSide* tSide = aParticle.GetCurrentSide();
-        deque<KSSpace*> tSequence;
+        std::deque<KSSpace*> tSequence;
 
         // get into the correct space state
         while (tSpace != aRoot && tSpace != nullptr) {
@@ -1081,8 +1081,8 @@ void KSNavMeshedSpace::StartNavigation(KSParticle& aParticle, KSSpace* aRoot)
             tSpace = tSpace->GetParent();
         }
 
-        for (auto tIt = tSequence.begin(); tIt != tSequence.end(); tIt++) {
-            tSpace = *tIt;
+        for (auto& tIt : tSequence) {
+            tSpace = tIt;
             navmsg_debug("  entering space <" << tSpace->GetName() << ">" << eom);
             tSpace->Enter();
         }
@@ -1115,7 +1115,7 @@ void KSNavMeshedSpace::StopNavigation(KSParticle& aParticle, KSSpace* aRoot)
     fLastSpaceEntity = nullptr;
     fLastSurfaceEntity = nullptr;
 
-    deque<KSSpace*> tSpaces;
+    std::deque<KSSpace*> tSpaces;
 
     KSSpace* tSpace = aParticle.GetCurrentSpace();
     KSSurface* tSurface = aParticle.GetCurrentSurface();
@@ -1138,8 +1138,8 @@ void KSNavMeshedSpace::StopNavigation(KSParticle& aParticle, KSSpace* aRoot)
         tSpaces.push_back(tSpace);
         tSpace = tSpace->GetParent();
     }
-    for (auto tIt = tSpaces.begin(); tIt != tSpaces.end(); tIt++) {
-        tSpace = *tIt;
+    for (auto& tIt : tSpaces) {
+        tSpace = tIt;
         navmsg_debug("  deactivating space <" << tSpace->GetName() << ">" << eom);
         tSpace->Exit();
     }

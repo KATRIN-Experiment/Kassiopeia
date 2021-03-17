@@ -8,13 +8,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSWriteROOTConditionOutputBuilder::~KComplexElement() {}
+template<> KSWriteROOTConditionOutputBuilder::~KComplexElement() = default;
 
-STATICINT sKSWriteROOTConditionOutputStructure = KSWriteROOTConditionOutputBuilder::Attribute<string>("name") +
+STATICINT sKSWriteROOTConditionOutputStructure = KSWriteROOTConditionOutputBuilder::Attribute<std::string>("name") +
                                                  KSWriteROOTConditionOutputBuilder::Attribute<double>("min_value") +
                                                  KSWriteROOTConditionOutputBuilder::Attribute<double>("max_value") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<string>("group") +
-                                                 KSWriteROOTConditionOutputBuilder::Attribute<string>("parent");
+                                                 KSWriteROOTConditionOutputBuilder::Attribute<std::string>("group") +
+                                                 KSWriteROOTConditionOutputBuilder::Attribute<std::string>("parent");
 
 
 STATICINT sKSWriteROOTConditionOutput =

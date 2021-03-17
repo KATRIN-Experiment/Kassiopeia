@@ -32,8 +32,10 @@ template<unsigned int NDIM, typename ObjectTypeList>
 class KFMCubicSpaceNodeProgenitor : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMCubicSpaceNodeProgenitor(){};
-    ~KFMCubicSpaceNodeProgenitor() override{};
+    KFMCubicSpaceNodeProgenitor() = default;
+    ;
+    ~KFMCubicSpaceNodeProgenitor() override = default;
+    ;
 
     void ApplyAction(KFMNode<ObjectTypeList>* node) override  //creates children for this node
     {

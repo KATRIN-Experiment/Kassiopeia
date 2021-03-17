@@ -43,6 +43,7 @@ KXMLTokenizer::KXMLTokenizer() :
     fComment(new KCommentToken()),
     fError(new KErrorToken())
 {}
+
 KXMLTokenizer::~KXMLTokenizer()
 {
     delete fBeginParsing;
@@ -85,7 +86,7 @@ void KXMLTokenizer::ProcessFile(KTextFile* aFile)
             KDEBUG("Finished: " << fFile->GetName() << " (took " << tMilliSeconds << " ms)");
 
             if (tMilliSeconds > 10000)
-                initmsg(eWarning) << "It took " << ceil(tMilliSeconds/100.)/10. << " s to process the file <"
+                initmsg(eWarning) << "It took " << ceil(tMilliSeconds / 100.) / 10. << " s to process the file <"
                                   << fFile->GetName() << ">" << eom;
         }
 

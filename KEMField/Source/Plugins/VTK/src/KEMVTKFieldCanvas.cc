@@ -25,12 +25,12 @@ void KEMVTKFieldCanvas::InitializeCanvas()
 
 //______________________________________________________________________________
 
-KEMVTKFieldCanvas::~KEMVTKFieldCanvas() {}
+KEMVTKFieldCanvas::~KEMVTKFieldCanvas() = default;
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double> y, std::vector<double> V, bool xy,
-                                     double z)
+void KEMVTKFieldCanvas::DrawFieldMap(const std::vector<double>& x, const std::vector<double>& y,
+                                     const std::vector<double>& V, bool xy, double z)
 {
     (void) xy;
     (void) z;
@@ -57,7 +57,7 @@ void KEMVTKFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double> 
     double min = 1.e10;
     double max = -1.e10;
 
-    double* dPtr = static_cast<double*>(data->GetScalarPointer(0, 0, 0));
+    auto* dPtr = static_cast<double*>(data->GetScalarPointer(0, 0, 0));
     int V_val = 0;
     for (int i = 0; i < (int) x.size(); ++i) {
         for (int j = 0; j < (int) y.size(); ++j) {
@@ -89,8 +89,8 @@ void KEMVTKFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double> 
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, std::vector<double> x, std::vector<double> y,
-                                          std::vector<double> V1, std::vector<double> V2)
+void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, const std::vector<double>& x, const std::vector<double>& y,
+                                          const std::vector<double>& V1, const std::vector<double>& V2)
 {
     (void) nPoints;
     chart = vtkSmartPointer<vtkChartHistogram2D>::New();
@@ -115,7 +115,7 @@ void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, std::vector<double> x, st
     double min = 1.e10;
     double max = -1.e10;
 
-    double* dPtr = static_cast<double*>(data->GetScalarPointer(0, 0, 0));
+    auto* dPtr = static_cast<double*>(data->GetScalarPointer(0, 0, 0));
     int V_val = 0;
     for (int i = 0; i < (int) x.size(); ++i) {
         for (int j = 0; j < (int) y.size(); ++j) {
@@ -148,7 +148,7 @@ void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, std::vector<double> x, st
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::DrawFieldLines(std::vector<double> x, std::vector<double> y)
+void KEMVTKFieldCanvas::DrawFieldLines(const std::vector<double>& x, const std::vector<double>& y)
 {
     (void) x;
     (void) y;
@@ -156,7 +156,7 @@ void KEMVTKFieldCanvas::DrawFieldLines(std::vector<double> x, std::vector<double
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::LabelAxes(std::string xname, std::string yname, std::string zname)
+void KEMVTKFieldCanvas::LabelAxes(const std::string& xname, const std::string& yname, const std::string& zname)
 {
     chart->GetAxis(vtkAxis::BOTTOM)->SetTitle(xname);
     chart->GetAxis(vtkAxis::LEFT)->SetTitle(yname);
@@ -165,14 +165,14 @@ void KEMVTKFieldCanvas::LabelAxes(std::string xname, std::string yname, std::str
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::LabelCanvas(std::string name)
+void KEMVTKFieldCanvas::LabelCanvas(const std::string& name)
 {
     chart->SetTitle(name);
 }
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::SaveAs(std::string savename)
+void KEMVTKFieldCanvas::SaveAs(const std::string& savename)
 {
     view->GetRenderWindow()->SetMultiSamples(0);
     view->GetInteractor()->Initialize();

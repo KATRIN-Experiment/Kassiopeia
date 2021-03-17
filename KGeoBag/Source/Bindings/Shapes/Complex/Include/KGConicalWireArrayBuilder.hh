@@ -53,7 +53,7 @@ template<> inline bool KGConicalWireArrayBuilder::AddAttribute(KContainer* anAtt
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGConicalWireArray>> KGConicalWireArraySurfaceBuilder;
+using KGConicalWireArraySurfaceBuilder = KComplexElement<KGWrappedSurface<KGConicalWireArray>>;
 
 template<> inline bool KGConicalWireArraySurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -78,7 +78,7 @@ template<> inline bool KGConicalWireArraySurfaceBuilder::AddElement(KContainer* 
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGConicalWireArray>> KGConicalWireArraySpaceBuilder;
+using KGConicalWireArraySpaceBuilder = KComplexElement<KGWrappedSpace<KGConicalWireArray>>;
 
 template<> inline bool KGConicalWireArraySpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

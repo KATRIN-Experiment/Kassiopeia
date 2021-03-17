@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     (void) argc;
     (void) argv;
 
-    KFMPinchonJMatrixCalculator* calc = new KFMPinchonJMatrixCalculator();
+    auto* calc = new KFMPinchonJMatrixCalculator();
 
     unsigned int deg = 3;
     calc->SetDegree(deg);

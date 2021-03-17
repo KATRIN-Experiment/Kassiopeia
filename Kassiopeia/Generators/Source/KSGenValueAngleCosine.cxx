@@ -11,7 +11,7 @@ namespace Kassiopeia
 
 KSGenValueAngleCosine::KSGenValueAngleCosine() : fAngleMin(0.), fAngleMax(0.) {}
 KSGenValueAngleCosine::KSGenValueAngleCosine(const KSGenValueAngleCosine& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fAngleMin(aCopy.fAngleMin),
     fAngleMax(aCopy.fAngleMax)
 {}
@@ -19,9 +19,9 @@ KSGenValueAngleCosine* KSGenValueAngleCosine::Clone() const
 {
     return new KSGenValueAngleCosine(*this);
 }
-KSGenValueAngleCosine::~KSGenValueAngleCosine() {}
+KSGenValueAngleCosine::~KSGenValueAngleCosine() = default;
 
-void KSGenValueAngleCosine::DiceValue(vector<double>& aDicedValues)
+void KSGenValueAngleCosine::DiceValue(std::vector<double>& aDicedValues)
 {
     genmsg_assert(fAngleMax, >= 0);
     genmsg_assert(fAngleMin, >= 0);

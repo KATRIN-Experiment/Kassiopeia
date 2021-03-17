@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyKryptonEventBuilder::~KComplexElement() {}
+template<> KSGenEnergyKryptonEventBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyKryptonEventStructure = KSGenEnergyKryptonEventBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyKryptonEventStructure = KSGenEnergyKryptonEventBuilder::Attribute<std::string>("name") +
                                               KSGenEnergyKryptonEventBuilder::Attribute<bool>("force_conversion") +
                                               KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_conversion") +
                                               KSGenEnergyKryptonEventBuilder::Attribute<bool>("do_auger");

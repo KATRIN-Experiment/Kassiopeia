@@ -27,8 +27,10 @@ template<typename ObjectTypeList, typename TypeToRemove>
 class KGNodeObjectRemover : public KGNodeActor<KGNode<ObjectTypeList>>
 {
   public:
-    KGNodeObjectRemover(){};
-    virtual ~KGNodeObjectRemover(){};
+    KGNodeObjectRemover() = default;
+    ;
+    virtual ~KGNodeObjectRemover() = default;
+    ;
 
     virtual void ApplyAction(KGNode<ObjectTypeList>* node)
     {

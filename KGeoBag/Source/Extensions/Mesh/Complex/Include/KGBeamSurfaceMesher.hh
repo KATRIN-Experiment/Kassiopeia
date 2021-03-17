@@ -13,8 +13,8 @@ class KGBeamSurfaceMesher : virtual public KGComplexMesher, public KGBeamSurface
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGBeamSurfaceMesher() {}
-    ~KGBeamSurfaceMesher() override {}
+    KGBeamSurfaceMesher() = default;
+    ~KGBeamSurfaceMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGBeamSurface* beamSurface) override;

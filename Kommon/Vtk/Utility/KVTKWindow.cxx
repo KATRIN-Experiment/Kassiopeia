@@ -70,7 +70,10 @@ void KVTKWindow::Render()
 
     /* setup display */
     if (fDisplayToggle == true) {
-        double textColor[] = {fFrameRed < .5 ? 1. : 0, fFrameGreen < .5 ? 1. : 0, fFrameBlue < .5 ? 1. : 0};
+        double textColor[] = {// NOLINT
+                              fFrameRed < .5 ? 1. : 0,
+                              fFrameGreen < .5 ? 1. : 0,
+                              fFrameBlue < .5 ? 1. : 0};
 
         /* setup renderer */
         fRenderer = vtkSmartPointer<vtkRenderer>::New();
@@ -238,8 +241,8 @@ void KVTKWindow::Write()
 
 void KVTKWindow::AddPainter(KPainter* aPainter)
 {
-    KVTKPainter* tPainter = dynamic_cast<KVTKPainter*>(aPainter);
-    if (tPainter != NULL) {
+    auto* tPainter = dynamic_cast<KVTKPainter*>(aPainter);
+    if (tPainter != nullptr) {
         if (fPainters.insert(tPainter).second == true) {
             tPainter->SetWindow(this);
             return;
@@ -253,8 +256,8 @@ void KVTKWindow::AddPainter(KPainter* aPainter)
 }
 void KVTKWindow::RemovePainter(KPainter* aPainter)
 {
-    KVTKPainter* tPainter = dynamic_cast<KVTKPainter*>(aPainter);
-    if (tPainter != NULL) {
+    auto* tPainter = dynamic_cast<KVTKPainter*>(aPainter);
+    if (tPainter != nullptr) {
         if (fPainters.erase(tPainter) == 1) {
             tPainter->ClearWindow(this);
             return;
@@ -326,7 +329,7 @@ void KVTKWindow::UpdateHelp()
 }
 void KVTKWindow::UpdateData()
 {
-    double cameraPosition[3], cameraFocus[3];
+    double cameraPosition[3], cameraFocus[3];  // NOLINT
     fRenderer->GetActiveCamera()->GetPosition(cameraPosition);
     fRenderer->GetActiveCamera()->GetFocalPoint(cameraFocus);
 
@@ -350,19 +353,19 @@ void KVTKWindow::Screenshot()
     struct tm* tTimeInfo;
     tTimeInfo = localtime(&tTimeRaw);
 
-    char tTimeStamp[64];
+    char tTimeStamp[64];  // NOLINT
     strftime(tTimeStamp, 64, "Screenshot_%Y_%m_%d_%H:%M:%S", tTimeInfo);
 
     /* take screenshot, make sure all actors are rendered at full detail */
-    int rate = fRenderWindow->GetDesiredUpdateRate();
-    fRenderWindow->SetDesiredUpdateRate(0);
+    double rate = fRenderWindow->GetDesiredUpdateRate();
+    fRenderWindow->SetDesiredUpdateRate(0);  // freeze
     fRenderer->Render();
 
     vtkSmartPointer<vtkWindowToImageFilter> filter = vtkSmartPointer<vtkWindowToImageFilter>::New();
     filter->SetInput(fRenderWindow);
     filter->Update();
 
-    fRenderWindow->SetDesiredUpdateRate(rate);
+    fRenderWindow->SetDesiredUpdateRate(rate);  // reset to old value
 
     string filename = string(SCRATCH_DEFAULT_DIR) + string("/") + string(tTimeStamp) + ".png";
     vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
@@ -380,8 +383,8 @@ void KVTKWindow::Screenshot()
 
 void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, void* aClient, void* /*callData*/)
 {
-    KVTKWindow* tWindow = static_cast<KVTKWindow*>(aClient);
-    vtkRenderWindowInteractor* tInteractor = static_cast<vtkRenderWindowInteractor*>(aCaller);
+    auto* tWindow = static_cast<KVTKWindow*>(aClient);
+    auto* tInteractor = static_cast<vtkRenderWindowInteractor*>(aCaller);
 
     string Symbol = tInteractor->GetKeySym();
     bool WithShift = tInteractor->GetShiftKey();
@@ -458,7 +461,7 @@ void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, v
 
 void KVTKWindow::OnEnd(vtkObject* /*aCaller*/, long unsigned int /*eventId*/, void* aClient, void* /*callData*/)
 {
-    KVTKWindow* tWindow = static_cast<KVTKWindow*>(aClient);
+    auto* tWindow = static_cast<KVTKWindow*>(aClient);
 
     tWindow->UpdateData();
 

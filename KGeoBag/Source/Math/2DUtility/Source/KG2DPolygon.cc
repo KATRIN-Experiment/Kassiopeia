@@ -23,8 +23,8 @@ KG2DPolygon::KG2DPolygon(const std::vector<std::vector<double>>* ordered_vertice
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back(KTwoVector((*ordered_vertices)[i][0], (*ordered_vertices)[i][1]));
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.emplace_back(ordered_vertice[0], ordered_vertice[1]);
     }
     Initialize();
 }
@@ -33,8 +33,8 @@ KG2DPolygon::KG2DPolygon(const std::vector<KTwoVector>* ordered_vertices)
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back((*ordered_vertices)[i]);
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.push_back(ordered_vertice);
     }
     Initialize();
 }
@@ -48,8 +48,8 @@ void KG2DPolygon::SetVertices(const std::vector<std::vector<double>>* ordered_ve
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back(KTwoVector((*ordered_vertices)[i][0], (*ordered_vertices)[i][1]));
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.emplace_back(ordered_vertice[0], ordered_vertice[1]);
     }
     Initialize();
 }
@@ -58,8 +58,8 @@ void KG2DPolygon::SetVertices(const std::vector<KTwoVector>* ordered_vertices)
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back((*ordered_vertices)[i]);
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.push_back(ordered_vertice);
     }
     Initialize();
 }
@@ -101,7 +101,7 @@ void KG2DPolygon::Initialize()
         fSides.clear();
         for (i = 0; i < fNVertices; i++) {
             j = Modulus(i + 1, fNVertices);
-            fSides.push_back(KG2DLineSegment(fVertices[i], fVertices[j]));
+            fSides.emplace_back(fVertices[i], fVertices[j]);
         }
 
         DetermineIfPolygonIsSimple();

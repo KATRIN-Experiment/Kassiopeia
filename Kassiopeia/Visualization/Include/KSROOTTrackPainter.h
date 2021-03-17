@@ -1,13 +1,14 @@
 #ifndef _Kassiopeia_KSROOTTrackPainter_h_
 #define _Kassiopeia_KSROOTTrackPainter_h_
 
-#include "KROOTWindow.h"
-using katrin::KROOTWindow;
-
-#include "KROOTPainter.h"
-using katrin::KROOTPainter;
+#include "KThreeVector.hh"
+#include "KTwoVector.hh"
+using KGeoBag::KThreeVector;
+using KGeoBag::KTwoVector;
 
 #include "KField.h"
+#include "KROOTPainter.h"
+#include "KROOTWindow.h"
 #include "KSVisualizationMessage.h"
 #include "TColor.h"
 #include "TMultiGraph.h"
@@ -16,7 +17,7 @@ namespace Kassiopeia
 {
 class KSReadFileROOT;
 
-class KSROOTTrackPainter : public KROOTPainter
+class KSROOTTrackPainter : public katrin::KROOTPainter
 {
   public:
     KSROOTTrackPainter();
@@ -34,23 +35,30 @@ class KSROOTTrackPainter : public KROOTPainter
     std::string GetXAxisLabel() override;
     std::string GetYAxisLabel() override;
 
+  private:
+    std::string GetAxisLabel(KThreeVector anAxis);
+
+  public:
+    void CalculatePlaneCoordinateSystem();
+    void TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint);
+
     void AddBaseColor(TColor aColor, double aFraction);
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eColorFix,
         eColorStep,
         eColorTrack
     } ColorMode;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eColorFPDRings,
         eColorDefault,
         eColorCustom
     } ColorPalette;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         ePlotStep,
         ePlotTrack
@@ -64,6 +72,18 @@ class KSROOTTrackPainter : public KROOTPainter
     K_SET(std::string, Path);
     ;
     K_SET(std::string, Base);
+    ;
+    K_SET(KThreeVector, PlaneNormal);
+    ;
+    K_SET(KThreeVector, PlanePoint);
+    ;
+    K_SET(bool, SwapAxis);
+    ;
+    K_GET(KThreeVector, PlaneVectorA);
+    ;
+    K_GET(KThreeVector, PlaneVectorB);
+    ;
+    K_SET(double, Epsilon);
     ;
     K_SET(std::string, XAxis);
     ;
@@ -95,7 +115,7 @@ inline void KSROOTTrackPainter::AddBaseColor(TColor aColor, double aFraction = -
 {
     vismsg(eNormal) << "ROOTTrackPainter adding color " << aColor.GetRed() << "," << aColor.GetGreen() << ","
                     << aColor.GetBlue() << " with fraction " << aFraction << eom;
-    fBaseColors.push_back(std::pair<TColor, double>(aColor, aFraction));
+    fBaseColors.emplace_back(aColor, aFraction);
 }
 
 }  // namespace Kassiopeia

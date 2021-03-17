@@ -14,7 +14,7 @@ class KGComplexAnnulus : public KGBoundary
     KGComplexAnnulus() : fCoordTransform(nullptr) {}
     KGComplexAnnulus(double rmain);
 
-    virtual ~KGComplexAnnulus();
+    ~KGComplexAnnulus() override;
 
     static std::string Name()
     {
@@ -26,7 +26,7 @@ class KGComplexAnnulus : public KGBoundary
     virtual KGComplexAnnulus* Clone() const;
 
     virtual void Initialize() const;
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -68,9 +68,9 @@ class KGComplexAnnulus : public KGBoundary
     class Ring
     {
       public:
-        Ring() {}
+        Ring() = default;
         Ring(KGComplexAnnulus* complexAnnulus) : fComplexAnnulus(complexAnnulus) {}
-        Ring(KGComplexAnnulus* complexAnnulus, double ZSub[2], double rsub);
+        Ring(KGComplexAnnulus* complexAnnulus, const double ZSub[2], double rsub);
 
         virtual ~Ring();
 

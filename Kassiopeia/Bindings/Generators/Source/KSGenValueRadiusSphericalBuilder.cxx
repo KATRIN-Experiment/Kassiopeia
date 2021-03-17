@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueRadiusSphericalBuilder::~KComplexElement() {}
+template<> KSGenValueRadiusSphericalBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueRadiusSphericalStructure = KSGenValueRadiusSphericalBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueRadiusSphericalStructure = KSGenValueRadiusSphericalBuilder::Attribute<std::string>("name") +
                                                 KSGenValueRadiusSphericalBuilder::Attribute<double>("radius_min") +
                                                 KSGenValueRadiusSphericalBuilder::Attribute<double>("radius_max");
 

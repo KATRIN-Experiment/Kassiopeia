@@ -3,7 +3,7 @@
 namespace KEMField
 {
 
-KSolidAngle::KSolidAngle() {}
-KSolidAngle::~KSolidAngle() {}
+KSolidAngle::KSolidAngle() = default;
+KSolidAngle::~KSolidAngle() = default;
 
 }  // namespace KEMField

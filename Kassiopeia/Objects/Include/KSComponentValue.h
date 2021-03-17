@@ -3,17 +3,10 @@
 
 #include "KSNumerical.h"
 #include "KSObject.h"
-#include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
-
-#include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
-#include "KTwoMatrix.hh"
-using KGeoBag::KTwoMatrix;
-
 #include "KThreeMatrix.hh"
-using KGeoBag::KThreeMatrix;
+#include "KThreeVector.hh"
+#include "KTwoMatrix.hh"
+#include "KTwoVector.hh"
 
 namespace Kassiopeia
 {
@@ -22,7 +15,7 @@ template<class XValueType> class KSComponentValue
   public:
     KSComponentValue(XValueType* aParentPointer) : fOperand(aParentPointer), fValue(KSNumerical<XValueType>::Zero()) {}
     KSComponentValue(const KSComponentValue<XValueType>& aCopy) : fOperand(aCopy.fOperand), fValue(aCopy.fValue) {}
-    virtual ~KSComponentValue() {}
+    virtual ~KSComponentValue() = default;
 
   public:
     XValueType* operator&()
@@ -42,7 +35,7 @@ template<class XValueType> class KSComponentValueMaximum : public KSComponentVal
   public:
     KSComponentValueMaximum(XValueType* aParentPointer) : KSComponentValue<XValueType>(aParentPointer) {}
     KSComponentValueMaximum(const KSComponentValueMaximum<XValueType>& aCopy) : KSComponentValue<XValueType>(aCopy) {}
-    ~KSComponentValueMaximum() override {}
+    ~KSComponentValueMaximum() override = default;
 
   public:
     void Reset();
@@ -55,24 +48,24 @@ template<class XValueType> inline void KSComponentValueMaximum<XValueType>::Rese
     return;
 }
 // initialize non-scalar types with zero because the magnitude will always be positive
-template<> inline void KSComponentValueMaximum<KTwoVector>::Reset()
+template<> inline void KSComponentValueMaximum<KGeoBag::KTwoVector>::Reset()
 {
-    this->fValue = KSNumerical<KTwoVector>::Zero();
+    this->fValue = KSNumerical<KGeoBag::KTwoVector>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KThreeVector>::Reset()
+template<> inline void KSComponentValueMaximum<KGeoBag::KThreeVector>::Reset()
 {
-    this->fValue = KSNumerical<KThreeVector>::Zero();
+    this->fValue = KSNumerical<KGeoBag::KThreeVector>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KTwoMatrix>::Reset()
+template<> inline void KSComponentValueMaximum<KGeoBag::KTwoMatrix>::Reset()
 {
-    this->fValue = KSNumerical<KTwoMatrix>::Zero();
+    this->fValue = KSNumerical<KGeoBag::KTwoMatrix>::Zero();
     return;
 }
-template<> inline void KSComponentValueMaximum<KThreeMatrix>::Reset()
+template<> inline void KSComponentValueMaximum<KGeoBag::KThreeMatrix>::Reset()
 {
-    this->fValue = KSNumerical<KThreeMatrix>::Zero();
+    this->fValue = KSNumerical<KGeoBag::KThreeMatrix>::Zero();
     return;
 }
 
@@ -84,7 +77,7 @@ template<class XValueType> inline bool KSComponentValueMaximum<XValueType>::Upda
     }
     return false;
 }
-template<> inline bool KSComponentValueMaximum<KTwoVector>::Update()
+template<> inline bool KSComponentValueMaximum<KGeoBag::KTwoVector>::Update()
 {
     if (this->fValue.Magnitude() < this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -92,7 +85,7 @@ template<> inline bool KSComponentValueMaximum<KTwoVector>::Update()
     }
     return false;
 }
-template<> inline bool KSComponentValueMaximum<KThreeVector>::Update()
+template<> inline bool KSComponentValueMaximum<KGeoBag::KThreeVector>::Update()
 {
     if (this->fValue.Magnitude() < this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -102,7 +95,7 @@ template<> inline bool KSComponentValueMaximum<KThreeVector>::Update()
 }
 // TODO: how to compare Matrices?
 /*
-    inline bool KSComponentValueMaximum< KTwoMatrix >::Update()
+    inline bool KSComponentValueMaximum< KGeoBag::KTwoMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -112,7 +105,7 @@ template<> inline bool KSComponentValueMaximum<KThreeVector>::Update()
         return false;
     }
     template<  >
-    inline bool KSComponentValueMaximum< KThreeMatrix >::Update()
+    inline bool KSComponentValueMaximum< KGeoBag::KThreeMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -130,7 +123,7 @@ template<class XValueType> class KSComponentValueMinimum : public KSComponentVal
   public:
     KSComponentValueMinimum(XValueType* aParentPointer) : KSComponentValue<XValueType>(aParentPointer) {}
     KSComponentValueMinimum(const KSComponentValueMinimum<XValueType>& aCopy) : KSComponentValue<XValueType>(aCopy) {}
-    ~KSComponentValueMinimum() override {}
+    ~KSComponentValueMinimum() override = default;
 
   public:
     void Reset();
@@ -151,7 +144,7 @@ template<class XValueType> inline bool KSComponentValueMinimum<XValueType>::Upda
     }
     return false;
 }
-template<> inline bool KSComponentValueMinimum<KTwoVector>::Update()
+template<> inline bool KSComponentValueMinimum<KGeoBag::KTwoVector>::Update()
 {
     if (this->fValue.Magnitude() > this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -159,7 +152,7 @@ template<> inline bool KSComponentValueMinimum<KTwoVector>::Update()
     }
     return false;
 }
-template<> inline bool KSComponentValueMinimum<KThreeVector>::Update()
+template<> inline bool KSComponentValueMinimum<KGeoBag::KThreeVector>::Update()
 {
     if (this->fValue.Magnitude() > this->fOperand->Magnitude()) {
         this->fValue = *(this->fOperand);
@@ -169,7 +162,7 @@ template<> inline bool KSComponentValueMinimum<KThreeVector>::Update()
 }
 // TODO: how to compare Matrices?
 /*
-    inline bool KSComponentValueMinimum< KTwoMatrix >::Update()
+    inline bool KSComponentValueMinimum< KGeoBag::KTwoMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -179,7 +172,7 @@ template<> inline bool KSComponentValueMinimum<KThreeVector>::Update()
         return false;
     }
     template<  >
-    inline bool KSComponentValueMinimum< KThreeMatrix >::Update()
+    inline bool KSComponentValueMinimum< KGeoBag::KThreeMatrix >::Update()
     {
         if( this->fValue.Determinant() < this->fOperand->Determinant() )
         {
@@ -197,7 +190,7 @@ template<class XValueType> class KSComponentValueIntegral : public KSComponentVa
   public:
     KSComponentValueIntegral(XValueType* aParentPointer) : KSComponentValue<XValueType>(aParentPointer) {}
     KSComponentValueIntegral(const KSComponentValueIntegral<XValueType>& aCopy) : KSComponentValue<XValueType>(aCopy) {}
-    ~KSComponentValueIntegral() override {}
+    ~KSComponentValueIntegral() override = default;
 
   public:
     void Reset();
@@ -229,7 +222,7 @@ template<class XValueType> class KSComponentValueDelta : public KSComponentValue
         KSComponentValue<XValueType>(aCopy),
         fLastValue(aCopy.fLastValue)
     {}
-    ~KSComponentValueDelta() override {}
+    ~KSComponentValueDelta() override = default;
 
   public:
     void Reset();

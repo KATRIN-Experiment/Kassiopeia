@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntCalculatorIonBuilder::~KComplexElement() {}
+template<> KSIntCalculatorIonBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntCalculatorIonStructure =
-    KSIntCalculatorIonBuilder::Attribute<string>("name") + KSIntCalculatorIonBuilder::Attribute<string>("gas");
+STATICINT sKSIntCalculatorIonStructure = KSIntCalculatorIonBuilder::Attribute<std::string>("name") +
+                                         KSIntCalculatorIonBuilder::Attribute<std::string>("gas");
 
 STATICINT sToolboxKSIntCalculatorIon = KSRootBuilder::ComplexElement<KSIntCalculatorIon>("ksint_calculator_ion");
 }  // namespace katrin

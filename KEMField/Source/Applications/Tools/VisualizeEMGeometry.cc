@@ -40,9 +40,9 @@ int main(int argc, char* argv[])
     }
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"name", required_argument, 0, 'n'},
-        {"display", no_argument, 0, 'd'},
+        {"help", no_argument, nullptr, 'h'},
+        {"name", required_argument, nullptr, 'n'},
+        {"display", no_argument, nullptr, 'd'},
     };
 
     static const char* optString = "hn:d";
@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
     std::string name = KSurfaceContainer::Name();
     bool display = false;
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
     }
 
     std::string inFileName = argv[optind];
-    std::string suffix = inFileName.substr(inFileName.find_last_of("."), std::string::npos);
+    std::string suffix = inFileName.substr(inFileName.find_last_of('.'), std::string::npos);
 
-    std::string outFileName = inFileName.substr(0, inFileName.find_last_of("."));
+    std::string outFileName = inFileName.substr(0, inFileName.find_last_of('.'));
     if (optind != argc - 1)
         outFileName = argv[optind + 1];
 
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }

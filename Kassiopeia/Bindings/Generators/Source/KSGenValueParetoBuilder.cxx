@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueParetoBuilder::~KComplexElement() {}
+template<> KSGenValueParetoBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueParetoStructure =
-    KSGenValueParetoBuilder::Attribute<string>("name") + KSGenValueParetoBuilder::Attribute<double>("value_min") +
+    KSGenValueParetoBuilder::Attribute<std::string>("name") + KSGenValueParetoBuilder::Attribute<double>("value_min") +
     KSGenValueParetoBuilder::Attribute<double>("value_max") + KSGenValueParetoBuilder::Attribute<double>("slope") +
     KSGenValueParetoBuilder::Attribute<double>("cutoff") + KSGenValueParetoBuilder::Attribute<double>("offset");
 

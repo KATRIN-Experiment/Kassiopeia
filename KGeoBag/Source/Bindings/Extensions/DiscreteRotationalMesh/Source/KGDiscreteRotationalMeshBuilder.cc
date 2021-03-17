@@ -8,12 +8,7 @@ using namespace KGeoBag;
 namespace KGeoBag
 {
 
-KGDiscreteRotationalMeshAttributor::KGDiscreteRotationalMeshAttributor() :
-    fSurfaces(),
-    fSpaces(),
-    fAxialAngle(0.),
-    fAxialCount(100)
-{}
+KGDiscreteRotationalMeshAttributor::KGDiscreteRotationalMeshAttributor() : fAxialAngle(0.), fAxialCount(100) {}
 
 KGDiscreteRotationalMeshAttributor::~KGDiscreteRotationalMeshAttributor()
 {
@@ -22,16 +17,16 @@ KGDiscreteRotationalMeshAttributor::~KGDiscreteRotationalMeshAttributor()
     tMesher.SetAxialCount(fAxialCount);
 
     KGDiscreteRotationalMeshSurface* tDiscreteRotationalMeshSurface;
-    for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-        tDiscreteRotationalMeshSurface = (*tIt)->MakeExtension<KGDiscreteRotationalMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& surface : fSurfaces) {
+        tDiscreteRotationalMeshSurface = surface->MakeExtension<KGDiscreteRotationalMesh>();
+        surface->AcceptNode(&tMesher);
         tDiscreteRotationalMeshSurface->SetName(GetName());
         tDiscreteRotationalMeshSurface->SetTags(GetTags());
     }
     KGDiscreteRotationalMeshSpace* tDiscreteRotationalMeshSpace;
-    for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-        tDiscreteRotationalMeshSpace = (*tIt)->MakeExtension<KGDiscreteRotationalMesh>();
-        (*tIt)->AcceptNode(&tMesher);
+    for (auto& space : fSpaces) {
+        tDiscreteRotationalMeshSpace = space->MakeExtension<KGDiscreteRotationalMesh>();
+        space->AcceptNode(&tMesher);
         tDiscreteRotationalMeshSpace->SetName(GetName());
         tDiscreteRotationalMeshSpace->SetTags(GetTags());
     }
@@ -55,13 +50,13 @@ void KGDiscreteRotationalMeshAttributor::AddSpace(KGSpace* aSpace)
 namespace katrin
 {
 
-template<> KGDiscreteRotationalMeshBuilder::~KComplexElement() {}
+template<> KGDiscreteRotationalMeshBuilder::~KComplexElement() = default;
 
-STATICINT sKGDiscreteRotationalMeshStructure = KGDiscreteRotationalMeshBuilder::Attribute<string>("name") +
+STATICINT sKGDiscreteRotationalMeshStructure = KGDiscreteRotationalMeshBuilder::Attribute<std::string>("name") +
                                                KGDiscreteRotationalMeshBuilder::Attribute<double>("angle") +
                                                KGDiscreteRotationalMeshBuilder::Attribute<int>("count") +
-                                               KGDiscreteRotationalMeshBuilder::Attribute<string>("surfaces") +
-                                               KGDiscreteRotationalMeshBuilder::Attribute<string>("spaces");
+                                               KGDiscreteRotationalMeshBuilder::Attribute<std::string>("surfaces") +
+                                               KGDiscreteRotationalMeshBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKGDiscreteRotationalMesh =
     KGInterfaceBuilder::ComplexElement<KGDiscreteRotationalMeshAttributor>("discrete_rotational_mesh");

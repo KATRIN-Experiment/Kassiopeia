@@ -3,11 +3,9 @@
 namespace Kassiopeia
 {
 
-KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative() {}
-KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative(const KSTrajAdiabaticDerivative& anOperand) :
-    KSMathArray<8>(anOperand)
-{}
-KSTrajAdiabaticDerivative::~KSTrajAdiabaticDerivative() {}
+KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative() = default;
+KSTrajAdiabaticDerivative::KSTrajAdiabaticDerivative(const KSTrajAdiabaticDerivative&) = default;
+KSTrajAdiabaticDerivative::~KSTrajAdiabaticDerivative() = default;
 
 void KSTrajAdiabaticDerivative::AddToTime(const double& aTime)
 {
@@ -19,7 +17,7 @@ void KSTrajAdiabaticDerivative::AddToSpeed(const double& aSpeed)
     fData[1] += aSpeed;
     return;
 }
-void KSTrajAdiabaticDerivative::AddToGuidingCenterVelocity(const KThreeVector& aVelocity)
+void KSTrajAdiabaticDerivative::AddToGuidingCenterVelocity(const KGeoBag::KThreeVector& aVelocity)
 {
     fData[2] += aVelocity.X();
     fData[3] += aVelocity.Y();

@@ -2,6 +2,7 @@
 #define KZONALHARMONICCOEFFICIENTGENERATOR_H
 
 #include "KEMCoordinateSystem.hh"
+#include "KEMCoreMessage.hh"
 #include "KEMTicker.hh"
 #include "KMessageInterface.hh"
 #include "KZonalHarmonicSourcePoint.hh"
@@ -17,7 +18,7 @@ class KZHElementVisitorBase :
     using KSelectiveVisitor<typename KZonalHarmonicTrait<Basis>::Visitor,
                             typename KZonalHarmonicTrait<Basis>::Types>::Visit;
 
-    ~KZHElementVisitorBase() override {}
+    ~KZHElementVisitorBase() override = default;
 
     virtual void SetGenerator(KZHCoefficientGeneratorElement* e) = 0;
 };
@@ -26,7 +27,7 @@ template<typename Type, class Base> class KZHElementVisitorType : public Base
 {
   public:
     using Base::Visit;
-    ~KZHElementVisitorType() override {}
+    ~KZHElementVisitorType() override = default;
 
     void Visit(Type& t) override
     {
@@ -46,14 +47,14 @@ class KZonalHarmonicCoefficientGenerator :
                                KZHElementVisitorBase<Basis>>
 {
   public:
-    typedef KZonalHarmonicTrait<Basis> ZonalHarmonicType;
-    typedef typename ZonalHarmonicType::Container ElementContainer;
+    using ZonalHarmonicType = KZonalHarmonicTrait<Basis>;
+    using ElementContainer = typename ZonalHarmonicType::Container;
 
     using KGenLinearHierarchy<typename KZonalHarmonicTrait<Basis>::Types, KZHElementVisitorType,
                               KZHElementVisitorBase<Basis>>::Visit;
 
     KZonalHarmonicCoefficientGenerator(ElementContainer& container) : fElementContainer(container) {}
-    ~KZonalHarmonicCoefficientGenerator() override {}
+    ~KZonalHarmonicCoefficientGenerator() override = default;
 
     void GroupCoaxialElements(std::vector<ElementContainer*>& subcontainers, double coaxialityTolerance);
     void BifurcateElements(std::vector<ElementContainer*>& subcontainers);
@@ -93,7 +94,7 @@ template<class Basis>
 void KZonalHarmonicCoefficientGenerator<Basis>::GroupCoaxialElements(
     std::vector<typename ZonalHarmonicType::Container*>& subcontainers, double coaxialityTolerance)
 {
-    typedef typename ZonalHarmonicType::Container ElementContainer;
+    using ElementContainer = typename ZonalHarmonicType::Container;
 
     if (fElementContainer.empty())
         return;
@@ -149,10 +150,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GroupCoaxialElements(
     }
 
     if (grouped_elements > 0) {
-        KDataDisplay<KMessage_KEMField> kem_cout;
-        kem_cout.GetStream().SetSeverity(katrin::eWarning);
-        kem_cout << "Added " << grouped_elements << " elements to existing coaxial group (coax. tolerance "
-                 << coaxialityTolerance << ")" << KEMField::endl;
+        kem_cout(eWarning) << "Added " << grouped_elements << " elements to existing coaxial group (coax. tolerance "
+                           << coaxialityTolerance << ")" << eom;
     }
 
     if (!(nonAxiallySymmetricElements->empty())) {
@@ -167,7 +166,7 @@ template<class Basis>
 void KZonalHarmonicCoefficientGenerator<Basis>::BifurcateElements(
     std::vector<typename ZonalHarmonicType::Container*>& subcontainers)
 {
-    typedef typename ZonalHarmonicType::Container ElementContainer;
+    using ElementContainer = typename ZonalHarmonicType::Container;
 
     if (fElementContainer.size() < 2)
         return;
@@ -239,8 +238,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateCentralSourcePointsByFix
     if (nSPs == 0)
         nSPs = 1;
 
-    KEMField::cout << "Computing " << nSPs << " central source points for " << Basis::Name()
-                   << " along the local z-axis from " << z1 << " to " << z2 << "." << KEMField::endl;
+    kem_cout(eNormal) << "Computing " << nSPs << " central source points for " << Basis::Name()
+                      << " along the local z-axis from " << z1 << " to " << z2 << "." << eom;
 
     KTicker ticker;
     ticker.StartTicker(nSPs);
@@ -279,8 +278,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateCentralSourcePointsByFra
     if (fabs(z1 - z2) < 1.e-10)
         SourcePointExtrema(z1, z2);
 
-    KEMField::cout << "Computing central source points for " << Basis::Name() << " along the local z-axis from " << z1
-                   << " to " << z2 << "." << KEMField::endl;
+    kem_cout(eNormal) << "Computing central source points for " << Basis::Name() << " along the local z-axis from "
+                      << z1 << " to " << z2 << "." << eom;
 
     KTicker ticker;
     ticker.StartTicker(z2 - z1);
@@ -303,7 +302,7 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateCentralSourcePointsByFra
 
     sps.push_back(GenerateCentralSourcePoint(z2, nCoeffs));
 
-    KEMField::cout << counter << " central source points have been computed" << KEMField::endl;
+    kem_cout(eNormal) << counter << " central source points have been computed" << eom;
 
     ticker.EndTicker();
 }
@@ -342,9 +341,8 @@ void KZonalHarmonicCoefficientGenerator<Basis>::GenerateRemoteSourcePoints(std::
         deltaZ = 0;
     }
 
-
-    KEMField::cout << "Computing " << nSPs << " remote source points for " << Basis::Name()
-                   << " along the local z-axis from " << z1 << " to " << z2 << "." << KEMField::endl;
+    kem_cout(eNormal) << "Computing " << nSPs << " remote source points for " << Basis::Name()
+                      << " along the local z-axis from " << z1 << " to " << z2 << "." << eom;
 
     KTicker ticker;
     ticker.StartTicker(nSPs);

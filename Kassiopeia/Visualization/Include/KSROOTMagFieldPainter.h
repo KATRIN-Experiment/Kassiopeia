@@ -1,19 +1,15 @@
 #ifndef KSROOTMAGFIELDPAINTER_H
 #define KSROOTMAGFIELDPAINTER_H
 
-#include "KROOTWindow.h"
-using katrin::KROOTWindow;
-
-#include "KROOTPainter.h"
-using katrin::KROOTPainter;
-
 #include "KField.h"
+#include "KROOTPainter.h"
+#include "KROOTWindow.h"
 #include "KSMagneticField.h"
 
 namespace Kassiopeia
 {
 
-class KSROOTMagFieldPainter : public KROOTPainter
+class KSROOTMagFieldPainter : public katrin::KROOTPainter
 {
   public:
     KSROOTMagFieldPainter();

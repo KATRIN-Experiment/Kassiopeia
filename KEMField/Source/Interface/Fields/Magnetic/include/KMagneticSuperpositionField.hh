@@ -19,14 +19,25 @@ namespace KEMField
 class KMagneticSuperpositionField : public KMagneticField
 {
   public:
+    enum RequirementType
+    {
+        rtNone, // no requirements on fields
+        rtAll,  // require all fields to be valid
+        rtAny,  // require one or more fields to be valid
+        rtOne   // require exactly one field to be valid
+    };
+
+  public:
     KMagneticSuperpositionField();
     ~KMagneticSuperpositionField() override;
 
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    bool CheckCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
-    void SetEnhancements(std::vector<double> aEnhancementVector);
+    void SetEnhancements(const std::vector<double>& aEnhancementVector);
     std::vector<double> GetEnhancements();
 
     void AddMagneticField(KMagneticField* aField, double aEnhancement = 1.0);
@@ -36,15 +47,17 @@ class KMagneticSuperpositionField : public KMagneticField
         fUseCaching = useCaching;
     }
 
+    void SetRequire(const std::string& require);
+
   private:
     void InitializeCore() override;
 
-    KThreeVector CalculateCachedPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
-    KThreeVector CalculateCachedField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KFieldVector CalculateCachedPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KFieldVector CalculateCachedField(const KPosition& aSamplePoint, const double& aSampleTime) const;
     KGradient CalculateCachedGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
 
-    KThreeVector CalculateDirectPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
-    KThreeVector CalculateDirectField(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KFieldVector CalculateDirectPotential(const KPosition& aSamplePoint, const double& aSampleTime) const;
+    KFieldVector CalculateDirectField(const KPosition& aSamplePoint, const double& aSampleTime) const;
     KGradient CalculateDirectGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
 
     bool AreAllFieldsStatic();
@@ -55,8 +68,9 @@ class KMagneticSuperpositionField : public KMagneticField
 
     bool fUseCaching;
     bool fCachingBlock;
-    mutable std::map<KPosition, std::vector<KThreeVector>> fPotentialCache;
-    mutable std::map<KPosition, std::vector<KThreeVector>> fFieldCache;
+    RequirementType fRequire;
+    mutable std::map<KPosition, std::vector<KFieldVector>> fPotentialCache;
+    mutable std::map<KPosition, std::vector<KFieldVector>> fFieldCache;
     mutable std::map<KPosition, std::vector<KGradient>> fGradientCache;
 };
 

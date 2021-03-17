@@ -14,7 +14,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KGaussianEliminationChargeDensitySolverBuilder::~KComplexElement() {}
+template<> KGaussianEliminationChargeDensitySolverBuilder::~KComplexElement() = default;
 
 STATICINT sKElectrostaticBoundaryField =
     KElectrostaticBoundaryFieldBuilder::ComplexElement<KGaussianEliminationChargeDensitySolver>(
@@ -23,6 +23,6 @@ STATICINT sKElectrostaticBoundaryField =
         "gaussian_elimination_charge_density_solver");
 
 STATICINT sKGaussianEliminationChargeDensitySolver =
-    KGaussianEliminationChargeDensitySolverBuilder::Attribute<string>("integrator");
+    KGaussianEliminationChargeDensitySolverBuilder::Attribute<std::string>("integrator");
 
 }  // namespace katrin

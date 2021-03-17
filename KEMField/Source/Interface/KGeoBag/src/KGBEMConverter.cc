@@ -1,11 +1,15 @@
 #include "KGBEMConverter.hh"
 
+#include "KEMCoreMessage.hh"
+using KEMField::kem_cout;
+
 #include "KGAxialMeshLoop.hh"
 #include "KGAxialMeshRing.hh"
-#include "KGCoreMessage.hh"
 #include "KGMeshRectangle.hh"
 #include "KGMeshTriangle.hh"
 #include "KGMeshWire.hh"
+
+using KEMField::kem_cout;
 
 #include <cstddef>
 
@@ -21,12 +25,10 @@ KGBEMConverter::KGBEMConverter() :
     fXAxis(KThreeVector::sXUnit),
     fYAxis(KThreeVector::sYUnit),
     fZAxis(KThreeVector::sZUnit),
-    fAxis(),
     fCurrentOrigin(KThreeVector::sZero),
     fCurrentXAxis(KThreeVector::sXUnit),
     fCurrentYAxis(KThreeVector::sYUnit),
-    fCurrentZAxis(KThreeVector::sZUnit),
-    fCurrentAxis()
+    fCurrentZAxis(KThreeVector::sZUnit)
 {}
 KGBEMConverter::~KGBEMConverter()
 {
@@ -37,55 +39,53 @@ void KGBEMConverter::Clear()
 {
     //cout << "clearing content" << endl;
 
-    for (auto tTriangleIt = fTriangles.begin(); tTriangleIt != fTriangles.end(); ++tTriangleIt) {
-        delete *tTriangleIt;
+    for (auto& triangle : fTriangles) {
+        delete triangle;
     }
     fTriangles.clear();
 
-    for (auto tRectangleIt = fRectangles.begin(); tRectangleIt != fRectangles.end(); ++tRectangleIt) {
-        delete *tRectangleIt;
+    for (auto& rectangle : fRectangles) {
+        delete rectangle;
     }
     fRectangles.clear();
 
-    for (auto tLineSegmentIt = fLineSegments.begin(); tLineSegmentIt != fLineSegments.end(); ++tLineSegmentIt) {
-        delete *tLineSegmentIt;
+    for (auto& lineSegment : fLineSegments) {
+        delete lineSegment;
     }
     fLineSegments.clear();
 
-    for (auto tConicSectionIt = fConicSections.begin(); tConicSectionIt != fConicSections.end(); ++tConicSectionIt) {
-        delete *tConicSectionIt;
+    for (auto& conicSection : fConicSections) {
+        delete conicSection;
     }
     fConicSections.clear();
 
-    for (auto tRingIt = fRings.begin(); tRingIt != fRings.end(); ++tRingIt) {
-        delete *tRingIt;
+    for (auto& ring : fRings) {
+        delete ring;
     }
     fRings.clear();
 
-    for (auto tTriangleIt = fSymmetricTriangles.begin(); tTriangleIt != fSymmetricTriangles.end(); ++tTriangleIt) {
-        delete *tTriangleIt;
+    for (auto& symmetricTriangle : fSymmetricTriangles) {
+        delete symmetricTriangle;
     }
     fSymmetricTriangles.clear();
 
-    for (auto tRectangleIt = fSymmetricRectangles.begin(); tRectangleIt != fSymmetricRectangles.end(); ++tRectangleIt) {
-        delete *tRectangleIt;
+    for (auto& symmetricRectangle : fSymmetricRectangles) {
+        delete symmetricRectangle;
     }
     fSymmetricRectangles.clear();
 
-    for (auto tLineSegmentIt = fSymmetricLineSegments.begin(); tLineSegmentIt != fSymmetricLineSegments.end();
-         ++tLineSegmentIt) {
-        delete *tLineSegmentIt;
+    for (auto& symmetricLineSegment : fSymmetricLineSegments) {
+        delete symmetricLineSegment;
     }
     fSymmetricLineSegments.clear();
 
-    for (auto tConicSectionIt = fSymmetricConicSections.begin(); tConicSectionIt != fSymmetricConicSections.end();
-         ++tConicSectionIt) {
-        delete *tConicSectionIt;
+    for (auto& symmetricConicSection : fSymmetricConicSections) {
+        delete symmetricConicSection;
     }
     fSymmetricConicSections.clear();
 
-    for (auto tRingIt = fSymmetricRings.begin(); tRingIt != fSymmetricRings.end(); ++tRingIt) {
-        delete *tRingIt;
+    for (auto& symmetricRing : fSymmetricRings) {
+        delete symmetricRing;
     }
     fSymmetricRings.clear();
 
@@ -130,7 +130,7 @@ KThreeVector KGBEMConverter::GlobalToInternalPosition(const KThreeVector& aVecto
 }
 KThreeVector KGBEMConverter::GlobalToInternalVector(const KThreeVector& aVector)
 {
-    KThreeVector tVector(aVector);
+    const KThreeVector& tVector(aVector);
     return KThreeVector(tVector.Dot(fXAxis), tVector.Dot(fYAxis), tVector.Dot(fZAxis));
 }
 KThreeVector KGBEMConverter::InternalToGlobalPosition(const KThreeVector& aVector)
@@ -193,12 +193,12 @@ KPosition KGBEMConverter::LocalToInternal(const KTwoVector& aVector)
     return KPosition(tInternalVector.R(), 0., tInternalVector.Z());
 }
 
-KGBEMMeshConverter::KGBEMMeshConverter() {}
-KGBEMMeshConverter::KGBEMMeshConverter(KSurfaceContainer& aContainer)
+KGBEMMeshConverter::KGBEMMeshConverter() = default;
+KGBEMMeshConverter::KGBEMMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
     fSurfaceContainer = &aContainer;
 }
-KGBEMMeshConverter::~KGBEMMeshConverter() {}
+KGBEMMeshConverter::~KGBEMMeshConverter() = default;
 
 void KGBEMMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
@@ -223,8 +223,12 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
     LineSegment* tLineSegment;
 
     if (aData != nullptr) {
-        for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
-            tMeshElement = *tElementIt;
+        size_t tIgnored = 0;
+        for (auto& tElementIt : *aData->Elements()) {
+            tMeshElement = tElementIt;
+
+            if (!tMeshElement)
+                continue;
 
             tMeshTriangle = dynamic_cast<KGMeshTriangle*>(tMeshElement);
             if ((tMeshTriangle != nullptr) && (tMeshTriangle->Area() > fMinimumArea) &&
@@ -257,9 +261,9 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
                                         LocalToInternal(tMeshWire->GetP1()),
                                         tMeshWire->GetDiameter());
                 if (tMeshWire->Aspect() < 1.) {
-                    coremsg(eWarning) << "Attention at line segment at P0=" << (KThreeVector)(tLineSegment->GetP0())
-                                      << ": Length < Diameter" << eom;
-                    coremsg(eNormal)
+                    kem_cout(eWarning) << "Attention at line segment at P0=" << (KThreeVector)(tLineSegment->GetP0())
+                                       << ": Length < Diameter" << eom;
+                    kem_cout(eNormal)
                         << "Wires are discretized too finely for the approximation of linear charge density to hold valid."
                         << ret << "Convergence problems of the Robin Hood charge density solver are expected." << ret
                         << "To avoid invalid elements, reduce mesh count and / or mesh power." << eom;
@@ -267,18 +271,24 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
                 fLineSegments.push_back(tLineSegment);
                 continue;
             }
+
+            //kem_cout(eDebug) << "ignored mesh element of type " << tMeshElement->Name() << eom;
+            tIgnored++;
         }
+        if (tIgnored)
+            kem_cout(eInfo) << "could not add " << tIgnored << " mesh elements that were not triangles, rectangles or wires"
+                       << eom;
     }
 
     return true;
 }
 
-KGBEMAxialMeshConverter::KGBEMAxialMeshConverter() {}
-KGBEMAxialMeshConverter::KGBEMAxialMeshConverter(KSurfaceContainer& aContainer)
+KGBEMAxialMeshConverter::KGBEMAxialMeshConverter() = default;
+KGBEMAxialMeshConverter::KGBEMAxialMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
     fSurfaceContainer = &aContainer;
 }
-KGBEMAxialMeshConverter::~KGBEMAxialMeshConverter() {}
+KGBEMAxialMeshConverter::~KGBEMAxialMeshConverter() = default;
 
 void KGBEMAxialMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
@@ -314,8 +324,12 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             return false;
         }
 
-        for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
-            tAxialMeshElement = *tElementIt;
+        size_t tIgnored = 0;
+        for (auto& tElementIt : *aData->Elements()) {
+            tAxialMeshElement = tElementIt;
+
+            if (!tAxialMeshElement)
+                continue;
 
             tAxialMeshLoop = dynamic_cast<KGAxialMeshLoop*>(tAxialMeshElement);
             if ((tAxialMeshLoop != nullptr) && (tAxialMeshLoop->Area() > fMinimumArea)) {
@@ -333,7 +347,13 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
                 fRings.push_back(tRing);
                 continue;
             }
+
+            //kem_cout(eDebug) << "ignored mesh element of type " << tAxialMeshElement->Name() << eom;
+            tIgnored++;
         }
+
+        if (tIgnored)
+            kem_cout(eInfo) << "could not add " << tIgnored << " axial mesh elements that were not loops or rings" << eom;
 
         //cout << "...added <" << fConicSections.size() + fRings.size() << "> components." << endl;
     }
@@ -341,12 +361,12 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
     return true;
 }
 
-KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter() {}
-KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter(KSurfaceContainer& aContainer)
+KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter() = default;
+KGBEMDiscreteRotationalMeshConverter::KGBEMDiscreteRotationalMeshConverter(KEMField::KSurfaceContainer& aContainer)
 {
     fSurfaceContainer = &aContainer;
 }
-KGBEMDiscreteRotationalMeshConverter::~KGBEMDiscreteRotationalMeshConverter() {}
+KGBEMDiscreteRotationalMeshConverter::~KGBEMDiscreteRotationalMeshConverter() = default;
 
 void KGBEMDiscreteRotationalMeshConverter::DispatchSurface(KGSurface* aSurface)
 {
@@ -387,8 +407,12 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
         tCenter.SetComponents(fAxis.GetCenter().X(), fAxis.GetCenter().Y(), fAxis.GetCenter().Z());
         tDirection.SetComponents(fAxis.GetDirection().X(), fAxis.GetDirection().Y(), fAxis.GetDirection().Z());
 
-        for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
-            tMeshElement = *tElementIt;
+        size_t tIgnored = 0;
+        for (auto& tElementIt : *aData->Elements()) {
+            tMeshElement = tElementIt;
+
+            if (!tMeshElement)
+                continue;
 
             tMeshTriangle = dynamic_cast<KGDiscreteRotationalMeshTriangle*>(tMeshElement);
             if ((tMeshTriangle != nullptr) && (tMeshTriangle->Area() > fMinimumArea) &&
@@ -426,7 +450,14 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
                 fSymmetricLineSegments.push_back(tLineSegments);
                 continue;
             }
+
+            //kem_cout(eDebug) << "ignored mesh element of type " << tMeshElement->Name() << eom;
+            tIgnored++;
         }
+
+        if (tIgnored)
+            kem_cout(eInfo) << "could not add " << tIgnored
+                       << " discrete-rotational mesh elements that were not triangles, rectangles or wires" << eom;
     }
 
     return true;

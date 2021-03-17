@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajExactDerivative : public KSMathArray<8>
   public:
     KSTrajExactDerivative();
     KSTrajExactDerivative(const KSTrajExactDerivative& anOperand);
-    virtual ~KSTrajExactDerivative();
+    ~KSTrajExactDerivative() override;
 
     //**********
     //assignment
@@ -36,8 +35,8 @@ class KSTrajExactDerivative : public KSMathArray<8>
   public:
     void AddToTime(const double& aTime);
     void AddToSpeed(const double& aSpeed);
-    void AddToVelocity(const KThreeVector& aVelocity);
-    void AddToForce(const KThreeVector& aForce);
+    void AddToVelocity(const KGeoBag::KThreeVector& aVelocity);
+    void AddToForce(const KGeoBag::KThreeVector& aForce);
 };
 
 inline KSTrajExactDerivative& KSTrajExactDerivative::operator=(const double& anOperand)

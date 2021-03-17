@@ -31,7 +31,8 @@ class KIterativeKrylovRestartCondition
         fNIterationsBetweenRestart = UINT_MAX;  //number of iterations before a restart is triggered
     };
 
-    virtual ~KIterativeKrylovRestartCondition(){};
+    virtual ~KIterativeKrylovRestartCondition() = default;
+    ;
 
     virtual void SetNumberOfIterationsBetweenRestart(unsigned int n)
     {

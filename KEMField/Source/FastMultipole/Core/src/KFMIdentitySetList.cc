@@ -11,8 +11,8 @@ unsigned int KFMIdentitySetList::GetNumberOfSets() const
 unsigned int KFMIdentitySetList::GetTotalSize() const
 {
     unsigned int ret_val = 0;
-    for (unsigned int i = 0; i < fIDSetList.size(); i++) {
-        ret_val += fIDSetList[i]->size();
+    for (const auto* i : fIDSetList) {
+        ret_val += i->size();
     }
     return ret_val;
 }
@@ -30,8 +30,8 @@ void KFMIdentitySetList::AddIDSetList(const KFMIdentitySetList* set_list)
 {
     if (set_list != nullptr) {
         const std::vector<const std::vector<unsigned int>*>* raw_list = set_list->GetRawSetList();
-        for (unsigned int i = 0; i < raw_list->size(); i++) {
-            fIDSetList.push_back(raw_list->at(i));
+        for (const auto* i : *raw_list) {
+            fIDSetList.push_back(i);
         }
     }
 }

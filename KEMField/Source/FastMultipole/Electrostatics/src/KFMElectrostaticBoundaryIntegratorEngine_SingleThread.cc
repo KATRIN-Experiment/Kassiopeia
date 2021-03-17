@@ -87,7 +87,7 @@ void KFMElectrostaticBoundaryIntegratorEngine_SingleThread::SetTree(KFMElectrost
 }
 
 //set parameters
-void KFMElectrostaticBoundaryIntegratorEngine_SingleThread::SetParameters(KFMElectrostaticParameters params)
+void KFMElectrostaticBoundaryIntegratorEngine_SingleThread::SetParameters(const KFMElectrostaticParameters& params)
 {
     fDegree = params.degree;
     fNTerms = (fDegree + 1) * (fDegree + 1);
@@ -396,7 +396,7 @@ void KFMElectrostaticBoundaryIntegratorEngine_SingleThread::EvaluateWorkLoads(un
         weights.SetFFTWeight(fFFTWeight);
 
         //now write out the values to disk so we can reuse them next time if needed
-        KSAObjectOutputNode<KFMWorkLoadBalanceWeights>* out_node =
+        auto* out_node =
             new KSAObjectOutputNode<KFMWorkLoadBalanceWeights>(KSAClassName<KFMWorkLoadBalanceWeights>::name());
         out_node->AttachObjectToNode(&weights);
         bool result;
@@ -525,7 +525,7 @@ double KFMElectrostaticBoundaryIntegratorEngine_SingleThread::ComputeFFTWeight(u
     KFMArrayWrapper<std::complex<double>, 3> input_cpu(raw_data_cpu, &(dim_size[1]));
 
 #ifdef KEMFIELD_USE_FFTW
-    KFMMultidimensionalFastFourierTransformFFTW<3>* fft_cpu = new KFMMultidimensionalFastFourierTransformFFTW<3>();
+    auto* fft_cpu = new KFMMultidimensionalFastFourierTransformFFTW<3>();
 #else
     auto* fft_cpu = new KFMMultidimensionalFastFourierTransform<3>();
 #endif

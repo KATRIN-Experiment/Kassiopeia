@@ -24,8 +24,10 @@ namespace KEMField
 template<typename TypeList> class KFMObjectCollection : public KGenScatterHierarchy<TypeList, KFMObjectHolder>
 {
   public:
-    KFMObjectCollection(){};
-    ~KFMObjectCollection() override{};
+    KFMObjectCollection() = default;
+    ;
+    ~KFMObjectCollection() override = default;
+    ;
 
   private:
 };

@@ -35,7 +35,7 @@ namespace katrin
  */
 template<class XType> bool AddElectrostaticIntegratorPolicy(XType* reciever, KContainer* aContainer)
 {
-    std::string integratorName = aContainer->AsReference<std::string>();
+    std::string integratorName = aContainer->AsString();
     try {
         KEMField::KEBIPolicy policy{integratorName};
         reciever->SetIntegratorPolicy(policy);
@@ -55,7 +55,7 @@ template<class XType> bool AddElectrostaticIntegratorPolicy(XType* reciever, KCo
  */
 template<class XType> bool AddElectrostaticIntegrator(XType* reciever, KContainer* aContainer)
 {
-    std::string integratorName = aContainer->AsReference<std::string>();
+    std::string integratorName = aContainer->AsString();
     try {
         KEMField::KEBIPolicy policy{integratorName};
         reciever->SetDirectIntegrator(policy.CreateIntegrator());

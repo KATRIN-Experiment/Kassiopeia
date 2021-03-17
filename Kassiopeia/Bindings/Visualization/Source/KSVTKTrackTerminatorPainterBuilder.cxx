@@ -9,17 +9,17 @@ namespace katrin
 {
 
 STATICINT sKSVTKTrackTerminatorPainterStructure =
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("name") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("file") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("path") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("outfile") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("point_object") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("point_variable") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("terminator_object") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("terminator_variable") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("name") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("file") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("path") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("outfile") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("point_object") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("point_variable") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("terminator_object") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("terminator_variable") +
     KSVTKTrackTerminatorPainterBuilder::Attribute<int>("point_size") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<string>("add_terminator") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<KThreeVector>("add_color");
+    KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("add_terminator") +
+    KSVTKTrackTerminatorPainterBuilder::Attribute<KGeoBag::KThreeVector>("add_color");
 
 STATICINT sKSVTKTrackTerminatorPainterWindow =
     KVTKWindowBuilder::ComplexElement<KSVTKTrackTerminatorPainter>("vtk_track_terminator_painter");

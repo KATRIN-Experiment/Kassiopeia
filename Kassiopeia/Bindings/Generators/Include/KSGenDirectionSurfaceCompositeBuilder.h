@@ -26,13 +26,12 @@ template<> inline bool KSGenDirectionSurfaceCompositeBuilder::AddAttribute(KCont
     }
     if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         std::vector<KGeoBag::KGSurface*>::iterator tSurfaceIt;
         KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -44,11 +43,11 @@ template<> inline bool KSGenDirectionSurfaceCompositeBuilder::AddAttribute(KCont
     }
 
     if (aContainer->GetName() == "theta") {
-        fObject->SetThetaValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetThetaValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "phi") {
-        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetPhiValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

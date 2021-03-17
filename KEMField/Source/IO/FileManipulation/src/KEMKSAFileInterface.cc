@@ -2,17 +2,20 @@
 
 #include "KSAStructuredASCIIHeaders.hh"
 
+using std::set;
+using std::string;
+
 namespace KEMField
 {
 
-void KEMKSAFileInterface::ReadKSAFile(KSAInputNode* node, string file_name, bool& result)
+void KEMKSAFileInterface::ReadKSAFile(KSAInputNode* node, const string& file_name, bool& result)
 {
     result = false;
     set<string> fileList = KEMFileInterface::GetInstance()->CompleteFileList();
 
     std::string full_file_name = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_name;
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (*it == full_file_name) {
+    for (const auto& it : fileList) {
+        if (it == full_file_name) {
             KSAFileReader reader;
 
             reader.SetFileName(full_file_name);
@@ -31,14 +34,14 @@ void KEMKSAFileInterface::ReadKSAFile(KSAInputNode* node, string file_name, bool
 }
 
 
-void KEMKSAFileInterface::SaveKSAFile(KSAOutputNode* node, string file_name, bool& result, bool forceOverwrite)
+void KEMKSAFileInterface::SaveKSAFile(KSAOutputNode* node, const string& file_name, bool& result, bool forceOverwrite)
 {
     result = false;
     set<string> fileList = KEMFileInterface::GetInstance()->CompleteFileList();
     std::string full_file_name = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_name;
 
-    for (auto it = fileList.begin(); it != fileList.end(); ++it) {
-        if (*it == full_file_name) {
+    for (const auto& it : fileList) {
+        if (it == full_file_name) {
             if (!forceOverwrite) {
                 //file already exists, and we do not want to overwrite it
                 result = false;

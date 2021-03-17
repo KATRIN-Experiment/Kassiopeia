@@ -14,17 +14,18 @@ using namespace std;
 namespace katrin
 {
 
-KSIntCalculatorSet::KSIntCalculatorSet() {}
-KSIntCalculatorSet::~KSIntCalculatorSet() {}
+KSIntCalculatorSet::KSIntCalculatorSet() = default;
+KSIntCalculatorSet::~KSIntCalculatorSet() = default;
 
-template<> KSIntScatteringBuilder::~KComplexElement() {}
+template<> KSIntScatteringBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntScattering = KSRootBuilder::ComplexElement<KSIntScattering>("ksint_scattering");
 
 STATICINT sKSIntScatteringStructure =
-    KSIntScatteringBuilder::Attribute<string>("name") + KSIntScatteringBuilder::Attribute<bool>("split") +
-    KSIntScatteringBuilder::Attribute<string>("density") + KSIntScatteringBuilder::Attribute<string>("calculator") +
-    KSIntScatteringBuilder::Attribute<string>("calculators") +
+    KSIntScatteringBuilder::Attribute<std::string>("name") + KSIntScatteringBuilder::Attribute<bool>("split") +
+    KSIntScatteringBuilder::Attribute<std::string>("density") +
+    KSIntScatteringBuilder::Attribute<std::string>("calculator") +
+    KSIntScatteringBuilder::Attribute<std::string>("calculators") +
     KSIntScatteringBuilder::Attribute<double>("enhancement") +
     KSIntScatteringBuilder::ComplexElement<KSIntDensityConstant>("density_constant") +
     KSIntScatteringBuilder::ComplexElement<KSIntCalculatorConstant>("calculator_constant") +

@@ -114,7 +114,7 @@ class KKrylovSolverConfiguration
         return fDisplayName;
     }
 
-    void SetDisplayName(std::string displayName)
+    void SetDisplayName(const std::string& displayName)
     {
         fDisplayName = displayName;
     }

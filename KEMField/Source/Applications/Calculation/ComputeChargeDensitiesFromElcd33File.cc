@@ -9,6 +9,7 @@
 #include "KBoundaryIntegralVector.hh"
 #include "KDataDisplay.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KGaussianElimination.hh"
@@ -57,10 +58,10 @@ using namespace KEMField;
 
 // typedefs for elements
 typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle> KEMRectangle;
-typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment> KEMWire;
+using KEMWire = KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>;
 
 
-void AddRectangle(double sideA, double sideB, KPosition p0, KPosition n1, KPosition n2, double pot,
+void AddRectangle(double sideA, double sideB, const KPosition& p0, const KPosition& n1, const KPosition& n2, double pot,
                   KSurfaceContainer& cont)
 {
     auto* rectangle = new KEMRectangle();
@@ -74,12 +75,10 @@ void AddRectangle(double sideA, double sideB, KPosition p0, KPosition n1, KPosit
     rectangle->SetBoundaryValue(pot);
 
     cont.push_back(rectangle);
-
-    return;
 }
 
 
-void AddWire(KPosition pA, KPosition pB, double diameter, double pot, KSurfaceContainer& cont)
+void AddWire(const KPosition& pA, const KPosition& pB, double diameter, double pot, KSurfaceContainer& cont)
 {
     auto* wire = new KEMWire();
 
@@ -90,11 +89,9 @@ void AddWire(KPosition pA, KPosition pB, double diameter, double pot, KSurfaceCo
     wire->SetBoundaryValue(pot);
 
     cont.push_back(wire);
-
-    return;
 }
 
-void ReadElectrodeFile(std::string inputFileName, KSurfaceContainer& container)
+void ReadElectrodeFile(const std::string& inputFileName, KSurfaceContainer& container)
 {
     std::ifstream inputFileStream(inputFileName.c_str());
     unsigned int L(0);
@@ -117,8 +114,8 @@ void ReadElectrodeFile(std::string inputFileName, KSurfaceContainer& container)
         for (unsigned int i = 0; i < L; i++) {
             inputFileStream >> subelindex >> groupindex >> ntype >> nrot;
 
-            for (unsigned int j = 0; j < 11; j++) {
-                inputFileStream >> par[j];
+            for (double& j : par) {
+                inputFileStream >> j;
             }
 
             inputFileStream >> U;
@@ -141,8 +138,6 @@ void ReadElectrodeFile(std::string inputFileName, KSurfaceContainer& container)
     }
 
     inputFileStream.close();
-
-    return;
 }
 
 int main(int argc, char* argv[])
@@ -195,7 +190,7 @@ int main(int argc, char* argv[])
         {"save-increment", required_argument, nullptr, 'j'},
         {"file", required_argument, nullptr, 'k'},
 #ifdef KEMFIELD_USE_VTK
-        {"with-plot", no_argument, 0, 'e'},
+        {"with-plot", no_argument, nullptr, 'e'},
 #endif
         {"method", required_argument, nullptr, 'm'},
     };
@@ -207,7 +202,7 @@ int main(int argc, char* argv[])
 #endif
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -219,7 +214,7 @@ int main(int argc, char* argv[])
 #endif
                 return 0;
             case ('v'):  // verbose
-                verbose = atoi(optarg);
+                verbose = (atoi(optarg) != 0);
                 break;
             case ('a'):
                 accuracy = atof(optarg);

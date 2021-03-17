@@ -14,10 +14,10 @@ namespace Kassiopeia
 {
 
 typedef KSMathSystem<KSTrajExactParticle, KSTrajExactDerivative, KSTrajExactError> KSTrajExactSystem;
-typedef KSMathControl<KSTrajExactSystem> KSTrajExactControl;
-typedef KSMathDifferentiator<KSTrajExactSystem> KSTrajExactDifferentiator;
-typedef KSMathIntegrator<KSTrajExactSystem> KSTrajExactIntegrator;
-typedef KSMathInterpolator<KSTrajExactSystem> KSTrajExactInterpolator;
+using KSTrajExactControl = KSMathControl<KSTrajExactSystem>;
+using KSTrajExactDifferentiator = KSMathDifferentiator<KSTrajExactSystem>;
+using KSTrajExactIntegrator = KSMathIntegrator<KSTrajExactSystem>;
+using KSTrajExactInterpolator = KSMathInterpolator<KSTrajExactSystem>;
 
 }  // namespace Kassiopeia
 

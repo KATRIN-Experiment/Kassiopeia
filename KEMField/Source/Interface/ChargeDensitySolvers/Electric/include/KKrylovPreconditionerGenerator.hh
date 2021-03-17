@@ -21,17 +21,17 @@ namespace KEMField
 class KKrylovPreconditionerGenerator : public KBoundaryMatrixGenerator<KElectrostaticBasis::ValueType>
 {
   public:
-    typedef KElectrostaticBasis::ValueType ValueType;
-    typedef KBoundaryMatrixGenerator<ValueType> MatrixGenerator;
+    using ValueType = KElectrostaticBasis::ValueType;
+    using MatrixGenerator = KBoundaryMatrixGenerator<ValueType>;
 
     KKrylovPreconditionerGenerator();
     ~KKrylovPreconditionerGenerator() override;
 
     KSmartPointer<KSquareMatrix<ValueType>> Build(const KSurfaceContainer& container) const override;
 
-    void SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen);
+    void SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen);
     KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
-    void SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen);
+    void SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen);
 
     void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart)
     {

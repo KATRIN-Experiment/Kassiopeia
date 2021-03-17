@@ -25,7 +25,7 @@ KSTrajTrajectoryExactTrapped::KSTrajTrajectoryExactTrapped() :
     fMaxAttempts(32)
 {}
 KSTrajTrajectoryExactTrapped::KSTrajTrajectoryExactTrapped(const KSTrajTrajectoryExactTrapped& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fInitialParticle(aCopy.fInitialParticle),
     fIntermediateParticle(aCopy.fIntermediateParticle),
     fFinalParticle(aCopy.fFinalParticle),
@@ -42,7 +42,7 @@ KSTrajTrajectoryExactTrapped* KSTrajTrajectoryExactTrapped::Clone() const
 {
     return new KSTrajTrajectoryExactTrapped(*this);
 }
-KSTrajTrajectoryExactTrapped::~KSTrajTrajectoryExactTrapped() {}
+KSTrajTrajectoryExactTrapped::~KSTrajTrajectoryExactTrapped() = default;
 
 void KSTrajTrajectoryExactTrapped::SetIntegrator(KSTrajExactTrappedIntegrator* anIntegrator)
 {
@@ -275,9 +275,9 @@ void KSTrajTrajectoryExactTrapped::GetPiecewiseLinearApproximation(
     std::vector<KSParticle>* intermediateParticleStates) const
 {
     intermediateParticleStates->clear();
-    for (unsigned int i = 0; i < fIntermediateParticleStates.size(); i++) {
+    for (auto& particleState : fIntermediateParticleStates) {
         KSParticle particle(anInitialParticle);
-        fIntermediateParticleStates[i].PushTo(particle);
+        particleState.PushTo(particle);
         intermediateParticleStates->push_back(particle);
     }
 }

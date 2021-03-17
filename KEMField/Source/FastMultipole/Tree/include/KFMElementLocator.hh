@@ -25,8 +25,10 @@ namespace KEMField
 template<typename ObjectTypeList> class KFMElementLocator : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMElementLocator(){};
-    virtual ~KFMElementLocator(){};
+    KFMElementLocator() = default;
+    ;
+    virtual ~KFMElementLocator() = default;
+    ;
 
     void SetElementID(unsigned int id)
     {

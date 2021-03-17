@@ -39,7 +39,7 @@ class KSComponentMember<const XValueType& (XParentType::*) (void) const> : publi
         Set(&fValue);
         this->SetParent(aCopy.fParentComponent);
     }
-    ~KSComponentMember() override {}
+    ~KSComponentMember() override = default;
 
     //***********
     //KSComponent
@@ -94,7 +94,7 @@ class KSComponentMemberFactory<const XValueType& (XParentType::*) () const> : pu
 {
   public:
     KSComponentMemberFactory(const XValueType& (XParentType::*aMember)() const) : fMember(aMember) {}
-    ~KSComponentMemberFactory() override {}
+    ~KSComponentMemberFactory() override = default;
 
   public:
     KSComponent* CreateComponent(KSComponent* aParent) const override
@@ -141,7 +141,7 @@ class KSComponentMember<XValueType (XParentType::*)(void) const> : public KSComp
         Set(&fValue);
         fParentComponent = aCopy.fParentComponent;
     }
-    ~KSComponentMember() override {}
+    ~KSComponentMember() override = default;
 
     //***********
     //KSComponent
@@ -190,7 +190,7 @@ class KSComponentMemberFactory<XValueType (XParentType::*)() const> : public KSC
 {
   public:
     KSComponentMemberFactory(XValueType (XParentType::*aMember)() const) : fMember(aMember) {}
-    ~KSComponentMemberFactory() override {}
+    ~KSComponentMemberFactory() override = default;
 
   public:
     KSComponent* CreateComponent(KSComponent* aParent) const override

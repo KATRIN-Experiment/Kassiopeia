@@ -29,10 +29,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryExactBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryExactBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryExactStructure =
-    KSTrajTrajectoryExactBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryExactBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryExactBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryExactBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +
     KSTrajTrajectoryExactBuilder::ComplexElement<KSTrajIntegratorRKDP54>("integrator_rkdp54") +

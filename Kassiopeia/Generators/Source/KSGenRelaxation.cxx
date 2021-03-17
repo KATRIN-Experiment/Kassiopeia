@@ -5,12 +5,13 @@
  *      Author: renschler, mertens
  */
 
-#include "KRandom.h"
-using katrin::KRandom;
 #include "KSGenRelaxation.h"
+
+#include "KRandom.h"
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
+using namespace katrin;
 
 namespace Kassiopeia
 {
@@ -49,20 +50,20 @@ bool KSGenRelaxation::ReadData()
     string two;
 
     if (fIsotope == 219 || fIsotope == 220) {
-        fDataFile = katrin::CreateDataTextFile("RelaxationPo.dat");
+        fDataFile = KTextFile::CreateDataTextFile("RelaxationPo.dat");
     }
     else if (fIsotope == 83) {
-        fDataFile = katrin::CreateDataTextFile("RelaxationKr.dat");
+        fDataFile = KTextFile::CreateDataTextFile("RelaxationKr.dat");
     }
     else if (fIsotope == 210) {
-        fDataFile = katrin::CreateDataTextFile("RelaxationBi.dat");
+        fDataFile = KTextFile::CreateDataTextFile("RelaxationBi.dat");
     }
     else {
         genmsg(eError) << "KSGenConversion::ReadData" << ret;
         genmsg << "isotope " << fIsotope << " not supported by relaxation process!" << eom;
     }
 
-    if (fDataFile->Open(katrin::KFile::eRead) == true) {
+    if (fDataFile->Open(KFile::eRead) == true) {
 
         fstream& inputfile = *(fDataFile->File());
 

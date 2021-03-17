@@ -7,12 +7,12 @@ namespace KEMField
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansion(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
 
     if (UseCentralExpansion(localP))
         return true;
 
-    for (auto& sub : fSubsetFieldSolvers) {
+    for (const auto& sub : fSubsetFieldSolvers) {
         if (sub->CentralExpansion(P))
             return true;
     }
@@ -22,12 +22,12 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansion(const KPos
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansion(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
 
     if (UseRemoteExpansion(localP))
         return true;
 
-    for (auto& sub : fSubsetFieldSolvers) {
+    for (const auto& sub : fSubsetFieldSolvers) {
         if (sub->RemoteExpansion(P))
             return true;
     }
@@ -35,11 +35,11 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansion(const KPosi
     return false;
 }
 
-KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(const KPosition& P) const
+KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
 
-    KThreeVector A;
+    KFieldVector A;
 
     if (fCentralFirst) {
 
@@ -70,7 +70,7 @@ KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
         }
     }
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         VectorPotentialAccumulator accumulator(P);
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), A, accumulator);
     }
@@ -78,10 +78,10 @@ KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::VectorPotential(con
     return fIntegratingFieldSolver.VectorPotential(P);
 }
 
-KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const KPosition& P) const
+KFieldVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
-    KThreeVector B;
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector B;
 
     if (fCentralFirst) {
         if (UseCentralExpansion(localP)) {
@@ -114,7 +114,7 @@ KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
         }
     }
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         MagneticFieldAccumulator accumulator(P);
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), B, accumulator);
     }
@@ -124,7 +124,7 @@ KThreeVector KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticField(const
 
 KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
     KGradient g;
 
     if (fCentralFirst) {
@@ -156,7 +156,7 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
         }
     }
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         MagneticFieldGradientAccumulator accumulator(P);
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), g, accumulator);
     }
@@ -166,12 +166,12 @@ KGradient KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldGradient(
     return g;
 }
 
-std::pair<KThreeVector, KGradient>
+std::pair<KFieldVector, KGradient>
 KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const KPosition& P) const
 {
-    KThreeVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
+    KFieldVector localP = fContainer.GetCoordinateSystem().ToLocal(P);
 
-    KThreeVector B;
+    KFieldVector B;
     KGradient g;
 
 
@@ -209,7 +209,7 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
     }
 
 
-    if (fSubsetFieldSolvers.size() != 0) {
+    if (!fSubsetFieldSolvers.empty()) {
         MagneticFieldAndGradientAccumulator accumulator(P);
         return std::accumulate(fSubsetFieldSolvers.begin(),
                                fSubsetFieldSolvers.end(),
@@ -224,10 +224,10 @@ KZonalHarmonicFieldSolver<KMagnetostaticBasis>::MagneticFieldAndGradient(const K
 }
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionMagneticField(const KPosition& P,
-                                                                                   KThreeVector& magneticField) const
+                                                                                   KFieldVector& B) const
 {
     if (fContainer.GetCentralSourcePoints().empty()) {
-        magneticField[0] = magneticField[1] = magneticField[2] = 0.;
+        B[0] = B[1] = B[2] = 0.;
         return true;
     }
 
@@ -241,8 +241,8 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionMagneticFie
 
     // if the field point is very close to the source point
     if (r < proximity_to_sourcepoint && fabs(z - sP.GetZ0()) < proximity_to_sourcepoint) {
-        magneticField[0] = magneticField[1] = 0.;
-        magneticField[2] = sPcoeff[0];
+        B[0] = B[1] = 0.;
+        B[2] = sPcoeff[0];
         return true;
     }
 
@@ -335,23 +335,23 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionMagneticFie
         return false;
     }
 
-    magneticField[2] = Bz;
+    B[2] = Bz;
 
     if (r < fContainer.GetParameters().GetProximityToSourcePoint())
-        magneticField[0] = magneticField[1] = 0.;
+        B[0] = B[1] = 0.;
     else {
-        magneticField[0] = P[0] / r * Br;
-        magneticField[1] = P[1] / r * Br;
+        B[0] = P[0] / r * Br;
+        B[1] = P[1] / r * Br;
     }
 
     return true;
 }
 
-bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPotential(
-    const KPosition& P, KThreeVector& vectorPotential) const
+bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPotential(const KPosition& P,
+                                                                                     KFieldVector& A) const
 {
     if (fContainer.GetCentralSourcePoints().empty()) {
-        vectorPotential[0] = vectorPotential[1] = vectorPotential[2] = 0.;
+        A[0] = A[1] = A[2] = 0.;
         return true;
     }
 
@@ -366,7 +366,7 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPoten
 
     // if the field point is very close to the source point
     if (r < proximity_to_sourcepoint && fabs(z - sP.GetZ0()) < proximity_to_sourcepoint) {
-        vectorPotential[0] = vectorPotential[1] = vectorPotential[2] = 0.;
+        A[0] = A[1] = A[2] = 0.;
         return true;
     }
 
@@ -384,7 +384,7 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPoten
 
     // First 2 terms of the series:
     double rcn = rc;
-    double A = -s * sPrho * sPcoeff[0] * .5 * rc;
+    double A0 = -s * sPrho * sPcoeff[0] * .5 * rc;
 
     // flags for series convergence
     bool A_hasConverged = false;
@@ -417,12 +417,12 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPoten
         // n-th A, Bz, Br terms in the series
         Aplus = -sPrho * s * sPcoeff[n - 1] * (1.) / (n * (n + 1.)) * rcn * p1p;
 
-        A += Aplus;
+        A0 += Aplus;
 
         // Conditions for series convergence:
         //   the last term in the series must be smaller than the current series
         //   sum by the given parameter, and smaller than the previous term
-        A_ratio = conv_param * fabs(A);
+        A_ratio = conv_param * fabs(A0);
 
         if ((fabs(Aplus) < A_ratio && fabs(lastAplus) < A_ratio) || r < proximity_to_sourcepoint) {
             A_hasConverged = true;
@@ -440,13 +440,13 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPoten
         return false;
     }
 
-    vectorPotential[2] = 0;
+    A[2] = 0;
 
     if (r < proximity_to_sourcepoint)
-        vectorPotential[0] = vectorPotential[1] = 0.;
+        A[0] = A[1] = 0.;
     else {
-        vectorPotential[0] = P[1] / r * A;
-        vectorPotential[1] = -P[0] / r * A;
+        A[0] = P[1] / r * A0;
+        A[1] = -P[0] / r * A0;
     }
 
     return true;
@@ -454,11 +454,11 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralExpansionVectorPoten
 
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionMagneticField(const KPosition& P,
-                                                                                  KThreeVector& magneticField) const
+                                                                                  KFieldVector& B) const
 {
     //      cout <<fmRemoteSPIndex <<endl;
     if (fContainer.GetRemoteSourcePoints().empty()) {
-        magneticField[0] = magneticField[1] = magneticField[2] = 0.;
+        B[0] = B[1] = B[2] = 0.;
         return true;
     }
 
@@ -559,23 +559,23 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionMagneticFiel
         return false;
     };
 
-    magneticField[2] = Bz;
+    B[2] = Bz;
 
     if (r < fContainer.GetParameters().GetProximityToSourcePoint())
-        magneticField[0] = magneticField[1] = 0.;
+        B[0] = B[1] = 0.;
     else {
-        magneticField[0] = P[0] / r * Br;
-        magneticField[1] = P[1] / r * Br;
+        B[0] = P[0] / r * Br;
+        B[1] = P[1] / r * Br;
     }
 
     return true;
 }
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionVectorPotential(const KPosition& P,
-                                                                                    KThreeVector& vectorPotential) const
+                                                                                    KFieldVector& A) const
 {
     if (fContainer.GetRemoteSourcePoints().empty()) {
-        vectorPotential[0] = vectorPotential[1] = vectorPotential[2] = 0.;
+        A[0] = A[1] = A[2] = 0.;
         return true;
     }
 
@@ -602,7 +602,7 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionVectorPotent
 
     // First 2 terms of the series:
     double rrn = rr * rr;
-    double A = -sPrho * sPcoeff[2] * s * .5 * rrn;
+    double A0 = -sPrho * sPcoeff[2] * s * .5 * rrn;
 
     // flags for series convergence
     bool A_hasConverged = false;
@@ -637,12 +637,12 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionVectorPotent
         // n-th A, Bz, Br terms in the series
         Aplus = -sPrho * sPcoeff[n + 1] * s * (1.) / (n * (n + 1.)) * rrn * p1p;
 
-        A += Aplus;
+        A0 += Aplus;
 
         // Conditions for series convergence:
         //   the last term in the series must be smaller than the current series
         //   sum by the given parameter, and smaller than the previous term
-        A_ratio = conv_param * fabs(A);
+        A_ratio = conv_param * fabs(A0);
 
         if ((fabs(Aplus) < A_ratio && fabs(lastAplus) < A_ratio) ||
             r < fContainer.GetParameters().GetProximityToSourcePoint()) {
@@ -660,13 +660,13 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionVectorPotent
     if (!A_hasConverged)
         return false;
 
-    vectorPotential[2] = 0;
+    A[2] = 0;
 
     if (r < fContainer.GetParameters().GetProximityToSourcePoint())
-        vectorPotential[0] = vectorPotential[1] = 0.;
+        A[0] = A[1] = 0.;
     else {
-        vectorPotential[0] = P[1] / r * A;
-        vectorPotential[1] = -P[0] / r * A;
+        A[0] = P[1] / r * A0;
+        A[1] = -P[0] / r * A0;
     }
 
 
@@ -675,22 +675,23 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteExpansionVectorPotent
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralGradientExpansion(const KPosition& P, KGradient& g) const
 {
-    KThreeVector B(0., 0., 0.);
+    KFieldVector B(0., 0., 0.);
     return CentralMagneticFieldAndGradientExpansion(P, g, B);
 }
 
 bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteGradientExpansion(const KPosition& P, KGradient& g) const
 {
-    KThreeVector B(0., 0., 0.);
+    KFieldVector B(0., 0., 0.);
     return RemoteMagneticFieldAndGradientExpansion(P, g, B);
 }
 
-bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralMagneticFieldAndGradientExpansion(
-    const KPosition& P, KGradient& g, KThreeVector& magneticField) const
+bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralMagneticFieldAndGradientExpansion(const KPosition& P,
+                                                                                              KGradient& g,
+                                                                                              KFieldVector& B) const
 {
     if (fContainer.GetCentralSourcePoints().empty()) {
         g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
-        magneticField[0] = magneticField[1] = magneticField[2] = 0.;
+        B[0] = B[1] = B[2] = 0.;
         return true;
     }
 
@@ -811,7 +812,7 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralMagneticFieldAndGrad
         //when particle is on or near axis of symmetry, to avoid numerical
         //instability in calculating the azimuthal angle we use a numerical derivative
         //to calculate the gradient
-        magneticField[0] = magneticField[1] = 0.;
+        B[0] = B[1] = 0.;
         g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
         CentralGradientExpansionNumerical(P, g);
     }
@@ -827,20 +828,21 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralMagneticFieldAndGrad
         g[7] = Bzr * sine;
         g[8] = Bzz;
 
-        magneticField[0] = cosine * Br;
-        magneticField[1] = sine * Br;
+        B[0] = cosine * Br;
+        B[1] = sine * Br;
     }
-    magneticField[2] = Bz;
+    B[2] = Bz;
 
     return true;
 }
 
-bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteMagneticFieldAndGradientExpansion(
-    const KPosition& P, KGradient& g, KThreeVector& magneticField) const
+bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteMagneticFieldAndGradientExpansion(const KPosition& P,
+                                                                                             KGradient& g,
+                                                                                             KFieldVector& B) const
 {
     if (fContainer.GetRemoteSourcePoints().empty()) {
         g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
-        magneticField[0] = magneticField[1] = magneticField[2] = 0.;
+        B[0] = B[1] = B[2] = 0.;
         return true;
     }
 
@@ -955,14 +957,14 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteMagneticFieldAndGradi
     }
 
 
-    magneticField[2] = Bz;
+    B[2] = Bz;
 
     if (r < fContainer.GetParameters().GetProximityToSourcePoint()) {
         //when particle is on or near axis of symmetry, to avoid numerical
         //instability in calculating the azimuthal angle we use a numerical derivative
         //to calculate the gradient
         g[0] = g[1] = g[2] = g[3] = g[4] = g[5] = g[6] = g[7] = g[8] = 0.;
-        magneticField[0] = magneticField[1] = 0.;
+        B[0] = B[1] = 0.;
         RemoteGradientExpansionNumerical(P, g);
     }
     else {
@@ -977,8 +979,8 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteMagneticFieldAndGradi
         g[7] = Bzr * sine;
         g[8] = Bzz;
 
-        magneticField[0] = cosine * Br;
-        magneticField[1] = sine * Br;
+        B[0] = cosine * Br;
+        B[1] = sine * Br;
     }
 
     return true;
@@ -990,15 +992,15 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::CentralGradientExpansionNum
     //slow, brute force, three-point numerical differentiation
     double num_eps = 1e-6;
     bool retval = true;
-    KThreeVector coord_ax[3];
-    KThreeVector result[3];
-    coord_ax[0] = KThreeVector(1, 0, 0);
-    coord_ax[1] = KThreeVector(0, 1, 0);
-    coord_ax[2] = KThreeVector(0, 0, 1);
+    KFieldVector coord_ax[3];
+    KFieldVector result[3];
+    coord_ax[0] = KFieldVector(1, 0, 0);
+    coord_ax[1] = KFieldVector(0, 1, 0);
+    coord_ax[2] = KFieldVector(0, 0, 1);
 
-    for (unsigned int i = 0; i < 3; i++) {
-        KThreeVector forward;
-        KThreeVector backward;
+    for (int i = 0; i < 3; i++) {
+        KFieldVector forward;
+        KFieldVector backward;
         retval = retval && CentralExpansionMagneticField(P + num_eps * coord_ax[i], forward);
         retval = retval && CentralExpansionMagneticField(P - num_eps * coord_ax[i], backward);
         result[i] = (forward - backward) / (2.0 * num_eps);
@@ -1016,15 +1018,15 @@ bool KZonalHarmonicFieldSolver<KMagnetostaticBasis>::RemoteGradientExpansionNume
     //slow, brute force, three-point numerical differentiation
     double num_eps = 1e-6;
     bool retval = true;
-    KThreeVector coord_ax[3];
-    KThreeVector result[3];
-    coord_ax[0] = KThreeVector(1, 0, 0);
-    coord_ax[1] = KThreeVector(0, 1, 0);
-    coord_ax[2] = KThreeVector(0, 0, 1);
+    KFieldVector coord_ax[3];
+    KFieldVector result[3];
+    coord_ax[0] = KFieldVector(1, 0, 0);
+    coord_ax[1] = KFieldVector(0, 1, 0);
+    coord_ax[2] = KFieldVector(0, 0, 1);
 
-    for (unsigned int i = 0; i < 3; i++) {
-        KThreeVector forward;
-        KThreeVector backward;
+    for (int i = 0; i < 3; i++) {
+        KFieldVector forward;
+        KFieldVector backward;
         retval = retval && RemoteExpansionMagneticField(P + num_eps * coord_ax[i], forward);
         retval = retval && RemoteExpansionMagneticField(P - num_eps * coord_ax[i], backward);
         result[i] = (forward - backward) / (2.0 * num_eps);

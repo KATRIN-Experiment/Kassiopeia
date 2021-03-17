@@ -6,7 +6,7 @@
 namespace KGeoBag
 {
 
-class KGDiscreteRotationalMeshAttributor : public KTagged, public KGDiscreteRotationalMeshData
+class KGDiscreteRotationalMeshAttributor : public katrin::KTagged, public KGDiscreteRotationalMeshData
 {
   public:
     KGDiscreteRotationalMeshAttributor();
@@ -17,8 +17,8 @@ class KGDiscreteRotationalMeshAttributor : public KTagged, public KGDiscreteRota
     void AddSpace(KGSpace* aSpace);
 
   private:
-    vector<KGSurface*> fSurfaces;
-    vector<KGSpace*> fSpaces;
+    std::vector<KGSurface*> fSurfaces;
+    std::vector<KGSpace*> fSpaces;
 
   public:
     void SetAxialAngle(double d)
@@ -50,7 +50,7 @@ template<> inline bool KGDiscreteRotationalMeshBuilder::AddAttribute(KContainer*
     using namespace KGeoBag;
 
     if (aContainer->GetName() == "name") {
-        fObject->SetName(aContainer->AsReference<string>());
+        fObject->SetName(aContainer->AsString());
         return true;
     }
     if (aContainer->GetName() == "angle") {
@@ -62,12 +62,12 @@ template<> inline bool KGDiscreteRotationalMeshBuilder::AddAttribute(KContainer*
         return true;
     }
     if (aContainer->GetName() == "surfaces") {
-        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         vector<KGSurface*>::iterator tSurfaceIt;
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -78,12 +78,12 @@ template<> inline bool KGDiscreteRotationalMeshBuilder::AddAttribute(KContainer*
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         vector<KGSpace*>::iterator tSpaceIt;
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

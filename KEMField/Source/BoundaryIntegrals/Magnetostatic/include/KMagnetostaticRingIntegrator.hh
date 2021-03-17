@@ -9,21 +9,21 @@ namespace KEMField
 class KMagnetostaticRingIntegrator
 {
   public:
-    typedef KRing Shape;
-    typedef KMagnetostaticBasis::ValueType ValueType;
+    using Shape = KRing;
+    using ValueType = KMagnetostaticBasis::ValueType;
 
     friend class KMagnetostaticConicSectionIntegrator;
 
-    KMagnetostaticRingIntegrator() {}
-    ~KMagnetostaticRingIntegrator() {}
+    KMagnetostaticRingIntegrator() = default;
+    ~KMagnetostaticRingIntegrator() = default;
 
-    KThreeVector VectorPotential(const KRing* source, const KPosition& P) const;
+    KFieldVector VectorPotential(const KRing* source, const KPosition& P) const;
 
-    KThreeVector MagneticField(const KRing* source, const KPosition& P) const;
+    KFieldVector MagneticField(const KRing* source, const KPosition& P) const;
 
-    KThreeVector VectorPotential(const KSymmetryGroup<KRing>* source, const KPosition& P) const;
+    KFieldVector VectorPotential(const KSymmetryGroup<KRing>* source, const KPosition& P) const;
 
-    KThreeVector MagneticField(const KSymmetryGroup<KRing>* source, const KPosition& P) const;
+    KFieldVector MagneticField(const KSymmetryGroup<KRing>* source, const KPosition& P) const;
 };
 
 }  // namespace KEMField

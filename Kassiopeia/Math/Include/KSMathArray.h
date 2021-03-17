@@ -55,7 +55,7 @@ template<class XLeft, class XOperation, class XRight> class KSMathExpression
     {
         static_assert(XLeft::sDimension == XRight::sDimension, "Dimension mismatch in KMathExpression.");
     }
-    virtual ~KSMathExpression() {}
+    virtual ~KSMathExpression() = default;
 
     double operator[](const int& anIndex) const
     {
@@ -75,7 +75,7 @@ template<class XLeft, class XOperation> class KSMathExpression<XLeft, XOperation
   public:
     KSMathExpression(const XLeft& aLeftOperand, const double& aRightNumber) : fLeft(aLeftOperand), fRight(aRightNumber)
     {}
-    virtual ~KSMathExpression() {}
+    virtual ~KSMathExpression() = default;
 
     double operator[](const int& anIndex) const
     {
@@ -95,7 +95,7 @@ template<class XOperation, class XRight> class KSMathExpression<double, XOperati
   public:
     KSMathExpression(const double& aLeftOperand, const XRight& aRightNumber) : fLeft(aLeftOperand), fRight(aRightNumber)
     {}
-    virtual ~KSMathExpression() {}
+    virtual ~KSMathExpression() = default;
 
     double operator[](const int& anIndex) const
     {
@@ -125,7 +125,7 @@ template<int XDimension> class KSMathArray
             fData[Index] = anOperand.fData[Index];
         }
     }
-    virtual ~KSMathArray() {}
+    virtual ~KSMathArray() = default;
 
 
   public:

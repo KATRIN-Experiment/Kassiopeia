@@ -10,10 +10,10 @@ namespace KEMField
 template<> class KZHCoefficientGenerator<KConicSection> : public KZHCoefficientGeneratorElement
 {
   public:
-    typedef KConicSection ElementType;
+    using ElementType = KConicSection;
 
     KZHCoefficientGenerator() : KZHCoefficientGeneratorElement() {}
-    ~KZHCoefficientGenerator() override {}
+    ~KZHCoefficientGenerator() override = default;
 
     void SetElement(const KConicSection* c)
     {

@@ -4,7 +4,6 @@
 #include "KSNavigatorsMessage.h"
 
 #include <limits>
-using std::numeric_limits;
 
 namespace Kassiopeia
 {
@@ -20,7 +19,7 @@ KSRootSpaceNavigator::KSRootSpaceNavigator() :
     fTrajectory(nullptr)
 {}
 KSRootSpaceNavigator::KSRootSpaceNavigator(const KSRootSpaceNavigator& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSpaceNavigator(aCopy.fSpaceNavigator),
     fStep(aCopy.fStep),
     fTerminatorParticle(aCopy.fTerminatorParticle),
@@ -34,14 +33,15 @@ KSRootSpaceNavigator* KSRootSpaceNavigator::Clone() const
 {
     return new KSRootSpaceNavigator(*this);
 }
-KSRootSpaceNavigator::~KSRootSpaceNavigator() {}
+KSRootSpaceNavigator::~KSRootSpaceNavigator() = default;
 
 void KSRootSpaceNavigator::CalculateNavigation(const KSTrajectory& aTrajectory,
                                                const KSParticle& aTrajectoryInitialParticle,
                                                const KSParticle& aTrajectoryFinalParticle,
-                                               const KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
-                                               const double& aTrajectoryStep, KSParticle& aNavigationParticle,
-                                               double& aNavigationStep, bool& aNavigationFlag)
+                                               const KGeoBag::KThreeVector& aTrajectoryCenter,
+                                               const double& aTrajectoryRadius, const double& aTrajectoryStep,
+                                               KSParticle& aNavigationParticle, double& aNavigationStep,
+                                               bool& aNavigationFlag)
 {
     if (fSpaceNavigator == nullptr) {
         navmsg(eError) << "<" << GetName() << "> cannot calculate navigation with no space navigator set" << eom;
@@ -129,8 +129,8 @@ void KSRootSpaceNavigator::SetSpaceNavigator(KSSpaceNavigator* aSpaceNavigator)
                        << "> with space navigator <" << fSpaceNavigator->GetName() << "> already set" << eom;
         return;
     }
-    navmsg_debug("<" << GetName() << "> setting space navigator <" << aSpaceNavigator->GetName() << ">" << eom)
-        fSpaceNavigator = aSpaceNavigator;
+    navmsg_debug("<" << GetName() << "> setting space navigator <" << aSpaceNavigator->GetName() << ">" << eom);
+    fSpaceNavigator = aSpaceNavigator;
     return;
 }
 void KSRootSpaceNavigator::ClearSpaceNavigator(KSSpaceNavigator* aSpaceNavigator)
@@ -140,8 +140,8 @@ void KSRootSpaceNavigator::ClearSpaceNavigator(KSSpaceNavigator* aSpaceNavigator
                        << "> with space navigator <" << fSpaceNavigator->GetName() << "> already set" << eom;
         return;
     }
-    navmsg_debug("<" << GetName() << "> clearing space navigator <" << aSpaceNavigator->GetName() << ">" << eom)
-        fSpaceNavigator = nullptr;
+    navmsg_debug("<" << GetName() << "> clearing space navigator <" << aSpaceNavigator->GetName() << ">" << eom);
+    fSpaceNavigator = nullptr;
     return;
 }
 
@@ -176,51 +176,48 @@ void KSRootSpaceNavigator::CalculateNavigation()
                         fStep->SpaceNavigationFlag());
 
     if (fStep->SpaceNavigationFlag() == true) {
-        navmsg_debug("space navigation calculation:" << eom) navmsg_debug("  space navigation may occur" << eom)
+        navmsg_debug("space navigation calculation:" << eom);
+        navmsg_debug("  space navigation may occur" << eom);
     }
     else {
-        navmsg_debug("space navigation calculation:" << eom) navmsg_debug("  space navigation will not occur" << eom)
+        navmsg_debug("space navigation calculation:" << eom);
+        navmsg_debug("  space navigation will not occur" << eom);
     }
 
-    navmsg_debug("space navigation calculation particle state: " << eom) navmsg_debug(
-        "  final particle space: <"
-        << (fNavigationParticle->GetCurrentSpace() ? fNavigationParticle->GetCurrentSpace()->GetName() : "") << ">"
-        << eom) navmsg_debug("  final particle surface: <" << (fNavigationParticle->GetCurrentSurface()
-                                                                   ? fNavigationParticle->GetCurrentSurface()->GetName()
-                                                                   : "")
-                                                           << ">" << eom)
-        navmsg_debug("  final particle side: <"
-                     << (fNavigationParticle->GetCurrentSide() ? fNavigationParticle->GetCurrentSide()->GetName() : "")
-                     << ">"
-                     << eom) navmsg_debug("  final particle time: <" << fNavigationParticle->GetTime() << ">" << eom)
-            navmsg_debug("  final particle length: <" << fNavigationParticle->GetLength() << ">" << eom)
-                navmsg_debug("  final particle position: <" << fNavigationParticle->GetPosition().X() << ", "
-                                                            << fNavigationParticle->GetPosition().Y() << ", "
-                                                            << fNavigationParticle->GetPosition().Z() << ">" << eom)
-                    navmsg_debug("  final particle momentum: <" << fNavigationParticle->GetMomentum().X() << ", "
-                                                                << fNavigationParticle->GetMomentum().Y() << ", "
-                                                                << fNavigationParticle->GetMomentum().Z() << ">" << eom)
-                        navmsg_debug("  final particle kinetic energy: <" << fNavigationParticle->GetKineticEnergy_eV()
-                                                                          << ">" << eom)
-                            navmsg_debug("  final particle electric field: <"
-                                         << fNavigationParticle->GetElectricField().X() << ","
-                                         << fNavigationParticle->GetElectricField().Y() << ","
-                                         << fNavigationParticle->GetElectricField().Z() << ">" << eom)
-                                navmsg_debug("  final particle magnetic field: <"
-                                             << fNavigationParticle->GetMagneticField().X() << ","
-                                             << fNavigationParticle->GetMagneticField().Y() << ","
-                                             << fNavigationParticle->GetMagneticField().Z() << ">" << eom)
-                                    navmsg_debug("  final particle angle to magnetic field: <"
-                                                 << fNavigationParticle->GetPolarAngleToB() << ">" << eom)
-                                        navmsg_debug("  final particle spin: " << fNavigationParticle->GetSpin() << eom)
-                                            navmsg_debug("  final particle spin0: <" << fNavigationParticle->GetSpin0()
-                                                                                     << ">" << eom)
-                                                navmsg_debug("  final particle aligned spin: <"
-                                                             << fNavigationParticle->GetAlignedSpin() << ">" << eom)
-                                                    navmsg_debug("  final particle spin angle: <"
-                                                                 << fNavigationParticle->GetSpinAngle() << ">" << eom)
+    navmsg_debug("space navigation calculation particle state: " << eom);
+    navmsg_debug("  final particle space: <"
+                 << (fNavigationParticle->GetCurrentSpace() ? fNavigationParticle->GetCurrentSpace()->GetName() : "")
+                 << ">" << eom);
+    navmsg_debug("  final particle surface: <"
+                 << (fNavigationParticle->GetCurrentSurface() ? fNavigationParticle->GetCurrentSurface()->GetName()
+                                                              : "")
+                 << ">" << eom);
+    navmsg_debug("  final particle side: <"
+                 << (fNavigationParticle->GetCurrentSide() ? fNavigationParticle->GetCurrentSide()->GetName() : "")
+                 << ">" << eom);
+    navmsg_debug("  final particle time: <" << fNavigationParticle->GetTime() << ">" << eom);
+    navmsg_debug("  final particle length: <" << fNavigationParticle->GetLength() << ">" << eom);
+    navmsg_debug("  final particle position: <" << fNavigationParticle->GetPosition().X() << ", "
+                                                << fNavigationParticle->GetPosition().Y() << ", "
+                                                << fNavigationParticle->GetPosition().Z() << ">" << eom);
+    navmsg_debug("  final particle momentum: <" << fNavigationParticle->GetMomentum().X() << ", "
+                                                << fNavigationParticle->GetMomentum().Y() << ", "
+                                                << fNavigationParticle->GetMomentum().Z() << ">" << eom);
+    navmsg_debug("  final particle kinetic energy: <" << fNavigationParticle->GetKineticEnergy_eV() << ">" << eom);
+    navmsg_debug("  final particle electric field: <" << fNavigationParticle->GetElectricField().X() << ","
+                                                      << fNavigationParticle->GetElectricField().Y() << ","
+                                                      << fNavigationParticle->GetElectricField().Z() << ">" << eom);
+    navmsg_debug("  final particle magnetic field: <" << fNavigationParticle->GetMagneticField().X() << ","
+                                                      << fNavigationParticle->GetMagneticField().Y() << ","
+                                                      << fNavigationParticle->GetMagneticField().Z() << ">" << eom);
+    navmsg_debug("  final particle angle to magnetic field: <" << fNavigationParticle->GetPolarAngleToB() << ">"
+                                                               << eom);
+    navmsg_debug("  final particle spin: " << fNavigationParticle->GetSpin() << eom);
+    navmsg_debug("  final particle spin0: <" << fNavigationParticle->GetSpin0() << ">" << eom);
+    navmsg_debug("  final particle aligned spin: <" << fNavigationParticle->GetAlignedSpin() << ">" << eom);
+    navmsg_debug("  final particle spin angle: <" << fNavigationParticle->GetSpinAngle() << ">" << eom);
 
-                                                        return;
+    return;
 }
 
 void KSRootSpaceNavigator::ExecuteNavigation()
@@ -238,64 +235,48 @@ void KSRootSpaceNavigator::ExecuteNavigation()
     fStep->DiscreteEnergyChange() = 0.;
     fStep->DiscreteMomentumChange() = 0.;
 
-    navmsg_debug("space navigation execution:" << eom) navmsg_debug("  space navigation name: <"
-                                                                    << fStep->SpaceNavigationName() << ">" << eom)
-        navmsg_debug("  step continuous time: <" << fStep->ContinuousTime() << ">" << eom) navmsg_debug(
-            "  step continuous length: <"
-            << fStep->ContinuousLength() << ">"
-            << eom) navmsg_debug("  step continuous energy change: <"
-                                 << fStep->ContinuousEnergyChange() << ">"
-                                 << eom) navmsg_debug("  step continuous momentum change: <"
-                                                      << fStep->ContinuousMomentumChange() << ">" << eom)
-            navmsg_debug("  step discrete secondaries: <" << fStep->DiscreteSecondaries() << ">" << eom) navmsg_debug(
-                "  step discrete energy change: <" << fStep->DiscreteEnergyChange() << ">" << eom)
-                navmsg_debug("  step discrete momentum change: <" << fStep->DiscreteMomentumChange() << ">" << eom)
+    navmsg_debug("space navigation execution:" << eom);
+    navmsg_debug("  space navigation name: <" << fStep->SpaceNavigationName() << ">" << eom);
+    navmsg_debug("  step continuous time: <" << fStep->ContinuousTime() << ">" << eom);
+    navmsg_debug("  step continuous length: <" << fStep->ContinuousLength() << ">" << eom);
+    navmsg_debug("  step continuous energy change: <" << fStep->ContinuousEnergyChange() << ">" << eom);
+    navmsg_debug("  step continuous momentum change: <" << fStep->ContinuousMomentumChange() << ">" << eom);
+    navmsg_debug("  step discrete secondaries: <" << fStep->DiscreteSecondaries() << ">" << eom);
+    navmsg_debug("  step discrete energy change: <" << fStep->DiscreteEnergyChange() << ">" << eom);
+    navmsg_debug("  step discrete momentum change: <" << fStep->DiscreteMomentumChange() << ">" << eom);
 
-                    navmsg_debug("space navigation final particle state: " << eom) navmsg_debug(
-                        "  final particle space: <"
-                        << (fFinalParticle->GetCurrentSpace() ? fFinalParticle->GetCurrentSpace()->GetName() : "")
-                        << ">" << eom) navmsg_debug("  final particle surface: <"
-                                                    << (fFinalParticle->GetCurrentSurface()
-                                                            ? fFinalParticle->GetCurrentSurface()->GetName()
-                                                            : "")
-                                                    << ">" << eom)
-                        navmsg_debug(
-                            "  final particle side: <"
-                            << (fFinalParticle->GetCurrentSide() ? fFinalParticle->GetCurrentSide()->GetName() : "")
-                            << ">"
-                            << eom) navmsg_debug("  final particle time: <" << fFinalParticle->GetTime() << ">" << eom)
-                            navmsg_debug("  final particle length: <" << fFinalParticle->GetLength() << ">" << eom)
-                                navmsg_debug("  final particle position: <"
-                                             << fFinalParticle->GetPosition().X() << ", "
-                                             << fFinalParticle->GetPosition().Y() << ", "
-                                             << fFinalParticle->GetPosition().Z() << ">"
-                                             << eom) navmsg_debug("  final particle momentum: <"
-                                                                  << fFinalParticle->GetMomentum().X() << ", "
-                                                                  << fFinalParticle->GetMomentum().Y() << ", "
-                                                                  << fFinalParticle->GetMomentum().Z() << ">" << eom)
-                                    navmsg_debug("  final particle kinetic energy: <"
-                                                 << fFinalParticle->GetKineticEnergy_eV() << ">"
-                                                 << eom) navmsg_debug("  final particle electric field: <"
-                                                                      << fFinalParticle->GetElectricField().X() << ","
-                                                                      << fFinalParticle->GetElectricField().Y() << ","
-                                                                      << fFinalParticle->GetElectricField().Z() << ">"
-                                                                      << eom)
-                                        navmsg_debug("  final particle magnetic field: <"
-                                                     << fFinalParticle->GetMagneticField().X() << ","
-                                                     << fFinalParticle->GetMagneticField().Y() << ","
-                                                     << fFinalParticle->GetMagneticField().Z() << ">"
-                                                     << eom) navmsg_debug("  final particle angle to magnetic field: <"
-                                                                          << fFinalParticle->GetPolarAngleToB() << ">"
-                                                                          << eom)
-                                            navmsg_debug("  final particle spin: " << fFinalParticle->GetSpin() << eom)
-                                                navmsg_debug("  final particle spin0: <" << fFinalParticle->GetSpin0()
-                                                                                         << ">" << eom)
-                                                    navmsg_debug("  final particle aligned spin: <"
-                                                                 << fFinalParticle->GetAlignedSpin() << ">" << eom)
-                                                        navmsg_debug("  final particle spin angle: <"
-                                                                     << fFinalParticle->GetSpinAngle() << ">" << eom)
+    navmsg_debug("space navigation final particle state: " << eom);
+    navmsg_debug("  final particle space: <"
+                 << (fFinalParticle->GetCurrentSpace() ? fFinalParticle->GetCurrentSpace()->GetName() : "") << ">"
+                 << eom);
+    navmsg_debug("  final particle surface: <"
+                 << (fFinalParticle->GetCurrentSurface() ? fFinalParticle->GetCurrentSurface()->GetName() : "") << ">"
+                 << eom);
+    navmsg_debug("  final particle side: <"
+                 << (fFinalParticle->GetCurrentSide() ? fFinalParticle->GetCurrentSide()->GetName() : "") << ">"
+                 << eom);
+    navmsg_debug("  final particle time: <" << fFinalParticle->GetTime() << ">" << eom);
+    navmsg_debug("  final particle length: <" << fFinalParticle->GetLength() << ">" << eom);
+    navmsg_debug("  final particle position: <" << fFinalParticle->GetPosition().X() << ", "
+                                                << fFinalParticle->GetPosition().Y() << ", "
+                                                << fFinalParticle->GetPosition().Z() << ">" << eom);
+    navmsg_debug("  final particle momentum: <" << fFinalParticle->GetMomentum().X() << ", "
+                                                << fFinalParticle->GetMomentum().Y() << ", "
+                                                << fFinalParticle->GetMomentum().Z() << ">" << eom);
+    navmsg_debug("  final particle kinetic energy: <" << fFinalParticle->GetKineticEnergy_eV() << ">" << eom);
+    navmsg_debug("  final particle electric field: <" << fFinalParticle->GetElectricField().X() << ","
+                                                      << fFinalParticle->GetElectricField().Y() << ","
+                                                      << fFinalParticle->GetElectricField().Z() << ">" << eom);
+    navmsg_debug("  final particle magnetic field: <" << fFinalParticle->GetMagneticField().X() << ","
+                                                      << fFinalParticle->GetMagneticField().Y() << ","
+                                                      << fFinalParticle->GetMagneticField().Z() << ">" << eom);
+    navmsg_debug("  final particle angle to magnetic field: <" << fFinalParticle->GetPolarAngleToB() << ">" << eom);
+    navmsg_debug("  final particle spin: " << fFinalParticle->GetSpin() << eom);
+    navmsg_debug("  final particle spin0: <" << fFinalParticle->GetSpin0() << ">" << eom);
+    navmsg_debug("  final particle aligned spin: <" << fFinalParticle->GetAlignedSpin() << ">" << eom);
+    navmsg_debug("  final particle spin angle: <" << fFinalParticle->GetSpinAngle() << ">" << eom);
 
-                                                            return;
+    return;
 }
 
 void KSRootSpaceNavigator::FinalizeNavigation()

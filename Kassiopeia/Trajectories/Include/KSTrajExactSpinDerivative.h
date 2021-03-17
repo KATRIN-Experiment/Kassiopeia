@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajExactSpinDerivative : public KSMathArray<12>
   public:
     KSTrajExactSpinDerivative();
     KSTrajExactSpinDerivative(const KSTrajExactSpinDerivative& anOperand);
-    virtual ~KSTrajExactSpinDerivative();
+    ~KSTrajExactSpinDerivative() override;
 
     //**********
     //assignment
@@ -36,11 +35,11 @@ class KSTrajExactSpinDerivative : public KSMathArray<12>
   public:
     void AddToTime(const double& aTime);
     void AddToSpeed(const double& aSpeed);
-    void AddToVelocity(const KThreeVector& aVelocity);
-    void AddToForce(const KThreeVector& aForce);
+    void AddToVelocity(const KGeoBag::KThreeVector& aVelocity);
+    void AddToForce(const KGeoBag::KThreeVector& aForce);
     // Omega0 and Omega are ds/dt's 0 and 1-3 components, respectively
     void AddToOmega0(const double& aOmega0);
-    void AddToOmega(const KThreeVector& aOmega);
+    void AddToOmega(const KGeoBag::KThreeVector& aOmega);
 };
 
 inline KSTrajExactSpinDerivative& KSTrajExactSpinDerivative::operator=(const double& anOperand)

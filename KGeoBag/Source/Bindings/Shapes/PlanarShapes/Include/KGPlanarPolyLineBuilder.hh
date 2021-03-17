@@ -23,7 +23,7 @@ template<> inline bool KGPlanarPolyLineStartPointArgumentsBuilder::AddAttribute(
     return false;
 }
 
-typedef KComplexElement<KGPlanarPolyLine::LineArguments> KGPlanarPolyLineLineArgumentsBuilder;
+using KGPlanarPolyLineLineArgumentsBuilder = KComplexElement<KGPlanarPolyLine::LineArguments>;
 
 template<> inline bool KGPlanarPolyLineLineArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -46,7 +46,7 @@ template<> inline bool KGPlanarPolyLineLineArgumentsBuilder::AddAttribute(KConta
     return false;
 }
 
-typedef KComplexElement<KGPlanarPolyLine::ArcArguments> KGPlanarPolyLineArcArgumentsBuilder;
+using KGPlanarPolyLineArcArgumentsBuilder = KComplexElement<KGPlanarPolyLine::ArcArguments>;
 
 template<> inline bool KGPlanarPolyLineArcArgumentsBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -77,7 +77,7 @@ template<> inline bool KGPlanarPolyLineArcArgumentsBuilder::AddAttribute(KContai
     return false;
 }
 
-typedef KComplexElement<KGPlanarPolyLine> KGPlanarPolyLineBuilder;
+using KGPlanarPolyLineBuilder = KComplexElement<KGPlanarPolyLine>;
 
 template<> inline bool KGPlanarPolyLineBuilder::AddAttribute(KContainer* /*anAttribute*/)
 {

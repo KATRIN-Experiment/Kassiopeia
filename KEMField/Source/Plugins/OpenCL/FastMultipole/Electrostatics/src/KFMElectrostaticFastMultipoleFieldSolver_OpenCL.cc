@@ -72,12 +72,12 @@ double KFMElectrostaticFastMultipoleFieldSolver_OpenCL::Potential(const KPositio
     }
 }
 
-KThreeVector KFMElectrostaticFastMultipoleFieldSolver_OpenCL::ElectricField(const KPosition& P) const
+KFieldVector KFMElectrostaticFastMultipoleFieldSolver_OpenCL::ElectricField(const KPosition& P) const
 {
     SetPoint(P);
 
     if (!fFallback) {
-        KThreeVector f;
+        KFieldVector f;
         double fast_f[3];
         if (fSubsetSize != 0) {
             fDirectFieldSolver->DispatchElectricField(fDirectCallIDs, fSubsetSize, P);

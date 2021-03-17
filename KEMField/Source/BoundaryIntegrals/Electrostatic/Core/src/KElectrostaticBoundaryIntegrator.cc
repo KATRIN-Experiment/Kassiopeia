@@ -10,11 +10,11 @@
 namespace KEMField
 {
 KElectrostaticBoundaryIntegrator::KElectrostaticBoundaryIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KTriangle>> triangleIntegrator,
-    KSmartPointer<KElectrostaticElementIntegrator<KRectangle>> rectangleIntegrator,
-    KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>> lineSegmentIntegrator,
-    KSmartPointer<KElectrostaticElementIntegrator<KConicSection>> conicSectionIntegrator,
-    KSmartPointer<KElectrostaticElementIntegrator<KRing>> ringIntegrator) :
+    const KSmartPointer<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator,
+    const KSmartPointer<KElectrostaticElementIntegrator<KRectangle>>& rectangleIntegrator,
+    const KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>>& lineSegmentIntegrator,
+    const KSmartPointer<KElectrostaticElementIntegrator<KConicSection>>& conicSectionIntegrator,
+    const KSmartPointer<KElectrostaticElementIntegrator<KRing>>& ringIntegrator) :
     fTriangleIntegrator(triangleIntegrator),
     fRectangleIntegrator(rectangleIntegrator),
     fLineSegmentIntegrator(lineSegmentIntegrator),
@@ -35,6 +35,9 @@ KEMField::KElectrostaticBoundaryIntegrator::KElectrostaticBoundaryIntegrator(
 KElectrostaticBoundaryIntegrator&
 KEMField::KElectrostaticBoundaryIntegrator::operator=(const KElectrostaticBoundaryIntegrator& integrator)
 {
+    if (this == &integrator)
+        return *this;
+
     fTriangleIntegrator = integrator.fTriangleIntegrator;
     fRectangleIntegrator = integrator.fRectangleIntegrator;
     fLineSegmentIntegrator = integrator.fLineSegmentIntegrator;
@@ -64,9 +67,9 @@ void KElectrostaticBoundaryIntegrator::BasisVisitor::Visit(KElectrostaticBasis& 
 }
 
 KElectrostaticBasis::ValueType KElectrostaticBoundaryIntegrator::BoundaryIntegral(KSurfacePrimitive* source,
-                                                                                  unsigned int,
+                                                                                  unsigned int /*unused*/,
                                                                                   KSurfacePrimitive* target,
-                                                                                  unsigned int)
+                                                                                  unsigned int /*unused*/)
 {
     fTarget = target;
     target->Accept(fBoundaryVisitor);
@@ -74,13 +77,15 @@ KElectrostaticBasis::ValueType KElectrostaticBoundaryIntegrator::BoundaryIntegra
     return fValue;
 }
 
-KElectrostaticBasis::ValueType KElectrostaticBoundaryIntegrator::BoundaryValue(KSurfacePrimitive* surface, unsigned int)
+KElectrostaticBasis::ValueType KElectrostaticBoundaryIntegrator::BoundaryValue(KSurfacePrimitive* surface,
+                                                                               unsigned int /*unused*/)
 {
     surface->Accept(fBoundaryVisitor);
     return fBoundaryVisitor.GetBoundaryValue();
 }
 
-KElectrostaticBasis::ValueType& KElectrostaticBoundaryIntegrator::BasisValue(KSurfacePrimitive* surface, unsigned int)
+KElectrostaticBasis::ValueType& KElectrostaticBoundaryIntegrator::BasisValue(KSurfacePrimitive* surface,
+                                                                             unsigned int /*unused*/)
 {
     surface->Accept(fBasisVisitor);
     return fBasisVisitor.GetBasisValue();
@@ -92,7 +97,7 @@ KSmartPointer<KElectrostaticElementIntegrator<KTriangle>> KElectrostaticBoundary
 }
 
 void KElectrostaticBoundaryIntegrator::SetTriangleIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KTriangle>> triangleIntegrator)
+    const KSmartPointer<KElectrostaticElementIntegrator<KTriangle>>& triangleIntegrator)
 {
     fTriangleIntegrator = triangleIntegrator;
 }
@@ -102,12 +107,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KTriangle* source, cons
     return fTriangleIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KTriangle* source, const KPosition& P) const
 {
     return fTriangleIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KTriangle* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KTriangle* source,
                                                                                             const KPosition& P) const
 {
     return fTriangleIntegrator->ElectricFieldAndPotential(source, P);
@@ -118,12 +123,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KTriangleGroup* source,
     return fTriangleIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KTriangleGroup* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KTriangleGroup* source, const KPosition& P) const
 {
     return fTriangleIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KTriangleGroup* source, const KPosition& P) const
 {
     return fTriangleIntegrator->ElectricFieldAndPotential(source, P);
@@ -135,7 +140,7 @@ KSmartPointer<KElectrostaticElementIntegrator<KRectangle>> KElectrostaticBoundar
 }
 
 void KElectrostaticBoundaryIntegrator::SetRectangleIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KRectangle>> RectangleIntegrator)
+    const KSmartPointer<KElectrostaticElementIntegrator<KRectangle>>& RectangleIntegrator)
 {
     fRectangleIntegrator = RectangleIntegrator;
 }
@@ -145,12 +150,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KRectangle* source, con
     return fRectangleIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KRectangle* source, const KPosition& P) const
 {
     return fRectangleIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRectangle* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRectangle* source,
                                                                                             const KPosition& P) const
 {
     return fRectangleIntegrator->ElectricFieldAndPotential(source, P);
@@ -161,12 +166,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KRectangleGroup* source
     return fRectangleIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KRectangleGroup* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KRectangleGroup* source, const KPosition& P) const
 {
     return fRectangleIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRectangleGroup* source, const KPosition& P) const
 {
     return fRectangleIntegrator->ElectricFieldAndPotential(source, P);
@@ -179,7 +184,7 @@ KElectrostaticBoundaryIntegrator::GetLineSegmentIntegrator()
 }
 
 void KElectrostaticBoundaryIntegrator::SetLineSegmentIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>> LineSegmentIntegrator)
+    const KSmartPointer<KElectrostaticElementIntegrator<KLineSegment>>& LineSegmentIntegrator)
 {
     fLineSegmentIntegrator = LineSegmentIntegrator;
 }
@@ -189,12 +194,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KLineSegment* source, c
     return fLineSegmentIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KLineSegment* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KLineSegment* source, const KPosition& P) const
 {
     return fLineSegmentIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KLineSegment* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KLineSegment* source,
                                                                                             const KPosition& P) const
 {
     return fLineSegmentIntegrator->ElectricFieldAndPotential(source, P);
@@ -205,12 +210,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KLineSegmentGroup* sour
     return fLineSegmentIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KLineSegmentGroup* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KLineSegmentGroup* source, const KPosition& P) const
 {
     return fLineSegmentIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KLineSegmentGroup* source, const KPosition& P) const
 {
     return fLineSegmentIntegrator->ElectricFieldAndPotential(source, P);
@@ -223,7 +228,7 @@ KElectrostaticBoundaryIntegrator::GetConicSectionIntegrator()
 }
 
 void KElectrostaticBoundaryIntegrator::SetConicSectionIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KConicSection>> ConicSectionIntegrator)
+    const KSmartPointer<KElectrostaticElementIntegrator<KConicSection>>& ConicSectionIntegrator)
 {
     fConicSectionIntegrator = ConicSectionIntegrator;
 }
@@ -233,12 +238,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KConicSection* source, 
     return fConicSectionIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KConicSection* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KConicSection* source, const KPosition& P) const
 {
     return fConicSectionIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KConicSection* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KConicSection* source,
                                                                                             const KPosition& P) const
 {
     return fConicSectionIntegrator->ElectricFieldAndPotential(source, P);
@@ -249,12 +254,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KConicSectionGroup* sou
     return fConicSectionIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KConicSectionGroup* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KConicSectionGroup* source, const KPosition& P) const
 {
     return fConicSectionIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KConicSectionGroup* source, const KPosition& P) const
 {
     return fConicSectionIntegrator->ElectricFieldAndPotential(source, P);
@@ -267,7 +272,7 @@ KSmartPointer<KElectrostaticElementIntegrator<KRing>> KElectrostaticBoundaryInte
 }
 
 void KElectrostaticBoundaryIntegrator::SetRingIntegrator(
-    KSmartPointer<KElectrostaticElementIntegrator<KRing>> RingIntegrator)
+    const KSmartPointer<KElectrostaticElementIntegrator<KRing>>& RingIntegrator)
 {
     fRingIntegrator = RingIntegrator;
 }
@@ -277,12 +282,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KRing* source, const KP
     return fRingIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KRing* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KRing* source, const KPosition& P) const
 {
     return fRingIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRing* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRing* source,
                                                                                             const KPosition& P) const
 {
     return fRingIntegrator->ElectricFieldAndPotential(source, P);
@@ -293,12 +298,12 @@ double KElectrostaticBoundaryIntegrator::Potential(const KRingGroup* source, con
     return fRingIntegrator->Potential(source, P);
 }
 
-KThreeVector KElectrostaticBoundaryIntegrator::ElectricField(const KRingGroup* source, const KPosition& P) const
+KFieldVector KElectrostaticBoundaryIntegrator::ElectricField(const KRingGroup* source, const KPosition& P) const
 {
     return fRingIntegrator->ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRingGroup* source,
+std::pair<KFieldVector, double> KElectrostaticBoundaryIntegrator::ElectricFieldAndPotential(const KRingGroup* source,
                                                                                             const KPosition& P) const
 {
     return fRingIntegrator->ElectricFieldAndPotential(source, P);

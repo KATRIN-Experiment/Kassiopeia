@@ -10,7 +10,7 @@ namespace Kassiopeia
 KSIntSpinFlipPulse::KSIntSpinFlipPulse() : fDone(false), fTime(0.) {}
 
 KSIntSpinFlipPulse::KSIntSpinFlipPulse(const KSIntSpinFlipPulse& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     KSComponentTemplate<KSIntSpinFlipPulse, KSSpaceInteraction>(aCopy),
     fDone(aCopy.fDone),
     fTime(aCopy.fTime)
@@ -21,13 +21,13 @@ KSIntSpinFlipPulse* KSIntSpinFlipPulse::Clone() const
     return new KSIntSpinFlipPulse(*this);
 }
 
-KSIntSpinFlipPulse::~KSIntSpinFlipPulse() {}
+KSIntSpinFlipPulse::~KSIntSpinFlipPulse() = default;
 
 
 void KSIntSpinFlipPulse::CalculateInteraction(const KSTrajectory& /*aTrajectory*/,
                                               const KSParticle& /*aTrajectoryInitialParticle*/,
                                               const KSParticle& aTrajectoryFinalParticle,
-                                              const KThreeVector& /*aTrajectoryCenter*/,
+                                              const KGeoBag::KThreeVector& /*aTrajectoryCenter*/,
                                               const double& /*aTrajectoryRadius*/,
                                               const double& /*aTrajectoryTimeStep*/, KSParticle& anInteractionParticle,
                                               double& /*aTimeStep*/, bool& aFlag)

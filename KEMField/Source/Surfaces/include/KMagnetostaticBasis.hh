@@ -24,7 +24,7 @@ class KMagnetostaticBasis : public KBasisType<double, 2>
 {
   public:
     KMagnetostaticBasis() : KBasisType<double, 2>() {}
-    ~KMagnetostaticBasis() override {}
+    ~KMagnetostaticBasis() override = default;
 
     static std::string Name()
     {

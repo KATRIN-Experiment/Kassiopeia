@@ -11,11 +11,11 @@ namespace KEMField
 template<class Electromagnet> class KElectromagnetContainerType : public std::vector<Electromagnet*>
 {
   public:
-    KElectromagnetContainerType() {}
-    virtual ~KElectromagnetContainerType() {}
+    KElectromagnetContainerType() = default;
+    virtual ~KElectromagnetContainerType() = default;
 
     typedef typename std::vector<Electromagnet*>::iterator ElectromagnetIterator;
-    typedef typename std::vector<Electromagnet*>::const_iterator ElectromagnetCIterator;
+    using ElectromagnetCIterator = typename std::vector<Electromagnet*>::const_iterator;
 
     template<class Stream> friend Stream& operator>>(Stream& s, KElectromagnetContainerType<Electromagnet>& c)
     {
@@ -57,8 +57,8 @@ class KElectromagnetContainer;
 template<int typeID = 0> class KElectromagnetAction
 {
   public:
-    typedef typename KEMField::TypeAt<KEMField::KElectromagnetTypes, typeID>::Result Electromagnet;
-    typedef KElectromagnetContainerType<Electromagnet> ElectromagnetContainer;
+    using Electromagnet = typename KEMField::TypeAt<KEMField::KElectromagnetTypes, typeID>::Result;
+    using ElectromagnetContainer = KElectromagnetContainerType<Electromagnet>;
 
     static void push_back(KElectromagnetContainer& c, KElectromagnet* e);
     static unsigned int size(const KElectromagnetContainer& c);
@@ -83,7 +83,7 @@ template<int typeID = 0> class KElectromagnetAction
     }
 };
 
-typedef KGenScatterHierarchy<KEMField::KElectromagnetTypes, KElectromagnetContainerType> KElectromagnetContainerTypes;
+using KElectromagnetContainerTypes = KGenScatterHierarchy<KEMField::KElectromagnetTypes, KElectromagnetContainerType>;
 
 class KElectromagnetContainer : public KElectromagnetContainerTypes
 {
@@ -128,7 +128,7 @@ class KElectromagnetContainer : public KElectromagnetContainerTypes
     }
     void clear()
     {
-        return KElectromagnetAction<>::Clear(*this);
+        KElectromagnetAction<>::Clear(*this);
     }
 
     KElectromagnet* at(unsigned int i)

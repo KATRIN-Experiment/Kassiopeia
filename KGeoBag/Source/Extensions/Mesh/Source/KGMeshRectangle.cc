@@ -11,7 +11,6 @@ namespace KGeoBag
 {
 KGMeshRectangle::KGMeshRectangle(const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1,
                                  const KThreeVector& n2) :
-    KGMeshElement(),
     fA(a),
     fB(b),
     fP0(p0),
@@ -19,8 +18,7 @@ KGMeshRectangle::KGMeshRectangle(const double& a, const double& b, const KThreeV
     fN2(n2)
 {}
 KGMeshRectangle::KGMeshRectangle(const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& /*p2*/,
-                                 const KThreeVector& p3) :
-    KGMeshElement()
+                                 const KThreeVector& p3)
 {
     fP0 = p0;
     fN1 = p1 - p0;
@@ -30,15 +28,8 @@ KGMeshRectangle::KGMeshRectangle(const KThreeVector& p0, const KThreeVector& p1,
     fB = fN2.Magnitude();
     fN2 = fN2.Unit();
 }
-KGMeshRectangle::KGMeshRectangle(const KGMeshRectangle& r) :
-    KGMeshElement(r),
-    fA(r.fA),
-    fB(r.fB),
-    fP0(r.fP0),
-    fN1(r.fN1),
-    fN2(r.fN2)
-{}
-KGMeshRectangle::~KGMeshRectangle() {}
+KGMeshRectangle::KGMeshRectangle(const KGMeshRectangle&) = default;
+KGMeshRectangle::~KGMeshRectangle() = default;
 
 double KGMeshRectangle::Area() const
 {
@@ -184,7 +175,8 @@ void KGMeshRectangle::GetEdge(KThreeVector& start, KThreeVector& end, unsigned i
     }
 }
 
-bool KGMeshRectangle::SameSide(KThreeVector point, KThreeVector A, KThreeVector B, KThreeVector C) const
+bool KGMeshRectangle::SameSide(const KThreeVector& point, const KThreeVector& A, const KThreeVector& B,
+                               const KThreeVector& C)
 {
     KThreeVector cp1 = (B - A).Cross(point - A);
     KThreeVector cp2 = (B - A).Cross(C - A);

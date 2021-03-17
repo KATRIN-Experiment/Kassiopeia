@@ -12,7 +12,7 @@ STATICINT sKGExtrudedPolyLoopSpaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGExtrudedPolyLoopSpace>("extruded_poly_loop_space");
 
 STATICINT sKGExtrudedPolyLoopSpaceBuilderStructure =
-    KGExtrudedPolyLoopSpaceBuilder::Attribute<string>("name") +
+    KGExtrudedPolyLoopSpaceBuilder::Attribute<std::string>("name") +
     KGExtrudedPolyLoopSpaceBuilder::Attribute<double>("zmin") +
     KGExtrudedPolyLoopSpaceBuilder::Attribute<double>("zmax") +
     KGExtrudedPolyLoopSpaceBuilder::Attribute<unsigned int>("extruded_mesh_count") +

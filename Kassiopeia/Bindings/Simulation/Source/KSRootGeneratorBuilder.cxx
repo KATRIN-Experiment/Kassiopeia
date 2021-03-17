@@ -8,11 +8,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSRootGeneratorBuilder::~KComplexElement() {}
+template<> KSRootGeneratorBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootGenerator = KSRootBuilder::ComplexElement<KSRootGenerator>("ks_root_generator");
 
-STATICINT sKSRootGeneratorStructure =
-    KSRootGeneratorBuilder::Attribute<string>("name") + KSRootGeneratorBuilder::Attribute<string>("set_generator");
+STATICINT sKSRootGeneratorStructure = KSRootGeneratorBuilder::Attribute<std::string>("name") +
+                                      KSRootGeneratorBuilder::Attribute<std::string>("set_generator");
 
 }  // namespace katrin

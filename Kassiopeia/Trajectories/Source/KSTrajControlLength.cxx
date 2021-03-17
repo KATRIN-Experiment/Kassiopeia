@@ -4,12 +4,13 @@ namespace Kassiopeia
 {
 
 KSTrajControlLength::KSTrajControlLength() : fLength(0.0) {}
-KSTrajControlLength::KSTrajControlLength(const KSTrajControlLength& aCopy) : KSComponent(), fLength(aCopy.fLength) {}
+KSTrajControlLength::KSTrajControlLength(const KSTrajControlLength& aCopy) : KSComponent(aCopy), fLength(aCopy.fLength)
+{}
 KSTrajControlLength* KSTrajControlLength::Clone() const
 {
     return new KSTrajControlLength(*this);
 }
-KSTrajControlLength::~KSTrajControlLength() {}
+KSTrajControlLength::~KSTrajControlLength() = default;
 
 void KSTrajControlLength::Calculate(const KSTrajExactParticle& aParticle, double& aValue)
 {

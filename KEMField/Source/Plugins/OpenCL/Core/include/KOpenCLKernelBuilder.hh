@@ -11,8 +11,10 @@ namespace KEMField
 class KOpenCLKernelBuilder
 {
   public:
-    KOpenCLKernelBuilder(){};
-    virtual ~KOpenCLKernelBuilder(){};
+    KOpenCLKernelBuilder() = default;
+    ;
+    virtual ~KOpenCLKernelBuilder() = default;
+    ;
 
     cl::Kernel* BuildKernel(std::string SourceFileName, std::string KernelName,
                             std::string BuildFlags = std::string(""));

@@ -29,7 +29,7 @@ set (MATH_SOURCEFILES
 
 ##################################################
 
-add_library (KEMMath SHARED ${MATH_SOURCEFILES})
+add_library (KEMMath SHARED ${MATH_SOURCEFILES} ${MATH_HEADERFILES})
 target_link_libraries (KEMMath KEMCore ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${GSL_LIBRARIES})
 
 kasper_install_headers (${MATH_HEADERFILES})

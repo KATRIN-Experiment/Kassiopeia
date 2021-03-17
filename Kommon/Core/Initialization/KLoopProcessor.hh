@@ -14,8 +14,8 @@ class KLoopProcessor : public KProcessor
 {
   private:
     typedef std::vector<KToken*> TokenVector;
-    typedef TokenVector::iterator TokenIt;
-    typedef TokenVector::const_iterator TokenCIt;
+    using TokenIt = TokenVector::iterator;
+    using TokenCIt = TokenVector::const_iterator;
 
   public:
     KLoopProcessor();
@@ -34,7 +34,7 @@ class KLoopProcessor : public KProcessor
     void Evaluate(KToken* aToken, const std::string& aName, const std::string& aValue);
     void Dispatch(KToken* aToken);
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eElementInactive,
         eActive,
@@ -42,7 +42,7 @@ class KLoopProcessor : public KProcessor
     } ElementState;
     ElementState fElementState;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eAttributeInactive,
         eVariable,

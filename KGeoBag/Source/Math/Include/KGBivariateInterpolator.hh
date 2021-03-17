@@ -13,11 +13,11 @@ template<class XInterpolator, class YInterpolator> class KGBivariateInterpolator
 {
   public:
     typedef KGDataPoint<2> DataPoint;
-    typedef std::vector<DataPoint> DataSubset;
-    typedef std::vector<DataSubset> DataSet;
+    using DataSubset = std::vector<DataPoint>;
+    using DataSet = std::vector<DataSubset>;
 
     KGBivariateInterpolator();
-    virtual ~KGBivariateInterpolator() {}
+    virtual ~KGBivariateInterpolator() = default;
 
     void Initialize(std::vector<double>&, std::vector<double>&, std::vector<double>&);
 

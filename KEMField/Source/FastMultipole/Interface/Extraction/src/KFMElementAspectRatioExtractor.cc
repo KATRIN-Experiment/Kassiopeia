@@ -79,7 +79,7 @@ void KFMElementAspectRatioExtractor::Visit(KLineSegment& l)
 }
 
 
-double KFMElementAspectRatioExtractor::TriangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2) const
+double KFMElementAspectRatioExtractor::TriangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2)
 {
     double a, b, c, max;
     double delx, dely, delz;
@@ -155,7 +155,7 @@ double KFMElementAspectRatioExtractor::TriangleAspectRatio(KFMPoint<3> P0, KFMPo
 }
 
 
-double KFMElementAspectRatioExtractor::RectangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2) const
+double KFMElementAspectRatioExtractor::RectangleAspectRatio(KFMPoint<3> P0, KFMPoint<3> P1, KFMPoint<3> P2)
 {
     double a, b;
     double delx, dely, delz;

@@ -17,7 +17,7 @@ KSIntSurfaceSpinFlip::KSIntSurfaceSpinFlip() : fProbability(.0)
     std::cout << "/* spin flip interaction created */" << std::endl;
 }
 KSIntSurfaceSpinFlip::KSIntSurfaceSpinFlip(const KSIntSurfaceSpinFlip& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fProbability(aCopy.fProbability)
 {
     std::cout << "/* spin flip interaction created */" << std::endl;
@@ -26,7 +26,7 @@ KSIntSurfaceSpinFlip* KSIntSurfaceSpinFlip::Clone() const
 {
     return new KSIntSurfaceSpinFlip(*this);
 }
-KSIntSurfaceSpinFlip::~KSIntSurfaceSpinFlip() {}
+KSIntSurfaceSpinFlip::~KSIntSurfaceSpinFlip() = default;
 
 void KSIntSurfaceSpinFlip::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                               KSParticleQueue& /*aQueue*/)

@@ -6,12 +6,12 @@ namespace Kassiopeia
 {
 
 KSTermMaxEnergy::KSTermMaxEnergy() : fMaxEnergy(0.) {}
-KSTermMaxEnergy::KSTermMaxEnergy(const KSTermMaxEnergy& aCopy) : KSComponent(), fMaxEnergy(aCopy.fMaxEnergy) {}
+KSTermMaxEnergy::KSTermMaxEnergy(const KSTermMaxEnergy& aCopy) : KSComponent(aCopy), fMaxEnergy(aCopy.fMaxEnergy) {}
 KSTermMaxEnergy* KSTermMaxEnergy::Clone() const
 {
     return new KSTermMaxEnergy(*this);
 }
-KSTermMaxEnergy::~KSTermMaxEnergy() {}
+KSTermMaxEnergy::~KSTermMaxEnergy() = default;
 
 void KSTermMaxEnergy::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

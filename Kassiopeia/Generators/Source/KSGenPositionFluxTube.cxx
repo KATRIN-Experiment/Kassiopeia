@@ -6,6 +6,9 @@
 #include "KSParticle.h"
 using katrin::KRandom;
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -18,7 +21,7 @@ KSGenPositionFluxTube::KSGenPositionFluxTube() :
     fOnlySurface(true)
 {}
 KSGenPositionFluxTube::KSGenPositionFluxTube(const KSGenPositionFluxTube& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fPhiValue(aCopy.fPhiValue),
     fZValue(aCopy.fZValue),
     fMagneticFields(aCopy.fMagneticFields),
@@ -30,7 +33,7 @@ KSGenPositionFluxTube* KSGenPositionFluxTube::Clone() const
 {
     return new KSGenPositionFluxTube(*this);
 }
-KSGenPositionFluxTube::~KSGenPositionFluxTube() {}
+KSGenPositionFluxTube::~KSGenPositionFluxTube() = default;
 
 void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 {
@@ -181,8 +184,8 @@ void KSGenPositionFluxTube::CalculateField(const KThreeVector& aSamplePoint, con
 {
     aField = KThreeVector::sZero;
     KThreeVector tCurrentField = KThreeVector::sZero;
-    for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
-        fMagneticFields.at(tIndex)->CalculateField(aSamplePoint, aSampleTime, tCurrentField);
+    for (auto& magneticField : fMagneticFields) {
+        magneticField->CalculateField(aSamplePoint, aSampleTime, tCurrentField);
         aField += tCurrentField;
     }
     return;

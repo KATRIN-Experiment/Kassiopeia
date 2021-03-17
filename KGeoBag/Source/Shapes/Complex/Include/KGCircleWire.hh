@@ -17,10 +17,10 @@ class KGCircleWire : public KGBoundary
 	 A class describing a wire circle with a flat section profile
 	 */
   public:
-    KGCircleWire() {}
+    KGCircleWire() = default;
     KGCircleWire(double r, double diameter, unsigned int nDisc) : fR(r), fDiameter(diameter), fNDisc(nDisc) {}
 
-    ~KGCircleWire() override {}
+    ~KGCircleWire() override = default;
 
     static std::string Name()
     {
@@ -30,17 +30,17 @@ class KGCircleWire : public KGBoundary
     virtual KGCircleWire* Clone() const;
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
 
-    bool ContainsPoint(const double* P) const;
-    double DistanceTo(const double* P, double* P_in = nullptr, double* P_norm = nullptr) const;
+    static bool ContainsPoint(const double* P);
+    static double DistanceTo(const double* P, const double* P_in = nullptr, const double* P_norm = nullptr);
 
-    double GetLength() const;
-    double Area() const;
-    double Volume() const;
+    static double GetLength();
+    static double Area();
+    static double Volume();
 
     void SetR(double d)
     {

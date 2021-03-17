@@ -12,7 +12,7 @@ class KRectangle : public KShape
 
   protected:
     KRectangle() : fA(0.), fB(0.), fP0(0., 0., 0.), fN1(0., 0., 0.), fN2(0., 0., 0.), fN3(0., 0., 0.) {}
-    ~KRectangle() override {}
+    ~KRectangle() override = default;
 
   public:
     static std::string Name()

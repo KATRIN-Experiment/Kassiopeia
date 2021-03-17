@@ -6,12 +6,12 @@ namespace Kassiopeia
 {
 
 KSTermMinEnergy::KSTermMinEnergy() : fMinEnergy(0.) {}
-KSTermMinEnergy::KSTermMinEnergy(const KSTermMinEnergy& aCopy) : KSComponent(), fMinEnergy(aCopy.fMinEnergy) {}
+KSTermMinEnergy::KSTermMinEnergy(const KSTermMinEnergy& aCopy) : KSComponent(aCopy), fMinEnergy(aCopy.fMinEnergy) {}
 KSTermMinEnergy* KSTermMinEnergy::Clone() const
 {
     return new KSTermMinEnergy(*this);
 }
-KSTermMinEnergy::~KSTermMinEnergy() {}
+KSTermMinEnergy::~KSTermMinEnergy() = default;
 
 void KSTermMinEnergy::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

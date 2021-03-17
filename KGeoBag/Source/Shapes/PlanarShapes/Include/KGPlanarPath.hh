@@ -4,7 +4,6 @@
 #include "KTwoVector.hh"
 
 #include <deque>
-using std::deque;
 
 namespace KGeoBag
 {
@@ -14,6 +13,11 @@ class KGPlanarPath
   public:
     KGPlanarPath();
     virtual ~KGPlanarPath();
+
+    static std::string Name()
+    {
+        return "path";
+    }
 
   public:
     virtual KGPlanarPath* Clone() const = 0;

@@ -70,15 +70,14 @@ int main()
     //    writer.IncludeXMLGuards();
 
 
-    KSAOutputNode* root = new KSAOutputNode(std::string("root"));
-    KSAObjectOutputNode<std::vector<KSATestC>>* test_c_vec_node =
-        new KSAObjectOutputNode<std::vector<KSATestC>>("TestCVector");
+    auto* root = new KSAOutputNode(std::string("root"));
+    auto* test_c_vec_node = new KSAObjectOutputNode<std::vector<KSATestC>>("TestCVector");
 
     if (writer.Open()) {
         int n = 10000;  //number of objects
         int nv = 1000;  //number of doubles in vector
 
-        std::vector<KSATestC>* C_vec = new std::vector<KSATestC>();
+        auto* C_vec = new std::vector<KSATestC>();
 
         KSATestC C_obj;
         KSATestB B_obj;
@@ -157,13 +156,12 @@ int main()
     KSAFileReader reader;
     reader.SetFileName(outfile);
 
-    KSAInputCollector* in_collector = new KSAInputCollector();
+    auto* in_collector = new KSAInputCollector();
     in_collector->SetFileReader(&reader);
 
 
-    KSAInputNode* input_root = new KSAInputNode(std::string("root"));
-    KSAObjectInputNode<std::vector<KSATestC>>* input_c_vec =
-        new KSAObjectInputNode<std::vector<KSATestC>>(std::string("TestCVector"));
+    auto* input_root = new KSAInputNode(std::string("root"));
+    auto* input_c_vec = new KSAObjectInputNode<std::vector<KSATestC>>(std::string("TestCVector"));
     input_root->AddChild(input_c_vec);
 
     std::cout << "reading file" << std::endl;
@@ -183,9 +181,8 @@ int main()
     //    writer2.SetModeRecreate();
     //    writer2.IncludeXMLGuards();
 
-    KSAOutputNode* root2 = new KSAOutputNode(std::string("root"));
-    KSAObjectOutputNode<std::vector<KSATestC>>* copy_c_vec =
-        new KSAObjectOutputNode<std::vector<KSATestC>>("TestCVector");
+    auto* root2 = new KSAOutputNode(std::string("root"));
+    auto* copy_c_vec = new KSAObjectOutputNode<std::vector<KSATestC>>("TestCVector");
     copy_c_vec->AttachObjectToNode(input_c_vec->GetObject());
     root2->AddChild(copy_c_vec);
 

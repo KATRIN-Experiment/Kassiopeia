@@ -47,7 +47,6 @@ class KDiscreteDirichlet2ndDerivative : public KSquareMatrix<double>
 {
   public:
     KDiscreteDirichlet2ndDerivative(unsigned int dimension, double delta) :
-        KSquareMatrix<double>(),
         fDimension(dimension),
         fOffDiagonal(1. / (delta * delta)),
         fDiagonal(-2. / (delta * delta)),
@@ -55,12 +54,12 @@ class KDiscreteDirichlet2ndDerivative : public KSquareMatrix<double>
         fZero(0.)
     {}
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fDimension;
     }
 
-    const double& operator()(unsigned int i, unsigned int j) const;
+    const double& operator()(unsigned int i, unsigned int j) const override;
 
   private:
     unsigned int fDimension;
@@ -89,14 +88,14 @@ const double& KDiscreteDirichlet2ndDerivative::operator()(unsigned int i, unsign
 class KIdentity : public KSquareMatrix<double>
 {
   public:
-    KIdentity(unsigned int dimension) : KSquareMatrix<double>(), fDimension(dimension), fOne(1.), fZero(0.) {}
+    KIdentity(unsigned int dimension) : fDimension(dimension), fOne(1.), fZero(0.) {}
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fDimension;
     }
 
-    const double& operator()(unsigned int i, unsigned int j) const;
+    const double& operator()(unsigned int i, unsigned int j) const override;
 
   private:
     unsigned int fDimension;
@@ -113,19 +112,14 @@ const double& KIdentity::operator()(unsigned int i, unsigned int j) const
 class KKronickerProduct : public KSquareMatrix<double>
 {
   public:
-    KKronickerProduct(const KSquareMatrix<double>& A, const KSquareMatrix<double>& B) :
-        KSquareMatrix<double>(),
-        fA(A),
-        fB(B),
-        fValue(0.)
-    {}
+    KKronickerProduct(const KSquareMatrix<double>& A, const KSquareMatrix<double>& B) : fA(A), fB(B), fValue(0.) {}
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fA.Dimension() * fB.Dimension();
     }
 
-    const double& operator()(unsigned int i, unsigned int j) const;
+    const double& operator()(unsigned int i, unsigned int j) const override;
 
   private:
     const KSquareMatrix<double>& fA;
@@ -148,14 +142,14 @@ class KLaplacian : public KSquareMatrix<double>
 {
   public:
     KLaplacian(unsigned int N_x, double xLen, unsigned int N_z, double zLen);
-    virtual ~KLaplacian() {}
+    ~KLaplacian() override = default;
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fN_x * fN_z;
     }
 
-    const double& operator()(unsigned int i, unsigned int j) const;
+    const double& operator()(unsigned int i, unsigned int j) const override;
 
     // void Multiply(const KVector<double>& x,KVector<double>& y) const;
 
@@ -177,7 +171,6 @@ class KLaplacian : public KSquareMatrix<double>
 };
 
 KLaplacian::KLaplacian(unsigned int N_x, double xLen, unsigned int N_z, double zLen) :
-    KSquareMatrix<double>(),
     fDx(N_x, xLen / N_x),
     fDz(N_z, zLen / N_z),
     fIx(N_x),
@@ -275,23 +268,23 @@ int main(int argc, char** argv)
     int rh_dimension = 2;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"length", required_argument, 0, 'L'},
-        {"height", required_argument, 0, 'H'},
-        {"N_x", required_argument, 0, 'x'},
-        {"N_z", required_argument, 0, 'z'},
-        {"x_frequency", required_argument, 0, 'j'},
-        {"z_frequency", required_argument, 0, 'k'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"cache", no_argument, 0, 'c'},
-        {"method", required_argument, 0, 'm'},
-        {"rh_dimension", required_argument, 0, 'n'},
+        {"help", no_argument, nullptr, 'h'},
+        {"length", required_argument, nullptr, 'L'},
+        {"height", required_argument, nullptr, 'H'},
+        {"N_x", required_argument, nullptr, 'x'},
+        {"N_z", required_argument, nullptr, 'z'},
+        {"x_frequency", required_argument, nullptr, 'j'},
+        {"z_frequency", required_argument, nullptr, 'k'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"cache", no_argument, nullptr, 'c'},
+        {"method", required_argument, nullptr, 'm'},
+        {"rh_dimension", required_argument, nullptr, 'n'},
     };
 
     static const char* optString = "hL:H:x:z:j:k:a:cm:n:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {

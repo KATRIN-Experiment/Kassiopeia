@@ -27,21 +27,21 @@ template<> inline bool KRampedMagneticFieldBuilder::AddAttribute(KContainer* aCo
         fObject->SetName(name);
     }
     else if (aContainer->GetName() == "root_field") {
-        std::string fieldName = aContainer->AsReference<std::string>();
+        std::string fieldName = aContainer->AsString();
         auto* field = katrin::KToolbox::GetInstance().Get<KEMField::KMagneticField>(fieldName);
         fObject->SetMagneticField(field);
     }
     else if (aContainer->GetName() == "ramping_type") {
-        std::string tFlag = aContainer->AsReference<std::string>();
-        if (tFlag == std::string("linear"))
+        std::string tFlag = aContainer->AsString();
+        if (tFlag == "linear")
             fObject->SetRampingType(KEMField::KRampedMagneticField::rtLinear);
-        else if (tFlag == std::string("exponential"))
+        else if (tFlag == "exponential")
             fObject->SetRampingType(KEMField::KRampedMagneticField::rtExponential);
-        else if (tFlag == std::string("inversion"))
+        else if (tFlag == "inversion")
             fObject->SetRampingType(KEMField::KRampedMagneticField::rtInversion);
-        else if (tFlag == std::string("inversion2"))
+        else if (tFlag == "inversion2")
             fObject->SetRampingType(KEMField::KRampedMagneticField::rtInversion2);
-        else if (tFlag == std::string("flipbox"))
+        else if (tFlag == "flipbox")
             fObject->SetRampingType(KEMField::KRampedMagneticField::rtFlipBox);
         else {
             BINDINGMSG(eError) << "ramped_magnetic_field got unknown ramping type: " << tFlag << "." << eom;

@@ -27,8 +27,8 @@ KG2DPolygonWithArcs::KG2DPolygonWithArcs(const KG2DPolygonWithArcs& copyObject) 
 
 KG2DPolygonWithArcs::~KG2DPolygonWithArcs()
 {
-    for (unsigned int i = 0; i < fSides.size(); i++) {
-        delete fSides[i];
+    for (auto& side : fSides) {
+        delete side;
     }
 }
 
@@ -84,9 +84,9 @@ void KG2DPolygonWithArcs::Initialize()
         DetermineInteriorSide();
 
         //now we can construct the sides (line segments and arcs)
-        if (fSides.size() > 0) {
-            for (unsigned int i = 0; i < fSides.size(); i++) {
-                delete fSides[i];
+        if (!fSides.empty()) {
+            for (auto& side : fSides) {
+                delete side;
             }
         }
 
@@ -311,9 +311,9 @@ void KG2DPolygonWithArcs::NearestIntersection(const KTwoVector& aStart, const KT
 
 
     //loop over all sides looking for an intersection
-    for (unsigned int i = 0; i < fSides.size(); i++) {
+    for (auto* side : fSides) {
         found = false;
-        fSides[i]->NearestIntersection(aStart, anEnd, found, inter);
+        side->NearestIntersection(aStart, anEnd, found, inter);
         if (found) {
             dist2 = (inter - aStart).MagnitudeSquared();
             if (dist2 <= min2) {
@@ -429,11 +429,11 @@ void KG2DPolygonWithArcs::DetermineIfPolygonIsSimpleAndValid()
                                 //check to make sure intersections are not an end points
                                 bool close_to_end_point = true;
 
-                                for (unsigned int n = 0; n < inters.size(); n++) {
-                                    if ((inters[n] - ArcUnderTest->GetFirstPoint()).Magnitude() > SMALLNUMBER) {
+                                for (auto& inter : inters) {
+                                    if ((inter - ArcUnderTest->GetFirstPoint()).Magnitude() > SMALLNUMBER) {
                                         close_to_end_point = false;
                                     }
-                                    if ((inters[n] - ArcUnderTest->GetSecondPoint()).Magnitude() > SMALLNUMBER) {
+                                    if ((inter - ArcUnderTest->GetSecondPoint()).Magnitude() > SMALLNUMBER) {
                                         close_to_end_point = false;
                                     }
                                 }

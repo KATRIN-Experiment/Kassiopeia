@@ -3,6 +3,8 @@
 #include "KSException.h"
 #include "KSFieldsMessage.h"
 
+using namespace KGeoBag;
+
 namespace Kassiopeia
 {
 using katrin::KGslErrorHandler;
@@ -13,7 +15,7 @@ KSRootMagneticField::KSRootMagneticField() : fCurrentField(), fCurrentGradient()
     fGslErrorHandler.Enable();
 }
 KSRootMagneticField::KSRootMagneticField(const KSRootMagneticField& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fCurrentField(aCopy.fCurrentField),
     fCurrentGradient(aCopy.fCurrentGradient),
     fMagneticFields(aCopy.fMagneticFields)
@@ -24,8 +26,24 @@ KSRootMagneticField* KSRootMagneticField::Clone() const
 {
     return new KSRootMagneticField(*this);
 }
-KSRootMagneticField::~KSRootMagneticField() {}
+KSRootMagneticField::~KSRootMagneticField() = default;
 
+void KSRootMagneticField::CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
+                                             KThreeVector& aPotential)
+{
+    aPotential = KThreeVector::sZero;
+    try {
+        for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
+            fMagneticFields.ElementAt(tIndex)->CalculatePotential(aSamplePoint, aSampleTime, fCurrentPotential);
+            aPotential += fCurrentPotential;
+        }
+    }
+    catch (KSException const& e) {
+        aPotential = KThreeVector::sInvalid;
+        throw KSFieldError().Nest(e) << "Failed to calculate magnetic potential at " << aSamplePoint << ".";
+    }
+    return;
+}
 void KSRootMagneticField::CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                          KThreeVector& aField)
 {
@@ -85,14 +103,11 @@ void KSRootMagneticField::CalculateFieldAndGradient(const KThreeVector& aSampleP
 void KSRootMagneticField::AddMagneticField(KSMagneticField* aMagneticField)
 {
     //check that field is not already present
-    for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
-        if (aMagneticField == fMagneticFields.ElementAt(tIndex)) {
-            fieldmsg_debug("<" << GetName() << "> attempted to add magnetic field <" << aMagneticField->GetName()
-                               << "> which is already present." << eom);
-            return;
-        }
+    if (fMagneticFields.FindElement(aMagneticField) != -1) {
+        fieldmsg(eWarning) << "<" << GetName() << "> attempted to add magnetic field <" << aMagneticField->GetName()
+                           << "> which is already present." << eom;
+        return;
     }
-
     if (fMagneticFields.AddElement(aMagneticField) == -1) {
         fieldmsg(eError) << "<" << GetName() << "> could not add magnetic field <" << aMagneticField->GetName() << ">"
                          << eom;
@@ -104,8 +119,8 @@ void KSRootMagneticField::AddMagneticField(KSMagneticField* aMagneticField)
 void KSRootMagneticField::RemoveMagneticField(KSMagneticField* aMagneticField)
 {
     if (fMagneticFields.RemoveElement(aMagneticField) == -1) {
-        fieldmsg(eError) << "<" << GetName() << "> could not remove magnetic field <" << aMagneticField->GetName()
-                         << ">" << eom;
+        fieldmsg(eWarning) << "<" << GetName() << "> could not remove magnetic field <" << aMagneticField->GetName()
+                           << ">" << eom;
         return;
     }
     fieldmsg_debug("<" << GetName() << "> removing magnetic field <" << aMagneticField->GetName() << ">" << eom);

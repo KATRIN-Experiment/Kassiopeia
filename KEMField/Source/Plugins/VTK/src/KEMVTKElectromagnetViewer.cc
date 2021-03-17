@@ -2,6 +2,8 @@
 
 #include "KEMCout.hh"
 
+#include <utility>
+
 namespace KEMField
 {
 KEMVTKElectromagnetViewer::KEMVTKElectromagnetViewer(KElectromagnetContainer& anElectromagnetContainer)
@@ -38,9 +40,9 @@ void KEMVTKElectromagnetViewer::Visit(KCoil& aCoil)
     KEMField::cout << aCoil << KEMField::endl;
 }
 
-void KEMVTKElectromagnetViewer::GenerateGeometryFile(std::string fileName)
+void KEMVTKElectromagnetViewer::GenerateGeometryFile(const std::string& fileName)
 {
-    KEMField::cout << "Generating file " << fileName << KEMField::endl;
+    KEMField::cout << "Generating file " << std::move(fileName) << KEMField::endl;
 }
 
 void KEMVTKElectromagnetViewer::ViewGeometry()

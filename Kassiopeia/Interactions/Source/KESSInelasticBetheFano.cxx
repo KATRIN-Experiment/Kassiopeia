@@ -13,6 +13,8 @@
 using namespace std;
 using namespace katrin;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -24,7 +26,7 @@ KESSInelasticBetheFano::KESSInelasticBetheFano() : fBetheFanoDepositedEnergy(0.)
 }
 
 KESSInelasticBetheFano::KESSInelasticBetheFano(const KESSInelasticBetheFano& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fBetheFanoDepositedEnergy(aCopy.fBetheFanoDepositedEnergy),
     fInElScMFPMap(aCopy.fInElScMFPMap),
     fInElScMap(aCopy.fInElScMap),
@@ -36,7 +38,7 @@ KESSInelasticBetheFano* KESSInelasticBetheFano::Clone() const
     return new KESSInelasticBetheFano(*this);
 }
 
-KESSInelasticBetheFano::~KESSInelasticBetheFano() {}
+KESSInelasticBetheFano::~KESSInelasticBetheFano() = default;
 
 void KESSInelasticBetheFano::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {

@@ -27,13 +27,13 @@ KSAFileReader::KSAFileReader() : fIsOpen(false), fUseDecompression(false)
     out_buffer = &(fOutputBuffer[0]);
 }
 
-KSAFileReader::~KSAFileReader()
-{
-    //    delete[] in_buffer;
-    //    delete[] out_buffer;
-}
+KSAFileReader::~KSAFileReader() = default;
+//{
+//    delete[] in_buffer;
+//    delete[] out_buffer;
+//}
 
-void KSAFileReader::SetFileName(std::string filename)
+void KSAFileReader::SetFileName(const std::string& filename)
 {
     fFileName = filename;
 
@@ -94,18 +94,18 @@ bool KSAFileReader::Open()
 bool KSAFileReader::GetLine(std::string& line)
 {
     if (fUseDecompression) {
-        if (fLineQueue.size() > 0) {
+        if (!fLineQueue.empty()) {
             fLine = fLineQueue.front();
             line = StripWhiteSpace();
             fLineQueue.pop();
             return true;
         }
-        else if (fLineQueue.size() == 0 && !fIsFinished) {
+        else if (fLineQueue.empty() || !fIsFinished) {
             while ((fLineQueue.size() < 100) && !fIsFinished) {
                 ExtractData();
             }
 
-            if (fLineQueue.size() > 0) {
+            if (!fLineQueue.empty()) {
                 fLine = fLineQueue.front();
                 line = StripWhiteSpace();
                 fLineQueue.pop();

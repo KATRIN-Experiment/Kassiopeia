@@ -13,10 +13,10 @@ using namespace std;
 
 namespace katrin
 {
-template<> KSGenPositionSurfaceAdjustmentStepBuilder::~KComplexElement() {}
+template<> KSGenPositionSurfaceAdjustmentStepBuilder::~KComplexElement() = default;
 
 STATICINT sKSKSGenPositionSurfaceAdjustmentStepStructure =
-    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<string>("name") +
+    KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<std::string>("name") +
     KSGenPositionSurfaceAdjustmentStepBuilder::Attribute<double>("length");
 
 STATICINT sKSGenPositionSurfaceAdjustmentStep =

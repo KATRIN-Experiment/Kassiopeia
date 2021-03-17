@@ -2,6 +2,6 @@
 
 namespace Kassiopeia
 {
-KSTrackModifier::KSTrackModifier() {}
-KSTrackModifier::~KSTrackModifier() {}
+KSTrackModifier::KSTrackModifier() = default;
+KSTrackModifier::~KSTrackModifier() = default;
 }  // namespace Kassiopeia

@@ -3,6 +3,7 @@
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -14,7 +15,7 @@ KSGenPositionFrustrumComposite::KSGenPositionFrustrumComposite()
     fCoordinateMap[eZ] = 2;
 }
 KSGenPositionFrustrumComposite::KSGenPositionFrustrumComposite(const KSGenPositionFrustrumComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fCoordinateMap(aCopy.fCoordinateMap),
     fValues(aCopy.fValues)
 {}
@@ -22,7 +23,7 @@ KSGenPositionFrustrumComposite* KSGenPositionFrustrumComposite::Clone() const
 {
     return new KSGenPositionFrustrumComposite(*this);
 }
-KSGenPositionFrustrumComposite::~KSGenPositionFrustrumComposite() {}
+KSGenPositionFrustrumComposite::~KSGenPositionFrustrumComposite() = default;
 
 void KSGenPositionFrustrumComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -30,10 +31,10 @@ void KSGenPositionFrustrumComposite::Dice(KSParticleQueue* aPrimaries)
     bool tHasPhiValue = false;
     bool tHasZValue = false;
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        tHasRValue = tHasRValue | ((*tIt).first == eRadius);
-        tHasPhiValue = tHasPhiValue | ((*tIt).first == ePhi);
-        tHasZValue = tHasZValue | ((*tIt).first == eZ);
+    for (auto& value : fValues) {
+        tHasRValue = tHasRValue | (value.first == eRadius);
+        tHasPhiValue = tHasPhiValue | (value.first == ePhi);
+        tHasZValue = tHasZValue | (value.first == eZ);
     }
 
     if (!tHasRValue | !tHasPhiValue | !tHasZValue)
@@ -99,14 +100,14 @@ void KSGenPositionFrustrumComposite::Dice(KSParticleQueue* aPrimaries)
 void KSGenPositionFrustrumComposite::SetRValue(KSGenValue* anRValue)
 {
 
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eRadius) {
+    for (auto& value : fValues) {
+        if (value.first == eRadius) {
             genmsg(eError) << "cannot set r value <" << anRValue->GetName()
                            << "> to composite position frustrum creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eRadius, anRValue));
+    fValues.emplace_back(eRadius, anRValue);
 }
 
 void KSGenPositionFrustrumComposite::ClearRValue(KSGenValue* anRValue)
@@ -125,14 +126,14 @@ void KSGenPositionFrustrumComposite::ClearRValue(KSGenValue* anRValue)
 
 void KSGenPositionFrustrumComposite::SetPhiValue(KSGenValue* aPhiValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == ePhi) {
+    for (auto& value : fValues) {
+        if (value.first == ePhi) {
             genmsg(eError) << "cannot set phi value <" << aPhiValue->GetName()
                            << "> to composite position frustrum creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(ePhi, aPhiValue));
+    fValues.emplace_back(ePhi, aPhiValue);
     return;
 }
 void KSGenPositionFrustrumComposite::ClearPhiValue(KSGenValue* anPhiValue)
@@ -151,14 +152,14 @@ void KSGenPositionFrustrumComposite::ClearPhiValue(KSGenValue* anPhiValue)
 
 void KSGenPositionFrustrumComposite::SetZValue(KSGenValue* anZValue)
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        if ((*tIt).first == eZ) {
+    for (auto& value : fValues) {
+        if (value.first == eZ) {
             genmsg(eError) << "cannot set z value <" << anZValue->GetName()
                            << "> to composite position frustrum creator <" << this->GetName() << ">" << eom;
             return;
         }
     }
-    fValues.push_back(std::pair<CoordinateType, KSGenValue*>(eZ, anZValue));
+    fValues.emplace_back(eZ, anZValue);
 }
 void KSGenPositionFrustrumComposite::ClearZValue(KSGenValue* anZValue)
 {
@@ -229,15 +230,15 @@ void KSGenPositionFrustrumComposite::SetZ2Value(KSGenValue* aZValue)
 
 void KSGenPositionFrustrumComposite::InitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Initialize();
+    for (auto& value : fValues) {
+        value.second->Initialize();
     }
     return;
 }
 void KSGenPositionFrustrumComposite::DeinitializeComponent()
 {
-    for (auto tIt = fValues.begin(); tIt != fValues.end(); tIt++) {
-        (*tIt).second->Deinitialize();
+    for (auto& value : fValues) {
+        value.second->Deinitialize();
     }
     return;
 }

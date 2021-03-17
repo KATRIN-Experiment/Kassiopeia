@@ -18,7 +18,7 @@ template<> inline bool KSGenTimeCompositeBuilder::AddAttribute(KContainer* aCont
         return true;
     }
     if (aContainer->GetName() == "time_value") {
-        fObject->SetTimeValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetTimeValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

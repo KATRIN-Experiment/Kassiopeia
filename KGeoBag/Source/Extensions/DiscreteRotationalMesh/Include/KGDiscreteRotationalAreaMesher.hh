@@ -9,7 +9,7 @@
 #define KGEOBAG_KGDISCRETEROTATIONALAREAMESHER_HH_
 
 
-#include "KGConicalWireArraySurface.hh"
+#include "KGConicalWireArrayDiscreteRotationalMesher.hh"
 
 
 namespace KGeoBag
@@ -18,8 +18,8 @@ namespace KGeoBag
 class KGDiscreteRotationalAreaMesher : public KGConicalWireArrayDiscreteRotationalMesher
 {
   public:
-    KGDiscreteRotationalAreaMesher(){};
-    ~KGDiscreteRotationalAreaMesher() override{};
+    KGDiscreteRotationalAreaMesher() = default;
+    ~KGDiscreteRotationalAreaMesher() override = default;
 
     using KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface;
 };

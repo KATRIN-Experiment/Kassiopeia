@@ -16,23 +16,24 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KMagnetostaticFieldmapBuilder::~KComplexElement() {}
+template<> KMagnetostaticFieldmapBuilder::~KComplexElement() = default;
 
-STATICINT sKMagnetostaticFieldmapStructure = KMagnetostaticFieldmapBuilder::Attribute<string>("name") +
-                                             KMagnetostaticFieldmapBuilder::Attribute<string>("directory") +
-                                             KMagnetostaticFieldmapBuilder::Attribute<string>("file") +
-                                             KMagnetostaticFieldmapBuilder::Attribute<string>("interpolation");
+STATICINT sKMagnetostaticFieldmapStructure = KMagnetostaticFieldmapBuilder::Attribute<std::string>("name") +
+                                             KMagnetostaticFieldmapBuilder::Attribute<std::string>("directory") +
+                                             KMagnetostaticFieldmapBuilder::Attribute<std::string>("file") +
+                                             KMagnetostaticFieldmapBuilder::Attribute<std::string>("interpolation") +
+                                             KMagnetostaticFieldmapBuilder::Attribute<bool>("magnetic_gradient_numerical");
 
 STATICINT sKMagnetostaticFieldmap = KEMToolboxBuilder::ComplexElement<KMagnetostaticFieldmap>("magnetic_fieldmap");
 
 ////////////////////////////////////////////////////////////////////
 
-template<> KMagnetostaticFieldmapCalculatorBuilder::~KComplexElement() {}
+template<> KMagnetostaticFieldmapCalculatorBuilder::~KComplexElement() = default;
 
 STATICINT sKMagnetostaticFieldmapCalculatorStructure =
-    KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("name") +
-    KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("directory") +
-    KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("file") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("name") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("directory") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("file") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("force_update") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("compute_gradient") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("center") +
@@ -41,8 +42,8 @@ STATICINT sKMagnetostaticFieldmapCalculatorStructure =
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("mirror_y") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("mirror_z") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<double>("spacing") +
-    KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("spaces") +
-    KMagnetostaticFieldmapCalculatorBuilder::Attribute<string>("field") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("spaces") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("field") +
     // support of deprecated old xml:
     KMagnetostaticFieldmapCalculatorBuilder::ComplexElement<KMagnetostaticConstantField>("field_magnetic_constant") +
     KMagnetostaticFieldmapCalculatorBuilder::ComplexElement<KMagneticDipoleFieldBuilder>("field_magnetic_dipole") +

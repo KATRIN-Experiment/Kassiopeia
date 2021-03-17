@@ -15,7 +15,7 @@ KSortedSurfaceContainer::KSortedSurfaceContainer(const KSurfaceContainer& contai
     for (KSurfaceContainer::iterator it = fSurfaceContainer.begin(); it != fSurfaceContainer.end(); it++) {
         bool isAssigned = false;
 
-        if (fSortedSurfaces.size() != 0) {
+        if (!fSortedSurfaces.empty()) {
             int indexLevel = 0;
             for (auto dataIt = fSortedSurfaces.begin(); dataIt != fSortedSurfaces.end(); ++dataIt) {
                 KSurfacePrimitive* sP = (*dataIt)->at(0);
@@ -42,9 +42,9 @@ KSortedSurfaceContainer::KSortedSurfaceContainer(const KSurfaceContainer& contai
     fNormalToSortedIndexMap.clear();
     fSortedToNormalIndexMap.clear();
 
-    for (unsigned int i = 0; i < sorted_surface_list.size(); i++) {
-        for (unsigned int j = 0; j < sorted_surface_list[i]->size(); j++) {
-            fSortedToNormalIndexMap.push_back(sorted_surface_list[i]->at(j));
+    for (auto& i : sorted_surface_list) {
+        for (unsigned int& j : *i) {
+            fSortedToNormalIndexMap.push_back(j);
         }
     }
 
@@ -57,15 +57,15 @@ KSortedSurfaceContainer::KSortedSurfaceContainer(const KSurfaceContainer& contai
     }
 
     //clean up
-    for (unsigned int i = 0; i < sorted_surface_list.size(); i++) {
-        delete sorted_surface_list[i];
+    for (auto& surface : sorted_surface_list) {
+        delete surface;
     }
 }
 
 KSortedSurfaceContainer::~KSortedSurfaceContainer()
 {
-    for (auto it = fSortedSurfaces.begin(); it != fSortedSurfaces.end(); ++it) {
-        delete *it;
+    for (auto& surface : fSortedSurfaces) {
+        delete surface;
     }
 }
 

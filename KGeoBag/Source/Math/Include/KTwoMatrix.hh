@@ -23,7 +23,7 @@ class KTwoMatrix
     KTwoMatrix(const double anArray[4]);
     KTwoMatrix& operator=(const double anArray[4]);
 
-    KTwoMatrix(const vector<double>& anArray);
+    KTwoMatrix(const std::vector<double>& anArray);
 
     //cast
 
@@ -66,6 +66,9 @@ inline KTwoMatrix::KTwoMatrix(const KTwoMatrix& aMatrix)
 }
 inline KTwoMatrix& KTwoMatrix::operator=(const KTwoMatrix& aMatrix)
 {
+    if (this == &aMatrix)
+        return *this;
+
     fData[0] = aMatrix.fData[0];
     fData[1] = aMatrix.fData[1];
 
@@ -94,7 +97,7 @@ inline KTwoMatrix& KTwoMatrix::operator=(const double anArray[9])
     return *this;
 }
 
-inline KTwoMatrix::KTwoMatrix(const vector<double>& anArray)
+inline KTwoMatrix::KTwoMatrix(const std::vector<double>& anArray)
 {
     assert(anArray.size() == 4);
 

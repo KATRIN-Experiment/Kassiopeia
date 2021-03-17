@@ -17,7 +17,7 @@ KSReadEventROOT::KSReadEventROOT(TFile* aFile) :
     fData->SetBranchAddress("FIRST_STEP_INDEX", &fFirstStepIndex);
     fData->SetBranchAddress("LAST_STEP_INDEX", &fLastStepIndex);
 }
-KSReadEventROOT::~KSReadEventROOT() {}
+KSReadEventROOT::~KSReadEventROOT() = default;
 
 unsigned int KSReadEventROOT::GetEventIndex() const
 {

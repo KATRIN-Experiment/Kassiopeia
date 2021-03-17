@@ -12,7 +12,7 @@ STATICINT sKGFlattenedPolyLoopSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGFlattenedPolyLoopSurface>("flattened_poly_loop_surface");
 
 STATICINT sKGFlattenedPolyLoopSurfaceBuilderStructure =
-    KGFlattenedPolyLoopSurfaceBuilder::Attribute<string>("name") +
+    KGFlattenedPolyLoopSurfaceBuilder::Attribute<std::string>("name") +
     KGFlattenedPolyLoopSurfaceBuilder::Attribute<double>("z") +
     KGFlattenedPolyLoopSurfaceBuilder::Attribute<unsigned int>("flattened_mesh_count") +
     KGFlattenedPolyLoopSurfaceBuilder::Attribute<double>("flattened_mesh_power") +

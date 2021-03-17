@@ -156,8 +156,8 @@ bool KGInsertionCondition::ElementEnclosedByCube(const KGNavigableMeshElement* e
     }
 }
 
-bool KGInsertionCondition::LineSegmentIntersectsCube(KThreeVector start, KThreeVector end,
-                                                     const KGCube<KGMESH_DIM>* cube) const
+bool KGInsertionCondition::LineSegmentIntersectsCube(const KThreeVector& start, const KThreeVector& end,
+                                                     const KGCube<KGMESH_DIM>* cube)
 {
     //uses 'slab clipping' to check if line segment intersects the cube
     //as specified in chapter 11.2 of Geometric Tools for Computer Graphics

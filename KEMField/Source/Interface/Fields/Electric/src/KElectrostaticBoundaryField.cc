@@ -16,19 +16,17 @@ namespace KEMField
 KElectrostaticBoundaryField::KElectrostaticBoundaryField() :
     fChargeDensitySolver(nullptr),
     fFieldSolver(nullptr),
-    fContainer(),
-    fFile(),
     fDirectory(KEMFileInterface::GetInstance()->ActiveDirectory()),
     fHashMaskedBits(20),
     fHashThreshold(1.e-14)
 {
     fFile = KEMFileInterface::GetInstance()->GetActiveFileName();
-    fFile = fFile.substr(fFile.find_last_of("/") + 1, std::string::npos);
+    fFile = fFile.substr(fFile.find_last_of('/') + 1, std::string::npos);
 }
 
-KElectrostaticBoundaryField::~KElectrostaticBoundaryField() {}
+KElectrostaticBoundaryField::~KElectrostaticBoundaryField() = default;
 
-void KElectrostaticBoundaryField::SetChargeDensitySolver(KSmartPointer<KChargeDensitySolver> solver)
+void KElectrostaticBoundaryField::SetChargeDensitySolver(const KSmartPointer<KChargeDensitySolver>& solver)
 {
     fChargeDensitySolver = solver;
 }
@@ -38,7 +36,7 @@ KSmartPointer<KChargeDensitySolver> KElectrostaticBoundaryField::GetChargeDensit
     return fChargeDensitySolver;
 }
 
-void KElectrostaticBoundaryField::SetFieldSolver(KSmartPointer<KElectricFieldSolver> solver)
+void KElectrostaticBoundaryField::SetFieldSolver(const KSmartPointer<KElectricFieldSolver>& solver)
 {
     fFieldSolver = solver;
 }
@@ -48,7 +46,7 @@ KSmartPointer<KElectricFieldSolver> KElectrostaticBoundaryField::GetFieldSolver(
     return fFieldSolver;
 }
 
-void KElectrostaticBoundaryField::SetContainer(KSmartPointer<KSurfaceContainer> container)
+void KElectrostaticBoundaryField::SetContainer(const KSmartPointer<KSurfaceContainer>& container)
 {
     fContainer = container;
 }
@@ -63,12 +61,12 @@ double KElectrostaticBoundaryField::PotentialCore(const KPosition& P) const
     return fFieldSolver->Potential(P);
 }
 
-KThreeVector KElectrostaticBoundaryField::ElectricFieldCore(const KPosition& P) const
+KFieldVector KElectrostaticBoundaryField::ElectricFieldCore(const KPosition& P) const
 {
     return fFieldSolver->ElectricField(P);
 }
 
-std::pair<KThreeVector, double> KElectrostaticBoundaryField::ElectricFieldAndPotentialCore(const KPosition& P) const
+std::pair<KFieldVector, double> KElectrostaticBoundaryField::ElectricFieldAndPotentialCore(const KPosition& P) const
 {
     return fFieldSolver->ElectricFieldAndPotential(P);
 }
@@ -94,7 +92,7 @@ void KElectrostaticBoundaryField::InitializeCore()
     VisitorPostprocessing();
 }
 
-void KElectrostaticBoundaryField::AddVisitor(KSmartPointer<Visitor> visitor)
+void KElectrostaticBoundaryField::AddVisitor(const KSmartPointer<Visitor>& visitor)
 {
     fVisitors.push_back(visitor);
 }
@@ -128,23 +126,23 @@ void KElectrostaticBoundaryField::SetHashThreshold(const double& aThreshold)
 
 void KElectrostaticBoundaryField::VisitorPreprocessing()
 {
-    for (auto it = fVisitors.begin(); it != fVisitors.end(); ++it)
-        if ((*it)->Preprocessing())
-            (*it)->PreVisit(*this);
+    for (auto& visitor : fVisitors)
+        if (visitor->Preprocessing())
+            visitor->PreVisit(*this);
 }
 
 void KElectrostaticBoundaryField::VisitorInBetweenProcessing()
 {
-    for (auto it = fVisitors.begin(); it != fVisitors.end(); ++it)
-        if ((*it)->InBetweenProcessing())
-            (*it)->InBetweenVisit(*this);
+    for (auto& visitor : fVisitors)
+        if (visitor->InBetweenProcessing())
+            visitor->InBetweenVisit(*this);
 }
 
 void KElectrostaticBoundaryField::VisitorPostprocessing()
 {
-    for (auto it = fVisitors.begin(); it != fVisitors.end(); ++it)
-        if ((*it)->Postprocessing())
-            (*it)->PostVisit(*this);
+    for (auto& visitor : fVisitors)
+        if (visitor->Postprocessing())
+            visitor->PostVisit(*this);
 }
 
 void KElectrostaticBoundaryField::CheckSolverExistance()

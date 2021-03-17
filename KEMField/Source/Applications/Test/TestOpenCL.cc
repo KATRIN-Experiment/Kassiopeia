@@ -9,13 +9,15 @@
 #include <stdlib.h>
 #include <vector>
 
-#define __NO_STD_VECTOR  // Use cl::vector instead of STL version
-#define __CL_ENABLE_EXCEPTIONS
+#define CL_HPP_NO_STD_VECTOR  // Use cl::vector instead of STL version
+#define CL_HPP_ENABLE_EXCEPTIONS
 
 #if defined __APPLE__
-#include <OpenCL/cl.hpp>
+#include <OpenCL/cl2.hpp>
 #else
-#include <CL/cl.hpp>
+#define CL_HPP_MINIMUM_OPENCL_VERSION 200
+#define CL_HPP_TARGET_OPENCL_VERSION 220
+#include <CL/cl2.hpp>
 #endif
 
 #ifndef KEMFIELD_DEFAULT_GPU_ID

@@ -2,17 +2,18 @@
 #define KOPENCLINTERFACE_DEF
 
 #ifdef KEMFIELD_USE_CL_VECTOR
-#define __NO_STD_VECTOR  // Use cl::vector instead of STL version
+#define CL_HPP_NO_STD_VECTOR  // Use cl::vector instead of STL version
 #define CL_VECTOR_TYPE cl::vector
 #else
 #define CL_VECTOR_TYPE std::vector
 #endif
 
-#define __CL_ENABLE_EXCEPTIONS
+#define CL_HPP_ENABLE_EXCEPTIONS
 
 //shut up the annoying unused variable warnings in cl.hpp for clang/gcc
 //by using a system-header wrapper for the opencl headers
 #include "KOpenCLHeaderWrapper.hh"
+
 // #ifdef GCC_VERSION
 // #pragma GCC diagnostic push
 // #pragma GCC diagnostic ignored "-Wall -Wcomment"
@@ -39,8 +40,13 @@
 // #pragma GCC diagnostic pop
 // #endif
 
+#undef CL_TYPE
+#undef CL_TYPE2
+#undef CL_TYPE4
+#undef CL_TYPE8
+#undef CL_TYPE16
 
-#if defined KEMFIELD_USE_DOUBLE_PRECISION
+#ifdef KEMFIELD_USE_DOUBLE_PRECISION
 #define CL_TYPE   cl_double
 #define CL_TYPE2  cl_double2
 #define CL_TYPE4  cl_double4
@@ -108,7 +114,7 @@ class KOpenCLInterface
     }
     cl::Device GetDevice() const
     {
-        return fDevices[fCLDeviceID];
+        return fDevices.at(fCLDeviceID);
     }
     cl::CommandQueue& GetQueue(int i = -1) const;
 

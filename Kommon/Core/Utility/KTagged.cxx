@@ -4,8 +4,8 @@ namespace katrin
 {
 
 KTagged::KTagged() : KNamed(), fTags(sOpenTags) {}
-KTagged::KTagged(const KTagged& aCopy) : KNamed(aCopy), fTags(aCopy.fTags) {}
-KTagged::~KTagged() {}
+KTagged::KTagged(const KTagged&) = default;
+KTagged::~KTagged() = default;
 
 bool KTagged::Empty() const
 {

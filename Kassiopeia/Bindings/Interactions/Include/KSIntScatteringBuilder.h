@@ -33,18 +33,18 @@ template<> inline bool KSIntScatteringBuilder::AddAttribute(KContainer* aContain
         return true;
     }
     if (aContainer->GetName() == "density") {
-        auto* tDensityCalculator = KToolbox::GetInstance().Get<KSIntDensity>(aContainer->AsReference<std::string>());
+        auto* tDensityCalculator = KToolbox::GetInstance().Get<KSIntDensity>(aContainer->AsString());
         fObject->SetDensity(tDensityCalculator->Clone());
         return true;
     }
     if (aContainer->GetName() == "calculator") {
-        auto* tCalculator = KToolbox::GetInstance().Get<KSIntCalculator>(aContainer->AsReference<std::string>());
+        auto* tCalculator = KToolbox::GetInstance().Get<KSIntCalculator>(aContainer->AsString());
         fObject->AddCalculator(tCalculator);
         return true;
     }
     if (aContainer->GetName() == "calculators") {
         std::vector<KSIntCalculator*> aCalculatorVector =
-            KToolbox::GetInstance().GetAll<KSIntCalculator>(aContainer->AsReference<std::string>());
+            KToolbox::GetInstance().GetAll<KSIntCalculator>(aContainer->AsString());
         std::vector<KSIntCalculator*>::iterator tIt;
         for (tIt = aCalculatorVector.begin(); tIt != aCalculatorVector.end(); tIt++) {
             fObject->AddCalculator((*tIt));

@@ -8,7 +8,7 @@ namespace katrin
 
 KROOTPainter::KROOTPainter() : fWindow(nullptr), fDisplayEnabled(true), fWriteEnabled(true) {}
 
-KROOTPainter::~KROOTPainter() {}
+KROOTPainter::~KROOTPainter() = default;
 
 void KROOTPainter::SetWindow(KWindow* aWindow)
 {

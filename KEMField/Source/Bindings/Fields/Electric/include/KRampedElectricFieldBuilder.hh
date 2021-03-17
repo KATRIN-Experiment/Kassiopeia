@@ -27,18 +27,18 @@ template<> inline bool KRampedElectricFieldBuilder::AddAttribute(KContainer* aCo
         return true;
     }
     if (aContainer->GetName() == "root_field") {
-        std::string fieldName = aContainer->AsReference<std::string>();
+        std::string fieldName = aContainer->AsString();
         auto* field = katrin::KToolbox::GetInstance().Get<KEMField::KElectricField>(fieldName);
         fObject->SetRootElectricField(field);
         return true;
     }
     if (aContainer->GetName() == "ramping_type") {
-        std::string tFlag = aContainer->AsReference<std::string>();
-        if (tFlag == std::string("linear"))
+        std::string tFlag = aContainer->AsString();
+        if (tFlag == "linear")
             fObject->SetRampingType(KEMField::KRampedElectricField::rtLinear);
-        else if (tFlag == std::string("exponential"))
+        else if (tFlag == "exponential")
             fObject->SetRampingType(KEMField::KRampedElectricField::rtExponential);
-        else if (tFlag == std::string("sinus"))
+        else if (tFlag == "sinus")
             fObject->SetRampingType(KEMField::KRampedElectricField::rtSinus);
         return true;
     }

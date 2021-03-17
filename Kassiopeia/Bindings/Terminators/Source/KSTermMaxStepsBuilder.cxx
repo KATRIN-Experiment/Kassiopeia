@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermMaxStepsBuilder::~KComplexElement() {}
+template<> KSTermMaxStepsBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermMaxStepsStructure =
-    KSTermMaxStepsBuilder::Attribute<string>("name") + KSTermMaxStepsBuilder::Attribute<unsigned int>("steps");
+    KSTermMaxStepsBuilder::Attribute<std::string>("name") + KSTermMaxStepsBuilder::Attribute<unsigned int>("steps");
 
 STATICINT sKSTermMaxSteps = KSRootBuilder::ComplexElement<KSTermMaxSteps>("ksterm_max_steps");
 

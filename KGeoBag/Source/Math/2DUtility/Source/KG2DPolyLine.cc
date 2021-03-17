@@ -16,8 +16,8 @@ KG2DPolyLine::KG2DPolyLine(const std::vector<std::vector<double>>* ordered_verti
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back(KTwoVector((*ordered_vertices)[i][0], (*ordered_vertices)[i][1]));
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.emplace_back(ordered_vertice[0], ordered_vertice[1]);
     }
     Initialize();
 }
@@ -26,8 +26,8 @@ KG2DPolyLine::KG2DPolyLine(const std::vector<KTwoVector>* ordered_vertices)
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back((*ordered_vertices)[i]);
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.push_back(ordered_vertice);
     }
     Initialize();
 }
@@ -41,8 +41,8 @@ void KG2DPolyLine::SetVertices(const std::vector<std::vector<double>>* ordered_v
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back(KTwoVector((*ordered_vertices)[i][0], (*ordered_vertices)[i][1]));
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.emplace_back(ordered_vertice[0], ordered_vertice[1]);
     }
     Initialize();
 }
@@ -51,8 +51,8 @@ void KG2DPolyLine::SetVertices(const std::vector<KTwoVector>* ordered_vertices)
 {
     fIsValid = false;
     fVertices.clear();
-    for (unsigned int i = 0; i < ordered_vertices->size(); i++) {
-        fVertices.push_back((*ordered_vertices)[i]);
+    for (const auto& ordered_vertice : *ordered_vertices) {
+        fVertices.push_back(ordered_vertice);
     }
     Initialize();
 }
@@ -93,7 +93,7 @@ void KG2DPolyLine::Initialize()
         fSides.clear();
         for (i = 0; i < fNVertices - 1; i++) {
             j = i + 1;
-            fSides.push_back(KG2DLineSegment(fVertices[i], fVertices[j]));
+            fSides.emplace_back(fVertices[i], fVertices[j]);
         }
 
         fDiff.resize(fNVertices);

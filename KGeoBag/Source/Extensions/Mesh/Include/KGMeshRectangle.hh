@@ -9,28 +9,34 @@ namespace KGeoBag
 class KGMeshRectangle : public KGMeshElement
 {
   public:
-    KGMeshRectangle(const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1,
-                    const KThreeVector& n2);
-    KGMeshRectangle(const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& /*p2*/, const KThreeVector& p3);
+    KGMeshRectangle(const double& a, const double& b, const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& n1,
+                    const KGeoBag::KThreeVector& n2);
+    KGMeshRectangle(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1,
+                    const KGeoBag::KThreeVector& /*p2*/, const KGeoBag::KThreeVector& p3);
     KGMeshRectangle(const KGMeshRectangle& r);
-    virtual ~KGMeshRectangle();
+    ~KGMeshRectangle() override;
+
+    static std::string Name()
+    {
+        return "mesh_rectangle";
+    }
 
     double Area() const override;
     double Aspect() const override;
     void Transform(const KTransformation& transform) override;
 
-    double NearestDistance(const KThreeVector& aPoint) const override;
-    KThreeVector NearestPoint(const KThreeVector& aPoint) const override;
-    KThreeVector NearestNormal(const KThreeVector& aPoint) const override;
-    bool NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd,
-                             KThreeVector& anIntersection) const override;
+    double NearestDistance(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector NearestNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool NearestIntersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
+                             KGeoBag::KThreeVector& anIntersection) const override;
 
     KGPointCloud<KGMESH_DIM> GetPointCloud() const override;
     unsigned int GetNumberOfEdges() const override
     {
         return 4;
     };
-    void GetEdge(KThreeVector& start, KThreeVector& end, unsigned int index) const override;
+    void GetEdge(KThreeVector& start, KGeoBag::KThreeVector& end, unsigned int index) const override;
 
     //assignment
     inline KGMeshRectangle& operator=(const KGMeshRectangle& r)
@@ -54,31 +60,31 @@ class KGMeshRectangle : public KGMeshElement
     {
         return fB;
     }
-    const KThreeVector& GetP0() const
+    const KGeoBag::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KThreeVector& GetN1() const
+    const KGeoBag::KThreeVector& GetN1() const
     {
         return fN1;
     }
-    const KThreeVector& GetN2() const
+    const KGeoBag::KThreeVector& GetN2() const
     {
         return fN2;
     }
-    const KThreeVector GetN3() const
+    const KGeoBag::KThreeVector GetN3() const
     {
         return fN1.Cross(fN2);
     }
-    const KThreeVector GetP1() const
+    const KGeoBag::KThreeVector GetP1() const
     {
         return fP0 + fN1 * fA;
     }
-    const KThreeVector GetP2() const
+    const KGeoBag::KThreeVector GetP2() const
     {
         return fP0 + fN1 * fA + fN2 * fB;
     }
-    const KThreeVector GetP3() const
+    const KGeoBag::KThreeVector GetP3() const
     {
         return fP0 + fN2 * fB;
     }
@@ -112,14 +118,14 @@ class KGMeshRectangle : public KGMeshElement
     }
 
   protected:
-    bool SameSide(KThreeVector point, KThreeVector A, KThreeVector B, KThreeVector C) const;
-
+    static bool SameSide(const KGeoBag::KThreeVector& point, const KGeoBag::KThreeVector& A,
+                         const KGeoBag::KThreeVector& B, const KGeoBag::KThreeVector& C);
 
     double fA;
     double fB;
-    KThreeVector fP0;
-    KThreeVector fN1;
-    KThreeVector fN2;
+    KGeoBag::KThreeVector fP0;
+    KGeoBag::KThreeVector fN1;
+    KGeoBag::KThreeVector fN2;
 };
 }  // namespace KGeoBag
 

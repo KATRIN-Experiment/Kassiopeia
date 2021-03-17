@@ -101,9 +101,9 @@ double Round(double x, unsigned int masked)
     int maskedBytes = masked / 8;
 
     // first we round
-    if (maskedBits || maskedBytes) {
+    if ((maskedBits != 0) || (maskedBytes != 0)) {
         unsigned short index, significantBit;
-        if (maskedBits) {
+        if (maskedBits != 0) {
             index = endian_min + endian_dir * maskedBytes;
             significantBit = (unsigned short) (~(0xff << 1)) << (maskedBits - 1);
         }
@@ -112,7 +112,7 @@ double Round(double x, unsigned int masked)
             significantBit = 0x80;
         }
 
-        if (reinterpret_cast<unsigned char*>(&y)[index] & significantBit) {
+        if ((reinterpret_cast<unsigned char*>(&y)[index] & significantBit) != 0) {
             double roundOff = y;
             reinterpret_cast<unsigned char*>(&roundOff)[index] ^= significantBit;
             y += (y - roundOff);

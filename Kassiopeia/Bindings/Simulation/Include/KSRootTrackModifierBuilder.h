@@ -17,7 +17,7 @@ template<> inline bool KSRootTrackModifierBuilder::AddAttribute(KContainer* aCon
         return true;
     }
     if (aContainer->GetName() == "add_modifier") {
-        fObject->AddModifier(KToolbox::GetInstance().Get<KSTrackModifier>(aContainer->AsReference<std::string>()));
+        fObject->AddModifier(KToolbox::GetInstance().Get<KSTrackModifier>(aContainer->AsString()));
         return true;
     }
     return false;

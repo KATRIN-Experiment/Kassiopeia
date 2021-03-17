@@ -39,15 +39,16 @@ class KEMSparseMatrixFileInterface
         fBufferSize *= sizeof(double) * 1024 * 1024;
     };
 
-    virtual ~KEMSparseMatrixFileInterface(){};
+    virtual ~KEMSparseMatrixFileInterface() = default;
+    ;
 
 
-    virtual void SetFilePrefix(std::string file_prefix)
+    virtual void SetFilePrefix(const std::string& file_prefix)
     {
         fPrefix = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_prefix;
     }
 
-    virtual void SetFilePredicate(std::string file_predicate)
+    virtual void SetFilePredicate(const std::string& file_predicate)
     {
         fPredicate = file_predicate;
     }
@@ -64,8 +65,8 @@ class KEMSparseMatrixFileInterface
 
         std::set<std::string> file_list = KEMFileInterface::GetInstance()->CompleteFileList();
 
-        for (auto it = file_list.begin(); it != file_list.end(); ++it) {
-            if (name == *it) {
+        for (const auto& it : file_list) {
+            if (name == it) {
                 return true;
             };
         }

@@ -53,7 +53,7 @@ kasper_internal_include_directories()
 foreach( BASENAME ${VALIDATION_SOURCE_BASENAMES} )
 	add_executable( ${BASENAME} ${VALIDATION_SOURCE_PATH}/${BASENAME}.cxx )
 	set_target_properties( ${BASENAME} PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
-	target_link_libraries( ${BASENAME} ${VALIDATION_SOURCE_LIBRARIES} )
+	target_link_libraries( ${BASENAME} ${VALIDATION_SOURCE_LIBRARIES} ${EXTERNAL_LIBRARIES} )
 endforeach( BASENAME )
 
 kasper_install_executables( ${VALIDATION_SOURCE_BASENAMES} )

@@ -12,7 +12,7 @@ STATICINT sKGShellLineSegmentSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGShellLineSegmentSurface>("shell_line_segment_surface");
 
 STATICINT sKGShellLineSegmentSurfaceBuilderStructure =
-    KGShellLineSegmentSurfaceBuilder::Attribute<string>("name") +
+    KGShellLineSegmentSurfaceBuilder::Attribute<std::string>("name") +
     KGShellLineSegmentSurfaceBuilder::Attribute<double>("angle_start") +
     KGShellLineSegmentSurfaceBuilder::Attribute<double>("angle_stop") +
     KGShellLineSegmentSurfaceBuilder::Attribute<unsigned int>("shell_mesh_count") +

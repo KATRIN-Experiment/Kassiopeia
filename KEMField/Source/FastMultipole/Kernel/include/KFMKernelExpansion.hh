@@ -33,7 +33,8 @@ class KFMKernelExpansion
         }
     };
 
-    virtual ~KFMKernelExpansion(){};
+    virtual ~KFMKernelExpansion() = default;
+    ;
 
     virtual void Initialize()
     {

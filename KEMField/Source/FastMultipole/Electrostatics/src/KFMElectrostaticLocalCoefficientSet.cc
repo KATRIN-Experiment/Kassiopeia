@@ -4,9 +4,9 @@
 namespace KEMField
 {
 
-KFMElectrostaticLocalCoefficientSet::KFMElectrostaticLocalCoefficientSet() {}
+KFMElectrostaticLocalCoefficientSet::KFMElectrostaticLocalCoefficientSet() = default;
 
-KFMElectrostaticLocalCoefficientSet::~KFMElectrostaticLocalCoefficientSet() {}
+KFMElectrostaticLocalCoefficientSet::~KFMElectrostaticLocalCoefficientSet() = default;
 
 std::string KFMElectrostaticLocalCoefficientSet::ClassName() const
 {

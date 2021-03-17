@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlPositionNumericalErrorBuilder::~KComplexElement() {}
+template<> KSTrajControlPositionNumericalErrorBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajControlPositionNumericalErrorStructure =
-    KSTrajControlPositionNumericalErrorBuilder::Attribute<string>("name") +
+    KSTrajControlPositionNumericalErrorBuilder::Attribute<std::string>("name") +
     KSTrajControlPositionNumericalErrorBuilder::Attribute<double>("absolute_position_error") +
     KSTrajControlPositionNumericalErrorBuilder::Attribute<double>("safety_factor") +
     KSTrajControlPositionNumericalErrorBuilder::Attribute<double>("solver_order");

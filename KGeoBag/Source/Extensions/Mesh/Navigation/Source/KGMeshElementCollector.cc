@@ -20,7 +20,8 @@ KGMeshElementCollector::KGMeshElementCollector() :
     fCurrentZAxis(KThreeVector::sZUnit)
 {}
 
-KGMeshElementCollector::~KGMeshElementCollector(){};
+KGMeshElementCollector::~KGMeshElementCollector() = default;
+;
 
 void KGMeshElementCollector::SetSystem(const KThreeVector& anOrigin, const KThreeVector& aXAxis,
                                        const KThreeVector& aYAxis, const KThreeVector& aZAxis)
@@ -92,16 +93,16 @@ void KGMeshElementCollector::Add(KGMeshData* aData)
 
     if (aData != nullptr) {
         if (aData->HasData()) {
-            for (auto tElementIt = aData->Elements()->begin(); tElementIt != aData->Elements()->end(); tElementIt++) {
-                tMeshElement = *tElementIt;
+            for (auto& tElementIt : *aData->Elements()) {
+                tMeshElement = tElementIt;
 
                 tMeshTriangle = dynamic_cast<KGMeshTriangle*>(tMeshElement);
                 if ((tMeshTriangle != nullptr)) {
                     fCurrentElementType = eTriangle;
                     //transform mesh triangle into global coordinates
-                    KGMeshTriangle* t = new KGMeshTriangle(LocalToInternal(tMeshTriangle->GetP0()),
-                                                           LocalToInternal(tMeshTriangle->GetP1()),
-                                                           LocalToInternal(tMeshTriangle->GetP2()));
+                    auto* t = new KGMeshTriangle(LocalToInternal(tMeshTriangle->GetP0()),
+                                                 LocalToInternal(tMeshTriangle->GetP1()),
+                                                 LocalToInternal(tMeshTriangle->GetP2()));
                     auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(t);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);
@@ -115,10 +116,10 @@ void KGMeshElementCollector::Add(KGMeshData* aData)
                 if ((tMeshRectangle != nullptr)) {
                     fCurrentElementType = eRectangle;
                     //transform mesh rectangle into global coordinates
-                    KGMeshRectangle* r = new KGMeshRectangle(LocalToInternal(tMeshRectangle->GetP0()),
-                                                             LocalToInternal(tMeshRectangle->GetP1()),
-                                                             LocalToInternal(tMeshRectangle->GetP2()),
-                                                             LocalToInternal(tMeshRectangle->GetP3()));
+                    auto* r = new KGMeshRectangle(LocalToInternal(tMeshRectangle->GetP0()),
+                                                  LocalToInternal(tMeshRectangle->GetP1()),
+                                                  LocalToInternal(tMeshRectangle->GetP2()),
+                                                  LocalToInternal(tMeshRectangle->GetP3()));
                     auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(r);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);
@@ -132,9 +133,9 @@ void KGMeshElementCollector::Add(KGMeshData* aData)
                 if ((tMeshWire != nullptr)) {
                     fCurrentElementType = eWire;
                     //transform mesh wire into global coordinates
-                    KGMeshWire* w = new KGMeshWire(LocalToInternal(tMeshWire->GetP0()),
-                                                   LocalToInternal(tMeshWire->GetP1()),
-                                                   tMeshWire->GetDiameter());
+                    auto* w = new KGMeshWire(LocalToInternal(tMeshWire->GetP0()),
+                                             LocalToInternal(tMeshWire->GetP1()),
+                                             tMeshWire->GetDiameter());
                     auto* navi_mesh_element = new KGNavigableMeshElement();
                     navi_mesh_element->SetMeshElement(w);
                     // navi_mesh_element->SetParentSurface(fCurrentSurface);

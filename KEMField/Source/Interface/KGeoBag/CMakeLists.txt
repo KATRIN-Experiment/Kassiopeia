@@ -21,7 +21,7 @@
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KGStaticElectromagnetField.cc
     )
 
-  add_library (KGeoBagInterface SHARED ${KGEOBAGINTERFACE_SOURCEFILES})
+  add_library (KGeoBagInterface SHARED ${KGEOBAGINTERFACE_SOURCEFILES} ${KGEOBAGINTERFACE_HEADERFILES})
   target_link_libraries (KGeoBagInterface 
   			KEMSurfaces
   			KEMFieldsElectric

@@ -6,17 +6,19 @@
  */
 #include "KTimer.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
+
+#include <utility>
 
 namespace KEMField
 {
 
-KTimer::KTimer(std::string timedActionDescription)
+KTimer::KTimer(const std::string& timedActionDescription)
 {
-    fDescription = timedActionDescription;
+    fDescription = std::move(timedActionDescription);
 }
 
-KTimer::~KTimer() {}
+KTimer::~KTimer() = default;
 
 void KTimer::start()
 {
@@ -36,13 +38,13 @@ void KTimer::end()
 
 void KTimer::display()
 {
-    KEMField::cout << fDescription << " took ";
+    kem_cout(eNormal) << fDescription << " took ";
 #ifdef KEMFIELD_USE_REALTIME_CLOCK
     timespec temp = TimeDifference(fStart, fEnd);
-    KEMField::cout << temp.tv_sec << "." << temp.tv_nsec << " real time seconds or ";
+    kem_cout << temp.tv_sec << "." << temp.tv_nsec << " real time seconds or ";
 #endif
     double time = ((double) (fCEnd - fCStart)) / CLOCKS_PER_SEC;  // time in seconds
-    cout << time << " process/CPU Time seconds to perform." << KEMField::endl;
+    kem_cout << time << " process/CPU Time seconds to perform." << eom;
 }
 
 #ifdef KEMFIELD_USE_REALTIME_CLOCK

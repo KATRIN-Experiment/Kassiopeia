@@ -17,9 +17,9 @@ KKrylovPreconditionerGenerator::KKrylovPreconditionerGenerator()
     fKrylovConfig.SetDisplayName("Preconditioner: ");
 }
 
-KKrylovPreconditionerGenerator::~KKrylovPreconditionerGenerator() {}
+KKrylovPreconditionerGenerator::~KKrylovPreconditionerGenerator() = default;
 
-void KKrylovPreconditionerGenerator::SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen)
+void KKrylovPreconditionerGenerator::SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen)
 {
     fMatrixGenerator = matrixGen;
 }
@@ -30,7 +30,7 @@ KKrylovPreconditionerGenerator::GetMatrixGenerator() const
     return fMatrixGenerator;
 }
 
-void KKrylovPreconditionerGenerator::SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen)
+void KKrylovPreconditionerGenerator::SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen)
 {
     fPreconditionerGenerator = preconGen;
 }

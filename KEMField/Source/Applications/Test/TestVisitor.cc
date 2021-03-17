@@ -4,11 +4,10 @@
 #include "KThreeVector_KEMField.hh"
 
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <vector>
 
 using namespace KEMField;
@@ -17,16 +16,15 @@ int main(int /*argc*/, char** /*argv*/)
 {
     double a = 1.5;
     double b = 1.3;
-    KThreeVector p0(0., 0., 0.);
-    KThreeVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
-    KThreeVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
+    KFieldVector p0(0., 0., 0.);
+    KFieldVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
+    KFieldVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
 
     double dirichletValue = 10.2;
 
     double chargeDensity = 4.8;
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* t =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* t = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
 
 
     t->SetA(a);
@@ -45,15 +43,15 @@ int main(int /*argc*/, char** /*argv*/)
       public:
         using KSelectiveVisitor<KShapeVisitor, KTYPELIST_2(KTriangle, KRectangle)>::Visit;
 
-        Visitor() {}
-        ~Visitor() {}
+        Visitor() = default;
+        ~Visitor() override = default;
 
-        void Visit(KTriangle& t)
+        void Visit(KTriangle& t) override
         {
             (void) t;
             KEMField::cout << "Triangle!" << KEMField::endl;
         }
-        void Visit(KRectangle& r)
+        void Visit(KRectangle& r) override
         {
             (void) r;
             KEMField::cout << "Rectangle!" << KEMField::endl;
@@ -64,8 +62,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     t->Accept(visitor);
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>* r =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
+    auto* r = new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
 
     r->SetA(a);
     r->SetB(b);
@@ -87,11 +84,10 @@ int main(int /*argc*/, char** /*argv*/)
     p->Accept(visitor);
     // visitor.Visit(p->GetBasis());
 
-    KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>* w =
-        new KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>();
+    auto* w = new KSurface<KElectrostaticBasis, KRobinBoundary, KLineSegment>();
 
-    w->SetP0(KThreeVector(0., 1., 0.));
-    w->SetP1(KThreeVector(1., 0., 0.));
+    w->SetP0(KFieldVector(0., 1., 0.));
+    w->SetP1(KFieldVector(1., 0., 0.));
     w->SetDiameter(1.e-4);
     w->SetNormalBoundaryFlux(3.3);
     w->SetSolution(12.6);

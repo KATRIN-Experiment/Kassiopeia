@@ -2,28 +2,18 @@
 #define Kassiopeia_KSWriteROOT_h_
 
 #include "KFile.h"
+#include "KRootFile.h"
 #include "KSList.h"
 #include "KSWriteROOTCondition.h"
 #include "KSWriter.h"
-using katrin::KFile;
-
-#include "KRootFile.h"
-using katrin::KRootFile;
-
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
 #include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
-
 #include "TFile.h"
 #include "TString.h"
 #include "TTree.h"
 #include "TVector3.h"
 
 #include <map>
-using std::map;
-using std::pair;
 
 namespace Kassiopeia
 {
@@ -58,10 +48,10 @@ class KSWriteROOT : public KSComponentTemplate<KSWriteROOT, KSWriter>
         std::vector<KSComponent*> fComponents;
     };
 
-    typedef map<KSComponent*, Data*> KSComponentMap;
-    typedef KSComponentMap::iterator ComponentIt;
-    typedef KSComponentMap::const_iterator ComponentCIt;
-    typedef KSComponentMap::value_type ComponentEntry;
+    using KSComponentMap = std::map<KSComponent*, Data*>;
+    using ComponentIt = KSComponentMap::iterator;
+    using ComponentCIt = KSComponentMap::const_iterator;
+    using ComponentEntry = KSComponentMap::value_type;
 
   public:
     KSWriteROOT();
@@ -122,7 +112,7 @@ class KSWriteROOT : public KSComponentTemplate<KSWriteROOT, KSWriter>
     void DeinitializeComponent() override;
 
   private:
-    KRootFile* fFile;
+    katrin::KRootFile* fFile;
     std::string fKey;
 
     TTree* fRunKeys;

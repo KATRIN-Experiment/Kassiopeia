@@ -1,6 +1,6 @@
 #include "KMPIInterface.hh"
 
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 
 #ifdef LOCAL_RANK_MPI
 //used to retrieve the host name
@@ -15,7 +15,7 @@
 
 namespace KEMField
 {
-KMPIInterface* KMPIInterface::fMPIInterface = 0;
+KMPIInterface* KMPIInterface::fMPIInterface = nullptr;
 
 KMPIInterface::KMPIInterface()
 {
@@ -28,7 +28,7 @@ KMPIInterface::KMPIInterface()
     fSplitMode = false;
 }
 
-KMPIInterface::~KMPIInterface() {}
+KMPIInterface::~KMPIInterface() = default;
 
 void KMPIInterface::Initialize(int* argc, char*** argv, bool split_mode)
 {
@@ -45,10 +45,19 @@ void KMPIInterface::Initialize(int* argc, char*** argv, bool split_mode)
     /* Find out how many processes are being used */
     MPI_Comm_size(MPI_COMM_WORLD, &fNProcesses);
 
+    if (fProcess <= 0) {
+        if (fNProcesses <= 0) {
+            kem_cout(eWarning) << "No MPI processes found - not running in an MPI context?" << eom;
+        }
+        else if (!initialized) { // only show this once
+            kem_cout << "Running in MPI context with " << fNProcesses << " processes." << eom;
+        }
+    }
+
     //now determine the local rank of this process (indexed from zero) on the local host
     //for example, if processes (0,2,5) are running on host A
     //and processes (1,3,4) are running on host B, then the
-    //local rank of process 3 is 1, and the locak rank of process 5 is 2
+    //local rank of process 3 is 1, and the local rank of process 5 is 2
     DetermineLocalRank();
 
     fSplitMode = split_mode;
@@ -78,7 +87,7 @@ void KMPIInterface::Finalize()
    */
 KMPIInterface* KMPIInterface::GetInstance()
 {
-    if (fMPIInterface == 0)
+    if (fMPIInterface == nullptr)
         fMPIInterface = new KMPIInterface();
     return fMPIInterface;
 }
@@ -114,6 +123,12 @@ void KMPIInterface::EndSequentialProcess()
 //root process for collection before calling cout
 void KMPIInterface::PrintMessage(std::string msg)
 {
+    if (fNProcesses < 0 || fProcess < 0) {
+        kem_cout(eError) << "MPI not initialized" << ret;
+        kem_cout << "Message was: " << msg << eom;
+        return;
+    }
+
     unsigned int n_char = msg.size();
 
     std::vector<unsigned int> in_msg_sizes;
@@ -161,8 +176,8 @@ void KMPIInterface::PrintMessage(std::string msg)
     if (fProcess == 0) {
         //convert to string
         std::stringstream final_output;
-        for (unsigned int i = 0; i < buf.size(); i++) {
-            final_output << buf[i];
+        for (char c : buf) {
+            final_output << c;
         }
         std::string full_message = final_output.str();
 
@@ -181,8 +196,8 @@ void KMPIInterface::PrintMessage(std::string msg)
         }
 
         //print message line by line
-        for (unsigned int i = 0; i < lines.size(); i++) {
-            KEMField::cout << lines[i] << KEMField::endl;
+        for (auto& line : lines) {
+            kem_cout() << line << eom;
         }
     }
 }

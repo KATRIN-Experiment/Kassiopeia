@@ -40,17 +40,17 @@ class KSCommandMemberSimpleData
     template<> inline bool KSCommandMember##xBUILDERNAME##Builder::AddAttribute(KContainer* aContainer)                \
     {                                                                                                                  \
         if (aContainer->GetName() == "name") {                                                                         \
-            std::string tName = aContainer->AsReference<std::string>();                                                \
+            std::string tName = aContainer->AsString();                                                                \
             fObject->fName = tName;                                                                                    \
             return true;                                                                                               \
         }                                                                                                              \
         if (aContainer->GetName() == "parent") {                                                                       \
-            std::string tParent = aContainer->AsReference<std::string>();                                              \
+            std::string tParent = aContainer->AsString();                                                              \
             fObject->fParentName = tParent;                                                                            \
             return true;                                                                                               \
         }                                                                                                              \
         if (aContainer->GetName() == "child") {                                                                        \
-            std::string tComponent = aContainer->AsReference<std::string>();                                           \
+            std::string tComponent = aContainer->AsString();                                                           \
             fObject->fChildName = tComponent;                                                                          \
             return true;                                                                                               \
         }                                                                                                              \

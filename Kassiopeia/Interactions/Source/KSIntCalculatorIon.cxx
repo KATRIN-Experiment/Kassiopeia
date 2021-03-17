@@ -7,15 +7,17 @@ using katrin::KRandom;
 
 #include "KConst.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 KSIntCalculatorIon::KSIntCalculatorIon() : fGas("H_2"), E_Binding(katrin::KConst::BindingEnergy_H2()) {}
-KSIntCalculatorIon::KSIntCalculatorIon(const KSIntCalculatorIon& aCopy) : KSComponent(), fGas(aCopy.fGas) {}
+KSIntCalculatorIon::KSIntCalculatorIon(const KSIntCalculatorIon& aCopy) : KSComponent(aCopy), fGas(aCopy.fGas) {}
 KSIntCalculatorIon* KSIntCalculatorIon::Clone() const
 {
     return new KSIntCalculatorIon(*this);
 }
-KSIntCalculatorIon::~KSIntCalculatorIon() {}
+KSIntCalculatorIon::~KSIntCalculatorIon() = default;
 
 //
 // Total cross sections for ionization
@@ -401,7 +403,7 @@ void KSIntCalculatorIon::CalculateEnergyDifferentialCrossSection(const double an
     aCrossSection = 0;
 
     //for H2
-    vector<vector<double>> shell_list = {{15.43, 2}};  //list of I and N from Table 1a in Rudd 1992
+    std::vector<std::vector<double>> shell_list = {{15.43, 2}};  //list of I and N from Table 1a in Rudd 1992
 
     //for H2O
     if (fGas.compare("H2O") == 0) {

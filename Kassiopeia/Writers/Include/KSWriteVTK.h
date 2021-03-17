@@ -2,6 +2,7 @@
 #define _Kassiopeia_KSWriteVTK_h_
 
 #include "KSWriter.h"
+#include "KThreeVector.hh"
 #include "KTwoVector.hh"
 #include "vtkCellArray.h"
 #include "vtkCharArray.h"
@@ -21,10 +22,6 @@
 #include "vtkUnsignedShortArray.h"
 #include "vtkVertex.h"
 #include "vtkXMLPolyDataWriter.h"
-using KGeoBag::KTwoVector;
-
-#include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -35,8 +32,8 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     class Action
     {
       public:
-        Action() {}
-        virtual ~Action() {}
+        Action() = default;
+        virtual ~Action() = default;
 
         virtual void Execute() = 0;
     };
@@ -45,9 +42,9 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     {
       public:
         UIntAction(unsigned int* aData, vtkSmartPointer<vtkUnsignedIntArray> anArray) : fData(aData), fArray(anArray) {}
-        virtual ~UIntAction() {}
+        ~UIntAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextValue(*fData);
             return;
@@ -62,9 +59,9 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     {
       public:
         IntAction(int* aData, vtkSmartPointer<vtkIntArray> anArray) : fData(aData), fArray(anArray) {}
-        virtual ~IntAction() {}
+        ~IntAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextValue(*fData);
             return;
@@ -79,9 +76,9 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     {
       public:
         FloatAction(float* aData, vtkSmartPointer<vtkFloatArray> anArray) : fData(aData), fArray(anArray) {}
-        virtual ~FloatAction() {}
+        ~FloatAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextValue(*fData);
             return;
@@ -96,9 +93,9 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     {
       public:
         DoubleAction(double* aData, vtkSmartPointer<vtkDoubleArray> anArray) : fData(aData), fArray(anArray) {}
-        virtual ~DoubleAction() {}
+        ~DoubleAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextValue(*fData);
             return;
@@ -112,70 +109,75 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     class TwoVectorAction : public Action
     {
       public:
-        TwoVectorAction(KTwoVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) : fData(aData), fArray(anArray) {}
-        virtual ~TwoVectorAction() {}
+        TwoVectorAction(KGeoBag::KTwoVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+            fData(aData),
+            fArray(anArray)
+        {}
+        ~TwoVectorAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextTuple2(fData->X(), fData->Y());
             return;
         }
 
       private:
-        KTwoVector* fData;
+        KGeoBag::KTwoVector* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class ThreeVectorAction : public Action
     {
       public:
-        ThreeVectorAction(KThreeVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) : fData(aData), fArray(anArray)
+        ThreeVectorAction(KGeoBag::KThreeVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+            fData(aData),
+            fArray(anArray)
         {}
-        virtual ~ThreeVectorAction() {}
+        ~ThreeVectorAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fArray->InsertNextTuple3(fData->X(), fData->Y(), fData->Z());
             return;
         }
 
       private:
-        KThreeVector* fData;
+        KGeoBag::KThreeVector* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class PointAction : public Action
     {
       public:
-        PointAction(KThreeVector* aData, std::vector<vtkIdType>& anIds, vtkSmartPointer<vtkPoints> aPoints) :
+        PointAction(KGeoBag::KThreeVector* aData, std::vector<vtkIdType>& anIds, vtkSmartPointer<vtkPoints> aPoints) :
             fData(aData),
             fIds(anIds),
             fPoints(aPoints)
         {}
-        virtual ~PointAction() {}
+        ~PointAction() override = default;
 
-        void Execute()
+        void Execute() override
         {
             fIds.push_back(fPoints->InsertNextPoint(fData->X(), fData->Y(), fData->Z()));
             return;
         }
 
       private:
-        KThreeVector* fData;
+        KGeoBag::KThreeVector* fData;
         std::vector<vtkIdType>& fIds;
         vtkSmartPointer<vtkPoints> fPoints;
     };
 
-    typedef std::map<KSComponent*, Action*> ActionMap;
-    typedef std::pair<KSComponent*, Action*> ActionEntry;
-    typedef ActionMap::iterator ActionIt;
-    typedef ActionMap::const_iterator ActionCIt;
+    using ActionMap = std::map<KSComponent*, Action*>;
+    using ActionEntry = std::pair<KSComponent*, Action*>;
+    using ActionIt = ActionMap::iterator;
+    using ActionCIt = ActionMap::const_iterator;
 
   public:
     KSWriteVTK();
     KSWriteVTK(const KSWriteVTK& aCopy);
-    KSWriteVTK* Clone() const;
-    ~KSWriteVTK();
+    KSWriteVTK* Clone() const override;
+    ~KSWriteVTK() override;
 
   public:
     void SetBase(const std::string& aBase);
@@ -186,10 +188,10 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     std::string fPath;
 
   public:
-    void ExecuteRun();
-    void ExecuteEvent();
-    void ExecuteTrack();
-    void ExecuteStep();
+    void ExecuteRun() override;
+    void ExecuteEvent() override;
+    void ExecuteTrack() override;
+    void ExecuteStep() override;
 
     void SetTrackPoint(KSComponent* aComponent);
     void ClearTrackPoint(KSComponent* aComponent);
@@ -204,8 +206,8 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     void ClearStepData(KSComponent* aComponent);
 
   protected:
-    void InitializeComponent();
-    void DeinitializeComponent();
+    void InitializeComponent() override;
+    void DeinitializeComponent() override;
 
   private:
     void AddTrackPoint(KSComponent* aComponent);

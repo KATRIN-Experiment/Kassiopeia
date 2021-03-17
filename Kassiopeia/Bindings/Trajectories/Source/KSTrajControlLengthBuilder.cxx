@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlLengthBuilder::~KComplexElement() {}
+template<> KSTrajControlLengthBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajControlLengthStructure =
-    KSTrajControlLengthBuilder::Attribute<string>("name") + KSTrajControlLengthBuilder::Attribute<double>("length");
+STATICINT sKSTrajControlLengthStructure = KSTrajControlLengthBuilder::Attribute<std::string>("name") +
+                                          KSTrajControlLengthBuilder::Attribute<double>("length");
 
 STATICINT sToolboxKSTrajControlLength = KSRootBuilder::ComplexElement<KSTrajControlLength>("kstraj_control_length");
 

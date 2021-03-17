@@ -30,10 +30,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTrajectoryExactSpinBuilder::~KComplexElement() {}
+template<> KSTrajTrajectoryExactSpinBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTrajectoryExactSpinStructure =
-    KSTrajTrajectoryExactSpinBuilder::Attribute<string>("name") +
+    KSTrajTrajectoryExactSpinBuilder::Attribute<std::string>("name") +
     KSTrajTrajectoryExactSpinBuilder::Attribute<unsigned int>("attempt_limit") +
     KSTrajTrajectoryExactSpinBuilder::ComplexElement<KSTrajIntegratorRK54>("integrator_rk54") +
     KSTrajTrajectoryExactSpinBuilder::ComplexElement<KSTrajIntegratorRKDP54>("integrator_rkdp54") +

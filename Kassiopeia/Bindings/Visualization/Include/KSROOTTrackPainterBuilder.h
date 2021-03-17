@@ -29,6 +29,22 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPath);
         return true;
     }
+    if (aContainer->GetName() == "plane_normal") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPlaneNormal);
+        return true;
+    }
+    if (aContainer->GetName() == "plane_point") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetPlanePoint);
+        return true;
+    }
+    if (aContainer->GetName() == "swap_axis") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetSwapAxis);
+        return true;
+    }
+    if (aContainer->GetName() == "epsilon") {
+        aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetEpsilon);
+        return true;
+    }
     if (aContainer->GetName() == "x_axis") {
         aContainer->CopyTo(fObject, &KSROOTTrackPainter::SetXAxis);
         return true;
@@ -54,19 +70,19 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         return true;
     }
     if (aContainer->GetName() == "color_mode") {
-        if (aContainer->AsReference<std::string>() == std::string("step")) {
+        if (aContainer->AsString() == "step") {
             fObject->SetColorMode(KSROOTTrackPainter::eColorStep);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("track")) {
+        if (aContainer->AsString() == "track") {
             fObject->SetColorMode(KSROOTTrackPainter::eColorTrack);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("fix")) {
+        if (aContainer->AsString() == "fix") {
             fObject->SetColorMode(KSROOTTrackPainter::eColorFix);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("fpd_rings")) {
+        if (aContainer->AsString() == "fpd_rings") {
             vismsg(eWarning) << "Backward compatibility warning: " << ret;
             vismsg(eWarning)
                 << "To use the fpd color option please use the attribute color_palette instead of color_mode from now on"
@@ -78,15 +94,15 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         return false;
     }
     if (aContainer->GetName() == "color_palette") {
-        if (aContainer->AsReference<std::string>() == std::string("default")) {
+        if (aContainer->AsString() == "default") {
             fObject->SetColorPalette(KSROOTTrackPainter::eColorDefault);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("fpd_rings")) {
+        if (aContainer->AsString() == "fpd_rings") {
             fObject->SetColorPalette(KSROOTTrackPainter::eColorFPDRings);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("custom")) {
+        if (aContainer->AsString() == "custom") {
             fObject->SetColorPalette(KSROOTTrackPainter::eColorCustom);
             return true;
         }
@@ -96,98 +112,98 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         aContainer->GetName() == "color")  //color is still used for backward compatibility
     {
         //first find the fraction number, is there is any
-        size_t tPos = aContainer->AsReference<std::string>().find(",");
-        std::string tColor = aContainer->AsReference<std::string>().substr(0, tPos);
+        size_t tPos = aContainer->AsString().find(",");
+        std::string tColor = aContainer->AsString().substr(0, tPos);
         double tFraction = -1.0;
 
         if (tPos == std::string::npos) {
             tFraction = -1.0;
         }
         else {
-            std::string tFractionString = aContainer->AsReference<std::string>().substr(tPos + 1, std::string::npos);
+            std::string tFractionString = aContainer->AsString().substr(tPos + 1, std::string::npos);
             tFraction = std::strtod(tFractionString.c_str(), nullptr);
         }
 
-        if (tColor == std::string("kWhite")) {
+        if (tColor == "kWhite") {
             TColor tColor = *(gROOT->GetColor(kWhite));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kGray")) {
+        if (tColor == "kGray") {
             TColor tColor = *(gROOT->GetColor(kGray));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kBlack")) {
+        if (tColor == "kBlack") {
             TColor tColor = *(gROOT->GetColor(kBlack));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kRed")) {
+        if (tColor == "kRed") {
             TColor tColor = *(gROOT->GetColor(kRed));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kGreen")) {
+        if (tColor == "kGreen") {
             TColor tColor = *(gROOT->GetColor(kGreen));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kBlue")) {
+        if (tColor == "kBlue") {
             TColor tColor = *(gROOT->GetColor(kBlue));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kYellow")) {
+        if (tColor == "kYellow") {
             TColor tColor = *(gROOT->GetColor(kYellow));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kMagenta")) {
+        if (tColor == "kMagenta") {
             TColor tColor = *(gROOT->GetColor(kMagenta));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kCyan")) {
+        if (tColor == "kCyan") {
             TColor tColor = *(gROOT->GetColor(kCyan));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kOrange")) {
+        if (tColor == "kOrange") {
             TColor tColor = *(gROOT->GetColor(kOrange));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kSpring")) {
+        if (tColor == "kSpring") {
             TColor tColor = *(gROOT->GetColor(kSpring));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kTeal")) {
+        if (tColor == "kTeal") {
             TColor tColor = *(gROOT->GetColor(kTeal));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kAzure")) {
+        if (tColor == "kAzure") {
             TColor tColor = *(gROOT->GetColor(kAzure));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kViolet")) {
+        if (tColor == "kViolet") {
             TColor tColor = *(gROOT->GetColor(kViolet));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        if (tColor == std::string("kPink")) {
+        if (tColor == "kPink") {
             TColor tColor = *(gROOT->GetColor(kPink));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
 
         //if color is in hex format
-        if (tColor.substr(0, 1) == std::string("#")) {
+        if (tColor.substr(0, 1) == "#") {
             TColor tColor;
-            int tColorNumber = tColor.GetColor(aContainer->AsReference<std::string>().c_str());
+            int tColorNumber = tColor.GetColor(aContainer->AsString().c_str());
             tColor = *(gROOT->GetColor(tColorNumber));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
@@ -195,12 +211,12 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
 
         //if color is a digit
         if (isdigit(tColor[0])) {
-            int tColorNumber = std::strtol(aContainer->AsReference<std::string>().c_str(), nullptr, 0);
+            int tColorNumber = std::strtol(aContainer->AsString().c_str(), nullptr, 0);
             TColor tColor = *(gROOT->GetColor(tColorNumber));
             fObject->AddBaseColor(tColor, tFraction);
             return true;
         }
-        vismsg(eWarning) << "invalid color value: " << aContainer->AsReference<std::string>() << eom;
+        vismsg(eWarning) << "invalid color value: " << aContainer->AsString() << eom;
         return false;
     }
     if (aContainer->GetName() == "draw_options") {
@@ -208,11 +224,11 @@ template<> inline bool KSROOTTrackPainterBuilder::AddAttribute(KContainer* aCont
         return true;
     }
     if (aContainer->GetName() == "plot_mode") {
-        if (aContainer->AsReference<std::string>() == std::string("step")) {
+        if (aContainer->AsString() == "step") {
             fObject->SetPlotMode(KSROOTTrackPainter::ePlotStep);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == std::string("track")) {
+        if (aContainer->AsString() == "track") {
             fObject->SetPlotMode(KSROOTTrackPainter::ePlotTrack);
             return true;
         }

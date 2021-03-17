@@ -55,7 +55,7 @@ set (KFMELECTROSTATICS_SOURCEFILES
 
 ##################################################
 
-add_library (KFMElectrostatics SHARED ${KFMELECTROSTATICS_SOURCEFILES})
+add_library (KFMElectrostatics SHARED ${KFMELECTROSTATICS_SOURCEFILES} ${KFMELECTROSTATICS_HEADERFILES})
 target_link_libraries (KFMElectrostatics KEMCore KFMCore KFMMath KFMMathUtilities KVectorMath KFMKernel KFMTree KEMFileManipulation)
 
 kasper_install_headers (${KFMELECTROSTATICS_HEADERFILES})

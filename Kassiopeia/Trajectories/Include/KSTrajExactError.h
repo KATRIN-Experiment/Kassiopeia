@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajExactError : public KSMathArray<8>
   public:
     KSTrajExactError();
     KSTrajExactError(const KSTrajExactError& anOperand);
-    ~KSTrajExactError();
+    ~KSTrajExactError() override;
 
     //**********
     //assignment
@@ -36,14 +35,14 @@ class KSTrajExactError : public KSMathArray<8>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KThreeVector& GetPositionError() const;
-    const KThreeVector& GetMomentumError() const;
+    const KGeoBag::KThreeVector& GetPositionError() const;
+    const KGeoBag::KThreeVector& GetMomentumError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KThreeVector fPositionError;
-    mutable KThreeVector fMomentumError;
+    mutable KGeoBag::KThreeVector fPositionError;
+    mutable KGeoBag::KThreeVector fMomentumError;
 };
 
 inline KSTrajExactError& KSTrajExactError::operator=(const double& anOperand)

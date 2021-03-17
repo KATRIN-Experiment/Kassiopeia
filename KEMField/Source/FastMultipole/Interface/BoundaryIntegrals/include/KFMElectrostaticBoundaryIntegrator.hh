@@ -51,13 +51,13 @@ class KFMElectrostaticBoundaryIntegrator : public KElectrostaticBoundaryIntegrat
         fSurfaceContainer(surfaceContainer)
     {
         fUniqueID = "INVALID_ID";
-        fTree = NULL;
-        fElementContainer = NULL;
+        fTree = nullptr;
+        fElementContainer = nullptr;
         fTreeIsOwned = true;
-        fSubdivisionCondition = NULL;
+        fSubdivisionCondition = nullptr;
     };
 
-    KFMElectrostaticBoundaryIntegrator(KElectrostaticBoundaryIntegrator directIntegrator,
+    KFMElectrostaticBoundaryIntegrator(const KElectrostaticBoundaryIntegrator& directIntegrator,
                                        const KSurfaceContainer& surfaceContainer) :
         KElectrostaticBoundaryIntegrator(directIntegrator),
         fInitialized(false),
@@ -346,7 +346,7 @@ class KFMElectrostaticBoundaryIntegrator : public KElectrostaticBoundaryIntegrat
             ret_val = fFastFieldSolver.Potential(target->GetShape()->Centroid());
         }
         else {
-            KThreeVector field;
+            KFieldVector field;
             fFastFieldSolver.ElectricField(target->GetShape()->Centroid(), field);
             ret_val = field.Dot(target->GetShape()->Normal());
         }
@@ -380,7 +380,7 @@ class KFMElectrostaticBoundaryIntegrator : public KElectrostaticBoundaryIntegrat
             ret_val = fFastFieldSolver.Potential(target->GetShape()->Centroid());
         }
         else {
-            KThreeVector field;
+            KFieldVector field;
             fFastFieldSolver.ElectricField(target->GetShape()->Centroid(), field);
             ret_val = field.Dot(target->GetShape()->Normal());
         }

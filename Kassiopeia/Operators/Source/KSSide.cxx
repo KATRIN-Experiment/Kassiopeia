@@ -6,7 +6,7 @@ namespace Kassiopeia
 {
 
 KSSide::KSSide() : fInsideParent(nullptr), fOutsideParent(nullptr) {}
-KSSide::~KSSide() {}
+KSSide::~KSSide() = default;
 
 const KSSpace* KSSide::GetOutsideParent() const
 {

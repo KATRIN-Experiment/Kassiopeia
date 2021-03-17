@@ -34,8 +34,10 @@ struct electrodeData
 class BasisDataExtractor : public KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>
 {
   public:
-    BasisDataExtractor(){};
-    ~BasisDataExtractor() override{};
+    BasisDataExtractor() = default;
+    ;
+    ~BasisDataExtractor() override = default;
+    ;
 
     using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KElectrostaticBasis)>::Visit;
 
@@ -58,8 +60,10 @@ class ShapeDataExtractor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>::Visit;
 
-    ShapeDataExtractor(){};
-    ~ShapeDataExtractor() override{};
+    ShapeDataExtractor() = default;
+    ;
+    ~ShapeDataExtractor() override = default;
+    ;
 
     void Visit(KTriangle& t) override
     {
@@ -150,26 +154,26 @@ void WritePlaceholder(std::ostream& tri, std::ostream& rect, std::ostream& line)
          << "\n";
 }
 
-void WritePlainText(std::ostream& tri, std::ostream& rect, std::ostream& line, electrodeData input)
+void WritePlainText(std::ostream& tri, std::ostream& rect, std::ostream& line, const electrodeData& input)
 {
     if (input.type == 0) {
         tri << std::scientific << std::setprecision(16);
-        for (unsigned short i = 0; i < 11; i++) {
-            tri << input.shape[i] << "\t";
+        for (double i : input.shape) {
+            tri << i << "\t";
         }
         tri << input.cd << "\n";
     }
     if (input.type == 1) {
         rect << std::scientific << std::setprecision(16);
-        for (unsigned short i = 0; i < 11; i++) {
-            rect << input.shape[i] << "\t";
+        for (double i : input.shape) {
+            rect << i << "\t";
         }
         rect << input.cd << "\n";
     }
     if (input.type == 2) {
         line << std::scientific << std::setprecision(16);
-        for (unsigned short i = 0; i < 11; i++) {
-            line << input.shape[i] << "\t";
+        for (double i : input.shape) {
+            line << i << "\t";
         }
         line << input.cd << "\n";
     }
@@ -196,11 +200,11 @@ int main(int argc, char* argv[])
 
     static const char* optString = "ha:b:n:m:s:";
 
-    std::string inFile = "";
+    std::string inFile;
     std::string containerName = "surfaceContainer";
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -219,7 +223,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string suffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -239,7 +243,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }
@@ -285,8 +289,8 @@ int main(int argc, char* argv[])
     // write first line as placeholder
     WritePlaceholder(triFile, rectFile, wireFile);
 
-    for (unsigned int i = 0; i < data.size(); i++) {
-        WritePlainText(triFile, rectFile, wireFile, data.at(i));
+    for (auto& i : data) {
+        WritePlainText(triFile, rectFile, wireFile, i);
     }
 
     triFile.close();

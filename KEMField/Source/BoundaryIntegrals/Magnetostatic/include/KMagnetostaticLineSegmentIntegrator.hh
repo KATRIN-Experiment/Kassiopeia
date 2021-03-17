@@ -9,19 +9,19 @@ namespace KEMField
 class KMagnetostaticLineSegmentIntegrator
 {
   public:
-    typedef KLineSegment Shape;
-    typedef KMagnetostaticBasis::ValueType ValueType;
+    using Shape = KLineSegment;
+    using ValueType = KMagnetostaticBasis::ValueType;
 
-    KMagnetostaticLineSegmentIntegrator() {}
-    ~KMagnetostaticLineSegmentIntegrator() {}
+    KMagnetostaticLineSegmentIntegrator() = default;
+    ~KMagnetostaticLineSegmentIntegrator() = default;
 
-    KThreeVector VectorPotential(const KLineSegment* source, const KPosition& P) const;
+    KFieldVector VectorPotential(const KLineSegment* source, const KPosition& P) const;
 
-    KThreeVector MagneticField(const KLineSegment* source, const KPosition& P) const;
+    KFieldVector MagneticField(const KLineSegment* source, const KPosition& P) const;
 
-    KThreeVector VectorPotential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
+    KFieldVector VectorPotential(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
 
-    KThreeVector MagneticField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
+    KFieldVector MagneticField(const KSymmetryGroup<KLineSegment>* source, const KPosition& P) const;
 };
 
 }  // namespace KEMField

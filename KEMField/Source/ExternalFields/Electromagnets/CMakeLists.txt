@@ -39,7 +39,7 @@ set (ELECTROMAGNETS_SOURCEFILES
 
 ##################################################
 
-add_library (KEMElectromagnets SHARED ${ELECTROMAGNETS_SOURCEFILES})
+add_library (KEMElectromagnets SHARED ${ELECTROMAGNETS_SOURCEFILES} ${ELECTROMAGNETS_HEADERFILES})
 target_link_libraries (KEMElectromagnets KEMCore KEMMath ${GSL_LIBRARIES})
 
 kasper_install_headers (${ELECTROMAGNETS_HEADERFILES})

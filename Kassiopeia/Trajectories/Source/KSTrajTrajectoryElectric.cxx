@@ -25,7 +25,7 @@ KSTrajTrajectoryElectric::KSTrajTrajectoryElectric() :
     fMaxAttempts(32)
 {}
 KSTrajTrajectoryElectric::KSTrajTrajectoryElectric(const KSTrajTrajectoryElectric& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fInitialParticle(aCopy.fInitialParticle),
     fIntermediateParticle(aCopy.fIntermediateParticle),
     fFinalParticle(aCopy.fFinalParticle),
@@ -42,7 +42,7 @@ KSTrajTrajectoryElectric* KSTrajTrajectoryElectric::Clone() const
 {
     return new KSTrajTrajectoryElectric(*this);
 }
-KSTrajTrajectoryElectric::~KSTrajTrajectoryElectric() {}
+KSTrajTrajectoryElectric::~KSTrajTrajectoryElectric() = default;
 
 void KSTrajTrajectoryElectric::SetIntegrator(KSTrajElectricIntegrator* anIntegrator)
 {
@@ -272,9 +272,9 @@ void KSTrajTrajectoryElectric::GetPiecewiseLinearApproximation(
     std::vector<KSParticle>* intermediateParticleStates) const
 {
     intermediateParticleStates->clear();
-    for (unsigned int i = 0; i < fIntermediateParticleStates.size(); i++) {
+    for (auto& particleState : fIntermediateParticleStates) {
         KSParticle particle(anInitialParticle);
-        fIntermediateParticleStates[i].PushTo(particle);
+        particleState.PushTo(particle);
         intermediateParticleStates->push_back(particle);
     }
 }

@@ -29,7 +29,12 @@ namespace KEMField
 class KSAOutputNode : public KSAObject
 {
   public:
-    KSAOutputNode(std::string name) : KSAObject(name), fStatus(KSANODE_STAY), fSingle(0), fIndex(0), fNextNode(nullptr)
+    KSAOutputNode(const std::string& name) :
+        KSAObject(name),
+        fStatus(KSANODE_STAY),
+        fSingle(0),
+        fIndex(0),
+        fNextNode(nullptr)
     {
         fChildren.clear();
     };
@@ -41,9 +46,9 @@ class KSAOutputNode : public KSAObject
 
     ~KSAOutputNode() override
     {
-        for (unsigned int i = 0; i < fChildren.size(); i++) {
-            delete fChildren[i];
-            fChildren[i] = nullptr;
+        for (auto& i : fChildren) {
+            delete i;
+            i = nullptr;
         }
 
         fChildren.clear();
@@ -83,8 +88,8 @@ class KSAOutputNode : public KSAObject
         fStatus = KSANODE_STAY;
         fSingle = 0;
         fNextNode = nullptr;
-        for (unsigned int i = 0; i < fChildren.size(); i++) {
-            delete fChildren[i];
+        for (auto& i : fChildren) {
+            delete i;
         }
 
         fChildren.clear();

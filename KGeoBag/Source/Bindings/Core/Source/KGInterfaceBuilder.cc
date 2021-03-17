@@ -9,7 +9,7 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-template<> KGInterfaceBuilder::~KComplexElement() {}
+template<> KGInterfaceBuilder::~KComplexElement() = default;
 
 STATICINT sKGInterfaceStructure = KGInterfaceBuilder::Attribute<bool>("reset");
 

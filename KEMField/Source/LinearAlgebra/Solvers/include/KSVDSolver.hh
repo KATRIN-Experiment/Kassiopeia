@@ -12,11 +12,11 @@ namespace KEMField
 template<typename ValueType> class KSVDSolver
 {
   public:
-    typedef KMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
     KSVDSolver() : fTolerance(1.e-14) {}
-    virtual ~KSVDSolver() {}
+    virtual ~KSVDSolver() = default;
 
     bool Solve(const Matrix& A, Vector& x, const Vector& b) const;
     void SetTolerance(double tol)

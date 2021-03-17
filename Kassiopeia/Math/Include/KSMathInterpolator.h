@@ -55,17 +55,15 @@ class KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>
 
 
     typedef typename std::pair<XValueType, bool> XValueFlagPair;
-    typedef typename std::list<XValueFlagPair> XValueFlagPairList;
-    typedef typename XValueFlagPairList::iterator XValueFlagPairListIter;
+    using XValueFlagPairList = typename std::list<XValueFlagPair>;
+    using XValueFlagPairListIter = typename XValueFlagPairList::iterator;
 };
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathInterpolator()
-{}
+KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::KSMathInterpolator() = default;
 
 template<class XValueType, class XDerivativeType, class XErrorType>
-KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathInterpolator()
-{}
+KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::~KSMathInterpolator() = default;
 
 template<class XValueType, class XDerivativeType, class XErrorType>
 double KSMathInterpolator<KSMathSystem<XValueType, XDerivativeType, XErrorType>>::DistanceMetric(

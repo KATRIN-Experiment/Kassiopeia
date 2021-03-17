@@ -32,7 +32,7 @@ class KFMElectrostaticFastMultipoleMultipleTreeFieldSolver
 
     //computes the potential and field at a given point
     double Potential(const KPosition& P) const;
-    KThreeVector ElectricField(const KPosition& P) const;
+    KFieldVector ElectricField(const KPosition& P) const;
 
   protected:
     void SetPoint(const double* p) const;

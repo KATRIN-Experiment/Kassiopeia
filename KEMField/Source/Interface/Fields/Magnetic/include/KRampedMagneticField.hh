@@ -30,8 +30,8 @@ class KRampedMagneticField : public KMagneticField
     ~KRampedMagneticField() override;
 
   public:
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
 
   public:

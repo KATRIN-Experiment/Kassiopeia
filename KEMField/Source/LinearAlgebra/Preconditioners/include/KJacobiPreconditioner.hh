@@ -33,7 +33,8 @@ template<typename ValueType> class KJacobiPreconditioner : public KPreconditione
         }
     };
 
-    ~KJacobiPreconditioner() override{};
+    ~KJacobiPreconditioner() override = default;
+    ;
 
     std::string Name() override
     {

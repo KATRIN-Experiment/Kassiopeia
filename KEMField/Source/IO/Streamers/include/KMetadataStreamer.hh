@@ -29,7 +29,7 @@ template<typename Type> struct KMetadataStreamerType
         return d.Self();
     }
 
-    virtual ~KMetadataStreamerType() {}
+    virtual ~KMetadataStreamerType() = default;
     virtual void AddType(std::string) = 0;
     virtual KMetadataStreamer& Self() = 0;
 };
@@ -39,8 +39,8 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KMetadataStreamerType> 
 class KMetadataStreamer : public KMetadataStreamerFundamentalTypes
 {
   public:
-    KMetadataStreamer() {}
-    ~KMetadataStreamer() override {}
+    KMetadataStreamer() = default;
+    ~KMetadataStreamer() override = default;
 
     static std::string Name()
     {
@@ -127,14 +127,14 @@ class KMetadataStreamer : public KMetadataStreamerFundamentalTypes
         return s.str();
     }
 
-    typedef std::string ClassName;
-    typedef std::pair<ClassName, unsigned int> ClassInfo;
-    typedef std::vector<ClassInfo> ClassContent;
-    typedef std::map<ClassName, ClassContent> ClassContentMap;
-    typedef std::list<std::pair<int, ClassContentMap::const_iterator>> ClassOrdering;
-    typedef std::list<ClassContent*> ClassContentList;
-    typedef std::list<ClassName> ClassList;
-    typedef std::map<ClassName, unsigned int> ClassPointerCounterMap;
+    using ClassName = std::string;
+    using ClassInfo = std::pair<ClassName, unsigned int>;
+    using ClassContent = std::vector<ClassInfo>;
+    using ClassContentMap = std::map<ClassName, ClassContent>;
+    using ClassOrdering = std::list<std::pair<int, ClassContentMap::const_iterator>>;
+    using ClassContentList = std::list<ClassContent*>;
+    using ClassList = std::list<ClassName>;
+    using ClassPointerCounterMap = std::map<ClassName, unsigned int>;
 
     // We need to deal with the case when a class is revisited, but has a higher
     // ordering value.

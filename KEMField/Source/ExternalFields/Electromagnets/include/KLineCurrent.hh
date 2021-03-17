@@ -18,7 +18,7 @@ class KLineCurrent : public KElectromagnet
 
   public:
     KLineCurrent() : KElectromagnet(), fP0(0., 0., 0.), fP1(0., 0., 0.), fCurrent(0.) {}
-    ~KLineCurrent() override {}
+    ~KLineCurrent() override = default;
 
     void SetValues(const KPosition& p0, const KPosition& p1, double current);
 

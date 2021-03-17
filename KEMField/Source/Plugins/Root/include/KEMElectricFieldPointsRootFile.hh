@@ -20,10 +20,10 @@ namespace KEMField
 class KEMElectricFieldPointsRootFile
 {
   public:
-    KEMElectricFieldPointsRootFile(std::string fullPath);
+    KEMElectricFieldPointsRootFile(const std::string& fullPath);
     ~KEMElectricFieldPointsRootFile();
 
-    void append(KPosition position, KDirection eField, double potential);
+    void append(const KPosition& position, const KDirection& eField, double potential);
     void Write();
 
   private:

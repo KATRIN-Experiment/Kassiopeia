@@ -2,10 +2,9 @@
 
 namespace KGeoBag
 {
-KGVolume::KGVolume() : fInitialized(false), fBoundaries() {}
-KGVolume::KGVolume(const KGVolume& aCopy) : KTagged(), fInitialized(aCopy.fInitialized), fBoundaries(aCopy.fBoundaries)
-{}
-KGVolume::~KGVolume() {}
+KGVolume::KGVolume() : fInitialized(false) {}
+KGVolume::KGVolume(const KGVolume&) = default;
+KGVolume::~KGVolume() = default;
 
 const KGVolume::BoundaryContainer& KGVolume::Boundaries() const
 {

@@ -9,8 +9,8 @@
 namespace KGeoBag
 {
 
-KGSimpleAxialMesher::KGSimpleAxialMesher() {}
-KGSimpleAxialMesher::~KGSimpleAxialMesher() {}
+KGSimpleAxialMesher::KGSimpleAxialMesher() = default;
+KGSimpleAxialMesher::~KGSimpleAxialMesher() = default;
 
 //*******************
 //partition functions

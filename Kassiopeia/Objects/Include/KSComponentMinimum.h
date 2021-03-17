@@ -25,7 +25,7 @@ template<class XValueType> class KSComponentMinimum : public KSComponent
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentMinimum() override {}
+    ~KSComponentMinimum() override = default;
 
     //***********
     //KSComponent

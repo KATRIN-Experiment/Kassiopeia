@@ -3,10 +3,8 @@
 
 #include "KSComponentTemplate.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 #include <set>
-using std::set;
 
 namespace Kassiopeia
 {
@@ -28,9 +26,9 @@ class KSSpace : public KSComponentTemplate<KSSpace>
     virtual void Enter() const = 0;
     virtual void Exit() const = 0;
 
-    virtual bool Outside(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector Point(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector Normal(const KThreeVector& aPoint) const = 0;
+    virtual bool Outside(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const = 0;
 
     const KSSpace* GetParent() const;
     KSSpace* GetParent();

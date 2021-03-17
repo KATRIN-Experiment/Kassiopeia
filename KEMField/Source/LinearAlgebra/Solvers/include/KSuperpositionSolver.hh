@@ -10,10 +10,10 @@ namespace KEMField
 template<typename ValueType, template<typename> class SVDSolver> class KSuperpositionSolver
 {
   public:
-    typedef KVector<ValueType> Vector;
+    using Vector = KVector<ValueType>;
 
     KSuperpositionSolver() : fTolerance(1.e-14) {}
-    virtual ~KSuperpositionSolver() {}
+    virtual ~KSuperpositionSolver() = default;
 
     void SetTolerance(double d)
     {
@@ -35,7 +35,7 @@ template<typename ValueType, template<typename> class SVDSolver> class KSuperpos
     {
       public:
         Matrix(std::vector<std::vector<ValueType>>& elements) : fElements(elements) {}
-        ~Matrix() override {}
+        ~Matrix() override = default;
 
         unsigned int Dimension(unsigned int) const override;
         const ValueType& operator()(unsigned int, unsigned int) const override;

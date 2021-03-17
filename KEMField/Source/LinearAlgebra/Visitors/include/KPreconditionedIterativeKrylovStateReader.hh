@@ -43,13 +43,15 @@ class KPreconditionedIterativeKrylovStateReader : public KIterativeSolver<ValueT
   public:
     typedef KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
 
-    KPreconditionedIterativeKrylovStateReader(std::vector<std::string> labels) : KIterativeSolver<ValueType>::Visitor()
+    KPreconditionedIterativeKrylovStateReader(const std::vector<std::string>& labels) :
+        KIterativeSolver<ValueType>::Visitor()
     {
         fLabels = labels;
         fVerbosity = 0;
     };
 
-    ~KPreconditionedIterativeKrylovStateReader() override{};
+    ~KPreconditionedIterativeKrylovStateReader() override = default;
+    ;
 
     void SetVerbosity(int v)
     {

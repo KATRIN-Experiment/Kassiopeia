@@ -23,8 +23,10 @@ namespace KEMField
 class KFMIdentitySetList
 {
   public:
-    KFMIdentitySetList(){};
-    virtual ~KFMIdentitySetList(){};
+    KFMIdentitySetList() = default;
+    ;
+    virtual ~KFMIdentitySetList() = default;
+    ;
 
     unsigned int GetNumberOfSets() const;
     unsigned int GetTotalSize() const;

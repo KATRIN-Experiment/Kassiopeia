@@ -7,7 +7,7 @@
 using namespace Kassiopeia;
 namespace katrin
 {
-template<> KSRootRunModifierBuilder::~KComplexElement() {}
+template<> KSRootRunModifierBuilder::~KComplexElement() = default;
 
 STATICINT sKSRootRunModifier = KSRootBuilder::ComplexElement<KSRootRunModifier>("ks_root_run_modifier");
 

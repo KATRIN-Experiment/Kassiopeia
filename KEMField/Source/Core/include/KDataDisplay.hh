@@ -41,7 +41,7 @@ template<typename Type> struct KDataDisplayType<Type, KNullStream>
         return d.Self();
     }
 
-    virtual ~KDataDisplayType() {}
+    virtual ~KDataDisplayType() = default;
     virtual KDataDisplay<KNullStream>& Self() = 0;
 };
 
@@ -65,7 +65,7 @@ template<typename Type, class Stream> struct KDataDisplayType
         return d.Self();
     }
 
-    virtual ~KDataDisplayType() {}
+    virtual ~KDataDisplayType() = default;
     virtual int Level() const = 0;
     virtual Stream& GetStream() = 0;
     virtual std::string& Separator() const = 0;
@@ -78,8 +78,8 @@ template<typename Type, class Stream> struct KDataDisplayType
 template<class Stream> class KDataDisplayOtherTypes
 {
   public:
-    KDataDisplayOtherTypes() {}
-    virtual ~KDataDisplayOtherTypes() {}
+    KDataDisplayOtherTypes() = default;
+    virtual ~KDataDisplayOtherTypes() = default;
 
     // function that takes a custom stream, and returns it
     typedef KDataDisplay<Stream>& (*KDataDisplayManipulator)(KDataDisplay<Stream>&);
@@ -94,10 +94,10 @@ template<class Stream> class KDataDisplayOtherTypes
             return Self();
     }
 
-    typedef std::basic_ostream<char, std::char_traits<char>> CoutType;
+    using CoutType = std::basic_ostream<char, std::char_traits<char>>;
 
     // this is the function signature of std::endl
-    typedef CoutType& (*StandardEndLine)(CoutType&);
+    using StandardEndLine = CoutType& (*) (CoutType&);
 
     // define an operator<< to take in std::endl
     KDataDisplay<Stream>& operator<<(StandardEndLine manip)
@@ -124,11 +124,11 @@ template<class Stream> class KDataDisplayOtherTypes
 template<> class KDataDisplayOtherTypes<KNullStream>
 {
   public:
-    KDataDisplayOtherTypes() {}
-    virtual ~KDataDisplayOtherTypes() {}
+    KDataDisplayOtherTypes() = default;
+    virtual ~KDataDisplayOtherTypes() = default;
 
     // function that takes a custom stream, and returns it
-    typedef KDataDisplay<KNullStream>& (*KDataDisplayManipulator)(KDataDisplay<KNullStream>&);
+    using KDataDisplayManipulator = KDataDisplay<KNullStream>& (*) (KDataDisplay<KNullStream>&);
 
     // take in a function with the custom signature
     KDataDisplay<KNullStream>& operator<<(KDataDisplayManipulator)
@@ -136,10 +136,10 @@ template<> class KDataDisplayOtherTypes<KNullStream>
         return Self();
     }
 
-    typedef std::basic_ostream<char, std::char_traits<char>> CoutType;
+    using CoutType = std::basic_ostream<char, std::char_traits<char>>;
 
     // this is the function signature of std::endl
-    typedef CoutType& (*StandardEndLine)(CoutType&);
+    using StandardEndLine = CoutType& (*) (CoutType&);
 
     // define an operator<< to take in std::endl
     KDataDisplay<KNullStream>& operator<<(StandardEndLine)
@@ -360,8 +360,8 @@ class KDataDisplay<KNullStream> :
     public KDataDisplayOtherTypes<KNullStream>
 {
   public:
-    KDataDisplay() {}
-    ~KDataDisplay() override {}
+    KDataDisplay() = default;
+    ~KDataDisplay() override = default;
 
   protected:
     KDataDisplay<KNullStream>& Self() override

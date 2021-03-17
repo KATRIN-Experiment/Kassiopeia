@@ -18,8 +18,7 @@ template<> inline bool KSRootSpaceNavigatorBuilder::AddAttribute(KContainer* aCo
         return true;
     }
     if (aContainer->GetName() == "set_space_navigator") {
-        fObject->SetSpaceNavigator(
-            KToolbox::GetInstance().Get<KSSpaceNavigator>(aContainer->AsReference<std::string>()));
+        fObject->SetSpaceNavigator(KToolbox::GetInstance().Get<KSSpaceNavigator>(aContainer->AsString()));
         return true;
     }
     return false;

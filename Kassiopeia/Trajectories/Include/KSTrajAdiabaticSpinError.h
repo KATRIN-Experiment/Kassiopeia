@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajAdiabaticSpinError : public KSMathArray<10>
   public:
     KSTrajAdiabaticSpinError();
     KSTrajAdiabaticSpinError(const KSTrajAdiabaticSpinError& anOperand);
-    ~KSTrajAdiabaticSpinError();
+    ~KSTrajAdiabaticSpinError() override;
 
     //**********
     //assignment
@@ -36,16 +35,16 @@ class KSTrajAdiabaticSpinError : public KSMathArray<10>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KThreeVector& GetPositionError() const;
-    const KThreeVector& GetMomentumError() const;
+    const KGeoBag::KThreeVector& GetPositionError() const;
+    const KGeoBag::KThreeVector& GetMomentumError() const;
     const double& GetAlignedSpinError() const;
     const double& GetSpinAngleError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KThreeVector fPositionError;
-    mutable KThreeVector fMomentumError;
+    mutable KGeoBag::KThreeVector fPositionError;
+    mutable KGeoBag::KThreeVector fMomentumError;
     mutable double fAlignedSpinError;
     mutable double fSpinAngleError;
 };

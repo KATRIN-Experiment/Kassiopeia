@@ -14,9 +14,9 @@ using namespace KEMField;
 
 int main(int /*argc*/, char** /*args*/)
 {
-    KSmartPointer<KChargeDensitySolver> ptr(NULL);
+    KSmartPointer<KChargeDensitySolver> ptr(nullptr);
     {
-        KGaussianEliminationChargeDensitySolver* raw = new KGaussianEliminationChargeDensitySolver;
+        auto* raw = new KGaussianEliminationChargeDensitySolver;
         KSmartPointer<KChargeDensitySolver> ptr1(raw);
         ptr = ptr1;
     }

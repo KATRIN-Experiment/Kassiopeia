@@ -40,7 +40,7 @@ set( APPLICATIONS_EXAMPLES_PATH
 kasper_internal_include_directories()
 foreach( BASENAME ${APPLICATIONS_EXAMPLES_BASENAMES} )
 	add_executable( ${BASENAME} ${APPLICATIONS_EXAMPLES_PATH}/${BASENAME}.cxx )
-	target_link_libraries( ${BASENAME} ${APPLICATIONS_EXAMPLES_LIBRARIES} )
+	target_link_libraries( ${BASENAME} ${APPLICATIONS_EXAMPLES_LIBRARIES} ${EXTERNAL_LIBRARIES} )
 endforeach( BASENAME )
 
 kasper_install_executables( ${APPLICATIONS_EXAMPLES_BASENAMES} )

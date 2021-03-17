@@ -148,7 +148,7 @@ class KPotentialMapVTK
 
   public:
     virtual bool GetPotential(const KPosition& aSamplePoint, const double& aSampleTime, double& aPotential) const;
-    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KThreeVector& aField) const;
+    virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
 
   protected:
     vtkImageData* fImageData;
@@ -158,20 +158,20 @@ class KLinearInterpolationPotentialMapVTK : public KPotentialMapVTK
 {
   public:
     KLinearInterpolationPotentialMapVTK(const std::string& aFilename);
-    virtual ~KLinearInterpolationPotentialMapVTK();
+    ~KLinearInterpolationPotentialMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
 };
 
 class KCubicInterpolationPotentialMapVTK : public KPotentialMapVTK
 {
   public:
     KCubicInterpolationPotentialMapVTK(const std::string& aFilename);
-    virtual ~KCubicInterpolationPotentialMapVTK();
+    ~KCubicInterpolationPotentialMapVTK() override;
 
   public:
-    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const;
+    bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue) const override;
 
   protected:
     static double _cubicInterpolate(double p[], double x);
@@ -185,7 +185,7 @@ class KElectrostaticPotentialmap : public KElectrostaticField
 {
   public:
     KElectrostaticPotentialmap();
-    virtual ~KElectrostaticPotentialmap();
+    ~KElectrostaticPotentialmap() override;
 
   public:
     void SetDirectory(const std::string& aDirectory);
@@ -193,9 +193,9 @@ class KElectrostaticPotentialmap : public KElectrostaticField
     void SetInterpolation(const std::string& aMode);
 
   private:
-    virtual double PotentialCore(const KPosition& P) const;
-    virtual KThreeVector ElectricFieldCore(const KPosition& P) const;
-    virtual void InitializeCore();
+    double PotentialCore(const KPosition& P) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P) const override;
+    void InitializeCore() override;
 
   private:
     std::string fDirectory;
@@ -229,11 +229,11 @@ class KElectrostaticPotentialmapCalculator
     {
         fComputeField = aFlag;
     }
-    void SetCenter(KPosition aCenter)
+    void SetCenter(const KPosition& aCenter)
     {
         fCenter = aCenter;
     }
-    void SetLength(KThreeVector aLength)
+    void SetLength(const KFieldVector& aLength)
     {
         fLength = aLength;
     }
@@ -257,7 +257,7 @@ class KElectrostaticPotentialmapCalculator
     {
         fElectricFields[aField->GetName()] = aField;
     }
-    void SetName(std::string aName)
+    void SetName(const std::string& aName)
     {
         fName = aName;
     }
@@ -302,7 +302,7 @@ class KElectrostaticPotentialmapCalculator
     bool fForceUpdate;
     bool fComputeField;
     KPosition fCenter;
-    KThreeVector fLength;
+    KFieldVector fLength;
     bool fMirrorX, fMirrorY, fMirrorZ;
     double fSpacing;
     std::map<std::string, KElectrostaticField*> fElectricFields;

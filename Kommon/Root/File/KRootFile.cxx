@@ -8,7 +8,7 @@ namespace katrin
 {
 
 KRootFile::KRootFile() : fFile(nullptr) {}
-KRootFile::~KRootFile() {}
+KRootFile::~KRootFile() = default;
 
 bool KRootFile::OpenFileSubclass(const string& aName, const Mode& aMode)
 {
@@ -22,7 +22,9 @@ bool KRootFile::OpenFileSubclass(const string& aName, const Mode& aMode)
         fFile = new TFile(aName.c_str(), "UPDATE");
     }
 
-    if (fFile->IsZombie() == true) {
+    if (fFile == nullptr || fFile->IsOpen() == false || fFile->IsZombie() == true) {
+        if (fFile->IsZombie())
+            filemsg(eInfo) << "could not open ROOT file <" << aName << "> (zombie)" << eom;
         delete fFile;
         fFile = nullptr;
         return false;
@@ -71,8 +73,8 @@ namespace katrin
 {
 
 STATICINT sRootFileStructure =
-    KRootFileBuilder::Attribute<string>("path") + KRootFileBuilder::Attribute<string>("default_path") +
-    KRootFileBuilder::Attribute<string>("base") + KRootFileBuilder::Attribute<string>("default_base") +
-    KRootFileBuilder::Attribute<string>("name");
+    KRootFileBuilder::Attribute<std::string>("path") + KRootFileBuilder::Attribute<std::string>("default_path") +
+    KRootFileBuilder::Attribute<std::string>("base") + KRootFileBuilder::Attribute<std::string>("default_base") +
+    KRootFileBuilder::Attribute<std::string>("name");
 
 }

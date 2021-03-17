@@ -26,7 +26,7 @@ class KInducedAzimuthalElectricField : public KElectricField
 
   private:
     double PotentialCore(const KPosition& P, const double& time) const override;
-    KThreeVector ElectricFieldCore(const KPosition& P, const double& time) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P, const double& time) const override;
     void InitializeCore() override;
 
     void CheckMagneticField() const;

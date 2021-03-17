@@ -37,7 +37,7 @@ kasper_internal_include_directories(
 
 # target
 kasper_internal_include_directories( ${UTILITY_HEADER_PATH} )
-add_library( KassiopeiaUtility SHARED ${UTILITY_SOURCE_FILENAMES} )
+add_library( KassiopeiaUtility SHARED ${UTILITY_SOURCE_FILENAMES} ${UTILITY_HEADER_FILENAMES} )
 target_link_libraries( KassiopeiaUtility
     pthread
     ${Kommon_LIBRARIES}

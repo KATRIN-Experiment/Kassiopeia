@@ -29,7 +29,8 @@ template<typename CallType, typename ReturnType, ReturnType (CallType::*memberFu
 class KSAAssociatedValuePODOutputNode : public KSAPODOutputNode<ReturnType>
 {
   public:
-    KSAAssociatedValuePODOutputNode(std::string name, const CallType* call_ptr) : KSAPODOutputNode<ReturnType>(name)
+    KSAAssociatedValuePODOutputNode(const std::string& name, const CallType* call_ptr) :
+        KSAPODOutputNode<ReturnType>(name)
     {
         KSAConstantReturnByValueGet<CallType, ReturnType, memberFunction> callback;
         KSAPODOutputNode<ReturnType>::SetValue(callback(call_ptr));

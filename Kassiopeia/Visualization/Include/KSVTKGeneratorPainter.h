@@ -19,7 +19,6 @@
 #include "vtkSmartPointer.h"
 
 #include <vector>
-using std::vector;
 
 namespace Kassiopeia
 {
@@ -33,11 +32,11 @@ class KSVTKGeneratorPainter : public katrin::KVTKPainter
 {
   public:
     KSVTKGeneratorPainter();
-    ~KSVTKGeneratorPainter();
+    ~KSVTKGeneratorPainter() override;
 
-    void Render();
-    void Display();
-    void Write();
+    void Render() override;
+    void Display() override;
+    void Write() override;
 
     ;
     K_SET(std::string, Path);
@@ -75,12 +74,12 @@ class KSVTKGeneratorPainter : public katrin::KVTKPainter
     std::vector<std::string> fGenerators;
 };
 
-void KSVTKGeneratorPainter::AddGenerator(const std::string& aGenerator)
+inline void KSVTKGeneratorPainter::AddGenerator(const std::string& aGenerator)
 {
     fGenerators.push_back(aGenerator);
 }
 
-void KSVTKGeneratorPainter::AddColor(const KGeoBag::KThreeVector& aColor)
+inline void KSVTKGeneratorPainter::AddColor(const KGeoBag::KThreeVector& aColor)
 {
     // sets color for last generator that was added
     if (!fGenerators.empty()) {

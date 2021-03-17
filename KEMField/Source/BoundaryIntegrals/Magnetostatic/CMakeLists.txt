@@ -17,7 +17,7 @@ set (MAGNETOSTATICBOUNDARYINTEGRALS_SOURCEFILES
 
 ##################################################
 
-add_library (KEMMagnetostaticBoundaryIntegrals SHARED ${MAGNETOSTATICBOUNDARYINTEGRALS_SOURCEFILES})
+add_library (KEMMagnetostaticBoundaryIntegrals SHARED ${MAGNETOSTATICBOUNDARYINTEGRALS_SOURCEFILES} ${MAGNETOSTATICBOUNDARYINTEGRALS_HEADERFILES})
 target_link_libraries (KEMMagnetostaticBoundaryIntegrals
 KEMMath KEMSurfaces KEMCore ${GSL_LIBRARIES})
 

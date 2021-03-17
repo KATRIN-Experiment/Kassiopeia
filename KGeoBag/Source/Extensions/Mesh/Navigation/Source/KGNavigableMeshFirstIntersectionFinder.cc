@@ -12,7 +12,8 @@ KGNavigableMeshFirstIntersectionFinder::KGNavigableMeshFirstIntersectionFinder()
     fVerbose = false;
 };
 
-KGNavigableMeshFirstIntersectionFinder::~KGNavigableMeshFirstIntersectionFinder(){};
+KGNavigableMeshFirstIntersectionFinder::~KGNavigableMeshFirstIntersectionFinder() = default;
+;
 
 
 void KGNavigableMeshFirstIntersectionFinder::SortOctreeNodes(unsigned int n_nodes,

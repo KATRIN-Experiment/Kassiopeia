@@ -16,12 +16,12 @@ namespace katrin
 
 typedef KComplexElement<KEMField::KElectrostaticBoundaryFieldTimer> KElectrostaticBoundaryFieldTimerBuilder;
 
-template<> bool KElectrostaticBoundaryFieldTimerBuilder::AddAttribute(KContainer*)
+template<> inline bool KElectrostaticBoundaryFieldTimerBuilder::AddAttribute(KContainer*)
 {
     return false;
 }
 
-template<> bool KElectrostaticBoundaryFieldTimerBuilder::AddElement(KContainer*)
+template<> inline bool KElectrostaticBoundaryFieldTimerBuilder::AddElement(KContainer*)
 {
     return false;
 }

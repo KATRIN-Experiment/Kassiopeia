@@ -6,7 +6,7 @@ namespace katrin
 {
 
 KProcessor::KProcessor() : fParent(nullptr), fChild(nullptr) {}
-KProcessor::~KProcessor() {}
+KProcessor::~KProcessor() = default;
 
 void KProcessor::Connect(KProcessor* aParent, KProcessor* aChild)
 {

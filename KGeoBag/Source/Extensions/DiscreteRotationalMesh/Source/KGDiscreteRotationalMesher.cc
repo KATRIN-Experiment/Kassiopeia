@@ -11,18 +11,18 @@ namespace KGeoBag
 
 KGDiscreteRotationalMesher::KGDiscreteRotationalMesher() : fCurrentElements(nullptr), fAxialAngle(0.), fAxialCount(100)
 {}
-KGDiscreteRotationalMesher::~KGDiscreteRotationalMesher() {}
+KGDiscreteRotationalMesher::~KGDiscreteRotationalMesher() = default;
 
 void KGDiscreteRotationalMesher::MeshAxialSurface(KGExtendedSurface<KGAxialMesh>* aSurface)
 {
-    for (auto it = aSurface->Elements()->begin(); it != aSurface->Elements()->end(); ++it)
-        AddAxialMeshElement(*it);
+    for (auto& it : *aSurface->Elements())
+        AddAxialMeshElement(it);
 }
 
 void KGDiscreteRotationalMesher::MeshAxialSpace(KGExtendedSpace<KGAxialMesh>* aSpace)
 {
-    for (auto it = aSpace->Elements()->begin(); it != aSpace->Elements()->end(); ++it)
-        AddAxialMeshElement(*it);
+    for (auto& it : *aSpace->Elements())
+        AddAxialMeshElement(it);
 }
 
 void KGDiscreteRotationalMesher::AddAxialMeshElement(KGAxialMeshElement* e)

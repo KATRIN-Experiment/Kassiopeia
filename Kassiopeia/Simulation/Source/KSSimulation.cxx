@@ -9,7 +9,7 @@ namespace Kassiopeia
 
 KSSimulation::KSSimulation() : fSeed(0), fRun(0), fEvents(0), fStepReportIteration(1000), fCommands() {}
 KSSimulation::KSSimulation(const KSSimulation& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSeed(aCopy.fSeed),
     fRun(aCopy.fRun),
     fEvents(aCopy.fEvents),
@@ -20,7 +20,7 @@ KSSimulation* KSSimulation::Clone() const
 {
     return new KSSimulation(*this);
 }
-KSSimulation::~KSSimulation() {}
+KSSimulation::~KSSimulation() = default;
 
 void KSSimulation::SetSeed(const unsigned int& aSeed)
 {

@@ -13,8 +13,8 @@ class KGRotatedSurfaceMesher : virtual public KGComplexMesher, public KGRotatedS
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGRotatedSurfaceMesher() {}
-    ~KGRotatedSurfaceMesher() override {}
+    KGRotatedSurfaceMesher() = default;
+    ~KGRotatedSurfaceMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGRotatedSurface* rotatedSurface) override;

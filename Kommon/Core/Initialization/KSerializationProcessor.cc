@@ -16,7 +16,7 @@ KSerializationProcessor::KSerializationProcessor() :
     fElementState(eElementInactive),
     fAttributeState(eAttributeInactive)
 {}
-KSerializationProcessor::~KSerializationProcessor() {}
+KSerializationProcessor::~KSerializationProcessor() = default;
 
 void KSerializationProcessor::ProcessToken(KBeginParsingToken* aToken)
 {

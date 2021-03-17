@@ -32,23 +32,23 @@ class KVMCompactVolume : public KVMMap<KVMVolumeDDim, KVMVolumeRDim>
     {
         ;
     };
-    virtual ~KVMCompactVolume()
+    ~KVMCompactVolume() override
     {
         ;
     };
 
     ///returns false if (u) outside of domain
-    virtual bool PointInDomain(const KVMFixedArray<double, KVMVolumeDDim>* in) const;
+    bool PointInDomain(const KVMFixedArray<double, KVMVolumeDDim>* in) const override;
 
     ///evaluates the function which defines the curve
-    virtual bool Evaluate(const KVMFixedArray<double, KVMVolumeDDim>* in,
-                          KVMFixedArray<double, KVMVolumeRDim>* out) const;
+    bool Evaluate(const KVMFixedArray<double, KVMVolumeDDim>* in,
+                  KVMFixedArray<double, KVMVolumeRDim>* out) const override;
 
     ///returns the derivative of the variable (specified by outputvarindex)
     ///with respect to the input (u), outputvarindex must be either 0,1, or 2
     ///otherwise it will return NaN.
-    virtual bool Jacobian(const KVMFixedArray<double, KVMVolumeDDim>* in,
-                          KVMFixedArray<KVMFixedArray<double, KVMVolumeRDim>, KVMVolumeDDim>* jacobian) const;
+    bool Jacobian(const KVMFixedArray<double, KVMVolumeDDim>* in,
+                  KVMFixedArray<KVMFixedArray<double, KVMVolumeRDim>, KVMVolumeDDim>* jacobian) const override;
 
 
     inline KVMCompactVolume(const KVMCompactVolume& copyObject);
@@ -79,9 +79,7 @@ class KVMCompactVolume : public KVMMap<KVMVolumeDDim, KVMVolumeRDim>
 };
 
 
-inline KVMCompactVolume::KVMCompactVolume(const KVMCompactVolume& copyObject) :
-    KVMMap<KVMVolumeDDim, KVMVolumeRDim>(copyObject)
-{}
+inline KVMCompactVolume::KVMCompactVolume(const KVMCompactVolume& copyObject) = default;
 
 
 }  // namespace KEMField

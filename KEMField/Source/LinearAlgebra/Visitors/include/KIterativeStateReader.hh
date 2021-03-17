@@ -19,7 +19,7 @@ template<typename ValueType> class KIterativeStateReader : public KIterativeSolv
 {
   public:
     KIterativeStateReader(KSurfaceContainer& container) : fContainer(container) {}
-    ~KIterativeStateReader() override {}
+    ~KIterativeStateReader() override = default;
 
     void Initialize(KIterativeSolver<ValueType>&) override;
     void Visit(KIterativeSolver<ValueType>&) override {}

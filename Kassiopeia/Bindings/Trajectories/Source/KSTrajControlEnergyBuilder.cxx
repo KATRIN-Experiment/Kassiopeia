@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlEnergyBuilder::~KComplexElement() {}
+template<> KSTrajControlEnergyBuilder::~KComplexElement() = default;
 
-STATICINT sKSTrajControlEnergyStructure = KSTrajControlEnergyBuilder::Attribute<string>("name") +
+STATICINT sKSTrajControlEnergyStructure = KSTrajControlEnergyBuilder::Attribute<std::string>("name") +
                                           KSTrajControlEnergyBuilder::Attribute<double>("lower_limit") +
                                           KSTrajControlEnergyBuilder::Attribute<double>("upper_limit") +
                                           KSTrajControlEnergyBuilder::Attribute<double>("min_length") +

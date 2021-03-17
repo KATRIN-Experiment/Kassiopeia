@@ -482,7 +482,7 @@ template<unsigned int NDIM> void KFMCubicSpaceTreeStaticLoadBalancer<NDIM>::Perm
 
     //select a random block from the giving process
     if (found) {
-        unsigned int r = static_cast<unsigned int>(UniformRandom(0.0, fPermutedProcessBlockSets[give_process].size()));
+        auto r = static_cast<unsigned int>(UniformRandom(0.0, fPermutedProcessBlockSets[give_process].size()));
         typename std::list<KFMWorkBlock<NDIM>>::iterator it = fPermutedProcessBlockSets[give_process].begin();
         if (r == fPermutedProcessBlockSets[give_process].size()) {
             r--;

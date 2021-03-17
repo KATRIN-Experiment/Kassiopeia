@@ -20,15 +20,15 @@ template<typename ValueType> class KBoundaryMatrixGenerator;  // forward declara
 class KKrylovChargeDensitySolver : public KChargeDensitySolver
 {
   public:
-    typedef KElectrostaticBasis::ValueType ValueType;
-    typedef KBoundaryMatrixGenerator<ValueType> MatrixGenerator;
+    using ValueType = KElectrostaticBasis::ValueType;
+    using MatrixGenerator = KBoundaryMatrixGenerator<ValueType>;
 
     KKrylovChargeDensitySolver();
     ~KKrylovChargeDensitySolver() override;
 
-    void SetMatrixGenerator(KSmartPointer<MatrixGenerator> matrixGen);
+    void SetMatrixGenerator(const KSmartPointer<MatrixGenerator>& matrixGen);
     KSmartPointer<const MatrixGenerator> GetMatrixGenerator() const;
-    void SetPreconditionerGenerator(KSmartPointer<MatrixGenerator> preconGen);
+    void SetPreconditionerGenerator(const KSmartPointer<MatrixGenerator>& preconGen);
 
     void SetIterationsBetweenRestart(unsigned int iterationsBetweenRestart)
     {

@@ -1,8 +1,8 @@
 #ifndef KGeoBag_KGAxialMeshElement_hh_
 #define KGeoBag_KGAxialMeshElement_hh_
 
+#include <string>
 #include <vector>
-using std::vector;
 
 namespace KGeoBag
 {
@@ -13,13 +13,18 @@ class KGAxialMeshElement
     KGAxialMeshElement();
     virtual ~KGAxialMeshElement();
 
+    static std::string Name()
+    {
+        return "axial_mesh_base";
+    }
+
     virtual double Area() const = 0;
     virtual double Aspect() const = 0;
 };
 
-typedef vector<KGAxialMeshElement*> KGAxialMeshElementVector;
-typedef vector<KGAxialMeshElement*>::iterator KGAxialMeshElementIt;
-typedef vector<KGAxialMeshElement*>::const_iterator KGAxialMeshElementCIt;
+typedef std::vector<KGAxialMeshElement*> KGAxialMeshElementVector;
+using KGAxialMeshElementIt = KGAxialMeshElementVector::iterator;
+using KGAxialMeshElementCIt = KGAxialMeshElementVector::const_iterator;
 
 }  // namespace KGeoBag
 

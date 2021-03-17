@@ -3,8 +3,8 @@
 namespace katrin
 {
 
-KWindow::KWindow() {}
+KWindow::KWindow() = default;
 
-KWindow::~KWindow() {}
+KWindow::~KWindow() = default;
 
 }  // namespace katrin

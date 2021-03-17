@@ -36,7 +36,7 @@ template<> inline bool KSTermOutputBuilder::Begin()
 template<> inline bool KSTermOutputBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
@@ -51,7 +51,7 @@ template<> inline bool KSTermOutputBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "group") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fGroupName = tName;
         return true;
     }
@@ -59,12 +59,12 @@ template<> inline bool KSTermOutputBuilder::AddAttribute(KContainer* aContainer)
         termmsg(eWarning)
             << "deprecated warning in KSTermOutputBuilder: Please use the attribute <output> instead <component>"
             << eom;
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fComponentName = tName;
         return true;
     }
     if (aContainer->GetName() == "output") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fComponentName = tName;
         return true;
     }

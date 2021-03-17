@@ -20,8 +20,10 @@ namespace KEMField
 template<typename NodeType> class KFMNodeActor
 {
   public:
-    KFMNodeActor(){};
-    virtual ~KFMNodeActor(){};
+    KFMNodeActor() = default;
+    ;
+    virtual ~KFMNodeActor() = default;
+    ;
 
     virtual void ApplyAction(NodeType* node) = 0;
 

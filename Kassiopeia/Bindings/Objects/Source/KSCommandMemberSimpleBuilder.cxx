@@ -13,9 +13,9 @@ namespace katrin
     template<> KSCommandMember##xBUILDERNAME##Builder::~KComplexElement() {}                                           \
                                                                                                                        \
     STATICINT sKSCommand##xBUILDERNAME##Structure =                                                                    \
-        KSCommandMember##xBUILDERNAME##Builder::Attribute<string>("name") +                                            \
-        KSCommandMember##xBUILDERNAME##Builder::Attribute<string>("parent") +                                          \
-        KSCommandMember##xBUILDERNAME##Builder::Attribute<string>("child");
+        KSCommandMember##xBUILDERNAME##Builder::Attribute<std::string>("name") +                                       \
+        KSCommandMember##xBUILDERNAME##Builder::Attribute<std::string>("parent") +                                     \
+        KSCommandMember##xBUILDERNAME##Builder::Attribute<std::string>("child");
 
 //add/remove terminator
 KSCOMMANDMEMBERSIMPLEBUILDERSOURCE(AddTerminator);

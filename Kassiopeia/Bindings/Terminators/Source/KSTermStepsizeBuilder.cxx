@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermStepsizeBuilder::~KComplexElement() {}
+template<> KSTermStepsizeBuilder::~KComplexElement() = default;
 
-STATICINT sKSTermMinEnergyStructure = KSTermStepsizeBuilder::Attribute<string>("name") +
+STATICINT sKSTermMinEnergyStructure = KSTermStepsizeBuilder::Attribute<std::string>("name") +
                                       KSTermStepsizeBuilder::Attribute<double>("min_length") +
                                       KSTermStepsizeBuilder::Attribute<double>("max_length");
 

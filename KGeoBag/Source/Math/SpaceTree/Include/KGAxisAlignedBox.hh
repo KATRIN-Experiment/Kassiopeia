@@ -44,7 +44,8 @@ template<size_t NDIM> class KGAxisAlignedBox
         SetParameters(center, length);
     };
 
-    virtual ~KGAxisAlignedBox(){};
+    virtual ~KGAxisAlignedBox() = default;
+    ;
 
     size_t GetDimension() const
     {

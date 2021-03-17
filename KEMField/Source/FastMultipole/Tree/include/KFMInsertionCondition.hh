@@ -33,7 +33,8 @@ template<unsigned int NDIM> class KFMInsertionCondition
         //the ratio 4/3 is an abitrary choice which seems to work fairly well in practice
         fEta = 4.0 / 3.0;
     };
-    virtual ~KFMInsertionCondition(){};
+    virtual ~KFMInsertionCondition() = default;
+    ;
 
     //user can explicitly set the ratio
     //if the ratio goes to infinity then if the center of a bounding ball under test is

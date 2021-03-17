@@ -17,9 +17,11 @@ using namespace katrin;
 int main(int argc, char** argv)
 {
     if (argc == 1) {
-        cout
-            << "usage: ./Kassiopeia <config_file_one.xml> [<config_file_two.xml> <...>] [ -r variable1=value1 variable2=value ... ]"
-            << endl;
+        std::cout
+            << "usage: ./Kassiopeia <config_file_one.xml> [<config_file_two.xml> <...>]"
+            << " [ -r variable1=value1 variable2=value ... ] [ --variable3=value3 ... ]"
+            << " [ -v | -q ]"
+            << std::endl;
         exit(-1);
     }
 
@@ -34,7 +36,7 @@ int main(int argc, char** argv)
 
     auto tFileNames = tXML.GetArguments().ParameterList();
     tFileNames.pop_front();
-    for (auto tFilename : tFileNames) {
+    for (const auto& tFilename : tFileNames) {
         mainmsg(eNormal) << "processing file <" << tFilename << "> ..." << eom;
         auto* tFile = new KTextFile();
         tFile->AddToNames(tFilename);

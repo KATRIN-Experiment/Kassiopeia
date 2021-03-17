@@ -6,6 +6,8 @@
 #include "KSParticle.h"
 using katrin::KRandom;
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -20,7 +22,7 @@ KSGenPositionHomogeneousFluxTube::KSGenPositionHomogeneousFluxTube() :
     fPhimax(360.)
 {}
 KSGenPositionHomogeneousFluxTube::KSGenPositionHomogeneousFluxTube(const KSGenPositionHomogeneousFluxTube& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fMagneticFields(aCopy.fMagneticFields),
     fFlux(aCopy.fFlux),
     fRmax(aCopy.fRmax),
@@ -34,7 +36,7 @@ KSGenPositionHomogeneousFluxTube* KSGenPositionHomogeneousFluxTube::Clone() cons
 {
     return new KSGenPositionHomogeneousFluxTube(*this);
 }
-KSGenPositionHomogeneousFluxTube::~KSGenPositionHomogeneousFluxTube() {}
+KSGenPositionHomogeneousFluxTube::~KSGenPositionHomogeneousFluxTube() = default;
 
 void KSGenPositionHomogeneousFluxTube::Dice(KSParticleQueue* aPrimaries)
 {
@@ -137,8 +139,8 @@ void KSGenPositionHomogeneousFluxTube::CalculateField(const KThreeVector& aSampl
 {
     aField = KThreeVector::sZero;
     KThreeVector tCurrentField = KThreeVector::sZero;
-    for (size_t tIndex = 0; tIndex < fMagneticFields.size(); tIndex++) {
-        fMagneticFields.at(tIndex)->CalculateField(aSamplePoint, aSampleTime, tCurrentField);
+    for (auto& magneticField : fMagneticFields) {
+        magneticField->CalculateField(aSamplePoint, aSampleTime, tCurrentField);
         aField += tCurrentField;
     }
     return;

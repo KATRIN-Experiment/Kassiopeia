@@ -13,18 +13,18 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectrostaticBoundaryFieldBuilder::~KComplexElement() {}
+template<> KElectrostaticBoundaryFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKEMToolBoxBuilder = KEMToolboxBuilder::ComplexElement<KGElectrostaticBoundaryField>("electrostatic_field");
 
 STATICINT sKElectrostaticBoundaryFieldBuilder =
     KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("name") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("directory") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("file") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("system") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("surfaces") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("spaces") +
-    KElectrostaticBoundaryFieldBuilder::Attribute<string>("symmetry") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("directory") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("file") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("system") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("surfaces") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("spaces") +
+    KElectrostaticBoundaryFieldBuilder::Attribute<std::string>("symmetry") +
     KElectrostaticBoundaryFieldBuilder::Attribute<unsigned int>("hash_masked_bits") +
     KElectrostaticBoundaryFieldBuilder::Attribute<double>("hash_threshold") +
     KElectrostaticBoundaryFieldBuilder::Attribute<double>("minimum_element_area") +

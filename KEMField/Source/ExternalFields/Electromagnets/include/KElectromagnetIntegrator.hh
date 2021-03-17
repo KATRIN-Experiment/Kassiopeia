@@ -27,10 +27,10 @@ class KElectromagnetIntegrator :
     using KSolenoidIntegrator::VectorPotential;
 
     // for selection of the correct field solver template and possibly elsewhere
-    typedef ElectromagnetSingleThread Kind;
+    using Kind = ElectromagnetSingleThread;
 
-    KElectromagnetIntegrator() {}
-    ~KElectromagnetIntegrator() override {}
+    KElectromagnetIntegrator() = default;
+    ~KElectromagnetIntegrator() override = default;
 };
 
 }  // namespace KEMField

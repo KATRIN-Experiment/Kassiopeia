@@ -79,14 +79,14 @@ class KFile
     bool fUsingDefaultPath;
 
   public:
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eRead,
         eWrite,
         eAppend
     } Mode;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eOpen,
         eClosed

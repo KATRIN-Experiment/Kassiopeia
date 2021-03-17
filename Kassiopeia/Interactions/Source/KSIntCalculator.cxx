@@ -6,7 +6,7 @@ namespace Kassiopeia
 
 KSIntCalculator::KSIntCalculator() : fStepNInteractions(0), fStepEnergyLoss(0.0), fStepAngularChange(0.0) {}
 
-KSIntCalculator::~KSIntCalculator() {}
+KSIntCalculator::~KSIntCalculator() = default;
 
 void KSIntCalculator::PullDeupdateComponent()
 {

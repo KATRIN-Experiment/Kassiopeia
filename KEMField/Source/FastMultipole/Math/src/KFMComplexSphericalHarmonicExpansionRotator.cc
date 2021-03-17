@@ -23,7 +23,7 @@ KFMComplexSphericalHarmonicExpansionRotator::~KFMComplexSphericalHarmonicExpansi
 //required for initialization
 void KFMComplexSphericalHarmonicExpansionRotator::SetDegree(int l_max)
 {
-    fDegree = (unsigned int) std::fabs(l_max);
+    fDegree = (int) std::fabs(l_max);
     fSize = (fDegree + 1) * (fDegree + 1);
     fRealRotator->SetDegree(fDegree);
     fRealMoments.resize(fSize);

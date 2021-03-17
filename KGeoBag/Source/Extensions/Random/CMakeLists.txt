@@ -6,6 +6,7 @@ set( RANDOM_HEADER_FILES
     Include/KGRandomPointGenerator.hh
     Include/KGBoxSurfaceRandom.hh
     Include/KGBoxSpaceRandom.hh
+    Include/KGAnnulusSurfaceRandom.hh
     Include/KGDiskSurfaceRandom.hh
     Include/KGCylinderSpaceRandom.hh
     Include/KGCylinderSurfaceRandom.hh
@@ -25,6 +26,7 @@ set( RANDOM_SOURCE_FILES
     Source/KGRotatedSurfaceRandom.cc
     Source/KGBoxSurfaceRandom.cc
     Source/KGBoxSpaceRandom.cc
+    Source/KGAnnulusSurfaceRandom.cc
     Source/KGDiskSurfaceRandom.cc
     Source/KGCylinderSpaceRandom.cc
     Source/KGCylinderSurfaceRandom.cc

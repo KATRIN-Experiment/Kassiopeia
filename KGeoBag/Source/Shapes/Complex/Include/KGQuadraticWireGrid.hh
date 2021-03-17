@@ -16,7 +16,7 @@ class KGQuadraticWireGrid : public KGBoundary
       A class describing a wire grid with a flat section profile
     */
   public:
-    KGQuadraticWireGrid() {}
+    KGQuadraticWireGrid() = default;
     KGQuadraticWireGrid(double r, double pitch, double diameter, unsigned int nDiscPerPitch, bool outerCircle) :
         fR(r),
         fPitch(pitch),
@@ -25,7 +25,7 @@ class KGQuadraticWireGrid : public KGBoundary
         fOuterCircle(outerCircle)
     {}
 
-    ~KGQuadraticWireGrid() override {}
+    ~KGQuadraticWireGrid() override = default;
 
     static std::string Name()
     {
@@ -35,17 +35,17 @@ class KGQuadraticWireGrid : public KGBoundary
     virtual KGQuadraticWireGrid* Clone() const;
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
 
-    bool ContainsPoint(const double* P) const;
-    double DistanceTo(const double* P, double* P_in = nullptr, double* P_norm = nullptr) const;
+    static bool ContainsPoint(const double* P);
+    static double DistanceTo(const double* P, const double* P_in = nullptr, const double* P_norm = nullptr);
 
-    double GetLength() const;
-    double Area() const;
-    double Volume() const;
+    static double GetLength();
+    static double Area();
+    static double Volume();
 
     void SetR(double d)
     {

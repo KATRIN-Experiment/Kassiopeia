@@ -27,7 +27,8 @@ template<typename NodeType> class KGCorecursiveActor : public KGNodeActor<NodeTy
 {
   public:
     KGCorecursiveActor() : fOperationalActor(nullptr){};
-    ~KGCorecursiveActor() override{};
+    ~KGCorecursiveActor() override = default;
+    ;
 
     void SetOperationalActor(KGNodeActor<NodeType>* opActor)
     {

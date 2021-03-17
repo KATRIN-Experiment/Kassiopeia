@@ -2,7 +2,6 @@
 
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
 
 #ifdef KGeoBag_USE_BOOST
 //#include "KPathUtils.h"
@@ -29,21 +28,17 @@ namespace KGeoBag
 {
 
 KGVTKGeometryPainter::KGVTKGeometryPainter() :
-    fFile(),
     fPath(""),
     fWriteSTL(false),
-    fSurfaces(),
-    fSpaces(),
-    fDefaultData(),
     fPoints(vtkSmartPointer<vtkPoints>::New()),
     fCells(vtkSmartPointer<vtkCellArray>::New()),
     fColors(vtkSmartPointer<vtkUnsignedCharArray>::New()),
     fPolyData(vtkSmartPointer<vtkPolyData>::New()),
     fMapper(vtkSmartPointer<vtkPolyDataMapper>::New()),
     fActor(vtkSmartPointer<vtkActor>::New()),
-    fCurrentSpace(NULL),
-    fCurrentSurface(NULL),
-    fCurrentData(NULL),
+    fCurrentSpace(nullptr),
+    fCurrentSurface(nullptr),
+    fCurrentData(nullptr),
     fCurrentOrigin(KThreeVector::sZero),
     fCurrentXAxis(KThreeVector::sXUnit),
     fCurrentYAxis(KThreeVector::sYUnit),
@@ -64,7 +59,7 @@ KGVTKGeometryPainter::KGVTKGeometryPainter() :
     fDefaultData.SetColor(KGRGBAColor(255, 255, 255, 100));
     fDefaultData.SetArc(72);
 }
-KGVTKGeometryPainter::~KGVTKGeometryPainter() {}
+KGVTKGeometryPainter::~KGVTKGeometryPainter() = default;
 
 void KGVTKGeometryPainter::Render()
 {
@@ -150,7 +145,7 @@ void KGVTKGeometryPainter::WriteSTL()
         }
 
         // change extension
-        int tIndex = tFile.find_last_of(".");
+        int tIndex = tFile.find_last_of('.');
         tFile = tFile.substr(0, tIndex) + string(".stl");
     }
     else {
@@ -226,11 +221,9 @@ void KGVTKGeometryPainter::VisitSurface(KGSurface* aSurface)
         fCurrentData = &fDefaultData;
     }
 
-    if (fCurrentSpace != NULL) {
-        for (vector<KGSurface*>::const_iterator tIt = fCurrentSpace->GetBoundaries()->begin();
-             tIt != fCurrentSpace->GetBoundaries()->end();
-             tIt++) {
-            if ((*tIt) == fCurrentSurface) {
+    if (fCurrentSpace != nullptr) {
+        for (auto* tIt : *fCurrentSpace->GetBoundaries()) {
+            if (tIt == fCurrentSurface) {
                 if (fCurrentData == &fDefaultData) {
                     fIgnore = true;
                 }
@@ -269,7 +262,7 @@ void KGVTKGeometryPainter::VisitFlattenedClosedPathSurface(KGFlattenedCircleSurf
     TubeMeshToVTK(tMeshPoints, tApexPoint);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -296,7 +289,7 @@ void KGVTKGeometryPainter::VisitFlattenedClosedPathSurface(KGFlattenedPolyLoopSu
     TubeMeshToVTK(tMeshPoints, tApexPoint);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -350,7 +343,7 @@ void KGVTKGeometryPainter::VisitRotatedPathSurface(KGRotatedLineSegmentSurface* 
     }
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -404,7 +397,7 @@ void KGVTKGeometryPainter::VisitRotatedPathSurface(KGRotatedArcSegmentSurface* a
     }
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -458,7 +451,7 @@ void KGVTKGeometryPainter::VisitRotatedPathSurface(KGRotatedPolyLineSurface* aRo
     }
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -480,7 +473,7 @@ void KGVTKGeometryPainter::VisitRotatedPathSurface(KGRotatedCircleSurface* aRota
     TorusMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -502,7 +495,7 @@ void KGVTKGeometryPainter::VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aRo
     TorusMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -526,7 +519,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface(KGShellLineSegmentSurface* aShe
 
     ShellMeshToVTK(tMeshPoints);
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -550,7 +543,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface(KGShellArcSegmentSurface* aShel
 
     ShellMeshToVTK(tMeshPoints);
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -578,7 +571,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface(KGShellPolyLineSurface* aShellP
 
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -603,7 +596,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface(KGShellPolyLoopSurface* aShellP
     ClosedShellMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -628,7 +621,7 @@ void KGVTKGeometryPainter::VisitShellPathSurface(KGShellCircleSurface* aShellCir
     ClosedShellMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -653,7 +646,7 @@ void KGVTKGeometryPainter::VisitExtrudedPathSurface(KGExtrudedLineSegmentSurface
     FlatMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -678,7 +671,7 @@ void KGVTKGeometryPainter::VisitExtrudedPathSurface(KGExtrudedArcSegmentSurface*
     FlatMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -703,7 +696,7 @@ void KGVTKGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLineSurface* a
     FlatMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -727,7 +720,7 @@ void KGVTKGeometryPainter::VisitExtrudedPathSurface(KGExtrudedCircleSurface* aEx
     TubeMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -752,7 +745,7 @@ void KGVTKGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* a
     TubeMeshToVTK(tMeshPoints);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -775,7 +768,7 @@ void KGVTKGeometryPainter::VisitWrappedSurface(KGConicalWireArraySurface* aConic
     ThreePointsToTubeMeshToVTK(tWireArrayThreePoints, tMeshPoints, tWireRadius);
 
     //clear surface
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 }
 
 void KGVTKGeometryPainter::VisitWrappedSurface(KGRodSurface* aRodSurface)
@@ -796,7 +789,7 @@ void KGVTKGeometryPainter::VisitWrappedSurface(KGRodSurface* aRodSurface)
     ThreePointsToTubeMeshToVTK(tRodThreePoints, tMeshPoints, tRodRadius);
 
     //clear space
-    fCurrentSurface = NULL;
+    fCurrentSurface = nullptr;
 
     return;
 }
@@ -860,7 +853,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace* 
 
     //surgery
     if (aRotatedLineSegmentSpace->Path()->Start().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tStartMeshPoints.fData.begin());
+        auto tCircleIt = ++(tStartMeshPoints.fData.begin());
         while (tCircleIt != tStartMeshPoints.fData.end()) {
             tMeshPoints.fData.push_front(*tCircleIt);
             ++tCircleIt;
@@ -871,7 +864,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace* 
     }
 
     if (aRotatedLineSegmentSpace->Path()->End().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tEndMeshPoints.fData.begin());
+        auto tCircleIt = ++(tEndMeshPoints.fData.begin());
         while (tCircleIt != tEndMeshPoints.fData.end()) {
             tMeshPoints.fData.push_back(*tCircleIt);
             ++tCircleIt;
@@ -884,7 +877,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace* 
     TubeMeshToVTK(tStartApex, tMeshPoints, tEndApex);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -926,7 +919,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* a
 
     //surgery
     if (aRotatedArcSegmentSpace->Path()->Start().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tStartMeshPoints.fData.begin());
+        auto tCircleIt = ++(tStartMeshPoints.fData.begin());
         while (tCircleIt != tStartMeshPoints.fData.end()) {
             tMeshPoints.fData.push_front(*tCircleIt);
             ++tCircleIt;
@@ -937,7 +930,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* a
     }
 
     if (aRotatedArcSegmentSpace->Path()->End().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tEndMeshPoints.fData.begin());
+        auto tCircleIt = ++(tEndMeshPoints.fData.begin());
         while (tCircleIt != tEndMeshPoints.fData.end()) {
             tMeshPoints.fData.push_back(*tCircleIt);
             ++tCircleIt;
@@ -950,7 +943,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* a
     TubeMeshToVTK(tStartApex, tMeshPoints, tEndApex);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -993,7 +986,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aRo
 
     //surgery
     if (aRotatedPolyLineSpace->Path()->Start().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tStartMeshPoints.fData.begin());
+        auto tCircleIt = ++(tStartMeshPoints.fData.begin());
         while (tCircleIt != tStartMeshPoints.fData.end()) {
             tMeshPoints.fData.push_front(*tCircleIt);
             ++tCircleIt;
@@ -1004,7 +997,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aRo
     }
 
     if (aRotatedPolyLineSpace->Path()->End().Y() > 0) {
-        TubeMesh::SetIt tCircleIt = ++(tEndMeshPoints.fData.begin());
+        auto tCircleIt = ++(tEndMeshPoints.fData.begin());
         while (tCircleIt != tEndMeshPoints.fData.end()) {
             tMeshPoints.fData.push_back(*tCircleIt);
             ++tCircleIt;
@@ -1017,7 +1010,7 @@ void KGVTKGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aRo
     TubeMeshToVTK(tStartApex, tMeshPoints, tEndApex);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -1050,7 +1043,7 @@ void KGVTKGeometryPainter::VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* a
     TorusMeshToVTK(tMeshPoints);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -1087,21 +1080,20 @@ void KGVTKGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace* a
 
     //surgery
     tMeshPoints.fData.pop_front();
-    for (TubeMesh::SetIt tStartIt = tStartMeshPoints.fData.begin(); tStartIt != tStartMeshPoints.fData.end();
-         ++tStartIt) {
-        tMeshPoints.fData.push_front(*tStartIt);
+    for (auto& tStartIt : tStartMeshPoints.fData) {
+        tMeshPoints.fData.push_front(tStartIt);
     }
 
     tMeshPoints.fData.pop_back();
-    for (TubeMesh::SetIt tEndIt = tEndMeshPoints.fData.begin(); tEndIt != tEndMeshPoints.fData.end(); ++tEndIt) {
-        tMeshPoints.fData.push_back(*tEndIt);
+    for (auto& tEndIt : tEndMeshPoints.fData) {
+        tMeshPoints.fData.push_back(tEndIt);
     }
 
     //create mesh
     TubeMeshToVTK(tStartApex, tMeshPoints, tEndApex);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -1139,21 +1131,20 @@ void KGVTKGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedPolyLoopSpace*
 
     //surgery
     tMeshPoints.fData.pop_front();
-    for (TubeMesh::SetIt tStartIt = tStartMeshPoints.fData.begin(); tStartIt != tStartMeshPoints.fData.end();
-         ++tStartIt) {
-        tMeshPoints.fData.push_front(*tStartIt);
+    for (auto& tStartIt : tStartMeshPoints.fData) {
+        tMeshPoints.fData.push_front(tStartIt);
     }
 
     tMeshPoints.fData.pop_back();
-    for (TubeMesh::SetIt tEndIt = tEndMeshPoints.fData.begin(); tEndIt != tEndMeshPoints.fData.end(); ++tEndIt) {
-        tMeshPoints.fData.push_back(*tEndIt);
+    for (auto& tEndIt : tEndMeshPoints.fData) {
+        tMeshPoints.fData.push_back(tEndIt);
     }
 
     //create mesh
     TubeMeshToVTK(tStartApex, tMeshPoints, tEndApex);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -1178,7 +1169,7 @@ void KGVTKGeometryPainter::VisitWrappedSpace(KGRodSpace* aRodSpace)
     TubeMeshToVTK(tMeshPoints);
 
     //clear space
-    fCurrentSpace = NULL;
+    fCurrentSpace = nullptr;
 
     return;
 }
@@ -1209,7 +1200,7 @@ void KGVTKGeometryPainter::ArcSegmentToOpenPoints(const KGPlanarArcSegment* anAr
     aPoints.fData.clear();
 
     double tArcFraction = anArcSegment->Length() / (2. * katrin::KConst::Pi() * anArcSegment->Radius());
-    unsigned int tArc = (unsigned int) (ceil(tArcFraction * (double) (fCurrentData->GetArc())));
+    auto tArc = (unsigned int) (ceil(tArcFraction * (double) (fCurrentData->GetArc())));
 
     double tFraction;
     unsigned int tCount;
@@ -1237,14 +1228,14 @@ void KGVTKGeometryPainter::PolyLineToOpenPoints(const KGPlanarPolyLine* aPolyLin
         tElement = *tElementIt;
 
         tLineSegmentElement = dynamic_cast<const KGPlanarLineSegment*>(tElement);
-        if (tLineSegmentElement != NULL) {
+        if (tLineSegmentElement != nullptr) {
             LineSegmentToOpenPoints(tLineSegmentElement, tSubPoints);
             aPoints.fData.insert(aPoints.fData.end(), tSubPoints.fData.begin(), --(tSubPoints.fData.end()));
             continue;
         }
 
         tArcSegmentElement = dynamic_cast<const KGPlanarArcSegment*>(tElement);
-        if (tArcSegmentElement != NULL) {
+        if (tArcSegmentElement != nullptr) {
             ArcSegmentToOpenPoints(tArcSegmentElement, tSubPoints);
             aPoints.fData.insert(aPoints.fData.end(), tSubPoints.fData.begin(), --(tSubPoints.fData.end()));
             continue;
@@ -1290,14 +1281,14 @@ void KGVTKGeometryPainter::PolyLoopToClosedPoints(const KGPlanarPolyLoop* aPolyL
         tSubPoints.fData.clear();
 
         tLineSegmentElement = dynamic_cast<const KGPlanarLineSegment*>(tElement);
-        if (tLineSegmentElement != NULL) {
+        if (tLineSegmentElement != nullptr) {
             LineSegmentToOpenPoints(tLineSegmentElement, tSubPoints);
             aPoints.fData.insert(aPoints.fData.end(), tSubPoints.fData.begin(), --(tSubPoints.fData.end()));
             continue;
         }
 
         tArcSegmentElement = dynamic_cast<const KGPlanarArcSegment*>(tElement);
-        if (tArcSegmentElement != NULL) {
+        if (tArcSegmentElement != nullptr) {
             ArcSegmentToOpenPoints(tArcSegmentElement, tSubPoints);
             aPoints.fData.insert(aPoints.fData.end(), tSubPoints.fData.begin(), --(tSubPoints.fData.end()));
             continue;
@@ -1421,9 +1412,9 @@ void KGVTKGeometryPainter::ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPo
 {
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZ;
         tGroup.push_back(tPoint);
     }
@@ -1446,14 +1437,14 @@ void KGVTKGeometryPainter::OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (tCount = 0; tCount < tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1475,16 +1466,16 @@ void KGVTKGeometryPainter::OpenPointsRotatedToShellMesh(const OpenPoints& aPoint
 
     KThreeVector tPoint;
     ShellMesh::Group tGroup;
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (tCount = 0; tCount <= tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1506,14 +1497,14 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToTorusMesh(const ClosedPoints& aP
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (tCount = 0; tCount < tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1534,16 +1525,16 @@ void KGVTKGeometryPainter::ClosedPointsRotatedToShellMesh(const ClosedPoints& aP
     double tAngle = (aAngleStop - aAngleStart) / 360;
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (tCount = 0; tCount <= tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction * tAngle +
-                                                aAngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction * tAngle +
+                                             aAngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1561,18 +1552,18 @@ void KGVTKGeometryPainter::OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoint
     TubeMesh::Group tGroup;
 
     tGroup.clear();
-    for (OpenPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMin;
         tGroup.push_back(tPoint);
     }
     aMesh.fData.push_back(tGroup);
 
     tGroup.clear();
-    for (OpenPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMax;
         tGroup.push_back(tPoint);
     }
@@ -1590,18 +1581,18 @@ void KGVTKGeometryPainter::ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aP
     TubeMesh::Group tGroup;
 
     tGroup.clear();
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMin;
         tGroup.push_back(tPoint);
     }
     aMesh.fData.push_back(tGroup);
 
     tGroup.clear();
-    for (ClosedPoints::CIt tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMax;
         tGroup.push_back(tPoint);
     }
@@ -1635,7 +1626,7 @@ void KGVTKGeometryPainter::ThreePointsToTubeMesh(const ThreePoints& aThreePoints
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
 
-    for (ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end();
+    for (auto tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end();
          tThreePointsIt++) {
         // define start and end point
         tStartPoint = *tThreePointsIt;
@@ -1731,7 +1722,7 @@ void KGVTKGeometryPainter::ThreePointsToTubeMeshToVTK(const ThreePoints& aThreeP
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
 
-    for (ThreePoints::CIt tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end();
+    for (auto tThreePointsIt = aThreePoints.fData.begin(); tThreePointsIt != aThreePoints.fData.end();
          tThreePointsIt++) {
         // define start and end point
         tStartPoint = *tThreePointsIt;
@@ -1832,10 +1823,10 @@ void KGVTKGeometryPainter::FlatMeshToVTK(const FlatMesh& aMesh)
     vtkSmartPointer<vtkQuad> vQuad;
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdSet.push_back(vMeshIdGroup);
@@ -1892,10 +1883,10 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const TubeMesh& aMesh)
     vtkSmartPointer<vtkQuad> vQuad;
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdGroup.push_back(vMeshIdGroup.front());
@@ -1959,10 +1950,10 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const KThreeVector& anApexStart, const 
     vMeshIdApexStart = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdGroup.push_back(vMeshIdGroup.front());
@@ -2043,10 +2034,10 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const TubeMesh& aMesh, const KThreeVect
     vMeshIdApexEnd = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdGroup.push_back(vMeshIdGroup.front());
@@ -2105,7 +2096,7 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const TubeMesh& aMesh, const KThreeVect
 void KGVTKGeometryPainter::TubeMeshToVTK(const KThreeVector& anApexStart, const TubeMesh& aMesh,
                                          const KThreeVector& anApexEnd)
 {
-    if (aMesh.fData.size() == 0) {
+    if (aMesh.fData.empty()) {
         vismsg(eWarning) << "mesh has size of zero, check your geometry" << eom;
     }
 
@@ -2137,10 +2128,10 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const KThreeVector& anApexStart, const 
     vMeshIdApexEnd = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdGroup.push_back(vMeshIdGroup.front());
@@ -2215,7 +2206,7 @@ void KGVTKGeometryPainter::TubeMeshToVTK(const KThreeVector& anApexStart, const 
 }
 void KGVTKGeometryPainter::ClosedShellMeshToVTK(const ShellMesh& aMesh)
 {
-    if (aMesh.fData.size() == 0) {
+    if (aMesh.fData.empty()) {
         vismsg(eWarning) << "mesh has size of zero, check your geometry" << eom;
     }
 
@@ -2236,10 +2227,10 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK(const ShellMesh& aMesh)
     vtkSmartPointer<vtkQuad> vQuad;
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
 
@@ -2281,7 +2272,7 @@ void KGVTKGeometryPainter::ClosedShellMeshToVTK(const ShellMesh& aMesh)
 }
 void KGVTKGeometryPainter::ShellMeshToVTK(const ShellMesh& aMesh)
 {
-    if (aMesh.fData.size() == 0) {
+    if (aMesh.fData.empty()) {
         vismsg(eWarning) << "mesh has size of zero, check your geometry" << eom;
     }
 
@@ -2302,10 +2293,10 @@ void KGVTKGeometryPainter::ShellMeshToVTK(const ShellMesh& aMesh)
     vtkSmartPointer<vtkQuad> vQuad;
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
 
@@ -2363,10 +2354,10 @@ void KGVTKGeometryPainter::TorusMeshToVTK(const TorusMesh& aMesh)
     vtkSmartPointer<vtkQuad> vQuad;
 
     //create mesh point ids
-    for (TubeMesh::SetCIt tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         vMeshIdGroup.clear();
-        for (TubeMesh::GroupCIt tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint);
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
             vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
         }
         vMeshIdGroup.push_back(vMeshIdGroup.front());

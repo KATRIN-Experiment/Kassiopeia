@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGExtrudedLineSegmentSurface::Visitor::Visitor() {}
+template<> KGExtrudedLineSegmentSurface::Visitor::Visitor() = default;
 
-template<> KGExtrudedLineSegmentSurface::Visitor::~Visitor() {}
+template<> KGExtrudedLineSegmentSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

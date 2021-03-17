@@ -45,8 +45,8 @@ class KFMTreeSurfaceOrderingPredicate :
     //the ordering operator
     virtual bool operator()(int i, int j)
     {
-        KThreeVector center_i = fSurfaceContainer[i]->GetShape()->Centroid();
-        KThreeVector center_j = fSurfaceContainer[j]->GetShape()->Centroid();
+        KFieldVector center_i = fSurfaceContainer[i]->GetShape()->Centroid();
+        KFieldVector center_j = fSurfaceContainer[j]->GetShape()->Centroid();
     }
 
   protected:

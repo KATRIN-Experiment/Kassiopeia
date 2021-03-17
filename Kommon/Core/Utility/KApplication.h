@@ -6,7 +6,7 @@
 namespace katrin
 {
 
-class KApplication : public KTagged
+class KApplication : public katrin::KTagged
 {
   public:
     KApplication();

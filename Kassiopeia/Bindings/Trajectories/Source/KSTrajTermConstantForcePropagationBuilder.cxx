@@ -9,11 +9,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajTermConstantForcePropagationBuilder::~KComplexElement() {}
+template<> KSTrajTermConstantForcePropagationBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTermConstantForcePropagationStructure =
-    KSTrajTermConstantForcePropagationBuilder::Attribute<string>("name") +
-    KSTrajTermConstantForcePropagationBuilder::Attribute<KThreeVector>("force");
+    KSTrajTermConstantForcePropagationBuilder::Attribute<std::string>("name") +
+    KSTrajTermConstantForcePropagationBuilder::Attribute<KGeoBag::KThreeVector>("force");
 
 STATICINT sToolboxKSTrajTermConstantForcePropagation =
     KSRootBuilder::ComplexElement<KSTrajTermConstantForcePropagation>("kstraj_term_constant_force_propagation");

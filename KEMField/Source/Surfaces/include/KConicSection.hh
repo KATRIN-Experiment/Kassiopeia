@@ -13,7 +13,7 @@ class KConicSection : public KShape
 
   protected:
     KConicSection() : fP0(0., 0., 0.), fP1(0., 0., 0.) {}
-    ~KConicSection() override {}
+    ~KConicSection() override = default;
 
   public:
     static std::string Name()

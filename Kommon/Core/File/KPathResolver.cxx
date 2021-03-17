@@ -24,9 +24,9 @@ void filter(std::vector<std::string>& strings, std::string pattern)
 namespace katrin
 {
 
-KPathResolver::KPathResolver() {}
+KPathResolver::KPathResolver() = default;
 
-KPathResolver::~KPathResolver() {}
+KPathResolver::~KPathResolver() = default;
 
 std::string KPathResolver::GetDirectory(KEDirectory directory) const
 {

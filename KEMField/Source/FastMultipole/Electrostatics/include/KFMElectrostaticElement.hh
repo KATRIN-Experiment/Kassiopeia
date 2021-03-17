@@ -25,8 +25,10 @@ namespace KEMField
 template<unsigned int SpatialDimension, unsigned int BasisDimension> class KFMElectrostaticElement
 {
   public:
-    KFMElectrostaticElement(){};
-    virtual ~KFMElectrostaticElement(){};
+    KFMElectrostaticElement() = default;
+    ;
+    virtual ~KFMElectrostaticElement() = default;
+    ;
 
     void SetIdentityPair(const KFMIdentityPair& id)
     {

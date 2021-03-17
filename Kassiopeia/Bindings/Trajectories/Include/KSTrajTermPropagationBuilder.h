@@ -17,11 +17,11 @@ template<> inline bool KSTrajTermPropagationBuilder::AddAttribute(KContainer* aC
         return true;
     }
     if (aContainer->GetName() == "direction") {
-        if (aContainer->AsReference<std::string>() == "forward") {
+        if (aContainer->AsString() == "forward") {
             fObject->SetDirection(KSTrajTermPropagation::eForward);
             return true;
         }
-        if (aContainer->AsReference<std::string>() == "backward") {
+        if (aContainer->AsString() == "backward") {
             fObject->SetDirection(KSTrajTermPropagation::eBackward);
             return true;
         }

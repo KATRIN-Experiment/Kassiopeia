@@ -34,9 +34,9 @@ void KFMPinchonJMatrixCalculator::AllocateMatrices(std::vector<kfm_matrix*>* mat
 
 void KFMPinchonJMatrixCalculator::DeallocateMatrices(std::vector<kfm_matrix*>* matrices)
 {
-    for (unsigned int l = 0; l < matrices->size(); l++) {
-        if (matrices->at(l) != nullptr) {
-            kfm_matrix_free(matrices->at(l));
+    for (auto& m : *matrices) {
+        if (m != nullptr) {
+            kfm_matrix_free(m);
         }
     }
     matrices->clear();

@@ -12,6 +12,7 @@ class KIncludeProcessor : public KProcessor
 {
   public:
     KIncludeProcessor();
+    KIncludeProcessor& operator=(const KIncludeProcessor& other) = delete;
     ~KIncludeProcessor() override;
 
     void ProcessToken(KBeginElementToken* aToken) override;
@@ -28,7 +29,7 @@ class KIncludeProcessor : public KProcessor
   private:
     void Reset();
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eElementInactive,
         eActive,
@@ -36,7 +37,7 @@ class KIncludeProcessor : public KProcessor
     } ElementState;
     ElementState fElementState;
 
-    typedef enum
+    typedef enum  // NOLINT(modernize-use-using)
     {
         eAttributeInactive,
         eName,
@@ -58,12 +59,12 @@ class KIncludeProcessor : public KProcessor
 
     std::map<std::string, std::string> fIncludedPaths;
 
-    typedef struct TreeNode_t
+    using TreeNode = struct TreeNode_t
     {
         std::string fName;
         TreeNode_t* fParent;
         std::list<TreeNode_t*> fChildren;
-    } TreeNode;
+    };
     TreeNode* fIncludeTree;
 
     static void PrintTreeNode(TreeNode* node, int level = 0, bool deleteAll = false);

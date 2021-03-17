@@ -24,8 +24,10 @@ namespace KEMField
 class KFMSquareRootUtilities
 {
   public:
-    KFMSquareRootUtilities(){};
-    virtual ~KFMSquareRootUtilities(){};
+    KFMSquareRootUtilities() = default;
+    ;
+    virtual ~KFMSquareRootUtilities() = default;
+    ;
 
     static double SqrtInteger(int arg);
     static double InverseSqrtInteger(int arg);

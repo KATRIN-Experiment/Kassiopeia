@@ -23,8 +23,10 @@ namespace KEMField
 template<typename ObjectTypeList, typename ObjectType> class KFMObjectRetriever
 {
   public:
-    KFMObjectRetriever(){};
-    virtual ~KFMObjectRetriever(){};
+    KFMObjectRetriever() = default;
+    ;
+    virtual ~KFMObjectRetriever() = default;
+    ;
 
     static ObjectType* GetNodeObject(KFMNode<ObjectTypeList>* node)
     {

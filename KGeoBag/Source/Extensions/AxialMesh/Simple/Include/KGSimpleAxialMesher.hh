@@ -9,7 +9,6 @@
 #include "KGPlanarPolyLoop.hh"
 
 #include <deque>
-using std::deque;
 
 namespace KGeoBag
 {
@@ -29,9 +28,9 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     {
       public:
         typedef double Value;
-        typedef deque<Value> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Set = std::deque<Value>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -40,10 +39,10 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     class Points
     {
       public:
-        typedef KTwoVector Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Element = KTwoVector;
+        using Set = std::deque<Element>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -60,12 +59,12 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     //*******************
 
   protected:
-    void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                            Partition& aPartition);
-    void ForwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                          Partition& aPartition);
-    void BackwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                           Partition& aPartition);
+    static void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                   const double& aPower, Partition& aPartition);
+    static void ForwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                 const double& aPower, Partition& aPartition);
+    static void BackwardPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                  const double& aPower, Partition& aPartition);
 
     //****************
     //points functions

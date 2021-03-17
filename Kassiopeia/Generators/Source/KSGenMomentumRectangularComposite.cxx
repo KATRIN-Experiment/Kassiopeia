@@ -2,6 +2,9 @@
 
 #include "KSGeneratorsMessage.h"
 
+using namespace std;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -14,7 +17,7 @@ KSGenMomentumRectangularComposite::KSGenMomentumRectangularComposite() :
     fZAxis(KThreeVector::sZUnit)
 {}
 KSGenMomentumRectangularComposite::KSGenMomentumRectangularComposite(const KSGenMomentumRectangularComposite& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fXValue(aCopy.fXValue),
     fYValue(aCopy.fYValue),
     fZValue(aCopy.fZValue),
@@ -26,7 +29,7 @@ KSGenMomentumRectangularComposite* KSGenMomentumRectangularComposite::Clone() co
 {
     return new KSGenMomentumRectangularComposite(*this);
 }
-KSGenMomentumRectangularComposite::~KSGenMomentumRectangularComposite() {}
+KSGenMomentumRectangularComposite::~KSGenMomentumRectangularComposite() = default;
 
 void KSGenMomentumRectangularComposite::Dice(KSParticleQueue* aPrimaries)
 {

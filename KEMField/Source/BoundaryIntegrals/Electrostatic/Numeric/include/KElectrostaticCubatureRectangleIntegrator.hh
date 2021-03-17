@@ -13,36 +13,36 @@ namespace KEMField
 class KElectrostaticCubatureRectangleIntegrator : public KElectrostaticRWGRectangleIntegrator
 {
   public:
-    typedef KRectangle Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KRectangle;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticCubatureRectangleIntegrator() {}
-    ~KElectrostaticCubatureRectangleIntegrator() override {}
+    KElectrostaticCubatureRectangleIntegrator() = default;
+    ~KElectrostaticCubatureRectangleIntegrator() override = default;
 
-    void GaussPoints_Rect4P(const double* data, double* Q) const;
-    void GaussPoints_Rect7P(const double* data, double* Q) const;
-    void GaussPoints_Rect9P(const double* data, double* Q) const;
-    void GaussPoints_Rect12P(const double* data, double* Q) const;
-    void GaussPoints_Rect17P(const double* data, double* Q) const;
-    void GaussPoints_Rect20P(const double* data, double* Q) const;
-    void GaussPoints_Rect33P(const double* data, double* Q) const;
+    static void GaussPoints_Rect4P(const double* data, double* Q);
+    static void GaussPoints_Rect7P(const double* data, double* Q);
+    static void GaussPoints_Rect9P(const double* data, double* Q);
+    static void GaussPoints_Rect12P(const double* data, double* Q);
+    static void GaussPoints_Rect17P(const double* data, double* Q);
+    static void GaussPoints_Rect20P(const double* data, double* Q);
+    static void GaussPoints_Rect33P(const double* data, double* Q);
 
-    double Potential_RectNP(const double* data, const KPosition& P, const unsigned short noPoints, double* Q,
-                            const double* weights) const;
-    KThreeVector ElectricField_RectNP(const double* data, const KPosition& P, const unsigned short noPoints, double* Q,
-                                      const double* weights) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential_RectNP(const double* source, const KPosition& P,
-                                                                     const unsigned short noPoints, double* Q,
-                                                                     const double* weights) const;
+    static double Potential_RectNP(const double* data, const KPosition& P, const unsigned short noPoints,
+                                   const double* Q, const double* weights);
+    static KFieldVector ElectricField_RectNP(const double* data, const KPosition& P, const unsigned short noPoints,
+                                             const double* Q, const double* weights);
+    static std::pair<KFieldVector, double> ElectricFieldAndPotential_RectNP(const double* data, const KPosition& P,
+                                                                            const unsigned short noPoints,
+                                                                            const double* Q, const double* weights);
 
     double Potential(const KRectangle* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KRectangle* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KRectangle* source,
+    KFieldVector ElectricField(const KRectangle* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KRectangle* source,
                                                               const KPosition& P) const override;
 
     double Potential(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
+    KFieldVector ElectricField(const KSymmetryGroup<KRectangle>* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
                                                               const KPosition& P) const override;
 
   private:

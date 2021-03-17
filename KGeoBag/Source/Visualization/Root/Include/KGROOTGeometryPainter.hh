@@ -1,12 +1,6 @@
 #ifndef KGROOTGEOMETRYPAINTER_HH_
 #define KGROOTGEOMETRYPAINTER_HH_
 
-#include "KROOTWindow.h"
-using katrin::KROOTWindow;
-
-#include "KROOTPainter.h"
-using katrin::KROOTPainter;
-
 #include "KGAppearance.hh"
 #include "KGBeam.hh"
 #include "KGBeamSurface.hh"
@@ -41,34 +35,25 @@ using katrin::KROOTPainter;
 #include "KGShellPolyLineSurface.hh"
 #include "KGShellPolyLoopSurface.hh"
 #include "KGWrappedSurface.hh"
+#include "KROOTPainter.h"
+#include "KROOTWindow.h"
 
 
 //include root stuff
+#include "KField.h"
 #include "TPolyLine.h"
 
-#include <vector>
-using std::vector;
-
-#include <deque>
-using std::deque;
-
-#include <list>
-using std::list;
-
-#include <utility>
-using std::pair;
-
 #include <algorithm>
-using std::reverse;
-using std::swap;
-
-#include "KField.h"
+#include <deque>
+#include <list>
+#include <utility>
+#include <vector>
 
 namespace KGeoBag
 {
 
 class KGROOTGeometryPainter :
-    public KROOTPainter,
+    public katrin::KROOTPainter,
     public KGVisitor,
     public KGSurface::Visitor,
     public KGFlattenedCircleSurface::Visitor,
@@ -123,8 +108,8 @@ class KGROOTGeometryPainter :
     double GetYMax() override;
 
   private:
-    vector<KGSurface*> fSurfaces;
-    vector<KGSpace*> fSpaces;
+    std::vector<KGSurface*> fSurfaces;
+    std::vector<KGSpace*> fSpaces;
 
     KGAppearanceData fDefaultData;
 
@@ -147,7 +132,7 @@ class KGROOTGeometryPainter :
     std::string GetYAxisLabel() override;
 
   private:
-    std::string GetAxisLabel(KThreeVector anAxis);
+    std::string GetAxisLabel(KThreeVector anAxis) const;
 
   public:
     void CalculatePlaneCoordinateSystem();
@@ -199,8 +184,8 @@ class KGROOTGeometryPainter :
     void VisitWrappedSpace(KGRodSpace* aRodSpace) override;
 
   private:
-    void LocalToGlobal(const KThreeVector& aLocal, KThreeVector& aGlobal);
-    double distance(KTwoVector Vector1, KTwoVector Vector2);
+    void LocalToGlobal(const KGeoBag::KThreeVector& aLocal, KGeoBag::KThreeVector& aGlobal);
+    static double distance(KTwoVector Vector1, KTwoVector Vector2);
 
     //**********
     //data types
@@ -210,9 +195,9 @@ class KGROOTGeometryPainter :
     {
       public:
         typedef KTwoVector Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Set = std::deque<Element>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -227,13 +212,13 @@ class KGROOTGeometryPainter :
     class Mesh
     {
       public:
-        typedef KThreeVector Element;
-        typedef deque<Element> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef deque<Group> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = KGeoBag::KThreeVector;
+        using Group = std::deque<Element>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+        using Set = std::deque<Group>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -262,14 +247,14 @@ class KGROOTGeometryPainter :
     class Lines
     {
       public:
-        typedef KThreeVector Element;
-        typedef pair<Element, Element> Line;
-        typedef deque<Line> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef deque<Group> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = KGeoBag::KThreeVector;
+        using Line = std::pair<Element, Element>;
+        using Group = std::deque<Line>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+        using Set = std::deque<Group>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -288,20 +273,17 @@ class KGROOTGeometryPainter :
     class IntersectionPoints
     {
       public:
-        typedef KTwoVector Element;
-        typedef deque<Element> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef enum
-        {
-            eUndefined,
-            eParallel,
-            eCircle
-        } Origin;
-        typedef pair<Group, Origin> NamedGroup;
-        typedef deque<NamedGroup> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = KTwoVector;
+        using Group = std::deque<Element>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+
+        using Origin = enum { eUndefined, eParallel, eCircle };
+
+        using NamedGroup = std::pair<Group, Origin>;
+        using Set = std::deque<NamedGroup>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -310,10 +292,10 @@ class KGROOTGeometryPainter :
     class OrderedPoints
     {
       public:
-        typedef Points Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = Points;
+        using Set = std::deque<Element>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -322,10 +304,10 @@ class KGROOTGeometryPainter :
     class SubPortOrderedPoints
     {
       public:
-        typedef OrderedPoints Element;
-        typedef deque<Element> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = OrderedPoints;
+        using Set = std::deque<Element>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -334,13 +316,13 @@ class KGROOTGeometryPainter :
     class ConnectionPoints
     {
       public:
-        typedef pair<KTwoVector, OrderedPoints::SetCIt> Element;
-        typedef deque<Element> Group;
-        typedef Group::iterator GroupIt;
-        typedef Group::const_iterator GroupCIt;
-        typedef deque<Group> Set;
-        typedef Set::iterator SetIt;
-        typedef Set::const_iterator SetCIt;
+        using Element = std::pair<KTwoVector, OrderedPoints::SetCIt>;
+        using Group = std::deque<Element>;
+        using GroupIt = Group::iterator;
+        using GroupCIt = Group::const_iterator;
+        using Set = std::deque<Group>;
+        using SetIt = Set::iterator;
+        using SetCIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -350,10 +332,10 @@ class KGROOTGeometryPainter :
     class Partition
     {
       public:
-        typedef double Value;
-        typedef deque<Value> Set;
-        typedef Set::iterator It;
-        typedef Set::const_iterator CIt;
+        using Value = double;
+        using Set = std::deque<Value>;
+        using It = Set::iterator;
+        using CIt = Set::const_iterator;
 
       public:
         Set fData;
@@ -364,79 +346,81 @@ class KGROOTGeometryPainter :
     //points functions
     //****************
 
-    void LineSegmentToOpenPoints(const KGPlanarLineSegment* aLineSegment, OpenPoints& aPoints);
+    static void LineSegmentToOpenPoints(const KGPlanarLineSegment* aLineSegment, OpenPoints& aPoints);
     void ArcSegmentToOpenPoints(const KGPlanarArcSegment* anArcSegment, OpenPoints& aPoints);
     void PolyLineToOpenPoints(const KGPlanarPolyLine* aPolyLine, OpenPoints& aPoints);
     void CircleToClosedPoints(const KGPlanarCircle* aCircle, ClosedPoints& aPoints);
     void PolyLoopToClosedPoints(const KGPlanarPolyLoop* aPolyLoop, ClosedPoints& aPoints);
-    void RodToOpenPoints(const KGRod* aRod, OpenPoints& aPoints);
+    static void RodToOpenPoints(const KGRod* aRod, OpenPoints& aPoints);
 
     //**************
     //mesh functions
     //**************
 
-    void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
-                                                const double& aZ, TubeMesh& aMesh, KThreeVector& anApex);
+    static void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
+                                                       const double& aZ, TubeMesh& aMesh,
+                                                       KGeoBag::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, TubeMesh& aMesh);
     void ClosedPointsRotatedToTorusMesh(const ClosedPoints& aPoints, TorusMesh& aMesh);
-    void OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, const double& aZMin, const double& aZMax,
-                                      FlatMesh& aMesh);
-    void ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aPoints, const double& aZMin, const double& aZMax,
-                                        TubeMesh& aMesh);
+    static void OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoints, const double& aZMin, const double& aZMax,
+                                             FlatMesh& aMesh);
+    static void ClosedPointsExtrudedToTubeMesh(const ClosedPoints& aPoints, const double& aZMin, const double& aZMax,
+                                               TubeMesh& aMesh);
     void OpenPointsToShellMesh(const OpenPoints& aPoints, ShellMesh& aMesh, const unsigned int& aCount,
                                const double& aPower, const double& AngleStart, const double& AngleStop);
     void ClosedPointsToMainPortMesh(const double* PointA, const double* PointB, const double aRadius, PortMesh& aMesh);
     void ClosedPointsToSubPortMesh(const KGPortHousing::CircularPort* aCircularPort, PortMesh& aMesh);
-    void ClosedPointsToBeamMesh(const vector<vector<double>> aStartCoord, const vector<vector<double>> aEndCoord,
-                                BeamMesh& aMesh);
-    void ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, FlatMesh& aMesh);
-    void ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus, RingMesh& aMesh);
+    static void ClosedPointsToBeamMesh(const std::vector<std::vector<double>>& aStartCoord,
+                                       const std::vector<std::vector<double>>& aEndCoord, BeamMesh& aMesh);
+    void ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus>& aComplexAnnulus, FlatMesh& aMesh);
+    void ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus>& aComplexAnnulus, RingMesh& aMesh);
 
 
     //**************
     //line functions
     //**************
 
-    void ShellMeshToArcLines(const ShellMesh aMesh, ArcLines& anArcLines);
-    void ShellMeshToParallelLines(const ShellMesh aMesh, ParallelLines& aParallelLines);
-    void TubeMeshToCircleLines(const TubeMesh aMesh, CircleLines& aCircleLines);
-    void TubeMeshToParallelLines(const TubeMesh aMesh, ParallelLines& aParallelLines);
-    void TorusMeshToCircleLines(const TorusMesh aMesh, CircleLines& aCircleLines);
-    void TorusMeshToParallelLines(const TorusMesh aMesh, ParallelLines& aParallelLines);
-    void PortMeshToCircleLines(const PortMesh aMesh, CircleLines& aCircleLines);
-    void PortMeshToParallelLines(const PortMesh aMesh, ParallelLines& aParallelLines);
-    void BeamMeshToCircleLines(const BeamMesh aMesh, CircleLines& aCircleLines);
-    void BeamMeshToParallelLines(const BeamMesh aMesh, ParallelLines& aParallelLines);
-    void FlatMeshToCircleLines(const FlatMesh aMesh, CircleLines& aCircleLines);
-    void RingMeshToCircleLines(const RingMesh aMesh, CircleLines& aCicleLines);
+    void ShellMeshToArcLines(const ShellMesh& aMesh, ArcLines& anArcLines);
+    void ShellMeshToParallelLines(const ShellMesh& aMesh, ParallelLines& aParallelLines);
+    void TubeMeshToCircleLines(const TubeMesh& aMesh, CircleLines& aCircleLines);
+    void TubeMeshToParallelLines(const TubeMesh& aMesh, ParallelLines& aParallelLines);
+    void TorusMeshToCircleLines(const TorusMesh& aMesh, CircleLines& aCircleLines);
+    void TorusMeshToParallelLines(const TorusMesh& aMesh, ParallelLines& aParallelLines);
+    void PortMeshToCircleLines(const PortMesh& aMesh, CircleLines& aCircleLines);
+    void PortMeshToParallelLines(const PortMesh& aMesh, ParallelLines& aParallelLines);
+    void BeamMeshToCircleLines(const BeamMesh& aMesh, CircleLines& aCircleLines);
+    void BeamMeshToParallelLines(const BeamMesh& aMesh, ParallelLines& aParallelLines);
+    void FlatMeshToCircleLines(const FlatMesh& aMesh, CircleLines& aCircleLines);
+    void RingMeshToCircleLines(const RingMesh& aMesh, CircleLines& aCicleLines);
 
 
     //**********************
     //intersection functions
     //**********************
 
-    void LinesToIntersections(const CircleLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
-    void LinesToIntersections(const ArcLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
-    void LinesToIntersections(const ParallelLines aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
-    void CalculatePlaneIntersection(const KThreeVector aStartPoint, const KThreeVector anEndPoint,
-                                    KThreeVector& anIntersectionPoint, bool& anIntersection);
-    void TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint);
+    void LinesToIntersections(const CircleLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
+    void LinesToIntersections(const ArcLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
+    void LinesToIntersections(const ParallelLines& aCircleLinesSet, IntersectionPoints& anIntersectionPoints);
+    void CalculatePlaneIntersection(const KGeoBag::KThreeVector& aStartPoint, const KGeoBag::KThreeVector& anEndPoint,
+                                    KGeoBag::KThreeVector& anIntersectionPoint, bool& anIntersection);
+    void TransformToPlaneSystem(const KGeoBag::KThreeVector& aPoint, KTwoVector& aPlanePoint);
 
-    void IntersectionPointsToOrderedPoints(const IntersectionPoints anIntersectionPoints,
+    void IntersectionPointsToOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                            OrderedPoints& anOrderedPoints);
-    void IntersectionPointsToOrderedPoints(const IntersectionPoints aMainIntersectionPoints,
-                                           const IntersectionPoints aRingIntersectionPoints,
+    void IntersectionPointsToOrderedPoints(const IntersectionPoints& aMainIntersectionPoints,
+                                           const IntersectionPoints& aRingIntersectionPoints,
                                            OrderedPoints& anOrderdPoints);
-    void ShellIntersectionPointsToOrderedPoints(const IntersectionPoints anIntersectionPoints,
+    void ShellIntersectionPointsToOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                 OrderedPoints& OrderedPoints);
 
-    void CreateClosedOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
-    void CreateShellClosedOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
-    void CreateOpenOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
-    void CreateShellOpenOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
-    void CreateDualOrderedPoints(const IntersectionPoints anIntersectionPoints, OrderedPoints& anOrderedPoints);
+    void CreateClosedOrderedPoints(const IntersectionPoints& anIntersectionPoints, OrderedPoints& anOrderedPoints);
+    void CreateShellClosedOrderedPoints(const IntersectionPoints& anIntersectionPoints, OrderedPoints& anOrderedPoints);
+    void CreateOpenOrderedPoints(const IntersectionPoints& anIntersectionPoints, OrderedPoints& anOrderedPoints) const;
+    void CreateShellOpenOrderedPoints(const IntersectionPoints& anIntersectionPoints,
+                                      OrderedPoints& anOrderedPoints) const;
+    static void CreateDualOrderedPoints(const IntersectionPoints& anIntersectionPoints, OrderedPoints& anOrderedPoints);
 
-    void CombineOrderedPoints(OrderedPoints& anOrderedPoints);
+    static void CombineOrderedPoints(OrderedPoints& anOrderedPoints);
     void CombineOrderedPoints(OrderedPoints& aMainOrderedPoints, SubPortOrderedPoints& aSubOrderedPoints,
                               OrderedPoints& anOrderedPoints);
 
@@ -444,30 +428,30 @@ class KGROOTGeometryPainter :
     //partition functions
     //*******************
 
-    void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount, const double& aPower,
-                            Partition& aPartition);
+    static void SymmetricPartition(const double& aStart, const double& aStop, const unsigned int& aCount,
+                                   const double& aPower, Partition& aPartition);
 
 
     //*******************
     //rendering functions
     //*******************
 
-    void OrderedPointsToROOTSurface(const OrderedPoints anOrderedPoints);
-    void OrderedPointsToROOTSpace(const OrderedPoints anOrderedPoints);
+    void OrderedPointsToROOTSurface(const OrderedPoints& anOrderedPoints);
+    void OrderedPointsToROOTSpace(const OrderedPoints& anOrderedPoints);
 
 
   private:
     //root stuff
-    vector<TPolyLine*> fROOTSpaces;
-    vector<TPolyLine*> fROOTSurfaces;
+    std::vector<TPolyLine*> fROOTSpaces;
+    std::vector<TPolyLine*> fROOTSurfaces;
 
     KGSpace* fCurrentSpace;
     KGSurface* fCurrentSurface;
     KGAppearanceData* fCurrentData;
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
+    KGeoBag::KThreeVector fCurrentOrigin;
+    KGeoBag::KThreeVector fCurrentXAxis;
+    KGeoBag::KThreeVector fCurrentYAxis;
+    KGeoBag::KThreeVector fCurrentZAxis;
     bool fIgnore;
 };
 

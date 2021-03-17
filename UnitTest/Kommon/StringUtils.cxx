@@ -85,7 +85,7 @@ TEST(KStringUtils, Conversion)
     EXPECT_FALSE(KStringUtils::Convert(s2, tInt));
     EXPECT_FALSE(KStringUtils::Convert(s3, tInt));
 
-    float tFloat;
+    float tFloat = 0;
     EXPECT_TRUE(KStringUtils::Convert(s1, tFloat));
     EXPECT_NEAR(tFloat, 1234., 1e-4);
     EXPECT_TRUE(KStringUtils::Convert(s2, tFloat));

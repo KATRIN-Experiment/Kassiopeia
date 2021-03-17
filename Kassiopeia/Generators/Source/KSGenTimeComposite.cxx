@@ -6,12 +6,15 @@ namespace Kassiopeia
 {
 
 KSGenTimeComposite::KSGenTimeComposite() : fTimeValue(nullptr) {}
-KSGenTimeComposite::KSGenTimeComposite(const KSGenTimeComposite& aCopy) : KSComponent(), fTimeValue(aCopy.fTimeValue) {}
+KSGenTimeComposite::KSGenTimeComposite(const KSGenTimeComposite& aCopy) :
+    KSComponent(aCopy),
+    fTimeValue(aCopy.fTimeValue)
+{}
 KSGenTimeComposite* KSGenTimeComposite::Clone() const
 {
     return new KSGenTimeComposite(*this);
 }
-KSGenTimeComposite::~KSGenTimeComposite() {}
+KSGenTimeComposite::~KSGenTimeComposite() = default;
 
 void KSGenTimeComposite::Dice(KSParticleQueue* aPrimaries)
 {
@@ -20,8 +23,8 @@ void KSGenTimeComposite::Dice(KSParticleQueue* aPrimaries)
     KSParticleIt tParticleIt;
 
     double tTimeValue;
-    vector<double> tTimeValues;
-    vector<double>::iterator tTimeValueIt;
+    std::vector<double> tTimeValues;
+    std::vector<double>::iterator tTimeValueIt;
 
     if (!fTimeValue)
         genmsg(eError) << "time value undefined in composite position creator <" << this->GetName() << ">" << eom;

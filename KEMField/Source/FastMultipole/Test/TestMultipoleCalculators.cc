@@ -216,17 +216,17 @@ int main(int argc, char* argv[])
     (void) oclforce;
     unsigned int degree = 3;
 
-    static struct option longOptions[] = {{"help", no_argument, 0, 'h'},
-                                          {"type", required_argument, 0, 't'},
-                                          {"mode", required_argument, 0, 'm'},
-                                          {"samples", required_argument, 0, 's'},
-                                          {"ocl-force", required_argument, 0, 'o'},
-                                          {"degree", required_argument, 0, 'd'}};
+    static struct option longOptions[] = {{"help", no_argument, nullptr, 'h'},
+                                          {"type", required_argument, nullptr, 't'},
+                                          {"mode", required_argument, nullptr, 'm'},
+                                          {"samples", required_argument, nullptr, 's'},
+                                          {"ocl-force", required_argument, nullptr, 'o'},
+                                          {"degree", required_argument, nullptr, 'd'}};
 
     static const char* optString = "ht:m:s:o:d:";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -265,10 +265,10 @@ int main(int argc, char* argv[])
     params.verbosity = 3;
 
     //now lets make the multipole calculators
-    KFMElectrostaticMultipoleCalculatorAnalytic* aCalc = new KFMElectrostaticMultipoleCalculatorAnalytic();
+    auto* aCalc = new KFMElectrostaticMultipoleCalculatorAnalytic();
     aCalc->SetDegree(degree);
 
-    KFMElectrostaticMultipoleCalculatorNumeric* nCalc = new KFMElectrostaticMultipoleCalculatorNumeric();
+    auto* nCalc = new KFMElectrostaticMultipoleCalculatorNumeric();
     nCalc->SetDegree(degree);
     nCalc->SetNumberOfQuadratureTerms(nquad);
 
@@ -336,15 +336,15 @@ int main(int argc, char* argv[])
                                   WireStartPoint[2] + WireLength * WireDirection[2]};
 
         //set up line segment, and triangle, rectangle surfaces
-        KVMLineSegment* line = new KVMLineSegment();
+        auto* line = new KVMLineSegment();
         line->SetAll(WireStartPoint, WireEndPoint);
         line->Initialize();
 
-        KVMTriangularSurface* triangle = new KVMTriangularSurface();
+        auto* triangle = new KVMTriangularSurface();
         triangle->SetAll(TriP, TriN1, TriN2, TriA, TriB);
         triangle->Initialize();
 
-        KVMRectangularSurface* rectangle = new KVMRectangularSurface();
+        auto* rectangle = new KVMRectangularSurface();
         rectangle->SetAll(RecP, RecN1, RecN2, RecA, RecB);
         rectangle->Initialize();
 

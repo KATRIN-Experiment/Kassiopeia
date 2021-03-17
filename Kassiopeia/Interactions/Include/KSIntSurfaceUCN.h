@@ -4,7 +4,6 @@
 #include "KField.h"
 #include "KMathBracketingSolver.h"
 #include "KSSurfaceInteraction.h"
-using katrin::KMathBracketingSolver;
 
 namespace Kassiopeia
 {
@@ -39,7 +38,7 @@ class KSIntSurfaceUCN : public KSComponentTemplate<KSIntSurfaceUCN, KSSurfaceInt
 
   protected:
     double ValueFunction(const double& aValue) const;
-    KMathBracketingSolver fSolver;
+    katrin::KMathBracketingSolver fSolver;
 };
 
 }  // namespace Kassiopeia

@@ -31,7 +31,8 @@ class KGNavigableMeshTreeInformationExtractor : public KGNodeActor<KGMeshNavigat
         fNNodes = 0;
     };
 
-    ~KGNavigableMeshTreeInformationExtractor() override{};
+    ~KGNavigableMeshTreeInformationExtractor() override = default;
+    ;
 
 
     void ApplyAction(KGMeshNavigationNode* node) override

@@ -1,10 +1,8 @@
 #include "KGROOTGeometryPainter.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 
 #include <TColor.h>
 #include <cmath>
@@ -18,7 +16,6 @@ namespace KGeoBag
 {
 
 KGROOTGeometryPainter::KGROOTGeometryPainter() :
-    fDefaultData(),
     fPlaneNormal(0.0, 1.0, 0.0),
     fPlanePoint(0.0, 0.0, 0.0),
     fSwapAxis(false),
@@ -27,8 +24,6 @@ KGROOTGeometryPainter::KGROOTGeometryPainter() :
     fFile(""),
     fPath(""),
     fEpsilon(1.0e-10),
-    fROOTSpaces(),
-    fROOTSurfaces(),
     fCurrentSpace(nullptr),
     fCurrentSurface(nullptr),
     fCurrentData(nullptr),
@@ -40,11 +35,11 @@ KGROOTGeometryPainter::KGROOTGeometryPainter() :
 {}
 KGROOTGeometryPainter::~KGROOTGeometryPainter()
 {
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        delete fROOTSpaces.at(i);
+    for (auto& space : fROOTSpaces) {
+        delete space;
     }
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        delete fROOTSurfaces.at(i);
+    for (auto& surface : fROOTSurfaces) {
+        delete surface;
     }
 }
 
@@ -72,8 +67,7 @@ void KGROOTGeometryPainter::Render()
 double KGROOTGeometryPainter::GetXMin()
 {
     double tMin(std::numeric_limits<double>::max());
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSpaces.at(i);
+    for (auto* tPolyLine : fROOTSpaces) {
         double* tValue = tPolyLine->GetX();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -82,8 +76,7 @@ double KGROOTGeometryPainter::GetXMin()
             }
         }
     }
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSurfaces.at(i);
+    for (auto* tPolyLine : fROOTSurfaces) {
         double* tValue = tPolyLine->GetX();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -97,8 +90,7 @@ double KGROOTGeometryPainter::GetXMin()
 double KGROOTGeometryPainter::GetXMax()
 {
     double tMax(-1.0 * std::numeric_limits<double>::max());
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSpaces.at(i);
+    for (auto* tPolyLine : fROOTSpaces) {
         double* tValue = tPolyLine->GetX();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -107,8 +99,7 @@ double KGROOTGeometryPainter::GetXMax()
             }
         }
     }
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSurfaces.at(i);
+    for (auto* tPolyLine : fROOTSurfaces) {
         double* tValue = tPolyLine->GetX();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -123,8 +114,7 @@ double KGROOTGeometryPainter::GetXMax()
 double KGROOTGeometryPainter::GetYMin()
 {
     double tMin(std::numeric_limits<double>::max());
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSpaces.at(i);
+    for (auto* tPolyLine : fROOTSpaces) {
         double* tValue = tPolyLine->GetY();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -133,8 +123,7 @@ double KGROOTGeometryPainter::GetYMin()
             }
         }
     }
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSurfaces.at(i);
+    for (auto* tPolyLine : fROOTSurfaces) {
         double* tValue = tPolyLine->GetY();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -148,8 +137,7 @@ double KGROOTGeometryPainter::GetYMin()
 double KGROOTGeometryPainter::GetYMax()
 {
     double tMax(-1.0 * std::numeric_limits<double>::max());
-    for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSpaces.at(i);
+    for (auto* tPolyLine : fROOTSpaces) {
         double* tValue = tPolyLine->GetY();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -158,8 +146,7 @@ double KGROOTGeometryPainter::GetYMax()
             }
         }
     }
-    for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-        TPolyLine* tPolyLine = fROOTSurfaces.at(i);
+    for (auto* tPolyLine : fROOTSurfaces) {
         double* tValue = tPolyLine->GetY();
 
         for (int j = 0; j < tPolyLine->Size(); j++) {
@@ -181,7 +168,7 @@ std::string KGROOTGeometryPainter::GetYAxisLabel()
     return GetAxisLabel(fPlaneVectorB);
 }
 
-std::string KGROOTGeometryPainter::GetAxisLabel(KThreeVector anAxis)
+std::string KGROOTGeometryPainter::GetAxisLabel(KThreeVector anAxis) const
 {
     if (anAxis.Y() < fEpsilon && anAxis.Y() > -fEpsilon && anAxis.Z() < fEpsilon && anAxis.Z() > -fEpsilon) {
         if (anAxis.X() < 1.0 + fEpsilon && anAxis.X() > 1.0 - fEpsilon) {
@@ -231,21 +218,21 @@ void KGROOTGeometryPainter::Display()
     if (fDisplayEnabled == true) {
         vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSpaces.size() << " spaces" << eom;
 
-        for (size_t i = 0; i < fROOTSpaces.size(); i++) {
-            fROOTSpaces.at(i)->SetLineStyle(kSolid);
-            fROOTSpaces.at(i)->SetLineColor(kGreen + 2);
-            fROOTSpaces.at(i)->SetLineWidth(1);
-            fROOTSpaces.at(i)->SetFillColorAlpha(kGreen + 2, 0.8);
-            fROOTSpaces.at(i)->Draw("F");
+        for (auto& space : fROOTSpaces) {
+            space->SetLineStyle(kSolid);
+            space->SetLineColor(kGreen + 2);
+            space->SetLineWidth(1);
+            space->SetFillColorAlpha(kGreen + 2, 0.8);
+            space->Draw("F");
         }
 
         vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTSurfaces.size() << " surfaces" << eom;
 
-        for (size_t i = 0; i < fROOTSurfaces.size(); i++) {
-            fROOTSurfaces.at(i)->SetLineStyle(kSolid);
-            fROOTSurfaces.at(i)->SetLineColor(kBlack);
-            fROOTSurfaces.at(i)->SetLineWidth(1);
-            fROOTSurfaces.at(i)->Draw();
+        for (auto& surface : fROOTSurfaces) {
+            surface->SetLineStyle(kSolid);
+            surface->SetLineColor(kBlack);
+            surface->SetLineWidth(1);
+            surface->Draw();
         }
     }
 
@@ -255,7 +242,7 @@ void KGROOTGeometryPainter::Display()
 }
 void KGROOTGeometryPainter::Write()
 {
-    std::cout << "WRITE: " << fWriteEnabled << std::endl;
+    //std::cout << "WRITE: " << fWriteEnabled << std::endl;
 
     //if (fWriteEnabled == true) {
 
@@ -344,7 +331,7 @@ void KGROOTGeometryPainter::WriteSVG()
 
     ofstream svg(tFileName);
 
-    svg << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" << endl;
+    svg << R"(<?xml version="1.0" encoding="UTF-8" standalone="no"?>)" << endl;
 
     double x = GetXMin();
     double y = GetYMin();
@@ -355,7 +342,7 @@ void KGROOTGeometryPainter::WriteSVG()
     const string surfaceColor = "blue";
     const double lineWidth = 0.005;
 
-    svg << "<svg viewBox=\"" << x << " " << y << " " << w << " " << h << "\" xmlns=\"http://www.w3.org/2000/svg\">"
+    svg << "<svg viewBox=\"" << x << " " << y << " " << w << " " << h << R"(" xmlns="http://www.w3.org/2000/svg">)"
         << endl;
 
     svg << "  <!-- ROOT spaces -->" << endl;
@@ -520,8 +507,8 @@ void KGROOTGeometryPainter::VisitSurface(KGSurface* aSurface)
     }
 
     if (fCurrentSpace != nullptr) {
-        for (auto tIt = fCurrentSpace->GetBoundaries()->begin(); tIt != fCurrentSpace->GetBoundaries()->end(); tIt++) {
-            if ((*tIt) == fCurrentSurface) {
+        for (auto* tIt : *fCurrentSpace->GetBoundaries()) {
+            if (tIt == fCurrentSurface) {
                 if (fCurrentData == &fDefaultData) {
                     fIgnore = true;
                 }
@@ -576,17 +563,17 @@ void KGROOTGeometryPainter::VisitFlattenedClosedPathSurface(KGFlattenedCircleSur
 
     return;
 }
-void KGROOTGeometryPainter::VisitFlattenedClosedPathSurface(KGFlattenedPolyLoopSurface*)
+void KGROOTGeometryPainter::VisitFlattenedClosedPathSurface(KGFlattenedPolyLoopSurface* /*aFlattenedClosedPathSurface*/)
 {
     vismsg(eWarning) << "flattened poly loop surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitShellPathSurface(KGShellLineSegmentSurface*)
+void KGROOTGeometryPainter::VisitShellPathSurface(KGShellLineSegmentSurface* /*aShellPathSurface*/)
 {
     vismsg(eWarning) << "shell line segment surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitShellPathSurface(KGShellArcSegmentSurface*)
+void KGROOTGeometryPainter::VisitShellPathSurface(KGShellArcSegmentSurface* /*aShellPathSurface*/)
 {
     vismsg(eWarning) << "shell arc segment surfaces are not yet supported by the root geometry painter!" << eom;
     return;
@@ -652,12 +639,12 @@ void KGROOTGeometryPainter::VisitShellPathSurface(KGShellPolyLineSurface* aShell
 
     return;
 }
-void KGROOTGeometryPainter::VisitShellPathSurface(KGShellPolyLoopSurface*)
+void KGROOTGeometryPainter::VisitShellPathSurface(KGShellPolyLoopSurface* /*aShellPathSurface*/)
 {
     vismsg(eWarning) << "shell poly loop surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitShellPathSurface(KGShellCircleSurface*)
+void KGROOTGeometryPainter::VisitShellPathSurface(KGShellCircleSurface* /*aShellPathSurface*/)
 {
     vismsg(eWarning) << "shell circle surfaces are not yet supported by the root geometry painter!" << eom;
     return;
@@ -901,8 +888,8 @@ void KGROOTGeometryPainter::VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aR
     IntersectionPointsToOrderedPoints(tAllIntersections, tOrderedPoints);
 
     //connect last and first point (Todo::This doesnt work out for some cases)
-    for (auto tSetIt = tOrderedPoints.fData.begin(); tSetIt != tOrderedPoints.fData.end(); tSetIt++) {
-        (*tSetIt).fData.push_back(*((*tSetIt).fData.begin()));
+    for (auto& tSetIt : tOrderedPoints.fData) {
+        tSetIt.fData.push_back(*(tSetIt.fData.begin()));
     }
 
     OrderedPointsToROOTSurface(tOrderedPoints);
@@ -912,27 +899,27 @@ void KGROOTGeometryPainter::VisitRotatedPathSurface(KGRotatedPolyLoopSurface* aR
 
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedLineSegmentSurface*)
+void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedLineSegmentSurface* /*aExtrudedPathSurface*/)
 {
     vismsg(eWarning) << "extruded line segment surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedArcSegmentSurface*)
+void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedArcSegmentSurface* /*aExtrudedPathSurface*/)
 {
     vismsg(eWarning) << "extruded arc segment surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLineSurface*)
+void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLineSurface* /*aExtrudedPathSurface*/)
 {
     vismsg(eWarning) << "extruded poly line surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedCircleSurface*)
+void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedCircleSurface* /*aExtrudedPathSurface*/)
 {
     vismsg(eWarning) << "extruded circle surfaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface*)
+void KGROOTGeometryPainter::VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* /*aExtrudedPathSurface*/)
 {
     vismsg(eWarning) << "extruded poly loop surfaces are not yet supported by the root geometry painter!" << eom;
     return;
@@ -982,7 +969,7 @@ void KGROOTGeometryPainter::VisitWrappedSurface(KGPortHousingSurface* aPortHousi
 
     SubPortOrderedPoints tSubPortPoints;
 
-    for (unsigned int i = 0; i < fPortHousing->GetNPorts(); i++) {
+    for (int i = 0; i < (int) fPortHousing->GetNPorts(); i++) {
         if (const auto* r = dynamic_cast<const KGPortHousing::RectangularPort*>(fPortHousing->GetPort(i))) {
             vismsg(eWarning) << "Rectangular Ports yet to be implemented, aborting sub port house mesh." << eom;
             delete r;
@@ -1020,7 +1007,7 @@ void KGROOTGeometryPainter::VisitWrappedSurface(KGPortHousingSurface* aPortHousi
             IntersectionPointsToOrderedPoints(tAllSubIntersections, tSubOrderedPoints);
 
             //Skip if there are no intersections.
-            if (tSubOrderedPoints.fData.size() == 0)
+            if (tSubOrderedPoints.fData.empty())
                 continue;
 
             tSubPortPoints.fData.push_back(tSubOrderedPoints);
@@ -1029,7 +1016,7 @@ void KGROOTGeometryPainter::VisitWrappedSurface(KGPortHousingSurface* aPortHousi
 
     //If the SubPorts had intersections with the plane, we need to properly take this into account and mix them with the OrderedPoints of Main Port.
     OrderedPoints tOrderedPoints;
-    if (tSubPortPoints.fData.size() != 0) {
+    if (!tSubPortPoints.fData.empty()) {
         OrderedPoints SubPortSet = tSubPortPoints.fData.front();
         CombineOrderedPoints(tMainOrderedPoints, tSubPortPoints, tOrderedPoints);
     }
@@ -1130,7 +1117,7 @@ void KGROOTGeometryPainter::VisitWrappedSurface(KGComplexAnnulusSurface* aComple
     return;
 }
 
-void KGROOTGeometryPainter::VisitWrappedSurface(KGRodSurface*)
+void KGROOTGeometryPainter::VisitWrappedSurface(KGRodSurface* /*aWrappedSurface*/)
 {
     vismsg(eWarning) << "rod surfaces are not yet supported by the root geometry painter!" << eom;
     return;
@@ -1199,8 +1186,8 @@ void KGROOTGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedLineSegmentSpace*
     CombineOrderedPoints(tOrderedPoints);
 
     //connect last and first point (Todo::This doesnt work out for some cases)
-    for (auto tSetIt = tOrderedPoints.fData.begin(); tSetIt != tOrderedPoints.fData.end(); tSetIt++) {
-        (*tSetIt).fData.push_back(*((*tSetIt).fData.begin()));
+    for (auto& tSetIt : tOrderedPoints.fData) {
+        tSetIt.fData.push_back(*(tSetIt.fData.begin()));
     }
 
     OrderedPointsToROOTSpace(tOrderedPoints);
@@ -1252,8 +1239,8 @@ void KGROOTGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedArcSegmentSpace* 
     CombineOrderedPoints(tOrderedPoints);
 
     //connect last and first point (Todo::This doesnt work out for some cases)
-    for (auto tSetIt = tOrderedPoints.fData.begin(); tSetIt != tOrderedPoints.fData.end(); tSetIt++) {
-        (*tSetIt).fData.push_back(*((*tSetIt).fData.begin()));
+    for (auto& tSetIt : tOrderedPoints.fData) {
+        tSetIt.fData.push_back(*(tSetIt.fData.begin()));
     }
 
     OrderedPointsToROOTSpace(tOrderedPoints);
@@ -1305,8 +1292,8 @@ void KGROOTGeometryPainter::VisitRotatedOpenPathSpace(KGRotatedPolyLineSpace* aR
     CombineOrderedPoints(tOrderedPoints);
 
     //connect last and first point (Todo::This doesnt work out for some cases)
-    for (auto tSetIt = tOrderedPoints.fData.begin(); tSetIt != tOrderedPoints.fData.end(); tSetIt++) {
-        (*tSetIt).fData.push_back(*((*tSetIt).fData.begin()));
+    for (auto& tSetIt : tOrderedPoints.fData) {
+        tSetIt.fData.push_back(*(tSetIt.fData.begin()));
     }
 
     OrderedPointsToROOTSpace(tOrderedPoints);
@@ -1400,8 +1387,8 @@ void KGROOTGeometryPainter::VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* 
     IntersectionPointsToOrderedPoints(tAllIntersections, tOrderedPoints);
 
     //connect last and first point (Todo::This doesnt work out for some cases)
-    for (auto tSetIt = tOrderedPoints.fData.begin(); tSetIt != tOrderedPoints.fData.end(); tSetIt++) {
-        (*tSetIt).fData.push_back(*((*tSetIt).fData.begin()));
+    for (auto& tSetIt : tOrderedPoints.fData) {
+        tSetIt.fData.push_back(*(tSetIt.fData.begin()));
     }
 
     OrderedPointsToROOTSpace(tOrderedPoints);
@@ -1411,19 +1398,19 @@ void KGROOTGeometryPainter::VisitRotatedClosedPathSpace(KGRotatedPolyLoopSpace* 
 
     return;
 }
-void KGROOTGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace*)
+void KGROOTGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace* /*aExtrudedClosedPathSpace*/)
 {
     vismsg(eWarning) << "extruded spaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
 
-void KGROOTGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedPolyLoopSpace*)
+void KGROOTGeometryPainter::VisitExtrudedClosedPathSpace(KGExtrudedPolyLoopSpace* /*aExtrudedClosedPathSpace*/)
 {
     vismsg(eWarning) << "extruded spaces are not yet supported by the root geometry painter!" << eom;
     return;
 }
 
-void KGROOTGeometryPainter::VisitWrappedSpace(KGRodSpace*)
+void KGROOTGeometryPainter::VisitWrappedSpace(KGRodSpace* /*aWrappedSpace*/)
 {
     vismsg(eWarning) << "rod spaces are not yet supported by the root geometry painter!" << eom;
 }
@@ -1580,9 +1567,9 @@ void KGROOTGeometryPainter::ClosedPointsFlattenedToTubeMeshAndApex(const ClosedP
 {
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZ;
         tGroup.push_back(tPoint);
     }
@@ -1605,14 +1592,14 @@ void KGROOTGeometryPainter::OpenPointsRotatedToTubeMesh(const OpenPoints& aPoint
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
 
         //get case, when point is on z axis
-        if ((*tPointsIt).Y() == 0.0) {
+        if (tPointsIt.Y() == 0.0) {
             tPoint.X() = 0.0;
             tPoint.Y() = 0.0;
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.Z() = tPointsIt.X();
             ;
             tGroup.push_back(tPoint);
             aMesh.fData.push_back(tGroup);
@@ -1622,9 +1609,9 @@ void KGROOTGeometryPainter::OpenPointsRotatedToTubeMesh(const OpenPoints& aPoint
         for (tCount = 0; tCount < tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1648,26 +1635,26 @@ void KGROOTGeometryPainter::OpenPointsToShellMesh(
 
     KThreeVector tPoint;
     ShellMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
 
         //get case, when point is on z axis
-        if ((*tPointsIt).Y() == 0.0) {
+        if (tPointsIt.Y() == 0.0) {
             tPoint.X() = 0.0;
             tPoint.Y() = 0.0;
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.Z() = tPointsIt.X();
             ;
             tGroup.push_back(tPoint);
             aMesh.fData.push_back(tGroup);
             continue;
         }
 
-        for (auto tPartitionIt = tPartition.fData.begin(); tPartitionIt != tPartition.fData.end(); tPartitionIt++) {
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                AngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * (*tPartitionIt) * tAngle +
-                                                AngleStart * katrin::KConst::Pi() / 180.);
-            tPoint.Z() = (*tPointsIt).X();
+        for (double& tPartitionIt : tPartition.fData) {
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             AngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tPartitionIt * tAngle +
+                                             AngleStart * katrin::KConst::Pi() / 180.);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1689,14 +1676,14 @@ void KGROOTGeometryPainter::ClosedPointsRotatedToTorusMesh(const ClosedPoints& a
 
     KThreeVector tPoint;
     TubeMesh::Group tGroup;
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
+    for (const auto& tPointsIt : aPoints.fData) {
         tGroup.clear();
         for (tCount = 0; tCount < tArc; tCount++) {
             tFraction = (double) (tCount) / (double) (tArc);
 
-            tPoint.X() = (*tPointsIt).Y() * cos(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Y() = (*tPointsIt).Y() * sin(2. * katrin::KConst::Pi() * tFraction);
-            tPoint.Z() = (*tPointsIt).X();
+            tPoint.X() = tPointsIt.Y() * cos(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Y() = tPointsIt.Y() * sin(2. * katrin::KConst::Pi() * tFraction);
+            tPoint.Z() = tPointsIt.X();
             tGroup.push_back(tPoint);
         }
         aMesh.fData.push_back(tGroup);
@@ -1714,18 +1701,18 @@ void KGROOTGeometryPainter::OpenPointsExtrudedToFlatMesh(const OpenPoints& aPoin
     TubeMesh::Group tGroup;
 
     tGroup.clear();
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMin;
         tGroup.push_back(tPoint);
     }
     aMesh.fData.push_back(tGroup);
 
     tGroup.clear();
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMax;
         tGroup.push_back(tPoint);
     }
@@ -1743,18 +1730,18 @@ void KGROOTGeometryPainter::ClosedPointsExtrudedToTubeMesh(const ClosedPoints& a
     TubeMesh::Group tGroup;
 
     tGroup.clear();
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMin;
         tGroup.push_back(tPoint);
     }
     aMesh.fData.push_back(tGroup);
 
     tGroup.clear();
-    for (auto tPointsIt = aPoints.fData.begin(); tPointsIt != aPoints.fData.end(); tPointsIt++) {
-        tPoint.X() = (*tPointsIt).X();
-        tPoint.Y() = (*tPointsIt).Y();
+    for (const auto& tPointsIt : aPoints.fData) {
+        tPoint.X() = tPointsIt.X();
+        tPoint.Y() = tPointsIt.Y();
         tPoint.Z() = aZMax;
         tGroup.push_back(tPoint);
     }
@@ -1856,8 +1843,7 @@ void KGROOTGeometryPainter::ClosedPointsToSubPortMesh(const KGPortHousing::Circu
 
     double aMainRadius = aCircularPort->GetPortHousing()->GetRMain();
 
-    for (PortMesh::GroupCIt tGroupIt1 = tGroup1.begin(); tGroupIt1 != tGroup1.end(); tGroupIt1++) {
-        KThreeVector tCircularStartPoint = *tGroupIt1;
+    for (auto tCircularStartPoint : tGroup1) {
         KThreeVector tCircularEndPoint;
 
         double aHelper = (tCircularStartPoint.X() * aNorm.X() + tCircularStartPoint.Y() * aNorm.Y()) /
@@ -1877,13 +1863,12 @@ void KGROOTGeometryPainter::ClosedPointsToSubPortMesh(const KGPortHousing::Circu
 
     return;
 }
-void KGROOTGeometryPainter::ClosedPointsToBeamMesh(const vector<vector<double>> aStartCoord,
-                                                   const vector<vector<double>> anEndCoord, BeamMesh& aMesh)
+void KGROOTGeometryPainter::ClosedPointsToBeamMesh(const vector<vector<double>>& aStartCoord,
+                                                   const vector<vector<double>>& anEndCoord, BeamMesh& aMesh)
 {
     BeamMesh::Group tGroup;
 
-    for (auto tSetIt = aStartCoord.begin(); tSetIt != aStartCoord.end(); tSetIt++) {
-        vector<double> tCoordinates = *tSetIt;
+    for (auto tCoordinates : aStartCoord) {
         KThreeVector tPoint(tCoordinates.at(0), tCoordinates.at(1), tCoordinates.at(2));
         tGroup.push_back(tPoint);
     }
@@ -1891,8 +1876,7 @@ void KGROOTGeometryPainter::ClosedPointsToBeamMesh(const vector<vector<double>> 
     aMesh.fData.push_back(tGroup);
     tGroup.clear();
 
-    for (auto tSetIt = anEndCoord.begin(); tSetIt != anEndCoord.end(); tSetIt++) {
-        vector<double> tCoordinates = *tSetIt;
+    for (auto tCoordinates : anEndCoord) {
         KThreeVector tPoint(tCoordinates.at(0), tCoordinates.at(1), tCoordinates.at(2));
         tGroup.push_back(tPoint);
     }
@@ -1901,7 +1885,7 @@ void KGROOTGeometryPainter::ClosedPointsToBeamMesh(const vector<vector<double>> 
 
     return;
 }
-void KGROOTGeometryPainter::ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus,
+void KGROOTGeometryPainter::ClosedPointsToFlatMesh(const std::shared_ptr<KGComplexAnnulus>& aComplexAnnulus,
                                                    FlatMesh& aMesh)
 {
     unsigned int tArc = fCurrentData->GetArc();
@@ -1930,14 +1914,14 @@ void KGROOTGeometryPainter::ClosedPointsToFlatMesh(const std::shared_ptr<KGCompl
     return;
 }
 
-void KGROOTGeometryPainter::ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus> aComplexAnnulus,
+void KGROOTGeometryPainter::ClosedPointsToRingMesh(const std::shared_ptr<KGComplexAnnulus>& aComplexAnnulus,
                                                    RingMesh& aMesh)
 {
     unsigned int tArc = fCurrentData->GetArc();
 
     RingMesh::Group tGroup;
 
-    for (unsigned int i = 0; i < aComplexAnnulus->GetNRings(); i++) {
+    for (int i = 0; i < (int) aComplexAnnulus->GetNRings(); i++) {
         const KGComplexAnnulus::Ring* aRing = aComplexAnnulus->GetRing(i);
         double tRadius = aRing->GetRSub();
         KThreeVector aGlobalStart(aRing->GetASub(0), aRing->GetASub(1), 0);
@@ -1972,25 +1956,25 @@ void KGROOTGeometryPainter::ClosedPointsToRingMesh(const std::shared_ptr<KGCompl
 //line functions
 //**************
 
-void KGROOTGeometryPainter::TubeMeshToCircleLines(const TubeMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::TubeMeshToCircleLines(const TubeMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from tube mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
+        auto tGroupIt = tSetIt.begin();
         //get case, when point is on z axis (no tube mesh, just single point)
-        if (tSetIt->size() == 1) {
+        if (tSetIt.size() == 1) {
             LocalToGlobal(*tGroupIt, tPoint1);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             aCircleLines.fData.push_back(tCircleLinesGroup);
             continue;
         }
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2004,25 +1988,25 @@ void KGROOTGeometryPainter::TubeMeshToCircleLines(const TubeMesh aMesh, CircleLi
     vismsg_debug("tube mesh into <" << aCircleLines.fData.size() << "> circle line groups with <"
                                     << tCircleLinesGroup.size() << "> lines each" << eom);
 }
-void KGROOTGeometryPainter::ShellMeshToArcLines(const ShellMesh aMesh, ArcLines& anArcLines)
+void KGROOTGeometryPainter::ShellMeshToArcLines(const ShellMesh& aMesh, ArcLines& anArcLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tArcLinesGroup;
 
     //create lines from tube mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tArcLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
+        auto tGroupIt = tSetIt.begin();
         //get case, when point is on z axis (no tube mesh, just single point)
-        if (tSetIt->size() == 1) {
+        if (tSetIt.size() == 1) {
             LocalToGlobal(*tGroupIt, tPoint1);
             tArcLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             tArcLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             anArcLines.fData.push_back(tArcLinesGroup);
             continue;
         }
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tArcLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2036,7 +2020,7 @@ void KGROOTGeometryPainter::ShellMeshToArcLines(const ShellMesh aMesh, ArcLines&
 }
 
 
-void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh aMesh, ParallelLines& aParallelLines)
+void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh& aMesh, ParallelLines& aParallelLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
@@ -2056,8 +2040,8 @@ void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh aMesh, Parall
         if (tSetIt->size() == 1) {
             KThreeVector tSinglePoint = *(tSetIt->begin());
             LocalToGlobal(tSinglePoint, tPoint1);
-            for (auto tNextGroupIt = (tSetIt + 1)->begin(); tNextGroupIt != (tSetIt + 1)->end(); tNextGroupIt++) {
-                LocalToGlobal(*tNextGroupIt, tPoint2);
+            for (const auto& tNextGroupIt : *(tSetIt + 1)) {
+                LocalToGlobal(tNextGroupIt, tPoint2);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             }
             aParallelLines.fData.push_back(tParallelLinesGroup);
@@ -2070,8 +2054,8 @@ void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh aMesh, Parall
         if ((tSetIt + 1)->size() == 1) {
             KThreeVector tSinglePoint = *((tSetIt + 1)->begin());
             LocalToGlobal(tSinglePoint, tPoint2);
-            for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-                LocalToGlobal(*tGroupIt, tPoint1);
+            for (const auto& tGroupIt : *tSetIt) {
+                LocalToGlobal(tGroupIt, tPoint1);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
                 tNextGroupIt++;
             }
@@ -2081,8 +2065,8 @@ void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh aMesh, Parall
         }
 
         //normal case if all groups have same size
-        for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint1);
+        for (const auto& tGroupIt : *tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint1);
             LocalToGlobal(*tNextGroupIt, tPoint2);
             tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             tNextGroupIt++;
@@ -2095,7 +2079,7 @@ void KGROOTGeometryPainter::TubeMeshToParallelLines(const TubeMesh aMesh, Parall
                                     << tParallelLinesGroup.size() << "> lines each" << eom);
 }
 
-void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh aMesh, ParallelLines& aParallelLines)
+void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh& aMesh, ParallelLines& aParallelLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
@@ -2115,8 +2099,8 @@ void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh aMesh, Para
         if (tSetIt->size() == 1) {
             KThreeVector tSinglePoint = *(tSetIt->begin());
             LocalToGlobal(tSinglePoint, tPoint1);
-            for (auto tNextGroupIt = (tSetIt + 1)->begin(); tNextGroupIt != (tSetIt + 1)->end(); tNextGroupIt++) {
-                LocalToGlobal(*tNextGroupIt, tPoint2);
+            for (const auto& tNextGroupIt : *(tSetIt + 1)) {
+                LocalToGlobal(tNextGroupIt, tPoint2);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             }
             aParallelLines.fData.push_back(tParallelLinesGroup);
@@ -2129,8 +2113,8 @@ void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh aMesh, Para
         if ((tSetIt + 1)->size() == 1) {
             KThreeVector tSinglePoint = *((tSetIt + 1)->begin());
             LocalToGlobal(tSinglePoint, tPoint2);
-            for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-                LocalToGlobal(*tGroupIt, tPoint1);
+            for (const auto& tGroupIt : *tSetIt) {
+                LocalToGlobal(tGroupIt, tPoint1);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
                 tNextGroupIt++;
             }
@@ -2140,8 +2124,8 @@ void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh aMesh, Para
         }
 
         //normal case if all groups have same size
-        for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint1);
+        for (const auto& tGroupIt : *tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint1);
             LocalToGlobal(*tNextGroupIt, tPoint2);
             tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             tNextGroupIt++;
@@ -2155,17 +2139,17 @@ void KGROOTGeometryPainter::ShellMeshToParallelLines(const ShellMesh aMesh, Para
 }
 
 
-void KGROOTGeometryPainter::TorusMeshToCircleLines(const TorusMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::TorusMeshToCircleLines(const TorusMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from tube mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        auto tGroupIt = tSetIt.begin();
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2180,7 +2164,7 @@ void KGROOTGeometryPainter::TorusMeshToCircleLines(const TorusMesh aMesh, Circle
                                     << tCircleLinesGroup.size() << "> lines each" << eom);
 }
 
-void KGROOTGeometryPainter::TorusMeshToParallelLines(const TorusMesh aMesh, ParallelLines& aParallelLines)
+void KGROOTGeometryPainter::TorusMeshToParallelLines(const TorusMesh& aMesh, ParallelLines& aParallelLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
@@ -2191,8 +2175,8 @@ void KGROOTGeometryPainter::TorusMeshToParallelLines(const TorusMesh aMesh, Para
     while ((tSetIt + 1) != aMesh.fData.end()) {
         tParallelLinesGroup.clear();
         auto tNextGroupIt = (tSetIt + 1)->begin();
-        for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint1);
+        for (const auto& tGroupIt : *tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint1);
             LocalToGlobal(*tNextGroupIt, tPoint2);
             tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             tNextGroupIt++;
@@ -2204,25 +2188,25 @@ void KGROOTGeometryPainter::TorusMeshToParallelLines(const TorusMesh aMesh, Para
     vismsg_debug("tube mesh into <" << aParallelLines.fData.size() << "> parallel line groups with <"
                                     << tParallelLinesGroup.size() << "> lines each" << eom);
 }
-void KGROOTGeometryPainter::PortMeshToCircleLines(const PortMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::PortMeshToCircleLines(const PortMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from port mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
+        auto tGroupIt = tSetIt.begin();
         //get case, when point is on z axis (no port mesh, just single point)
-        if (tSetIt->size() == 1) {
+        if (tSetIt.size() == 1) {
             LocalToGlobal(*tGroupIt, tPoint1);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             aCircleLines.fData.push_back(tCircleLinesGroup);
             continue;
         }
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2234,7 +2218,7 @@ void KGROOTGeometryPainter::PortMeshToCircleLines(const PortMesh aMesh, CircleLi
     }
 }
 
-void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh aMesh, ParallelLines& aParallelLines)
+void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh& aMesh, ParallelLines& aParallelLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
@@ -2254,8 +2238,8 @@ void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh aMesh, Parall
         if (tSetIt->size() == 1) {
             KThreeVector tSinglePoint = *(tSetIt->begin());
             LocalToGlobal(tSinglePoint, tPoint1);
-            for (auto tNextGroupIt = (tSetIt + 1)->begin(); tNextGroupIt != (tSetIt + 1)->end(); tNextGroupIt++) {
-                LocalToGlobal(*tNextGroupIt, tPoint2);
+            for (const auto& tNextGroupIt : *(tSetIt + 1)) {
+                LocalToGlobal(tNextGroupIt, tPoint2);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             }
             aParallelLines.fData.push_back(tParallelLinesGroup);
@@ -2268,8 +2252,8 @@ void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh aMesh, Parall
         if ((tSetIt + 1)->size() == 1) {
             KThreeVector tSinglePoint = *((tSetIt + 1)->begin());
             LocalToGlobal(tSinglePoint, tPoint2);
-            for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-                LocalToGlobal(*tGroupIt, tPoint1);
+            for (const auto& tGroupIt : *tSetIt) {
+                LocalToGlobal(tGroupIt, tPoint1);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
                 tNextGroupIt++;
             }
@@ -2280,8 +2264,8 @@ void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh aMesh, Parall
 
         double epsilon = 1e-7;
         //normal case if all groups have same size
-        for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint1);
+        for (const auto& tGroupIt : *tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint1);
             LocalToGlobal(*tNextGroupIt, tPoint2);
             tNextGroupIt++;
             //Skip points that are the same (causing errors later on)
@@ -2294,25 +2278,25 @@ void KGROOTGeometryPainter::PortMeshToParallelLines(const PortMesh aMesh, Parall
     }
 }
 
-void KGROOTGeometryPainter::BeamMeshToCircleLines(const BeamMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::BeamMeshToCircleLines(const BeamMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from tube mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
+        auto tGroupIt = tSetIt.begin();
         //get case, when point is on z axis (no tube mesh, just single point)
-        if (tSetIt->size() == 1) {
+        if (tSetIt.size() == 1) {
             LocalToGlobal(*tGroupIt, tPoint1);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint1));
             aCircleLines.fData.push_back(tCircleLinesGroup);
             continue;
         }
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2324,7 +2308,7 @@ void KGROOTGeometryPainter::BeamMeshToCircleLines(const BeamMesh aMesh, CircleLi
     }
 }
 
-void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh aMesh, ParallelLines& aParallelLines)
+void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh& aMesh, ParallelLines& aParallelLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
@@ -2344,8 +2328,8 @@ void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh aMesh, Parall
         if (tSetIt->size() == 1) {
             KThreeVector tSinglePoint = *(tSetIt->begin());
             LocalToGlobal(tSinglePoint, tPoint1);
-            for (auto tNextGroupIt = (tSetIt + 1)->begin(); tNextGroupIt != (tSetIt + 1)->end(); tNextGroupIt++) {
-                LocalToGlobal(*tNextGroupIt, tPoint2);
+            for (const auto& tNextGroupIt : *(tSetIt + 1)) {
+                LocalToGlobal(tNextGroupIt, tPoint2);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             }
             aParallelLines.fData.push_back(tParallelLinesGroup);
@@ -2358,8 +2342,8 @@ void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh aMesh, Parall
         if ((tSetIt + 1)->size() == 1) {
             KThreeVector tSinglePoint = *((tSetIt + 1)->begin());
             LocalToGlobal(tSinglePoint, tPoint2);
-            for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-                LocalToGlobal(*tGroupIt, tPoint1);
+            for (const auto& tGroupIt : *tSetIt) {
+                LocalToGlobal(tGroupIt, tPoint1);
                 tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
                 tNextGroupIt++;
             }
@@ -2369,8 +2353,8 @@ void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh aMesh, Parall
         }
 
         //normal case if all groups have same size
-        for (auto tGroupIt = tSetIt->begin(); tGroupIt != tSetIt->end(); tGroupIt++) {
-            LocalToGlobal(*tGroupIt, tPoint1);
+        for (const auto& tGroupIt : *tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint1);
             LocalToGlobal(*tNextGroupIt, tPoint2);
             tParallelLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
             tNextGroupIt++;
@@ -2382,17 +2366,17 @@ void KGROOTGeometryPainter::BeamMeshToParallelLines(const BeamMesh aMesh, Parall
     vismsg_debug("beam mesh into <" << aParallelLines.fData.size() << "> parallel line groups with <"
                                     << tParallelLinesGroup.size() << "> lines each" << eom);
 }
-void KGROOTGeometryPainter::FlatMeshToCircleLines(const FlatMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::FlatMeshToCircleLines(const FlatMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from flat mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        auto tGroupIt = tSetIt.begin();
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2406,17 +2390,17 @@ void KGROOTGeometryPainter::FlatMeshToCircleLines(const FlatMesh aMesh, CircleLi
     vismsg_debug("flat mesh into <" << aCircleLines.fData.size() << "> circle line groups with <"
                                     << tCircleLinesGroup.size() << "> lines each" << eom);
 }
-void KGROOTGeometryPainter::RingMeshToCircleLines(const RingMesh aMesh, CircleLines& aCircleLines)
+void KGROOTGeometryPainter::RingMeshToCircleLines(const RingMesh& aMesh, CircleLines& aCircleLines)
 {
     //object allocation
     KThreeVector tPoint1, tPoint2;
     Lines::Group tCircleLinesGroup;
 
     //create lines from ring mesh
-    for (auto tSetIt = aMesh.fData.begin(); tSetIt != aMesh.fData.end(); tSetIt++) {
+    for (const auto& tSetIt : aMesh.fData) {
         tCircleLinesGroup.clear();
-        auto tGroupIt = tSetIt->begin();
-        while ((tGroupIt + 1) != tSetIt->end()) {
+        auto tGroupIt = tSetIt.begin();
+        while ((tGroupIt + 1) != tSetIt.end()) {
             LocalToGlobal(*tGroupIt, tPoint1);
             LocalToGlobal(*(tGroupIt + 1), tPoint2);
             tCircleLinesGroup.push_back(Lines::Line(tPoint1, tPoint2));
@@ -2436,7 +2420,7 @@ void KGROOTGeometryPainter::RingMeshToCircleLines(const RingMesh aMesh, CircleLi
 //intersection functions
 //**********************
 
-void KGROOTGeometryPainter::LinesToIntersections(const CircleLines aCircleLines,
+void KGROOTGeometryPainter::LinesToIntersections(const CircleLines& aCircleLines,
                                                  IntersectionPoints& anIntersectionPoints)
 {
     vismsg_debug("Calculating intersection of <" << aCircleLines.fData.size() << "> circle lines" << eom);
@@ -2444,12 +2428,11 @@ void KGROOTGeometryPainter::LinesToIntersections(const CircleLines aCircleLines,
     bool tIntersection;
     IntersectionPoints::Group tIntersectionPointsGroup;
 
-    for (auto tSetIt = aCircleLines.fData.begin(); tSetIt != aCircleLines.fData.end(); tSetIt++) {
+    for (const auto& tLinesGroup : aCircleLines.fData) {
         vismsg_debug("Next Circle Line: " << eom);
         tIntersectionPointsGroup.clear();
-        Lines::Group tLinesGroup = *tSetIt;
-        for (Lines::GroupCIt tGroupIt = tLinesGroup.begin(); tGroupIt != tLinesGroup.end(); tGroupIt++) {
-            CalculatePlaneIntersection((*tGroupIt).first, (*tGroupIt).second, tIntersectionPoint, tIntersection);
+        for (const auto& tGroupIt : tLinesGroup) {
+            CalculatePlaneIntersection(tGroupIt.first, tGroupIt.second, tIntersectionPoint, tIntersection);
             if (tIntersection) {
                 vismsg_debug("intersection found at " << tIntersectionPoint << eom);
                 //convert in 2-axis system of plane
@@ -2463,19 +2446,18 @@ void KGROOTGeometryPainter::LinesToIntersections(const CircleLines aCircleLines,
     }
     return;
 }
-void KGROOTGeometryPainter::LinesToIntersections(const ArcLines anArcLines, IntersectionPoints& anIntersectionPoints)
+void KGROOTGeometryPainter::LinesToIntersections(const ArcLines& anArcLines, IntersectionPoints& anIntersectionPoints)
 {
     vismsg_debug("Calculating intersection of <" << anArcLines.fData.size() << "> arc lines" << eom);
     KThreeVector tIntersectionPoint;
     bool tIntersection;
     IntersectionPoints::Group tIntersectionPointsGroup;
 
-    for (auto tSetIt = anArcLines.fData.begin(); tSetIt != anArcLines.fData.end(); tSetIt++) {
+    for (const auto& tLinesGroup : anArcLines.fData) {
         vismsg_debug("Next Circle Line: " << eom);
         tIntersectionPointsGroup.clear();
-        Lines::Group tLinesGroup = *tSetIt;
-        for (Lines::GroupCIt tGroupIt = tLinesGroup.begin(); tGroupIt != tLinesGroup.end(); tGroupIt++) {
-            CalculatePlaneIntersection((*tGroupIt).first, (*tGroupIt).second, tIntersectionPoint, tIntersection);
+        for (const auto& tGroupIt : tLinesGroup) {
+            CalculatePlaneIntersection(tGroupIt.first, tGroupIt.second, tIntersectionPoint, tIntersection);
             if (tIntersection) {
                 vismsg_debug("intersection found at " << tIntersectionPoint << eom);
                 //convert in 2-axis system of plane
@@ -2491,7 +2473,7 @@ void KGROOTGeometryPainter::LinesToIntersections(const ArcLines anArcLines, Inte
 }
 
 
-void KGROOTGeometryPainter::LinesToIntersections(const ParallelLines aParallelLines,
+void KGROOTGeometryPainter::LinesToIntersections(const ParallelLines& aParallelLines,
                                                  IntersectionPoints& anIntersectionPoints)
 {
     vismsg_debug("Calculating intersection of <" << aParallelLines.fData.size() << "> parallel lines" << eom);
@@ -2499,12 +2481,11 @@ void KGROOTGeometryPainter::LinesToIntersections(const ParallelLines aParallelLi
     bool tIntersection;
     IntersectionPoints::Group tIntersectionPointsGroup;
 
-    for (auto tSetIt = aParallelLines.fData.begin(); tSetIt != aParallelLines.fData.end(); tSetIt++) {
+    for (const auto& tLinesGroup : aParallelLines.fData) {
         vismsg_debug("Next Parallel Line: " << eom);
         tIntersectionPointsGroup.clear();
-        Lines::Group tLinesGroup = *tSetIt;
-        for (Lines::GroupCIt tGroupIt = tLinesGroup.begin(); tGroupIt != tLinesGroup.end(); tGroupIt++) {
-            CalculatePlaneIntersection((*tGroupIt).first, (*tGroupIt).second, tIntersectionPoint, tIntersection);
+        for (const auto& tGroupIt : tLinesGroup) {
+            CalculatePlaneIntersection(tGroupIt.first, tGroupIt.second, tIntersectionPoint, tIntersection);
             if (tIntersection) {
                 vismsg_debug("intersection found at " << tIntersectionPoint << eom);
                 //convert in 2-axis system of plane
@@ -2520,7 +2501,7 @@ void KGROOTGeometryPainter::LinesToIntersections(const ParallelLines aParallelLi
 }
 
 
-void KGROOTGeometryPainter::CalculatePlaneIntersection(const KThreeVector aStartPoint, const KThreeVector anEndPoint,
+void KGROOTGeometryPainter::CalculatePlaneIntersection(const KThreeVector& aStartPoint, const KThreeVector& anEndPoint,
                                                        KThreeVector& anIntersectionPoint, bool& anIntersection)
 {
     //calculates the intersection between the line from aStartPoint to anEndPoint with the plane define by tPlaneNormal and tPlanePoint
@@ -2582,7 +2563,7 @@ void KGROOTGeometryPainter::CalculatePlaneIntersection(const KThreeVector aStart
     return;
 }
 
-void KGROOTGeometryPainter::TransformToPlaneSystem(const KThreeVector aPoint, KTwoVector& aPlanePoint)
+void KGROOTGeometryPainter::TransformToPlaneSystem(const KThreeVector& aPoint, KTwoVector& aPlanePoint)
 {
     //solve aPoint = fPlanePoint + alpha * fPlaneA + beta * fPlaneB for alpha and beta
     double tAlpha, tBeta;
@@ -2642,7 +2623,7 @@ void KGROOTGeometryPainter::TransformToPlaneSystem(const KThreeVector aPoint, KT
     return;
 }
 
-void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const IntersectionPoints anIntersectionPoints,
+void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                               OrderedPoints& anOrderedPoints)
 {
     //the intersection points now have to be sorted, to create one (or more) ordered points (which later can be connected to form a shape on the canvas)
@@ -2758,15 +2739,15 @@ void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const Intersection
         }
     }
 
-    if (anOrderedPoints.fData.size() == 0) {
+    if (anOrderedPoints.fData.empty()) {
         vismsg_debug("plane did not cross geometry" << eom);
     }
 
     return;
 }
 
-void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const IntersectionPoints aMainIntersectionPoints,
-                                                              const IntersectionPoints aRingIntersection,
+void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const IntersectionPoints& aMainIntersectionPoints,
+                                                              const IntersectionPoints& aRingIntersection,
                                                               OrderedPoints& anOrderedPoint)
 {
     IntersectionPoints::NamedGroup tMainGroup = aMainIntersectionPoints.fData.front();
@@ -2777,10 +2758,9 @@ void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const Intersection
         KTwoVector aClosestPoint(-1000., -1000.);
         KTwoVector aNextStartPoint;
         tPoints.fData.push_back(tStartPoint);
-        for (auto tSetIt = aRingIntersection.fData.begin(); tSetIt != aRingIntersection.fData.end(); tSetIt++) {
-            IntersectionPoints::NamedGroup tNamedGroup = *tSetIt;
+        for (const auto& tNamedGroup : aRingIntersection.fData) {
             IntersectionPoints::Group tGroup = tNamedGroup.first;
-            if (tGroup.size() == 0) {
+            if (tGroup.empty()) {
                 continue;
             }
             KTwoVector aPoint1 = tGroup.front();
@@ -2811,7 +2791,7 @@ void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const Intersection
     anOrderedPoint.fData.push_back(tPoints);
     tPoints.fData.clear();
 
-    if (anOrderedPoint.fData.size() == 0) {
+    if (anOrderedPoint.fData.empty()) {
         vismsg_debug("plane did not cross geometry" << eom);
     }
 
@@ -2819,7 +2799,7 @@ void KGROOTGeometryPainter::IntersectionPointsToOrderedPoints(const Intersection
 }
 
 
-void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const IntersectionPoints anIntersectionPoints,
+void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                                    OrderedPoints& anOrderedPoints)
 {
     //the intersection points now have to be sorted, to create one (or more) ordered points (which later can be connected to form a shape on the canvas)
@@ -2838,8 +2818,7 @@ void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const Interse
 
     vismsg_debug("Trying to order the following intersection points: " << eom);
 
-    for (auto tSetIt = anIntersectionPoints.fData.begin(); tSetIt != anIntersectionPoints.fData.end(); tSetIt++) {
-        IntersectionPoints::NamedGroup tNamedGroup = *tSetIt;
+    for (const auto& tNamedGroup : anIntersectionPoints.fData) {
         IntersectionPoints::Group tGroup = tNamedGroup.first;
         if (tGroup.size() <= 1)
             aCount++;
@@ -2857,7 +2836,7 @@ void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const Interse
             IntersectionPoints::Group tGroup = tNamedGroup.first;
 
             //Pushing all intersection points into deque, defining ending and starting point.
-            if (tGroup.size() > 0) {
+            if (!tGroup.empty()) {
                 if (tStartState == IntersectionPoints::eUndefined) {
                     tStartState = tOrigin;
                     tEndState = tOrigin;
@@ -2872,10 +2851,7 @@ void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const Interse
             //Reaching the end of loop:
             if (tSetIt == anIntersectionPoints.fData.end() - 1) {
                 OpenPoints tPoints1;
-                for (IntersectionPoints::SetCIt tNewSetIt = tNewIntersectionPoints.fData.begin();
-                     tNewSetIt != tNewIntersectionPoints.fData.end();
-                     tNewSetIt++) {
-                    IntersectionPoints::NamedGroup tNewNamedGroup = *tNewSetIt;
+                for (const auto& tNewNamedGroup : tNewIntersectionPoints.fData) {
                     IntersectionPoints::Group tNewGroup = tNewNamedGroup.first;
                     KTwoVector tPoint1 = tNewGroup.front();
                     tPoints1.fData.push_back(tPoint1);
@@ -2934,7 +2910,7 @@ void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const Interse
             }
         }
     }
-    if (anOrderedPoints.fData.size() == 0) {
+    if (anOrderedPoints.fData.empty()) {
         vismsg_debug("plane did not cross geometry" << eom);
     }
 
@@ -2942,7 +2918,7 @@ void KGROOTGeometryPainter::ShellIntersectionPointsToOrderedPoints(const Interse
 }
 
 
-void KGROOTGeometryPainter::CreateClosedOrderedPoints(const IntersectionPoints anIntersectionPoints,
+void KGROOTGeometryPainter::CreateClosedOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                       OrderedPoints& anOrderedPoints)
 {
     ClosedPoints tClosedPoints;
@@ -3036,7 +3012,7 @@ void KGROOTGeometryPainter::CreateClosedOrderedPoints(const IntersectionPoints a
     return;
 }
 
-void KGROOTGeometryPainter::CreateShellClosedOrderedPoints(const IntersectionPoints anIntersectionPoints,
+void KGROOTGeometryPainter::CreateShellClosedOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                            OrderedPoints& anOrderedPoints)
 {
     ClosedPoints tClosedPointsHigh, tClosedPointsLow;
@@ -3136,8 +3112,8 @@ void KGROOTGeometryPainter::CreateShellClosedOrderedPoints(const IntersectionPoi
 }
 
 
-void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anIntersectionPoints,
-                                                    OrderedPoints& anOrderedPoints)
+void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints& anIntersectionPoints,
+                                                    OrderedPoints& anOrderedPoints) const
 {
     OpenPoints tOpenPoints;
 
@@ -3200,8 +3176,7 @@ void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anI
             OpenPoints tTempPoints;
 
             vismsg_debug("have points:" << eom);
-            for (auto tGroupIt = tGroup.begin(); tGroupIt != tGroup.end(); tGroupIt++) {
-                KTwoVector tPoint = *tGroupIt;
+            for (auto tPoint : tGroup) {
                 vismsg_debug(tPoint << eom);
                 if (((tPoint.X() < tCirclePointHigh.X() && tPoint.X() > tCirclePointLow.X()) ||
                      (tPoint.X() > tCirclePointHigh.X() && tPoint.X() < tCirclePointLow.X())) &&
@@ -3212,13 +3187,13 @@ void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anI
             }
 
             vismsg_debug("using:" << eom);
-            for (auto tMapIt = tTempPointsMap.begin(); tMapIt != tTempPointsMap.end(); tMapIt++) {
-                vismsg_debug((*tMapIt).second << eom);
+            for (auto& tMapIt : tTempPointsMap) {
+                vismsg_debug(tMapIt.second << eom);
                 if (tCirclePointHigh.X() < tCirclePointLow.X()) {
-                    tTempPoints.fData.push_back((*tMapIt).second);
+                    tTempPoints.fData.push_back(tMapIt.second);
                 }
                 else {
-                    tTempPoints.fData.push_front((*tMapIt).second);
+                    tTempPoints.fData.push_front(tMapIt.second);
                 }
             }
 
@@ -3235,8 +3210,7 @@ void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anI
             tTempPoints.fData.clear();
 
             vismsg_debug("have points:" << eom);
-            for (auto tGroupIt = tGroup.begin(); tGroupIt != tGroup.end(); tGroupIt++) {
-                KTwoVector tPoint = *tGroupIt;
+            for (auto tPoint : tGroup) {
                 vismsg_debug(tPoint << eom);
                 if (((tPoint.X() < tCirclePointHigh.X() && tPoint.X() > tCirclePointLow.X()) ||
                      (tPoint.X() > tCirclePointHigh.X() && tPoint.X() < tCirclePointLow.X())) &&
@@ -3247,13 +3221,13 @@ void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anI
             }
 
             vismsg_debug("using:" << eom);
-            for (auto tMapIt = tTempPointsMap.begin(); tMapIt != tTempPointsMap.end(); tMapIt++) {
-                vismsg_debug((*tMapIt).second << eom);
+            for (auto& tMapIt : tTempPointsMap) {
+                vismsg_debug(tMapIt.second << eom);
                 if (tCirclePointHigh.X() > tCirclePointLow.X()) {
-                    tTempPoints.fData.push_back((*tMapIt).second);
+                    tTempPoints.fData.push_back(tMapIt.second);
                 }
                 else {
-                    tTempPoints.fData.push_front((*tMapIt).second);
+                    tTempPoints.fData.push_front(tMapIt.second);
                 }
             }
 
@@ -3334,8 +3308,8 @@ void KGROOTGeometryPainter::CreateOpenOrderedPoints(const IntersectionPoints anI
     return;
 }
 
-void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoints anIntersectionPoints,
-                                                         OrderedPoints& anOrderedPoints)
+void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoints& anIntersectionPoints,
+                                                         OrderedPoints& anOrderedPoints) const
 {
     OpenPoints tOpenPoints1, tOpenPoints2;
 
@@ -3393,8 +3367,7 @@ void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoint
             OpenPoints tTempPoints;
 
             vismsg_debug("have points:" << eom);
-            for (auto tGroupIt = tGroup.begin(); tGroupIt != tGroup.end(); tGroupIt++) {
-                KTwoVector tPoint = *tGroupIt;
+            for (auto tPoint : tGroup) {
                 vismsg_debug(tPoint << eom);
                 if (((tPoint.X() < tCirclePointHigh.X() && tPoint.X() > tCirclePointLow.X()) ||
                      (tPoint.X() > tCirclePointHigh.X() && tPoint.X() < tCirclePointLow.X())) &&
@@ -3405,13 +3378,13 @@ void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoint
             }
 
             vismsg_debug("using:" << eom);
-            for (auto tMapIt = tTempPointsMap.begin(); tMapIt != tTempPointsMap.end(); tMapIt++) {
-                vismsg_debug((*tMapIt).second << eom);
+            for (auto& tMapIt : tTempPointsMap) {
+                vismsg_debug(tMapIt.second << eom);
                 if (tCirclePointHigh.X() < tCirclePointLow.X()) {
-                    tTempPoints.fData.push_back((*tMapIt).second);
+                    tTempPoints.fData.push_back(tMapIt.second);
                 }
                 else {
-                    tTempPoints.fData.push_front((*tMapIt).second);
+                    tTempPoints.fData.push_front(tMapIt.second);
                 }
             }
 
@@ -3428,8 +3401,7 @@ void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoint
             tTempPoints.fData.clear();
 
             vismsg_debug("have points:" << eom);
-            for (auto tGroupIt = tGroup.begin(); tGroupIt != tGroup.end(); tGroupIt++) {
-                KTwoVector tPoint = *tGroupIt;
+            for (auto tPoint : tGroup) {
                 vismsg_debug(tPoint << eom);
                 if (((tPoint.X() < tCirclePointHigh.X() && tPoint.X() > tCirclePointLow.X()) ||
                      (tPoint.X() > tCirclePointHigh.X() && tPoint.X() < tCirclePointLow.X())) &&
@@ -3440,13 +3412,13 @@ void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoint
             }
 
             vismsg_debug("using:" << eom);
-            for (auto tMapIt = tTempPointsMap.begin(); tMapIt != tTempPointsMap.end(); tMapIt++) {
-                vismsg_debug((*tMapIt).second << eom);
+            for (auto& tMapIt : tTempPointsMap) {
+                vismsg_debug(tMapIt.second << eom);
                 if (tCirclePointHigh.X() > tCirclePointLow.X()) {
-                    tTempPoints.fData.push_back((*tMapIt).second);
+                    tTempPoints.fData.push_back(tMapIt.second);
                 }
                 else {
-                    tTempPoints.fData.push_front((*tMapIt).second);
+                    tTempPoints.fData.push_front(tMapIt.second);
                 }
             }
 
@@ -3543,12 +3515,11 @@ void KGROOTGeometryPainter::CreateShellOpenOrderedPoints(const IntersectionPoint
 }
 
 
-void KGROOTGeometryPainter::CreateDualOrderedPoints(const IntersectionPoints anIntersectionPoints,
+void KGROOTGeometryPainter::CreateDualOrderedPoints(const IntersectionPoints& anIntersectionPoints,
                                                     OrderedPoints& anOrderedPoints)
 {
     OpenPoints tPoints1, tPoints2;
-    for (auto tSetIt = anIntersectionPoints.fData.begin(); tSetIt != anIntersectionPoints.fData.end(); tSetIt++) {
-        IntersectionPoints::NamedGroup tNamedGroup = *tSetIt;
+    for (const auto& tNamedGroup : anIntersectionPoints.fData) {
         IntersectionPoints::Origin tOrigin = tNamedGroup.second;
         IntersectionPoints::Group tGroup = tNamedGroup.first;
         if (tGroup.size() > 2 || tOrigin != IntersectionPoints::eCircle) {
@@ -3582,8 +3553,7 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& anOrderedPoints)
         Points tNewPoints;
         OrderedPoints::SetCIt tSetIt = anOrderedPoints.fData.begin();
         Points tPoints = *tSetIt;
-        for (Points::CIt tGroupIt = tPoints.fData.begin(); tGroupIt != tPoints.fData.end(); tGroupIt++) {
-            KTwoVector tPoint = *tGroupIt;
+        for (const auto& tPoint : tPoints.fData) {
             tNewPoints.fData.push_back(tPoint);
         }
         tSetIt++;
@@ -3604,16 +3574,14 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& anOrderedPoints)
 //rendering functions
 //*******************
 
-void KGROOTGeometryPainter::OrderedPointsToROOTSurface(const OrderedPoints anOrderedPoints)
+void KGROOTGeometryPainter::OrderedPointsToROOTSurface(const OrderedPoints& anOrderedPoints)
 {
-    for (auto tSetIt = anOrderedPoints.fData.begin(); tSetIt != anOrderedPoints.fData.end(); tSetIt++) {
+    for (const auto& tPoints : anOrderedPoints.fData) {
         auto* tPolyLine = new TPolyLine();
         KTwoVector tLastPoint;
-        Points tPoints = *tSetIt;
-
         vismsg_debug("adding polyline with " << tPoints.fData.size() << " ordered points to ROOT surfaces" << eom);
 
-        for (Points::CIt tGroupIt = tPoints.fData.begin(); tGroupIt != tPoints.fData.end(); tGroupIt++) {
+        for (auto tGroupIt = tPoints.fData.begin(); tGroupIt != tPoints.fData.end(); tGroupIt++) {
             KTwoVector tPoint = *tGroupIt;
             if (tPoint.X() == tLastPoint.X() && tPoint.Y() == tLastPoint.Y() && tGroupIt != tPoints.fData.begin()) {
                 //skip points that are the same
@@ -3639,15 +3607,10 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
 
     //Let's first extract the Points the points closest to the main cylinder from the subports.
     ConnectionPoints tConnectionPoints;
-    for (SubPortOrderedPoints::SetCIt tSetIt = aSubOrderedPoints.fData.begin(); tSetIt != aSubOrderedPoints.fData.end();
-         tSetIt++) {
-        OrderedPoints anOrderedPoint = *tSetIt;
+    for (const auto& anOrderedPoint : aSubOrderedPoints.fData) {
         ConnectionPoints::Group tConnectionGroup;
         if (anOrderedPoint.fData.size() > 1) {
-            for (OrderedPoints::SetCIt tSubSetIt = anOrderedPoint.fData.begin();
-                 tSubSetIt != anOrderedPoint.fData.end();
-                 tSubSetIt++) {
-                Points tPoints = *tSubSetIt;
+            for (const auto& tPoints : anOrderedPoint.fData) {
                 //KTwoVector tConnectionVector = tPoints.fData.back();
                 pair<KTwoVector, OrderedPoints::SetCIt> tConnectionPoint;
                 tConnectionPoint.first = tPoints.fData.back();
@@ -3655,10 +3618,7 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
             }
         }
         if (anOrderedPoint.fData.size() == 1) {
-            for (OrderedPoints::SetCIt tSubSetIt = anOrderedPoint.fData.begin();
-                 tSubSetIt != anOrderedPoint.fData.end();
-                 tSubSetIt++) {
-                Points tPoints = *tSubSetIt;
+            for (const auto& tPoints : anOrderedPoint.fData) {
                 pair<KTwoVector, OrderedPoints::SetCIt> tConnectionPointFront;
                 tConnectionPointFront.first = tPoints.fData.front();
                 pair<KTwoVector, OrderedPoints::SetCIt> tConnectionPointBack;
@@ -3673,9 +3633,7 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
     //Now we need to search for the points on the main cylinder, that are closest to the connection points, but not in between one group of them.
     ConnectionPoints tMainConnectionPoints;
 
-    for (ConnectionPoints::SetCIt tSetIt = tConnectionPoints.fData.begin(); tSetIt != tConnectionPoints.fData.end();
-         tSetIt++) {
-        ConnectionPoints::Group tConnectionGroup = *tSetIt;
+    for (auto tConnectionGroup : tConnectionPoints.fData) {
         pair<KTwoVector, OrderedPoints::SetCIt> ClosestPointFront;
         pair<KTwoVector, OrderedPoints::SetCIt> ClosestPointBack;
         KTwoVector Initialise(-1000, -1000);
@@ -3688,9 +3646,7 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
              tMainIt++) {
             OrderedPoints::Element tMainOrderedPoint = *tMainIt;
 
-            for (Points::CIt tGroupIt = tMainOrderedPoint.fData.begin(); tGroupIt != tMainOrderedPoint.fData.end();
-                 tGroupIt++) {
-                KTwoVector TempPoint = *tGroupIt;
+            for (const auto& TempPoint : tMainOrderedPoint.fData) {
                 if (distance(TempPoint, tConnectionGroup.front().first) <
                         distance(ClosestPointFront.first, tConnectionGroup.front().first) &&
                     distance(TempPoint, tConnectionGroup.back().first) >
@@ -3726,14 +3682,8 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
         Points tTempOrdered;
         //We need to check again if a point is in between two connection points or not by comparing the distance between the point and the connection points
         //We also need to make sure to not check for Connection points from the opposite parallel group.
-        for (Points::CIt tPointIt = tMainOrderedPoint.fData.begin(); tPointIt != tMainOrderedPoint.fData.end();
-             tPointIt++) {
-            KTwoVector tMainPoint = *tPointIt;
-
-            for (ConnectionPoints::SetCIt tSetIt = tMainConnectionPoints.fData.begin();
-                 tSetIt != tMainConnectionPoints.fData.end();
-                 tSetIt++) {
-                ConnectionPoints::Group tConnectionGroup = *tSetIt;
+        for (const auto& tMainPoint : tMainOrderedPoint.fData) {
+            for (auto tConnectionGroup : tMainConnectionPoints.fData) {
                 if (tConnectionGroup.front().second != tMainSetIt) {
                     //Wrong connection group, skip.
                     continue;
@@ -3771,21 +3721,13 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
 
     //Now we just have to add the connection points to the subports intersection points
 
-    for (SubPortOrderedPoints::SetCIt tSetIt = aSubOrderedPoints.fData.begin(); tSetIt != aSubOrderedPoints.fData.end();
-         tSetIt++) {
-        OrderedPoints anOrderedPoint = *tSetIt;
+    for (auto& anOrderedPoint : aSubOrderedPoints.fData) {
         if (anOrderedPoint.fData.size() > 1) {
-            for (OrderedPoints::SetCIt tSubSetIt = anOrderedPoint.fData.begin();
-                 tSubSetIt != anOrderedPoint.fData.end();
-                 tSubSetIt++) {
-                Points tPoints = *tSubSetIt;
+            for (auto& tPoints : anOrderedPoint.fData) {
                 KTwoVector tConnectionPoint = tPoints.fData.back();
                 KTwoVector ClosestPoint(-1000, -1000);
                 //Gotta search for the right main connection point again. Feel like there is an easier way like tagging the point beforehand.
-                for (ConnectionPoints::SetCIt tConnSetIt = tMainConnectionPoints.fData.begin();
-                     tConnSetIt != tMainConnectionPoints.fData.end();
-                     tConnSetIt++) {
-                    ConnectionPoints::Group ConnectionGroup = *tConnSetIt;
+                for (auto ConnectionGroup : tMainConnectionPoints.fData) {
                     KTwoVector First = ConnectionGroup.front().first;
                     KTwoVector Second = ConnectionGroup.back().first;
                     if (distance(First, tConnectionPoint) < distance(ClosestPoint, tConnectionPoint)) {
@@ -3800,18 +3742,12 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& aMainOrderedPoin
             }
         }
         if (anOrderedPoint.fData.size() == 1) {
-            for (OrderedPoints::SetCIt tSubSetIt = anOrderedPoint.fData.begin();
-                 tSubSetIt != anOrderedPoint.fData.end();
-                 tSubSetIt++) {
-                Points tPoints = *tSubSetIt;
+            for (auto& tPoints : anOrderedPoint.fData) {
                 KTwoVector tConnectionPointFront = tPoints.fData.front();
                 KTwoVector tConnectionPointBack = tPoints.fData.back();
                 KTwoVector ClosestPointFront = tPoints.fData.back();
                 KTwoVector ClosestPointBack = tPoints.fData.front();
-                for (ConnectionPoints::SetCIt tConnSetIt = tMainConnectionPoints.fData.begin();
-                     tConnSetIt != tMainConnectionPoints.fData.end();
-                     tConnSetIt++) {
-                    ConnectionPoints::Group ConnectionGroup = *tConnSetIt;
+                for (auto ConnectionGroup : tMainConnectionPoints.fData) {
                     KTwoVector First = ConnectionGroup.front().first;
                     KTwoVector Second = ConnectionGroup.back().first;
                     if (distance(First, tConnectionPointFront) < distance(ClosestPointFront, tConnectionPointFront)) {
@@ -3875,16 +3811,14 @@ void KGROOTGeometryPainter::SymmetricPartition(const double& aStart, const doubl
 }
 
 
-void KGROOTGeometryPainter::OrderedPointsToROOTSpace(const OrderedPoints anOrderedPoints)
+void KGROOTGeometryPainter::OrderedPointsToROOTSpace(const OrderedPoints& anOrderedPoints)
 {
-    for (auto tSetIt = anOrderedPoints.fData.begin(); tSetIt != anOrderedPoints.fData.end(); tSetIt++) {
+    for (const auto& tPoints : anOrderedPoints.fData) {
         auto* tPolyLine = new TPolyLine();
         KTwoVector tLastPoint;
-        Points tPoints = *tSetIt;
-
         vismsg_debug("adding polyline with " << tPoints.fData.size() << " ordered points to ROOT spaces" << eom);
 
-        for (Points::CIt tGroupIt = tPoints.fData.begin(); tGroupIt != tPoints.fData.end(); tGroupIt++) {
+        for (auto tGroupIt = tPoints.fData.begin(); tGroupIt != tPoints.fData.end(); tGroupIt++) {
             KTwoVector tPoint = *tGroupIt;
             if (tPoint.X() == tLastPoint.X() && tPoint.Y() == tLastPoint.Y() && tGroupIt != tPoints.fData.begin()) {
                 //skip points that are the same

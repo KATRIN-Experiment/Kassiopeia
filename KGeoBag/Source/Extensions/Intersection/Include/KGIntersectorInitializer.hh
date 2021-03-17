@@ -9,10 +9,10 @@ namespace KGeoBag
 class KGIntersectorInitializer : virtual public KGVisitor, virtual public KGExtendedSurface<KGIntersectable>::Visitor
 {
   protected:
-    KGIntersectorInitializer() {}
+    KGIntersectorInitializer() = default;
 
   public:
-    ~KGIntersectorInitializer() override {}
+    ~KGIntersectorInitializer() override = default;
 
     void Visit(KGExtendedSurface<KGIntersectable>* intersectableSurface);
 

@@ -36,7 +36,7 @@ endforeach( BASENAME )
 
 # target
 kasper_internal_include_directories( ${MATH_HEADER_PATH} )
-add_library( KassiopeiaMath SHARED ${MATH_SOURCE_FILENAMES} )
+add_library( KassiopeiaMath SHARED ${MATH_SOURCE_FILENAMES} ${MATH_HEADER_FILENAMES} )
 target_link_libraries( KassiopeiaMath
     ${Kommon_LIBRARIES}
 )

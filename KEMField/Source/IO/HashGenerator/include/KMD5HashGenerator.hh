@@ -38,7 +38,7 @@ template<typename Type> struct KMD5HashGeneratorType
         }
         return d.Self();
     }
-    virtual ~KMD5HashGeneratorType() {}
+    virtual ~KMD5HashGeneratorType() = default;
     virtual bool Omit() const = 0;
     virtual MD5& GetMD5() = 0;
     virtual KMD5HashGenerator& Self() = 0;
@@ -99,7 +99,7 @@ template<> struct KMD5HashGeneratorType<float>
         return d.Self();
     }
 
-    virtual ~KMD5HashGeneratorType() {}
+    virtual ~KMD5HashGeneratorType() = default;
     virtual bool Omit() const = 0;
     virtual unsigned short MaskedBits() const = 0;
     virtual unsigned short MaskedBytes() const = 0;
@@ -163,7 +163,7 @@ template<> struct KMD5HashGeneratorType<double>
         return d.Self();
     }
 
-    virtual ~KMD5HashGeneratorType() {}
+    virtual ~KMD5HashGeneratorType() = default;
     virtual bool Omit() const = 0;
     virtual unsigned short MaskedBits() const = 0;
     virtual unsigned short MaskedBytes() const = 0;
@@ -286,8 +286,8 @@ template<class X> std::string KMD5HashGenerator::GenerateHash(const X& x)
 
 template<class Streamed> void KMD5HashGenerator::PreStreamOutAction(const Streamed&)
 {
-    for (auto it = fOmitted.begin(); it != fOmitted.end(); ++it) {
-        if (*(*it) == typeid(Streamed)) {
+    for (auto it : fOmitted) {
+        if (*it == typeid(Streamed)) {
             fOmitting = &typeid(Streamed);
             fOmit = true;
         }

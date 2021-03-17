@@ -75,9 +75,7 @@ class KVMCompactSurface : public KVMMap<KVMSurfaceDDim, KVMSurfaceRDim>
 };
 
 
-inline KVMCompactSurface::KVMCompactSurface(const KVMCompactSurface& copyObject) :
-    KVMMap<KVMSurfaceDDim, KVMSurfaceRDim>(copyObject)
-{}
+inline KVMCompactSurface::KVMCompactSurface(const KVMCompactSurface& copyObject) = default;
 
 
 }  // namespace KEMField

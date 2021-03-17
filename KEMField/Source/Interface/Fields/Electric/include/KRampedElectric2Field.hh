@@ -34,7 +34,7 @@ class KRampedElectric2Field : public KElectricField
 
   private:
     double PotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
-    KThreeVector ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
+    KFieldVector ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const override;
     double CalculateNeededPotential(const double& aTof, const bool small) const;
 
   public:
@@ -168,7 +168,6 @@ class KRampedElectric2Field : public KElectricField
 
 
   public:
-    ;
     K_SET_GET_PTR(KElectricField, RootElectricField1);
     K_SET_GET_PTR(KElectricField, RootElectricField2);
     K_SET_GET(eRampingType, RampingType);

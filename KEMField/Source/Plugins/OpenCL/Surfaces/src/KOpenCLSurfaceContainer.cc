@@ -3,7 +3,7 @@
 #include "KOpenCLBufferStreamer.hh"
 
 #include <algorithm>
-#include <limits.h>
+#include <climits>
 
 namespace KEMField
 {
@@ -14,11 +14,11 @@ KOpenCLSurfaceContainer::KOpenCLSurfaceContainer(const KSurfaceContainer& contai
     fShapeSize(0),
     fBoundarySize(0),
     fBasisSize(0),
-    fBufferShapeInfo(NULL),
-    fBufferShapeData(NULL),
-    fBufferBoundaryInfo(NULL),
-    fBufferBoundaryData(NULL),
-    fBufferBasisData(NULL)
+    fBufferShapeInfo(nullptr),
+    fBufferShapeData(nullptr),
+    fBufferBoundaryInfo(nullptr),
+    fBufferBoundaryData(nullptr),
+    fBufferBasisData(nullptr)
 {
     // Acquire the maximum buffer sizes for the shape, boundary and basis policies
     KSurfaceSize<KShape> shapeSize;
@@ -250,7 +250,7 @@ void KOpenCLSurfaceContainer::ReadBasisData()
                                                                   0,
                                                                   fBasisData.size() * sizeof(CL_TYPE),
                                                                   &fBasisData[0],
-                                                                  NULL,
+                                                                  nullptr,
                                                                   &event);
     event.wait();
 

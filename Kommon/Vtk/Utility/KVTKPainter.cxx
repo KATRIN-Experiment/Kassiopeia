@@ -6,15 +6,15 @@
 namespace katrin
 {
 
-KVTKPainter::KVTKPainter() : fWindow(NULL), fDisplayEnabled(true), fWriteEnabled(true) {}
+KVTKPainter::KVTKPainter() : fWindow(nullptr), fDisplayEnabled(true), fWriteEnabled(true) {}
 
-KVTKPainter::~KVTKPainter() {}
+KVTKPainter::~KVTKPainter() = default;
 
 void KVTKPainter::SetWindow(KWindow* aWindow)
 {
-    KVTKWindow* tWindow = dynamic_cast<KVTKWindow*>(aWindow);
-    if (tWindow != NULL) {
-        if (fWindow == NULL) {
+    auto* tWindow = dynamic_cast<KVTKWindow*>(aWindow);
+    if (tWindow != nullptr) {
+        if (fWindow == nullptr) {
             fWindow = tWindow;
             return;
         }
@@ -28,10 +28,10 @@ void KVTKPainter::SetWindow(KWindow* aWindow)
 
 void KVTKPainter::ClearWindow(KWindow* aWindow)
 {
-    KVTKWindow* tWindow = dynamic_cast<KVTKWindow*>(aWindow);
-    if (tWindow != NULL) {
+    auto* tWindow = dynamic_cast<KVTKWindow*>(aWindow);
+    if (tWindow != nullptr) {
         if (fWindow == tWindow) {
-            fWindow = NULL;
+            fWindow = nullptr;
             return;
         }
         utilmsg(eError) << "cannot use vtk window <" << tWindow->GetName() << "> with vtk painter <" << GetName() << ">"

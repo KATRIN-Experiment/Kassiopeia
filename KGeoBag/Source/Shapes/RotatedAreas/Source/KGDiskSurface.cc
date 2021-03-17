@@ -3,18 +3,11 @@
 namespace KGeoBag
 {
 
-KGDiskSurface::Visitor::Visitor() {}
-KGDiskSurface::Visitor::~Visitor() {}
+KGDiskSurface::Visitor::Visitor() = default;
+KGDiskSurface::Visitor::~Visitor() = default;
 
-KGDiskSurface::KGDiskSurface() :
-    KGRotatedPathSurface<KGPlanarLineSegment>(),
-    fZ(0.),
-    fR(0.),
-    fRadialMeshCount(8),
-    fRadialMeshPower(1.),
-    fAxialMeshCount(8)
-{}
-KGDiskSurface::~KGDiskSurface() {}
+KGDiskSurface::KGDiskSurface() : fZ(0.), fR(0.), fRadialMeshCount(8), fRadialMeshPower(1.), fAxialMeshCount(8) {}
+KGDiskSurface::~KGDiskSurface() = default;
 
 void KGDiskSurface::Z(const double& aZ)
 {

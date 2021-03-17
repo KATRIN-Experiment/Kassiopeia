@@ -191,7 +191,7 @@ void kg_matrix_set(const kg_matrix* src, kg_matrix* dest)
         std::stringstream ss;
         ss << "kg_matrix_set: error, matrices have difference sizes. \n";
         ss << "source matrix is " << src->size1 << " by " << src->size2 << ". \n";
-        ss << "destination matrix is " << dest->size1 << " by " << dest->size2 << ".\n";
+        ss << "destination matrix is " << dest->size1 << " by " << dest->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -208,7 +208,7 @@ void kg_matrix_sub(kg_matrix* a, const kg_matrix* b)
         std::stringstream ss;
         ss << "kg_matrix_sub: error, matrices have difference sizes.\n";
         ss << "matrix a is " << a->size1 << " by " << a->size2 << ".\n";
-        ss << "matrix b is " << b->size1 << " by " << b->size2 << ".\n";
+        ss << "matrix b is " << b->size1 << " by " << b->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -225,7 +225,7 @@ void kg_matrix_add(kg_matrix* a, const kg_matrix* b)
         std::stringstream ss;
         ss << "kg_matrix_add: error, matrices have difference sizes.\n";
         ss << "matrix a is " << a->size1 << " by " << a->size2 << ".\n";
-        ss << "matrix b is " << b->size1 << " by " << b->size2 << ".\n";
+        ss << "matrix b is " << b->size1 << " by " << b->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -270,7 +270,7 @@ void kg_matrix_multiply(const kg_matrix* A, const kg_matrix* B, kg_matrix* C)
         ss << "kg_matrix_multiply: error, matrices have difference sizes.\n";
         ss << "matrix a is " << A->size1 << " by " << A->size2 << ".\n";
         ss << "matrix b is " << B->size1 << " by " << B->size2 << ".\n";
-        ss << "matrix c is " << C->size1 << " by " << C->size2 << ".\n";
+        ss << "matrix c is " << C->size1 << " by " << C->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -343,7 +343,7 @@ void kg_matrix_multiply_with_transpose(bool transposeA, bool transposeB, const k
         ss << "kg_matrix_multiply_with_transpose: error, matrices have difference sizes.\n";
         ss << "matrix a is " << A->size1 << " by " << A->size2 << ".\n";
         ss << "matrix b is " << B->size1 << " by " << B->size2 << ".\n";
-        ss << "matrix c is " << C->size1 << " by " << C->size2 << ".\n";
+        ss << "matrix c is " << C->size1 << " by " << C->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -370,15 +370,15 @@ void kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
         std::stringstream ss;
         ss << "kg_matrix_svd: error, matrices A and U have different sizes.\n";
         ss << "matrix A is " << A->size1 << " by " << A->size2 << ".\n";
-        ss << "matrix U is " << U->size1 << " by " << U->size2 << ".\n";
+        ss << "matrix U is " << U->size1 << " by " << U->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 
-    if (n != V->size1 || n != V->size1) {
+    if (n != V->size1 || m != V->size2) {
         std::stringstream ss;
         ss << "kg_matrix_svd: error, matrix V has wrong size.\n";
         ss << "matrix V is " << V->size1 << " by " << V->size2 << ".\n";
-        ss << "matrix V should be " << n << " by " << n << ".\n";
+        ss << "matrix V should be " << n << " by " << n << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 
@@ -386,7 +386,7 @@ void kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
         std::stringstream ss;
         ss << "kg_matrix_svd: error, vector S has wrong size.\n";
         ss << "vector S is length " << S->size << ".\n";
-        ss << "vector S should be length " << n << ".\n";
+        ss << "vector S should be length " << n << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 
@@ -396,8 +396,8 @@ void kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
     kg_matrix_set_identity(V);
 
     //put some limits on the number of iterations, this is completely arbitrary
-    int n_iter = 0;
-    int n_max_iter = 10 * n;
+    unsigned int n_iter = 0;
+    unsigned int n_max_iter = 10 * n;
 
     //scratch space
     double a, b, c, g1, g2, cs, sn, t, psi, sign;
@@ -479,7 +479,7 @@ void kg_matrix_svd(const kg_matrix* A, kg_matrix* U, kg_vector* S, kg_matrix* V)
         if (n_iter >= n_max_iter) {
             std::stringstream ss;
             ss << "kg_matrix_svd: warning, singular value decomposition failed to converge within " << n_max_iter
-               << " iterations. \n";
+               << " iterations.";
             mathmsg(eDebug) << ss.str().c_str() << eom;
             break;
         }
@@ -808,7 +808,7 @@ void kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_ma
             ss << "matrix A is " << A->size1 << " by " << A->size2 << ".\n";
             ss << "matrix P is " << P->size1 << " by " << P->size2 << ".\n";
             ss << "matrix J is " << J->size1 << " by " << J->size2 << ".\n";
-            ss << "matrix Q is " << Q->size1 << " by " << Q->size2 << ".\n";
+            ss << "matrix Q is " << Q->size1 << " by " << Q->size2 << ".";
             mathmsg(eDebug) << ss.str().c_str() << eom;
         }
 
@@ -914,7 +914,7 @@ void kg_matrix_householder_bidiagonalize(const kg_matrix* A, kg_matrix* P, kg_ma
         //because we are lazy and don't need the functionality this is only implemented for square matrices
         std::stringstream ss;
         ss << "kg_matrix_householder_bidiagonalize: error, matrix A is not square. \n";
-        ss << "matrix A is " << A->size1 << " by " << A->size2 << ". \n";
+        ss << "matrix A is " << A->size1 << " by " << A->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }
@@ -938,7 +938,7 @@ void kg_matrix_householder(kg_matrix* H, const kg_vector* w)
     else {
         std::stringstream ss;
         ss << "kg_matrix_householder: error, matrix H is not square. \n";
-        ss << "matrix H is " << H->size1 << " by " << H->size2 << ". \n";
+        ss << "matrix H is " << H->size1 << " by " << H->size2 << ".";
         mathmsg(eDebug) << ss.str().c_str() << eom;
     }
 }

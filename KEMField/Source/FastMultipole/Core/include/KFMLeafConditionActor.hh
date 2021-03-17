@@ -27,7 +27,8 @@ template<typename NodeType> class KFMLeafConditionActor : public KFMInspectingAc
     {
         fSwitch = true;
     };
-    ~KFMLeafConditionActor() override{};
+    ~KFMLeafConditionActor() override = default;
+    ;
 
     void SetTrueOnLeafNodes()
     {

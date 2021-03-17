@@ -9,10 +9,10 @@ namespace KEMField
 class KElectromagnetVisitor : public KGenLinearHierarchy<KElectromagnetTypes, KVisitorType, KVisitorBase>
 {
   public:
-    typedef KElectromagnetTypes AcceptedTypes;
+    using AcceptedTypes = KElectromagnetTypes;
 
-    KElectromagnetVisitor() {}
-    ~KElectromagnetVisitor() override {}
+    KElectromagnetVisitor() = default;
+    ~KElectromagnetVisitor() override = default;
 };
 }  // namespace KEMField
 

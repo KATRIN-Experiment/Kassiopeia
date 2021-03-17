@@ -11,7 +11,7 @@ namespace katrin
 STATICINT sKGCutConeTubeSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGCutConeTubeSpace>("cut_cone_tube_space");
 
 STATICINT sKGCutConeTubeSpaceBuilderStructure =
-    KGCutConeTubeSpaceBuilder::Attribute<string>("name") + KGCutConeTubeSpaceBuilder::Attribute<double>("z1") +
+    KGCutConeTubeSpaceBuilder::Attribute<std::string>("name") + KGCutConeTubeSpaceBuilder::Attribute<double>("z1") +
     KGCutConeTubeSpaceBuilder::Attribute<double>("z2") + KGCutConeTubeSpaceBuilder::Attribute<double>("r11") +
     KGCutConeTubeSpaceBuilder::Attribute<double>("r12") + KGCutConeTubeSpaceBuilder::Attribute<double>("r21") +
     KGCutConeTubeSpaceBuilder::Attribute<double>("r22") +

@@ -20,7 +20,7 @@ class KSComponentMathData
     std::vector<std::string> fParents;
 };
 
-KSComponent* BuildOutputMath(std::vector<KSComponent*> aComponents, std::string aTerm)
+inline KSComponent* BuildOutputMath(std::vector<KSComponent*> aComponents, std::string aTerm)
 {
     if (aComponents.at(0)->Is<unsigned short>() == true) {
         std::vector<unsigned short*> tComponents;
@@ -157,17 +157,17 @@ template<> inline bool KSComponentMathBuilder::Begin()
 template<> inline bool KSComponentMathBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->fName = tName;
         return true;
     }
     if (aContainer->GetName() == "group") {
-        std::string tGroupName = aContainer->AsReference<std::string>();
+        std::string tGroupName = aContainer->AsString();
         fObject->fGroupName = tGroupName;
         return true;
     }
     if (aContainer->GetName() == "term") {
-        std::string tTerm = aContainer->AsReference<std::string>();
+        std::string tTerm = aContainer->AsString();
         fObject->fTerm = tTerm;
         return true;
     }
@@ -175,12 +175,12 @@ template<> inline bool KSComponentMathBuilder::AddAttribute(KContainer* aContain
         objctmsg(eWarning)
             << "deprecated warning in KSComponentMathBuilder: Please use the attribute <parent> instead <component>"
             << eom;
-        std::string tComponent = aContainer->AsReference<std::string>();
+        std::string tComponent = aContainer->AsString();
         fObject->fParents.push_back(tComponent);
         return true;
     }
     if (aContainer->GetName() == "parent") {
-        std::string tComponent = aContainer->AsReference<std::string>();
+        std::string tComponent = aContainer->AsString();
         fObject->fParents.push_back(tComponent);
         return true;
     }
@@ -192,26 +192,25 @@ template<> inline bool KSComponentMathBuilder::End()
     std::vector<KSComponent*> tParentComponents;
     if (!fObject->fGroupName.empty()) {
         auto* tComponentGroup = KToolbox::GetInstance().Get<KSComponentGroup>(fObject->fGroupName);
-        for (size_t tNameIndex = 0; tNameIndex < fObject->fParents.size(); tNameIndex++) {
+        for (auto& parent : fObject->fParents) {
             KSComponent* tOneComponent = nullptr;
             for (unsigned int tGroupIndex = 0; tGroupIndex < tComponentGroup->ComponentCount(); tGroupIndex++) {
                 KSComponent* tGroupComponent = tComponentGroup->ComponentAt(tGroupIndex);
-                if (tGroupComponent->GetName() == fObject->fParents.at(tNameIndex)) {
+                if (tGroupComponent->GetName() == parent) {
                     tOneComponent = tGroupComponent;
                     break;
                 }
             }
             if (tOneComponent == nullptr) {
-                objctmsg(eError) << "KSComponentMathBuilder can not find component < "
-                                 << fObject->fParents.at(tNameIndex) << " > in group < " << fObject->fGroupName << " >"
-                                 << eom;
+                objctmsg(eError) << "KSComponentMathBuilder can not find component < " << parent << " > in group < "
+                                 << fObject->fGroupName << " >" << eom;
             }
             tParentComponents.push_back(tOneComponent);
         }
     }
     else {
-        for (size_t tIndex = 0; tIndex < fObject->fParents.size(); tIndex++) {
-            auto* tOneComponent = KToolbox::GetInstance().Get<KSComponent>(fObject->fParents.at(tIndex));
+        for (auto& parent : fObject->fParents) {
+            auto* tOneComponent = KToolbox::GetInstance().Get<KSComponent>(parent);
             tParentComponents.push_back(tOneComponent);
         }
     }

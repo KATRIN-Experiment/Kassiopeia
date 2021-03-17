@@ -41,7 +41,7 @@ template<class XType> KSimpleElement<XType>::KSimpleElement(KElementBase* aParen
     }
     fAttributes = sAttributes;
 }
-template<class XType> KSimpleElement<XType>::~KSimpleElement() {}
+template<class XType> KSimpleElement<XType>::~KSimpleElement() = default;
 
 template<class XType> bool KSimpleElement<XType>::Begin()
 {

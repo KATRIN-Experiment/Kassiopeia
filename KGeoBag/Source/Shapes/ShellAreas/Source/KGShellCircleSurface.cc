@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGShellCircleSurface::Visitor::Visitor() {}
+template<> KGShellCircleSurface::Visitor::Visitor() = default;
 
-template<> KGShellCircleSurface::Visitor::~Visitor() {}
+template<> KGShellCircleSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

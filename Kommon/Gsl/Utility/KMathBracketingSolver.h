@@ -47,8 +47,8 @@ class KMathBracketingSolver
     class Function
     {
       public:
-        Function() {}
-        virtual ~Function() {}
+        Function() = default;
+        virtual ~Function() = default;
 
         virtual double Evaluate(double anArgument) = 0;
     };
@@ -62,7 +62,7 @@ class KMathBracketingSolver
             fMember(aMember),
             fValue(aValue)
         {}
-        ~ReferringMemberFunction() override {}
+        ~ReferringMemberFunction() override = default;
 
         double Evaluate(double anArgument) override
         {
@@ -87,7 +87,7 @@ class KMathBracketingSolver
             fMember(aMember),
             fValue(aValue)
         {}
-        ~ReferringConstMemberFunction() override {}
+        ~ReferringConstMemberFunction() override = default;
 
         double Evaluate(double anArgument) override
         {
@@ -111,7 +111,7 @@ class KMathBracketingSolver
             fMember(aMember),
             fValue(aValue)
         {}
-        ~ReturningMemberFunction() override {}
+        ~ReturningMemberFunction() override = default;
 
         double Evaluate(double anArgument) override
         {
@@ -136,7 +136,7 @@ class KMathBracketingSolver
             fMember(aMember),
             fValue(aValue)
         {}
-        ~ReturningConstMemberFunction() override {}
+        ~ReturningConstMemberFunction() override = default;
 
         double Evaluate(double anArgument) override
         {

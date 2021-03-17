@@ -22,7 +22,8 @@ KGNavigableMeshTreeBuilder::KGNavigableMeshTreeBuilder() :
     fInfoString = "";
 };
 
-KGNavigableMeshTreeBuilder::~KGNavigableMeshTreeBuilder(){};
+KGNavigableMeshTreeBuilder::~KGNavigableMeshTreeBuilder() = default;
+;
 
 void KGNavigableMeshTreeBuilder::SetNavigableMeshElementContainer(KGNavigableMeshElementContainer* container)
 {
@@ -132,8 +133,8 @@ void KGNavigableMeshTreeBuilder::ConstructRootNode()
     KGSpaceTreeProperties<KGMESH_DIM>* tree_prop = fTree->GetTreeProperties();
     tree_prop->SetMaxTreeDepth(fMaximumTreeDepth);
     unsigned int dim[KGMESH_DIM];
-    for (unsigned int i = 0; i < KGMESH_DIM; i++) {
-        dim[i] = 2;
+    for (unsigned int& i : dim) {
+        i = 2;
     };  //we use an oct-tree in 3d
     tree_prop->SetDimensions(dim);
     tree_prop->SetNeighborOrder(0);

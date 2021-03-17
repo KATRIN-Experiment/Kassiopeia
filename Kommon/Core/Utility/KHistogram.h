@@ -117,7 +117,7 @@ inline KHistogram<XValueT, XCountingT>::KHistogram(XValueT min, XValueT max, XVa
     SetBinWidth(binWidth);
 }
 
-template<class XValueT, class XCountingT> inline KHistogram<XValueT, XCountingT>::~KHistogram() {}
+template<class XValueT, class XCountingT> inline KHistogram<XValueT, XCountingT>::~KHistogram() = default;
 
 template<class XValueT, class XCountingT> inline void KHistogram<XValueT, XCountingT>::Reset()
 {

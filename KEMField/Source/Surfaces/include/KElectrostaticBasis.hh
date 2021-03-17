@@ -23,7 +23,7 @@ class KElectrostaticBasis : public KBasisType<double, 1>
 {
   public:
     KElectrostaticBasis() : KBasisType<double, 1>() {}
-    ~KElectrostaticBasis() override {}
+    ~KElectrostaticBasis() override = default;
 
     static std::string Name()
     {

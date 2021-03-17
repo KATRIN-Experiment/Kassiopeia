@@ -3,7 +3,6 @@
 
 #include "KSMathArray.h"
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -13,7 +12,7 @@ class KSTrajMagneticError : public KSMathArray<5>
   public:
     KSTrajMagneticError();
     KSTrajMagneticError(const KSTrajMagneticError& anOperand);
-    virtual ~KSTrajMagneticError();
+    ~KSTrajMagneticError() override;
 
     //**********
     //assignment
@@ -36,12 +35,12 @@ class KSTrajMagneticError : public KSMathArray<5>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KThreeVector& GetPositionError() const;
+    const KGeoBag::KThreeVector& GetPositionError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KThreeVector fPositionError;
+    mutable KGeoBag::KThreeVector fPositionError;
 };
 
 inline KSTrajMagneticError& KSTrajMagneticError::operator=(const double& anOperand)

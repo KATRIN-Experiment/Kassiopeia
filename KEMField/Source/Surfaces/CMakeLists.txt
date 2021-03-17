@@ -43,7 +43,7 @@ set (SURFACES_SOURCEFILES
 
 ##################################################
 
-add_library (KEMSurfaces SHARED ${SURFACES_SOURCEFILES})
+add_library (KEMSurfaces SHARED ${SURFACES_SOURCEFILES} ${SURFACES_HEADERFILES})
 target_link_libraries (KEMSurfaces KEMCore KEMMath KEMIO ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES})
 
 kasper_install_headers (${SURFACES_HEADERFILES})

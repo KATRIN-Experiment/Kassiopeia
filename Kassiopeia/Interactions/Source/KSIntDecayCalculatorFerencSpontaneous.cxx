@@ -28,7 +28,7 @@ KSIntDecayCalculatorFerencSpontaneous::KSIntDecayCalculatorFerencSpontaneous() :
 
 KSIntDecayCalculatorFerencSpontaneous::KSIntDecayCalculatorFerencSpontaneous(
     const KSIntDecayCalculatorFerencSpontaneous& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
     fmaxPID(aCopy.fmaxPID),

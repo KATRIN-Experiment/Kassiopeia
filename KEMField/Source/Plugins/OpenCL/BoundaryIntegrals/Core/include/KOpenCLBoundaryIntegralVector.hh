@@ -161,7 +161,7 @@ void KBoundaryIntegralVector<KOpenCLBoundaryIntegrator<BasisPolicy>>::ConstructO
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
     cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, 0);

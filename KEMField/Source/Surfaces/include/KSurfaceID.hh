@@ -30,7 +30,7 @@ struct KSurfaceID
         BoundaryID(boundaryID),
         ShapeID(shapeID)
     {}
-    virtual ~KSurfaceID() {}
+    virtual ~KSurfaceID() = default;
 
     static std::string Name()
     {

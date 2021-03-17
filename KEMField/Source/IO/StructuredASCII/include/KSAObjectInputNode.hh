@@ -36,7 +36,7 @@ class KSAFixedSizeInputOutputObject;
 template<typename T, unsigned int U = 0> class KSAObjectInputNode : public KSAInputNode
 {
   public:
-    KSAObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fObject = new T();
         fObject->DefineInputNode(this);
@@ -112,7 +112,7 @@ template<typename T> class KSAObjectInputNode<T, 1> : public KSAInputNode
 {
 
   public:
-    KSAObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fIndex = 0;
         fObject = new T();
@@ -259,7 +259,7 @@ template<typename T> class KSAObjectInputNode<T, 1> : public KSAInputNode
 template<typename T, unsigned int U = 0> class KSAExternalObjectInputNode : public KSAInputNode
 {
   public:
-    KSAExternalObjectInputNode(std::string name) : KSAInputNode(name) {}
+    KSAExternalObjectInputNode(const std::string& name) : KSAInputNode(name) {}
 
     KSAExternalObjectInputNode() : KSAInputNode() {}
 
@@ -337,7 +337,7 @@ template<typename T> class KSAExternalObjectInputNode<T, 1> : public KSAInputNod
 {
 
   public:
-    KSAExternalObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAExternalObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fIndex = 0;
         fTagSuppression = true;
@@ -483,7 +483,7 @@ class KSAAssociatedReferenceObjectInputNode :
     public KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>
 {
   public:
-    KSAAssociatedReferenceObjectInputNode(std::string name, CallType* call_ptr) :
+    KSAAssociatedReferenceObjectInputNode(const std::string& name, CallType* call_ptr) :
         KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = call_ptr;
@@ -502,9 +502,8 @@ class KSAAssociatedReferenceObjectInputNode :
     }
 
 
-    ~KSAAssociatedReferenceObjectInputNode() override{
-
-    };
+    ~KSAAssociatedReferenceObjectInputNode() override = default;
+    ;
 
 
   protected:
@@ -518,7 +517,7 @@ class KSAAssociatedPointerObjectInputNode :
     public KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>
 {
   public:
-    KSAAssociatedPointerObjectInputNode(std::string name, CallType* call_ptr) :
+    KSAAssociatedPointerObjectInputNode(const std::string& name, CallType* call_ptr) :
         KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = call_ptr;
@@ -537,9 +536,8 @@ class KSAAssociatedPointerObjectInputNode :
     }
 
 
-    virtual ~KSAAssociatedPointerObjectInputNode(){
-
-    };
+    virtual ~KSAAssociatedPointerObjectInputNode() = default;
+    ;
 
 
   protected:
@@ -556,13 +554,13 @@ class KSAAssociatedAllocatedToVectorPointerObjectInputNode :
     public KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>
 {
   public:
-    KSAAssociatedAllocatedToVectorPointerObjectInputNode(std::string name, CallType* call_ptr) :
+    KSAAssociatedAllocatedToVectorPointerObjectInputNode(const std::string& name, CallType* call_ptr) :
         KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = call_ptr;
     }
 
-    KSAAssociatedAllocatedToVectorPointerObjectInputNode(std::string name) :
+    KSAAssociatedAllocatedToVectorPointerObjectInputNode(const std::string& name) :
         KSAObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = nullptr;
@@ -581,9 +579,8 @@ class KSAAssociatedAllocatedToVectorPointerObjectInputNode :
     }
 
 
-    ~KSAAssociatedAllocatedToVectorPointerObjectInputNode() override{
-
-    };
+    ~KSAAssociatedAllocatedToVectorPointerObjectInputNode() override = default;
+    ;
 
 
   protected:
@@ -599,13 +596,13 @@ class KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode :
     public KSAExternalObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>
 {
   public:
-    KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode(std::string name, CallType* call_ptr) :
+    KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode(const std::string& name, CallType* call_ptr) :
         KSAExternalObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = call_ptr;
     }
 
-    KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode(std::string name) :
+    KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode(const std::string& name) :
         KSAExternalObjectInputNode<SetType, KSAIsDerivedFrom<SetType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         fCallPtr = NULL;
@@ -623,9 +620,8 @@ class KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode :
         fCallPtr = obj;
     }
 
-    virtual ~KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode(){
-
-    };
+    virtual ~KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode() = default;
+    ;
 
 
   protected:
@@ -641,7 +637,7 @@ class KSAAssociatedAllocatedToVectorPointerExternalObjectInputNode :
 template<typename T> class KSAObjectInputNode<std::vector<T>> : public KSAInputNode
 {
   public:
-    KSAObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fObject = new std::vector<T>();
         fObject->clear();
@@ -662,7 +658,7 @@ template<typename T> class KSAObjectInputNode<std::vector<T>> : public KSAInputN
     }
 
 
-    KSAObjectInputNode(std::string name, std::vector<T>* object_ptr) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name, std::vector<T>* object_ptr) : KSAInputNode(name)
     {
         fObject = object_ptr;
         fObject->clear();
@@ -771,7 +767,7 @@ template<typename T> class KSAObjectInputNode<std::vector<T>> : public KSAInputN
 template<typename T> class KSAObjectInputNode<std::vector<T*>> : public KSAInputNode
 {
   public:
-    KSAObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fObject = new std::vector<T*>();
         fObject->clear();
@@ -791,7 +787,7 @@ template<typename T> class KSAObjectInputNode<std::vector<T*>> : public KSAInput
     }
 
 
-    KSAObjectInputNode(std::string name, std::vector<T*>* object_ptr) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name, std::vector<T*>* object_ptr) : KSAInputNode(name)
     {
         fObject = object_ptr;
         fObject->clear();
@@ -909,7 +905,7 @@ template<typename T> class KSAObjectInputNode<std::vector<T*>> : public KSAInput
 template<typename T> class KSAObjectInputNode<std::list<T>> : public KSAInputNode
 {
   public:
-    KSAObjectInputNode(std::string name) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name) : KSAInputNode(name)
     {
         fObject = new std::list<T>();
         fObject->clear();
@@ -929,7 +925,7 @@ template<typename T> class KSAObjectInputNode<std::list<T>> : public KSAInputNod
     }
 
 
-    KSAObjectInputNode(std::string name, std::list<T>* object_ptr) : KSAInputNode(name)
+    KSAObjectInputNode(const std::string& name, std::list<T>* object_ptr) : KSAInputNode(name)
     {
         fObject = object_ptr;
         fObject->clear();

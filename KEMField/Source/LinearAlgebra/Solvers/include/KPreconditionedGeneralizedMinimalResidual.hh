@@ -41,12 +41,12 @@ namespace KEMField
 template<typename ValueType> class KPreconditionedGeneralizedMinimalResidual
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
-    typedef KPreconditioner<ValueType> Preconditioner;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
+    using Preconditioner = KPreconditioner<ValueType>;
 
-    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleMatrixType = KSimpleMatrix<ValueType>;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
     KPreconditionedGeneralizedMinimalResidual(const Matrix& A, Preconditioner& P, Vector& x, const Vector& b) :
         fDim(A.Dimension()),
@@ -64,7 +64,8 @@ template<typename ValueType> class KPreconditionedGeneralizedMinimalResidual
         fExternalStateSet = false;
     };
 
-    virtual ~KPreconditionedGeneralizedMinimalResidual(){};
+    virtual ~KPreconditionedGeneralizedMinimalResidual() = default;
+    ;
 
     static std::string Name()
     {

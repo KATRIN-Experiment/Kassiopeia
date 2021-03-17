@@ -7,18 +7,24 @@
 #include <limits>
 
 using namespace std;
+using KGeoBag::KGSpace;
+using KGeoBag::KGSurface;
+using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
 
 KSGeoSpace::KSGeoSpace() : fContents(), fCommands() {}
-KSGeoSpace::KSGeoSpace(const KSGeoSpace& aCopy) : KSComponent(), fContents(aCopy.fContents), fCommands(aCopy.fCommands)
+KSGeoSpace::KSGeoSpace(const KSGeoSpace& aCopy) :
+    KSComponent(aCopy),
+    fContents(aCopy.fContents),
+    fCommands(aCopy.fCommands)
 {}
 KSGeoSpace* KSGeoSpace::Clone() const
 {
     return new KSGeoSpace(*this);
 }
-KSGeoSpace::~KSGeoSpace() {}
+KSGeoSpace::~KSGeoSpace() = default;
 
 void KSGeoSpace::Enter() const
 {
@@ -180,24 +186,22 @@ void KSGeoSpace::InitializeComponent()
         if (tGeoSide != nullptr) {
             vector<KGSurface*> tSideSurfaces = tGeoSide->GetContent();
 
-            for (vector<KGSurface*>::const_iterator tSideSurface = tSideSurfaces.begin();
-                 tSideSurface != tSideSurfaces.end();
-                 tSideSurface++) {
+            for (auto tSideSurface : tSideSurfaces) {
 
-                for (vector<KGSpace*>::const_iterator tSpace = fContents.begin(); tSpace != fContents.end(); tSpace++) {
+                for (auto content : fContents) {
                     bool tValid = false;
 
-                    const vector<KGSurface*>* tSurfaces = (*tSpace)->GetBoundaries();
+                    const vector<KGSurface*>* tSurfaces = content->GetBoundaries();
 
-                    for (auto tSurface = tSurfaces->begin(); tSurface != tSurfaces->end(); tSurface++) {
-                        if (*(tSideSurface) == *(tSurface)) {
+                    for (auto tSurface : *tSurfaces) {
+                        if (tSideSurface == tSurface) {
                             tValid = true;
                         }
                     }
 
                     if (tValid == false) {
-                        geomsg(eError) << "geo_side <" << (*tSideSurface)->GetName()
-                                       << "> is not a geometic boundary of space <" << (*tSpace)->GetName()
+                        geomsg(eError) << "geo_side <" << tSideSurface->GetName()
+                                       << "> is not a geometic boundary of space <" << content->GetName()
                                        << ">, check your navigation configuration" << eom;
                     }
                 }

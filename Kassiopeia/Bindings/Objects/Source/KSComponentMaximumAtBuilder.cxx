@@ -9,12 +9,13 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSComponentMaximumAtBuilder::~KComplexElement() {}
+template<> KSComponentMaximumAtBuilder::~KComplexElement() = default;
 
-STATICINT sKSComponentMaximumAtStructure =
-    KSComponentMaximumAtBuilder::Attribute<string>("name") + KSComponentMaximumAtBuilder::Attribute<string>("group") +
-    KSComponentMaximumAtBuilder::Attribute<string>("component") +
-    KSComponentMaximumAtBuilder::Attribute<string>("parent") + KSComponentMaximumAtBuilder::Attribute<string>("source");
+STATICINT sKSComponentMaximumAtStructure = KSComponentMaximumAtBuilder::Attribute<std::string>("name") +
+                                           KSComponentMaximumAtBuilder::Attribute<std::string>("group") +
+                                           KSComponentMaximumAtBuilder::Attribute<std::string>("component") +
+                                           KSComponentMaximumAtBuilder::Attribute<std::string>("parent") +
+                                           KSComponentMaximumAtBuilder::Attribute<std::string>("source");
 
 STATICINT sKSComponentMaximumAt =
     KSComponentGroupBuilder::ComplexElement<KSComponentMaximumAtData>("component_maximum_at") +

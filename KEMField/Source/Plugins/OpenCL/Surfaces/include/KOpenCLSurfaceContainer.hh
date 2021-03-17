@@ -26,11 +26,11 @@ class KOpenCLSurfaceContainer : public KSortedSurfaceContainer, public KOpenCLDa
 {
   public:
     KOpenCLSurfaceContainer(const KSurfaceContainer& surfaceContainer);
-    virtual ~KOpenCLSurfaceContainer();
+    ~KOpenCLSurfaceContainer() override;
 
-    void BuildOpenCLObjects();
+    void BuildOpenCLObjects() override;
 
-    unsigned int GetNBufferedElements() const
+    unsigned int GetNBufferedElements() const override
     {
         return fNBufferedElements;
     }
@@ -71,7 +71,7 @@ class KOpenCLSurfaceContainer : public KSortedSurfaceContainer, public KOpenCLDa
         return fBasisSize;
     }
 
-    std::string GetOpenCLFlags() const
+    std::string GetOpenCLFlags() const override
     {
         return fOpenCLFlags;
     }

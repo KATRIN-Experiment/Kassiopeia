@@ -4,21 +4,21 @@
 namespace Kassiopeia
 {
 
-KSTrajTermDrift::KSTrajTermDrift() {}
+KSTrajTermDrift::KSTrajTermDrift() = default;
 KSTrajTermDrift::KSTrajTermDrift(const KSTrajTermDrift&) : KSComponent() {}
 KSTrajTermDrift* KSTrajTermDrift::Clone() const
 {
     return new KSTrajTermDrift(*this);
 }
-KSTrajTermDrift::~KSTrajTermDrift() {}
+KSTrajTermDrift::~KSTrajTermDrift() = default;
 
 void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
                                     KSTrajAdiabaticDerivative& aDerivative) const
 {
-    KThreeVector tMagneticField = aParticle.GetMagneticField();
-    KThreeVector tMagneticFieldUnit = tMagneticField.Unit();
-    KThreeMatrix tMagneticGradient = aParticle.GetMagneticGradient();
-    KThreeVector tMagneticGradientUnit;
+    KGeoBag::KThreeVector tMagneticField = aParticle.GetMagneticField();
+    KGeoBag::KThreeVector tMagneticFieldUnit = tMagneticField.Unit();
+    KGeoBag::KThreeMatrix tMagneticGradient = aParticle.GetMagneticGradient();
+    KGeoBag::KThreeVector tMagneticGradientUnit;
     tMagneticGradientUnit.X() = tMagneticFieldUnit.X() * tMagneticGradient(0, 0) +
                                 tMagneticFieldUnit.Y() * tMagneticGradient(0, 1) +
                                 tMagneticFieldUnit.Z() * tMagneticGradient(0, 2);
@@ -29,7 +29,7 @@ void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParti
                                 tMagneticFieldUnit.Y() * tMagneticGradient(2, 1) +
                                 tMagneticFieldUnit.Z() * tMagneticGradient(2, 2);
 
-    KThreeVector tElectricField = aParticle.GetElectricField();
+    KGeoBag::KThreeVector tElectricField = aParticle.GetElectricField();
     double tMagneticFieldMag = tMagneticField.Magnitude();
     double tMagneticFieldMag2 = tMagneticField.MagnitudeSquared();
     double tMagneticFieldMag3 = tMagneticFieldMag2 * tMagneticFieldMag;
@@ -41,7 +41,7 @@ void KSTrajTermDrift::Differentiate(double /*aTime*/, const KSTrajAdiabaticParti
     double tMass = aParticle.GetMass();
     double tCharge = aParticle.GetCharge();
 
-    KThreeVector tDriftVelocity =
+    KGeoBag::KThreeVector tDriftVelocity =
         (1. / tMagneticFieldMag2) * tElectricField.Cross(tMagneticField) +
         ((2. * tLongMomentum2 + tTransMomentum2) / (tCharge * tMagneticFieldMag3 * tMass * (1. + tLorentzFactor))) *
             (tMagneticField.Cross(tMagneticGradientUnit));

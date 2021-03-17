@@ -12,8 +12,8 @@ template<typename ValueType, template<typename> class ParallelTrait = KGaussSeid
 class KGaussSeidel : public KIterativeSolver<ValueType>
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector =  KVector<ValueType>;
 
     KGaussSeidel();
     ~KGaussSeidel() override;

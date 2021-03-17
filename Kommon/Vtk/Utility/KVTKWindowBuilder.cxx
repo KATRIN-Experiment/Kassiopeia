@@ -17,11 +17,12 @@ STATICINT sKVTKWindow = KRootBuilder::ComplexElement<KVTKWindow>("vtk_window");
 STATICINT sKVTKWindowCompat = KElementProcessor::ComplexElement<KVTKWindow>("vtk_window");
 
 STATICINT sKVTKWindowStructure =
-    KVTKWindowBuilder::Attribute<string>("name") + KVTKWindowBuilder::Attribute<bool>("enable_display") +
+    KVTKWindowBuilder::Attribute<std::string>("name") + KVTKWindowBuilder::Attribute<bool>("enable_display") +
     KVTKWindowBuilder::Attribute<bool>("enable_write") + KVTKWindowBuilder::Attribute<bool>("enable_help") +
     KVTKWindowBuilder::Attribute<bool>("enable_axis") + KVTKWindowBuilder::Attribute<bool>("enable_data") +
     KVTKWindowBuilder::Attribute<bool>("enable_parallel_projection") +
-    KVTKWindowBuilder::Attribute<string>("frame_title") + KVTKWindowBuilder::Attribute<unsigned int>("frame_size_x") +
+    KVTKWindowBuilder::Attribute<std::string>("frame_title") +
+    KVTKWindowBuilder::Attribute<unsigned int>("frame_size_x") +
     KVTKWindowBuilder::Attribute<unsigned int>("frame_size_y") +
     KVTKWindowBuilder::Attribute<float>("frame_color_red") + KVTKWindowBuilder::Attribute<float>("frame_color_green") +
     KVTKWindowBuilder::Attribute<float>("frame_color_blue") + KVTKWindowBuilder::Attribute<double>("eye_angle") +

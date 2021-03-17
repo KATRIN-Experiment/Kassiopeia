@@ -15,7 +15,7 @@ KSParticleFactory::KSParticleFactory() :
     fElectricField(nullptr),
     fParticleIndex(-1)
 {}
-KSParticleFactory::~KSParticleFactory() {}
+KSParticleFactory::~KSParticleFactory() = default;
 
 KSParticle* KSParticleFactory::Create(const long long& aPID)
 {
@@ -77,12 +77,13 @@ int KSParticleFactory::Define(const long long& aPID, const std::string& aStringI
 {
     auto tIter = fParticles.find(aPID);
     if (tIter != fParticles.end()) {
-        oprmsg(eError) << "asked to add definition for pid <" << aPID << "> with one already defined" << eom;
+        oprmsg(eWarning) << "asked to add definition for pid <" << aPID << "> with one already defined" << eom;
         return -1;
     }
     auto tStringIter = fParticleString.find(aStringID);
     if (tStringIter != fParticleString.end()) {
-        oprmsg(eError) << "asked to add definition for string_id <" << aStringID << "> with one already defined" << eom;
+        oprmsg(eWarning) << "asked to add definition for string_id <" << aStringID << "> with one already defined"
+                         << eom;
         return -1;
     }
 
@@ -98,8 +99,8 @@ int KSParticleFactory::Define(const long long& aPID, const std::string& aStringI
     fParticleString.insert(ParticleStringEntry(aStringID, tParticle));
     //Add the alternative strings to the particle string list as well
     //See http://www.cplusplus.com/reference/vector/vector/begin/
-    for (auto it = aAltStringIDs.begin(); it != aAltStringIDs.end(); ++it) {
-        fParticleString.insert(ParticleStringEntry(*it, tParticle));
+    for (const auto& altStringID : aAltStringIDs) {
+        fParticleString.insert(ParticleStringEntry(altStringID, tParticle));
     }
 
     return 0;
@@ -137,24 +138,24 @@ KSElectricField* KSParticleFactory::GetElectricField()
 
 
 // A "ghost" particle
-STATICINT sGhostDefinition = KSParticleFactory::GetInstance().Define(0, "ghost", {}, std::numeric_limits<double>::min(),
-                                                                     0., 0., 0.);  // needs to have non-zero mass
+STATICINT sGhostDefinition = KSParticleFactory::GetInstance().Define(
+    0, "ghost", {}, std::numeric_limits<double>::min(), 0., 0., 0.);  // needs to have non-zero mass
 
 //electron
 STATICINT sElectronDefinition = KSParticleFactory::GetInstance().Define(
     11, "e-", {"e^-"}, katrin::KConst::M_el_kg(), -1. * katrin::KConst::Q(), 0.5, -1.760859644e+11);
 
 //positron
-STATICINT sPositronDefinition = KSParticleFactory::GetInstance().Define(-11, "e+", {"e^+"}, katrin::KConst::M_el_kg(),
-                                                                        katrin::KConst::Q(), 0.5, -1.760859644e+11);
+STATICINT sPositronDefinition = KSParticleFactory::GetInstance().Define(
+    -11, "e+", {"e^+"}, katrin::KConst::M_el_kg(), katrin::KConst::Q(), 0.5, -1.760859644e+11);
 
 //muon
-STATICINT sMuMinusDefinition = KSParticleFactory::GetInstance().Define(13, "mu-", {"mu^-"}, katrin::KConst::M_mu_kg(),
-                                                                       -1 * katrin::KConst::Q(), 0.5, -2.43318710e+7);
+STATICINT sMuMinusDefinition = KSParticleFactory::GetInstance().Define(
+    13, "mu-", {"mu^-"}, katrin::KConst::M_mu_kg(), -1 * katrin::KConst::Q(), 0.5, -2.43318710e+7);
 
 //anti-muon
-STATICINT sMuPlusDefinition = KSParticleFactory::GetInstance().Define(-13, "mu+", {"mu^+"}, katrin::KConst::M_mu_kg(),
-                                                                      katrin::KConst::Q(), 0.5, -2.43318710e+7);
+STATICINT sMuPlusDefinition = KSParticleFactory::GetInstance().Define(
+    -13, "mu+", {"mu^+"}, katrin::KConst::M_mu_kg(), katrin::KConst::Q(), 0.5, -2.43318710e+7);
 
 //proton
 STATICINT sProtonDefinition = KSParticleFactory::GetInstance().Define(
@@ -165,8 +166,8 @@ STATICINT sAntiProtonDefinition = KSParticleFactory::GetInstance().Define(
     -2212, "p-", {"p^-"}, katrin::KConst::M_prot_kg(), -1 * katrin::KConst::Q(), 0.5, 2.675221900e+8);
 
 //neutron
-STATICINT sNeutronDefinition =
-    KSParticleFactory::GetInstance().Define(2112, "n", {}, katrin::KConst::M_neut_kg(), 0., 0.5, -1.83247172e+8);
+STATICINT sNeutronDefinition = KSParticleFactory::GetInstance().Define(
+    2112, "n", {}, katrin::KConst::M_neut_kg(), 0., 0.5, -1.83247172e+8);
 
 //deuterium plus
 STATICINT sDeuteriumPlusDefinition = KSParticleFactory::GetInstance().Define(
@@ -192,8 +193,8 @@ STATICINT sTTripletDefinition = KSParticleFactory::GetInstance().Define(
     99061, "T", {}, katrin::KConst::M_tPlus_kg() + katrin::KConst::M_el_kg(), 0, 0.5, -1.76e+11);
 
 //T+
-STATICINT sTPlusDefinition = KSParticleFactory::GetInstance().Define(99071, "T^+", {"T+"}, katrin::KConst::M_tPlus_kg(),
-                                                                     katrin::KConst::Q(), 0.5, 2.853493e+8);
+STATICINT sTPlusDefinition = KSParticleFactory::GetInstance().Define(
+    99071, "T^+", {"T+"}, katrin::KConst::M_tPlus_kg(), katrin::KConst::Q(), 0.5, 2.853493e+8);
 
 //T2+
 STATICINT sT2PlusDefinition = KSParticleFactory::GetInstance().Define(
@@ -201,8 +202,8 @@ STATICINT sT2PlusDefinition = KSParticleFactory::GetInstance().Define(
 
 //T3+
 STATICINT sT3PlusDefinition = KSParticleFactory::GetInstance().Define(
-    99073, "T_3^+", {"T3^+", "T3+"}, katrin::KConst::M_T2_kg() + katrin::KConst::M_tPlus_kg(), 1 * katrin::KConst::Q(),
-    0.5, 0);
+    99073, "T_3^+", {"T3^+", "T3+"}, katrin::KConst::M_T2_kg() + katrin::KConst::M_tPlus_kg(),
+    1 * katrin::KConst::Q(), 0.5, 0);
 
 //T5+
 STATICINT sT5PlusDefinition = KSParticleFactory::GetInstance().Define(
@@ -232,4 +233,5 @@ STATICINT sHMinusDefinition = KSParticleFactory::GetInstance().Define(
 //^4He+ (NOTE: Using He+ mass; this should be improved)
 STATICINT s4HeDefinition = KSParticleFactory::GetInstance().Define(
     99101, "^4He^+", {"4He^+", "^4He+", "4He+"}, katrin::KConst::M_HePlus_kg(), 1 * katrin::KConst::Q(), 0.5, 0);
+
 }  // namespace Kassiopeia

@@ -40,7 +40,7 @@ template<typename Type> struct KSABufferType
         return d.Self();
     }
 
-    virtual ~KSABufferType() {}
+    virtual ~KSABufferType() = default;
     virtual const std::string& PopEntryFromBuffer() = 0;
     virtual void AppendEntryToBuffer() = 0;
     virtual std::string& Entry() const = 0;
@@ -52,14 +52,14 @@ typedef KGenScatterHierarchy<KEMField::FundamentalTypes, KSABufferType> KSABuffe
 class KSABuffer : public KSABufferFundamentalTypes
 {
   public:
-    KSABuffer() {}
-    ~KSABuffer() override {}
+    KSABuffer() = default;
+    ~KSABuffer() override = default;
 
     inline std::string& Entry() const override
     {
         return fEntry;
     }
-    inline void FillBuffer(std::string s)
+    inline void FillBuffer(const std::string& s)
     {
         fBufferData = s;
     }

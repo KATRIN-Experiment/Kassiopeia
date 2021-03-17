@@ -7,12 +7,9 @@
 namespace katrin
 {
 
-KApplicationRunner::KApplicationRunner() {}
+KApplicationRunner::KApplicationRunner() = default;
 
-KApplicationRunner::KApplicationRunner(const KApplicationRunner& aCopy) :
-    KApplication(aCopy),
-    fApplications(aCopy.fApplications)
-{}
+KApplicationRunner::KApplicationRunner(const KApplicationRunner&) = default;
 
 KApplicationRunner::~KApplicationRunner()
 {

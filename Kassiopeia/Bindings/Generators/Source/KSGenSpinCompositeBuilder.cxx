@@ -21,12 +21,14 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenSpinCompositeBuilder::~KComplexElement() {}
+template<> KSGenSpinCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenSpinCompositeStructure =
-    KSGenSpinCompositeBuilder::Attribute<string>("name") + KSGenSpinCompositeBuilder::Attribute<string>("theta") +
-    KSGenSpinCompositeBuilder::Attribute<string>("phi") + KSGenSpinCompositeBuilder::Attribute<string>("surface") +
-    KSGenSpinCompositeBuilder::Attribute<string>("space") +
+    KSGenSpinCompositeBuilder::Attribute<std::string>("name") +
+    KSGenSpinCompositeBuilder::Attribute<std::string>("theta") +
+    KSGenSpinCompositeBuilder::Attribute<std::string>("phi") +
+    KSGenSpinCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenSpinCompositeBuilder::Attribute<std::string>("space") +
     KSGenSpinCompositeBuilder::ComplexElement<KSGenValueFix>("theta_fix") +
     KSGenSpinCompositeBuilder::ComplexElement<KSGenValueSet>("theta_set") +
     KSGenSpinCompositeBuilder::ComplexElement<KSGenValueList>("theta_list") +

@@ -24,8 +24,10 @@ namespace KEMField
 class KSAInputOutputObject : public KSAInputObject, public KSAOutputObject
 {
   public:
-    KSAInputOutputObject(){};
-    ~KSAInputOutputObject() override{};
+    KSAInputOutputObject() = default;
+    ;
+    ~KSAInputOutputObject() override = default;
+    ;
 
     //       //inherits these functions
     //       virtual void Initialize(){;};

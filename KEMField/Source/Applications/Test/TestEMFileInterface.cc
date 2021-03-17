@@ -18,23 +18,22 @@ int main()
     std::set<std::string> fileList = KEMFileInterface::GetInstance()->FileList(".");
 
     std::cout << "Files in this directory:" << std::endl;
-    for (std::set<std::string>::iterator it = fileList.begin(); it != fileList.end(); ++it)
-        std::cout << *it << std::endl;
+    for (const auto& it : fileList)
+        std::cout << it << std::endl;
 
     std::cout << "" << std::endl;
 
     double a = 1.5;
     double b = 1.3;
-    KThreeVector p0(0., 0., 0.);
-    KThreeVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
-    KThreeVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
+    KFieldVector p0(0., 0., 0.);
+    KFieldVector n1(1. / sqrt(2.), 1. / sqrt(2.), 0.);
+    KFieldVector n2(1. / sqrt(2.), -1. / sqrt(2.), 0.);
 
     double dirichletValue = 10.2;
 
     double chargeDensity = 4.8;
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* t =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* t = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
 
     std::cout << "\nOriginal element:\n" << std::endl;
 
@@ -50,7 +49,7 @@ int main()
 
     // KEMField::cout<<*t<<KEMField::endl;
 
-    KMD5HashGenerator* hashGenerator_noSolution = new KMD5HashGenerator();
+    auto* hashGenerator_noSolution = new KMD5HashGenerator();
     hashGenerator_noSolution->Omit(Type2Type<KElectrostaticBasis>());
 
     KEMFileInterface::GetInstance()->Write("test.kbd", *t, "a_triangle");

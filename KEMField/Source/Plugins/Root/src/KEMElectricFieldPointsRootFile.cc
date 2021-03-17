@@ -10,7 +10,7 @@
 namespace KEMField
 {
 
-KEMElectricFieldPointsRootFile::KEMElectricFieldPointsRootFile(std::string fullPath) :
+KEMElectricFieldPointsRootFile::KEMElectricFieldPointsRootFile(const std::string& fullPath) :
     fFile(fullPath.c_str(), "RECREATE"),
     fTree("field_values", "field_values")
 {
@@ -29,7 +29,7 @@ KEMElectricFieldPointsRootFile::~KEMElectricFieldPointsRootFile()
     Write();
 }
 
-void KEMElectricFieldPointsRootFile::append(KPosition position, KDirection eField, double potential)
+void KEMElectricFieldPointsRootFile::append(const KPosition& position, const KDirection& eField, double potential)
 {
     fPosition = position;
     fElectricField = eField;

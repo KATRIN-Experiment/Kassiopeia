@@ -70,8 +70,8 @@ class KSTrajTrajectoryExactSpin :
 
   public:
     void Reset() override;
-    void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle, KThreeVector& aCenter,
-                             double& aRadius, double& aTimeStep) override;
+    void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
+                             KGeoBag::KThreeVector& aCenter, double& aRadius, double& aTimeStep) override;
     void ExecuteTrajectory(const double& aTimeStep, KSParticle& anIntermediateParticle) const override;
     void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& /*aFinalParticle*/,
                                          std::vector<KSParticle>* intermediateParticleStates) const override;

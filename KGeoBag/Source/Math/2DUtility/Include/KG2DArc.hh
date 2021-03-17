@@ -128,11 +128,11 @@ class KG2DArc : public KG2DShape
 
     ///tests if a given point is inside the section of the circle
     ///that is defined by the arc and its chord
-    bool IsInsideCircularSegment(const KTwoVector aPoint) const;
+    bool IsInsideCircularSegment(const KTwoVector& aPoint) const;
 
     ///tests if a given point is inside the wedge defined by
     ///the arc and the center of the circle
-    bool IsInsideWedge(const KTwoVector aPoint) const;
+    bool IsInsideWedge(const KTwoVector& aPoint) const;
 
     ///tests if a given point lies within the angles defined by the arc
     bool IsInAngularRange(const KTwoVector& aPoint) const;
@@ -142,7 +142,7 @@ class KG2DArc : public KG2DShape
     bool IsInAngularRange(const double& angle1, const double& angle2, const double& test) const;
 
     ///tests if a point is on the same side of the chord that the arc is on
-    bool IsSameSideOfChordAsArc(const KTwoVector aPoint) const;
+    bool IsSameSideOfChordAsArc(const KTwoVector& aPoint) const;
 
     int DoArcsOverlap(const KG2DArc* aArc) const;
 

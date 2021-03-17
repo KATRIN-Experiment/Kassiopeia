@@ -15,7 +15,7 @@ class KBoundaryIntegralSolutionVector : public KVector<typename Integrator::Valu
     typedef typename Integrator::Basis::ValueType ValueType;
 
     KBoundaryIntegralSolutionVector(KSurfaceContainer& c, Integrator& integrator);
-    ~KBoundaryIntegralSolutionVector() override {}
+    ~KBoundaryIntegralSolutionVector() override = default;
 
     unsigned int Dimension() const override
     {

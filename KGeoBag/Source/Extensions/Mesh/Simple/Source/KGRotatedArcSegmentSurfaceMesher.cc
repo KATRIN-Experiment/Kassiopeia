@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGRotatedArcSegmentSurfaceMesher::KGRotatedArcSegmentSurfaceMesher() : KGSimpleMesher() {}
-KGRotatedArcSegmentSurfaceMesher::~KGRotatedArcSegmentSurfaceMesher() {}
+KGRotatedArcSegmentSurfaceMesher::KGRotatedArcSegmentSurfaceMesher() = default;
+KGRotatedArcSegmentSurfaceMesher::~KGRotatedArcSegmentSurfaceMesher() = default;
 
 void KGRotatedArcSegmentSurfaceMesher::VisitRotatedPathSurface(KGRotatedArcSegmentSurface* aRotatedArcSegmentSurface)
 {

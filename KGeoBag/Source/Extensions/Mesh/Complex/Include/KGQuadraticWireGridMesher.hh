@@ -13,8 +13,8 @@ class KGQuadraticWireGridMesher : virtual public KGComplexMesher, public KGWrapp
     using KGMesherBase::VisitExtendedSurface;
 
   public:
-    KGQuadraticWireGridMesher() {}
-    ~KGQuadraticWireGridMesher() override {}
+    KGQuadraticWireGridMesher() = default;
+    ~KGQuadraticWireGridMesher() override = default;
 
   protected:
     void VisitWrappedSurface(KGWrappedSurface<KGQuadraticWireGrid>* quadraticWireGridSurface) override;

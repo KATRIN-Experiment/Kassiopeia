@@ -56,3 +56,4 @@ cmake_install.cmake
 /*.py
 /*.sh
 /*.gpl
+/**/*.egg-info

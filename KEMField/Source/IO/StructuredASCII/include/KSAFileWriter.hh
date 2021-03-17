@@ -36,7 +36,7 @@ class KSAFileWriter
     virtual ~KSAFileWriter();
 
     //must be called before opening the file stream
-    void SetFileName(std::string filename);
+    void SetFileName(const std::string& filename);
 
     bool Open();
     void AddToFile(const std::string& data);

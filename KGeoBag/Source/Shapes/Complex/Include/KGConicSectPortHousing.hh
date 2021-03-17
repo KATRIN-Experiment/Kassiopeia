@@ -11,7 +11,7 @@ namespace KGeoBag
 class KGConicSectPortHousing : public KGBoundary
 {
   public:
-    KGConicSectPortHousing() {}
+    KGConicSectPortHousing() = default;
     KGConicSectPortHousing(double zA, double rA, double zB, double rB);
 
     ~KGConicSectPortHousing() override;
@@ -24,7 +24,7 @@ class KGConicSectPortHousing : public KGBoundary
     virtual KGConicSectPortHousing* Clone() const;
 
     virtual void Initialize() const;
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -95,14 +95,14 @@ class KGConicSectPortHousing : public KGBoundary
     void RayConicSectIntersection(const std::vector<double>& p0, const std::vector<double>& n1,
                                   std::vector<double>& p_int) const;
 
-    double DistanceBetweenLines(const std::vector<double>& s1, const std::vector<double>& s2,
-                                const std::vector<double>& p1, const std::vector<double>& p2) const;
+    static double DistanceBetweenLines(const std::vector<double>& s1, const std::vector<double>& s2,
+                                       const std::vector<double>& p1, const std::vector<double>& p2);
 
     class Port
     {
       public:
-        Port() {}
-        Port(KGConicSectPortHousing* portHousing, double asub[3], double r);
+        Port() = default;
+        Port(KGConicSectPortHousing* portHousing, const double asub[3], double r);
 
         virtual ~Port();
 
@@ -196,7 +196,7 @@ class KGConicSectPortHousing : public KGBoundary
     class OrthogonalPort : public KGConicSectPortHousing::Port
     {
       public:
-        OrthogonalPort() {}
+        OrthogonalPort() = default;
         OrthogonalPort(KGConicSectPortHousing* portHousing, double asub[3], double rsub);
 
         ~OrthogonalPort() override;
@@ -308,7 +308,7 @@ class KGConicSectPortHousing : public KGBoundary
     class ParaxialPort : public KGConicSectPortHousing::Port
     {
       public:
-        ParaxialPort() {}
+        ParaxialPort() = default;
         ParaxialPort(KGConicSectPortHousing* portHousing, double asub[3], double rsub);
 
         ~ParaxialPort() override;

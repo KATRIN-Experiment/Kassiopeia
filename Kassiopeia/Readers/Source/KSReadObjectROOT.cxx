@@ -119,7 +119,7 @@ KSReadObjectROOT::KSReadObjectROOT(TTree* aStructureTree, TTree* aPresenceTree, 
 
         readermsg_debug("analyzing presence with index <" << tIndex << "> and length <" << tLength << ">" << eom);
 
-        tPresences.push_back(Presence(tIndex, tLength, tEntry));
+        tPresences.emplace_back(tIndex, tLength, tEntry);
         tEntry += tLength;
     }
 
@@ -145,29 +145,29 @@ KSReadObjectROOT::KSReadObjectROOT(TTree* aStructureTree, TTree* aPresenceTree, 
             tTotalLength += tLength;
         }
         else {
-            fPresences.push_back(Presence(tFirstIndex, tTotalLength, tFirstEntry));
+            fPresences.emplace_back(tFirstIndex, tTotalLength, tFirstEntry);
             tFirstIndex = tIndex;
             tFirstEntry = tEntry;
             tTotalLength = tLength;
         }
         tLastIndex = tIndex;
     }
-    fPresences.push_back(Presence(tFirstIndex, tTotalLength, tFirstEntry));
+    fPresences.emplace_back(tFirstIndex, tTotalLength, tFirstEntry);
 }
 
-KSReadObjectROOT::~KSReadObjectROOT() {}
+KSReadObjectROOT::~KSReadObjectROOT() = default;
 
 void KSReadObjectROOT::operator++(int)
 {
     fIndex++;
-    for (auto tIt = fPresences.begin(); tIt != fPresences.end(); tIt++) {
-        if (tIt->fIndex > fIndex) {
+    for (auto& presence : fPresences) {
+        if (presence.fIndex > fIndex) {
             fValid = false;
             return;
         }
-        if (tIt->fIndex + tIt->fLength > fIndex) {
+        if (presence.fIndex + presence.fLength > fIndex) {
             fValid = true;
-            fData->GetEntry(tIt->fEntry + (fIndex - tIt->fIndex));
+            fData->GetEntry(presence.fEntry + (fIndex - presence.fIndex));
             return;
         }
     }
@@ -177,14 +177,14 @@ void KSReadObjectROOT::operator++(int)
 void KSReadObjectROOT::operator--(int)
 {
     fIndex--;
-    for (auto tIt = fPresences.begin(); tIt != fPresences.end(); tIt++) {
-        if (tIt->fIndex > fIndex) {
+    for (auto& presence : fPresences) {
+        if (presence.fIndex > fIndex) {
             fValid = false;
             return;
         }
-        if (tIt->fIndex + tIt->fLength > fIndex) {
+        if (presence.fIndex + presence.fLength > fIndex) {
             fValid = true;
-            fData->GetEntry(tIt->fEntry + (fIndex - tIt->fIndex));
+            fData->GetEntry(presence.fEntry + (fIndex - presence.fIndex));
             return;
         }
     }
@@ -194,14 +194,14 @@ void KSReadObjectROOT::operator--(int)
 void KSReadObjectROOT::operator<<(const unsigned int& aValue)
 {
     fIndex = aValue;
-    for (auto tIt = fPresences.begin(); tIt != fPresences.end(); tIt++) {
-        if (tIt->fIndex > fIndex) {
+    for (auto& presence : fPresences) {
+        if (presence.fIndex > fIndex) {
             fValid = false;
             return;
         }
-        if (tIt->fIndex + tIt->fLength > fIndex) {
+        if (presence.fIndex + presence.fLength > fIndex) {
             fValid = true;
-            fData->GetEntry(tIt->fEntry + (fIndex - tIt->fIndex));
+            fData->GetEntry(presence.fEntry + (fIndex - presence.fIndex));
             return;
         }
     }

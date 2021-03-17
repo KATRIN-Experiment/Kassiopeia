@@ -27,8 +27,10 @@ template<typename ObjectTypeList, unsigned int NFLAGS>
 class KFMNodeFlagValueInitializer : public KFMNodeActor<KFMNode<ObjectTypeList>>
 {
   public:
-    KFMNodeFlagValueInitializer(){};
-    ~KFMNodeFlagValueInitializer() override{};
+    KFMNodeFlagValueInitializer() = default;
+    ;
+    ~KFMNodeFlagValueInitializer() override = default;
+    ;
 
     void SetFlagIndex(unsigned int flag_index)
     {

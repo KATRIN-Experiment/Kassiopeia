@@ -28,7 +28,7 @@ KRampedElectricField::KRampedElectricField() :
     fTimeScalingFactor(1.)
 {}
 
-KRampedElectricField::~KRampedElectricField() {}
+KRampedElectricField::~KRampedElectricField() = default;
 
 double KRampedElectricField::PotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const
 {
@@ -38,9 +38,9 @@ double KRampedElectricField::PotentialCore(const KPosition& aSamplePoint, const 
     //fieldmsg_debug( "Ramped electric field <" << GetName() << "> returns U=" << aTarget << " at t=" << aSampleTime << eom );
 }
 
-KThreeVector KRampedElectricField::ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const
+KFieldVector KRampedElectricField::ElectricFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const
 {
-    KThreeVector field = fRootElectricField->ElectricField(aSamplePoint, aSampleTime);
+    KFieldVector field = fRootElectricField->ElectricField(aSamplePoint, aSampleTime);
     double Modulation = GetModulationFactor(aSampleTime);
     return field * Modulation;
     //fieldmsg_debug( "Ramped electric field <" << GetName() << "> returns E=" << aTarget << " at t=" << aSampleTime << eom );

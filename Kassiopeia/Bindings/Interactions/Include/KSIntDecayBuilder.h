@@ -33,13 +33,13 @@ template<> inline bool KSIntDecayBuilder::AddAttribute(KContainer* aContainer)
         return true;
     }
     if (aContainer->GetName() == "calculator") {
-        auto* tCalculator = KToolbox::GetInstance().Get<KSIntDecayCalculator>(aContainer->AsReference<std::string>());
+        auto* tCalculator = KToolbox::GetInstance().Get<KSIntDecayCalculator>(aContainer->AsString());
         fObject->AddCalculator(tCalculator);
         return true;
     }
     if (aContainer->GetName() == "calculators") {
         std::vector<KSIntDecayCalculator*> aCalculatorVector =
-            KToolbox::GetInstance().GetAll<KSIntDecayCalculator>(aContainer->AsReference<std::string>());
+            KToolbox::GetInstance().GetAll<KSIntDecayCalculator>(aContainer->AsString());
         std::vector<KSIntDecayCalculator*>::iterator tIt;
         for (tIt = aCalculatorVector.begin(); tIt != aCalculatorVector.end(); tIt++) {
             fObject->AddCalculator((*tIt));

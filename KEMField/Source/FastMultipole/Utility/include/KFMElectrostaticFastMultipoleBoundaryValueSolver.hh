@@ -47,10 +47,10 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
     virtual ~KFMElectrostaticFastMultipoleBoundaryValueSolver();
 
     //read the parameters from a configuration file
-    void ReadConfigurationFile(std::string config_file);
+    void ReadConfigurationFile(const std::string& config_file);
 
     //parameters used to contruct the region tree
-    void SetSolverElectrostaticParameters(KFMElectrostaticParameters params)
+    void SetSolverElectrostaticParameters(const KFMElectrostaticParameters& params)
     {
         fSolverParameters = params;
         fHaveRecievedSolverParameters = true;
@@ -58,7 +58,7 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
 
     //ability to set independent tree parameters for the preconditioner
     //only used in the case where the preconditioner type is independent_implicit_krylov
-    void SetPreconditionerElectrostaticParameters(KFMElectrostaticParameters params)
+    void SetPreconditionerElectrostaticParameters(const KFMElectrostaticParameters& params)
     {
         fPreconditionerParameters = params;
     };
@@ -91,13 +91,13 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
     };
 
     //set the name of the solver (gmres or bicgstab)
-    void SetSolverType(std::string solver_name)
+    void SetSolverType(const std::string& solver_name)
     {
         fSolverName = solver_name;
     };
 
     //set the name of the preconditioner (none, jacobi, implicit_krylov)
-    void SetPreconditionerType(std::string preconditioner_name)
+    void SetPreconditionerType(const std::string& preconditioner_name)
     {
         fPreconditionerName = preconditioner_name;
     };
@@ -225,7 +225,7 @@ class KFMElectrostaticFastMultipoleBoundaryValueSolver
     //generate Matrix
     KSmartPointer<KFMElectrostaticTypes::FastMultipoleMatrix>
     CreateMatrix(const KSurfaceContainer& surfaceContainer,
-                 KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>) const;
+                 const KSmartPointer<KFMElectrostaticTypes::FastMultipoleEBI>&) const;
 
 //profiling
 #ifdef KEMFIELD_USE_REALTIME_CLOCK

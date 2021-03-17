@@ -9,7 +9,7 @@ void KSADataStreamer::open(const std::string& fileName, const std::string& actio
 
     std::transform(action.begin(), action.end(), action_.begin(), ::toupper);
 
-    if (action_.compare("READ") == 0) {
+    if (action_ == "READ") {
         fIsReading = true;
         fReader.SetFileName(fileName);
         fReader.Open();
@@ -18,7 +18,7 @@ void KSADataStreamer::open(const std::string& fileName, const std::string& actio
         std::string s;
         fReader.GetLine(s);
     }
-    if (action_.compare("OVERWRITE") == 0) {
+    if (action_ == "OVERWRITE") {
         fIsReading = false;
         fWriter.SetFileName(fileName);
         fWriter.Open();
@@ -30,7 +30,7 @@ void KSADataStreamer::close()
     if (fIsReading)
         fReader.Close();
     else {
-        if (fBuffer.StringifyBuffer().size() != 0)
+        if (!fBuffer.StringifyBuffer().empty())
             flush();
         fBuffer.FillBuffer("\n");
         flush();

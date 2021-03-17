@@ -45,7 +45,8 @@ template<size_t NDIM> class KGBall
         fData[NDIM] = radius;
     }
 
-    virtual ~KGBall(){};
+    virtual ~KGBall() = default;
+    ;
 
     size_t GetDimension() const
     {

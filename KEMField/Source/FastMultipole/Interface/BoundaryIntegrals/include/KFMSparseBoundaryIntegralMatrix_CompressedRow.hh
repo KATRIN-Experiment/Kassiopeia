@@ -200,7 +200,7 @@ class KFMSparseBoundaryIntegralMatrix_CompressedRow : public KBoundaryIntegralMa
             KFMExternalIdentitySet* eid_set =
                 KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(fNodes[i]);
 
-            if (eid_set != NULL) {
+            if (eid_set != nullptr) {
                 n_mx_elements += eid_set->GetSize();
             }
         }
@@ -218,7 +218,7 @@ class KFMSparseBoundaryIntegralMatrix_CompressedRow : public KBoundaryIntegralMa
             KFMExternalIdentitySet* eid_set =
                 KFMObjectRetriever<ObjectTypeList, KFMExternalIdentitySet>::GetNodeObject(fNodes[i]);
 
-            if (eid_set != NULL) {
+            if (eid_set != nullptr) {
                 fColumnIndexListPointers[i] = eid_set->GetRawIDList();
             }
             else {

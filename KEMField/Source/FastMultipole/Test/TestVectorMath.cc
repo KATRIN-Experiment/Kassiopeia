@@ -120,15 +120,15 @@ int main(int /*argc*/, char** /*argv[]*/)
 
     //set up line segment, and triangle, rectangle surfaces
 
-    KVMLineSegment* line = new KVMLineSegment();
+    auto* line = new KVMLineSegment();
     line->SetAll(WireStartPoint, WireEndPoint);
     line->Initialize();
 
-    KVMTriangularSurface* triangle = new KVMTriangularSurface();
+    auto* triangle = new KVMTriangularSurface();
     triangle->SetAll(TriP, TriN1, TriN2, TriA, TriB);
     triangle->Initialize();
 
-    KVMRectangularSurface* rectangle = new KVMRectangularSurface();
+    auto* rectangle = new KVMRectangularSurface();
     rectangle->SetAll(RecP, RecN1, RecN2, RecA, RecB);
     rectangle->Initialize();
 
@@ -153,7 +153,7 @@ int main(int /*argc*/, char** /*argv[]*/)
     //    identity_func* ident = new identity_func(&testcase,3,1);
 
     typedef KVMFieldWrapper<FieldTestCase, &FieldTestCase::dist> dist_func;
-    dist_func* dist = new dist_func(&testcase, 3, 1);
+    auto* dist = new dist_func(&testcase, 3, 1);
 
     //here we wrap a function which takes a point in 3-space and returns 6 values
     //    typedef KVMFieldWrapper<FieldTestCase, &FieldTestCase::functionA> funcA;
@@ -169,9 +169,9 @@ int main(int /*argc*/, char** /*argv[]*/)
     double result[6];
 
     //create a new surface integrator
-    KVMSurfaceIntegral<1>* surfaceInt1D = new KVMSurfaceIntegral<1>();  //integrates a 1-dim function
-    KVMSurfaceIntegral<3>* surfaceInt3D = new KVMSurfaceIntegral<3>();  //integrates a 3-dim function
-    KVMSurfaceIntegral<6>* surfaceInt6D = new KVMSurfaceIntegral<6>();  //integrates a 6-dim function
+    auto* surfaceInt1D = new KVMSurfaceIntegral<1>();  //integrates a 1-dim function
+    auto* surfaceInt3D = new KVMSurfaceIntegral<3>();  //integrates a 3-dim function
+    auto* surfaceInt6D = new KVMSurfaceIntegral<6>();  //integrates a 6-dim function
 
     //make sure we intialize the integrators, lets use 8-th order quadrature for all
     surfaceInt1D->SetNTerms(8);

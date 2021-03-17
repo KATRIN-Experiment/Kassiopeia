@@ -17,7 +17,7 @@ KSTermMinDistance::KSTermMinDistance() :
 {}
 
 KSTermMinDistance::KSTermMinDistance(const KSTermMinDistance& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fMinDistancePerStep(aCopy.fMinDistancePerStep),
     fMinDistance(aCopy.fMinDistance),
     fSurfaces(aCopy.fSurfaces),
@@ -29,7 +29,7 @@ KSTermMinDistance* KSTermMinDistance::Clone() const
     return new KSTermMinDistance(*this);
 }
 
-KSTermMinDistance::~KSTermMinDistance() {}
+KSTermMinDistance::~KSTermMinDistance() = default;
 
 void KSTermMinDistance::AddSurface(KGeoBag::KGSurface* aSurface)
 {
@@ -47,19 +47,19 @@ void KSTermMinDistance::CalculateTermination(const KSParticle& anInitialParticle
 {
     fMinDistancePerStep = std::numeric_limits<double>::max();
 
-    KThreeVector tNearestPoint(0., 0., 0.);
+    KGeoBag::KThreeVector tNearestPoint(0., 0., 0.);
     double tMinDist(0.);
 
-    for (auto tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end(); tSurfaceIt++) {
-        tNearestPoint = (*tSurfaceIt)->Point(anInitialParticle.GetPosition());
+    for (auto& surface : fSurfaces) {
+        tNearestPoint = surface->Point(anInitialParticle.GetPosition());
         tMinDist = (anInitialParticle.GetPosition() - tNearestPoint).Magnitude();
         if (tMinDist < fMinDistancePerStep) {
             fMinDistancePerStep = tMinDist;
         }
     }
 
-    for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-        tNearestPoint = (*tSpaceIt)->Point(anInitialParticle.GetPosition());
+    for (auto& space : fSpaces) {
+        tNearestPoint = space->Point(anInitialParticle.GetPosition());
         tMinDist = (anInitialParticle.GetPosition() - tNearestPoint).Magnitude();
         if (tMinDist < fMinDistancePerStep) {
             fMinDistancePerStep = tMinDist;

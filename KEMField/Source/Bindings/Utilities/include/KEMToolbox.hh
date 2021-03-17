@@ -47,8 +47,8 @@ class KEMToolbox : public katrin::KSingleton<KEMToolbox>
     void DeleteAll();
 
   protected:
-    KEMToolbox() {}
-    ~KEMToolbox() override {}
+    KEMToolbox() = default;
+    ~KEMToolbox() override = default;
 
   private:
     bool checkKeyIsFree(std::string name);
@@ -56,7 +56,7 @@ class KEMToolbox : public katrin::KSingleton<KEMToolbox>
 
     typedef std::pair<std::string, KSmartPointer<katrin::KContainer>> NameAndContainer;
 
-    typedef std::map<std::string, KSmartPointer<katrin::KContainer>> ContainerMap;
+    using ContainerMap = std::map<std::string, KSmartPointer<katrin::KContainer>>;
 
     ContainerMap fObjects;
 };

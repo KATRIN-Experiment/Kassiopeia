@@ -15,13 +15,13 @@ class KMagnetostaticBoundaryIntegrator : public KMagnetostaticLineSegmentIntegra
     using KMagnetostaticRingIntegrator::MagneticField;
     using KMagnetostaticRingIntegrator::VectorPotential;
 
-    typedef KMagnetostaticBasis Basis;
-    typedef Basis::ValueType ValueType;
-    typedef KBoundaryType<Basis, KDirichletBoundary> DirichletBoundary;
-    typedef KBoundaryType<Basis, KNeumannBoundary> NeumannBoundary;
+    using Basis = KMagnetostaticBasis;
+    using ValueType = Basis::ValueType;
+    using DirichletBoundary = KBoundaryType<Basis, KDirichletBoundary>;
+    using NeumannBoundary = KBoundaryType<Basis, KNeumannBoundary>;
 
     KMagnetostaticBoundaryIntegrator() : fShapeVisitor(*this) {}
-    virtual ~KMagnetostaticBoundaryIntegrator() {}
+    virtual ~KMagnetostaticBoundaryIntegrator() = default;
 
     ValueType BoundaryIntegral(KSurfacePrimitive* source, KSurfacePrimitive* target, unsigned int i);
     ValueType BoundaryValue(KSurfacePrimitive* surface, unsigned int i);
@@ -35,11 +35,11 @@ class KMagnetostaticBoundaryIntegrator : public KMagnetostaticLineSegmentIntegra
 
         ShapeVisitor(KMagnetostaticBoundaryIntegrator& integrator) : fIntegrator(integrator) {}
 
-        void Visit(KLineSegment& l)
+        void Visit(KLineSegment& l) override
         {
             fIntegrator.ComputeBoundaryIntegral(l);
         }
-        void Visit(KRing& r)
+        void Visit(KRing& r) override
         {
             fIntegrator.ComputeBoundaryIntegral(r);
         }
@@ -54,10 +54,10 @@ class KMagnetostaticBoundaryIntegrator : public KMagnetostaticLineSegmentIntegra
       public:
         using KSelectiveVisitor<KBoundaryVisitor, KTYPELIST_2(KDirichletBoundary, KNeumannBoundary)>::Visit;
 
-        BoundaryVisitor() {}
+        BoundaryVisitor() = default;
 
-        void Visit(KDirichletBoundary&);
-        void Visit(KNeumannBoundary&);
+        void Visit(KDirichletBoundary&) override;
+        void Visit(KNeumannBoundary&) override;
 
         void SetBoundaryIndex(unsigned int i)
         {
@@ -88,9 +88,9 @@ class KMagnetostaticBoundaryIntegrator : public KMagnetostaticLineSegmentIntegra
       public:
         using KSelectiveVisitor<KBasisVisitor, KTYPELIST_1(KMagnetostaticBasis)>::Visit;
 
-        BasisVisitor() : fBasisValue(NULL) {}
+        BasisVisitor() : fBasisValue(nullptr) {}
 
-        void Visit(KMagnetostaticBasis&);
+        void Visit(KMagnetostaticBasis&) override;
 
         void SetBasisIndex(unsigned int i)
         {
@@ -119,12 +119,12 @@ template<class SourceShape> void KMagnetostaticBoundaryIntegrator::ComputeBounda
 {
     // if (fBoundaryVisitor.IsDirichlet())
     // {
-    //   KThreeVector A = this->VectorPotential(&source,fTarget->GetShape()->Centroid());
+    //   KFieldVector A = this->VectorPotential(&source,fTarget->GetShape()->Centroid());
     //   fValue = A.Dot(fTarget->GetShape()->Normal());
     // }
     // else
     // {
-    //   KThreeVector field = this->MagneticField(&source,
+    //   KFieldVector field = this->MagneticField(&source,
     // 					       fTarget->GetShape()->Centroid());
     //   fValue = field.Dot(fTarget->GetShape()->Normal());
     //   double dist = (source.Centroid() -

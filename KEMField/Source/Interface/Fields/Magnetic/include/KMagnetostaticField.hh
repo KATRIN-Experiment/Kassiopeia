@@ -16,8 +16,8 @@ namespace KEMField
 class KMagnetostaticField : public KMagneticField
 {
   public:
-    KMagnetostaticField() {}
-    ~KMagnetostaticField() override {}
+    KMagnetostaticField() = default;
+    ~KMagnetostaticField() override = default;
 
     static std::string Name()
     {
@@ -26,12 +26,12 @@ class KMagnetostaticField : public KMagneticField
 
     using KMagneticField::MagneticPotential;
 
-    KThreeVector MagneticPotential(const KPosition& P) const
+    KFieldVector MagneticPotential(const KPosition& P) const
     {
         return MagneticPotentialCore(P);
     }
 
-    KThreeVector MagneticField(const KPosition& P) const
+    KFieldVector MagneticField(const KPosition& P) const
     {
         return MagneticFieldCore(P);
     }
@@ -41,13 +41,18 @@ class KMagnetostaticField : public KMagneticField
         return MagneticGradientCore(P);
     }
 
+    bool Check(const KPosition& P) const
+    {
+        return CheckCore(P);
+    }
+
   private:
-    KThreeVector MagneticPotentialCore(const KPosition& P, const double& /*time*/) const override
+    KFieldVector MagneticPotentialCore(const KPosition& P, const double& /*time*/) const override
     {
         return MagneticPotentialCore(P);
     }
 
-    KThreeVector MagneticFieldCore(const KPosition& P, const double& /*time*/) const override
+    KFieldVector MagneticFieldCore(const KPosition& P, const double& /*time*/) const override
     {
         return MagneticFieldCore(P);
     }
@@ -57,23 +62,33 @@ class KMagnetostaticField : public KMagneticField
         return MagneticGradientCore(P);
     }
 
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P,
+    std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P,
                                                                     const double& /*time*/) const override
     {
         return MagneticFieldAndGradientCore(P);
     }
 
-    virtual KThreeVector MagneticPotentialCore(const KPosition& P) const = 0;
-    virtual KThreeVector MagneticFieldCore(const KPosition& P) const = 0;
+    bool CheckCore(const KPosition& P, const double& /*time*/) const override
+    {
+        return CheckCore(P);
+    }
+
+    virtual KFieldVector MagneticPotentialCore(const KPosition& P) const = 0;
+    virtual KFieldVector MagneticFieldCore(const KPosition& P) const = 0;
     virtual KGradient MagneticGradientCore(const KPosition& P) const = 0;
-    virtual std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
+    virtual std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const
     {
         //default behavior is to simply call the field and gradient separately
         //this function may be overloaded to perform a more efficient combined calculation
-        KThreeVector field = MagneticFieldCore(P);
+        KFieldVector field = MagneticFieldCore(P);
         KGradient grad = MagneticGradientCore(P);
 
-        return std::pair<KThreeVector, KGradient>(field, grad);
+        return std::pair<KFieldVector, KGradient>(field, grad);
+    }
+    virtual bool CheckCore(const KPosition& /*P*/) const
+    {
+        //default behavior is to assume all points are valid
+        return true;
     }
 };
 }  // namespace KEMField

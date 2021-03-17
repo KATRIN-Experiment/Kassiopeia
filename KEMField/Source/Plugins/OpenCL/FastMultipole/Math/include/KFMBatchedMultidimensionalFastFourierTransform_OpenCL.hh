@@ -46,15 +46,15 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL :
         fMaxBufferSize(0),
         fTotalDataSize(0),
         fOpenCLFlags(""),
-        fFFTKernel(NULL),
-        fSpatialDimensionBufferCL(NULL),
-        fTwiddleBufferCL(NULL),
-        fConjugateTwiddleBufferCL(NULL),
-        fScaleBufferCL(NULL),
-        fCirculantBufferCL(NULL),
-        fDataBufferCL(NULL),
-        fPermuationArrayCL(NULL),
-        fWorkspaceBufferCL(NULL),
+        fFFTKernel(nullptr),
+        fSpatialDimensionBufferCL(nullptr),
+        fTwiddleBufferCL(nullptr),
+        fConjugateTwiddleBufferCL(nullptr),
+        fScaleBufferCL(nullptr),
+        fCirculantBufferCL(nullptr),
+        fDataBufferCL(nullptr),
+        fPermuationArrayCL(nullptr),
+        fWorkspaceBufferCL(nullptr),
         fNLocal(0)
     {
         ;
@@ -539,7 +539,7 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL :
         if (fFillFromHostData) {
             //initialize data on the GPU from host memory
             cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
-            CL_TYPE2* ptr = (CL_TYPE2*) (&((this->fInput->GetData())[0]));
+            auto* ptr = (CL_TYPE2*) (&((this->fInput->GetData())[0]));
             Q.enqueueWriteBuffer(*fDataBufferCL, CL_TRUE, 0, fTotalDataSize * sizeof(CL_TYPE2), ptr);
 #ifdef ENFORCE_CL_FINISH
             KOpenCLInterface::GetInstance()->GetQueue().finish();
@@ -556,7 +556,7 @@ class KFMBatchedMultidimensionalFastFourierTransform_OpenCL :
         if (fReadOutDataToHost) {
             //read out data from the GPU to the host memory
             cl::CommandQueue& Q = KOpenCLInterface::GetInstance()->GetQueue();
-            CL_TYPE2* ptr = (CL_TYPE2*) (&((this->fInput->GetData())[0]));
+            auto* ptr = (CL_TYPE2*) (&((this->fInput->GetData())[0]));
             Q.enqueueReadBuffer(*fDataBufferCL, CL_TRUE, 0, fTotalDataSize * sizeof(CL_TYPE2), ptr);
 #ifdef ENFORCE_CL_FINISH
             KOpenCLInterface::GetInstance()->GetQueue().finish();

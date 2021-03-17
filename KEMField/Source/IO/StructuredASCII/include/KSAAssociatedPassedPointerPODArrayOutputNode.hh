@@ -34,7 +34,8 @@ template<typename CallType, typename ReturnType, void (CallType::*memberFunction
 class KSAAssociatedPassedPointerPODArrayOutputNode : public KSAPODArrayOutputNode<ReturnType>
 {
   public:
-    KSAAssociatedPassedPointerPODArrayOutputNode(std::string name, unsigned int arr_size, const CallType* call_ptr) :
+    KSAAssociatedPassedPointerPODArrayOutputNode(const std::string& name, unsigned int arr_size,
+                                                 const CallType* call_ptr) :
         KSAPODArrayOutputNode<ReturnType>(name, arr_size)
     {
         KSAConstantReturnByPassedPointerGet<CallType, ReturnType, memberFunction> callback;

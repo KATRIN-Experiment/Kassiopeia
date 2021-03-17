@@ -184,8 +184,8 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Line* li
 
     double n2[3] = {0., 0., 1.};
 
-    for (int i = 0; i < 3; i++)
-        n1[i] /= xy_len;
+    for (double& i : n1)
+        i /= xy_len;
 
     double p0[3] = {line->GetP1(0), line->GetP1(1), fExtrudedObject->GetZMin()};
 
@@ -221,7 +221,7 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Line* li
     coords.push_back(xy);
     counter++;
 
-    KGMeshRectangle* r = new KGMeshRectangle(xy_len, z_len, p0, n1, n2);
+    auto* r = new KGMeshRectangle(xy_len, z_len, p0, n1, n2);
 
     RefineAndAddElement(r,
                         nDisc,
@@ -275,7 +275,7 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Arc* arc
         coords.push_back(xy);
         counter++;
 
-        KGMeshRectangle* r = new KGMeshRectangle(xy_len, z_len, p0, n1, n2);
+        auto* r = new KGMeshRectangle(xy_len, z_len, p0, n1, n2);
 
         RefineAndAddElement(r,
                             1,

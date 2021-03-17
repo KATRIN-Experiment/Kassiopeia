@@ -24,11 +24,6 @@ KDirection KEMCoordinateSystem::ToLocal(const KDirection& d) const
     return KDirection(fXAxis.Dot(d), fYAxis.Dot(d), fZAxis.Dot(d));
 }
 
-KThreeVector KEMCoordinateSystem::ToLocal(const KThreeVector& v) const
-{
-    return KThreeVector(fXAxis.Dot(v), fYAxis.Dot(v), fZAxis.Dot(v));
-}
-
 KGradient KEMCoordinateSystem::ToLocal(const KGradient& g) const
 {
     KThreeMatrix
@@ -51,13 +46,6 @@ KDirection KEMCoordinateSystem::ToGlobal(const KDirection& p) const
     return KDirection(fXAxis[0] * p[0] + fYAxis[0] * p[1] + fZAxis[0] * p[2],
                       fXAxis[1] * p[0] + fYAxis[1] * p[1] + fZAxis[1] * p[2],
                       fXAxis[2] * p[0] + fYAxis[2] * p[1] + fZAxis[2] * p[2]);
-}
-
-KThreeVector KEMCoordinateSystem::ToGlobal(const KThreeVector& v) const
-{
-    return KThreeVector(fXAxis[0] * v[0] + fYAxis[0] * v[1] + fZAxis[0] * v[2],
-                        fXAxis[1] * v[0] + fYAxis[1] * v[1] + fZAxis[1] * v[2],
-                        fXAxis[2] * v[0] + fYAxis[2] * v[1] + fZAxis[2] * v[2]);
 }
 
 KGradient KEMCoordinateSystem::ToGlobal(const KGradient& g) const

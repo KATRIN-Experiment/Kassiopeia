@@ -9,12 +9,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSComponentMathBuilder::~KComplexElement() {}
+template<> KSComponentMathBuilder::~KComplexElement() = default;
 
 STATICINT sKSComponentMathStructure =
-    KSComponentMathBuilder::Attribute<string>("name") + KSComponentMathBuilder::Attribute<string>("group") +
-    KSComponentMathBuilder::Attribute<string>("component") + KSComponentMathBuilder::Attribute<string>("parent") +
-    KSComponentMathBuilder::Attribute<string>("term");
+    KSComponentMathBuilder::Attribute<std::string>("name") + KSComponentMathBuilder::Attribute<std::string>("group") +
+    KSComponentMathBuilder::Attribute<std::string>("component") +
+    KSComponentMathBuilder::Attribute<std::string>("parent") + KSComponentMathBuilder::Attribute<std::string>("term");
 
 STATICINT sKSComponentMath = KSComponentGroupBuilder::ComplexElement<KSComponentMathData>("component_math") +
                              KSComponentGroupBuilder::ComplexElement<KSComponentMathData>("output_math") +

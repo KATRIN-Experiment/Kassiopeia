@@ -43,7 +43,8 @@ KEMRootFieldCanvas::~KEMRootFieldCanvas()
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::DrawGeomRZ(std::string conicSectfile, std::string wirefile, std::string coilfile)
+void KEMRootFieldCanvas::DrawGeomRZ(const std::string& conicSectfile, const std::string& wirefile,
+                                    const std::string& coilfile)
 {
     // Read in the conicSects
 
@@ -226,7 +227,8 @@ void KEMRootFieldCanvas::DrawGeomRZ(std::string conicSectfile, std::string wiref
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::DrawGeomXY(double z, std::string conicSectfile, std::string wirefile, std::string coilfile)
+void KEMRootFieldCanvas::DrawGeomXY(double z, const std::string& conicSectfile, const std::string& wirefile,
+                                    const std::string& coilfile)
 {
     // Read in the conicSects
 
@@ -378,12 +380,12 @@ void KEMRootFieldCanvas::DrawFieldMapCube(double x_1, double x_2, double y_1, do
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double> y, std::vector<double> V, bool xy,
-                                      double z)
+void KEMRootFieldCanvas::DrawFieldMap(const std::vector<double>& x, const std::vector<double>& y,
+                                      const std::vector<double>& V, bool xy, double z)
 {
     (void) z;
-    if (hist)
-        delete hist;
+
+    delete hist;
     int ysize = y.size();
     if (full && !xy)
         ysize *= 2;
@@ -391,11 +393,11 @@ void KEMRootFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double>
 
     int V_val = 0;
 
-    for (int i = 0; i < (int) x.size(); i++) {
-        for (int j = 0; j < (int) y.size(); j++) {
-            hist->Fill(x[i], y[j], V[V_val]);
+    for (double i : x) {
+        for (double j : y) {
+            hist->Fill(i, j, V[V_val]);
             if (full && !xy)
-                hist->Fill(x[i], -y[j], V[V_val]);
+                hist->Fill(i, -j, V[V_val]);
             V_val++;
         }
     }
@@ -412,11 +414,11 @@ void KEMRootFieldCanvas::DrawFieldMap(std::vector<double> x, std::vector<double>
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::DrawComparisonMap(int nPoints, std::vector<double> x, std::vector<double> y,
-                                           std::vector<double> V1, std::vector<double> V2)
+void KEMRootFieldCanvas::DrawComparisonMap(int nPoints, const std::vector<double>& x, const std::vector<double>& y,
+                                           const std::vector<double>& V1, const std::vector<double>& V2)
 {
-    if (hist)
-        delete hist;
+
+    delete hist;
     int ysize = y.size();
     if (full)
         ysize *= 2;
@@ -443,7 +445,7 @@ void KEMRootFieldCanvas::DrawComparisonMap(int nPoints, std::vector<double> x, s
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::DrawFieldLines(std::vector<double> x, std::vector<double> y)
+void KEMRootFieldCanvas::DrawFieldLines(const std::vector<double>& x, const std::vector<double>& y)
 {
     int nLineSegs = x.size() - 1;
 
@@ -469,7 +471,7 @@ void KEMRootFieldCanvas::DrawFieldLines(std::vector<double> x, std::vector<doubl
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::LabelAxes(std::string xname, std::string yname, std::string zname)
+void KEMRootFieldCanvas::LabelAxes(const std::string& xname, const std::string& yname, const std::string& zname)
 {
     canvas->SetRightMargin(.15);
     hist->GetXaxis()->SetTitle(xname.c_str());
@@ -479,14 +481,14 @@ void KEMRootFieldCanvas::LabelAxes(std::string xname, std::string yname, std::st
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::LabelCanvas(std::string name)
+void KEMRootFieldCanvas::LabelCanvas(const std::string& name)
 {
     hist->SetTitle(name.c_str());
 }
 
 //______________________________________________________________________________
 
-void KEMRootFieldCanvas::SaveAs(std::string savename)
+void KEMRootFieldCanvas::SaveAs(const std::string& savename)
 {
     canvas->SaveAs(savename.c_str());
 }

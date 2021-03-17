@@ -42,6 +42,10 @@ template<> inline bool KMagnetostaticFieldmapBuilder::AddAttribute(KContainer* a
         aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmap::SetInterpolation);
         return true;
     }
+    if (aContainer->GetName() == "magnetic_gradient_numerical") {
+        aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmap::SetGradNumerical);
+        return true;
+    }
     return false;
 }
 
@@ -103,13 +107,12 @@ template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KCo
     }
     if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 
@@ -158,15 +161,15 @@ namespace KEMField
 {
 class KMagnetostaticFieldmap : public KMagnetostaticField
 {
-    KThreeVector MagneticPotentialCore(const KPosition& /*P*/) const override
+    KFieldVector MagneticPotentialCore(const KPosition& /*P*/) const override
     {
         double nan = std::numeric_limits<double>::quiet_NaN();
-        return KThreeVector(nan, nan, nan);
+        return KFieldVector(nan, nan, nan);
     }
-    KThreeVector MagneticFieldCore(const KPosition& /*P*/) const override
+    KFieldVector MagneticFieldCore(const KPosition& /*P*/) const override
     {
         double nan = std::numeric_limits<double>::quiet_NaN();
-        return KThreeVector(nan, nan, nan);
+        return KFieldVector(nan, nan, nan);
     }
     KGradient MagneticGradientCore(const KPosition& /*P*/) const override
     {
@@ -194,7 +197,7 @@ template<> inline bool KMagnetostaticFieldmapBuilder::End()
     return true;
 }
 
-typedef KComplexElement<KEMField::KMagnetostaticFieldmapCalculator> KMagnetostaticFieldmapCalculatorBuilder;
+using KMagnetostaticFieldmapCalculatorBuilder = KComplexElement<KEMField::KMagnetostaticFieldmapCalculator>;
 
 template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KContainer* /*aContainer*/)
 {

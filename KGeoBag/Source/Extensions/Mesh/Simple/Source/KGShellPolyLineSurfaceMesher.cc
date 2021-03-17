@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGShellPolyLineSurfaceMesher::KGShellPolyLineSurfaceMesher() : KGSimpleMesher() {}
-KGShellPolyLineSurfaceMesher::~KGShellPolyLineSurfaceMesher() {}
+KGShellPolyLineSurfaceMesher::KGShellPolyLineSurfaceMesher() = default;
+KGShellPolyLineSurfaceMesher::~KGShellPolyLineSurfaceMesher() = default;
 
 void KGShellPolyLineSurfaceMesher::VisitShellPathSurface(KGShellPolyLineSurface* aShellPolyLineSurface)
 {

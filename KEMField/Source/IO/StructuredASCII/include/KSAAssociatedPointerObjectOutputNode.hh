@@ -27,7 +27,7 @@ class KSAAssociatedPointerObjectOutputNode :
     public KSAObjectOutputNode<ReturnType, KSAIsDerivedFrom<ReturnType, KSAFixedSizeInputOutputObject>::Is>
 {
   public:
-    KSAAssociatedPointerObjectOutputNode(std::string name, const CallType* call_ptr) :
+    KSAAssociatedPointerObjectOutputNode(const std::string& name, const CallType* call_ptr) :
         KSAObjectOutputNode<ReturnType, KSAIsDerivedFrom<ReturnType, KSAFixedSizeInputOutputObject>::Is>(name)
     {
         KSAConstantReturnByPointerGet<CallType, ReturnType, memberFunction> callback;

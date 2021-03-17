@@ -26,7 +26,7 @@ KSIntDecayCalculatorFerencIonisation::KSIntDecayCalculatorFerencIonisation() :
 
 KSIntDecayCalculatorFerencIonisation::KSIntDecayCalculatorFerencIonisation(
     const KSIntDecayCalculatorFerencIonisation& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
     fmaxPID(aCopy.fmaxPID),
@@ -92,7 +92,7 @@ void KSIntDecayCalculatorFerencIonisation::ExecuteInteraction(const KSParticle& 
     if ((anInitialParticle.GetPID() == fTargetPID && fTargetPID != 0) ||
         ((anInitialParticle.GetPID() >= fminPID) && (anInitialParticle.GetPID() <= fmaxPID))) {
         double tTime = aFinalParticle.GetTime();
-        KThreeVector tPosition = aFinalParticle.GetPosition();
+        KGeoBag::KThreeVector tPosition = aFinalParticle.GetPosition();
 
         aFinalParticle.SetLabel(GetName());
         aFinalParticle.SetActive(false);

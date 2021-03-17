@@ -1,7 +1,12 @@
 #ifndef KROOTFILE_H_
 #define KROOTFILE_H_
 
+#include "KException.h"
 #include "KFile.h"
+
+#ifdef KASPER_USE_BOOST
+#include "KPathUtils.h"
+#endif
 
 #include <TFile.h>
 
@@ -57,6 +62,11 @@ inline KRootFile* KRootFile::CreateOutputRootFile(const std::string& aBase)
 
 inline KRootFile* KRootFile::CreateOutputRootFile(const std::string& aPath, const std::string& aBase)
 {
+#ifdef KASPER_USE_BOOST
+    if (katrin::KPathUtils::IsDirectory(aPath) == false)
+        throw KException() << "not a directory: " << aPath;
+#endif
+
     auto* tFile = new KRootFile();
     tFile->SetDefaultPath(aPath);
     tFile->SetDefaultBase(aBase);

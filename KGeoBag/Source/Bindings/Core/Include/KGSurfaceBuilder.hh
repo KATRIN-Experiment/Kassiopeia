@@ -18,7 +18,7 @@ template<> inline bool KGSurfaceBuilder::AddAttribute(KContainer* anAttribute)
         return true;
     }
     if (anAttribute->GetName() == "node") {
-        KGSurface* tSource = KGInterface::GetInstance()->RetrieveSurface(anAttribute->AsReference<std::string>());
+        KGSurface* tSource = KGInterface::GetInstance()->RetrieveSurface(anAttribute->AsString());
         if (tSource == nullptr) {
             return false;
         }

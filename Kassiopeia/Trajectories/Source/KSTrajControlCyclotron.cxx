@@ -7,14 +7,14 @@ namespace Kassiopeia
 
 KSTrajControlCyclotron::KSTrajControlCyclotron() : fFraction(1. / 16.) {}
 KSTrajControlCyclotron::KSTrajControlCyclotron(const KSTrajControlCyclotron& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fFraction(aCopy.fFraction)
 {}
 KSTrajControlCyclotron* KSTrajControlCyclotron::Clone() const
 {
     return new KSTrajControlCyclotron(*this);
 }
-KSTrajControlCyclotron::~KSTrajControlCyclotron() {}
+KSTrajControlCyclotron::~KSTrajControlCyclotron() = default;
 
 void KSTrajControlCyclotron::Calculate(const KSTrajExactParticle& aParticle, double& aValue)
 {

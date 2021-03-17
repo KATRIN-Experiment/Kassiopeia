@@ -25,8 +25,10 @@ namespace KGeoBag
 template<size_t NDIM> class KGPointCloud
 {
   public:
-    KGPointCloud(){};
-    virtual ~KGPointCloud(){};
+    KGPointCloud() = default;
+    ;
+    virtual ~KGPointCloud() = default;
+    ;
 
     KGPointCloud(const KGPointCloud& copyObject)
     {

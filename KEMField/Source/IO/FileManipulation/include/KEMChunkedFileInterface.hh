@@ -36,22 +36,23 @@ class KEMChunkedFileInterface
         fFilePath = "";
     };
 
-    virtual ~KEMChunkedFileInterface(){};
+    virtual ~KEMChunkedFileInterface() = default;
+    ;
 
     //check if file exists in order to open it, or so we can avoid overwriting it
-    bool DoesFileExist(std::string file_name)
+    bool DoesFileExist(const std::string& file_name)
     {
         std::string full_file_name = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + file_name;
         std::set<std::string> file_list = KEMFileInterface::GetInstance()->CompleteFileList();
-        for (auto it = file_list.begin(); it != file_list.end(); ++it) {
-            if (full_file_name == *it) {
+        for (const auto& it : file_list) {
+            if (full_file_name == it) {
                 return true;
             };
         }
         return false;
     }
 
-    bool OpenFileForWriting(std::string file_name)
+    bool OpenFileForWriting(const std::string& file_name)
     {
         fFileName = file_name;
         fFilePath = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + fFileName;
@@ -67,7 +68,7 @@ class KEMChunkedFileInterface
         return true;
     }
 
-    bool OpenFileForReading(std::string file_name)
+    bool OpenFileForReading(const std::string& file_name)
     {
         fFileName = file_name;
         fFilePath = KEMFileInterface::GetInstance()->ActiveDirectory() + "/" + fFileName;

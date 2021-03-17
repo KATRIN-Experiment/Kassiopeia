@@ -27,13 +27,12 @@ template<> inline bool KSGenPositionSurfaceRandomBuilder::AddAttribute(KContaine
 
     if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         std::vector<KGeoBag::KGSurface*>::iterator tSurfaceIt;
         KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            genmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

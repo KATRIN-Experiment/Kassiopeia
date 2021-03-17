@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGExtrudedCircleSpaceMesher::KGExtrudedCircleSpaceMesher() : KGSimpleMesher() {}
-KGExtrudedCircleSpaceMesher::~KGExtrudedCircleSpaceMesher() {}
+KGExtrudedCircleSpaceMesher::KGExtrudedCircleSpaceMesher() = default;
+KGExtrudedCircleSpaceMesher::~KGExtrudedCircleSpaceMesher() = default;
 
 void KGExtrudedCircleSpaceMesher::VisitExtrudedClosedPathSpace(KGExtrudedCircleSpace* aExtrudedCircleSpace)
 {
@@ -45,13 +45,13 @@ void KGExtrudedCircleSpaceMesher::VisitExtrudedClosedPathSpace(KGExtrudedCircleS
 
     //surgery
     tMeshPoints.fData.pop_front();
-    for (auto tStartIt = tStartMeshPoints.fData.begin(); tStartIt != tStartMeshPoints.fData.end(); ++tStartIt) {
-        tMeshPoints.fData.push_front(*tStartIt);
+    for (auto& tStartIt : tStartMeshPoints.fData) {
+        tMeshPoints.fData.push_front(tStartIt);
     }
 
     tMeshPoints.fData.pop_back();
-    for (auto tEndIt = tEndMeshPoints.fData.begin(); tEndIt != tEndMeshPoints.fData.end(); ++tEndIt) {
-        tMeshPoints.fData.push_back(*tEndIt);
+    for (auto& tEndIt : tEndMeshPoints.fData) {
+        tMeshPoints.fData.push_back(tEndIt);
     }
 
     //create mesh

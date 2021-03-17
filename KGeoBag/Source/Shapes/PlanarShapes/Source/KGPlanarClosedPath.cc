@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-KGPlanarClosedPath::KGPlanarClosedPath() {}
+KGPlanarClosedPath::KGPlanarClosedPath() = default;
 
-KGPlanarClosedPath::~KGPlanarClosedPath() {}
+KGPlanarClosedPath::~KGPlanarClosedPath() = default;
 
 }  // namespace KGeoBag

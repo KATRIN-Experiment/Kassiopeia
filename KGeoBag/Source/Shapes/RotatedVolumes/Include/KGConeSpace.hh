@@ -12,6 +12,11 @@ class KGConeSpace : public KGRotatedLineSegmentSpace
     KGConeSpace();
     ~KGConeSpace() override;
 
+    static std::string Name()
+    {
+        return "cone_space";
+    }
+
   public:
     void ZA(const double& aZA);
     void ZB(const double& aZB);

@@ -29,7 +29,7 @@ template<typename CallType, typename SetType, void (CallType::*memberFunction)(c
 class KSAAssociatedPointerPODInputNode : public KSAPODInputNode<SetType>
 {
   public:
-    KSAAssociatedPointerPODInputNode(std::string name, CallType* call_ptr) : KSAPODInputNode<SetType>(name)
+    KSAAssociatedPointerPODInputNode(const std::string& name, CallType* call_ptr) : KSAPODInputNode<SetType>(name)
     {
         fCallPtr = call_ptr;
     };

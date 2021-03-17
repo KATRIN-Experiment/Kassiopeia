@@ -18,7 +18,7 @@ template<> inline bool KGSpaceBuilder::AddAttribute(KContainer* anAttribute)
         return true;
     }
     if (anAttribute->GetName() == "node") {
-        KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace(anAttribute->AsReference<std::string>());
+        KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace(anAttribute->AsString());
         if (tSource == nullptr) {
             return false;
         }
@@ -33,7 +33,7 @@ template<> inline bool KGSpaceBuilder::AddAttribute(KContainer* anAttribute)
         return true;
     }
     if (anAttribute->GetName() == "tree") {
-        KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace(anAttribute->AsReference<std::string>());
+        KGSpace* tSource = KGInterface::GetInstance()->RetrieveSpace(anAttribute->AsString());
         if (tSource == nullptr) {
             return false;
         }

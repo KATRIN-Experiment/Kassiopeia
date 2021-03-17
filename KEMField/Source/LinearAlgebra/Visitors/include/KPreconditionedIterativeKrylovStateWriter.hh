@@ -47,7 +47,8 @@ class KPreconditionedIterativeKrylovStateWriter : public KIterativeSolver<ValueT
   public:
     typedef KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait> SolverType;
 
-    KPreconditionedIterativeKrylovStateWriter(std::vector<std::string> labels) : KIterativeSolver<ValueType>::Visitor()
+    KPreconditionedIterativeKrylovStateWriter(const std::vector<std::string>& labels) :
+        KIterativeSolver<ValueType>::Visitor()
     {
         fLabels = labels;
 
@@ -60,7 +61,8 @@ class KPreconditionedIterativeKrylovStateWriter : public KIterativeSolver<ValueT
         fPreviousStateFile = "";
     };
 
-    ~KPreconditionedIterativeKrylovStateWriter() override{};
+    ~KPreconditionedIterativeKrylovStateWriter() override = default;
+    ;
 
     void Initialize(KIterativeSolver<ValueType>& solver) override
     {
@@ -196,7 +198,7 @@ class KPreconditionedIterativeKrylovStateWriter : public KIterativeSolver<ValueT
                 std::stringstream label_ss;
                 label_ss << "iteration_" << krylov_solver->Iteration();
                 stateLabels.push_back(label_ss.str());
-                stateLabels.push_back("final");
+                stateLabels.emplace_back("final");
                 stateLabels.push_back(unique_state_id);
 
                 KEMFileInterface::GetInstance()->Write(saveName.str(), *trait, trait->NameLabel(), stateLabels);

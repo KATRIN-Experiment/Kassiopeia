@@ -8,7 +8,7 @@ namespace KEMField
 KFMElectrostaticElementContainerFlyweight::KFMElectrostaticElementContainerFlyweight(
     const KSurfaceContainer& container) :
     fSurfaceContainer(&container),
-    fSortedSurfaceContainer(NULL),
+    fSortedSurfaceContainer(nullptr),
     fPointCloudContainer(container),
     fBoundingBallContainer(container)
 {
@@ -45,7 +45,7 @@ KFMElectrostaticElementContainerFlyweight::KFMElectrostaticElementContainerFlywe
 
 KFMElectrostaticElementContainerFlyweight::KFMElectrostaticElementContainerFlyweight(
     const KSortedSurfaceContainer& container) :
-    fSurfaceContainer(NULL),
+    fSurfaceContainer(nullptr),
     fSortedSurfaceContainer(&container),
     fPointCloudContainer(container),
     fBoundingBallContainer(container)

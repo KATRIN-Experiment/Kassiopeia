@@ -33,7 +33,7 @@ set (MATH_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMDenseBlockSparseMatrixStructure.cc
 )
 
-add_library (KFMMath SHARED ${MATH_SOURCEFILES})
+add_library (KFMMath SHARED ${MATH_SOURCEFILES} ${MATH_HEADERFILES})
     target_link_libraries (KFMMath KFMCore KFMMathUtilities)
 
 kasper_install_headers (${MATH_HEADERFILES})

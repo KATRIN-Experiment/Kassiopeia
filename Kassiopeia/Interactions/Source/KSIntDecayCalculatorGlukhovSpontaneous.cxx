@@ -14,7 +14,7 @@ KSIntDecayCalculatorGlukhovSpontaneous::KSIntDecayCalculatorGlukhovSpontaneous()
 
 KSIntDecayCalculatorGlukhovSpontaneous::KSIntDecayCalculatorGlukhovSpontaneous(
     const KSIntDecayCalculatorGlukhovSpontaneous& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
     fmaxPID(aCopy.fmaxPID)
@@ -25,7 +25,7 @@ KSIntDecayCalculatorGlukhovSpontaneous* KSIntDecayCalculatorGlukhovSpontaneous::
     return new KSIntDecayCalculatorGlukhovSpontaneous(*this);
 }
 
-KSIntDecayCalculatorGlukhovSpontaneous::~KSIntDecayCalculatorGlukhovSpontaneous() {}
+KSIntDecayCalculatorGlukhovSpontaneous::~KSIntDecayCalculatorGlukhovSpontaneous() = default;
 
 const double KSIntDecayCalculatorGlukhovSpontaneous::p_coefficients[3][4] = {{5.8664e8, -0.3634, -16.704, 51.07},
                                                                              {5.4448e9, -0.03953, -1.5171, 5.115},

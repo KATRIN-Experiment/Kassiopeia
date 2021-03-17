@@ -180,8 +180,7 @@ void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 #ifdef KEMFIELD_USE_VTK
                 MPI_SINGLE_PROCESS
                 {
-                    KVTKIterationPlotter<KElectrostaticBoundaryIntegrator::ValueType>* plotter =
-                        new KVTKIterationPlotter<KElectrostaticBoundaryIntegrator::ValueType>();
+                    auto* plotter = new KVTKIterationPlotter<KElectrostaticBoundaryIntegrator::ValueType>();
                     plotter->Interval(fPlotInterval);
                     robinHood.AddVisitor(plotter);
                 }

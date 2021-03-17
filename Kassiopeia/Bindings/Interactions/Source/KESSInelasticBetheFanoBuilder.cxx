@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KESSInelasticBetheFanoBuilder::~KComplexElement() {}
+template<> KESSInelasticBetheFanoBuilder::~KComplexElement() = default;
 
-STATICINT sKSInelasticBetheFanoStructure = KESSInelasticBetheFanoBuilder::Attribute<string>("name") +
+STATICINT sKSInelasticBetheFanoStructure = KESSInelasticBetheFanoBuilder::Attribute<std::string>("name") +
                                            KESSInelasticBetheFanoBuilder::Attribute<bool>("PhotoAbsorption") +
                                            KESSInelasticBetheFanoBuilder::Attribute<bool>("AugerRelaxation");
 

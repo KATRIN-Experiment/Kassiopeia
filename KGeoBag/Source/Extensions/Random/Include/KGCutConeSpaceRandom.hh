@@ -21,7 +21,7 @@ class KGCutConeSpaceRandom : virtual public KGShapeRandom, public KGCutConeSpace
 {
   public:
     KGCutConeSpaceRandom() : KGShapeRandom() {}
-    ~KGCutConeSpaceRandom() override {}
+    ~KGCutConeSpaceRandom() override = default;
 
     /**
      * \brief Visitor function for dicing the point

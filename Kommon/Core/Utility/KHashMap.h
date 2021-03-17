@@ -35,7 +35,7 @@ template<class Input, class Result, class Hash = std::hash<Input>> class KHashMa
 {
   public:
     KHashMap(size_t maxCacheSize = 8192, double maxLoadFactor = 2.0);
-    virtual ~KHashMap() {}
+    virtual ~KHashMap() = default;
 
     typedef Input CacheKey;
 
@@ -117,9 +117,9 @@ template<class Input, class Result, class Hash = std::hash<Input>> class KHashMa
     void EnableReporting(uint32_t reportFreq = 1000, const std::string& cacheName = "");
 
   private:
-    typedef std::unordered_map<Input, Result, Hash> CacheMap;
-    typedef typename CacheMap::iterator CacheMapIterator;
-    typedef typename CacheMap::const_iterator CacheMapConstIterator;
+    using CacheMap = std::unordered_map<Input, Result, Hash>;
+    using CacheMapIterator = typename CacheMap::iterator;
+    using CacheMapConstIterator = typename CacheMap::const_iterator;
 
     CacheMap fHashMap;
     size_t fMaxCacheSize;

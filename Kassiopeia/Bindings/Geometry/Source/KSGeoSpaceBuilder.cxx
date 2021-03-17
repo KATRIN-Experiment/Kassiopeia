@@ -11,7 +11,7 @@ namespace katrin
 {
 
 STATICINT sKSSpaceStructure =
-    KSGeoSpaceBuilder::Attribute<string>("name") + KSGeoSpaceBuilder::Attribute<string>("spaces") +
+    KSGeoSpaceBuilder::Attribute<std::string>("name") + KSGeoSpaceBuilder::Attribute<std::string>("spaces") +
     KSGeoSpaceBuilder::ComplexElement<KSGeoSpace>("geo_space") +
     KSGeoSpaceBuilder::ComplexElement<KSGeoSurface>("geo_surface") +
     KSGeoSpaceBuilder::ComplexElement<KSGeoSide>("geo_side") +

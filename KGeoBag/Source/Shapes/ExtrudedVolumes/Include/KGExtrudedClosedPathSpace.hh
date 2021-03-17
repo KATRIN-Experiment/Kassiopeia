@@ -55,7 +55,12 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         fFlattenedMeshCount(1),
         fFlattenedMeshPower(1.)
     {}
-    ~KGExtrudedClosedPathSpace() override {}
+    ~KGExtrudedClosedPathSpace() override = default;
+
+    static std::string Name()
+    {
+        return "extruded_" + XPathType::Name() + "_space";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -172,7 +177,7 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         KGVolume::VolumeAccept(aVisitor);
         return;
     }
-    bool VolumeOutside(const KThreeVector& aPoint) const override
+    bool VolumeOutside(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
@@ -217,7 +222,7 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         }
         return fPath->Above(tXYPoint);
     }
-    KThreeVector VolumePoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector VolumePoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
@@ -250,21 +255,21 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
             if (tTopDistanceSquared < tBottomDistanceSquared) {
                 tXYNearest = tXYPoint + tCapPoint;
                 tZNearest = tZPoint + tTopZ;
-                return KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+                return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
             }
         }
         if (tBottomDistanceSquared < tJacketDistanceSquared) {
             if (tBottomDistanceSquared < tTopDistanceSquared) {
                 tXYNearest = tXYPoint + tCapPoint;
                 tZNearest = tZPoint + tBottomZ;
-                return KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+                return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
             }
         }
         tXYNearest = tXYPoint + tJacketPoint;
         tZNearest = tZPoint + tJacketZ;
-        return KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
+        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZNearest);
     }
-    KThreeVector VolumeNormal(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector VolumeNormal(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tXYPoint = aPoint.ProjectXY();
         double tZPoint = aPoint.Z();
@@ -296,17 +301,17 @@ template<class XPathType> class KGExtrudedClosedPathSpace : public KGVolume
         if (tTopDistanceSquared < tJacketDistanceSquared) {
             if (tTopDistanceSquared < tBottomDistanceSquared) {
                 tZNormal = 1.;
-                return KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+                return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
             }
         }
         if (tBottomDistanceSquared < tJacketDistanceSquared) {
             if (tBottomDistanceSquared < tTopDistanceSquared) {
                 tZNormal = 1.;
-                return KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+                return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
             }
         }
         tXYNormal = fPath->Normal(tXYPoint);
-        return KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
+        return KGeoBag::KThreeVector(tXYNormal.X(), tXYNormal.Y(), tZNormal);
     }
 
   private:

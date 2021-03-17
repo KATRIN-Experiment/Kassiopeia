@@ -2,7 +2,7 @@
 #define KEMFILE_DEF
 
 #include "KBinaryDataStreamer.hh"
-#include "KEMCout.hh"
+#include "KEMCoreMessage.hh"
 #include "KMD5HashGenerator.hh"
 #include "KStreamedSizeOf.hh"
 
@@ -11,9 +11,6 @@
 #include <cstdlib>
 #include <sstream>
 #include <vector>
-
-using std::string;
-using std::vector;
 
 namespace KEMField
 {
@@ -33,10 +30,10 @@ class KEMFile
 {
   public:
     KEMFile();
-    KEMFile(string fileName);
+    KEMFile(const std::string& fileName);
     virtual ~KEMFile();
 
-    void ActiveFile(string fileName)
+    void ActiveFile(const std::string& fileName)
     {
         fFileName = fileName;
     }
@@ -45,66 +42,70 @@ class KEMFile
         return fFileName;
     }
 
-    template<class Writable> void Write(string, const Writable&, string, vector<string>&);
+    template<class Writable>
+    void Write(const std::string&, const Writable&, const std::string&, const std::vector<std::string>&);
 
-    template<class Writable> void Write(string, const Writable&, string);
+    template<class Writable> void Write(const std::string&, const Writable&, const std::string&);
 
-    template<class Writable> void Write(string, const Writable&, string, string);
+    template<class Writable> void Write(const std::string&, const Writable&, const std::string&, const std::string&);
 
-    template<class Writable> void Write(const Writable& w, string name)
+    template<class Writable> void Write(const Writable& w, const std::string& name)
     {
         Write(fFileName, w, name);
     }
 
-    template<class Writable> void Write(const Writable& w, string name, string label)
+    template<class Writable> void Write(const Writable& w, const std::string& name, const std::string& label)
     {
         Write(fFileName, w, name, label);
     }
 
-    template<class Writable> void Write(const Writable& w, string name, vector<string> labels)
+    template<class Writable>
+    void Write(const Writable& w, const std::string& name, const std::vector<std::string>& labels)
     {
         Write(fFileName, w, name, labels);
     }
 
-    template<class Readable> void Read(string, Readable&, string);
+    template<class Readable> void Read(const std::string&, Readable&, const std::string&);
 
-    template<class Readable> void Read(Readable& r, string s)
+    template<class Readable> void Read(Readable& r, const std::string& s)
     {
         Read(fFileName, r, s);
     }
 
-    template<class Readable> void ReadHashed(string, Readable&, string);
+    template<class Readable> void ReadHashed(const std::string&, Readable&, const std::string&);
 
-    template<class Readable> void ReadLabeled(string, Readable&, string, unsigned int index = 0);
+    template<class Readable>
+    void ReadLabeled(const std::string&, Readable&, const std::string&, unsigned int index = 0);
 
-    template<class Readable> void ReadLabeled(string, Readable&, vector<string>, unsigned int index = 0);
+    template<class Readable>
+    void ReadLabeled(const std::string&, Readable&, const std::vector<std::string>&, unsigned int index = 0);
 
-    template<class Writable> void Overwrite(string, const Writable&, string);
+    template<class Writable> void Overwrite(const std::string&, const Writable&, const std::string&);
 
-    template<class Writable> void Overwrite(const Writable& w, string s)
+    template<class Writable> void Overwrite(const Writable& w, const std::string& s)
     {
         Overwrite(fFileName, w, s);
     }
 
-    void Inspect(string) const;
+    void Inspect(const std::string&) const;
 
-    bool HasElement(string, string) const;
-    bool HasLabeled(string, vector<string>) const;
-    unsigned int NumberOfLabeled(string, string) const;
-    unsigned int NumberOfLabeled(string, vector<string>) const;
+    bool HasElement(const std::string&, const std::string&) const;
+    bool HasLabeled(const std::string&, const std::vector<std::string>&) const;
+    unsigned int NumberOfLabeled(const std::string&, const std::string&) const;
+    unsigned int NumberOfLabeled(const std::string&, const std::vector<std::string>&) const;
 
-    vector<string> LabelsForElement(string, string) const;
-    bool ElementHasLabel(string, string, string) const;
+    std::vector<std::string> LabelsForElement(const std::string&, const std::string&) const;
+    bool ElementHasLabel(const std::string&, const std::string&, const std::string&) const;
 
-    static bool FileExists(string);
+    static bool FileExists(const std::string&);
 
-    string GetFileSuffix() const
+    std::string GetFileSuffix() const
     {
         return fStreamer.GetFileSuffix();
     }
 
   protected:
-    string fFileName;
+    std::string fFileName;
 
     KMD5HashGenerator fHashGenerator;
 
@@ -112,10 +113,10 @@ class KEMFile
 
     struct Key
     {
-        Key() {}
-        ~Key() {}
+        Key() = default;
+        ~Key() = default;
 
-        static string Name()
+        static std::string Name()
         {
             return "Key";
         }
@@ -158,43 +159,48 @@ class KEMFile
             s << k.fClassName;
             s << k.fObjectHash;
             s << (unsigned int) (k.fLabels.size());
-            for (unsigned int i = 0; i < k.fLabels.size(); i++)
-                s << k.fLabels.at(i);
+            for (const auto& label : k.fLabels)
+                s << label;
             s << k.fObjectLocation;
             s << k.fObjectSize;
             s.PostStreamOutAction(k);
             return s;
         }
 
-        string fObjectName;
-        string fClassName;
-        string fObjectHash;
-        vector<string> fLabels;
+        std::string fObjectName;
+        std::string fClassName;
+        std::string fObjectHash;
+        std::vector<std::string> fLabels;
         size_t fObjectLocation;
         size_t fObjectSize;
     };
 
-    Key KeyForElement(string, string);
-    Key KeyForHashed(string, string);
-    Key KeyForLabeled(string, string, unsigned int index = 0);
+    Key KeyForElement(const std::string&, const std::string&);
+    Key KeyForHashed(const std::string&, const std::string&);
+    Key KeyForLabeled(const std::string&, const std::string&, unsigned int index = 0);
 };
 
-template<class Writable> void KEMFile::Write(string fileName, const Writable& writable, string name)
+template<class Writable>
+void KEMFile::Write(const std::string& fileName, const Writable& writable, const std::string& name)
 {
-    vector<string> labels(0);
+    std::vector<std::string> labels(0);
     Write<Writable>(fileName, writable, name, labels);
 }
 
-template<class Writable> void KEMFile::Write(string fileName, const Writable& writable, string name, string label)
+template<class Writable>
+void KEMFile::Write(const std::string& fileName, const Writable& writable, const std::string& name,
+                    const std::string& label)
 {
-    vector<string> labels;
+    std::vector<std::string> labels;
     labels.push_back(label);
     Write<Writable>(fileName, writable, name, labels);
 }
 
 template<class Writable>
-void KEMFile::Write(string fileName, const Writable& writable, string name, vector<string>& labels)
+void KEMFile::Write(const std::string& fileName, const Writable& writable, const std::string& name,
+                    const std::vector<std::string>& labels)
 {
+
     if (!FileExists(fileName)) {
         fStreamer.open(fileName, "overwrite");
         fStreamer.close();
@@ -212,18 +218,26 @@ void KEMFile::Write(string fileName, const Writable& writable, string name, vect
 
         bool duplicateName = false;
 
-        while (readPoint < end) {
+        while (fStreamer.Stream().good() && readPoint < end) {
             fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
             fStreamer >> key;
+
             if (key.fObjectName == name)
                 duplicateName = true;
+
+            size_t lastReadPoint = readPoint;
             readPoint = key.NextKey();
+            if (readPoint <= lastReadPoint) {
+                kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+                kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+               break;
+            }
         }
 
         fStreamer.close();
 
         if (duplicateName) {
-            KEMField::cout << "Element <" << name << "> already exists in file " << fileName << "." << KEMField::endl;
+            kem_cout(eWarning) << "Element <" << name << "> already exists in file <" << fileName << ">." << eom;
             return;
         }
     }
@@ -237,8 +251,8 @@ void KEMFile::Write(string fileName, const Writable& writable, string name, vect
 
     key.fObjectHash = fHashGenerator.GenerateHash(writable);
 
-    for (auto it = labels.begin(); it != labels.end(); ++it)
-        key.fLabels.push_back(*it);
+    for (auto& label : labels)
+        key.fLabels.push_back(label);
 
     // Write the incomplete key into the stream
     fStreamer.Stream().seekp(0, fStreamer.Stream().end);
@@ -263,12 +277,15 @@ void KEMFile::Write(string fileName, const Writable& writable, string name, vect
     fStreamer.close();
 }
 
-template<class Writable> void KEMFile::Overwrite(string fileName, const Writable& writable, string name)
+template<class Writable>
+void KEMFile::Overwrite(const std::string& fileName, const Writable& writable, const std::string& name)
 {
     if (!FileExists(fileName)) {
-        KEMField::cout << "Cannot open file /'" << fileName << "/'." << KEMField::endl;
+        kem_cout(eError) << "Cannot open file <" << fileName << ">." << eom;
         return;
     }
+
+    kem_cout_debug("Overwriting an element in file <" << fileName << ">" << eom);
 
     // First, we find the key associated with our object
     fStreamer.open(fileName, "read");
@@ -283,36 +300,41 @@ template<class Writable> void KEMFile::Overwrite(string fileName, const Writable
 
     bool elementFound = false;
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
+
         if (key.fObjectName == name) {
             if (key.fClassName != Writable::Name()) {
-                KEMField::cout << "Element <" << name << "> is stored as a " << key.fClassName << KEMField::endl;
+                kem_cout(eInfo) << "Element <" << name << "> is stored as a " << key.fClassName << eom;
                 break;
             }
 
             elementFound = true;
             break;
         }
-        else
-            readPoint = key.NextKey();
+
+        size_t lastReadPoint = readPoint;
+        readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "Corrupted file <" << fileName << ">, " << end-lastReadPoint << " bytes remain" << eom;
+            break;
+        }
     }
 
     fStreamer.close();
 
     if (!elementFound) {
         if (readPoint >= end)
-            KEMField::cout << "Element <" << name << "> could not be located in file \'" << fileName << "\'."
-                           << KEMField::endl;
+            kem_cout(eWarning) << "Element <" << name << "> could not be located in file <" << fileName << ">." << eom;
         return;
     }
 
     // check to make sure the objects are the same size
     KStreamedSizeOf sizeOf;
     if (sizeOf(writable) != key.fObjectSize) {
-        KEMField::cout << "Cannot overwrite element <" << name << "> with an instance of " << key.fClassName
-                       << " of a different size." << KEMField::endl;
+        kem_cout(eError) << "Cannot overwrite element <" << name << "> with an instance of " << key.fClassName
+                         << " of a different size." << eom;
     }
 
     // overwrite the modified element
@@ -324,12 +346,15 @@ template<class Writable> void KEMFile::Overwrite(string fileName, const Writable
     fStreamer.close();
 }
 
-template<class Readable> void KEMFile::ReadHashed(string fileName, Readable& readable, string hash)
+template<class Readable>
+void KEMFile::ReadHashed(const std::string& fileName, Readable& readable, const std::string& hash)
 {
     if (!FileExists(fileName)) {
-        KEMField::cout << "Cannot open file /'" << fileName << "/'." << KEMField::endl;
+        kem_cout(eError) << "Cannot open file <" << fileName << ">." << eom;
         return;
     }
+
+    kem_cout_debug("Reading a hashed element from file <" << fileName << ">" << eom);
 
     fStreamer.open(fileName, "read");
 
@@ -341,15 +366,13 @@ template<class Readable> void KEMFile::ReadHashed(string fileName, Readable& rea
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
-
         fStreamer >> key;
 
         if (key.fObjectHash == hash) {
             if (key.fClassName != Readable::Name()) {
-                KEMField::cout << "Element with hash <" << hash << "> is stored as a " << key.fClassName
-                               << KEMField::endl;
+                kem_cout(eInfo) << "Element with hash <" << hash << "> is stored as a " << key.fClassName << eom;
             }
             else {
                 fStreamer.Stream().seekg(key.fObjectLocation, fStreamer.Stream().beg);
@@ -357,18 +380,27 @@ template<class Readable> void KEMFile::ReadHashed(string fileName, Readable& rea
             }
             break;
         }
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
     fStreamer.close();
 }
 
 template<class Readable>
-void KEMFile::ReadLabeled(string fileName, Readable& readable, string label, unsigned int index)
+void KEMFile::ReadLabeled(const std::string& fileName, Readable& readable, const std::string& label, unsigned int index)
 {
     if (!FileExists(fileName)) {
-        KEMField::cout << "Cannot open file /'" << fileName << "/'." << KEMField::endl;
+        kem_cout(eError) << "Cannot open file <" << fileName << ">." << eom;
         return;
     }
+
+    kem_cout_debug("Reading a labeled element from file <" << fileName << ">" << eom);
 
     fStreamer.open(fileName, "read");
 
@@ -384,10 +416,10 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, string label, uns
 
     bool found = false;
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
-
         fStreamer >> key;
+
         for (auto it = key.fLabels.begin(); it != key.fLabels.end(); ++it) {
             if (*it == label) {
                 // first, check if this is the correct index
@@ -397,9 +429,7 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, string label, uns
                 }
                 else {
                     if (key.fClassName != Readable::Name())
-
-                        KEMField::cout << "Label <" << label << "> is assigned to a " << key.fClassName
-                                       << KEMField::endl;
+                        kem_cout(eInfo) << "Label <" << label << "> is assigned to a " << key.fClassName << eom;
                     else {
                         fStreamer.Stream().seekg(key.fObjectLocation, fStreamer.Stream().beg);
                         fStreamer >> readable;
@@ -411,18 +441,28 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, string label, uns
         }
         if (found)
             break;
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
     fStreamer.close();
 }
 
 template<class Readable>
-void KEMFile::ReadLabeled(string fileName, Readable& readable, vector<string> labels, unsigned int index)
+void KEMFile::ReadLabeled(const std::string& fileName, Readable& readable, const std::vector<std::string>& labels,
+                          unsigned int index)
 {
     if (!FileExists(fileName)) {
-        KEMField::cout << "Cannot open file /'" << fileName << "/'." << KEMField::endl;
+        kem_cout(eError) << "Cannot open file <" << fileName << ">." << eom;
         return;
     }
+
+    kem_cout_debug("Reading " << labels.size() << " labeled elements from file <" << fileName << ">" << eom);
 
     fStreamer.open(fileName, "read");
 
@@ -438,12 +478,13 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, vector<string> la
 
     bool found = false;
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
         fStreamer >> key;
+
         found = true;
-        for (auto it = labels.begin(); it != labels.end(); ++it) {
-            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), *it);
+        for (auto& label : labels) {
+            auto it2 = std::find(key.fLabels.begin(), key.fLabels.end(), label);
             if (it2 == key.fLabels.end()) {
                 found = false;
                 break;
@@ -456,7 +497,7 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, vector<string> la
             }
             else {
                 if (key.fClassName != Readable::Name()) {
-                    KEMField::cout << "Label set is assigned to a " << key.fClassName << KEMField::endl;
+                    kem_cout(eInfo) << "Label set is assigned to a " << key.fClassName << eom;
                 }
                 else {
                     fStreamer.Stream().seekg(key.fObjectLocation, fStreamer.Stream().beg);
@@ -465,17 +506,26 @@ void KEMFile::ReadLabeled(string fileName, Readable& readable, vector<string> la
                 break;
             }
         }
+
+        size_t lastReadPoint = readPoint;
         readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
     fStreamer.close();
 }
 
-template<class Readable> void KEMFile::Read(string fileName, Readable& readable, string name)
+template<class Readable> void KEMFile::Read(const std::string& fileName, Readable& readable, const std::string& name)
 {
     if (!FileExists(fileName)) {
-        KEMField::cout << "Cannot open file /'" << fileName << "/'." << KEMField::endl;
+        kem_cout << "Cannot open file <" << fileName << ">." << eom;
         return;
     }
+
+    kem_cout_debug("Reading an element from file <" << fileName << ">" << eom);
 
     fStreamer.open(fileName, "read");
 
@@ -487,13 +537,13 @@ template<class Readable> void KEMFile::Read(string fileName, Readable& readable,
     size_t end = fStreamer.Stream().tellg();
     fStreamer.Stream().seekg(0, fStreamer.Stream().beg);
 
-    while (readPoint < end) {
+    while (fStreamer.Stream().good() && readPoint < end) {
         fStreamer.Stream().seekg(readPoint, fStreamer.Stream().beg);
-
         fStreamer >> key;
+
         if (key.fObjectName == name) {
             if (key.fClassName != Readable::Name()) {
-                KEMField::cout << "Element <" << name << "> is stored as a " << key.fClassName << KEMField::endl;
+                kem_cout() << "Element <" << name << "> is stored as a " << key.fClassName << eom;
                 break;
             }
 
@@ -501,12 +551,19 @@ template<class Readable> void KEMFile::Read(string fileName, Readable& readable,
             fStreamer >> readable;
             break;
         }
-        else
-            readPoint = key.NextKey();
+
+        size_t lastReadPoint = readPoint;
+        readPoint = key.NextKey();
+        if (readPoint <= lastReadPoint) {
+            kem_cout(eError) << "File <" << fileName << "> could not be read (" << end-lastReadPoint << " bytes remain)" << ret;
+            kem_cout << "Stored data in the file might be corrupted. You need to manually remove this file to continue." << eom;
+           break;
+        }
     }
 
     fStreamer.close();
 }
+
 }  // namespace KEMField
 
 #endif /* KEMFILE_DEF */

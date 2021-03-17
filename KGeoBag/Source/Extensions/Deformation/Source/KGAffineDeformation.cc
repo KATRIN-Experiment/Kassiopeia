@@ -2,7 +2,7 @@
 
 namespace KGeoBag
 {
-KGAffineDeformation::KGAffineDeformation() : KGDeformation()
+KGAffineDeformation::KGAffineDeformation()
 {
     fLinearMap[0] = 1.;
     fLinearMap[1] = 0.;

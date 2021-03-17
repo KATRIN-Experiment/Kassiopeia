@@ -13,10 +13,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntDecayCalculatorFerencSpontaneousBuilder::~KComplexElement() {}
+template<> KSIntDecayCalculatorFerencSpontaneousBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntDecayCalculatorFerencSpontaneousBuilderStructure =
-    KSIntDecayCalculatorFerencSpontaneousBuilder::Attribute<string>("name") +
+    KSIntDecayCalculatorFerencSpontaneousBuilder::Attribute<std::string>("name") +
     KSIntDecayCalculatorFerencSpontaneousBuilder::Attribute<long long>("target_pid") +
     KSIntDecayCalculatorFerencSpontaneousBuilder::Attribute<long long>("min_pid") +
     KSIntDecayCalculatorFerencSpontaneousBuilder::Attribute<long long>("max_pid") +

@@ -2,6 +2,6 @@
 
 namespace Kassiopeia
 {
-KSStepModifier::KSStepModifier() {}
-KSStepModifier::~KSStepModifier() {}
+KSStepModifier::KSStepModifier() = default;
+KSStepModifier::~KSStepModifier() = default;
 }  // namespace Kassiopeia

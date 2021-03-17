@@ -8,10 +8,10 @@ using namespace KGeoBag;
 namespace katrin
 {
 
-template<> KGMeshDeformerBuilder::~KComplexElement() {}
+template<> KGMeshDeformerBuilder::~KComplexElement() = default;
 
 STATICINT sKGMeshDeformerStructure =
-    KGMeshDeformerBuilder::Attribute<string>("surfaces") + KGMeshDeformerBuilder::Attribute<string>("spaces");
+    KGMeshDeformerBuilder::Attribute<std::string>("surfaces") + KGMeshDeformerBuilder::Attribute<std::string>("spaces");
 
 STATICINT sKGMeshDeformer = KGInterfaceBuilder::ComplexElement<KGMeshDeformer>("mesh_deformer");
 

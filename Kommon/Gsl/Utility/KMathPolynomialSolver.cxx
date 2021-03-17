@@ -3,8 +3,8 @@
 namespace katrin
 {
 
-KMathPolynomialSolver::KMathPolynomialSolver() {}
-KMathPolynomialSolver::~KMathPolynomialSolver() {}
+KMathPolynomialSolver::KMathPolynomialSolver() = default;
+KMathPolynomialSolver::~KMathPolynomialSolver() = default;
 
 KMathPolynomialSolver::Workspaces KMathPolynomialSolver::sPolynomialTypes = KMathPolynomialSolver::Workspaces();
 
@@ -16,8 +16,8 @@ KMathPolynomialSolver::Workspaces::Workspaces()
 }
 KMathPolynomialSolver::Workspaces::~Workspaces()
 {
-    for (unsigned int tType = 0; tType < eMaxDegree; tType++) {
-        gsl_poly_complex_workspace_free(fTypes[tType]);
+    for (auto& type : fTypes) {
+        gsl_poly_complex_workspace_free(type);
     }
 }
 

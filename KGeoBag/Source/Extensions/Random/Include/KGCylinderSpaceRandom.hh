@@ -21,7 +21,7 @@ class KGCylinderSpaceRandom : virtual public KGShapeRandom, public KGCylinderSpa
 {
   public:
     KGCylinderSpaceRandom() : KGShapeRandom() {}
-    ~KGCylinderSpaceRandom() override {}
+    ~KGCylinderSpaceRandom() override = default;
 
     /**
      * \brief Visitor function for dicing the point

@@ -16,15 +16,13 @@
 #include <cstdlib>
 #include <iostream>
 
-#define POW2(x) ((x) * (x))
-
 // VALUES
 #define NUMTRIANGLES 500    // number of triangles for each Dr step
 #define MINDR        2      // minimal distance ratio to be investigated
 #define MAXDR        10000  // maximal distance ratio to be investigated
 #define STEPSDR      500    // steps between given distance ratio range
-#define SEPARATECOMP        // if this variable has been defined potentials and fields will be computed separately,    \
-                            // hence 'ElectricFieldAndPotential' function won't be used                                \
+#define SEPARATECOMP        // if this variable has been defined potentials and fields will be computed separately,
+                            // hence 'ElectricFieldAndPotential' function won't be used
                             // both options have to produce same values
 
 // ROOT PLOTS AND COLORS (all settings apply for both field and potential)
@@ -45,7 +43,7 @@ typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KEMTriangle
 void subrn(double* u, int len);
 double randomnumber();
 
-void printVec(std::string add, KThreeVector input)
+void printVec(std::string add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -60,9 +58,9 @@ class TriangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTri
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTriangle)>::Visit;
 
-    TriangleVisitor() {}
+    TriangleVisitor() = default;
 
-    void Visit(KTriangle& t)
+    void Visit(KTriangle& t) override
     {
         ProcessTriangle(t);
     }
@@ -81,14 +79,14 @@ class TriangleVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_1(KTri
     {
         return fAverageSideLength;
     }
-    KThreeVector GetCentroid()
+    KFieldVector GetCentroid()
     {
         return fShapeCentroid;
     }
 
   private:
     double fAverageSideLength;
-    KThreeVector fShapeCentroid;
+    KFieldVector fShapeCentroid;
 };
 
 }  // namespace KEMField
@@ -107,25 +105,25 @@ int main()
     double N2[3];
 
     // assign a unique direction vector for field point to each rectangle and save into std::vector
-    std::vector<KThreeVector> fPointDirections;
+    std::vector<KFieldVector> fPointDirections;
 
     // 'Num' triangles will be diced in the beginning and added to a surface container
     // This values decides how much triangles=field points will be computed for each distance ratio value
 
-    KSurfaceContainer* container = new KSurfaceContainer();
+    auto* container = new KSurfaceContainer();
     const unsigned int Num(NUMTRIANGLES); /* number of triangles */
 
     for (unsigned int i = 0; i < Num; i++) {
         IJKLRANDOM = i + 1;
-        KEMTriangle* triangle = new KEMTriangle();
+        auto* triangle = new KEMTriangle();
 
         // dice triangle geometry
-        for (unsigned short l = 0; l < 3; l++)
-            P0[l] = -1. + 2. * randomnumber();
-        for (unsigned short j = 0; j < 3; j++)
-            P1[j] = -1. + 2. * randomnumber();
-        for (unsigned short k = 0; k < 3; k++)
-            P2[k] = -1. + 2. * randomnumber();
+        for (double& l : P0)
+            l = -1. + 2. * randomnumber();
+        for (double& j : P1)
+            j = -1. + 2. * randomnumber();
+        for (double& k : P2)
+            k = -1. + 2. * randomnumber();
 
         // compute further triangle data
         A = sqrt(POW2(P1[0] - P0[0]) + POW2(P1[1] - P0[1]) + POW2(P1[2] - P0[2]));
@@ -140,9 +138,9 @@ int main()
 
         triangle->SetA(A);
         triangle->SetB(B);
-        triangle->SetP0(KThreeVector(P0[0], P0[1], P0[2]));
-        triangle->SetN1(KThreeVector(N1[0], N1[1], N1[2]));
-        triangle->SetN2(KThreeVector(N2[0], N2[1], N2[2]));
+        triangle->SetP0(KFieldVector(P0[0], P0[1], P0[2]));
+        triangle->SetN1(KFieldVector(N1[0], N1[1], N1[2]));
+        triangle->SetN2(KFieldVector(N2[0], N2[1], N2[2]));
 
         triangle->SetBoundaryValue(1.);
         triangle->SetSolution(1.);
@@ -153,11 +151,11 @@ int main()
         const double sinthetaFP = sqrt(1. - POW2(costhetaFP));
         const double phiFP = 2. * M_PI * randomnumber();
 
-        fPointDirections.push_back(KThreeVector(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP));
+        fPointDirections.emplace_back(sinthetaFP * cos(phiFP), sinthetaFP * sin(phiFP), costhetaFP);
     }
 
     // OpenCL surface container
-    KOpenCLSurfaceContainer* oclContainer = new KOpenCLSurfaceContainer(*container);
+    auto* oclContainer = new KOpenCLSurfaceContainer(*container);
     KOpenCLInterface::GetInstance()->SetActiveData(oclContainer);
 
     // Bi-Quadrature and OpenCL integrator classes
@@ -184,25 +182,25 @@ int main()
                    << " triangles for each dist. ratio value." << KEMField::endl;
 
     // field point
-    KThreeVector fP;
+    KFieldVector fP;
 
     // field and potential values
-    std::pair<KThreeVector, double> valQuad;
-    std::pair<KThreeVector, double> valAna;
-    std::pair<KThreeVector, double> valRwg;
-    std::pair<KThreeVector, double> valNum;
+    std::pair<KFieldVector, double> valQuad;
+    std::pair<KFieldVector, double> valAna;
+    std::pair<KFieldVector, double> valRwg;
+    std::pair<KFieldVector, double> valNum;
 
     // plot
 
-    TApplication* fAppWindow = new TApplication("fAppWindow", 0, NULL);
+    auto* fAppWindow = new TApplication("fAppWindow", nullptr, nullptr);
 
     gStyle->SetCanvasColor(kWhite);
     gStyle->SetLabelOffset(0.03, "xyz");  // values
     gStyle->SetTitleOffset(1.8, "xyz");   // label
 
-    TMultiGraph* mgPot = new TMultiGraph();
+    auto* mgPot = new TMultiGraph();
 
-    TGraph* plotDrPotAna = new TGraph(kmax + 1);
+    auto* plotDrPotAna = new TGraph(kmax + 1);
     plotDrPotAna->SetTitle("Relative error of analytical triangle potential");
     plotDrPotAna->SetDrawOption("AC");
     plotDrPotAna->SetMarkerColor(COLANA);
@@ -213,7 +211,7 @@ int main()
     if (PLOTANA)
         mgPot->Add(plotDrPotAna);
 
-    TGraph* plotDrPotRwg = new TGraph(kmax + 1);
+    auto* plotDrPotRwg = new TGraph(kmax + 1);
     plotDrPotRwg->SetTitle("Relative error of triangle RWG potential");
     plotDrPotRwg->SetDrawOption("same");
     plotDrPotRwg->SetMarkerColor(COLRWG);
@@ -224,7 +222,7 @@ int main()
     if (PLOTRWG)
         mgPot->Add(plotDrPotRwg);
 
-    TGraph* plotDrPotNum = new TGraph(kmax + 1);
+    auto* plotDrPotNum = new TGraph(kmax + 1);
     plotDrPotNum->SetTitle("Relative error of triangle potential with adjusted numerical integrator");
     plotDrPotNum->SetDrawOption("same");
     plotDrPotNum->SetMarkerColor(COLNUM);
@@ -235,9 +233,9 @@ int main()
     if (PLOTNUM)
         mgPot->Add(plotDrPotNum);
 
-    TMultiGraph* mgField = new TMultiGraph();
+    auto* mgField = new TMultiGraph();
 
-    TGraph* plotDrFieldAna = new TGraph(kmax + 1);
+    auto* plotDrFieldAna = new TGraph(kmax + 1);
     plotDrFieldAna->SetTitle("Relative error of analytical triangle field");
     plotDrFieldAna->SetDrawOption("AC");
     plotDrFieldAna->SetMarkerColor(COLANA);
@@ -248,7 +246,7 @@ int main()
     if (PLOTANA)
         mgField->Add(plotDrFieldAna);
 
-    TGraph* plotDrFieldRwg = new TGraph(kmax + 1);
+    auto* plotDrFieldRwg = new TGraph(kmax + 1);
     plotDrFieldRwg->SetTitle("Relative error of triangle RWG field");
     plotDrFieldRwg->SetDrawOption("same");
     plotDrFieldRwg->SetMarkerColor(COLRWG);
@@ -259,7 +257,7 @@ int main()
     if (PLOTRWG)
         mgField->Add(plotDrFieldRwg);
 
-    TGraph* plotDrFieldNum = new TGraph(kmax + 1);
+    auto* plotDrFieldNum = new TGraph(kmax + 1);
     plotDrFieldNum->SetTitle("Relative error of numerical triangle field");
     plotDrFieldNum->SetDrawOption("same");
     plotDrFieldNum->SetMarkerColor(COLNUM);

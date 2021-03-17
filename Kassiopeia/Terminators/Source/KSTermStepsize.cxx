@@ -14,7 +14,7 @@ KSTermStepsize::KSTermStepsize() :
     fCurrentPathLength(0.)
 {}
 KSTermStepsize::KSTermStepsize(const KSTermStepsize& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLowerLimit(aCopy.fLowerLimit),
     fUpperLimit(aCopy.fUpperLimit),
     fCurrentPathLength(0.)
@@ -23,7 +23,7 @@ KSTermStepsize* KSTermStepsize::Clone() const
 {
     return new KSTermStepsize(*this);
 }
-KSTermStepsize::~KSTermStepsize() {}
+KSTermStepsize::~KSTermStepsize() = default;
 
 void KSTermStepsize::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

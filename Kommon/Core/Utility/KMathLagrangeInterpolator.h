@@ -96,9 +96,9 @@ inline double KMathLagrangeInterpolator::Calculate(double point) const
     size_t tIndex1 = 0;
     for (auto tIt1 = tClosePoints.cbegin(); tIt1 != tClosePoints.cend(); tIt1++) {
         size_t tIndex2 = 0;
-        for (auto tIt2 = tClosePoints.cbegin(); tIt2 != tClosePoints.cend(); tIt2++) {
-            A[tIndex2] = (point - tIt2->first);
-            B[tIndex2] = (tIt1->first - tIt2->first);
+        for (auto closePoint : tClosePoints) {
+            A[tIndex2] = (point - closePoint.first);
+            B[tIndex2] = (tIt1->first - closePoint.first);
             tIndex2++;
         }
         A[tIndex1] = 1.0;

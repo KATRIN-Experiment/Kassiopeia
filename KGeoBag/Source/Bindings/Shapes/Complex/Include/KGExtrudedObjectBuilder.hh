@@ -45,7 +45,7 @@ template<> inline bool KGExtrudedObjectLineBuilder::AddAttribute(KContainer* anA
     return false;
 }
 
-typedef KComplexElement<KGExtrudedObject::Arc> KGExtrudedObjectArcBuilder;
+using KGExtrudedObjectArcBuilder = KComplexElement<KGExtrudedObject::Arc>;
 
 template<> inline bool KGExtrudedObjectArcBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -88,7 +88,7 @@ template<> inline bool KGExtrudedObjectArcBuilder::AddAttribute(KContainer* anAt
     return false;
 }
 
-typedef KComplexElement<KGExtrudedObject> KGExtrudedObjectBuilder;
+using KGExtrudedObjectBuilder = KComplexElement<KGExtrudedObject>;
 
 template<> inline bool KGExtrudedObjectBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -145,7 +145,7 @@ template<> inline bool KGExtrudedObjectBuilder::AddElement(KContainer* anElement
     return false;
 }
 
-typedef KComplexElement<KGWrappedSurface<KGExtrudedObject>> KGExtrudedSurfaceBuilder;
+using KGExtrudedSurfaceBuilder = KComplexElement<KGWrappedSurface<KGExtrudedObject>>;
 
 template<> inline bool KGExtrudedSurfaceBuilder::AddAttribute(KContainer* anAttribute)
 {
@@ -170,7 +170,7 @@ template<> inline bool KGExtrudedSurfaceBuilder::AddElement(KContainer* anElemen
 }
 
 
-typedef KComplexElement<KGWrappedSpace<KGExtrudedObject>> KGExtrudedSpaceBuilder;
+using KGExtrudedSpaceBuilder = KComplexElement<KGWrappedSpace<KGExtrudedObject>>;
 
 template<> inline bool KGExtrudedSpaceBuilder::AddAttribute(KContainer* anAttribute)
 {

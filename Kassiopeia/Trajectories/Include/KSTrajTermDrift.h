@@ -19,7 +19,7 @@ class KSTrajTermDrift : public KSComponentTemplate<KSTrajTermDrift>, public KSTr
     void Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
                        KSTrajAdiabaticDerivative& aDerivative) const override;
 
-    const KThreeVector& GetDriftVelocity() const
+    const KGeoBag::KThreeVector& GetDriftVelocity() const
     {
         return fDriftVelocity;
     }
@@ -33,7 +33,7 @@ class KSTrajTermDrift : public KSComponentTemplate<KSTrajTermDrift>, public KSTr
     }
 
   private:
-    mutable KThreeVector fDriftVelocity;
+    mutable KGeoBag::KThreeVector fDriftVelocity;
     mutable double fLongitudinalForce;
     mutable double fTransverseForce;
 };

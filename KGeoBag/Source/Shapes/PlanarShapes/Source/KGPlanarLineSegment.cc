@@ -6,7 +6,6 @@ namespace KGeoBag
 {
 
 KGPlanarLineSegment::KGPlanarLineSegment() :
-    KGPlanarOpenPath(),
     fStart(0., 0.),
     fEnd(0., 0.),
     fMeshCount(2),
@@ -18,7 +17,6 @@ KGPlanarLineSegment::KGPlanarLineSegment() :
     fInitialized(false)
 {}
 KGPlanarLineSegment::KGPlanarLineSegment(const KGPlanarLineSegment& aCopy) :
-    KGPlanarOpenPath(),
     fStart(aCopy.fStart),
     fEnd(aCopy.fEnd),
     fMeshCount(aCopy.fMeshCount),
@@ -31,7 +29,6 @@ KGPlanarLineSegment::KGPlanarLineSegment(const KGPlanarLineSegment& aCopy) :
 {}
 KGPlanarLineSegment::KGPlanarLineSegment(const double& anX1, const double& aY1, const double& anX2, const double& aY2,
                                          const unsigned int aCount, const double aPower) :
-    KGPlanarOpenPath(),
     fStart(anX1, aY1),
     fEnd(anX2, aY2),
     fMeshCount(aCount),
@@ -44,7 +41,6 @@ KGPlanarLineSegment::KGPlanarLineSegment(const double& anX1, const double& aY1, 
 {}
 KGPlanarLineSegment::KGPlanarLineSegment(const KTwoVector& aStart, const KTwoVector& anEnd, const unsigned int aCount,
                                          const double aPower) :
-    KGPlanarOpenPath(),
     fStart(aStart),
     fEnd(anEnd),
     fMeshCount(aCount),

@@ -3,7 +3,7 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 # Kommon version
 set( MODULE_VERSION_MAJOR 1 )
 set( MODULE_VERSION_MINOR 4 )
-set( MODULE_VERSION_PATCH 0 )
+set( MODULE_VERSION_PATCH 2 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
 #project( Kommon VERSION ${MODULE_VERSION} )
@@ -98,7 +98,7 @@ add_subdirectory( Core )
 kasper_include_default_dirs()
 kasper_install_headers( ${KOMMON_HEADER_FILES} )
 
-add_library( Kommon SHARED ${KOMMON_SOURCE_FILES} )
+add_library( Kommon SHARED ${KOMMON_SOURCE_FILES} ${KOMMON_HEADER_FILES} )
 target_link_libraries( Kommon ${EXTERNAL_LIBRARIES} )
 kasper_install_libraries( Kommon )
 

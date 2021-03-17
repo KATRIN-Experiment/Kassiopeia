@@ -13,7 +13,7 @@ typedef KComplexElement<Kassiopeia::KSComponentGroup> KSComponentGroupBuilder;
 template<> inline bool KSComponentGroupBuilder::AddAttribute(KContainer* aContainer)
 {
     if (aContainer->GetName() == "name") {
-        std::string tName = aContainer->AsReference<std::string>();
+        std::string tName = aContainer->AsString();
         fObject->SetName(tName);
         return true;
     }

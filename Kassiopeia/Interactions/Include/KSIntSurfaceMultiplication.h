@@ -68,14 +68,14 @@ class KSIntSurfaceMultiplication : public KSComponentTemplate<KSIntSurfaceMultip
         fPerformSideCheck = false;
 
         //top is the side on which the normal points outward
-        if (side_name == std::string("top")) {
+        if (side_name == "top") {
             fSideName = side_name;
             fPerformSideCheck = true;
             fSideSignIsNegative = true;
         }
 
         //bottom is the side on which the normal std::vector points inward
-        if (side_name == std::string("bottom")) {
+        if (side_name == "bottom") {
             fSideName = side_name;
             fPerformSideCheck = true;
             fSideSignIsNegative = false;

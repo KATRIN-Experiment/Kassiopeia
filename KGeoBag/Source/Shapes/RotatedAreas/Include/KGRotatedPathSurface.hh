@@ -34,7 +34,12 @@ template<class XPathType> class KGRotatedPathSurface : public KGArea
         fRotatedMeshCount(aCopy.fRotatedMeshCount)
     {}
     KGRotatedPathSurface(std::shared_ptr<XPathType> aPath) : KGArea(), fPath(aPath), fSign(1.), fRotatedMeshCount(64) {}
-    ~KGRotatedPathSurface() override {}
+    ~KGRotatedPathSurface() override = default;
+
+    static std::string Name()
+    {
+        return "rotated_" + XPathType::Name() + "_surface";
+    }
 
   public:
     std::shared_ptr<XPathType>& Path()
@@ -85,7 +90,7 @@ template<class XPathType> class KGRotatedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KThreeVector& aPoint) const override
+    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         bool tZRAbove = fPath->Above(tZRPoint);
@@ -96,19 +101,19 @@ template<class XPathType> class KGRotatedPathSurface : public KGArea
             return false;
         }
     }
-    KThreeVector AreaPoint(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         KTwoVector tZRNearest = fPath->Point(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
+        return KGeoBag::KThreeVector(cos(tAngle) * tZRNearest.R(), sin(tAngle) * tZRNearest.R(), tZRNearest.Z());
     }
-    KThreeVector AreaNormal(const KThreeVector& aPoint) const override
+    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override
     {
         KTwoVector tZRPoint = aPoint.ProjectZR();
         KTwoVector tZRNormal = fPath->Normal(tZRPoint);
         double tAngle = aPoint.AzimuthalAngle();
-        return fSign * KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
+        return fSign * KGeoBag::KThreeVector(cos(tAngle) * tZRNormal.R(), sin(tAngle) * tZRNormal.R(), tZRNormal.Z());
     }
 
   private:

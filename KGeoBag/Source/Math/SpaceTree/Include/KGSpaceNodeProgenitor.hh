@@ -32,8 +32,10 @@ template<unsigned int NDIM, typename ObjectTypeList>
 class KGSpaceNodeProgenitor : public KGNodeActor<KGNode<ObjectTypeList>>
 {
   public:
-    KGSpaceNodeProgenitor(){};
-    ~KGSpaceNodeProgenitor() override{};
+    KGSpaceNodeProgenitor() = default;
+    ;
+    ~KGSpaceNodeProgenitor() override = default;
+    ;
 
     void ApplyAction(KGNode<ObjectTypeList>* node) override  //creates children for this node
     {

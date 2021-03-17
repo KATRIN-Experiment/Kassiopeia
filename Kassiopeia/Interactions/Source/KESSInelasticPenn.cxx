@@ -11,6 +11,8 @@ using katrin::KRandom;
 #include <algorithm>
 #include <map>
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -21,7 +23,7 @@ KESSInelasticPenn::KESSInelasticPenn() : fPennDepositedEnergy(0.)
 }
 
 KESSInelasticPenn::KESSInelasticPenn(const KESSInelasticPenn& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fPennDepositedEnergy(aCopy.fPennDepositedEnergy),
     fInElScMFPMap(aCopy.fInElScMFPMap),
     fInElScMap(aCopy.fInElScMap)
@@ -32,7 +34,7 @@ KESSInelasticPenn* KESSInelasticPenn::Clone() const
     return new KESSInelasticPenn(*this);
 }
 
-KESSInelasticPenn::~KESSInelasticPenn() {}
+KESSInelasticPenn::~KESSInelasticPenn() = default;
 
 void KESSInelasticPenn::CalculateCrossSection(const KSParticle& aParticle, double& aCrossSection)
 {

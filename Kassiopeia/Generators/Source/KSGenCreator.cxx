@@ -3,8 +3,8 @@
 namespace Kassiopeia
 {
 
-KSGenCreator::KSGenCreator() {}
+KSGenCreator::KSGenCreator() = default;
 
-KSGenCreator::~KSGenCreator() {}
+KSGenCreator::~KSGenCreator() = default;
 
 }  // namespace Kassiopeia

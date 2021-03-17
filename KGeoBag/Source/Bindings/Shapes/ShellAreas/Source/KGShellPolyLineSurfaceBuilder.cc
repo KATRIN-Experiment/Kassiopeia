@@ -12,7 +12,7 @@ STATICINT sKGShellPolyLineSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGShellPolyLineSurface>("shell_poly_line_surface");
 
 STATICINT sKGShellPolyLineSurfaceBuilderStructure =
-    KGShellPolyLineSurfaceBuilder::Attribute<string>("name") +
+    KGShellPolyLineSurfaceBuilder::Attribute<std::string>("name") +
     KGShellPolyLineSurfaceBuilder::Attribute<double>("angle_start") +
     KGShellPolyLineSurfaceBuilder::Attribute<double>("angle_stop") +
     KGShellPolyLineSurfaceBuilder::Attribute<unsigned int>("shell_mesh_count") +

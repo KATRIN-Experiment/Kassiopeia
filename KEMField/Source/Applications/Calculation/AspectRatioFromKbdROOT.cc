@@ -4,6 +4,7 @@
 // Date: 19.04.2016
 
 #include "KBinaryDataStreamer.hh"
+#include "KEMCout.hh"
 #include "KEMFileInterface.hh"
 #include "KSADataStreamer.hh"
 #include "KSerializer.hh"
@@ -33,7 +34,7 @@ class AspectRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
   public:
     using KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(KTriangle, KRectangle, KLineSegment)>::Visit;
 
-    AspectRatioVisitor() {}
+    AspectRatioVisitor() = default;
 
     void Visit(KTriangle& t) override
     {
@@ -50,7 +51,7 @@ class AspectRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
 
     void ProcessTriangle(KTriangle& tri)
     {
-        fShapeType = KThreeVector(1, 0, 0);
+        fShapeType = KFieldVector(1, 0, 0);
 
         const double data[11] = {tri.GetA(),
                                  tri.GetB(),
@@ -93,34 +94,34 @@ class AspectRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
 
         c = std::sqrt(delx * delx + dely * dely + delz * delz);
 
-        KThreeVector PA;
-        KThreeVector PB;
-        KThreeVector PC;
-        KThreeVector V;
-        KThreeVector X;
-        KThreeVector Y;
-        KThreeVector Q;
-        KThreeVector SUB;
+        KFieldVector PA;
+        KFieldVector PB;
+        KFieldVector PC;
+        KFieldVector V;
+        KFieldVector X;
+        KFieldVector Y;
+        KFieldVector Q;
+        KFieldVector SUB;
 
         //find the longest side:
         if (a > b) {
             max = a;
-            PA = KThreeVector(P2[0], P2[1], P2[2]);
-            PB = KThreeVector(P0[0], P0[1], P0[2]);
-            PC = KThreeVector(P1[0], P1[1], P1[2]);
+            PA = KFieldVector(P2[0], P2[1], P2[2]);
+            PB = KFieldVector(P0[0], P0[1], P0[2]);
+            PC = KFieldVector(P1[0], P1[1], P1[2]);
         }
         else {
             max = b;
-            PA = KThreeVector(P1[0], P1[1], P1[2]);
-            PB = KThreeVector(P2[0], P2[1], P2[2]);
-            PC = KThreeVector(P0[0], P0[1], P0[2]);
+            PA = KFieldVector(P1[0], P1[1], P1[2]);
+            PB = KFieldVector(P2[0], P2[1], P2[2]);
+            PC = KFieldVector(P0[0], P0[1], P0[2]);
         }
 
         if (c > max) {
             max = c;
-            PA = KThreeVector(P0[0], P0[1], P0[2]);
-            PB = KThreeVector(P1[0], P1[1], P1[2]);
-            PC = KThreeVector(P2[0], P2[1], P2[2]);
+            PA = KFieldVector(P0[0], P0[1], P0[2]);
+            PB = KFieldVector(P1[0], P1[1], P1[2]);
+            PC = KFieldVector(P2[0], P2[1], P2[2]);
         }
 
         //the line pointing along v is the y-axis
@@ -145,10 +146,10 @@ class AspectRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
 
     void ProcessRectangle(KRectangle& r)
     {
-        fShapeType = KThreeVector(0, 1, 0);
+        fShapeType = KFieldVector(0, 1, 0);
 
         //figure out which vertices make the sides
-        KThreeVector p[4];
+        KFieldVector p[4];
         p[0] = r.GetP0();
         p[1] = r.GetP1();
         p[2] = r.GetP2();
@@ -187,27 +188,27 @@ class AspectRatioVisitor : public KSelectiveVisitor<KShapeVisitor, KTYPELIST_3(K
 
     void ProcessLineSegment(KLineSegment& l)
     {
-        fShapeType = KThreeVector(0, 0, 1);
+        fShapeType = KFieldVector(0, 0, 1);
 
         fAspectRatio = (l.GetP1() - l.GetP0()).Magnitude() / l.GetDiameter();
     }
 
-    double GetAspectRatio()
+    double GetAspectRatio() const
     {
         return fAspectRatio;
     }
-    KThreeVector GetShapeType()
+    KFieldVector GetShapeType()
     {
         return fShapeType;
     }
 
   private:
     double fAspectRatio;
-    KThreeVector fShapeType; /* ( vector component 0=triangle, 1=rectangle, 2=line segment ) */
+    KFieldVector fShapeType; /* ( vector component 0=triangle, 1=rectangle, 2=line segment ) */
 };
 }  // namespace KEMField
 
-void GetMinMaxAspectRatio(double* retValues, unsigned int containerSize, std::vector<KThreeVector>& shapeTypes,
+void GetMinMaxAspectRatio(double* retValues, unsigned int containerSize, std::vector<KFieldVector>& shapeTypes,
                           std::vector<double>& arValues)
 {
     double aspectRatioTri = 0.;
@@ -282,11 +283,9 @@ void GetMinMaxAspectRatio(double* retValues, unsigned int containerSize, std::ve
                    << KEMField::endl;
     KEMField::cout << "Min. aspect ratio for line segments: " << aspectRatioLineMin << ", max: " << aspectRatioLineMax
                    << KEMField::endl;
-
-    return;
 }
 
-std::vector<TH1D*> ComputeAspectRatios(unsigned int contSize, std::vector<KThreeVector>& types,
+std::vector<TH1D*> ComputeAspectRatios(unsigned int contSize, std::vector<KFieldVector>& types,
                                        std::vector<double>& arvalues)
 {
     // get min and max aspect ratio values
@@ -367,11 +366,11 @@ int main(int argc, char* argv[])
 
     static const char* optString = "h:f:n:";
 
-    std::string inFile = "";
+    std::string inFile;
     std::string containerName = "surfaceContainer";
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -390,7 +389,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix = inFile.substr(inFile.find_last_of("."), std::string::npos);
+    std::string suffix = inFile.substr(inFile.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo;
     bool exists;
@@ -410,7 +409,7 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix << "\"" << std::endl;
         return 1;
     }
@@ -429,8 +428,8 @@ int main(int argc, char* argv[])
 
     AspectRatioVisitor fShapeVisitor;
     std::vector<double> values;
-    std::vector<KThreeVector> types;
-    KThreeVector countShapeTypes(0, 0, 0);
+    std::vector<KFieldVector> types;
+    KFieldVector countShapeTypes(0, 0, 0);
 
     KSurfaceContainer::iterator it;
 

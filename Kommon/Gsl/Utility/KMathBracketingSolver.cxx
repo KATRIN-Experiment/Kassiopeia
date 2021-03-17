@@ -3,8 +3,8 @@
 namespace katrin
 {
 
-KMathBracketingSolver::KMathBracketingSolver() {}
-KMathBracketingSolver::~KMathBracketingSolver() {}
+KMathBracketingSolver::KMathBracketingSolver() = default;
+KMathBracketingSolver::~KMathBracketingSolver() = default;
 
 KMathBracketingSolver::Algorithms KMathBracketingSolver::sAlgorithms = Algorithms();
 

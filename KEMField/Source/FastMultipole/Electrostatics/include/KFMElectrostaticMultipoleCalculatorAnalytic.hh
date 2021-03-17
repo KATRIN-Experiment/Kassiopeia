@@ -55,17 +55,17 @@ class KFMElectrostaticMultipoleCalculatorAnalytic : public KFMElectrostaticMulti
   protected:
     unsigned int fSize;
 
-    void ComputeTriangleMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+    void ComputeTriangleMoments(const double* target_origin, const KFMPointCloud<3>* vertices,
                                 KFMScalarMultipoleExpansion* moments) const;
-    void ComputeTriangleMomentsSlow(double* target_origin, const KFMPointCloud<3>* vertices,
+    void ComputeTriangleMomentsSlow(const double* target_origin, const KFMPointCloud<3>* vertices,
                                     KFMScalarMultipoleExpansion* moments) const;
 
-    void ComputeRectangleMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+    void ComputeRectangleMoments(const double* target_origin, const KFMPointCloud<3>* vertices,
                                  KFMScalarMultipoleExpansion* moments) const;
-    void ComputeWireMoments(double* target_origin, const KFMPointCloud<3>* vertices,
+    void ComputeWireMoments(const double* target_origin, const KFMPointCloud<3>* vertices,
                             KFMScalarMultipoleExpansion* moments) const;
 
-    void ComputeTriangleMomentAnalyticTerms(double area, double h, double lower_angle, double upper_angle,
+    void ComputeTriangleMomentAnalyticTerms(double area, double dist, double lower_angle, double upper_angle,
                                             std::vector<std::complex<double>>* moments) const;
 
 

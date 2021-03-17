@@ -24,8 +24,10 @@ namespace KEMField
 class KFMBitReversalPermutation
 {
   public:
-    KFMBitReversalPermutation(){};
-    virtual ~KFMBitReversalPermutation(){};
+    KFMBitReversalPermutation() = default;
+    ;
+    virtual ~KFMBitReversalPermutation() = default;
+    ;
 
     static bool IsPowerOfTwo(unsigned int N);
     static unsigned int TwoToThePowerOf(unsigned int N);  //N must be >= 0
@@ -33,7 +35,7 @@ class KFMBitReversalPermutation
     static unsigned int NextLowestPowerOfTwo(unsigned int N);
 
     //factor the integer N into powers of the factors listed in factors
-    static bool Factor(unsigned int N, unsigned int n_factors, unsigned int* factors, unsigned int* powers);
+    static bool Factor(unsigned int N, unsigned int n_factors, const unsigned int* factors, unsigned int* powers);
 
     static bool IsPowerOfBase(unsigned int N, unsigned int B);
     static unsigned int RaiseBaseToThePower(unsigned int B, unsigned int N);  //N must be >= 0

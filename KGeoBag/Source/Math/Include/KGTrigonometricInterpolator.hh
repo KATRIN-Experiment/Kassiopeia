@@ -9,7 +9,7 @@ class KGTrigonometricInterpolator : public KGInterpolator
 {
   public:
     KGTrigonometricInterpolator();
-    ~KGTrigonometricInterpolator() override {}
+    ~KGTrigonometricInterpolator() override = default;
 
     void Initialize(DataSet&) override;
 

@@ -31,8 +31,10 @@ namespace KEMField
 class KFMElectrostaticMultipoleCalculator
 {
   public:
-    KFMElectrostaticMultipoleCalculator(){};
-    virtual ~KFMElectrostaticMultipoleCalculator(){};
+    KFMElectrostaticMultipoleCalculator() = default;
+    ;
+    virtual ~KFMElectrostaticMultipoleCalculator() = default;
+    ;
 
     virtual void SetDegree(int l_max) = 0;
     int GetDegree() const

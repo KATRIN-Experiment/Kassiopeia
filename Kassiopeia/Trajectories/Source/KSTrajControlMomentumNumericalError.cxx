@@ -15,7 +15,7 @@ KSTrajControlMomentumNumericalError::KSTrajControlMomentumNumericalError() :
 
 KSTrajControlMomentumNumericalError::KSTrajControlMomentumNumericalError(
     const KSTrajControlMomentumNumericalError& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fAbsoluteError(aCopy.fAbsoluteError),
     fSafetyFactor(aCopy.fSafetyFactor),
     fSolverOrder(aCopy.fSolverOrder),
@@ -32,7 +32,7 @@ KSTrajControlMomentumNumericalError* KSTrajControlMomentumNumericalError::Clone(
     return new KSTrajControlMomentumNumericalError(*this);
 }
 
-KSTrajControlMomentumNumericalError::~KSTrajControlMomentumNumericalError() {}
+KSTrajControlMomentumNumericalError::~KSTrajControlMomentumNumericalError() = default;
 
 void KSTrajControlMomentumNumericalError::ActivateObject()
 {

@@ -20,7 +20,7 @@ class KGDiskSurfaceRandom : virtual public KGShapeRandom, public KGDiskSurface::
 {
   public:
     KGDiskSurfaceRandom() : KGShapeRandom() {}
-    ~KGDiskSurfaceRandom() override {}
+    ~KGDiskSurfaceRandom() override = default;
 
     /**
          * \brief Visitor function to dice the point on the KGDiskSurface.

@@ -14,22 +14,22 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
     typedef typename Integrator::Basis Basis;
 
     KIntegratingFieldSolver(const KSurfaceContainer& container, Integrator& integrator);
-    virtual ~KIntegratingFieldSolver() {}
+    virtual ~KIntegratingFieldSolver() = default;
 
     virtual void Initialize() {}
 
     double Potential(const KPosition& P) const;
-    KThreeVector ElectricField(const KPosition& P) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P) const;
+    KFieldVector ElectricField(const KPosition& P) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KPosition& P) const;
 
     // functions without Kahan summation
     double PotentialNoKahanSum(const KPosition& P) const;
-    KThreeVector ElectricFieldNoKahanSum(const KPosition& P) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const;
+    KFieldVector ElectricFieldNoKahanSum(const KPosition& P) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotentialNoKahanSum(const KPosition& P) const;
 
     double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
-    KThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
+    KFieldVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
                                                               const KPosition& P) const;
 
   protected:
@@ -162,14 +162,14 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
         {
             fP = p;
         }
-        KThreeVector& GetNormalizedElectricField() const
+        KFieldVector& GetNormalizedElectricField() const
         {
             return fElectricField;
         }
 
       private:
         mutable KPosition fP;
-        mutable KThreeVector fElectricField;
+        mutable KFieldVector fElectricField;
         Integrator& fIntegrator;
     };
 
@@ -231,14 +231,14 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
         {
             fP = p;
         }
-        std::pair<KThreeVector, double>& GetNormalizedElectricFieldAndPotential() const
+        std::pair<KFieldVector, double>& GetNormalizedElectricFieldAndPotential() const
         {
             return fElectricFieldAndPotential;
         }
 
       private:
         mutable KPosition fP;
-        mutable std::pair<KThreeVector, double> fElectricFieldAndPotential;
+        mutable std::pair<KFieldVector, double> fElectricFieldAndPotential;
         Integrator& fIntegrator;
     };
 
@@ -279,14 +279,14 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const KPosition& P) const
+KFieldVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricField.SetPosition(P);
-    KThreeVector sum(0., 0., 0.);
-    KThreeVector c(0., 0., 0.);
-    KThreeVector y(0., 0., 0.);
-    KThreeVector t(0., 0., 0.);
+    KFieldVector sum(0., 0., 0.);
+    KFieldVector c(0., 0., 0.);
+    KFieldVector y(0., 0., 0.);
+    KFieldVector t(0., 0., 0.);
     KSurfaceContainer::iterator it;
     for (it = fContainer.begin<Basis>(); it != fContainer.end<Basis>(); ++it) {
         (*it)->Accept(fShapeVisitorForElectricField);
@@ -299,16 +299,16 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Ele
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-    KThreeVector sumField(0., 0., 0.);
-    KThreeVector cField(0., 0., 0.);
-    KThreeVector yField(0., 0., 0.);
-    KThreeVector tField(0., 0., 0.);
+    KFieldVector sumField(0., 0., 0.);
+    KFieldVector cField(0., 0., 0.);
+    KFieldVector yField(0., 0., 0.);
+    KFieldVector tField(0., 0., 0.);
 
     double sumPot = 0.;
     double cPot = 0.;
@@ -316,7 +316,7 @@ KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAnd
     double tPot = 0.;
 
     KSurfaceContainer::iterator it;
-    std::pair<KThreeVector, double> itFieldAndPot;
+    std::pair<KFieldVector, double> itFieldAndPot;
     double itBasisValue = 0.;
 
     for (it = fContainer.begin<Basis>(); it != fContainer.end<Basis>(); ++it) {
@@ -352,12 +352,12 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template<class Integrator>
-KThreeVector
+KFieldVector
 KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldNoKahanSum(const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricField.SetPosition(P);
-    KThreeVector sum(0., 0., 0.);
+    KFieldVector sum(0., 0., 0.);
     KSurfaceContainer::iterator it;
     for (it = fContainer.begin<Basis>(); it != fContainer.end<Basis>(); ++it) {
         (*it)->Accept(fShapeVisitorForElectricField);
@@ -367,18 +367,18 @@ KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldNoK
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotentialNoKahanSum(
     const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-    KThreeVector sumField(0., 0., 0.);
+    KFieldVector sumField(0., 0., 0.);
     double sumPot = 0.;
 
     KSurfaceContainer::iterator it;
-    std::pair<KThreeVector, double> itFieldAndPot;
+    std::pair<KFieldVector, double> itFieldAndPot;
     double itBasisValue = 0.;
 
     for (it = fContainer.begin<Basis>(); it != fContainer.end<Basis>(); ++it) {
@@ -417,15 +417,15 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Potential
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(
+KFieldVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricField(
     const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricField.SetPosition(P);
-    KThreeVector sum(0., 0., 0.);
-    KThreeVector c(0., 0., 0.);
-    KThreeVector y(0., 0., 0.);
-    KThreeVector t(0., 0., 0.);
+    KFieldVector sum(0., 0., 0.);
+    KFieldVector c(0., 0., 0.);
+    KFieldVector y(0., 0., 0.);
+    KFieldVector t(0., 0., 0.);
     unsigned int id;
     for (unsigned int i = 0; i < SetSize; ++i) {
         id = SurfaceIndexSet[i];
@@ -439,17 +439,17 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::Ele
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAndPotential(
     const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& P) const
 {
     // Kahan Sum to mitigate rounding error
     fShapeVisitorForElectricFieldAndPotential.SetPosition(P);
 
-    KThreeVector sumField(0., 0., 0.);
-    KThreeVector cField(0., 0., 0.);
-    KThreeVector yField(0., 0., 0.);
-    KThreeVector tField(0., 0., 0.);
+    KFieldVector sumField(0., 0., 0.);
+    KFieldVector cField(0., 0., 0.);
+    KFieldVector yField(0., 0., 0.);
+    KFieldVector tField(0., 0., 0.);
 
     double sumPot = 0.;
     double cPot = 0.;
@@ -457,7 +457,7 @@ KIntegratingFieldSolver<Integrator, ElectrostaticSingleThread>::ElectricFieldAnd
     double tPot = 0.;
 
     KSurfaceContainer::iterator it;
-    std::pair<KThreeVector, double> itFieldAndPot;
+    std::pair<KFieldVector, double> itFieldAndPot;
     double itBasisValue = 0.;
 
     unsigned int id;

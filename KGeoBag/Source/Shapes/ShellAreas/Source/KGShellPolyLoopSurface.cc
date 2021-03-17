@@ -3,8 +3,8 @@
 namespace KGeoBag
 {
 
-template<> KGShellPolyLoopSurface::Visitor::Visitor() {}
+template<> KGShellPolyLoopSurface::Visitor::Visitor() = default;
 
-template<> KGShellPolyLoopSurface::Visitor::~Visitor() {}
+template<> KGShellPolyLoopSurface::Visitor::~Visitor() = default;
 
 }  // namespace KGeoBag

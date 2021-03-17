@@ -1,6 +1,7 @@
 #ifndef KGAREA_HH_
 #define KGAREA_HH_
 
+#include "KConst.h"
 #include "KGBoundary.hh"
 #include "KGCoreMessage.hh"
 #include "KGVisitor.hh"
@@ -8,9 +9,6 @@
 #include "KThreeVector.hh"
 #include "KTransformation.hh"
 #include "KTwoVector.hh"
-using katrin::KTagged;
-
-#include "KConst.h"
 
 #include <cmath>
 
@@ -22,8 +20,8 @@ class KGArea : public KGBoundary
     class Visitor
     {
       public:
-        Visitor() {}
-        virtual ~Visitor() {}
+        Visitor() = default;
+        virtual ~Visitor() = default;
         virtual void VisitArea(KGArea*) = 0;
     };
 
@@ -32,6 +30,11 @@ class KGArea : public KGBoundary
     KGArea(const KGArea& aArea);
     ~KGArea() override;
 
+    static std::string Name()
+    {
+        return "area";
+    }
+
   public:
     void Accept(KGVisitor* aVisitor);
 
@@ -39,18 +42,18 @@ class KGArea : public KGBoundary
     virtual void AreaAccept(KGVisitor* aVisitor);
 
   public:
-    bool Above(const KThreeVector& aPoint) const;
-    KThreeVector Point(const KThreeVector& aPoint) const;
-    KThreeVector Normal(const KThreeVector& aPoint) const;
+    bool Above(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
 
   protected:
-    virtual bool AreaAbove(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector AreaPoint(const KThreeVector& aPoint) const = 0;
-    virtual KThreeVector AreaNormal(const KThreeVector& aPoint) const = 0;
+    virtual bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const = 0;
 
   protected:
     void Check() const;
-    virtual void AreaInitialize() const override = 0;
+    void AreaInitialize() const override = 0;
     mutable bool fInitialized;
 };
 

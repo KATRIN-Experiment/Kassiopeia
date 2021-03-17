@@ -136,7 +136,7 @@ template<class XEngineType> inline RandomPrototype<XEngineType>::RandomPrototype
     SetSeed(seed);
 }
 
-template<class XEngineType> inline RandomPrototype<XEngineType>::~RandomPrototype() {}
+template<class XEngineType> inline RandomPrototype<XEngineType>::~RandomPrototype() = default;
 
 template<class XEngineType>
 inline typename RandomPrototype<XEngineType>::result_type RandomPrototype<XEngineType>::SetSeed(result_type value)

@@ -27,7 +27,8 @@ template<typename NodeType> class KGLeafConditionActor : public KGInspectingActo
     {
         fSwitch = true;
     };
-    virtual ~KGLeafConditionActor(){};
+    virtual ~KGLeafConditionActor() = default;
+    ;
 
     void SetTrueOnLeafNodes()
     {

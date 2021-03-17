@@ -49,6 +49,23 @@ KIncludeProcessor::KIncludeProcessor() :
 #endif
 }
 
+//KIncludeProcessor& KIncludeProcessor::operator=(const KIncludeProcessor& other)
+//{
+//    if (this == &other)
+//        return *this;
+
+//    fElementState = other.fElementState;
+//    fAttributeState = other.fAttributeState;
+//    fOptionalFlag = other.fOptionalFlag;
+//    fNames = other.fNames;
+//    fPaths = other.fPaths;
+//    fBases = other.fBases;
+//    fIncludedPaths = other.fIncludedPaths;
+//    fIncludeTree = new TreeNode(*other.fIncludeTree);
+
+//    return *this;
+//}
+
 KIncludeProcessor::~KIncludeProcessor()
 {
 #ifdef Kommon_ENABLE_DEBUG

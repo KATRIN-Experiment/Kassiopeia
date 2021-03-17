@@ -11,6 +11,8 @@ using katrin::KRandom;
 #include <iostream>
 #include <limits>
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -24,7 +26,7 @@ KSIntSurfaceMultiplication::KSIntSurfaceMultiplication() :
 {}
 
 KSIntSurfaceMultiplication::KSIntSurfaceMultiplication(const KSIntSurfaceMultiplication& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fPerformSideCheck(aCopy.fPerformSideCheck),
     fSideSignIsNegative(aCopy.fSideSignIsNegative),
     fSideName(aCopy.fSideName),
@@ -37,7 +39,7 @@ KSIntSurfaceMultiplication* KSIntSurfaceMultiplication::Clone() const
     return new KSIntSurfaceMultiplication(*this);
 }
 
-KSIntSurfaceMultiplication::~KSIntSurfaceMultiplication() {}
+KSIntSurfaceMultiplication::~KSIntSurfaceMultiplication() = default;
 
 void KSIntSurfaceMultiplication::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                                     KSParticleQueue& aQueue)

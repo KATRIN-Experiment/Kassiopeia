@@ -7,6 +7,7 @@
 #ifndef KOMMON_CORE_UTILITY_KMATHOPERANDS_H_
 #define KOMMON_CORE_UTILITY_KMATHOPERANDS_H_
 
+#include <type_traits>
 
 namespace katrin
 {

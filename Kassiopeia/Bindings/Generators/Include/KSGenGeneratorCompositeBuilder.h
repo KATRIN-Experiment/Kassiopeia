@@ -21,39 +21,39 @@ template<> inline bool KSGenGeneratorCompositeBuilder::AddAttribute(KContainer* 
         return true;
     }
     if (aContainer->GetName() == "energy") {
-        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsReference<std::string>()));
+        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsString()));
         genmsg(eWarning)
             << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders"
             << eom;
         return true;
     }
     if (aContainer->GetName() == "position") {
-        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsReference<std::string>()));
+        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsString()));
         genmsg(eWarning)
             << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders"
             << eom;
         return true;
     }
     if (aContainer->GetName() == "direction") {
-        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsReference<std::string>()));
+        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsString()));
         genmsg(eWarning)
             << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders"
             << eom;
         return true;
     }
     if (aContainer->GetName() == "time") {
-        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsReference<std::string>()));
+        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsString()));
         genmsg(eWarning)
             << "This option is deprecated and will be removed in the future. Use creator to add creators or nest the builders"
             << eom;
         return true;
     }
     if (aContainer->GetName() == "creator") {
-        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsReference<std::string>()));
+        fObject->AddCreator(KToolbox::GetInstance().Get<KSGenCreator>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "special") {
-        fObject->AddSpecial(KToolbox::GetInstance().Get<KSGenSpecial>(aContainer->AsReference<std::string>()));
+        fObject->AddSpecial(KToolbox::GetInstance().Get<KSGenSpecial>(aContainer->AsString()));
         return true;
     }
     if (aContainer->GetName() == "pid") {
@@ -64,7 +64,7 @@ template<> inline bool KSGenGeneratorCompositeBuilder::AddAttribute(KContainer* 
     }
     if (aContainer->GetName() == "string_id") {
         auto* tStringIdValue = new KSGenStringValueFix();
-        tStringIdValue->SetValue(aContainer->AsReference<std::string>());
+        tStringIdValue->SetValue(aContainer->AsString());
         fObject->SetStringId(tStringIdValue);
         return true;
     }

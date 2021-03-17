@@ -2,6 +2,6 @@
 
 namespace Kassiopeia
 {
-KSRunModifier::KSRunModifier() {}
-KSRunModifier::~KSRunModifier() {}
+KSRunModifier::KSRunModifier() = default;
+KSRunModifier::~KSRunModifier() = default;
 }  // namespace Kassiopeia

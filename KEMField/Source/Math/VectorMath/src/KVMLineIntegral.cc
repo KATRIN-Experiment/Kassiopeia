@@ -2,10 +2,9 @@
 
 using namespace KEMField;
 
-KVMLineIntegral::KVMLineIntegral() : KVMPathIntegral<1>() {}
+KVMLineIntegral::KVMLineIntegral() = default;
 
-
-KVMLineIntegral::~KVMLineIntegral() {}
+KVMLineIntegral::~KVMLineIntegral() = default;
 
 void KVMLineIntegral::SetField(const KVMField* aField)
 {

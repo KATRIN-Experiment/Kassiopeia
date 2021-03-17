@@ -12,9 +12,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenEnergyBetaRecoilBuilder::~KComplexElement() {}
+template<> KSGenEnergyBetaRecoilBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenEnergyBetaRecoilStructure = KSGenEnergyBetaRecoilBuilder::Attribute<string>("name") +
+STATICINT sKSGenEnergyBetaRecoilStructure = KSGenEnergyBetaRecoilBuilder::Attribute<std::string>("name") +
                                             KSGenEnergyBetaRecoilBuilder::Attribute<double>("min_energy") +
                                             KSGenEnergyBetaRecoilBuilder::Attribute<double>("max_energy");
 

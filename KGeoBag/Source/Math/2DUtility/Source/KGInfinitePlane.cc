@@ -95,7 +95,7 @@ void KGInfinitePlane::NearestIntersection(const KThreeVector& aStart, const KThr
     anIntersection = aStart + t * v;
 }
 
-bool KGInfinitePlane::IsAbove(const KThreeVector vec) const
+bool KGInfinitePlane::IsAbove(const KThreeVector& vec) const
 {
     if ((vec - fOrigin).Dot(fZAxis) > 0) {
         return true;

@@ -11,7 +11,7 @@ template<class BasisPolicy, class BoundaryPolicy> class KGBEMAttributor;
 
 template<class BasisPolicy>
 class KGBEMAttributor<BasisPolicy, KDirichletBoundary> :
-    public KTagged,
+    public katrin::KTagged,
     public KGBEMData<BasisPolicy, KDirichletBoundary>
 {
   public:
@@ -19,15 +19,15 @@ class KGBEMAttributor<BasisPolicy, KDirichletBoundary> :
     ~KGBEMAttributor() override
     {
         KGExtendedSurface<KGBEM<BasisPolicy, KDirichletBoundary>>* tBEMSurface;
-        for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-            tBEMSurface = (*tIt)->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
+        for (auto& surface : fSurfaces) {
+            tBEMSurface = surface->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
             tBEMSurface->SetName(this->GetName());
             tBEMSurface->SetTags(this->GetTags());
             tBEMSurface->SetBoundaryValue(this->GetBoundaryValue());
         }
         KGExtendedSpace<KGBEM<BasisPolicy, KDirichletBoundary>>* tBEMSpace;
-        for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-            tBEMSpace = (*tIt)->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
+        for (auto& space : fSpaces) {
+            tBEMSpace = space->template MakeExtension<KGBEM<BasisPolicy, KDirichletBoundary>>();
             tBEMSpace->SetName(this->GetName());
             tBEMSpace->SetTags(this->GetTags());
             tBEMSpace->SetBoundaryValue(this->GetBoundaryValue());
@@ -50,22 +50,24 @@ class KGBEMAttributor<BasisPolicy, KDirichletBoundary> :
 };
 
 template<class BasisPolicy>
-class KGBEMAttributor<BasisPolicy, KNeumannBoundary> : public KTagged, public KGBEMData<BasisPolicy, KNeumannBoundary>
+class KGBEMAttributor<BasisPolicy, KNeumannBoundary> :
+    public katrin::KTagged,
+    public KGBEMData<BasisPolicy, KNeumannBoundary>
 {
   public:
     KGBEMAttributor() : fSurfaces() {}
     ~KGBEMAttributor() override
     {
         KGExtendedSurface<KGBEM<BasisPolicy, KNeumannBoundary>>* tBEMSurface;
-        for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-            tBEMSurface = (*tIt)->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
+        for (auto& fSurface : fSurfaces) {
+            tBEMSurface = fSurface->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
             tBEMSurface->SetName(this->GetName());
             tBEMSurface->SetTags(this->GetTags());
             tBEMSurface->SetNormalBoundaryFlux(this->GetNormalBoundaryFlux());
         }
         KGExtendedSpace<KGBEM<BasisPolicy, KNeumannBoundary>>* tBEMSpace;
-        for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-            tBEMSpace = (*tIt)->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
+        for (auto& fSpace : fSpaces) {
+            tBEMSpace = fSpace->template MakeExtension<KGBEM<BasisPolicy, KNeumannBoundary>>();
             tBEMSpace->SetName(this->GetName());
             tBEMSpace->SetTags(this->GetTags());
             tBEMSpace->SetNormalBoundaryFlux(this->GetNormalBoundaryFlux());
@@ -88,9 +90,9 @@ class KGBEMAttributor<BasisPolicy, KNeumannBoundary> : public KTagged, public KG
 };
 
 typedef KGBEMAttributor<KElectrostaticBasis, KDirichletBoundary> KGElectrostaticDirichletAttributor;
-typedef KGBEMAttributor<KElectrostaticBasis, KNeumannBoundary> KGElectrostaticNeumannAttributor;
-typedef KGBEMAttributor<KMagnetostaticBasis, KDirichletBoundary> KGMagnetostaticDirichletAttributor;
-typedef KGBEMAttributor<KMagnetostaticBasis, KNeumannBoundary> KGMagnetostaticNeumannAttributor;
+using KGElectrostaticNeumannAttributor = KGBEMAttributor<KElectrostaticBasis, KNeumannBoundary>;
+using KGMagnetostaticDirichletAttributor = KGBEMAttributor<KMagnetostaticBasis, KDirichletBoundary>;
+using KGMagnetostaticNeumannAttributor = KGBEMAttributor<KMagnetostaticBasis, KNeumannBoundary>;
 
 }  // namespace KGeoBag
 
@@ -107,7 +109,7 @@ template<> inline bool KGElectrostaticDirichletBuilder::AddAttribute(KContainer*
     using namespace std;
 
     if (aContainer->GetName() == "name") {
-        fObject->SetName(aContainer->AsReference<string>());
+        fObject->SetName(aContainer->AsString());
         return true;
     }
     if (aContainer->GetName() == "value") {
@@ -115,12 +117,12 @@ template<> inline bool KGElectrostaticDirichletBuilder::AddAttribute(KContainer*
         return true;
     }
     if (aContainer->GetName() == "surfaces") {
-        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         vector<KGSurface*>::const_iterator tSurfaceIt;
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -131,7 +133,7 @@ template<> inline bool KGElectrostaticDirichletBuilder::AddAttribute(KContainer*
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         vector<KGSpace*>::const_iterator tSpaceIt;
         KGSpace* tSpace;
         const vector<KGSurface*>* tSurfaces;
@@ -139,7 +141,7 @@ template<> inline bool KGElectrostaticDirichletBuilder::AddAttribute(KContainer*
         KGSurface* tSurface;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -156,7 +158,7 @@ template<> inline bool KGElectrostaticDirichletBuilder::AddAttribute(KContainer*
     return false;
 }
 
-typedef KComplexElement<KGeoBag::KGElectrostaticNeumannAttributor> KGElectrostaticNeumannBuilder;
+using KGElectrostaticNeumannBuilder = KComplexElement<KGeoBag::KGElectrostaticNeumannAttributor>;
 
 template<> inline bool KGElectrostaticNeumannBuilder::AddAttribute(KContainer* aContainer)
 {
@@ -164,7 +166,7 @@ template<> inline bool KGElectrostaticNeumannBuilder::AddAttribute(KContainer* a
     using namespace std;
 
     if (aContainer->GetName() == "name") {
-        fObject->SetName(aContainer->AsReference<string>());
+        fObject->SetName(aContainer->AsString());
         return true;
     }
     if (aContainer->GetName() == "flux") {
@@ -172,12 +174,12 @@ template<> inline bool KGElectrostaticNeumannBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "surfaces") {
-        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<string>());
+        vector<KGSurface*> tSurfaces = KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
         vector<KGSurface*>::const_iterator tSurfaceIt;
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 
@@ -188,7 +190,7 @@ template<> inline bool KGElectrostaticNeumannBuilder::AddAttribute(KContainer* a
         return true;
     }
     if (aContainer->GetName() == "spaces") {
-        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<string>());
+        vector<KGSpace*> tSpaces = KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         vector<KGSpace*>::const_iterator tSpaceIt;
         KGSpace* tSpace;
         const vector<KGSurface*>* tSurfaces;
@@ -196,7 +198,7 @@ template<> inline bool KGElectrostaticNeumannBuilder::AddAttribute(KContainer* a
         KGSurface* tSurface;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<string>() << ">" << eom;
+            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 

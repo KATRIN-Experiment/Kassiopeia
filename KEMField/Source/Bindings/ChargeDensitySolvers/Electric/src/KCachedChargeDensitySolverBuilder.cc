@@ -17,10 +17,10 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KCachedChargeDensitySolverBuilder::~KComplexElement() {}
+template<> KCachedChargeDensitySolverBuilder::~KComplexElement() = default;
 
-STATICINT sKCachedChargeDensitySolverStructure = KCachedChargeDensitySolverBuilder::Attribute<string>("name") +
-                                                 KCachedChargeDensitySolverBuilder::Attribute<string>("hash");
+STATICINT sKCachedChargeDensitySolverStructure = KCachedChargeDensitySolverBuilder::Attribute<std::string>("name") +
+                                                 KCachedChargeDensitySolverBuilder::Attribute<std::string>("hash");
 
 STATICINT sKElectrostaticBoundaryField =
     KElectrostaticBoundaryFieldBuilder::ComplexElement<KCachedChargeDensitySolver>("cached_bem_solver") +

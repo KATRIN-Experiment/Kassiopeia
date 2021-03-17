@@ -18,15 +18,15 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenMomentumRectangularCompositeBuilder::~KComplexElement() {}
+template<> KSGenMomentumRectangularCompositeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenMomentumRectangularCompositeStructure =
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("name") +
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("surface") +
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("space") +
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("x") +
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("y") +
-    KSGenMomentumRectangularCompositeBuilder::Attribute<string>("z") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("name") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("surface") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("space") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("x") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("y") +
+    KSGenMomentumRectangularCompositeBuilder::Attribute<std::string>("z") +
     KSGenMomentumRectangularCompositeBuilder::ComplexElement<KSGenValueFix>("x_fix") +
     KSGenMomentumRectangularCompositeBuilder::ComplexElement<KSGenValueSet>("x_set") +
     KSGenMomentumRectangularCompositeBuilder::ComplexElement<KSGenValueList>("x_list") +

@@ -22,22 +22,25 @@ class KStaticElectromagnetField : public KMagnetostaticField
     ~KStaticElectromagnetField() override;
 
     void SetDirectory(const std::string& aDirectory);
-    void SetFile(const std::string& aFile);
+    std::string GetDirectory() const;
 
-    void SetFieldSolver(KSmartPointer<KMagneticFieldSolver> solver);
+    void SetFile(const std::string& aFile);
+    std::string GetFile() const;
+
+    void SetFieldSolver(const KSmartPointer<KMagneticFieldSolver>& solver);
     KSmartPointer<KMagneticFieldSolver> GetFieldSolver();
 
-    void SetContainer(KSmartPointer<KElectromagnetContainer> aContainer);
+    void SetContainer(const KSmartPointer<KElectromagnetContainer>& aContainer);
     KSmartPointer<KElectromagnetContainer> GetContainer() const;
 
   protected:
     void InitializeCore() override;
     void CheckSolverExistance() const;
 
-    KThreeVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
-    KThreeVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticPotentialCore(const KPosition& aSamplePoint) const override;
+    KFieldVector MagneticFieldCore(const KPosition& aSamplePoint) const override;
     KGradient MagneticGradientCore(const KPosition& aSamplePoint) const override;
-    std::pair<KThreeVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
+    std::pair<KFieldVector, KGradient> MagneticFieldAndGradientCore(const KPosition& P) const override;
 
   private:
     KSmartPointer<KElectromagnetContainer> fContainer;

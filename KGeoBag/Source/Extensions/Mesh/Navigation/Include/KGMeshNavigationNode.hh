@@ -28,12 +28,15 @@ namespace KGeoBag
 
 typedef KGCube<KGMESH_DIM> kg_mesh_cube;
 
-typedef KGSpaceTreeProperties<KGMESH_DIM> kg_mesh_tree_properties;
+using kg_mesh_tree_properties = KGSpaceTreeProperties<3>;
 
-typedef KGTYPELIST_4(kg_mesh_cube, kg_mesh_tree_properties, KGIdentitySet,
-                     KGNavigableMeshElementContainer) KGMeshNavigationNodeObjects;
+using KGMeshNavigationNodeObjects = KGeoBag::KGTypelist<
+    kg_mesh_cube,
+    KGeoBag::KGTypelist<
+        kg_mesh_tree_properties,
+        KGeoBag::KGTypelist<KGIdentitySet, KGeoBag::KGTypelist<KGNavigableMeshElementContainer, KGeoBag::KGNullType>>>>;
 
-typedef KGNode<KGMeshNavigationNodeObjects> KGMeshNavigationNode;
+using KGMeshNavigationNode = KGNode<KGMeshNavigationNodeObjects>;
 
 
 //streamrs for the cube

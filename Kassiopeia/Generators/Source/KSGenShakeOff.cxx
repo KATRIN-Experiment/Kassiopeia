@@ -87,9 +87,9 @@ bool KSGenShakeOff::ReadData()
 
     double shell, /*subshell,*/ prob, probNorm, energy, probTotal = 0;
 
-    fDataFile = katrin::CreateDataTextFile("ShakeOffRn.dat");
+    fDataFile = KTextFile::CreateDataTextFile("ShakeOffRn.dat");
 
-    if (fDataFile->Open(katrin::KFile::eRead) == true) {
+    if (fDataFile->Open(KFile::eRead) == true) {
 
         fstream& inputfile = *(fDataFile->File());
 
@@ -114,8 +114,8 @@ bool KSGenShakeOff::ReadData()
     }
     fDataFile->Close();
 
-    for (unsigned int i = 0; i < fSoProb.size(); i++) {
-        probNorm = fSoProb.at(i) / probTotal;
+    for (double i : fSoProb) {
+        probNorm = i / probTotal;
         fSoProbNorm.push_back(probNorm);
     }
     return true;

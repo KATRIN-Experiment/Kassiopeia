@@ -11,7 +11,7 @@ namespace katrin
 STATICINT sKGBoxSpaceBuilder = KGInterfaceBuilder::ComplexElement<KGBoxSpace>("box_space");
 
 STATICINT sKGBoxSpaceBuilderStructure =
-    KGBoxSpaceBuilder::Attribute<string>("name") + KGBoxSpaceBuilder::Attribute<double>("xa") +
+    KGBoxSpaceBuilder::Attribute<std::string>("name") + KGBoxSpaceBuilder::Attribute<double>("xa") +
     KGBoxSpaceBuilder::Attribute<double>("xb") + KGBoxSpaceBuilder::Attribute<unsigned int>("x_mesh_count") +
     KGBoxSpaceBuilder::Attribute<double>("x_mesh_power") + KGBoxSpaceBuilder::Attribute<double>("ya") +
     KGBoxSpaceBuilder::Attribute<double>("yb") + KGBoxSpaceBuilder::Attribute<unsigned int>("y_mesh_count") +

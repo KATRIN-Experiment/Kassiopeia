@@ -31,7 +31,8 @@ class KGNavigableMeshElementSorter : public KGNodeActor<KGMeshNavigationNode>
 {
   public:
     KGNavigableMeshElementSorter() : fContainer(nullptr){};
-    ~KGNavigableMeshElementSorter() override{};
+    ~KGNavigableMeshElementSorter() override = default;
+    ;
 
     void SetMeshElementContainer(KGNavigableMeshElementContainer* container)
     {

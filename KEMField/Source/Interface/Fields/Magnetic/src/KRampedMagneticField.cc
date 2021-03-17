@@ -28,18 +28,18 @@ KRampedMagneticField::KRampedMagneticField() :
     fTimeScalingFactor(1.)
 {}
 
-KRampedMagneticField::~KRampedMagneticField() {}
+KRampedMagneticField::~KRampedMagneticField() = default;
 
-KThreeVector KRampedMagneticField::MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const
+KFieldVector KRampedMagneticField::MagneticPotentialCore(const KPosition& aSamplePoint, const double& aSampleTime) const
 {
-    KThreeVector aPotential = fRootMagneticField->MagneticPotential(aSamplePoint, aSampleTime);
+    KFieldVector aPotential = fRootMagneticField->MagneticPotential(aSamplePoint, aSampleTime);
     double Modulation = GetModulationFactor(aSampleTime);
     return aPotential * Modulation;
 }
 
-KThreeVector KRampedMagneticField::MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const
+KFieldVector KRampedMagneticField::MagneticFieldCore(const KPosition& aSamplePoint, const double& aSampleTime) const
 {
-    KThreeVector aField = fRootMagneticField->MagneticField(aSamplePoint, aSampleTime);
+    KFieldVector aField = fRootMagneticField->MagneticField(aSamplePoint, aSampleTime);
     double Modulation = GetModulationFactor(aSampleTime);
     return aField * Modulation;
 }

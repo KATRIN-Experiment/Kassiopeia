@@ -40,7 +40,7 @@ set (VECTORMATH_SOURCEFILES
 
 ##################################################
 
-add_library (KVectorMath SHARED ${VECTORMATH_SOURCEFILES})
+add_library (KVectorMath SHARED ${VECTORMATH_SOURCEFILES} ${VECTORMATH_HEADERFILES})
 target_link_libraries (KVectorMath  KEMMath KFMMathUtilities ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES})
 
 kasper_install_headers (${VECTORMATH_HEADERFILES})

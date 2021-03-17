@@ -13,35 +13,35 @@ namespace KEMField
 class KElectrostaticCubatureTriangleIntegrator : public KElectrostaticRWGTriangleIntegrator
 {
   public:
-    typedef KTriangle Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KTriangle;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticCubatureTriangleIntegrator() {}
-    ~KElectrostaticCubatureTriangleIntegrator() override {}
+    KElectrostaticCubatureTriangleIntegrator() = default;
+    ~KElectrostaticCubatureTriangleIntegrator() override = default;
 
-    void GaussPoints_Tri4P(const double* data, double* Q) const;
-    void GaussPoints_Tri7P(const double* data, double* Q) const;
-    void GaussPoints_Tri12P(const double* data, double* Q) const;
-    void GaussPoints_Tri16P(const double* data, double* Q) const;
-    void GaussPoints_Tri19P(const double* data, double* Q) const;
-    void GaussPoints_Tri33P(const double* data, double* Q) const;
+    static void GaussPoints_Tri4P(const double* data, double* Q);
+    static void GaussPoints_Tri7P(const double* data, double* Q);
+    static void GaussPoints_Tri12P(const double* data, double* Q);
+    static void GaussPoints_Tri16P(const double* data, double* Q);
+    static void GaussPoints_Tri19P(const double* data, double* Q);
+    static void GaussPoints_Tri33P(const double* data, double* Q);
 
-    double Potential_TriNP(const double* data, const KPosition& P, const unsigned short noPoints, double* Q,
-                           const double* weights) const;
-    KThreeVector ElectricField_TriNP(const double* data, const KPosition& P, const unsigned short noPoints, double* Q,
-                                     const double* weights) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential_TriNP(const double* data, const KPosition& P,
-                                                                    const unsigned short noPoints, double* Q,
-                                                                    const double* weights) const;
+    static double Potential_TriNP(const double* data, const KPosition& P, const unsigned short noPoints,
+                                  const double* Q, const double* weights);
+    static KFieldVector ElectricField_TriNP(const double* data, const KPosition& P, const unsigned short noPoints,
+                                            const double* Q, const double* weights);
+    static std::pair<KFieldVector, double> ElectricFieldAndPotential_TriNP(const double* data, const KPosition& P,
+                                                                           const unsigned short noPoints,
+                                                                           const double* Q, const double* weights);
 
     double Potential(const KTriangle* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KTriangle* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KTriangle* source,
+    KFieldVector ElectricField(const KTriangle* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KTriangle* source,
                                                               const KPosition& P) const override;
 
     double Potential(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KTriangle>* source,
+    KFieldVector ElectricField(const KSymmetryGroup<KTriangle>* source, const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KSymmetryGroup<KTriangle>* source,
                                                               const KPosition& P) const override;
 
   private:

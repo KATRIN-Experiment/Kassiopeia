@@ -1,6 +1,7 @@
 #ifndef KGRANDOMPOINTGENERATOR_DEF
 #define KGRANDOMPOINTGENERATOR_DEF
 
+#include "KGAnnulusSurfaceRandom.hh"
 #include "KGBoxSpaceRandom.hh"
 #include "KGBoxSurfaceRandom.hh"
 #include "KGConeSpaceRandom.hh"
@@ -35,6 +36,7 @@ class KGRandomPointGenerator :
     public KGBoxSurfaceRandom,
     public KGBoxSpaceRandom,
     // -------------------------------
+    public KGAnnulusSurfaceRandom,
     public KGDiskSurfaceRandom,
     // -------------------------------
     public KGCylinderSpaceRandom,
@@ -49,8 +51,8 @@ class KGRandomPointGenerator :
     public KGCutConeTubeSpaceRandom
 {
   public:
-    KGRandomPointGenerator() {}
-    ~KGRandomPointGenerator() override {}
+    KGRandomPointGenerator() = default;
+    ~KGRandomPointGenerator() override = default;
 };
 }  // namespace KGeoBag
 

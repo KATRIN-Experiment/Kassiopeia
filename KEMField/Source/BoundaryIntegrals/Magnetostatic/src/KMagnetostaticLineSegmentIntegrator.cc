@@ -36,8 +36,8 @@ KThreeVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KSymmetr
                                                                   const KPosition& P) const
 {
     KThreeVector A;
-    for (KSymmetryGroup<KLineSegment>::ShapeCIt it = source->begin(); it != source->end(); ++it)
-        A += VectorPotential(*it, P);
+    for (auto it : *source)
+        A += VectorPotential(it, P);
     return A;
 }
 
@@ -45,8 +45,8 @@ KThreeVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KSymmetryG
                                                                 const KPosition& P) const
 {
     KThreeVector magneticField(0., 0., 0.);
-    for (KSymmetryGroup<KLineSegment>::ShapeCIt it = source->begin(); it != source->end(); ++it)
-        magneticField += MagneticField(*it, P);
+    for (auto it : *source)
+        magneticField += MagneticField(it, P);
     return magneticField;
 }
 }  // namespace KEMField

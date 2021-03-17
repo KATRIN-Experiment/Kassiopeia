@@ -26,8 +26,8 @@ class KSCommandGroup : public KSCommand
 
   private:
     typedef std::vector<KSCommand*> CommandVector;
-    typedef CommandVector::iterator CommandIt;
-    typedef CommandVector::const_iterator CommandCIt;
+    using CommandIt = CommandVector::iterator;
+    using CommandCIt = CommandVector::const_iterator;
 
     CommandVector fCommands;
 };

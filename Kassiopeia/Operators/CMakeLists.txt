@@ -60,7 +60,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${OPERATORS_HEADER_PATH} )
-add_library( KassiopeiaOperators SHARED ${OPERATORS_SOURCE_FILENAMES} )
+add_library( KassiopeiaOperators SHARED ${OPERATORS_SOURCE_FILENAMES} ${OPERATORS_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaOperators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaOperators
     ${Kommon_LIBRARIES}

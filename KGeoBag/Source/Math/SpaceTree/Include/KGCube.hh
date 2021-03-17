@@ -44,7 +44,8 @@ template<size_t NDIM> class KGCube
         SetParameters(center, length);
     };
 
-    virtual ~KGCube(){};
+    virtual ~KGCube() = default;
+    ;
 
     size_t GetDimension() const
     {

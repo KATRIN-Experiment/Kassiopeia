@@ -1,13 +1,10 @@
 #include "KTransformation.hh"
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include "KConst.h"
 #include "KGMathMessage.hh"
 
 #include <cmath>
+#include <iostream>
 
 namespace KGeoBag
 {
@@ -17,20 +14,10 @@ KTransformation::KTransformation() :
     fXAxis(1., 0., 0.),
     fYAxis(0., 1., 0.),
     fZAxis(0., 0., 1.),
-    fRotation(),
-    fRotationInverse(),
     fDisplacement(0., 0., 0.)
 {}
-KTransformation::KTransformation(const KTransformation& aTransformation) :
-    fOrigin(aTransformation.fOrigin),
-    fXAxis(aTransformation.fXAxis),
-    fYAxis(aTransformation.fYAxis),
-    fZAxis(aTransformation.fZAxis),
-    fRotation(aTransformation.fRotation),
-    fRotationInverse(aTransformation.fRotationInverse),
-    fDisplacement(aTransformation.fDisplacement)
-{}
-KTransformation::~KTransformation() {}
+KTransformation::KTransformation(const KTransformation&) = default;
+KTransformation::~KTransformation() = default;
 
 void KTransformation::Apply(KThreeVector& point) const
 {

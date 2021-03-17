@@ -17,7 +17,7 @@ template<> inline bool KSRootRunModifierBuilder::AddAttribute(KContainer* aConta
         return true;
     }
     if (aContainer->GetName() == "add_modifier") {
-        fObject->AddModifier(KToolbox::GetInstance().Get<KSRunModifier>(aContainer->AsReference<std::string>()));
+        fObject->AddModifier(KToolbox::GetInstance().Get<KSRunModifier>(aContainer->AsString()));
         return true;
     }
     return false;

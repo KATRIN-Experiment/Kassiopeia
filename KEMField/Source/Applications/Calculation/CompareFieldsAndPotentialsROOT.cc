@@ -8,6 +8,7 @@
 #include "KBoundaryIntegralVector.hh"
 #include "KDataDisplay.hh"
 #include "KEMConstants.hh"
+#include "KEMCout.hh"
 #include "KEMFieldCanvas.hh"
 #include "KEMFileInterface.hh"
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
@@ -76,15 +77,15 @@ int main(int argc, char* argv[])
 
     static const char* optString = "ha:b:n:m:s:";
 
-    std::string inFile1 = "";
-    std::string inFile2 = "";
+    std::string inFile1;
+    std::string inFile2;
     std::string containerName1 = "surfaceContainer";
     std::string containerName2 = "surfaceContainer";
     double len = 1.0;
     (void) len;
 
     while (true) {
-        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
+        int optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -112,8 +113,8 @@ int main(int argc, char* argv[])
         }
     }
 
-    std::string suffix1 = inFile1.substr(inFile1.find_last_of("."), std::string::npos);
-    std::string suffix2 = inFile2.substr(inFile2.find_last_of("."), std::string::npos);
+    std::string suffix1 = inFile1.substr(inFile1.find_last_of('.'), std::string::npos);
+    std::string suffix2 = inFile2.substr(inFile2.find_last_of('.'), std::string::npos);
 
     struct stat fileInfo1;
     bool exists1;
@@ -149,12 +150,12 @@ int main(int argc, char* argv[])
 
     KBinaryDataStreamer binaryDataStreamer;
 
-    if (suffix1.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix1 != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix1 << "\"" << std::endl;
         return 1;
     }
 
-    if (suffix2.compare(binaryDataStreamer.GetFileSuffix()) != 0) {
+    if (suffix2 != binaryDataStreamer.GetFileSuffix()) {
         std::cout << "Error: unkown file extension \"" << suffix2 << "\"" << std::endl;
         return 1;
     }
@@ -223,7 +224,7 @@ int main(int argc, char* argv[])
     double cylZmin(-4.43);
     double cylZmax(4.43);
     double cylR(2.5);
-    std::vector<KThreeVector> tPositions;
+    std::vector<KFieldVector> tPositions;
 
     for (unsigned int i = 0; i < noPoints; i++) {
         IJKLRANDOM = i + 1;
@@ -236,13 +237,13 @@ int main(int argc, char* argv[])
         double y = sin(phi) * r;                          // y
         double z = cylZmin + zRnd * (cylZmax - cylZmin);  // z
 
-        tPositions.push_back(KThreeVector(x, y, z));
+        tPositions.emplace_back(x, y, z);
     }
 
     double pot1, pot2, potDiff, fieldDiff;
-    KThreeVector field1, field2;
-    std::pair<KThreeVector, double> set1;
-    std::pair<KThreeVector, double> set2;
+    KFieldVector field1, field2;
+    std::pair<KFieldVector, double> set1;
+    std::pair<KFieldVector, double> set2;
 
     std::vector<double> potDiffContainer;
     std::vector<double> fieldDiffContainer;
@@ -341,7 +342,7 @@ int main(int argc, char* argv[])
         double y = sin(phi) * r;                          // y
         double z = cylZmin + zRnd * (cylZmax - cylZmin);  // z
 
-        tPositions.push_back(KThreeVector(x, y, z));
+        tPositions.emplace_back(x, y, z);
     }
 
     for (unsigned int i = 0; i < tPositions.size(); i++) {
@@ -437,7 +438,7 @@ int main(int argc, char* argv[])
         double y = sin(phi) * r;  // y
         double z = cylZ;          // z
 
-        tPositions.push_back(KThreeVector(x, y, z));
+        tPositions.emplace_back(x, y, z);
     }
 
 
@@ -540,7 +541,7 @@ int main(int argc, char* argv[])
     plotDiffField->SetMarkerSize(0.2);
     plotDiffField->SetMarkerStyle(8);
 
-    KThreeVector tPos;
+    KFieldVector tPos;
 
     for (unsigned int i = 0; i < noPoints; i++) {
 
@@ -660,7 +661,6 @@ void subrn(double* u, int len)
         }
         u[ivec] = uni;
     }
-    return;
 }
 
 ////////////////////////////////////////////////////////////////

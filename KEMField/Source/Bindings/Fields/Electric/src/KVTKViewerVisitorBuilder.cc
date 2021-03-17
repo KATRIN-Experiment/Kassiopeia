@@ -15,10 +15,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KVTKViewerVisitorBuilder::~KComplexElement() {}
+template<> KVTKViewerVisitorBuilder::~KComplexElement() = default;
 
 STATICINT sKVTKViewerVisitorStructure =
-    KVTKViewerVisitorBuilder::Attribute<string>("file") + KVTKViewerVisitorBuilder::Attribute<bool>("view") +
+    KVTKViewerVisitorBuilder::Attribute<std::string>("file") + KVTKViewerVisitorBuilder::Attribute<bool>("view") +
     KVTKViewerVisitorBuilder::Attribute<bool>("save") + KVTKViewerVisitorBuilder::Attribute<bool>("preprocessing") +
     KVTKViewerVisitorBuilder::Attribute<bool>("postprocessing");
 

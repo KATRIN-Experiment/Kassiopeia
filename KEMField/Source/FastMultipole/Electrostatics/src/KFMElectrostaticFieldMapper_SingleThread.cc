@@ -62,7 +62,7 @@ void KFMElectrostaticFieldMapper_SingleThread::SetTree(KFMElectrostaticTree* tre
 }
 
 //set parameters
-void KFMElectrostaticFieldMapper_SingleThread::SetParameters(KFMElectrostaticParameters params)
+void KFMElectrostaticFieldMapper_SingleThread::SetParameters(const KFMElectrostaticParameters& params)
 {
     fDegree = params.degree;
     fNTerms = (fDegree + 1) * (fDegree + 1);

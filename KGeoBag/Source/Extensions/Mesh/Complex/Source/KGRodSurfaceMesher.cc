@@ -90,8 +90,8 @@ void KGRodSurfaceMesher::VisitWrappedSurface(KGWrappedSurface<KGRod>* rodSurface
                     len += norm2[k] * norm2[k];
                 }
                 len = sqrt(len);
-                for (unsigned int k = 0; k < 3; k++)
-                    norm2[k] /= len;
+                for (double& k : norm2)
+                    k /= len;
             }
 
             KGBeam::LinePlaneIntersection(tmp4, p1, rod->GetCoordinate(i + 1), norm2, p4);
@@ -137,8 +137,8 @@ void KGRodSurfaceMesher::GetNormal(const double* p1, const double* p2, const dou
         len += n[i] * n[i];
     }
     len = sqrt(len);
-    for (unsigned int i = 0; i < 3; i++)
-        n[i] /= len;
+    for (double& i : n)
+        i /= len;
 
     if (oldNormal == nullptr) {
         // we then start with a normal vector whose sole component lies in the

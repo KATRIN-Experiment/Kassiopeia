@@ -16,13 +16,14 @@ namespace katrin
 {
 
 STATICINT sKMagneticSuperpositionFieldEntryStructure =
-    KMagneticSuperpositionFieldEntryBuilder::Attribute<string>("name") +
+    KMagneticSuperpositionFieldEntryBuilder::Attribute<std::string>("name") +
     KMagneticSuperpositionFieldEntryBuilder::Attribute<double>("enhancement");
 
 
 STATICINT sKMagneticSuperpositionFieldStructure =
-    KMagneticSuperpositionFieldBuilder::Attribute<string>("name") +
+    KMagneticSuperpositionFieldBuilder::Attribute<std::string>("name") +
     KMagneticSuperpositionFieldBuilder::Attribute<bool>("use_caching") +
+    KMagneticSuperpositionFieldBuilder::Attribute<std::string>("require") +
     KMagneticSuperpositionFieldBuilder::ComplexElement<KMagneticSuperpositionFieldEntry>("add_field");
 
 

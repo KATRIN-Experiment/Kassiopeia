@@ -27,7 +27,7 @@ template<typename CallType, typename ReturnType, void (CallType::*memberFunction
 class KSAAssociatedPassedPointerPODOutputNode : public KSAPODOutputNode<ReturnType>
 {
   public:
-    KSAAssociatedPassedPointerPODOutputNode(std::string name, const CallType* call_ptr) :
+    KSAAssociatedPassedPointerPODOutputNode(const std::string& name, const CallType* call_ptr) :
         KSAPODOutputNode<ReturnType>(name)
     {
         KSAConstantReturnByPassedPointerGet<CallType, ReturnType, memberFunction> callback;

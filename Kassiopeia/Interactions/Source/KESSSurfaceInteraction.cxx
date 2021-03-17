@@ -7,6 +7,8 @@ using katrin::KRandom;
 
 #include <cmath>
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -17,7 +19,7 @@ KESSSurfaceInteraction::KESSSurfaceInteraction() :
 {}
 
 KESSSurfaceInteraction::KESSSurfaceInteraction(const KESSSurfaceInteraction& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fElectronDirection(aCopy.fElectronDirection),
     fElectronAffinity(aCopy.fElectronAffinity),
     fSurfaceOrientation(aCopy.fSurfaceOrientation)
@@ -28,7 +30,7 @@ KESSSurfaceInteraction* KESSSurfaceInteraction::Clone() const
     return new KESSSurfaceInteraction(*this);
 }
 
-KESSSurfaceInteraction::~KESSSurfaceInteraction() {}
+KESSSurfaceInteraction::~KESSSurfaceInteraction() = default;
 
 double KESSSurfaceInteraction::CalculateTransmissionProbability(const double aKineticEnergy,
                                                                 const double aCosIncidentAngle)

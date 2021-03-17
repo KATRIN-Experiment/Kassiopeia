@@ -34,18 +34,18 @@ class KSComponentFactory
 template<class XType> class KSDictionary
 {
   private:
-    KSDictionary();
-    ~KSDictionary();
+    KSDictionary() = delete;
+    ~KSDictionary() = delete;
 
-    typedef std::multimap<std::string, const KSCommandFactory*> CommandFactoryMap;
-    typedef CommandFactoryMap::iterator CommandFactoryIt;
-    typedef CommandFactoryMap::const_iterator CommandFactoryCIt;
-    typedef CommandFactoryMap::value_type CommandFactoryEntry;
+    using CommandFactoryMap = std::multimap<std::string, const KSCommandFactory*>;
+    using CommandFactoryIt = CommandFactoryMap::iterator;
+    using CommandFactoryCIt = CommandFactoryMap::const_iterator;
+    using CommandFactoryEntry = CommandFactoryMap::value_type;
 
-    typedef std::multimap<std::string, const KSComponentFactory*> ComponentFactoryMap;
-    typedef ComponentFactoryMap::iterator ComponentFactoryIt;
-    typedef ComponentFactoryMap::const_iterator ComponentFactoryCIt;
-    typedef ComponentFactoryMap::value_type ComponentFactoryEntry;
+    using ComponentFactoryMap = std::multimap<std::string, const KSComponentFactory*>;
+    using ComponentFactoryIt = ComponentFactoryMap::iterator;
+    using ComponentFactoryCIt = ComponentFactoryMap::const_iterator;
+    using ComponentFactoryEntry = ComponentFactoryMap::value_type;
 
     static CommandFactoryMap* fCommandFactories;
     static ComponentFactoryMap* fComponentFactories;

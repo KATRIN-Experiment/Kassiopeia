@@ -7,7 +7,7 @@
 
 namespace KGeoBag
 {
-KGPortHousing::KGPortHousing(double Amain[3], double Bmain[3], double rmain) : fCoordTransform(nullptr)
+KGPortHousing::KGPortHousing(const double Amain[3], const double Bmain[3], double rmain) : fCoordTransform(nullptr)
 {
     fRMain = rmain;
     for (int i = 0; i < 3; i++) {
@@ -18,12 +18,10 @@ KGPortHousing::KGPortHousing(double Amain[3], double Bmain[3], double rmain) : f
 
 KGPortHousing::~KGPortHousing()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+    delete fCoordTransform;
 
-    for (unsigned int i = 0; i < fPorts.size(); i++) {
-        if (fPorts.at(i))
-            delete fPorts.at(i);
+    for (auto& port : fPorts) {
+        delete port;
     }
 }
 
@@ -70,8 +68,8 @@ KGPortHousing* KGPortHousing::Clone() const
 
     p->fCoordTransform = new KGCoordinateTransform(*fCoordTransform);
 
-    for (unsigned int i = 0; i < fPorts.size(); i++)
-        p->fPorts.push_back(fPorts.at(i)->Clone(p));
+    for (auto* port : fPorts)
+        p->fPorts.push_back(port->Clone(p));
     return p;
 }
 
@@ -85,8 +83,8 @@ void KGPortHousing::Initialize() const
     }
 
     fLength = sqrt(fLengthSq);
-    for (int i = 0; i < 3; i++)
-        fNorm[i] /= fLength;
+    for (double& i : fNorm)
+        i /= fLength;
 
     fRSq = (fRMain * fRMain);
 
@@ -94,8 +92,8 @@ void KGPortHousing::Initialize() const
     fPolyMain = 120;
 
     fCoordTransform = new KGCoordinateTransform();
-    for (unsigned int i = 0; i < fPorts.size(); i++)
-        fPorts.at(i)->Initialize();
+    for (auto* port : fPorts)
+        port->Initialize();
 }
 
 bool KGPortHousing::ContainsPoint(const double* P) const
@@ -118,8 +116,8 @@ bool KGPortHousing::ContainsPoint(const double* P) const
     }
     else {
         // otherwise, we have to look in each of the ports
-        for (unsigned int i = 0; i < fPorts.size(); i++) {
-            if (fPorts.at(i)->ContainsPoint(P))
+        for (auto port : fPorts) {
+            if (port->ContainsPoint(P))
                 return true;
         }
     }
@@ -164,8 +162,8 @@ double KGPortHousing::DistanceTo(const double* P, double* P_in, double* P_norm) 
     len_perp = sqrt(len_perp);
 
     if (len_perp > 0.)
-        for (unsigned int i = 0; i < 3; i++)
-            norm2[i] /= len_perp;
+        for (double& i : norm2)
+            i /= len_perp;
     else {
         for (unsigned int i = 0; i < 3; i++)
             norm2[i] = (i == 1 ? 1. : -1.) * fNorm[(i + 1) % 3];
@@ -195,12 +193,12 @@ double KGPortHousing::DistanceTo(const double* P, double* P_in, double* P_norm) 
             P_norm[i] = sign * norm2[i];
     }
 
-    for (unsigned int i = 0; i < fPorts.size(); i++) {
+    for (auto* port : fPorts) {
         double P_tmp[3];
         double P_tmp_norm[3];
-        double dist_tmp = fPorts.at(i)->DistanceTo(P, P_tmp, P_tmp_norm);
+        double dist_tmp = port->DistanceTo(P, P_tmp, P_tmp_norm);
 
-        if (dist_tmp < dist_main || (fPorts.at(i)->ContainsPoint(P_main) && pointIsOnMainCylinder)) {
+        if (dist_tmp < dist_main || (port->ContainsPoint(P_main) && pointIsOnMainCylinder)) {
             pointIsOnMainCylinder = false;
 
             if (P_in)
@@ -217,7 +215,7 @@ double KGPortHousing::DistanceTo(const double* P, double* P_in, double* P_norm) 
     return dist_main;
 }
 
-KGPortHousing::RectangularPort::RectangularPort(KGPortHousing* portHousing, double asub[3], double length,
+KGPortHousing::RectangularPort::RectangularPort(KGPortHousing* portHousing, const double asub[3], double length,
                                                 double width) :
     Port(portHousing)
 {
@@ -232,8 +230,8 @@ KGPortHousing::RectangularPort::RectangularPort(KGPortHousing* portHousing, doub
 
 KGPortHousing::RectangularPort::~RectangularPort()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+
+    delete fCoordTransform;
 }
 
 void KGPortHousing::RectangularPort::Initialize()
@@ -487,7 +485,8 @@ double KGPortHousing::RectangularPort::DistanceTo(const double* P, double* P_in,
     }
 }
 
-KGPortHousing::CircularPort::CircularPort(KGPortHousing* portHousing, double asub[3], double rsub) : Port(portHousing)
+KGPortHousing::CircularPort::CircularPort(KGPortHousing* portHousing, const double asub[3], double rsub) :
+    Port(portHousing)
 {
     for (int i = 0; i < 3; i++)
         fASub[i] = asub[i];
@@ -499,8 +498,8 @@ KGPortHousing::CircularPort::CircularPort(KGPortHousing* portHousing, double asu
 
 KGPortHousing::CircularPort::~CircularPort()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+
+    delete fCoordTransform;
 }
 
 void KGPortHousing::CircularPort::Initialize()
@@ -526,8 +525,8 @@ void KGPortHousing::CircularPort::Initialize()
     }
 
     fLength = sqrt(fLengthSq);
-    for (int i = 0; i < 3; i++)
-        fNorm[i] /= fLength;
+    for (double& i : fNorm)
+        i /= fLength;
 }
 
 KGPortHousing::CircularPort* KGPortHousing::CircularPort::Clone(KGPortHousing* p) const
@@ -720,8 +719,8 @@ double KGPortHousing::CircularPort::DistanceTo(const double* P, double* P_in, do
 
     if (P_norm) {
         if (r_loc < fRSub)
-            for (unsigned int i = 0; i < 3; i++)
-                P_n[i] *= -1.;
+            for (double& i : P_n)
+                i *= -1.;
         fCoordTransform->ConvertToGlobalCoords(P_n, P_norm, true);
     }
 

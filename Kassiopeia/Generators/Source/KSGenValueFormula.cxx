@@ -5,7 +5,7 @@ namespace Kassiopeia
 
 KSGenValueFormula::KSGenValueFormula() : fValueMin(0.), fValueMax(0.), fValueFormula("x"), fValueFunction(nullptr) {}
 KSGenValueFormula::KSGenValueFormula(const KSGenValueFormula& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fValueMin(aCopy.fValueMin),
     fValueMax(aCopy.fValueMax),
     fValueFormula(aCopy.fValueFormula),
@@ -15,9 +15,9 @@ KSGenValueFormula* KSGenValueFormula::Clone() const
 {
     return new KSGenValueFormula(*this);
 }
-KSGenValueFormula::~KSGenValueFormula() {}
+KSGenValueFormula::~KSGenValueFormula() = default;
 
-void KSGenValueFormula::DiceValue(vector<double>& aDicedValues)
+void KSGenValueFormula::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 

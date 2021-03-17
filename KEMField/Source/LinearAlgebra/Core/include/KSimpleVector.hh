@@ -10,7 +10,7 @@ namespace KEMField
 template<typename ValueType> class KSimpleVector : public KVector<ValueType>
 {
   public:
-    KSimpleVector() {}
+    KSimpleVector() = default;
     KSimpleVector(unsigned int n, ValueType v = 0)
     {
         resize(n, v);
@@ -19,7 +19,7 @@ template<typename ValueType> class KSimpleVector : public KVector<ValueType>
     {
         fElements = v;
     }
-    ~KSimpleVector() override {}
+    ~KSimpleVector() override = default;
 
     const ValueType& operator()(unsigned int i) const override
     {

@@ -10,6 +10,7 @@
 #include <vector>
 
 using namespace Kassiopeia;
+using namespace std;
 
 int main()
 {
@@ -51,9 +52,9 @@ int main()
     // string filelist[] = {""};
     string file_end = "/Project8Simulation.root";
 
-    for (string filename : filelist) {
+    for (const string& filename : filelist) {
 
-        auto* tRootFile = new KRootFile();
+        auto* tRootFile = new katrin::KRootFile();
         tRootFile->AddToNames(file_base + filename + file_end);
 
         KSReadFileROOT tReader;
@@ -203,22 +204,22 @@ int main()
     std::ofstream FKEStream;
 
     TTStream.open("Termination_Times.txt");
-    for (unsigned int i = 0; i < term_times.size(); i++) {
-        TTStream << term_times[i];
+    for (double term_time : term_times) {
+        TTStream << term_time;
         TTStream << "\t";
     }
     TTStream.close();
 
     IKEStream.open("Initial_Kinetic_Energies.txt");
-    for (unsigned int i = 0; i < initial_ke_values.size(); i++) {
-        IKEStream << initial_ke_values[i];
+    for (double initial_ke_value : initial_ke_values) {
+        IKEStream << initial_ke_value;
         IKEStream << "\t";
     }
     IKEStream.close();
 
     FKEStream.open("Final_Kinetic_Energies.txt");
-    for (unsigned int i = 0; i < final_ke_values.size(); i++) {
-        FKEStream << final_ke_values[i];
+    for (double final_ke_value : final_ke_values) {
+        FKEStream << final_ke_value;
         FKEStream << "\t";
     }
     FKEStream.close();

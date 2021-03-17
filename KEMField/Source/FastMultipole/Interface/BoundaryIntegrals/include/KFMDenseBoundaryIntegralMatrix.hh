@@ -45,7 +45,7 @@ class KFMDenseBoundaryIntegralMatrix : public KSquareMatrix<typename FastMultipo
         fZero = 0.0;
     }
 
-    ~KFMDenseBoundaryIntegralMatrix() override {}
+    ~KFMDenseBoundaryIntegralMatrix() override = default;
 
     unsigned int Dimension() const override
     {

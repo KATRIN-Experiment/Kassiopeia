@@ -20,7 +20,7 @@ KSAFileWriter::~KSAFileWriter()
     delete[] out_buffer;
 }
 
-void KSAFileWriter::SetFileName(std::string filename)
+void KSAFileWriter::SetFileName(const std::string& filename)
 {
     fFileName = filename;
     if (std::string::npos != filename.find(std::string(".ksa"))) {

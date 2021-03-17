@@ -36,7 +36,7 @@ template<class XParentType, class XChildType> class KSCommandMemberAdd : public 
         fParentComponent = aCopy.fParentComponent;
         fChildComponent = aCopy.fChildComponent;
     }
-    ~KSCommandMemberAdd() override {}
+    ~KSCommandMemberAdd() override = default;
 
   public:
     KSCommandMemberAdd* Clone() const override
@@ -73,7 +73,7 @@ template<class XParentType, class XChildType> class KSCommandMemberAddFactory : 
         fAddMember(anAddMember),
         fRemoveMember(aRemoveMember)
     {}
-    ~KSCommandMemberAddFactory() override {}
+    ~KSCommandMemberAddFactory() override = default;
 
   public:
     KSCommand* CreateCommand(KSComponent* aParent, KSComponent* aChild) const override
@@ -135,7 +135,7 @@ template<class XParentType, class XChildType> class KSCommandMemberRemove : publ
         fParentComponent = aCopy.fParentComponent;
         fChildComponent = aCopy.fChildComponent;
     }
-    ~KSCommandMemberRemove() override {}
+    ~KSCommandMemberRemove() override = default;
 
   public:
     KSCommandMemberRemove* Clone() const override
@@ -172,7 +172,7 @@ template<class XParentType, class XChildType> class KSCommandMemberRemoveFactory
         fAddMember(anAddMember),
         fRemoveMember(aRemoveMember)
     {}
-    ~KSCommandMemberRemoveFactory() override {}
+    ~KSCommandMemberRemoveFactory() override = default;
 
   public:
     KSCommand* CreateCommand(KSComponent* aParent, KSComponent* aChild) const override
@@ -233,7 +233,7 @@ template<class XParentType, class XChildType> class KSCommandMemberParameter : p
         fParentComponent = aCopy.fParentComponent;
         fChildComponent = aCopy.fChildComponent;
     }
-    ~KSCommandMemberParameter() override {}
+    ~KSCommandMemberParameter() override = default;
 
   public:
     KSCommandMemberParameter* Clone() const override
@@ -272,7 +272,7 @@ template<class XParentType, class XChildType> class KSCommandMemberParameterFact
         fSetMember(aSetMember),
         fGetMember(aGetMember)
     {}
-    ~KSCommandMemberParameterFactory() override {}
+    ~KSCommandMemberParameterFactory() override = default;
 
   public:
     KSCommand* CreateCommand(KSComponent* aParent, KSComponent* aChild) const override

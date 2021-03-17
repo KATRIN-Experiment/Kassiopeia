@@ -17,10 +17,10 @@ class KGRod : public KGBoundary
       long as each rod segment is a straight line.
     */
   public:
-    KGRod() {}
+    KGRod() = default;
     KGRod(double radius, int nDiscRad, int nDiscLong) : fRadius(radius), fNDiscRad(nDiscRad), fNDiscLong(nDiscLong) {}
 
-    ~KGRod() override {}
+    ~KGRod() override = default;
 
     static std::string Name()
     {
@@ -30,7 +30,7 @@ class KGRod : public KGBoundary
     virtual KGRod* Clone() const;
 
     virtual void Initialize() const {}
-    virtual void AreaInitialize() const override
+    void AreaInitialize() const override
     {
         Initialize();
     }
@@ -40,7 +40,7 @@ class KGRod : public KGBoundary
     double Area() const;
     double Volume() const;
 
-    void AddPoint(double p[3]);
+    void AddPoint(const double p[3]);
 
     double GetLength() const;
 

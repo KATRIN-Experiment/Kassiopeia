@@ -86,7 +86,7 @@ double KElectrostaticAnalyticTriangleIntegrator::Potential(const KTriangle* sour
     return I / (4. * M_PI * KEMConstants::Eps0);
 }
 
-KThreeVector KElectrostaticAnalyticTriangleIntegrator ::ElectricField(const KTriangle* source, const KPosition& P) const
+KFieldVector KElectrostaticAnalyticTriangleIntegrator ::ElectricField(const KTriangle* source, const KPosition& P) const
 {
     double x_loc[3];
     double y_loc[2];
@@ -95,8 +95,8 @@ KThreeVector KElectrostaticAnalyticTriangleIntegrator ::ElectricField(const KTri
     double b_loc[2];
     double u_loc[2];
     double z_sign;
-    KThreeVector local_field;
-    KThreeVector field;
+    KFieldVector local_field;
+    KFieldVector field;
 
     double dist = (source->Centroid() - P).Magnitude();
 
@@ -173,8 +173,7 @@ KThreeVector KElectrostaticAnalyticTriangleIntegrator ::ElectricField(const KTri
     return field;
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::Potential_noZ(double a2, double b2, double a1, double b1,
-                                                               double y) const
+double KElectrostaticAnalyticTriangleIntegrator::Potential_noZ(double a2, double b2, double a1, double b1, double y)
 {
     double logArg2 =
         (1. + b2 * b2) * y + a2 * b2 + sqrt(1. + b2 * b2) * sqrt((1. + b2 * b2) * y * y + 2 * a2 * b2 * y + a2 * a2);
@@ -214,12 +213,12 @@ double KElectrostaticAnalyticTriangleIntegrator::Potential_noZ(double a2, double
     return ans2 - ans1;
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::F1(double a, double b, double u) const
+double KElectrostaticAnalyticTriangleIntegrator::F1(double a, double b, double u)
 {
     return u * asinh((a + b * u) / sqrt(u * u + 1.));
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::I3(double a, double b, double u1, double u2) const
+double KElectrostaticAnalyticTriangleIntegrator::I3(double a, double b, double u1, double u2)
 {
     double g1 = (sqrt(b * b + 1.) * sqrt(a * a + 2 * a * b * u1 + (b * b + 1.) * u1 * u1 + 1.) + b * (a + b * u1) + u1);
     double g2 = (sqrt(b * b + 1.) * sqrt(a * a + 2 * a * b * u2 + (b * b + 1.) * u2 * u2 + 1.) + b * (a + b * u2) + u2);
@@ -247,7 +246,7 @@ double KElectrostaticAnalyticTriangleIntegrator::I3(double a, double b, double u
     return a / sqrt(b * b + 1.) * log(fabs(g2 / g1));
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::I3p(double a, double b, double u1, double u2) const
+double KElectrostaticAnalyticTriangleIntegrator::I3p(double a, double b, double u1, double u2)
 {
     double g1 = (sqrt(b * b + 1.) * sqrt(a * a + 2 * a * b * u1 + (b * b + 1.) * u1 * u1 + 1.) + b * (a + b * u1) + u1);
     double g2 = (sqrt(b * b + 1.) * sqrt(a * a + 2 * a * b * u2 + (b * b + 1.) * u2 * u2 + 1.) + b * (a + b * u2) + u2);
@@ -265,7 +264,7 @@ double KElectrostaticAnalyticTriangleIntegrator::I3p(double a, double b, double 
 }
 
 double KElectrostaticAnalyticTriangleIntegrator::I4(double alpha, double gamma, double q2, double prefac, double t1,
-                                                    double t2) const
+                                                    double t2)
 {
     // double q = sqrt(gamma-alpha);
     double q = sqrt(q2);
@@ -340,8 +339,7 @@ double KElectrostaticAnalyticTriangleIntegrator::I4(double a, double b, double u
         return sign * I4(alpha, gamma, q2, prefac, t1, t2);
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::I4_2(double alpha, double gamma, double prefac, double t1,
-                                                      double t2) const
+double KElectrostaticAnalyticTriangleIntegrator::I4_2(double alpha, double gamma, double prefac, double t1, double t2)
 {
     double g1 = sqrt(alpha * t1 * t1 + gamma);
     double g2 = sqrt(alpha * t2 * t2 + gamma);
@@ -390,14 +388,14 @@ double KElectrostaticAnalyticTriangleIntegrator::I1(double a, double b, double u
     return F1(a, b, u2) - F1(a, b, u1) + I3(a, b, u1, u2) - I4(a, b, u1, u2);
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::I6(double x, double u1, double u2) const
+double KElectrostaticAnalyticTriangleIntegrator::I6(double x, double u1, double u2)
 {
     if (fabs(x) < 1.e-15)
         return 0;
     return x * log((sqrt(u2 * u2 + x * x + 1.) + u2) / (sqrt(u1 * u1 + x * x + 1.) + u1));
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::I7(double x, double u1, double u2) const
+double KElectrostaticAnalyticTriangleIntegrator::I7(double x, double u1, double u2)
 {
     double t1;
     if (fabs(u1) > 1.e-16)
@@ -434,7 +432,7 @@ double KElectrostaticAnalyticTriangleIntegrator::I2(double x, double u1, double 
     return ans;
 }
 
-double KElectrostaticAnalyticTriangleIntegrator::J2(double a, double u1, double u2) const
+double KElectrostaticAnalyticTriangleIntegrator::J2(double a, double u1, double u2)
 {
     if (a == 0.)
         return 0.;

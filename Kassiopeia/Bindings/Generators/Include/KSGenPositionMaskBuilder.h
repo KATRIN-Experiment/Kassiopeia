@@ -26,29 +26,27 @@ template<> inline bool KSGenPositionMaskBuilder::AddAttribute(KContainer* aConta
     }
     if (aContainer->GetName() == "spaces_allowed") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         if (tSpaces.size() == 0) {
-            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
-        for (auto tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++) {
-            fObject->AddAllowedSpace((*tSpaceIt));
+        for (auto& tSpace : tSpaces) {
+            fObject->AddAllowedSpace(tSpace);
         }
         return true;
     }
     if (aContainer->GetName() == "spaces_forbidden") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         if (tSpaces.size() == 0) {
-            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                             << eom;
+            genmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
-        for (auto tSpaceIt = tSpaces.begin(); tSpaceIt != tSpaces.end(); tSpaceIt++) {
-            fObject->AddForbiddenSpace((*tSpaceIt));
+        for (auto& tSpace : tSpaces) {
+            fObject->AddForbiddenSpace(tSpace);
         }
         return true;
     }

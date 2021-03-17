@@ -115,7 +115,7 @@ void kfm_matrix_svd_solve(const kfm_matrix* U, const kfm_vector* S, const kfm_ma
 
 kfm_matrix* kfm_matrix_alloc(unsigned int nrows, unsigned int ncolumns)
 {
-    kfm_matrix* m = new kfm_matrix();
+    auto* m = new kfm_matrix();
     m->size1 = nrows;
     m->size2 = ncolumns;
     m->data = new double[nrows * ncolumns];
@@ -124,11 +124,11 @@ kfm_matrix* kfm_matrix_alloc(unsigned int nrows, unsigned int ncolumns)
 
 kfm_matrix* kfm_matrix_calloc(unsigned int nrows, unsigned int ncolumns)
 {
-    kfm_matrix* m = new kfm_matrix();
+    auto* m = new kfm_matrix();
     m->size1 = nrows;
     m->size2 = ncolumns;
     unsigned int total_size = nrows * ncolumns;
-    double* d = new double[total_size];
+    auto* d = new double[total_size];
     for (unsigned int i = 0; i < total_size; i++) {
         d[i] = 0.;
     }

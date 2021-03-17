@@ -3,7 +3,7 @@
 namespace Kassiopeia
 {
 
-KSSpaceNavigator::KSSpaceNavigator() {}
-KSSpaceNavigator::~KSSpaceNavigator() {}
+KSSpaceNavigator::KSSpaceNavigator() = default;
+KSSpaceNavigator::~KSSpaceNavigator() = default;
 
 }  // namespace Kassiopeia

@@ -36,7 +36,7 @@ template<> inline bool KMagneticSuperpositionFieldEntryBuilder::AddAttribute(KCo
     return false;
 }
 
-typedef KComplexElement<KEMField::KMagneticSuperpositionField> KMagneticSuperpositionFieldBuilder;
+using KMagneticSuperpositionFieldBuilder = KComplexElement<KEMField::KMagneticSuperpositionField>;
 
 template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContainer* aContainer)
 {
@@ -48,6 +48,9 @@ template<> inline bool KMagneticSuperpositionFieldBuilder::AddAttribute(KContain
     }
     else if (aContainer->GetName() == "use_caching") {
         aContainer->CopyTo(fObject, &KEMField::KMagneticSuperpositionField::SetUseCaching);
+    }
+    else if (aContainer->GetName() == "require") {
+        aContainer->CopyTo(fObject, &KEMField::KMagneticSuperpositionField::SetRequire);
     }
     else
         return false;

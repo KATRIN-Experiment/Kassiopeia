@@ -12,11 +12,11 @@ using namespace std;
 namespace katrin
 {
 
-template<> KExplicitSuperpositionSolutionComponentBuilder::~KComplexElement() {}
+template<> KExplicitSuperpositionSolutionComponentBuilder::~KComplexElement() = default;
 
 STATICINT sKSExplicitSuperpositionSolutionComponentStructure =
-    KExplicitSuperpositionSolutionComponentBuilder::Attribute<string>("name") +
+    KExplicitSuperpositionSolutionComponentBuilder::Attribute<std::string>("name") +
     KExplicitSuperpositionSolutionComponentBuilder::Attribute<double>("scale") +
-    KExplicitSuperpositionSolutionComponentBuilder::Attribute<string>("hash");
+    KExplicitSuperpositionSolutionComponentBuilder::Attribute<std::string>("hash");
 
 } /* namespace katrin */

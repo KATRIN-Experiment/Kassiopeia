@@ -8,12 +8,12 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermOutputBuilder::~KComplexElement() {}
+template<> KSTermOutputBuilder::~KComplexElement() = default;
 
 STATICINT sKSTermOutputStructure =
-    KSTermOutputBuilder::Attribute<string>("name") + KSTermOutputBuilder::Attribute<double>("min_value") +
-    KSTermOutputBuilder::Attribute<double>("max_value") + KSTermOutputBuilder::Attribute<string>("group") +
-    KSTermOutputBuilder::Attribute<string>("component");
+    KSTermOutputBuilder::Attribute<std::string>("name") + KSTermOutputBuilder::Attribute<double>("min_value") +
+    KSTermOutputBuilder::Attribute<double>("max_value") + KSTermOutputBuilder::Attribute<std::string>("group") +
+    KSTermOutputBuilder::Attribute<std::string>("component");
 
 
 STATICINT sKSTermOutput = KSRootBuilder::ComplexElement<KSTermOutputData>("ksterm_output");

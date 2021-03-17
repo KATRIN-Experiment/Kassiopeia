@@ -18,6 +18,8 @@
 #include <vtkXMLImageDataReader.h>
 #include <vtkXMLImageDataWriter.h>
 
+using std::string;
+
 namespace KEMField
 {
 
@@ -35,14 +37,33 @@ KMagfieldMapVTK::KMagfieldMapVTK(const string& aFilename)
     double bounds[6];
     fImageData->GetDimensions(dims);
     fImageData->GetBounds(bounds);
-    //fieldmsg_debug( "field map has " << fImageData->GetNumberOfPoints() << " points (" << dims[0] << "x" << dims[1] << "x" << dims[2] << ") and ranges from " << KThreeVector(bounds[0],bounds[2],bounds[4]) << " to " << KThreeVector(bounds[1],bounds[3],bounds[4]) << eom);
+    //fieldmsg_debug( "field map has " << fImageData->GetNumberOfPoints() << " points (" << dims[0] << "x" << dims[1] << "x" << dims[2] << ") and ranges from " << KFieldVector(bounds[0],bounds[2],bounds[4]) << " to " << KFieldVector(bounds[1],bounds[3],bounds[4]) << eom);
 }
 
-KMagfieldMapVTK::~KMagfieldMapVTK() {}
+KMagfieldMapVTK::~KMagfieldMapVTK() = default;
+
+bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePoint) const
+{
+    vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
+
+    // get bounds of data set (FindPoint returns nearest point even outside bounds)
+    double bounds[6];
+    fImageData->GetBounds(bounds);
+    if (aSamplePoint.X() < bounds[0] || aSamplePoint.X() > bounds[1])
+        return false;
+    if (aSamplePoint.Y() < bounds[2] || aSamplePoint.Y() > bounds[3])
+        return false;
+    if (aSamplePoint.Z() < bounds[4] || aSamplePoint.Z() > bounds[5])
+        return false;
+
+    return true;
+}
 
 bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of closest mesh point
     vtkIdType center = fImageData->FindPoint((double*) (aSamplePoint.Components()));
@@ -55,7 +76,12 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
     return true;
 }
 
-bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/, KThreeVector& aField) const
+bool KMagfieldMapVTK::CheckField(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic field", aSamplePoint);
+}
+
+bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/, KFieldVector& aField) const
 {
     //fieldmsg_debug( "sampling magnetic field at point " << aSamplePoint << eom);
 
@@ -65,6 +91,11 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
         return true;
     }
     return false;
+}
+
+bool KMagfieldMapVTK::CheckGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
+{
+    return CheckValue("magnetic gradient", aSamplePoint);
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
@@ -84,12 +115,13 @@ KLinearInterpolationMagfieldMapVTK::KLinearInterpolationMagfieldMapVTK(const str
     KMagfieldMapVTK(aFilename)
 {}
 
-KLinearInterpolationMagfieldMapVTK::~KLinearInterpolationMagfieldMapVTK() {}
+KLinearInterpolationMagfieldMapVTK::~KLinearInterpolationMagfieldMapVTK() = default;
 
 bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
                                                   double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[8][3] = {
@@ -102,20 +134,20 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPo
         {0, 1, 1},  // c011
         {1, 1, 1},  // c111
     };
-    static KThreeVector vertices[8];
+    static KFieldVector vertices[8];
     static double values
         [9]
         [8];  // always allocate for matrices even if we have scalars (to be safe) - note that array ordering is swapped
 
     double* spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
+    KFieldVector start_point = KFieldVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
                                             floor(aSamplePoint.Y() / spacing[1]) * spacing[1],
                                             floor(aSamplePoint.Z() / spacing[2]) * spacing[2]);
     for (int i = 0; i < 8; i++) {
         // first compute the coordinates of the surrounding mesh points ...
-        KThreeVector point =
-            start_point + KThreeVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
+        KFieldVector point =
+            start_point + KFieldVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
         vtkIdType corner = fImageData->FindPoint((double*) (point.Components()));
         if (corner < 0)
             return false;
@@ -150,12 +182,13 @@ KCubicInterpolationMagfieldMapVTK::KCubicInterpolationMagfieldMapVTK(const strin
     KMagfieldMapVTK(aFilename)
 {}
 
-KCubicInterpolationMagfieldMapVTK::~KCubicInterpolationMagfieldMapVTK() {}
+KCubicInterpolationMagfieldMapVTK::~KCubicInterpolationMagfieldMapVTK() = default;
 
 bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
                                                  double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[64][3] = {
@@ -240,20 +273,20 @@ bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPos
         {2, 2, 1},
         {2, 2, 2},
     };
-    static KThreeVector vertices[64];
+    static KFieldVector vertices[64];
     static double values
         [9]
         [64];  // always allocate for matrices even if we have scalars (to be safe) - note that array ordering is swapped
 
     double* spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
+    KFieldVector start_point = KFieldVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
                                             floor(aSamplePoint.Y() / spacing[1]) * spacing[1],
                                             floor(aSamplePoint.Z() / spacing[2]) * spacing[2]);
     for (int i = 0; i < 64; i++) {
         // first compute the coordinates of the surrounding mesh points ...
-        KThreeVector point =
-            start_point + KThreeVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
+        KFieldVector point =
+            start_point + KFieldVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
         vtkIdType corner = fImageData->FindPoint((double*) (point.Components()));
         if (corner < 0)
             return false;
@@ -305,23 +338,23 @@ double KCubicInterpolationMagfieldMapVTK::_tricubicInterpolate(double p[], doubl
 
 KMagnetostaticFieldmap::KMagnetostaticFieldmap() :
     fDirectory(SCRATCH_DEFAULT_DIR),
-    fFile(),
     fInterpolation(0),
-    fFieldMap(NULL)
+    fGradNumerical(false),
+    fFieldMap(nullptr)
 {}
 
-KMagnetostaticFieldmap::~KMagnetostaticFieldmap() {}
+KMagnetostaticFieldmap::~KMagnetostaticFieldmap() = default;
 
-KThreeVector KMagnetostaticFieldmap::MagneticPotentialCore(const KPosition& /*P*/) const
+KFieldVector KMagnetostaticFieldmap::MagneticPotentialCore(const KPosition& /*P*/) const
 {
-    KThreeVector tPotential;
+    KFieldVector tPotential;
     tPotential.SetComponents(0., 0., 0.);
     return tPotential;
 }
 
-KThreeVector KMagnetostaticFieldmap::MagneticFieldCore(const KPosition& P) const
+KFieldVector KMagnetostaticFieldmap::MagneticFieldCore(const KPosition& P) const
 {
-    KThreeVector tField;
+    KFieldVector tField;
     tField.SetComponents(0., 0., 0.);
     double aRandomTime = 0;
     if (!fFieldMap->GetField(P, aRandomTime, tField))
@@ -365,6 +398,18 @@ void KMagnetostaticFieldmap::SetInterpolation(const string& aMode)
     return;
 }
 
+void KMagnetostaticFieldmap::SetGradNumerical(bool aFlag)
+{
+    fGradNumerical = aFlag;
+}
+
+bool KMagnetostaticFieldmap::CheckCore(const KPosition& P) const
+{
+    double aRandomTime = 0;
+    return fFieldMap->CheckField(P, aRandomTime) &&
+          (fFieldMap->CheckGradient(P, aRandomTime) || fGradNumerical);
+}
+
 void KMagnetostaticFieldmap::InitializeCore()
 {
     string filename = fDirectory + "/" + fFile;
@@ -397,26 +442,22 @@ KMagnetostaticFieldmapCalculator::KMagnetostaticFieldmapCalculator() :
     fFile(""),
     fForceUpdate(false),
     fComputeGradient(false),
-    fCenter(),
-    fLength(),
     fMirrorX(false),
     fMirrorY(false),
     fMirrorZ(false),
-    fSpacing(1.),
-    fMagneticFields()
+    fSpacing(1.)
 {}
 
-KMagnetostaticFieldmapCalculator::~KMagnetostaticFieldmapCalculator() {}
+KMagnetostaticFieldmapCalculator::~KMagnetostaticFieldmapCalculator() = default;
 
 bool KMagnetostaticFieldmapCalculator::CheckPosition(const KPosition& aPosition) const
 {
-    if (fSpaces.size() == 0)
+    if (fSpaces.empty())
         return true;
 
     // check if position is inside ANY space (fails when position is outside ALL spaces)
     // this allows to define multiple spaces and use their logical intersection
-    for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt) {
-        const KGeoBag::KGSpace* tSpace = (*tSpaceIt);
+    for (const auto* tSpace : fSpaces) {
         if (tSpace->Outside(aPosition) == false)
             return true;
     }
@@ -459,9 +500,9 @@ void KMagnetostaticFieldmapCalculator::Prepare()
         return;
     }
 
-    KThreeVector tGridDims =
-        KThreeVector(1 + fLength[0] / fSpacing, 1 + fLength[1] / fSpacing, 1 + fLength[2] / fSpacing);
-    KThreeVector tGridOrigin = fCenter - 0.5 * fLength;
+    KFieldVector tGridDims =
+        KFieldVector(1 + fLength[0] / fSpacing, 1 + fLength[1] / fSpacing, 1 + fLength[2] / fSpacing);
+    KFieldVector tGridOrigin = fCenter - 0.5 * fLength;
 
     if ((ceil(tGridDims[0]) <= 0) || (ceil(tGridDims[1]) <= 0) || (ceil(tGridDims[2]) <= 0)) {
         throw KEMSimpleException(
@@ -565,7 +606,7 @@ void KMagnetostaticFieldmapCalculator::Execute()
             continue;
 
         bool tHasValue = false;
-        KThreeVector tField;
+        KFieldVector tField;
 
         if (fMirrorX || fMirrorY || fMirrorZ) {
             double tMirrorPoint[3];
@@ -590,13 +631,13 @@ void KMagnetostaticFieldmapCalculator::Execute()
         }
 
         if (!tHasValue) {
-            tField = KThreeVector::sZero;
+            tField = KFieldVector::sZero;
             try {
                 for (auto& it : fMagneticFields)
                     tField += it.second->MagneticField(KPosition(tPoint));
             }
             catch (katrin::KGslException& e) {
-                tField = KThreeVector::sInvalid;
+                tField = KFieldVector::sInvalid;
             }
         }
 

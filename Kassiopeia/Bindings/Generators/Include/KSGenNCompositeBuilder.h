@@ -18,7 +18,7 @@ template<> inline bool KSGenNCompositeBuilder::AddAttribute(KContainer* aContain
         return true;
     }
     if (aContainer->GetName() == "n_value") {
-        fObject->SetNValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetNValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

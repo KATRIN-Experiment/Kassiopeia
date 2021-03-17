@@ -26,7 +26,7 @@ template<class XType> KAttribute<XType>::KAttribute(KElementBase* aParentElement
     fObject = new XType();
     Set(fObject);
 }
-template<class XType> KAttribute<XType>::~KAttribute() {}
+template<class XType> KAttribute<XType>::~KAttribute() = default;
 
 template<class XType> bool KAttribute<XType>::SetValue(KToken* aToken)
 {

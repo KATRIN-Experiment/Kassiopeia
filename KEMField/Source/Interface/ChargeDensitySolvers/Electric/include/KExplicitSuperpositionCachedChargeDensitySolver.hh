@@ -23,7 +23,7 @@ class KExplicitSuperpositionCachedChargeDensitySolver : public KChargeDensitySol
     KExplicitSuperpositionCachedChargeDensitySolver();
     ~KExplicitSuperpositionCachedChargeDensitySolver() override;
 
-    void SetName(std::string s)
+    void SetName(const std::string& s)
     {
         fName = s;
     }

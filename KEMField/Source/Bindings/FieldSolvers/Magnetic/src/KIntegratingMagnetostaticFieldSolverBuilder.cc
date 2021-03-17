@@ -13,7 +13,7 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KIntegratingMagnetostaticFieldSolverBuilder::~KComplexElement() {}
+template<> KIntegratingMagnetostaticFieldSolverBuilder::~KComplexElement() = default;
 
 STATICINT sKStaticElectromagnetFieldStructure =
     KStaticElectromagnetFieldBuilder::ComplexElement<KIntegratingMagnetostaticFieldSolver>("integrating_field_solver");

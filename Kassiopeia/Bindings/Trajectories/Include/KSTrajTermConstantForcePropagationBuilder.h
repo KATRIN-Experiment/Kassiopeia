@@ -18,7 +18,7 @@ template<> inline bool KSTrajTermConstantForcePropagationBuilder::AddAttribute(K
         return true;
     }
     if ((aContainer->GetName() == "force")) {
-        KThreeVector* tForce = nullptr;
+        KGeoBag::KThreeVector* tForce = nullptr;
         aContainer->ReleaseTo(tForce);
         fObject->SetForce(*tForce);
         delete tForce;

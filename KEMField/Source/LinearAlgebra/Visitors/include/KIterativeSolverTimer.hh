@@ -20,7 +20,7 @@ template<typename ValueType> class KIterativeSolverTimer : public KIterativeSolv
 {
   public:
     KIterativeSolverTimer() : fTimer(sDescription) {}
-    ~KIterativeSolverTimer() override {}
+    ~KIterativeSolverTimer() override = default;
 
     void Initialize(KIterativeSolver<ValueType>&) override;
     void Visit(KIterativeSolver<ValueType>&) override {}

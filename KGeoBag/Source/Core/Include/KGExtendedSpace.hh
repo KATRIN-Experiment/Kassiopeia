@@ -5,7 +5,8 @@
 namespace KGeoBag
 {
 
-template<class XExtension> class KGExtendedSpace : public KTagged, public KGExtensibleSpace, public XExtension::Space
+template<class XExtension>
+class KGExtendedSpace : public katrin::KTagged, public KGExtensibleSpace, public XExtension::Space
 {
   public:
     friend class KGExtendedSurface<XExtension>;
@@ -14,6 +15,11 @@ template<class XExtension> class KGExtendedSpace : public KTagged, public KGExte
     KGExtendedSpace(KGSpace* aSpace);
     KGExtendedSpace(KGSpace* aSpace, const typename XExtension::Space&);
     ~KGExtendedSpace() override;
+
+    static std::string Name()
+    {
+        return "extended_space";
+    }
 
   private:
     KGExtendedSpace();
@@ -95,19 +101,19 @@ template<class XExtension> class KGExtendedSpace : public KTagged, public KGExte
   public:
     void Transform(const KTransformation* aTransformation);
 
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
+    const KGeoBag::KThreeVector& GetOrigin() const;
+    const KGeoBag::KThreeVector& GetXAxis() const;
+    const KGeoBag::KThreeVector& GetYAxis() const;
+    const KGeoBag::KThreeVector& GetZAxis() const;
 
     //*********
     //navigable
     //*********
 
   public:
-    KThreeVector Point(const KThreeVector& aPoint) const;
-    KThreeVector Normal(const KThreeVector& aPoint) const;
-    bool Outside(const KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
+    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
+    bool Outside(const KGeoBag::KThreeVector& aPoint) const;
 };
 
 }  // namespace KGeoBag

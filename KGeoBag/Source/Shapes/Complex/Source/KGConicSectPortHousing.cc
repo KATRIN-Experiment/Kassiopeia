@@ -27,8 +27,8 @@ KGConicSectPortHousing::KGConicSectPortHousing(double zA, double rA, double zB, 
 
 KGConicSectPortHousing::~KGConicSectPortHousing()
 {
-    for (unsigned int i = 0; i < fPorts.size(); i++)
-        delete fPorts.at(i);
+    for (auto& port : fPorts)
+        delete port;
 }
 
 KGConicSectPortHousing* KGConicSectPortHousing::Clone() const
@@ -42,15 +42,15 @@ KGConicSectPortHousing* KGConicSectPortHousing::Clone() const
     c->fNumDiscMain = fNumDiscMain;
     c->fPolyMain = fPolyMain;
 
-    for (unsigned int i = 0; i < fPorts.size(); i++)
-        c->fPorts.push_back(fPorts.at(i)->Clone(c));
+    for (auto* port : fPorts)
+        c->fPorts.push_back(port->Clone(c));
     return c;
 }
 
 void KGConicSectPortHousing::Initialize() const
 {
-    for (unsigned int i = 0; i < fPorts.size(); i++)
-        fPorts.at(i)->Initialize();
+    for (auto* port : fPorts)
+        port->Initialize();
 }
 
 void KGConicSectPortHousing::AddParaxialPort(double asub[3], double rsub)
@@ -169,7 +169,7 @@ void KGConicSectPortHousing::RayConicSectIntersection(const std::vector<double>&
 }
 
 double KGConicSectPortHousing::DistanceBetweenLines(const std::vector<double>& s1, const std::vector<double>& s2,
-                                                    const std::vector<double>& p1, const std::vector<double>& p2) const
+                                                    const std::vector<double>& p1, const std::vector<double>& p2)
 {
     // In three dimensions, returns the shortest distance between line s (running
     // through s1 and s2) and line p (running through p1 and p2).
@@ -265,8 +265,8 @@ bool KGConicSectPortHousing::ContainsPoint(const double* P) const
         return true;
     else {
         // otherwise, we have to look in each of the ports
-        for (unsigned int i = 0; i < fPorts.size(); i++)
-            if (fPorts.at(i)->ContainsPoint(P))
+        for (auto port : fPorts)
+            if (port->ContainsPoint(P))
                 return true;
     }
 
@@ -295,10 +295,10 @@ double KGConicSectPortHousing::DistanceTo(const double* P, double* P_in, double*
 
     {
         double tmp = 0.;
-        for (unsigned int i = 0; i < 3; i++)
-            tmp += P_norm_main[i] * P_norm_main[i];
-        for (unsigned int i = 0; i < 3; i++)
-            P_norm_main[i] /= tmp;
+        for (double i : P_norm_main)
+            tmp += i * i;
+        for (double& i : P_norm_main)
+            i /= tmp;
     }
 
     if (u <= 0.) {
@@ -327,12 +327,12 @@ double KGConicSectPortHousing::DistanceTo(const double* P, double* P_in, double*
     }
     bool pointIsOnMainConicSect = true;
 
-    for (unsigned int i = 0; i < fPorts.size(); i++) {
+    for (auto* port : fPorts) {
         double P_tmp[3];
         double P_tmp_norm[3];
-        double dist_tmp = fPorts.at(i)->DistanceTo(P, P_tmp, P_tmp_norm);
+        double dist_tmp = port->DistanceTo(P, P_tmp, P_tmp_norm);
 
-        if (dist_tmp < dist_main || (fPorts.at(i)->ContainsPoint(P_in_main) && pointIsOnMainConicSect)) {
+        if (dist_tmp < dist_main || (port->ContainsPoint(P_in_main) && pointIsOnMainConicSect)) {
             pointIsOnMainConicSect = false;
 
             for (unsigned int j = 0; j < 3; j++)
@@ -358,7 +358,7 @@ double KGConicSectPortHousing::DistanceTo(const double* P, double* P_in, double*
 
 //______________________________________________________________________________
 
-KGConicSectPortHousing::Port::Port(KGConicSectPortHousing* portHousing, double asub[3], double r)
+KGConicSectPortHousing::Port::Port(KGConicSectPortHousing* portHousing, const double asub[3], double r)
 {
     fPortHousing = portHousing;
 
@@ -370,7 +370,7 @@ KGConicSectPortHousing::Port::Port(KGConicSectPortHousing* portHousing, double a
 
 //______________________________________________________________________________
 
-KGConicSectPortHousing::Port::~Port() {}
+KGConicSectPortHousing::Port::~Port() = default;
 
 //______________________________________________________________________________
 
@@ -382,8 +382,8 @@ KGConicSectPortHousing::OrthogonalPort::OrthogonalPort(KGConicSectPortHousing* p
 
 KGConicSectPortHousing::OrthogonalPort::~OrthogonalPort()
 {
-    if (fCoordTransform)
-        delete fCoordTransform;
+
+    delete fCoordTransform;
 }
 
 KGConicSectPortHousing::OrthogonalPort* KGConicSectPortHousing::OrthogonalPort::Clone(KGConicSectPortHousing* c) const
@@ -664,7 +664,7 @@ KGConicSectPortHousing::ParaxialPort::ParaxialPort(KGConicSectPortHousing* portH
     Initialize();
 }
 
-KGConicSectPortHousing::ParaxialPort::~ParaxialPort() {}
+KGConicSectPortHousing::ParaxialPort::~ParaxialPort() = default;
 
 KGConicSectPortHousing::ParaxialPort* KGConicSectPortHousing::ParaxialPort::Clone(KGConicSectPortHousing* c) const
 {
@@ -783,12 +783,12 @@ void KGConicSectPortHousing::ParaxialPort::ComputeNorm()
         fNorm[2] = -1.;
 
     double len = 0;
-    for (unsigned int i = 0; i < 3; i++)
-        len += fNorm[i] * fNorm[i];
+    for (double i : fNorm)
+        len += i * i;
     len = sqrt(len);
 
-    for (unsigned int i = 0; i < 3; i++)
-        fNorm[i] /= len;
+    for (double& i : fNorm)
+        i /= len;
 }
 
 bool KGConicSectPortHousing::ParaxialPort::ContainsPoint(const double* P) const

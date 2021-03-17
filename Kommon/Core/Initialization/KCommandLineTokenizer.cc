@@ -13,8 +13,8 @@ extern char** environ;
 namespace katrin
 {
 
-KCommandLineTokenizer::KCommandLineTokenizer() {}
-KCommandLineTokenizer::~KCommandLineTokenizer() {}
+KCommandLineTokenizer::KCommandLineTokenizer() = default;
+KCommandLineTokenizer::~KCommandLineTokenizer() = default;
 
 void KCommandLineTokenizer::ReadEnvironmentVars()
 {
@@ -40,7 +40,7 @@ void KCommandLineTokenizer::ProcessCommandLine(int anArgC, char** anArgV)
 
     vector<string> tArgList;
     for (int tArgumentCount = 0; tArgumentCount < anArgC; tArgumentCount++) {
-        tArgList.push_back(string(anArgV[tArgumentCount]));
+        tArgList.emplace_back(anArgV[tArgumentCount]);
     }
 
     ProcessCommandLine(tArgList);

@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTrajControlTimeBuilder::~KComplexElement() {}
+template<> KSTrajControlTimeBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajControlTimeStructure =
-    KSTrajControlTimeBuilder::Attribute<string>("name") + KSTrajControlTimeBuilder::Attribute<double>("time");
+    KSTrajControlTimeBuilder::Attribute<std::string>("name") + KSTrajControlTimeBuilder::Attribute<double>("time");
 
 STATICINT sToolboxKSTrajControlTime = KSRootBuilder::ComplexElement<KSTrajControlTime>("kstraj_control_time");
 

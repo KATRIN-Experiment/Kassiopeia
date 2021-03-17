@@ -11,22 +11,22 @@ namespace KEMField
 class KElectrostaticAnalyticRectangleIntegrator : public KElectrostaticElementIntegrator<KRectangle>
 {
   public:
-    typedef KRectangle Shape;
-    typedef KElectrostaticBasis::ValueType ValueType;
+    using Shape = KRectangle;
+    using ValueType = KElectrostaticBasis::ValueType;
 
-    KElectrostaticAnalyticRectangleIntegrator() {}
-    ~KElectrostaticAnalyticRectangleIntegrator() override {}
+    KElectrostaticAnalyticRectangleIntegrator() = default;
+    ~KElectrostaticAnalyticRectangleIntegrator() override = default;
 
     double Potential(const KRectangle* source, const KPosition& P) const override;
-    KThreeVector ElectricField(const KRectangle* source, const KPosition& P) const override;
+    KFieldVector ElectricField(const KRectangle* source, const KPosition& P) const override;
     using KElectrostaticElementIntegrator<KRectangle>::Potential;
     using KElectrostaticElementIntegrator<KRectangle>::ElectricField;
 
   private:
-    double Integral_ln(double x, double y, double w) const;
+    static double Integral_ln(double x, double y, double w);
 
-    double EFieldLocalXY(double x1, double x2, double y1, double y2, double z) const;
-    double EFieldLocalZ(double x1, double x2, double y1, double y2, double z) const;
+    static double EFieldLocalXY(double x1, double x2, double y1, double y2, double z);
+    static double EFieldLocalZ(double x1, double x2, double y1, double y2, double z);
 };
 
 }  // namespace KEMField

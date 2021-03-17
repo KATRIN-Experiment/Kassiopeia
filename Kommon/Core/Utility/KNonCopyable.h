@@ -20,15 +20,16 @@ namespace noncopyable_  // protection from unintended ADL
 class KNonCopyable
 {
   protected:
-    constexpr KNonCopyable() {}
-    ~KNonCopyable() {}
+    constexpr KNonCopyable() = default;
+    ~KNonCopyable() = default;
 
+  public:
     KNonCopyable(const KNonCopyable&) = delete;
     const KNonCopyable& operator=(const KNonCopyable&) = delete;
 };
 }  // namespace noncopyable_
 
-typedef noncopyable_::KNonCopyable KNonCopyable;
+using KNonCopyable = noncopyable_::KNonCopyable;
 }  // namespace katrin
 
 #endif /* KNONCOPYABLE_H_ */

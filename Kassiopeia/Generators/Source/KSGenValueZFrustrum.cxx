@@ -11,7 +11,7 @@ namespace Kassiopeia
 
 KSGenValueZFrustrum::KSGenValueZFrustrum() : fr1(0.), fr2(0.), fz1(0.), fz2(0.) {}
 KSGenValueZFrustrum::KSGenValueZFrustrum(const KSGenValueZFrustrum& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fr1(aCopy.fr1),
     fr2(aCopy.fr2),
     fz1(aCopy.fz1),
@@ -21,9 +21,9 @@ KSGenValueZFrustrum* KSGenValueZFrustrum::Clone() const
 {
     return new KSGenValueZFrustrum(*this);
 }
-KSGenValueZFrustrum::~KSGenValueZFrustrum() {}
+KSGenValueZFrustrum::~KSGenValueZFrustrum() = default;
 
-void KSGenValueZFrustrum::DiceValue(vector<double>& aDicedValues)
+void KSGenValueZFrustrum::DiceValue(std::vector<double>& aDicedValues)
 {
     bool done = false;
     double z = 0;

@@ -46,7 +46,8 @@ template<unsigned int NDIM> class KFMCube : public KSAFixedSizeInputOutputObject
         SetParameters(center, length);
     };
 
-    ~KFMCube() override{};
+    ~KFMCube() override = default;
+    ;
 
     unsigned int GetDimension() const
     {

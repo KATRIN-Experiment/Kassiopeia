@@ -18,7 +18,7 @@ template<> inline bool KSGenEnergyCompositeBuilder::AddAttribute(KContainer* aCo
         return true;
     }
     if (aContainer->GetName() == "energy") {
-        fObject->SetEnergyValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsReference<std::string>()));
+        fObject->SetEnergyValue(KToolbox::GetInstance().Get<KSGenValue>(aContainer->AsString()));
         return true;
     }
     return false;

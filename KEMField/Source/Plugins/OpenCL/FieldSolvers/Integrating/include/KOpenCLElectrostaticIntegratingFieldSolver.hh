@@ -6,8 +6,8 @@
 #include "KOpenCLAction.hh"
 #include "KOpenCLSurfaceContainer.hh"
 
+#include <climits>
 #include <fstream>
-#include <limits.h>
 #include <sstream>
 
 #define MAX_SUBSET_SIZE 10000
@@ -28,21 +28,21 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
     KIntegratingFieldSolver(KOpenCLSurfaceContainer& container, Integrator& integrator, unsigned int max_subset_size,
                             unsigned int min_subset_size = 16);
 
-    virtual ~KIntegratingFieldSolver();
+    ~KIntegratingFieldSolver() override;
 
-    void ConstructOpenCLKernels() const;
-    void AssignBuffers() const;
+    void ConstructOpenCLKernels() const override;
+    void AssignBuffers() const override;
 
     double Potential(const KPosition& aPosition) const;
-    KThreeVector ElectricField(const KPosition& aPosition) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& aPosition) const;
+    KFieldVector ElectricField(const KPosition& aPosition) const;
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KPosition& aPosition) const;
 
     ////////////////////////////////////////////////////////////////////////////
     //sub-set potential/field calls
     double Potential(const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const;
-    KThreeVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
+    KFieldVector ElectricField(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
                                const KPosition& aPosition) const;
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
                                                               const KPosition& aPosition) const;
 
     //these methods allow us to dispatch a calculation to the GPU and retrieve the values later
@@ -53,12 +53,12 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
     void DispatchElectricFieldAndPotential(const unsigned int* SurfaceIndexSet, unsigned int SetSize,
                                            const KPosition& aPosition) const;
     double RetrievePotential() const;
-    KThreeVector RetrieveElectricField() const;
-    std::pair<KThreeVector, double> RetrieveElectricFieldAndPotential() const;
+    KFieldVector RetrieveElectricField() const;
+    std::pair<KFieldVector, double> RetrieveElectricFieldAndPotential() const;
 
     ////////////////////////////////////////////////////////////////////////////
 
-    std::string GetOpenCLFlags() const
+    std::string GetOpenCLFlags() const override
     {
         return fOpenCLFlags;
     }
@@ -69,7 +69,7 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
 
     KOpenCLSurfaceContainer& fContainer;
 
-    typedef typename Integrator::IntegratorSingleThread FallbackIntegrator;
+    using FallbackIntegrator = typename Integrator::IntegratorSingleThread;
     FallbackIntegrator fStandardIntegrator;
     KIntegratingFieldSolver<FallbackIntegrator> fStandardSolver;
 
@@ -112,8 +112,8 @@ template<class Integrator> class KIntegratingFieldSolver<Integrator, Electrostat
     mutable unsigned int fCachedNDummy;
     mutable unsigned int fCachedNWorkgroups;
     mutable double fCachedSubsetPotential;
-    mutable KThreeVector fCachedSubsetField;
-    mutable std::pair<KThreeVector, double> fCachedSubsetFieldAndPotential;
+    mutable KFieldVector fCachedSubsetField;
+    mutable std::pair<KFieldVector, double> fCachedSubsetFieldAndPotential;
 
     mutable unsigned int fCachedSubsetSize;
     mutable const unsigned int* fCachedSurfaceIndexSet;
@@ -129,20 +129,20 @@ KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::KIntegratingFieldSolve
     fContainer(container),
     fStandardIntegrator(integrator.GetCPUIntegrator()),
     fStandardSolver(container.GetSurfaceContainer(), fStandardIntegrator),
-    fPotentialKernel(NULL),
-    fElectricFieldKernel(NULL),
-    fElectricFieldAndPotentialKernel(NULL),
-    fGlobalRange(NULL),
-    fLocalRange(NULL),
-    fCLPotential(NULL),
-    fCLElectricField(NULL),
-    fCLElectricFieldAndPotential(NULL),
+    fPotentialKernel(nullptr),
+    fElectricFieldKernel(nullptr),
+    fElectricFieldAndPotentialKernel(nullptr),
+    fGlobalRange(nullptr),
+    fLocalRange(nullptr),
+    fCLPotential(nullptr),
+    fCLElectricField(nullptr),
+    fCLElectricFieldAndPotential(nullptr),
     fMaxSubsetSize(MAX_SUBSET_SIZE),
     fMinSubsetSize(MIN_SUBSET_SIZE),
-    fSubsetPotentialKernel(NULL),
-    fSubsetElectricFieldKernel(NULL),
-    fSubsetElectricFieldAndPotentialKernel(NULL),
-    fBufferElementIdentities(NULL)
+    fSubsetPotentialKernel(nullptr),
+    fSubsetElectricFieldKernel(nullptr),
+    fSubsetElectricFieldAndPotentialKernel(nullptr),
+    fBufferElementIdentities(nullptr)
 {
     std::stringstream options;
     options << container.GetOpenCLFlags() << " " << integrator.GetOpenCLFlags();
@@ -160,20 +160,20 @@ KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::KIntegratingFieldSolve
     fContainer(container),
     fStandardIntegrator(integrator.GetCPUIntegrator()),
     fStandardSolver(container.GetSurfaceContainer(), fStandardIntegrator),
-    fPotentialKernel(NULL),
-    fElectricFieldKernel(NULL),
-    fElectricFieldAndPotentialKernel(NULL),
-    fGlobalRange(NULL),
-    fLocalRange(NULL),
-    fCLPotential(NULL),
-    fCLElectricField(NULL),
-    fCLElectricFieldAndPotential(NULL),
+    fPotentialKernel(nullptr),
+    fElectricFieldKernel(nullptr),
+    fElectricFieldAndPotentialKernel(nullptr),
+    fGlobalRange(nullptr),
+    fLocalRange(nullptr),
+    fCLPotential(nullptr),
+    fCLElectricField(nullptr),
+    fCLElectricFieldAndPotential(nullptr),
     fMaxSubsetSize(max_subset_size),
     fMinSubsetSize(min_subset_size),
-    fSubsetPotentialKernel(NULL),
-    fSubsetElectricFieldKernel(NULL),
-    fSubsetElectricFieldAndPotentialKernel(NULL),
-    fBufferElementIdentities(NULL)
+    fSubsetPotentialKernel(nullptr),
+    fSubsetElectricFieldKernel(nullptr),
+    fSubsetElectricFieldAndPotentialKernel(nullptr),
+    fBufferElementIdentities(nullptr)
 {
     if (fMaxSubsetSize == 0) {
         fMaxSubsetSize = MAX_SUBSET_SIZE;
@@ -229,10 +229,10 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
 
     sourceCode = std::string(std::istreambuf_iterator<char>(sourceFile), (std::istreambuf_iterator<char>()));
 
-    cl::Program::Sources source(1, std::make_pair(sourceCode.c_str(), sourceCode.length() + 1));
+    cl::Program::Sources source = {{sourceCode.c_str(), sourceCode.length() + 1}};
 
     // Make program of the source code in the context
-    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, 0);
+    cl::Program program(KOpenCLInterface::GetInstance()->GetContext(), source, nullptr);
 
     // Build program for these specific devices
     try {
@@ -291,9 +291,9 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
 
     fNLocal = UINT_MAX;
 
-    for (std::vector<cl::Kernel*>::iterator it = kernelArray.begin(); it != kernelArray.end(); ++it) {
+    for (auto& it : kernelArray) {
         unsigned int workgroupSize =
-            (*it)->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
+            it->getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>((KOpenCLInterface::GetInstance()->GetDevice()));
         if (workgroupSize < fNLocal)
             fNLocal = workgroupSize;
     }
@@ -362,21 +362,21 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
     fPotentialKernel->setArg(1, *fContainer.GetShapeInfo());
     fPotentialKernel->setArg(2, *fContainer.GetShapeData());
     fPotentialKernel->setArg(3, *fContainer.GetBasisData());
-    fPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE), NULL);
+    fPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE), nullptr);
     fPotentialKernel->setArg(5, *fBufferPotential);
 
     fElectricFieldKernel->setArg(0, *fBufferP);
     fElectricFieldKernel->setArg(1, *fContainer.GetShapeInfo());
     fElectricFieldKernel->setArg(2, *fContainer.GetShapeData());
     fElectricFieldKernel->setArg(3, *fContainer.GetBasisData());
-    fElectricFieldKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), NULL);
+    fElectricFieldKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), nullptr);
     fElectricFieldKernel->setArg(5, *fBufferElectricField);
 
     fElectricFieldAndPotentialKernel->setArg(0, *fBufferP);
     fElectricFieldAndPotentialKernel->setArg(1, *fContainer.GetShapeInfo());
     fElectricFieldAndPotentialKernel->setArg(2, *fContainer.GetShapeData());
     fElectricFieldAndPotentialKernel->setArg(3, *fContainer.GetBasisData());
-    fElectricFieldAndPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), NULL);
+    fElectricFieldAndPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), nullptr);
     fElectricFieldAndPotentialKernel->setArg(5, *fBufferElectricFieldAndPotential);
 
     //create the element id buffer
@@ -388,7 +388,7 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
     fSubsetPotentialKernel->setArg(1, *fContainer.GetShapeInfo());
     fSubsetPotentialKernel->setArg(2, *fContainer.GetShapeData());
     fSubsetPotentialKernel->setArg(3, *fContainer.GetBasisData());
-    fSubsetPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE), NULL);
+    fSubsetPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE), nullptr);
     fSubsetPotentialKernel->setArg(5, *fBufferPotential);
     fSubsetPotentialKernel->setArg(6, fMaxSubsetSize);
     fSubsetPotentialKernel->setArg(7, *fBufferElementIdentities);
@@ -397,7 +397,7 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
     fSubsetElectricFieldKernel->setArg(1, *fContainer.GetShapeInfo());
     fSubsetElectricFieldKernel->setArg(2, *fContainer.GetShapeData());
     fSubsetElectricFieldKernel->setArg(3, *fContainer.GetBasisData());
-    fSubsetElectricFieldKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), NULL);
+    fSubsetElectricFieldKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), nullptr);
     fSubsetElectricFieldKernel->setArg(5, *fBufferElectricField);
     fSubsetElectricFieldKernel->setArg(6, fMaxSubsetSize);
     fSubsetElectricFieldKernel->setArg(7, *fBufferElementIdentities);
@@ -406,7 +406,7 @@ template<class Integrator> void KIntegratingFieldSolver<Integrator, Electrostati
     fSubsetElectricFieldAndPotentialKernel->setArg(1, *fContainer.GetShapeInfo());
     fSubsetElectricFieldAndPotentialKernel->setArg(2, *fContainer.GetShapeData());
     fSubsetElectricFieldAndPotentialKernel->setArg(3, *fContainer.GetBasisData());
-    fSubsetElectricFieldAndPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), NULL);
+    fSubsetElectricFieldAndPotentialKernel->setArg(4, fNLocal * sizeof(CL_TYPE4), nullptr);
     fSubsetElectricFieldAndPotentialKernel->setArg(5, *fBufferElectricFieldAndPotential);
     fSubsetElectricFieldAndPotentialKernel->setArg(6, fMaxSubsetSize);
     fSubsetElectricFieldAndPotentialKernel->setArg(7, *fBufferElementIdentities);
@@ -427,9 +427,13 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::Potential(const
     CL_TYPE potential = 0.;
 
     cl::Event event;
-    KOpenCLInterface::GetInstance()
-        ->GetQueue()
-        .enqueueReadBuffer(*fBufferPotential, CL_TRUE, 0, fNWorkgroups * sizeof(CL_TYPE), fCLPotential, NULL, &event);
+    KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fBufferPotential,
+                                                                  CL_TRUE,
+                                                                  0,
+                                                                  fNWorkgroups * sizeof(CL_TYPE),
+                                                                  fCLPotential,
+                                                                  nullptr,
+                                                                  &event);
 
     event.wait();
 
@@ -443,7 +447,7 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::Potential(const
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricField(const KPosition& aPosition) const
+KFieldVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricField(const KPosition& aPosition) const
 {
     CL_TYPE P[3] = {aPosition[0], aPosition[1], aPosition[2]};
 
@@ -454,7 +458,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricF
                                                                      *fGlobalRange,
                                                                      *fLocalRange);
 
-    KThreeVector eField(0., 0., 0.);
+    KFieldVector eField(0., 0., 0.);
 
     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fBufferElectricField,
                                                                   CL_TRUE,
@@ -476,7 +480,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricF
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricFieldAndPotential(const KPosition& aPosition) const
 {
     CL_TYPE P[3] = {aPosition[0], aPosition[1], aPosition[2]};
@@ -488,7 +492,7 @@ KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricFieldAndPotent
                                                                      *fGlobalRange,
                                                                      *fLocalRange);
 
-    KThreeVector eField(0., 0., 0.);
+    KFieldVector eField(0., 0., 0.);
     CL_TYPE potential = 0.;
 
     KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fBufferElectricFieldAndPotential,
@@ -562,7 +566,7 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::Potential(const
                                                                       0,
                                                                       n_workgroups * sizeof(CL_TYPE),
                                                                       fCLPotential,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();
@@ -585,7 +589,7 @@ double KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::Potential(const
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricField(
+KFieldVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricField(
     const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
 {
     CL_TYPE P[3] = {aPosition[0], aPosition[1], aPosition[2]};
@@ -622,7 +626,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricF
                                                                          global,
                                                                          local);
 
-        KThreeVector eField(0., 0., 0.);
+        KFieldVector eField(0., 0., 0.);
         CL_TYPE potential = 0.;
 
         cl::Event event;
@@ -631,7 +635,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricF
                                                                       0,
                                                                       n_workgroups * sizeof(CL_TYPE4),
                                                                       fCLElectricField,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();
@@ -656,7 +660,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricF
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double> KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricFieldAndPotential(
+std::pair<KFieldVector, double> KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::ElectricFieldAndPotential(
     const unsigned int* SurfaceIndexSet, unsigned int SetSize, const KPosition& aPosition) const
 {
     CL_TYPE P[3] = {aPosition[0], aPosition[1], aPosition[2]};
@@ -693,7 +697,7 @@ std::pair<KThreeVector, double> KIntegratingFieldSolver<Integrator, Electrostati
                                                                          global,
                                                                          local);
 
-        KThreeVector eField(0., 0., 0.);
+        KFieldVector eField(0., 0., 0.);
         CL_TYPE potential = 0.;
 
         cl::Event event;
@@ -702,7 +706,7 @@ std::pair<KThreeVector, double> KIntegratingFieldSolver<Integrator, Electrostati
                                                                       0,
                                                                       n_workgroups * sizeof(CL_TYPE4),
                                                                       fCLElectricFieldAndPotential,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();
@@ -923,7 +927,7 @@ template<class Integrator> double KIntegratingFieldSolver<Integrator, Electrosta
                                                                       0,
                                                                       fCachedNWorkgroups * sizeof(CL_TYPE),
                                                                       fCLPotential,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();
@@ -945,10 +949,10 @@ template<class Integrator> double KIntegratingFieldSolver<Integrator, Electrosta
 }
 
 template<class Integrator>
-KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveElectricField() const
+KFieldVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveElectricField() const
 {
     if (fCallDevice) {
-        KThreeVector eField(0., 0., 0.);
+        KFieldVector eField(0., 0., 0.);
 
         cl::Event event;
         KOpenCLInterface::GetInstance()->GetQueue().enqueueReadBuffer(*fBufferElectricField,
@@ -956,7 +960,7 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveE
                                                                       0,
                                                                       fCachedNWorkgroups * sizeof(CL_TYPE4),
                                                                       fCLElectricField,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();
@@ -980,11 +984,11 @@ KThreeVector KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveE
 }
 
 template<class Integrator>
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveElectricFieldAndPotential() const
 {
     if (fCallDevice) {
-        KThreeVector eField(0., 0., 0.);
+        KFieldVector eField(0., 0., 0.);
         CL_TYPE potential = 0.;
 
         cl::Event event;
@@ -993,7 +997,7 @@ KIntegratingFieldSolver<Integrator, ElectrostaticOpenCL>::RetrieveElectricFieldA
                                                                       0,
                                                                       fCachedNWorkgroups * sizeof(CL_TYPE4),
                                                                       fCLElectricFieldAndPotential,
-                                                                      NULL,
+                                                                      nullptr,
                                                                       &event);
 
         event.wait();

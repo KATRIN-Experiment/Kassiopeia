@@ -11,7 +11,7 @@ namespace Kassiopeia
 
 KSGenValueRadiusCylindrical::KSGenValueRadiusCylindrical() : fRadiusMin(0.), fRadiusMax(0.) {}
 KSGenValueRadiusCylindrical::KSGenValueRadiusCylindrical(const KSGenValueRadiusCylindrical& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fRadiusMin(aCopy.fRadiusMin),
     fRadiusMax(aCopy.fRadiusMax)
 {}
@@ -19,9 +19,9 @@ KSGenValueRadiusCylindrical* KSGenValueRadiusCylindrical::Clone() const
 {
     return new KSGenValueRadiusCylindrical(*this);
 }
-KSGenValueRadiusCylindrical::~KSGenValueRadiusCylindrical() {}
+KSGenValueRadiusCylindrical::~KSGenValueRadiusCylindrical() = default;
 
-void KSGenValueRadiusCylindrical::DiceValue(vector<double>& aDicedValues)
+void KSGenValueRadiusCylindrical::DiceValue(std::vector<double>& aDicedValues)
 {
     double tMinRadiusSquared = fRadiusMin * fRadiusMin;
     double tMaxRadiusSquared = fRadiusMax * fRadiusMax;

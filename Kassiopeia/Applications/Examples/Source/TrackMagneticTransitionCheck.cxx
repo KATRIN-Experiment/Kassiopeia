@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <vector>
 
+using namespace KGeoBag;
 using namespace Kassiopeia;
 using namespace std;
 
@@ -18,7 +19,7 @@ int main()
     double gyromagnetic_ratio = -1.83247172e+8;
     //double spin_magnitude = 0.5; // in units of hbar
 
-    auto* tRootFile = new KRootFile();
+    auto* tRootFile = new katrin::KRootFile();
     tRootFile->AddToNames("~/Work/kasper/install/output/Kassiopeia/CombinedNeutronTrapAdiabaticSimulation.root");
 
     KSReadFileROOT tReader;
@@ -66,9 +67,9 @@ int main()
                     if (tCell.Valid()) {
                         time_list.push_back(tTime.Value());
                         //B_list.push_back( B.Value() );
-                        B_list.push_back(KThreeVector(1.,
-                                                      std::cos(frequency_gap * tTime.Value()),
-                                                      std::sin(frequency_gap * tTime.Value())));
+                        B_list.emplace_back(1.,
+                                            std::cos(frequency_gap * tTime.Value()),
+                                            std::sin(frequency_gap * tTime.Value()));
                         //B_list.push_back( KThreeVector( std::sin(1.e+8 * tTime.Value()), std::cos(0.99999e+8 * tTime.Value()), std::sin( 0.9999999e+8 * tTime.Value() ) ) );
                         cell_count++;
                     }

@@ -10,7 +10,7 @@ namespace katrin
 {
 
 KTagProcessor::KTagProcessor() : KProcessor(), fState(eInactive), fTags(), fTagIt(), fTagStack() {}
-KTagProcessor::~KTagProcessor() {}
+KTagProcessor::~KTagProcessor() = default;
 
 void KTagProcessor::ProcessToken(KBeginElementToken* aToken)
 {

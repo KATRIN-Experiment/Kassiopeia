@@ -177,7 +177,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${GENERATORS_HEADER_PATH} ../Readers/Include )
-add_library( KassiopeiaGenerators SHARED ${GENERATORS_SOURCE_FILENAMES} )
+add_library( KassiopeiaGenerators SHARED ${GENERATORS_SOURCE_FILENAMES} ${GENERATORS_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaGenerators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaGenerators
     ${Kommon_LIBRARIES}

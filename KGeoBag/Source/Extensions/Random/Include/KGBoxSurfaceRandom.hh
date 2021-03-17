@@ -20,7 +20,7 @@ class KGBoxSurfaceRandom : virtual public KGShapeRandom, public KGBox::Visitor
 {
   public:
     KGBoxSurfaceRandom() : KGShapeRandom() {}
-    ~KGBoxSurfaceRandom() override {}
+    ~KGBoxSurfaceRandom() override = default;
 
     /**
      * \brief Visitor function for dicing a point on

@@ -27,8 +27,10 @@ namespace KGeoBag
 template<size_t NDIM> class KGPointCloudToBoundingBallConverter
 {
   public:
-    KGPointCloudToBoundingBallConverter(){};
-    virtual ~KGPointCloudToBoundingBallConverter(){};
+    KGPointCloudToBoundingBallConverter() = default;
+    ;
+    virtual ~KGPointCloudToBoundingBallConverter() = default;
+    ;
 
     void Convert(const std::vector<KGPointCloud<NDIM>>* cloud_container,
                  std::vector<KGBall<NDIM>>* ball_container) const
@@ -38,7 +40,7 @@ template<size_t NDIM> class KGPointCloudToBoundingBallConverter
         size_t n_clouds = cloud_container->size();
 
         for (size_t i = 0; i < n_clouds; i++) {
-            ball_container->push_back(Convert(&(cloud_container->at(t))));
+            ball_container->push_back(Convert(&(cloud_container->at(i))));
         }
     }
 

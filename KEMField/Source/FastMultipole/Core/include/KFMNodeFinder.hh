@@ -23,7 +23,8 @@ template<typename ObjectTypeList> class KFMNodeFinder : public KFMNodeActor<KFMN
 {
   public:
     KFMNodeFinder() : fID(0), fNode(NULL){};
-    virtual ~KFMNodeFinder(){};
+    virtual ~KFMNodeFinder() = default;
+    ;
 
     void SetID(int id)
     {

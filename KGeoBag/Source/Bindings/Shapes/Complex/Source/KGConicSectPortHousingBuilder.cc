@@ -37,14 +37,14 @@ STATICINT sKGConicSectPortHousingBuilderStructure =
     KGConicSectPortHousingBuilder::ComplexElement<KGConicSectPortHousing::ParaxialPort>("paraxial_port");
 
 STATICINT sKGConicSectPortHousingSurfaceBuilderStructure =
-    KGConicSectPortHousingSurfaceBuilder::Attribute<string>("name") +
+    KGConicSectPortHousingSurfaceBuilder::Attribute<std::string>("name") +
     KGConicSectPortHousingSurfaceBuilder::ComplexElement<KGConicSectPortHousing>("conic_section_port_housing");
 
 STATICINT sKGConicSectPortHousingSurfaceBuilder =
     KGInterfaceBuilder::ComplexElement<KGWrappedSurface<KGConicSectPortHousing>>("conic_section_port_housing_surface");
 
 STATICINT sKGConicSectPortHousingSpaceBuilderStructure =
-    KGConicSectPortHousingSpaceBuilder::Attribute<string>("name") +
+    KGConicSectPortHousingSpaceBuilder::Attribute<std::string>("name") +
     KGConicSectPortHousingSpaceBuilder::ComplexElement<KGConicSectPortHousing>("conic_section_port_housing");
 
 STATICINT sKGConicSectPortHousingSpaceBuilder =

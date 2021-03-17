@@ -53,7 +53,7 @@ class KFMCubicSpaceTreeNavigator : public KFMNodeActor<KFMNode<ObjectTypeList>>
         fPreallocatedStack.resize(fDefaultStackSize, nullptr);
     }
 
-    ~KFMCubicSpaceTreeNavigator() override {}
+    ~KFMCubicSpaceTreeNavigator() override = default;
 
     void SetPoint(const KFMPoint<SpatialNDIM>* p)
     {

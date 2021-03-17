@@ -6,29 +6,25 @@ using namespace std;
 namespace KGeoBag
 {
 
-KGElectromagnetAttributor::KGElectromagnetAttributor() :
-    fSurfaces(),
-    fSpaces(),
-    fLineCurrent(0.0),
-    fScalingFactor(1.0),
-    fDirection(1.0)
-{}
+KGElectromagnetAttributor::KGElectromagnetAttributor() : fLineCurrent(0.0), fCurrentTurns(1.0), fDirection(1.0) {}
 
 KGElectromagnetAttributor::~KGElectromagnetAttributor()
 {
     KGElectromagnetSurface* tElectromagnetSurface;
-    for (auto tIt = fSurfaces.begin(); tIt != fSurfaces.end(); tIt++) {
-        tElectromagnetSurface = (*tIt)->MakeExtension<KGElectromagnet>();
+    for (auto& surface : fSurfaces) {
+        tElectromagnetSurface = surface->MakeExtension<KGElectromagnet>();
         tElectromagnetSurface->SetName(GetName());
         tElectromagnetSurface->SetTags(GetTags());
-        tElectromagnetSurface->SetCurrent(GetCurrent());
+        tElectromagnetSurface->SetLineCurrent(GetLineCurrent());
+        tElectromagnetSurface->SetCurrentTurns(GetCurrentTurns());
     }
     KGElectromagnetSpace* tElectromagnetSpace;
-    for (auto tIt = fSpaces.begin(); tIt != fSpaces.end(); tIt++) {
-        tElectromagnetSpace = (*tIt)->MakeExtension<KGElectromagnet>();
+    for (auto& space : fSpaces) {
+        tElectromagnetSpace = space->MakeExtension<KGElectromagnet>();
         tElectromagnetSpace->SetName(GetName());
         tElectromagnetSpace->SetTags(GetTags());
-        tElectromagnetSpace->SetCurrent(GetCurrent());
+        tElectromagnetSpace->SetLineCurrent(GetLineCurrent());
+        tElectromagnetSpace->SetCurrentTurns(GetCurrentTurns());
     }
 }
 
@@ -50,13 +46,15 @@ void KGElectromagnetAttributor::AddSpace(KGSpace* aSpace)
 namespace katrin
 {
 
-template<> inline KGElectromagnetBuilder::~KComplexElement() {}
+template<> inline KGElectromagnetBuilder::~KComplexElement() = default;
 
-STATICINT sKGElectromagnetStructure =
-    KGElectromagnetBuilder::Attribute<string>("name") + KGElectromagnetBuilder::Attribute<double>("current") +
-    KGElectromagnetBuilder::Attribute<double>("scaling_factor") +
-    KGElectromagnetBuilder::Attribute<string>("direction") + KGElectromagnetBuilder::Attribute<string>("surfaces") +
-    KGElectromagnetBuilder::Attribute<string>("spaces");
+STATICINT sKGElectromagnetStructure = KGElectromagnetBuilder::Attribute<std::string>("name") +
+                                      KGElectromagnetBuilder::Attribute<double>("current") +
+                                      KGElectromagnetBuilder::Attribute<double>("scaling_factor") +
+                                      KGElectromagnetBuilder::Attribute<double>("num_turns") +
+                                      KGElectromagnetBuilder::Attribute<std::string>("direction") +
+                                      KGElectromagnetBuilder::Attribute<std::string>("surfaces") +
+                                      KGElectromagnetBuilder::Attribute<std::string>("spaces");
 
 
 STATICINT sKGElectromagnet = KGInterfaceBuilder::ComplexElement<KGElectromagnetAttributor>("electromagnet");

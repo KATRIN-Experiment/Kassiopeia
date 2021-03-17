@@ -18,7 +18,7 @@ KSIntDecayCalculatorGlukhovIonisation::KSIntDecayCalculatorGlukhovIonisation() :
 
 KSIntDecayCalculatorGlukhovIonisation::KSIntDecayCalculatorGlukhovIonisation(
     const KSIntDecayCalculatorGlukhovIonisation& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fTargetPID(aCopy.fTargetPID),
     fminPID(aCopy.fminPID),
     fmaxPID(aCopy.fmaxPID),
@@ -30,7 +30,7 @@ KSIntDecayCalculatorGlukhovIonisation* KSIntDecayCalculatorGlukhovIonisation::Cl
     return new KSIntDecayCalculatorGlukhovIonisation(*this);
 }
 
-KSIntDecayCalculatorGlukhovIonisation::~KSIntDecayCalculatorGlukhovIonisation() {}
+KSIntDecayCalculatorGlukhovIonisation::~KSIntDecayCalculatorGlukhovIonisation() = default;
 
 const double KSIntDecayCalculatorGlukhovIonisation::low_n_rates[32] = {
     57.32484,  146.49681, 286.6242,  452.2293,  630.57324, 802.5478,  968.1529,  1101.9109,
@@ -95,7 +95,7 @@ void KSIntDecayCalculatorGlukhovIonisation::ExecuteInteraction(const KSParticle&
     if ((anInitialParticle.GetPID() == fTargetPID && fTargetPID != 0) ||
         ((anInitialParticle.GetPID() >= fminPID) && (anInitialParticle.GetPID() <= fmaxPID))) {
         double tTime = aFinalParticle.GetTime();
-        KThreeVector tPosition = aFinalParticle.GetPosition();
+        KGeoBag::KThreeVector tPosition = aFinalParticle.GetPosition();
 
         aFinalParticle.SetLabel(GetName());
         aFinalParticle.SetActive(false);

@@ -22,7 +22,7 @@
 
 using namespace KEMField;
 
-void printVec(std::string add, KThreeVector input)
+void printVec(const std::string& add, KFieldVector input)
 {
     std::cout << add.c_str() << input.X() << "\t" << input.Y() << "\t" << input.Z() << std::endl;
 }
@@ -37,7 +37,7 @@ int main()
     KPosition test3(4.5, 2., 500.);
 
     // evaluation point for computation
-    KPosition evalPoint = test1;
+    const KPosition& evalPoint = test1;
 
     // Triangles
     // ---------
@@ -45,11 +45,11 @@ int main()
     //	KSurface<KElectrostaticBasis,KDirichletBoundary,KTriangle>* tL = new KSurface<KElectrostaticBasis,KDirichletBoundary,KTriangle>();
     //	tL->SetA( 1. ); // positive x-direction
     //	tL->SetB( 2. ); // positive y-direction
-    //	KThreeVector tLp0( 3., 5., -6. ); /* P0 */
+    //	KFieldVector tLp0( 3., 5., -6. ); /* P0 */
     //	tL->SetP0(tLp0);
-    //	KThreeVector tLn1( 1./sqrt(2.), 1./sqrt(2.), 0. ); /* N1 */
+    //	KFieldVector tLn1( 1./sqrt(2.), 1./sqrt(2.), 0. ); /* N1 */
     //	tL->SetN1( tLn1 );
-    //	KThreeVector tLn2( 0., 1./sqrt(2.), 1./sqrt(2.) ); /* N2 */
+    //	KFieldVector tLn2( 0., 1./sqrt(2.), 1./sqrt(2.) ); /* N2 */
     //	tL->SetN2( tLn2 );
     //	//tL->SetSolution(1.); // charge density (electrostatic basis)
     //	tL->SetBoundaryValue( 100. ); // electric potential
@@ -98,8 +98,7 @@ int main()
 
     // triangles for 'test2'
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* tL =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* tL = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
     tL->SetA(a);  // positive x-direction
     tL->SetB(b);  // positive y-direction
     tL->SetP0(P0);
@@ -121,15 +120,14 @@ int main()
                                tL->GetN2().Y(),
                                tL->GetN2().Z()};
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>* tR =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
+    auto* tR = new KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>();
     tR->SetA(1.133);               // positive x-direction
     tR->SetB(2.2323);              // positive y-direction
-    KThreeVector tRp0(0., 0., 1.); /* P0 */
+    KFieldVector tRp0(0., 0., 1.); /* P0 */
     tR->SetP0(tRp0);
-    KThreeVector tRn1(1., 0., 0.); /* N1 */
+    KFieldVector tRn1(1., 0., 0.); /* N1 */
     tR->SetN1(tRn1);
-    KThreeVector tRn2(0., 1., 0.); /* N2 */
+    KFieldVector tRn2(0., 1., 0.); /* N2 */
     tR->SetN2(tRn2);
     //tR->SetSolution(12.); // charge density (electrostatic basis)
     tR->SetBoundaryValue(-100.);  // electric potential
@@ -138,15 +136,14 @@ int main()
     // Rectangles
     // ----------
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>* rL =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
+    auto* rL = new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
     rL->SetA(3.);                    // positive x-direction
     rL->SetB(2.);                    // positive y-direction
-    KThreeVector rLp0(0., 0., -0.9); /* P0 */
+    KFieldVector rLp0(0., 0., -0.9); /* P0 */
     rL->SetP0(rLp0);
-    KThreeVector rLn1(1., 0., 0.); /* N1 */
+    KFieldVector rLn1(1., 0., 0.); /* N1 */
     rL->SetN1(rLn1);
-    KThreeVector rLn2(0., 1., 0.); /* N2 */
+    KFieldVector rLn2(0., 1., 0.); /* N2 */
     rL->SetN2(rLn2);
     //rL->SetSolution(12.); // charge density (electrostatic basis)
     rL->SetBoundaryValue(-200.);  // electric potential
@@ -164,15 +161,14 @@ int main()
                                rL->GetN2().Y(),
                                rL->GetN2().Z()};
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>* rR =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
+    auto* rR = new KSurface<KElectrostaticBasis, KDirichletBoundary, KRectangle>();
     rR->SetA(1.);                   // positive x-direction
     rR->SetB(2.);                   // positive y-direction
-    KThreeVector rRp0(0., 0., 0.9); /* P0 */
+    KFieldVector rRp0(0., 0., 0.9); /* P0 */
     rR->SetP0(rRp0);
-    KThreeVector rRn1(1., 0., 0.); /* N1 */
+    KFieldVector rRn1(1., 0., 0.); /* N1 */
     rR->SetN1(rRn1);
-    KThreeVector rRn2(0., 1., 0.); /* N2 */
+    KFieldVector rRn2(0., 1., 0.); /* N2 */
     rR->SetN2(rRn2);
     //rR->SetSolution(12.); // charge density (electrostatic basis)
     rR->SetBoundaryValue(200.);  // electric potential
@@ -181,10 +177,9 @@ int main()
     // Line Segments
     // -------------
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>* wL =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
-    wL->SetP0(KThreeVector(0.1, -1.5, -0.5));
-    wL->SetP1(KThreeVector(0.1, 1., -0.5));
+    auto* wL = new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
+    wL->SetP0(KFieldVector(0.1, -1.5, -0.5));
+    wL->SetP1(KFieldVector(0.1, 1., -0.5));
     wL->SetDiameter(0.003);
     wL->SetBoundaryValue(-1000);
 
@@ -196,10 +191,9 @@ int main()
                               wL->GetP1().Z(),
                               wL->GetDiameter()};
 
-    KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>* wR =
-        new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
-    wR->SetP0(KThreeVector(0.1, -1., 0.5));
-    wR->SetP1(KThreeVector(0.1, 1., 0.5));
+    auto* wR = new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
+    wR->SetP0(KFieldVector(0.1, -1., 0.5));
+    wR->SetP1(KFieldVector(0.1, 1., 0.5));
     wR->SetDiameter(0.003);
     wR->SetBoundaryValue(-1000);
 

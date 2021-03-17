@@ -8,7 +8,7 @@ using namespace KEMField;
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    KFMResponseKernel_3DLaplaceM2L* kernel = new KFMResponseKernel_3DLaplaceM2L();
+    auto* kernel = new KFMResponseKernel_3DLaplaceM2L();
 
     double source[3] = {0., 0., 0.};
     double target[3] = {1.124, 4.455, -2.565};

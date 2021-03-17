@@ -38,9 +38,9 @@ int main(int /*argc*/, char** /*argv*/)
 
     double a = 1.5;
     double b = 1.3;
-    KThreeVector p0(0.,0.,0.);
-    KThreeVector n1(1./sqrt(2.),1./sqrt(2.),0.);
-    KThreeVector n2(1./sqrt(2.),-1./sqrt(2.),0.);
+    KFieldVector p0(0.,0.,0.);
+    KFieldVector n1(1./sqrt(2.),1./sqrt(2.),0.);
+    KFieldVector n2(1./sqrt(2.),-1./sqrt(2.),0.);
 
     double dirichletValue = 10.2;
 
@@ -73,8 +73,8 @@ int main(int /*argc*/, char** /*argv*/)
     */
 
     /*
-      KThreeVector p0(0.,0.,0.);
-      KThreeVector p1(1.,0.,1.);
+      KFieldVector p0(0.,0.,0.);
+      KFieldVector p1(1.,0.,1.);
 
       double dirichletValue = 10.2;
 
@@ -109,9 +109,9 @@ int main(int /*argc*/, char** /*argv*/)
     /*
     double a_ = 1.5;
     double b_ = 1.3;
-    KThreeVector p0(0.,0.,0.);
-    KThreeVector n1(1./sqrt(2.),1./sqrt(2.),0.);
-    KThreeVector n2(1./sqrt(2.),-1./sqrt(2.),0.);
+    KFieldVector p0(0.,0.,0.);
+    KFieldVector n1(1./sqrt(2.),1./sqrt(2.),0.);
+    KFieldVector n2(1./sqrt(2.),-1./sqrt(2.),0.);
 
     double dirichletValue = 10.2;
 
@@ -221,8 +221,8 @@ int main(int /*argc*/, char** /*argv*/)
     KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>* w =
         new KSurface<KElectrostaticBasis, KDirichletBoundary, KLineSegment>();
 
-    w->SetP0(KThreeVector(-0.457222, 0.0504778, -0.51175));
-    w->SetP1(KThreeVector(-0.463342, 0.0511534, -0.515712));
+    w->SetP0(KFieldVector(-0.457222, 0.0504778, -0.51175));
+    w->SetP1(KFieldVector(-0.463342, 0.0511534, -0.515712));
     w->SetDiameter(0.0003);
     w->SetBoundaryValue(-900);
 

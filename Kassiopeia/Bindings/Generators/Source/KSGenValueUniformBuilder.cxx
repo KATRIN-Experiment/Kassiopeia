@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueUniformBuilder::~KComplexElement() {}
+template<> KSGenValueUniformBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueUniformStructure = KSGenValueUniformBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueUniformStructure = KSGenValueUniformBuilder::Attribute<std::string>("name") +
                                         KSGenValueUniformBuilder::Attribute<double>("value_min") +
                                         KSGenValueUniformBuilder::Attribute<double>("value_max");
 

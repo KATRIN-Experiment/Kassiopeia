@@ -10,7 +10,7 @@ KFMPinchonGMatrixCalculator::KFMPinchonGMatrixCalculator()
     fMatrixType = 0;
 }
 
-KFMPinchonGMatrixCalculator::~KFMPinchonGMatrixCalculator() {}
+KFMPinchonGMatrixCalculator::~KFMPinchonGMatrixCalculator() = default;
 
 bool KFMPinchonGMatrixCalculator::ComputeMatrix(kfm_matrix* G) const
 {

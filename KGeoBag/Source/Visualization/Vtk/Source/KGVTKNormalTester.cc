@@ -1,10 +1,8 @@
 #include "KGVTKNormalTester.hh"
 
+#include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-using katrin::KFile;
-
-#include "KConst.h"
 #include "KRandom.h"
 using katrin::KRandom;
 
@@ -52,7 +50,7 @@ KGVTKNormalTester::KGVTKNormalTester() :
     fActor->SetMapper(fMapper);
 }
 
-KGVTKNormalTester::~KGVTKNormalTester() {}
+KGVTKNormalTester::~KGVTKNormalTester() = default;
 
 void KGVTKNormalTester::Render()
 {
@@ -76,10 +74,9 @@ void KGVTKNormalTester::Render()
         tPhi = tRandom.Uniform(0., 2. * katrin::KConst::Pi());
         tPoint = fSampleDiskOrigin + tRadius * (cos(tPhi) * tUnitOne + sin(tPhi) * tUnitTwo);
 
-        for (vector<const KGSurface*>::iterator tSurfaceIt = fSurfaces.begin(); tSurfaceIt != fSurfaces.end();
-             tSurfaceIt++) {
-            tNearest = (*tSurfaceIt)->Point(tPoint);
-            tNormal = (*tSurfaceIt)->Normal(tPoint);
+        for (auto& surface : fSurfaces) {
+            tNearest = surface->Point(tPoint);
+            tNormal = surface->Normal(tPoint);
             tNormal = tNearest + fNormalLength * tNormal;
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());
@@ -105,9 +102,9 @@ void KGVTKNormalTester::Render()
             fLineCells->InsertNextCell(vLine);
         }
 
-        for (vector<const KGSpace*>::iterator tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); tSpaceIt++) {
-            tNearest = (*tSpaceIt)->Point(tPoint);
-            tNormal = (*tSpaceIt)->Normal(tPoint);
+        for (auto& space : fSpaces) {
+            tNearest = space->Point(tPoint);
+            tNormal = space->Normal(tPoint);
             tNormal = tNearest + fNormalLength * tNormal;
 
             vPointId = fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z());

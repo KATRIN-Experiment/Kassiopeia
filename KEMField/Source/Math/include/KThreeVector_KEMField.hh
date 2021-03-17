@@ -10,9 +10,8 @@
 
 namespace KEMField
 {
-typedef KGeoBag::KThreeVector KThreeVector;
 
-template<typename Stream> Stream& operator>>(Stream& s, KThreeVector& aThreeVector)
+template<typename Stream> Stream& operator>>(Stream& s, KGeoBag::KThreeVector& aThreeVector)
 {
     s.PreStreamInAction(aThreeVector);
     s >> aThreeVector[0] >> aThreeVector[1] >> aThreeVector[2];
@@ -20,7 +19,7 @@ template<typename Stream> Stream& operator>>(Stream& s, KThreeVector& aThreeVect
     return s;
 }
 
-template<typename Stream> Stream& operator<<(Stream& s, const KThreeVector& aThreeVector)
+template<typename Stream> Stream& operator<<(Stream& s, const KGeoBag::KThreeVector& aThreeVector)
 {
     s.PreStreamOutAction(aThreeVector);
     s << aThreeVector[0] << aThreeVector[1] << aThreeVector[2];
@@ -28,27 +27,29 @@ template<typename Stream> Stream& operator<<(Stream& s, const KThreeVector& aThr
     return s;
 }
 
-template<bool isDisplacement> class KThreeVector_ : public KThreeVector
+template<bool isDisplacement> class KThreeVector_ : public KGeoBag::KThreeVector
 {
   public:
-    KThreeVector_() : KThreeVector() {}
-    KThreeVector_(const KThreeVector& aVector) : KThreeVector(aVector) {}
-    KThreeVector_(const double anArray[3]) : KThreeVector(anArray) {}
-    KThreeVector_(const double& aX, const double& aY, const double& aZ) : KThreeVector(aX, aY, aZ) {}
+    KThreeVector_() : KGeoBag::KThreeVector() {}
+    KThreeVector_(const KGeoBag::KThreeVector& aVector) : KGeoBag::KThreeVector(aVector) {}
+    KThreeVector_(const double anArray[3]) : KGeoBag::KThreeVector(anArray) {}
+    KThreeVector_(const double& aX, const double& aY, const double& aZ) : KGeoBag::KThreeVector(aX, aY, aZ) {}
 
-    ~KThreeVector_() override{};
+    ~KThreeVector_() override = default;
+    ;
 
     static std::string Name();
 
-    void ReflectThroughPlane(const KThreeVector& planePosition, const KThreeVector& planeNormal);
-    void RotateAboutAxis(const KThreeVector& axisPosition, const KThreeVector& axisDirection, double angle);
+    void ReflectThroughPlane(const KGeoBag::KThreeVector& planePosition, const KGeoBag::KThreeVector& planeNormal);
+    void RotateAboutAxis(const KGeoBag::KThreeVector& axisPosition, const KGeoBag::KThreeVector& axisDirection,
+                         double angle);
 };
 
 template<bool isDisplacement>
-void KThreeVector_<isDisplacement>::ReflectThroughPlane(const KThreeVector& planePosition,
-                                                        const KThreeVector& planeNormal)
+void KThreeVector_<isDisplacement>::ReflectThroughPlane(const KGeoBag::KThreeVector& planePosition,
+                                                        const KGeoBag::KThreeVector& planeNormal)
 {
-    KThreeVector& point = *this;
+    KGeoBag::KThreeVector& point = *this;
     double signedDistance;
     if (isDisplacement)
         signedDistance = (point - planePosition).Dot(planeNormal);
@@ -58,10 +59,10 @@ void KThreeVector_<isDisplacement>::ReflectThroughPlane(const KThreeVector& plan
 }
 
 template<bool isDisplacement>
-void KThreeVector_<isDisplacement>::RotateAboutAxis(const KThreeVector& axisPosition, const KThreeVector& axisDirection,
-                                                    double angle)
+void KThreeVector_<isDisplacement>::RotateAboutAxis(const KGeoBag::KThreeVector& axisPosition,
+                                                    const KGeoBag::KThreeVector& axisDirection, double angle)
 {
-    KThreeVector& point = *this;
+    KGeoBag::KThreeVector& point = *this;
     if (isDisplacement)
         point -= axisPosition;
     point = (point * cos(angle) + axisDirection * axisDirection.Dot(point) * (1. - cos(angle)) -
@@ -95,7 +96,7 @@ Stream& operator<<(Stream& s, const KThreeVector_<isDisplacement>& aThreeVector_
 *
 * @author T.J. Corona
 */
-typedef KThreeVector_<true> KPosition;
+using KPosition = KThreeVector_<true>;
 
 template<> inline std::string KPosition::Name()
 {
@@ -109,7 +110,7 @@ template<> inline std::string KPosition::Name()
 *
 * @author T.J. Corona
 */
-typedef KThreeVector_<false> KDirection;
+using KDirection = KThreeVector_<false>;
 
 template<> inline std::string KDirection::Name()
 {
@@ -117,20 +118,14 @@ template<> inline std::string KDirection::Name()
 }
 
 /**
-* @class KMagneticFieldVector
+* @class KFieldVector
 *
 * @brief A three-vector that does not transform with a translation.
 *
 * @author T.J. Corona
 */
-class KMagneticFieldVector : public KThreeVector_<false>
-{
-  public:
-    static std::string Name()
-    {
-        return "MagneticFieldVector";
-    }
-};
+using KFieldVector = KThreeVector_<false>;
+
 }  // namespace KEMField
 
 #endif /* KTHREEVECTOR_KEMFIELD_H_ */

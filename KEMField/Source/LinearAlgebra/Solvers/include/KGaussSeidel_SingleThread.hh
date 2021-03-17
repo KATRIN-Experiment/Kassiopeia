@@ -1,6 +1,7 @@
 #ifndef KGAUSSSEIDEL_SINGLETHREAD_DEF
 #define KGAUSSSEIDEL_SINGLETHREAD_DEF
 
+#include "KSquareMatrix.hh"
 #include "KSimpleVector.hh"
 
 namespace KEMField
@@ -8,8 +9,8 @@ namespace KEMField
 template<typename ValueType> class KGaussSeidel_SingleThread
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector =  KVector<ValueType>;
 
     KGaussSeidel_SingleThread(const Matrix& A, Vector& x, const Vector& b);
     ~KGaussSeidel_SingleThread() {}

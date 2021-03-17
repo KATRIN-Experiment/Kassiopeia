@@ -30,11 +30,11 @@ namespace KEMField
 template<typename ValueType> class KBiconjugateGradientStabilized
 {
   public:
-    typedef KSquareMatrix<ValueType> Matrix;
-    typedef KVector<ValueType> Vector;
+    using Matrix = KSquareMatrix<ValueType>;
+    using Vector = KVector<ValueType>;
 
-    typedef KSimpleMatrix<ValueType> KSimpleMatrixType;
-    typedef KSimpleVector<ValueType> KSimpleVectorType;
+    using KSimpleMatrixType = KSimpleMatrix<ValueType>;
+    using KSimpleVectorType = KSimpleVector<ValueType>;
 
     KBiconjugateGradientStabilized(const Matrix& A, Vector& x, const Vector& b) : fA(A), fX(x), fB(b)
     {
@@ -42,7 +42,8 @@ template<typename ValueType> class KBiconjugateGradientStabilized
         fExternalStateSet = false;
     };
 
-    virtual ~KBiconjugateGradientStabilized(){};
+    virtual ~KBiconjugateGradientStabilized() = default;
+    ;
 
     static std::string Name()
     {

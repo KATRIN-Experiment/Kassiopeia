@@ -24,10 +24,10 @@ class KSReadIteratorROOT :
     public KSStringSet
 {
   private:
-    typedef map<std::string, KSReadObjectROOT*> ObjectMap;
-    typedef ObjectMap::iterator ObjectIt;
-    typedef ObjectMap::const_iterator ObjectCIt;
-    typedef ObjectMap::value_type ObjectEntry;
+    using ObjectMap = std::map<std::string, KSReadObjectROOT*>;
+    using ObjectIt = ObjectMap::iterator;
+    using ObjectCIt = ObjectMap::const_iterator;
+    using ObjectEntry = ObjectMap::value_type;
 
   public:
     KSReadIteratorROOT(TFile* aFile, TTree* aKeyTree, TTree* aDataTree);

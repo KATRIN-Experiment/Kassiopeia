@@ -48,7 +48,8 @@ template<unsigned int NDIM> class KFMBox
         SetParameters(center, length);
     };
 
-    virtual ~KFMBox(){};
+    virtual ~KFMBox() = default;
+    ;
 
     unsigned int GetDimension() const
     {

@@ -1,6 +1,7 @@
 #include "KGCore.hh"
 
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 using namespace std;
 
@@ -36,7 +37,7 @@ KGInterface* KGInterface::DeleteInstance()
 KGInterface::KGInterface()
 {
     fRoot = new KGSpace();
-    fRoot->SetName("<interface>");
+    fRoot->SetName("(interface)");
 }
 KGInterface::~KGInterface()
 {
@@ -65,18 +66,18 @@ vector<KGSurface*> KGInterface::RetrieveSurfaces()
 
     return tAccumulator;
 }
-vector<KGSurface*> KGInterface::RetrieveSurfaces(string aSpecifier)
+vector<KGSurface*> KGInterface::RetrieveSurfaces(const string& aSpecifier)
 {
     coremsg_debug("retrieving surfaces for <" << aSpecifier << ">..." << eom);
 
     vector<KGSurface*> tAccumulator;
-    RetrieveSurfacesBySpecifier(tAccumulator, fRoot, aSpecifier);
+    RetrieveSurfacesBySpecifier(tAccumulator, fRoot, std::move(aSpecifier));
 
     coremsg_debug("...done" << eom);
 
     return tAccumulator;
 }
-KGSurface* KGInterface::RetrieveSurface(string aSpecifier)
+KGSurface* KGInterface::RetrieveSurface(const string& aSpecifier)
 {
     coremsg_debug("retrieving surface for <" << aSpecifier << ">..." << eom);
 
@@ -85,7 +86,7 @@ KGSurface* KGInterface::RetrieveSurface(string aSpecifier)
 
     coremsg_debug("...done" << eom);
 
-    if (tAccumulator.size() == 0) {
+    if (tAccumulator.empty()) {
         coremsg(eWarning) << "no surfaces registered for path <" << aSpecifier << ">" << eom;
         return nullptr;
     }
@@ -108,18 +109,18 @@ vector<KGSpace*> KGInterface::RetrieveSpaces()
 
     return tAccumulator;
 }
-vector<KGSpace*> KGInterface::RetrieveSpaces(string aSpecifier)
+vector<KGSpace*> KGInterface::RetrieveSpaces(const string& aSpecifier)
 {
     coremsg_debug("retrieving spaces for <" << aSpecifier << ">..." << eom);
 
     vector<KGSpace*> tAccumulator;
-    RetrieveSpacesBySpecifier(tAccumulator, fRoot, aSpecifier);
+    RetrieveSpacesBySpecifier(tAccumulator, fRoot, std::move(aSpecifier));
 
     coremsg_debug("...done" << eom);
 
     return tAccumulator;
 }
-KGSpace* KGInterface::RetrieveSpace(string aSpecifier)
+KGSpace* KGInterface::RetrieveSpace(const string& aSpecifier)
 {
     coremsg_debug("retrieving space for <" << aSpecifier << ">..." << eom);
 
@@ -128,7 +129,7 @@ KGSpace* KGInterface::RetrieveSpace(string aSpecifier)
 
     coremsg_debug("...done" << eom);
 
-    if (tAccumulator.size() == 0) {
+    if (tAccumulator.empty()) {
         coremsg(eWarning) << "no spaces registered for path <" << aSpecifier << ">" << eom;
         return nullptr;
     }
@@ -168,7 +169,7 @@ void KGInterface::RetrieveSpacesBySpecifier(vector<KGSpace*>& anAccumulator, KGS
     }
 }
 
-void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSpace* aNode, string aPath)
+void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSpace* aNode, const string& aPath)
 {
     size_t tNestPos = aPath.find_first_of(sNest);
     string tHead = aPath.substr(0, tNestPos);
@@ -222,7 +223,7 @@ void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSp
             return;
         }
 
-        string tName = tHead;
+        const string& tName = tHead;
 
         coremsg_debug("  retrieving final surfaces for name <" << tName << ">" << eom);
 
@@ -252,8 +253,8 @@ void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSp
 
             RetrieveSpacesByTag(tAccumulator, aNode, tTag, tRecursion);
 
-            for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-                RetrieveSurfacesByPath(anAccumulator, *tIt, tTail);
+            for (auto& tIt : tAccumulator) {
+                RetrieveSurfacesByPath(anAccumulator, tIt, tTail);
             }
 
             return;
@@ -278,28 +279,28 @@ void KGInterface::RetrieveSurfacesByPath(vector<KGSurface*>& anAccumulator, KGSp
 
             RetrieveSpacesByWildcard(tAccumulator, aNode, tRecursion);
 
-            for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-                RetrieveSurfacesByPath(anAccumulator, *tIt, tTail);
+            for (auto& tIt : tAccumulator) {
+                RetrieveSurfacesByPath(anAccumulator, tIt, tTail);
             }
 
             return;
         }
 
-        string tName = tHead;
+        const string& tName = tHead;
 
         coremsg_debug("  retrieving spaces for name <" << tName << ">" << eom);
 
         RetrieveSpacesByName(tAccumulator, aNode, tName);
 
-        for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-            RetrieveSurfacesByPath(anAccumulator, *tIt, tTail);
+        for (auto& tIt : tAccumulator) {
+            RetrieveSurfacesByPath(anAccumulator, tIt, tTail);
         }
 
         return;
     }
 }
 
-void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace* aNode, string aPath)
+void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace* aNode, const string& aPath)
 {
     size_t tNestPos = aPath.find_first_of(sNest);
     string tHead = aPath.substr(0, tNestPos);
@@ -353,7 +354,7 @@ void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace*
             return;
         }
 
-        string tName = tHead;
+        const string& tName = tHead;
 
         coremsg_debug("  retrieving final spaces for name <" << tName << ">" << eom);
 
@@ -382,8 +383,8 @@ void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace*
 
             RetrieveSpacesByTag(tAccumulator, aNode, tTag, tRecursion);
 
-            for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-                RetrieveSpacesByPath(anAccumulator, *tIt, tTail);
+            for (auto& tIt : tAccumulator) {
+                RetrieveSpacesByPath(anAccumulator, tIt, tTail);
             }
 
             return;
@@ -408,28 +409,28 @@ void KGInterface::RetrieveSpacesByPath(vector<KGSpace*>& anAccumulator, KGSpace*
 
             RetrieveSpacesByWildcard(tAccumulator, aNode, tRecursion);
 
-            for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-                RetrieveSpacesByPath(anAccumulator, *tIt, tTail);
+            for (auto& tIt : tAccumulator) {
+                RetrieveSpacesByPath(anAccumulator, tIt, tTail);
             }
 
             return;
         }
 
-        string tName = tHead;
+        const string& tName = tHead;
 
         coremsg_debug("  retrieving spaces for name <" << tName << ">" << eom);
 
         RetrieveSpacesByName(tAccumulator, aNode, tName);
 
-        for (auto tIt = tAccumulator.begin(); tIt != tAccumulator.end(); tIt++) {
-            RetrieveSpacesByPath(anAccumulator, *tIt, tTail);
+        for (auto& tIt : tAccumulator) {
+            RetrieveSpacesByPath(anAccumulator, tIt, tTail);
         }
 
         return;
     }
 }
 
-void KGInterface::RetrieveSurfacesByName(vector<KGSurface*>& anAccumulator, KGSpace* aNode, string aName)
+void KGInterface::RetrieveSurfacesByName(vector<KGSurface*>& anAccumulator, KGSpace* aNode, const string& aName)
 {
     KGSurface* tBoundary;
     vector<KGSurface*>::const_iterator tBoundaryIt;
@@ -454,7 +455,7 @@ void KGInterface::RetrieveSurfacesByName(vector<KGSurface*>& anAccumulator, KGSp
 
     return;
 }
-void KGInterface::RetrieveSpacesByName(vector<KGSpace*>& anAccumulator, KGSpace* aNode, string aName)
+void KGInterface::RetrieveSpacesByName(vector<KGSpace*>& anAccumulator, KGSpace* aNode, const string& aName)
 {
     KGSpace* tSpace;
     vector<KGSpace*>::const_iterator tSpaceIt;
@@ -469,7 +470,8 @@ void KGInterface::RetrieveSpacesByName(vector<KGSpace*>& anAccumulator, KGSpace*
     return;
 }
 
-void KGInterface::RetrieveSurfacesByTag(vector<KGSurface*>& anAccumulator, KGSpace* aNode, string aTag, int aDepth)
+void KGInterface::RetrieveSurfacesByTag(vector<KGSurface*>& anAccumulator, KGSpace* aNode, const string& aTag,
+                                        int aDepth)
 {
     if (aDepth == 0) {
         return;
@@ -505,7 +507,7 @@ void KGInterface::RetrieveSurfacesByTag(vector<KGSurface*>& anAccumulator, KGSpa
 
     return;
 }
-void KGInterface::RetrieveSpacesByTag(vector<KGSpace*>& anAccumulator, KGSpace* aNode, string aTag, int aDepth)
+void KGInterface::RetrieveSpacesByTag(vector<KGSpace*>& anAccumulator, KGSpace* aNode, const string& aTag, int aDepth)
 {
     if (aDepth == 0) {
         return;

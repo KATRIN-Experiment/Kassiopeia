@@ -27,14 +27,14 @@ template<> inline bool KSVTKGeneratorPainterBuilder::AddAttribute(KContainer* aC
         return true;
     }
     if (aContainer->GetName() == "electric_field") {
-        auto tField = getElectricField(aContainer->AsReference<string>());
+        auto tField = getElectricField(aContainer->AsString());
         if (!tField)
             return false;
         fObject->AddElectricField(tField);
         return true;
     }
     if (aContainer->GetName() == "magnetic_field") {
-        auto tField = getMagneticField(aContainer->AsReference<string>());
+        auto tField = getMagneticField(aContainer->AsString());
         if (!tField)
             return false;
         fObject->AddMagneticField(tField);

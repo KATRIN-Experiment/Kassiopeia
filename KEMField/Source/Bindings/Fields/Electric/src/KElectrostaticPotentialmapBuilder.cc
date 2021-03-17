@@ -16,24 +16,25 @@ using namespace KEMField;
 namespace katrin
 {
 
-template<> KElectrostaticPotentialmapBuilder::~KComplexElement() {}
+template<> KElectrostaticPotentialmapBuilder::~KComplexElement() = default;
 
-STATICINT sKElectrostaticPotentialmapStructure = KElectrostaticPotentialmapBuilder::Attribute<string>("name") +
-                                                 KElectrostaticPotentialmapBuilder::Attribute<string>("directory") +
-                                                 KElectrostaticPotentialmapBuilder::Attribute<string>("file") +
-                                                 KElectrostaticPotentialmapBuilder::Attribute<string>("interpolation");
+STATICINT sKElectrostaticPotentialmapStructure =
+    KElectrostaticPotentialmapBuilder::Attribute<std::string>("name") +
+    KElectrostaticPotentialmapBuilder::Attribute<std::string>("directory") +
+    KElectrostaticPotentialmapBuilder::Attribute<std::string>("file") +
+    KElectrostaticPotentialmapBuilder::Attribute<std::string>("interpolation");
 
 STATICINT sKElectrostaticPotentialmap =
     KEMToolboxBuilder::ComplexElement<KElectrostaticPotentialmap>("electric_potentialmap");
 
 ////////////////////////////////////////////////////////////////////
 
-template<> KElectrostaticPotentialmapCalculatorBuilder::~KComplexElement() {}
+template<> KElectrostaticPotentialmapCalculatorBuilder::~KComplexElement() = default;
 
 STATICINT sKElectrostaticPotentialmapCalculatorStructure =
-    KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("name") +
-    KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("directory") +
-    KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("file") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<std::string>("name") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<std::string>("directory") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<std::string>("file") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("force_update") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("compute_field") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<KEMStreamableThreeVector>("center") +
@@ -42,8 +43,8 @@ STATICINT sKElectrostaticPotentialmapCalculatorStructure =
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("mirror_y") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<bool>("mirror_z") +
     KElectrostaticPotentialmapCalculatorBuilder::Attribute<double>("spacing") +
-    KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("spaces") +
-    KElectrostaticPotentialmapCalculatorBuilder::Attribute<string>("field") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<std::string>("spaces") +
+    KElectrostaticPotentialmapCalculatorBuilder::Attribute<std::string>("field") +
     // support of deprecated old xml:
     KElectrostaticPotentialmapCalculatorBuilder::ComplexElement<KElectrostaticConstantField>(
         "field_electric_constant") +

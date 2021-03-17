@@ -4,13 +4,8 @@ namespace Kassiopeia
 {
 
 KSCommand::KSCommand() : KSObject(), fState(eIdle), fParentComponent(nullptr), fChildComponent(nullptr) {}
-KSCommand::KSCommand(const KSCommand& aCopy) :
-    KSObject(aCopy),
-    fState(aCopy.fState),
-    fParentComponent(aCopy.fParentComponent),
-    fChildComponent(aCopy.fChildComponent)
-{}
-KSCommand::~KSCommand() {}
+KSCommand::KSCommand(const KSCommand&) = default;
+KSCommand::~KSCommand() = default;
 
 const KSCommand::StateType& KSCommand::State() const
 {

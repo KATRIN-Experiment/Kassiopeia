@@ -31,8 +31,6 @@
 namespace Kassiopeia
 {
 
-using std::vector;
-
 class KSGenShakeOff
 {
 
@@ -40,7 +38,7 @@ class KSGenShakeOff
     KSGenShakeOff();
     ~KSGenShakeOff();
 
-    void CreateSO(vector<int>& vacancy, std::vector<double>& energy);
+    void CreateSO(std::vector<int>& vacancy, std::vector<double>& energy);
     void SetForceCreation(bool asetting)
     {
         fForceCreation = asetting;
@@ -49,10 +47,10 @@ class KSGenShakeOff
   protected:
     double DiceEnergy(double bindingEnergy, int vacancy);
     std::string fFilename;
-    vector<int> fShell;
-    vector<double> fBindE;
-    vector<double> fSoProb;
-    vector<double> fSoProbNorm;
+    std::vector<int> fShell;
+    std::vector<double> fBindE;
+    std::vector<double> fSoProb;
+    std::vector<double> fSoProbNorm;
     bool fForceCreation;
 
     bool ReadData();

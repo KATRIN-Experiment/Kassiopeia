@@ -31,7 +31,7 @@ namespace KEMField
 class KSAInputNode : public KSAObject
 {
   public:
-    KSAInputNode(std::string name) : KSAObject(name)
+    KSAInputNode(const std::string& name) : KSAObject(name)
     {
         fStatus = KSANODE_STAY;
         fIndex = 0;
@@ -55,8 +55,8 @@ class KSAInputNode : public KSAObject
 
     ~KSAInputNode() override
     {
-        for (unsigned int i = 0; i < fChildren.size(); i++) {
-            delete fChildren[i];
+        for (auto& i : fChildren) {
+            delete i;
         }
 
         fChildren.clear();

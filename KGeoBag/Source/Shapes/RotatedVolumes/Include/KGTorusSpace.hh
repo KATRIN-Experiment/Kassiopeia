@@ -12,6 +12,11 @@ class KGTorusSpace : public KGRotatedCircleSpace
     KGTorusSpace();
     ~KGTorusSpace() override;
 
+    static std::string Name()
+    {
+        return "torus_space";
+    }
+
   public:
     void Z(const double& aZ);
     void R(const double& anR);

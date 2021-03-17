@@ -42,12 +42,12 @@ template<typename T, unsigned int U = 0> class KSAObjectOutputNode : public KSAO
     // general case: T is not derived from
 
   public:
-    KSAObjectOutputNode(std::string name, const T* obj) : KSAOutputNode(name), fObject(obj)
+    KSAObjectOutputNode(const std::string& name, const T* obj) : KSAOutputNode(name), fObject(obj)
     {
         ;
     };
 
-    KSAObjectOutputNode(std::string name) : KSAOutputNode(name), fObject(nullptr)
+    KSAObjectOutputNode(const std::string& name) : KSAOutputNode(name), fObject(nullptr)
     {
         ;
     };
@@ -95,12 +95,12 @@ template<typename T> class KSAObjectOutputNode<T, 1> : public KSAOutputNode
     //this has not been changed from the general case yet...so everything should function
     //the same as before
   public:
-    KSAObjectOutputNode(std::string name, const T* obj) : KSAOutputNode(name), fObject(obj)
+    KSAObjectOutputNode(const std::string& name, const T* obj) : KSAOutputNode(name), fObject(obj)
     {
         fTagSuppression = true;
     };
 
-    KSAObjectOutputNode(std::string name) : KSAOutputNode(name), fObject(NULL)
+    KSAObjectOutputNode(const std::string& name) : KSAOutputNode(name), fObject(NULL)
     {
         fTagSuppression = true;
     };
@@ -264,14 +264,14 @@ template<typename T> class KSAObjectOutputNode<T, 1> : public KSAOutputNode
 template<typename T> class KSAObjectOutputNode<std::vector<T>> : public KSAOutputNode
 {
   public:
-    KSAObjectOutputNode(std::string name, const std::vector<T>* obj) : KSAOutputNode(name), fObject(obj)
+    KSAObjectOutputNode(const std::string& name, const std::vector<T>* obj) : KSAOutputNode(name), fObject(obj)
     {
         fElementNode = new KSAObjectOutputNode<T, KSAIsDerivedFrom<T, KSAFixedSizeInputOutputObject>::Is>();
         fElementName = KSAClassName<T>::name();
         //all elements must have the same name, this is required by input
     };
 
-    KSAObjectOutputNode(std::string name) : KSAOutputNode(name), fObject(NULL)
+    KSAObjectOutputNode(const std::string& name) : KSAOutputNode(name), fObject(NULL)
     {
         fElementNode = new KSAObjectOutputNode<T, KSAIsDerivedFrom<T, KSAFixedSizeInputOutputObject>::Is>();
         fElementName = KSAClassName<T>::name();
@@ -358,13 +358,13 @@ template<typename T> class KSAObjectOutputNode<std::vector<T>> : public KSAOutpu
 template<typename T> class KSAObjectOutputNode<std::vector<T*>> : public KSAOutputNode
 {
   public:
-    KSAObjectOutputNode(std::string name, const std::vector<T*>* obj) : KSAOutputNode(name), fObject(obj)
+    KSAObjectOutputNode(const std::string& name, const std::vector<T*>* obj) : KSAOutputNode(name), fObject(obj)
     {
         //fElementNode = new KSAObjectOutputNode< T >();
         fElementNode = new KSAObjectOutputNode<T, KSAIsDerivedFrom<T, KSAFixedSizeInputOutputObject>::Is>();
     };
 
-    KSAObjectOutputNode(std::string name) : KSAOutputNode(name), fObject(NULL)
+    KSAObjectOutputNode(const std::string& name) : KSAOutputNode(name), fObject(NULL)
     {
         //fElementNode = new KSAObjectOutputNode< T >();
         fElementNode = new KSAObjectOutputNode<T, KSAIsDerivedFrom<T, KSAFixedSizeInputOutputObject>::Is>();
@@ -453,7 +453,7 @@ template<typename T> class KSAObjectOutputNode<std::vector<T*>> : public KSAOutp
 template<typename T> class KSAObjectOutputNode<std::list<T>> : public KSAOutputNode
 {
   public:
-    KSAObjectOutputNode(std::string name, const std::list<T>* obj) : KSAOutputNode(name), fObject(obj)
+    KSAObjectOutputNode(const std::string& name, const std::list<T>* obj) : KSAOutputNode(name), fObject(obj)
     {
         fObjIT = fObject->begin();
         //            fElementNode = new KSAObjectOutputNode< T >();
@@ -463,7 +463,7 @@ template<typename T> class KSAObjectOutputNode<std::list<T>> : public KSAOutputN
         fFirstCall = true;
     };
 
-    KSAObjectOutputNode(std::string name) : KSAOutputNode(name), fObject(NULL)
+    KSAObjectOutputNode(const std::string& name) : KSAOutputNode(name), fObject(NULL)
     {
         //            fElementNode = new KSAObjectOutputNode< T >();
         fElementNode = new KSAObjectOutputNode<T, KSAIsDerivedFrom<T, KSAFixedSizeInputOutputObject>::Is>();

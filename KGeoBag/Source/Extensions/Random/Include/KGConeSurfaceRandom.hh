@@ -20,7 +20,7 @@ class KGConeSurfaceRandom : virtual public KGShapeRandom, public KGConeSurface::
 {
   public:
     KGConeSurfaceRandom() : KGShapeRandom() {}
-    ~KGConeSurfaceRandom() override {}
+    ~KGConeSurfaceRandom() override = default;
 
     /**
      * \brief Visitor function for dicing a point on

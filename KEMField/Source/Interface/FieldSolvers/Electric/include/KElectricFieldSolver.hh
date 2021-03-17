@@ -11,6 +11,8 @@
 #include "KSurfaceContainer.hh"
 #include "KThreeVector_KEMField.hh"
 
+#include <memory>
+
 namespace KEMField
 {
 
@@ -18,7 +20,7 @@ class KElectricFieldSolver
 {
   public:
     KElectricFieldSolver() : fInitialized(false) {}
-    virtual ~KElectricFieldSolver() {}
+    virtual ~KElectricFieldSolver() = default;
 
     void Initialize(KSurfaceContainer& container)
     {
@@ -33,12 +35,12 @@ class KElectricFieldSolver
         return PotentialCore(P);
     }
 
-    KThreeVector ElectricField(const KPosition& P) const
+    KFieldVector ElectricField(const KPosition& P) const
     {
         return ElectricFieldCore(P);
     }
 
-    std::pair<KThreeVector, double> ElectricFieldAndPotential(const KPosition& P) const
+    std::pair<KFieldVector, double> ElectricFieldAndPotential(const KPosition& P) const
     {
         return ElectricFieldAndPotentialCore(P);
     }
@@ -46,9 +48,9 @@ class KElectricFieldSolver
   private:
     virtual void InitializeCore(KSurfaceContainer& container) = 0;
     virtual double PotentialCore(const KPosition& P) const = 0;
-    virtual KThreeVector ElectricFieldCore(const KPosition& P) const = 0;
+    virtual KFieldVector ElectricFieldCore(const KPosition& P) const = 0;
 
-    virtual std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
+    virtual std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const
     {
         //the default behavior is just to call the field and potential separately
 
@@ -57,9 +59,9 @@ class KElectricFieldSolver
         //at the same time with minimal additional work (e.g. ZH and fast multipole).
 
         double potential = PotentialCore(P);
-        KThreeVector field = ElectricFieldCore(P);
+        KFieldVector field = ElectricFieldCore(P);
 
-        return std::pair<KThreeVector, double>(field, potential);
+        return std::pair<KFieldVector, double>(field, potential);
     };
 
     bool fInitialized;

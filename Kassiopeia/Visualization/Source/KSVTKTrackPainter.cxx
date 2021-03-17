@@ -7,6 +7,7 @@
 #include "vtkPolyLine.h"
 #include "vtkProperty.h"
 
+using namespace katrin;
 using namespace std;
 
 namespace Kassiopeia
@@ -41,7 +42,7 @@ KSVTKTrackPainter::KSVTKTrackPainter() :
     fMapper->ScalarVisibilityOn();
     fActor->SetMapper(fMapper);
 }
-KSVTKTrackPainter::~KSVTKTrackPainter() {}
+KSVTKTrackPainter::~KSVTKTrackPainter() = default;
 
 void KSVTKTrackPainter::Render()
 {
@@ -144,6 +145,8 @@ void KSVTKTrackPainter::Render()
             }
         }
     }
+
+    vismsg(eNormal) << "vtk track painter found " << fLines->GetNumberOfCells() << " tracks " << eom;
 
     tReader.CloseFile();
 

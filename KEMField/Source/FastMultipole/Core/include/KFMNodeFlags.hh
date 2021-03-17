@@ -26,7 +26,8 @@ template<unsigned int NFLAGS> class KFMNodeFlags
         };
     };
 
-    virtual ~KFMNodeFlags(){};
+    virtual ~KFMNodeFlags() = default;
+    ;
 
     void SetFlag(unsigned int flag_index, char flag_value)
     {

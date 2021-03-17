@@ -15,10 +15,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KMagneticDipoleFieldBuilder::~KComplexElement() {}
+template<> KMagneticDipoleFieldBuilder::~KComplexElement() = default;
 
 STATICINT sKMagneticDipoleFieldStructure =
-    KMagneticDipoleFieldBuilder::Attribute<string>("name") +
+    KMagneticDipoleFieldBuilder::Attribute<std::string>("name") +
     KMagneticDipoleFieldBuilder::Attribute<KEMStreamableThreeVector>("location") +
     KMagneticDipoleFieldBuilder::Attribute<KEMStreamableThreeVector>("moment");
 

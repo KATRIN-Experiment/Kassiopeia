@@ -35,7 +35,7 @@ class KElectricZHFieldSolver : public KElectricFieldSolver
 
     KZonalHarmonicParameters* GetParameters()
     {
-        return fParameters;
+        return fParameters.get();
     }
 
     std::set<std::pair<double, double>> CentralSourcePoints();
@@ -45,14 +45,14 @@ class KElectricZHFieldSolver : public KElectricFieldSolver
     void InitializeCore(KSurfaceContainer& container) override;
 
     double PotentialCore(const KPosition& P) const override;
-    KThreeVector ElectricFieldCore(const KPosition& P) const override;
-    std::pair<KThreeVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const override;
+    KFieldVector ElectricFieldCore(const KPosition& P) const override;
+    std::pair<KFieldVector, double> ElectricFieldAndPotentialCore(const KPosition& P) const override;
 
     KEBIPolicy fIntegratorPolicy;
     KElectrostaticBoundaryIntegrator fIntegrator;
     KZonalHarmonicContainer<KElectrostaticBasis>* fZHContainer;
     KZonalHarmonicFieldSolver<KElectrostaticBasis>* fZonalHarmonicFieldSolver;
-    KZonalHarmonicParameters* fParameters;
+    std::shared_ptr<KZonalHarmonicParameters> fParameters;
 };
 
 } /* namespace KEMField */

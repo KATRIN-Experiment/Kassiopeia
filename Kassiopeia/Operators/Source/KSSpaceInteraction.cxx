@@ -3,7 +3,7 @@
 namespace Kassiopeia
 {
 
-KSSpaceInteraction::KSSpaceInteraction() {}
-KSSpaceInteraction::~KSSpaceInteraction() {}
+KSSpaceInteraction::KSSpaceInteraction() = default;
+KSSpaceInteraction::~KSSpaceInteraction() = default;
 
 }  // namespace Kassiopeia

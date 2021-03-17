@@ -25,7 +25,7 @@ template<class XValueType> class KSComponentMaximum : public KSComponent
         this->SetParent(aCopy.fParentComponent);
         aCopy.fParentComponent->AddChild(this);
     }
-    ~KSComponentMaximum() override {}
+    ~KSComponentMaximum() override = default;
 
     //***********
     //KSComponent

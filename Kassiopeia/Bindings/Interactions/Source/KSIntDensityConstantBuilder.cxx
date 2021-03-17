@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntDensityConstantBuilder::~KComplexElement() {}
+template<> KSIntDensityConstantBuilder::~KComplexElement() = default;
 
-STATICINT sKSIntDensityConstantStructure = KSIntDensityConstantBuilder::Attribute<string>("name") +
+STATICINT sKSIntDensityConstantStructure = KSIntDensityConstantBuilder::Attribute<std::string>("name") +
                                            KSIntDensityConstantBuilder::Attribute<double>("temperature") +
                                            KSIntDensityConstantBuilder::Attribute<double>("pressure") +
                                            KSIntDensityConstantBuilder::Attribute<double>("pressure_mbar") +

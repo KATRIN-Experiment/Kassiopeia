@@ -21,12 +21,12 @@ class KExceptionBase : public std::exception
 {
   public:
     KExceptionBase();
-    ~KExceptionBase() throw() override {}
+    ~KExceptionBase() noexcept override = default;
 
     KExceptionBase(const KExceptionBase& toCopy);
-    void operator=(const KExceptionBase& toCopy);
+    KExceptionBase& operator=(const KExceptionBase& toCopy);
 
-    const char* what() const throw() override;
+    const char* what() const noexcept override;
 
   protected:
     std::ostringstream fMessage;
@@ -67,7 +67,7 @@ class KException : public KExceptionPrototype<KException, KExceptionBase>
 {};
 
 
-inline KExceptionBase::KExceptionBase() {}
+inline KExceptionBase::KExceptionBase() = default;
 
 inline KExceptionBase::KExceptionBase(const KExceptionBase& toCopy) :
     std::exception(toCopy),
@@ -75,14 +75,15 @@ inline KExceptionBase::KExceptionBase(const KExceptionBase& toCopy) :
     fNestedMessage(toCopy.fNestedMessage)
 {}
 
-inline void KExceptionBase::operator=(const KExceptionBase& toCopy)
+inline KExceptionBase& KExceptionBase::operator=(const KExceptionBase& toCopy)
 {
     std::exception::operator=(toCopy);
     fMessage.str(toCopy.fMessage.str());
     fNestedMessage = toCopy.fNestedMessage;
+    return *this;
 }
 
-inline const char* KExceptionBase::what() const throw()
+inline const char* KExceptionBase::what() const noexcept
 {
     fWhat = fMessage.str();
     if (!fNestedMessage.empty()) {

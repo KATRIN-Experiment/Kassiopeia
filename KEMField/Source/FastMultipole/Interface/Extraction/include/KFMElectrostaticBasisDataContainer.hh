@@ -33,21 +33,22 @@ class KFMElectrostaticBasisDataContainer : public KFMElectrostaticBasisDataConta
   public:
     KFMElectrostaticBasisDataContainer(const KSurfaceContainer& container) :
         fSurfaceContainer(&container),
-        fSortedSurfaceContainer(NULL)
+        fSortedSurfaceContainer(nullptr)
     {
         fContainerIsSorted = false;
     };
 
     KFMElectrostaticBasisDataContainer(const KSortedSurfaceContainer& container) :
-        fSurfaceContainer(NULL),
+        fSurfaceContainer(nullptr),
         fSortedSurfaceContainer(&container)
     {
         fContainerIsSorted = true;
     };
 
-    virtual ~KFMElectrostaticBasisDataContainer(){};
+    ~KFMElectrostaticBasisDataContainer() override = default;
+    ;
 
-    virtual unsigned int GetNObjects() const
+    unsigned int GetNObjects() const override
     {
         if (fContainerIsSorted) {
             return fSortedSurfaceContainer->size();
@@ -57,12 +58,12 @@ class KFMElectrostaticBasisDataContainer : public KFMElectrostaticBasisDataConta
         }
     };
 
-    virtual void AddObject(const KFMBasisData<1>& /*obj*/)
+    void AddObject(const KFMBasisData<1>& /*obj*/) override
     {
         //warning...cannot add object to a virtual container
     }
 
-    virtual KFMBasisData<1>* GetObjectWithID(const unsigned int& id)
+    KFMBasisData<1>* GetObjectWithID(const unsigned int& id) override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fBasisExtractor);
@@ -88,7 +89,7 @@ class KFMElectrostaticBasisDataContainer : public KFMElectrostaticBasisDataConta
         }
     }
 
-    virtual const KFMBasisData<1>* GetObjectWithID(const unsigned int& id) const
+    const KFMBasisData<1>* GetObjectWithID(const unsigned int& id) const override
     {
         if (fContainerIsSorted) {
             fSortedSurfaceContainer->at(id)->Accept(fBasisExtractor);
@@ -114,7 +115,7 @@ class KFMElectrostaticBasisDataContainer : public KFMElectrostaticBasisDataConta
         }
     }
 
-    virtual void DeleteAllObjects()
+    void DeleteAllObjects() override
     {
         ;
     };  //does nothing, no objects to delete

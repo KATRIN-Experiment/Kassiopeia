@@ -55,7 +55,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${OBJECTS_HEADER_PATH} )
-add_library( KassiopeiaObjects SHARED ${OBJECTS_SOURCE_FILENAMES} )
+add_library( KassiopeiaObjects SHARED ${OBJECTS_SOURCE_FILENAMES} ${OBJECTS_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaObjects PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaObjects
     ${Kommon_LIBRARIES}

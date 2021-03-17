@@ -14,6 +14,8 @@
 #include "KTagProcessor.hh"
 #include "KVariableProcessor.hh"
 
+#include <memory>
+
 #ifdef Kommon_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
@@ -39,7 +41,7 @@ KXMLInitializer::KXMLInitializer() :
     fUsingDefaultPaths(false)
 {}
 
-KXMLInitializer::~KXMLInitializer() {}
+KXMLInitializer::~KXMLInitializer() = default;
 
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
@@ -216,6 +218,7 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
 {
     // BUG: should clean up dynamic memory allocations before making new ones
 
+    delete fTokenizer;
     fTokenizer = new KXMLTokenizer();
 
     if (!variables.empty()) {
@@ -253,7 +256,7 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
     tPrintProcessor->InsertAfter(tConditionProcessor);
 
     if (!fConfigSerializer)
-        fConfigSerializer.reset(new KSerializationProcessor());
+        fConfigSerializer = std::make_unique<KSerializationProcessor>();
     fConfigSerializer->InsertAfter(tPrintProcessor);
 
     auto* tTagProcessor = new KTagProcessor();

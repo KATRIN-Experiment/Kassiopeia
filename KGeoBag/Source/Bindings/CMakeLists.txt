@@ -95,6 +95,8 @@ set( BINDINGS_HEADER_FILES
 
   # discrete rotational mesh
   Extensions/DiscreteRotationalMesh/Include/KGDiscreteRotationalMeshBuilder.hh
+
+  Visualization/Basic/Include/KGGeometryPrinterBuilder.hh
 )
 
 if( KGeoBag_USE_VTK )
@@ -213,6 +215,8 @@ set( BINDINGS_SOURCE_FILES
 
     # discrete rotational mesh
     Extensions/DiscreteRotationalMesh/Source/KGDiscreteRotationalMeshBuilder.cc
+
+    Visualization/Basic/Source/KGGeometryPrinterBuilder.cc
 )
 
 if( KGeoBag_USE_VTK )
@@ -251,7 +255,7 @@ kasper_internal_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/Mesh/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/AxialMesh/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/DiscreteRotationalMesh/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/Visualization/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Visualization/Basic/Include
 )
 
 if( KGeoBag_USE_VTK )
@@ -268,7 +272,7 @@ endif( KGeoBag_USE_ROOT )
 
 # target
 add_library( KGeoBagBindings SHARED
-	${BINDINGS_SOURCE_FILES}
+	${BINDINGS_SOURCE_FILES} ${BINDINGS_HEADER_FILES}
 )
 set( BINDINGS_LIBRARIES
 	${Kommon_LIBRARIES}

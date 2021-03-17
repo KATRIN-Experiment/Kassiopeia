@@ -7,14 +7,14 @@ namespace Kassiopeia
 
 KSTermMinLongEnergy::KSTermMinLongEnergy() : fMinLongEnergy(0.) {}
 KSTermMinLongEnergy::KSTermMinLongEnergy(const KSTermMinLongEnergy& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fMinLongEnergy(aCopy.fMinLongEnergy)
 {}
 KSTermMinLongEnergy* KSTermMinLongEnergy::Clone() const
 {
     return new KSTermMinLongEnergy(*this);
 }
-KSTermMinLongEnergy::~KSTermMinLongEnergy() {}
+KSTermMinLongEnergy::~KSTermMinLongEnergy() = default;
 
 void KSTermMinLongEnergy::CalculateTermination(const KSParticle& anInitialParticle, bool& aFlag)
 {

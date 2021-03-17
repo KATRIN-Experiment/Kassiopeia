@@ -12,19 +12,19 @@ STATICINT sElectrostaticDirichlet =
     KGInterfaceBuilder::ComplexElement<KGBEMAttributor<KEMField::KElectrostaticBasis, KEMField::KDirichletBoundary>>(
         "electrostatic_dirichlet");
 
-STATICINT sElectrostaticDirichletStructure = KGElectrostaticDirichletBuilder::Attribute<string>("name") +
+STATICINT sElectrostaticDirichletStructure = KGElectrostaticDirichletBuilder::Attribute<std::string>("name") +
                                              KGElectrostaticDirichletBuilder::Attribute<double>("value") +
-                                             KGElectrostaticDirichletBuilder::Attribute<string>("surfaces") +
-                                             KGElectrostaticDirichletBuilder::Attribute<string>("spaces");
+                                             KGElectrostaticDirichletBuilder::Attribute<std::string>("surfaces") +
+                                             KGElectrostaticDirichletBuilder::Attribute<std::string>("spaces");
 
 STATICINT sElectrostaticNeumann =
     KGInterfaceBuilder::ComplexElement<KGBEMAttributor<KEMField::KElectrostaticBasis, KEMField::KNeumannBoundary>>(
         "electrostatic_neumann");
 
-STATICINT sElectrostaticNeumannStructure = KGElectrostaticNeumannBuilder::Attribute<string>("name") +
+STATICINT sElectrostaticNeumannStructure = KGElectrostaticNeumannBuilder::Attribute<std::string>("name") +
                                            KGElectrostaticNeumannBuilder::Attribute<double>("flux") +
-                                           KGElectrostaticNeumannBuilder::Attribute<string>("surfaces") +
-                                           KGElectrostaticNeumannBuilder::Attribute<string>("spaces");
+                                           KGElectrostaticNeumannBuilder::Attribute<std::string>("surfaces") +
+                                           KGElectrostaticNeumannBuilder::Attribute<std::string>("spaces");
 
 //STATICINT sMagnetostaticDirichlet =
 //    KGInterfaceBuilder::ComplexElement< KGBEMAttributor< KEMField::KMagnetostaticBasis, KEMField::KDirichletBoundary > >( "magnetostatic_dirichlet" );

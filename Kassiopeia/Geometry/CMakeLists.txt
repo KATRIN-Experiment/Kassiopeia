@@ -1,12 +1,12 @@
 # header files
 set( GEOMETRY_HEADER_BASENAMES
     KSGeometryMessage.h
-    
+
     KSGeoSpace.h
     KSGeoSurface.h
     KSGeoSide.h
 )
-set( GEOMETRY_HEADER_PATH 
+set( GEOMETRY_HEADER_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${GEOMETRY_HEADER_BASENAMES} )
@@ -16,12 +16,12 @@ endforeach( BASENAME )
 # source files
 set( GEOMETRY_SOURCE_BASENAMES
     KSGeometryMessage.cxx
-    
+
     KSGeoSpace.cxx
     KSGeoSurface.cxx
     KSGeoSide.cxx
 )
-set( GEOMETRY_SOURCE_PATH 
+set( GEOMETRY_SOURCE_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${GEOMETRY_SOURCE_BASENAMES} )
@@ -31,7 +31,7 @@ endforeach( BASENAME )
 # data files
 set( GEOMETRY_DATA_BASENAMES
 )
-set( GEOMETRY_DATA_PATH 
+set( GEOMETRY_DATA_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${GEOMETRY_DATA_BASENAMES} )
@@ -41,7 +41,7 @@ endforeach( BASENAME )
 # config files
 set( GEOMETRY_CONFIG_BASENAMES
 )
-set( GEOMETRY_CONFIG_PATH 
+set( GEOMETRY_CONFIG_PATH
 	${CMAKE_CURRENT_SOURCE_DIR}/Config
 )
 foreach( BASENAME ${GEOMETRY_CONFIG_BASENAMES} )
@@ -50,7 +50,7 @@ endforeach( BASENAME )
 
 # library
 kasper_internal_include_directories( ${GEOMETRY_HEADER_PATH} )
-add_library( KassiopeiaGeometry SHARED ${GEOMETRY_SOURCE_FILENAMES} )
+add_library( KassiopeiaGeometry SHARED ${GEOMETRY_SOURCE_FILENAMES} ${GEOMETRY_HEADER_FILENAMES} )
 set_target_properties( KassiopeiaGeometry PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 target_link_libraries( KassiopeiaGeometry
     ${Kommon_LIBRARIES}

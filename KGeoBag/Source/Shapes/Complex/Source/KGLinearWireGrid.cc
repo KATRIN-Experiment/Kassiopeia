@@ -19,33 +19,33 @@ KGLinearWireGrid* KGLinearWireGrid::Clone() const
     return w;
 }
 
-double KGLinearWireGrid::GetLength() const
+double KGLinearWireGrid::GetLength()
 {
     // TODO
     return 0.;
 }
 
 
-double KGLinearWireGrid::Area() const
+double KGLinearWireGrid::Area()
 {
     // TODO
     return 0.;
 }
 
-double KGLinearWireGrid::Volume() const
+double KGLinearWireGrid::Volume()
 {
     // TODO
     return 0.;
 }
 
-bool KGLinearWireGrid::ContainsPoint(const double* P) const
+bool KGLinearWireGrid::ContainsPoint(const double* P)
 {
     // TODO
     (void) P;
     return true;
 }
 
-double KGLinearWireGrid::DistanceTo(const double* P, double* P_in, double* P_norm) const
+double KGLinearWireGrid::DistanceTo(const double* P, const double* P_in, const double* P_norm)
 {
     // TODO
     (void) P;

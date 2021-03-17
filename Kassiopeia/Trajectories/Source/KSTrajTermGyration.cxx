@@ -6,13 +6,13 @@
 namespace Kassiopeia
 {
 
-KSTrajTermGyration::KSTrajTermGyration() {}
+KSTrajTermGyration::KSTrajTermGyration() = default;
 KSTrajTermGyration::KSTrajTermGyration(const KSTrajTermGyration&) : KSComponent() {}
 KSTrajTermGyration* KSTrajTermGyration::Clone() const
 {
     return new KSTrajTermGyration(*this);
 }
-KSTrajTermGyration::~KSTrajTermGyration() {}
+KSTrajTermGyration::~KSTrajTermGyration() = default;
 
 void KSTrajTermGyration::Differentiate(double /*aTime*/, const KSTrajAdiabaticParticle& aParticle,
                                        KSTrajAdiabaticDerivative& aDerivative) const

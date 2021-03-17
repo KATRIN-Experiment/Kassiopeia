@@ -20,11 +20,11 @@
 #include "TH1D.h"
 
 #include <sstream>
-using std::stringstream;
 
 using namespace KEMField;
 using namespace Kassiopeia;
 using namespace katrin;
+using namespace std;
 
 int main(int anArgc, char** anArgv)
 {
@@ -48,7 +48,7 @@ int main(int anArgc, char** anArgv)
 
     KTextFile tInputFile;
     tInputFile.AddToBases("TestZonalHarmonics.xml");
-    tInputFile.AddToPaths(string(CONFIG_DEFAULT_DIR) + string("/Validation"));
+    tInputFile.AddToPaths(string(CONFIG_DEFAULT_DIR) + "/Validation");
     tXMLTokenizer.ProcessFile(&tInputFile);
 
     // read in command line parameters

@@ -35,16 +35,23 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddAttribute(KContainer
         aContainer->CopyTo(fObject, &KEMField::KStaticElectromagnetField::SetFile);
         return true;
     }
+    if (aContainer->GetName() == "save_magfield3") {
+        aContainer->CopyTo(fObject, &KEMField::KGStaticElectromagnetField::SetSaveMagfield3);
+        return true;
+    }
+    if (aContainer->GetName() == "directory_magfield3") {
+        aContainer->CopyTo(fObject, &KEMField::KGStaticElectromagnetField::SetDirectoryMagfield3);
+        return true;
+    }
     if (aContainer->GetName() == "surfaces") {
         std::vector<KGeoBag::KGSurface*> tSurfaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSurfaces(aContainer->AsString());
 
         std::vector<KGeoBag::KGSurface*>::const_iterator tSurfaceIt;
         KGeoBag::KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no surfaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -56,13 +63,12 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddAttribute(KContainer
     }
     if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsReference<std::string>());
+            KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
         std::vector<KGeoBag::KGSpace*>::const_iterator tSpaceIt;
         KGeoBag::KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -73,12 +79,10 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddAttribute(KContainer
         return true;
     }
     if (aContainer->GetName() == "system") {
-        KGeoBag::KGSpace* tSpace =
-            KGeoBag::KGInterface::GetInstance()->RetrieveSpace(aContainer->AsReference<std::string>());
+        KGeoBag::KGSpace* tSpace = KGeoBag::KGInterface::GetInstance()->RetrieveSpace(aContainer->AsString());
 
         if (tSpace == nullptr) {
-            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsReference<std::string>() << ">"
-                                 << eom;
+            BINDINGMSG(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return false;
         }
 

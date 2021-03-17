@@ -16,7 +16,7 @@ namespace Kassiopeia
 
 KSGenEnergyBetaRecoil::KSGenEnergyBetaRecoil() : fNMax(1000), fEMax(0.), fPMax(0.), fMinEnergy(0.), fMaxEnergy(-1.) {}
 KSGenEnergyBetaRecoil::KSGenEnergyBetaRecoil(const KSGenEnergyBetaRecoil& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fNMax(aCopy.fNMax),
     fEMax(aCopy.fEMax),
     fPMax(aCopy.fPMax),
@@ -27,7 +27,7 @@ KSGenEnergyBetaRecoil* KSGenEnergyBetaRecoil::Clone() const
 {
     return new KSGenEnergyBetaRecoil(*this);
 }
-KSGenEnergyBetaRecoil::~KSGenEnergyBetaRecoil() {}
+KSGenEnergyBetaRecoil::~KSGenEnergyBetaRecoil() = default;
 
 void KSGenEnergyBetaRecoil::Dice(KSParticleQueue* aPrimaries)
 {
@@ -61,7 +61,7 @@ double KSGenEnergyBetaRecoil::g1(double E)
     static const double y = 2.0 * KConst::M_neut_eV() / (Delta * Delta);
     double s = 1.0 - E * y;
     double g0 = pow(1.0 - x2 / s, 2.0) * sqrt(1 - s);
-    double g1 = g0 * (4 * (1 + x2 / s) - 4 / 3 * (s - x2) / s * (1 - s));
+    double g1 = g0 * (4.0 * (1 + x2 / s) - 4.0 / 3.0 * (s - x2) / s * (1 - s));
     return g1;
 }
 
@@ -73,7 +73,7 @@ double KSGenEnergyBetaRecoil::g2(double E)
     static const double y = 2.0 * KConst::M_neut_eV() / (Delta * Delta);
     double s = 1.0 - E * y;
     double g0 = pow(1.0 - x2 / s, 2.0) * sqrt(1 - s);
-    double g2 = g0 * (4 * (1 + x2 / s - 2 * s) - 4 / 3 * (s - x2) / s * (1 - s));
+    double g2 = g0 * (4.0 * (1 + x2 / s - 2 * s) - 4.0 / 3.0 * (s - x2) / s * (1 - s));
     return g2;
 }
 

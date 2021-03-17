@@ -27,8 +27,10 @@ namespace KEMField
 template<unsigned int NDIM> class KFMPointCloudToBoundingBallConverter
 {
   public:
-    KFMPointCloudToBoundingBallConverter(){};
-    virtual ~KFMPointCloudToBoundingBallConverter(){};
+    KFMPointCloudToBoundingBallConverter() = default;
+    ;
+    virtual ~KFMPointCloudToBoundingBallConverter() = default;
+    ;
 
     void Convert(const KFMObjectContainer<KFMPointCloud<NDIM>>* cloud_container,
                  KFMObjectContainer<KFMBall<NDIM>>* ball_container) const

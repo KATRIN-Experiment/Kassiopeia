@@ -60,9 +60,9 @@ template<typename ValueType> class KIterativeStateWriter : public KIterativeSolv
         fSaveNameRoot("partialConvergence"),
         fNConcurrentFiles(1)
     {}
-    ~KIterativeStateWriter() override {}
+    ~KIterativeStateWriter() override = default;
 
-    void SaveNameRoot(std::string root)
+    void SaveNameRoot(const std::string& root)
     {
         fSaveNameRoot = root;
     }
@@ -83,7 +83,6 @@ template<typename ValueType> class KIterativeStateWriter : public KIterativeSolv
     unsigned int fNConcurrentFiles;
 
     std::deque<std::string> fSavedContainerFiles;
-
     std::vector<std::string> fThresholdLabels;
 };
 
@@ -115,8 +114,7 @@ template<typename ValueType> void KIterativeStateWriter<ValueType>::Visit(KItera
         residualThreshold.fGeometryHash = hashGenerator.GenerateHash(fContainer);
 
         std::string activeNameRoot = KEMFileInterface::GetInstance()->GetActiveFileName().substr(
-            0,
-            KEMFileInterface::GetInstance()->GetActiveFileName().find_last_of("."));
+            0, KEMFileInterface::GetInstance()->GetActiveFileName().find_last_of("."));
         std::stringstream saveName;
         saveName << activeNameRoot << "_" << fSaveNameRoot << "_" << solver.Iteration()
                  << KEMFileInterface::GetInstance()->GetFileSuffix();
@@ -163,8 +161,7 @@ template<typename ValueType> void KIterativeStateWriter<ValueType>::Finalize(KIt
         residualThreshold.fGeometryHash = hashGenerator.GenerateHash(fContainer);
 
         std::string activeNameRoot = KEMFileInterface::GetInstance()->GetActiveFileName().substr(
-            0,
-            KEMFileInterface::GetInstance()->GetActiveFileName().find_last_of("."));
+            0, KEMFileInterface::GetInstance()->GetActiveFileName().find_last_of("."));
         std::stringstream saveName;
         saveName << activeNameRoot << "_" << fSaveNameRoot << "_final"
                  << KEMFileInterface::GetInstance()->GetFileSuffix();
@@ -188,8 +185,8 @@ template<typename ValueType> void KIterativeStateWriter<ValueType>::Finalize(KIt
                                                KResidualVector<ValueType>::Name(),
                                                vectorLabels);
 
-        for (auto it = fSavedContainerFiles.begin(); it != fSavedContainerFiles.end(); ++it)
-            std::remove((*it).c_str());
+        for (auto& file : fSavedContainerFiles)
+            std::remove(file.c_str());
     }
 }
 }  // namespace KEMField

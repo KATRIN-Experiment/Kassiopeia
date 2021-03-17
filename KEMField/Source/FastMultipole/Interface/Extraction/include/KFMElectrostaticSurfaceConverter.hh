@@ -46,7 +46,8 @@ class KFMElectrostaticSurfaceConverter
         fElectrostaticElementContainer = nullptr;
     };
 
-    virtual ~KFMElectrostaticSurfaceConverter(){};
+    virtual ~KFMElectrostaticSurfaceConverter() = default;
+    ;
 
     void SetSurfaceContainer(const KSurfaceContainer* container);
     void SetSortedSurfaceContainer(const KSortedSurfaceContainer* container);

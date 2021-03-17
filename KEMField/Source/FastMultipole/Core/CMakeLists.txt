@@ -51,7 +51,7 @@ set (KFMCORE_SOURCEFILES
 
 ##################################################
 
-add_library (KFMCore SHARED ${KFMCORE_SOURCEFILES})
+add_library (KFMCore SHARED ${KFMCORE_SOURCEFILES} ${KFMCORE_HEADERFILES})
 target_link_libraries (KFMCore KEMCore)
 
 kasper_install_headers (${KFMCORE_HEADERFILES})

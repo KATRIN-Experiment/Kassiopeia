@@ -17,14 +17,16 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenPositionFluxTubeBuilder::~KComplexElement() {}
+template<> KSGenPositionFluxTubeBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenPositionFluxTubeStructure =
-    KSGenPositionFluxTubeBuilder::Attribute<string>("name") + KSGenPositionFluxTubeBuilder::Attribute<string>("phi") +
-    KSGenPositionFluxTubeBuilder::Attribute<string>("z") + KSGenPositionFluxTubeBuilder::Attribute<double>("flux") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("name") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("phi") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("z") +
+    KSGenPositionFluxTubeBuilder::Attribute<double>("flux") +
     KSGenPositionFluxTubeBuilder::Attribute<int>("n_integration_step") +
     KSGenPositionFluxTubeBuilder::Attribute<bool>("only_surface") +
-    KSGenPositionFluxTubeBuilder::Attribute<string>("magnetic_field_name") +
+    KSGenPositionFluxTubeBuilder::Attribute<std::string>("magnetic_field_name") +
     KSGenPositionFluxTubeBuilder::ComplexElement<KSGenValueFix>("phi_fix") +
     KSGenPositionFluxTubeBuilder::ComplexElement<KSGenValueSet>("phi_set") +
     KSGenPositionFluxTubeBuilder::ComplexElement<KSGenValueUniform>("phi_uniform") +

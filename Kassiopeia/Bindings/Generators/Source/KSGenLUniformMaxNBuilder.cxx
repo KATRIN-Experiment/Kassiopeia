@@ -11,9 +11,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenLUniformMaxNBuilder::~KComplexElement() {}
+template<> KSGenLUniformMaxNBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenLUniformMaxNStructure = KSGenLUniformMaxNBuilder::Attribute<string>("name");
+STATICINT sKSGenLUniformMaxNStructure = KSGenLUniformMaxNBuilder::Attribute<std::string>("name");
 
 STATICINT sKSGenLUniformMaxN = KSRootBuilder::ComplexElement<KSGenLUniformMaxN>("ksgen_l_uniform_max_n");
 }  // namespace katrin

@@ -25,11 +25,11 @@ KGExtrudedObject* KGExtrudedObject::Clone() const
     tClone->fNOuterSegments = fNOuterSegments;
     tClone->fClosedLoops = fClosedLoops;
 
-    for (size_t i = 0; i < fInnerSegments.size(); i++)
-        tClone->fInnerSegments.push_back(fInnerSegments[i]->Clone(tClone));
+    for (auto* segment : fInnerSegments)
+        tClone->fInnerSegments.push_back(segment->Clone(tClone));
 
-    for (size_t i = 0; i < fInnerSegments.size(); i++)
-        tClone->fInnerSegments.push_back(fInnerSegments[i]->Clone(tClone));
+    for (auto* segment : fInnerSegments)
+        tClone->fInnerSegments.push_back(segment->Clone(tClone));
 
     return tClone;
 }
@@ -232,8 +232,8 @@ bool KGExtrudedObject::ContainsPoint(const double* P) const
     double P_inner[2] = {0, 0};
 
     // we find the closest inner segment to the point
-    for (unsigned int i = 0; i < fInnerSegments.size(); i++) {
-        dist_tmp = fInnerSegments.at(i)->DistanceTo(P, P_tmp);
+    for (auto* segment : fInnerSegments) {
+        dist_tmp = segment->DistanceTo(P, P_tmp);
         if (dist_tmp < dist_inner) {
             dist_inner = dist_tmp;
             P_inner[0] = P_tmp[0];
@@ -245,8 +245,8 @@ bool KGExtrudedObject::ContainsPoint(const double* P) const
     double P_outer[2] = {0, 0};
 
     // we find the closest outer segment to the point
-    for (unsigned int i = 0; i < fOuterSegments.size(); i++) {
-        dist_tmp = fOuterSegments.at(i)->DistanceTo(P, P_tmp);
+    for (auto* segment : fOuterSegments) {
+        dist_tmp = segment->DistanceTo(P, P_tmp);
         if (dist_tmp < dist_outer) {
             dist_outer = dist_tmp;
             P_outer[0] = P_tmp[0];
@@ -313,8 +313,8 @@ double KGExtrudedObject::DistanceTo(const double* P, double* P_in, double* P_nor
     double P_inorm[2] = {0, 0};
 
     // we find the closest inner segment to the point
-    for (unsigned int i = 0; i < fInnerSegments.size(); i++) {
-        dist_tmp = fInnerSegments.at(i)->DistanceTo(P, P_tmp, P_tnorm);
+    for (auto* segment : fInnerSegments) {
+        dist_tmp = segment->DistanceTo(P, P_tmp, P_tnorm);
         if (dist_tmp < dist_inner) {
             dist_inner = dist_tmp;
             P_inner[0] = P_tmp[0];
@@ -329,8 +329,8 @@ double KGExtrudedObject::DistanceTo(const double* P, double* P_in, double* P_nor
     double P_onorm[2] = {0, 0};
 
     // we find the closest outer segment to the point
-    for (unsigned int i = 0; i < fOuterSegments.size(); i++) {
-        dist_tmp = fOuterSegments.at(i)->DistanceTo(P, P_tmp, P_tnorm);
+    for (auto* segment : fOuterSegments) {
+        dist_tmp = segment->DistanceTo(P, P_tmp, P_tnorm);
         if (dist_tmp < dist_outer) {
             dist_outer = dist_tmp;
             P_outer[0] = P_tmp[0];
@@ -453,7 +453,7 @@ double KGExtrudedObject::DistanceTo(const double* P, double* P_in, double* P_nor
     return dist;
 }
 
-KGExtrudedObject::Line::Line(KGExtrudedObject* eO, double p1[2], double p2[2])
+KGExtrudedObject::Line::Line(KGExtrudedObject* eO, const double p1[2], const double p2[2])
 {
     fExtruded = eO;
 
@@ -603,15 +603,15 @@ void KGExtrudedObject::Arc::FindCenter() const
     // unit vector pointing from p1 to p2
     double unit[2] = {fP2[0] - fP1[0], fP2[1] - fP1[1]};
     double chord = sqrt(unit[0] * unit[0] + unit[1] * unit[1]);
-    for (int i = 0; i < 2; i++)
-        unit[i] /= chord;
+    for (double& i : unit)
+        i /= chord;
 
     // unit vector normal to line connecting p1 and p2
     double norm[2] = {-unit[1], unit[0]};
 
     if (!fPositiveOrientation)
-        for (int i = 0; i < 2; i++)
-            norm[i] *= -1.;
+        for (double& i : norm)
+            i *= -1.;
 
     double theta = 2. * asin(chord / (2. * fRadius));
 
@@ -741,7 +741,7 @@ double KGExtrudedObject::Arc::DistanceTo(const double* P, double* P_in, double* 
     return dist;
 }
 
-double KGExtrudedObject::Arc::NormalizeAngle(double angle) const
+double KGExtrudedObject::Arc::NormalizeAngle(double angle)
 {
     double normalized_angle = angle;
     while (normalized_angle > 2. * M_PI)

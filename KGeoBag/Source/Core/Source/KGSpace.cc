@@ -7,32 +7,22 @@ using namespace std;
 namespace KGeoBag
 {
 
-KGSpace::Visitor::Visitor() {}
-KGSpace::Visitor::~Visitor() {}
+KGSpace::Visitor::Visitor() = default;
+KGSpace::Visitor::~Visitor() = default;
 
 KGSpace::KGSpace() :
-    fExtensions(),
     fParent(nullptr),
-    fBoundaries(),
-    fChildSurfaces(),
-    fChildSpaces(),
     fOrigin(KThreeVector::sZero),
     fXAxis(KThreeVector::sXUnit),
     fYAxis(KThreeVector::sYUnit),
-    fZAxis(KThreeVector::sZUnit),
-    fVolume()
+    fZAxis(KThreeVector::sZUnit)
 {}
 KGSpace::KGSpace(KGVolume* aVolume) :
-    fExtensions(),
     fParent(nullptr),
-    fBoundaries(),
-    fChildSurfaces(),
-    fChildSpaces(),
     fOrigin(KThreeVector::sZero),
     fXAxis(KThreeVector::sXUnit),
     fYAxis(KThreeVector::sYUnit),
-    fZAxis(KThreeVector::sZUnit),
-    fVolume()
+    fZAxis(KThreeVector::sZUnit)
 {
     Volume(std::shared_ptr<KGVolume>(aVolume));
 }
@@ -152,24 +142,35 @@ const vector<KGSpace*>* KGSpace::GetChildSpaces() const
 void KGSpace::Transform(const KTransformation* aTransform)
 {
     //transform the local frame
-    coremsg_debug("starting transformation on space <" << GetName() << ">" << eom;)
-        coremsg_debug("transformation has rotation of " << aTransform->GetRotation() << ret;)
-            coremsg_debug("and displacement of " << aTransform->GetDisplacement() << eom;)
+    coremsg_debug("starting transformation on space <" << GetName() << ">" << eom);
+    coremsg_debug("transformation has rotation of " << aTransform->GetRotation() << ret);
+    coremsg_debug("and displacement of " << aTransform->GetDisplacement() << eom);
 
-                coremsg_debug("applying transformation on origin " << fOrigin << eom;) aTransform->Apply(fOrigin);
-    coremsg_debug("transformation on origin done, new value " << fOrigin << eom;)
+    coremsg_debug("applying transformation on origin " << fOrigin << eom);
+    aTransform->Apply(fOrigin);
+    coremsg_debug("transformation on origin done, new value " << fOrigin << eom);
 
-        coremsg_debug("applying rotation on x axis " << fXAxis << eom;) aTransform->ApplyRotation(fXAxis);
-    coremsg_debug("rotation on x axis done, new value " << fXAxis << eom;)
+    coremsg_debug("applying rotation on x axis " << fXAxis << eom);
+    aTransform->ApplyRotation(fXAxis);
+    coremsg_debug("rotation on x axis done, new value " << fXAxis << eom);
 
-        coremsg_debug("applying rotation on y axis " << fYAxis << eom;) aTransform->ApplyRotation(fYAxis);
-    coremsg_debug("rotation on y axis done, new value " << fYAxis << eom;)
+    coremsg_debug("applying rotation on y axis " << fYAxis << eom);
+    aTransform->ApplyRotation(fYAxis);
+    coremsg_debug("rotation on y axis done, new value " << fYAxis << eom);
 
-        coremsg_debug("applying rotation on z axis " << fZAxis << eom;) aTransform->ApplyRotation(fZAxis);
-    coremsg_debug("rotation on z axis done, new value " << fZAxis << eom;)
+    coremsg_debug("applying rotation on z axis " << fZAxis << eom);
+    aTransform->ApplyRotation(fZAxis);
+    coremsg_debug("rotation on z axis done, new value " << fZAxis << eom);
 
-        //transform all the boundaries
-        coremsg_debug("starting transformation on boundaries of <" << GetName() << ">" << eom;) KGSurface* tBoundary;
+#ifdef KGeoBag_ENABLE_DEBUG
+    double tEulerAlpha, tEulerBeta, tEulerGamma;
+    aTransform->GetRotation().GetEulerAnglesInDegrees(tEulerAlpha, tEulerBeta, tEulerGamma);
+    coremsg_debug("new euler angles are " << tEulerAlpha << " " << tEulerBeta << " " << tEulerGamma << eom);
+#endif
+
+    //transform all the boundaries
+    coremsg_debug("starting transformation on boundaries of <" << GetName() << ">" << eom);
+    KGSurface* tBoundary;
     vector<KGSurface*>::const_iterator tBoundaryIt;
     for (tBoundaryIt = fBoundaries.begin(); tBoundaryIt != fBoundaries.end(); tBoundaryIt++) {
         tBoundary = *tBoundaryIt;
@@ -177,7 +178,8 @@ void KGSpace::Transform(const KTransformation* aTransform)
     }
 
     //transform all the child surfaces
-    coremsg_debug("starting transformation on child surfaces of <" << GetName() << ">" << eom;) KGSurface* tSurface;
+    coremsg_debug("starting transformation on child surfaces of <" << GetName() << ">" << eom);
+    KGSurface* tSurface;
     vector<KGSurface*>::const_iterator tSurfaceIt;
     for (tSurfaceIt = fChildSurfaces.begin(); tSurfaceIt != fChildSurfaces.end(); tSurfaceIt++) {
         tSurface = *tSurfaceIt;
@@ -185,7 +187,8 @@ void KGSpace::Transform(const KTransformation* aTransform)
     }
 
     //transform all the child spaces
-    coremsg_debug("starting transformation on child spaces of <" << GetName() << ">" << eom;) KGSpace* tSpace;
+    coremsg_debug("starting transformation on child spaces of <" << GetName() << ">" << eom);
+    KGSpace* tSpace;
     vector<KGSpace*>::const_iterator tSpaceIt;
     for (tSpaceIt = fChildSpaces.begin(); tSpaceIt != fChildSpaces.end(); tSpaceIt++) {
         tSpace = *tSpaceIt;
@@ -412,7 +415,11 @@ void KGSpace::Volume(const std::shared_ptr<KGVolume>& aVolume)
         tBoundary = new KGSurface();
         tBoundary->SetName((*tAreaIt)->GetName());
         tBoundary->SetTags((*tAreaIt)->GetTags());
-        tBoundary->Area(std::static_pointer_cast<KGArea, KGBoundary>(*tAreaIt));  // FIXME this code looks ugly
+        const std::shared_ptr<KGArea> tArea = std::dynamic_pointer_cast<KGArea, KGBoundary>(*tAreaIt);
+        if (tArea == nullptr){
+            coremsg(eWarning)<< "failed to cast KGBoundary <"<< (*tAreaIt)->GetName() << "> to KGArea! Certain features (like calculating the distance to this surface) might not be available." <<eom;
+        }
+        tBoundary->Area(tArea);
         AddBoundary(tBoundary);
     }
 

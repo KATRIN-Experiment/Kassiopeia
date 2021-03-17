@@ -26,6 +26,6 @@ KKrylovSolverConfiguration::KKrylovSolverConfiguration() :
 
 {}
 
-KKrylovSolverConfiguration::~KKrylovSolverConfiguration() {}
+KKrylovSolverConfiguration::~KKrylovSolverConfiguration() = default;
 
 } /* namespace KEMField */

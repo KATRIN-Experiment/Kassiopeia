@@ -21,7 +21,8 @@ namespace KEMField
 template<unsigned int BasisDimensionality> class KFMBasisData
 {
   public:
-    KFMBasisData(){};
+    KFMBasisData() = default;
+    ;
 
     KFMBasisData(const KFMBasisData& copyObject)
     {
@@ -30,7 +31,8 @@ template<unsigned int BasisDimensionality> class KFMBasisData
         }
     }
 
-    virtual ~KFMBasisData(){};
+    virtual ~KFMBasisData() = default;
+    ;
 
     unsigned int GetNDimensions() const
     {

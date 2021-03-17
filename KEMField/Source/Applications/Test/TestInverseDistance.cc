@@ -57,14 +57,14 @@ class KInverseDistance : public KSquareMatrix<double>
 {
   public:
     KInverseDistance(unsigned int dimension, double diagonal, double offDiagonal, double power);
-    virtual ~KInverseDistance() {}
+    ~KInverseDistance() override = default;
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fDimension;
     }
 
-    const double& operator()(unsigned int i, unsigned int j) const;
+    const double& operator()(unsigned int i, unsigned int j) const override;
 
   private:
     unsigned int fDimension;
@@ -76,7 +76,6 @@ class KInverseDistance : public KSquareMatrix<double>
 };
 
 KInverseDistance::KInverseDistance(unsigned int dimension, double diagonal, double offDiagonal, double power) :
-    KSquareMatrix<double>(),
     fDimension(dimension),
     fDiagonal(diagonal),
     fOffDiagonal(offDiagonal),
@@ -142,23 +141,23 @@ int main(int argc, char** argv)
     (void) residualGraph;
 
     static struct option longOptions[] = {
-        {"help", no_argument, 0, 'h'},
-        {"dimension", required_argument, 0, 'D'},
-        {"diagonal", required_argument, 0, 'd'},
-        {"off_diagonal", required_argument, 0, 'o'},
-        {"power", required_argument, 0, 'p'},
-        {"accuracy", required_argument, 0, 'a'},
-        {"cache", no_argument, 0, 'c'},
-        {"method", required_argument, 0, 'm'},
-        {"rh_dimension", required_argument, 0, 'n'},
-        {"plot_matrix", no_argument, 0, 'l'},
-        {"residual_graph", required_argument, 0, 'r'},
+        {"help", no_argument, nullptr, 'h'},
+        {"dimension", required_argument, nullptr, 'D'},
+        {"diagonal", required_argument, nullptr, 'd'},
+        {"off_diagonal", required_argument, nullptr, 'o'},
+        {"power", required_argument, nullptr, 'p'},
+        {"accuracy", required_argument, nullptr, 'a'},
+        {"cache", no_argument, nullptr, 'c'},
+        {"method", required_argument, nullptr, 'm'},
+        {"rh_dimension", required_argument, nullptr, 'n'},
+        {"plot_matrix", no_argument, nullptr, 'l'},
+        {"residual_graph", required_argument, nullptr, 'r'},
     };
 
     static const char* optString = "hD:d:o:p:a:cm:n:lr";
 
-    while (1) {
-        char optId = getopt_long(argc, argv, optString, longOptions, NULL);
+    while (true) {
+        char optId = getopt_long(argc, argv, optString, longOptions, nullptr);
         if (optId == -1)
             break;
         switch (optId) {
@@ -204,7 +203,7 @@ int main(int argc, char** argv)
     KInverseDistance A(dimension, diagonal, offDiagonal, power);
 
     if (plotMatrix) {
-        KEMFieldCanvas* fieldCanvas = NULL;
+        KEMFieldCanvas* fieldCanvas = nullptr;
 
 #if defined(KEMFIELD_USE_VTK)
         fieldCanvas = new KEMVTKFieldCanvas(0, dimension, 0, dimension, 1.e30, true);
@@ -212,7 +211,7 @@ int main(int argc, char** argv)
         fieldCanvas = new KEMRootFieldCanvas(0, dimension, 0, dimension, 1.e30, true);
 #endif
 
-        if (fieldCanvas) {
+        if (fieldCanvas != nullptr) {
             std::vector<double> x_;
             std::vector<double> y_;
             std::vector<double> V_;

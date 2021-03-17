@@ -5,12 +5,11 @@
 namespace KGeoBag
 {
 KGMeshWire::KGMeshWire(const KThreeVector& p0, const KThreeVector& p1, const double& diameter) :
-    KGMeshElement(),
     fP0(p0),
     fP1(p1),
     fDiameter(diameter)
 {}
-KGMeshWire::~KGMeshWire() {}
+KGMeshWire::~KGMeshWire() = default;
 
 double KGMeshWire::Area() const
 {

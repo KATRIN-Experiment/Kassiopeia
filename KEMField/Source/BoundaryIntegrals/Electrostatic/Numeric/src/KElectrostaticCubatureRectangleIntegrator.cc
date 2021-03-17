@@ -6,7 +6,7 @@
 
 namespace KEMField
 {
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect4P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect4P(const double* data, double* Q)
 {
     // Calculates the 4 Gaussian points Q[0],...,Q[3]  for the 4-point cubature of the rectangle
     // P0, P2, P2: corner points of the rectangle
@@ -40,7 +40,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect4P(const double*
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect7P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect7P(const double* data, double* Q)
 {
     // Calculates the 7 Gaussian points Q[0],...,Q[6]  for the 7-point cubature of the rectangle
     // P0, P2, P2: corner points of the rectangle
@@ -94,7 +94,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect7P(const double*
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect9P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect9P(const double* data, double* Q)
 {
     const double cx = 0.5 * data[0];
     const double cy = 0.5 * data[1];
@@ -117,7 +117,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect9P(const double*
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect12P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect12P(const double* data, double* Q)
 {
     // Calculates the 12 Gaussian points Q[0],...,Q[11]  for the 12-point cubature of the rectangle;
     // See: Stroud book, page 253;  Tyler 1953, page 403.
@@ -154,7 +154,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect12P(const double
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect17P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect17P(const double* data, double* Q)
 {
     // Calculates the 17 Gaussian points Q[0],...,Q[16]  for the 17-point cubature of the rectangle;
     // See: Engels book, page 257;  Möller 1976, page 194.
@@ -196,7 +196,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect17P(const double
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect20P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect20P(const double* data, double* Q)
 {
     const double cx = 0.5 * data[0];
     const double cy = 0.5 * data[1];
@@ -232,7 +232,7 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect20P(const double
     return;
 }
 
-void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect33P(const double* data, double* Q) const
+void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect33P(const double* data, double* Q)
 {
     // Calculates the 33 Gaussian points Q[0],...,Q[32]  for the 33-point cubature of the rectangle;
     // See: Cools, Haegemans, Computing  40 (1988) 139
@@ -290,8 +290,8 @@ void KElectrostaticCubatureRectangleIntegrator::GaussPoints_Rect33P(const double
 }
 
 double KElectrostaticCubatureRectangleIntegrator::Potential_RectNP(const double* data, const KPosition& P,
-                                                                   const unsigned short noPoints, double* Q,
-                                                                   const double* weights) const
+                                                                   const unsigned short noPoints, const double* Q,
+                                                                   const double* weights)
 {
     const double area = data[0] * data[1];
     const double prefac = area * KEMConstants::OneOverFourPiEps0;
@@ -336,9 +336,9 @@ double KElectrostaticCubatureRectangleIntegrator::Potential_RectNP(const double*
     return (prefac * finalSum);
 }
 
-KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP(const double* data, const KPosition& P,
-                                                                             const unsigned short noPoints, double* Q,
-                                                                             const double* weights) const
+KFieldVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP(
+        const double* data, const KPosition& P, const unsigned short noPoints,
+        const double* Q, const double* weights)
 {
     const double area = data[0] * data[1];
     const double prefac = area * KEMConstants::OneOverFourPiEps0;
@@ -390,15 +390,15 @@ KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField_RectNP(con
         finalSum[2] += partialValue[2];
     } /* Gaussian points */
 
-    for (unsigned short i = 0; i < 3; i++) {
-        finalSum[i] = prefac * finalSum[i];
+    for (double& val : finalSum) {
+        val = prefac * val;
     }
 
-    return KThreeVector(finalSum[0], finalSum[1], finalSum[2]);
+    return KFieldVector(finalSum[0], finalSum[1], finalSum[2]);
 }
 
-std::pair<KThreeVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential_RectNP(
-    const double* data, const KPosition& P, const unsigned short noPoints, double* Q, const double* weights) const
+std::pair<KFieldVector, double> KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential_RectNP(
+    const double* data, const KPosition& P, const unsigned short noPoints, const double* Q, const double* weights)
 {
     const double area = data[0] * data[1];
     const double prefac = area * KEMConstants::OneOverFourPiEps0;
@@ -452,11 +452,11 @@ std::pair<KThreeVector, double> KElectrostaticCubatureRectangleIntegrator::Elect
         finalSum[3] += partialValue[3];
     } /* Gaussian points */
 
-    for (unsigned short i = 0; i < 4; i++) {
-        finalSum[i] = prefac * finalSum[i];
+    for (double& val : finalSum) {
+        val = prefac * val;
     }
 
-    return std::make_pair(KThreeVector(finalSum[0], finalSum[1], finalSum[2]), finalSum[3]);
+    return std::make_pair(KFieldVector(finalSum[0], finalSum[1], finalSum[2]), finalSum[3]);
 }
 
 double KElectrostaticCubatureRectangleIntegrator::Potential(const KRectangle* source, const KPosition& P) const
@@ -517,7 +517,7 @@ double KElectrostaticCubatureRectangleIntegrator::Potential(const KRectangle* so
     return KElectrostaticRWGRectangleIntegrator::Potential(source, P);
 }
 
-KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KRectangle* source,
+KFieldVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KRectangle* source,
                                                                       const KPosition& P) const
 {
     // save geometry info on rectangle into array, same convention as OpenCL implementation
@@ -576,7 +576,7 @@ KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KRec
     return KElectrostaticRWGRectangleIntegrator::ElectricField(source, P);
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KRectangle* source, const KPosition& P) const
 {
     // save geometry info on rectangle into array, same convention as OpenCL implementation
@@ -639,30 +639,30 @@ double KElectrostaticCubatureRectangleIntegrator::Potential(const KSymmetryGroup
                                                             const KPosition& P) const
 {
     double potential = 0.;
-    for (auto it = source->begin(); it != source->end(); ++it)
-        potential += Potential(*it, P);
+    for (auto* it : *source)
+        potential += Potential(it, P);
     return potential;
 }
 
-KThreeVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source,
+KFieldVector KElectrostaticCubatureRectangleIntegrator::ElectricField(const KSymmetryGroup<KRectangle>* source,
                                                                       const KPosition& P) const
 {
-    KThreeVector electricField(0., 0., 0.);
-    for (auto it = source->begin(); it != source->end(); ++it)
-        electricField += ElectricField(*it, P);
+    KFieldVector electricField(0., 0., 0.);
+    for (auto* it : *source)
+        electricField += ElectricField(it, P);
     return electricField;
 }
 
-std::pair<KThreeVector, double>
+std::pair<KFieldVector, double>
 KElectrostaticCubatureRectangleIntegrator::ElectricFieldAndPotential(const KSymmetryGroup<KRectangle>* source,
                                                                      const KPosition& P) const
 {
-    std::pair<KThreeVector, double> fieldAndPotential;
+    std::pair<KFieldVector, double> fieldAndPotential;
     double potential(0.);
-    KThreeVector electricField(0., 0., 0.);
+    KFieldVector electricField(0., 0., 0.);
 
-    for (auto it = source->begin(); it != source->end(); ++it) {
-        fieldAndPotential = ElectricFieldAndPotential(*it, P);
+    for (auto* it : *source) {
+        fieldAndPotential = ElectricFieldAndPotential(it, P);
         electricField += fieldAndPotential.first;
         potential += fieldAndPotential.second;
     }

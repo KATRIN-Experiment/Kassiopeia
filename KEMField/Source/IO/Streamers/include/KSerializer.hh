@@ -10,7 +10,7 @@ template<class DataStreamer> class KSerializer;
 template<class DataStreamer> class KSerializerBase
 {
   public:
-    virtual ~KSerializerBase() {}
+    virtual ~KSerializerBase() = default;
     KMetadataStreamer& GetMetadataStreamer()
     {
         return fMetadataStreamer;
@@ -42,7 +42,7 @@ template<typename Type, class DataStreamer> class KSerializerType : virtual publ
         return d.Self();
     }
 
-    virtual ~KSerializerType() {}
+    virtual ~KSerializerType() = default;
     virtual KSerializer<DataStreamer>& Self() = 0;
 };
 
@@ -50,8 +50,8 @@ template<class DataStreamer>
 class KSerializer : public KGenScatterHierarchyWithParameter<KEMField::FundamentalTypes, DataStreamer, KSerializerType>
 {
   public:
-    KSerializer() {}
-    virtual ~KSerializer() {}
+    KSerializer() = default;
+    virtual ~KSerializer() = default;
 
     using KSerializerBase<DataStreamer>::GetMetadataStreamer;
     using KSerializerBase<DataStreamer>::GetDataStreamer;

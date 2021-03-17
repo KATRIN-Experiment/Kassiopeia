@@ -51,37 +51,8 @@ KSTrajExactParticle::KSTrajExactParticle() :
     fGetElectricPotentialPtr(&KSTrajExactParticle::RecalculateElectricPotential),
     fGetElectricGradientPtr(&KSTrajExactParticle::RecalculateElectricGradient)
 {}
-KSTrajExactParticle::KSTrajExactParticle(const KSTrajExactParticle& aParticle) :
-    KSMathArray<8>(aParticle),
-    fTime(aParticle.fTime),
-    fLength(aParticle.fLength),
-    fPosition(aParticle.fPosition),
-    fMomentum(aParticle.fMomentum),
-    fVelocity(aParticle.fVelocity),
-    fLorentzFactor(aParticle.fLorentzFactor),
-    fKineticEnergy(aParticle.fKineticEnergy),
-
-    fMagneticField(aParticle.fMagneticField),
-    fElectricField(aParticle.fElectricField),
-    fMagneticGradient(aParticle.fMagneticGradient),
-    fElectricGradient(aParticle.fElectricGradient),
-    fElectricPotential(aParticle.fElectricPotential),
-
-    fGuidingCenter(aParticle.fGuidingCenter),
-    fLongMomentum(aParticle.fLongMomentum),
-    fTransMomentum(aParticle.fTransMomentum),
-    fLongVelocity(aParticle.fLongVelocity),
-    fTransVelocity(aParticle.fTransVelocity),
-    fCyclotronFrequency(aParticle.fCyclotronFrequency),
-    fOrbitalMagneticMoment(aParticle.fOrbitalMagneticMoment),
-
-    fGetMagneticFieldPtr(aParticle.fGetMagneticFieldPtr),
-    fGetElectricFieldPtr(aParticle.fGetElectricFieldPtr),
-    fGetMagneticGradientPtr(aParticle.fGetMagneticGradientPtr),
-    fGetElectricPotentialPtr(aParticle.fGetElectricPotentialPtr),
-    fGetElectricGradientPtr(aParticle.fGetElectricGradientPtr)
-{}
-KSTrajExactParticle::~KSTrajExactParticle() {}
+KSTrajExactParticle::KSTrajExactParticle(const KSTrajExactParticle&) = default;
+KSTrajExactParticle::~KSTrajExactParticle() = default;
 
 //**********
 //assignment
@@ -247,17 +218,17 @@ const double& KSTrajExactParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KThreeVector& KSTrajExactParticle::GetPosition() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KThreeVector& KSTrajExactParticle::GetMomentum() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetMomentum() const
 {
     fMomentum.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentum;
 }
-const KThreeVector& KSTrajExactParticle::GetVelocity() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -274,22 +245,22 @@ const double& KSTrajExactParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KThreeVector& KSTrajExactParticle::GetMagneticField() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KThreeVector& KSTrajExactParticle::GetElectricField() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KThreeMatrix& KSTrajExactParticle::GetMagneticGradient() const
+const KGeoBag::KThreeMatrix& KSTrajExactParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
 }
-const KThreeMatrix& KSTrajExactParticle::GetElectricGradient() const
+const KGeoBag::KThreeMatrix& KSTrajExactParticle::GetElectricGradient() const
 {
     (this->*fGetElectricGradientPtr)();
     return fElectricGradient;
@@ -300,7 +271,7 @@ const double& KSTrajExactParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KThreeVector& KSTrajExactParticle::GetGuidingCenter() const
+const KGeoBag::KThreeVector& KSTrajExactParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition() + (1. / (GetCharge() * GetMagneticField().MagnitudeSquared())) *
                                          (GetMomentum().Cross(GetMagneticField()));

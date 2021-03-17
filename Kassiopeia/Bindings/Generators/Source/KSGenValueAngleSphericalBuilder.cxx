@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSGenValueAngleSphericalBuilder::~KComplexElement() {}
+template<> KSGenValueAngleSphericalBuilder::~KComplexElement() = default;
 
-STATICINT sKSGenValueAngleSphericalStructure = KSGenValueAngleSphericalBuilder::Attribute<string>("name") +
+STATICINT sKSGenValueAngleSphericalStructure = KSGenValueAngleSphericalBuilder::Attribute<std::string>("name") +
                                                KSGenValueAngleSphericalBuilder::Attribute<double>("angle_min") +
                                                KSGenValueAngleSphericalBuilder::Attribute<double>("angle_max");
 

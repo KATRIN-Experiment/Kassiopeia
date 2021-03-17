@@ -82,7 +82,7 @@ template<> inline bool KSIntCalculatorHydrogenSetBuilder::End()
         aIntCalculator->SetTag(fObject->GetName());
         fObject->AddCalculator(aIntCalculator);
 
-        if (fObject->GetMolecule() == std::string("tritium")) {
+        if (fObject->GetMolecule() == "tritium") {
             aIntCalculator = new KSIntCalculatorHydrogenRot20();
             aIntCalculator->SetName(fObject->GetName() + "_rot_20");
             aIntCalculator->SetTag(fObject->GetName());

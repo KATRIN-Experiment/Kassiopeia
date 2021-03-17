@@ -39,7 +39,7 @@ namespace tag
 {
 struct error : depends_on<variance>
 {
-    typedef boost::accumulators::impl::error_accumulator<mpl::_1> impl;
+    using impl = boost::accumulators::impl::error_accumulator<mpl::_1>;
 };
 }  // namespace tag
 
@@ -53,7 +53,7 @@ namespace impl
 {
 template<typename Sample> struct variance_unbiased_accumulator : accumulator_base
 {
-    typedef Sample result_type;
+    using result_type = Sample;
     variance_unbiased_accumulator(dont_care) {}
 
     template<typename Args> result_type result(Args const& args) const
@@ -70,7 +70,7 @@ namespace tag
 {
 struct variance_unbiased : depends_on<variance>
 {
-    typedef boost::accumulators::impl::variance_unbiased_accumulator<mpl::_1> impl;
+    using impl = boost::accumulators::impl::variance_unbiased_accumulator<mpl::_1>;
 };
 }  // namespace tag
 
@@ -84,7 +84,7 @@ namespace impl
 {
 template<typename Sample> struct error_unbiased_accumulator : accumulator_base
 {
-    typedef Sample result_type;
+    using result_type = Sample;
     error_unbiased_accumulator(dont_care) {}
 
     template<typename Args> result_type result(Args const& args) const
@@ -102,7 +102,7 @@ namespace tag
 {
 struct error_unbiased : depends_on<variance_unbiased>
 {
-    typedef boost::accumulators::impl::error_unbiased_accumulator<mpl::_1> impl;
+    using impl = boost::accumulators::impl::error_unbiased_accumulator<mpl::_1>;
 };
 }  // namespace tag
 
@@ -116,7 +116,7 @@ namespace impl
 {
 template<typename Sample> struct error_of_mean_accumulator : accumulator_base
 {
-    typedef Sample result_type;
+    using result_type = Sample;
     error_of_mean_accumulator(dont_care) {}
 
     template<typename Args> result_type result(Args const& args) const
@@ -135,7 +135,7 @@ namespace tag
 {
 struct error_of_mean : depends_on<variance>
 {
-    typedef boost::accumulators::impl::error_of_mean_accumulator<mpl::_1> impl;
+    using impl = boost::accumulators::impl::error_of_mean_accumulator<mpl::_1>;
 };
 }  // namespace tag
 
@@ -147,10 +147,10 @@ extractor<tag::error_of_mean> const error_of_mean = {};
 
 // pulling the extractors into the boost::accumulators namespace:
 
-using extract::error;
-using extract::error_of_mean;
-using extract::error_unbiased;
-using extract::variance_unbiased;
+using extract::error;              // NOLINT(misc-unused-using-decls)
+using extract::error_of_mean;      // NOLINT(misc-unused-using-decls)
+using extract::error_unbiased;     // NOLINT(misc-unused-using-decls)
+using extract::variance_unbiased;  // NOLINT(misc-unused-using-decls)
 
 }  // namespace accumulators
 }  // namespace boost

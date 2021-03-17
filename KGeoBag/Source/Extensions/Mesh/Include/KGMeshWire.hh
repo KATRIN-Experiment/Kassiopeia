@@ -9,31 +9,36 @@ namespace KGeoBag
 class KGMeshWire : public KGMeshElement
 {
   public:
-    KGMeshWire(const KThreeVector& p0, const KThreeVector& p1, const double& diameter);
+    KGMeshWire(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1, const double& diameter);
     ~KGMeshWire() override;
+
+    static std::string Name()
+    {
+        return "mesh_wire";
+    }
 
     double Area() const override;
     double Aspect() const override;
     void Transform(const KTransformation& transform) override;
 
-    double NearestDistance(const KThreeVector& aPoint) const override;
-    KThreeVector NearestPoint(const KThreeVector& aPoint) const override;
-    KThreeVector NearestNormal(const KThreeVector& aPoint) const override;
-    bool NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd,
-                             KThreeVector& anIntersection) const override;
+    double NearestDistance(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& aPoint) const override;
+    KGeoBag::KThreeVector NearestNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool NearestIntersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
+                             KGeoBag::KThreeVector& anIntersection) const override;
 
     KGPointCloud<KGMESH_DIM> GetPointCloud() const override;
     unsigned int GetNumberOfEdges() const override
     {
         return 1;
     };
-    void GetEdge(KThreeVector& start, KThreeVector& end, unsigned int /*index*/) const override;
+    void GetEdge(KThreeVector& start, KGeoBag::KThreeVector& end, unsigned int /*index*/) const override;
 
-    const KThreeVector& GetP0() const
+    const KGeoBag::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KThreeVector& GetP1() const
+    const KGeoBag::KThreeVector& GetP1() const
     {
         return fP1;
     }
@@ -51,10 +56,10 @@ class KGMeshWire : public KGMeshElement
     }
 
   protected:
-    double ClosestApproach(const KThreeVector& aStart, const KThreeVector& anEnd) const;
+    double ClosestApproach(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd) const;
 
-    KThreeVector fP0;
-    KThreeVector fP1;
+    KGeoBag::KThreeVector fP0;
+    KGeoBag::KThreeVector fP1;
     double fDiameter;
 };
 }  // namespace KGeoBag

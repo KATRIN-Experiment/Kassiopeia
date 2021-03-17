@@ -8,10 +8,10 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSIntSpinFlipPulseBuilder::~KComplexElement() {}
+template<> KSIntSpinFlipPulseBuilder::~KComplexElement() = default;
 
 STATICINT sKSIntSpinFlipPulseStructure =
-    KSIntSpinFlipPulseBuilder::Attribute<string>("name") + KSIntSpinFlipPulseBuilder::Attribute<double>("time");
+    KSIntSpinFlipPulseBuilder::Attribute<std::string>("name") + KSIntSpinFlipPulseBuilder::Attribute<double>("time");
 
 STATICINT sKSIntSpinFlipPulse = KSRootBuilder::ComplexElement<KSIntSpinFlipPulse>("ksint_spin_flip_pulse");
 

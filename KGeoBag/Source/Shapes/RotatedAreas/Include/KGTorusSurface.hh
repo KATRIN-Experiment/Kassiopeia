@@ -12,6 +12,11 @@ class KGTorusSurface : public KGRotatedCircleSurface
     KGTorusSurface();
     ~KGTorusSurface() override;
 
+    static std::string Name()
+    {
+        return "torus_surface";
+    }
+
   public:
     void Z(const double& aZ);
     void R(const double& anR);

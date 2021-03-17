@@ -8,9 +8,9 @@ using namespace std;
 namespace katrin
 {
 
-template<> KSTermDeathBuilder::~KComplexElement() {}
+template<> KSTermDeathBuilder::~KComplexElement() = default;
 
-STATICINT sKSTermDeathStructure = KSTermDeathBuilder::Attribute<string>("name");
+STATICINT sKSTermDeathStructure = KSTermDeathBuilder::Attribute<std::string>("name");
 
 STATICINT sKSTermDeath = KSRootBuilder::ComplexElement<KSTermDeath>("ksterm_death");
 

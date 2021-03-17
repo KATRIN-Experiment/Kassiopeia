@@ -11,7 +11,7 @@ namespace Kassiopeia
 
 KSGenValueAngleSpherical::KSGenValueAngleSpherical() : fAngleMin(0.), fAngleMax(0.) {}
 KSGenValueAngleSpherical::KSGenValueAngleSpherical(const KSGenValueAngleSpherical& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fAngleMin(aCopy.fAngleMin),
     fAngleMax(aCopy.fAngleMax)
 {}
@@ -19,9 +19,9 @@ KSGenValueAngleSpherical* KSGenValueAngleSpherical::Clone() const
 {
     return new KSGenValueAngleSpherical(*this);
 }
-KSGenValueAngleSpherical::~KSGenValueAngleSpherical() {}
+KSGenValueAngleSpherical::~KSGenValueAngleSpherical() = default;
 
-void KSGenValueAngleSpherical::DiceValue(vector<double>& aDicedValues)
+void KSGenValueAngleSpherical::DiceValue(std::vector<double>& aDicedValues)
 {
     genmsg_assert(fAngleMax, >= 0);
     genmsg_assert(fAngleMin, >= 0);

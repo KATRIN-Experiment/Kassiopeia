@@ -29,7 +29,8 @@ class KFMNodeData : public KSAFixedSizeInputOutputObject
         fID = -1;
         fChildIDs.resize(0);
     };
-    ~KFMNodeData() override{};
+    ~KFMNodeData() override = default;
+    ;
 
     unsigned int GetID() const
     {

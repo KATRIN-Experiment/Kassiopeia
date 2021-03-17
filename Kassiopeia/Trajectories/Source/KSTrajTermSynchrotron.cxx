@@ -2,12 +2,15 @@
 
 #include "KConst.h"
 
+using KGeoBag::KThreeMatrix;
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
 KSTrajTermSynchrotron::KSTrajTermSynchrotron() : fEnhancement(1.), fOldMethode(false) {}
 KSTrajTermSynchrotron::KSTrajTermSynchrotron(const KSTrajTermSynchrotron& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fEnhancement(aCopy.fEnhancement),
     fOldMethode(aCopy.fOldMethode)
 {}
@@ -15,7 +18,7 @@ KSTrajTermSynchrotron* KSTrajTermSynchrotron::Clone() const
 {
     return new KSTrajTermSynchrotron(*this);
 }
-KSTrajTermSynchrotron::~KSTrajTermSynchrotron() {}
+KSTrajTermSynchrotron::~KSTrajTermSynchrotron() = default;
 
 void KSTrajTermSynchrotron::Differentiate(double /*aTime*/, const KSTrajExactParticle& aParticle,
                                           KSTrajExactDerivative& aDerivative) const

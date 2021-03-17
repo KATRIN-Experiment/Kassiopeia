@@ -18,9 +18,11 @@ class KSGenValueList : public KSComponentTemplate<KSGenValueList, KSGenValue>
   public:
     void DiceValue(std::vector<double>& aDicedValues) override;
     void AddValue(double aValue);
+    void SetRandomize(bool aFlag);
 
   public:
     std::vector<double> fValues;
+    bool fRandomize;
 };
 
 }  // namespace Kassiopeia

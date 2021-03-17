@@ -25,8 +25,10 @@ namespace KEMField
 template<unsigned int NDIM> class KFMPointCloud
 {
   public:
-    KFMPointCloud(){};
-    virtual ~KFMPointCloud(){};
+    KFMPointCloud() = default;
+    ;
+    virtual ~KFMPointCloud() = default;
+    ;
 
     KFMPointCloud(const KFMPointCloud& copyObject)
     {

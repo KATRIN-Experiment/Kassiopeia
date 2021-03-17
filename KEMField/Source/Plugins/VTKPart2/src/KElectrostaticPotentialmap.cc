@@ -18,9 +18,10 @@
 #include <vtkXMLImageDataReader.h>
 #include <vtkXMLImageDataWriter.h>
 
+using std::string;
+
 namespace KEMField
 {
-
 
 KPotentialMapVTK::KPotentialMapVTK(const string& aFilename)
 {
@@ -35,14 +36,15 @@ KPotentialMapVTK::KPotentialMapVTK(const string& aFilename)
     double bounds[6];
     fImageData->GetDimensions(dims);
     fImageData->GetBounds(bounds);
-    //fieldmsg_debug( "potential map has " << fImageData->GetNumberOfPoints() << " points (" << dims[0] << "x" << dims[1] << "x" << dims[2] << ") and ranges from " << KThreeVector(bounds[0],bounds[2],bounds[4]) << " to " << KThreeVector(bounds[1],bounds[3],bounds[4]) << eom);
+    //fieldmsg_debug( "potential map has " << fImageData->GetNumberOfPoints() << " points (" << dims[0] << "x" << dims[1] << "x" << dims[2] << ") and ranges from " << KFieldVector(bounds[0],bounds[2],bounds[4]) << " to " << KFieldVector(bounds[1],bounds[3],bounds[4]) << eom);
 }
 
-KPotentialMapVTK::~KPotentialMapVTK() {}
+KPotentialMapVTK::~KPotentialMapVTK() = default;
 
 bool KPotentialMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of closest mesh point
     vtkIdType center = fImageData->FindPoint((double*) (aSamplePoint.Components()));
@@ -69,7 +71,7 @@ bool KPotentialMapVTK::GetPotential(const KPosition& aSamplePoint, const double&
 }
 
 bool KPotentialMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
-                                KThreeVector& aField) const
+                                KFieldVector& aField) const
 {
     //fieldmsg_debug( "sampling electric field at point " << aSamplePoint << eom);
 
@@ -85,12 +87,13 @@ KLinearInterpolationPotentialMapVTK::KLinearInterpolationPotentialMapVTK(const s
     KPotentialMapVTK(aFilename)
 {}
 
-KLinearInterpolationPotentialMapVTK::~KLinearInterpolationPotentialMapVTK() {}
+KLinearInterpolationPotentialMapVTK::~KLinearInterpolationPotentialMapVTK() = default;
 
 bool KLinearInterpolationPotentialMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
                                                    double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[8][3] = {
@@ -103,20 +106,20 @@ bool KLinearInterpolationPotentialMapVTK::GetValue(const string& array, const KP
         {0, 1, 1},  // c011
         {1, 1, 1},  // c111
     };
-    static KThreeVector vertices[8];
+    static KFieldVector vertices[8];
     static double values
         [3]
         [8];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double* spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
+    KFieldVector start_point = KFieldVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
                                             floor(aSamplePoint.Y() / spacing[1]) * spacing[1],
                                             floor(aSamplePoint.Z() / spacing[2]) * spacing[2]);
     for (int i = 0; i < 8; i++) {
         // first compute the coordinates of the surrounding mesh points ...
-        KThreeVector point =
-            start_point + KThreeVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
+        KFieldVector point =
+            start_point + KFieldVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
         vtkIdType corner = fImageData->FindPoint((double*) (point.Components()));
         if (corner < 0)
             return false;
@@ -151,12 +154,13 @@ KCubicInterpolationPotentialMapVTK::KCubicInterpolationPotentialMapVTK(const str
     KPotentialMapVTK(aFilename)
 {}
 
-KCubicInterpolationPotentialMapVTK::~KCubicInterpolationPotentialMapVTK() {}
+KCubicInterpolationPotentialMapVTK::~KCubicInterpolationPotentialMapVTK() = default;
 
 bool KCubicInterpolationPotentialMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
                                                   double* aValue) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
+    if (data == nullptr) return false;
 
     // get coordinates of surrounding mesh points
     static const char map[64][3] = {
@@ -241,20 +245,20 @@ bool KCubicInterpolationPotentialMapVTK::GetValue(const string& array, const KPo
         {2, 2, 1},
         {2, 2, 2},
     };
-    static KThreeVector vertices[64];
+    static KFieldVector vertices[64];
     static double values
         [3]
         [64];  // always allocate for vectors even if we have scalars (to be safe) - note that array ordering is swapped
 
     double* spacing = fImageData->GetSpacing();
     //compute corner point of mesh cell aSamplePoint belongs to
-    KThreeVector start_point = KThreeVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
+    KFieldVector start_point = KFieldVector(floor(aSamplePoint.X() / spacing[0]) * spacing[0],
                                             floor(aSamplePoint.Y() / spacing[1]) * spacing[1],
                                             floor(aSamplePoint.Z() / spacing[2]) * spacing[2]);
     for (int i = 0; i < 64; i++) {
         // first compute the coordinates of the surrounding mesh points ...
-        KThreeVector point =
-            start_point + KThreeVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
+        KFieldVector point =
+            start_point + KFieldVector(map[i][0] * spacing[0], map[i][1] * spacing[1], map[i][2] * spacing[2]);
         vtkIdType corner = fImageData->FindPoint((double*) (point.Components()));
         if (corner < 0)
             return false;
@@ -306,12 +310,11 @@ double KCubicInterpolationPotentialMapVTK::_tricubicInterpolate(double p[], doub
 
 KElectrostaticPotentialmap::KElectrostaticPotentialmap() :
     fDirectory(SCRATCH_DEFAULT_DIR),
-    fFile(),
     fInterpolation(0),
-    fPotentialMap(NULL)
+    fPotentialMap(nullptr)
 {}
 
-KElectrostaticPotentialmap::~KElectrostaticPotentialmap() {}
+KElectrostaticPotentialmap::~KElectrostaticPotentialmap() = default;
 
 double KElectrostaticPotentialmap::PotentialCore(const KPosition& P) const
 {
@@ -323,9 +326,9 @@ double KElectrostaticPotentialmap::PotentialCore(const KPosition& P) const
     return tPotential;
 }
 
-KThreeVector KElectrostaticPotentialmap::ElectricFieldCore(const KPosition& P) const
+KFieldVector KElectrostaticPotentialmap::ElectricFieldCore(const KPosition& P) const
 {
-    KThreeVector tField;
+    KFieldVector tField;
     tField.SetComponents(0., 0., 0.);
     double aRandomTime = 0;
     if (!fPotentialMap->GetField(P, aRandomTime, tField))
@@ -391,26 +394,22 @@ KElectrostaticPotentialmapCalculator::KElectrostaticPotentialmapCalculator() :
     fFile(""),
     fForceUpdate(false),
     fComputeField(false),
-    fCenter(),
-    fLength(),
     fMirrorX(false),
     fMirrorY(false),
     fMirrorZ(false),
-    fSpacing(1.),
-    fElectricFields()
+    fSpacing(1.)
 {}
 
-KElectrostaticPotentialmapCalculator::~KElectrostaticPotentialmapCalculator() {}
+KElectrostaticPotentialmapCalculator::~KElectrostaticPotentialmapCalculator() = default;
 
 bool KElectrostaticPotentialmapCalculator::CheckPosition(const KPosition& aPosition) const
 {
-    if (fSpaces.size() == 0)
+    if (fSpaces.empty())
         return true;
 
     // check if position is inside ANY space (fails when position is outside ALL spaces)
     // this allows to define multiple spaces and use their logical intersection
-    for (auto tSpaceIt = fSpaces.begin(); tSpaceIt != fSpaces.end(); ++tSpaceIt) {
-        const KGeoBag::KGSpace* tSpace = (*tSpaceIt);
+    for (const auto* tSpace : fSpaces) {
         if (tSpace->Outside(aPosition) == false)
             return true;
     }
@@ -435,7 +434,7 @@ void KElectrostaticPotentialmapCalculator::Prepare()
 
     cout << "initializing electric field" << endl;
 
-    for (auto it : fElectricFields)
+    for (const auto& it : fElectricFields)
         it.second->Initialize();
 
 
@@ -454,9 +453,9 @@ void KElectrostaticPotentialmapCalculator::Prepare()
         return;
     }
 
-    KThreeVector tGridDims =
-        KThreeVector(1 + fLength[0] / fSpacing, 1 + fLength[1] / fSpacing, 1 + fLength[2] / fSpacing);
-    KThreeVector tGridOrigin = fCenter - 0.5 * fLength;
+    KFieldVector tGridDims =
+        KFieldVector(1 + fLength[0] / fSpacing, 1 + fLength[1] / fSpacing, 1 + fLength[2] / fSpacing);
+    KFieldVector tGridOrigin = fCenter - 0.5 * fLength;
 
     if ((ceil(tGridDims[0]) <= 0) || (ceil(tGridDims[1]) <= 0) || (ceil(tGridDims[2]) <= 0)) {
         throw KEMSimpleException(
@@ -584,7 +583,7 @@ void KElectrostaticPotentialmapCalculator::Execute()
             tPotential = 0.;
             try {
                 for (auto& it : fElectricFields)
-                    tPotential += it.second->Potential(KThreeVector(tPoint));
+                    tPotential += it.second->Potential(KFieldVector(tPoint));
             }
             catch (katrin::KGslException& e) {
                 continue;
@@ -623,7 +622,7 @@ void KElectrostaticPotentialmapCalculator::Execute()
                 continue;
 
             bool tHasValue = false;
-            KThreeVector tField;
+            KFieldVector tField;
 
             if (fMirrorX || fMirrorY || fMirrorZ) {
                 double tMirrorPoint[3];
@@ -649,7 +648,7 @@ void KElectrostaticPotentialmapCalculator::Execute()
             }
 
             if (!tHasValue) {
-                tField = KThreeVector::sZero;
+                tField = KFieldVector::sZero;
                 try {
                     for (auto& it : fElectricFields)
                         tField += it.second->ElectricField(KPosition(tPoint));

@@ -45,7 +45,8 @@ template<unsigned int NDIM> class KFMBall
         fData[NDIM] = radius;
     }
 
-    virtual ~KFMBall(){};
+    virtual ~KFMBall() = default;
+    ;
 
     unsigned int GetDimension() const
     {

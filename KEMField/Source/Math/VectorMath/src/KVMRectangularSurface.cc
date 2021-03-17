@@ -4,7 +4,7 @@
 
 using namespace KEMField;
 
-KVMRectangularSurface::KVMRectangularSurface() : KVMCompactSurface(), KVMSpaceRectangle() {}
+KVMRectangularSurface::KVMRectangularSurface() = default;
 
 
 void KVMRectangularSurface::Initialize()

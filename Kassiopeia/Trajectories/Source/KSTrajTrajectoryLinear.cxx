@@ -3,6 +3,8 @@
 #include "KConst.h"
 #include "KSTrajectoriesMessage.h"
 
+using KGeoBag::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -13,7 +15,7 @@ KSTrajTrajectoryLinear::KSTrajTrajectoryLinear() :
     fVelocity(0., 0., 0.)
 {}
 KSTrajTrajectoryLinear::KSTrajTrajectoryLinear(const KSTrajTrajectoryLinear& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fLength(aCopy.fLength),
     fTime(aCopy.fTime),
     fPosition(aCopy.fPosition),
@@ -23,7 +25,7 @@ KSTrajTrajectoryLinear* KSTrajTrajectoryLinear::Clone() const
 {
     return new KSTrajTrajectoryLinear(*this);
 }
-KSTrajTrajectoryLinear::~KSTrajTrajectoryLinear() {}
+KSTrajTrajectoryLinear::~KSTrajTrajectoryLinear() = default;
 
 void KSTrajTrajectoryLinear::SetLength(const double& aLength)
 {

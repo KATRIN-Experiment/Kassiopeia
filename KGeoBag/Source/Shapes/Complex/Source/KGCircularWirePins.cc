@@ -20,33 +20,33 @@ KGCircularWirePins* KGCircularWirePins::Clone() const
     return w;
 }
 
-double KGCircularWirePins::GetLength() const
+double KGCircularWirePins::GetLength()
 {
     // TODO
     return 0.;
 }
 
 
-double KGCircularWirePins::Area() const
+double KGCircularWirePins::Area()
 {
     // TODO
     return 0.;
 }
 
-double KGCircularWirePins::Volume() const
+double KGCircularWirePins::Volume()
 {
     // TODO
     return 0.;
 }
 
-bool KGCircularWirePins::ContainsPoint(const double* P) const
+bool KGCircularWirePins::ContainsPoint(const double* P)
 {
     // TODO
     (void) P;
     return true;
 }
 
-double KGCircularWirePins::DistanceTo(const double* P, double* P_in, double* P_norm) const
+double KGCircularWirePins::DistanceTo(const double* P, const double* P_in, const double* P_norm)
 {
     // TODO
     (void) P;

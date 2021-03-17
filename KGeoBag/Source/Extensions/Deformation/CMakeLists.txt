@@ -22,7 +22,7 @@ kasper_internal_include_directories(
 
 # target
 add_library( KGeoBagDeformation SHARED
-	${DEFORMATION_SOURCE_FILES}
+	${DEFORMATION_SOURCE_FILES} ${DEFORMATION_HEADER_FILES}
 )
 target_link_libraries( KGeoBagDeformation
     KGeoBagMath

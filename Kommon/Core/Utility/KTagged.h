@@ -11,9 +11,9 @@ namespace katrin
 {
 
 typedef std::string KTag;
-typedef std::set<std::string> KTagSet;
-typedef KTagSet::iterator KTagSetIt;
-typedef KTagSet::const_iterator KTagSetCIt;
+using KTagSet = std::set<std::string>;
+using KTagSetIt = KTagSet::iterator;
+using KTagSetCIt = KTagSet::const_iterator;
 
 class KTagged : public KNamed
 {

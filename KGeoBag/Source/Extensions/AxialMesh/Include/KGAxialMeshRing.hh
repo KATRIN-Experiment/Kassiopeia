@@ -13,6 +13,11 @@ class KGAxialMeshRing : public KGAxialMeshElement
     KGAxialMeshRing(const double& aD, const KTwoVector& aP0);
     ~KGAxialMeshRing() override;
 
+    static std::string Name()
+    {
+        return "axial_mesh_ring";
+    }
+
     double Area() const override;
     double Aspect() const override;
 

@@ -16,7 +16,7 @@ KSRootSurfaceInteraction::KSRootSurfaceInteraction() :
     fParticleQueue(nullptr)
 {}
 KSRootSurfaceInteraction::KSRootSurfaceInteraction(const KSRootSurfaceInteraction& aCopy) :
-    KSComponent(),
+    KSComponent(aCopy),
     fSurfaceInteraction(aCopy.fSurfaceInteraction),
     fStep(aCopy.fStep),
     fTerminatorParticle(aCopy.fTerminatorParticle),
@@ -27,7 +27,7 @@ KSRootSurfaceInteraction* KSRootSurfaceInteraction::Clone() const
 {
     return new KSRootSurfaceInteraction(*this);
 }
-KSRootSurfaceInteraction::~KSRootSurfaceInteraction() {}
+KSRootSurfaceInteraction::~KSRootSurfaceInteraction() = default;
 
 void KSRootSurfaceInteraction::ExecuteInteraction(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
                                                   KSParticleQueue& aSecondaries)

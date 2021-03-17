@@ -30,11 +30,12 @@ template<unsigned int NDIM> class KFMCubicSpaceTreeProperties
         };
     };
 
-    virtual ~KFMCubicSpaceTreeProperties(){};
+    virtual ~KFMCubicSpaceTreeProperties() = default;
+    ;
 
   public:
     //unique id for the entire tree
-    void SetTreeID(std::string tree_id)
+    void SetTreeID(const std::string& tree_id)
     {
         fTreeID = tree_id;
     };

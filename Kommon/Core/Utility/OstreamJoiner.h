@@ -17,13 +17,13 @@ class OstreamJoiner
 {
   public:
     typedef Character char_type;
-    typedef Traits traits_type;
-    typedef std::basic_ostream<Character, Traits> ostream_type;
-    typedef std::output_iterator_tag iterator_category;
-    typedef void value_type;
-    typedef void difference_type;
-    typedef void pointer;
-    typedef void reference;
+    using traits_type = Traits;
+    using ostream_type = std::basic_ostream<Character, Traits>;
+    using iterator_category = std::output_iterator_tag;
+    using value_type = void;
+    using difference_type = void;
+    using pointer = void;
+    using reference = void;
 
     OstreamJoiner(ostream_type& os, const Delimiter& delimiter) : output(os), delimiter(delimiter) {}
 
