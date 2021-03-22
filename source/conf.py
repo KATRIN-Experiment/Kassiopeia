@@ -39,6 +39,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.extlinks',
     'sphinx.ext.mathjax',
+    'sphinx.ext.graphviz',
 ]
 
 extlinks = {

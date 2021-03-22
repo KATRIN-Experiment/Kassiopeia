@@ -1,3 +1,5 @@
+.. _configuration-label:
+
 Configuring Your Own Simulation
 *******************************
 
@@ -1473,6 +1475,21 @@ Paraview_. This write may be created using the following statement:
 
 Note that in principle both data formats are equivalent, but their underlying structure differs. In most cases it is
 best to write output file in both formats, and delete any files that are no longer needed.
+
+To write output in plaintext ASCII format that can be easily viewed and read into other software such as Gnuplot_,
+one may use the following statement:
+
+.. code-block:: xml
+
+    <kswrite_ascii
+        name="write_ascii"
+        path="/path/to/desired/output/directory"
+        base="my_filename_base.vtp"
+    />
+
+This is not recommended for large-scale simulations because the output file will quickly approach a size that will be
+extremely difficult to handle.
+
 
 Output description
 ~~~~~~~~~~~~~~~~~~
