@@ -12,10 +12,10 @@ project( Kasper )
 
 # Silently try to find major dependencies. This list is not be complete!
 # (Somehow, CMake behaves better if this is done in the root scope before adding modules...)
-find_package(Boost QUIET)
+#find_package(Boost QUIET)
 find_package(HDF5 COMPONENTS CXX QUIET)
 find_package(MPI QUIET)
-find_package(ROOT QUIET)
+#find_package(ROOT QUIET)
 find_package(VTK QUIET)
 
 set( BUILD_SHARED_LIBS ON )
