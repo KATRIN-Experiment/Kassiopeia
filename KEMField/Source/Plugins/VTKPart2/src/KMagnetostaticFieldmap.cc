@@ -60,7 +60,7 @@ bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePo
     return true;
 }
 
-bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue) const
+bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint, double* aValue, bool gradient) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
@@ -71,7 +71,10 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
         return false;
 
     // get value at center
-    data->GetTuple(center, aValue);
+    if (!gradient)
+        data->GetTuple(center, aValue);
+    else
+        return false;
 
     return true;
 }
@@ -99,12 +102,17 @@ bool KMagfieldMapVTK::CheckGradient(const KPosition& aSamplePoint, const double&
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
-                                  KGradient& aGradient) const
+                                  KGradient& aGradient, bool grad_numerical) const
 {
     //fieldmsg_debug( "sampling magnetic gradient at point " << aSamplePoint << eom);
 
     double value[9];
-    if (GetValue("magnetic gradient", aSamplePoint, value)) {
+    bool success = false;
+    if (grad_numerical)
+        success = GetValue("magnetic field", aSamplePoint, value, true);
+    else
+        success = GetValue("magnetic gradient", aSamplePoint, value);
+    if (success) {
         aGradient.SetComponents(value);
         return true;
     }
@@ -118,7 +126,7 @@ KLinearInterpolationMagfieldMapVTK::KLinearInterpolationMagfieldMapVTK(const str
 KLinearInterpolationMagfieldMapVTK::~KLinearInterpolationMagfieldMapVTK() = default;
 
 bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
-                                                  double* aValue) const
+                                                  double* aValue, bool gradient) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
@@ -161,22 +169,49 @@ bool KLinearInterpolationMagfieldMapVTK::GetValue(const string& array, const KPo
     double xd = (aSamplePoint.X() - vertices[0][0]) / spacing[0];
     double yd = (aSamplePoint.Y() - vertices[0][1]) / spacing[1];
     double zd = (aSamplePoint.Z() - vertices[0][2]) / spacing[2];
-    for (int k = 0; k < data->GetNumberOfComponents(); k++) {
-        double c00 = values[k][0] * (1 - xd) + values[k][1] * xd;
-        double c10 = values[k][2] * (1 - xd) + values[k][3] * xd;
-        double c01 = values[k][4] * (1 - xd) + values[k][5] * xd;
-        double c11 = values[k][6] * (1 - xd) + values[k][7] * xd;
-
-        double c0 = c00 * (1 - yd) + c10 * yd;
-        double c1 = c01 * (1 - yd) + c11 * yd;
-
-        double c = c0 * (1 - zd) + c1 * zd;
-
-        aValue[k] = c;
+    if (! gradient) {
+        static int d[3] = {0, 0, 0};
+        for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+            aValue[k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd);
+        }
+    } else {
+        for (int l = 0; l < data->GetNumberOfComponents(); l++) {
+            int d[3] = {0, 0, 0};
+            d[l] = 1; // 1st derivative in component l
+            for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+                aValue[3*l+k] = _trilinearInterpolate(&(values[k][0]), d, xd, yd, zd) / spacing[l];
+            }
+        }
     }
 
     return true;
 }
+
+double KLinearInterpolationMagfieldMapVTK::_linearInterpolate(double p[], int d[], double x)  // array of 2
+{
+    if (d[0] == 1)
+        return p[1] - p[0];
+    else
+        return p[0] + x * (p[1] - p[0]);
+}
+
+double KLinearInterpolationMagfieldMapVTK::_bilinearInterpolate(double p[], int d[], double x, double y)  // array of 2x2
+{
+    static double q[2];
+    q[0] = _linearInterpolate(&(p[0]), &(d[0]), x);
+    q[1] = _linearInterpolate(&(p[2]), &(d[0]), x);
+    return _linearInterpolate(q, &(d[1]), y);
+}
+
+double KLinearInterpolationMagfieldMapVTK::_trilinearInterpolate(double p[], int d[], double x, double y,
+                                                                 double z)  // array of 2x2x2
+{
+    static double q[2];
+    q[0] = _bilinearInterpolate(&(p[0]), &(d[0]), x, y);
+    q[1] = _bilinearInterpolate(&(p[4]), &(d[0]), x, y);
+    return _linearInterpolate(q, &(d[2]), z);
+}
+////////////////////////////////////////////////////////////////////
 
 KCubicInterpolationMagfieldMapVTK::KCubicInterpolationMagfieldMapVTK(const string& aFilename) :
     KMagfieldMapVTK(aFilename)
@@ -185,7 +220,7 @@ KCubicInterpolationMagfieldMapVTK::KCubicInterpolationMagfieldMapVTK(const strin
 KCubicInterpolationMagfieldMapVTK::~KCubicInterpolationMagfieldMapVTK() = default;
 
 bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoint,
-                                                 double* aValue) const
+                                                 double* aValue, bool gradient) const
 {
     vtkDataArray* data = fImageData->GetPointData()->GetArray(array.c_str());
     if (data == nullptr) return false;
@@ -300,39 +335,60 @@ bool KCubicInterpolationMagfieldMapVTK::GetValue(const string& array, const KPos
         (aSamplePoint.X() - vertices[21][0]) / spacing[0];  // point index 21 is at -1/-1/-1 coords = "lower" corner
     double yd = (aSamplePoint.Y() - vertices[21][1]) / spacing[1];
     double zd = (aSamplePoint.Z() - vertices[21][2]) / spacing[2];
-    for (int k = 0; k < data->GetNumberOfComponents(); k++) {
-        aValue[k] = _tricubicInterpolate(&(values[k][0]), xd, yd, zd);
+    if (! gradient) {
+        static int d[3] = {0, 0, 0};
+        for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+            aValue[k] = _tricubicInterpolate(&(values[k][0]), d, xd, yd, zd);
+        }
+    } else {
+        for (int l = 0; l < data->GetNumberOfComponents(); l++) {
+            int d[3] = {0, 0, 0};
+            d[l] = 1; // 1st derivative in component l
+            for (int k = 0; k < data->GetNumberOfComponents(); k++) {
+                aValue[3*l+k] = _tricubicInterpolate(&(values[k][0]), d, xd, yd, zd) / spacing[l];
+            }
+        }
     }
 
     return true;
 }
 
-double KCubicInterpolationMagfieldMapVTK::_cubicInterpolate(double p[], double x)  // array of 4
+double KCubicInterpolationMagfieldMapVTK::_cubicInterpolate(double p[], int d[],
+                                                            double x)  // array of 4
 {
-    return p[1] +
-           0.5 * x *
-               (p[2] - p[0] + x * (2. * p[0] - 5. * p[1] + 4. * p[2] - p[3] + x * (3. * (p[1] - p[2]) + p[3] - p[0])));
+    if (d[0] == 1)
+        return 0.5 *
+                  (p[2] - p[0]) + 2. * x *
+                       (2. * p[0] - 5. * p[1] + 4. * p[2] - p[3] + 3. * x *
+                           (3. * (p[1] - p[2]) + p[3] - p[0]));
+    else
+        return p[1] +
+               0.5 * x *
+                   (p[2] - p[0] + x *
+                       (2. * p[0] - 5. * p[1] + 4. * p[2] - p[3] + x *
+                           (3. * (p[1] - p[2]) + p[3] - p[0])));
 }
 
-double KCubicInterpolationMagfieldMapVTK::_bicubicInterpolate(double p[], double x, double y)  // array of 4x4
+double KCubicInterpolationMagfieldMapVTK::_bicubicInterpolate(double p[], int d[],
+                                                              double x, double y)  // array of 4x4
 {
     static double q[4];
-    q[0] = _cubicInterpolate(&(p[0]), y);
-    q[1] = _cubicInterpolate(&(p[4]), y);
-    q[2] = _cubicInterpolate(&(p[8]), y);
-    q[3] = _cubicInterpolate(&(p[12]), y);
-    return _cubicInterpolate(q, x);
+    q[0] = _cubicInterpolate(&(p[0]),  &(d[1]), y);
+    q[1] = _cubicInterpolate(&(p[4]),  &(d[1]), y);
+    q[2] = _cubicInterpolate(&(p[8]),  &(d[1]), y);
+    q[3] = _cubicInterpolate(&(p[12]), &(d[1]), y);
+    return _cubicInterpolate(q, &(d[0]), x);
 }
 
-double KCubicInterpolationMagfieldMapVTK::_tricubicInterpolate(double p[], double x, double y,
-                                                               double z)  // array of 4x4x4
+double KCubicInterpolationMagfieldMapVTK::_tricubicInterpolate(double p[], int d[],
+                                                               double x, double y, double z)  // array of 4x4x4
 {
     static double q[4];
-    q[0] = _bicubicInterpolate(&(p[0]), y, z);
-    q[1] = _bicubicInterpolate(&(p[16]), y, z);
-    q[2] = _bicubicInterpolate(&(p[32]), y, z);
-    q[3] = _bicubicInterpolate(&(p[48]), y, z);
-    return _cubicInterpolate(q, x);
+    q[0] = _bicubicInterpolate(&(p[0]),  &(d[1]), y, z);
+    q[1] = _bicubicInterpolate(&(p[16]), &(d[1]), y, z);
+    q[2] = _bicubicInterpolate(&(p[32]), &(d[1]), y, z);
+    q[3] = _bicubicInterpolate(&(p[48]), &(d[1]), y, z);
+    return _cubicInterpolate(q, &(d[0]), x);
 }
 ////////////////////////////////////////////////////////////////////
 
@@ -367,7 +423,7 @@ KGradient KMagnetostaticFieldmap::MagneticGradientCore(const KPosition& P) const
 {
     KGradient tGradient(KGradient::sZero);
     double aRandomTime = 0;
-    if (!fFieldMap->GetGradient(P, aRandomTime, tGradient))
+    if (!fFieldMap->GetGradient(P, aRandomTime, tGradient, fGradNumerical))
         cout << "WARNING: could not compute magnetic gradient at sample point " << P << endl;
 
     return tGradient;
