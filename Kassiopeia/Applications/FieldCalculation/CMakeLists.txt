@@ -10,6 +10,8 @@ set( APPLICATIONS_FIELDS_BASENAMES
     SimpleMagneticFieldCalculatorOverXYplane
     SimpleMagneticFieldCalculatorFromFile
     SimpleMagneticFieldCalculatorSpeedTest
+
+    SimpleMagneticGradientCalculator
 )
 
 set( APPLICATIONS_FIELDS_LIBRARIES

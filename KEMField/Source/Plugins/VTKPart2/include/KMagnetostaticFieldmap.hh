@@ -128,6 +128,7 @@
 #include "KMPIEnvironment.hh"
 #include "KMagnetostaticField.hh"
 #include "KThreeVector_KEMField.hh"
+#include "KEMSimpleException.hh"
 
 #include <memory>
 #include <string>
@@ -145,6 +146,8 @@ class KMagfieldMapVTK
     KMagfieldMapVTK(const std::string& aFilename);
     virtual ~KMagfieldMapVTK();
 
+    bool HasGradient() const;
+
   protected:
     virtual bool CheckValue(const std::string& array, const KPosition& aSamplePoint) const;
     virtual bool GetValue(const std::string& array, const KPosition& aSamplePoint, double* aValue, bool gradient = false) const;
@@ -153,7 +156,7 @@ class KMagfieldMapVTK
     virtual bool CheckField(const KPosition& aSamplePoint, const double& aSampleTime) const;
     virtual bool CheckGradient(const KPosition& aSamplePoint, const double& aSampleTime) const;
     virtual bool GetField(const KPosition& aSamplePoint, const double& aSampleTime, KFieldVector& aField) const;
-    virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient, bool grad_numerical) const;
+    virtual bool GetGradient(const KPosition& aSamplePoint, const double& aSampleTime, KGradient& aGradient, bool grad_numerical = false) const;
 
   protected:
     vtkImageData* fImageData;
@@ -269,6 +272,9 @@ class KMagnetostaticFieldmapCalculator
     }
     void AddMagneticField(KMagnetostaticField* aField)
     {
+        if (!aField)
+            throw KEMSimpleException("cannot add invalid magnetic field");
+
         fMagneticFields[aField->GetName()] = aField;
     }
     void SetName(const std::string& aName)

@@ -23,6 +23,8 @@ using std::string;
 namespace KEMField
 {
 
+static const char* sKMagneticFieldArrayName = "magnetic field";
+static const char* sKMagneticGradientArrayName = "magnetic gradient";
 
 KMagfieldMapVTK::KMagfieldMapVTK(const string& aFilename)
 {
@@ -41,6 +43,14 @@ KMagfieldMapVTK::KMagfieldMapVTK(const string& aFilename)
 }
 
 KMagfieldMapVTK::~KMagfieldMapVTK() = default;
+
+bool KMagfieldMapVTK::HasGradient() const
+{
+    vtkDataArray* data = fImageData->GetPointData()->GetArray(sKMagneticGradientArrayName);
+    if (data == nullptr) return false;
+
+    return true;
+}
 
 bool KMagfieldMapVTK::CheckValue(const string& array, const KPosition& aSamplePoint) const
 {
@@ -81,7 +91,7 @@ bool KMagfieldMapVTK::GetValue(const string& array, const KPosition& aSamplePoin
 
 bool KMagfieldMapVTK::CheckField(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
 {
-    return CheckValue("magnetic field", aSamplePoint);
+    return CheckValue(sKMagneticFieldArrayName, aSamplePoint);
 }
 
 bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aSampleTime*/, KFieldVector& aField) const
@@ -89,7 +99,7 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
     //fieldmsg_debug( "sampling magnetic field at point " << aSamplePoint << eom);
 
     double value[3];
-    if (GetValue("magnetic field", aSamplePoint, value)) {
+    if (GetValue(sKMagneticFieldArrayName, aSamplePoint, value)) {
         aField.SetComponents(value);
         return true;
     }
@@ -98,7 +108,7 @@ bool KMagfieldMapVTK::GetField(const KPosition& aSamplePoint, const double& /*aS
 
 bool KMagfieldMapVTK::CheckGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/) const
 {
-    return CheckValue("magnetic gradient", aSamplePoint);
+    return CheckValue(sKMagneticGradientArrayName, aSamplePoint);
 }
 
 bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /*aSampleTime*/,
@@ -108,10 +118,15 @@ bool KMagfieldMapVTK::GetGradient(const KPosition& aSamplePoint, const double& /
 
     double value[9];
     bool success = false;
-    if (grad_numerical)
-        success = GetValue("magnetic field", aSamplePoint, value, true);
-    else
-        success = GetValue("magnetic gradient", aSamplePoint, value);
+    if (grad_numerical) {
+        success = GetValue(sKMagneticFieldArrayName, aSamplePoint, value, true);
+    }
+    else {
+        if (! HasGradient())
+            throw KEMSimpleException("field map does not contain gradient values");
+        success = GetValue(sKMagneticGradientArrayName, aSamplePoint, value);
+    }
+
     if (success) {
         aGradient.SetComponents(value);
         return true;
@@ -610,7 +625,7 @@ void KMagnetostaticFieldmapCalculator::Prepare()
     fGrid->GetPointData()->AddArray(fValidityData);
 
     fFieldData = vtkSmartPointer<vtkDoubleArray>::New();
-    fFieldData->SetName("magnetic field");
+    fFieldData->SetName(sKMagneticFieldArrayName);
     fFieldData->SetNumberOfComponents(3);  // vector data
     fFieldData->SetNumberOfTuples(tNumPoints);
     fGrid->GetPointData()->AddArray(fFieldData);
@@ -621,7 +636,7 @@ void KMagnetostaticFieldmapCalculator::Prepare()
         }
 
         fGradientData = vtkSmartPointer<vtkDoubleArray>::New();
-        fGradientData->SetName("magnetic gradient");
+        fGradientData->SetName(sKMagneticGradientArrayName);
         fGradientData->SetNumberOfComponents(9);  // tensor data
         fGradientData->SetNumberOfTuples(tNumPoints);
         fGrid->GetPointData()->AddArray(fGradientData);
