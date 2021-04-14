@@ -280,46 +280,205 @@ in the ROOT file, distinguished by their postfix:
 * `..._DATA` contains the actual simulation data. For each output field, one leaf object (an array-like structure) is
   created in the output file. In the example shown here, the `component_step_world_DATA` tree contains the fields
   `step_id`, `time` and so on. In case of vector or tensor data, one individual field is created for each component,
-  e.g. `position_x`, `position_y`, `position_z`. All output fields are sorted by the respective index, e.g. `STEP_DATA`
+  e.g. `position_x`, `position_y`, `position_z`. All output fields are sorted by the respective index, e.g. step data
   is sorted by `STEP_INDEX` (which is a continually increasing integer number). This allows direct access to any
-  specific data field at any output level.
-* `..._PRESENCE` indicates at which indices in the output fields valid data is present. This tree contains the fields
-  `INDEX`, referring to the start index in the output data, and `LENGTH`, referring to the length of one segment.
-* `..._STRUCTURE` contains the fields `LABEL` and `TYPE`. For each output field present in the file, they indicate their
-  name (i.e. the name of the leaf placed under `..._DATA`) and their type (``double`` etc.).
+  specific data field at any output level. Note that the step index can be different than the `step id`, which is an
+  attribute of the :kassiopeia:`KSStep` class and thus defined by the simulation.
+* `..._PRESENCE` indicates which segments in the data array contain valid data. This tree contains the fields `INDEX`,
+  referring to the start index in the output data, and `LENGTH`, referring to the length of one segment. When reading
+  values from the data arrays, these fields should be checked so that only valid data is used.
+* `..._STRUCTURE` contains the fields `LABEL` and `TYPE`. For each output field present in the file, they indicate its
+  name (i.e. the name of the leaf placed under `..._DATA`) and its type (``double`` etc.). When reading the data arrays,
+  this information can be taken into account in order to treat data types correctly.
 
 Note that the data in each leaf is written continuously, i.e. there is no distinction between individual tracks, events,
-or runs. This is done in order to improve storage efficiency and to provide a clean output structure. See below for
-information on how to map output fields between the step, track, event, and run level.
+or runs. This is done in order to improve storage efficiency and to provide a clean output structure. Hence, the step
+index is a monotonic integer number that increases with each new value written to the output file. In order to
+distinguish between different tracks, one needs to know the step indices corresponding to the start and end of the
+track so that the corresponding data segment can be analyzed. This is possible with the following meta-data fields.
 
 In addition to the output groups defined in the XML configuration file, several trees containing meta-data are present
-as well. These trees and their data fields are always present, regardless of the output configuration:
+in the output file. This data is always present in the ROOT_ file, regardless of the output configuration:
 
-* `LABEL`
 * `RUN_KEYS`, `EVENT_KEYS`, etc. contain the names of the output groups present in the file. In the example shown here,
-  the `TRACK_KEYS` tree contains one element ``component_track_world``.
-* `RUN_DATA`, `EVENT_DATA`, etc. contain a list of run/event/... indices that correspond to the number of elements
-  present in the output file at the corresponding level. This is accessible by the field `RUN_INDEX` and so on.
-  In addition, these fields provide a mapping between the different levels:
+  the `TRACK_KEYS` tree contains one element `component_track_world`, while `STEP_KEYS` contains two elements.
+* `RUN_DATA`, `EVENT_DATA`, etc. each contain a list of run/event/... indices that correspond to the internally used
+  indices for accessing data at the corresponding level. For example, `STEP_DATA` contains a field `STEP_INDEX`,
+  which holds all indices that can be accessed in the data arrays.  In addition, the `..._DATA` trees at higher levels
+  than step also provide a mapping between to the indices at the lower levels:
 
-  * `TRACK_DATA` contains the arrays `FIRST_STEP_INDEX` and `LAST_STEP_INDEX`. Their size corresponds to the number of
-    tracks and they are sorted by `TRACK_INDEX`. For each track index, the two fields indicate the first and last step
-    of the track. Hence if one looks at the step output, `component_step_world` in this case, one may use this
-    information to split the continuous step data (sorted by `STEP_INDEX`) into individual tracks.
-  * `EVENT_DATA` contains the fields `(FIRST|LAST)_STEP_INDEX` and `(FIRST|LAST)_TRACK_INDEX`, sorted by `EVENT_INDEX`.
-  * `RUN_DATA` contains the same fields and `(FIRST|LAST)_EVENT_INDEX`, sorted by `RUN_INDEX`.
+  * `TRACK_DATA` contains the arrays `FIRST_STEP_INDEX` and `LAST_STEP_INDEX`. For each track that is designated by
+    `TRACK_INDEX` they point to the index of the first and last step of the track. Hence if one looks at the step
+    output, `component_step_world` in this case, one may use these step indices to split the step data into individual
+    track segments. Similarly,
+  * `EVENT_DATA` contains the fields `(FIRST|LAST)_STEP_INDEX` and `(FIRST|LAST)_TRACK_INDEX`, and
+  * `RUN_DATA` contains  `(FIRST|LAST)_STEP_INDEX`, `(FIRST|LAST)_TRACK_INDEX`, and `(FIRST|LAST)_EVENT_INDEX`.
 
 Accessing simulation data
 -------------------------
 
+In most cases, for example when using the ROOT_ ``TBrowser``, one may just look into the `STEP_DATA` and `TRACK_DATA`
+fields to find the relevant information. For more sophisticated analyses, other means of accessing the data are
+available.
+
 Using Kassiopeia
 ~~~~~~~~~~~~~~~~
+
+*Kassiopeia* includes a simple analysis application that uses the :kassiopeia:`KSReadFileROOT` class to iterate through
+the step output produced by the `QuadrupoleTrapSimulation.xml` example. Its code is available at
+:gh-file:`Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx` and it serves as a general example
+of using this method.
+
+In this case, the simulation output can be accessed in a structured way, using the run/event/track/step levels and
+iterating through each component:
+
+.. code-block:: c++
+
+        for (tRunReader = 0; tRunReader <= tRunReader.GetLastRunIndex(); tRunReader++) {
+            // run analysis code
+
+            for (tEventReader = tRunReader.GetFirstEventIndex(); tEventReader <= tRunReader.GetLastEventIndex(); tEventReader++) {
+                // event analysis code
+
+                for (tTrackReader = tEventReader.GetFirstTrackIndex(); tTrackReader <= tEventReader.GetLastTrackIndex(); tTrackReader++) {
+                    // track analysis code
+
+                    for (tStepReader = tTrackReader.GetFirstStepIndex(); tStepReader <= tTrackReader.GetLastStepIndex();  tStepReader++) {
+                        // step analysis code
+                    }
+                }
+            }
+        }
+
+Individual output fields are accessed via an instance of :kassiopeia:`KSReadObjectROOT`, as shown in the example. The
+benefit of using this method is that it uses *Kassiopeia's* internal classes that are fully compatible with the writer
+class that produced the output file. On the other hand, it requires writing a custom C++ application that needs
+to be compiled against *Kasper*.
 
 Using ROOT
 ~~~~~~~~~~
 
+Alternatively, the output can be access directly from a ROOT_ program. In this case, the ouput is accessible through
+the `TBranch` and `TLeaf` classes of ROOT.
+
+/// TODO
+
+
 Using Python
 ~~~~~~~~~~~~
+
+Another common method of analysis makes use of Python libraries such as NumPy_ and Pandas_. Several methods of getting
+the *Kassiopeia* output into a Python script are available:
+
+* `KassiopeiaReader` is a Python module based on *PyROOT* (the official Python-interface of the ROOT_ software). It is
+  essentially a wrapper around ROOT classes that takes into account the relations between *Kassiopeia's* output levels
+  and allows easy iteration over step/track/... data fields. Its code is available at
+  :gh-code:`Kassiopeia/Python/KassiopeiaReader.py`.
+* uproot_ is a ROOT-less implementation of the ROOT_ file interface. It allows to access *Kassiopeia's* output data
+  without the ROOT dependency. Especially for large output files, this is a very efficient way of processing the
+  simulation results. However, it is difficult to take into account relations between the output levels; e.g. in order
+  to select specific steps that belong to a track or event in the simulation.
+* Pandas_ can be used together with uproot (or PyROOT) to access *Kassiopeia's* output data in the form of a Pandas
+  dataframe. With some extra work, it is possible to include the relations between output levels as well.
+
+All three methods will be briefly explained in this section, in the form of a simple example that reproduces the
+`QuadrupoleTrapAnalysis.cxx` code introduced above. The examples use the ROOT_ file ``QuadrupoleTrapSimulation.root``
+produced by the ``QuadrupoleTrapSimulation.xml`` example.
+
+KassiopeiaReader
+~~~~~~~~~~~~~~~~
+
+The ``KassiopeiaReader`` Python module provides an iterator interface to a selected output group in a *Kassiopeia*
+file. It can easily be used to retrieve e.g. all track or step output from a simulation. Correctly iterating over
+more advanced output definitions take more effort, however. The `QuadrupoleTrapSimulation` is a good example for this,
+because it uses an additional output region (``component_step_cell``) that is only filled with data in a small section
+of each particle's trajectory.
+
+To re-implement the `QuadrupoleTrapAnalysis.cxx` program, a few things need to be considered that are explained below.
+The full example script is located at :gh-code:`Kassiopeia/Python/Examples/QuadrupoleTrapAnalysis.py`.
+
+.. code-block:: python
+
+    import KassiopeiaReader
+
+    reader = KassiopeiaReader.Iterator('QuadrupoleTrapSimulation.root')
+    reader.loadTree('component_step_cell')
+
+    step_presence = reader.getTree('component_step_cell_PRESENCE')
+    step_valid = zip(*[step_presence['INDEX'], step_presence['LENGTH']])
+
+    reader.select('orbital_magnetic_moment')
+    step = iter(reader)
+
+First of all, we need to import the Python module and create an instance for reading the output file
+``QuadrupoleTrapSimulation.root``. The data we're interested in is located in the ``component_step_cell`` tree.
+As we will see later, the ``component_step_cell_PRESENCE`` tree is important in this example because it defines the
+step entries that contain valid data (i.e. where the output was filled by the simulation, according to the definition
+in the configuration file.) Because we're only interested in a single output field ``orbital_magnetic_moment``, we
+can select it before accessing any data in order to reduce memory footprint.
+
+Finally, an iterator instance over the step data is created with the function ``iter(reader)``.
+
+.. code-block:: python
+
+    for track_index in reader.getTracks('TRACK_INDEX'):
+
+        first_step_index = reader.getTracks('FIRST_STEP_INDEX')[track_index]
+        last_step_index = reader.getTracks('LAST_STEP_INDEX')[track_index]
+
+        for first_valid,valid_length in step_valid:
+            last_valid = first_valid + valid_length - 1
+            if first_valid >= first_step_index:
+                first_step_index = first_valid
+                if last_valid < last_step_index:
+                    last_step_index = last_valid
+                break
+
+Our analysis requires to compute the magnetic moment deviation for each single track. This requires to consider the
+relation between step and track data. One method which is used here is to use the ``(FIRST|LAST)_STEP_INDEX`` field of
+the track structure to select the first and last step index which belongs to a given track. However, because
+not all of these steps will contain data in this case, some further adjustment is required: We also check the contents
+of the ``component_step_cell_PRESENCE`` tree from above, and see if the first step index needs to be moved ahead to
+the first valid data point. Similarly, we check if the last step index needs to be moved back.
+
+*Note:* This implementation is not fully correct, because it only considers one entry in the presence tree. In
+principle, several segments of valid step data could be associated with a single track. For the quadrupole trap this
+is not the case, however.
+
+.. code-block:: python
+
+        while reader.iev < first_step_index:
+            item = next(step)
+
+        max_moment = -float('Inf')
+        min_moment = float('Inf')
+
+        while reader.iev <= last_step_index:
+
+            item = next(step)
+
+            moment = float(item.orbital_magnetic_moment)
+            if moment > max_moment:
+                max_moment = moment
+            if moment < min_moment:
+                min_moment = moment
+
+        deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
+        print("extrema for track <{:g}>".format(deviation))
+
+
+With this information, the step iterator can be advanced to the first step before starting the data processing. It is
+then very straightforward to iterate over the range of steps beloging to the current track by advancing the step
+iterator accordingly. In this example we retrieve the value ``orbital_magnetic_moment`` for each step, determine
+its minimum/maximum over the entire track, and then calculate and print a mean deviation.
+
+All output values should be in agreement with the C++ program.
+
+uproot
+~~~~~~
+
+Pandas
+~~~~~~
 
 
 VTK output files
@@ -364,5 +523,8 @@ ASCII output files
 .. _Paraview: http://www.paraview.org/
 .. _ROOT: https://root.cern.ch/
 .. _VTK: http://www.vtk.org/
+.. _NumPy: https://numpy.org/
+.. _Pandas: https://pandas.pydata.org/
+.. _uproot: https://pypi.org/project/uproot/
 
 .. rubric:: Footnotes
