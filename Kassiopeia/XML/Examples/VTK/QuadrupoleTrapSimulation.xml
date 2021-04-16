@@ -367,9 +367,9 @@
         <command parent="write_root" field="add_track_output" child="component_track_world"/>
         <command parent="write_root" field="add_step_output" child="component_step_world"/>
         <command parent="write_vtk" field="set_track_point" child="component_track_position"/>
-        <command parent="write_vtk" field="set_track_data" child="component_track_length"/>
+        <command parent="write_vtk" field="set_track_data" child="component_track_world"/>
         <command parent="write_vtk" field="set_step_point" child="component_step_position"/>
-        <command parent="write_vtk" field="set_step_data" child="component_step_length"/>
+        <command parent="write_vtk" field="set_step_data" child="component_step_world"/>
         <geo_surface name="surface_start" surfaces="world/quadrupole_trap/start">
             <command parent="root_terminator" field="add_terminator" child="term_start"/>
         </geo_surface>
