@@ -11,6 +11,7 @@
     </title>
 <link href="_static/pygments.css" rel="stylesheet"/>
 <link href="_static/theme.css" rel="stylesheet"/>
+<link href="_static/graphviz.css" rel="stylesheet"/>
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
 <link href="kgeobag_basic.html" rel="next" title="Basic Shapes in KGeoBag"/>
@@ -218,7 +219,30 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#output-configuration">Output configuration</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#groups-and-fields">Groups and fields</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#root-output-files">ROOT output files</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#data-structure">Data structure</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#accessing-simulation-data">Accessing simulation data</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-kassiopeia">Using Kassiopeia</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-root">Using ROOT</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-python">Using Python</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#id7">Accessing simulation data</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-paraview">Using ParaView</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#id8">Using Python</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></div></li>
+</ul>
+</li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
@@ -235,7 +259,7 @@
 <span class="text-gray-700 mr-1"> • </span><span aria-current="page">Configuring Your Own Simulation</span>
 </nav>
 <section id="configuring-your-own-simulation">
-<h1>Configuring Your Own Simulation<a aria-label="Copy link to section: Configuring Your Own Simulation." class="headerlink tooltipped tooltipped-ne" href="#configuring-your-own-simulation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<span id="configuration-label"></span><h1>Configuring Your Own Simulation<a aria-label="Copy link to section: Configuring Your Own Simulation." class="headerlink tooltipped tooltipped-ne" href="#configuring-your-own-simulation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
 <p>This section gives a brief overview of what you need to know to configure your own <em>Kassiopeia</em> simulation.</p>
 <section id="overview-and-units">
 <h2>Overview and Units<a aria-label="Copy link to section: Overview and Units." class="headerlink tooltipped tooltipped-ne" href="#overview-and-units" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
@@ -2070,6 +2094,21 @@ information to a <code class="docutils literal notranslate">.vtp</code> (VTK pol
 </code></pre></div>
 <p>Note that in principle both data formats are equivalent, but their underlying structure differs. In most cases it is
 best to write output file in both formats, and delete any files that are no longer needed.</p>
+<p>To write output in plaintext ASCII format that can be easily viewed and read into other software such as <a href="#id31"><span class="problematic" id="id32">Gnuplot_</span></a>,
+one may use the following statement:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;kswrite_ascii</span>
+    <span class="na">name=</span><span class="s">"write_ascii"</span>
+    <span class="na">path=</span><span class="s">"/path/to/desired/output/directory"</span>
+    <span class="na">base=</span><span class="s">"my_filename_base.vtp"</span>
+<span class="nt">/&gt;</span>
+</code></pre></div>
+<p>This is not recommended for large-scale simulations because the output file will quickly approach a size that will be
+extremely difficult to handle.</p>
 </section>
 <section id="output-description">
 <h3>Output description<a aria-label="Copy link to section: Output description." class="headerlink tooltipped tooltipped-ne" href="#output-description" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>

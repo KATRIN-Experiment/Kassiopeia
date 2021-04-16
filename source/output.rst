@@ -359,9 +359,62 @@ Using ROOT
 ~~~~~~~~~~
 
 Alternatively, the output can be access directly from a ROOT_ program. In this case, the ouput is accessible through
-the `TBranch` and `TLeaf` classes of ROOT.
+the `TTreeReader` interface:
 
-/// TODO
+.. code-block:: c++
+
+    TFile file("QuadrupoleTrapSimulation.root");
+
+    TTreeReader track_data("TRACK_DATA", &file);
+    TTreeReaderValue<unsigned> first_step_index(track_data, "FIRST_STEP_INDEX");
+    TTreeReaderValue<unsigned> last_step_index(track_data, "LAST_STEP_INDEX");
+
+    TTreeReader step_data("component_step_cell_DATA", &file);
+    TTreeReaderValue<double> step_moment(step_data, "orbital_magnetic_moment");
+
+    TTreeReader step_presence("component_step_cell_PRESENCE", &file);
+    TTreeReaderValue<unsigned> valid_index(step_presence, "INDEX");
+    TTreeReaderValue<unsigned> valid_length(step_presence, "LENGTH");
+
+As explained further below, here it is necessary to take into account the information from the ``TRACK_DATA`` tree to
+get the first and last step index belonging to each track, as well as the ``..._PRESENCE`` tree to only work on valid
+entries in the output group. Because the simulation only fills the ``component_step_cell`` output in a certain region
+of the geometry (the inner part of the trap), some values outside this region contain invalid values.
+
+One approach to handle this structure is shown below, where the main loop iterates over each track and the inner loop
+over the steps only processes valid output fields:
+
+.. code-block:: c++
+
+    vector<pair<unsigned,unsigned>> valid_steps;
+    while (step_presence.Next()) {
+        valid_steps.emplace_back(*valid_index, *valid_index + *valid_length);
+    }
+
+    while (track_data.Next()) {
+        auto max_moment = -TMath::Infinity();
+        auto min_moment = TMath::Infinity();
+
+        while (step_data.Next()) {
+            auto index = step_data.GetCurrentEntry();
+
+            if (index < *first_step_index)
+                continue;
+            if (index > *last_step_index)
+                break;
+
+            for (auto & valid : valid_steps) {
+                if (index >= valid.first && index <= valid.second) {
+                    if (*step_moment > max_moment)
+                        max_moment = *step_moment;
+                    if (*step_moment < min_moment)
+                        min_moment = *step_moment;
+                }
+            }
+        }
+        auto deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment);
+        cout << "extrema for track <" << deviation << ">" << endl;
+    }
 
 
 Using Python
@@ -402,13 +455,14 @@ The full example script is located at :gh-code:`Kassiopeia/Python/Examples/Quadr
     import KassiopeiaReader
 
     reader = KassiopeiaReader.Iterator('QuadrupoleTrapSimulation.root')
+
     reader.loadTree('component_step_cell')
+    reader.select('orbital_magnetic_moment')
+
+    track_step_index = list(zip(*[reader.getTracks('FIRST_STEP_INDEX'), reader.getTracks('LAST_STEP_INDEX')]))
 
     step_presence = reader.getTree('component_step_cell_PRESENCE')
-    step_valid = zip(*[step_presence['INDEX'], step_presence['LENGTH']])
-
-    reader.select('orbital_magnetic_moment')
-    step = iter(reader)
+    step_valid = list(zip(*[step_presence['INDEX'], step_presence['LENGTH']]))
 
 First of all, we need to import the Python module and create an instance for reading the output file
 ``QuadrupoleTrapSimulation.root``. The data we're interested in is located in the ``component_step_cell`` tree.
@@ -417,23 +471,6 @@ step entries that contain valid data (i.e. where the output was filled by the si
 in the configuration file.) Because we're only interested in a single output field ``orbital_magnetic_moment``, we
 can select it before accessing any data in order to reduce memory footprint.
 
-Finally, an iterator instance over the step data is created with the function ``iter(reader)``.
-
-.. code-block:: python
-
-    for track_index in reader.getTracks('TRACK_INDEX'):
-
-        first_step_index = reader.getTracks('FIRST_STEP_INDEX')[track_index]
-        last_step_index = reader.getTracks('LAST_STEP_INDEX')[track_index]
-
-        for first_valid,valid_length in step_valid:
-            last_valid = first_valid + valid_length - 1
-            if first_valid >= first_step_index:
-                first_step_index = first_valid
-                if last_valid < last_step_index:
-                    last_step_index = last_valid
-                break
-
 Our analysis requires to compute the magnetic moment deviation for each single track. This requires to consider the
 relation between step and track data. One method which is used here is to use the ``(FIRST|LAST)_STEP_INDEX`` field of
 the track structure to select the first and last step index which belongs to a given track. However, because
@@ -441,31 +478,38 @@ not all of these steps will contain data in this case, some further adjustment i
 of the ``component_step_cell_PRESENCE`` tree from above, and see if the first step index needs to be moved ahead to
 the first valid data point. Similarly, we check if the last step index needs to be moved back.
 
-*Note:* This implementation is not fully correct, because it only considers one entry in the presence tree. In
-principle, several segments of valid step data could be associated with a single track. For the quadrupole trap this
-is not the case, however.
-
 .. code-block:: python
 
-        while reader.iev < first_step_index:
-            item = next(step)
+    for first_step_index, last_step_index in track_step_index:
 
-        max_moment = -float('Inf')
-        min_moment = float('Inf')
+        max_moment = -np.inf
+        min_moment = np.inf
 
-        while reader.iev <= last_step_index:
+        for step in iter(reader):
+            step_index = reader.iev - 1
 
-            item = next(step)
+            if step_index < first_step_index:
+                continue
 
-            moment = float(item.orbital_magnetic_moment)
-            if moment > max_moment:
-                max_moment = moment
-            if moment < min_moment:
-                min_moment = moment
+            for first_valid,valid_length in step_valid:
+
+                last_valid = first_valid + valid_length - 1
+                if step_index >= first_valid and step_index <= last_valid:
+
+                    moment = float(step.orbital_magnetic_moment)
+                    if moment > max_moment:
+                        max_moment = moment
+                    if moment < min_moment:
+                        min_moment = moment
+
+                if first_valid > first_step_index:
+                    break
+
+            if step_index >= last_step_index:
+                 break
 
         deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
         print("extrema for track <{:g}>".format(deviation))
-
 
 With this information, the step iterator can be advanced to the first step before starting the data processing. It is
 then very straightforward to iterate over the range of steps beloging to the current track by advancing the step
@@ -474,11 +518,56 @@ its minimum/maximum over the entire track, and then calculate and print a mean d
 
 All output values should be in agreement with the C++ program.
 
-uproot
-~~~~~~
+uproot / Pandas
+~~~~~~~~~~~~~~~
 
-Pandas
-~~~~~~
+The same result can be achieved by using the uproot_ package with Pandas_ dataframes. In this case, PyROOT isn't needed
+and the analysis can run without ROOT_ dependencies. Applying the knowledge about *Kassiopeia's* output structure
+that we gathered in the section above, we can write the following snippet:
+
+.. code-block:: python
+
+    import numpy as np
+    import uproot
+
+    data = uproot.open(file_name)
+
+    df0 = data['TRACK_DATA'].pandas.df()
+    df1 = data['component_step_cell_PRESENCE'].pandas.df()
+    df2 = data['component_step_cell_DATA'].pandas.df()
+
+    for first_step_index, last_step_index in zip(df0['FIRST_STEP_INDEX'], df0['LAST_STEP_INDEX']):
+
+        mask = np.full(df2['orbital_magnetic_moment'].shape, False)
+
+        for first_valid, valid_length in zip(df1['INDEX'], df1['LENGTH']):
+
+            last_valid = first_valid + valid_length - 1
+            if first_valid >= first_step_index and last_valid <= last_step_index:
+                mask[first_valid:last_valid] = True
+
+            if first_valid > last_step_index:
+                break
+
+        steps_moment = df2['orbital_magnetic_moment'][mask]
+        max_moment = np.max(steps_moment)
+        min_moment = np.min(steps_moment)
+
+        deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
+        print("extrema for track <{:g}>".format(deviation))
+
+Here the output file is opened with ``uproot.open()`` and the relevant data trees are accessed via the ``pandas.df()``
+interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
+over the tracks in the ``TRACK_DATA`` tree, select the valid step range (with the same caveat noted above), and simply
+use NumPy_'s methods to determine the minimum/maximum of the magnetic moment.
+
+Obviously this code is more compact than the *KassiopeiaReader* method from above. For large output files with many
+steps, it is also much faster. The main convenience arises from using dataframes to represent the data, which allows
+slicing of data segments, instead of using a step-by-step iterative approach.
+
+The example above could be easily extended to allow multiple valid segments per track (using the `PRESENCE` tree) and
+for other relations between runs, events, tracks, and steps. Consider for example a simulation where secondary particles
+are produced over the course of a track, which need to be mapped to the primary event.
 
 
 VTK output files
@@ -496,11 +585,11 @@ Data structure
 In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in ParaView_:
 
-.. image:: _images/vtk_output.png
-   :width: 350pt
+.. image:: _images/paraview_sheet.png
+   :width: 500pt
 
 In this example, the step and track output only contains one data field in addition to the particle position. For the
-step output, the file contains the value of `component_step_length` and the position at each point. Each point
+step output, the file contains the fields of `component_step_world` and the position at each point. Each point
 corresponds to one step in the simulation. As with the ROOT output, the step data itself is continuous and not split
 into individual tracks. However, because the 3D representation of the steps is stored as a ``vtkPolyLine``, the
 visualization can dinstignuish between individual tracks: Each track in the simulation corresponds to a polyline in the
@@ -510,15 +599,64 @@ VTK step file.
 Accessing simulation data
 -------------------------
 
+Because the VTK_ output is mainly intended for visualization, we will only cover the use of the standard software
+ParaView_ in this guide. In principle, VTK data files can also be used to store and access simulation output (and e.g.
+read their contents using Python), but this approach is less flexible than with ROOT_ output and not advised.
+
 Using ParaView
 ~~~~~~~~~~~~~~
 
-Using Python
-~~~~~~~~~~~~
+ParaView offers a quite sophisticated interface for various kinds of visualization. With the output files generated
+by the quadrupole trap simulation, one may reproduce the following image by loading the VTK step file
+(``output/Kassiopeia/QuadrupoleTrapSimulationStep.vtp``) and the geometry file created by the `geometry_painter` after
+the simulation (``output/TheBag/geometry_painter.vtp``):
+
+.. image:: _images/paraview_render.png
+   :width: 500pt
+
+The geometry is shown as colored surfaces according to the configuration in the XML file; the colors are defined by the
+``<appearance .../>`` elements. To make the tracks visible, the *Slice* operation was applied which cuts away one side
+of the close surfaces, and the opacity was recuced to 50%. The individual steps are shown as points and colored by
+their electric potential.
+
+ParaView allows to change the data represenation by choosing different color maps and normalization, applying cuts and
+other data operations, and combining multiple source files. In addition to 2D and 3D render views, the user can also
+investigate the underlying data with typical plotting tools like shown here:
+
+.. image:: _images/paraview_histogram.png
+   :width: 500pt
+
+For a full documentation, see:
+
+    https://www.paraview.org/Wiki/The_ParaView_Tutorial
+
+    https://docs.paraview.org/en/latest/
 
 
 ASCII output files
 ------------------
+
+The ASCII output writer creates a simple, space-separated file that contains all the output values defined in the
+configuration file. Each row corresponds to one step and each column to one output field. A new file is created
+for each track, with the label ``Track#.txt`` added to the configured output file name. This format is useful for
+working with plotting tools such as Gnuplot_, or for importing or comparing the output to other applications.
+
+A typical output file looks like this:
+
+.. code-block::
+
+    step_id	continuous_time	continuous_length	time	position_x	position_y	position_z
+    0	3.79467e-13	3.18284e-07	3.79467e-13	-0.000395068	-0.000194398	-0.0025
+    1	3.79467e-13	3.18288e-07	7.58933e-13	-0.000395383	-0.000194364	-0.0025
+    2	3.79467e-13	3.18292e-07	1.1384e-12	-0.000395686	-0.000194452	-0.0025
+    3	3.79467e-13	3.18297e-07	1.51787e-12	-0.000395933	-0.00019465	-0.0025
+    4	3.79467e-13	3.18301e-07	1.89733e-12	-0.000396085	-0.000194928	-0.0025
+    5	3.79467e-13	3.18305e-07	2.2768e-12	-0.000396119	-0.000195242	-0.0025
+
+
+However, because the storage is rather inefficient it should not be used for large-scale simulations. File sizes on
+the order of several Gigabytes can be easily produced by a typical Monte-Carlo simulation!
+
 
 .. _Paraview: http://www.paraview.org/
 .. _ROOT: https://root.cern.ch/
@@ -526,5 +664,4 @@ ASCII output files
 .. _NumPy: https://numpy.org/
 .. _Pandas: https://pandas.pydata.org/
 .. _uproot: https://pypi.org/project/uproot/
-
-.. rubric:: Footnotes
+.. _Gnuplot: http://www.gnuplot.info/
