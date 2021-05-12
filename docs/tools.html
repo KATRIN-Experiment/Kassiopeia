@@ -248,7 +248,23 @@
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></div></li>
 </ul>
 </li>
-<li class="toctree-l1 current expanded"><div class="nav-link"><a class="current reference internal" href="#"> Additional Simulation Tools</a></div></li>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Additional Simulation Tools</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#geometry-viewers">Geometry viewers</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#usage">Usage</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#advanced-visualization">Advanced visualization</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#mesh-viewers">Mesh viewers</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#id1">Usage</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#field-calculation">Field calculation</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#id2">Usage</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#simulation-tools">Simulation tools</a></div></li>
+</ul>
+</li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
@@ -264,7 +280,148 @@
 <span class="text-gray-700 mr-1"> • </span><span aria-current="page">Additional Simulation Tools</span>
 </nav>
 <section id="additional-simulation-tools">
-<span id="output-label"></span><h1>Additional Simulation Tools<a aria-label="Copy link to section: Additional Simulation Tools." class="headerlink tooltipped tooltipped-ne" href="#additional-simulation-tools" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<span id="tools-label"></span><h1>Additional Simulation Tools<a aria-label="Copy link to section: Additional Simulation Tools." class="headerlink tooltipped tooltipped-ne" href="#additional-simulation-tools" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>The main application for simulations is <code class="docutils literal notranslate">Kassiopeia</code>. The XML interface allows flexible configuration that is suited
+to many tasks. However, sometimes a more direct approach to certain investigations is needed. This is typically the
+case during simulation design and debugging, and for field calculations that do not require a full-scale simulation. In
+the following, additional tools that are included with <em>Kassiopeia</em>, <em>KEMField</em> and <em>KGeoBag</em> are presented.</p>
+<section id="geometry-viewers">
+<h2>Geometry viewers<a aria-label="Copy link to section: Geometry viewers." class="headerlink tooltipped tooltipped-ne" href="#geometry-viewers" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The geometry viewwers are intended to help with constructing and optimizing a simulation geometry that is typically
+used with <em>Kassiopeia</em> and <em>KEMField</em>. In most cases, the simulation requires a sophistocated geometry setup where
+additional tools are beneficial.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate">GeometryDump</code> prints information about the selected geometry elements to the terminal. This provides a quick method
+to access positions and rotations of any elements placed in the global coordinate system. The output is constructed
+in <a href="#id3"><span class="problematic" id="id4">XML_</span></a> format, which can be further processed by external software.</p></li>
+<li><p><code class="docutils literal notranslate">GeometryViewer</code> opens a <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> visualization window showing the geometry in a 3D view. In the case that appearance
+definitions are embedded in the configuration file (via the <code class="docutils literal notranslate">&lt;appearance .../&gt;</code> element), the shown geometry
+elements will be displayed accordingly.</p></li>
+<li><p><code class="docutils literal notranslate">GeometryViewerROOT</code> opens a <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> visualization window showing the geometry in a 2D view. Spaces are shown as green
+boxes, surfaces as black lines. In order to project the geometry onto a 2D plane, the center point and direction
+of the plane must be defined. By default, the ROOT viewer draws the geometry in the Y-Z plane.</p></li>
+</ul>
+<section id="usage">
+<h3>Usage<a aria-label="Copy link to section: Usage." class="headerlink tooltipped tooltipped-ne" href="#usage" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>All listed programs will show a brief usage summary if called without arguments. The applications are called with a
+configuration file name and a valid geometry path, e.g.:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>GeometryViewer QuadrupoleTrapSimulation.xml <span class="s1">'world/@electrode_tag'</span>
+</code></pre></div>
+<p>Below is an example of the <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> geometry viewer:</p>
+<a class="reference internal image-reference" href="_images/tools_geometry_viewer.png"><img alt="_images/tools_geometry_viewer.png" src="_images/tools_geometry_viewer.png" style="width: 500pt;"/></a>
+<p>In case of the <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> viewer, additional options can be passed to define the 2D view plane:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>GeometryViewerROOT QuadrupoleTrapSimulation.xml <span class="s1">'world/@electrode_tag'</span> <span class="s1">'world/@magnet_tag'</span> --plane<span class="o">=</span>XZ
+</code></pre></div>
+<p>Below is an example of the <a class="reference external" href="https://root.cern.ch/">ROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> geometry viewer:</p>
+<a class="reference internal image-reference" href="_images/tools_geometry_viewer_root.png"><img alt="_images/tools_geometry_viewer_root.png" src="_images/tools_geometry_viewer_root.png" style="width: 500pt;"/></a>
+<p>As shown above, it is possible to specify multiple geometry paths as well.</p>
+</section>
+<section id="advanced-visualization">
+<h3>Advanced visualization<a aria-label="Copy link to section: Advanced visualization." class="headerlink tooltipped tooltipped-ne" href="#advanced-visualization" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>Note that in addition to these geometry viewers, <em>Kassiopeia</em> also supports to define visualizations in the
+configuration file directly so that no additional commands are necessary. For details see <a class="reference internal" href="visualization.html#visualization-label"><span class="std std-ref">Visualization Techniques</span></a>.</p>
+</section>
+</section>
+<section id="mesh-viewers">
+<h2>Mesh viewers<a aria-label="Copy link to section: Mesh viewers." class="headerlink tooltipped tooltipped-ne" href="#mesh-viewers" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>The mesh viewers are intended to help with constructing and optimizing an electrostatic geometry that is provided
+to <em>KEMField</em>. In this case a mesh needs to be defined according to the selected symmetry level. The viewers show
+the defined mesh in a <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> window, coloring each mesh element individually.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate">AxialMeshViewer</code> opens a visualization window showing the axial mesh. A corresponding mesh must be defined in the
+configuration file with the <code class="docutils literal notranslate">&lt;axial_mesh .../&gt;</code> element.</p></li>
+<li><p><code class="docutils literal notranslate">MeshViewer</code> opens a visualization window showing the asymmetric (3D) mesh. A corresponding mesh must be defined in
+the configuration file with the <code class="docutils literal notranslate">&lt;mesh .../&gt;</code> element.</p></li>
+</ul>
+<section id="id1">
+<h3>Usage<a aria-label="Copy link to section: Usage." class="headerlink tooltipped tooltipped-ne" href="#id1" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>All listed programs will show a brief usage summary if called without arguments. The viewers are called with a
+configuration file name and a valid geometry path, e.g.:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">bash</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>AxialMeshViewer QuadrupoleTrapSimulation.xml <span class="s1">'world/@electrode_tag'</span>
+</code></pre></div>
+<p>In this case, the geometry path selects all elements with the tag <cite>electrode_tag</cite>, which in this geometry corresponds
+to all electrode elements. Note that because the configuration file is processed before the mesh viewer visualization,
+there may be additional messages or windows shown (e.g. the internal <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> geometry viewer). Below is an example of the
+axial mesh viewer:</p>
+<a class="reference internal image-reference" href="_images/tools_axial_mesh_viewer.png"><img alt="_images/tools_axial_mesh_viewer.png" src="_images/tools_axial_mesh_viewer.png" style="width: 500pt;"/></a>
+</section>
+</section>
+<section id="field-calculation">
+<h2>Field calculation<a aria-label="Copy link to section: Field calculation." class="headerlink tooltipped tooltipped-ne" href="#field-calculation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Although <em>Kassiopeia</em> is quite powerful in terms of configuration options, sometimes it is necessary to calculate the
+electric or magnetic field at one or more defined points in the geometry. This is especially useful to compare
+different geometry setups, or during the design stage when full-scale simulations are not yet feasible. The field
+calculation tools are intended to help with these tasks.</p>
+<p>Several programs are available for working with electric fields:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate">SimpleElectricFieldCalculator</code> calculates the electric field and potential at a single point in the global
+coordinate system, and prints the results to the terminal.</p></li>
+<li><p><code class="docutils literal notranslate">SimpleElectricFieldCalculatorAlongZAxis</code> calculates the electric field and potential at several points spread
+along the z-axis, defined by a start and stop position on the z-axis and a distance between points. The results are
+printed to the terminal and saved to a output text file.</p></li>
+<li><p><code class="docutils literal notranslate">SimpleElectricFieldCalculatorOverXYplane</code> calculates the electric field and potential at several points spread
+over the xy-plane, defined by a position on the z-axis, a maimum radius, and a distance between points. The results
+are printed to the terminal and saved to a output text file.</p></li>
+<li><p><code class="docutils literal notranslate">SimpleElectricFieldCalculatorAlongFieldline</code> calculates the electric field and potential along a field line,
+which is calculated with the help of <em>Kassiopeia</em> using a magnetic trajectory. In principle this can be done through
+the <em>Kassiopeia</em> XML interfaces, but this program provides a convenient method for a simple field line calculation.
+The results are printed to the terminal and saved to a output text file.</p></li>
+<li><p><code class="docutils literal notranslate">SimpleElectricFieldCalculatorFromFile</code> takes coordinates from a given input text file and calculates the electric
+field and potential at each point. The results are printed to the terminal and saved to a output text file.</p></li>
+</ul>
+<p>For working with magnetic fields, the same programs are available under the adapted name <code class="docutils literal notranslate">SimpleMagneticFieldCalculator</code>
+and so on. In addition, there is:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate">SimpleMagneticGradientCalculator</code> calculates the magnetic field and its gradient at a single point in the global
+coordinate system, and prints the results to the terminal.</p></li>
+</ul>
+<section id="id2">
+<h3>Usage<a aria-label="Copy link to section: Usage." class="headerlink tooltipped tooltipped-ne" href="#id2" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>All listed programs will show a brief usage summary if called without arguments. For example, the
+<code class="docutils literal notranslate">SimpleElectricFieldCalculatorAlongZaxis</code> will show a message:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang"></span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code>usage: ./SimpleElectricFieldCalculatorAlongZaxis &lt;config_file.xml&gt; &lt;z1&gt; &lt;z2&gt; &lt;dz&gt; &lt;output_file.txt&gt; &lt;electric_field_name1&gt; [&lt;electric_field_name2&gt; &lt;...&gt;]
+</code></pre></div>
+<p>which indicates that at least 6 arguments are required: the name of a configuration file with at least one defined
+electric field; the start and stop position and step distance on the z-axis; the name of an output file; and the name
+of an electric field. If multiple fields are specified, their contributions will be summed up.</p>
+</section>
+</section>
+<section id="simulation-tools">
+<h2>Simulation tools<a aria-label="Copy link to section: Simulation tools." class="headerlink tooltipped tooltipped-ne" href="#simulation-tools" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+<p>Finally, some helper tools are provided with <em>Kassiopeia</em> that can be used together with simulations.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate">ROOTFileMerge</code> combines several simulation output files into a single file with all runs/events combined. This is
+useful in the case of Monte-Carlo simulations, where <em>Kassiopeia</em> is executed several times with the same or slightly
+different settings. Although the individual output files could be analyzed separately, sometimes it is beneficial to
+combine all results into a single file that can then be analyzed in a single go. The program simply takes a list
+of input files, followed by the name of an output file that will be created.</p></li>
+<li><p><code class="docutils literal notranslate">ParticleGenerator</code> provides a quick method to generate particles as specified in a configuration file, without
+running a simulations. This is useful for the design of simulations, and to compare and validate the generators used
+by the simulations. The program generates an output text file that contains one line for each generated particle,
+with information about its position, energy, and so on.</p></li>
+</ul>
+<p>All listed programs will show a brief usage summary if called without arguments.</p>
+</section>
 </section>
 <section class="flex justify-between pt-4 mt-12">
 <div class="mr-auto">
@@ -277,7 +434,7 @@
 </div>
 </section>
 </main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.4.3</a></footer>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.5.4</a></footer>
 </div>
 <div class="sticky bottom-0 md:hidden print:hidden bg-white">
 <div class="flex justify-center items-center">

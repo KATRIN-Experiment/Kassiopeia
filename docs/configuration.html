@@ -248,7 +248,13 @@
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></div></li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div></li>
+<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div><ul>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></div></li>
+</ul>
+</li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
@@ -1881,7 +1887,7 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 <td><p>Fast linear interpolation</p></td>
 </tr>
 <tr class="row-even"><td><p>Hermite</p></td>
-<td><p><a href="#id19"><span class="problematic" id="id20">``</span></a>interpolator_hermite`</p></td>
+<td><p><code class="docutils literal notranslate">interpolator_hermite</code></p></td>
 <td><p>Hermite polynomial interpolation</p></td>
 </tr>
 <tr class="row-odd"><td><p>Cont. Runge-Kutta</p></td>
@@ -1928,6 +1934,57 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 <tr class="row-even"><td><p>Gravity</p></td>
 <td><p><code class="docutils literal notranslate">term_gravity</code></p></td>
 <td><p>Gravity pull; exact only</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%"/>
+<col style="width: 32%"/>
+<col style="width: 50%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="3"><p>Trajectory controls</p></td>
+</tr>
+<tr class="row-even"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_length</code></p></td>
+<td><p>Fixed length</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_time</code></p></td>
+<td><p>Fixed time</p></td>
+</tr>
+<tr class="row-even"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_B_change</code></p></td>
+<td><p>Length scaled by relative B-field gradient</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_cyclotron</code></p></td>
+<td><p>Length scaled to length of a full cyclotron turn</p></td>
+</tr>
+<tr class="row-even"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_energy</code></p></td>
+<td><p>Length adjusted to limit total energy violation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_magnetic_moment</code></p></td>
+<td><p>Length adjusted to limit adiabaticity violation</p></td>
+</tr>
+<tr class="row-even"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_momentum_numerical_error</code></p></td>
+<td><p>Length adjusted to limit momentum error</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_position_numerical_error</code></p></td>
+<td><p>Length adjusted to limit position error</p></td>
+</tr>
+<tr class="row-even"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_m_dot</code></p></td>
+<td><p>Length scaled by $dot{M}$ (spin tracking only)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gravity</p></td>
+<td><p><code class="docutils literal notranslate">control_spin_precession</code></p></td>
+<td><p>Length scaled by precession freq. (spin tracking only)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2029,7 +2086,7 @@ surface. In both cases, the behavior ties with the <em>KGeoBag</em> module that 
 <section id="volume-interactions">
 <h3>Volume Interactions<a aria-label="Copy link to section: Volume Interactions." class="headerlink tooltipped tooltipped-ne" href="#volume-interactions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>Volume interactions typically involve scattering off of a gas. The abstract base class of all volume interactions is
-<a href="#id21"><span class="problematic" id="id22">:kassiopeia:`KSSpaceInteraction`</span></a>. Simple situations where the scattering interactions is treated approximately by a
+<a href="#id19"><span class="problematic" id="id20">:kassiopeia:`KSSpaceInteraction`</span></a>. Simple situations where the scattering interactions is treated approximately by a
 constant density and cross section can be constructed as follows:</p>
 <div class="highlight">
 <div class="code-header">
@@ -2050,7 +2107,7 @@ always be associated with a particular volume when describing the simulation str
 <section id="surface-interactions">
 <h3>Surface Interactions<a aria-label="Copy link to section: Surface Interactions." class="headerlink tooltipped tooltipped-ne" href="#surface-interactions" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>Surface interactions are much more limited in their scope and only occur when the track of a particle passes through a
-surface. The abstract base class of all surface interactions is <a href="#id23"><span class="problematic" id="id24">:kassiopeia:`KSSurfaceInteraction`</span></a>.</p>
+surface. The abstract base class of all surface interactions is <a href="#id21"><span class="problematic" id="id22">:kassiopeia:`KSSurfaceInteraction`</span></a>.</p>
 <p>For example, to cause a particle to be reflected diffusely (Lambertian) from a surface the user can specify an
 interaction of the following type:</p>
 <div class="highlight">
@@ -2067,7 +2124,7 @@ structure.</p>
 <section id="output">
 <h2>Output<a aria-label="Copy link to section: Output." class="headerlink tooltipped tooltipped-ne" href="#output" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <p>The data which is saved as output from the simulation requires two pieces: a file writer and a description of the data
-to be saved. The abstract base class of all file writers is <a href="#id25"><span class="problematic" id="id26">:kassiopeia:`KSWriter`</span></a>.</p>
+to be saved. The abstract base class of all file writers is <a href="#id23"><span class="problematic" id="id24">:kassiopeia:`KSWriter`</span></a>.</p>
 <section id="writers">
 <h3>Writers<a aria-label="Copy link to section: Writers." class="headerlink tooltipped tooltipped-ne" href="#writers" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
 <p>The file writer is responsible for buffering and writing the desired information to disk. The default writer is based on
@@ -2099,7 +2156,7 @@ information to a <code class="docutils literal notranslate">.vtp</code> (VTK pol
 </code></pre></div>
 <p>Note that in principle both data formats are equivalent, but their underlying structure differs. In most cases it is
 best to write output file in both formats, and delete any files that are no longer needed.</p>
-<p>To write output in plaintext ASCII format that can be easily viewed and read into other software such as <a href="#id31"><span class="problematic" id="id32">Gnuplot_</span></a>,
+<p>To write output in plaintext ASCII format that can be easily viewed and read into other software such as <a href="#id29"><span class="problematic" id="id30">Gnuplot_</span></a>,
 one may use the following statement:</p>
 <div class="highlight">
 <div class="code-header">
@@ -2330,7 +2387,7 @@ nesting of the navigation elements should follow the same order as the underlyin
 <section id="simulation">
 <h2>Simulation<a aria-label="Copy link to section: Simulation." class="headerlink tooltipped tooltipped-ne" href="#simulation" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
 <p>The final object to be declared within <code class="docutils literal notranslate">&lt;kassiopeia&gt;</code> is the simulation element. This describes the simulation object
-<a href="#id27"><span class="problematic" id="id28">:kassiopeia:`KSSimulation`</span></a>, which is then executed by <a href="#id29"><span class="problematic" id="id30">:kassiopeia:`KSRoot`</span></a>. The simulation element specifies the global
+<a href="#id25"><span class="problematic" id="id26">:kassiopeia:`KSSimulation`</span></a>, which is then executed by <a href="#id27"><span class="problematic" id="id28">:kassiopeia:`KSRoot`</span></a>. The simulation element specifies the global
 and initial properties of the simulation as a whole. For example in the <code class="docutils literal notranslate">QuadrupoleTrapSimulation.xml</code> example, the
 simulation element is declared as follows:</p>
 <div class="highlight">
@@ -2523,7 +2580,7 @@ the message:</p>
 </div>
 </section>
 </main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.4.3</a></footer>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.5.4</a></footer>
 </div>
 <div class="sticky bottom-0 md:hidden print:hidden bg-white">
 <div class="flex justify-center items-center">

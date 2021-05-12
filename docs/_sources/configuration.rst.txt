@@ -1286,7 +1286,7 @@ The tables below lists the available integrators, interpolators, and terms:
 +====================+=====================================+================================================+
 | Fast               | ``interpolator_fast``               | Fast linear interpolation                      |
 +--------------------+-------------------------------------+------------------------------------------------+
-| Hermite            | ``interpolator_hermite`             | Hermite polynomial interpolation               |
+| Hermite            | ``interpolator_hermite``            | Hermite polynomial interpolation               |
 +--------------------+-------------------------------------+------------------------------------------------+
 | Cont. Runge-Kutta  | ``kstraj_interpolator_crk``         | Continuous Runge-Kutta (needs dense output)    |
 +--------------------+-------------------------------------+------------------------------------------------+
@@ -1307,6 +1307,30 @@ The tables below lists the available integrators, interpolators, and terms:
 | Gyration           | ``term_gyration``                   | Gyration around guiding center; adiabatic only          |
 +--------------------+-------------------------------------+---------------------------------------------------------+
 | Gravity            | ``term_gravity``                    | Gravity pull; exact only                                |
++--------------------+-------------------------------------+---------------------------------------------------------+
+
++--------------------------------------------------------------------------------------------------------------------+
+| Trajectory controls                                                                                                |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_length``                  | Fixed length                                            |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_time``                    | Fixed time                                              |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_B_change``                | Length scaled by relative B-field gradient              |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_cyclotron``               | Length scaled to length of a full cyclotron turn        |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_energy``                  | Length adjusted to limit total energy violation         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_magnetic_moment``         | Length adjusted to limit adiabaticity violation         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_momentum_numerical_error``| Length adjusted to limit momentum error                 |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_position_numerical_error``| Length adjusted to limit position error                 |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_m_dot``                   | Length scaled by $\dot{M}$ (spin tracking only)         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gravity            | ``control_spin_precession``         | Length scaled by precession freq. (spin tracking only)  |
 +--------------------+-------------------------------------+---------------------------------------------------------+
 
 The exact tracking method can be used where accuracy is of the utmost importance, but requires a large number of steps
