@@ -1,68 +1,63 @@
-# names
-set( APPLICATION_NAMES
-	KGeoBag
-	RandomExtensionTester
-	MetricsExtensionTester
-    EulerAngles
-	GeometryDump
-)
+option (KGeoBag_ENABLE_APP "Build KGeoBag applications" ON)
+if (KGeoBag_ENABLE_APP)
 
-# libraries
-set( APPLICATION_LIBRARIES
-    ${Kommon_LIBRARIES}
-    KGeoBagMath
-    KGeoBagCore
-    KGeoBagShapes
-    KGeoBagAppearance
-    KGeoBagMesh
-    KGeoBagAxialMesh
-    KGeoBagBindings
-    KGeoBagRandom
-    KGeoBagMetrics
-)
-if( KGeoBag_USE_VTK )
-	list( APPEND APPLICATION_NAMES
-		GeometryViewer
-		MeshViewer
-		AxialMeshViewer
-		PointTester
-		NormalTester
-		DistanceTester
-		OutsideTester
-		RandomPointTester
-		MeshIntersectionTester
-	)
-	list( APPEND APPLICATION_LIBRARIES
-	   ${Kommon_Vtk_LIBRARIES}
-		KGeoBagVtkVisualization
-	)
-endif( KGeoBag_USE_VTK )
+    # names
+    set( APPLICATION_NAMES
+        KGeoBag
+        RandomExtensionTester
+        MetricsExtensionTester
+        EulerAngles
+        GeometryDump
+    )
 
-if( KGeoBag_USE_ROOT )
-	list( APPEND APPLICATION_NAMES
-		GeometryViewerROOT
-	)
-	list( APPEND APPLICATION_LIBRARIES
-		KGeoBagROOTVisualization
-	)
-endif( KGeoBag_USE_ROOT )
+    # libraries
+    set( APPLICATION_LIBRARIES
+        KGeoBagBindings
+        KGeoBagCore
+        KGeoBagRandom
+    )
 
-# internal
-kasper_internal_include_directories()
+    if( KGeoBag_USE_VTK )
+        list( APPEND APPLICATION_NAMES
+            GeometryViewer
+            MeshViewer
+            AxialMeshViewer
+            PointTester
+            NormalTester
+            DistanceTester
+            OutsideTester
+            RandomPointTester
+            MeshIntersectionTester
+        )
+        list( APPEND APPLICATION_LIBRARIES
+            KGeoBagVtkVisualization
+        )
+    endif( KGeoBag_USE_VTK )
 
-# target
-if(APPLE)
-	foreach( NAME ${APPLICATION_NAMES} )
-		add_executable( ${NAME} MACOSX_BUNDLE Source/${NAME}.cc )
-	endforeach()
-else(APPLE)
-	foreach( NAME ${APPLICATION_NAMES} )
-		add_executable( ${NAME} Source/${NAME}.cc )
-	endforeach()
-endif(APPLE)
+    if( KGeoBag_USE_ROOT )
+        list( APPEND APPLICATION_NAMES
+            GeometryViewerROOT
+        )
+        list( APPEND APPLICATION_LIBRARIES
+            KGeoBagROOTVisualization
+        )
+    endif( KGeoBag_USE_ROOT )
 
-# install
-foreach( NAME ${APPLICATION_NAMES} )
-	target_link_libraries( ${NAME} ${APPLICATION_LIBRARIES} )
-	kasper_install_executables( ${NAME} )
-endforeach()
+    # target
+    if(APPLE)
+        foreach( NAME ${APPLICATION_NAMES} )
+            add_executable( ${NAME} MACOSX_BUNDLE Source/${NAME}.cc )
+        endforeach()
+    else(APPLE)
+        foreach( NAME ${APPLICATION_NAMES} )
+            add_executable( ${NAME} Source/${NAME}.cc )
+        endforeach()
+    endif(APPLE)
+
+    # install
+    foreach( NAME ${APPLICATION_NAMES} )
+        target_link_libraries( ${NAME} ${APPLICATION_LIBRARIES} )
+        kasper_install_executables( ${NAME} )
+    endforeach()
+
+endif(KGeoBag_ENABLE_APP)

@@ -1,7 +1,7 @@
 #ifndef KSURFACEVISITORS_DEF
 #define KSURFACEVISITORS_DEF
 
-#include "../../../Surfaces/include/KSurfaceTypes.hh"
+#include "KSurfaceTypes.hh"
 #include "KTypelistVisitor.hh"
 
 namespace KEMField

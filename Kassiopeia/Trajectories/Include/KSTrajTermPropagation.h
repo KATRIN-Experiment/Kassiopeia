@@ -53,6 +53,7 @@ class KSTrajTermPropagation :
     } Direction;
 
     void SetDirection(const Direction& anDirection);
+    void ReverseDirection() { fDirection = (fDirection == Direction::eBackward ? Direction::eForward : Direction::eBackward); }
 
   private:
     Direction fDirection;

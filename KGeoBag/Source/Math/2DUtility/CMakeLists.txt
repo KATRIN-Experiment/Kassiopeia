@@ -23,18 +23,14 @@ set( 2DUTILITY_SOURCE_FILES
     Source/KGInfinitePlane.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
-add_library( KGeoBag2DUtility SHARED ${2DUTILITY_SOURCE_FILES} ${2DUTILITY_HEADER_FILES})
-
+add_library( KGeoBag2DUtility SHARED
+    ${2DUTILITY_SOURCE_FILES} ${2DUTILITY_HEADER_FILES})
+target_include_directories( KGeoBag2DUtility
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBag2DUtility
-	KGeoBagCore
-    KGeoBagMath
-	${Kommon_LIBRARIES}
+    PUBLIC
+       KGeoBagMath
 )
 
 # install

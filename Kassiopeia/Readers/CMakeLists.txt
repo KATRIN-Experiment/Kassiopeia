@@ -1,79 +1,76 @@
 # header files
 set( READERS_HEADER_BASENAMES
-	KSReadersMessage.h
+    KSReadersMessage.h
 
-	KSReadValue.h
-	KSReadSet.h
-	KSReadIterator.h
-	KSReadFile.h
+    KSReadValue.h
+    KSReadSet.h
+    KSReadIterator.h
+    KSReadFile.h
 )
 
 if( Kassiopeia_USE_ROOT )
-	list( APPEND READERS_HEADER_BASENAMES
-		KSReadIteratorROOT.h
-		KSReadRunROOT.h
-		KSReadEventROOT.h
-		KSReadTrackROOT.h
-		KSReadStepROOT.h
-		KSReadObjectROOT.h
-		KSReadFileROOT.h
-	)
+    list( APPEND READERS_HEADER_BASENAMES
+        KSReadIteratorROOT.h
+        KSReadRunROOT.h
+        KSReadEventROOT.h
+        KSReadTrackROOT.h
+        KSReadStepROOT.h
+        KSReadObjectROOT.h
+        KSReadFileROOT.h
+    )
 endif( Kassiopeia_USE_ROOT )
 
 set( READERS_HEADER_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${READERS_HEADER_BASENAMES} )
-	list( APPEND READERS_HEADER_FILENAMES ${READERS_HEADER_PATH}/${BASENAME} )
+    list( APPEND READERS_HEADER_FILENAMES ${READERS_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
 set( READERS_SOURCE_BASENAMES
-	KSReadersMessage.cxx
-	KSReadIterator.cxx
-	KSReadFile.cxx
+    KSReadersMessage.cxx
+    KSReadIterator.cxx
+    KSReadFile.cxx
 )
 
 if( Kassiopeia_USE_ROOT )
-	list( APPEND READERS_SOURCE_BASENAMES
-		KSReadIteratorROOT.cxx
-		KSReadRunROOT.cxx
-		KSReadEventROOT.cxx
-		KSReadTrackROOT.cxx
-		KSReadStepROOT.cxx
-		KSReadObjectROOT.cxx
-		KSReadFileROOT.cxx
+    list( APPEND READERS_SOURCE_BASENAMES
+        KSReadIteratorROOT.cxx
+        KSReadRunROOT.cxx
+        KSReadEventROOT.cxx
+        KSReadTrackROOT.cxx
+        KSReadStepROOT.cxx
+        KSReadObjectROOT.cxx
+        KSReadFileROOT.cxx
     )
 endif( Kassiopeia_USE_ROOT )
 
 set( READERS_SOURCE_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${READERS_SOURCE_BASENAMES} )
-	list( APPEND READERS_SOURCE_FILENAMES ${READERS_SOURCE_PATH}/${BASENAME} )
+    list( APPEND READERS_SOURCE_FILENAMES ${READERS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # data files
 set( READERS_DATA_BASENAMES
 )
 set( READERS_DATA_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Data
+    ${CMAKE_CURRENT_SOURCE_DIR}/Data
 )
 foreach( BASENAME ${READERS_DATA_BASENAMES} )
-	list( APPEND READERS_DATA_FILENAMES ${READERS_DATA_PATH}/${BASENAME} )
+    list( APPEND READERS_DATA_FILENAMES ${READERS_DATA_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${READERS_HEADER_PATH} )
-add_library( KassiopeiaReaders SHARED ${READERS_SOURCE_FILENAMES} ${READERS_HEADER_FILENAMES} )
-set_target_properties( KassiopeiaReaders PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+add_library( KassiopeiaReaders SHARED
+    ${READERS_SOURCE_FILENAMES} ${READERS_HEADER_FILENAMES} )
+target_include_directories(KassiopeiaReaders
+    PUBLIC $<BUILD_INTERFACE:${READERS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaReaders
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
-    ${ROOT_LIBRARIES}
+    PUBLIC
+        KassiopeiaOperators
 )
 
 # install

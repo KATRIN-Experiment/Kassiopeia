@@ -17,20 +17,21 @@ set( MATH_LINALG_SOURCE_FILES
     Source/KGVectorOperations.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagMathLinearAlgebra SHARED
-	${MATH_LINALG_SOURCE_FILES} ${MATH_LINALG_HEADER_FILES}
+    ${MATH_LINALG_SOURCE_FILES} ${MATH_LINALG_HEADER_FILES})
+target_include_directories( KGeoBagMathLinearAlgebra
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>
 )
 target_link_libraries( KGeoBagMathLinearAlgebra
-    KGeoBagMath
-    ${Kommon_LIBRARIES}
-    ${GSL_LIBRARIES}
+    PUBLIC
+        KGeoBagMath
 )
+
+if(KGeoBag_USE_GSL)
+    target_link_libraries( KGeoBagMathLinearAlgebra PUBLIC GSL::gsl )
+    target_compile_definitions( KGeoBagMathLinearAlgebra PUBLIC KGEOBAG_MATH_USE_GSL )
+endif(KGeoBag_USE_GSL)
 
 # install
 kasper_install_headers( ${MATH_LINALG_HEADER_FILES} )

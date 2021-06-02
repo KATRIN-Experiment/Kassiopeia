@@ -1,10 +1,5 @@
-kasper_find_vtk()
-if( VTK_MAJOR_VERSION GREATER 5 )
-    add_definitions(-DVTK6)
-endif()
-
-# internal
-kasper_internal_include_directories( Utility )
+find_package(VTK REQUIRED NO_MODULE)
+include(${VTK_USE_FILE})
 
 # headers
 set( KOMMON_VTK_HEADER_FILENAMES
@@ -20,10 +15,33 @@ set( KOMMON_VTK_SOURCE_FILENAMES
         Utility/KVTKWindowBuilder.cxx
 )
 
-# propagate path variable to parent scope
-kasper_install_headers( ${KOMMON_VTK_HEADER_FILENAMES} )
+add_library( KommonVtk SHARED
+    ${KOMMON_VTK_SOURCE_FILENAMES} ${KOMMON_VTK_HEADER_FILENAMES})
 
-add_library( KommonVtk SHARED ${KOMMON_VTK_SOURCE_FILENAMES} )
-target_link_libraries( KommonVtk ${VTK_LIBRARIES} Kommon )
+# get header paths from collected header files
+foreach(HEADER ${KOMMON_VTK_HEADER_FILENAMES})
+    get_filename_component(DIRNAME ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER} DIRECTORY)
+    target_include_directories(KommonVtk PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
+endforeach(HEADER)
+target_include_directories(KommonVtk PUBLIC $<INSTALL_INTERFACE:include>)
+
+target_include_directories(KommonVtk PUBLIC ${VTK_INCLUDE_DIRS})
+target_compile_definitions(KommonVtk PUBLIC KASPER_USE_VTK)
+target_link_libraries( KommonVtk
+    PUBLIC
+        Kommon
+        ${VTK_LIBRARIES}
+)
+
+if( VTK_MAJOR_VERSION GREATER 6 )
+    if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
+        target_compile_options(KommonVtk PUBLIC -Wno-inconsistent-missing-override)  # FIXME: vtk doesn't care about warnings, it seems
+    endif()
+endif()
+
+if( VTK_MAJOR_VERSION GREATER 5 )
+    target_compile_definitions(KommonVtk PRIVATE VTK6)
+endif()
+
 kasper_install_libraries( KommonVtk )
-
+kasper_install_headers( ${KOMMON_VTK_HEADER_FILENAMES} )

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KGVTKNormalTester.hh"
-#include "KGVisualizationMessage.hh"
+#include "KGBindingsMessage.hh"
 
 namespace katrin
 {
@@ -29,7 +29,7 @@ template<> inline bool KGVTKNormalTesterBuilder::AddAttribute(KContainer* aConta
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -49,7 +49,7 @@ template<> inline bool KGVTKNormalTesterBuilder::AddAttribute(KContainer* aConta
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

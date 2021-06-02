@@ -1,8 +1,3 @@
-# internal
-kasper_internal_include_directories(
-    Utility
-)
-
 # headers
 set(KOMMON_GSL_HEADER_FILES
     Utility/KMathPolynomialSolver.h
@@ -16,7 +11,6 @@ set( KOMMON_GSL_SOURCE_FILES
     Utility/KMathBracketingSolver.cxx
     Utility/KGslErrorHandler.cxx
 )
-
 
 # propagate path variable to parent scope
 kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_GSL_HEADER_FILES} )

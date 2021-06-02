@@ -8,6 +8,7 @@
 
 namespace KEMField
 {
+
 using KThreeMatrix = KGeoBag::KThreeMatrix;
 
 template<typename Stream> Stream& operator>>(Stream& s, KThreeMatrix& aThreeMatrix)

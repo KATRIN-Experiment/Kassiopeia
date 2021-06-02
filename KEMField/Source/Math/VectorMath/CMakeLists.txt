@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/VectorMath
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (VECTORMATH_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KVMFixedArray.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KVMMap.hh
@@ -38,10 +36,16 @@ set (VECTORMATH_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KVMFluxIntegral.cc
 )
 
-##################################################
-
-add_library (KVectorMath SHARED ${VECTORMATH_SOURCEFILES} ${VECTORMATH_HEADERFILES})
-target_link_libraries (KVectorMath  KEMMath KFMMathUtilities ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES})
+add_library (KFMVectorMath SHARED
+    ${VECTORMATH_SOURCEFILES} ${VECTORMATH_HEADERFILES})
+target_include_directories(KFMVectorMath
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMVectorMath
+    PUBLIC
+        KEMMath
+        KFMMathUtilities
+        KGeoBagMath
+    )
 
 kasper_install_headers (${VECTORMATH_HEADERFILES})
-kasper_install_libraries (KVectorMath)
+kasper_install_libraries (KFMVectorMath)

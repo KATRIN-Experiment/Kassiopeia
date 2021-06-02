@@ -1,9 +1,9 @@
 #ifndef KSURFACE_DEF
 #define KSURFACE_DEF
 
-#include "../../../Surfaces/include/KSurfaceID.hh"
-#include "../../../Surfaces/include/KSurfacePrimitive.hh"
-#include "../../../Surfaces/include/KSurfaceVisitors.hh"
+#include "KSurfaceID.hh"
+#include "KSurfacePrimitive.hh"
+#include "KSurfaceVisitors.hh"
 
 #include <iostream>
 #include <sstream>
@@ -133,7 +133,7 @@ Stream& operator<<(Stream& s, const KSurface<BasisPolicy, BoundaryPolicy, ShapeP
 }
 }  // namespace KEMField
 
-#include "../../../Surfaces/include/KSurfaceAction.hh"
+#include "KSurfaceAction.hh"
 
 namespace KEMField
 {

@@ -16,7 +16,7 @@
 
 #include <memory>
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
 #include "KFormulaProcessor.hh"
 #endif
 
@@ -35,6 +35,7 @@ KXMLInitializer::KXMLInitializer() :
     fTokenizer(nullptr),
     fArguments(),
     fVerbosityLevel(eNormal),
+    fBatchMode(false),
     fDefaultConfigFile(),
     fDefaultIncludePaths(),
     fAllowConfigFileFallback(false),
@@ -46,6 +47,7 @@ KXMLInitializer::~KXMLInitializer() = default;
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
     fVerbosityLevel = eNormal;  // reset
+    fBatchMode = false;
     KArgumentList commandLineArgs;
 
     if (argc >= 1) {
@@ -89,18 +91,21 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             if (key.length() > 0 && key[0] == '-') {
                 // parse verbosity options like '-vvqv -q -vv'
                 if (key.length() >= 2 && (key[1] == 'v' || key[1] == 'q')) {
-                    int verbosity = 0;
+                    int verbosityAdjust = 0;
                     for (size_t i = 1; i < key.length(); i++) {
                         if (key[i] == 'v')
-                            verbosity++;
+                            verbosityAdjust++;
                         else if (key[i] == 'q')
-                            verbosity--;
+                            verbosityAdjust--;
                         else {
-                            verbosity = 0;
+                            verbosityAdjust = 0;
                             break;
                         }
                     }
-                    fVerbosityLevel += verbosity;
+                    fVerbosityLevel += verbosityAdjust;
+                }
+                else if (key == string("-b") || key == string("-batch")) {
+                    fBatchMode = true;
                 }
 
                 // treat as key=value pair
@@ -240,7 +245,7 @@ void KXMLInitializer::SetupProcessChain(const map<string, string>& variables, co
     }
     tIncludeProcessor->InsertAfter(tVariableProcessor);
 
-#ifdef Kommon_USE_ROOT
+#ifdef KASPER_USE_ROOT
     auto* tFormulaProcessor = new KFormulaProcessor();
     tFormulaProcessor->InsertAfter(tVariableProcessor);
     tIncludeProcessor->InsertAfter(tFormulaProcessor);

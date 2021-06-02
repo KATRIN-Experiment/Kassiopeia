@@ -237,7 +237,7 @@ TEST(XML, Variables)
     tTokenizer.ProcessFile(tFile);
 }
 
-#ifdef ROOT
+#ifdef KASPER_USE_ROOT
 
 #include "KFormulaProcessor.hh"
 

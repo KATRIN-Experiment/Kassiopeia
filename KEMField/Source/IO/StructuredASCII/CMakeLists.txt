@@ -44,17 +44,13 @@ set (STRUCTUREDASCII_HEADERFILES
 find_package(ZLIB QUIET)
 option (KEMField_USE_ZLIB "Use ZLib compression" ${ZLIB_FOUND})
 if (KEMField_USE_ZLIB)
-  find_package(ZLIB REQUIRED)
-  kasper_external_include_directories (${ZLIB_INCLUDE_DIRS})
-  add_cflag(KEMFIELD_USE_ZLIB)
+    find_package(ZLIB REQUIRED)
 else (KEMField_USE_ZLIB)
-  set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
-  list (APPEND STRUCTUREDASCII_HEADERFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh
+    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
+    list (APPEND STRUCTUREDASCII_HEADERFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.hh
     )
 endif (KEMField_USE_ZLIB)
-
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set (STRUCTUREDASCII_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KSAFileReader.cc
@@ -68,20 +64,23 @@ set (STRUCTUREDASCII_SOURCEFILES
 )
 
 if (NOT KEMField_USE_ZLIB)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
-list (APPEND STRUCTUREDASCII_SOURCEFILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c
+    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c PROPERTIES COMPILE_FLAGS -Wno-strict-aliasing)
+    list (APPEND STRUCTUREDASCII_SOURCEFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/miniz.c
     )
 endif (NOT KEMField_USE_ZLIB)
 
-##################################################
-
-add_library (KEMStructuredASCII SHARED ${STRUCTUREDASCII_SOURCEFILES} ${STRUCTUREDASCII_HEADERFILES})
+add_library (KEMStructuredASCII SHARED
+    ${STRUCTUREDASCII_SOURCEFILES} ${STRUCTUREDASCII_HEADERFILES})
+target_include_directories(KEMStructuredASCII
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
 if (KEMField_USE_ZLIB)
-target_link_libraries (KEMStructuredASCII ${ZLIB_LIBRARIES})
+    target_compile_definitions(KEMStructuredASCII PUBLIC KEMFIELD_USE_ZLIB )
+    target_include_directories(KEMStructuredASCII PRIVATE ${ZLIB_INCLUDE_DIRS}>)
+    target_link_libraries (KEMStructuredASCII PRIVATE ZLIB::ZLIB)
 else (KEMField_USE_ZLIB)
-target_link_libraries (KEMStructuredASCII)
+    target_link_libraries (KEMStructuredASCII)
 endif (KEMField_USE_ZLIB)
 
 kasper_install_headers (${STRUCTUREDASCII_HEADERFILES})

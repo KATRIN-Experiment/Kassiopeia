@@ -1,24 +1,21 @@
-set( CMAKE_MINIMUM_VERSION "3.13.0" )
+set( CMAKE_MINIMUM_VERSION "3.14.0" )
 cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # project version
 set(KASPER_VERSION_MAJOR 3)
 set(KASPER_VERSION_MINOR 7)
-set(KASPER_VERSION_PATCH 7)
+set(KASPER_VERSION_PATCH 8)
 set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VERSION_PATCH}")
 
-#project( Kasper VERSION ${KASPER_VERSION} )
-project( Kasper )
-
-# Silently try to find major dependencies. This list is not be complete!
-# (Somehow, CMake behaves better if this is done in the root scope before adding modules...)
-#find_package(Boost COMPONENTS QUIET)
-#find_package(HDF5 COMPONENTS CXX QUIET)
-#find_package(ROOT QUIET)
-find_package(MPI QUIET)
-find_package(VTK QUIET)
+#project( Kasper )
+project( Kasper VERSION ${KASPER_VERSION}
+                DESCRIPTION "The KATRIN Analysis and Simulations Package"
+                LANGUAGES CXX )
 
 set( BUILD_SHARED_LIBS ON )
+set( Boost_USE_STATIC_LIBS OFF )
+set( Boost_USE_MULTITHREADED ON )
+set( Boost_USE_STATIC_RUNTIME OFF )
 
 set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
@@ -29,17 +26,17 @@ set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 if( CMAKE_SYSTEM_NAME STREQUAL "Linux" )
     if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
         if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "5.0" )
-            message(WARNING "Your compiler is unsupported! You need at least GCC 5.0 to build Kasper.")
+            message(FATAL_ERROR "Your compiler is unsupported! You need at least GCC 5.0 to build Kasper.")
         endif()
     elseif( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
         if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "3.4" )
-            message(WARNING "Your compiler is unsupported! You need at least Clang 3.4 to build Kasper.")
+            message(FATAL_ERROR "Your compiler is unsupported! You need at least Clang 3.4 to build Kasper.")
         endif()
     endif()
 elseif( CMAKE_SYSTEM_NAME STREQUAL "Darwin" )
     if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
         if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "10.0" )
-            message(WARNING "Your compiler is unsupported! You need at least Clang 10.0 to build Kasper.")
+            message(FATAL_ERROR "Your compiler is unsupported! You need at least Clang 10.0 to build Kasper.")
         endif()
     endif()
 else()
@@ -63,16 +60,11 @@ set( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE )
 # which point to directories outside the build tree to the install RPATH
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
 if( APPLE )
-    set(CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path")
+    #set( CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path" )
+    set( CMAKE_MACOSX_RPATH TRUE )
 elseif( UNIX )
-    set(CMAKE_INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}")
+    set( CMAKE_INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}" )
 endif( APPLE )
-
-# the RPATH to be used when installing, but only if it's not a system directory
-#LIST( FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${LIB_INSTALL_DIR}" isSystemDir )
-#IF( "${isSystemDir}" STREQUAL "-1" )
-#   set( CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}" )
-#ENDIF()
 
 
 # Flags for all modules, every module should have a flag.
@@ -102,39 +94,34 @@ endif()
 # We like the compiler to be more pedantic than usual :-P
 add_compile_options( -Wall -Wextra -Werror )
 
+# Only link in libraries that we actually need (but not for executables since it makes things slow)
+set(_target_type "$<TARGET_PROPERTY:TYPE>")
+add_link_options( $<IF:$<STREQUAL:"${_target_type}","SHARED_LIBRARY">,LINKER:--as-needed,LINKER:--no-as-needed> )
+
 # Enable some advanced options depending on build type
 if (CMAKE_BUILD_TYPE MATCHES Rel)
     option( COMPILER_TUNE_OPTIONS "Enable additional tuning options [compiles for local CPU, use with care!]" OFF )
+    mark_as_advanced(COMPILER_TUNE_OPTIONS)
     if( COMPILER_TUNE_OPTIONS )
         # These are advanced options for GCC which might improve performance ... or break everything - use with care!
         add_compile_options( -march=native -mfpmath=sse -funroll-loops )
     endif( COMPILER_TUNE_OPTIONS )
 endif()
 
-if( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR CMAKE_COMPILER_IS_GNUCXX )
-    if( NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "7.0" )
-        # Use -faligned-new flag to trick gcc into using aligned allocators CL types.
-        # This is only used by KEMField, but required here because of include files.
-        add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-faligned-new>)
-    endif()
-
-    # Enable some advanced options
-    option( GCC_FORCE_LINKING "Fix linker errors with some GCC versions by adding the --no-as-needed flag" ON )
-    if( GCC_FORCE_LINKING )
-        add_link_options( -Wl,--no-as-needed )
-    endif( GCC_FORCE_LINKING )
-
+if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_COMPILER_IS_GNUCXX )
     option( GCC_REDUCE_MEMORY "Significantly reduce GCC memory usage by setting ftrack-macro-expansion=1 (default: 2)" ON )
+    mark_as_advanced(GCC_REDUCE_MEMORY)
     if( GCC_REDUCE_MEMORY )
         add_compile_options( -ftrack-macro-expansion=1 )
     endif( GCC_REDUCE_MEMORY )
 
     option( GCC_ENABLE_PIPES "Use pipes to speed up compiling with GCC by adding the -pipe flag" ON )
+    mark_as_advanced(GCC_ENABLE_PIPES)
     if( GCC_ENABLE_PIPES )
         add_compile_options( -pipe )
     endif( GCC_ENABLE_PIPES )
 
-else( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+else( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
     # Suppress warnings about unknown warning options. See https://bugs.llvm.org/show_bug.cgi?id=24979
     add_compile_options( -Wno-unknown-warning-option )
 
@@ -142,6 +129,7 @@ endif()
 
 # Enable some advanced options (compiler-independent)
 option( ENABLE_PROFILING "Enable profiling (gperftools-based, adds '-lprofile' flag to linker calls)" OFF )
+mark_as_advanced(ENABLE_PROFILING)
 if( ENABLE_PROFILING )
     find_library( PROFILER_LIBRARY profiler )
     if ( PROFILER_LIBRARY )
@@ -149,17 +137,29 @@ if( ENABLE_PROFILING )
     endif( PROFILER_LIBRARY )
 endif( ENABLE_PROFILING )
 
+# Check for memory errors using clang's AddressSanitizer. See https://github.com/google/sanitizers/wiki/AddressSanitizer
+option( ENABLE_SANITIZE_ADDRESSES "Enable memory error detection (asan-based, adds '-fsanitize=address' flag)" OFF )
+mark_as_advanced(ENABLE_SANITIZE_ADDRESSES)
+if( ENABLE_SANITIZE_ADDRESSES )
+    add_compile_options( -O1 -g -fno-omit-frame-pointer -fsanitize=address -fno-optimize-sibling-calls )
+    add_link_options( -g -fno-omit-frame-pointer -fsanitize=address )
+    if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
+        # See https://github.com/google/sanitizers/issues/1017
+        add_compile_options( -mllvm -asan-use-private-alias=1 )
+    endif()
+endif( ENABLE_SANITIZE_ADDRESSES )
+
 # Force coloured compiler output (useful for Ninja builds)
-if( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
     option( FORCE_COLOURED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." OFF )
-    if( NOT DEFINED FORCE_COLOURED_OUTPUT AND "${CMAKE_GENERATOR}" MATCHES "Ninja" )
+    if( NOT DEFINED FORCE_COLOURED_OUTPUT AND CMAKE_GENERATOR MATCHES "Ninja" )
         message(STATUS "Building with Ninja - enabling coloured compiler output.")
         set( FORCE_COLOURED_OUTPUT ON CACHE BOOL "" FORCE )
     endif()
     if( FORCE_COLOURED_OUTPUT )
-        if( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+        if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
            add_compile_options( -fdiagnostics-color=always )
-        elseif( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
+        elseif( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
            add_compile_options( -fcolor-diagnostics )
         endif()
     endif( FORCE_COLOURED_OUTPUT )
@@ -169,19 +169,42 @@ mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
 
 # Global dependency options
-option( KASPER_USE_BOOST "Build Boost dependent modules" ON )
+#option( KASPER_USE_BOOST "Build Boost dependent modules" ON )
+set(KASPER_USE_BOOST ON)
 option( KASPER_USE_ROOT "Build ROOT dependent modules" ON )
-option( KASPER_USE_GSL "Build GSL dependent modules" OFF )
+option( KASPER_USE_GSL "Build GSL dependent modules" ON )
 option( KASPER_USE_VTK "Build VTK dependent modules" OFF )
+
+find_package(VTK QUIET)
+if(VTK_FOUND AND NOT KASPER_USE_VTK)
+    message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this." )
+    set(KASPER_USE_VTK ON)
+endif(VTK_FOUND AND NOT KASPER_USE_VTK)
 
 # Advanced options mainly for testing
 option( KASPER_EXPERIMENTAL "Enable some experimental features" OFF )
 if( KASPER_EXPERIMENTAL )
-    option( KASPER_USE_TBB "Build TBB dependent modules" OFF )
-    if( KASPER_USE_TBB )
-        message( "WARNING: Enabling TBB can produce inconsistent or wrong results in KaFit. It is strongly recommended to leave this option disabled until further investigation." )
-    endif()
+    # not used for now
 endif( KASPER_EXPERIMENTAL )
+
+# Make sure that version requirements are fulfilled
+if( KASPER_USE_BOOST )
+    set(BOOST_MINIMUM_VERSION "1.65")
+    find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED)
+endif( KASPER_USE_BOOST )
+
+if( KASPER_USE_ROOT )
+    set(ROOT_MINIMUM_VERSION "6.16")
+    find_package(ROOT ${ROOT_MINIMUM_VERSION} CONFIG REQUIRED)
+endif( KASPER_USE_ROOT )
+
+if( KASPER_USE_GSL )
+    find_package( GSL REQUIRED )
+endif( KASPER_USE_GSL )
+
+if( KASPER_USE_VTK )
+    find_package(VTK REQUIRED)
+endif( KASPER_USE_VTK )
 
 # Make sure all dependencies are being built
 # Every module must be listed before its dependencies and activate ONLY its
@@ -210,7 +233,6 @@ if( BUILD_KGEOBAG )
         message("KGeoBag requires GSL to be enabled in Kasper (activated automatically)" )
     endif()
     set( KASPER_USE_GSL ON CACHE BOOL "(Required)" FORCE )
-    set( KASPER_USE_BOOST ON CACHE BOOL "(Required)" FORCE )
 endif( BUILD_KGEOBAG )
 
 # Build modules
@@ -221,14 +243,17 @@ if( BUILD_KOMMON )
 endif()
 
 if( BUILD_KGEOBAG )
+    # needs Kommon
     add_subdirectory( KGeoBag )
 endif()
 
 if( BUILD_KEMFIELD )
+    # needs Kommon, KGeoBag
     add_subdirectory( KEMField )
 endif()
 
 if( BUILD_KASSIOPEIA )
+    # needs Kommon, KGeoBag, KEMField
     add_subdirectory( Kassiopeia )
 endif()
 
@@ -270,8 +295,6 @@ message("\n   Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start th
     "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate documentation.\n")
 
 # Install common project files
-
-install( EXPORT KasperTargets DESTINATION ${CMAKE_INSTALL_DIR}/${PROJECT_NAME} )
 
 configure_file( KasperVersion.h.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h @ONLY )
 install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h DESTINATION ${INCLUDE_INSTALL_DIR} )

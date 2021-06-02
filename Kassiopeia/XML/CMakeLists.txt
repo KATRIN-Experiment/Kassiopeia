@@ -20,7 +20,7 @@ kasper_install_config_subdir( Validation
     Validation/TestDiscreteRotationalField.xml
     Validation/TestNavigation.xml
     Validation/TestPotentialmap.xml
-	Validation/TestSynchrotron.xml
+    Validation/TestSynchrotron.xml
 )
 
 if( Kassiopeia_USE_VTK )

@@ -30,18 +30,30 @@ set( CORE_SOURCE_FILES
     Source/KGInterface.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagCore SHARED
-	${CORE_SOURCE_FILES} ${CORE_HEADER_FILES}
+    ${CORE_SOURCE_FILES} ${CORE_HEADER_FILES}
+)
+target_include_directories( KGeoBagCore
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>
 )
 target_link_libraries( KGeoBagCore
-    KGeoBagMath
+    PUBLIC
+        Kommon
+        KGeoBagMath
 )
+
+if( KGeoBag_ENABLE_DEBUG )
+    target_compile_definitions( KGeoBagCore PUBLIC KGeoBag_ENABLE_DEBUG )
+endif( KGeoBag_ENABLE_DEBUG )
+
+if( KGeoBag_USE_GSL )
+    target_compile_definitions( KGeoBagCore PUBLIC KGeoBag_USE_GSL )
+endif( KGeoBag_USE_GSL )
+
+if( KGeoBag_USE_BOOST )
+    target_compile_definitions( KGeoBagCore PUBLIC KGeoBag_USE_BOOST )
+endif()
 
 # install
 kasper_install_headers( ${CORE_HEADER_FILES} )

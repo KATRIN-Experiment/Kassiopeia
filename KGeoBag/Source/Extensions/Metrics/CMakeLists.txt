@@ -10,21 +10,16 @@ set( METRICS_SOURCE_FILES
     Source/KGMetricsMessage.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
-add_library( KGeoBagMetrics SHARED ${METRICS_SOURCE_FILES} ${METRICS_HEADER_FILES} )
+add_library( KGeoBagMetrics SHARED
+    ${METRICS_SOURCE_FILES} ${METRICS_HEADER_FILES})
+target_include_directories( KGeoBagMetrics
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagMetrics
-	KGeoBagCore
-	KGeoBagShapes
-	${Kommon_LIBRARIES}
+    PUBLIC
+        KGeoBagShapes
 )
 
 # install
 kasper_install_headers( ${METRICS_HEADER_FILES} )
 kasper_install_libraries( KGeoBagMetrics )
-
-

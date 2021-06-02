@@ -34,7 +34,7 @@ bool KFormulaProcessor::EvaluateTinyExpression(const std::string& tExpr, double&
 
     // replace some ROOT::TMath functions by STL equivalents
     const vector<pair<string,string>> tStandardFunctions = {
-        // standard functions
+        // C standard functions
         {"TMath::Abs", "fabs"},
         {"TMath::ACos", "acos"},
         {"TMath::ASin", "asin"},
@@ -52,6 +52,10 @@ bool KFormulaProcessor::EvaluateTinyExpression(const std::string& tExpr, double&
         {"TMath::SinH", "sinh"},
         {"TMath::Tan", "tan"},
         {"TMath::TanH", "tanh"},
+        // additional functions (provided by TinyExpr)
+        {"TMath::Factorial", "fac"},
+        {"TMath::Binomial", "ncr"},
+        {"TMath::Binomial", "npr"},
         // additional constants (provided by TinyExpr)
         {"TMath::Pi()", "pi"},
         {"TMath::E()", "e"},

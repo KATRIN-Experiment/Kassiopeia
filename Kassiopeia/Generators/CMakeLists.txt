@@ -60,6 +60,7 @@ set( GENERATORS_HEADER_BASENAMES
     KSGenRelaxation.h
 
     KSGenGeneratorComposite.h
+    KSGenGeneratorTextFile.h
 )
 
 if( Kassiopeia_USE_ROOT )
@@ -140,6 +141,7 @@ set( GENERATORS_SOURCE_BASENAMES
     KSGenRelaxation.cxx
 
     KSGenGeneratorComposite.cxx
+    KSGenGeneratorTextFile.cxx
 )
 
 if( Kassiopeia_USE_ROOT )
@@ -176,21 +178,18 @@ foreach( BASENAME ${GENERATORS_DATA_BASENAMES} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${GENERATORS_HEADER_PATH} ../Readers/Include )
-add_library( KassiopeiaGenerators SHARED ${GENERATORS_SOURCE_FILENAMES} ${GENERATORS_HEADER_FILENAMES} )
-set_target_properties( KassiopeiaGenerators PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
-target_link_libraries( KassiopeiaGenerators
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
-    KassiopeiaReaders
-)
+add_library( KassiopeiaGenerators SHARED
+    ${GENERATORS_SOURCE_FILENAMES} ${GENERATORS_HEADER_FILENAMES} )
 
-if( Kassiopeia_USE_ROOT )
-    target_link_libraries( KassiopeiaGenerators ${ROOT_LIBRARIES} )
-endif( Kassiopeia_USE_ROOT )
+target_include_directories(KassiopeiaGenerators
+    PUBLIC $<BUILD_INTERFACE:${GENERATORS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
+target_link_libraries( KassiopeiaGenerators
+    PUBLIC
+        KassiopeiaOperators
+        KassiopeiaReaders
+        KGeoBagRandom
+        KGeoBagMesh
+)
 
 # install
 kasper_install_headers( ${GENERATORS_HEADER_FILENAMES} )

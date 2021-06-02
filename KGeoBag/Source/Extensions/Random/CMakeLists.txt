@@ -39,22 +39,17 @@ set( RANDOM_SOURCE_FILES
     Source/KGGenericSurfaceRandom.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
-add_library( KGeoBagRandom SHARED ${RANDOM_SOURCE_FILES} ${RANDOM_HEADER_FILES} )
+add_library( KGeoBagRandom SHARED
+    ${RANDOM_SOURCE_FILES} ${RANDOM_HEADER_FILES})
+target_include_directories( KGeoBagRandom
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagRandom
-    KGeoBagCore
-    KGeoBagShapes
-    KGeoBagMetrics
-    ${Kommon_LIBRARIES}
+    PUBLIC
+        KGeoBagShapes
+        KGeoBagMetrics
 )
 
 # install
 kasper_install_headers( ${RANDOM_HEADER_FILES} )
 kasper_install_libraries( KGeoBagRandom )
-
-

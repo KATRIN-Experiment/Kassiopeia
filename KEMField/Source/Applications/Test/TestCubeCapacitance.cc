@@ -1,4 +1,4 @@
-#include "../Test/include/KElectrostaticBoundaryIntegratorOptions.hh"
+#include "KElectrostaticBoundaryIntegratorOptions.hh"
 #include "KBinaryDataStreamer.hh"
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralSolutionVector.hh"

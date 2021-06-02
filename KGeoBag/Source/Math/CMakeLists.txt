@@ -39,18 +39,14 @@ set( MATH_SOURCE_FILES
     Source/KGMathMessage.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagMath SHARED
-	${MATH_SOURCE_FILES} ${MATH_HEADER_FILES}
-)
+    ${MATH_SOURCE_FILES} ${MATH_HEADER_FILES})
+target_include_directories( KGeoBagMath
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagMath
-    ${Kommon_LIBRARIES}
-    ${GSL_LIBRARIES}
+    PUBLIC
+        Kommon
 )
 
 # install

@@ -1,6 +1,6 @@
-#include "../../../Surfaces/include/KRing.hh"
+#include "KRing.hh"
 
-#include "../../../Surfaces/include/KSurfaceVisitors.hh"
+#include "KSurfaceVisitors.hh"
 #include "KEMConstants.hh"
 
 namespace KEMField

@@ -1,7 +1,7 @@
 #ifndef KVMSpaceTriangle_H
 #define KVMSpaceTriangle_H
 
-#include "../../include/KThreeVector_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 
 #include <cmath>
 #include <limits>

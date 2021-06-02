@@ -1,8 +1,8 @@
 #ifndef KOrderedSurfaceContainer_DEF
 #define KOrderedSurfaceContainer_DEF
 
-#include "../../../Surfaces/include/KSurfaceContainer.hh"
-#include "../../../Surfaces/include/KSurfaceOrderingPredicate.hh"
+#include "KSurfaceContainer.hh"
+#include "KSurfaceOrderingPredicate.hh"
 
 #include <algorithm>
 #include <vector>

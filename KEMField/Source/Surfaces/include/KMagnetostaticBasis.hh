@@ -1,7 +1,7 @@
 #ifndef KMAGNETOSTATICBASIS_DEF
 #define KMAGNETOSTATICBASIS_DEF
 
-#include "../../../Surfaces/include/KBasis.hh"
+#include "KBasis.hh"
 
 #include <string>
 

@@ -1,31 +1,18 @@
-# include directories
-kasper_internal_include_directories(
-    Binning/include
-    Functions
-    Geometry
-    Logging
-    File
-    Initialization
-    Maths
-    Random
-    Typelists
-    Units
-    Utility
-    ../Extensions/Root/Initialization
-)
-
 # headers
 set(KOMMON_CORE_HEADER_FILES
     Typelists/KTypeNull.h
     Typelists/KTypeList.h
     Typelists/KTypeChain.h
     Typelists/KTypeOperation.h
+
     Units/KDimensions.h
     Units/KUnits.h
+
     File/KFileMessage.h
     File/KFile.h
     File/KTextFile.h
     File/KPathResolver.h
+
     Initialization/KInitializationMessage.hh
     Initialization/KToken.hh
     Initialization/KTypedTokens.hh
@@ -49,13 +36,15 @@ set(KOMMON_CORE_HEADER_FILES
     Initialization/KElementProcessor.hh
     Initialization/KVariant.h
     Initialization/KArgumentList.h
+    Initialization/KXMLInitializer.hh
+
     Random/KNamedRandomGenerator.h
     Random/KNamedRandomPrototype.h
     Random/KRandomBuilder.h
     Random/KNamedRandomGeneratorBuilder.h
     Random/KRandom.h
     Random/KRandomPrototype.h
-    Initialization/KXMLInitializer.hh
+
     Utility/Gnuplot.hpp
     Utility/KAlgorithm.h
     Utility/KException.h
@@ -103,6 +92,7 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/PositiveValue.h
     Utility/Printable.h
     Utility/SimplyPrintableCollection.h
+
     Logging/KLogger.h
 )
 
@@ -112,6 +102,7 @@ set(KOMMON_CORE_SOURCE_FILES
     File/KFile.cxx
     File/KTextFile.cxx
     File/KPathResolver.cxx
+
     Initialization/KInitializationMessage.cc
     Initialization/KToken.cc
     Initialization/KProcessor.cc
@@ -132,11 +123,15 @@ set(KOMMON_CORE_SOURCE_FILES
     Initialization/KVariant.cxx
     Initialization/KArgumentList.cxx
     Initialization/KXMLInitializer.cc
+
     Units/KDimensions.cxx
     Units/KUnits.cxx
+
     Utility/Gnuplot.cpp
+
     Random/KRandomBuilder.cxx
     Random/KNamedRandomGeneratorBuilder.cxx
+
     Utility/KMessage.cxx
     Utility/KUtilityMessage.cxx
     Utility/KNamed.cxx
@@ -151,6 +146,7 @@ set(KOMMON_CORE_SOURCE_FILES
     Utility/KMessageBuilder.cxx
     Utility/KNamedBuilder.cxx
     Utility/Printable.cxx
+
     Logging/KLogger.cxx
 )
 
@@ -159,7 +155,6 @@ set(KOMMON_CORE_EXTRA_FILES
     Initialization/tinyexpr.c
     Initialization/tinyexpr.h
 )
-
 
 set_source_files_properties(Initialization/KVariant.cxx PROPERTIES COMPILE_DEFINITIONS __GLIBCXX_USE_CXX11_ABI=0)
 
@@ -177,6 +172,3 @@ endif()
 # propagate path variable to parent scope
 kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_CORE_HEADER_FILES} )
 kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_CORE_SOURCE_FILES} ${KOMMON_CORE_EXTRA_FILES})
-
-add_subdirectory(Binning)
-add_subdirectory(Maths)

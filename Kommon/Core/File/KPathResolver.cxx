@@ -7,6 +7,8 @@
 #include <boost/filesystem.hpp>
 #include <sys/stat.h>
 
+#include <iostream>
+
 using namespace std;
 
 namespace

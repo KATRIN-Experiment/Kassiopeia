@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Array
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (KFMARRAY_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMArrayMath.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMArrayWrapper.hh
@@ -18,4 +16,9 @@ set (KFMARRAY_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMMessaging.hh
 )
 
+add_library(KFMArray INTERFACE)
+target_include_directories(KFMArray
+    INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+
 kasper_install_headers (${KFMARRAY_HEADERFILES})
+kasper_install_libraries (KFMArray)

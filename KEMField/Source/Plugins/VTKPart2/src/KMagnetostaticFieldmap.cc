@@ -697,6 +697,13 @@ void KMagnetostaticFieldmapCalculator::Execute()
                 {
                     tField.SetComponents(fFieldData->GetTuple3(j));
                     tHasValue = true;
+
+                    if (tMirrorPoint[0] != tPoint[0])
+                        tField[0] *= -1;
+                    if (tMirrorPoint[1] != tPoint[1])
+                        tField[1] *= -1;
+                    if (tMirrorPoint[2] != tPoint[2])
+                        tField[2] *= -1;
                 }
             }
         }
@@ -763,8 +770,9 @@ void KMagnetostaticFieldmapCalculator::Execute()
                     unsigned int j = fGrid->FindPoint(tMirrorPoint);
                     if (fValidityData->GetTuple1(j) >= 3)  // 3 = gradient valid
                     {
-                        tGradient.SetComponents(fGradientData->GetTuple9(j));
-                        tHasValue = true;
+                        // FIXME: mirroring gradients is incorrect, need to flip signs for some components!
+                        //tGradient.SetComponents(fGradientData->GetTuple9(j));
+                        //tHasValue = true;
                     }
                 }
             }

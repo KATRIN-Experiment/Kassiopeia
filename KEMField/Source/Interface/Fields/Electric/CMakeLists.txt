@@ -17,10 +17,11 @@ set( FIELDS_ELECTRIC_HEADER_BASENAMES
 )
 
 set( FIELDS_ELECTRIC_HEADER_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
 foreach( BASENAME ${FIELDS_ELECTRIC_HEADER_BASENAMES} )
-	list( APPEND FIELDS_ELECTRIC_HEADER_FILENAMES ${FIELDS_ELECTRIC_HEADER_PATH}/${BASENAME} )
+    list( APPEND FIELDS_ELECTRIC_HEADER_FILENAMES ${FIELDS_ELECTRIC_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
@@ -37,19 +38,28 @@ set( FIELDS_ELECTRIC_SOURCE_BASENAMES
 )
 
 set( FIELDS_ELECTRIC_SOURCE_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 foreach( BASENAME ${FIELDS_ELECTRIC_SOURCE_BASENAMES} )
-	list( APPEND FIELDS_ELECTRIC_SOURCE_FILENAMES ${FIELDS_ELECTRIC_SOURCE_PATH}/${BASENAME} )
+    list( APPEND FIELDS_ELECTRIC_SOURCE_FILENAMES ${FIELDS_ELECTRIC_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${FIELDS_ELECTRIC_HEADER_PATH} )
-add_library( KEMFieldsElectric SHARED ${FIELDS_ELECTRIC_SOURCE_FILENAMES} ${FIELDS_ELECTRIC_HEADER_FILENAMES} )
-set_target_properties( KEMFieldsElectric PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+add_library( KEMFieldsElectric SHARED
+    ${FIELDS_ELECTRIC_SOURCE_FILENAMES} ${FIELDS_ELECTRIC_HEADER_FILENAMES} )
+#set_target_properties( KEMFieldsElectric PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+
+target_include_directories(KEMFieldsElectric
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KEMFieldsElectric
-    KEMFieldChargeDensitySolvers
-    KEMFieldsMagnetic
+    PUBLIC
+        Kommon
+        KEMMath
+        KEMElectricFieldSolvers
+        KEMFieldChargeDensitySolvers
+        # KEMFieldElectricBoundaryIntegrators
+        KEMFieldsMagnetic  # for induced fields
+        KGeoBagCore
 )
 
 # install

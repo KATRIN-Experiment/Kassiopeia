@@ -1,7 +1,7 @@
 #ifndef KSORTEDSURFACECONTAINER_DEF
 #define KSORTEDSURFACECONTAINER_DEF
 
-#include "../../../Surfaces/include/KSurfaceContainer.hh"
+#include "KSurfaceContainer.hh"
 
 namespace KEMField
 {

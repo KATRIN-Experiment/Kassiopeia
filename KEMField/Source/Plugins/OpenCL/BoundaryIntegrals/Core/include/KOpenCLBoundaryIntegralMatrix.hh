@@ -24,12 +24,12 @@ class KBoundaryIntegralMatrix<KOpenCLBoundaryIntegrator<BasisPolicy>> :
 
     ~KBoundaryIntegralMatrix() override;
 
-    unsigned int Dimension() const
+    unsigned int Dimension() const override
     {
         return fDimension;
     }
 
-    const ValueType& operator()(unsigned int i, unsigned int j) const;
+    const ValueType& operator()(unsigned int i, unsigned int j) const override;
 
     void SetNLocal(int nLocal) const
     {

@@ -63,24 +63,28 @@
 
 </geometry>
 
-<kassiopeia>
+<kemfield>
 
     <!-- magnetic fields -->
 
-    <ksfield_magnetic_constant
+    <constant_magnetic_field
             name="field_magnetic_constant"
             field="0. 0. 5."
     />
 
     <!-- electric fields -->
 
-    <ksfield_electric_quadrupole
+    <electric_quadrupole_field
             name="field_electric_quadrupole"
             location="0. 0. 0."
             strength="-10000."
             length="1.e-2"
             radius="1.e-2"
     />
+
+</kemfield>
+
+<kassiopeia>
 
     <!-- generators -->
 

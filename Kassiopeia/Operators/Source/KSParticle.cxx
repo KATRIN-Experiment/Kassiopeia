@@ -285,6 +285,7 @@ void KSParticle::Print() const
 {
     oprmsg(eInfo);
     oprmsg << "KSParticle state: [" << fIndexNumber << "]" << ret;
+    oprmsg << "  label:               " << fLabel << ret;
     oprmsg << "  id:                  " << fPID << ret;
     oprmsg << "  string id:           " << fStringID << ret;
     oprmsg << "  mass:                " << fMass << ret;
@@ -2329,5 +2330,9 @@ STATICINT sKSKThreeVectorDict =
     KSDictionary<KThreeVector>::AddComponent(&KThreeVector::PerpSquared, "perp_squared") +
     KSDictionary<KThreeVector>::AddComponent(&KThreeVector::PolarAngle, "polar_angle") +
     KSDictionary<KThreeVector>::AddComponent(&KThreeVector::AzimuthalAngle, "azimuthal_angle");
+
+STATICINT sKSKThreeMatrixDict =
+    KSDictionary<KThreeMatrix>::AddComponent(&KThreeMatrix::Determinant, "determinant") +
+    KSDictionary<KThreeMatrix>::AddComponent(&KThreeMatrix::Trace, "trace");
 
 } /* namespace Kassiopeia */

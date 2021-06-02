@@ -42,6 +42,7 @@
 //include root stuff
 #include "KField.h"
 #include "TPolyLine.h"
+#include "TText.h"
 
 #include <algorithm>
 #include <deque>
@@ -106,6 +107,10 @@ class KGROOTGeometryPainter :
     double GetXMax() override;
     double GetYMin() override;
     double GetYMax() override;
+
+    K_SET(bool, ShowLabels);
+    K_SET(bool, SaveJSON);
+    K_SET(bool, SaveSVG);
 
   private:
     std::vector<KGSurface*> fSurfaces;
@@ -436,6 +441,7 @@ class KGROOTGeometryPainter :
     //rendering functions
     //*******************
 
+    void PolyLineToROOTLabel(const TPolyLine* aPolyLine);
     void OrderedPointsToROOTSurface(const OrderedPoints& anOrderedPoints);
     void OrderedPointsToROOTSpace(const OrderedPoints& anOrderedPoints);
 
@@ -444,10 +450,12 @@ class KGROOTGeometryPainter :
     //root stuff
     std::vector<TPolyLine*> fROOTSpaces;
     std::vector<TPolyLine*> fROOTSurfaces;
+    std::vector<TText*> fROOTLabels;
 
     KGSpace* fCurrentSpace;
     KGSurface* fCurrentSurface;
     KGAppearanceData* fCurrentData;
+    katrin::KTagSet fCurrentTags;
     KGeoBag::KThreeVector fCurrentOrigin;
     KGeoBag::KThreeVector fCurrentXAxis;
     KGeoBag::KThreeVector fCurrentYAxis;

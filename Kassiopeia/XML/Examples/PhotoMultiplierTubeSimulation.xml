@@ -325,12 +325,11 @@
 
 </geometry>
 
-
-<kassiopeia>
+<kemfield>
 
     <!-- fields -->
 
-    <ksfield_electrostatic
+    <electrostatic_field
             name="kemfield_e"
             directory="[KEMFIELD_CACHE]"
             file="PhotoMultiplierTubeElectrodes.kbd"
@@ -408,8 +407,11 @@
                 verbosity="3"
                 use_opencl="true"
         />
-    </ksfield_electrostatic>
+    </electrostatic_field>
 
+</kemfield>
+
+<kassiopeia>
 
     <!--     generators -->
 

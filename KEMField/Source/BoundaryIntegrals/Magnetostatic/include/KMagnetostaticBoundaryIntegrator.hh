@@ -115,7 +115,7 @@ class KMagnetostaticBoundaryIntegrator : public KMagnetostaticLineSegmentIntegra
     ValueType fValue;
 };
 
-template<class SourceShape> void KMagnetostaticBoundaryIntegrator::ComputeBoundaryIntegral(SourceShape& source)
+template<class SourceShape> void KMagnetostaticBoundaryIntegrator::ComputeBoundaryIntegral(SourceShape& /*source*/)
 {
     // if (fBoundaryVisitor.IsDirichlet())
     // {

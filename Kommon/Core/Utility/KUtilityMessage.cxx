@@ -1,3 +1,3 @@
 #include "KUtilityMessage.h"
 
-KMESSAGE_DEFINE(katrin, utilmsg, KUtility, KUTILITY)
+KMESSAGE_DEFINE(katrin, utilmsg, k_utility, KUTILITY)

@@ -34,18 +34,15 @@ set( MATH_SPACETREE_SOURCE_FILES
     Source/KGIdentitySet.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagMathSpaceTree SHARED
-	${MATH_SPACETREE_SOURCE_FILES} ${MATH_SPACETREE_HEADER_FILES}
-)
+    ${MATH_SPACETREE_SOURCE_FILES} ${MATH_SPACETREE_HEADER_FILES})
+target_include_directories( KGeoBagMathSpaceTree
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagMathSpaceTree
-    ${Kommon_LIBRARIES}
-    ${GSL_LIBRARIES}
+    PUBLIC
+        Kommon
+        KGeoBagMathLinearAlgebra
 )
 
 # install

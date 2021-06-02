@@ -3,6 +3,7 @@
 #include "KFile.h"
 #include "KUtilityMessage.h"
 #include "KVTKPainter.h"
+#include "KXMLInitializer.hh"
 #include "vtkAnnotatedCubeActor.h"
 #include "vtkAppendPolyData.h"
 #include "vtkAxesActor.h"
@@ -63,13 +64,15 @@ KVTKWindow::~KVTKWindow()
 
 void KVTKWindow::Render()
 {
+    utilmsg(eInfo) << "KVTKWindow starts to render!" << eom;
+
     /* setup writer */
     if (fWriteToggle == true) {
         fWriter = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
     }
 
     /* setup display */
-    if (fDisplayToggle == true) {
+    if (fDisplayToggle == true && !KXMLInitializer::GetInstance().IsBatchMode()) {
         double textColor[] = {// NOLINT
                               fFrameRed < .5 ? 1. : 0,
                               fFrameGreen < .5 ? 1. : 0,
@@ -185,49 +188,62 @@ void KVTKWindow::Render()
         (*tIt)->Render();
     }
 
+    utilmsg(eInfo) << "KVTKWindow finished to render!" << eom;
     return;
 }
 
 void KVTKWindow::Display()
 {
-    PainterIt tIt;
-    if (fDisplayToggle == true) {
-        /* display painters */
-        for (tIt = fPainters.begin(); tIt != fPainters.end(); tIt++) {
-            (*tIt)->Display();
-        }
-
-        /* add help actor if necessary */
-        if (fHelpToggle == true) {
-            fRenderer->AddActor(fHelpActor);
-        }
-
-        /* add data actor if necessary */
-        if (fDataToggle == true) {
-            fRenderer->AddActor(fDataActor);
-        }
-
-        /* add axis actor if necessary */
-        if (fAxisToggle == true) {
-            fOrientationWidget->EnabledOn();
-        }
-
-        /* enable parallel projection if necessary */
-        if (fParallelProjectionToggle == true) {
-            fRenderer->GetActiveCamera()->SetParallelProjection(1);
-        }
-
-        /* setup renderer */
-        fRenderer->ResetCamera();
-        fRenderWindow->Render();
-        fRenderInteractor->Start();
+    if (KXMLInitializer::GetInstance().IsBatchMode()) {
+        utilmsg(eWarning) << "KVTKWindow display disabled in batch mode"
+                        << eom;
+        return;
     }
 
+    if (! fDisplayToggle)
+        return;
+
+    utilmsg(eInfo) << "KVTKWindow starts to display!" << eom;
+
+    PainterIt tIt;
+    /* display painters */
+    for (tIt = fPainters.begin(); tIt != fPainters.end(); tIt++) {
+        (*tIt)->Display();
+    }
+
+    /* add help actor if necessary */
+    if (fHelpToggle == true) {
+        fRenderer->AddActor(fHelpActor);
+    }
+
+    /* add data actor if necessary */
+    if (fDataToggle == true) {
+        fRenderer->AddActor(fDataActor);
+    }
+
+    /* add axis actor if necessary */
+    if (fAxisToggle == true) {
+        fOrientationWidget->EnabledOn();
+    }
+
+    /* enable parallel projection if necessary */
+    if (fParallelProjectionToggle == true) {
+        fRenderer->GetActiveCamera()->SetParallelProjection(1);
+    }
+
+    /* setup renderer */
+    fRenderer->ResetCamera();
+    fRenderWindow->Render();
+    fRenderInteractor->Start();
+
+    utilmsg(eInfo) << "KVTKWindow finished to display!" << eom;
     return;
 }
 
 void KVTKWindow::Write()
 {
+    utilmsg(eInfo) << "KVTKWindow starts to write!" << eom;
+
     PainterIt tIt;
     if (fWriteToggle == true) {
         /* write painters */
@@ -236,6 +252,7 @@ void KVTKWindow::Write()
         }
     }
 
+    utilmsg(eInfo) << "KVTKWindow finished to write!" << eom;
     return;
 }
 

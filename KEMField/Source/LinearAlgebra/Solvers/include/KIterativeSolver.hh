@@ -166,8 +166,13 @@ template<typename ValueType> void KIterationDisplay<ValueType>::Visit(KIterative
 
 template<typename ValueType> void KIterationDisplay<ValueType>::Finalize(KIterativeSolver<ValueType>& solver)
 {
-    kem_cout << fPrefix << "Convergence complete after " << solver.Iteration()
-             << " iterations, with |Residual|: " << solver.ResidualNorm() << eom;
+    if (!std::isfinite(solver.ResidualNorm())) {
+        kem_cout(eError) << fPrefix << "Convergence incomplete after " << solver.Iteration()
+                   << " iterations, with |Residual|: " << solver.ResidualNorm() << eom;
+    }
+
+    kem_cout() << fPrefix << "Convergence complete after " << solver.Iteration()
+               << " iterations, with |Residual|: " << solver.ResidualNorm() << eom;
 }
 
 }  // namespace KEMField

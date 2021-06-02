@@ -3,9 +3,10 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 # UnitTest version
 set( MODULE_VERSION_MAJOR 0 )
 set( MODULE_VERSION_MINOR 2 )
-set( MODULE_VERSION_PATCH 5 )
+set( MODULE_VERSION_PATCH 6 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
+#project( UnitTest VERSION ${MODULE_VERSION} )
 project( UnitTest )
 
 include( KasperDefaults )
@@ -22,19 +23,20 @@ include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 # the gtest and gtest_main targets.
 add_subdirectory(GoogleTest)
 
-if (CMAKE_VERSION VERSION_LESS 2.8.11)
-  include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../GoogleTest/include")
-endif()
-
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/MockUps/Include
-)
-
-
 ## MockUps sub-modules
 
 add_subdirectory( MockUps )
+
+add_library( UnitTestBase INTERFACE )
+target_include_directories( UnitTestBase INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/MockUps/Include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest/include>
+)
+target_link_libraries( UnitTestBase INTERFACE gtest )
+kasper_install_libraries( UnitTestBase )
+
+set(GTEST_MAIN_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest//src/gtest_main.cc)
 
 ## Kasper sub-modules
 
