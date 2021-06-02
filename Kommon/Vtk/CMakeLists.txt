@@ -1,5 +1,4 @@
-find_package(VTK REQUIRED NO_MODULE)
-include(${VTK_USE_FILE})
+find_package(VTK CONFIG REQUIRED)
 
 # headers
 set( KOMMON_VTK_HEADER_FILENAMES
@@ -25,7 +24,11 @@ foreach(HEADER ${KOMMON_VTK_HEADER_FILENAMES})
 endforeach(HEADER)
 target_include_directories(KommonVtk PUBLIC $<INSTALL_INTERFACE:include>)
 
+# VTK should *really* use proper CMake targets at this point :-/
+target_include_directories(KommonVtk PUBLIC ${VTK_INCLUDE_DIRS})
+
 target_compile_definitions(KommonVtk PUBLIC KASPER_USE_VTK)
+
 target_link_libraries( KommonVtk
     PUBLIC
         Kommon

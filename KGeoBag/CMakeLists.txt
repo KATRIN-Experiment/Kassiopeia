@@ -27,8 +27,7 @@ if( KGeoBag_USE_BOOST )
 endif()
 
 if( KGeoBag_USE_VTK )
-    find_package(VTK REQUIRED NO_MODULE)
-    include(${VTK_USE_FILE})
+    find_package(VTK CONFIG REQUIRED)
 endif()
 
 if( KGeoBag_USE_ROOT )

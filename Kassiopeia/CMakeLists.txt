@@ -47,8 +47,7 @@ endif( Kassiopeia_USE_ROOT )
 
 # external dependencies: vtk
 if( Kassiopeia_USE_VTK )
-    find_package(VTK REQUIRED NO_MODULE)
-    include(${VTK_USE_FILE})
+    find_package(VTK CONFIG REQUIRED)
 endif( Kassiopeia_USE_VTK )
 
 # subdirectories
