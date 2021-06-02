@@ -18,16 +18,16 @@ NOTE: Kasper requires Linux/MacOS. Windows+cygwin should work too, but has not b
 Some dependencies are only required if certain module are compiled in.
 
 Dependencies:
-*   CMake (https://www.cmake.org) version 3.13 or higher
+*   CMake (https://www.cmake.org) version 3.14 or higher
 *   G++ (https://gcc.gnu.org) version 6.1 or higher (if compiling with GCC)
 *   Clang++ (https://clang.llvm.org) version 3.4 or higher (if compiling with clang)
+*   Boost (https://www.boost.org) version 1.65 or higher
 *   GSL (https://www.gnu.org/software/gsl)
-*   ROOT (https://www.cern.ch/root) version 6.0 or higher
+*   ROOT (https://www.cern.ch/root) version 6.16 or higher
     +   --enable-minuit2 (if you want to use KaFit)
     +   --enable-fftw3 (if you want to use KEMField)
 
 Optional Dependencies:
-*   Boost (https://www.boost.org) version 1.61 or higher
 *   FFTW (https://fftw.org) version 3.3.4 or higher
 *   HDF5 (https://support.hdfgroup.org/HDF5/)
 *   LibXml2 (https://www.xmlsoft.org)
