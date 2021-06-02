@@ -1,32 +1,32 @@
+# --- runtime-base ---
 FROM fedora:31 as runtime-base
 
 LABEL description="Runtime base container"
-LABEL maintainer=wdconinc@gmail.com
+LABEL maintainer="jan.behrens@kit.edu"
 
 COPY Docker/packages.runtime packages
 RUN dnf update -y \
  && dnf install -y $(cat packages) \
  && rm /packages
 
-
+# --- build-base ---
 FROM runtime-base as build-base
 
 LABEL description="Build base container"
-LABEL maintainer=wdconinc@gmail.com
 
 COPY Docker/packages.build packages
 RUN dnf update -y \
  && dnf install -y $(cat packages) \
  && rm /packages
 
-
+# --- build ---
 FROM build-base as build
 
 LABEL description="Build container"
-LABEL maintainer=wdconinc@gmail.com
 
-COPY . .
-RUN mkdir -p build && \
+COPY . /usr/src/kasper
+RUN cd /usr/src/kasper && \
+    mkdir -p build && \
     pushd build && \
     cmake -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_INSTALL_PREFIX=/usr/local \
@@ -40,11 +40,10 @@ RUN mkdir -p build && \
     make install && \
     popd
 
-
+# --- runtime ---
 FROM runtime-base as runtime
 
 LABEL description="Run container"
-LABEL maintainer=wdconinc@gmail.com
 
 COPY --from=build /usr/local /usr/local
 RUN echo "/usr/local/lib64" > /etc/ld.so.conf.d/local-x86_64.conf \
