@@ -25,7 +25,6 @@ foreach(HEADER ${KOMMON_VTK_HEADER_FILENAMES})
 endforeach(HEADER)
 target_include_directories(KommonVtk PUBLIC $<INSTALL_INTERFACE:include>)
 
-target_include_directories(KommonVtk PUBLIC ${VTK_INCLUDE_DIRS})
 target_compile_definitions(KommonVtk PUBLIC KASPER_USE_VTK)
 target_link_libraries( KommonVtk
     PUBLIC

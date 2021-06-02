@@ -70,6 +70,8 @@ target_include_directories(KassiopeiaWriters
 target_link_libraries( KassiopeiaWriters
     PUBLIC
         KassiopeiaOperators
+        ROOT::Tree
+        ROOT::Physics
 )
 
 if( Kassiopeia_USE_VTK )

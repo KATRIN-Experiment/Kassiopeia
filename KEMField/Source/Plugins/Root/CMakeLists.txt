@@ -19,7 +19,6 @@ if (KEMField_USE_ROOT)
         ${KEMROOT_SOURCEFILES} ${KEMROOT_HEADERFILES})
     target_include_directories(KEMRootPlugin
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
-    target_include_directories( KEMRootPlugin PUBLIC ${ROOT_INCLUDE_DIRS})
     target_link_libraries (KEMRootPlugin
         PUBLIC
             KEMVisualization

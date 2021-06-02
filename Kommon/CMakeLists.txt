@@ -95,7 +95,6 @@ if( KASPER_USE_BOOST )
 endif( KASPER_USE_BOOST )
 
 if( KASPER_USE_ROOT )
-    target_include_directories(Kommon PUBLIC ${ROOT_INCLUDE_DIRS})  # FIXME: why is this still needed?
     target_compile_definitions(Kommon PUBLIC KASPER_USE_ROOT)
     target_link_libraries( Kommon
         PUBLIC
@@ -106,7 +105,6 @@ if( KASPER_USE_ROOT )
 endif(KASPER_USE_ROOT)
 
 if( KASPER_USE_GSL )
-    target_include_directories(Kommon PUBLIC ${GSL_INCLUDE_DIRS})  # FIXME: why is this still needed?
     target_compile_definitions(Kommon PUBLIC KASPER_USE_GSL)
     target_link_libraries(Kommon
         PRIVATE
@@ -115,7 +113,7 @@ if( KASPER_USE_GSL )
 endif(KASPER_USE_GSL)
 
 if( KASPER_USE_TBB )
-    target_include_directories(Kommon PUBLIC ${TBB_INCLUDE_DIRS})
+    target_include_directories(Kommon PRIVATE ${TBB_INCLUDE_DIRS})
     target_compile_definitions(Kommon PUBLIC KASPER_USE_TBB)
     target_link_libraries(Kommon
         PRIVATE

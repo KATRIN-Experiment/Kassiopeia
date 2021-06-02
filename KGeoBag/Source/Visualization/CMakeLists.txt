@@ -109,7 +109,6 @@ if( KGeoBag_USE_ROOT )
     target_include_directories( KGeoBagROOTVisualization
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Root/Include> $<INSTALL_INTERFACE:include>
     )
-    target_include_directories( KGeoBagROOTVisualization PUBLIC ${ROOT_INCLUDE_DIRS})
     target_link_libraries( KGeoBagROOTVisualization
         PUBLIC
             KGeoBagBasicVisualization

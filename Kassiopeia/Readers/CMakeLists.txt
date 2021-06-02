@@ -71,6 +71,7 @@ target_include_directories(KassiopeiaReaders
 target_link_libraries( KassiopeiaReaders
     PUBLIC
         KassiopeiaOperators
+        ROOT::Tree
 )
 
 # install

@@ -189,6 +189,7 @@ target_link_libraries( KassiopeiaGenerators
         KassiopeiaReaders
         KGeoBagRandom
         KGeoBagMesh
+        ROOT::Tree
 )
 
 # install
