@@ -1182,6 +1182,98 @@ For example, the following generator specification:
 results in a total of 100 particles being generated per event (as a combination of possible energies and momentum
 direction theta coordinate). To see other generator examples please see the included example XML files.
 
+The table below lists the available value distributions that can be used with one of the initial parameters. Note
+that the XML element name can also be adapted, so instead of ``value_gauss`` for an energy distribution one would use:
+
+.. code-block:: xml
+
+    <energy_composite>
+        <energy_gauss mean="18600." sigma="5."/>
+    </energy_composite>
+
+The position and direction generators usually support multiple value distributions; e.g. radius (``r_gauss``),
+azimuthal angle (``phi_gauss``) and z-position (``z_gauss``) for the composite cylindrical position generator.
+
++--------------------------------------------------------------------------------------------------------------------+
+| Generator value distributions                                                                                      |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Name               | XML Element                         | Description (main parameters)                           |
++====================+=====================================+=========================================================+
+| Fixed              | ``value_fix``                       | Fixed value                                             |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| List               | ``value_list``                      | Fixed set of inidivual values                           |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Set                | ``value_set``                       | Fixed set of values in range (start, stop, increment)   |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Uniform            | ``value_uniform``                   | Uniform distribution (min, max)                         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Boltzmann          | ``value_boltzmann``                 | Boltzmann energy distribution (mass, `kT`)              |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Gauss              | ``value_gauss``                     | Gaussian distribution (mean, sigma, min, max)           |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Generalized Gauss  | ``value_generalized_gauss``         | Skewed Gaussian distrib. (mean, sigma, min, max, skew)  |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Pareto             | ``value_pareto``                    | Pareto distribution (slope, cutoff, offset, min, max)   |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Cylindrical Radius | ``value_radius_cylindrical``        | Cylindrical radial distribution (min, max)              |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Spherical Radius   | ``value_radius_spherical``          | Spherical radial distribution (min, max)                |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Fractional Radius  | ``value_radius_fraction``           | Radial distribution with ``r_max = 1``                  |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Cosine Angle       | ``value_angle_cosine``              | Cosine angular distribution (min, max)                  |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Spherical Angle    | ``value_angle_spherical``           | Spherical angular distribution (min, max)               |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Z-Frustrum         | ``value_z_frustrum``                | Random z-value inside frustrum (z1, r1, z2, r2)         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Formula            | ``value_formula``                   | ROOT Formula (``TF1``) given as string                  |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Histogram          | ``value_histogram``                 | ROOT Histogram (``TH1``) read from file                 |
++--------------------+-------------------------------------+---------------------------------------------------------+
+
+In addition, a number of specialized generators exists. For example, the position or energy of the generated particle
+can be defined in more a sophisticated way in case a particle is generated from nuclear decays (Tritium, Krypton, Radon)
+or starts from a surface.
+
++--------------------------------------------------------------------------------------------------------------------+
+| Energy generators (incomplete list)                                                                                |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Name               | XML Element                         | Description                                             |
++====================+=====================================+=========================================================+
+| Beta Decay         | ``energy_beta_decay``               | Energy from (tritium) beta decay                        |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Beta Recoil        | ``energy_beta_recoil``              | Recoil energy from beta decay                           |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Krypton            | ``energy_krypton_event``            | Energy from krypton decay (conversion/Auger)            |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Lead               | ``energy_lead_event``               | Energy from lead decay (conversion/Auger)               |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Radon              | ``energy_radon_event``              | Energy from radon decay (conversion/Auger/ShakeOff)     |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Rydberg            | ``energy_rydberg``                  | Energy from Rydberg ionization                          |
++--------------------+-------------------------------------+---------------------------------------------------------+
+
++--------------------------------------------------------------------------------------------------------------------+
+| Position generators (incomplete list)                                                                              |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Name               | XML Element                         | Description                                             |
++====================+=====================================+=========================================================+
+| Cylindrical        | ``position_cylindrical_composite``  | Cylindrical position ``(r, phi, z)``                    |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Rectangular        | ``position_rectangular_composite``  | Rectangular position ``(x, y, z)``                      |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Spherical          | ``position_spherical_composite``    | Spherical position ``(r, phi, theta)``                  |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Flux Tube          | ``position_flux_tube``              | Cylindrical position; radius defined by flux tube       |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Surface            | ``position_surface_random``         | Random position on surface (not all types supported)    |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Mesh Surface       | ``position_mesh_surface_random``    | Random position on surface; needs surface mesh!         |
++--------------------+-------------------------------------+---------------------------------------------------------+
+| Space              | ``position_space_random``           | Random position in space (not all types supported)      |
++--------------------+-------------------------------------+---------------------------------------------------------+
+
 Termination
 -----------
 
@@ -1312,25 +1404,27 @@ The tables below lists the available integrators, interpolators, and terms:
 +--------------------------------------------------------------------------------------------------------------------+
 | Trajectory controls                                                                                                |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_length``                  | Fixed length                                            |
+| Name               | XML Element                         | Description                                             |
++====================+=====================================+=========================================================+
+| Length             | ``control_length``                  | Fixed length                                            |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_time``                    | Fixed time                                              |
+| Time               | ``control_time``                    | Fixed time                                              |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_B_change``                | Length scaled by relative B-field gradient              |
+| B-Field Gradient   | ``control_B_change``                | Length scaled by relative B-field gradient              |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_cyclotron``               | Length scaled to length of a full cyclotron turn        |
+| Cyclotron          | ``control_cyclotron``               | Length scaled to length of a full cyclotron turn        |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_energy``                  | Length adjusted to limit total energy violation         |
+| Energy             | ``control_energy``                  | Length adjusted to limit total energy violation         |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_magnetic_moment``         | Length adjusted to limit adiabaticity violation         |
+| Magnetic Moment    | ``control_magnetic_moment``         | Length adjusted to limit adiabaticity violation         |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_momentum_numerical_error``| Length adjusted to limit momentum error                 |
+| Momentum Error     | ``control_momentum_numerical_error``| Length adjusted to limit momentum error                 |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_position_numerical_error``| Length adjusted to limit position error                 |
+| Position Error     | ``control_position_numerical_error``| Length adjusted to limit position error                 |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_m_dot``                   | Length scaled by $\dot{M}$ (spin tracking only)         |
+| Spin M-Dot         | ``control_m_dot``                   | Length scaled by $\dot{M}$ (spin tracking only)         |
 +--------------------+-------------------------------------+---------------------------------------------------------+
-| Gravity            | ``control_spin_precession``         | Length scaled by precession freq. (spin tracking only)  |
+| Spin Precession    | ``control_spin_precession``         | Length scaled by precession freq. (spin tracking only)  |
 +--------------------+-------------------------------------+---------------------------------------------------------+
 
 The exact tracking method can be used where accuracy is of the utmost importance, but requires a large number of steps

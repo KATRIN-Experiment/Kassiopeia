@@ -11,6 +11,8 @@
     </title>
 <link href="_static/pygments.css" rel="stylesheet"/>
 <link href="_static/theme.css" rel="stylesheet"/>
+<link href="_static/pygments.css" rel="stylesheet"/>
+<link href="_static/theme.css" rel="stylesheet"/>
 <link href="_static/graphviz.css" rel="stylesheet"/>
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
@@ -249,9 +251,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#usage">Usage</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#advanced-visualization">Advanced visualization</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#id1">Usage</a></div></li>
+</ul>
+</li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#field-calculation">Field calculation</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#id2">Usage</a></div></li>
+</ul>
+</li>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></div></li>
 </ul>
 </li>
@@ -1721,6 +1733,189 @@ For example, the following generator specification:</p>
 </code></pre></div>
 <p>results in a total of 100 particles being generated per event (as a combination of possible energies and momentum
 direction theta coordinate). To see other generator examples please see the included example XML files.</p>
+<p>The table below lists the available value distributions that can be used with one of the initial parameters. Note
+that the XML element name can also be adapted, so instead of <code class="docutils literal notranslate">value_gauss</code> for an energy distribution one would use:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;energy_composite&gt;</span>
+    <span class="nt">&lt;energy_gauss</span> <span class="na">mean=</span><span class="s">"18600."</span> <span class="na">sigma=</span><span class="s">"5."</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/energy_composite&gt;</span>
+</code></pre></div>
+<p>The position and direction generators usually support multiple value distributions; e.g. radius (<code class="docutils literal notranslate">r_gauss</code>),
+azimuthal angle (<code class="docutils literal notranslate">phi_gauss</code>) and z-position (<code class="docutils literal notranslate">z_gauss</code>) for the composite cylindrical position generator.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%"/>
+<col style="width: 32%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Generator value distributions</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element</p></th>
+<th class="head"><p>Description (main parameters)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Fixed</p></td>
+<td><p><code class="docutils literal notranslate">value_fix</code></p></td>
+<td><p>Fixed value</p></td>
+</tr>
+<tr class="row-even"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate">value_list</code></p></td>
+<td><p>Fixed set of inidivual values</p></td>
+</tr>
+<tr class="row-odd"><td><p>Set</p></td>
+<td><p><code class="docutils literal notranslate">value_set</code></p></td>
+<td><p>Fixed set of values in range (start, stop, increment)</p></td>
+</tr>
+<tr class="row-even"><td><p>Uniform</p></td>
+<td><p><code class="docutils literal notranslate">value_uniform</code></p></td>
+<td><p>Uniform distribution (min, max)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Boltzmann</p></td>
+<td><p><code class="docutils literal notranslate">value_boltzmann</code></p></td>
+<td><p>Boltzmann energy distribution (mass, <cite>kT</cite>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Gauss</p></td>
+<td><p><code class="docutils literal notranslate">value_gauss</code></p></td>
+<td><p>Gaussian distribution (mean, sigma, min, max)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Generalized Gauss</p></td>
+<td><p><code class="docutils literal notranslate">value_generalized_gauss</code></p></td>
+<td><p>Skewed Gaussian distrib. (mean, sigma, min, max, skew)</p></td>
+</tr>
+<tr class="row-even"><td><p>Pareto</p></td>
+<td><p><code class="docutils literal notranslate">value_pareto</code></p></td>
+<td><p>Pareto distribution (slope, cutoff, offset, min, max)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cylindrical Radius</p></td>
+<td><p><code class="docutils literal notranslate">value_radius_cylindrical</code></p></td>
+<td><p>Cylindrical radial distribution (min, max)</p></td>
+</tr>
+<tr class="row-even"><td><p>Spherical Radius</p></td>
+<td><p><code class="docutils literal notranslate">value_radius_spherical</code></p></td>
+<td><p>Spherical radial distribution (min, max)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fractional Radius</p></td>
+<td><p><code class="docutils literal notranslate">value_radius_fraction</code></p></td>
+<td><p>Radial distribution with <code class="docutils literal notranslate">r_max = 1</code></p></td>
+</tr>
+<tr class="row-even"><td><p>Cosine Angle</p></td>
+<td><p><code class="docutils literal notranslate">value_angle_cosine</code></p></td>
+<td><p>Cosine angular distribution (min, max)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Spherical Angle</p></td>
+<td><p><code class="docutils literal notranslate">value_angle_spherical</code></p></td>
+<td><p>Spherical angular distribution (min, max)</p></td>
+</tr>
+<tr class="row-even"><td><p>Z-Frustrum</p></td>
+<td><p><code class="docutils literal notranslate">value_z_frustrum</code></p></td>
+<td><p>Random z-value inside frustrum (z1, r1, z2, r2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Formula</p></td>
+<td><p><code class="docutils literal notranslate">value_formula</code></p></td>
+<td><p>ROOT Formula (<code class="docutils literal notranslate">TF1</code>) given as string</p></td>
+</tr>
+<tr class="row-even"><td><p>Histogram</p></td>
+<td><p><code class="docutils literal notranslate">value_histogram</code></p></td>
+<td><p>ROOT Histogram (<code class="docutils literal notranslate">TH1</code>) read from file</p></td>
+</tr>
+</tbody>
+</table>
+<p>In addition, a number of specialized generators exists. For example, the position or energy of the generated particle
+can be defined in more a sophisticated way in case a particle is generated from nuclear decays (Tritium, Krypton, Radon)
+or starts from a surface.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%"/>
+<col style="width: 32%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Energy generators (incomplete list)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Beta Decay</p></td>
+<td><p><code class="docutils literal notranslate">energy_beta_decay</code></p></td>
+<td><p>Energy from (tritium) beta decay</p></td>
+</tr>
+<tr class="row-even"><td><p>Beta Recoil</p></td>
+<td><p><code class="docutils literal notranslate">energy_beta_recoil</code></p></td>
+<td><p>Recoil energy from beta decay</p></td>
+</tr>
+<tr class="row-odd"><td><p>Krypton</p></td>
+<td><p><code class="docutils literal notranslate">energy_krypton_event</code></p></td>
+<td><p>Energy from krypton decay (conversion/Auger)</p></td>
+</tr>
+<tr class="row-even"><td><p>Lead</p></td>
+<td><p><code class="docutils literal notranslate">energy_lead_event</code></p></td>
+<td><p>Energy from lead decay (conversion/Auger)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Radon</p></td>
+<td><p><code class="docutils literal notranslate">energy_radon_event</code></p></td>
+<td><p>Energy from radon decay (conversion/Auger/ShakeOff)</p></td>
+</tr>
+<tr class="row-even"><td><p>Rydberg</p></td>
+<td><p><code class="docutils literal notranslate">energy_rydberg</code></p></td>
+<td><p>Energy from Rydberg ionization</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%"/>
+<col style="width: 32%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Position generators (incomplete list)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Cylindrical</p></td>
+<td><p><code class="docutils literal notranslate">position_cylindrical_composite</code></p></td>
+<td><p>Cylindrical position <code class="docutils literal notranslate">(r, phi, z)</code></p></td>
+</tr>
+<tr class="row-even"><td><p>Rectangular</p></td>
+<td><p><code class="docutils literal notranslate">position_rectangular_composite</code></p></td>
+<td><p>Rectangular position <code class="docutils literal notranslate">(x, y, z)</code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Spherical</p></td>
+<td><p><code class="docutils literal notranslate">position_spherical_composite</code></p></td>
+<td><p>Spherical position <code class="docutils literal notranslate">(r, phi, theta)</code></p></td>
+</tr>
+<tr class="row-even"><td><p>Flux Tube</p></td>
+<td><p><code class="docutils literal notranslate">position_flux_tube</code></p></td>
+<td><p>Cylindrical position; radius defined by flux tube</p></td>
+</tr>
+<tr class="row-odd"><td><p>Surface</p></td>
+<td><p><code class="docutils literal notranslate">position_surface_random</code></p></td>
+<td><p>Random position on surface (not all types supported)</p></td>
+</tr>
+<tr class="row-even"><td><p>Mesh Surface</p></td>
+<td><p><code class="docutils literal notranslate">position_mesh_surface_random</code></p></td>
+<td><p>Random position on surface; needs surface mesh!</p></td>
+</tr>
+<tr class="row-odd"><td><p>Space</p></td>
+<td><p><code class="docutils literal notranslate">position_space_random</code></p></td>
+<td><p>Random position in space (not all types supported)</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="termination">
 <h2>Termination<a aria-label="Copy link to section: Termination." class="headerlink tooltipped tooltipped-ne" href="#termination" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
@@ -1943,46 +2138,52 @@ or dynamic adjustment (e.g. a step size derived from the local magnetic field.) 
 <col style="width: 32%"/>
 <col style="width: 50%"/>
 </colgroup>
-<tbody>
-<tr class="row-odd"><td colspan="3"><p>Trajectory controls</p></td>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>Trajectory controls</p></th>
 </tr>
-<tr class="row-even"><td><p>Gravity</p></td>
+<tr class="row-even"><th class="head"><p>Name</p></th>
+<th class="head"><p>XML Element</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>Length</p></td>
 <td><p><code class="docutils literal notranslate">control_length</code></p></td>
 <td><p>Fixed length</p></td>
 </tr>
-<tr class="row-odd"><td><p>Gravity</p></td>
+<tr class="row-even"><td><p>Time</p></td>
 <td><p><code class="docutils literal notranslate">control_time</code></p></td>
 <td><p>Fixed time</p></td>
 </tr>
-<tr class="row-even"><td><p>Gravity</p></td>
+<tr class="row-odd"><td><p>B-Field Gradient</p></td>
 <td><p><code class="docutils literal notranslate">control_B_change</code></p></td>
 <td><p>Length scaled by relative B-field gradient</p></td>
 </tr>
-<tr class="row-odd"><td><p>Gravity</p></td>
+<tr class="row-even"><td><p>Cyclotron</p></td>
 <td><p><code class="docutils literal notranslate">control_cyclotron</code></p></td>
 <td><p>Length scaled to length of a full cyclotron turn</p></td>
 </tr>
-<tr class="row-even"><td><p>Gravity</p></td>
+<tr class="row-odd"><td><p>Energy</p></td>
 <td><p><code class="docutils literal notranslate">control_energy</code></p></td>
 <td><p>Length adjusted to limit total energy violation</p></td>
 </tr>
-<tr class="row-odd"><td><p>Gravity</p></td>
+<tr class="row-even"><td><p>Magnetic Moment</p></td>
 <td><p><code class="docutils literal notranslate">control_magnetic_moment</code></p></td>
 <td><p>Length adjusted to limit adiabaticity violation</p></td>
 </tr>
-<tr class="row-even"><td><p>Gravity</p></td>
+<tr class="row-odd"><td><p>Momentum Error</p></td>
 <td><p><code class="docutils literal notranslate">control_momentum_numerical_error</code></p></td>
 <td><p>Length adjusted to limit momentum error</p></td>
 </tr>
-<tr class="row-odd"><td><p>Gravity</p></td>
+<tr class="row-even"><td><p>Position Error</p></td>
 <td><p><code class="docutils literal notranslate">control_position_numerical_error</code></p></td>
 <td><p>Length adjusted to limit position error</p></td>
 </tr>
-<tr class="row-even"><td><p>Gravity</p></td>
+<tr class="row-odd"><td><p>Spin M-Dot</p></td>
 <td><p><code class="docutils literal notranslate">control_m_dot</code></p></td>
 <td><p>Length scaled by $dot{M}$ (spin tracking only)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Gravity</p></td>
+<tr class="row-even"><td><p>Spin Precession</p></td>
 <td><p><code class="docutils literal notranslate">control_spin_precession</code></p></td>
 <td><p>Length scaled by precession freq. (spin tracking only)</p></td>
 </tr>
@@ -2580,7 +2781,7 @@ the message:</p>
 </div>
 </section>
 </main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 3.5.4</a></footer>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.0.1</a></footer>
 </div>
 <div class="sticky bottom-0 md:hidden print:hidden bg-white">
 <div class="flex justify-center items-center">
@@ -2609,6 +2810,7 @@ the message:</p>
 </div>
 <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
 </script>
+<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
 <script src="_static/jquery.js"></script>
 <script src="_static/underscore.js"></script>
 <script src="_static/doctools.js"></script>
