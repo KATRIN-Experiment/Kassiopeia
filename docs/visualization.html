@@ -327,15 +327,15 @@ In addition, the mesh geometry can be viewed as well:</p>
         <span class="na">enable_write=</span><span class="s">"true"</span>
         <span class="na">frame_title=</span><span class="s">"KGeoBag Visualization"</span>
     <span class="nt">&gt;</span>
-    <span class="nt">&lt;vtk_mesh_painter</span>
-        <span class="na">name=</span><span class="s">"vtk_mesh_painter"</span>
+    <span class="nt">&lt;vtk_axial_mesh_painter</span>
+        <span class="na">name=</span><span class="s">"vtk_axial_mesh_painter"</span>
         <span class="na">surfaces=</span><span class="s">"world/dipole_trap/@electrode_tag"</span>
         <span class="na">color_mode=</span><span class="s">"area"</span>
-    <span class="nt">&gt;</span>
+    <span class="nt">/&gt;</span>
 <span class="nt">&lt;/vtk_window&gt;</span>
 </code></pre></div>
-<p>The mesh painter needs a defined mesh (see <span class="xref std std-ref">configuration</span> and the mesh section). An <code class="docutils literal notranslate">&lt;vtk_axial_mesh_painter&gt;</code>
-element exists as well, to be used with an axial mesh in the case of axial-symmetric geometries.</p>
+<p>The axial mesh painter needs a defined mesh (<code class="docutils literal notranslate">&lt;axial_mesh&gt;</code> XML element, see <span class="xref std std-ref">configuration</span>). An
+<code class="docutils literal notranslate">&lt;vtk_mesh_painter&gt;</code> exists as well, to be used with an asymmetric mesh (defined via <code class="docutils literal notranslate">&lt;mesh&gt;</code>.)</p>
 </section>
 <section id="kassiopieia-visualization">
 <h2>Kassiopieia visualization<a aria-label="Copy link to section: Kassiopieia visualization." class="headerlink tooltipped tooltipped-ne" href="#kassiopieia-visualization" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
@@ -409,8 +409,6 @@ of the 3D geometry projected onto the Z-X plane.</p>
             <span class="na">plane_normal=</span><span class="s">"0 1 0"</span>
             <span class="na">plane_point=</span><span class="s">"0 0 0"</span>
             <span class="na">swap_axis=</span><span class="s">"false"</span>
-            <span class="na">x_axis=</span><span class="s">"z"</span>
-            <span class="na">y_axis=</span><span class="s">"x"</span>
         <span class="nt">/&gt;</span>
         <span class="nt">&lt;root_track_painter</span>
             <span class="na">name=</span><span class="s">"root_track_painter"</span>

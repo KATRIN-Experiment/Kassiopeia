@@ -40,15 +40,15 @@ In addition, the mesh geometry can be viewed as well:
             enable_write="true"
             frame_title="KGeoBag Visualization"
         >
-        <vtk_mesh_painter
-            name="vtk_mesh_painter"
+        <vtk_axial_mesh_painter
+            name="vtk_axial_mesh_painter"
             surfaces="world/dipole_trap/@electrode_tag"
             color_mode="area"
-        >
+        />
     </vtk_window>
 
-The mesh painter needs a defined mesh (see :ref:`configuration` and the mesh section). An ``<vtk_axial_mesh_painter>``
-element exists as well, to be used with an axial mesh in the case of axial-symmetric geometries.
+The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration`). An
+``<vtk_mesh_painter>`` exists as well, to be used with an asymmetric mesh (defined via ``<mesh>``.)
 
 
 Kassiopieia visualization
@@ -122,8 +122,6 @@ of the 3D geometry projected onto the Z-X plane.
                 plane_normal="0 1 0"
                 plane_point="0 0 0"
                 swap_axis="false"
-                x_axis="z"
-                y_axis="x"
             />
             <root_track_painter
                 name="root_track_painter"
