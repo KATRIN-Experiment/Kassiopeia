@@ -18,7 +18,7 @@
     <message key="ks_field" terminal="normal" log="normal"/>
     <message key="ks_generator" terminal="normal" log="normal"/>
     <message key="ks_trajectory" terminal="normal" log="normal"/>
-    <message key="ks_interaction" terminal="normal" log="debug"/>
+    <message key="ks_interaction" terminal="normal" log="normal"/>
     <message key="ks_terminator" terminal="normal" log="normal"/>
     <message key="ks_writer" terminal="normal" log="normal"/>
     <message key="ks_navigator" terminal="normal" log="normal"/>

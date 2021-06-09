@@ -141,11 +141,11 @@
 
 </geometry>
 
-<kassiopeia>
+<kemfield>
 
     <!-- magnetic fields -->
 
-    <ksfield_electromagnet
+    <electromagnet_field
             name="field_electromagnet"
             directory="[KEMFIELD_CACHE]"
             file="DipoleTrapMagnets.kbd"
@@ -165,11 +165,11 @@
                 remote_sourcepoint_start="-5.e-2"
                 remote_sourcepoint_end="5.e-2"
         />
-    </ksfield_electromagnet>
+    </electromagnet_field>
 
     <!-- electric fields -->
 
-    <ksfield_electrostatic
+    <electrostatic_field
             name="field_electrostatic"
             directory="[KEMFIELD_CACHE]"
             file="DipoleTrapElectrodes.kbd"
@@ -199,12 +199,16 @@
                 remote_sourcepoint_start="-5.e-2"
                 remote_sourcepoint_end="5.e-2"
         />
-    </ksfield_electrostatic>
+    </electrostatic_field>
 
-    <ksfield_electric_constant
+    <constant_electric_field
             name="field_constant"
             field="0. 0. 0."
     />
+
+</kemfield>
+
+<kassiopeia>
 
     <!-- generators -->
 
