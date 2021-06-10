@@ -49,7 +49,7 @@ add_subdirectory( cmake )
 add_subdirectory( Documentation )
 
 if( KASPER_USE_BOOST )
-    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem  )
+    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem system )
     add_subdirectory( Boost )
 endif()
 
@@ -89,6 +89,7 @@ if( KASPER_USE_BOOST )
     target_link_libraries(Kommon
         PUBLIC
             Boost::boost
+            Boost::system
         PRIVATE
             Boost::filesystem
     )

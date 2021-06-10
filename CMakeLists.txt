@@ -169,23 +169,29 @@ mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
 
 # Global dependency options
-#option( KASPER_USE_BOOST "Build Boost dependent modules" ON )
+#find_package(Boost QUIET)
+#option( KASPER_USE_BOOST "Build Boost dependent modules" ${Boost_FOUND} )
 set(KASPER_USE_BOOST ON)
-option( KASPER_USE_ROOT "Build ROOT dependent modules" ON )
-option( KASPER_USE_GSL "Build GSL dependent modules" ON )
-option( KASPER_USE_VTK "Build VTK dependent modules" OFF )
+
+find_package(ROOT QUIET)
+if(ROOT_FOUND AND NOT DEFINED KASPER_USE_ROOT)
+    message("ROOT was found and enabled automatically. Set KASPER_USE_ROOT=OFF to change this.")
+endif()
+option( KASPER_USE_ROOT "Build ROOT dependent modules" ${ROOT_FOUND} )
+
+find_package(GSL QUIET)
+if(GSL_FOUND AND NOT DEFINED KASPER_USE_GSL)
+    message("GSL was found and enabled automatically. Set KASPER_USE_GSL=OFF to change this.")
+endif()
+option( KASPER_USE_GSL "Build GSL dependent modules" ${GSL_FOUND} )
 
 find_package(VTK QUIET)
-if(VTK_FOUND AND NOT KASPER_USE_VTK)
-    message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this." )
-    set(KASPER_USE_VTK ON)
-endif(VTK_FOUND AND NOT KASPER_USE_VTK)
+if(VTK_FOUND AND NOT DEFINED KASPER_USE_VTK)
+    message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
+endif()
+option( KASPER_USE_VTK "Build VTK dependent modules" ${VTK_FOUND} )
 
-# Advanced options mainly for testing
-option( KASPER_EXPERIMENTAL "Enable some experimental features" OFF )
-if( KASPER_EXPERIMENTAL )
-    # not used for now
-endif( KASPER_EXPERIMENTAL )
+option( KASPER_USE_XGBOOST"Build XGBOOST dependent modules" OFF )
 
 # Make sure that version requirements are fulfilled
 if( KASPER_USE_BOOST )
