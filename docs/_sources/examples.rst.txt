@@ -180,6 +180,18 @@ following figure.
 .. image:: _images/pmt_paraview.png
    :width: 500pt
 
+
+The Mesh Simulation Example
+"""""""""""""""""""""""""""
+
+The mesh simulation uses a geometry from an external STL_ file, which is a format widely used in 3D design software.
+The external geometry must provide a surface mesh in order to be usable with *KEMField* and *Kassiopeia*. In this
+example, an electric field is defined by two copies of the so-called `Menger sponge` cubes that are placed next to each
+other. Particles are tracked along a linear trajectory, which are reflected when they hit one of the cube surfaces.
+
+.. image:: _images/mesh_simulation.png
+   :width: 500pt
+
 Other Examples
 """"""""""""""
 
@@ -228,5 +240,6 @@ also distributed with Kassiopeia, and are described in the following table.
 .. _TBrowser: https://root.cern.ch/doc/master/classTBrowser.html
 .. _PyROOT: https://root.cern/manual/python/
 .. _uproot: https://pypi.org/project/uproot/
+.. _STL: https://en.wikipedia.org/wiki/STL_%28file_format%29
 
 .. [*] D. Furse *et al.* (2017) New J. Phys. **19** 053012, `doi:10.1088/1367-2630/aa6950 <https://doi.org/10.1088/1367-2630/aa6950>`_

@@ -386,3 +386,60 @@ An XML example is as follows:
             <arc z1="2." r1="1." z2="0." r2="2." radius="2" positive_orientation="1"/>
         </rotated_object>
     </rotated_space>
+
+
+External Shapes in KGeoBag
+**************************
+
+As an alternative to defining geometries via the XML file format, one may also use geometric objects from external
+files. The only available file format is STL, which is supported by the majority of current 3D design software. The
+STL file contains a set of triangles, which are treated as a fully meshed geometry in *KGeoBag*. As such, the geometry
+is usable with *KEMField* (for electric field calculation) and *Kassiopeia* (for particle navigation.)
+
+
+STL File Surface
+~~~~~~~~~~~~~~~~
+
+.. image:: _images/kgeobag_teapot_mesh.png
+   :width: 400pt
+
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+
+An XML example is as follows:
+
+.. code-block:: xml
+
+    <stl_file_surface name="cube_surface">
+        <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
+    </stl_file_surface>
+
+    <stl_file_surface name="teapot_lid">
+        <stl_file file="Utah_teapot.stl" selector="-2267"/>
+    </stl_file_surface>
+
+    <stl_file_surface name="teapot_solid_body">
+        <stl_file file="Utah_teapot.stl" selector="2268-"/>
+    </stl_file_surface>
+
+Note that because the geometry is defined by an external file, the possible modifications in the *KGeoBag* framework
+are limited. Besides the translations/rotations that can be applied to any object, one may also scale the external
+geometry or increase its number of mesh elements. If the triangles in the file are sufficienctly ordered, then one
+can use the ``selector`` attribute to specify indices of the triangles to be used in *KGeoBag*. In the case of the
+``Utah_teapot.stl`` example file, this allows to split the lid from the pot's body.
+
+STL File Space
+~~~~~~~~~~~~~~
+
+For visualization see the above STL file surface.
+
+- Works with GeometryViewer: Yes.
+- Works with MeshViewer: Yes.
+
+An XML example is as follows:
+
+.. code-block:: xml
+
+    <stl_file_space name="cube_surface">
+        <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
+    </stl_file_space>

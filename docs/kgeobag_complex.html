@@ -81,6 +81,7 @@
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#the-mesh-simulation-example">The Mesh Simulation Example</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></div></li>
 </ul>
 </li>
@@ -200,7 +201,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Complex KGeoBag Shapes</a></div><ul>
+<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#">Complex Shapes in KGeoBag</a></div><ul>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#surfaces">Surfaces</a></div><ul>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#pump-port">Pump Port</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#conic-section-pump-port">Conic section pump port</a></div></li>
@@ -221,6 +222,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="#external-shapes-in-kgeobag">External Shapes in KGeoBag</a></div></li>
 <li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div><ul>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#output-configuration">Output configuration</a></div><ul>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#groups-and-fields">Groups and fields</a></div></li>
@@ -681,6 +683,56 @@ the definition of the variables see the corresponding surfaces above.</p>
 </section>
 </section>
 </section>
+<section id="external-shapes-in-kgeobag">
+<h1>External Shapes in KGeoBag<a aria-label="Copy link to section: External Shapes in KGeoBag." class="headerlink tooltipped tooltipped-ne" href="#external-shapes-in-kgeobag" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
+<p>As an alternative to defining geometries via the XML file format, one may also use geometric objects from external
+files. The only available file format is STL, which is supported by the majority of current 3D design software. The
+STL file contains a set of triangles, which are treated as a fully meshed geometry in <em>KGeoBag</em>. As such, the geometry
+is usable with <em>KEMField</em> (for electric field calculation) and <em>Kassiopeia</em> (for particle navigation.)</p>
+<a class="reference internal image-reference" href="_images/kgeobag_teapot_mesh.png"><img alt="_images/kgeobag_teapot_mesh.png" src="_images/kgeobag_teapot_mesh.png" style="width: 400pt;"/></a>
+<ul class="simple">
+<li><p>Works with GeometryViewer: Yes.</p></li>
+<li><p>Works with MeshViewer: Yes.</p></li>
+</ul>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;stl_file_surface</span> <span class="na">name=</span><span class="s">"cube_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;stl_file</span> <span class="na">file=</span><span class="s">"Menger_sponge.stl"</span> <span class="na">scale=</span><span class="s">"0.5"</span> <span class="na">mesh_count=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/stl_file_surface&gt;</span>
+
+<span class="nt">&lt;stl_file_surface</span> <span class="na">name=</span><span class="s">"teapot_lid"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;stl_file</span> <span class="na">file=</span><span class="s">"Utah_teapot.stl"</span> <span class="na">selector=</span><span class="s">"-2267"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/stl_file_surface&gt;</span>
+
+<span class="nt">&lt;stl_file_surface</span> <span class="na">name=</span><span class="s">"teapot_solid_body"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;stl_file</span> <span class="na">file=</span><span class="s">"Utah_teapot.stl"</span> <span class="na">selector=</span><span class="s">"2268-"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/stl_file_surface&gt;</span>
+</code></pre></div>
+<p>Note that because the geometry is defined by an external file, the possible modifications in the <em>KGeoBag</em> framework
+are limited. Besides the translations/rotations that can be applied to any object, one may also scale the external
+geometry or increase its number of mesh elements. If the triangles in the file are sufficienctly ordered, then one
+can use the <code class="docutils literal notranslate">selector</code> attribute to specify indices of the triangles to be used in <em>KGeoBag</em>. In the case of the
+<code class="docutils literal notranslate">Utah_teapot.stl</code> example file, this allows to split the lid from the pot’s body.</p>
+<p>For visualization see the above STL file surface.</p>
+<ul class="simple">
+<li><p>Works with GeometryViewer: Yes.</p></li>
+<li><p>Works with MeshViewer: Yes.</p></li>
+</ul>
+<p>An XML example is as follows:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">xml</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="nt">&lt;stl_file_space</span> <span class="na">name=</span><span class="s">"cube_surface"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;stl_file</span> <span class="na">file=</span><span class="s">"Menger_sponge.stl"</span> <span class="na">scale=</span><span class="s">"0.5"</span> <span class="na">mesh_count=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/stl_file_space&gt;</span>
+</code></pre></div>
+</section>
 <section class="flex justify-between pt-4 mt-12">
 <div class="mr-auto">
 <span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2">Previous</span>
@@ -692,7 +744,7 @@ the definition of the variables see the corresponding surfaces above.</p>
 </div>
 </section>
 </main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.0.1</a></footer>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.0.2</a></footer>
 </div>
 <div class="sticky bottom-0 md:hidden print:hidden bg-white">
 <div class="flex justify-center items-center">

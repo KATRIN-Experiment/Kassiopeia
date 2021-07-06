@@ -400,6 +400,9 @@ is usable with *KEMField* (for electric field calculation) and *Kassiopeia* (for
 STL File Surface
 ~~~~~~~~~~~~~~~~
 
+.. image:: _images/kgeobag_teapot_mesh.png
+   :width: 400pt
+
 - Works with GeometryViewer: Yes.
 - Works with MeshViewer: Yes.
 
