@@ -1556,6 +1556,12 @@ interaction of the following type:
 
     <ksint_surface_diffuse name="int_surface_diffuse" probability=".3" reflection_loss="0." transmission_loss="1."/>
 
+Similarly, one may use the following code to employ fully specular reflection:
+
+.. code-block:: xml
+
+    <ksint_surface_specular name="int_surface_diffuse" probability="0." reflection_loss="0." transmission_loss="1."/>
+
 In order for this interaction to operate on any particles it must be associated with a surface in the simulation command
 structure.
 
@@ -1758,6 +1764,9 @@ operate, all geometric objects (spaces, sufaces) which have navigation commands 
 extension in the geometry specification. Furthermore, since ``ksnav_meshed_space`` requires access to the root space
 ``space_world`` and all of the navigation commands associated with the shapes it contains, it must be declared after the
 definition of the simulation command structure element ``ksgeo_space`` (see below).
+
+The mesh navigator can also be used together with geometry from exernal files, as shown in the ``MeshSimulation.xml``
+example.
 
 Navigation and Commands
 -----------------------
