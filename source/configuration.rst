@@ -1036,6 +1036,9 @@ Note that although the zonal harmonics solver allows a faster calculation of the
 some initialization time to compute the source points. Depending on the simulation, the overall computation time could
 be lower when using the integrating solver instead.
 
+Also, please note that only three KGeoBag shapes can be used to create electromagnets: cylinder surface, cylinder tube
+space, and rod space. 
+
 A complete list and set of examples of the XML bindings for magnetic fields can be found in the file
 ``$KASPERSYS/config/KEMField/Complete/MagneticFields.xml`` (see :gh-code:`KEMField/Source/XML/Complete/MagneticFields.xml`.)
 
