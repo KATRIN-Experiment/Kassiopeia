@@ -1600,6 +1600,10 @@ region with no adverse effects.</p>
 <p>Note that although the zonal harmonics solver allows a faster calculation of the electromagnetic fields, but requires
 some initialization time to compute the source points. Depending on the simulation, the overall computation time could
 be lower when using the integrating solver instead.</p>
+<p>Also, please note that only three <em>KGeoBag</em> shapes can be used to create electromagnets: cylinder surface, cylinder tube
+space, and rod space. For details, see the above section <cite>Extensions</cite>. If other shapes are added to the electromagnet
+field elemenet, they will not be recognized as magnet geometries. When using rod spaces, the resulting magnet element
+will be a “line current” that does not allow any zonal harmonic approximation and is always solved directly.</p>
 <p>A complete list and set of examples of the XML bindings for magnetic fields can be found in the file
 <code class="docutils literal notranslate">$KASPERSYS/config/KEMField/Complete/MagneticFields.xml</code> (see <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/KEMField/Source/XML/Complete/MagneticFields.xml">GitHub: KEMField/Source/XML/Complete/MagneticFields.xml<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>.)</p>
 <p>Further documentation on the exact methods and parameters used in <em>KEMField</em> can be found in [2] and [3].</p>
