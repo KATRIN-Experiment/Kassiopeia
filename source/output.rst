@@ -529,32 +529,42 @@ that we gathered in the section above, we can write the following snippet:
 
     import numpy as np
     import uproot
+    #import uproot3 as uproot  # try this if newer uproot does not work
 
+    # Open data file
     data = uproot.open(file_name)
 
+    # Read data structures
     df0 = data['TRACK_DATA'].pandas.df()
-    df1 = data['component_step_cell_PRESENCE'].pandas.df()
-    df2 = data['component_step_cell_DATA'].pandas.df()
+    df1 = data['component_step_cell_DATA'].pandas.df()
+    df1p = data['component_step_cell_PRESENCE'].pandas.df()
 
-    for first_step_index, last_step_index in zip(df0['FIRST_STEP_INDEX'], df0['LAST_STEP_INDEX']):
+    # Extend step data for merging
+    df1.assign(track_id=np.nan)
 
-        mask = np.full(df2['orbital_magnetic_moment'].shape, False)
+    # Iterate over tracks and assign to step data
+    for track_id, first_step_index, last_step_index in zip(df0['TRACK_INDEX'], df0['FIRST_STEP_INDEX'], df0['LAST_STEP_INDEX']):
 
-        for first_valid, valid_length in zip(df1['INDEX'], df1['LENGTH']):
-
+        start_index = 0
+        for first_valid, valid_length in zip(df1p['INDEX'], df1p['LENGTH']):
             last_valid = first_valid + valid_length - 1
-            if first_valid >= first_step_index and last_valid <= last_step_index:
-                mask[first_valid:last_valid] = True
 
-            if first_valid > last_step_index:
+            if first_valid >= first_step_index and last_valid <= last_step_index:
+                df1.loc[start_index:start_index+valid_length-1, ('track_id')] = track_id
+
+            if start_index > last_step_index:
                 break
 
-        steps_moment = df2['orbital_magnetic_moment'][mask]
-        max_moment = np.max(steps_moment)
-        min_moment = np.min(steps_moment)
+            start_index += valid_length
 
-        deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
-        print("extrema for track <{:g}>".format(deviation))
+    # Select data of current track
+    steps_moment = df1[df1.track_id == track_id]['orbital_magnetic_moment']
+    max_moment = np.max(steps_moment)
+    min_moment = np.min(steps_moment)
+
+    # Compute result
+    deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
+    print("extrema for track #{:d} <{:g}>".format(track_id, deviation))
 
 Here the output file is opened with ``uproot.open()`` and the relevant data trees are accessed via the ``pandas.df()``
 interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
@@ -569,6 +579,75 @@ The example above could be easily extended to allow multiple valid segments per 
 for other relations between runs, events, tracks, and steps. Consider for example a simulation where secondary particles
 are produced over the course of a track, which need to be mapped to the primary event.
 
+There is another method of producing the track-by-track result that is printed by the code above. Instead of computing
+the results in the main loop, one may use the ``DataFrame.groupby()`` method to iterate over tracks in a second loop.
+This is a more useful approach in case of more complex analysis:
+
+.. code-block:: python
+
+    # Iterate over tracks and assign to step data
+    # ... see above ...
+
+    for track_id, group in df1.groupby("track_id"):
+        steps_moment = group.orbital_magnetic_moment
+
+        max_moment = np.max(steps_moment)
+        min_moment = np.min(steps_moment)
+
+        deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
+        print("extrema for track #{:d} <{:g}>".format(int(track_id), deviation))
+
+The use of Pandas_ dataframes makes it fairly easy to select and combine data as needed. Consider again the
+``QuadrupoleTrapSimulation.xml`` example, where the step output is split into a `world` and `cell` group. One may need
+to merge the two datasets before the analysis, e.g. if one needs to relate the magnetic moment to the magnetic field.
+The code below shows how this can be done with ``DataFrame.concat()`` and ``DataFrame.merge()`` methods:
+
+.. code-block:: python
+
+    import numpy as np
+    import pandas as pd
+    import uproot
+    #import uproot3 as uproot  # try this if newer uproot does not work
+
+    # Open data file
+    data = uproot.open(file_name)
+
+    # Read data structures
+    df0 = data['TRACK_DATA'].pandas.df()
+    df1 = data['component_track_world_DATA'].pandas.df()
+    df2 = data['component_step_world_DATA'].pandas.df()
+    df3 = data['component_step_cell_DATA'].pandas.df()
+    df2p = data['component_step_world_PRESENCE'].pandas.df()
+    df3p = data['component_step_cell_PRESENCE'].pandas.df()
+
+    # Extend step data for merging
+    df1 = df1.assign(track_id=df0['TRACK_INDEX'])
+    df2 = df2.assign(track_id=np.nan, step_id=np.nan)
+    df3 = df3.assign(track_id=np.nan, step_id=np.nan)
+
+    # Assign indicec for mergin
+    df1.set_index('track_id')
+    df2.set_index('step_id')
+    df3.set_index('step_id')
+
+    # Merge the step data frames (append columns)
+    #   `inner` join: keep only steps that exist in *both* data frames
+    #   `outer` join: keep all steps, even those that only exist in one data frame
+    df = pd.concat([df2, df3], axis='columns', join='inner')
+    df = df.loc[:,~df.columns.duplicated()]
+
+    # Merge the track data frame (merge columns via common `track_id`)
+    df = df.set_index('track_id')
+    df = df.join(df1, on='track_id', how='outer')
+    df.set_index(['track_id', 'step_id'])
+
+    for track_id,group in dfx.groupby("track_id"):
+        print("track #{:d}:\t max. magnetic field is <{:g}> and mean magnetic moment is <{:g}>".\
+                format(int(track_id), group.magnetic_field_z.max(), group.orbital_magnetic_moment.mean()))
+
+Keep in mind that while this approach is pretty flexible, it easily consumes a lot of memory because of the combination
+of large data frames. This is especially true when the output fields contain a large number of elements. In that case,
+it is advisable to select only the necessary fields before the merge steps.
 
 VTK output files
 -----------------

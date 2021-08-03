@@ -820,32 +820,42 @@ that we gathered in the section above, we can write the following snippet:</p>
 </div>
 <pre><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">uproot</span>
+<span class="c1">#import uproot3 as uproot  # try this if newer uproot does not work</span>
 
+<span class="c1"># Open data file</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
 
+<span class="c1"># Read data structures</span>
 <span class="n">df0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'TRACK_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
-<span class="n">df1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_PRESENCE'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df1p</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_PRESENCE'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
 
-<span class="k">for</span> <span class="n">first_step_index</span><span class="p">,</span> <span class="n">last_step_index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">'FIRST_STEP_INDEX'</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">'LAST_STEP_INDEX'</span><span class="p">]):</span>
+<span class="c1"># Extend step data for merging</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 
-    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s1">'orbital_magnetic_moment'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Iterate over tracks and assign to step data</span>
+<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span> <span class="n">first_step_index</span><span class="p">,</span> <span class="n">last_step_index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">'TRACK_INDEX'</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">'FIRST_STEP_INDEX'</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">'LAST_STEP_INDEX'</span><span class="p">]):</span>
 
-    <span class="k">for</span> <span class="n">first_valid</span><span class="p">,</span> <span class="n">valid_length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s1">'INDEX'</span><span class="p">],</span> <span class="n">df1</span><span class="p">[</span><span class="s1">'LENGTH'</span><span class="p">]):</span>
-
+    <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">first_valid</span><span class="p">,</span> <span class="n">valid_length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df1p</span><span class="p">[</span><span class="s1">'INDEX'</span><span class="p">],</span> <span class="n">df1p</span><span class="p">[</span><span class="s1">'LENGTH'</span><span class="p">]):</span>
         <span class="n">last_valid</span> <span class="o">=</span> <span class="n">first_valid</span> <span class="o">+</span> <span class="n">valid_length</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">first_valid</span> <span class="o">&gt;=</span> <span class="n">first_step_index</span> <span class="ow">and</span> <span class="n">last_valid</span> <span class="o">&lt;=</span> <span class="n">last_step_index</span><span class="p">:</span>
-            <span class="n">mask</span><span class="p">[</span><span class="n">first_valid</span><span class="p">:</span><span class="n">last_valid</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="n">first_valid</span> <span class="o">&gt;</span> <span class="n">last_step_index</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">first_valid</span> <span class="o">&gt;=</span> <span class="n">first_step_index</span> <span class="ow">and</span> <span class="n">last_valid</span> <span class="o">&lt;=</span> <span class="n">last_step_index</span><span class="p">:</span>
+            <span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">start_index</span><span class="o">+</span><span class="n">valid_length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'track_id'</span><span class="p">)]</span> <span class="o">=</span> <span class="n">track_id</span>
+
+        <span class="k">if</span> <span class="n">start_index</span> <span class="o">&gt;</span> <span class="n">last_step_index</span><span class="p">:</span>
             <span class="k">break</span>
 
-    <span class="n">steps_moment</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">'orbital_magnetic_moment'</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span>
-    <span class="n">max_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
-    <span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+        <span class="n">start_index</span> <span class="o">+=</span> <span class="n">valid_length</span>
 
-    <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"extrema for track &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deviation</span><span class="p">))</span>
+<span class="c1"># Select data of current track</span>
+<span class="n">steps_moment</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">df1</span><span class="o">.</span><span class="n">track_id</span> <span class="o">==</span> <span class="n">track_id</span><span class="p">][</span><span class="s1">'orbital_magnetic_moment'</span><span class="p">]</span>
+<span class="n">max_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+<span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+
+<span class="c1"># Compute result</span>
+<span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">track_id</span><span class="p">,</span> <span class="n">deviation</span><span class="p">))</span>
 </code></pre></div>
 <p>Here the output file is opened with <code class="docutils literal notranslate">uproot.open()</code> and the relevant data trees are accessed via the <code class="docutils literal notranslate">pandas.df()</code>
 interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
@@ -857,6 +867,79 @@ slicing of data segments, instead of using a step-by-step iterative approach.</p
 <p>The example above could be easily extended to allow multiple valid segments per track (using the <cite>PRESENCE</cite> tree) and
 for other relations between runs, events, tracks, and steps. Consider for example a simulation where secondary particles
 are produced over the course of a track, which need to be mapped to the primary event.</p>
+<p>There is another method of producing the track-by-track result that is printed by the code above. Instead of computing
+the results in the main loop, one may use the <code class="docutils literal notranslate">DataFrame.groupby()</code> method to iterate over tracks in a second loop.
+This is a more useful approach in case of more complex analysis:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="c1"># Iterate over tracks and assign to step data</span>
+<span class="c1"># ... see above ...</span>
+
+<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"track_id"</span><span class="p">):</span>
+    <span class="n">steps_moment</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">orbital_magnetic_moment</span>
+
+    <span class="n">max_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+    <span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+
+    <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">track_id</span><span class="p">),</span> <span class="n">deviation</span><span class="p">))</span>
+</code></pre></div>
+<p>The use of <a class="reference external" href="https://pandas.pydata.org/">Pandas<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> dataframes makes it fairly easy to select and combine data as needed. Consider again the
+<code class="docutils literal notranslate">QuadrupoleTrapSimulation.xml</code> example, where the step output is split into a <cite>world</cite> and <cite>cell</cite> group. One may need
+to merge the two datasets before the analysis, e.g. if one needs to relate the magnetic moment to the magnetic field.
+The code below shows how this can be done with <code class="docutils literal notranslate">DataFrame.concat()</code> and <code class="docutils literal notranslate">DataFrame.merge()</code> methods:</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">uproot</span>
+<span class="c1">#import uproot3 as uproot  # try this if newer uproot does not work</span>
+
+<span class="c1"># Open data file</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">uproot</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+<span class="c1"># Read data structures</span>
+<span class="n">df0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'TRACK_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_track_world_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_world_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_DATA'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df2p</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_world_PRESENCE'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+<span class="n">df3p</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'component_step_cell_PRESENCE'</span><span class="p">]</span><span class="o">.</span><span class="n">pandas</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+
+<span class="c1"># Extend step data for merging</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">df0</span><span class="p">[</span><span class="s1">'TRACK_INDEX'</span><span class="p">])</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">step_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">step_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="c1"># Assign indicec for mergin</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'track_id'</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'step_id'</span><span class="p">)</span>
+<span class="n">df3</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'step_id'</span><span class="p">)</span>
+
+<span class="c1"># Merge the step data frames (append columns)</span>
+<span class="c1">#   `inner` join: keep only steps that exist in *both* data frames</span>
+<span class="c1">#   `outer` join: keep all steps, even those that only exist in one data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df2</span><span class="p">,</span> <span class="n">df3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">'columns'</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">'inner'</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+
+<span class="c1"># Merge the track data frame (merge columns via common `track_id`)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'track_id'</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'track_id'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'outer'</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">'track_id'</span><span class="p">,</span> <span class="s1">'step_id'</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span><span class="n">group</span> <span class="ow">in</span> <span class="n">dfx</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"track_id"</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"track #</span><span class="si">{:d}</span><span class="s2">:</span><span class="se">\t</span><span class="s2"> max. magnetic field is &lt;</span><span class="si">{:g}</span><span class="s2">&gt; and mean magnetic moment is &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span>\
+            <span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">track_id</span><span class="p">),</span> <span class="n">group</span><span class="o">.</span><span class="n">magnetic_field_z</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">group</span><span class="o">.</span><span class="n">orbital_magnetic_moment</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</code></pre></div>
+<p>Keep in mind that while this approach is pretty flexible, it easily consumes a lot of memory because of the combination
+of large data frames. This is especially true when the output fields contain a large number of elements. In that case,
+it is advisable to select only the necessary fields before the merge steps.</p>
 </section>
 </section>
 <section id="vtk-output-files">
