@@ -848,14 +848,14 @@ that we gathered in the section above, we can write the following snippet:</p>
 
         <span class="n">start_index</span> <span class="o">+=</span> <span class="n">valid_length</span>
 
-<span class="c1"># Select data of current track</span>
-<span class="n">steps_moment</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">df1</span><span class="o">.</span><span class="n">track_id</span> <span class="o">==</span> <span class="n">track_id</span><span class="p">][</span><span class="s1">'orbital_magnetic_moment'</span><span class="p">]</span>
-<span class="n">max_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
-<span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+    <span class="c1"># Select data of current track</span>
+    <span class="n">steps_moment</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="n">df1</span><span class="o">.</span><span class="n">track_id</span> <span class="o">==</span> <span class="n">track_id</span><span class="p">][</span><span class="s1">'orbital_magnetic_moment'</span><span class="p">]</span>
+    <span class="n">max_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
+    <span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">steps_moment</span><span class="p">)</span>
 
-<span class="c1"># Compute result</span>
-<span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">track_id</span><span class="p">,</span> <span class="n">deviation</span><span class="p">))</span>
+    <span class="c1"># Compute result</span>
+    <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">track_id</span><span class="p">,</span> <span class="n">deviation</span><span class="p">))</span>
 </code></pre></div>
 <p>Here the output file is opened with <code class="docutils literal notranslate">uproot.open()</code> and the relevant data trees are accessed via the <code class="docutils literal notranslate">pandas.df()</code>
 interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
@@ -917,7 +917,36 @@ The code below shows how this can be done with <code class="docutils literal not
 <span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">step_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 <span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">step_id</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 
-<span class="c1"># Assign indicec for mergin</span>
+<span class="c1"># Iterate over tracks and assign to step data</span>
+<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span> <span class="n">first_step_index</span><span class="p">,</span> <span class="n">last_step_index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="s1">'TRACK_INDEX'</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">'FIRST_STEP_INDEX'</span><span class="p">],</span> <span class="n">df0</span><span class="p">[</span><span class="s1">'LAST_STEP_INDEX'</span><span class="p">]):</span>
+
+    <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">first_valid</span><span class="p">,</span> <span class="n">valid_length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df2p</span><span class="p">[</span><span class="s1">'INDEX'</span><span class="p">],</span> <span class="n">df2p</span><span class="p">[</span><span class="s1">'LENGTH'</span><span class="p">]):</span>
+        <span class="n">last_valid</span> <span class="o">=</span> <span class="n">first_valid</span> <span class="o">+</span> <span class="n">valid_length</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">first_valid</span> <span class="o">&gt;=</span> <span class="n">first_step_index</span> <span class="ow">and</span> <span class="n">last_valid</span> <span class="o">&lt;=</span> <span class="n">last_step_index</span><span class="p">:</span>
+            <span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">start_index</span><span class="o">+</span><span class="n">valid_length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'track_id'</span><span class="p">)]</span> <span class="o">=</span> <span class="n">track_id</span>
+            <span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">start_index</span><span class="o">+</span><span class="n">valid_length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'step_id'</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">first_valid</span><span class="p">,</span> <span class="n">last_valid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">start_index</span> <span class="o">&gt;</span> <span class="n">last_step_index</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">start_index</span> <span class="o">+=</span> <span class="n">valid_length</span>
+
+    <span class="n">start_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">first_valid</span><span class="p">,</span> <span class="n">valid_length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df3p</span><span class="p">[</span><span class="s1">'INDEX'</span><span class="p">],</span> <span class="n">df3p</span><span class="p">[</span><span class="s1">'LENGTH'</span><span class="p">]):</span>
+        <span class="n">last_valid</span> <span class="o">=</span> <span class="n">first_valid</span> <span class="o">+</span> <span class="n">valid_length</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">first_valid</span> <span class="o">&gt;=</span> <span class="n">first_step_index</span> <span class="ow">and</span> <span class="n">last_valid</span> <span class="o">&lt;=</span> <span class="n">last_step_index</span><span class="p">:</span>
+            <span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">start_index</span><span class="o">+</span><span class="n">valid_length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'track_id'</span><span class="p">)]</span> <span class="o">=</span> <span class="n">track_id</span>
+            <span class="n">df3</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span><span class="n">start_index</span><span class="o">+</span><span class="n">valid_length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'step_id'</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">first_valid</span><span class="p">,</span> <span class="n">last_valid</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">start_index</span> <span class="o">&gt;</span> <span class="n">last_step_index</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">start_index</span> <span class="o">+=</span> <span class="n">valid_length</span>
+
+<span class="c1"># Assign indices for merging</span>
 <span class="n">df1</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'track_id'</span><span class="p">)</span>
 <span class="n">df2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'step_id'</span><span class="p">)</span>
 <span class="n">df3</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'step_id'</span><span class="p">)</span>
@@ -926,6 +955,7 @@ The code below shows how this can be done with <code class="docutils literal not
 <span class="c1">#   `inner` join: keep only steps that exist in *both* data frames</span>
 <span class="c1">#   `outer` join: keep all steps, even those that only exist in one data frame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df2</span><span class="p">,</span> <span class="n">df3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="s1">'columns'</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">'inner'</span><span class="p">)</span>
+
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
 
 <span class="c1"># Merge the track data frame (merge columns via common `track_id`)</span>
@@ -933,7 +963,7 @@ The code below shows how this can be done with <code class="docutils literal not
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'track_id'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'outer'</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">'track_id'</span><span class="p">,</span> <span class="s1">'step_id'</span><span class="p">])</span>
 
-<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span><span class="n">group</span> <span class="ow">in</span> <span class="n">dfx</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"track_id"</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">track_id</span><span class="p">,</span><span class="n">group</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"track_id"</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"track #</span><span class="si">{:d}</span><span class="s2">:</span><span class="se">\t</span><span class="s2"> max. magnetic field is &lt;</span><span class="si">{:g}</span><span class="s2">&gt; and mean magnetic moment is &lt;</span><span class="si">{:g}</span><span class="s2">&gt;"</span><span class="o">.</span>\
             <span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">track_id</span><span class="p">),</span> <span class="n">group</span><span class="o">.</span><span class="n">magnetic_field_z</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">group</span><span class="o">.</span><span class="n">orbital_magnetic_moment</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
 </code></pre></div>

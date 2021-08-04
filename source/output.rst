@@ -557,14 +557,14 @@ that we gathered in the section above, we can write the following snippet:
 
             start_index += valid_length
 
-    # Select data of current track
-    steps_moment = df1[df1.track_id == track_id]['orbital_magnetic_moment']
-    max_moment = np.max(steps_moment)
-    min_moment = np.min(steps_moment)
+        # Select data of current track
+        steps_moment = df1[df1.track_id == track_id]['orbital_magnetic_moment']
+        max_moment = np.max(steps_moment)
+        min_moment = np.min(steps_moment)
 
-    # Compute result
-    deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
-    print("extrema for track #{:d} <{:g}>".format(track_id, deviation))
+        # Compute result
+        deviation = 2.0 * (max_moment - min_moment) / (max_moment + min_moment)
+        print("extrema for track #{:d} <{:g}>".format(track_id, deviation))
 
 Here the output file is opened with ``uproot.open()`` and the relevant data trees are accessed via the ``pandas.df()``
 interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
@@ -625,7 +625,36 @@ The code below shows how this can be done with ``DataFrame.concat()`` and ``Data
     df2 = df2.assign(track_id=np.nan, step_id=np.nan)
     df3 = df3.assign(track_id=np.nan, step_id=np.nan)
 
-    # Assign indicec for mergin
+    # Iterate over tracks and assign to step data
+    for track_id, first_step_index, last_step_index in zip(df0['TRACK_INDEX'], df0['FIRST_STEP_INDEX'], df0['LAST_STEP_INDEX']):
+
+        start_index = 0
+        for first_valid, valid_length in zip(df2p['INDEX'], df2p['LENGTH']):
+            last_valid = first_valid + valid_length - 1
+
+            if first_valid >= first_step_index and last_valid <= last_step_index:
+                df2.loc[start_index:start_index+valid_length-1, ('track_id')] = track_id
+                df2.loc[start_index:start_index+valid_length-1, ('step_id')] = np.arange(first_valid, last_valid+1)
+
+            if start_index > last_step_index:
+                break
+
+            start_index += valid_length
+
+        start_index = 0
+        for first_valid, valid_length in zip(df3p['INDEX'], df3p['LENGTH']):
+            last_valid = first_valid + valid_length - 1
+
+            if first_valid >= first_step_index and last_valid <= last_step_index:
+                df3.loc[start_index:start_index+valid_length-1, ('track_id')] = track_id
+                df3.loc[start_index:start_index+valid_length-1, ('step_id')] = np.arange(first_valid, last_valid+1)
+
+            if start_index > last_step_index:
+                break
+
+            start_index += valid_length
+
+    # Assign indices for merging
     df1.set_index('track_id')
     df2.set_index('step_id')
     df3.set_index('step_id')
@@ -634,6 +663,7 @@ The code below shows how this can be done with ``DataFrame.concat()`` and ``Data
     #   `inner` join: keep only steps that exist in *both* data frames
     #   `outer` join: keep all steps, even those that only exist in one data frame
     df = pd.concat([df2, df3], axis='columns', join='inner')
+
     df = df.loc[:,~df.columns.duplicated()]
 
     # Merge the track data frame (merge columns via common `track_id`)
@@ -641,7 +671,7 @@ The code below shows how this can be done with ``DataFrame.concat()`` and ``Data
     df = df.join(df1, on='track_id', how='outer')
     df.set_index(['track_id', 'step_id'])
 
-    for track_id,group in dfx.groupby("track_id"):
+    for track_id,group in df.groupby("track_id"):
         print("track #{:d}:\t max. magnetic field is <{:g}> and mean magnetic moment is <{:g}>".\
                 format(int(track_id), group.magnetic_field_z.max(), group.orbital_magnetic_moment.mean()))
 
