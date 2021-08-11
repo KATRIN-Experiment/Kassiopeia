@@ -25,7 +25,7 @@ class KGExtrudedSurfaceMesher : virtual public KGComplexMesher, public KGExtrude
     void DiscretizeSegment(const KGExtrudedObject::Arc* arc, const unsigned int nDisc,
                            std::vector<std::vector<double>>& coords, unsigned int& counter);
     void DiscretizeEnclosedEnds(std::vector<std::vector<double>>& iCoords, std::vector<std::vector<double>>& oCoords,
-                                unsigned int nDisc);
+                                unsigned int nDisc, double mergeDist = 0. /*1.E-4*/);
     void DiscretizeLoopEnds();
 
     virtual void ModifyInnerSegment(int, std::vector<std::vector<double>>&) {}

@@ -527,7 +527,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGS(XIntegrandType&& 
         	 throw KMathIntegratorException() << "Error encountered in routine QAGS: " << e.what();
     }
 
-    KGslErrorHandler::GetInstance().Reset();
+//    KGslErrorHandler::GetInstance().Reset();
 
     fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGS log2(workspace->size) is non integer
     gsl_integration_workspace_free(workspace);
@@ -575,7 +575,7 @@ inline XFloatT KMathIntegrator<XFloatT, XSamplingPolicy>::QAGIU(XIntegrandType&&
         	 throw KMathIntegratorException() << "Error encountered in routine QAGIU: " << e.what();
     }
 
-    KGslErrorHandler::GetInstance().Reset();
+//    KGslErrorHandler::GetInstance().Reset();
 
     fIteration+=ilog2_ceil(workspace->size);	//crude approximation, since QAGIU log2(workspace->size) is non integer
     gsl_integration_workspace_free(workspace);

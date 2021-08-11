@@ -902,7 +902,6 @@ void KSNavMeshedSpace::ExecuteNavigation(const KSParticle& aNavigationParticle, 
     if (fSideEntity != nullptr) {
         navmsg(eNormal) << "  side <" << fSideEntity->GetName() << "> was crossed" << eom;
         aFinalParticle = aNavigationParticle;
-        ;
         aFinalParticle.SetLabel(GetName());
         aFinalParticle.AddLabel(fSideEntity->GetName());
         aFinalParticle.AddLabel("crossed");
@@ -1149,6 +1148,9 @@ void KSNavMeshedSpace::StopNavigation(KSParticle& aParticle, KSSpace* aRoot)
 
 double KSNavMeshedSpace::SolveForTime(double distance, double t, double v1, double v2) const
 {
+    if (v1 == v2)
+        return 0.;
+
     //solving for the time to travel the specified distance
     //along a straight line path with initial velocity
     //v1 and final velocity v2, assuming constant acceleration

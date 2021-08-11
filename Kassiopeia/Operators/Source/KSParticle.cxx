@@ -331,8 +331,8 @@ bool KSParticle::IsValid() const
         return false;
     if (!isfinite(fMomentum.X()) || !isfinite(fMomentum.Y()) || !isfinite(fMomentum.Z()))
         return false;
-    if (!isfinite(fSpin0) || !isfinite(fSpin.X()) || !isfinite(fSpin.Y()) || !isfinite(fSpin.Z()))
-        return false;
+    //if (!isfinite(fSpin0) || !isfinite(fSpin.X()) || !isfinite(fSpin.Y()) || !isfinite(fSpin.Z()))
+    //    return false;
     /** require E > 0 for tracking */
     if (fMomentum.MagnitudeSquared() <= std::numeric_limits<double>::min())
         return false;

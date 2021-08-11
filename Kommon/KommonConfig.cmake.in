@@ -2,12 +2,12 @@ include(CMakeFindDependencyMacro)
 
 set(KASPER_USE_BOOST @KASPER_USE_BOOST@)
 if(KASPER_USE_BOOST)
-    find_dependency( Boost COMPONENTS )
+    find_dependency( Boost @BOOST_MINIMUM_VERSION@ COMPONENTS filesystem system )
 endif(KASPER_USE_BOOST)
 
 set(KASPER_USE_ROOT @KASPER_USE_ROOT@)
 if(KASPER_USE_ROOT)
-    find_dependency( ROOT CONFIG )
+    find_dependency( ROOT @ROOT_MINIMUM_VERSION@ CONFIG )
 endif(KASPER_USE_ROOT)
 
 set(KASPER_USE_GSL @KASPER_USE_GSL@)

@@ -132,7 +132,11 @@ void KPreconditionedIterativeKrylovSolver<ValueType, ParallelTrait>::Solve(const
     do {
         solutionUpdated = false;
         trait.AugmentKrylovSubspace();
-        trait.GetResidualNorm(this->fResidualNorm);
+        double residualNorm;
+        trait.GetResidualNorm(residualNorm);
+        if (this->fIteration > 0 && residualNorm > this->fResidualNorm*2.)
+            kem_cout(eWarning) << "Convergence problem, |Residual| increased by " << (100*residualNorm/this->fResidualNorm) << "%" << eom;
+        this->fResidualNorm = residualNorm;
         this->GetRestartCondition()->UpdateProgress(this->fResidualNorm);
         this->fIteration++;
 

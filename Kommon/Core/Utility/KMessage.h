@@ -266,6 +266,9 @@ class KMessageTable : public KSingleton<KMessageTable>
     void SetLogStream(std::ostream* aLogStream);
     std::ostream* GetLogStream();
 
+    void SetVerbosityLevel(int level = 0);
+    KMessageSeverity CorrectedLevel(const KMessageSeverity& level) const;
+
   private:
     using MessageMap = std::map<std::string, KMessage*>;
     using MessageEntry = MessageMap::value_type;
@@ -282,6 +285,7 @@ class KMessageTable : public KSingleton<KMessageTable>
     std::ostream* fTerminalStream;
     KMessageSeverity fLogVerbosity;
     std::ostream* fLogStream;
+    int fVerbosityLevel;
 };
 
 }  // namespace katrin

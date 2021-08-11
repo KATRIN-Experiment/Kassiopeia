@@ -24,6 +24,7 @@
 #include "vtkPolyDataMapper2D.h"
 #include "vtkPropCollection.h"
 #include "vtkProperty.h"
+#include "vtkProperty2D.h"
 #include "vtkQuad.h"
 #include "vtkSmartPointer.h"
 #include "vtkTIFFWriter.h"
@@ -331,14 +332,16 @@ void KVTKWindow::UpdateHelp()
     tText << "  pan - center button [3 button mouse], shift + left button [1 or 2 button mouse]" << '\n';
     tText << "  zoom - right button [3 button mouse], ctrl + shift + left button [1 or 2 button mouse]" << '\n';
     tText << '\n';
-    tText << "help toggle: h                    [" << (fHelpToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "data toggle: d                    [" << (fDataToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "axis toggle: a                    [" << (fAxisToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "parallel projection toggle: p     [" << (fParallelProjectionToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << '\n';
-    tText << "take screenshot: s" << '\n';
-    tText << "reset view: r" << '\n';
-    tText << "quit: q" << '\n';
+    tText << "key bindings:" << '\n';
+    tText << "  H   - toggle help text            [" << (fHelpToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "  D   - toggle data display         [" << (fDataToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "  A   - toggle axis display         [" << (fAxisToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "  P   - toggle parallel projection  [" << (fParallelProjectionToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "  W/S - switch wireframe / solid mode" << '\n';
+    tText << "  F12 - take screenshot" << '\n';
+    tText << "  F11 - toggle fullscreen" << '\n';
+    tText << "  F10 - reset view" << '\n';
+    tText << "  Q   - quit" << '\n';
 
     fHelpActor->SetText(2, tText.str().c_str());
 
@@ -402,19 +405,27 @@ void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, v
 {
     auto* tWindow = static_cast<KVTKWindow*>(aClient);
     auto* tInteractor = static_cast<vtkRenderWindowInteractor*>(aCaller);
+    auto* tRenderWindow = tInteractor->GetRenderWindow();
 
     string Symbol = tInteractor->GetKeySym();
     bool WithShift = tInteractor->GetShiftKey();
     bool WithCtrl = tInteractor->GetControlKey();
 
+    utilmsg(eDebug) << "key press in VTK window: " << Symbol << (WithShift ? "+shift" : "") << (WithCtrl ? "+ctrl" : "") << eom;
+
     if ((WithShift == false) && (WithCtrl == false)) {
         //screenshot
-        if (Symbol == string("s")) {
+        if (Symbol == string("F12")) {
             tWindow->Screenshot();
         }
 
+        //fullscreen
+        if (Symbol == string("F11")) {
+            tRenderWindow->SetFullScreen(! tRenderWindow->GetFullScreen());
+        }
+
         //reset
-        else if (Symbol == string("r")) {
+        else if (Symbol == string("F10")) {
             tWindow->fRenderer->ResetCamera();
             tWindow->fViewAngle = 45.;
             tWindow->fRenderer->GetActiveCamera()->SetViewAngle(tWindow->fViewAngle);

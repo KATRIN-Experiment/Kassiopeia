@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     if (argc < 2) {
         cout
             << "usage: ./GeometryPainterROOT <config_file_name.xml> <geometry_path> [...] <plane normal vector> <plane point> <swap axis>"
-            << "     : ./GeometryPainterROOT <config_file_name.xml> <geometry_path> [...] --plane={XZ,YZ,XY} [--point='<plane point>'] [--labels=true]"
+            << "     : ./GeometryPainterROOT <config_file_name.xml> <geometry_path> [...] --plane={ZX,ZY,XY,XZ,YZ,YX} [--point='<plane point>'] [--labels=true]"
             << endl;
         return -1;
     }
@@ -36,25 +36,25 @@ int main(int argc, char** argv)
     auto tOptions = tXML.GetArguments().OptionTable();
     if (tOptions.find("plane") != tOptions.end()) {
         if (tOptions["plane"] == "ZX" || tOptions["plane"] == "zx") {
-            tPlaneNormal = KThreeVector(1, 0, 0);
+            tPlaneNormal = KThreeVector(0, 1, 0);
         }
         else if (tOptions["plane"] == "XZ" || tOptions["plane"] == "xz") {
-            tPlaneNormal = KThreeVector(1, 0, 0);
+            tPlaneNormal = KThreeVector(0, 1, 0);
             tSwapAxes = true;
         }
         else if (tOptions["plane"] == "YZ" || tOptions["plane"] == "yz") {
-            tPlaneNormal = KThreeVector(0 , 0, 0);
+            tPlaneNormal = KThreeVector(1, 0, 0);
         }
         else if (tOptions["plane"] == "ZY" || tOptions["plane"] == "zy") {
-            tPlaneNormal = KThreeVector(0 , 0, 0);
+            tPlaneNormal = KThreeVector(1, 0, 0);
             tSwapAxes = true;
         }
         else if (tOptions["plane"] == "YX" || tOptions["plane"] == "yx") {
             tPlaneNormal = KThreeVector(0 , 0, 1);
+            tSwapAxes = true;
         }
         else if (tOptions["plane"] == "XY" || tOptions["plane"] == "xy") {
             tPlaneNormal = KThreeVector(0 , 0, 1);
-            tSwapAxes = true;
         }
         else
             coremsg(eError) << "plane definition <" << tOptions["plane"] << "> is not supported" << eom;

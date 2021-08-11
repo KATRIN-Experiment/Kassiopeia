@@ -19,6 +19,11 @@ NAME="${BASE}/../module-deps-graph"
 
 cmake --graphviz="${NAME}.dot" .. || exit $?
 
+sed -i 's/shape = egg/shape = egg,style=filled,color=lightpink/g' $NAME.dot
+sed -i 's/shape = doubleoctagon/shape = octagon,style=filled,color=lightgreen/g' $NAME.dot
+sed -i 's/shape = pentagon/shape = pentagon,style=filled,color=lightgrey/g' $NAME.dot
+sed -i 's/shape = hexagon/shape = hexagon,style=filled,color=lightblue/g' $NAME.dot
+
 dot -Tpng -o$NAME.png $NAME.dot
 
 echo "Dependency scan of ${BASE} completed:"

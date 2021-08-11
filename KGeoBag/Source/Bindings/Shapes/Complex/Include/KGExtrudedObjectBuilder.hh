@@ -108,6 +108,22 @@ template<> inline bool KGExtrudedObjectBuilder::AddAttribute(KContainer* anAttri
         anAttribute->CopyTo(fObject, &KGExtrudedObject::SetDiscretizationPower);
         return true;
     }
+    if (anAttribute->GetName() == "extruded_mesh_count") {
+        anAttribute->CopyTo(fObject, &KGExtrudedObject::SetExtrudedMeshCount);
+        return true;
+    }
+    if (anAttribute->GetName() == "extruded_mesh_power") {
+        anAttribute->CopyTo(fObject, &KGExtrudedObject::SetExtrudedMeshPower);
+        return true;
+    }
+    if (anAttribute->GetName() == "refine_mesh") {
+        anAttribute->CopyTo(fObject, &KGExtrudedObject::SetRefineMesh);
+        return true;
+    }
+    if (anAttribute->GetName() == "mesh_merge_distance") {
+        anAttribute->CopyTo(fObject, &KGExtrudedObject::SetMeshMergeDistance);
+        return true;
+    }
     if (anAttribute->GetName() == "closed_form") {
         bool closedLoops = true;
         anAttribute->CopyTo(closedLoops);

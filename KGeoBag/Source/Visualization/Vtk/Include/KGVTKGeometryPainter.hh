@@ -30,6 +30,7 @@
 #include "KGShellLineSegmentSurface.hh"
 #include "KGShellPolyLineSurface.hh"
 #include "KGShellPolyLoopSurface.hh"
+#include "KGStlFileSurface.hh"
 #include "KVTKPainter.h"
 #include "KVTKWindow.h"
 #include "vtkActor.h"
@@ -69,6 +70,7 @@ class KGVTKGeometryPainter :
     public KGExtrudedPolyLoopSurface::Visitor,
     public KGConicalWireArraySurface::Visitor,
     public KGRodSurface::Visitor,
+    public KGStlFileSurface::Visitor,
     public KGSpace::Visitor,
     public KGRotatedLineSegmentSpace::Visitor,
     public KGRotatedArcSegmentSpace::Visitor,
@@ -137,6 +139,7 @@ class KGVTKGeometryPainter :
     void VisitExtrudedPathSurface(KGExtrudedPolyLoopSurface* aExtrudedPolyLoopSurface) override;
     void VisitWrappedSurface(KGConicalWireArraySurface* aConicalWireArraySurface) override;
     void VisitWrappedSurface(KGRodSurface* aRodSurface) override;
+    void VisitWrappedSurface(KGStlFileSurface* aStlFileSurface) override;
 
     //**************
     //space visitors
@@ -225,6 +228,7 @@ class KGVTKGeometryPainter :
 
     class ShellMesh : public Mesh
     {};
+
     class TorusMesh : public Mesh
     {};
 
@@ -271,6 +275,7 @@ class KGVTKGeometryPainter :
     //rendering functions
     //*******************
 
+    void MeshToVTK(const Mesh& aMesh);
     void FlatMeshToVTK(const FlatMesh& aMesh);
     void TubeMeshToVTK(const TubeMesh& aMesh);
     void TubeMeshToVTK(const TubeMesh& aMesh, const KGeoBag::KThreeVector& anApexEnd);

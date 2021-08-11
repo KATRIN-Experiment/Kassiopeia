@@ -11,6 +11,9 @@ set( BINDINGS_HEADER_FILES
   Core/Include/KGSpaceBuilder.hh
   Core/Include/KGInterfaceBuilder.hh
 
+  # External shapes
+  Shapes/External/Include/KGStlFileBuilder.hh
+
   # complex shapes
   Shapes/Complex/Include/KGBeamBuilder.hh
   Shapes/Complex/Include/KGConicalWireArrayBuilder.hh
@@ -132,6 +135,9 @@ set( BINDINGS_SOURCE_FILES
     Core/Source/KGSurfaceBuilder.cc
     Core/Source/KGSpaceBuilder.cc
     Core/Source/KGInterfaceBuilder.cc
+
+    # External shapes
+    Shapes/External/Source/KGStlFileBuilder.cc
 
     # complex shapes
     Shapes/Complex/Source/KGBeamBuilder.cc

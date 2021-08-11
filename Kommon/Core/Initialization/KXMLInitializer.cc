@@ -34,7 +34,7 @@ KXMLInitializer::KXMLInitializer() :
     fConfigSerializer(),
     fTokenizer(nullptr),
     fArguments(),
-    fVerbosityLevel(eNormal),
+    fVerbosityLevel(0),
     fBatchMode(false),
     fDefaultConfigFile(),
     fDefaultIncludePaths(),
@@ -46,7 +46,7 @@ KXMLInitializer::~KXMLInitializer() = default;
 
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
-    fVerbosityLevel = eNormal;  // reset
+    fVerbosityLevel = 0;  // reset
     fBatchMode = false;
     KArgumentList commandLineArgs;
 
@@ -278,8 +278,10 @@ KXMLTokenizer* KXMLInitializer::Configure(int argc, char** argv, bool processCon
     ParseCommandLine(argc, argv);
     initmsg(eNormal) << "Command line: " << fArguments.CommandLine() << eom;
 
-    KDEBUG("Verbosity level is now: " << fVerbosityLevel);
-    KMessageTable::GetInstance().SetTerminalVerbosity(static_cast<KMessageSeverity>(fVerbosityLevel));
+    if (fVerbosityLevel != 0)
+        KINFO("Verbosity level " << (fVerbosityLevel < 0 ? "decreased" : "increased") << "  by " << fVerbosityLevel);
+    KLoggerTable::GetInstance().SetVerbosityLevel(fVerbosityLevel);
+    KMessageTable::GetInstance().SetVerbosityLevel(fVerbosityLevel);
     KMessageTable::GetInstance().SetShowShutdownMessage();
 
     pair<string, KTextFile> tConfig;

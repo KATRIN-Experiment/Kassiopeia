@@ -86,7 +86,7 @@ int main(int argc, char** argv)
     auto tMagneticPropagation = new KSTrajTermPropagation();
     tMagneticPropagation->SetDirection(tDistance < 0 ? KSTrajTermPropagation::eBackward : KSTrajTermPropagation::eForward);
     auto tMagneticTimeStep = new KSTrajControlTime();
-    tMagneticTimeStep->SetTime(tDistance);
+    tMagneticTimeStep->SetTime(fabs(tDistance));
     tMagneticTrajectory->SetIntegrator(tMagneticIntegrator);
     tMagneticTrajectory->SetInterpolator(tMagneticInterpolator);
     tMagneticTrajectory->AddTerm(tMagneticPropagation);

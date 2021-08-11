@@ -64,7 +64,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    mainmsg(eNormal) << "Magnetic Field at position " << tPosition << " is " << tMagneticField << eom;
+    mainmsg(eNormal) << "Magnetic Field at position " << tPosition << " is " << tMagneticField << ", magnitude " << tMagneticField.Magnitude() << eom;
 
     for (size_t tIndex = 3; tIndex < tParameters.size(); tIndex++) {
         KSMagneticField* tMagneticFieldObject = getMagneticField(tParameters[tIndex]);

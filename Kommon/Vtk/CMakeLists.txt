@@ -28,7 +28,8 @@ target_include_directories(KommonVtk PUBLIC $<INSTALL_INTERFACE:include>)
 # The lines below are adapted from the `UseVTK.cmake` file, located at ${VTK_USE_FILE}
 
 # Add compiler flags needed to use VTK.
-target_compile_options(KommonVtk PUBLIC ${VTK_REQUIRED_CXX_FLAGS})
+separate_arguments(_VTK_REQUIRED_CXX_FLAGS UNIX_COMMAND "${VTK_REQUIRED_CXX_FLAGS}")
+target_compile_options(KommonVtk PUBLIC ${_VTK_REQUIRED_CXX_FLAGS})
 set(_target_type "$<TARGET_PROPERTY:TYPE>")
 add_link_options( $<$<STREQUAL:"${_target_type}","EXECUTABLE">:${VTK_REQUIRED_EXE_LINKER_FLAGS}> )
 add_link_options( $<$<STREQUAL:"${_target_type}","SHARED_LIBRARY">:${VTK_REQUIRED_SHARED_LINKER_FLAGS}> )

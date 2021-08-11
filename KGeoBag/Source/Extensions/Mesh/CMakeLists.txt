@@ -11,6 +11,9 @@ set( MESH_HEADER_FILES
     Include/KGMesherBase.hh
     Include/KGMesher.hh
 
+    External/Include/KGStlFileSurfaceMesher.hh
+    External/Include/KGStlFileSpaceMesher.hh
+
     Complex/Include/KGComplexMesher.hh
     Complex/Include/KGBoxMesher.hh
     Complex/Include/KGCylinderMesher.hh
@@ -81,6 +84,9 @@ set( MESH_SOURCE_FILES
     Source/KGMesherBase.cc
     Source/KGMesher.cc
 
+    External/Source/KGStlFileSurfaceMesher.cc
+    External/Source/KGStlFileSpaceMesher.cc
+
     Complex/Source/KGComplexMesher.cc
     Complex/Source/KGBoxMesher.cc
     Complex/Source/KGCylinderMesher.cc
@@ -142,6 +148,7 @@ add_library( KGeoBagMesh SHARED
 target_include_directories( KGeoBagMesh
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/External/Include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Complex/Include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Simple/Include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Navigation/Include>

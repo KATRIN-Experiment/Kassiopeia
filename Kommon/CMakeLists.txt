@@ -72,6 +72,10 @@ add_subdirectory( Core )
 add_subdirectory( Core/Binning )
 add_subdirectory( Core/Maths )
 
+# Fix build issues for certain source files
+#set_property(SOURCE Core/Initialization/KVariant.cxx APPEND PROPERTY COMPILE_DEFINITIONS __GLIBCXX_USE_CXX11_ABI=0)
+set_property(SOURCE Core/Initialization/tinyexpr.c APPEND PROPERTY COMPILE_OPTIONS "-Wno-array-bounds" )  # FIXME
+
 kasper_install_headers( ${KOMMON_HEADER_FILES} )
 
 add_library( Kommon SHARED

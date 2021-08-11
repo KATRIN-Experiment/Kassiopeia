@@ -14,9 +14,10 @@
 #include "vtkDepthSortPolyData.h"
 #include "vtkIVWriter.h"
 #include "vtkPolyDataMapper.h"
-#include "vtkQuad.h"
-#include "vtkSTLWriter.h"
 #include "vtkTriangle.h"
+#include "vtkQuad.h"
+#include "vtkPolygon.h"
+#include "vtkSTLWriter.h"
 #include "vtkTriangleFilter.h"
 #include "vtkXMLPolyDataWriter.h"
 
@@ -792,6 +793,26 @@ void KGVTKGeometryPainter::VisitWrappedSurface(KGRodSurface* aRodSurface)
     fCurrentSurface = nullptr;
 
     return;
+}
+
+void KGVTKGeometryPainter::VisitWrappedSurface(KGStlFileSurface* aStlFileSurface)
+{
+    if (fIgnore == true) {
+        return;
+    }
+
+    // create rotated points and create mesh
+    Mesh tMeshPoints;
+    for (auto & elem : aStlFileSurface->GetObject()->GetElements()) {
+        Mesh::Group tMeshGroup = { elem.GetP0(), elem.GetP1(), elem.GetP2() };
+        tMeshPoints.fData.push_back(tMeshGroup);
+    }
+
+    //create mesh
+    MeshToVTK(tMeshPoints);
+
+    //clear space
+    fCurrentSurface = nullptr;
 }
 
 //**************
@@ -1803,6 +1824,57 @@ void KGVTKGeometryPainter::ThreePointsToTubeMeshToVTK(const ThreePoints& aThreeP
 //*******************
 //rendering functions
 //*******************
+
+void KGVTKGeometryPainter::MeshToVTK(const Mesh& aMesh)
+{
+    //object allocation
+    KThreeVector tPoint;
+
+    deque<vtkIdType> vMeshIdGroup;
+    deque<deque<vtkIdType>> vMeshIdSet;
+
+    deque<vtkIdType>::iterator vThisPoint;
+    deque<deque<vtkIdType>>::iterator vThisGroup;
+
+    vtkSmartPointer<vtkCell> vCell;
+
+    //create mesh point ids
+    for (const auto& tSetIt : aMesh.fData) {
+        vMeshIdGroup.clear();
+        for (const auto& tGroupIt : tSetIt) {
+            LocalToGlobal(tGroupIt, tPoint);
+            vMeshIdGroup.push_back(fPoints->InsertNextPoint(tPoint.X(), tPoint.Y(), tPoint.Z()));
+        }
+        vMeshIdSet.push_back(vMeshIdGroup);
+    }
+
+    //create hull cells
+    vThisGroup = vMeshIdSet.begin();
+
+    while (vThisGroup != vMeshIdSet.end()) {
+        vThisPoint = vThisGroup->begin();
+        if (vThisGroup->size() <= 2)
+            continue;
+        else if (vThisGroup->size() == 3)
+            vCell = vtkSmartPointer<vtkTriangle>::New();
+        else if (vThisGroup->size() == 4)
+            vCell = vtkSmartPointer<vtkQuad>::New();
+        else
+            vCell = vtkSmartPointer<vtkPolygon>::New();
+
+        for (unsigned i = 0; i < vThisGroup->size(); i++)
+            vCell->GetPointIds()->SetId(i, *(vThisPoint++));
+        fCells->InsertNextCell(vCell);
+        fColors->InsertNextTuple4(fCurrentData->GetColor().GetRed(),
+                                  fCurrentData->GetColor().GetGreen(),
+                                  fCurrentData->GetColor().GetBlue(),
+                                  fCurrentData->GetColor().GetOpacity());
+
+        ++vThisGroup;
+    }
+
+    return;
+}
 
 void KGVTKGeometryPainter::FlatMeshToVTK(const FlatMesh& aMesh)
 {

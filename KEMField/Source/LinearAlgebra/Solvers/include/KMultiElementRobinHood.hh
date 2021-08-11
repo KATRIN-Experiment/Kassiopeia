@@ -89,9 +89,14 @@ void KMultiElementRobinHood<ValueType, ParallelTrait>::Solve(const Matrix& A, Ve
         trait.FindResidual();
         if (subIteration == fResidualCheckInterval) {
             subIteration = 0;
+            double residualNorm;
+            trait.FindResidualNorm(residualNorm);
+            if (residualNorm > 1e100)
+                kem_cout(eError) << "Iterative solve failed to converge, current |Residual|: " << residualNorm << eom;
+            else if (this->fIteration > 0 && residualNorm > this->fResidualNorm*2.)
+                kem_cout(eWarning) << "Convergence problem, |Residual| increased by " << (100*residualNorm/this->fResidualNorm) << "%" << eom;
+            this->fResidualNorm = residualNorm;
             this->fIteration++;
-            trait.FindResidualNorm(this->fResidualNorm);
-
             this->AcceptVisitors();
         }
         trait.IdentifyLargestResidualElements();

@@ -1,0 +1,26 @@
+<geometry>
+
+    <!-- Load a meshed geometry from an STL file. Use the 'selector' attribute to
+         specify a (range of) indices that should be included. This allows to split
+         a file into several geometry objects for use with field solvers/navigators.
+     -->
+
+    <stl_file_surface name="teapot_lid">
+        <stl_file file="Utah_teapot.stl" selector="-2267"/>
+    </stl_file_surface>
+
+    <stl_file_surface name="teapot_body">
+        <stl_file file="Utah_teapot.stl" selector="2268-"/>
+    </stl_file_surface>
+
+    <!-- The loaded mesh can also be scaled and refined. Using `mesh_count` larger
+         than one will break down all mesh triangles into smaller elements.
+     -->
+
+    <stl_file_surface name="cube_surface">
+        <stl_file file="Menger_sponge.stl" scale="0.5" mesh_count="1"/>
+    </stl_file_surface>
+
+    <mesh name="surface_mesh" surfaces="#"/>
+
+</geometry>

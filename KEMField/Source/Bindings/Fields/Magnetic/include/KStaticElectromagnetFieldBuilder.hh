@@ -12,6 +12,7 @@
 #include "KEMBindingsMessage.hh"
 #include "KGStaticElectromagnetField.hh"
 #include "KSmartPointerRelease.hh"
+#include "KIntegratingMagnetostaticFieldSolver.hh"
 
 namespace katrin
 {
@@ -115,10 +116,11 @@ template<> inline bool KStaticElectromagnetFieldBuilder::AddElement(KContainer* 
 template<> inline bool KStaticElectromagnetFieldBuilder::End()
 {
     if (!(fObject->GetFieldSolver())) {
-        BINDINGMSG(eError) << " No magnetic field solver "
-                              "set in field "
-                           << GetName() << "!" << eom;
-        return false;
+        BINDINGMSG(eWarning) << " No magnetic field solver set in field "
+                           << GetName() << " - falling back to integrating solver!" << eom;
+        auto solver = new KEMField::KIntegratingMagnetostaticFieldSolver();
+        fObject->SetFieldSolver(solver);
+        return true;
     }
     else
         return true;

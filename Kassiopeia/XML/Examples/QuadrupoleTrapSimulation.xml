@@ -276,7 +276,7 @@
 
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false"/>
+    <ksnav_space name="nav_space" enter_split="true" exit_split="true"/>
 
     <!-- surface interactions -->
 

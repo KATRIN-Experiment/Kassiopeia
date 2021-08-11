@@ -55,6 +55,8 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::InitializePlo
     // Set up the view
     fView = vtkSmartPointer<vtkContextView>::New();
     fView->GetRenderer()->SetBackground(1.0, 1.0, 1.0);
+    fView->GetRenderWindow()->SetSize(500, 300);
+    fView->GetRenderWindow()->SetMultiSamples(0);
 
     // Add line plot, setting the colors etc
     fChart = vtkSmartPointer<vtkChartXY>::New();
@@ -64,6 +66,7 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::InitializePlo
 
     // fView->GetRenderWindow()->SetPosition(2810,2000);
     fView->GetScene()->AddItem(fChart);
+    fView->GetInteractor()->Initialize();
 }
 
 template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
@@ -72,14 +75,24 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
     table->AddColumn(fArrayX);
     table->AddColumn(fArrayY);
 
-    vtkPlot* line = fChart->AddPlot(vtkChart::LINE);
+    vtkPlot* dots = fChart->AddPlot(vtkChart::POINTS);
 #if VTK_MAJOR_VERSION <= 5
-    line->SetInput(table, 0, 1);
+    dots->SetInput(table, 0, 1);
 #else
-    line->SetInputData(table, 0, 1);
+    dots->SetInputData(table, 0, 1);
 #endif
-    line->SetColor(0, 255, 0, 255);
-    line->SetWidth(1.0);
+    dots->SetColor(0, 0, 0, 255);
+
+    if (fArrayX->GetSize() >= 2) {
+        vtkPlot* line = fChart->AddPlot(vtkChart::LINE);
+#if VTK_MAJOR_VERSION <= 5
+        line->SetInput(table, 0, 1);
+#else
+        line->SetInputData(table, 0, 1);
+#endif
+        line->SetColor(0, 0, 255, 255);
+        line->SetWidth(1.0);
+    }
 
     fChart->Modified();
     fView->GetRenderWindow()->Render();
@@ -87,10 +100,10 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::CreatePlot()
 
 template<typename ValueType> void KVTKIterationPlotter<ValueType>::AddPoint(float x, float y)
 {
+    std::cout << "adding points: " << x << ", " << y << std::endl;
     fArrayX->InsertNextValue(x);
     fArrayY->InsertNextValue(y);
-    if (fArrayX->GetSize() > 2)
-        CreatePlot();
+    CreatePlot();
 }
 
 template<typename ValueType> void KVTKIterationPlotter<ValueType>::Initialize(KIterativeSolver<ValueType>&)
@@ -105,6 +118,8 @@ template<typename ValueType> void KVTKIterationPlotter<ValueType>::Visit(KIterat
 
 template<typename ValueType> void KVTKIterationPlotter<ValueType>::Finalize(KIterativeSolver<ValueType>&)
 {
+    kem_cout() << "KVTKIterationPlotter finished; waiting for key press ..." << eom;
+    fView->GetInteractor()->Start();
     fView->GetRenderWindow()->Finalize();
 }
 }  // namespace KEMField

@@ -16,6 +16,13 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
 
     set(STANDALONE true)
 
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/CMakeCache.txt")
+        message(FATAL_ERROR "Please remove the file '${CMAKE_CURRENT_SOURCE_DIR}/CMakeCache.txt' before running `cmake`.")
+    endif()
+    if("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}" OR EXISTS "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt")
+        message(FATAL_ERROR "Please run the `cmake` command from the build directory, not inside the source tree! See the file 'README.md' for instructions.")
+    endif()
+
     # use this section to modifiy initial values of builtin CMAKE variables
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 

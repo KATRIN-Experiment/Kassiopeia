@@ -3,11 +3,17 @@ set( SHAPES_HEADER_FILES
     # utilities
     Utility/Include/KGShapeMessage.hh
 
+    # external shapes
+    External/Include/KGStlFile.hh
+    External/Include/KGStlFileSpace.hh
+    External/Include/KGStlFileSurface.hh
+
     # basic shapes
     Basic/Include/KGBox.hh
-    Basic/Include/KGRectangle.hh
-    Basic/Include/KGDisk.hh
     Basic/Include/KGCylinder.hh
+    Basic/Include/KGDisk.hh
+    Basic/Include/KGRectangle.hh
+    Basic/Include/KGTriangle.hh
 
     # planar paths
     PlanarShapes/Include/KGPlanarPath.hh
@@ -123,11 +129,16 @@ set( SHAPES_SOURCE_FILES
     # utilities
     Utility/Source/KGShapeMessage.cc
 
+    # external shapes
+    External/Source/KGStlFile.cc
+    External/Source/stl_reader.h
+
     # basic shapes
     Basic/Source/KGBox.cc
-    Basic/Source/KGRectangle.cc
-    Basic/Source/KGDisk.cc
     Basic/Source/KGCylinder.cc
+    Basic/Source/KGDisk.cc
+    Basic/Source/KGRectangle.cc
+    Basic/Source/KGTriangle.cc
 
     # planar paths
     PlanarShapes/Source/KGPlanarPath.cc

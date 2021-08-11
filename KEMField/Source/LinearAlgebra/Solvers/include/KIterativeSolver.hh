@@ -126,15 +126,16 @@ template<typename ValueType> bool KIterativeSolver<ValueType>::Terminate()
 
 template<typename ValueType> void KIterativeSolver<ValueType>::AcceptVisitors()
 {
-    for (typename std::vector<Visitor*>::const_iterator it = fVisitors.begin(); it != fVisitors.end(); ++it)
+    for (typename std::vector<Visitor*>::const_iterator it = fVisitors.begin(); it != fVisitors.end(); ++it) {
         if (Iteration() % (*it)->Interval() == 0)
             (*it)->Visit(*this);
+    }
 }
 
 template<typename ValueType> class KIterationDisplay : public KIterativeSolver<ValueType>::Visitor
 {
   public:
-    KIterationDisplay() : fPrefix(""), fCarriageReturn(true)
+    KIterationDisplay() : fPrefix(""), fCarriageReturn(false)
     {
         KIterativeSolver<ValueType>::Visitor::Interval(1);
     }
@@ -154,24 +155,24 @@ template<typename ValueType> class KIterationDisplay : public KIterativeSolver<V
 
 template<typename ValueType> void KIterationDisplay<ValueType>::Initialize(KIterativeSolver<ValueType>& solver)
 {
-    kem_cout() << fPrefix << "Beginning iterative solve with target residual norm " << solver.Tolerance()
+    kem_cout(eNormal) << fPrefix << "Beginning iterative solve with target residual norm " << solver.Tolerance()
                << " and dimension " << solver.Dimension() << eom;
 }
 
 template<typename ValueType> void KIterationDisplay<ValueType>::Visit(KIterativeSolver<ValueType>& solver)
 {
-    kem_cout() << fPrefix << "Iteration, |Residual|: " << solver.Iteration() << ", " << solver.ResidualNorm()
+    kem_cout(eNormal) << fPrefix << "Iteration, |Residual|: " << solver.Iteration() << ", " << solver.ResidualNorm()
                << (fCarriageReturn ? ret : eom);
 }
 
 template<typename ValueType> void KIterationDisplay<ValueType>::Finalize(KIterativeSolver<ValueType>& solver)
 {
-    if (!std::isfinite(solver.ResidualNorm())) {
+    if (!std::isfinite(solver.ResidualNorm()) || solver.ResidualNorm() == 0) {
         kem_cout(eError) << fPrefix << "Convergence incomplete after " << solver.Iteration()
                    << " iterations, with |Residual|: " << solver.ResidualNorm() << eom;
     }
 
-    kem_cout() << fPrefix << "Convergence complete after " << solver.Iteration()
+    kem_cout(eNormal) << fPrefix << "Convergence complete after " << solver.Iteration()
                << " iterations, with |Residual|: " << solver.ResidualNorm() << eom;
 }
 
