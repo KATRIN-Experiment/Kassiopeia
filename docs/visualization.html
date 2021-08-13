@@ -239,6 +239,8 @@
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-python">Using Python</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#kassiopeiareader">KassiopeiaReader</a></div></li>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#uproot-pandas">uproot / Pandas</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#python-notebook">Python notebook</a></div></li>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#geometry-visualization">Geometry visualization</a></div></li>
 </ul>
 </li>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a></div><ul>
@@ -270,7 +272,10 @@
 </ul>
 </li>
 <li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Visualization Techniques</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#kgeobag-visualization">KGeoBag visualization</a></div></li>
+<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#kgeobag-visualization">KGeoBag visualization</a></div><ul>
+<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#python">Python</a></div></li>
+</ul>
+</li>
 <li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="#kassiopieia-visualization">Kassiopieia visualization</a></div></li>
 <li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#kemfield-visualization">KEMField visualization</a></div><ul>
 <li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#field-maps">Field maps</a></div></li>
@@ -338,6 +343,40 @@ In addition, the mesh geometry can be viewed as well:</p>
 </code></pre></div>
 <p>The axial mesh painter needs a defined mesh (<code class="docutils literal notranslate">&lt;axial_mesh&gt;</code> XML element, see <span class="xref std std-ref">configuration</span>). An
 <code class="docutils literal notranslate">&lt;vtk_mesh_painter&gt;</code> exists as well, to be used with an asymmetric mesh (defined via <code class="docutils literal notranslate">&lt;mesh&gt;</code>.)</p>
+<section id="python">
+<h3>Python<a aria-label="Copy link to section: Python." class="headerlink tooltipped tooltipped-ne" href="#python" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<p>It is possible to draw a geometry visualization in Python. This is especially useful if you run your analysis in Python as well (see <a class="reference internal" href="output.html#output-label"><span class="std std-ref">Understanding Simulation Output</span></a> for examples.)</p>
+<p>The <a class="reference external" href="https://www.pyvista.org/">PyVista<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> Python package makes it easy to operate on the <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> output files that are produced by <em>KGeoBag</em> and the other <em>Kasper</em> modules. (Note that this method only works if <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> was enabled at build time.) In the XML snippets above, the different VTK painters will produce output files if the <code class="docutils literal notranslate">enable_write</code> attribute is set. These files contain the 3D geometry in the <cite>vtp</cite> format and can be read in Python. In order to get a 2D view of the geometry, one also needs to create a slice that transforms the 3D surfaces into 2D lines.</p>
+<div class="highlight">
+<div class="code-header">
+<span class="code-lang">python</span>
+<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+</div>
+<pre><code><span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Open geometry file</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">'geometry_painter.vtp'</span><span class="p">)</span>
+
+<span class="c1"># Produce a slice along the x-z axis</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">normal</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Draw lines in each slice cell</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">n_cells</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cell_points</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cell_type</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># VTK_LINE</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">z</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">max</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">z</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+        <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">max</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+</code></pre></div>
+</section>
 </section>
 <section id="kassiopieia-visualization">
 <h2>Kassiopieia visualization<a aria-label="Copy link to section: Kassiopieia visualization." class="headerlink tooltipped tooltipped-ne" href="#kassiopieia-visualization" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>

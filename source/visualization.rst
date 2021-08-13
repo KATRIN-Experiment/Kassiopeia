@@ -50,6 +50,39 @@ In addition, the mesh geometry can be viewed as well:
 The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration`). An
 ``<vtk_mesh_painter>`` exists as well, to be used with an asymmetric mesh (defined via ``<mesh>``.)
 
+Python
+~~~~~~
+
+It is possible to draw a geometry visualization in Python. This is especially useful if you run your analysis in Python as well (see :ref:`output-label` for examples.)
+
+The PyVista_ Python package makes it easy to operate on the VTK_ output files that are produced by *KGeoBag* and the other *Kasper* modules. (Note that this method only works if VTK_ was enabled at build time.) In the XML snippets above, the different VTK painters will produce output files if the ``enable_write`` attribute is set. These files contain the 3D geometry in the `vtp` format and can be read in Python. In order to get a 2D view of the geometry, one also needs to create a slice that transforms the 3D surfaces into 2D lines.
+
+.. code-block:: python
+
+    import pyvista as pv
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+
+    # Open geometry file
+    dataset = pv.read('geometry_painter.vtp')
+
+    # Produce a slice along the x-z axis
+    mesh = dataset.slice(normal=[0,1,0])
+
+    # Draw lines in each slice cell
+    plt.figure()
+    xlim, ylim = (0,0), (0,0)
+    for ind in range(mesh.n_cells):
+        x, y, z = mesh.cell_points(ind).T
+
+        if mesh.cell_type(ind) == 3:  # VTK_LINE
+            line = mpl.lines.Line2D(z, x, lw=2, c='k')
+            plt.gca().add_artist(line)
+            xlim = (min(xlim[0],z.min()), max(xlim[1],z.max()))
+            ylim = (min(ylim[0],x.min()), max(ylim[1],x.max()))
+    plt.xlim(xlim)
+    plt.ylim(ylim)
+
 
 Kassiopieia visualization
 -------------------------
@@ -242,3 +275,4 @@ correctly.
 .. _ROOT: https://root.cern.ch/
 .. _VTK: http://www.vtk.org/
 .. _ParaView: https://www.paraview.org/
+.. _PyVista: https://www.pyvista.org/

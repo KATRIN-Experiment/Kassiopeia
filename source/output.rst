@@ -532,7 +532,7 @@ that we gathered in the section above, we can write the following snippet:
     #import uproot3 as uproot  # try this if newer uproot does not work
 
     # Open data file
-    data = uproot.open(file_name)
+    data = uproot.open('QuadrupoleTrapSimulation.root')
 
     # Read data structures
     df0 = data['TRACK_DATA'].pandas.df()
@@ -610,7 +610,7 @@ The code below shows how this can be done with ``DataFrame.concat()`` and ``Data
     #import uproot3 as uproot  # try this if newer uproot does not work
 
     # Open data file
-    data = uproot.open(file_name)
+    data = uproot.open('QuadrupoleTrapSimulation.root')
 
     # Read data structures
     df0 = data['TRACK_DATA'].pandas.df()
@@ -678,6 +678,16 @@ The code below shows how this can be done with ``DataFrame.concat()`` and ``Data
 Keep in mind that while this approach is pretty flexible, it easily consumes a lot of memory because of the combination
 of large data frames. This is especially true when the output fields contain a large number of elements. In that case,
 it is advisable to select only the necessary fields before the merge steps.
+
+Python notebook
+~~~~~~~~~~~~~~~
+
+A complete analysis using Pandas dataframes for the `QuadrupoleTrapSimulation.xml` example is available in the form of a Python notebook: `QuadrupoleTrapAnalysis.ipynb <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb>`_
+
+Geometry visualization
+~~~~~~~~~~~~~~~~~~~~~~
+
+It is often useful to combine a view of the simulation geometry with a plot of the step data. In Python this can be done with the help of VTK_ files created by *KGeoBag*. For more details, see :ref:`visualization-label`.
 
 VTK output files
 -----------------
