@@ -54,4 +54,14 @@ void KVTKPainter::SetWriteMode(bool aMode)
     return;
 }
 
+std::string KVTKPainter::HelpText()
+{
+    return "";
+}
+
+void KVTKPainter::OnKeyPress(vtkObject* /*caller*/, long unsigned int /*eventId*/, void* /*client*/, void* /*callData*/)
+{
+    return;
+}
+
 }  // namespace katrin

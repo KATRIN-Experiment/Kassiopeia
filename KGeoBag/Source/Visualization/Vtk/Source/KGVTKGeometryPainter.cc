@@ -11,11 +11,13 @@
 #include "KConst.h"
 #include "vtkAppendPolyData.h"
 #include "vtkCellArray.h"
+#include "vtkCutter.h"
 #include "vtkDepthSortPolyData.h"
 #include "vtkIVWriter.h"
 #include "vtkPolyDataMapper.h"
 #include "vtkTriangle.h"
 #include "vtkQuad.h"
+#include "vtkPlane.h"
 #include "vtkPolygon.h"
 #include "vtkSTLWriter.h"
 #include "vtkTriangleFilter.h"
@@ -31,6 +33,7 @@ namespace KGeoBag
 KGVTKGeometryPainter::KGVTKGeometryPainter() :
     fPath(""),
     fWriteSTL(false),
+    fPlaneMode(0),
     fPoints(vtkSmartPointer<vtkPoints>::New()),
     fCells(vtkSmartPointer<vtkCellArray>::New()),
     fColors(vtkSmartPointer<vtkUnsignedCharArray>::New()),
@@ -201,6 +204,127 @@ void KGVTKGeometryPainter::AddSpace(KGSpace* aSpace)
 {
     fSpaces.push_back(aSpace);
     return;
+}
+
+string KGVTKGeometryPainter::HelpText()
+{
+    std::ostringstream tText;
+
+    tText << "  geometry painter:" << '\n';
+    tText << "    X,Y,Z - toggle slice mode (cut through plane with x/y/z normal)" << '\n';
+
+    return tText.str();
+}
+
+void KGVTKGeometryPainter::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, void* /*aClient*/, void* /*callData*/)
+{
+    auto* tInteractor = static_cast<vtkRenderWindowInteractor*>(aCaller);
+
+    string Symbol = tInteractor->GetKeySym();
+    bool WithShift = tInteractor->GetShiftKey();
+    bool WithCtrl = tInteractor->GetControlKey();
+
+    //utilmsg(eDebug) << "key press in VTK geometry painter: " << Symbol << (WithShift ? "+shift" : "") << (WithCtrl ? "+ctrl" : "") << eom;
+
+    if ((WithShift == false) && (WithCtrl == false)) {
+        //screenshot
+        if (Symbol == string("x")) {
+            if (fPlaneMode != 1) {
+                vtkSmartPointer<vtkPlane> vPlane = vtkSmartPointer<vtkPlane>::New();
+                vPlane->SetOrigin(0., 0., 0.);
+                vPlane->SetNormal(1., 0., 0.);
+
+                vtkSmartPointer<vtkCutter> vCutter = vtkSmartPointer<vtkCutter>::New();
+                vCutter->SetCutFunction(vPlane);
+
+                #ifdef VTK6
+                    vCutter->SetInputData(fPolyData);
+                    fMapper->SetInputConnection(vCutter->GetOutputPort());
+                #else
+                    vCutter->SetInput(fPolyData);
+                    fMapper->SetInput(vCutter);
+                #endif
+
+                vCutter->Update();
+                fMapper->Update();
+                fPlaneMode = 1;
+            }
+            else {
+                #ifdef VTK6
+                    fMapper->SetInputData(fPolyData);
+                #else
+                    fMapper->SetInput(fPolyData);
+                #endif
+
+                fMapper->Update();
+                fPlaneMode = 0;
+            }
+        }
+        else if (Symbol == string("y")) {
+            if (fPlaneMode != 2) {
+                vtkSmartPointer<vtkPlane> vPlane = vtkSmartPointer<vtkPlane>::New();
+                vPlane->SetOrigin(0., 0., 0.);
+                vPlane->SetNormal(0., 1., 0.);
+
+                vtkSmartPointer<vtkCutter> vCutter = vtkSmartPointer<vtkCutter>::New();
+                vCutter->SetCutFunction(vPlane);
+
+                #ifdef VTK6
+                    vCutter->SetInputData(fPolyData);
+                    fMapper->SetInputConnection(vCutter->GetOutputPort());
+                #else
+                    vCutter->SetInput(fPolyData);
+                    fMapper->SetInput(vCutter);
+                #endif
+
+                vCutter->Update();
+                fMapper->Update();
+                fPlaneMode = 2;
+            }
+            else {
+                #ifdef VTK6
+                    fMapper->SetInputData(fPolyData);
+                #else
+                    fMapper->SetInput(fPolyData);
+                #endif
+
+                fMapper->Update();
+                fPlaneMode = 0;
+            }
+        }
+        else if (Symbol == string("z")) {
+            if (fPlaneMode != 3) {
+                vtkSmartPointer<vtkPlane> vPlane = vtkSmartPointer<vtkPlane>::New();
+                vPlane->SetOrigin(0., 0., 0.);
+                vPlane->SetNormal(0., 0., 1.);
+
+                vtkSmartPointer<vtkCutter> vCutter = vtkSmartPointer<vtkCutter>::New();
+                vCutter->SetCutFunction(vPlane);
+
+                #ifdef VTK6
+                    vCutter->SetInputData(fPolyData);
+                    fMapper->SetInputConnection(vCutter->GetOutputPort());
+                #else
+                    vCutter->SetInput(fPolyData);
+                    fMapper->SetInput(vCutter);
+                #endif
+
+                vCutter->Update();
+                fMapper->Update();
+                fPlaneMode = 3;
+            }
+            else {
+                #ifdef VTK6
+                    fMapper->SetInputData(fPolyData);
+                #else
+                    fMapper->SetInput(fPolyData);
+                #endif
+
+                fMapper->Update();
+                fPlaneMode = 0;
+            }
+        }
+    }
 }
 
 //****************

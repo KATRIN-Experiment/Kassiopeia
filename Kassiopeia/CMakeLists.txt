@@ -79,3 +79,6 @@ add_subdirectory( Applications/Visualization )
 add_subdirectory( XML )
 
 kasper_install_module()
+
+# Install code examples
+install(DIRECTORY AnalysisExamples/ DESTINATION ${KASPER_INSTALL_DIR}/examples/Kassiopeia)

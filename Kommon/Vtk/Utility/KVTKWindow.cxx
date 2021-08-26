@@ -333,15 +333,23 @@ void KVTKWindow::UpdateHelp()
     tText << "  zoom - right button [3 button mouse], ctrl + shift + left button [1 or 2 button mouse]" << '\n';
     tText << '\n';
     tText << "key bindings:" << '\n';
-    tText << "  H   - toggle help text            [" << (fHelpToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "  D   - toggle data display         [" << (fDataToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "  A   - toggle axis display         [" << (fAxisToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "  P   - toggle parallel projection  [" << (fParallelProjectionToggle ? "ON" : "OFF") << "]" << '\n';
-    tText << "  W/S - switch wireframe / solid mode" << '\n';
-    tText << "  F12 - take screenshot" << '\n';
-    tText << "  F11 - toggle fullscreen" << '\n';
-    tText << "  F10 - reset view" << '\n';
-    tText << "  Q   - quit" << '\n';
+
+    for (auto & tPainter : fPainters) {
+        auto tVtkPainter = dynamic_cast<KVTKPainter*>(tPainter);
+        if (tVtkPainter)
+            tText << tVtkPainter->HelpText();
+    }
+
+    tText << "  general:" << '\n';
+    tText << "    H     - toggle help text            [" << (fHelpToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "    D     - toggle data display         [" << (fDataToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "    A     - toggle axis display         [" << (fAxisToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "    P     - toggle parallel projection  [" << (fParallelProjectionToggle ? "ON" : "OFF") << "]" << '\n';
+    tText << "    W,S   - switch wireframe / solid mode" << '\n';
+    tText << "    F12   - take screenshot" << '\n';
+    tText << "    F11   - toggle fullscreen" << '\n';
+    tText << "    F10   - reset view" << '\n';
+    tText << "    Q     - quit" << '\n';
 
     fHelpActor->SetText(2, tText.str().c_str());
 
@@ -401,7 +409,7 @@ void KVTKWindow::Screenshot()
     return;
 }
 
-void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, void* aClient, void* /*callData*/)
+void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int anEventId, void* aClient, void* aCallData)
 {
     auto* tWindow = static_cast<KVTKWindow*>(aClient);
     auto* tInteractor = static_cast<vtkRenderWindowInteractor*>(aCaller);
@@ -478,6 +486,12 @@ void KVTKWindow::OnKeyPress(vtkObject* aCaller, long unsigned int /*eventId*/, v
                 tWindow->fParallelProjectionToggle = false;
             }
         }
+    }
+
+    for (auto & tPainter : tWindow->fPainters) {
+        auto tVtkPainter = dynamic_cast<KVTKPainter*>(tPainter);
+        if (tVtkPainter)
+            tVtkPainter->OnKeyPress(aCaller, anEventId, aClient, aCallData);
     }
 
     tWindow->UpdateHelp();

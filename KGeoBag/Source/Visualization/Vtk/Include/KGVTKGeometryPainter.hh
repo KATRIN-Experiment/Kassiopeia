@@ -43,6 +43,7 @@
 
 #include <deque>
 #include <vector>
+#include <string>
 
 namespace KGeoBag
 {
@@ -104,10 +105,14 @@ class KGVTKGeometryPainter :
     void AddSurface(KGSurface* aSurface);
     void AddSpace(KGSpace* aSpace);
 
+    std::string HelpText() override;
+    void OnKeyPress(vtkObject* aCaller, long unsigned int eventId, void* aClient, void* callData) override;
+
   private:
     std::string fFile;
     std::string fPath;
     bool fWriteSTL;
+    int fPlaneMode;
 
     std::vector<KGSurface*> fSurfaces;
     std::vector<KGSpace*> fSpaces;
