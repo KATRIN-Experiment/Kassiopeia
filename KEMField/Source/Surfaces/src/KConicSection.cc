@@ -1,4 +1,4 @@
-#include "../../../Surfaces/include/KConicSection.hh"
+#include "KConicSection.hh"
 
 #include "KEMConstants.hh"
 

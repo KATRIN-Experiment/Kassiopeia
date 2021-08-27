@@ -35,6 +35,11 @@ class KVTKViewerAsBoundaryFieldVisitor : public KElectrostaticBoundaryField::Vis
         fFile = file;
     }
 
+    void SetPath(const std::string& path)
+    {
+        fPath = path;
+    }
+
     bool ViewGeometry() const
     {
         return fViewGeometry;
@@ -52,6 +57,7 @@ class KVTKViewerAsBoundaryFieldVisitor : public KElectrostaticBoundaryField::Vis
     bool fViewGeometry;
     bool fSaveGeometry;
     std::string fFile;
+    std::string fPath;
 };
 
 } /* namespace KEMField */

@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KGVTKAxialMeshPainter.hh"
-#include "KGVisualizationMessage.hh"
+#include "KGBindingsMessage.hh"
 
 namespace katrin
 {
@@ -43,7 +43,7 @@ template<> inline bool KGVTKAxialMeshPainterBuilder::AddAttribute(KContainer* aC
             return true;
         }
 
-        coremsg(eWarning) << "unknown option <" << tMode << "> for vtk mesh painter color mode" << eom;
+        bindmsg(eWarning) << "unknown option <" << tMode << "> for vtk mesh painter color mode" << eom;
         return false;
     }
     if (aContainer->GetName() == "surfaces") {
@@ -56,7 +56,7 @@ template<> inline bool KGVTKAxialMeshPainterBuilder::AddAttribute(KContainer* aC
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -76,7 +76,7 @@ template<> inline bool KGVTKAxialMeshPainterBuilder::AddAttribute(KContainer* aC
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

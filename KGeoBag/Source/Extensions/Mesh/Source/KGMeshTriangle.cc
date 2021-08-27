@@ -9,13 +9,9 @@
 
 namespace KGeoBag
 {
-KGMeshTriangle::KGMeshTriangle(const double& fA, const double& fB, const KThreeVector& p0, const KThreeVector& n1,
+KGMeshTriangle::KGMeshTriangle(const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1,
                                const KThreeVector& n2) :
-    fA(fA),
-    fB(fB),
-    fP0(p0),
-    fN1(n1),
-    fN2(n2)
+    fA(a), fB(b), fP0(p0), fN1(n1), fN2(n2)
 {}
 KGMeshTriangle::KGMeshTriangle(const KThreeVector& p0, const KThreeVector& p1, const KThreeVector& p2)
 {
@@ -27,6 +23,13 @@ KGMeshTriangle::KGMeshTriangle(const KThreeVector& p0, const KThreeVector& p1, c
     fB = fN2.Magnitude();
     fN2 = fN2.Unit();
 }
+KGMeshTriangle::KGMeshTriangle(const KGTriangle& t) :
+    fA(t.GetA()),
+    fB(t.GetB()),
+    fP0(t.GetP0()),
+    fN1(t.GetN1()),
+    fN2(t.GetN2())
+{}
 KGMeshTriangle::KGMeshTriangle(const KGMeshTriangle&) = default;
 KGMeshTriangle::~KGMeshTriangle() = default;
 
@@ -109,6 +112,34 @@ void KGMeshTriangle::Transform(const KTransformation& transform)
     transform.Apply(fP0);
     transform.ApplyRotation(fN1);
     transform.ApplyRotation(fN2);
+}
+
+KGPointCloud<KGMESH_DIM> KGMeshTriangle::GetPointCloud() const
+{
+    KGPointCloud<KGMESH_DIM> point_cloud;
+    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0));
+    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0 + fA * fN1));
+    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0 + fB * fN2));
+    return point_cloud;
+}
+
+void KGMeshTriangle::GetEdge(KThreeVector& start, KThreeVector& end, unsigned int index) const
+{
+    if (index == 0) {
+        start = fP0;
+        end = fP0 + fA * fN1;
+        return;
+    }
+
+    if (index == 1) {
+        start = fP0 + fA * fN1;
+        end = fP0 + fB * fN2;
+    }
+
+    if (index == 2) {
+        start = fP0 + fB * fN2;
+        end = fP0;
+    }
 }
 
 double KGMeshTriangle::NearestDistance(const KThreeVector& aPoint) const
@@ -242,34 +273,6 @@ bool KGMeshTriangle::NearestIntersection(const KThreeVector& aStart, const KThre
     }
 
     return false;
-}
-
-KGPointCloud<KGMESH_DIM> KGMeshTriangle::GetPointCloud() const
-{
-    KGPointCloud<KGMESH_DIM> point_cloud;
-    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0));
-    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0 + fA * fN1));
-    point_cloud.AddPoint(KGPoint<KGMESH_DIM>(fP0 + fB * fN2));
-    return point_cloud;
-}
-
-void KGMeshTriangle::GetEdge(KThreeVector& start, KThreeVector& end, unsigned int index) const
-{
-    if (index == 0) {
-        start = fP0;
-        end = fP0 + fA * fN1;
-        return;
-    }
-
-    if (index == 1) {
-        start = fP0 + fA * fN1;
-        end = fP0 + fB * fN2;
-    }
-
-    if (index == 2) {
-        start = fP0 + fB * fN2;
-        end = fP0;
-    }
 }
 
 

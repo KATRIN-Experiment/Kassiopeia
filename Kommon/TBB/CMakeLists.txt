@@ -1,8 +1,6 @@
-kasper_internal_include_directories( Utility )
-
 # headers
 set( KOMMON_TBB_HEADER_FILENAMES
-	Utility/KMathIntegratorThreaded.h
+    Utility/KMathIntegratorThreaded.h
 )
 
 # source

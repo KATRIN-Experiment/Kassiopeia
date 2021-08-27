@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Subdivision
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (INTERFACE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSurfaceToPointCloudConverter.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticBasisDataExtractor.hh
@@ -21,10 +19,16 @@ set (INTERFACE_SOURCEFILES
 #    ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticElementContainerFlyweight.cc
 )
 
-##################################################
-
-add_library (KFMInterfaceExtraction SHARED ${INTERFACE_SOURCEFILES} ${INTERFACE_HEADERFILES})
-target_link_libraries (KFMInterfaceExtraction KEMMath KEMSurfaces KFMCore KFMElectrostatics)
+add_library (KFMInterfaceExtraction SHARED
+    ${INTERFACE_SOURCEFILES} ${INTERFACE_HEADERFILES})
+target_include_directories(KFMInterfaceExtraction
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMInterfaceExtraction
+    PUBLIC
+        KEMSurfaces
+        KFMCore
+        KFMElectrostatics
+)
 
 kasper_install_headers (${INTERFACE_HEADERFILES})
 kasper_install_libraries (KFMInterfaceExtraction)

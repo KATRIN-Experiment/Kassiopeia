@@ -2,20 +2,24 @@
 #define _Kassiopeia_KSWriteVTK_h_
 
 #include "KSWriter.h"
-#include "KThreeVector.hh"
 #include "KTwoVector.hh"
+#include "KThreeVector.hh"
+#include "KTwoMatrix.hh"
+#include "KThreeMatrix.hh"
 #include "vtkCellArray.h"
 #include "vtkCharArray.h"
 #include "vtkDoubleArray.h"
 #include "vtkFloatArray.h"
 #include "vtkIntArray.h"
 #include "vtkLongArray.h"
+#include "vtkLongLongArray.h"
 #include "vtkPointData.h"
 #include "vtkPoints.h"
 #include "vtkPolyData.h"
 #include "vtkPolyLine.h"
 #include "vtkShortArray.h"
 #include "vtkSmartPointer.h"
+#include "vtkStringArray.h"
 #include "vtkUnsignedCharArray.h"
 #include "vtkUnsignedIntArray.h"
 #include "vtkUnsignedLongArray.h"
@@ -38,11 +42,12 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         virtual void Execute() = 0;
     };
 
-    class UIntAction : public Action
+    template<typename T, typename V>
+    class SimpleAction : public Action
     {
       public:
-        UIntAction(unsigned int* aData, vtkSmartPointer<vtkUnsignedIntArray> anArray) : fData(aData), fArray(anArray) {}
-        ~UIntAction() override = default;
+        SimpleAction(T* aData, vtkSmartPointer<V> anArray) : fData(aData), fArray(anArray) {}
+        ~SimpleAction() override = default;
 
         void Execute() override
         {
@@ -51,60 +56,23 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        unsigned int* fData;
-        vtkSmartPointer<vtkUnsignedIntArray> fArray;
+        T* fData;
+        vtkSmartPointer<V> fArray;
     };
 
-    class IntAction : public Action
-    {
-      public:
-        IntAction(int* aData, vtkSmartPointer<vtkIntArray> anArray) : fData(aData), fArray(anArray) {}
-        ~IntAction() override = default;
-
-        void Execute() override
-        {
-            fArray->InsertNextValue(*fData);
-            return;
-        }
-
-      private:
-        int* fData;
-        vtkSmartPointer<vtkIntArray> fArray;
-    };
-
-    class FloatAction : public Action
-    {
-      public:
-        FloatAction(float* aData, vtkSmartPointer<vtkFloatArray> anArray) : fData(aData), fArray(anArray) {}
-        ~FloatAction() override = default;
-
-        void Execute() override
-        {
-            fArray->InsertNextValue(*fData);
-            return;
-        }
-
-      private:
-        float* fData;
-        vtkSmartPointer<vtkFloatArray> fArray;
-    };
-
-    class DoubleAction : public Action
-    {
-      public:
-        DoubleAction(double* aData, vtkSmartPointer<vtkDoubleArray> anArray) : fData(aData), fArray(anArray) {}
-        ~DoubleAction() override = default;
-
-        void Execute() override
-        {
-            fArray->InsertNextValue(*fData);
-            return;
-        }
-
-      private:
-        double* fData;
-        vtkSmartPointer<vtkDoubleArray> fArray;
-    };
+    using StringAction = SimpleAction<std::string, vtkStringArray>;
+    using BoolAction = SimpleAction<bool, vtkUnsignedCharArray>;
+    using UCharAction = SimpleAction<unsigned char, vtkUnsignedCharArray>;
+    using CharAction = SimpleAction<char, vtkCharArray>;
+    using UShortAction = SimpleAction<unsigned short, vtkUnsignedShortArray>;
+    using ShortAction = SimpleAction<short, vtkShortArray>;
+    using UIntAction = SimpleAction<unsigned int, vtkUnsignedIntArray>;
+    using IntAction = SimpleAction<int, vtkIntArray>;
+    using ULongAction = SimpleAction<unsigned long, vtkUnsignedLongArray>;
+    using LongAction = SimpleAction<long, vtkLongArray>;
+    using LongLongAction = SimpleAction<long long, vtkLongLongArray>;
+    using FloatAction = SimpleAction<float, vtkFloatArray>;
+    using DoubleAction = SimpleAction<double, vtkDoubleArray>;
 
     class TwoVectorAction : public Action
     {
@@ -143,6 +111,48 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
 
       private:
         KGeoBag::KThreeVector* fData;
+        vtkSmartPointer<vtkDoubleArray> fArray;
+    };
+
+    class TwoMatrixAction : public Action
+    {
+      public:
+        TwoMatrixAction(KGeoBag::KTwoMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+            fData(aData),
+            fArray(anArray)
+        {}
+        ~TwoMatrixAction() override = default;
+
+        void Execute() override
+        {
+            fArray->InsertNextTuple4(fData->At(0), fData->At(1), fData->At(2), fData->At(3));
+            return;
+        }
+
+      private:
+        KGeoBag::KTwoMatrix* fData;
+        vtkSmartPointer<vtkDoubleArray> fArray;
+    };
+
+    class ThreeMatrixAction : public Action
+    {
+      public:
+        ThreeMatrixAction(KGeoBag::KThreeMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+            fData(aData),
+            fArray(anArray)
+        {}
+        ~ThreeMatrixAction() override = default;
+
+        void Execute() override
+        {
+            fArray->InsertNextTuple9(fData->At(0), fData->At(1), fData->At(2),
+                                     fData->At(3), fData->At(4), fData->At(5),
+                                     fData->At(6), fData->At(7), fData->At(8));
+            return;
+        }
+
+      private:
+        KGeoBag::KThreeMatrix* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 

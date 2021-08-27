@@ -26,25 +26,33 @@ template<class FloatT = double> class KMathKahanSum
     virtual ~KMathKahanSum() = default;
 
     KMathKahanSum& Add(FloatT summand);
-    KMathKahanSum& Subtract(FloatT summand)
+    inline KMathKahanSum& Subtract(FloatT summand)
     {
         return Add(-summand);
     }
-    FloatT Result() const
+    inline FloatT Result() const
     {
         return fSum;
     }
+    inline FloatT Sum() const
+    {
+        return fSum;
+    }
+    inline FloatT Compensation() const
+    {
+        return fCompensation;
+    }
 
-    KMathKahanSum& operator+=(FloatT summand)
+    inline KMathKahanSum& operator+=(FloatT summand)
     {
         return Add(summand);
     }
-    KMathKahanSum& operator-=(FloatT summand)
+    inline KMathKahanSum& operator-=(FloatT summand)
     {
         return Subtract(summand);
     }
     //    KMathKahanSum& operator() (FloatT summand) { return Add(summand); }
-    operator FloatT() const
+    inline operator FloatT() const
     {
         return Result();
     }

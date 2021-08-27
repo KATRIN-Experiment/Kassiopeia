@@ -42,6 +42,8 @@
 #define COLOR_FOREGROUND_RED    "31"
 #define COLOR_FOREGROUND_GREEN  "32"
 #define COLOR_FOREGROUND_YELLOW "33"
+#define COLOR_FOREGROUND_BLUE   "34"
+#define COLOR_FOREGROUND_PURPLE "35"
 #define COLOR_FOREGROUND_CYAN   "36"
 #define COLOR_FOREGROUND_WHITE  "37"
 #define COLOR_PREFIX            "\033["
@@ -107,9 +109,9 @@ namespace katrin
 class KLogger
 {
   public:
-    enum ELevel
+    enum ELevel : int
     {
-        eTrace,
+        eTrace = 0,
         eDebug,
         eInfo,
         eWarn,
@@ -120,9 +122,9 @@ class KLogger
 
   public:
     /**
-         * A simple struct used by the Logger macros to pass information about the filename and line number.
-         * Not to be used directly by the user!
-         */
+     * A simple struct used by the Logger macros to pass information about the filename and line number.
+     * Not to be used directly by the user!
+     */
     struct Location
     {
         Location(const char* const fileName = "", const char* const functionName = "", int lineNumber = -1) :
@@ -137,9 +139,9 @@ class KLogger
 
   public:
     /**
-         * Standard constructor assigning a name to the logger instance.
-         * @param name The logger name.
-         */
+     * Standard constructor assigning a name to the logger instance.
+     * @param name The logger name.
+     */
     KLogger(const char* name = nullptr);
     /// @overload
     KLogger(const std::string& name);
@@ -148,96 +150,96 @@ class KLogger
     virtual ~KLogger();
 
     /**
-         * Get a loggers name
-         * @return name identifiying the logger
-         */
+     * Get a loggers name
+     * @return name identifiying the logger
+     */
     const std::string& GetName() const;
 
     /**
-         * Check whether a certain log-level is enabled.
-         * @param level The log level as string representation.
-         * @return
-         */
+     * Check whether a certain log-level is enabled.
+     * @param level The log level as string representation.
+     * @return
+     */
     bool IsLevelEnabled(ELevel level) const;
 
     /**
-         * Get a loggers minimum logging level
-         * @return level enum item identifying the log level
-         */
+     * Get a loggers minimum logging level
+     * @return level enum item identifying the log level
+     */
     ELevel GetLevel() const;
 
     /**
-         * Set a loggers minimum logging level
-         * @param level enum item identifying the log level
-         */
+     * Set a loggers minimum logging level
+     * @param level enum item identifying the log level
+     */
     void SetLevel(ELevel level);
 
     /**
-         * Log a message with the specified level.
-         * Use the macro KLOG(logger, level, message).
-         * @param level The log level.
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message with the specified level.
+     * Use the macro KLOG(logger, level, message).
+     * @param level The log level.
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void Log(ELevel level, const std::string& message, const Location& loc = Location());
 
     /**
-         * Log a message at TRACE level.
-         * Use the macro KTRACE(logger, message).
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at TRACE level.
+     * Use the macro KTRACE(logger, message).
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogTrace(const std::string& message, const Location& loc = Location())
     {
         Log(eTrace, message, loc);
     }
     /**
-         * Log a message at DEBUG level.
-         * Use the macro KDEBUG(logger, message).
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at DEBUG level.
+     * Use the macro KDEBUG(logger, message).
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogDebug(const std::string& message, const Location& loc = Location())
     {
         Log(eDebug, message, loc);
     }
     /**
-         * Log a message at DEBUG level.
-         * Use the macro KDEBUG(logger, message).
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at DEBUG level.
+     * Use the macro KDEBUG(logger, message).
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogInfo(const std::string& message, const Location& loc = Location())
     {
         Log(eInfo, message, loc);
     }
     /**
-         * Log a message at INFO level.
-         * Use the macro KINFO(logger, message).
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at INFO level.
+     * Use the macro KINFO(logger, message).
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogWarn(const std::string& message, const Location& loc = Location())
     {
         Log(eWarn, message, loc);
     }
     /**
-         * Log a message at ERROR level.
-         * Use the macro KERROR(logger, message).
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at ERROR level.
+     * Use the macro KERROR(logger, message).
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogError(const std::string& message, const Location& loc = Location())
     {
         Log(eError, message, loc);
     }
     /**
-         * Log a message at FATAL level.
-         * Use the macro KFATAL(logger, message).
-         * @note This will throw a KException after the error message.
-         * @param message The message.
-         * @param loc Source code location (set automatically by the corresponding macro).
-         */
+     * Log a message at FATAL level.
+     * Use the macro KFATAL(logger, message).
+     * @note This will throw a KException after the error message.
+     * @param message The message.
+     * @param loc Source code location (set automatically by the corresponding macro).
+     */
     void LogFatal(const std::string& message, const Location& loc = Location())
     {
         Log(eFatal, message, loc);
@@ -273,6 +275,9 @@ class KLoggerTable : public KSingleton<KLoggerTable>
     void SetLevel(const KLogger::ELevel& level);
     void SetLevel(const KLogger::ELevel& level, const std::string& name);
 
+    void SetVerbosityLevel(int offset = 0);
+    KLogger::ELevel CorrectedLevel(KLogger::ELevel level) const;
+
   private:
     using LoggerMap = std::map<std::string, std::list<KLogger*>>;
     using LoggerEntry = LoggerMap::value_type;
@@ -280,6 +285,7 @@ class KLoggerTable : public KSingleton<KLoggerTable>
     using LoggerCIt = LoggerMap::const_iterator;
 
     LoggerMap fLoggerMap;
+    int fVerbosityLevel;
 };
 
 }  // namespace katrin

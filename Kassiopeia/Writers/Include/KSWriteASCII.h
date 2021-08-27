@@ -4,8 +4,10 @@
 #include "KFile.h"
 #include "KSWriter.h"
 #include "KTextFile.h"
-#include "KThreeVector.hh"
 #include "KTwoVector.hh"
+#include "KThreeVector.hh"
+#include "KTwoMatrix.hh"
+#include "KThreeMatrix.hh"
 
 #include <map>
 

@@ -1,7 +1,7 @@
 #ifndef KVMSpaceLineSegment_H
 #define KVMSpaceLineSegment_H
 
-#include "../../include/KThreeVector_KEMField.hh"
+#include "KThreeVector_KEMField.hh"
 
 #include <cmath>
 #include <string>

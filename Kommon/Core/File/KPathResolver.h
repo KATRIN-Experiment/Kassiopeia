@@ -32,8 +32,8 @@ class KPathResolver
     virtual ~KPathResolver();
 
     virtual std::string GetDirectory(KEDirectory directory) const;
+    virtual std::string ResolvePath(const std::string& filename, KEDirectory directory = KEDirectory::Undefined) const;
 
-    std::string ResolvePath(const std::string& filename, KEDirectory directory = KEDirectory::Undefined) const;
     std::vector<std::string> getAllFileNames(std::string directoryPath) const;
     std::vector<std::string> getAllFilesContaining(std::string NamePattern) const;
 };

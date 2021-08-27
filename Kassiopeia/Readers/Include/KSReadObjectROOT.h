@@ -23,6 +23,8 @@ class KSReadObjectROOT :
     public KSDoubleSet,
     public KSThreeVectorSet,
     public KSTwoVectorSet,
+    public KSThreeMatrixSet,
+    public KSTwoMatrixSet,
     public KSStringSet
 {
   public:

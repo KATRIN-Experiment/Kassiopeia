@@ -64,7 +64,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenSpinRelativeCompositeBuilder.h
     Generators/Include/KSGenTimeCompositeBuilder.h
     Generators/Include/KSGenGeneratorCompositeBuilder.h
-
+    Generators/Include/KSGenGeneratorTextFileBuilder.h
 
     # trajectories
     Trajectories/Include/KSTrajIntegratorRK54Builder.h
@@ -205,13 +205,14 @@ if( Kassiopeia_USE_ROOT )
         Visualization/Include/KSROOTMagFieldPainterBuilder.h
         Visualization/Include/KSROOTZonalHarmonicsPainterBuilder.h
     )
+
     if( Kassiopeia_USE_VTK )
         list( APPEND BINDINGS_HEADER_FILES
             Visualization/Include/KSVTKGeneratorPainterBuilder.h
             Visualization/Include/KSVTKTrackPainterBuilder.h
             Visualization/Include/KSVTKTrackTerminatorPainterBuilder.h
         )
-        endif( Kassiopeia_USE_VTK )
+    endif( Kassiopeia_USE_VTK )
 endif( Kassiopeia_USE_ROOT )
 
 if( Kassiopeia_USE_VTK )
@@ -287,6 +288,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx
     Generators/Source/KSGenTimeCompositeBuilder.cxx
     Generators/Source/KSGenGeneratorCompositeBuilder.cxx
+    Generators/Source/KSGenGeneratorTextFileBuilder.cxx
 
     # trajectories
     Trajectories/Source/KSTrajIntegratorRK54Builder.cxx
@@ -418,7 +420,7 @@ if( Kassiopeia_USE_ROOT )
         Generators/Source/KSGenValueHistogramBuilder.cxx
         Generators/Source/KSGenGeneratorSimulationBuilder.cxx
         Writers/Source/KSWriteROOTBuilder.cxx
-    	Writers/Source/KSWriteROOTConditionOutputBuilder.cxx
+        Writers/Source/KSWriteROOTConditionOutputBuilder.cxx
         Writers/Source/KSWriteROOTConditionPeriodicBuilder.cxx
         Writers/Source/KSWriteROOTConditionTerminatorBuilder.cxx
         Writers/Source/KSWriteROOTConditionStepBuilder.cxx
@@ -442,53 +444,38 @@ if( Kassiopeia_USE_VTK )
     )
 endif( Kassiopeia_USE_VTK )
 
-# libraries
-set( BINDINGS_LIBRARIES
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    ${KEMField_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
-    KassiopeiaFields
-    KassiopeiaGenerators
-    KassiopeiaGeometry
-    KassiopeiaTrajectories
-    KassiopeiaInteractions
-    KassiopeiaModifiers
-    KassiopeiaNavigators
-    KassiopeiaTerminators
-    KassiopeiaWriters
-    KassiopeiaVisualization
-    KassiopeiaSimulation
-)
-
-# internal
-kasper_internal_include_directories(
-    Objects/Include
-    Operators/Include
-    Fields/Include
-    Generators/Include
-    Geometry/Include
-    Trajectories/Include
-    Interactions/Include
-    Modifiers/Include
-    Navigators/Include
-    Terminators/Include
-    Writers/Include
-    Visualization/Include
-    Simulation/Include
-)
-
 # target
 add_library( KassiopeiaBindings SHARED
     ${BINDINGS_SOURCE_FILES} ${BINDINGS_HEADER_FILES}
 )
-set_target_properties( KassiopeiaBindings PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+
+add_library( KassiopeiaBindingsHeaders INTERFACE )
+
+# get header paths from collected header files
+foreach(HEADER ${BINDINGS_HEADER_FILES})
+    get_filename_component(DIRNAME ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER} DIRECTORY)
+    target_include_directories(KassiopeiaBindings PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
+    target_include_directories(KassiopeiaBindingsHeaders INTERFACE $<BUILD_INTERFACE:${DIRNAME}>)
+endforeach(HEADER)
+
+target_include_directories(KassiopeiaBindings PUBLIC $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaBindings
-    ${BINDINGS_LIBRARIES}
+    PUBLIC
+        Kommon
+        KEMFieldBindings
+        KassiopeiaFields
+        KassiopeiaGenerators
+        KassiopeiaGeometry
+        KassiopeiaTrajectories
+        KassiopeiaInteractions
+        KassiopeiaModifiers
+        KassiopeiaNavigators
+        KassiopeiaTerminators
+        KassiopeiaWriters
+        KassiopeiaVisualization
+        KassiopeiaSimulation
 )
 
 # install
 kasper_install_headers( ${BINDINGS_HEADER_FILES} )
-kasper_install_libraries( KassiopeiaBindings )
+kasper_install_libraries( KassiopeiaBindings KassiopeiaBindingsHeaders )

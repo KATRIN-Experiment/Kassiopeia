@@ -4,7 +4,9 @@
 #include "KGElectrostaticBoundaryField.hh"
 #include "KGStaticElectromagnetField.hh"
 #include "KSObject.h"
-#include "KSReadFileROOT.h"
+#include "KSFieldFinder.h"
+#include "KSElectricKEMField.h"
+#include "KSMagneticKEMField.h"
 #include "KSVisualizationMessage.h"
 #include "KToolbox.h"
 #include "KZonalHarmonicMagnetostaticFieldSolver.hh"
@@ -19,25 +21,6 @@ using namespace KGeoBag;
 using namespace katrin;
 using namespace std;
 
-namespace
-{
-
-void MirrorGraph(TGraph* g)
-{
-    // used to shade area between graphs, see: https://root.cern.ch/root/html/tutorials/graphics/graphShade.C.html
-    if (g->GetN() <= 0)
-        return;
-
-    int n = g->GetN();
-    double* x = g->GetX();
-    double* y = g->GetY();
-    for (int i = 0; i < n; i++) {
-        g->SetPoint(2 * n - i, x[i], -y[i]);
-    }
-}
-
-}  // namespace
-
 namespace Kassiopeia
 {
 KSROOTZonalHarmonicsPainter::KSROOTZonalHarmonicsPainter() :
@@ -49,17 +32,15 @@ KSROOTZonalHarmonicsPainter::KSROOTZonalHarmonicsPainter() :
     fRmax(5.0),
     fZdist(0.01),
     fRdist(0.001),
-    fZMaxSteps(5000),
-    fRMaxSteps(5000),
+    fZMaxSteps(1000),
+    fRMaxSteps(1000),
     fElectricFieldName(""),
     fMagneticFieldName(""),
     fFile(""),
     fPath(""),
     fDrawSourcePoints(true),
-    fDrawSourcePointArea(true)
-//fGeometryType ( "surface" ),
-//fRadialSafetyMargin( 0. ),
-//fZRPoints ()
+    fDrawExpansionArea(false),
+    fDrawConvergenceArea(true)
 {}
 KSROOTZonalHarmonicsPainter::~KSROOTZonalHarmonicsPainter() = default;
 
@@ -71,14 +52,6 @@ void KSROOTZonalHarmonicsPainter::Render()
         fZmax = std::numeric_limits<double>::min();
     }
 
-    fElZHConvergenceGraph = new TGraph();
-    fElZHCentralGraph = new TGraph();
-    fElZHRemoteGraph = new TGraph();
-
-    fMagZHConvergenceGraph = new TGraph();
-    fMagZHCentralGraph = new TGraph();
-    fMagZHRemoteGraph = new TGraph();
-
     fElZHPoints = new TPolyMarker();
     fMagZHPoints = new TPolyMarker();
 
@@ -87,7 +60,14 @@ void KSROOTZonalHarmonicsPainter::Render()
     KElectricZHFieldSolver* tElZHSolver = nullptr;
     if (!fElectricFieldName.empty()) {
         vismsg(eNormal) << "Getting electric field " << fElectricFieldName << " from the toolbox" << eom;
+
         auto* tElField = katrin::KToolbox::GetInstance().Get<KGElectrostaticBoundaryField>(fElectricFieldName);
+        if (! tElField) {
+            KSElectricField* tFieldWrapper = getElectricField(fElectricFieldName);
+            auto* tKEMFieldObject = dynamic_cast<KSElectricKEMField*>(tFieldWrapper);
+            tElField = dynamic_cast<KGElectrostaticBoundaryField*>(tKEMFieldObject->GetElectricField());
+        }
+
         if (tElField == nullptr)
             vismsg(eError) << "No electric Field!" << eom;
         vismsg(eNormal) << "Initialize electric field (again)" << eom;
@@ -120,7 +100,14 @@ void KSROOTZonalHarmonicsPainter::Render()
     KZonalHarmonicMagnetostaticFieldSolver* tMagZHSolver = nullptr;
     if (!fMagneticFieldName.empty()) {
         vismsg(eNormal) << "Getting magnetic field " << fMagneticFieldName << " from the toolbox" << eom;
+
         auto* tMagField = katrin::KToolbox::GetInstance().Get<KGStaticElectromagnetField>(fMagneticFieldName);
+        if (! tMagField) {
+            KSMagneticField* tFieldWrapper = getMagneticField(fMagneticFieldName);
+            auto* tKEMFieldObject = dynamic_cast<KSMagneticKEMField*>(tFieldWrapper);
+            tMagField = dynamic_cast<KGStaticElectromagnetField*>(tKEMFieldObject->GetMagneticField());
+        }
+
         if (tMagField == nullptr)
             vismsg(eError) << "No magnetic Field!" << eom;
         vismsg(eNormal) << "Initialize magnetic field (again)" << eom;
@@ -161,13 +148,25 @@ void KSROOTZonalHarmonicsPainter::Render()
 
     KThreeVector tPosition;
 
-    vismsg(eNormal) << "ZH painter: start calculating convergence boundary from " << fZmin << " to " << fZmax << " m"
-                    << eom;
-    for (double tZ = fZmin; tZ <= fZmax; tZ += fZdist) {
-        //vismsg( eInfo ) << "ZH painter: Z Position: " << tZ << eom;
-        double tR = 0;
+    unsigned tNPoints = floor((fZmax - fZmin) / fZdist);
+
+    fElZHConvergenceGraph = new TGraph(2*tNPoints);
+    fElZHCentralGraph = new TGraph(2*tNPoints);
+    fElZHRemoteGraph = new TGraph(2*tNPoints);
+
+    fMagZHConvergenceGraph = new TGraph(2*tNPoints);
+    fMagZHCentralGraph = new TGraph(2*tNPoints);
+    fMagZHRemoteGraph = new TGraph(2*tNPoints);
+
+    vismsg(eNormal) << "ZH painter: start calculating convergence boundary from " << fZmin << " to " << fZmax << " m ("
+                    << tNPoints << " steps) ..." << eom;
+
+    for (unsigned tPointIndex = 0; tPointIndex < tNPoints; tPointIndex++) {
+        unsigned tNegPointIndex = 2*tNPoints - tPointIndex - 1;
+        double tZ = fZmin + tPointIndex * fZdist;
 
         if (tElZHSolver != nullptr) {
+            double tR = 0;
             for (auto& sp : tElZHSolver->CentralSourcePoints()) {
                 double rho = sp.second;
                 double dz = fabs(tZ - sp.first);
@@ -179,32 +178,39 @@ void KSROOTZonalHarmonicsPainter::Render()
                     tR = h;
             }
 
-            if (tR >= 0) {
-                //vismsg(eDebug) << "  electric field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
-                fElZHConvergenceGraph->SetPoint(fElZHConvergenceGraph->GetN(), tZ, tR);
-            }
+            //vismsg(eDebug) << "  electric field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
+            fElZHConvergenceGraph->SetPoint(tPointIndex, tZ, tR);
+            fElZHConvergenceGraph->SetPoint(tNegPointIndex, tZ, -tR);
+
+            fElZHCentralGraph->SetPoint(tPointIndex, tZ, 0);
+            fElZHCentralGraph->SetPoint(tNegPointIndex, tZ, 0);
+            fElZHRemoteGraph->SetPoint(tPointIndex, tZ, 0);
+            fElZHRemoteGraph->SetPoint(tNegPointIndex, tZ, 0);
 
             // scan central convergence region
-            for (double tRho = 0; tRho <= tR; tRho += fRdist) {
+            for (double tRho = fRmin; tRho <= tR; tRho += fRdist) {
                 if (!tElZHSolver->UseCentralExpansion(KThreeVector(0, tRho, tZ))) {
                     vismsg(eDebug) << "  electric field central convergence limit at z=" << tZ << " is r=" << tRho
                                    << " m" << eom;
-                    fElZHCentralGraph->SetPoint(fElZHCentralGraph->GetN(), tZ, tRho - fRdist);
                     break;
                 }
+                fElZHCentralGraph->SetPoint(tPointIndex, tZ, tRho);
+                fElZHCentralGraph->SetPoint(tNegPointIndex, tZ, -tRho);
             }
             // scan remote convergence region
-            for (double tRho = tR; tRho >= 0; tRho -= fRdist) {
+            for (double tRho = fRmax; tRho >= tR; tRho -= fRdist) {
                 if (!tElZHSolver->UseRemoteExpansion(KThreeVector(0, tRho, tZ))) {
                     vismsg(eDebug) << "  electric field remote convergence limit at z=" << tZ << " is r=" << tRho
                                    << " m" << eom;
-                    fElZHRemoteGraph->SetPoint(fElZHRemoteGraph->GetN(), tZ, tRho + fRdist);
                     break;
                 }
+                fElZHRemoteGraph->SetPoint(tPointIndex, tZ, tRho);
+                fElZHRemoteGraph->SetPoint(tNegPointIndex, tZ, -tRho);
             }
         }
 
         if (tMagZHSolver != nullptr) {
+            double tR = 0;
             for (auto& sp : tMagZHSolver->CentralSourcePoints()) {
                 double rho = sp.second;
                 double dz = fabs(tZ - sp.first);
@@ -216,66 +222,60 @@ void KSROOTZonalHarmonicsPainter::Render()
                     tR = h;
             }
 
-            if (tR >= 0) {
-                //vismsg(eDebug) << "  magnetic field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
-                fMagZHConvergenceGraph->SetPoint(fMagZHConvergenceGraph->GetN(), tZ, tR);
-            }
+            //vismsg(eDebug) << "  magnetic field sourcepoint radius at z=" << tZ << " is r=" << tR << " m" << eom;
+            fMagZHConvergenceGraph->SetPoint(tPointIndex, tZ, tR);
+            fMagZHConvergenceGraph->SetPoint(tNegPointIndex, tZ, -tR);
+
+            fMagZHCentralGraph->SetPoint(tPointIndex, tZ, 0);
+            fMagZHCentralGraph->SetPoint(tNegPointIndex, tZ, 0);
+            fMagZHRemoteGraph->SetPoint(tPointIndex, tZ, 0);
+            fMagZHRemoteGraph->SetPoint(tNegPointIndex, tZ, 0);
 
             // scan central convergence region
-            for (double tRho = 0; tRho <= tR; tRho += fRdist) {
+            for (double tRho = fRmin; tRho <= tR; tRho += fRdist) {
                 if (!tMagZHSolver->UseCentralExpansion(KThreeVector(0, tRho, tZ))) {
                     vismsg(eDebug) << "  magnetic field central convergence limit at z=" << tZ << " is r=" << tRho
                                    << " m" << eom;
-                    fMagZHCentralGraph->SetPoint(fMagZHCentralGraph->GetN(), tZ, tRho - fRdist);
                     break;
                 }
+                fMagZHCentralGraph->SetPoint(tPointIndex, tZ, tRho);
+                fMagZHCentralGraph->SetPoint(tNegPointIndex, tZ, -tRho);
             }
             // scan central remote region
-            for (double tRho = tR; tRho >= 0; tRho -= fRdist) {
+            for (double tRho = fRmax; tRho >= tR; tRho -= fRdist) {
                 if (!tMagZHSolver->UseRemoteExpansion(KThreeVector(0, tRho, tZ))) {
                     vismsg(eDebug) << "  magnetic field remote convergence limit at z=" << tZ << " is r=" << tRho
                                    << " m" << eom;
-                    fMagZHRemoteGraph->SetPoint(fMagZHRemoteGraph->GetN(), tZ, tRho + fRdist);
                     break;
                 }
+                fMagZHRemoteGraph->SetPoint(tPointIndex, tZ, tRho);
+                fMagZHRemoteGraph->SetPoint(tNegPointIndex, tZ, -tRho);
             }
         }
     }
 
     if (tElZHSolver != nullptr) {
-        // add lower part of graphs (negative R) for filled draw, points in reverse order
-        MirrorGraph(fElZHConvergenceGraph);
-        MirrorGraph(fElZHCentralGraph);
-        MirrorGraph(fElZHRemoteGraph);
-
         fElZHConvergenceGraph->SetLineColor(kRed);
-        fElZHConvergenceGraph->SetLineStyle(kDotted);
 
         fElZHCentralGraph->SetLineColor(kRed);
-        fElZHCentralGraph->SetFillColorAlpha(kRed, 0.1);
-
+        fElZHCentralGraph->SetLineStyle(kDotted);
         fElZHRemoteGraph->SetLineColor(kRed);
+        fElZHRemoteGraph->SetLineStyle(kDashed);
 
-        fElZHPoints->SetMarkerColor(kRed);
-        fElZHPoints->SetMarkerStyle(kFullDotMedium);
+        fElZHPoints->SetMarkerColor(kBlack);
+        fElZHPoints->SetMarkerStyle(kFullDotSmall);
     }
 
     if (tMagZHSolver != nullptr) {
-        // add lower part of graph (negative R) for filled draw, points in reverse order
-        MirrorGraph(fMagZHConvergenceGraph);
-        MirrorGraph(fMagZHCentralGraph);
-        MirrorGraph(fMagZHRemoteGraph);
-
         fMagZHConvergenceGraph->SetLineColor(kBlue);
-        fMagZHConvergenceGraph->SetLineStyle(kDotted);
 
         fMagZHCentralGraph->SetLineColor(kBlue);
-        fMagZHCentralGraph->SetFillColorAlpha(kBlue, 0.1);
-
+        fMagZHCentralGraph->SetLineStyle(kDotted);
         fMagZHRemoteGraph->SetLineColor(kBlue);
+        fMagZHRemoteGraph->SetLineStyle(kDashed);
 
-        fMagZHPoints->SetMarkerColor(kBlue);
-        fMagZHPoints->SetMarkerStyle(kFullDotMedium);
+        fMagZHPoints->SetMarkerColor(kBlack);
+        fMagZHPoints->SetMarkerStyle(kFullDotSmall);
     }
 
     return;
@@ -286,30 +286,31 @@ void KSROOTZonalHarmonicsPainter::Display()
     if (fDisplayEnabled == true) {
         // draw order may be important, who knows what ROOT does anyway ...
 
-        auto tGraphsFilled = new TMultiGraph();
         auto tGraphs = new TMultiGraph();
 
-        if (fElZHCentralGraph->GetN() > 0)
-            tGraphsFilled->Add(fElZHCentralGraph);
-        if (fMagZHCentralGraph->GetN() > 0)
-            tGraphsFilled->Add(fMagZHCentralGraph);
+        // TODO: make this an option
+        if (fDrawExpansionArea) {
+            if (fElZHCentralGraph->GetN() > 0)
+                tGraphs->Add(fElZHCentralGraph);
+            if (fMagZHCentralGraph->GetN() > 0)
+                tGraphs->Add(fMagZHCentralGraph);
 
-        // FIXME: this is confusing
-        //if (fElZHRemoteGraph->GetN() > 0)
-        //    tGraphs->Add(fElZHRemoteGraph);
-        //if (fMagZHRemoteGraph->GetN() > 0)
-        //    tGraphs->Add(fMagZHRemoteGraph);
+            // FIXME: this is confusing
+            if (fElZHRemoteGraph->GetN() > 0)
+               tGraphs->Add(fElZHRemoteGraph);
+            if (fMagZHRemoteGraph->GetN() > 0)
+               tGraphs->Add(fMagZHRemoteGraph);
+        }
 
         // TODO: make this an option
-        if (fDrawSourcePointArea) {
+        if (fDrawConvergenceArea) {
             if (fElZHConvergenceGraph->GetN() > 0)
                 tGraphs->Add(fElZHConvergenceGraph);
             if (fMagZHConvergenceGraph->GetN() > 0)
                 tGraphs->Add(fMagZHConvergenceGraph);
         }
 
-        tGraphsFilled->Draw("fl");
-        tGraphs->Draw("l");
+        tGraphs->Draw("L");
 
         // TODO: make this an option
         if (fDrawSourcePoints) {

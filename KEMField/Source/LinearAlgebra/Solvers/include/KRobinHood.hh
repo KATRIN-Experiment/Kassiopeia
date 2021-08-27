@@ -76,13 +76,20 @@ void KRobinHood<ValueType, ParallelTrait>::Solve(const Matrix& A, Vector& x, con
     while (this->fResidualNorm > this->fTolerance && !(this->Terminate())) {
         subIteration++;
         trait.FindResidual();
-        if (subIteration == fResidualCheckInterval) {
-            subIteration = 0;
-            this->fIteration++;
-            trait.FindResidualNorm(this->fResidualNorm);
 
+        if (subIteration % fResidualCheckInterval == 0) {
+            subIteration = 0;
+            double residualNorm;
+            trait.FindResidualNorm(residualNorm);
+            if (residualNorm > 1e100)
+                kem_cout(eError) << "Iterative solve failed to converge, current |Residual|: " << residualNorm << eom;
+            else if (this->fIteration > 0 && residualNorm > this->fResidualNorm*2.)
+                kem_cout(eWarning) << "Convergence problem, |Residual| increased by " << (100*residualNorm/this->fResidualNorm) << "%" << eom;
+            this->fResidualNorm = residualNorm;
+            this->fIteration++;
             this->AcceptVisitors();
         }
+
         trait.IdentifyLargestResidualElement();
         trait.ComputeCorrection();
         trait.UpdateSolutionApproximation();

@@ -1,0 +1,44 @@
+include(CMakeFindDependencyMacro)
+
+set(KEMField_USE_VTK @KEMField_USE_VTK@)
+if(KEMField_USE_VTK)
+    find_dependency( VTK NO_MODULE )
+endif(KEMField_USE_VTK)
+
+set(KEMField_USE_ROOT @KEMField_USE_ROOT@)
+if(KEMField_USE_ROOT)
+    find_dependency( ROOT CONFIG )
+endif(KEMField_USE_ROOT)
+
+set(KEMField_USE_GSL @KEMField_USE_GSL@)
+if(KEMField_USE_GSL)
+    find_dependency( GSL )
+endif(KEMField_USE_GSL)
+
+# set(KEMField_USE_FFTW @KEMField_USE_FFTW@)
+# if(KEMField_USE_FFTW)
+#     find_dependency( FFTW )
+# endif(KEMField_USE_FFTW)
+
+set(KEMField_USE_PETSc @KEMField_USE_PETSc@)
+if(KEMField_USE_PETSc)
+    find_dependency( PETSc )
+endif(KEMField_USE_PETSc)
+
+set(KEMField_USE_OPENCL @KEMField_USE_OPENCL@)
+if(KEMField_USE_OPENCL)
+    find_dependency( OpenCL )
+endif(KEMField_USE_OPENCL)
+
+set(KEMField_USE_MPI @KEMField_USE_MPI@)
+if(KEMField_USE_MPI)
+    find_dependency(MPI)
+endif(KEMField_USE_MPI)
+
+# Kasper dependencies
+find_dependency( Kommon )
+find_dependency( KGeoBag )
+
+if(NOT TARGET @PROJECT_NAME@::@PROJECT_NAME@)
+    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+endif()

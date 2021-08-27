@@ -6,8 +6,8 @@
 #ifndef KSURFACEACTION_DEF
 #define KSURFACEACTION_DEF
 
-#include "../../../Surfaces/include/KSurfaceID.hh"
-#include "../../../Surfaces/include/KSurfaceTypes.hh"
+#include "KSurfaceID.hh"
+#include "KSurfaceTypes.hh"
 #include "KFundamentalTypeCounter.hh"
 #include "KTypeManipulation.hh"
 

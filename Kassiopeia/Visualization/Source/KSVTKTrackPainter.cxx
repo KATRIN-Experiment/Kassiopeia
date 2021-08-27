@@ -64,6 +64,11 @@ void KSVTKTrackPainter::Render()
     KSReadTrackROOT& tTrack = tReader.GetTrack();
     KSReadStepROOT& tStep = tReader.GetStep();
 
+    if (! (tStep.HasObject(fPointObject) && tStep.HasObject(fColorObject))) {
+        vismsg(eWarning) << "Object <" << fPointObject << "> and <" << fColorObject << "> does not exist in file <" << tRootFile->GetName() << ">" << eom;
+        return;
+    }
+
     KSReadObjectROOT& tPointObject = tStep.GetObject(fPointObject);
     const KSThreeVector& tPointVariable = tPointObject.Get<KSThreeVector>(fPointVariable);
 

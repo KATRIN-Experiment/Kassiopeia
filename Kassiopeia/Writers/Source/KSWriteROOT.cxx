@@ -11,7 +11,10 @@ using katrin::KPathUtils;
 #include "TObjString.h"
 
 using namespace std;
-using namespace KGeoBag;
+using KGeoBag::KTwoVector;
+using KGeoBag::KThreeVector;
+using KGeoBag::KTwoMatrix;
+using KGeoBag::KThreeMatrix;
 
 namespace Kassiopeia
 {
@@ -100,7 +103,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
         auto* tComponentGroup = aComponent->As<KSComponentGroup>();
     if (tComponentGroup != nullptr) {
         wtrmsg_debug("  object <" << aComponent->GetName() << "> is a group"
-                                  << eom) for (unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount();
+                                  << eom);
+    for (unsigned int tIndex = 0; tIndex < tComponentGroup->ComponentCount();
                                                tIndex++)
         {
             MakeBranches(tComponentGroup->ComponentAt(tIndex));
@@ -110,7 +114,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tString = aComponent->As<string>();
     if (tString != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a string" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a string" << eom);
+        fLabel = aComponent->GetName();
         fType = string("string");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tString, fBufferSize, fSplitLevel);
@@ -120,8 +125,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tTwoVector = aComponent->As<KTwoVector>();
     if (tTwoVector != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a two_vector" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a two_vector" << eom);
+        fLabel = aComponent->GetName();
         fType = string("two_vector");
         fStructure->Fill();
         fData->Branch((aComponent->GetName() + string("_x")).c_str(), &(tTwoVector->X()), fBufferSize, fSplitLevel);
@@ -131,8 +136,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tThreeVector = aComponent->As<KThreeVector>();
     if (tThreeVector != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a three_vector" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a three_vector" << eom);
+        fLabel = aComponent->GetName();
         fType = string("three_vector");
         fStructure->Fill();
         fData->Branch((aComponent->GetName() + string("_x")).c_str(), &(tThreeVector->X()), fBufferSize, fSplitLevel);
@@ -142,9 +147,42 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
         return;
     }
 
+    auto* tTwoMatrix = aComponent->As<KTwoMatrix>();
+    if (tTwoMatrix != nullptr) {
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a two_matrix" << eom);
+        fLabel = aComponent->GetName();
+        fType = string("two_matrix");
+        fStructure->Fill();
+        fData->Branch((aComponent->GetName() + string("_xx")).c_str(), &(tTwoMatrix->At(0,0)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_xy")).c_str(), &(tTwoMatrix->At(0,1)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_yx")).c_str(), &(tTwoMatrix->At(1,0)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_yy")).c_str(), &(tTwoMatrix->At(1,1)), fBufferSize, fSplitLevel);
+        fComponents.push_back(aComponent);
+        return;
+    }
+    auto* tThreeMatrix = aComponent->As<KThreeMatrix>();
+    if (tThreeMatrix != nullptr) {
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a three_matrix" << eom);
+        fLabel = aComponent->GetName();
+        fType = string("three_matrix");
+        fStructure->Fill();
+        fData->Branch((aComponent->GetName() + string("_xx")).c_str(), &(tThreeMatrix->At(0,0)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_xy")).c_str(), &(tThreeMatrix->At(0,1)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_xz")).c_str(), &(tThreeMatrix->At(0,2)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_yx")).c_str(), &(tThreeMatrix->At(1,0)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_yy")).c_str(), &(tThreeMatrix->At(1,1)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_yz")).c_str(), &(tThreeMatrix->At(1,2)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_zx")).c_str(), &(tThreeMatrix->At(2,0)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_zy")).c_str(), &(tThreeMatrix->At(2,1)), fBufferSize, fSplitLevel);
+        fData->Branch((aComponent->GetName() + string("_zz")).c_str(), &(tThreeMatrix->At(2,2)), fBufferSize, fSplitLevel);
+        fComponents.push_back(aComponent);
+        return;
+    }
+
     auto* tBool = aComponent->As<bool>();
     if (tBool != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a bool" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a bool" << eom);
+        fLabel = aComponent->GetName();
         fType = string("bool");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tBool, fBufferSize, fSplitLevel);
@@ -154,8 +192,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tUChar = aComponent->As<unsigned char>();
     if (tUChar != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_char" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_char" << eom);
+        fLabel = aComponent->GetName();
         fType = string("unsigned_char");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tUChar, fBufferSize, fSplitLevel);
@@ -164,7 +202,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tChar = aComponent->As<char>();
     if (tChar != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a char" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a char" << eom);
+        fLabel = aComponent->GetName();
         fType = string("char");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tChar, fBufferSize, fSplitLevel);
@@ -174,8 +213,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tUShort = aComponent->As<unsigned short>();
     if (tUShort != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_short" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_short" << eom);
+        fLabel = aComponent->GetName();
         fType = string("unsigned_short");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tUShort, fBufferSize, fSplitLevel);
@@ -184,7 +223,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tShort = aComponent->As<short>();
     if (tShort != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a short" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a short" << eom);
+        fLabel = aComponent->GetName();
         fType = string("short");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tShort, fBufferSize, fSplitLevel);
@@ -194,8 +234,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tUInt = aComponent->As<unsigned int>();
     if (tUInt != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a unsigned_int" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a unsigned_int" << eom);
+        fLabel = aComponent->GetName();
         fType = string("unsigned_int");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tUInt, fBufferSize, fSplitLevel);
@@ -204,7 +244,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tInt = aComponent->As<int>();
     if (tInt != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an int" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an int" << eom);
+        fLabel = aComponent->GetName();
         fType = string("int");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tInt, fBufferSize, fSplitLevel);
@@ -214,8 +255,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tULong = aComponent->As<unsigned long>();
     if (tULong != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_long" << eom) fLabel =
-            aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is an unsigned_long" << eom);
+        fLabel = aComponent->GetName();
         fType = string("unsigned_long");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tULong, fBufferSize, fSplitLevel);
@@ -224,7 +265,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tLong = aComponent->As<long>();
     if (tLong != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long" << eom);
+        fLabel = aComponent->GetName();
         fType = string("long");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tLong, fBufferSize, fSplitLevel);
@@ -233,8 +275,9 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tLongLong = aComponent->As<long long>();
     if (tLongLong != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long long" << eom) fLabel = aComponent->GetName();
-        fType = string("long long");
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a long_long" << eom);
+        fLabel = aComponent->GetName();
+        fType = string("long_long");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tLongLong, fBufferSize, fSplitLevel);
         fComponents.push_back(aComponent);
@@ -243,7 +286,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
 
     auto* tFloat = aComponent->As<float>();
     if (tFloat != nullptr) {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a float" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a float" << eom);
+        fLabel = aComponent->GetName();
         fType = string("float");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tFloat, fBufferSize, fSplitLevel);
@@ -252,7 +296,8 @@ void KSWriteROOT::Data::MakeBranches(KSComponent* aComponent)
     }
     auto* tDouble = aComponent->As<double>();
     {
-        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a double" << eom) fLabel = aComponent->GetName();
+        wtrmsg_debug("  object <" << aComponent->GetName() << "> is a double" << eom);
+        fLabel = aComponent->GetName();
         fType = string("double");
         fStructure->Fill();
         fData->Branch(aComponent->GetName().c_str(), tDouble, fBufferSize, fSplitLevel);

@@ -15,25 +15,17 @@ set( DEFORMATION_SOURCE_FILES
     Source/KGMeshDeformer.cc
 )
 
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-)
-
 # target
 add_library( KGeoBagDeformation SHARED
-	${DEFORMATION_SOURCE_FILES} ${DEFORMATION_HEADER_FILES}
-)
+    ${DEFORMATION_SOURCE_FILES} ${DEFORMATION_HEADER_FILES})
+target_include_directories( KGeoBagDeformation
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagDeformation
-    KGeoBagMath
-    KGeoBagCore
-    KGeoBagShapes
-    KGeoBagMesh
-    ${Kommon_LIBRARIES}
+    PUBLIC
+        KGeoBagShapes
+        KGeoBagMesh
 )
 
 # install
 kasper_install_headers( ${DEFORMATION_HEADER_FILES} )
 kasper_install_libraries( KGeoBagDeformation )
-
-

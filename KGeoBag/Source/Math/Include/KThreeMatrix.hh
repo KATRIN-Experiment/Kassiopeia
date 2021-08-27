@@ -66,6 +66,15 @@ class KThreeMatrix
     double& operator()(int aRow, int aColumn);
     const double& operator()(int aRow, int aColumn) const;
 
+    double& At(int anIndex);
+    const double& At(int anIndex) const;
+
+    double& At(int aRow, int aColumn);
+    const double& At(int aRow, int aColumn) const;
+
+    const double* Components() const;
+    const std::array<double,9> AsArray() const;
+
     //properties
 
     bool IsValid() const;
@@ -256,20 +265,56 @@ inline KThreeMatrix::operator const double*() const
 
 inline double& KThreeMatrix::operator[](int anIndex)
 {
+    assert(anIndex >= 0 && anIndex < 9);
     return fData[anIndex];
 }
 inline const double& KThreeMatrix::operator[](int anIndex) const
 {
+    assert(anIndex >= 0 && anIndex < 9);
     return fData[anIndex];
 }
 
 inline double& KThreeMatrix::operator()(int aRow, int aColumn)
 {
+    assert(aRow >= 0 && aRow < 3 && aColumn >= 0 && aColumn < 3);
     return fData[3 * aRow + aColumn];
 }
 inline const double& KThreeMatrix::operator()(int aRow, int aColumn) const
 {
+    assert(aRow >= 0 && aRow < 3 && aColumn >= 0 && aColumn < 3);
     return fData[3 * aRow + aColumn];
+}
+
+inline double&  KThreeMatrix::At(int anIndex)
+{
+    assert(anIndex >= 0 && anIndex < 9);
+    return fData[anIndex];
+}
+inline const double&  KThreeMatrix::At(int anIndex) const
+{
+    assert(anIndex >= 0 && anIndex < 9);
+    return fData[anIndex];
+}
+inline double&  KThreeMatrix::At(int aRow, int aColumn)
+{
+    assert(aRow >= 0 && aRow < 3 && aColumn >= 0 && aColumn < 3);
+    return fData[3 * aRow + aColumn];
+}
+inline const double&  KThreeMatrix::At(int aRow, int aColumn) const
+{
+    assert(aRow >= 0 && aRow < 3 && aColumn >= 0 && aColumn < 3);
+    return fData[3 * aRow + aColumn];
+}
+
+inline const double* KThreeMatrix::Components() const
+{
+    return (const double*) fData;
+}
+inline const std::array<double,9> KThreeMatrix::AsArray() const
+{
+    std::array<double,9> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
+    return tData;
 }
 
 inline bool KThreeMatrix::IsValid() const

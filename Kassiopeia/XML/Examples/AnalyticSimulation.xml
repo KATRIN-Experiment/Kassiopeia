@@ -13,7 +13,7 @@
     <message key="kg_axial_mesh" terminal="normal" log="warning"/>
 
     <message key="ks_object" terminal="normal" log="normal"/>
-    <message key="ks_operator" terminal="" log="normal"/>
+    <message key="ks_operator" terminal="normal" log="normal"/>
     <message key="ks_field" terminal="normal" log="normal"/>
     <message key="ks_geometry" terminal="normal" log="normal"/>
     <message key="ks_generator" terminal="normal" log="normal"/>
@@ -63,24 +63,28 @@
 
 </geometry>
 
-<kassiopeia>
+<kemfield>
 
     <!-- magnetic fields -->
 
-    <ksfield_magnetic_constant
+    <constant_magnetic_field
             name="field_magnetic_constant"
             field="0. 0. 5."
     />
 
     <!-- electric fields -->
 
-    <ksfield_electric_quadrupole
+    <electric_quadrupole_field
             name="field_electric_quadrupole"
             location="0. 0. 0."
             strength="-10000."
             length="1.e-2"
             radius="1.e-2"
     />
+
+</kemfield>
+
+<kassiopeia>
 
     <!-- generators -->
 
@@ -124,7 +128,7 @@
 
     <!-- space navigators -->
 
-    <ksnav_space name="nav_space" enter_split="false" exit_split="false" tolerance="1.e-6"/>
+    <ksnav_space name="nav_space" enter_split="true" exit_split="true" tolerance="1.e-6"/>
 
     <!-- surface interactions -->
 
@@ -134,11 +138,11 @@
 
     <!-- surface navigators -->
 
-    <ksnav_surface name="nav_surface" transmission_split="false" reflection_split="false"/>
+    <ksnav_surface name="nav_surface" transmission_split="true" reflection_split="true"/>
 
     <!-- terminators -->
 
-    <ksterm_max_steps name="term_max_steps" steps="10000000"/>
+    <ksterm_max_steps name="term_max_steps" steps="1000"/>
     <ksterm_min_energy name="term_min_energy" energy="1."/>
     <ksterm_secondaries name="term_secondaries"/>
 
@@ -201,7 +205,7 @@
     <!-- structure -->
 
     <ksgeo_space name="space_world" spaces="world">
-        <command parent="root_terminator" field="add_terminator" child="term_secondaries"/>
+        <!--command parent="root_terminator" field="add_terminator" child="term_secondaries"/-->
         <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
         <command parent="root_terminator" field="add_terminator" child="term_min_energy"/>
         <command parent="write_root" field="add_track_output" child="component_track_world"/>

@@ -9,24 +9,21 @@
 
 #include "KException.h"
 
-#ifdef KLOGGER_THROW_EXCEPTIONS
-#pragma message "KLogger will throw exceptions on error"
-#include "KException.h"
-#endif
-
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
+#include <cstdlib>
 
 using namespace std;
 using namespace katrin;
 
 static const char* skEndColor = COLOR_PREFIX COLOR_NORMAL COLOR_SUFFIX;
-static const char* skFatalColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED COLOR_SUFFIX;
+static const char* skFatalColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_PURPLE COLOR_SUFFIX;
 static const char* skErrorColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_RED COLOR_SUFFIX;
 static const char* skWarnColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_YELLOW COLOR_SUFFIX;
 static const char* skInfoColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_GREEN COLOR_SUFFIX;
 static const char* skDebugColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_CYAN COLOR_SUFFIX;
+static const char* skTraceColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_BLUE COLOR_SUFFIX;
 static const char* skOtherColor = COLOR_PREFIX COLOR_BRIGHT COLOR_SEPARATOR COLOR_FOREGROUND_WHITE COLOR_SUFFIX;
 
 namespace
@@ -44,8 +41,9 @@ inline const char* level2Color(KLogger::ELevel level)
         case KLogger::eInfo:
             return skInfoColor;
         case KLogger::eDebug:
-        case KLogger::eTrace:
             return skDebugColor;
+        case KLogger::eTrace:
+            return skTraceColor;
         default:
             return skOtherColor;
     }
@@ -236,7 +234,8 @@ const string& KLogger::GetName() const
 
 bool KLogger::IsLevelEnabled(ELevel level) const
 {
-    return fPrivate->fLogger->isEnabledFor(level2Ptr(level));
+    ELevel displayedLevel = KLoggerTable::GetInstance().CorrectedLevel(level);
+    return fPrivate->fLogger->isEnabledFor(level2Ptr(displayedLevel)) || level >= eFatal;
 }
 
 KLogger::ELevel KLogger::GetLevel() const
@@ -253,10 +252,12 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
 {
     fPrivate->log(level2Ptr(level), message, loc);
 
-    if (level == ELevel::eFatal)
+    if (level >= eFatal) {
         throw KException() << "fatal error in " << loc.fFunctionName;
+        exit(EXIT_FAILURE);
+    }
 #ifdef KLOGGER_THROW_EXCEPTIONS
-    if (level >= ELevel::eError)
+    else if (level >= ELevel::eError)
         throw KException() << "error in " << loc.fFunctionName;
 #endif
 }
@@ -392,7 +393,8 @@ const string& KLogger::GetName() const
 
 bool KLogger::IsLevelEnabled(ELevel level) const
 {
-    return fPrivate->fLogLevel <= level;
+    ELevel displayedLevel = KLoggerTable::GetInstance().CorrectedLevel(level);
+    return fPrivate->fLogLevel <= displayedLevel || level >= eFatal;
 }
 
 KLogger::ELevel KLogger::GetLevel() const
@@ -419,16 +421,18 @@ void KLogger::Log(ELevel level, const string& message, const Location& loc)
     fPrivate->logCerr(levelStr, message, loc, color);
 #endif
 
-    if (level == ELevel::eFatal)
+    if (level >= eFatal) {
         throw KException() << "fatal error in " << loc.fFunctionName;
+        exit(EXIT_FAILURE);
+    }
 #ifdef KLOGGER_THROW_EXCEPTIONS
-    if (level >= eError)
+    else if (level >= eError)
         throw KException() << "error in " << loc.fFunctionName;
 #endif
 }
 #endif  // LOG4CXX
 
-KLoggerTable::KLoggerTable() : fLoggerMap() {}
+KLoggerTable::KLoggerTable() : fLoggerMap(), fVerbosityLevel(0) {}
 
 KLoggerTable::~KLoggerTable() = default;
 
@@ -473,4 +477,20 @@ void KLoggerTable::SetLevel(const KLogger::ELevel& level, const string& name)
         for (auto& logger : mapIt->second)
             logger->SetLevel(level);
     }
+}
+
+void KLoggerTable::SetVerbosityLevel(int level)
+{
+    fVerbosityLevel = level;
+}
+
+KLogger::ELevel KLoggerTable::CorrectedLevel(KLogger::ELevel level) const
+{
+    // larger value means higher message severity
+    auto result = static_cast<KLogger::ELevel>(level + fVerbosityLevel);
+    if (result <= KLogger::eTrace)
+        return KLogger::eTrace;
+    else if (result >= KLogger::eFatal)
+        return KLogger::eFatal;
+    return result;
 }

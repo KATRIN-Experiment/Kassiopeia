@@ -29,7 +29,7 @@ class KSElectricKEMField : public KSElectricField
     ~KSElectricKEMField() override;
 
     void SetElectricField(KEMField::KElectricField* field);
-    const KEMField::KElectricField* GetElectricField();
+    KEMField::KElectricField* GetElectricField();
 
     void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
                             double& aPotential) override;

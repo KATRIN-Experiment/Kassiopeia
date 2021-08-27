@@ -1,4 +1,4 @@
-#include "../../../Surfaces/include/KLineSegment.hh"
+#include "KLineSegment.hh"
 
 #include <cmath>
 

@@ -11,6 +11,7 @@ namespace katrin
 template<> KSGenValueAngleCosineBuilder::~KComplexElement() = default;
 
 STATICINT sKSGenValueAngleCosineStructure = KSGenValueAngleCosineBuilder::Attribute<std::string>("name") +
+                                            KSGenValueAngleCosineBuilder::Attribute<std::string>("mode") +
                                             KSGenValueAngleCosineBuilder::Attribute<double>("angle_min") +
                                             KSGenValueAngleCosineBuilder::Attribute<double>("angle_max");
 

@@ -14,6 +14,9 @@ STATICINT sKGROOTGeometryPainterStructure = KGROOTGeometryPainterBuilder::Attrib
                                             KGROOTGeometryPainterBuilder::Attribute<std::string>("path") +
                                             KGROOTGeometryPainterBuilder::Attribute<std::string>("surfaces") +
                                             KGROOTGeometryPainterBuilder::Attribute<std::string>("spaces") +
+                                            KGROOTGeometryPainterBuilder::Attribute<bool>("show_labels") +
+                                            KGROOTGeometryPainterBuilder::Attribute<bool>("save_json") +
+                                            KGROOTGeometryPainterBuilder::Attribute<bool>("save_svg") +
                                             KGROOTGeometryPainterBuilder::Attribute<KThreeVector>("plane_normal") +
                                             KGROOTGeometryPainterBuilder::Attribute<KThreeVector>("plane_point") +
                                             KGROOTGeometryPainterBuilder::Attribute<bool>("swap_axis") +

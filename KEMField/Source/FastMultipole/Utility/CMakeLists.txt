@@ -1,8 +1,6 @@
 # CMakeLists for FastMultipole/Utility
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (KFM_UTIL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFastMultipoleMatrixGenerator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTypes.hh
@@ -21,39 +19,27 @@ set (KFM_UTIL_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticFastMultipoleBoundaryValueSolverConfiguration.cc
 )
 
-set (KFM_UTIL_LIBS
-        KFMCore
-        KFMMath
-        KFMMathUtilities
-        KVectorMath
-        KFMKernel
-        KFMTree
-        KFMElectrostatics
-        KFMInterfaceExtraction
-        KFMInterfaceFieldSolvers
-        KEMCore
-        KEMFieldExceptions
-        KEMFileManipulation
-        KEMHashGenerator
+add_library (KFMUtility SHARED
+    ${KFM_UTIL_SOURCEFILES} ${KFM_UTIL_HEADERFILES})
+target_include_directories(KFMUtility
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+
+target_link_libraries (KFMUtility
+    PUBLIC
+        KEMLinearAlgebraPreconditioner
         KEMLinearAlgebraSolvers
-        KEMStructuredASCII
-        KEMMath
-        KEMSurfaces
-        KEMIO
+        KFMCore
+        KFMInterfaceBoundaryIntegral
+        KFMElectrostatics
 )
 
-if(${PROJECT_NAME}_USE_OPENCL)
-  list (APPEND KFM_UTIL_LIBS KEMOpenCLPlugin ${OPENCL_LIBRARIES})
-  add_cflag (KEMFIELD_USE_OPENCL)
-endif(${PROJECT_NAME}_USE_OPENCL)
+if(KEMField_USE_OPENCL)
+    target_link_libraries(KFMUtility PUBLIC KEMOpenCLPlugin)
+endif(KEMField_USE_OPENCL)
 
-if (${PROJECT_NAME}_USE_VTK)
-    list (APPEND KFM_UTIL_LIBS KEMVTKPlugin)
-    add_cflag (KEMFIELD_USE_VTK)
-endif (${PROJECT_NAME}_USE_VTK)
-
-add_library (KFMUtility SHARED ${KFM_UTIL_SOURCEFILES} ${KFM_UTIL_HEADERFILES})
-target_link_libraries (KFMUtility ${Kommon_LIBRARIES} ${KGeoBag_LIBRARIES} ${KFM_UTIL_LIBS})
+if(KEMField_USE_VTK)
+    target_link_libraries(KFMUtility PUBLIC KEMVTKPlugin)
+endif(KEMField_USE_VTK)
 
 kasper_install_headers (${KFM_UTIL_HEADERFILES})
 kasper_install_libraries (KFMUtility)

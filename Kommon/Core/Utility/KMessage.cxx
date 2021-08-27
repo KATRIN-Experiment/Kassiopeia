@@ -148,7 +148,9 @@ void KMessage::EndLine(const KMessageLineEnd& aLineEnd)
 
 void KMessage::Flush()
 {
-    if ((fSeverity <= fTerminalVerbosity) && (fTerminalStream != nullptr) && (fTerminalStream->good() == true)) {
+    KMessageSeverity displayedSeverity = KMessageTable::GetInstance().CorrectedLevel(fSeverity);
+
+    if ((displayedSeverity <= fTerminalVerbosity) && (fTerminalStream != nullptr) && (fTerminalStream->good() == true)) {
         for (auto& It : fMessageLines) {
             (*fTerminalStream) << Prefix() << (It == fMessageLines.front() ? "" : TabIndent) << It.first << Suffix()
                                << It.second;
@@ -301,6 +303,7 @@ std::ostream* KMessage::GetLogStream()
     return fLogStream;
 }
 
+
 }  // namespace katrin
 
 namespace katrin
@@ -313,7 +316,8 @@ KMessageTable::KMessageTable() :
     fTerminalVerbosity(eNormal),
     fTerminalStream(&cerr),
     fLogVerbosity(eInfo),
-    fLogStream(nullptr)
+    fLogStream(nullptr),
+    fVerbosityLevel(0)
 {}
 
 KMessageTable::~KMessageTable() = default;
@@ -459,6 +463,21 @@ void KMessageTable::SetLogStream(ostream* aLogStream)
 ostream* KMessageTable::GetLogStream()
 {
     return fLogStream;
+}
+
+void KMessageTable::SetVerbosityLevel(int level)
+{
+    fVerbosityLevel = level;
+}
+KMessageSeverity KMessageTable::CorrectedLevel(const KMessageSeverity& level) const
+{
+    // smaller value means higher message severity
+    auto result = static_cast<KMessageSeverity>(level - fVerbosityLevel);
+    if (result <= KMessageSeverity::eErrorMessage)
+        return KMessageSeverity::eErrorMessage;
+    else if (result >= KMessageSeverity::eDebugMessage)
+        return KMessageSeverity::eDebugMessage;
+    return result;
 }
 
 }  // namespace katrin

@@ -14,6 +14,8 @@ KGMeshAttributor::~KGMeshAttributor()
 {
     KGMesher tMesher;
 
+    coremsg(eNormal) << "Generating mesh for <" << fSurfaces.size() << "> surfaces and <" << fSpaces.size() << "> spaces ..." << eom;
+
     KGMeshSurface* tMeshSurface;
     for (auto& surface : fSurfaces) {
         tMeshSurface = surface->MakeExtension<KGMesh>();

@@ -18,8 +18,14 @@ class KSGenValueAngleCosine : public KSComponentTemplate<KSGenValueAngleCosine, 
     void DiceValue(std::vector<double>& aDicedValues) override;
 
   public:
+    enum EDistributionMode {
+        Classic,
+        MolecularFlow
+    };
+
     K_SET_GET(double, AngleMin)
     K_SET_GET(double, AngleMax)
+    K_SET_GET(EDistributionMode, Mode)
 };
 
 }  // namespace Kassiopeia

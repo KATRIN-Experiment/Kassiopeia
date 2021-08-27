@@ -30,7 +30,7 @@ template<> inline bool KSRootBuilder::AddElement(KContainer* aContainer)
 
     /// NOTE: deprecated legacy support for old field bindings in the <kassiopeia> tag
     if (aContainer->Is<KEMField::KElectricField>()) {
-        mainmsg(eWarning) << "legacy binding for electric field <" << aContainer->GetName()
+        mainmsg(eInfo) << "legacy binding for electric field <" << aContainer->GetName()
                           << "> is DEPRECATED - please move objects to <kemfield> tag" << eom;
 
         auto* tField = new KSElectricKEMField();
@@ -40,7 +40,7 @@ template<> inline bool KSRootBuilder::AddElement(KContainer* aContainer)
         return true;
     }
     if (aContainer->Is<KEMField::KMagneticField>()) {
-        mainmsg(eWarning) << "legacy binding for magnetic field <" << aContainer->GetName()
+        mainmsg(eInfo) << "legacy binding for magnetic field <" << aContainer->GetName()
                           << "> is DEPRECATED - please move objects to <kemfield> tag" << eom;
 
         auto* tField = new KSMagneticKEMField();

@@ -35,7 +35,7 @@ void KSElectricKEMField::SetElectricField(KEMField::KElectricField* field)
     fField = field;
 }
 
-const KEMField::KElectricField* KSElectricKEMField::GetElectricField()
+KEMField::KElectricField* KSElectricKEMField::GetElectricField()
 {
     return fField;
 }

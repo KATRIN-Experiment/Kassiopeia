@@ -3,7 +3,7 @@
 
 #include "KComplexElement.hh"
 #include "KGROOTGeometryPainter.hh"
-#include "KGVisualizationMessage.hh"
+#include "KGBindingsMessage.hh"
 
 namespace katrin
 {
@@ -37,7 +37,7 @@ template<> inline bool KGROOTGeometryPainterBuilder::AddAttribute(KContainer* aC
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -57,7 +57,7 @@ template<> inline bool KGROOTGeometryPainterBuilder::AddAttribute(KContainer* aC
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -65,6 +65,18 @@ template<> inline bool KGROOTGeometryPainterBuilder::AddAttribute(KContainer* aC
             tSpace = *tSpaceIt;
             fObject->AddSpace(tSpace);
         }
+        return true;
+    }
+    if (aContainer->GetName() == "save_json") {
+        aContainer->CopyTo(fObject, &KGROOTGeometryPainter::SetSaveJSON);
+        return true;
+    }
+    if (aContainer->GetName() == "save_svg") {
+        aContainer->CopyTo(fObject, &KGROOTGeometryPainter::SetSaveSVG);
+        return true;
+    }
+    if (aContainer->GetName() == "show_labels") {
+        aContainer->CopyTo(fObject, &KGROOTGeometryPainter::SetShowLabels);
         return true;
     }
     if (aContainer->GetName() == "plane_normal") {

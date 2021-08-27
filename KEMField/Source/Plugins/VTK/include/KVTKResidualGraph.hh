@@ -65,6 +65,8 @@ template<typename ValueType> void KVTKResidualGraph<ValueType>::InitializeGraph(
     // Set up the view
     fView = vtkSmartPointer<vtkContextView>::New();
     fView->GetRenderer()->SetBackground(1.0, 1.0, 1.0);
+    fView->GetRenderWindow()->SetSize(500, 300);
+    fView->GetRenderWindow()->SetMultiSamples(0);
 
     // Add line plot, setting the colors etc
     fChart = vtkSmartPointer<vtkChartXY>::New();
@@ -75,8 +77,8 @@ template<typename ValueType> void KVTKResidualGraph<ValueType>::InitializeGraph(
     fChart->GetAxis(vtkAxis::BOTTOM)->SetTitle("Dimension");
 
     // fView->GetRenderWindow()->SetPosition(2810,2000);
-    fView->GetRenderWindow()->SetSize(1000, 256);
     fView->GetScene()->AddItem(fChart);
+    fView->GetInteractor()->Initialize();
 }
 
 template<typename ValueType> void KVTKResidualGraph<ValueType>::CreateGraph()
@@ -121,6 +123,8 @@ template<typename ValueType> void KVTKResidualGraph<ValueType>::Visit(KIterative
 
 template<typename ValueType> void KVTKResidualGraph<ValueType>::Finalize(KIterativeSolver<ValueType>&)
 {
+    kem_cout() << "KVTKResidualGraph finished; waiting for key press ..." << eom;
+    fView->GetInteractor()->Start();
     fView->GetRenderWindow()->Finalize();
 }
 }  // namespace KEMField

@@ -1,5 +1,4 @@
 # include directories
-kasper_internal_include_directories( Utility )
 
 # headers
 set(KOMMON_BOOST_HEADER_FILES

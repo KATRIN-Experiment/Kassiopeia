@@ -1,6 +1,6 @@
 # headers
 set( MESH_HEADER_FILES
-	Include/KGMeshMessage.hh
+    Include/KGMeshMessage.hh
 
     Include/KGMeshElement.hh
     Include/KGMeshRectangle.hh
@@ -10,6 +10,9 @@ set( MESH_HEADER_FILES
     Include/KGMesh.hh
     Include/KGMesherBase.hh
     Include/KGMesher.hh
+
+    External/Include/KGStlFileSurfaceMesher.hh
+    External/Include/KGStlFileSpaceMesher.hh
 
     Complex/Include/KGComplexMesher.hh
     Complex/Include/KGBoxMesher.hh
@@ -53,24 +56,24 @@ set( MESH_HEADER_FILES
     Simple/Include/KGExtrudedCircleSpaceMesher.hh
     Simple/Include/KGExtrudedPolyLoopSpaceMesher.hh
 
-	Navigation/Include/KGNavigableMeshElement.hh
-	Navigation/Include/KGMeshNavigationNode.hh
-	Navigation/Include/KGMeshElementCollector.hh
-	Navigation/Include/KGNavigableMeshElementContainer.hh
-	Navigation/Include/KGInsertionCondition.hh
-	Navigation/Include/KGNavigableMeshElementSorter.hh
-	Navigation/Include/KGSubdivisionCondition.hh
-	Navigation/Include/KGNavigableMeshTree.hh
-	Navigation/Include/KGNavigableMeshTreeBuilder.hh
-	Navigation/Include/KGNavigableMeshTreeInformationExtractor.hh
-	Navigation/Include/KGNavigableMeshFirstIntersectionFinder.hh
-	Navigation/Include/KGNavigableMeshIntersectionFinder.hh
-	Navigation/Include/KGNavigableMeshProximityCheck.hh
+    Navigation/Include/KGNavigableMeshElement.hh
+    Navigation/Include/KGMeshNavigationNode.hh
+    Navigation/Include/KGMeshElementCollector.hh
+    Navigation/Include/KGNavigableMeshElementContainer.hh
+    Navigation/Include/KGInsertionCondition.hh
+    Navigation/Include/KGNavigableMeshElementSorter.hh
+    Navigation/Include/KGSubdivisionCondition.hh
+    Navigation/Include/KGNavigableMeshTree.hh
+    Navigation/Include/KGNavigableMeshTreeBuilder.hh
+    Navigation/Include/KGNavigableMeshTreeInformationExtractor.hh
+    Navigation/Include/KGNavigableMeshFirstIntersectionFinder.hh
+    Navigation/Include/KGNavigableMeshIntersectionFinder.hh
+    Navigation/Include/KGNavigableMeshProximityCheck.hh
 )
 
 # sources
 set( MESH_SOURCE_FILES
-	Source/KGMeshMessage.cc
+    Source/KGMeshMessage.cc
 
     Source/KGMeshElement.cc
     Source/KGMeshRectangle.cc
@@ -80,6 +83,9 @@ set( MESH_SOURCE_FILES
     Source/KGMesh.cc
     Source/KGMesherBase.cc
     Source/KGMesher.cc
+
+    External/Source/KGStlFileSurfaceMesher.cc
+    External/Source/KGStlFileSpaceMesher.cc
 
     Complex/Source/KGComplexMesher.cc
     Complex/Source/KGBoxMesher.cc
@@ -123,37 +129,35 @@ set( MESH_SOURCE_FILES
     Simple/Source/KGExtrudedCircleSpaceMesher.cc
     Simple/Source/KGExtrudedPolyLoopSpaceMesher.cc
 
-	Navigation/Source/KGNavigableMeshElement.cc
-	Navigation/Source/KGMeshElementCollector.cc
-	Navigation/Source/KGNavigableMeshElementContainer.cc
-	Navigation/Source/KGInsertionCondition.cc
-	Navigation/Source/KGNavigableMeshElementSorter.cc
-	Navigation/Source/KGSubdivisionCondition.cc
-	Navigation/Source/KGNavigableMeshTreeBuilder.cc
-	Navigation/Source/KGNavigableMeshFirstIntersectionFinder.cc
-	Navigation/Source/KGNavigableMeshIntersectionFinder.cc
-	Navigation/Source/KGNavigableMeshProximityCheck.cc
+    Navigation/Source/KGNavigableMeshElement.cc
+    Navigation/Source/KGMeshElementCollector.cc
+    Navigation/Source/KGNavigableMeshElementContainer.cc
+    Navigation/Source/KGInsertionCondition.cc
+    Navigation/Source/KGNavigableMeshElementSorter.cc
+    Navigation/Source/KGSubdivisionCondition.cc
+    Navigation/Source/KGNavigableMeshTreeBuilder.cc
+    Navigation/Source/KGNavigableMeshFirstIntersectionFinder.cc
+    Navigation/Source/KGNavigableMeshIntersectionFinder.cc
+    Navigation/Source/KGNavigableMeshProximityCheck.cc
 )
-
-# internal
-kasper_internal_include_directories(
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
-	${CMAKE_CURRENT_SOURCE_DIR}/Complex/Include
-	${CMAKE_CURRENT_SOURCE_DIR}/Simple/Include
-	${CMAKE_CURRENT_SOURCE_DIR}/Navigation/Include
-)
-
 
 # target
-add_library( KGeoBagMesh SHARED ${MESH_SOURCE_FILES} ${MESH_HEADER_FILES} )
+add_library( KGeoBagMesh SHARED
+    ${MESH_SOURCE_FILES} ${MESH_HEADER_FILES}
+)
+target_include_directories( KGeoBagMesh
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/External/Include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Complex/Include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Simple/Include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Navigation/Include>
+        $<INSTALL_INTERFACE:include>
+)
 target_link_libraries( KGeoBagMesh
-	KGeoBagCore
-	KGeoBagShapes
-    KGeoBag2DUtility
-	KGeoBagMath
-	KGeoBagMathLinearAlgebra
- 	KGeoBagMathSpaceTree
-	${Kommon_LIBRARIES}
+    PUBLIC
+        KGeoBagShapes
+        KGeoBagMathSpaceTree
 )
 
 # install

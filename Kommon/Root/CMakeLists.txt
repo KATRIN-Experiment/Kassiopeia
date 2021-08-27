@@ -1,10 +1,3 @@
-# internal
-kasper_internal_include_directories(
-    File
-    Initialization
-    Utility
-)
-
 # headers
 set(KOMMON_ROOT_HEADER_FILES
     File/KRootFile.h

@@ -13,10 +13,11 @@ set (FIELDS_MAGNETIC_HEADER_BASENAMES
 )
 
 set( FIELDS_MAGNETIC_HEADER_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
 foreach( BASENAME ${FIELDS_MAGNETIC_HEADER_BASENAMES} )
-	list( APPEND FIELDS_MAGNETIC_HEADER_FILENAMES ${FIELDS_MAGNETIC_HEADER_PATH}/${BASENAME} )
+    list( APPEND FIELDS_MAGNETIC_HEADER_FILENAMES ${FIELDS_MAGNETIC_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
@@ -29,19 +30,28 @@ set( FIELDS_MAGNETIC_SOURCE_BASENAMES
 )
 
 set( FIELDS_MAGNETIC_SOURCE_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 foreach( BASENAME ${FIELDS_MAGNETIC_SOURCE_BASENAMES} )
-	list( APPEND FIELDS_MAGNETIC_SOURCE_FILENAMES ${FIELDS_MAGNETIC_SOURCE_PATH}/${BASENAME} )
+    list( APPEND FIELDS_MAGNETIC_SOURCE_FILENAMES ${FIELDS_MAGNETIC_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${FIELDS_MAGNETIC_HEADER_PATH} )
-add_library( KEMFieldsMagnetic SHARED ${FIELDS_MAGNETIC_SOURCE_FILENAMES} ${FIELDS_MAGNETIC_HEADER_FILENAMES} )
-set_target_properties( KEMFieldsMagnetic PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+add_library( KEMFieldsMagnetic SHARED
+    ${FIELDS_MAGNETIC_SOURCE_FILENAMES} ${FIELDS_MAGNETIC_HEADER_FILENAMES} )
+#set_target_properties( KEMFieldsMagnetic PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+
+target_include_directories(KEMFieldsMagnetic
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KEMFieldsMagnetic
-    KEMFieldChargeDensitySolvers
-    KEMMath KEMCore ${Kommon_LIBRARIES} ${GSL_LIBRARIES}
+    PUBLIC
+        Kommon
+        KEMCore
+        KEMMath
+        KEMFieldExceptions
+        KEMFileManipulation
+        KEMMagneticFieldSolvers
+        KEMZHSolver
 )
 
 # install

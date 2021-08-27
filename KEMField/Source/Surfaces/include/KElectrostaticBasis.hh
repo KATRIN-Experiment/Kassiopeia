@@ -1,7 +1,7 @@
 #ifndef KELECTROSTATICBASIS_DEF
 #define KELECTROSTATICBASIS_DEF
 
-#include "../../../Surfaces/include/KBasis.hh"
+#include "KBasis.hh"
 
 #include <string>
 

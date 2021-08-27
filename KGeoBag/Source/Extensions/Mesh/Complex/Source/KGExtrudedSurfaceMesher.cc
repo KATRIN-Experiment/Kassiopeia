@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-#define MERGE_DIST 1.e-4
+//#define MERGE_DIST 1.e-4
 
 namespace KGeoBag
 {
@@ -19,6 +19,8 @@ void KGExtrudedSurfaceMesher::VisitWrappedSurface(KGWrappedSurface<KGExtrudedObj
 void KGExtrudedSurfaceMesher::Discretize(KGExtrudedObject* object)
 {
     fExtrudedObject = object;
+
+    bool refineMesh = fExtrudedObject->RefineMesh();
 
     std::vector<unsigned int> nInnerCoords(fExtrudedObject->GetNInnerSegments(), 0);
     std::vector<unsigned int> nOuterCoords(fExtrudedObject->GetNOuterSegments(), 0);
@@ -49,7 +51,7 @@ void KGExtrudedSurfaceMesher::Discretize(KGExtrudedObject* object)
         // First, we start with the outer segments
 
         // assign the segments a discretization according to their relative length
-        int nAssignedSegments = 0;
+        int nAssignedOuterSegments = 0;
         for (unsigned int i = 0; i < fExtrudedObject->GetNOuterSegments(); i++) {
             int nSegments;
             if (totalOuterLength > totalOuterLength)
@@ -67,13 +69,16 @@ void KGExtrudedSurfaceMesher::Discretize(KGExtrudedObject* object)
             else if (nSegments < 4)
                 nSegments = 4;
             outerDisc[i] = nSegments;
-            nAssignedSegments += nSegments;
+            nAssignedOuterSegments += nSegments;
         }
+
+        if (nAssignedOuterSegments != (int) nDisc)
+            discretizationHasChanged = true;
 
         // next, we add the inner segments
 
         // assign the segments a discretization according to their relative length
-        nAssignedSegments = 0;
+        int nAssignedInnerSegments = 0;
         for (unsigned int i = 0; i < fExtrudedObject->GetNInnerSegments(); i++) {
             int nSegments;
             if (totalInnerLength > totalOuterLength)
@@ -100,14 +105,16 @@ void KGExtrudedSurfaceMesher::Discretize(KGExtrudedObject* object)
                 }
 
             innerDisc[i] = nSegments;
-            nAssignedSegments += nSegments;
+            nAssignedInnerSegments += nSegments;
         }
 
-        if (nAssignedSegments != (int) nDisc)
+        if (nAssignedInnerSegments != (int) nDisc)
             discretizationHasChanged = true;
 
-        if (nAssignedSegments != (int) nDisc)
-            discretizationHasChanged = true;
+        if (refineMesh && (nAssignedOuterSegments != nAssignedInnerSegments)) {
+            nDisc += 1;
+            continue;
+        }
 
         discretizationIsOk = true;
 
@@ -161,7 +168,7 @@ void KGExtrudedSurfaceMesher::Discretize(KGExtrudedObject* object)
     if (fIsModifiable)
         ModifySurface(innerCoords, outerCoords, nInnerCoords, nOuterCoords);
 
-    DiscretizeEnclosedEnds(innerCoords, outerCoords, nDisc);
+    DiscretizeEnclosedEnds(innerCoords, outerCoords, nDisc, fExtrudedObject->MeshMergeDistance());
 
     if (!(fExtrudedObject->ClosedLoops())) {
         DiscretizeLoopEnds();
@@ -227,7 +234,7 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Line* li
                         nDisc,
                         fExtrudedObject->GetDiscretizationPower(),
                         nDisc,
-                        fExtrudedObject->GetDiscretizationPower());
+                        fExtrudedObject->GetExtrudedMeshPower());
 }
 
 //____________________________________________________________________________
@@ -281,7 +288,7 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Arc* arc
                             1,
                             fExtrudedObject->GetDiscretizationPower(),
                             z_len / xy_len,
-                            fExtrudedObject->GetDiscretizationPower());
+                            fExtrudedObject->GetExtrudedMeshPower());
     }
 
     std::vector<double> xy(2);
@@ -295,7 +302,8 @@ void KGExtrudedSurfaceMesher::DiscretizeSegment(const KGExtrudedObject::Arc* arc
 //____________________________________________________________________________
 
 void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<double>>& iCoords,
-                                                     std::vector<std::vector<double>>& oCoords, unsigned int nDisc)
+                                                     std::vector<std::vector<double>>& oCoords, unsigned int nDisc,
+                                                     double mergeDist)
 {
     // For surfaces with closed ends, this method constructs the end caps.
 
@@ -377,7 +385,7 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
         double dist = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
         // if the points aren't close, we shouldn't try to merge them
-        if (dist > MERGE_DIST)
+        if (dist > mergeDist)
             continue;
 
         int pointsAreOnALine = 0;  // 0 = false; 1 = below; 2 = above; 3 = both;
@@ -437,7 +445,7 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
         double dist = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
         // if the points aren't close, we shouldn't try to merge them
-        if (dist > MERGE_DIST)
+        if (dist > mergeDist)
             continue;
 
         int pointsAreOnALine = 0;  // 0 = false; 1 = below; 2 = above; 3 = both;
@@ -487,20 +495,6 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
     }
     /////////////////////////
 
-    // if we have closed loops, we can sort the points (and, thus, maintain
-    // backwards compatibility with the detector region's flange!)
-    // if (fExtrudedObject->ClosedLoops())
-    if (true) {
-        if (fExtrudedObject->IsBackwards()) {
-            std::sort(augmentedInnerCoords.rbegin(), augmentedInnerCoords.rend(), KGExtrudedObject::CompareTheta);
-            std::sort(augmentedOuterCoords.rbegin(), augmentedOuterCoords.rend(), KGExtrudedObject::CompareTheta);
-        }
-        else {
-            std::sort(augmentedInnerCoords.begin(), augmentedInnerCoords.end(), KGExtrudedObject::CompareTheta);
-            std::sort(augmentedOuterCoords.begin(), augmentedOuterCoords.end(), KGExtrudedObject::CompareTheta);
-        }
-    }
-
     /////////////////////////
     /*
          // now we try to merge points (simplified algorithm)
@@ -516,7 +510,7 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
          double dist = sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0));
 
          // if the points aren't close, we shouldn't try to merge them
-         if (dist<MERGE_DIST)
+         if (dist<mergeDist)
          {
          augmentedOuterCoords.erase(augmentedOuterCoords.begin()+i);
          i++;
@@ -535,7 +529,7 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
          double dist = sqrt((x1-x0)*(x1-x0) + (y1-y0)*(y1-y0));
 
          // if the points aren't close, we shouldn't try to merge them
-         if (dist<MERGE_DIST)
+         if (dist<mergeDist)
          {
          augmentedInnerCoords.erase(augmentedInnerCoords.begin()+i);
          i++;
@@ -543,6 +537,21 @@ void KGExtrudedSurfaceMesher::DiscretizeEnclosedEnds(std::vector<std::vector<dou
          }
          */
     /////////////////////////
+
+    // if we have closed loops, we can sort the points (and, thus, maintain
+    // backwards compatibility with the detector region's flange!)
+    // if (fExtrudedObject->ClosedLoops())
+    if (true) {
+        if (fExtrudedObject->IsBackwards()) {
+            std::sort(augmentedInnerCoords.rbegin(), augmentedInnerCoords.rend(), KGExtrudedObject::CompareTheta);
+            std::sort(augmentedOuterCoords.rbegin(), augmentedOuterCoords.rend(), KGExtrudedObject::CompareTheta);
+        }
+        else {
+            std::sort(augmentedInnerCoords.begin(), augmentedInnerCoords.end(), KGExtrudedObject::CompareTheta);
+            std::sort(augmentedOuterCoords.begin(), augmentedOuterCoords.end(), KGExtrudedObject::CompareTheta);
+        }
+    }
+
     iCoords.clear();
     oCoords.clear();
 

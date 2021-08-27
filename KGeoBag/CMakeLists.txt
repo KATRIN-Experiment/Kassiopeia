@@ -2,8 +2,8 @@ cmake_minimum_required( VERSION ${CMAKE_MINIMUM_VERSION} )
 
 # KGeoBag version
 set( MODULE_VERSION_MAJOR 3 )
-set( MODULE_VERSION_MINOR 7 )
-set( MODULE_VERSION_PATCH 7 )
+set( MODULE_VERSION_MINOR 8 )
+set( MODULE_VERSION_PATCH 0 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}.${MODULE_VERSION_PATCH}" )
 
 #project( KGeoBag VERSION ${MODULE_VERSION})
@@ -11,43 +11,27 @@ project( KGeoBag )
 
 include( KasperDefaults )
 
-
-# internal dependencies
-kasper_find_module( Kommon )
-foreach( FLAG ${Kommon_CFLAGS} )
-    add_definitions( -D${FLAG} )
-endforeach( FLAG )
-
-# external dependencies
-find_package( GSL REQUIRED )
-kasper_external_include_directories( ${GSL_INCLUDE_DIRS} )
-
 #option( KGeoBag_USE_VTK "Enable visualization with VTK" OFF )
 #option( KGeoBag_USE_ROOT "Enable visualization with ROOT" OFF )
 set( KGeoBag_USE_BOOST ${KASPER_USE_BOOST} )
 set( KGeoBag_USE_VTK ${KASPER_USE_VTK} )
 set( KGeoBag_USE_ROOT ${KASPER_USE_ROOT} )
+set( KGeoBag_USE_GSL ${KASPER_USE_GSL} )
+
+if( KGeoBag_USE_GSL )
+    find_package( GSL REQUIRED )
+endif( KGeoBag_USE_GSL )
 
 if( KGeoBag_USE_BOOST )
-    find_package( Boost 1.43.0 COMPONENTS filesystem REQUIRED )
-    if( Boost_INCLUDE_DIR )
-        kasper_external_include_directories( ${Boost_INCLUDE_DIR} )
-        list(APPEND EXTERNAL_LIBRARIES ${Boost_LIBRARIES} )
-    else()
-        list(APPEND EXTERNAL_LIBRARIES Boost::headers Boost::filesystem )
-    endif()
-    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_BOOST )
+    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED )
 endif()
 
 if( KGeoBag_USE_VTK )
-    kasper_find_vtk()
-    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_VTK )
+    find_package(VTK CONFIG REQUIRED)
 endif()
 
 if( KGeoBag_USE_ROOT )
-    find_package( ROOT REQUIRED )
-    kasper_external_include_directories( ${ROOT_INCLUDE_DIRS} )
-    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS KGeoBag_USE_ROOT )
+    find_package( ROOT ${ROOT_MINIMUM_VERSION} CONFIG REQUIRED )
 endif()
 
 # installing
@@ -55,9 +39,6 @@ kasper_module_paths( TheBag )
 
 # debugging
 kasper_module_debug()
-if( KGeoBag_ENABLE_DEBUG )
-    add_cflag (KGeoBag_ENABLE_DEBUG)
-endif()
 
 ## testing
 kasper_module_test( Source/Test )

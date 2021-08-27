@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Core
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectHolder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectCollection.hh
@@ -49,10 +47,15 @@ set (KFMCORE_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElementLocalInfluenceRange.cc
 )
 
-##################################################
-
-add_library (KFMCore SHARED ${KFMCORE_SOURCEFILES} ${KFMCORE_HEADERFILES})
-target_link_libraries (KFMCore KEMCore)
+add_library (KFMCore SHARED
+    ${KFMCORE_SOURCEFILES} ${KFMCORE_HEADERFILES})
+target_include_directories(KFMCore
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMCore
+    PUBLIC
+        KEMCore
+        KEMStructuredASCII
+)
 
 kasper_install_headers (${KFMCORE_HEADERFILES})
 kasper_install_libraries (KFMCore)

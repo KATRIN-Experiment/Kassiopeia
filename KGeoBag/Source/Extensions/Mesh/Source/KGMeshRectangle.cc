@@ -28,6 +28,13 @@ KGMeshRectangle::KGMeshRectangle(const KThreeVector& p0, const KThreeVector& p1,
     fB = fN2.Magnitude();
     fN2 = fN2.Unit();
 }
+KGMeshRectangle::KGMeshRectangle(const KGRectangle& r) :
+    fA(r.GetA()),
+    fB(r.GetB()),
+    fP0(r.GetP0()),
+    fN1(r.GetN1()),
+    fN2(r.GetN2())
+{}
 KGMeshRectangle::KGMeshRectangle(const KGMeshRectangle&) = default;
 KGMeshRectangle::~KGMeshRectangle() = default;
 
