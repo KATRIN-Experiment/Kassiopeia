@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     tTester.SetSampleColor(KGRGBColor(127, 127, 127));
     tTester.SetUnintersectedLineColor(KGRGBColor(127, 127, 127));
     tTester.SetIntersectedLineColor(KGRGBColor(0, 0, 255));
-    tTester.SetVertexSize(0.001);
+    tTester.SetVertexSize(0.005);
     tTester.SetLineSize(0.001);
 
     for (auto& tPath : tPathList) {

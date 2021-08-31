@@ -23,6 +23,8 @@ KGExtrudedObject* KGExtrudedObject::Clone() const
     tClone->fDiscretizationPower = fDiscretizationPower;
     tClone->fNInnerSegments = fNInnerSegments;
     tClone->fNOuterSegments = fNOuterSegments;
+    tClone->fRefineMesh = fRefineMesh;
+    tClone->fMeshMergeDistance = fMeshMergeDistance;
     tClone->fClosedLoops = fClosedLoops;
 
     for (auto* segment : fInnerSegments)

@@ -58,6 +58,10 @@ class KStringUtils
     template<typename Range1T, typename Range2T>
     static bool IContainsOneOf(const Range1T&, std::initializer_list<Range2T>);
 
+    template<typename Range1T, typename Range2T> static bool StartsWith(const Range1T&, const Range2T&);
+
+    template<typename Range1T, typename Range2T> static bool IStartsWith(const Range1T&, const Range2T&);
+
     template<typename Range1T, typename Range2T> static size_t Distance(const Range1T&, const Range2T&);
 
     template<typename Range1T, typename Range2T> static size_t IDistance(const Range1T&, const Range2T&);
@@ -98,6 +102,10 @@ class KStringUtils
     static std::string GroupDigits(std::string input, const std::string& sep = ",");
 
     static std::string RandomAlphaNum(size_t length);
+
+    static void HexDump(const void* data, size_t length, std::ostream& os = std::cout);
+    template<class SequenceT>
+    static void HexDump(const SequenceT& data, std::ostream& os = std::cout);
 
   private:
     template<typename Range1T, typename Range2T> static size_t LevenshteinDistance(const Range1T&, const Range2T&);
@@ -237,6 +245,16 @@ inline bool KStringUtils::IContainsOneOf(const Range1T& r1, std::initializer_lis
         if (boost::icontains(r1, r2))
             return true;
     return false;
+}
+
+template<typename Range1T, typename Range2T> inline bool KStringUtils::StartsWith(const Range1T& r1, const Range2T& r2)
+{
+    return boost::starts_with(r1, r2);
+}
+
+template<typename Range1T, typename Range2T> inline bool KStringUtils::IStartsWith(const Range1T& r1, const Range2T& r2)
+{
+    return boost::istarts_with(r1, r2);
 }
 
 template<typename Range1T, typename Range2T> inline size_t KStringUtils::Distance(const Range1T& r1, const Range2T& r2)
@@ -460,6 +478,55 @@ inline std::string KStringUtils::RandomAlphaNum(size_t length)
         result += alphanums[KRandom::GetInstance().Uniform<size_t>(0, alphanums.length() - 1)];
 
     return result;
+}
+
+// adapted from
+inline void KStringUtils::HexDump(const void *data, size_t length, std::ostream& os)
+{
+    size_t i;
+    unsigned char linebuf[17];
+    unsigned char *pc = (unsigned char*)data;
+
+    // Process every byte in the data.
+    for (i = 0; i < length; i++) {
+        // Multiple of 16 means new line (with line offset).
+
+        if ((i % 16) == 0) {
+            // Just don't print ASCII for the zeroth line.
+            if (i != 0)
+                os << "  " << linebuf << "\n";
+
+            // Output the offset.
+            os << "  " << std::hex << std::setfill('0') << std::setw(4) << i;
+        }
+
+        // Now the hex code for the specific character.
+        os << " " << std::hex << std::setfill('0') << std::setw(2) << pc[i];
+
+        // And store a printable ASCII character for later.
+        if ((pc[i] < 0x20) || (pc[i] > 0x7e)) {
+            linebuf[i % 16] = '.';
+        } else {
+            linebuf[i % 16] = pc[i];
+        }
+
+        linebuf[(i % 16) + 1] = '\0';
+    }
+
+    // Pad out last line if not exactly 16 characters.
+    while ((i % 16) != 0) {
+        os << "   ";
+        i++;
+    }
+
+    // And print the final ASCII bit.
+    os << "  " << linebuf << "\n";
+}
+
+template<class SequenceT>
+inline void KStringUtils::HexDump(const SequenceT& sequence, std::ostream& os)
+{
+    HexDump(sequence.data(), sequence.size() * sizeof(typename SequenceT::value_type), os);
 }
 
 }  // namespace katrin

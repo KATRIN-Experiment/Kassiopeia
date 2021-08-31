@@ -23,8 +23,12 @@ template<> inline bool KVTKViewerVisitorBuilder::AddAttribute(KContainer* aConta
         std::string name = "";
         aContainer->CopyTo(name);
         fObject->SetFile(name);
-
-
+        return true;
+    }
+    if (aContainer->GetName() == "path") {
+        std::string name = "";
+        aContainer->CopyTo(name);
+        fObject->SetPath(name);
         return true;
     }
     if (aContainer->GetName() == "view") {

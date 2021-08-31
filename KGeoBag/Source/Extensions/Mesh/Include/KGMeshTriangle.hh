@@ -2,6 +2,7 @@
 #define KGMESHTRIANGLE_DEF
 
 #include "KGMeshElement.hh"
+#include "KGTriangle.hh"
 #include "KThreeVector.hh"
 
 namespace KGeoBag
@@ -12,6 +13,7 @@ class KGMeshTriangle : public KGMeshElement
     KGMeshTriangle(const double& a, const double& b, const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& n1,
                    const KGeoBag::KThreeVector& n2);
     KGMeshTriangle(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1, const KGeoBag::KThreeVector& p2);
+    KGMeshTriangle(const KGTriangle& t);
     KGMeshTriangle(const KGMeshTriangle& t);
     ~KGMeshTriangle() override;
 
@@ -24,10 +26,10 @@ class KGMeshTriangle : public KGMeshElement
     double Aspect() const override;
     void Transform(const KTransformation& transform) override;
 
-    double NearestDistance(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector NearestNormal(const KGeoBag::KThreeVector& aPoint) const override;
-    bool NearestIntersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
+    virtual double NearestDistance(const KGeoBag::KThreeVector& aPoint) const override;
+    virtual KGeoBag::KThreeVector NearestPoint(const KGeoBag::KThreeVector& aPoint) const override;
+    virtual KGeoBag::KThreeVector NearestNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    virtual bool NearestIntersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
                              KGeoBag::KThreeVector& anIntersection) const override;
 
     KGPointCloud<KGMESH_DIM> GetPointCloud() const override;
@@ -109,18 +111,18 @@ class KGMeshTriangle : public KGMeshElement
 
   protected:
     static bool SameSide(const KGeoBag::KThreeVector& point, const KGeoBag::KThreeVector& A,
-                         const KGeoBag::KThreeVector& B, const KGeoBag::KThreeVector& C);
+                       const KGeoBag::KThreeVector& B, const KGeoBag::KThreeVector& C);
 
     static KGeoBag::KThreeVector NearestPointOnLineSegment(const KGeoBag::KThreeVector& a,
-                                                           const KGeoBag::KThreeVector& b,
-                                                           const KGeoBag::KThreeVector& point);
-
+                                                         const KGeoBag::KThreeVector& b,
+                                                         const KGeoBag::KThreeVector& point);
     double fA;
     double fB;
     KGeoBag::KThreeVector fP0;
     KGeoBag::KThreeVector fN1;
     KGeoBag::KThreeVector fN2;
 };
+
 }  // namespace KGeoBag
 
 #endif /* KGMESHTRIANGLE_DEF */

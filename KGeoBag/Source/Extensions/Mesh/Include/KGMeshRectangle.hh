@@ -2,6 +2,7 @@
 #define KGMESHRECTANGLE_DEF
 
 #include "KGMeshElement.hh"
+#include "KGRectangle.hh"
 #include "KThreeVector.hh"
 
 namespace KGeoBag
@@ -13,6 +14,7 @@ class KGMeshRectangle : public KGMeshElement
                     const KGeoBag::KThreeVector& n2);
     KGMeshRectangle(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1,
                     const KGeoBag::KThreeVector& /*p2*/, const KGeoBag::KThreeVector& p3);
+    KGMeshRectangle(const KGRectangle& t);
     KGMeshRectangle(const KGMeshRectangle& r);
     ~KGMeshRectangle() override;
 

@@ -72,7 +72,7 @@ int main(int argc, char** argv)
             continue;
         }
 
-        mainmsg(eNormal) << "Magnetic Field at position " << tPosition << " is " << tMagneticField << eom;
+        mainmsg(eNormal) << "Magnetic Field at position " << tPosition << " is " << tMagneticField << ", magnitude " << tMagneticField.Magnitude() << eom;
 
         outFile << std::fixed << std::setprecision(16) << tPosition.X() << "\t" << tPosition.Y() << "\t"
                 << tPosition.Z() << "\t" << tMagneticField.X() << "\t" << tMagneticField.Y() << "\t"

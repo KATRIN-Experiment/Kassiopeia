@@ -1,48 +1,47 @@
 # header files
 set( FIELDS_HEADER_BASENAMES
-	KSElectricKEMField.h
-	KSFieldsMessage.h
-	KSExampleFields.h
-	KSFieldFinder.h
+    KSElectricKEMField.h
+    KSFieldsMessage.h
+    KSExampleFields.h
+    KSFieldFinder.h
     KSMagneticKEMField.h
 
 )
 
 set( FIELDS_HEADER_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
 foreach( BASENAME ${FIELDS_HEADER_BASENAMES} )
-	list( APPEND FIELDS_HEADER_FILENAMES ${FIELDS_HEADER_PATH}/${BASENAME} )
+    list( APPEND FIELDS_HEADER_FILENAMES ${FIELDS_HEADER_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # source files
 set( FIELDS_SOURCE_BASENAMES
     KSElectricKEMField.cxx
-	KSFieldsMessage.cxx
-	KSExampleFields.cxx
-	KSFieldFinder.cxx
-	KSMagneticKEMField.cxx
+    KSFieldsMessage.cxx
+    KSExampleFields.cxx
+    KSFieldFinder.cxx
+    KSMagneticKEMField.cxx
 
 )
 
 set( FIELDS_SOURCE_PATH
-	${CMAKE_CURRENT_SOURCE_DIR}/Source
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
 foreach( BASENAME ${FIELDS_SOURCE_BASENAMES} )
-	list( APPEND FIELDS_SOURCE_FILENAMES ${FIELDS_SOURCE_PATH}/${BASENAME} )
+    list( APPEND FIELDS_SOURCE_FILENAMES ${FIELDS_SOURCE_PATH}/${BASENAME} )
 endforeach( BASENAME )
 
 # library
-kasper_internal_include_directories( ${FIELDS_HEADER_PATH} )
 add_library( KassiopeiaFields SHARED ${FIELDS_SOURCE_FILENAMES} ${FIELDS_HEADER_FILENAMES} )
-set_target_properties( KassiopeiaFields PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
+
+target_include_directories(KassiopeiaFields
+    PUBLIC $<BUILD_INTERFACE:${FIELDS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaFields
-    ${Kommon_LIBRARIES}
-    ${KGeoBag_LIBRARIES}
-    ${KEMField_LIBRARIES}
-    KassiopeiaUtility
-    KassiopeiaObjects
-    KassiopeiaOperators
+    PUBLIC
+        KassiopeiaOperators
+        KEMFieldsElectric
+        KEMFieldsMagnetic
 )
 
 # install

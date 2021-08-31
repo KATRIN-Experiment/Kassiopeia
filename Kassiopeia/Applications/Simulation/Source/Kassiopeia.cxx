@@ -19,8 +19,8 @@ int main(int argc, char** argv)
     if (argc == 1) {
         std::cout
             << "usage: ./Kassiopeia <config_file_one.xml> [<config_file_two.xml> <...>]"
+            << " [ -v | -q ] [ -b | -batch ]"
             << " [ -r variable1=value1 variable2=value ... ] [ --variable3=value3 ... ]"
-            << " [ -v | -q ]"
             << std::endl;
         exit(-1);
     }

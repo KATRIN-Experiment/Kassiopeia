@@ -17,6 +17,7 @@ CMakeLists.txt.user*
 *.tmp
 *.old
 *.srctrl*
+*.log
 
 /*.vt?
 /*.root

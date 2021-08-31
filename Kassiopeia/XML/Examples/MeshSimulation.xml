@@ -1,0 +1,342 @@
+<define name="output_path" value="[KASPERSYS]/output/Kassiopeia"/>
+<define name="log_path" value="[KASPERSYS]/log/Kassiopeia"/>
+
+<messages>
+
+    <file path="[log_path]" base="MeshSimulationLog.txt"/>
+
+    <message key="k_file" terminal="normal" log="warning"/>
+    <message key="k_initialization" terminal="normal" log="warning"/>
+
+    <message key="kg_core" terminal="normal" log="warning"/>
+    <message key="kg_shape" terminal="normal" log="warning"/>
+    <message key="kg_mesh" terminal="normal" log="warning"/>
+    <message key="kg_axial_mesh" terminal="normal" log="warning"/>
+
+    <message key="ks_object" terminal="normal" log="normal"/>
+    <message key="ks_operator" terminal="normal" log="normal"/>
+    <message key="ks_field" terminal="normal" log="normal"/>
+    <message key="ks_generator" terminal="normal" log="normal"/>
+    <message key="ks_trajectory" terminal="normal" log="normal"/>
+    <message key="ks_interaction" terminal="normal" log="normal"/>
+    <message key="ks_terminator" terminal="normal" log="normal"/>
+    <message key="ks_writer" terminal="normal" log="normal"/>
+    <message key="ks_navigator" terminal="normal" log="normal"/>
+    <message key="ks_main" terminal="normal" log="normal"/>
+    <message key="ks_run" terminal="normal" log="normal"/>
+    <message key="ks_event" terminal="normal" log="normal"/>
+    <message key="ks_track" terminal="normal" log="normal"/>
+    <message key="ks_step" terminal="normal" log="normal"/>
+
+</messages>
+
+<geometry>
+
+    <box_space name="world_space" xa="-10" xb="10" ya="-10" yb="10" za="-10" zb="10"/>
+
+    <define name="box_mesh_n" value="15"/>
+    <define name="cube_mesh_n" value="3"/>
+
+    <tag name="electrode_tag">
+    <tag name="box_tag">
+        <flattened_poly_loop_surface name="box_cap_surface" z="-2" flattened_mesh_count="[box_mesh_n]">
+            <poly_loop>
+                <start_point x="-1" y="-1"/>
+                <next_line x="-1" y="1" line_mesh_count="[box_mesh_n]"/>
+                <next_line x="1" y="1" line_mesh_count="[box_mesh_n]"/>
+                <next_line x="1" y="-1" line_mesh_count="[box_mesh_n]"/>
+                <last_line line_mesh_count="10"/>
+            </poly_loop>
+        </flattened_poly_loop_surface>
+
+        <extruded_poly_loop_surface name="box_surface" zmin="-2" zmax="2" extruded_mesh_count="{2*[box_mesh_n]}">
+            <poly_loop>
+                <start_point x="-1" y="-1"/>
+                <next_line x="-1" y="1" line_mesh_count="[box_mesh_n]"/>
+                <next_line x="1" y="1" line_mesh_count="[box_mesh_n]"/>
+                <next_line x="1" y="-1" line_mesh_count="[box_mesh_n]"/>
+                <last_line line_mesh_count="10"/>
+            </poly_loop>
+        </extruded_poly_loop_surface>
+    </tag>
+
+    <tag name="cube_tag">
+        <stl_file_surface name="cube_surface">
+            <stl_file file="Menger_sponge.stl" selector="" scale="0.5" mesh_count="[cube_mesh_n]"/>
+        </stl_file_surface>
+    </tag>
+    </tag>
+
+    <space name="world" node="world_space">
+        <space name="box_assembly">
+            <surface name="outer_box" node="box_surface"/>
+            <surface name="outer_box_cap_1" node="box_cap_surface"/>
+            <surface name="outer_box_cap_2" node="box_cap_surface">
+                <transformation rotation_euler="0 180. 0"/>
+            </surface>
+        </space>
+        <space name="cube_assembly">
+            <surface name="red_cube" node="cube_surface">
+                <transformation displacement="0 0 -0.75"/>
+            </surface>
+            <surface name="blue_cube" node="cube_surface">
+                <transformation displacement="0 0 0.75"/>
+            </surface>
+        </space>
+    </space>
+
+    <!-- appearance -->
+
+    <appearance name="app_world" color="255 255 255 64" arc="72" surfaces="world/box_assembly/#"/>
+    <appearance name="app_cube" color="255 0 0 128" arc="72" surfaces="world/cube_assembly/red_cube"/>
+    <appearance name="app_cube" color="0 0 255 128" arc="72" surfaces="world/cube_assembly/blue_cube"/>
+
+    <!-- mesh -->
+
+    <mesh name="surface_mesh" surfaces="world/@electrode_tag"/>
+
+    <!-- bem -->
+
+    <electrostatic_dirichlet
+        surfaces="world/box_assembly/#"
+        value="0"
+    />
+    <electrostatic_dirichlet
+        surfaces="world/cube_assembly/red_cube"
+        value="-100."
+    />
+    <electrostatic_dirichlet
+        surfaces="world/cube_assembly/blue_cube"
+        value="100."
+    />
+
+</geometry>
+
+<kemfield>
+
+    <electrostatic_field
+        name="kemfield_e"
+        directory="[KEMFIELD_CACHE]"
+        file="MeshSimulationElectrodes.kbd"
+        system="world"
+        surfaces="world/@electrode_tag"
+        symmetry="none"
+    >
+        <viewer
+            file="MeshSimulationElectrodes.vtp"
+            view="false"
+            save="true"
+            preprocessing="false"
+            postprocessing="true"
+        />
+        <!--robin_hood_bem_solver
+            tolerance="1.e-6"
+            display_interval="100"
+            check_sub_interval="100"
+            display_interval="1"
+            cache_matrix_elements="true"
+        />
+        <integrating_field_solver /-->
+        <krylov_bem_solver
+            solver_name="gmres"
+            preconditioner="implicit_krylov"
+            tolerance="1e-6"
+            preconditioner_tolerance="0.01"
+            max_iterations="500"
+            max_preconditioner_iterations="30"
+            iterations_between_restarts="250"
+            preconditioner_degree="1"
+            intermediate_save_interval="1"
+            use_display="true"
+            show_plot="false"
+            use_timer="true"
+            >
+            <fftm_multiplication
+                verbosity="3"
+                strategy="balanced"
+                top_level_divisions="8"
+                tree_level_divisions="2"
+                expansion_degree="7"
+                bias_degree="1"
+                neighbor_order="1"
+                maximum_tree_depth="9"
+                use_region_size_estimation="true"
+                use_caching="true"
+                region_expansion_factor="1.1"
+                insertion_ratio="1.3333333"
+                world_cube_center_x="0.0"
+                world_cube_center_y="0.0"
+                world_cube_center_z="0.1"
+                world_cube_length="0.0"
+                />
+            <preconditioner_electrostatic_parameters
+                verbosity="3"
+                top_level_divisions="2"
+                tree_level_divisions="2"
+                expansion_degree="0"
+                neighbor_order="1"
+                maximum_tree_depth="5"
+                use_region_size_estimation="true"
+                use_caching="true"
+                region_expansion_factor="1.1"
+                insertion_ratio="1.3333333"
+                world_cube_center_x="0.0"
+                world_cube_center_y="0.0"
+                world_cube_center_z="0.0"
+                world_cube_length="0.0"
+            />
+        </krylov_bem_solver>
+        <fast_multipole_field_solver
+            top_level_divisions="8"
+            tree_level_divisions="2"
+            expansion_degree="8"
+            neighbor_order="1"
+            maximum_tree_depth="6"
+            region_expansion_factor="2"
+            use_region_size_estimation="true"
+            use_caching="true"
+            verbosity="3"
+            use_opencl="true"
+        />
+    </electrostatic_field>
+
+</kemfield>
+
+<kassiopeia>
+
+    <!-- generators -->
+
+    <ksgen_generator_composite name="electron_single">
+        <energy_composite>
+            <energy_fix value="0.011"/>
+        </energy_composite>
+        <position_cylindrical_composite>
+            <r_fix value="0."/>
+            <phi_fix value="0."/>
+            <z_fix value="-0.75"/>
+        </position_cylindrical_composite>
+        <direction_spherical_composite>
+            <theta_spherical angle_min="0." angle_max="180."/>
+            <phi_uniform value_min="0." value_max="360."/>
+        </direction_spherical_composite>
+        <time_composite>
+            <time_fix value="0."/>
+        </time_composite>
+    </ksgen_generator_composite>
+
+
+    <!-- trajectories-->
+
+    <kstraj_trajectory_linear name="trajectory_linear" length="1e-3"/>
+
+    <kstraj_trajectory_exact name="trajectory_exact">
+        <interpolator_crk name="interpolator_crk"/>
+        <integrator_rkdp853 name="integrator_rkdp853"/>
+        <term_propagation name="term_propagation"/>
+        <control_position_error name="control_position_error" absolute_position_error="1e-12" safety_factor="0.75" solver_order="8"/>
+        <control_length name="stepsizelength" length="1e-4" />
+        <control_time name="stepsizetime" time="1e-6" />
+    </kstraj_trajectory_exact>
+
+    <!-- surface navigator -->
+
+    <ksnav_surface name="nav_surface"/>
+
+    <!-- surface interactions -->
+    <ksint_surface_specular name="int_surface_reflection"
+        probability="0" reflection_loss="0" transmission_loss="0"/>
+
+    <!-- terminators -->
+
+    <ksterm_death name="term_death"/>
+    <ksterm_max_steps name="term_max_steps" steps="100000"/>
+    <ksterm_min_energy name="term_min_energy" energy=".01"/>
+
+    <!-- writers -->
+
+    <kswrite_root
+            name="write_root"
+            path="[output_path]"
+            base="MeshSimulation.root"
+    />
+
+    <!-- output -->
+
+    <ks_component_member name="component_track_initial_particle" field="initial_particle" parent="track"/>
+    <ks_component_member name="component_track_final_particle" field="final_particle" parent="track"/>
+    <ks_component_member name="component_track_position" field="position" parent="component_track_final_particle"/>
+    <ks_component_member name="component_track_length" field="length" parent="component_track_final_particle"/>
+
+    <ks_component_group name="component_track_world">
+        <component_member name="track_id" field="track_id" parent="track"/>
+        <component_member name="creator_name" field="creator_name" parent="track"/>
+        <component_member name="terminator_name" field="terminator_name" parent="track"/>
+        <component_member name="total_steps" field="total_steps" parent="track"/>
+        <component_member name="initial_time" field="time" parent="component_track_initial_particle"/>
+        <component_member name="initial_position" field="position" parent="component_track_initial_particle"/>
+        <component_member name="initial_momentum" field="momentum" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_field" field="electric_field" parent="component_track_initial_particle"/>
+        <component_member name="initial_electric_potential" field="electric_potential" parent="component_track_initial_particle"/>
+        <component_member name="initial_kinetic_energy" field="kinetic_energy_ev" parent="component_track_initial_particle"/>
+        <component_member name="final_time" field="time" parent="component_track_final_particle"/>
+        <component_member name="final_position" field="position" parent="component_track_final_particle"/>
+        <component_member name="final_momentum" field="momentum" parent="component_track_final_particle"/>
+        <component_member name="final_electric_field" field="electric_field" parent="component_track_final_particle"/>
+        <component_member name="final_electric_potential" field="electric_potential" parent="component_track_final_particle"/>
+        <component_member name="final_kinetic_energy" field="kinetic_energy_ev" parent="component_track_final_particle"/>
+    </ks_component_group>
+
+    <ks_component_member name="component_step_final_particle" field="final_particle" parent="step"/>
+    <ks_component_member name="component_step_position" field="position" parent="component_step_final_particle"/>
+    <ks_component_member name="component_step_length" field="length" parent="component_step_final_particle"/>
+
+    <ks_component_group name="component_step_world">
+        <component_member name="step_id" field="step_id" parent="step"/>
+        <component_member name="continuous_time" field="continuous_time" parent="step"/>
+        <component_member name="continuous_length" field="continuous_length" parent="step"/>
+        <component_member name="time" field="time" parent="component_step_final_particle"/>
+        <component_member name="position" field="position" parent="component_step_final_particle"/>
+        <component_member name="momentum" field="momentum" parent="component_step_final_particle"/>
+        <component_member name="electric_field" field="electric_field" parent="component_step_final_particle"/>
+        <component_member name="electric_potential" field="electric_potential" parent="component_step_final_particle"/>
+        <component_member name="kinetic_energy" field="kinetic_energy_ev" parent="component_step_final_particle"/>
+        <component_member name="polar_angle_to_z" field="polar_angle_to_z" parent="component_step_final_particle"/>
+    </ks_component_group>
+
+    <!-- structure -->
+
+    <ksgeo_space name="space_world" spaces="world">
+        <command parent="write_root" field="add_track_output" child="component_track_world"/>
+        <command parent="write_root" field="add_step_output" child="component_step_world"/>
+        <command parent="root_terminator" field="add_terminator" child="term_max_steps"/>
+        <command parent="root_terminator" field="add_terminator" child="term_min_energy"/>
+        <geo_surface name="terminator_surface" surfaces="world/box_assembly/#">
+            <command parent="root_terminator" field="add_terminator" child="term_death"/>
+        </geo_surface>
+        <geo_surface name="reflection_surface" surfaces="world/cube_assembly/#">
+            <command parent="root_surface_interaction" field="set_surface_interaction" child="int_surface_reflection"/>
+        </geo_surface>
+    </ksgeo_space>
+
+
+    <!-- space navigator -->
+
+    <ksnav_meshed_space name="nav_meshed_space" root_space="space_world" max_octree_depth="9" n_allowed_elements="1"/>
+
+    <!-- simulation -->
+
+    <ks_simulation
+        name="mesh_simulation"
+        run="1"
+        seed="12345"
+        events="[events:100]"
+        electric_field="kemfield_e"
+        space="space_world"
+        generator="electron_single"
+        trajectory="trajectory_linear"
+        space_navigator="nav_meshed_space"
+        surface_navigator="nav_surface"
+        writer="write_root"
+    />
+
+</kassiopeia>

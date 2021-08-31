@@ -2,7 +2,7 @@
 
 namespace KEMField
 {
-KThreeVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KLineSegment* source, const KPosition& P) const
+KFieldVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KLineSegment* source, const KPosition& P) const
 {
     double r0 = (source->GetP0() - P).Magnitude();
     double r1 = (source->GetP1() - P).Magnitude();
@@ -15,7 +15,7 @@ KThreeVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KLineSeg
 }
 
 
-KThreeVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KLineSegment* source, const KPosition& P) const
+KFieldVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KLineSegment* source, const KPosition& P) const
 {
     KPosition r0 = P - source->GetP0();
     KPosition r1 = P - source->GetP1();
@@ -32,19 +32,19 @@ KThreeVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KLineSegme
     return r0.Cross(i).Unit() * prefac;
 }
 
-KThreeVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KSymmetryGroup<KLineSegment>* source,
+KFieldVector KMagnetostaticLineSegmentIntegrator::VectorPotential(const KSymmetryGroup<KLineSegment>* source,
                                                                   const KPosition& P) const
 {
-    KThreeVector A;
+    KFieldVector A;
     for (auto it : *source)
         A += VectorPotential(it, P);
     return A;
 }
 
-KThreeVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KSymmetryGroup<KLineSegment>* source,
+KFieldVector KMagnetostaticLineSegmentIntegrator::MagneticField(const KSymmetryGroup<KLineSegment>* source,
                                                                 const KPosition& P) const
 {
-    KThreeVector magneticField(0., 0., 0.);
+    KFieldVector magneticField(0., 0., 0.);
     for (auto it : *source)
         magneticField += MagneticField(it, P);
     return magneticField;

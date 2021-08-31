@@ -2,6 +2,7 @@
 #define KGAPPEARANCEBUILDER_HH_
 
 #include "KGAppearance.hh"
+#include "KGBindingsMessage.hh"
 
 namespace KGeoBag
 {
@@ -53,7 +54,7 @@ template<> inline bool KGAppearanceBuilder::AddAttribute(KContainer* aContainer)
         KGSurface* tSurface;
 
         if (tSurfaces.size() == 0) {
-            coremsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no surfaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 
@@ -69,7 +70,7 @@ template<> inline bool KGAppearanceBuilder::AddAttribute(KContainer* aContainer)
         KGSpace* tSpace;
 
         if (tSpaces.size() == 0) {
-            coremsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
+            bindmsg(eWarning) << "no spaces found for specifier <" << aContainer->AsString() << ">" << eom;
             return true;
         }
 

@@ -47,10 +47,18 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
     {
         return fVerbosityLevel;
     }
+    bool IsBatchMode() const
+    {
+        return fBatchMode;
+    }
 
     const KXMLTokenizer* GetContext() const
     {
         return fTokenizer;
+    }
+
+    const std::string GetSerializedConfig() const {
+        return fConfigSerializer ? fConfigSerializer->GetConfig() : "";
     }
 
     KXMLTokenizer* Configure(int argc = 0, char** argv = nullptr, bool processConfig = true);
@@ -71,6 +79,7 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
     KXMLTokenizer* fTokenizer;
     KArgumentList fArguments;
     int fVerbosityLevel;
+    bool fBatchMode;
     std::string fDefaultConfigFile;
     std::vector<std::string> fDefaultIncludePaths;
     bool fAllowConfigFileFallback;

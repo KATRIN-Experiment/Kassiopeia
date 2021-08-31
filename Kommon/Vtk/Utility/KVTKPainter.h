@@ -3,6 +3,8 @@
 
 #include "KPainter.h"
 
+#include <vtkObject.h>
+
 namespace katrin
 {
 class KVTKWindow;
@@ -19,6 +21,9 @@ class KVTKPainter : public KPainter
 
     void SetDisplayMode(bool aMode);
     void SetWriteMode(bool aMode);
+
+    virtual std::string HelpText();
+    virtual void OnKeyPress(vtkObject* /*caller*/, long unsigned int /*eventId*/, void* /*client*/, void* /*callData*/);
 
   protected:
     KVTKWindow* fWindow;

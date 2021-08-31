@@ -22,6 +22,10 @@ STATICINT sKGExtrudedObjectBuilderStructure =
     KGExtrudedObjectBuilder::Attribute<double>("z_min") + KGExtrudedObjectBuilder::Attribute<double>("z_max") +
     KGExtrudedObjectBuilder::Attribute<int>("longitudinal_mesh_count") +
     KGExtrudedObjectBuilder::Attribute<double>("longitudinal_mesh_power") +
+    KGExtrudedObjectBuilder::Attribute<int>("extruded_mesh_count") +
+    KGExtrudedObjectBuilder::Attribute<double>("extruded_mesh_power") +
+    KGExtrudedObjectBuilder::Attribute<bool>("refine_mesh") +
+    KGExtrudedObjectBuilder::Attribute<double>("mesh_merge_distance") +
     KGExtrudedObjectBuilder::Attribute<bool>("closed_form") +
     KGExtrudedObjectBuilder::ComplexElement<KGExtrudedObject::Line>("outer_line") +
     KGExtrudedObjectBuilder::ComplexElement<KGExtrudedObject::Line>("inner_line") +

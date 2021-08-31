@@ -1,5 +1,7 @@
 #include "KElectrostaticZonalHarmonicFieldSolver.hh"
 
+#include "KEMCoreMessage.hh"
+
 #include <numeric>
 
 // #include "KShanksTransformation.hh"
@@ -50,6 +52,7 @@ double KZonalHarmonicFieldSolver<KElectrostaticBasis>::Potential(const KPosition
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), phi, accumulator);
     }
 
+    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
     return fIntegratingFieldSolver.Potential(P);
 }
 
@@ -71,6 +74,7 @@ KFieldVector KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricField(const
         return std::accumulate(fSubsetFieldSolvers.begin(), fSubsetFieldSolvers.end(), E, accumulator);
     }
 
+    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
     return fIntegratingFieldSolver.ElectricField(P);
 }
 
@@ -97,6 +101,7 @@ KZonalHarmonicFieldSolver<KElectrostaticBasis>::ElectricFieldAndPotential(const 
                                accumulator);
     }
 
+    kem_cout_debug("ZH solver falling back to direct integration at point <" << P.Z() << " " << P.Perp() << ">"   << eom);
     return std::make_pair(fIntegratingFieldSolver.ElectricField(P), fIntegratingFieldSolver.Potential(P));
 }
 

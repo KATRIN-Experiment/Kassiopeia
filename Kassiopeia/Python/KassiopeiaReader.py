@@ -235,7 +235,7 @@ class Iterator:
         if not self.file:
             raise RuntimeError("A file must be opened before accessing a tree.")
 
-        if not treename.endswith('_DATA'):
+        if not (treename.endswith('_DATA') or treename.endswith('_PRESENCE') or treename.endswith('_STRUCTURE')):
             treename += '_DATA'
 
         tree = self.file.Get(treename)
@@ -286,7 +286,7 @@ class Iterator:
         if not self.file:
             raise RuntimeError("A file must be opened before accessing a tree.")
 
-        if not treename.endswith('_DATA'):
+        if not (treename.endswith('_DATA') or treename.endswith('_PRESENCE') or treename.endswith('_STRUCTURE')):
             treename += '_DATA'
 
         try:

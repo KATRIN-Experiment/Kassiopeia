@@ -417,7 +417,7 @@ void KGSpace::Volume(const std::shared_ptr<KGVolume>& aVolume)
         tBoundary->SetTags((*tAreaIt)->GetTags());
         const std::shared_ptr<KGArea> tArea = std::dynamic_pointer_cast<KGArea, KGBoundary>(*tAreaIt);
         if (tArea == nullptr){
-            coremsg(eWarning)<< "failed to cast KGBoundary <"<< (*tAreaIt)->GetName() << "> to KGArea! Certain features (like calculating the distance to this surface) might not be available." <<eom;
+            coremsg(eInfo)<< "failed to cast volume boundary <" << aVolume->GetName() << "/"<< (*tAreaIt)->GetName() << "> to KGArea! Certain features (like calculating the distance to this surface) might not be available." <<eom;
         }
         tBoundary->Area(tArea);
         AddBoundary(tBoundary);

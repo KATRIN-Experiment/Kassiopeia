@@ -175,6 +175,9 @@ void KSRootSpaceNavigator::CalculateNavigation()
                         fStep->SpaceNavigationStep(),
                         fStep->SpaceNavigationFlag());
 
+    if (! fNavigationParticle->IsValid())
+        throw KSNavigatorError() << "invalid particle state after navigation calculation";
+
     if (fStep->SpaceNavigationFlag() == true) {
         navmsg_debug("space navigation calculation:" << eom);
         navmsg_debug("  space navigation may occur" << eom);
@@ -224,6 +227,9 @@ void KSRootSpaceNavigator::ExecuteNavigation()
 {
     ExecuteNavigation(*fNavigationParticle, *fFinalParticle, *fParticleQueue);
     fFinalParticle->ReleaseLabel(fStep->SpaceNavigationName());
+
+    if (! fFinalParticle->IsValid())
+        throw KSNavigatorError() << "invalid particle state after navigation execution";
 
     fStep->ContinuousTime() = fNavigationParticle->GetTime() - fTerminatorParticle->GetTime();
     fStep->ContinuousLength() = fNavigationParticle->GetLength() - fTerminatorParticle->GetLength();

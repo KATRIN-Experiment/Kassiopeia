@@ -39,13 +39,13 @@ KMagnetostaticBasis::ValueType KMagnetostaticBoundaryIntegrator::BoundaryValue(K
 {
     fBoundaryVisitor.SetBoundaryIndex(i);
     surface->Accept(fBoundaryVisitor);
-    return fBoundaryVisitor.GetBoundaryValue(i);
+    return fBoundaryVisitor.GetBoundaryValue();
 }
 
 KMagnetostaticBasis::ValueType& KMagnetostaticBoundaryIntegrator::BasisValue(KSurfacePrimitive* surface, unsigned int i)
 {
     fBasisVisitor.SetBasisIndex(i);
     surface->Accept(fBasisVisitor);
-    return fBasisVisitor.GetBasisValue(i);
+    return fBasisVisitor.GetBasisValue();
 }
 }  // namespace KEMField

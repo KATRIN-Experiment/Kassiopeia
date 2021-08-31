@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Electrostatics
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (KFMELECTROSTATICS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticElement.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNode.hh
@@ -27,7 +25,6 @@ set (KFMELECTROSTATICS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNodeWorkScoreCalculator.hh
 )
 
-
 set (KFMELECTROSTATICS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticMultipoleSet.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticLocalCoefficientSet.cc
@@ -44,19 +41,28 @@ set (KFMELECTROSTATICS_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticNodeWorkScoreCalculator.cc
 )
 
-  if (${PROJECT_NAME}_USE_MPI)
-     list (APPEND KFMELECTROSTATICS_HEADERFILES
-          ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeBuilder_MPI.hh
-	  )
-     list (APPEND KFMELECTROSTATICS_SOURCEFILES
-          ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticTreeBuilder_MPI.cc
-	  )
-  endif (${PROJECT_NAME}_USE_MPI)
+if (KEMField_USE_MPI)
+    list (APPEND KFMELECTROSTATICS_HEADERFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeBuilder_MPI.hh
+    )
+    list (APPEND KFMELECTROSTATICS_SOURCEFILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMElectrostaticTreeBuilder_MPI.cc
+    )
+endif (KEMField_USE_MPI)
 
-##################################################
-
-add_library (KFMElectrostatics SHARED ${KFMELECTROSTATICS_SOURCEFILES} ${KFMELECTROSTATICS_HEADERFILES})
-target_link_libraries (KFMElectrostatics KEMCore KFMCore KFMMath KFMMathUtilities KVectorMath KFMKernel KFMTree KEMFileManipulation)
+add_library (KFMElectrostatics SHARED
+    ${KFMELECTROSTATICS_SOURCEFILES} ${KFMELECTROSTATICS_HEADERFILES})
+target_include_directories(KFMElectrostatics
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMElectrostatics
+    PUBLIC
+        KEMFileManipulation
+        KFMCore
+        KFMMath
+        KFMVectorMath
+        KFMKernel
+        KFMTree
+)
 
 kasper_install_headers (${KFMELECTROSTATICS_HEADERFILES})
 kasper_install_libraries (KFMElectrostatics)

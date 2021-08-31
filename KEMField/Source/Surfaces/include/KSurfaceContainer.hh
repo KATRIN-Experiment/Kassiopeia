@@ -1,7 +1,7 @@
 #ifndef KSURFACECONTAINER_DEF
 #define KSURFACECONTAINER_DEF
 
-#include "../../../Surfaces/include/KSurface.hh"
+#include "KSurface.hh"
 #include "KSmartPointer.hh"
 
 #include <vector>

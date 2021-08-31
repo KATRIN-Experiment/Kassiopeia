@@ -8,7 +8,7 @@
 #include <cmath>
 #include <istream>
 #include <ostream>
-#include <vector>
+#include <array>
 
 namespace KGeoBag
 {
@@ -75,7 +75,7 @@ class KTwoVector
     const double& GetR() const;
 
     const double* Components() const;
-    const std::vector<double> ComponentVector() const;
+    const std::array<double,2> AsArray() const;
 
     //comparison
 
@@ -231,9 +231,10 @@ inline const double* KTwoVector::Components() const
 {
     return (const double*) fData;
 }
-inline const std::vector<double> KTwoVector::ComponentVector() const
+inline const std::array<double,2> KTwoVector::AsArray() const
 {
-    std::vector<double> tData = {fData[0], fData[1]};
+    std::array<double,2> tData;
+    std::copy(std::begin(fData), std::end(fData), std::begin(tData));
     return tData;
 }
 

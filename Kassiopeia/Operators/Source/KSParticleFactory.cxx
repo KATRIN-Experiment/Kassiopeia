@@ -139,7 +139,7 @@ KSElectricField* KSParticleFactory::GetElectricField()
 
 // A "ghost" particle
 STATICINT sGhostDefinition = KSParticleFactory::GetInstance().Define(
-    0, "ghost", {}, std::numeric_limits<double>::min(), 0., 0., 0.);  // needs to have non-zero mass
+    0, "ghost", {}, 1e-123, 0., 0., 0.);  // needs to have non-zero mass, but too small energy breaks tracking
 
 //electron
 STATICINT sElectronDefinition = KSParticleFactory::GetInstance().Define(

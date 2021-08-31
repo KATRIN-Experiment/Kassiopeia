@@ -24,7 +24,11 @@ class KGComplexMesher : virtual public KGMesherBase
     static void DiscretizeInterval(double interval, int nSegments, double power, std::vector<double>& segments);
 
   protected:
-    void AddElement(KGMeshElement* e);
+    //void AddElement(KGMeshElement* e);
+
+    template<class MeshType>
+    void AddElement(MeshType* e, bool checkNormals = true);
+
     void RefineAndAddElement(KGMeshRectangle* rectangle, int nElements_A, double power_A, int nElements_B,
                              double power_B);
     void RefineAndAddElement(KGMeshTriangle* triangle, int nElements, double power);

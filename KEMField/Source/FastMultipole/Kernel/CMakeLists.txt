@@ -1,8 +1,6 @@
 # CMakeLists for KEMField/FastMultipole/Kernel
 # Author: J. P. Barrett
 
-kasper_internal_include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set (KERNEL_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMKernelExpansion.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMScalarMultipoleExpansion.hh
@@ -23,10 +21,14 @@ set (KERNEL_SOURCEFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/KFMScalarMultipoleExpansion.cc
 )
 
-##################################################
-
-add_library (KFMKernel SHARED ${KERNEL_SOURCEFILES} ${KERNEL_HEADERFILES})
-target_link_libraries (KFMKernel KFMCore KFMMath)
+add_library (KFMKernel SHARED
+    ${KERNEL_SOURCEFILES} ${KERNEL_HEADERFILES})
+target_include_directories(KFMKernel
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_link_libraries (KFMKernel
+    PUBLIC
+        KFMMath
+)
 
 kasper_install_headers (${KERNEL_HEADERFILES})
 kasper_install_libraries (KFMKernel)

@@ -26,10 +26,10 @@
 
 #include <sstream>
 
-using std::stringstream;
-
 using namespace Kassiopeia;
+using namespace KGeoBag;
 using namespace katrin;
+using namespace std;
 
 int main(int anArgc, char** anArgv)
 {

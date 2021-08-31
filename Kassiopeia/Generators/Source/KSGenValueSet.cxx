@@ -23,7 +23,10 @@ void KSGenValueSet::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
     double tValueCount = fValueCount;
-    double tValueIncrement = (fValueStop - fValueStart) / ((double) (tValueCount > 1 ? tValueCount - 1 : 1));
+    double tValueIncrement = fValueIncrement;
+
+    if (tValueCount != 0)
+        tValueIncrement = (fValueStop - fValueStart) / ((double) (tValueCount > 1 ? tValueCount - 1 : 1));
 
     if (fValueIncrement != 0.) {
         if ((fValueCount > 0) && (fValueIncrement != tValueIncrement))  // only fail if the two definitions do not match
@@ -33,7 +36,7 @@ void KSGenValueSet::DiceValue(std::vector<double>& aDicedValues)
             return;
         }
         tValueIncrement = fValueIncrement;
-        tValueCount = (fValueStop - fValueStart) / tValueIncrement;
+        tValueCount = (fValueStop - fValueStart) / tValueIncrement + 1;  // last step included
     }
 
     for (unsigned int tIndex = 0; tIndex < tValueCount; tIndex++) {

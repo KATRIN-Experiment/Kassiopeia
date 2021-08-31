@@ -1,4 +1,4 @@
-#include "../../../Surfaces/include/KSortedSurfaceContainer.hh"
+#include "KSortedSurfaceContainer.hh"
 
 #include <algorithm>
 

@@ -1,4 +1,4 @@
-#include "../../../Surfaces/include/KRectangle.hh"
+#include "KRectangle.hh"
 
 #include <cmath>
 

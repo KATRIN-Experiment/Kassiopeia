@@ -3,6 +3,7 @@
 #include "KROOTPad.h"
 #include "KROOTPainter.h"
 #include "KUtilityMessage.h"
+#include "KXMLInitializer.hh"
 
 #ifdef KASPER_USE_BOOST
 //#include "KPathUtils.h"
@@ -39,7 +40,7 @@ KROOTWindow::~KROOTWindow()
 
 void KROOTWindow::Render()
 {
-    utilmsg(eNormal) << "KROOTWindow starts to render!" << eom;
+    utilmsg(eInfo) << "KROOTWindow starts to render!" << eom;
 
     //        gStyle->SetPadBottomMargin(0.1);
     //          gStyle->SetPadRightMargin(0.1);
@@ -49,15 +50,18 @@ void KROOTWindow::Render()
     gStyle->SetTitleAlign(23);
     gStyle->SetTitleSize(0.08, "t");
 
-    if (gApplication) {
-        fApplication = gApplication;
-    }
-    else {
-        fApplication = new TApplication("My ROOT Application", nullptr, nullptr);
-    }
+    if (!KXMLInitializer::GetInstance().IsBatchMode())
+    {
+        if (gApplication) {
+            fApplication = gApplication;
+        }
+        else {
+            fApplication = new TApplication("My ROOT Application", nullptr, nullptr);
+        }
 
-    TQObject::Connect("TCanvas", "Closed()", "TApplication", fApplication, "Terminate()");
-    TQObject::Connect("TPad", "Closed()", "TApplication", fApplication, "Terminate()");
+        TQObject::Connect("TCanvas", "Closed()", "TApplication", fApplication, "Terminate()");
+        TQObject::Connect("TPad", "Closed()", "TApplication", fApplication, "Terminate()");
+    }
 
     fCanvas = new TCanvas(GetName().c_str(), GetName().c_str(), 10, 10, fCanvasWidth, fCanvasHeight);
 
@@ -129,14 +133,20 @@ void KROOTWindow::Render()
         (*tPadIt)->Render();
     }
 
-    utilmsg(eNormal) << "KROOTWindow finished to render!" << eom;
+    utilmsg(eInfo) << "KROOTWindow finished to render!" << eom;
 
     return;
 }
 
 void KROOTWindow::Display()
 {
-    utilmsg(eNormal) << "KROOTWindow starts to display!" << eom;
+    if (KXMLInitializer::GetInstance().IsBatchMode()) {
+        utilmsg(eWarning) << "KROOTWindow display disabled in batch mode"
+                        << eom;
+        return;
+    }
+
+    utilmsg(eInfo) << "KROOTWindow starts to display!" << eom;
 
     fCanvas->cd();
     if (fFrame) {
@@ -156,13 +166,13 @@ void KROOTWindow::Display()
         (*tPadIt)->Display();
     }
 
-    utilmsg(eNormal) << "KROOTWindow finished to display!" << eom;
+    utilmsg(eInfo) << "KROOTWindow finished to display!" << eom;
     return;
 }
 
 void KROOTWindow::Write()
 {
-    utilmsg(eNormal) << "KROOTWindow starts to write!" << eom;
+    utilmsg(eInfo) << "KROOTWindow starts to write!" << eom;
 
     if (fWriteEnabled) {
         string tOutputStringRoot;
@@ -195,14 +205,14 @@ void KROOTWindow::Write()
         (*tPadIt)->Write();
     }
 
-    if (fActive) {
+    if (fActive && fApplication) {
         if (!fApplication->IsRunning()) {
-            utilmsg(eNormal) << "KROOTWindow starting the TApplication!" << eom;
+            utilmsg(eInfo) << "KROOTWindow starting the TApplication!" << eom;
             fApplication->Run(true);
         }
     }
 
-    utilmsg(eNormal) << "KROOTWindow finished to write!" << eom;
+    utilmsg(eInfo) << "KROOTWindow finished to write!" << eom;
     return;
 }
 

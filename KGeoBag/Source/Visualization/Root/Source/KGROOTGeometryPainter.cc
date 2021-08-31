@@ -3,6 +3,7 @@
 #include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
+#include "KStringUtils.h"
 
 #include <TColor.h>
 #include <cmath>
@@ -16,6 +17,9 @@ namespace KGeoBag
 {
 
 KGROOTGeometryPainter::KGROOTGeometryPainter() :
+    fShowLabels(false),
+    fSaveJSON(false),
+    fSaveSVG(false),
     fPlaneNormal(0.0, 1.0, 0.0),
     fPlanePoint(0.0, 0.0, 0.0),
     fSwapAxis(false),
@@ -35,16 +39,26 @@ KGROOTGeometryPainter::KGROOTGeometryPainter() :
 {}
 KGROOTGeometryPainter::~KGROOTGeometryPainter()
 {
-    for (auto& space : fROOTSpaces) {
+    for (auto& space : fROOTSpaces)
         delete space;
-    }
-    for (auto& surface : fROOTSurfaces) {
+    for (auto& surface : fROOTSurfaces)
         delete surface;
-    }
+    for (auto& label : fROOTLabels)
+        delete label;
 }
 
 void KGROOTGeometryPainter::Render()
 {
+    for (auto& space : fROOTSpaces)
+        delete space;
+    for (auto& surface : fROOTSurfaces)
+        delete surface;
+    for (auto& label : fROOTLabels)
+        delete label;
+    fROOTSpaces.clear();
+    fROOTSurfaces.clear();
+    fROOTLabels.clear();
+
     CalculatePlaneCoordinateSystem();
 
     KGSurface* tSurface;
@@ -234,6 +248,35 @@ void KGROOTGeometryPainter::Display()
             surface->SetLineWidth(1);
             surface->Draw();
         }
+
+        if (fShowLabels) {
+            vismsg(eInfo) << "ROOT geometry painter drawing " << fROOTLabels.size() << " labels" << eom;
+
+            vector<Rectangle_t> tBBoxes;
+
+            for (auto& label : fROOTLabels) {
+                label->SetTextAlign(22);  // centered
+                label->SetTextFont(423);  // helvetica-medium-r-normal / scalabale+rotatable
+                label->SetTextSizePixels(12);
+                label->SetTextColorAlpha(kBlue + 2, 0.2);
+
+                // avoid (some) text overlaps - this is far from perfect!
+                for (auto & otherBox : tBBoxes) {
+                    auto thisBox = label->GetBBox();
+                    int dir = 1;
+                    while (thisBox.fX >= otherBox.fX && thisBox.fX+thisBox.fWidth <= otherBox.fX+otherBox.fWidth &&
+                            thisBox.fY >= otherBox.fY && thisBox.fY+thisBox.fHeight <= otherBox.fY+otherBox.fHeight) {
+                        label->SetX(label->GetX() + dir*0.01);
+                        label->SetY(label->GetY() + dir*0.01);
+                        thisBox = label->GetBBox();
+                        dir *= -1;
+                    }
+                }
+
+                label->Draw();
+                tBBoxes.push_back(label->GetBBox());
+            }
+        }
     }
 
     Write();  // FIXME
@@ -246,8 +289,11 @@ void KGROOTGeometryPainter::Write()
 
     //if (fWriteEnabled == true) {
 
-    WriteJSON();
-    WriteSVG();
+    if (fSaveJSON)
+        WriteJSON();
+
+    if (fSaveSVG)
+        WriteSVG();
 
     //}
     return;
@@ -498,6 +544,7 @@ void KGROOTGeometryPainter::VisitSurface(KGSurface* aSurface)
     fCurrentXAxis = aSurface->GetXAxis();
     fCurrentYAxis = aSurface->GetYAxis();
     fCurrentZAxis = aSurface->GetZAxis();
+    fCurrentTags = aSurface->GetTags();
 
     if (aSurface->HasExtension<KGAppearance>() == true) {
         fCurrentData = aSurface->AsExtension<KGAppearance>();
@@ -1135,6 +1182,7 @@ void KGROOTGeometryPainter::VisitSpace(KGSpace* aSpace)
     fCurrentXAxis = aSpace->GetXAxis();
     fCurrentYAxis = aSpace->GetYAxis();
     fCurrentZAxis = aSpace->GetZAxis();
+    fCurrentTags = aSpace->GetTags();
 
     if (aSpace->HasExtension<KGAppearance>() == true) {
         fCurrentData = aSpace->AsExtension<KGAppearance>();
@@ -3574,6 +3622,29 @@ void KGROOTGeometryPainter::CombineOrderedPoints(OrderedPoints& anOrderedPoints)
 //rendering functions
 //*******************
 
+void KGROOTGeometryPainter::PolyLineToROOTLabel(const TPolyLine* aPolyLine)
+{
+    int tNumPoints = aPolyLine->Size();
+    double tMidX = 0, tMidY = 0;
+
+    // get midpoint
+    for (Int_t i = 0; i < tNumPoints; i++) {
+        tMidX += aPolyLine->GetX()[i];
+        tMidY += aPolyLine->GetY()[i];
+    }
+    tMidX /= (double) tNumPoints;
+    tMidY /= (double) tNumPoints;
+
+    // get label string
+    stringstream ss;
+    for (auto & tag : fCurrentTags) {
+        ss << "@" << tag << " ";
+    }
+
+    auto *tLabel = new TText(tMidX, tMidY, ss.str().c_str());
+    fROOTLabels.push_back(tLabel);
+}
+
 void KGROOTGeometryPainter::OrderedPointsToROOTSurface(const OrderedPoints& anOrderedPoints)
 {
     for (const auto& tPoints : anOrderedPoints.fData) {
@@ -3592,8 +3663,10 @@ void KGROOTGeometryPainter::OrderedPointsToROOTSurface(const OrderedPoints& anOr
         }
         if (tPolyLine->Size() > 0) {
             fROOTSurfaces.push_back(tPolyLine);
+            PolyLineToROOTLabel(tPolyLine);
         }
     }
+
     return;
 }
 
@@ -3829,6 +3902,7 @@ void KGROOTGeometryPainter::OrderedPointsToROOTSpace(const OrderedPoints& anOrde
         }
         if (tPolyLine->Size() > 0) {
             fROOTSpaces.push_back(tPolyLine);
+            PolyLineToROOTLabel(tPolyLine);
         }
     }
     return;
