@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Kassiopeia'
-copyright = '2021, The Kassiopeia developers.'
+copyright = '2016-2021, The Kassiopeia developers.'
 author = 'The Kassiopeia developers'
 
 # The full version, including alpha/beta/rc tags
-release = '3.7'
+release = '3.8'
 
 
 # -- General configuration ---------------------------------------------------

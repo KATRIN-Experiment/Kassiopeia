@@ -6,8 +6,9 @@
 <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta charset="utf-8"/>
+<meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>
 <title>
-      Understanding Simulation Output | Kassiopeia 3.7 documentation
+      Understanding Simulation Output | Kassiopeia 3.8 documentation
     </title>
 <link href="_static/pygments.css" rel="stylesheet"/>
 <link href="_static/theme.css" rel="stylesheet"/>
@@ -22,7 +23,7 @@
 <a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#understanding-simulation-output" title="Skip navigation links">Skip to content</a>
 <header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
 <img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
-</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia 3.7 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
+</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia 3.8 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
 <input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
 <button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
 <svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
@@ -293,7 +294,7 @@
 </nav>
 <div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
 <main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
-<a class="text-blue-700" href="index.html">Kassiopeia 3.7 documentation</a>
+<a class="text-blue-700" href="index.html">Kassiopeia 3.8 documentation</a>
 <span class="text-gray-700 mr-1"> • </span><span aria-current="page">Understanding Simulation Output</span>
 </nav>
 <section id="understanding-simulation-output">
@@ -628,21 +629,21 @@ iterating through each component:</p>
 <span class="code-lang">c++</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="k">for</span> <span class="p">(</span><span class="n">tRunReader</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">tRunReader</span> <span class="o">&lt;=</span> <span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastRunIndex</span><span class="p">();</span> <span class="n">tRunReader</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// run analysis code</span>
+<pre><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tRunReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">tRunReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastRunIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tRunReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// run analysis code</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="n">tEventReader</span> <span class="o">=</span> <span class="n">tRunReader</span><span class="p">.</span><span class="n">GetFirstEventIndex</span><span class="p">();</span> <span class="n">tEventReader</span> <span class="o">&lt;=</span> <span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastEventIndex</span><span class="p">();</span> <span class="n">tEventReader</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// event analysis code</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tEventReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetFirstEventIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tEventReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastEventIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tEventReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// event analysis code</span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="n">tTrackReader</span> <span class="o">=</span> <span class="n">tEventReader</span><span class="p">.</span><span class="n">GetFirstTrackIndex</span><span class="p">();</span> <span class="n">tTrackReader</span> <span class="o">&lt;=</span> <span class="n">tEventReader</span><span class="p">.</span><span class="n">GetLastTrackIndex</span><span class="p">();</span> <span class="n">tTrackReader</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// track analysis code</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tTrackReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tEventReader</span><span class="p">.</span><span class="n">GetFirstTrackIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tTrackReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tEventReader</span><span class="p">.</span><span class="n">GetLastTrackIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tTrackReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// track analysis code</span>
 
-            <span class="k">for</span> <span class="p">(</span><span class="n">tStepReader</span> <span class="o">=</span> <span class="n">tTrackReader</span><span class="p">.</span><span class="n">GetFirstStepIndex</span><span class="p">();</span> <span class="n">tStepReader</span> <span class="o">&lt;=</span> <span class="n">tTrackReader</span><span class="p">.</span><span class="n">GetLastStepIndex</span><span class="p">();</span>  <span class="n">tStepReader</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">// step analysis code</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tStepReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tTrackReader</span><span class="p">.</span><span class="n">GetFirstStepIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tStepReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tTrackReader</span><span class="p">.</span><span class="n">GetLastStepIndex</span><span class="p">();</span><span class="w">  </span><span class="n">tStepReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">// step analysis code</span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>Individual output fields are accessed via an instance of <a href="#id11"><span class="problematic" id="id12">:kassiopeia:`KSReadObjectROOT`</span></a>, as shown in the example. The
 benefit of using this method is that it uses <em>Kassiopeia’s</em> internal classes that are fully compatible with the writer
@@ -658,18 +659,18 @@ the <cite>TTreeReader</cite> interface:</p>
 <span class="code-lang">c++</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="n">TFile</span> <span class="nf">file</span><span class="p">(</span><span class="s">"QuadrupoleTrapSimulation.root"</span><span class="p">);</span>
+<pre><code><span class="n">TFile</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="s">"QuadrupoleTrapSimulation.root"</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span> <span class="nf">track_data</span><span class="p">(</span><span class="s">"TRACK_DATA"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">file</span><span class="p">);</span>
-<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span> <span class="n">first_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span> <span class="s">"FIRST_STEP_INDEX"</span><span class="p">);</span>
-<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span> <span class="n">last_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span> <span class="s">"LAST_STEP_INDEX"</span><span class="p">);</span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">track_data</span><span class="p">(</span><span class="s">"TRACK_DATA"</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span><span class="w"> </span><span class="s">"FIRST_STEP_INDEX"</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">last_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span><span class="w"> </span><span class="s">"LAST_STEP_INDEX"</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span> <span class="nf">step_data</span><span class="p">(</span><span class="s">"component_step_cell_DATA"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">file</span><span class="p">);</span>
-<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">step_moment</span><span class="p">(</span><span class="n">step_data</span><span class="p">,</span> <span class="s">"orbital_magnetic_moment"</span><span class="p">);</span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">step_data</span><span class="p">(</span><span class="s">"component_step_cell_DATA"</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">step_moment</span><span class="p">(</span><span class="n">step_data</span><span class="p">,</span><span class="w"> </span><span class="s">"orbital_magnetic_moment"</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">TTreeReader</span> <span class="nf">step_presence</span><span class="p">(</span><span class="s">"component_step_cell_PRESENCE"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">file</span><span class="p">);</span>
-<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span> <span class="n">valid_index</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span> <span class="s">"INDEX"</span><span class="p">);</span>
-<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span> <span class="n">valid_length</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span> <span class="s">"LENGTH"</span><span class="p">);</span>
+<span class="n">TTreeReader</span><span class="w"> </span><span class="nf">step_presence</span><span class="p">(</span><span class="s">"component_step_cell_PRESENCE"</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_index</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">"INDEX"</span><span class="p">);</span><span class="w"></span>
+<span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_length</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">"LENGTH"</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>As explained further below, here it is necessary to take into account the information from the <code class="docutils literal notranslate">TRACK_DATA</code> tree to
 get the first and last step index belonging to each track, as well as the <code class="docutils literal notranslate">..._PRESENCE</code> tree to only work on valid
@@ -682,35 +683,35 @@ over the steps only processes valid output fields:</p>
 <span class="code-lang">c++</span>
 <button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
 </div>
-<pre><code><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="kt">unsigned</span><span class="o">&gt;&gt;</span> <span class="n">valid_steps</span><span class="p">;</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">step_presence</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span> <span class="p">{</span>
-    <span class="n">valid_steps</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="o">*</span><span class="n">valid_index</span><span class="p">,</span> <span class="o">*</span><span class="n">valid_index</span> <span class="o">+</span> <span class="o">*</span><span class="n">valid_length</span><span class="p">);</span>
-<span class="p">}</span>
+<pre><code><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="kt">unsigned</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">valid_steps</span><span class="p">;</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">step_presence</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">valid_steps</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="o">*</span><span class="n">valid_index</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">valid_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">*</span><span class="n">valid_length</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="k">while</span> <span class="p">(</span><span class="n">track_data</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">max_moment</span> <span class="o">=</span> <span class="o">-</span><span class="n">TMath</span><span class="o">::</span><span class="n">Infinity</span><span class="p">();</span>
-    <span class="k">auto</span> <span class="n">min_moment</span> <span class="o">=</span> <span class="n">TMath</span><span class="o">::</span><span class="n">Infinity</span><span class="p">();</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">track_data</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">max_moment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">TMath</span><span class="o">::</span><span class="n">Infinity</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">min_moment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TMath</span><span class="o">::</span><span class="n">Infinity</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">while</span> <span class="p">(</span><span class="n">step_data</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span> <span class="p">{</span>
-        <span class="k">auto</span> <span class="n">index</span> <span class="o">=</span> <span class="n">step_data</span><span class="p">.</span><span class="n">GetCurrentEntry</span><span class="p">();</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">step_data</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">step_data</span><span class="p">.</span><span class="n">GetCurrentEntry</span><span class="p">();</span><span class="w"></span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="o">*</span><span class="n">first_step_index</span><span class="p">)</span>
-            <span class="k">continue</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">last_step_index</span><span class="p">)</span>
-            <span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">*</span><span class="n">first_step_index</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">last_step_index</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span> <span class="nl">valid</span> <span class="p">:</span> <span class="n">valid_steps</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">valid</span><span class="p">.</span><span class="n">first</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="n">valid</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">step_moment</span> <span class="o">&gt;</span> <span class="n">max_moment</span><span class="p">)</span>
-                    <span class="n">max_moment</span> <span class="o">=</span> <span class="o">*</span><span class="n">step_moment</span><span class="p">;</span>
-                <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">step_moment</span> <span class="o">&lt;</span> <span class="n">min_moment</span><span class="p">)</span>
-                    <span class="n">min_moment</span> <span class="o">=</span> <span class="o">*</span><span class="n">step_moment</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">auto</span> <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">);</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"extrema for track &lt;"</span> <span class="o">&lt;&lt;</span> <span class="n">deviation</span> <span class="o">&lt;&lt;</span> <span class="s">"&gt;"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nl">valid</span> <span class="p">:</span><span class="w"> </span><span class="n">valid_steps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">valid</span><span class="p">.</span><span class="n">first</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">valid</span><span class="p">.</span><span class="n">second</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">step_moment</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">max_moment</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">max_moment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">step_moment</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">step_moment</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">min_moment</span><span class="p">)</span><span class="w"></span>
+<span class="w">                    </span><span class="n">min_moment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">step_moment</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">max_moment</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">min_moment</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">max_moment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">min_moment</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"extrema for track &lt;"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"&gt;"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </section>
 <section id="using-python">
@@ -1067,7 +1068,7 @@ the order of several Gigabytes can be easily produced by a typical Monte-Carlo s
 </div>
 </section>
 </main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.0.2</a></footer>
+<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2016-2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.1.2</a></footer>
 </div>
 <div class="sticky bottom-0 md:hidden print:hidden bg-white">
 <div class="flex justify-center items-center">
