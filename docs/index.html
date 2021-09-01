@@ -313,30 +313,92 @@
 <li class="toctree-l2"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiling.html#docker-image">Docker image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#minimum-requirements">Minimum requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#optional-dependencies">Optional dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#external-libraries">External libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#environment-variables">Environment variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#executing-kassiopeia">Executing Kassiopeia</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#build-options">Build options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#miscellaneous-options">Miscellaneous options</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html"> Examples and Tests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#example-configurations">Example configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#verbosity-levels">Verbosity levels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#output-files">Output files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#example-configurations">Example configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#the-mesh-simulation-example">The Mesh Simulation Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#overview-and-units">Overview and Units</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#geometry">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#variables">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#print-statements">Print statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#formula-expressions">Formula Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#comments">Comments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#verbosity-levels">Verbosity levels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#additional-logging">Additional logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#geometry">Geometry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#shapes-and-assemblies">Shapes and assemblies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#tagging-system">Tagging system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#assembling-elements">Assembling elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#transformations">Transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#extensions">Extensions</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#kemfield">KEMField</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#fields">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#fields">Fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#electric">Electric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#magnetic">Magnetic</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#kassiopeia">Kassiopeia</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#generation">Generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#termination">Termination</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#propagation">Propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#interactions">Interactions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#interactions">Interactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#volume-interactions">Volume Interactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#surface-interactions">Surface Interactions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#writers">Writers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#output-description">Output description</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation">Navigation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation-and-commands">Navigation and Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#simulation">Simulation</a></li>
@@ -348,41 +410,145 @@
 <li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-surface">Rotated poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html">Complex Shapes in KGeoBag</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port">Pump Port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port">Conic section pump port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam">Beam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod">Rod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-surfaces-with-holes">Extruded surfaces with holes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-surface">Rotated surface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port-space">Pump Port Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port-space">Conic Section Pump Port Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam-space">Beam Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod-space">Rod Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-space">Extruded Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-space">Rotated Space</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html#external-shapes-in-kgeobag">External Shapes in KGeoBag</a></li>
 <li class="toctree-l1"><a class="reference internal" href="output.html"> Understanding Simulation Output</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="output.html#output-configuration">Output configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output.html#root-output-files">ROOT output files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output.html#accessing-simulation-data">Accessing simulation data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="output.html#id14">Accessing simulation data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#output-configuration">Output configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#groups-and-fields">Groups and fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#output-structure">Output structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#root-output-files">ROOT output files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#data-structure">Data structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#accessing-simulation-data">Accessing simulation data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-kassiopeia">Using Kassiopeia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-root">Using ROOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-python">Using Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#kassiopeiareader">KassiopeiaReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#uproot-pandas">uproot / Pandas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#python-notebook">Python notebook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#geometry-visualization">Geometry visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#id13">Data structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#id14">Accessing simulation data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-paraview">Using ParaView</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#advanced-visualization">Advanced visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#id1">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#id2">Usage</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html"> Visualization Techniques</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#kgeobag-visualization">KGeoBag visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#kgeobag-visualization">KGeoBag visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#python">Python</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="visualization.html#kassiopieia-visualization">Kassiopieia visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#kemfield-visualization">KEMField visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#kemfield-visualization">KEMField visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#field-maps">Field maps</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html"> License</a></li>
@@ -393,8 +559,6 @@
 <section id="indices-and-tables">
 <h1>Indices and tables<a aria-label="Copy link to section: Indices and tables." class="headerlink tooltipped tooltipped-ne" href="#indices-and-tables" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </section>

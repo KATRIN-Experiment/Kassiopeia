@@ -12,7 +12,7 @@ Welcome to Kassiopeia's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
     Introduction <introduction.rst>
     External Documentation, Citation and Contact <external_documentation.rst>
@@ -30,6 +30,4 @@ Contents:
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
