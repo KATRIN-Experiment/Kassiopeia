@@ -173,7 +173,7 @@ mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 #option( KASPER_USE_BOOST "Build Boost dependent modules" ${Boost_FOUND} )
 set(KASPER_USE_BOOST ON)
 
-#find_package(ROOT QUIET)
+find_package(ROOT QUIET)
 if(ROOT_FOUND AND NOT DEFINED KASPER_USE_ROOT)
     message("ROOT was found and enabled automatically. Set KASPER_USE_ROOT=OFF to change this.")
 endif()
