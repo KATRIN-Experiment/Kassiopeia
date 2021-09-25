@@ -3,7 +3,6 @@ if (Kassiopeia_ENABLE_APP)
 
     # executables
     set( VALIDATION_SOURCE_BASENAMES
-        TestField
         # TestTrajectory
         # TestGenerator
         # TestSpaceInteraction
@@ -26,6 +25,7 @@ if (Kassiopeia_ENABLE_APP)
     if(Kassiopeia_USE_VTK)
         if(KEMField_USE_VTK)
             list( APPEND VALIDATION_SOURCE_BASENAMES
+                TestField
                 TestPotentialmap
             )
         endif(KEMField_USE_VTK)
