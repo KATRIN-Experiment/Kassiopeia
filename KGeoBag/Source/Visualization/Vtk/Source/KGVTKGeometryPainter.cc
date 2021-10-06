@@ -22,6 +22,7 @@
 #include "vtkSTLWriter.h"
 #include "vtkTriangleFilter.h"
 #include "vtkXMLPolyDataWriter.h"
+#include "vtkUnsignedCharArray.h"
 
 #include <cmath>
 
