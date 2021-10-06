@@ -10,7 +10,7 @@ set(KASPER_VERSION "${KASPER_VERSION_MAJOR}.${KASPER_VERSION_MINOR}.${KASPER_VER
 #project( Kasper )
 project( Kasper VERSION ${KASPER_VERSION}
                 DESCRIPTION "The KATRIN Analysis and Simulations Package"
-                LANGUAGES CXX )
+                LANGUAGES CXX C )
 
 set( BUILD_SHARED_LIBS ON )
 set( Boost_USE_STATIC_LIBS OFF )
