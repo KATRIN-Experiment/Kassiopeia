@@ -41,10 +41,10 @@ constexpr double Q()
     return 1.60217653E-19;
 }  //!< elementary charge  in C(>0)
 
-// constexpr double g()
-// {
-//     return 2.002319304361;
-// }//!< electron g-factor (>0)
+constexpr double g()
+{
+    return 2.002319304361;
+}  //!< electron g-factor (>0)
 
 constexpr double g_N()
 {
@@ -69,12 +69,12 @@ constexpr double Hbar()
 constexpr double Hbar_eV()
 {
     return Hbar() / Q();
-}  //hbar in eV*s
+}  //!< hbar in eV*s
 
 constexpr double HbarC_eV()
 {
     return 197.326968E-9;
-}  //!<hbar c in m eV.
+}  //!< hbar c in m eV.
 
 constexpr double kB()
 {
@@ -105,12 +105,12 @@ constexpr double AtomicMassUnit_eV()
 constexpr double BohrRadius()
 {
     return 0.5291772108E-10;
-}  //!<Bohr radius (M_prot -> infinity)
+}  //!< Bohr radius (M_prot -> infinity)
 
 constexpr double BohrRadiusSquared()
 {
     return 2.8002852043e-21;
-}  //!<squared Bohr radius
+}  //!< squared Bohr radius
 
 constexpr double ERyd_eV()
 {
