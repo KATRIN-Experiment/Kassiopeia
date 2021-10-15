@@ -21,7 +21,8 @@ namespace katrin
 
 /**
      * This class contains various fundamental constants.
-     * Values are taken from PDG edition 2006, unless pointed out otherwise. The naming conventions are: normal name for SI units, a suffix _unit for something else.
+     * Values are taken from PDG edition 2021 (https://pdg.lbl.gov/2021/reviews/rpp2020-rev-phys-constants.pdf), unless pointed out otherwise. 
+     * The naming conventions are: normal name for SI units, a suffix _unit for something else.
      **/
 namespace KConst
 {
@@ -34,99 +35,94 @@ template<class XFloatT = double> constexpr XFloatT Pi()
 constexpr double C()
 {
     return 299792458.0;
-}  //!< c im m/s
+}  //!< c im m/s, uncertainty: exact
 
 constexpr double Q()
 {
-    return 1.60217653E-19;
-}  //!< elementary charge  in C(>0)
-
-// constexpr double g()
-// {
-//     return 2.002319304361;
-// }//!< electron g-factor (>0)
+    return 1.602176634E-19;
+}  //!< elementary charge  in C(>0), uncertainty: exact
 
 constexpr double mu_B()
 {
-    return 9.27400968E-24;
-}  //!< Bohr magneton in J/T
+    return 9.2740100782E-24;
+}  //!< Bohr magneton in J/T, uncertainty: 0.3 ppb
 
 constexpr double Alpha()
 {
-    return 7.2973525664E-3;
-}  //!< fine structure constant alpha
+    return 7.2973525693E-3;
+}  //!< fine structure constant alpha, uncertainty: 0.15 ppb
 
 constexpr double Hbar()
 {
-    return 1.05457168E-34;
-}  //!< hbar in J*s
+    return 1.054571817E-34;
+}  //!< hbar in J*s, uncertainty: exact to given precision
 
 constexpr double Hbar_eV()
 {
     return Hbar() / Q();
-}  //hbar in eV*s
+}  //hbar in eV*s, uncertainty: exact to calculated precision
 
 constexpr double HbarC_eV()
 {
-    return 197.326968E-9;
-}  //!<hbar c in m eV.
+    return 197.3269804E-9;
+}  //!<hbar c in m eV, uncertainty: exact to given precision
 
 constexpr double kB()
 {
-    return 1.3806505E-23;
-}  //!< Boltzmann constant J/K
+    return 1.380649E-23;
+}  //!< Boltzmann constant J/K, uncertainty: exact
 
 constexpr double kB_eV()
 {
-    return 8.617343E-5;
-}  //!< Boltzmann constant eV/K
+    return 8.617333262E-5;
+}  //!< Boltzmann constant eV/K, uncertainty: exact to given precision
 
 constexpr double N_A()
 {
-    return 6.022141E+23;
-}  //!< Avogadro Constant in 1/mol
+    return 6.02214076E+23;
+}  //!< Avogadro Constant in 1/mol, uncertainty: exact
 
 //atomic properties
 constexpr double AtomicMassUnit_kg()
 {
-    return 1.66053886E-27;
-}  //!< unified atomic mass unit in kg
+    return 1.66053906660E-27;
+}  //!< unified atomic mass unit in kg, uncertainty: 0.30 ppb
 
 constexpr double AtomicMassUnit_eV()
 {
-    return 931.49404E6;
-}  //!< unified atomic mass unit in eV/c^2
+    return 931.49410242E6;
+}  //!< unified atomic mass unit in eV/c^2, uncertainty: 0.30 ppb
 
 constexpr double BohrRadius()
 {
-    return 0.5291772108E-10;
-}  //!<Bohr radius (M_prot -> infinity)
+    return 0.529177210903E-10;
+}  //!<Bohr radius (M_prot -> infinity), uncertainty: 0.15 ppb
 
 constexpr double BohrRadiusSquared()
 {
-    return 2.8002852043e-21;
-}  //!<squared Bohr radius
+    return 2.80028520539e-21; 
+}  //!<squared Bohr radius, uncertainty: 0.30 ppb
 
 constexpr double ERyd_eV()
 {
-    return 13.6056923;
-}  //!< Rydberg energy (ionization energy of atomic hydrogen for m_prot -> infinity)
+    return 13.605693122994;
+}  //!< Rydberg energy (ionization energy of atomic hydrogen for m_prot -> infinity), uncertainty 0.0019 ppb = 1.9 ppt
 
 //EM coupling constants
 constexpr double EpsNull()
 {
-    return 8.854187817E-12;
-}  //!< epsilon0, Constant of Newtons force.
+    return 8.8541878128E-12;
+}  //!< epsilon0, Constant of Newtons force, uncertainty: 0.15 ppb
 
 constexpr double FourPiEps()
 {
     return 4. * Pi() * EpsNull();
-}  //!< 4  pi  epsilon0, Constant of Newtons force.
+}  //!< 4  pi  epsilon0, Constant of Newtons force, uncertainty: 0.15 ppb
 
 constexpr double MuNull()
 {
-    return 4.E-7 * Pi();
-}  //!< permeability of free space
+    return 4.E-7 * Pi()*1.00000000055;
+}  //!< permeability of free space, uncertainty: 0.15 ppb
 
 inline double EtaNull()
 {
@@ -136,53 +132,54 @@ inline double EtaNull()
 //masses
 constexpr double M_el_kg()
 {
-    return 9.1093826E-31;
-}  //!< electron mass in kg
+    return 9.1093837015E-31;
+}  //!< electron mass in kg, uncertainty: 0.30 ppb
 
 constexpr double M_el_eV()
 {
-    return 510.998918E3;
-}  //!< electron mass in ev/c^2
+    return 510.99895000E3;
+}  //!< electron mass in ev/c^2, uncertainty: 0.30 ppb
 
 constexpr double M_mu_kg()
 {
-    return 1.88353160e-28;
-}  //!< muon mass in kg
+    return 1.883531609e-28;
+}  //!< muon mass in kg, uncertainty: 22.7 ppb, https://pdg.lbl.gov/2020/listings/rpp2020-list-muon.pdf
 
 constexpr double M_mu_eV()
 {
-    return 105.6583692E6;
-}  //!< muon mass in ev/c^2
+    return 105.658 374 5E6;
+           
+}  //!< muon mass in ev/c^2, uncertainty: 22.7 ppb, https://pdg.lbl.gov/2020/listings/rpp2020-list-muon.pdf
 
 constexpr double M_prot_kg()
 {
-    return 1.67262171E-27;
-}  //!< proton mass in kg
+    return 1.67262192369E-27;
+}  //!< proton mass in kg, uncertainty: 0.31 ppb
 
 constexpr double M_prot_eV()
 {
-    return 938.272029E6;
-}  //!< proton mass in ev/c^2
+    return 938.27208816E6;
+}  //!< proton mass in ev/c^2, uncertainty: 0.31 ppb
 
 constexpr double M_neut_kg()
 {
-    return 1.674927464E-27;
-}  //!< neutron mass in kg
+    return 1.6749274980E-27;
+}  //!< neutron mass in kg, uncertainty: 0.57 ppb
 
 constexpr double M_neut_eV()
 {
-    return 939.565360E6;
-}  //!< neutron mass in ev/c^2
+    return 939.56542052E6;
+}  //!< neutron mass in ev/c^2, uncertainty: 0.57 ppb
 
 constexpr double M_deut_kg()
 {
-    return 3.34358334e-27;
-}  //!< deuteron mass in kg
+    return 3.34358377243e-27;
+}  //!< deuteron mass in kg, uncertainty: 0.30 ppb
 
 constexpr double M_deut_eV()
 {
-    return 1875.61282E6;
-}  //!< deuteron mass in eV/c^2
+    return 1875.61294257E6;
+}  //!< deuteron mass in eV/c^2, uncertainty: 0.30 ppb
 
 //Tritium properties
 constexpr double M_tPlus_kg()
@@ -198,12 +195,12 @@ constexpr double M_tPlus_eV()
 constexpr double M_H2_kg()
 {
     return 2.015650 * AtomicMassUnit_kg();
-}
+}  //! , TODO
 
 constexpr double M_H2_eV()
 {
     return 2.015650 * AtomicMassUnit_eV();
-}
+} //!, TODO 
 
 //Mass values for H2+, H3+, H-, D-, T2+, and He+ from NIST Chemistry WebBook, NIST Standard Reference Database Number 69, http://webbook.nist.gov/chemistry/
 
@@ -391,8 +388,8 @@ constexpr double M_83Kr_eV()
 
 constexpr double FermiConstant_eV()
 {
-    return 1.16637E-5 * 1E-18 * KConst::HbarC_eV() * KConst::HbarC_eV() * KConst::HbarC_eV();
-}  //!< Fermi coupling constant [eVm^3]
+    return 1.1663787E-5 * 1E-18 * KConst::HbarC_eV() * KConst::HbarC_eV() * KConst::HbarC_eV();
+}  //!< Fermi coupling constant [eVm^3], uncertainty: 510 ppb
 
 //neutrino mixing
 constexpr double Deltam21sq_eV()
