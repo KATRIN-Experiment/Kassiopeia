@@ -101,6 +101,12 @@ endforeach(HEADER)
 target_include_directories(Kommon PUBLIC $<INSTALL_INTERFACE:include>)
 target_compile_definitions(Kommon PUBLIC KConst_REFERENCE_EPOCH=${KConst_REFERENCE_EPOCH})
 
+# Fixes Boost build error on some Mac/Cygwin installations,
+# see: https://github.com/boostorg/stacktrace/issues/88
+if(UNIX OR APPLE OR MINGW)
+    target_compile_definitions(Kommon PRIVATE _GNU_SOURCE)
+endif()
+
 if( KASPER_USE_BOOST )
     target_compile_definitions(Kommon PUBLIC KASPER_USE_BOOST)
     target_link_libraries(Kommon
