@@ -50,6 +50,7 @@ set(KOMMON_CORE_HEADER_FILES
     Utility/KException.h
     Utility/KCast.h
     Utility/KConst.h
+    Utility/KConst_2006.h
     Utility/KConsoleMuter.h
     Utility/KHash.h
     Utility/OstreamJoiner.h
