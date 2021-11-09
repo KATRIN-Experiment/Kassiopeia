@@ -160,4 +160,6 @@ if( KASPER_USE_VTK )
         add_subdirectory( Vtk )
 endif()
 
+add_subdirectory( Applications )
+
 kasper_install_module()

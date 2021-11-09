@@ -11,20 +11,30 @@
 
 #include "KRandom.h"
 
-#include <array>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
-#include <deque>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
-#include <list>
-#include <map>
-#include <set>
 #include <string>
 #include <type_traits>
+
+// clang-format off
+// C++ container types
+#include <utility>
+#include <array>
 #include <vector>
+#include <deque>
+#include <forward_list>
+#include <list>
+#include <stack>
+#include <queue>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+// clang-format on
 
 namespace katrin
 {
@@ -75,7 +85,9 @@ class KStringUtils
     static std::string TrimRight(const std::string& input);
 
     template<class SequenceT, class SeparatorT>
-    static std::ostream& Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator);
+    static std::ostream& Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator,
+                              std::function<void (std::ostream&, const typename SequenceT::const_iterator&)> formatter
+                              = [](std::ostream& os, const typename SequenceT::const_iterator&it) { os << *it; });
 
     template<class SequenceT, class SeparatorT>
     static std::string Join(const SequenceT& sequence, const SeparatorT& separator, int precision = -1);
@@ -302,7 +314,8 @@ inline std::string KStringUtils::TrimRight(const std::string& input)
 }
 
 template<class SequenceT, class SeparatorT>
-inline std::ostream& KStringUtils::Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator)
+inline std::ostream& KStringUtils::Join(std::ostream& stream, const SequenceT& sequence, const SeparatorT& separator,
+                                        std::function<void (std::ostream&, const typename SequenceT::const_iterator&)> formatter)
 {
     // Parse input
     auto itBegin = std::begin(sequence);
@@ -310,12 +323,12 @@ inline std::ostream& KStringUtils::Join(std::ostream& stream, const SequenceT& s
 
     // Append first element
     if (itBegin != itEnd) {
-        stream << *itBegin;
+        formatter(stream, itBegin);
         ++itBegin;
     }
     for (; itBegin != itEnd; ++itBegin) {
         stream << boost::as_literal(separator);
-        stream << *itBegin;
+        formatter(stream, itBegin);
     }
     return stream;
 }
@@ -331,22 +344,9 @@ inline std::string KStringUtils::Join(const SequenceT& sequence, const Separator
 }
 
 template<class KeyT, class ValueT, class SeparatorT>
-inline std::ostream& KStringUtils::Join(std::ostream& stream, const std::map<KeyT, ValueT>& map,
-                                        const SeparatorT& separator)
+inline std::ostream& KStringUtils::Join(std::ostream& stream, const std::map<KeyT, ValueT>& map, const SeparatorT& separator)
 {
-    // Parse input
-    auto itBegin = std::begin(map);
-    auto itEnd = std::end(map);
-
-    // Append first element
-    if (itBegin != itEnd) {
-        stream << "[" << itBegin->first << "] " << itBegin->second;
-        itBegin++;
-    }
-    for (; itBegin != itEnd; ++itBegin) {
-        stream << boost::as_literal(separator);
-        stream << "[" << itBegin->first << "] " << itBegin->second;
-    }
+    Join(stream, map, separator, [&](auto& os, auto& it) { os << "[" << it->first << "] " << it->second; });
     return stream;
 }
 
@@ -480,41 +480,45 @@ inline std::string KStringUtils::RandomAlphaNum(size_t length)
     return result;
 }
 
-// adapted from
 inline void KStringUtils::HexDump(const void *data, size_t length, std::ostream& os)
 {
+    // Code adapted from https://gist.github.com/domnikl/af00cc154e3da1c5d965
+
+    const unsigned nbytes = 16;  // bytes displayed per line of output
+    const unsigned addrw = fmax(4, log(length)/log(16));  // max. digits of displayed offset
+
     size_t i;
-    unsigned char linebuf[17];
+    unsigned char linebuf[nbytes+1];
     unsigned char *pc = (unsigned char*)data;
 
     // Process every byte in the data.
     for (i = 0; i < length; i++) {
-        // Multiple of 16 means new line (with line offset).
+        // Multiple of nbytes means new line (with line offset).
 
-        if ((i % 16) == 0) {
+        if ((i % nbytes) == 0) {
             // Just don't print ASCII for the zeroth line.
             if (i != 0)
                 os << "  " << linebuf << "\n";
 
             // Output the offset.
-            os << "  " << std::hex << std::setfill('0') << std::setw(4) << i;
+            os << "  " << std::noshowbase << std::setfill('0') << std::setw(addrw) << std::hex << i;
         }
 
         // Now the hex code for the specific character.
-        os << " " << std::hex << std::setfill('0') << std::setw(2) << pc[i];
+        os << " " << std::noshowbase << std::setfill('0') << std::setw(2) << std::hex << (unsigned short)pc[i];
 
         // And store a printable ASCII character for later.
         if ((pc[i] < 0x20) || (pc[i] > 0x7e)) {
-            linebuf[i % 16] = '.';
+            linebuf[i % nbytes] = '.';
         } else {
-            linebuf[i % 16] = pc[i];
+            linebuf[i % nbytes] = pc[i];
         }
 
-        linebuf[(i % 16) + 1] = '\0';
+        linebuf[(i % nbytes) + 1] = '\0';
     }
 
     // Pad out last line if not exactly 16 characters.
-    while ((i % 16) != 0) {
+    while ((i % nbytes) != 0) {
         os << "   ";
         i++;
     }
@@ -535,7 +539,16 @@ inline void KStringUtils::HexDump(const SequenceT& sequence, std::ostream& os)
 namespace std
 {
 
-template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::vector<ValueT>& v)
+template<class Value1T, class Value2T> inline std::ostream& operator<<(std::ostream& os, const std::pair<Value1T,Value2T>& v)
+{
+    os << "[" << 2 << "]";
+    os << "(";
+    os << v.first << ", " << v.second;
+    os << ")";
+    return os;
+}
+
+template<class InputT, std::size_t S> inline std::ostream& operator<<(std::ostream& os, const std::array<InputT, S>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -546,7 +559,31 @@ template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const s
     return os;
 }
 
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::vector<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
 template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::deque<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::forward_list<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -560,6 +597,40 @@ template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const s
 template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::list<ValueT>& v)
 {
     os << "[" << v.size() << "]";
+
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::stack<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::queue<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::priority_queue<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
     if (!v.empty()) {
         os << "(";
         katrin::KStringUtils::Join(os, v, ", ");
@@ -571,6 +642,7 @@ template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const s
 template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::set<ValueT>& v)
 {
     os << "[" << v.size() << "]";
+
     if (!v.empty()) {
         os << "(";
         katrin::KStringUtils::Join(os, v, ", ");
@@ -579,7 +651,7 @@ template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const s
     return os;
 }
 
-template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::map<KeyT, ValueT>& v)
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::multiset<ValueT>& v)
 {
     os << "[" << v.size() << "]";
     if (!v.empty()) {
@@ -590,12 +662,56 @@ template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream&
     return os;
 }
 
+template<class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::unordered_set<ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ", [&](auto& os, auto& it) { os << "[" << it->first << "] " << it->second; });
+        os << ")";
+    }
+    return os;
+}
+
+template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::map<KeyT, ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ");
+        os << ")";
+    }
+    return os;
+}
+
+template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::multimap<KeyT, ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ", [&](auto& os, auto& it) { os << "[" << it->first << "] " << it->second; });
+        os << ")";
+    }
+    return os;
+}
+
+template<class KeyT, class ValueT> inline std::ostream& operator<<(std::ostream& os, const std::unordered_map<KeyT, ValueT>& v)
+{
+    os << "[" << v.size() << "]";
+    if (!v.empty()) {
+        os << "(";
+        katrin::KStringUtils::Join(os, v, ", ", [&](auto& os, auto& it) { os << "[" << it->first << "] " << it->second; });
+        os << ")";
+    }
+    return os;
+}
+
 template<class T> inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::matrix<T>& matrix)
 {
     using size_type = typename boost::numeric::ublas::matrix<T>::size_type;
 
     os << "[" << matrix.size1() << "," << matrix.size2() << "]";
-
     for (size_type r = 0; r < matrix.size1(); ++r) {
         os << std::endl << "(";
         for (size_type c = 0; c < matrix.size2(); ++c) {
@@ -613,7 +729,6 @@ inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::t
     using size_type = typename boost::numeric::ublas::matrix<T>::size_type;
 
     os << "[" << matrix.size1() << "," << matrix.size2() << "]";
-
     for (size_type r = 0; r < matrix.size1(); ++r) {
         os << std::endl << "(";
         for (size_type c = 0; c < matrix.size2(); ++c) {
@@ -633,7 +748,6 @@ template<class InputT> inline std::ostream& operator<<(std::ostream& os, const s
     const size_type nCols = (matrix.empty()) ? 0 : matrix.front().size();
 
     os << "[" << nRows << "," << nCols << "]";
-
     if (nCols * nRows == 0)
         return os;
 
@@ -644,18 +758,6 @@ template<class InputT> inline std::ostream& operator<<(std::ostream& os, const s
             os << matrix[r][c];
         }
         os << " )";
-    }
-    return os;
-}
-
-template<class InputT, std::size_t S>
-inline std::ostream& operator<<(std::ostream& os, const std::array<InputT, S>& arr)
-{
-    os << "[" << arr.size() << "]";
-    if (!arr.empty()) {
-        os << "(";
-        katrin::KStringUtils::Join(os, arr, ", ");
-        os << ")";
     }
     return os;
 }

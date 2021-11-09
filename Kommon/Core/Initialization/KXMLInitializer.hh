@@ -57,14 +57,14 @@ class KXMLInitializer : public KSingleton<KXMLInitializer>
         return fTokenizer;
     }
 
-    const std::string GetSerializedConfig() const {
-        return fConfigSerializer ? fConfigSerializer->GetConfig() : "";
+    const std::string GetSerializedConfig(KSerializationProcessor::EConfigFormat format) const {
+        return fConfigSerializer ? fConfigSerializer->GetConfig(format) : "";
     }
 
     KXMLTokenizer* Configure(int argc = 0, char** argv = nullptr, bool processConfig = true);
 
     void UpdateVariables(const KArgumentList& args);
-    void DumpConfiguration(std::ostream& strm = std::cout, bool includeArguments = true) const;
+    void DumpConfiguration(std::ostream& strm = std::cout, bool includeArguments = true, KSerializationProcessor::EConfigFormat format = KSerializationProcessor::EConfigFormat::XML) const;
 
   protected:
     void ParseCommandLine(int argc, char** argv);

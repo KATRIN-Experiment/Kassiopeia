@@ -472,7 +472,10 @@ void KSROOTTrackPainter::Render()
         }
     }
 
-    vismsg(eNormal) << "root track painter found " << fMultigraph->GetListOfGraphs()->GetSize() << " tracks " << eom;
+    if (fMultigraph->GetListOfGraphs() != nullptr)
+        vismsg(eNormal) << "root track painter has " << fMultigraph->GetListOfGraphs()->GetSize() << " elements" << eom;
+    else
+        vismsg(eWarning) << "root track painter found no data to plot!" << eom;
 
     tReader.CloseFile();
     delete tRootFile;
@@ -483,16 +486,19 @@ void KSROOTTrackPainter::Render()
 void KSROOTTrackPainter::Display()
 {
     if ((fDisplayEnabled == true) && (fMultigraph->GetListOfGraphs() != nullptr)) {
-        if (fPlotMode == ePlotStep) {
+        if (!fDrawOptions.empty()) {
+            fMultigraph->Draw(fDrawOptions.c_str());
+        }
+        else if (fPlotMode == ePlotStep) {
             if (fColorMode == eColorStep) {
-                fMultigraph->Draw((string("P") + fDrawOptions).c_str());
+                fMultigraph->Draw("P");
             }
             else {
-                fMultigraph->Draw((string("L") + fDrawOptions).c_str());
+                fMultigraph->Draw("L");
             }
         }
-        if (fPlotMode == ePlotTrack) {
-            fMultigraph->Draw((string("P") + fDrawOptions).c_str());
+        else if (fPlotMode == ePlotTrack) {
+            fMultigraph->Draw("P");
         }
     }
 
@@ -621,7 +627,13 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
                          tTrackReader <= tEventReader.GetLastTrackIndex();
                          tTrackReader++) {
                         double tColorVariable = 0.;
-                        if (tTrackGroup.Exists<KSDouble>(fColorVariable)) {
+                        if (tTrackGroup.Exists<KSString>(fColorVariable)) {
+                            string tColorKey = tTrackGroup.Get<KSString>(fColorVariable).Value();
+                            if (fColorIndex.find(tColorKey) == fColorIndex.end())
+                                fColorIndex[tColorKey] = fColorIndex.size();
+                            tColorVariable = fColorIndex[tColorKey];
+                        }
+                        else if (tTrackGroup.Exists<KSDouble>(fColorVariable)) {
                             tColorVariable = tTrackGroup.Get<KSDouble>(fColorVariable).Value();
                         }
                         else if (tTrackGroup.Exists<KSInt>(fColorVariable)) {
@@ -654,7 +666,13 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
                          tTrackReader <= tEventReader.GetLastTrackIndex();
                          tTrackReader++) {
                         double tColorVariable = 0.;
-                        if (tTrackGroup.Exists<KSDouble>(fColorVariable)) {
+                        if (tTrackGroup.Exists<KSString>(fColorVariable)) {
+                            string tColorKey = tTrackGroup.Get<KSString>(fColorVariable).Value();
+                            if (fColorIndex.find(tColorKey) == fColorIndex.end())
+                                fColorIndex[tColorKey] = fColorIndex.size();
+                            tColorVariable = fColorIndex[tColorKey];
+                        }
+                        else if (tTrackGroup.Exists<KSDouble>(fColorVariable)) {
                             tColorVariable = tTrackGroup.Get<KSDouble>(fColorVariable).Value();
                         }
                         else if (tTrackGroup.Exists<KSInt>(fColorVariable)) {
@@ -691,7 +709,13 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
                              tStepReader++) {
                             if (tStepGroup.Valid()) {
                                 double tColorVariable = 0.;
-                                if (tStepGroup.Exists<KSDouble>(fColorVariable)) {
+                                if (tStepGroup.Exists<KSString>(fColorVariable)) {
+                                    string tColorKey = tStepGroup.Get<KSString>(fColorVariable).Value();
+                                    if (fColorIndex.find(tColorKey) == fColorIndex.end())
+                                        fColorIndex[tColorKey] = fColorIndex.size();
+                                    tColorVariable = fColorIndex[tColorKey];
+                                }
+                                else if (tStepGroup.Exists<KSDouble>(fColorVariable)) {
                                     tColorVariable = tStepGroup.Get<KSDouble>(fColorVariable).Value();
                                 }
                                 else if (tStepGroup.Exists<KSInt>(fColorVariable)) {
@@ -730,7 +754,13 @@ void KSROOTTrackPainter::CreateColors(KSReadFileROOT& aReader)
                              tStepReader++) {
                             if (tStepGroup.Valid()) {
                                 double tColorVariable = 0.;
-                                if (tStepGroup.Exists<KSDouble>(fColorVariable)) {
+                                if (tStepGroup.Exists<KSString>(fColorVariable)) {
+                                    string tColorKey = tStepGroup.Get<KSString>(fColorVariable).Value();
+                                    if (fColorIndex.find(tColorKey) == fColorIndex.end())
+                                        fColorIndex[tColorKey] = fColorIndex.size();
+                                    tColorVariable = fColorIndex[tColorKey];
+                                }
+                                else if (tStepGroup.Exists<KSDouble>(fColorVariable)) {
                                     tColorVariable = tStepGroup.Get<KSDouble>(fColorVariable).Value();
                                 }
                                 else if (tStepGroup.Exists<KSInt>(fColorVariable)) {

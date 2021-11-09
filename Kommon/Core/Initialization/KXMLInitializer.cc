@@ -314,15 +314,15 @@ void KXMLInitializer::UpdateVariables(const KArgumentList& args)
     tVariableProcessor->InsertAfter(fTokenizer);
 }
 
-void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments) const
+void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments, KSerializationProcessor::EConfigFormat format) const
 {
-    if (includeArguments) {
+    if (includeArguments && (format == KSerializationProcessor::EConfigFormat::XML)) {
         strm << "<Arguments>" << endl;
         fArguments.Dump(strm);
         strm << "</Arguments>" << endl;
     }
     if (fConfigSerializer) {
-        strm << fConfigSerializer->GetConfig();
+        strm << fConfigSerializer->GetConfig(format);
     }
 }
 

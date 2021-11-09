@@ -20,6 +20,7 @@ set (KEMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KMPIEnvironment.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSmartPointer.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTimer.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypeManipulation.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypelist.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KTypelistVisitor.hh
 )

@@ -42,8 +42,10 @@ void KSRootSpaceInteraction::CalculateInteraction(const KSTrajectory& aTrajector
                                                   const KSParticle& aTrajectoryInitialParticle,
                                                   const KSParticle& aTrajectoryFinalParticle,
                                                   const KGeoBag::KThreeVector& aTrajectoryCenter,
-                                                  const double& aTrajectoryRadius, const double& aTrajectoryStep,
-                                                  KSParticle& anInteractionParticle, double& anInteractionStep,
+                                                  const double& aTrajectoryRadius,
+                                                  const double& aTrajectoryStep,
+                                                  KSParticle& anInteractionParticle,
+                                                  double& anInteractionStep,
                                                   bool& anInteractionFlag)
 {
     KSParticle tInteractionParticle;
@@ -56,6 +58,7 @@ void KSRootSpaceInteraction::CalculateInteraction(const KSTrajectory& aTrajector
 
     try {
         for (int tIndex = 0; tIndex < fSpaceInteractions.End(); tIndex++) {
+            intmsg_debug("<" << GetName() << "> calculating space interaction <" << fSpaceInteractions.ElementAt(tIndex)->GetName() << "> at " << aTrajectoryCenter << eom);
             fSpaceInteractions.ElementAt(tIndex)->CalculateInteraction(aTrajectory,
                                                                        aTrajectoryInitialParticle,
                                                                        aTrajectoryFinalParticle,
@@ -88,6 +91,7 @@ void KSRootSpaceInteraction::ExecuteInteraction(const KSParticle& anInteractionP
         return;
     }
     try {
+        intmsg_debug("<" << GetName() << "> executing space interaction <" << fSpaceInteraction->GetName() << "> at " << anInteractionParticle.GetPosition() << eom);
         fSpaceInteraction->ExecuteInteraction(anInteractionParticle, aFinalParticle, aSecondaries);
     }
     catch (KSException const& e) {

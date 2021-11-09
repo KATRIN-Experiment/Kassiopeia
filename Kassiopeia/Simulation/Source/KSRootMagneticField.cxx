@@ -31,9 +31,13 @@ KSRootMagneticField::~KSRootMagneticField() = default;
 void KSRootMagneticField::CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                              KThreeVector& aPotential)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate magnetic potential.";
+
     aPotential = KThreeVector::sZero;
     try {
         for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating magnetic potential <" << fMagneticFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fMagneticFields.ElementAt(tIndex)->CalculatePotential(aSamplePoint, aSampleTime, fCurrentPotential);
             aPotential += fCurrentPotential;
         }
@@ -47,9 +51,13 @@ void KSRootMagneticField::CalculatePotential(const KThreeVector& aSamplePoint, c
 void KSRootMagneticField::CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                          KThreeVector& aField)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate magnetic field.";
+
     aField = KThreeVector::sZero;
     try {
         for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating magnetic field <" << fMagneticFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fMagneticFields.ElementAt(tIndex)->CalculateField(aSamplePoint, aSampleTime, fCurrentField);
             aField += fCurrentField;
         }
@@ -63,9 +71,13 @@ void KSRootMagneticField::CalculateField(const KThreeVector& aSamplePoint, const
 void KSRootMagneticField::CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                             KThreeMatrix& aGradient)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate magnetic field gradient.";
+
     aGradient = KThreeMatrix::sZero;
     try {
         for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating magnetic field gradient <" << fMagneticFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fMagneticFields.ElementAt(tIndex)->CalculateGradient(aSamplePoint, aSampleTime, fCurrentGradient);
             aGradient += fCurrentGradient;
         }
@@ -80,10 +92,14 @@ void KSRootMagneticField::CalculateGradient(const KThreeVector& aSamplePoint, co
 void KSRootMagneticField::CalculateFieldAndGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                                     KThreeVector& aField, KThreeMatrix& aGradient)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate magnetic field and gradient.";
+
     aField = KThreeVector::sZero;
     aGradient = KThreeMatrix::sZero;
     try {
         for (int tIndex = 0; tIndex < fMagneticFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating magnetic field and gradient <" << fMagneticFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fMagneticFields.ElementAt(tIndex)->CalculateFieldAndGradient(aSamplePoint,
                                                                          aSampleTime,
                                                                          fCurrentField,

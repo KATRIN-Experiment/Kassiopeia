@@ -39,6 +39,7 @@ void KSRootTerminator::CalculateTermination(const KSParticle& anInitialParticle,
         aFlag = false;
         fTerminator = nullptr;
         for (int tIndex = 0; tIndex < fTerminators.End(); tIndex++) {
+            termmsg_debug("<" << GetName() << "> calculating terminator <" << fTerminators.ElementAt(tIndex)->GetName() << "> at " << anInitialParticle.GetPosition() << eom);
             fTerminators.ElementAt(tIndex)->CalculateTermination(anInitialParticle, tTerminatorFlag);
             if (tTerminatorFlag == true) {
                 aFlag = true;
@@ -61,6 +62,7 @@ void KSRootTerminator::ExecuteTermination(const KSParticle& anInitialParticle, K
     }
 
     try {
+        termmsg_debug("<" << GetName() << "> executing terminator <" << fTerminator->GetName() << "> at " << anInitialParticle.GetPosition() << eom);
         fTerminator->ExecuteTermination(anInitialParticle, aFinalParticle, aParticleQueue);
     }
     catch (KSException const& e) {

@@ -40,9 +40,13 @@ KSRootElectricField::~KSRootElectricField() = default;
 void KSRootElectricField::CalculatePotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                              double& aPotential)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate electric potential.";
+
     aPotential = 0.;
     try {
         for (int tIndex = 0; tIndex < fElectricFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating electric potential <" << fElectricFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fElectricFields.ElementAt(tIndex)->CalculatePotential(aSamplePoint, aSampleTime, fCurrentPotential);
             aPotential += fCurrentPotential;
         }
@@ -56,9 +60,13 @@ void KSRootElectricField::CalculatePotential(const KThreeVector& aSamplePoint, c
 void KSRootElectricField::CalculateField(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                          KThreeVector& aField)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate electric field.";
+
     aField = KThreeVector::sZero;
     try {
         for (int tIndex = 0; tIndex < fElectricFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating electric field <" << fElectricFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fElectricFields.ElementAt(tIndex)->CalculateField(aSamplePoint, aSampleTime, fCurrentField);
             aField += fCurrentField;
         }
@@ -72,9 +80,13 @@ void KSRootElectricField::CalculateField(const KThreeVector& aSamplePoint, const
 void KSRootElectricField::CalculateGradient(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                             KThreeMatrix& aGradient)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate electric field gradient.";
+
     aGradient = KThreeMatrix::sZero;
     try {
         for (int tIndex = 0; tIndex < fElectricFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating electric gradient <" << fElectricFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fElectricFields.ElementAt(tIndex)->CalculateGradient(aSamplePoint, aSampleTime, fCurrentGradient);
             aGradient += fCurrentGradient;
         }
@@ -88,10 +100,14 @@ void KSRootElectricField::CalculateGradient(const KThreeVector& aSamplePoint, co
 void KSRootElectricField::CalculateFieldAndPotential(const KThreeVector& aSamplePoint, const double& aSampleTime,
                                                      KThreeVector& aField, double& aPotential)
 {
+    if (! aSamplePoint.IsValid())
+        throw KSFieldError() << "Invalid sample point to calculate electric field and potential.";
+
     aField = KThreeVector::sZero;
     aPotential = 0.;
     try {
         for (int tIndex = 0; tIndex < fElectricFields.End(); tIndex++) {
+            fieldmsg_debug("<" << GetName() << "> calculating electric field and potential <" << fElectricFields.ElementAt(tIndex)->GetName() << "> at " << aSamplePoint << eom);
             fElectricFields.ElementAt(tIndex)->CalculateFieldAndPotential(aSamplePoint,
                                                                           aSampleTime,
                                                                           fCurrentField,

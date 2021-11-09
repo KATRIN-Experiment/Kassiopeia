@@ -1,5 +1,55 @@
 find_package(VTK CONFIG REQUIRED)
 
+if( VTK_MAJOR_VERSION GREATER 6 )
+    find_package(VTK CONFIG COMPONENTS
+        vtkChartsCore
+        vtkCommonCore
+        vtkCommonDataModel
+        vtkInteractionStyle
+        vtkIOGeometry
+        vtkIOXML
+        vtkRenderingContext2D
+        vtkRenderingContextOpenGL2
+        vtkRenderingCore
+        vtkRenderingFreeType
+        vtkRenderingOpenGL2
+        vtkViewsContext2D
+        QUIET
+    )
+else()
+    find_package(VTK CONFIG COMPONENTS
+        vtkChartsCore
+        vtkCommonCore
+        vtkCommonDataModel
+        vtkInteractionStyle
+        vtkIOGeometry
+        vtkIOXML
+        vtkRenderingContext2D
+        #vtkRenderingContextOpenGL
+        vtkRenderingCore
+        vtkRenderingFreeType
+        vtkRenderingOpenGL
+        vtkViewsContext2D
+        QUIET
+    )
+endif()
+# find_package(VTK CONFIG COMPONENTS
+#     vtkChartsCore
+#     vtkCommonCore
+#     vtkCommonDataModel
+#     vtkInteractionStyle
+#     vtkIOGeometry
+#     vtkIOXML
+#     vtkRenderingContext2D
+#     vtkRenderingContextOpenGL2
+#     vtkRenderingCore
+#     vtkRenderingFreeType
+#     vtkRenderingGL2PSOpenGL2
+#     vtkRenderingOpenGL2
+#     vtkViewsContext2D
+#     QUIET
+# )
+
 # headers
 set( KOMMON_VTK_HEADER_FILENAMES
         Utility/KVTKWindow.h

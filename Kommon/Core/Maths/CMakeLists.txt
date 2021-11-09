@@ -26,7 +26,7 @@ add_library(Maths SHARED ${SOURCES})
 target_include_directories(Maths
     PUBLIC $<BUILD_INTERFACE:${HEADER_PATH}> $<INSTALL_INTERFACE:include>
 )
-target_compile_features(Maths PRIVATE cxx_std_14)
+#target_compile_features(Maths PRIVATE cxx_std_14)
 target_link_libraries(Maths
     PRIVATE
         Boost::boost

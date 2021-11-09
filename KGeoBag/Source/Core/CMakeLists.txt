@@ -7,11 +7,15 @@ set( CORE_HEADER_FILES
     Include/KGArea.hh
     Include/KGVolume.hh
     Include/KGSurface.hh
+    Include/KGSurfaceFunctions.hh
     Include/KGExtensibleSurface.hh
     Include/KGExtendedSurface.hh
+    Include/KGExtendedSurfaceFunctions.hh
     Include/KGSpace.hh
+    Include/KGSpaceFunctions.hh
     Include/KGExtensibleSpace.hh
     Include/KGExtendedSpace.hh
+    Include/KGExtendedSpaceFunctions.hh
     Include/KGInterface.hh
     Include/KGTypelist.hh
 )

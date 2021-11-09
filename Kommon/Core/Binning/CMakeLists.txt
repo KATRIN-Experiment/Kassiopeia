@@ -26,7 +26,7 @@ add_library(Binning SHARED ${SOURCES})
 target_include_directories(Binning
     PUBLIC $<BUILD_INTERFACE:${HEADER_PATH}> $<INSTALL_INTERFACE:include>
 )
-target_compile_features(Binning PRIVATE cxx_std_14)
+#target_compile_features(Binning PRIVATE cxx_std_14)
 target_link_libraries(Binning
     PRIVATE
         Kommon

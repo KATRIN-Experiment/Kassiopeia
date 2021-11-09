@@ -206,6 +206,7 @@ bool KSRootStepModifier::ExecutePreStepModification(KSParticle& anInitialParticl
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing pre-step modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> at " << anInitialParticle.GetPosition() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePreStepModification(anInitialParticle, aParticleQueue);
             if (changed)
                 hasChangedState = true;
@@ -223,6 +224,7 @@ bool KSRootStepModifier::ExecutePostStepModification(KSParticle& anInitialPartic
     bool hasChangedState = false;
     try {
         for (int tIndex = 0; tIndex < fModifiers.End(); tIndex++) {
+            modmsg_debug("<" << GetName() << "> executing post-step modification <" << fModifiers.ElementAt(tIndex)->GetName() << "> at " << aFinalParticle.GetPosition() << eom);
             bool changed = fModifiers.ElementAt(tIndex)->ExecutePostStepModification(anInitialParticle,
                                                                                      aFinalParticle,
                                                                                      aParticleQueue);

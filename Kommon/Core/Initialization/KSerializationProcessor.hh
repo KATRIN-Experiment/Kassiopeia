@@ -2,6 +2,7 @@
 #define Kommon_KSerializationProcessor_hh_
 
 #include "KProcessor.hh"
+#include "KException.h"
 
 namespace katrin
 {
@@ -9,6 +10,12 @@ class KSerializationProcessor : public KProcessor
 
 {
   public:
+    enum EConfigFormat {
+        XML,
+        YAML,
+        JSON
+    };
+
     KSerializationProcessor();
     ~KSerializationProcessor() override;
 
@@ -26,18 +33,37 @@ class KSerializationProcessor : public KProcessor
     void ProcessToken(KCommentToken* aToken) override;
     void ProcessToken(KErrorToken* aToken) override;
 
-    std::string GetConfig()
+    std::string GetConfig(EConfigFormat format = EConfigFormat::XML) const
     {
-        return completeconfig;
+        switch (format) {
+            case EConfigFormat::XML:
+                return fXmlConfig;
+            case EConfigFormat::YAML:
+                return fYamlConfig;
+            case EConfigFormat::JSON:
+                return "[\n" + fJsonConfig + "\n]\n";
+            default:
+                throw KException() << "invalid config format";
+        }
     }
     void Clear()
     {
-        completeconfig.clear();
+        fXmlConfig.clear();
+        fYamlConfig.clear();
+        fJsonConfig.clear();
     }
 
   private:
-    std::string completeconfig;
+    int fIndentLevel;
+    std::string fXmlConfig;
+    std::string fYamlConfig;
+    std::string fJsonConfig;
     std::string fOutputFilename;
+
+    std::string fElementName;
+    std::string fAttributeName;
+    bool fIsChildElement;
+    unsigned fAttributeCount;
 
     typedef enum  // NOLINT(modernize-use-using)
     {

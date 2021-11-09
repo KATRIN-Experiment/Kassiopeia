@@ -32,7 +32,8 @@ KSRootSurfaceNavigator* KSRootSurfaceNavigator::Clone() const
 KSRootSurfaceNavigator::~KSRootSurfaceNavigator() = default;
 
 void KSRootSurfaceNavigator::ExecuteNavigation(const KSParticle& anInitialParticle,
-                                               const KSParticle& aNavigationParticle, KSParticle& aFinalParticle,
+                                               const KSParticle& aNavigationParticle,
+                                               KSParticle& aFinalParticle,
                                                KSParticleQueue& aSecondaries) const
 {
     if (fSurfaceNavigator == nullptr) {
@@ -40,6 +41,7 @@ void KSRootSurfaceNavigator::ExecuteNavigation(const KSParticle& anInitialPartic
     }
 
     try {
+        navmsg_debug("<" << GetName() << "> executing surface navigator <" << fSurfaceNavigator->GetName() << "> at " << anInitialParticle.GetPosition() << eom);
         fSurfaceNavigator->ExecuteNavigation(anInitialParticle, aNavigationParticle, aFinalParticle, aSecondaries);
     }
     catch (KSException const& e) {

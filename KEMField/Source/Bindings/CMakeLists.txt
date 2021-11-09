@@ -113,6 +113,7 @@ target_link_libraries (KEMFieldBindings
         Kommon
         KGeoBagBindings
         KGeoBagInterface
+        KEMCore
         KEMFieldElectricBoundaryIntegrators
         KEMFieldsElectric
         KEMFieldsMagnetic
