@@ -13,6 +13,7 @@ set (LINEARALGEBRASOLVERS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSuccessiveSubspaceCorrection.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSuccessiveSubspaceCorrection_SingleThread.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KIterativeKrylovSolver.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KIterativeKrylovRestartCondition.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KKrylovSolverConfiguration.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KKrylovSolverFactory.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSimpleIterativeKrylovSolver.hh
