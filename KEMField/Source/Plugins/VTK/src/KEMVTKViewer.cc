@@ -1,4 +1,5 @@
 #include "KEMVTKViewer.hh"
+#include "KEMCoreMessage.hh"
 
 namespace KEMField
 {
@@ -126,6 +127,9 @@ void KEMVTKViewer::ViewGeometry()
 
     renderer->AddActor(actor);
     renderWindow->Render();
+
+    kem_cout() << "KEMVTKViewer finished; waiting for key press ..." << eom;
     renderWindowInteractor->Start();
+    renderWindow->Finalize();
 }
 }  // namespace KEMField

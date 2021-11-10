@@ -35,6 +35,7 @@ class KEMVTKFieldCanvas : public KEMFieldCanvas
     void LabelAxes(const std::string& xname, const std::string& yname, const std::string& zname) override;
     void LabelCanvas(const std::string& title) override;
     void SaveAs(const std::string& savename) override;
+    void View();
 
   private:
     vtkSmartPointer<vtkContextView> view;

@@ -1,4 +1,5 @@
 #include "KEMVTKFieldCanvas.hh"
+#include "KEMCoreMessage.hh"
 
 #include <cmath>
 
@@ -187,4 +188,14 @@ void KEMVTKFieldCanvas::SaveAs(const std::string& savename)
     writer->SetInputConnection(windowToImageFilter->GetOutputPort());
     writer->Write();
 }
+
+//______________________________________________________________________________
+
+void KEMVTKFieldCanvas::View()
+{
+    kem_cout() << "KEMVTKFieldCanvas finished; waiting for key press ..." << eom;
+    view->GetInteractor()->Start();
+    view->GetRenderWindow()->Finalize();
+}
+
 }  // namespace KEMField
