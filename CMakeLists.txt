@@ -18,8 +18,9 @@ set( Boost_USE_MULTITHREADED ON )
 set( Boost_USE_STATIC_RUNTIME OFF )
 
 set( CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard whose features are requested to build this target" )
+mark_as_advanced( FORCE CMAKE_CXX_STANDARD )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
-set( CMAKE_CXX_EXTENSIONS OFF )
+set( CMAKE_CXX_EXTENSIONS ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 # Additional compiler version checks, see https://en.cppreference.com/w/cpp/compiler_support
@@ -59,6 +60,14 @@ set( CMAKE_BUILD_WITH_INSTALL_RPATH FALSE )
 # add the automatically determined parts of the RPATH
 # which point to directories outside the build tree to the install RPATH
 set( CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE )
+
+# whether to create a position-independent target
+include(CheckPIESupported)
+check_pie_supported(LANGUAGES CXX)
+if( CMAKE_CXX_LINK_PIE_SUPPORTED )
+    set( CMAKE_POSITION_INDEPENDENT_CODE TRUE )
+endif( CMAKE_CXX_LINK_PIE_SUPPORTED )
+
 if( APPLE )
     #set( CMAKE_INSTALL_RPATH "@executable_path/../${CMAKE_INSTALL_LIBDIR};@loader_path" )
     set( CMAKE_MACOSX_RPATH TRUE )
@@ -167,7 +176,6 @@ endif()
 
 mark_as_advanced( CLEAR CMAKE_VERBOSE_MAKEFILE )
 
-
 # Global dependency options
 #find_package(Boost QUIET)
 #option( KASPER_USE_BOOST "Build Boost dependent modules" ${Boost_FOUND} )
@@ -191,7 +199,7 @@ if(VTK_FOUND AND NOT DEFINED KASPER_USE_VTK)
 endif()
 option( KASPER_USE_VTK "Build VTK dependent modules" ${VTK_FOUND} )
 
-option( KASPER_USE_XGBOOST"Build XGBOOST dependent modules" OFF )
+option( KASPER_USE_XGBOOST "Build XGBOOST dependent modules" OFF )
 
 # Make sure that version requirements are fulfilled
 if( KASPER_USE_BOOST )
@@ -285,20 +293,11 @@ if( BUILD_KASSIOPEIA )
     endif( NOT KASPER_USE_ROOT )
 endif()
 
-if( KASPER_EXPERIMENTAL )
-    message(WARNING "*** Building with experimental code ***\n"
-    "Experimental code is not fully tested and shouldn't be used unless you know what you're doing. Set KASPER_EXPERIMENTAL=OFF to change this.")
-endif( KASPER_EXPERIMENTAL )
-
-if( KASPER_DEPRECATED )
-    message(WARNING "*** Building with deprecated code ***\n"
-    "Deprecated code is no longer maintained and shouldn't be used. Set KASPER_DEPRECATED=OFF to change this.")
-endif( KASPER_DEPRECATED )
-
 get_filename_component(CMAKE_MAKE_PROGRAM_NAME ${CMAKE_MAKE_PROGRAM} NAME)
-message("\n   Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start the build,\n"
-    "   `${CMAKE_MAKE_PROGRAM_NAME} install` to install in ${KASPER_INSTALL_DIR},\n"
-    "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate documentation.\n")
+message(STATUS
+    "Build was configured. Run `${CMAKE_MAKE_PROGRAM_NAME}` to start the build,\n"
+    "   or `${CMAKE_MAKE_PROGRAM_NAME} install` to install to ${KASPER_INSTALL_DIR},\n"
+    "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate the documentation.\n")
 
 # Install common project files
 

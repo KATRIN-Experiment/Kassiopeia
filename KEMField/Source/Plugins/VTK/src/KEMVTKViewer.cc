@@ -1,6 +1,8 @@
 #include "KEMVTKViewer.hh"
 #include "KEMCoreMessage.hh"
 
+#include <vtkCamera.h>
+
 namespace KEMField
 {
 KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
@@ -126,6 +128,8 @@ void KEMVTKViewer::ViewGeometry()
     renderWindowInteractor->SetRenderWindow(renderWindow);
 
     renderer->AddActor(actor);
+    renderer->GetActiveCamera()->SetParallelProjection(1);
+
     renderWindow->Render();
 
     kem_cout() << "KEMVTKViewer finished; waiting for key press ..." << eom;
