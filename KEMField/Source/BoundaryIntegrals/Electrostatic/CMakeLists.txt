@@ -22,6 +22,8 @@ set (ELECTROSTATICBOUNDARYINTEGRALS_HEADERFILES
 
     RWG/include/KElectrostaticRWGTriangleIntegrator.hh
     RWG/include/KElectrostaticRWGRectangleIntegrator.hh
+    RWG/include/KRWGFunctions.hh
+    RWG/include/KTFaceRFBasis.hh
 )
 
 set (ELECTROSTATICBOUNDARYINTEGRALS_SOURCEFILES

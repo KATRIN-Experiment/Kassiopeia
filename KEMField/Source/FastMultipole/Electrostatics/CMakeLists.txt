@@ -2,6 +2,7 @@
 # Author: J. P. Barrett
 
 set (KFMELECTROSTATICS_HEADERFILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticParameters.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticElement.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNode.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTree.hh
@@ -23,6 +24,8 @@ set (KFMELECTROSTATICS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeInformationExtractor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticTreeData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNodeWorkScoreCalculator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNodeInspector.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElectrostaticNearFieldToLocalCoefficientCalculator.hh
 )
 
 set (KFMELECTROSTATICS_SOURCEFILES

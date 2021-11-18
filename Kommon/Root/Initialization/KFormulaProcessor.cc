@@ -27,6 +27,8 @@ const string KFormulaProcessor::fLess = string("lt");
 const string KFormulaProcessor::fGreaterEqual = string("ge");
 const string KFormulaProcessor::fLessEqual = string("le");
 const string KFormulaProcessor::fModulo = string("mod");
+const string KFormulaProcessor::fStringCompare = string("cmp");
+const string KFormulaProcessor::fStringICompare = string("icmp");
 
 bool KFormulaProcessor::EvaluateTinyExpression(const std::string& tExpr, double& tResult)
 {
@@ -186,13 +188,23 @@ void KFormulaProcessor::Evaluate(KToken* aToken)
                 while (tBuffer.find(fLess) != string::npos) {
                     tBuffer.replace(tBuffer.find(fLess), fLess.length(), string("<"));
                 }
-
                 while (tBuffer.find(fModulo) != string::npos) {
                     tBuffer.replace(tBuffer.find(fModulo), fModulo.length(), string("%"));
                 }
 
-                double tResult;
+                //conversions for string operations
+                while (tBuffer.find(fStringICompare) != string::npos) {  // this must come before fStringCompare !
+                    auto tLeft = KStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringICompare)-1));
+                    auto tRight = KStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringICompare) + fStringICompare.length()));
+                    tBuffer = KStringUtils::IEquals(tLeft,  tRight) ? "1" : "0";
+                }
+                while (tBuffer.find(fStringCompare) != string::npos) {
+                    auto tLeft = KStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringCompare)-1));
+                    auto tRight = KStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringCompare) + fStringCompare.length()));
+                    tBuffer = KStringUtils::Equals(tLeft,  tRight) ? "1" : "0";
+                }
 
+                double tResult = std::numeric_limits<double>::quiet_NaN();
                 if (! EvaluateTinyExpression(tBuffer, tResult)) {
                     if (! EvaluateRootExpression(tBuffer, tResult)) {
                         initmsg(eError) << "could not evaluate formula '" << tBuffer << "'" << eom;

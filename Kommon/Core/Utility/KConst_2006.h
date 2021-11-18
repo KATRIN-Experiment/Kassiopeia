@@ -410,6 +410,11 @@ constexpr double Deltam32sq_eV()
     return 2.32e-3;  //m3^2 - m2^2; Unit is eV^2; sign unknown; Reference: PDG 6/18/2012
 }
 
+constexpr double InvertedDeltam32sq_eV()
+{
+    return 2.536e-3;
+}   //!< mass difference m32^2 = m3^2 - m2^2, unit: eV^2 (sign unknown, inverted ordering), uncertainty: 0.034e-3 eV^2, Ref: PDG 2021
+
 constexpr double Ue1sq()
 {
     return 0.672;  // calculated from the angles in the reference; Reference: PDG 6/18/2012

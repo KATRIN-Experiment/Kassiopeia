@@ -36,11 +36,14 @@ set (TREE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrixGenerator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDenseBlockSparseMatrixStructureGenerator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElementLocator.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElementLocalInfluenceRangeCollector.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeCollector.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSpecialNodeSet.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMSpecialNodeSetCreator.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMDirectCallCounter.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMWorkLoadBalanceWeights.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMExternalIdentitySetNullifier.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMExternalIdentitySetCreator.hh
 )
 
 if (KEMField_USE_MPI)

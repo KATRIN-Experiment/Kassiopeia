@@ -190,8 +190,6 @@ void KRobinHoodChargeDensitySolver::InitializeCore(KSurfaceContainer& container)
 
         robinHood.Solve(*A, x, b);
 
-        delete A;
-
         MPI_SINGLE_PROCESS
         {
             SaveSolution(fTolerance, container);

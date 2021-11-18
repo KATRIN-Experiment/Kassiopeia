@@ -45,12 +45,10 @@ class KRobinHoodChargeDensitySolver : public KChargeDensitySolver
     {
         fPlotInterval = i;
     }
-
     void CacheMatrixElements(bool choice)
     {
         fCacheMatrixElements = choice;
     }
-
     void UseOpenCL(bool choice)
     {
         if (choice == true) {

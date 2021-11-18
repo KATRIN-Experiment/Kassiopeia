@@ -27,6 +27,7 @@ set (LINEARALGEBRASOLVERS_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KPreconditionedBiconjugateGradientStabilized.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KSVDSolver.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KProjectionSolver.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KSuperpositionSolver.hh
 )
 if (KEMField_USE_MPI)
     list (APPEND LINEARALGEBRASOLVERS_HEADERFILES

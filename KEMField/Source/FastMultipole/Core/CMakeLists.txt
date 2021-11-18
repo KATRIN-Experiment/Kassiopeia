@@ -4,6 +4,7 @@
 set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectHolder.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectCollection.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectCollector.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNode.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMObjectRetriever.hh
@@ -21,6 +22,7 @@ set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMBasisData.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentitySet.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMIdentitySetList.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMEmptyIdentitySetRemover.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMElementLocalInfluenceRange.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeObjectRemover.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeObjectNullifier.hh
@@ -39,6 +41,8 @@ set (KFMCORE_HEADERFILES
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMNodeParentToChildFlagValueInspector.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMLeafConditionActor.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMLevelConditionActor.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMExternalIdentitySetSorter.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/KFMExternalIdentitySet.hh
 )
 
 set (KFMCORE_SOURCEFILES

@@ -430,7 +430,12 @@ constexpr double Deltam21sq_eV()
 constexpr double Deltam32sq_eV()
 {
     return 2.453e-3;
-}   //!< mass difference m32^2 = m3^2 - m2^2, unit: eV^2 (sign unknown), uncertainty: 0.033e-3 eV^2, Ref: PDG 2021
+}   //!< mass difference m32^2 = m3^2 - m2^2, unit: eV^2 (sign unknown, normal ordering), uncertainty: 0.033e-3 eV^2, Ref: PDG 2021
+
+constexpr double InvertedDeltam32sq_eV()
+{
+    return 2.536e-3;
+}   //!< mass difference m32^2 = m3^2 - m2^2, unit: eV^2 (sign unknown, inverted ordering), uncertainty: 0.034e-3 eV^2, Ref: PDG 2021
 
 constexpr double Ue1sq()
 {
