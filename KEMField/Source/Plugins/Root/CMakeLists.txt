@@ -29,6 +29,8 @@ if (KEMField_USE_ROOT)
             ROOT::Physics
     )
 
+    target_compile_definitions(KEMRootPlugin PUBLIC KEMFIELD_USE_ROOT )
+
     kasper_install_headers (${KEMROOT_HEADERFILES})
     kasper_install_libraries (KEMRootPlugin)
 

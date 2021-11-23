@@ -418,21 +418,25 @@ endmacro()
 
 macro(kasper_export_pkgconfig)
 
+    # get the libraries associated with the project
     get_property(${PROJECT_NAME}_LIBRARIES GLOBAL PROPERTY ${PROJECT_NAME}_LIBRARIES)
 
     set(${PROJECT_NAME}_DEPENDS)
     set(${PROJECT_NAME}_CXX_FLAGS)
 
-    # generate list of dependencies for installed libraries
+    # generate list of dependencies for installed libraries for use in the pkgconfig file
     foreach(TARGET_NAME ${${PROJECT_NAME}_LIBRARIES})
         get_target_property(TARGET_LIBS ${TARGET_NAME} INTERFACE_LINK_LIBRARIES)
-        foreach(LIB_NAME ${TARGET_LIBS})
+
+        # scan each dependency of the current target
+        foreach(LIB_NAME ${TARGET_NAME} ${TARGET_LIBS})
             if(TARGET ${LIB_NAME})
                 get_target_property(LIB_TYPE ${LIB_NAME} TYPE)
+                # ignore interface libs that cannot be used by external software
                 if(NOT LIB_TYPE STREQUAL INTERFACE_LIBRARY)
                     get_target_property(LIB_IMPORTED ${LIB_NAME} IMPORTED)
                     if(LIB_IMPORTED)
-                        # get the actual filename on disk
+                        # get the actual filename on disk if it exists
                         get_target_property(LIB_LOCATION ${LIB_NAME} LOCATION)
                         if(LIB_LOCATION)
                             list(APPEND ${PROJECT_NAME}_DEPENDS ${LIB_LOCATION})
@@ -480,6 +484,7 @@ macro(kasper_export_pkgconfig)
     endforeach(TARGET_NAME)
 
     #message("${PROJECT_NAME}_CXX_FLAGS : ${${PROJECT_NAME}_CXX_FLAGS}")
+    #message("${PROJECT_NAME}_LIBRARIES : ${${PROJECT_NAME}_LIBRARIES}")
     #message("${PROJECT_NAME}_DEPENDS   : ${${PROJECT_NAME}_DEPENDS}")
 
     #include(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
@@ -488,7 +493,8 @@ macro(kasper_export_pkgconfig)
 
     set( PC_LIBRARIES_STR )
     set( LIBDIRS )
-    set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
+    #set( LIBS ${${PROJECT_NAME}_LIBRARIES} ${${PROJECT_NAME}_DEPENDS} )
+    set( LIBS ${${PROJECT_NAME}_DEPENDS} )
     if(LIBS)
         list( REMOVE_DUPLICATES LIBS )
     endif(LIBS)

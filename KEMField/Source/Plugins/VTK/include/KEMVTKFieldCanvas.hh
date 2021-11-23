@@ -2,20 +2,11 @@
 #define KEMVTKFIELDCANVAS_H
 
 #include "KEMFieldCanvas.hh"
-#include "vtkAxis.h"
+
 #include "vtkChartHistogram2D.h"
-#include "vtkChartLegend.h"
 #include "vtkColorTransferFunction.h"
-#include "vtkContextScene.h"
 #include "vtkContextView.h"
 #include "vtkImageData.h"
-#include "vtkMath.h"
-#include "vtkPNGWriter.h"
-#include "vtkPlotHistogram2D.h"
-#include "vtkRenderWindow.h"
-#include "vtkRenderWindowInteractor.h"
-#include "vtkSmartPointer.h"
-#include "vtkWindowToImageFilter.h"
 
 namespace KEMField
 {
@@ -35,6 +26,7 @@ class KEMVTKFieldCanvas : public KEMFieldCanvas
     void LabelAxes(const std::string& xname, const std::string& yname, const std::string& zname) override;
     void LabelCanvas(const std::string& title) override;
     void SaveAs(const std::string& savename) override;
+    void Export(const std::string& savename);
     void View();
 
   private:

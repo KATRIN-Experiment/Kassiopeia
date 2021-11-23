@@ -40,8 +40,11 @@ std::string oclIntegratorType{"numeric"};
 
 #ifdef KEMFIELD_USE_ROOT
 #include "KEMRootFieldCanvas.hh"
+#include "TAxis.h"
+#include "TCanvas.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
+#include "TStyle.h"
 #endif
 
 #ifdef KEMFIELD_USE_VTK
