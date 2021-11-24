@@ -207,7 +207,10 @@ void KFormulaProcessor::Evaluate(KToken* aToken)
                 double tResult = std::numeric_limits<double>::quiet_NaN();
                 if (! EvaluateTinyExpression(tBuffer, tResult)) {
                     if (! EvaluateRootExpression(tBuffer, tResult)) {
-                        initmsg(eError) << "could not evaluate formula '" << tBuffer << "'" << eom;
+                        initmsg(eError) << "could not evaluate formula '" << tBuffer << "'" << ret;
+                        initmsg(eError) << "in path <" << aToken->GetPath() << "> in file <" << aToken->GetFile()
+                                        << "> at line <" << aToken->GetLine() << ">, column <" << aToken->GetColumn() << ">"
+                                        << eom;
                     }
                 }
 

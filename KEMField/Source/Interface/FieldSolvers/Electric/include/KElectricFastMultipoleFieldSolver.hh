@@ -43,6 +43,11 @@ class KElectricFastMultipoleFieldSolver : public KElectricFieldSolver
         return &fParameters;
     }
 
+    KFMElectrostaticTree* GetTree()
+    {
+        return fTree;
+    }
+
     void UseOpenCL(bool choice);
 
   private:
