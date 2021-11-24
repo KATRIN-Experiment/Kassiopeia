@@ -40,8 +40,9 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
 
     fPointCounter = 0;
 
-    fLineSegmentPolyApprox = 3;
-    fArcPolyApprox = 128;
+    fLineSegmentRadiusMin = 1.e-4;
+    fLineSegmentPolyApprox = 6;
+    fArcPolyApprox = 120;
 
     for (KSurfaceContainer::iterator it = aSurfaceContainer.begin(); it != aSurfaceContainer.end(); it++) {
         if (! *it)

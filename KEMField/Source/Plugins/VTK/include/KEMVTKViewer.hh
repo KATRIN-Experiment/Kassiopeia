@@ -142,6 +142,8 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
 
     unsigned int fPointCounter;
 
+    double fLineSegmentRadiusMin;
+
     // polygon cross-section for line segments (otherwise, they have no surface)
     unsigned int fLineSegmentPolyApprox;
     unsigned int fArcPolyApprox;
@@ -229,8 +231,8 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegmentSymmetryGroup(Int2
 
     for (unsigned int i = 0; i < s->size(); i++) {
         double radius = s->at(i)->GetDiameter() / 2.;
-        if (radius < 5.e-4)
-            radius = 5.e-4;
+        if (radius < fLineSegmentRadiusMin)
+            radius = fLineSegmentRadiusMin;
 
         double length = (s->at(i)->GetP0() - s->at(i)->GetP1()).Magnitude();
 
@@ -381,8 +383,8 @@ template<typename Surface> void KEMVTKViewer::AddIfLineSegment(Int2Type<true>)
     auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     double radius = s->GetDiameter() / 2.;
-    if (radius < 5.e-4)
-        radius = 5.e-4;
+    if (radius < fLineSegmentRadiusMin)
+        radius = fLineSegmentRadiusMin;
 
     double length = (s->GetP0() - s->GetP1()).Magnitude();
 
