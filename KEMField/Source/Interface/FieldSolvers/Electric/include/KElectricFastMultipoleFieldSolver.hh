@@ -43,6 +43,8 @@ class KElectricFastMultipoleFieldSolver : public KElectricFieldSolver
         return &fParameters;
     }
 
+    std::string GetParameterInformation();
+
     KFMElectrostaticTree* GetTree()
     {
         return fTree;

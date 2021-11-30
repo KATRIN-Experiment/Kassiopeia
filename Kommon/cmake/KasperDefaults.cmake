@@ -56,6 +56,7 @@ if( ${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR} )
     endif()
 
     # define global install paths
+    set_path(KASPER_SOURCE_DIR "${CMAKE_HOME_DIRECTORY}" "Kasper source directory")
     set_path(KASPER_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" "Kasper install directory")
     set_path(INCLUDE_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR}" "Install directory for headers")
     set_path(LIB_INSTALL_DIR "${KASPER_INSTALL_DIR}/${CMAKE_INSTALL_LIBDIR}" "Install directory for libraries")
@@ -203,6 +204,7 @@ macro( kasper_module_paths PATH )
     set( ${PROJECT_NAME}_CACHE_INSTALL_DIR "${CACHE_INSTALL_DIR}/${PATH}" )
 
     add_compile_definitions( KASPER_INSTALL_DIR=${KASPER_INSTALL_DIR} )
+    add_compile_definitions( KASPER_SOURCE_DIR=${KASPER_SOURCE_DIR} )
 
     add_compile_definitions( INCLUDE_INSTALL_DIR=${${PROJECT_NAME}_INCLUDE_INSTALL_DIR} )
     install(CODE "file(MAKE_DIRECTORY \"${${PROJECT_NAME}_INCLUDE_INSTALL_DIR}\")" )

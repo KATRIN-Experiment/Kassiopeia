@@ -5,6 +5,7 @@ if( VTK_MAJOR_VERSION GREATER 6 )
         vtkChartsCore
         vtkCommonCore
         vtkCommonDataModel
+        vtkFiltersVerdict
         vtkInteractionStyle
         vtkIOGeometry
         vtkIOXML
@@ -12,6 +13,7 @@ if( VTK_MAJOR_VERSION GREATER 6 )
         vtkRenderingContextOpenGL2
         vtkRenderingCore
         vtkRenderingFreeType
+        vtkRenderingLabel
         vtkRenderingOpenGL2
         vtkViewsContext2D
         QUIET

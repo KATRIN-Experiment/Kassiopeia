@@ -6,36 +6,12 @@
 #include "KTypeManipulation.hh"
 
 #include <limits>
-#include <vtkActor.h>
-#include <vtkAppendPolyData.h>
-#include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkCleanPolyData.h>
-#include <vtkDataSetMapper.h>
-#include <vtkDiskSource.h>
-#include <vtkDoubleArray.h>
-#include <vtkImageData.h>
-#include <vtkLine.h>
-#include <vtkLinearExtrusionFilter.h>
-#include <vtkPointData.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataWriter.h>
-#include <vtkProperty.h>
-#include <vtkQuad.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-#include <vtkShortArray.h>
-#include <vtkSmartPointer.h>
-#include <vtkStripper.h>
-#include <vtkTransform.h>
-#include <vtkTransformPolyDataFilter.h>
-#include <vtkTriangle.h>
-#include <vtkTriangleFilter.h>
-#include <vtkXMLImageDataWriter.h>
-#include <vtkXMLPPolyDataWriter.h>
-#include <vtkXMLPolyDataWriter.h>
 
+#include <vtkDoubleArray.h>
+#include <vtkPolyData.h>
+#include <vtkQuad.h>
+#include <vtkShortArray.h>
+#include <vtkTriangle.h>
 
 namespace KEMField
 {
@@ -126,11 +102,13 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
     double RectangleAspectRatio(const KFieldVector& P0, const KFieldVector& P1, const KFieldVector& P2,
                                 const KFieldVector& P3);
 
+    vtkSmartPointer<vtkPolyData> fPolyData;
     vtkSmartPointer<vtkPoints> fPoints;
     vtkSmartPointer<vtkCellArray> fCells;
     vtkSmartPointer<vtkDoubleArray> fArea;
     vtkSmartPointer<vtkDoubleArray> fLogArea;
     vtkSmartPointer<vtkDoubleArray> fAspectRatio;
+    vtkSmartPointer<vtkDoubleArray> fQuality;
     vtkSmartPointer<vtkShortArray> fModulo;
     vtkSmartPointer<vtkDoubleArray> fChargeDensity;
     vtkSmartPointer<vtkDoubleArray> fLogChargeDensity;
@@ -143,6 +121,8 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
     unsigned int fPointCounter;
 
     double fLineSegmentRadiusMin;
+
+    int fQualityMeasure;
 
     // polygon cross-section for line segments (otherwise, they have no surface)
     unsigned int fLineSegmentPolyApprox;
