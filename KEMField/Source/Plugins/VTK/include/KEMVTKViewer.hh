@@ -105,6 +105,7 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
     vtkSmartPointer<vtkPolyData> fPolyData;
     vtkSmartPointer<vtkPoints> fPoints;
     vtkSmartPointer<vtkCellArray> fCells;
+
     vtkSmartPointer<vtkDoubleArray> fArea;
     vtkSmartPointer<vtkDoubleArray> fLogArea;
     vtkSmartPointer<vtkDoubleArray> fAspectRatio;

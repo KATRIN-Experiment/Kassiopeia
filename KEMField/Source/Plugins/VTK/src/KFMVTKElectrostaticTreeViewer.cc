@@ -1,5 +1,33 @@
 #include "KFMVTKElectrostaticTreeViewer.hh"
 
+#include <vtkActor.h>
+#include <vtkAppendPolyData.h>
+#include <vtkCellArray.h>
+#include <vtkCellData.h>
+#include <vtkCleanPolyData.h>
+#include <vtkDataSetMapper.h>
+#include <vtkDiskSource.h>
+#include <vtkImageData.h>
+#include <vtkLine.h>
+#include <vtkLinearExtrusionFilter.h>
+#include <vtkPointData.h>
+#include <vtkPolyDataWriter.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkSmartPointer.h>
+//#include <vtkStripper.h>
+#include <vtkTransform.h>
+#include <vtkTransformPolyDataFilter.h>
+//#include <vtkTriangleFilter.h>
+#include <vtkVector.h>
+#include <vtkVoxel.h>
+#include <vtkXMLImageDataWriter.h>
+#include <vtkXMLPPolyDataWriter.h>
+#include <vtkXMLPolyDataWriter.h>
+#include <vtkXMLUnstructuredGridWriter.h>
+
 namespace KEMField
 {
 
@@ -49,6 +77,25 @@ KFMVTKElectrostaticTreeViewer::KFMVTKElectrostaticTreeViewer(KFMElectrostaticTre
     fGrid->GetCellData()->AddArray(fPotential);
     fGrid->GetCellData()->AddArray(fElectricFieldMagnitude);
     fGrid->GetCellData()->AddArray(fElectricField);
+
+    fPolyData = vtkSmartPointer<vtkPolyData>::New();
+
+    fPolyData->SetPoints(fPoints);
+    fPolyData->SetPolys(fCells);
+    // fPolyData->GetPointData()->AddArray(fTreeLevel);
+    // fPolyData->GetPointData()->AddArray(fOwnedElements);
+    // fPolyData->GetPointData()->AddArray(fDirectCalls);
+    // fPolyData->GetPointData()->AddArray(fZeroOrderMultipole);
+    // fPolyData->GetPointData()->AddArray(fZeroOrderLocalCoeff);
+
+    fPolyData->GetCellData()->AddArray(fTreeLevel);
+    fPolyData->GetCellData()->AddArray(fOwnedElements);
+    fPolyData->GetCellData()->AddArray(fDirectCalls);
+    fPolyData->GetCellData()->AddArray(fZeroOrderMultipole);
+    fPolyData->GetCellData()->AddArray(fZeroOrderLocalCoeff);
+    fPolyData->GetCellData()->AddArray(fPotential);
+    fPolyData->GetCellData()->AddArray(fElectricFieldMagnitude);
+    fPolyData->GetCellData()->AddArray(fElectricField);
 
     //TODO uncomment and implement below
     // //average size of owned elements
@@ -184,23 +231,6 @@ void KFMVTKElectrostaticTreeViewer::ApplyAction(KFMElectrostaticNode* node)
 
 void KFMVTKElectrostaticTreeViewer::GenerateGeometryFile(const std::string& fileName)
 {
-    vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
-    polydata->SetPoints(fPoints);
-    polydata->SetPolys(fCells);
-    // polydata->GetPointData()->AddArray(fTreeLevel);
-    // polydata->GetPointData()->AddArray(fOwnedElements);
-    // polydata->GetPointData()->AddArray(fDirectCalls);
-    // polydata->GetPointData()->AddArray(fZeroOrderMultipole);
-    // polydata->GetPointData()->AddArray(fZeroOrderLocalCoeff);
-
-    polydata->GetCellData()->AddArray(fTreeLevel);
-    polydata->GetCellData()->AddArray(fOwnedElements);
-    polydata->GetCellData()->AddArray(fDirectCalls);
-    polydata->GetCellData()->AddArray(fZeroOrderMultipole);
-    polydata->GetCellData()->AddArray(fZeroOrderLocalCoeff);
-    polydata->GetCellData()->AddArray(fPotential);
-    polydata->GetCellData()->AddArray(fElectricFieldMagnitude);
-    polydata->GetCellData()->AddArray(fElectricField);
 
     vtkSmartPointer<vtkXMLPolyDataWriter> writer = vtkSmartPointer<vtkXMLPolyDataWriter>::New();
 
@@ -213,7 +243,7 @@ void KFMVTKElectrostaticTreeViewer::GenerateGeometryFile(const std::string& file
     writer->SetInput(polydata);
 #else
     writer->SetHeaderTypeToUInt64();
-    writer->SetInputData(polydata);
+    writer->SetInputData(fPolyData);
 #endif
     writer->SetFileName(fileName.c_str());
     writer->Write();
@@ -234,39 +264,22 @@ void KFMVTKElectrostaticTreeViewer::GenerateGridFile(const std::string& fileName
 
 void KFMVTKElectrostaticTreeViewer::ViewGeometry()
 {
-    vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
-    polydata->SetPoints(fPoints);
-    polydata->SetPolys(fCells);
-    polydata->GetCellData()->AddArray(fTreeLevel);
-    polydata->GetCellData()->AddArray(fOwnedElements);
-    polydata->GetCellData()->AddArray(fDirectCalls);
-    polydata->GetCellData()->AddArray(fZeroOrderMultipole);
-    polydata->GetCellData()->AddArray(fZeroOrderLocalCoeff);
-    polydata->GetCellData()->AddArray(fPotential);
-    polydata->GetCellData()->AddArray(fElectricFieldMagnitude);
-    polydata->GetCellData()->AddArray(fElectricField);
-
-    vtkSmartPointer<vtkTriangleFilter> trifilter = vtkSmartPointer<vtkTriangleFilter>::New();
-#ifdef VTK6
-    trifilter->SetInputData(polydata);
-#else
-    trifilter->SetInput(polydata);
-#endif
-
-    vtkSmartPointer<vtkStripper> stripper = vtkSmartPointer<vtkStripper>::New();
-    stripper->SetInputConnection(trifilter->GetOutputPort());
+    fPolyData->GetCellData()->SetScalars(fOwnedElements);
 
     // Create an actor and mapper
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 #ifdef VTK6
-    mapper->SetInputConnection(stripper->GetOutputPort());
+    mapper->SetInputData(fPolyData);
 #else
-    mapper->SetInput(stripper->GetOutput());
+    mapper->SetInput(fPolyData);
 #endif
+    mapper->SetScalarModeToUseCellData();
+    mapper->SetResolveCoincidentTopologyToShiftZBuffer();
 
     vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
     actor->SetMapper(mapper);
-    actor->GetProperty()->SetRepresentationToWireframe();
+    actor->GetProperty()->SetRepresentationToSurface();
+    actor->GetProperty()->SetOpacity(0.2);
 
     // Create a renderer, render window, and interactor
     vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
@@ -278,6 +291,7 @@ void KFMVTKElectrostaticTreeViewer::ViewGeometry()
     renderWindowInteractor->SetRenderWindow(renderWindow);
 
     renderer->AddActor(actor);
+
     renderWindow->Render();
     renderWindowInteractor->Start();
 }

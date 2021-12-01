@@ -22,7 +22,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSTLWriter.h>
-#include <vtkStripper.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkTriangleFilter.h>
@@ -89,7 +88,7 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     fPolyData->SetPolys(fCells);
 
     // Calculate functions of quality of the elements of a mesh.
-    vtkNew<vtkMeshQuality> qualityFilter;
+    auto qualityFilter = vtkSmartPointer<vtkMeshQuality>::New();
     qualityFilter->SetInputData(fPolyData);
     qualityFilter->SetTriangleQualityMeasure(fQualityMeasure);
     qualityFilter->SetQuadQualityMeasure(fQualityMeasure);
@@ -150,23 +149,11 @@ void KEMVTKViewer::ViewGeometry()
 {
     fPolyData->GetCellData()->SetScalars(fQuality);
 
-//    vtkSmartPointer<vtkTriangleFilter> trifilter = vtkSmartPointer<vtkTriangleFilter>::New();
-//#ifdef VTK6
-//    trifilter->SetInputData(fPolyData);
-//#else
-//    trifilter->SetInput(fPolyData);
-//#endif
-
-//    vtkSmartPointer<vtkStripper> stripper = vtkSmartPointer<vtkStripper>::New();
-//    stripper->SetInputConnection(trifilter->GetOutputPort());
-
     // Create an actor and mapper
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
 #ifdef VTK6
-//    mapper->SetInputConnection(stripper->GetOutputPort());
     mapper->SetInputData(fPolyData);
 #else
-//    mapper->SetInput(stripper->GetOutput());
     mapper->SetInput(edgeFilter->GetOutput());
 #endif
     mapper->SetScalarModeToUseCellData();
