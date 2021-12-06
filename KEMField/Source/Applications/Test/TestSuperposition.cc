@@ -26,6 +26,7 @@
 #include "TGraph.h"
 #include "TMultiGraph.h"
 #include "TStyle.h"
+#include "KEMRootFieldCanvas.hh"
 #elif defined(KEMFIELD_USE_VTK)
 #include "KEMVTKFieldCanvas.hh"
 #else
