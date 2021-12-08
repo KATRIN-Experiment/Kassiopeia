@@ -20,7 +20,7 @@ using value = ptree::value_type;
 #include "KConst.h"
 #include "KFile.h"
 #include "KRotation.hh"
-#include "KStringUtils.h"
+#include "KBaseStringUtils.h"
 
 #include <cmath>
 
@@ -66,11 +66,11 @@ class KGGeometryPrinter::Private
     }
     inline string Put(const string& aKey, const set<string>& aValue)
     {
-        return Put(aKey, KStringUtils::Join(aValue, " "));
+        return Put(aKey, KBaseStringUtils::Join(aValue, " "));
     }
     inline string Put(const string& aKey, const vector<string>& aValue)
     {
-        return Put(aKey, KStringUtils::Join(aValue, " "));
+        return Put(aKey, KBaseStringUtils::Join(aValue, " "));
     }
 
     template<typename T> inline const T& Get(const string& aKey)

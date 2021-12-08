@@ -113,7 +113,7 @@ target_include_directories(KEMFieldBindings PUBLIC $<INSTALL_INTERFACE:include>)
 
 target_link_libraries (KEMFieldBindings
     PUBLIC
-        Kommon
+        KommonCore
         KGeoBagBindings
         KGeoBagInterface
         KEMCore

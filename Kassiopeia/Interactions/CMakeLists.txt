@@ -193,6 +193,7 @@ target_include_directories(KassiopeiaInteractions
     PUBLIC $<BUILD_INTERFACE:${INTERACTIONS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaInteractions
     PUBLIC
+        KommonGsl
         KassiopeiaOperators
 )
 

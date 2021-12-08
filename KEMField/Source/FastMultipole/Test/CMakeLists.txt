@@ -19,7 +19,6 @@ if (${PROJECT_NAME}_ENABLE_FM_TEST)
     endif (${PROJECT_NAME}_USE_VTK)
 
     if (${PROJECT_NAME}_USE_ROOT)
-        find_package(ROOT REQUIRED)
         list (APPEND FAST_MULTIPOLE_TEST_LIBS KEMRootPlugin)
     endif (${PROJECT_NAME}_USE_ROOT)
 

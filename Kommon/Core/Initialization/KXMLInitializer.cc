@@ -13,6 +13,9 @@
 #include "KPrintProcessor.hh"
 #include "KTagProcessor.hh"
 #include "KVariableProcessor.hh"
+#include "KGlobals.hh"
+
+#include "KMessage.h"
 
 #include <memory>
 
@@ -35,19 +38,19 @@ KXMLInitializer::KXMLInitializer() :
     fTokenizer(nullptr),
     fArguments(),
     fVerbosityLevel(0),
-    fBatchMode(false),
     fDefaultConfigFile(),
     fDefaultIncludePaths(),
     fAllowConfigFileFallback(false),
     fUsingDefaultPaths(false)
-{}
+{
+    KMessageTable::GetInstance().SetParserContextPrinterCallback(PrintParserContext);
+}
 
 KXMLInitializer::~KXMLInitializer() = default;
 
 void KXMLInitializer::ParseCommandLine(int argc, char** argv)
 {
     fVerbosityLevel = 0;  // reset
-    fBatchMode = false;
     KArgumentList commandLineArgs;
 
     if (argc >= 1) {
@@ -78,6 +81,9 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
                 commandLineArgs.SetOption(key, value);
             }
         }
+        
+        // Default: BatchMode false
+        KGlobals::GetInstance().SetBatchMode(false);
 
         // parse any `-key[=value]` and `--key[=value]` options
         for (lastArg = 1; lastArg < argc; lastArg++) {
@@ -105,7 +111,7 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
                     fVerbosityLevel += verbosityAdjust;
                 }
                 else if (key == string("-b") || key == string("-batch")) {
-                    fBatchMode = true;
+                    KGlobals::GetInstance().SetBatchMode(true);
                 }
 
                 // treat as key=value pair
@@ -323,6 +329,15 @@ void KXMLInitializer::DumpConfiguration(ostream& strm, bool includeArguments, KS
     }
     if (fConfigSerializer) {
         strm << fConfigSerializer->GetConfig(format);
+    }
+}
+
+void KXMLInitializer::PrintParserContext(std::ostream& aStream)
+{
+    const auto* ctx = GetInstance().GetContext();
+    if (ctx && ctx->IsValid()) {
+        aStream << "parsing element <" << ctx->GetElement() << "> in file <"
+                << ctx->GetName() << "> at line <" << ctx->GetLine() << ">, column <" << ctx->GetColumn() << ">\n";
     }
 }
 

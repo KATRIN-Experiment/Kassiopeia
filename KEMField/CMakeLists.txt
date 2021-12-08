@@ -26,28 +26,19 @@ if (KEMField_USE_MPI)
     find_package(MPI REQUIRED)
 endif (KEMField_USE_MPI)
 
-#option (KEMField_USE_VTK "Enables the use of VTK for visualization" OFF)
-set (KEMField_USE_VTK ${KASPER_USE_VTK})
-if (KEMField_USE_VTK)
-    find_package(VTK CONFIG REQUIRED)
-endif()
-
-#option (KEMField_USE_ROOT "Link against ROOT" OFF)
-set (KEMField_USE_ROOT ${KASPER_USE_ROOT})
-if (KEMField_USE_ROOT)
-    find_package(ROOT REQUIRED)
-endif (KEMField_USE_ROOT)
-
-#option (KEMField_USE_GSL "Use GSL" OFF)
-set (KEMField_USE_GSL ${KASPER_USE_GSL})
-if (KEMField_USE_GSL)
-    find_package(GSL REQUIRED)
-endif (KEMField_USE_GSL)
-
 option (KEMField_USE_FFTW "Use FFTW" OFF)
 if (KEMField_USE_FFTW)
     find_package(FFTW 3.3.4 REQUIRED)
 endif (KEMField_USE_FFTW)
+
+#option (KEMField_USE_VTK "Enables the use of VTK for visualization" OFF)
+set (KEMField_USE_VTK ${KASPER_USE_VTK})
+
+#option (KEMField_USE_ROOT "Link against ROOT" OFF)
+set (KEMField_USE_ROOT ${KASPER_USE_ROOT})
+
+#option (KEMField_USE_GSL "Use GSL" OFF)
+set (KEMField_USE_GSL ${KASPER_USE_GSL})
 
 # paths
 kasper_module_paths( KEMField )

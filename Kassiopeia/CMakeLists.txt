@@ -35,21 +35,6 @@ kasper_module_paths( Kassiopeia )
 # module debugging
 kasper_module_debug()
 
-# external dependencies: boost
-if( Kassiopeia_USE_BOOST )
-    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS  filesystem system )
-endif( Kassiopeia_USE_BOOST )
-
-# external dependencies: root
-if( Kassiopeia_USE_ROOT )
-    find_package( ROOT ${ROOT_MINIMUM_VERSION} CONFIG REQUIRED )
-endif( Kassiopeia_USE_ROOT )
-
-# external dependencies: vtk
-if( Kassiopeia_USE_VTK )
-    find_package(VTK CONFIG REQUIRED)
-endif( Kassiopeia_USE_VTK )
-
 # subdirectories
 add_subdirectory( Documentation )
 add_subdirectory( Utility )

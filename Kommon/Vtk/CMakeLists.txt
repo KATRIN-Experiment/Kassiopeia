@@ -1,7 +1,26 @@
-find_package(VTK CONFIG REQUIRED)
+# Setup VTK modules for use in CMake
+# For details, see: https://vtk.org/doc/nightly/html/md__builds_gitlab-kitware-sciviz-ci_Documentation_Doxygen_ModuleMigration.html
 
-if( VTK_MAJOR_VERSION GREATER 6 )
-    find_package(VTK CONFIG COMPONENTS
+find_package(VTK COMPONENTS vtkCommonCore)
+
+if( VTK_MAJOR_VERSION GREATER 8 )
+    set(KOMMON_VTK_COMPONENTS
+        ChartsCore
+        CommonCore
+        CommonDataModel
+        FiltersVerdict
+        InteractionStyle
+        IOGeometry
+        IOXML
+        RenderingContext2D
+        RenderingContextOpenGL2
+        RenderingCore
+        RenderingFreeType
+        RenderingOpenGL2
+        ViewsContext2D
+    )
+else()
+    set(KOMMON_VTK_COMPONENTS
         vtkChartsCore
         vtkCommonCore
         vtkCommonDataModel
@@ -13,44 +32,17 @@ if( VTK_MAJOR_VERSION GREATER 6 )
         vtkRenderingContextOpenGL2
         vtkRenderingCore
         vtkRenderingFreeType
-        vtkRenderingLabel
         vtkRenderingOpenGL2
         vtkViewsContext2D
-        QUIET
-    )
-else()
-    find_package(VTK CONFIG COMPONENTS
-        vtkChartsCore
-        vtkCommonCore
-        vtkCommonDataModel
-        vtkInteractionStyle
-        vtkIOGeometry
-        vtkIOXML
-        vtkRenderingContext2D
-        #vtkRenderingContextOpenGL
-        vtkRenderingCore
-        vtkRenderingFreeType
-        vtkRenderingOpenGL
-        vtkViewsContext2D
-        QUIET
     )
 endif()
-# find_package(VTK CONFIG COMPONENTS
-#     vtkChartsCore
-#     vtkCommonCore
-#     vtkCommonDataModel
-#     vtkInteractionStyle
-#     vtkIOGeometry
-#     vtkIOXML
-#     vtkRenderingContext2D
-#     vtkRenderingContextOpenGL2
-#     vtkRenderingCore
-#     vtkRenderingFreeType
-#     vtkRenderingGL2PSOpenGL2
-#     vtkRenderingOpenGL2
-#     vtkViewsContext2D
-#     QUIET
-# )
+
+# needed in parent scope to write the KommonConfig.cmake file
+set(KOMMON_VTK_COMPONENTS ${KOMMON_VTK_COMPONENTS} PARENT_SCOPE)
+
+# Requires VTK 7 or above
+find_package(VTK CONFIG COMPONENTS ${KOMMON_VTK_COMPONENTS} REQUIRED)
+message(STATUS "VTK: Found version ${VTK_VERSION}.")
 
 # headers
 set( KOMMON_VTK_HEADER_FILENAMES
@@ -99,7 +91,7 @@ target_link_directories(KommonVtk PUBLIC ${VTK_LIBRARY_DIRS})
 target_compile_definitions(KommonVtk PUBLIC KASPER_USE_VTK)
 target_link_libraries( KommonVtk
     PUBLIC
-        Kommon
+        KommonCore
         ${VTK_LIBRARIES}
 )
 
@@ -111,6 +103,10 @@ endif()
 
 if( VTK_MAJOR_VERSION GREATER 5 )
     target_compile_definitions(KommonVtk PRIVATE VTK6)
+endif()
+
+if( VTK_MAJOR_VERSION GREATER 8 )
+    vtk_module_autoinit(TARGETS KommonVtk MODULES ${VTK_LIBRARIES})
 endif()
 
 kasper_install_libraries( KommonVtk )

@@ -3,7 +3,7 @@
 #include "KFile.h"
 #include "KUtilityMessage.h"
 #include "KVTKPainter.h"
-#include "KXMLInitializer.hh"
+#include "KGlobals.hh"
 #include "vtkAnnotatedCubeActor.h"
 #include "vtkAppendPolyData.h"
 #include "vtkAxesActor.h"
@@ -79,7 +79,7 @@ void KVTKWindow::Render()
     }
 
     /* setup display */
-    if (fDisplayToggle == true && !KXMLInitializer::GetInstance().IsBatchMode()) {
+    if (fDisplayToggle == true && !KGlobals::GetInstance().IsBatchMode()) {
         double textColor[] = {// NOLINT
                               fFrameRed < .5 ? 1. : 0,
                               fFrameGreen < .5 ? 1. : 0,
@@ -201,7 +201,7 @@ void KVTKWindow::Render()
 
 void KVTKWindow::Display()
 {
-    if (KXMLInitializer::GetInstance().IsBatchMode()) {
+    if (KGlobals::GetInstance().IsBatchMode()) {
         utilmsg(eWarning) << "KVTKWindow display disabled in batch mode"
                         << eom;
         return;

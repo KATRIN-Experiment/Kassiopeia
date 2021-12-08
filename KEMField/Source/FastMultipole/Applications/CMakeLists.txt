@@ -14,7 +14,6 @@ if (KEMField_ENABLE_FM_APP)
     endif (KEMField_USE_VTK)
 
     if (KEMField_USE_ROOT)
-        find_package(ROOT REQUIRED)
         list (APPEND FAST_MULTIPOLE_APP_LIBS KEMRootPlugin)
     endif (KEMField_USE_ROOT)
 

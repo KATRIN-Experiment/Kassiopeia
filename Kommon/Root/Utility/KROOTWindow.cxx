@@ -3,7 +3,7 @@
 #include "KROOTPad.h"
 #include "KROOTPainter.h"
 #include "KUtilityMessage.h"
-#include "KXMLInitializer.hh"
+#include "KGlobals.hh"
 
 #ifdef KASPER_USE_BOOST
 //#include "KPathUtils.h"
@@ -50,7 +50,7 @@ void KROOTWindow::Render()
     gStyle->SetTitleAlign(23);
     gStyle->SetTitleSize(0.08, "t");
 
-    if (!KXMLInitializer::GetInstance().IsBatchMode())
+    if (!KGlobals::GetInstance().IsBatchMode())
     {
         if (gApplication) {
             fApplication = gApplication;
@@ -140,7 +140,7 @@ void KROOTWindow::Render()
 
 void KROOTWindow::Display()
 {
-    if (KXMLInitializer::GetInstance().IsBatchMode()) {
+    if (KGlobals::GetInstance().IsBatchMode()) {
         utilmsg(eWarning) << "KROOTWindow display disabled in batch mode"
                         << eom;
         return;

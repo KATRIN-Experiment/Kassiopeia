@@ -193,9 +193,17 @@ if(GSL_FOUND AND NOT DEFINED KASPER_USE_GSL)
 endif()
 option( KASPER_USE_GSL "Build GSL dependent modules" ${GSL_FOUND} )
 
-find_package(VTK QUIET)
-if(VTK_FOUND AND NOT DEFINED KASPER_USE_VTK)
-    message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
+if(NOT DEFINED KASPER_USE_VTK)
+    find_package(VTK QUIET COMPONENTS vtkCommonCore)
+    if(VTK_FOUND)
+        message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
+    endif()
+elseif(KASPER_USE_VTK)
+    find_package(VTK REQUIRED COMPONENTS vtkCommonCore)
+    find_package(X11 QUIET)
+    find_package(GLEW QUIET)
+    find_package(Freetype QUIET)
+    find_package(JsonCpp QUIET)
 endif()
 option( KASPER_USE_VTK "Build VTK dependent modules" ${VTK_FOUND} )
 
@@ -213,12 +221,8 @@ if( KASPER_USE_ROOT )
 endif( KASPER_USE_ROOT )
 
 if( KASPER_USE_GSL )
-    find_package( GSL REQUIRED )
+    find_package(GSL REQUIRED)
 endif( KASPER_USE_GSL )
-
-if( KASPER_USE_VTK )
-    find_package(VTK REQUIRED)
-endif( KASPER_USE_VTK )
 
 # Make sure all dependencies are being built
 # Every module must be listed before its dependencies and activate ONLY its

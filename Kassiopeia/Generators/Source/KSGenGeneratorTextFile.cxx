@@ -2,7 +2,7 @@
 
 #include "KSGeneratorsMessage.h"
 #include "KSParticleFactory.h"
-#include "KStringUtils.h"
+#include "KBaseStringUtils.h"
 
 using namespace std;
 using namespace katrin;
@@ -76,7 +76,7 @@ void KSGenGeneratorTextFile::GenerateParticlesFromFile(KSParticleQueue& aParticl
                 continue;
 
             vector<double> fields;
-            KStringUtils::Split(buf, " \t", fields);
+            fields = KBaseStringUtils::SplitAndConvert<double>(buf, " \t");
 
             if (fields.size() < 10) {
                 genmsg(eError) << "file generator <" << GetName() << " cannot parse input file with " << fields.size() << " columns (needs at least 10)" << eom;

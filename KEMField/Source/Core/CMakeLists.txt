@@ -60,7 +60,7 @@ target_include_directories(KEMCore
 
 target_link_libraries (KEMCore
     PUBLIC
-        Kommon
+        KommonCore
 )
 
 target_compile_definitions( KEMCore PUBLIC KEMFIELD_USE_KOMMON )

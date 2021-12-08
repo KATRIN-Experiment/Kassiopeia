@@ -32,7 +32,7 @@ target_include_directories(KEMFieldExceptions
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KEMFieldExceptions
     PUBLIC
-        Kommon
+        KommonBase
 )
 #set_target_properties( KEMFieldExceptions PROPERTIES COMPILE_FLAGS -Wno-overloaded-virtual )
 

@@ -18,22 +18,6 @@ set( KGeoBag_USE_VTK ${KASPER_USE_VTK} )
 set( KGeoBag_USE_ROOT ${KASPER_USE_ROOT} )
 set( KGeoBag_USE_GSL ${KASPER_USE_GSL} )
 
-if( KGeoBag_USE_GSL )
-    find_package( GSL REQUIRED )
-endif( KGeoBag_USE_GSL )
-
-if( KGeoBag_USE_BOOST )
-    find_package( Boost ${BOOST_MINIMUM_VERSION} REQUIRED )
-endif()
-
-if( KGeoBag_USE_VTK )
-    find_package(VTK CONFIG REQUIRED)
-endif()
-
-if( KGeoBag_USE_ROOT )
-    find_package( ROOT ${ROOT_MINIMUM_VERSION} CONFIG REQUIRED )
-endif()
-
 # installing
 kasper_module_paths( TheBag )
 

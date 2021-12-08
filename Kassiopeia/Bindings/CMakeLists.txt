@@ -461,7 +461,7 @@ endforeach(HEADER)
 target_include_directories(KassiopeiaBindings PUBLIC $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaBindings
     PUBLIC
-        Kommon
+        KommonCore
         KEMFieldBindings
         KassiopeiaFields
         KassiopeiaGenerators

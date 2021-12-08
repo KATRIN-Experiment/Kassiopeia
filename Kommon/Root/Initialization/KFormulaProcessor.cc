@@ -194,14 +194,14 @@ void KFormulaProcessor::Evaluate(KToken* aToken)
 
                 //conversions for string operations
                 while (tBuffer.find(fStringICompare) != string::npos) {  // this must come before fStringCompare !
-                    auto tLeft = KStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringICompare)-1));
-                    auto tRight = KStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringICompare) + fStringICompare.length()));
-                    tBuffer = KStringUtils::IEquals(tLeft,  tRight) ? "1" : "0";
+                    auto tLeft = KBaseStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringICompare)-1));
+                    auto tRight = KBaseStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringICompare) + fStringICompare.length()));
+                    tBuffer = KBaseStringUtils::IEquals(tLeft,  tRight) ? "1" : "0";
                 }
                 while (tBuffer.find(fStringCompare) != string::npos) {
-                    auto tLeft = KStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringCompare)-1));
-                    auto tRight = KStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringCompare) + fStringCompare.length()));
-                    tBuffer = KStringUtils::Equals(tLeft,  tRight) ? "1" : "0";
+                    auto tLeft = KBaseStringUtils::Trim(tBuffer.substr(0, tBuffer.find(fStringCompare)-1));
+                    auto tRight = KBaseStringUtils::Trim(tBuffer.substr(tBuffer.find(fStringCompare) + fStringCompare.length()));
+                    tBuffer = KBaseStringUtils::Equals(tLeft,  tRight) ? "1" : "0";
                 }
 
                 double tResult = std::numeric_limits<double>::quiet_NaN();

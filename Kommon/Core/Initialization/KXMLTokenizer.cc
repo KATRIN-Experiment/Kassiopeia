@@ -6,6 +6,7 @@ KLOGGER("kommon.init");
 
 #include <chrono>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 

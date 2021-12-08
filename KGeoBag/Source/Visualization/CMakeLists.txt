@@ -111,6 +111,7 @@ if( KGeoBag_USE_ROOT )
     )
     target_link_libraries( KGeoBagROOTVisualization
         PUBLIC
+            KommonRoot
             KGeoBagBasicVisualization
             ROOT::Core
     )

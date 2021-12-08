@@ -3,12 +3,14 @@ set( WRITERS_HEADER_BASENAMES
     KSWritersMessage.h
     KSWriteASCII.h
 )
+
 if( Kassiopeia_USE_VTK )
     set( WRITERS_HEADER_BASENAMES
         ${WRITER_HEADER_BASENAMES}
         KSWriteVTK.h
     )
 endif( Kassiopeia_USE_VTK )
+
 if( Kassiopeia_USE_ROOT )
     set( WRITERS_HEADER_BASENAMES
         ${WRITER_HEADER_BASENAMES}
@@ -20,6 +22,7 @@ if( Kassiopeia_USE_ROOT )
         KSWriteROOTConditionStep.h
     )
 endif( Kassiopeia_USE_ROOT )
+
 set( WRITERS_HEADER_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Include
 )
@@ -32,12 +35,14 @@ set( WRITERS_SOURCE_BASENAMES
     KSWritersMessage.cxx
     KSWriteASCII.cxx
 )
+
 if( Kassiopeia_USE_VTK )
     set( WRITERS_SOURCE_BASENAMES
         ${WRITERS_SOURCE_BASENAMES}
         KSWriteVTK.cxx
     )
 endif( Kassiopeia_USE_VTK )
+
 if( Kassiopeia_USE_ROOT )
     set( WRITERS_SOURCE_BASENAMES
         ${WRITERS_SOURCE_BASENAMES}
@@ -45,6 +50,7 @@ if( Kassiopeia_USE_ROOT )
         KSWriteROOTCondition.cxx
     )
 endif( Kassiopeia_USE_ROOT )
+
 set( WRITERS_SOURCE_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/Source
 )
@@ -80,6 +86,10 @@ if( Kassiopeia_USE_VTK )
         target_compile_definitions( KassiopeiaWriters PRIVATE VTK6 )
     endif()
 endif( Kassiopeia_USE_VTK )
+
+if( Kassiopeia_USE_ROOT )
+    target_link_libraries( KassiopeiaWriters PUBLIC KommonRoot )
+endif( Kassiopeia_USE_ROOT )
 
 # install
 kasper_install_headers( ${WRITERS_HEADER_FILENAMES} )

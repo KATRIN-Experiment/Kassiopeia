@@ -4,7 +4,8 @@ set( APPLICATION_NAMES
 )
 
 set( APPLICATION_LIBRARIES
-    Kommon
+    KommonBase
+    KommonCore
 )
 
 foreach( NAME ${APPLICATION_NAMES} )

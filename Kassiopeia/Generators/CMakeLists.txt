@@ -185,6 +185,8 @@ target_include_directories(KassiopeiaGenerators
     PUBLIC $<BUILD_INTERFACE:${GENERATORS_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaGenerators
     PUBLIC
+        KommonGsl
+        KommonRoot
         KassiopeiaOperators
         KassiopeiaReaders
         KGeoBagRandom

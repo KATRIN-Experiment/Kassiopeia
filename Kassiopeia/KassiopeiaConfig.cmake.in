@@ -1,19 +1,8 @@
 include(CMakeFindDependencyMacro)
 
 set(Kassiopeia_USE_BOOST @Kassiopeia_USE_BOOST@)
-if(Kassiopeia_USE_BOOST)
-    find_dependency( Boost COMPONENTS )
-endif(Kassiopeia_USE_BOOST)
-
 set(Kassiopeia_USE_ROOT @Kassiopeia_USE_ROOT@)
-if(Kassiopeia_USE_ROOT)
-    find_dependency( ROOT CONFIG )
-endif(Kassiopeia_USE_ROOT)
-
 set(Kassiopeia_USE_VTK @Kassiopeia_USE_VTK@)
-if(Kassiopeia_USE_VTK)
-    find_dependency( VTK NO_MODULE )
-endif(Kassiopeia_USE_VTK)
 
 # Kasper dependencies
 find_dependency( Kommon )

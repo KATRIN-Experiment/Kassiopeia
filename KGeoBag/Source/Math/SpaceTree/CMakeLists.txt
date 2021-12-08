@@ -41,7 +41,7 @@ target_include_directories( KGeoBagMathSpaceTree
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Include> $<INSTALL_INTERFACE:include>)
 target_link_libraries( KGeoBagMathSpaceTree
     PUBLIC
-        Kommon
+        KommonCore
         KGeoBagMathLinearAlgebra
 )
 

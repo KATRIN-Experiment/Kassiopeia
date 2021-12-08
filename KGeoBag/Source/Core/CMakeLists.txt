@@ -43,7 +43,7 @@ target_include_directories( KGeoBagCore
 )
 target_link_libraries( KGeoBagCore
     PUBLIC
-        Kommon
+        KommonCore
         KGeoBagMath
 )
 

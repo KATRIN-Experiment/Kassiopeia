@@ -11,9 +11,11 @@ project( UnitTest )
 
 include( KasperDefaults )
 
-
 # module paths
 kasper_module_paths( UnitTest )
+
+# dependencies
+find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS filesystem)
 
 include_directories(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -64,4 +66,5 @@ endif()
 ## Global Kasper module
 
 add_subdirectory( Kasper )
+
 kasper_install_module()

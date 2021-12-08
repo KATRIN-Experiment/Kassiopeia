@@ -41,7 +41,7 @@ target_include_directories(KassiopeiaUtility
     PUBLIC $<BUILD_INTERFACE:${UTILITY_HEADER_PATH}> $<INSTALL_INTERFACE:include> )
 target_link_libraries( KassiopeiaUtility
     PUBLIC
-        Kommon
+        KommonCore
     PRIVATE
         Threads::Threads
 )

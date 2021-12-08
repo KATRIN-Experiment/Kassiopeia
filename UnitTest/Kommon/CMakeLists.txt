@@ -7,6 +7,7 @@ set (UNIT_TESTS_SOURCEFILES
     Math.cxx
     Integrator.cxx
     KComplexElement.cxx
+    BaseStringUtils.cxx
     StringUtils.cxx
     TestXML.cxx
 )
@@ -15,14 +16,31 @@ set (UNIT_TESTS_SOURCEFILES
 
 add_library (KommonUnitTests SHARED
     ${UNIT_TESTS_SOURCEFILES} ${UNIT_TESTS_HEADERFILES})
+
 target_include_directories( KommonUnitTests
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries (KommonUnitTests
     PUBLIC
         UnitTestBase
-        Kommon
+        KommonCore
+        KommonMath
+        KommonBase
 )
+
+if( KASPER_USE_ROOT )
+    target_link_libraries(KommonUnitTests
+        PRIVATE
+            KommonRoot
+    )
+endif( KASPER_USE_ROOT )
+
+if( KASPER_USE_GSL )
+    target_link_libraries(KommonUnitTests
+        PRIVATE
+            KommonGsl
+    )
+endif( KASPER_USE_GSL )
 
 kasper_install_libraries (KommonUnitTests)
 
