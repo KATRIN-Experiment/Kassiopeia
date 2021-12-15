@@ -105,6 +105,10 @@ template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KCo
         aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmapCalculator::SetSpacing);
         return true;
     }
+    if (aContainer->GetName() == "time") {
+        aContainer->CopyTo(fObject, &KEMField::KMagnetostaticFieldmapCalculator::SetTime);
+        return true;
+    }
     if (aContainer->GetName() == "spaces") {
         std::vector<KGeoBag::KGSpace*> tSpaces =
             KGeoBag::KGInterface::GetInstance()->RetrieveSpaces(aContainer->AsString());
@@ -125,8 +129,8 @@ template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KCo
     if (aContainer->GetName() == "field") {
         std::string fieldName;
         aContainer->CopyTo(fieldName);
-        KEMField::KMagnetostaticField* field =
-            katrin::KToolbox::GetInstance().Get<KEMField::KMagnetostaticField>(fieldName);
+        KEMField::KMagneticField* field =
+            katrin::KToolbox::GetInstance().Get<KEMField::KMagneticField>(fieldName);
         fObject->AddMagneticField(field);
         return true;
     }
@@ -135,7 +139,7 @@ template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddAttribute(KCo
 
 template<> inline bool KMagnetostaticFieldmapCalculatorBuilder::AddElement(KContainer* aContainer)
 {
-    if (aContainer->Is<KEMField::KMagnetostaticField>()) {
+    if (aContainer->Is<KEMField::KMagneticField>()) {
         aContainer->ReleaseTo(fObject, &KEMField::KMagnetostaticFieldmapCalculator::AddMagneticField);
         return true;
     }
