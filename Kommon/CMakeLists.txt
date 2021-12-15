@@ -33,12 +33,24 @@ endif()
 
 option( KLogger_THROW_EXCEPTIONS "Throw exception when using KERROR/KFATAL macros." OFF )
 if( KLogger_THROW_EXCEPTIONS )
-        set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
-            "KLOGGER_THROW_EXCEPTIONS"
-        )
+    set_source_files_properties(Core/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
+        "KLOGGER_THROW_EXCEPTIONS"
+    )
 endif()
 mark_as_advanced( CLEAR KLogger_THROW_EXCEPTIONS )
 
+set( KConst_REFERENCE_EPOCH 2021 CACHE STRING "Reference epoch for physical constants defined in 'KConst.h'. Follows PDG data releases." )
+set_property(CACHE KConst_REFERENCE_EPOCH PROPERTY STRINGS 2006 2021)  # make drop-down list of allowed values
+
+if(KConst_REFERENCE_EPOCH GREATER 2006)
+    message(WARNING "*** Using updated physical constants ***\n"
+    "Kasper was configured to use physical constants based on 2021 datasets. This will affect the outcome "
+    "of some calculations. To restore *old* behavior, set KConst_REFERENCE_EPOCH=2006.")
+elseif(KConst_REFERENCE_EPOCH LESS 2021)
+    message(WARNING "*** Using outdated physical constants ***\n"
+    "Kasper was configured to use physical constants based on 2006 datasets. This will affect the outcome "
+    "of some calculations. To restore *default* behavior, set KConst_REFERENCE_EPOCH=2021.")
+endif()
 
 # to be populated by subdirectories
 set(KOMMON_HEADER_FILES)
@@ -87,6 +99,13 @@ foreach(HEADER ${KOMMON_HEADER_FILES})
     target_include_directories(Kommon PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
 endforeach(HEADER)
 target_include_directories(Kommon PUBLIC $<INSTALL_INTERFACE:include>)
+target_compile_definitions(Kommon PUBLIC KConst_REFERENCE_EPOCH=${KConst_REFERENCE_EPOCH})
+
+# Fixes Boost build error on some Mac/Cygwin installations,
+# see: https://github.com/boostorg/stacktrace/issues/88
+if(UNIX OR APPLE OR MINGW)
+    target_compile_definitions(Kommon PRIVATE _GNU_SOURCE)
+endif()
 
 if( KASPER_USE_BOOST )
     target_compile_definitions(Kommon PUBLIC KASPER_USE_BOOST)
