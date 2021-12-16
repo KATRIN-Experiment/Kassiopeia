@@ -54,6 +54,9 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     //fQuality = vtkSmartPointer<vtkDoubleArray>::New();
     //fQuality->SetName("Cell Quality");
 
+    fCharge = vtkSmartPointer<vtkDoubleArray>::New();
+    fCharge->SetName("Charge");
+
     fChargeDensity = vtkSmartPointer<vtkDoubleArray>::New();
     fChargeDensity->SetName("Charge Density");
 
@@ -101,12 +104,13 @@ KEMVTKViewer::KEMVTKViewer(KSurfaceContainer& aSurfaceContainer)
     fPolyData->GetCellData()->AddArray(fQuality);
     fPolyData->GetCellData()->AddArray(fArea);
     fPolyData->GetCellData()->AddArray(fLogArea);
-    fPolyData->GetCellData()->AddArray(fModulo);
     fPolyData->GetCellData()->AddArray(fAspectRatio);
+    fPolyData->GetCellData()->AddArray(fCharge);
     fPolyData->GetCellData()->AddArray(fChargeDensity);
     fPolyData->GetCellData()->AddArray(fLogChargeDensity);
     fPolyData->GetCellData()->AddArray(fPotential);
     fPolyData->GetCellData()->AddArray(fPermittivity);
+    fPolyData->GetCellData()->AddArray(fModulo);
 }
 
 void KEMVTKViewer::GenerateGeometryFile(const std::string& fileName)
@@ -122,7 +126,8 @@ void KEMVTKViewer::GenerateGeometryFile(const std::string& fileName)
 #endif
 
         auto writer = vtkSmartPointer<vtkSTLWriter>::New();
-        writer->SetFileTypeToASCII();  // binary STL might break import in other programs
+        //writer->SetFileTypeToASCII();  // binary STL might break import in other programs
+        writer->SetFileTypeToBinary();
         writer->SetInputConnection(filter->GetOutputPort());
         writer->SetFileName(fileName.c_str());
         writer->Write();

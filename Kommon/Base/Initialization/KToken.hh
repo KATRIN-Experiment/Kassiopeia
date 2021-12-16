@@ -68,7 +68,7 @@ template<typename XDataType> inline XDataType KToken::GetValue() const
 
 template<class OutputT> inline const std::vector<OutputT> KToken::AsVector() const
 {
-    return KBaseStringUtils::SplitAndConvert<OutputT>(fValue, ";, |/");
+    return KBaseStringUtils::SplitTrimAndConvert<OutputT>(fValue, ";, |/");
 }
 
 template<class OutputT> inline const std::pair<OutputT, OutputT> KToken::AsPair() const

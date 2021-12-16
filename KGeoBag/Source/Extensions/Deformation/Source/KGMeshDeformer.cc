@@ -44,16 +44,16 @@ void KGMeshDeformer::VisitExtendedSurface(KGExtendedSurface<KGMesh>* meshSurface
         // the old mesh elements as we go)
         fDeformation = meshSurface->AsExtension<KGDeformed>()->GetDeformation();
 
-        KGMeshElementIt it;
-        for (it = meshSurface->Elements()->begin(); it != meshSurface->Elements()->end(); ++it) {
-            AddDeformed(*it);
-            delete *it;
+        for (auto & it : *(meshSurface->Elements())) {
+            AddDeformed(it);
+            delete it;
         }
 
         // then, add the deformed mesh elements to the surface
         meshSurface->Elements()->clear();
-        for (it = fDeformedVector.begin(); it != fDeformedVector.end(); ++it)
-            meshSurface->Elements()->push_back(*it);
+        for (auto & it : fDeformedVector) {
+            meshSurface->Elements()->push_back(it);
+        }
 
         fDeformedVector.clear();
     }

@@ -3,6 +3,8 @@
 
 #include "KThreeVector_KEMField.hh"
 
+#include "KTagged.h"
+
 #include <string>
 
 namespace KEMField
@@ -19,7 +21,7 @@ namespace KEMField
 * @author T.J. Corona
 */
 
-class KShape
+class KShape : public katrin::KTagged
 {
   protected:
     KShape() = default;

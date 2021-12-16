@@ -108,10 +108,19 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
 
         tSolution = false;
         string tSolutionFilename;
-        KEMFileInterface::GetInstance()->FindByHash(aContainer,
+        auto* tNewContainer = new KSurfaceContainer();
+        KEMFileInterface::GetInstance()->FindByHash(*tNewContainer,
                                                     tMinResidualThreshold.fGeometryHash,
                                                     tSolution,
                                                     tSolutionFilename);
+
+        // restore names/tags that are not stored with the container
+        for (size_t i = 0; i < aContainer.size(); ++i) {
+            if (tNewContainer->at(i)->GetShape()->Centroid() == aContainer[i]->GetShape()->Centroid()) {
+                tNewContainer->at(i)->GetShape()->SetName(aContainer[i]->GetShape()->GetName());
+                tNewContainer->at(i)->GetShape()->SetTagsFrom(aContainer[i]->GetShape());
+            }
+        }
 
         if (tMinResidualThreshold.fResidualThreshold <= aThreshold) {
             MPI_SINGLE_PROCESS
@@ -121,6 +130,7 @@ bool KChargeDensitySolver::FindSolution(double aThreshold, KSurfaceContainer& aC
         }
 
         if (tSolution == true) {
+            aContainer = std::move(*tNewContainer);
             return true;
         }
     }

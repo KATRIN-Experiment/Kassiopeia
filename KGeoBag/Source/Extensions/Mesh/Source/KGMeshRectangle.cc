@@ -51,6 +51,10 @@ double KGMeshRectangle::Aspect() const
         return fB / fA;
     }
 }
+KThreeVector KGMeshRectangle::Centroid() const
+{
+    return fP0 + fA * fN1 * .5 + fB * fN2 * .5;
+}
 
 void KGMeshRectangle::Transform(const KTransformation& transform)
 {

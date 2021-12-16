@@ -69,13 +69,19 @@ TEST(KBaseStringUtils, Manipulation)
     const std::string s7 = "a__b__c__d";
     const std::vector<std::string> v6 = {"a", "b", "c"};
     const std::vector<std::string> v7 = {"a", "b", "c", "d"};
+    
+    const std::string s8 = "a, b ,\n  , c  \r";
+    const std::string s9 = "1, 2 ,\n  , 3  \r";
+    const std::vector<int> v9 = {1, 2, 3};
 
-    EXPECT_EQ(v6, KBaseStringUtils::SplitAndConvert<std::string>(s6, ","));
-    EXPECT_NE(v6, KBaseStringUtils::SplitAndConvert<std::string>(s7, ","));
-    EXPECT_NE(v7, KBaseStringUtils::SplitAndConvert<std::string>(s6, "__"));
-    EXPECT_EQ(v7, KBaseStringUtils::SplitAndConvert<std::string>(s7, "__"));
-    EXPECT_EQ(v7, KBaseStringUtils::SplitAndConvert<std::string>(s7, "_"));
-    EXPECT_NE(v7, KBaseStringUtils::SplitAndConvert<std::string>(s7, " "));
+    EXPECT_EQ(v6, KBaseStringUtils::SplitTrimAndConvert<std::string>(s6, ","));
+    EXPECT_NE(v6, KBaseStringUtils::SplitTrimAndConvert<std::string>(s7, ","));
+    EXPECT_NE(v7, KBaseStringUtils::SplitTrimAndConvert<std::string>(s6, "__"));
+    EXPECT_EQ(v7, KBaseStringUtils::SplitTrimAndConvert<std::string>(s7, "__"));
+    EXPECT_EQ(v7, KBaseStringUtils::SplitTrimAndConvert<std::string>(s7, "_"));
+    EXPECT_NE(v7, KBaseStringUtils::SplitTrimAndConvert<std::string>(s7, " "));
+    EXPECT_EQ(v6, KBaseStringUtils::SplitTrimAndConvert<std::string>(s8, ","));
+    EXPECT_EQ(v9, KBaseStringUtils::SplitTrimAndConvert<int>(s9, ","));
 
     EXPECT_EQ(s6, KBaseStringUtils::Join(v6, ","));
     EXPECT_NE(s6, KBaseStringUtils::Join(v7, ","));

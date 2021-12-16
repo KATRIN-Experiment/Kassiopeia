@@ -106,6 +106,10 @@ double KGMeshTriangle::Aspect() const
 
     return ratio;
 }
+KThreeVector KGMeshTriangle::Centroid() const
+{
+    return fP0 + (fA * fN1 + fB * fN2) / 3.;
+}
 
 void KGMeshTriangle::Transform(const KTransformation& transform)
 {

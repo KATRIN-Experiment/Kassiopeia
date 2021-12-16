@@ -220,6 +220,8 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     KThreeVector fCurrentYAxis;
     KThreeVector fCurrentZAxis;
     KAxis fCurrentAxis;
+
+    katrin::KTagged* fCurrentElement;
 };
 
 template<class XBasisPolicy, class XBoundaryPolicy>

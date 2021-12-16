@@ -44,7 +44,7 @@ class KBaseStringUtils
 public:
     // New functions
     template<typename XDataType> static XDataType Convert(std::string str);
-    template<class OutputT> static std::vector<OutputT> SplitAndConvert(std::string valueCopy, std::string delimiters);
+    template<class OutputT> static std::vector<OutputT> SplitTrimAndConvert(std::string valueCopy, std::string delimiters);
 
     static std::string Replace(const std::string value, const std::string from, const std::string to);
     static std::string EscapeMostly(const std::string value);
@@ -147,7 +147,7 @@ template<> inline std::string KBaseStringUtils::Convert<std::string>(std::string
     return str;
 }
 
-template<class OutputT> std::vector<OutputT> KBaseStringUtils::SplitAndConvert(std::string valueCopy, std::string delimiters)
+template<class OutputT> std::vector<OutputT> KBaseStringUtils::SplitTrimAndConvert(std::string valueCopy, std::string delimiters)
 {
     std::vector<OutputT> res;
     std::string tmp;
@@ -159,6 +159,8 @@ template<class OutputT> std::vector<OutputT> KBaseStringUtils::SplitAndConvert(s
                 tmp += c;
                 continue;
             }
+            
+            tmp = Trim(tmp);
 
             if (tmp.size() != 0) {
                 // Convert
@@ -166,6 +168,8 @@ template<class OutputT> std::vector<OutputT> KBaseStringUtils::SplitAndConvert(s
                 tmp = "";
             }
         }
+        
+        tmp = Trim(tmp);
 
         if (tmp.size() != 0) {
             // Convert last entry

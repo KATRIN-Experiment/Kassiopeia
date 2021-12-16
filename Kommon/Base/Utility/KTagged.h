@@ -19,8 +19,10 @@ class KTagged : public KNamed
 {
   public:
     KTagged();
-    KTagged(const KTagged& aCopy);
+    KTagged(const KTagged& aCopy);    
     ~KTagged() override;
+
+    inline KTagged& operator=(const KTagged& other);
 
     bool Empty() const;
     bool HasTag(const KTag& aTag) const;
@@ -50,6 +52,13 @@ class KTagged : public KNamed
 
     static KTagSet sOpenTags;
 };
+
+inline KTagged& KTagged::operator=(const KTagged& other)
+{
+    SetName(other.GetName());
+    SetTagsFrom(&other);
+    return *this;
+}
 
 inline std::ostream& operator<<(std::ostream& aStream, const KTagged& aTagged)
 {

@@ -19,6 +19,7 @@ class KGMeshWire : public KGMeshElement
 
     double Area() const override;
     double Aspect() const override;
+    KThreeVector Centroid() const override;
     void Transform(const KTransformation& transform) override;
 
     double NearestDistance(const KGeoBag::KThreeVector& aPoint) const override;

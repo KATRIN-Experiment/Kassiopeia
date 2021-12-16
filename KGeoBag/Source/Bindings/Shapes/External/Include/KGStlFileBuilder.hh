@@ -44,7 +44,7 @@ template<> inline bool KGStlFileBuilder::AddAttribute(KContainer* anAttribute)
     if (anAttribute->GetName() == "selector") {
         try {
             // allowed syntax pattern: "a-b;c-d;..."
-            for (std::string& sel : KBaseStringUtils::SplitAndConvert<std::string>(anAttribute->AsString(), ";")) {
+            for (std::string& sel : KBaseStringUtils::SplitTrimAndConvert<std::string>(anAttribute->AsString(), ";")) {
                 size_t pos = sel.find_first_of("-");
                 size_t first = 0, last = 0;
                 if (pos == std::string::npos) {

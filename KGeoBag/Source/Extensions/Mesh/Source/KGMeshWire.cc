@@ -19,6 +19,10 @@ double KGMeshWire::Aspect() const
 {
     return ((fP1 - fP0).Magnitude()) / fDiameter;
 }
+KThreeVector KGMeshWire::Centroid() const
+{
+    return (fP0 + fP1) * .5;
+}
 
 void KGMeshWire::Transform(const KTransformation& transform)
 {

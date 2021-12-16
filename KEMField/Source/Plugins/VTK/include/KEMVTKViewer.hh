@@ -109,12 +109,13 @@ class KEMVTKViewer : public KSurfaceAction<KEMVTKViewer>
     vtkSmartPointer<vtkDoubleArray> fArea;
     vtkSmartPointer<vtkDoubleArray> fLogArea;
     vtkSmartPointer<vtkDoubleArray> fAspectRatio;
-    vtkSmartPointer<vtkDoubleArray> fQuality;
-    vtkSmartPointer<vtkShortArray> fModulo;
+    vtkSmartPointer<vtkDoubleArray> fCharge;
     vtkSmartPointer<vtkDoubleArray> fChargeDensity;
     vtkSmartPointer<vtkDoubleArray> fLogChargeDensity;
     vtkSmartPointer<vtkDoubleArray> fPotential;
     vtkSmartPointer<vtkDoubleArray> fPermittivity;
+    vtkSmartPointer<vtkDoubleArray> fQuality;
+    vtkSmartPointer<vtkShortArray> fModulo;
 
     vtkSmartPointer<vtkTriangle> fTriangle;
     vtkSmartPointer<vtkQuad> fQuad;
@@ -471,6 +472,9 @@ template<typename Surface> void KEMVTKViewer::AddIfElectrostaticBasis(Int2Type<t
     auto* s = static_cast<Surface*>(fSurfacePrimitive);
 
     double cd = s->GetSolution();
+    double area = s->Area();
+
+    fCharge->InsertNextValue(cd * area);
     fChargeDensity->InsertNextValue(cd);
     if (cd > 0.)
         fLogChargeDensity->InsertNextValue(log(1. + 1.e16 * cd));

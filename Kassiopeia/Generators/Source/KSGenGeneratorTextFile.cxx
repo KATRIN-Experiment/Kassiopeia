@@ -76,7 +76,7 @@ void KSGenGeneratorTextFile::GenerateParticlesFromFile(KSParticleQueue& aParticl
                 continue;
 
             vector<double> fields;
-            fields = KBaseStringUtils::SplitAndConvert<double>(buf, " \t");
+            fields = KBaseStringUtils::SplitTrimAndConvert<double>(buf, " \t");
 
             if (fields.size() < 10) {
                 genmsg(eError) << "file generator <" << GetName() << " cannot parse input file with " << fields.size() << " columns (needs at least 10)" << eom;

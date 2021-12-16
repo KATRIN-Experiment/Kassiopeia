@@ -25,6 +25,7 @@ class KGMeshElement
 
     virtual double Area() const = 0;
     virtual double Aspect() const = 0;
+    virtual KThreeVector Centroid() const = 0;
 
     virtual void Transform(const KTransformation& transform) = 0;
 
