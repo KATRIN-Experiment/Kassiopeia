@@ -1,0 +1,65 @@
+# This file configures the console logging output.
+#
+# See:
+#   https://logging.apache.org/log4cxx/latest_stable/usage.html
+#   https://www.tutorialspoint.com/log4j/log4j_patternlayout.htm
+
+
+# Set default level and target for all loggers
+# Available levels are: FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+#log4j.rootLogger=@LEVEL@, stdout
+log4j.rootLogger=@LEVEL@, stderr
+
+# Adjust settings for specific loggers
+# Available loggers are (incomplete list): BEANS, IDLE, kali, kafit, ssc
+#log4j.logger.BEANS=DEBUG
+#log4j.logger.IDLE=DEBUG
+#log4j.logger.kali=DEBUG
+#log4j.logger.kali.applications=DEBUG
+
+# Add file target to a logger (see below)
+#log4j.logger.kdb=DEBUG, stdout, R
+
+# Set appearance of stdout log messages
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.ColoredPatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss} [%5p] %30.30F:%-5L %m%n
+log4j.appender.stdout.ImmediateFlush=true
+
+# Set appearance of stderr log messages
+log4j.appender.stderr=org.apache.log4j.ConsoleAppender
+log4j.appender.stderr.target=System.err
+log4j.appender.stderr.filter.range=org.apache.log4j.LevelRangeFilter
+log4j.appender.stderr.filter.range.levelMin = WARN
+log4j.appender.stderr.layout=org.apache.log4j.ColoredPatternLayout
+log4j.appender.stderr.layout.ConversionPattern=%d{HH:mm:ss} [%5p] %30.30F:%-5L %m%n
+log4j.appender.stderr.ImmediateFlush=true
+
+
+# Alternative settings follow below. Uncomment to override defaults.
+
+# Use simple pattern layout (without colors)
+#log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+#log4j.appender.stderr.layout=org.apache.log4j.PatternLayout
+
+# Alternative patterns to output the caller's file name and line number.
+#log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss.SSS} [%5p] %30.30F:%-5L %m%n
+#log4j.appender.stderr.layout.ConversionPattern=%d{HH:mm:ss.SSS} [%5p] %30.30F:%-5L %m%n
+#log4j.appender.stdout.layout.ConversionPattern=%d{HH:mm:ss} +%r [%5p] %.16 - %m%n
+#log4j.appender.stderr.layout.ConversionPattern=%d{HH:mm:ss} +%r [%5p] %.16 - %m%n
+#log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MMM-dd HH:mm:ss.SSS} [%-5p] %16c: %m%n
+#log4j.appender.stderr.layout.ConversionPattern=%d{yyyy-MMM-dd HH:mm:ss.SSS} [%-5p] %16c: %m%n
+
+# Write log output to a file
+#log4j.appender.R=org.apache.log4j.RollingFileAppender
+#log4j.appender.R.layout=org.apache.log4j.PatternLayout
+#log4j.appender.R.layout.ConversionPattern=%d{yyyy-MMM-dd HH:mm:ss.SSS} %t [%-5p] %16c: %m%n
+#
+# Set output file name
+#log4j.appender.R.File=example.log
+#
+# Limit size of the output file
+#log4j.appender.R.MaxFileSize=8192KB
+# Keep one backup file
+#log4j.appender.R.MaxBackupIndex=1
