@@ -42,6 +42,7 @@ STATICINT sKMagnetostaticFieldmapCalculatorStructure =
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("mirror_y") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<bool>("mirror_z") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<double>("spacing") +
+    KMagnetostaticFieldmapCalculatorBuilder::Attribute<double>("time") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("spaces") +
     KMagnetostaticFieldmapCalculatorBuilder::Attribute<std::string>("field") +
     // support of deprecated old xml:

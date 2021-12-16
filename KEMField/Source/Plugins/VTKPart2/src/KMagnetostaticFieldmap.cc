@@ -516,7 +516,8 @@ KMagnetostaticFieldmapCalculator::KMagnetostaticFieldmapCalculator() :
     fMirrorX(false),
     fMirrorY(false),
     fMirrorZ(false),
-    fSpacing(1.)
+    fSpacing(1.),
+    fTime(0.)
 {}
 
 KMagnetostaticFieldmapCalculator::~KMagnetostaticFieldmapCalculator() = default;
@@ -712,7 +713,7 @@ void KMagnetostaticFieldmapCalculator::Execute()
             tField = KFieldVector::sZero;
             try {
                 for (auto& it : fMagneticFields)
-                    tField += it.second->MagneticField(KPosition(tPoint));
+                    tField += it.second->MagneticField(KPosition(tPoint), fTime);
             }
             catch (katrin::KGslException& e) {
                 tField = KFieldVector::sInvalid;
@@ -783,7 +784,7 @@ void KMagnetostaticFieldmapCalculator::Execute()
                     /// FIXME: summing up gradients from multiple fields doesn't make much sense,
                     /// Needs to be handled in a better way, e.g. calculate gradient from field map directly.
                     for (auto& it : fMagneticFields)
-                        tGradient += it.second->MagneticGradient(KPosition(tPoint));
+                        tGradient += it.second->MagneticGradient(KPosition(tPoint), fTime);
                 }
                 catch (katrin::KGslException& e) {
                     tGradient = KThreeMatrix::sInvalid;

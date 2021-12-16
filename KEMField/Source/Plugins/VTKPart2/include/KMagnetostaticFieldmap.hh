@@ -270,7 +270,11 @@ class KMagnetostaticFieldmapCalculator
     {
         fSpacing = aSpacing;
     }
-    void AddMagneticField(KMagnetostaticField* aField)
+    void SetTime(double aTime)
+    {
+        fTime = aTime;
+    }
+    void AddMagneticField(KMagneticField* aField)
     {
         if (!aField)
             throw KEMSimpleException("cannot add invalid magnetic field");
@@ -325,7 +329,8 @@ class KMagnetostaticFieldmapCalculator
     KFieldVector fLength;
     bool fMirrorX, fMirrorY, fMirrorZ;
     double fSpacing;
-    std::map<std::string, KMagnetostaticField*> fMagneticFields;
+    double fTime;
+    std::map<std::string, KMagneticField*> fMagneticFields;
     std::vector<const KGeoBag::KGSpace*> fSpaces;
 
     vtkSmartPointer<vtkImageData> fGrid;
