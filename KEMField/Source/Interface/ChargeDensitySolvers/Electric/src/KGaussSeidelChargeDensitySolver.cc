@@ -10,7 +10,7 @@
 #include "KBoundaryIntegralMatrix.hh"
 #include "KBoundaryIntegralSolutionVector.hh"
 #include "KBoundaryIntegralVector.hh"
-#include "KElectrostaticBoundaryIntegratorFactory.hh"
+#include "KElectrostaticBoundaryIntegrator.hh"
 #include "KGaussSeidel.hh"
 #include "KSquareMatrix.hh"
 
@@ -22,6 +22,10 @@ using KEMField::KGaussSeidel_MPI;
 #endif
 
 #ifdef KEMFIELD_USE_OPENCL
+#include "KOpenCLBoundaryIntegralMatrix.hh"
+#include "KOpenCLBoundaryIntegralSolutionVector.hh"
+#include "KOpenCLBoundaryIntegralVector.hh"
+#include "KOpenCLElectrostaticBoundaryIntegrator.hh"
 #include "KGaussSeidel_OpenCL.hh"
 using KEMField::KGaussSeidel_OpenCL;
 #endif
@@ -68,7 +72,7 @@ void KGaussSeidelChargeDensitySolver::InitializeCore(KSurfaceContainer& containe
             KBoundaryIntegralSolutionVector<KOpenCLBoundaryIntegrator<KElectrostaticBasis>> x(*oclContainer, integrator);
 
             // NOTE: Running with OpenCL+MPI is not supported here!
-            KGaussSeidel_OpenCL<KElectrostaticBoundaryIntegrator::ValueType> gaussSeidel;
+            KGaussSeidel<KElectrostaticBoundaryIntegrator::ValueType, KGaussSeidel_OpenCL> gaussSeidel;
 
             gaussSeidel.Solve(A, x, b);
 

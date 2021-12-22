@@ -502,6 +502,7 @@ void KFMElectrostaticMultipoleCalculator_OpenCL::AssignBuffers()
     KOpenCLInterface::GetInstance()->GetQueue().finish();
 #endif
 
+/*
     double mem_size = 0;
     mem_size += fStride * sizeof(CL_TYPE);
     mem_size += fStride * sizeof(CL_TYPE);
@@ -509,6 +510,7 @@ void KFMElectrostaticMultipoleCalculator_OpenCL::AssignBuffers()
     mem_size += fJSize * sizeof(CL_TYPE);
     mem_size += (fDegree + 1) * sizeof(CL_TYPE);
     mem_size += (fDegree + 1) * sizeof(CL_TYPE);
+*/
 
     fMultipoleDistributionKernel->setArg(0, fNMaxItems);  //must be set to (fNGroupUniqueNodes) on each call
     fMultipoleDistributionKernel->setArg(1, *fNodeIndexBufferCL);
