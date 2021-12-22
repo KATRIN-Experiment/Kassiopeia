@@ -27,13 +27,13 @@ template<> const KSFloat KSFloat::sZero(0.);
 
 template<> const KSDouble KSDouble::sZero(0);
 
-template<> const KSThreeVector KSThreeVector::sZero(KGeoBag::KThreeVector::sZero);
+template<> const KSThreeVector KSThreeVector::sZero(katrin::KThreeVector::sZero);
 
-template<> const KSTwoVector KSTwoVector::sZero(KGeoBag::KTwoVector::sZero);
+template<> const KSTwoVector KSTwoVector::sZero(katrin::KTwoVector::sZero);
 
-template<> const KSThreeMatrix KSThreeMatrix::sZero(KGeoBag::KThreeMatrix::sZero);
+template<> const KSThreeMatrix KSThreeMatrix::sZero(katrin::KThreeMatrix::sZero);
 
-template<> const KSTwoMatrix KSTwoMatrix::sZero(KGeoBag::KTwoMatrix::sZero);
+template<> const KSTwoMatrix KSTwoMatrix::sZero(katrin::KTwoMatrix::sZero);
 
 template<> const KSString KSString::sZero(std::string(""));
 

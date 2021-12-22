@@ -114,6 +114,8 @@ using namespace KEMField;
 using namespace KGeoBag;
 #endif
 
+using katrin::KThreeVector;
+
 void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
 std::vector<std::string> Tokenize(const std::string& separators, std::string input);
 

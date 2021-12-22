@@ -3,6 +3,8 @@
 
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+
 namespace KGeoBag
 {
 class KGBox : public KGArea
@@ -19,15 +21,15 @@ class KGBox : public KGArea
 
     KGBox();
     KGBox(double x0, double x1, double y0, double y1, double z0, double z1);
-    KGBox(const KGeoBag::KThreeVector& p0, const KGeoBag::KThreeVector& p1);
+    KGBox(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1);
 
     ~KGBox() override = default;
 
     void AreaInitialize() const override {}
     void AreaAccept(KGVisitor* aVisitor) override;
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override;
 
     void SetX0(double d)
     {
@@ -54,11 +56,11 @@ class KGBox : public KGArea
         fP1[2] = d;
     }
 
-    void SetP0(const KGeoBag::KThreeVector& p)
+    void SetP0(const katrin::KThreeVector& p)
     {
         fP0 = p;
     }
-    void SetP1(const KGeoBag::KThreeVector& p)
+    void SetP1(const katrin::KThreeVector& p)
     {
         fP1 = p;
     }
@@ -88,11 +90,11 @@ class KGBox : public KGArea
         return fP1[2];
     }
 
-    const KGeoBag::KThreeVector& GetP0() const
+    const katrin::KThreeVector& GetP0() const
     {
         return fP0;
     }
-    const KGeoBag::KThreeVector& GetP1() const
+    const katrin::KThreeVector& GetP1() const
     {
         return fP1;
     }
@@ -160,8 +162,8 @@ class KGBox : public KGArea
     }
 
   private:
-    KGeoBag::KThreeVector fP0;
-    KGeoBag::KThreeVector fP1;
+    katrin::KThreeVector fP0;
+    katrin::KThreeVector fP1;
 
     unsigned int fMeshCount[3];
     double fMeshPower[3];

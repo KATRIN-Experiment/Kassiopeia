@@ -17,6 +17,8 @@ using std::numeric_limits;
 using namespace KEMField;
 using namespace KGeoBag;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 

@@ -14,7 +14,7 @@ void KGFlattenedPolyLoopSurfaceMesher::VisitFlattenedClosedPathSurface(
     PolyLoopToClosedPoints(aFlattenedPolyLoopSurface->Path().operator->(), tPolyLoopPoints);
 
     //create flattened points
-    KThreeVector tApexPoint;
+    katrin::KThreeVector tApexPoint;
     TubeMesh tMeshPoints;
     ClosedPointsFlattenedToTubeMeshAndApex(tPolyLoopPoints,
                                            aFlattenedPolyLoopSurface->Path()->Centroid(),

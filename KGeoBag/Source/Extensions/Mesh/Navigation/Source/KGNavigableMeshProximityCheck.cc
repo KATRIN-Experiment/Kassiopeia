@@ -17,7 +17,7 @@ KGNavigableMeshProximityCheck::KGNavigableMeshProximityCheck() :
 KGNavigableMeshProximityCheck::~KGNavigableMeshProximityCheck() = default;
 ;
 
-void KGNavigableMeshProximityCheck::SetPointAndRadius(const KThreeVector& point, double radius)
+void KGNavigableMeshProximityCheck::SetPointAndRadius(const katrin::KThreeVector& point, double radius)
 {
     fPoint = point;
     fRadius = radius;

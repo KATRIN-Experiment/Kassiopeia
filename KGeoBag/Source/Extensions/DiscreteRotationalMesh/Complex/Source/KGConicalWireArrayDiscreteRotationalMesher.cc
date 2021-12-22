@@ -3,6 +3,9 @@
 #include "KGComplexMesher.hh"
 #include "KGDiscreteRotationalMeshElement.hh"
 
+using katrin::KTransformation;
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGConicalWireArrayDiscreteRotationalMesher::VisitWrappedSurface(

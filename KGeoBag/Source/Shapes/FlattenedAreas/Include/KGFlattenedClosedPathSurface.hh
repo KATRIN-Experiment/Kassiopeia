@@ -5,6 +5,8 @@
 #include "KGPlanarClosedPath.hh"
 #include "KGShapeMessage.hh"
 
+#include "KThreeVector.hh"
+
 #include <memory>
 
 namespace KGeoBag
@@ -130,7 +132,7 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override
     {
         double tZ = aPoint.Z();
 
@@ -141,11 +143,11 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
             return false;
         }
     }
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
 
-        KTwoVector tXYNearest;
+        katrin::KTwoVector tXYNearest;
         if (fPath->Above(tXYPoint) == true) {
             tXYNearest = fPath->Point(tXYPoint);
         }
@@ -153,11 +155,11 @@ template<class XPathType> class KGFlattenedClosedPathSurface : public KGArea
             tXYNearest = tXYPoint;
         }
 
-        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), fZ);
+        return katrin::KThreeVector(tXYNearest.X(), tXYNearest.Y(), fZ);
     }
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& /*aPoint*/) const override
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& /*aPoint*/) const override
     {
-        return KGeoBag::KThreeVector(0., 0., fSign);
+        return katrin::KThreeVector(0., 0., fSign);
     }
 
   private:

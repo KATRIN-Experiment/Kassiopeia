@@ -4,11 +4,6 @@
 #include "KElectromagnetContainer.hh"
 #include "KSurfaceContainer.hh"
 
-
-using KEMField::KDirection;
-using KEMField::KPosition;
-
-
 #include "KGCore.hh"
 
 namespace KGeoBag

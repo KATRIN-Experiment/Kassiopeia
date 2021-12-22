@@ -3,7 +3,8 @@
 #include "KSGeneratorsMessage.h"
 
 using namespace std;
-using KGeoBag::KThreeVector;
+
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

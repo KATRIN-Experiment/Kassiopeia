@@ -1,5 +1,7 @@
 #include "KGVolume.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGVolume::KGVolume() : fInitialized(false) {}

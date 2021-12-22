@@ -32,8 +32,6 @@ protected:
     {
         KEMFieldTest::SetUp();
 
-        using namespace KGeoBag;
-
         // first, the magnets
 
         KPosition origin(0., 0., 0.);

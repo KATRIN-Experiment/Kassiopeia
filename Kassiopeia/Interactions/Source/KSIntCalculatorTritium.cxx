@@ -11,7 +11,6 @@
 
 using namespace std;
 using namespace katrin;
-using namespace KGeoBag;
 
 constexpr double T2H2Ratio = 6.032099 / 2.015650;
 

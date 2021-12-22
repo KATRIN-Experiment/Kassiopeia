@@ -24,7 +24,7 @@ class KSIntDecay : public KSComponentTemplate<KSIntDecay, KSSpaceInteraction>
 
     void CalculateInteraction(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
                               const KSParticle& aTrajectoryFinalParticle,
-                              const KGeoBag::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
+                              const katrin::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
                               const double& aTrajectoryTimeStep, KSParticle& anInteractionParticle, double& aTimeStep,
                               bool& aFlag) override;
 

@@ -11,8 +11,6 @@
 using namespace std;
 using namespace katrin;
 
-using KGeoBag::KThreeVector;
-
 namespace Kassiopeia
 {
 

@@ -11,9 +11,7 @@
 namespace KEMField
 {
 
-using KThreeVector = KGeoBag::KThreeVector;
-
-template<typename Stream> Stream& operator>>(Stream& s, KGeoBag::KThreeVector& aThreeVector)
+template<typename Stream> Stream& operator>>(Stream& s, katrin::KThreeVector& aThreeVector)
 {
     s.PreStreamInAction(aThreeVector);
     s >> aThreeVector[0] >> aThreeVector[1] >> aThreeVector[2];
@@ -21,7 +19,7 @@ template<typename Stream> Stream& operator>>(Stream& s, KGeoBag::KThreeVector& a
     return s;
 }
 
-template<typename Stream> Stream& operator<<(Stream& s, const KGeoBag::KThreeVector& aThreeVector)
+template<typename Stream> Stream& operator<<(Stream& s, const katrin::KThreeVector& aThreeVector)
 {
     s.PreStreamOutAction(aThreeVector);
     s << aThreeVector[0] << aThreeVector[1] << aThreeVector[2];
@@ -29,29 +27,29 @@ template<typename Stream> Stream& operator<<(Stream& s, const KGeoBag::KThreeVec
     return s;
 }
 
-template<bool isDisplacement> class KThreeVector_ : public KGeoBag::KThreeVector
+template<bool isDisplacement> class KThreeVector_ : public katrin::KThreeVector
 {
   public:
-    KThreeVector_() : KGeoBag::KThreeVector() {}
-    KThreeVector_(const KGeoBag::KThreeVector& aVector) : KGeoBag::KThreeVector(aVector) {}
-    KThreeVector_(const double anArray[3]) : KGeoBag::KThreeVector(anArray) {}
-    KThreeVector_(const double& aX, const double& aY, const double& aZ) : KGeoBag::KThreeVector(aX, aY, aZ) {}
+    KThreeVector_() : katrin::KThreeVector() {}
+    KThreeVector_(const katrin::KThreeVector& aVector) : katrin::KThreeVector(aVector) {}
+    KThreeVector_(const double anArray[3]) : katrin::KThreeVector(anArray) {}
+    KThreeVector_(const double& aX, const double& aY, const double& aZ) : katrin::KThreeVector(aX, aY, aZ) {}
 
     ~KThreeVector_() override = default;
     ;
 
     static std::string Name();
 
-    void ReflectThroughPlane(const KGeoBag::KThreeVector& planePosition, const KGeoBag::KThreeVector& planeNormal);
-    void RotateAboutAxis(const KGeoBag::KThreeVector& axisPosition, const KGeoBag::KThreeVector& axisDirection,
+    void ReflectThroughPlane(const katrin::KThreeVector& planePosition, const katrin::KThreeVector& planeNormal);
+    void RotateAboutAxis(const katrin::KThreeVector& axisPosition, const katrin::KThreeVector& axisDirection,
                          double angle);
 };
 
 template<bool isDisplacement>
-void KThreeVector_<isDisplacement>::ReflectThroughPlane(const KGeoBag::KThreeVector& planePosition,
-                                                        const KGeoBag::KThreeVector& planeNormal)
+void KThreeVector_<isDisplacement>::ReflectThroughPlane(const katrin::KThreeVector& planePosition,
+                                                        const katrin::KThreeVector& planeNormal)
 {
-    KGeoBag::KThreeVector& point = *this;
+    katrin::KThreeVector& point = *this;
     double signedDistance;
     if (isDisplacement)
         signedDistance = (point - planePosition).Dot(planeNormal);
@@ -61,10 +59,10 @@ void KThreeVector_<isDisplacement>::ReflectThroughPlane(const KGeoBag::KThreeVec
 }
 
 template<bool isDisplacement>
-void KThreeVector_<isDisplacement>::RotateAboutAxis(const KGeoBag::KThreeVector& axisPosition,
-                                                    const KGeoBag::KThreeVector& axisDirection, double angle)
+void KThreeVector_<isDisplacement>::RotateAboutAxis(const katrin::KThreeVector& axisPosition,
+                                                    const katrin::KThreeVector& axisDirection, double angle)
 {
-    KGeoBag::KThreeVector& point = *this;
+    katrin::KThreeVector& point = *this;
     if (isDisplacement)
         point -= axisPosition;
     point = (point * cos(angle) + axisDirection * axisDirection.Dot(point) * (1. - cos(angle)) -

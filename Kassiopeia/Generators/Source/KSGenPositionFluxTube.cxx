@@ -6,8 +6,9 @@
 #include "KSParticle.h"
 using katrin::KRandom;
 
+using katrin::KThreeVector;
+
 using namespace std;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {

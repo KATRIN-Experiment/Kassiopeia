@@ -7,7 +7,7 @@
 
 using namespace std;
 using KGeoBag::KGSurface;
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

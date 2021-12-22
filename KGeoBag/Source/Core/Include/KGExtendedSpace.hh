@@ -99,21 +99,21 @@ class KGExtendedSpace : public katrin::KTagged, public KGExtensibleSpace, public
     //*************
 
   public:
-    void Transform(const KTransformation* aTransformation);
+    void Transform(const katrin::KTransformation* aTransformation);
 
-    const KGeoBag::KThreeVector& GetOrigin() const;
-    const KGeoBag::KThreeVector& GetXAxis() const;
-    const KGeoBag::KThreeVector& GetYAxis() const;
-    const KGeoBag::KThreeVector& GetZAxis() const;
+    const katrin::KThreeVector& GetOrigin() const;
+    const katrin::KThreeVector& GetXAxis() const;
+    const katrin::KThreeVector& GetYAxis() const;
+    const katrin::KThreeVector& GetZAxis() const;
 
     //*********
     //navigable
     //*********
 
   public:
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
-    bool Outside(const KGeoBag::KThreeVector& aPoint) const;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const;
+    bool Outside(const katrin::KThreeVector& aPoint) const;
 };
 
 }  // namespace KGeoBag

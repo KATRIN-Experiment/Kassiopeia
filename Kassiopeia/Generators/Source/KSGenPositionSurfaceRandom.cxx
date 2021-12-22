@@ -8,7 +8,6 @@
 #include "KSGenPositionSurfaceRandom.h"
 
 using namespace std;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -45,7 +44,7 @@ bool KSGenPositionSurfaceRandom::RemoveSurface(KGeoBag::KGSurface* aSurface)
 void KSGenPositionSurfaceRandom::Dice(KSParticleQueue* aPrimaries)
 {
     for (auto& aPrimarie : *aPrimaries) {
-        KThreeVector pos = random.Random(fSurfaces);
+        katrin::KThreeVector pos = random.Random(fSurfaces);
         genmsg_debug("surface random position generator <" << GetName() << "> diced position " << pos << eom);
         aPrimarie->SetPosition(pos);
     }

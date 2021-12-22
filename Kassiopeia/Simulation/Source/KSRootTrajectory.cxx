@@ -37,7 +37,7 @@ void KSRootTrajectory::Reset()
 
 void KSRootTrajectory::CalculateTrajectory(const KSParticle& anInitialParticle,
                                            KSParticle& aFinalParticle,
-                                           KGeoBag::KThreeVector& aCenter,
+                                           katrin::KThreeVector& aCenter,
                                            double& aRadius,
                                            double& aTimeStep)
 {

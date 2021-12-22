@@ -9,9 +9,10 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace KGeoBag;
 using namespace Kassiopeia;
 using namespace std;
+
+using katrin::KThreeVector;
 
 int main()
 {

@@ -39,18 +39,18 @@ class KGElectromagnetConverter :
     KEMField::KElectromagnetContainer* fElectromagnetContainer;
 
   public:
-    void SetSystem(const KThreeVector& anOrigin, const KThreeVector& anXAxis, const KThreeVector& aYAxis,
-                   const KThreeVector& aZAxis);
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
+    void SetSystem(const katrin::KThreeVector& anOrigin, const katrin::KThreeVector& anXAxis, const katrin::KThreeVector& aYAxis,
+                   const katrin::KThreeVector& aZAxis);
+    const katrin::KThreeVector& GetOrigin() const;
+    const katrin::KThreeVector& GetXAxis() const;
+    const katrin::KThreeVector& GetYAxis() const;
+    const katrin::KThreeVector& GetZAxis() const;
 
-    KThreeVector GlobalToInternalPosition(const KThreeVector& aPosition);
-    KThreeVector GlobalToInternalVector(const KThreeVector& aVector);
-    KThreeVector InternalToGlobalPosition(const KThreeVector& aVector);
-    KThreeVector InternalToGlobalVector(const KThreeVector& aVector);
-    KThreeMatrix InternalTensorToGlobal(const KEMField::KGradient& aGradient);
+    katrin::KThreeVector GlobalToInternalPosition(const katrin::KThreeVector& aPosition);
+    katrin::KThreeVector GlobalToInternalVector(const katrin::KThreeVector& aVector);
+    katrin::KThreeVector InternalToGlobalPosition(const katrin::KThreeVector& aVector);
+    katrin::KThreeVector InternalToGlobalVector(const katrin::KThreeVector& aVector);
+    katrin::KThreeMatrix InternalTensorToGlobal(const KEMField::KGradient& aGradient);
 
     void VisitSpace(KGSpace* aSpace) override;
     void VisitSurface(KGSurface* aSurface) override;
@@ -67,15 +67,15 @@ class KGElectromagnetConverter :
 
     katrin::KTextFile* fMagfield3File;
 
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
+    katrin::KThreeVector fOrigin;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
 
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
 
     KGExtendedSpace<KGElectromagnet>* fCurrentElectromagnetSpace;
     KGExtendedSurface<KGElectromagnet>* fCurrentElectromagnetSurface;

@@ -4,6 +4,8 @@
 #include "KSGeneratorsMessage.h"
 #include "KSNumerical.h"
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -72,8 +74,8 @@ void KSRootGenerator::ExecuteGeneration()
 {
     ExecuteGeneration(fEvent->ParticleQueue());
 
-    KGeoBag::KThreeVector tPosition;
-    KGeoBag::KThreeVector tCenterPosition(0., 0., 0.);
+    KThreeVector tPosition;
+    KThreeVector tCenterPosition(0., 0., 0.);
     double tEnergy;
     double tTotalEnergy = 0;
     double tTime;

@@ -19,7 +19,7 @@ STATICINT sKSVTKTrackTerminatorPainterStructure =
     KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("terminator_variable") +
     KSVTKTrackTerminatorPainterBuilder::Attribute<int>("point_size") +
     KSVTKTrackTerminatorPainterBuilder::Attribute<std::string>("add_terminator") +
-    KSVTKTrackTerminatorPainterBuilder::Attribute<KGeoBag::KThreeVector>("add_color");
+    KSVTKTrackTerminatorPainterBuilder::Attribute<KThreeVector>("add_color");
 
 STATICINT sKSVTKTrackTerminatorPainterWindow =
     KVTKWindowBuilder::ComplexElement<KSVTKTrackTerminatorPainter>("vtk_track_terminator_painter");

@@ -10,7 +10,7 @@
 #include <ostream>
 #include <array>
 
-namespace KGeoBag
+namespace katrin
 {
 
 class KTwoVector
@@ -374,14 +374,14 @@ inline std::ostream& operator<<(std::ostream& aStream, const KTwoVector& aVector
     return aStream;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin
 
 namespace std
 {
 
-template<> struct hash<KGeoBag::KTwoVector>
+template<> struct hash<katrin::KTwoVector>
 {
-    size_t operator()(const KGeoBag::KTwoVector& vec) const
+    size_t operator()(const katrin::KTwoVector& vec) const
     {
         size_t seed = 0;
         katrin::hash_range(seed, vec.Components(), vec.Components() + 2);

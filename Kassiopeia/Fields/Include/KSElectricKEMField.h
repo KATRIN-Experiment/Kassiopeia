@@ -31,12 +31,12 @@ class KSElectricKEMField : public KSElectricField
     void SetElectricField(KEMField::KElectricField* field);
     KEMField::KElectricField* GetElectricField();
 
-    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+    void CalculatePotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
                             double& aPotential) override;
-    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                        KGeoBag::KThreeVector& aField) override;
-    void CalculateFieldAndPotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                    KGeoBag::KThreeVector& aField, double& aPotential) override;
+    void CalculateField(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        katrin::KThreeVector& aField) override;
+    void CalculateFieldAndPotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                    katrin::KThreeVector& aField, double& aPotential) override;
 
   private:
     void InitializeComponent() override;

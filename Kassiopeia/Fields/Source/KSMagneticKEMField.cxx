@@ -10,7 +10,9 @@
 #include "KMagneticField.hh"
 
 using namespace KEMField;
-using KGeoBag::KThreeVector;
+
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

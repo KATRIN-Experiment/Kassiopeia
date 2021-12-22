@@ -6,7 +6,8 @@
 #include <limits>
 using std::numeric_limits;
 
-using namespace KGeoBag;
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

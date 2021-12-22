@@ -3,7 +3,6 @@
 
 #include "KField.h"
 #include "KSVisualizationMessage.h"
-#include "KThreeVector.hh"
 #include "KVTKPainter.h"
 #include "KVTKWindow.h"
 #include "vtkActor.h"
@@ -15,6 +14,8 @@
 #include "vtkPolyData.h"
 #include "vtkPolyDataMapper.h"
 #include "vtkSmartPointer.h"
+
+#include "KThreeVector.hh"
 
 #include <vector>
 
@@ -43,7 +44,7 @@ class KSVTKTrackTerminatorPainter : public katrin::KVTKPainter
 
   public:
     void AddTerminator(const std::string& aTerminator);
-    void AddColor(const KGeoBag::KThreeVector& aColor);
+    void AddColor(const katrin::KThreeVector& aColor);
 
   private:
     vtkSmartPointer<vtkPoints> fPoints;
@@ -61,14 +62,14 @@ inline void KSVTKTrackTerminatorPainter::AddTerminator(const std::string& aTermi
     fTerminators.push_back(aTerminator);
 }
 
-inline void KSVTKTrackTerminatorPainter::AddColor(const KGeoBag::KThreeVector& aColor)
+inline void KSVTKTrackTerminatorPainter::AddColor(const katrin::KThreeVector& aColor)
 {
     // sets color for last terminator that was added
     if (!fTerminators.empty()) {
         std::string tTerminator = fTerminators.back();
         vismsg_debug("track terminator painter <" << GetName() << "> uses color <" << aColor << "> for terminator <"
                                                   << tTerminator << ">" << eom);
-        KGeoBag::KThreeVector tColorRGB =
+        katrin::KThreeVector tColorRGB =
             aColor /
             255.;  // VTK assumes RGB floats to be in range [0,1] but it is more convenient to use [0,255] in XML input
         fNamedColors->SetColor(tTerminator, tColorRGB.X(), tColorRGB.Y(), tColorRGB.Z());

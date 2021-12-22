@@ -6,9 +6,8 @@
 #include "KGCoreMessage.hh"
 #include "KGVisitor.hh"
 #include "KTagged.h"
+
 #include "KThreeVector.hh"
-#include "KTransformation.hh"
-#include "KTwoVector.hh"
 
 #include <cmath>
 
@@ -42,14 +41,14 @@ class KGArea : public KGBoundary
     virtual void AreaAccept(KGVisitor* aVisitor);
 
   public:
-    bool Above(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
+    bool Above(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const;
 
   protected:
-    virtual bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual bool AreaAbove(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const = 0;
 
   protected:
     void Check() const;

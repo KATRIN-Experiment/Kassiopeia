@@ -4,6 +4,8 @@
 #include "KGMeshTriangle.hh"
 #include "KGMeshWire.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

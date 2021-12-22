@@ -30,8 +30,8 @@ class KSGenPositionFluxTube : public KSComponentTemplate<KSGenPositionFluxTube, 
     void AddMagneticField(KSMagneticField* aField);
 
   private:
-    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                        KGeoBag::KThreeVector& aField);
+    void CalculateField(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        katrin::KThreeVector& aField);
 
 
   private:

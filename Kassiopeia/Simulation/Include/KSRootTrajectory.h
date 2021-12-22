@@ -25,7 +25,7 @@ class KSRootTrajectory : public KSComponentTemplate<KSRootTrajectory, KSTrajecto
 
   protected:
     void CalculateTrajectory(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
-                             KGeoBag::KThreeVector& aCenter, double& aRadius, double& aTimeStep) override;
+                             katrin::KThreeVector& aCenter, double& aRadius, double& aTimeStep) override;
 
     void ExecuteTrajectory(const double& aTimeStep, KSParticle& anIntermediateParticle) const override;
     void GetPiecewiseLinearApproximation(const KSParticle& anInitialParticle, const KSParticle& aFinalParticle,

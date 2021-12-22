@@ -11,7 +11,7 @@ class KGDeformation
     KGDeformation() = default;
     virtual ~KGDeformation() = default;
 
-    virtual void Apply(KThreeVector& point) const = 0;
+    virtual void Apply(katrin::KThreeVector& point) const = 0;
 };
 }  // namespace KGeoBag
 

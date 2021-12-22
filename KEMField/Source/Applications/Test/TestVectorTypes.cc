@@ -17,7 +17,7 @@
 // Author: Daniel Hilk
 
 using namespace KEMField;
-using namespace KGeoBag;
+using katrin::KThreeVector;
 
 // for math. on arrays
 #define USEHEAP

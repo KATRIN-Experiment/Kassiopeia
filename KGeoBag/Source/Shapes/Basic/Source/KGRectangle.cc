@@ -1,5 +1,7 @@
 #include "KGRectangle.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGRectangle::KGRectangle(const double& a, const double& b, const KThreeVector& p0, const KThreeVector& n1,

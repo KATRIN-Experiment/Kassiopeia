@@ -1,6 +1,9 @@
 #include "KG2DArc.hh"
 
 #include "KThreeVector.hh"
+using katrin::KThreeVector;
+
+using katrin::KTwoVector;
 
 #include <iostream>
 

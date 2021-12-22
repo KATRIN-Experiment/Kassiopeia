@@ -9,9 +9,7 @@
 namespace KEMField
 {
 
-using KThreeMatrix = KGeoBag::KThreeMatrix;
-
-template<typename Stream> Stream& operator>>(Stream& s, KThreeMatrix& aThreeMatrix)
+template<typename Stream> Stream& operator>>(Stream& s, katrin::KThreeMatrix& aThreeMatrix)
 {
     s.PreStreamInAction(aThreeMatrix);
     s >> aThreeMatrix[0] >> aThreeMatrix[1] >> aThreeMatrix[2] >> aThreeMatrix[3] >> aThreeMatrix[4] >>
@@ -20,7 +18,7 @@ template<typename Stream> Stream& operator>>(Stream& s, KThreeMatrix& aThreeMatr
     return s;
 }
 
-template<typename Stream> Stream& operator<<(Stream& s, const KThreeMatrix& aThreeMatrix)
+template<typename Stream> Stream& operator<<(Stream& s, const katrin::KThreeMatrix& aThreeMatrix)
 {
     s.PreStreamOutAction(aThreeMatrix);
     s << aThreeMatrix[0] << aThreeMatrix[1] << aThreeMatrix[2] << aThreeMatrix[3] << aThreeMatrix[4] << aThreeMatrix[5]
@@ -36,14 +34,14 @@ template<typename Stream> Stream& operator<<(Stream& s, const KThreeMatrix& aThr
 *
 * @author D.L. Furse
 */
-class KGradient : public KThreeMatrix
+class KGradient : public katrin::KThreeMatrix
 {
   public:
-    KGradient() : KThreeMatrix() {}
-    KGradient(const KThreeMatrix& aMatrix) : KThreeMatrix(aMatrix) {}
+    KGradient() : katrin::KThreeMatrix() {}
+    KGradient(const katrin::KThreeMatrix& aMatrix) : katrin::KThreeMatrix(aMatrix) {}
     KGradient(const double& anXX, const double& anXY, const double& anXZ, const double& aYX, const double& aYY,
               const double& aYZ, const double& aZX, const double& aZY, const double& aZZ) :
-        KThreeMatrix(anXX, anXY, anXZ, aYX, aYY, aYZ, aZX, aZY, aZZ)
+        katrin::KThreeMatrix(anXX, anXY, anXZ, aYX, aYY, aYZ, aZX, aZY, aZZ)
     {}
 
     ~KGradient() override = default;

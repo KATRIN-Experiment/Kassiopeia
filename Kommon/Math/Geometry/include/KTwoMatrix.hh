@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-namespace KGeoBag
+namespace katrin
 {
 
 class KTwoMatrix
@@ -274,6 +274,6 @@ inline KTwoMatrix operator*(const KTwoMatrix& aLeft, const KTwoMatrix& aRight)
     return Result;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin
 
 #endif

@@ -25,7 +25,6 @@
 #include "KElectrostaticBoundaryIntegratorFactory.hh"
 #include "KIterativeStateWriter.hh"
 #include "KSquareMatrix.hh"
-#include "KStringUtils.h"
 
 #ifdef KEMFIELD_USE_MPI
 #include "KMPIInterface.hh"

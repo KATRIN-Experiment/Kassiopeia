@@ -4,6 +4,8 @@
 #include "KGPortHousingSurface.hh"
 #include "KGRectangle.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 template<> void KGWrappedSpace<KGPortHousing>::VolumeInitialize(BoundaryContainer& aBoundaryContainer) const

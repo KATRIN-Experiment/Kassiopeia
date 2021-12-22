@@ -2,6 +2,7 @@
 #define Kassiopeia_KSElectricField_h_
 
 #include "KSComponentTemplate.h"
+
 #include "KThreeMatrix.hh"
 #include "KThreeVector.hh"
 
@@ -15,17 +16,17 @@ class KSElectricField : public KSComponentTemplate<KSElectricField>
     ~KSElectricField() override;
 
   public:
-    virtual void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
+    virtual void CalculatePotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
                                     double& aPotential) = 0;
 
-    virtual void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                KGeoBag::KThreeVector& aField) = 0;
+    virtual void CalculateField(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                katrin::KThreeVector& aField) = 0;
 
-    virtual void CalculateGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                   KGeoBag::KThreeMatrix& aGradient);
+    virtual void CalculateGradient(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                   katrin::KThreeMatrix& aGradient);
 
-    virtual void CalculateFieldAndPotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                            KGeoBag::KThreeVector& aField, double& aPotential)
+    virtual void CalculateFieldAndPotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                            katrin::KThreeVector& aField, double& aPotential)
     {
         CalculateField(aSamplePoint, aSampleTime, aField);
         CalculatePotential(aSamplePoint, aSampleTime, aPotential);

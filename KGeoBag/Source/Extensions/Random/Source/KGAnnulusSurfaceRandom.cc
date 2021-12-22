@@ -9,7 +9,7 @@
 
 void KGeoBag::KGAnnulusSurfaceRandom::VisitAnnulusSurface(KGeoBag::KGAnnulusSurface* anAnnulusSpace)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     // point is always on the disk surface
 

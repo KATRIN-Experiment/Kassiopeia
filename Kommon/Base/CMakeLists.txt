@@ -121,7 +121,7 @@ mark_as_advanced( CLEAR Kommon_USE_Log4CXX )
 
 if(Kommon_USE_Log4CXX)
         set(LOGGER_CONFIGURATION "${Kommon_CONFIG_INSTALL_DIR}/log4cxx.properties" )
-        set_source_files_properties(Base/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
+        set_source_files_properties(Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
             "LOG4CXX;LOGGER_CONFIGURATION=${LOGGER_CONFIGURATION}"
         )
 endif()
@@ -139,7 +139,7 @@ endif()
 
 option( KLogger_THROW_EXCEPTIONS "Throw exception when using KERROR/KFATAL macros." OFF )
 if( KLogger_THROW_EXCEPTIONS )
-    set_source_files_properties(Base/Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
+    set_source_files_properties(Logging/KLogger.cxx PROPERTIES COMPILE_DEFINITIONS
         "KLOGGER_THROW_EXCEPTIONS"
     )
 endif()

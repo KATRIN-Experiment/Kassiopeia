@@ -3,7 +3,7 @@
 
 #include "KThreeVector.hh"
 
-namespace KGeoBag
+namespace katrin
 {
 
 class KAxis
@@ -16,20 +16,20 @@ class KAxis
     KAxis& operator=(const KAxis& anAxis);
 
     bool EqualTo(const KAxis& anAxis) const;
-    bool ParallelTo(const KGeoBag::KThreeVector& aVector) const;
+    bool ParallelTo(const KThreeVector& aVector) const;
 
   public:
-    void SetPoints(const KGeoBag::KThreeVector& aPointOne, const KGeoBag::KThreeVector& aPointTwo);
-    const KGeoBag::KThreeVector& GetCenter() const;
-    const KGeoBag::KThreeVector& GetDirection() const;
+    void SetPoints(const KThreeVector& aPointOne, const KThreeVector& aPointTwo);
+    const KThreeVector& GetCenter() const;
+    const KThreeVector& GetDirection() const;
 
   private:
-    KGeoBag::KThreeVector fCenter;
-    KGeoBag::KThreeVector fDirection;
+    KThreeVector fCenter;
+    KThreeVector fDirection;
 };
 
 inline KAxis& KAxis::operator=(const KAxis& anAxis) = default;
 
-}  // namespace KGeoBag
+}  // namespace katrin
 
 #endif

@@ -75,18 +75,18 @@ class KGSpace : public katrin::KTagged
     //*************
 
   public:
-    void Transform(const KTransformation* aTransformation);
+    void Transform(const katrin::KTransformation* aTransformation);
 
-    const KGeoBag::KThreeVector& GetOrigin() const;
-    const KGeoBag::KThreeVector& GetXAxis() const;
-    const KGeoBag::KThreeVector& GetYAxis() const;
-    const KGeoBag::KThreeVector& GetZAxis() const;
+    const katrin::KThreeVector& GetOrigin() const;
+    const katrin::KThreeVector& GetXAxis() const;
+    const katrin::KThreeVector& GetYAxis() const;
+    const katrin::KThreeVector& GetZAxis() const;
 
   protected:
-    KGeoBag::KThreeVector fOrigin;
-    KGeoBag::KThreeVector fXAxis;
-    KGeoBag::KThreeVector fYAxis;
-    KGeoBag::KThreeVector fZAxis;
+    katrin::KThreeVector fOrigin;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
 
     //********
     //clonable
@@ -112,9 +112,9 @@ class KGSpace : public katrin::KTagged
     void Volume(const std::shared_ptr<KGVolume>& anVolume);
     const std::shared_ptr<KGVolume>& Volume() const;
 
-    bool Outside(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const;
+    bool Outside(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const;
 
   private:
     std::shared_ptr<KGVolume> fVolume;

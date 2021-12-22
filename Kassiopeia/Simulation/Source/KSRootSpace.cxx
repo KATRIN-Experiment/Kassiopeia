@@ -5,6 +5,8 @@
 
 using namespace std;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -25,17 +27,17 @@ void KSRootSpace::Exit() const
     return;
 }
 
-bool KSRootSpace::Outside(const KGeoBag::KThreeVector&) const
+bool KSRootSpace::Outside(const KThreeVector&) const
 {
     return false;
 }
-KGeoBag::KThreeVector KSRootSpace::Point(const KGeoBag::KThreeVector&) const
+KThreeVector KSRootSpace::Point(const KThreeVector&) const
 {
-    return KGeoBag::KThreeVector(0., 0., 1.e30);
+    return KThreeVector(0., 0., 1.e30);
 }
-KGeoBag::KThreeVector KSRootSpace::Normal(const KGeoBag::KThreeVector&) const
+KThreeVector KSRootSpace::Normal(const KThreeVector&) const
 {
-    return KGeoBag::KThreeVector(0., 0., 1.);
+    return KThreeVector(0., 0., 1.);
 }
 
 void KSRootSpace::AddSpace(KSSpace* aSpace)

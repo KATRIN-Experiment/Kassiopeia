@@ -1,5 +1,7 @@
 #include "KSTrajExactSpinDerivative.h"
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -17,14 +19,14 @@ void KSTrajExactSpinDerivative::AddToSpeed(const double& aSpeed)
     fData[1] += aSpeed;
     return;
 }
-void KSTrajExactSpinDerivative::AddToVelocity(const KGeoBag::KThreeVector& aVelocity)
+void KSTrajExactSpinDerivative::AddToVelocity(const KThreeVector& aVelocity)
 {
     fData[2] += aVelocity.X();
     fData[3] += aVelocity.Y();
     fData[4] += aVelocity.Z();
     return;
 }
-void KSTrajExactSpinDerivative::AddToForce(const KGeoBag::KThreeVector& aForce)
+void KSTrajExactSpinDerivative::AddToForce(const KThreeVector& aForce)
 {
     fData[5] += aForce.X();
     fData[6] += aForce.Y();
@@ -36,7 +38,7 @@ void KSTrajExactSpinDerivative::AddToOmega0(const double& aOmega0)
     fData[8] += aOmega0;
     return;
 }
-void KSTrajExactSpinDerivative::AddToOmega(const KGeoBag::KThreeVector& aOmega)
+void KSTrajExactSpinDerivative::AddToOmega(const KThreeVector& aOmega)
 {
     fData[9] += aOmega.X();
     fData[10] += aOmega.Y();

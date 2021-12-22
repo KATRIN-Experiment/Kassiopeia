@@ -11,7 +11,7 @@ using katrin::KRandom;
 #include <algorithm>
 #include <map>
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

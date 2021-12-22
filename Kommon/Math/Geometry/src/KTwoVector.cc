@@ -1,6 +1,6 @@
 #include "KTwoVector.hh"
 
-namespace KGeoBag
+namespace katrin
 {
 
 const KTwoVector KTwoVector::sInvalid(NAN, NAN);
@@ -18,4 +18,4 @@ KTwoVector::KTwoVector()
     fData[1] = 0.;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

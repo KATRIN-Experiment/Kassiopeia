@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajMagneticDerivative_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,7 +36,7 @@ class KSTrajMagneticDerivative : public KSMathArray<5>
   public:
     void AddToTime(const double& aTime);
     void AddToSpeed(const double& aSpeed);
-    void AddToVelocity(const KGeoBag::KThreeVector& aVelocity);
+    void AddToVelocity(const katrin::KThreeVector& aVelocity);
 };
 
 inline KSTrajMagneticDerivative& KSTrajMagneticDerivative::operator=(const double& anOperand)

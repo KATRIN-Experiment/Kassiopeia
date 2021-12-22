@@ -32,7 +32,7 @@ class KGVTKRandomPointTester : public katrin::KVTKPainter
 
     K_SET(KGRGBColor, SampleColor)
     K_SET(double, VertexSize)
-    K_SET(std::vector<KThreeVector*>, SamplePoints)
+    K_SET(std::vector<katrin::KThreeVector*>, SamplePoints)
 
   private:
     std::vector<const KGSurface*> fSurfaces;

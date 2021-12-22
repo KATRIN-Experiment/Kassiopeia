@@ -1,5 +1,7 @@
 #include "KGRotatedLineSegmentSurfaceMesher.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

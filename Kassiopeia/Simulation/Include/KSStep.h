@@ -66,7 +66,7 @@ class KSStep : public KSComponentTemplate<KSStep>
 
   public:
     K_REFS(std::string, TrajectoryName)
-    K_REFS(KGeoBag::KThreeVector, TrajectoryCenter)
+    K_REFS(katrin::KThreeVector, TrajectoryCenter)
     K_REFS(double, TrajectoryRadius)
     K_REFS(double, TrajectoryStep)
 

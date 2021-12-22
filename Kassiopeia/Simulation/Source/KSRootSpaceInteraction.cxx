@@ -41,7 +41,7 @@ KSRootSpaceInteraction::~KSRootSpaceInteraction() = default;
 void KSRootSpaceInteraction::CalculateInteraction(const KSTrajectory& aTrajectory,
                                                   const KSParticle& aTrajectoryInitialParticle,
                                                   const KSParticle& aTrajectoryFinalParticle,
-                                                  const KGeoBag::KThreeVector& aTrajectoryCenter,
+                                                  const katrin::KThreeVector& aTrajectoryCenter,
                                                   const double& aTrajectoryRadius,
                                                   const double& aTrajectoryStep,
                                                   KSParticle& anInteractionParticle,

@@ -2,7 +2,7 @@
 
 #include "KSNavigatorsMessage.h"
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

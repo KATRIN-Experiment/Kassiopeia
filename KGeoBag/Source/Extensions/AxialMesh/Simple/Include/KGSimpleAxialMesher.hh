@@ -39,7 +39,7 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     class Points
     {
       public:
-        using Element = KTwoVector;
+        using Element = katrin::KTwoVector;
         using Set = std::deque<Element>;
         using It = Set::iterator;
         using CIt = Set::const_iterator;
@@ -71,7 +71,7 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     //****************
 
   protected:
-    void EndToOpenPoints(const KTwoVector& anEnd, const unsigned int& aMeshCount, const double& aMeshPower,
+    void EndToOpenPoints(const katrin::KTwoVector& anEnd, const unsigned int& aMeshCount, const double& aMeshPower,
                          OpenPoints& aPoints);
     void LineSegmentToOpenPoints(const KGPlanarLineSegment* aLineSegment, OpenPoints& aPoints);
     void ArcSegmentToOpenPoints(const KGPlanarArcSegment* anArcSegment, OpenPoints& aPoints);
@@ -92,7 +92,7 @@ class KGSimpleAxialMesher : virtual public KGAxialMesherBase
     //*************
 
   protected:
-    void Loop(const KTwoVector& aFirst, const KTwoVector& aSecond);
+    void Loop(const katrin::KTwoVector& aFirst, const katrin::KTwoVector& aSecond);
 };
 
 }  // namespace KGeoBag

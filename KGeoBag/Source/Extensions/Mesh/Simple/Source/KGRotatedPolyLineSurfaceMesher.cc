@@ -18,7 +18,7 @@ void KGRotatedPolyLineSurfaceMesher::VisitRotatedPathSurface(KGRotatedPolyLineSu
 
     //surgery
     bool tHasStart = false;
-    KThreeVector tStartApex;
+    katrin::KThreeVector tStartApex;
     if (aRotatedPolyLineSurface->Path()->Start().Y() == 0.) {
         tHasStart = true;
         tStartApex.SetComponents(0., 0., aRotatedPolyLineSurface->Path()->Start().X());
@@ -26,7 +26,7 @@ void KGRotatedPolyLineSurfaceMesher::VisitRotatedPathSurface(KGRotatedPolyLineSu
     }
 
     bool tHasEnd = false;
-    KThreeVector tEndApex;
+    katrin::KThreeVector tEndApex;
     if (aRotatedPolyLineSurface->Path()->End().Y() == 0.) {
         tHasEnd = true;
         tEndApex.SetComponents(0., 0., aRotatedPolyLineSurface->Path()->End().X());

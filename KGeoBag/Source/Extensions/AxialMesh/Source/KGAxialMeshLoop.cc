@@ -1,5 +1,8 @@
 #include "KGAxialMeshLoop.hh"
 
+#include "KTwoVector.hh"
+using katrin::KTwoVector;
+
 #include "KConst.h"
 
 namespace KGeoBag

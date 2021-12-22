@@ -5,7 +5,7 @@
 #include <cassert>
 #include <cmath>
 
-namespace KGeoBag
+namespace katrin
 {
 
 KRotation::KRotation()
@@ -215,4 +215,4 @@ void KRotation::GetEulerAnglesInDegrees(double& anAlpha, double& aBeta, double& 
     aGamma *= 180. / katrin::KConst::Pi();
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

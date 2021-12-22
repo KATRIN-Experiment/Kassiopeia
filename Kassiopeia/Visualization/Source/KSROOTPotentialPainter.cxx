@@ -10,6 +10,8 @@
 #include <iostream>
 #include <limits>
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 KSROOTPotentialPainter::KSROOTPotentialPainter() : fXAxis("z"), fYAxis("y"), fCalcPot(true), fMap(), fComparison(false)
@@ -42,12 +44,12 @@ void KSROOTPotentialPainter::Render()
     double tDeltaR = fabs(fRmax) / fRsteps;
     double tZ, tR;
     auto* Map = new TH2D("Map", "Map", fZsteps, fZmin, fZmax, 2 * fRsteps, -fRmax, fRmax);
-    KGeoBag::KThreeVector tPosition;
+    KThreeVector tPosition;
 
-    KGeoBag::KThreeVector ElectricField;
+    KThreeVector ElectricField;
     Double_t tPotential;
 
-    KGeoBag::KThreeVector tRefElectricField;
+    KThreeVector tRefElectricField;
     Double_t tRefPotential;
 
     Double_t tRelError = 0.;

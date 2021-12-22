@@ -20,15 +20,15 @@ void KGIntersectableSurface::SetIntersector(KGAnalyticIntersector* intersector)
     fIntersector = intersector;
 }
 
-bool KGIntersectableSurface::Intersection(const KThreeVector& aStart, const KThreeVector& anEnd,
-                                          KThreeVector& aResult) const
+bool KGIntersectableSurface::Intersection(const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd,
+                                          katrin::KThreeVector& aResult) const
 {
-    KThreeVector tLocalStart, tLocalEnd, tLocalResult;
+    katrin::KThreeVector tLocalStart, tLocalEnd, tLocalResult;
 
-    const KThreeVector& tOrigin = fSurface->GetOrigin();
-    const KThreeVector& tXAxis = fSurface->GetXAxis();
-    const KThreeVector& tYAxis = fSurface->GetYAxis();
-    const KThreeVector& tZAxis = fSurface->GetZAxis();
+    const katrin::KThreeVector& tOrigin = fSurface->GetOrigin();
+    const katrin::KThreeVector& tXAxis = fSurface->GetXAxis();
+    const katrin::KThreeVector& tYAxis = fSurface->GetYAxis();
+    const katrin::KThreeVector& tZAxis = fSurface->GetZAxis();
 
     tLocalStart[0] = ((aStart[0] - tOrigin[0]) * tXAxis[0] + (aStart[1] - tOrigin[1]) * tXAxis[1] +
                       (aStart[2] - tOrigin[2]) * tXAxis[2]);
@@ -58,8 +58,8 @@ bool KGIntersectableSurface::Intersection(const KThreeVector& aStart, const KThr
     return tIsIntersection;
 }
 
-bool KGIntersectableSurface::NumericIntersection(const KThreeVector& aLocalStart, const KThreeVector& aLocalEnd,
-                                                 KThreeVector& aLocalResult)
+bool KGIntersectableSurface::NumericIntersection(const katrin::KThreeVector& aLocalStart, const katrin::KThreeVector& aLocalEnd,
+                                                 katrin::KThreeVector& aLocalResult)
 {
     // Default numeric intersection algorithm
 

@@ -21,7 +21,7 @@ const double& KSTrajElectricError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KGeoBag::KThreeVector& KSTrajElectricError::GetPositionError() const
+const katrin::KThreeVector& KSTrajElectricError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;

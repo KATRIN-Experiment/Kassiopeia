@@ -2,21 +2,23 @@
 
 #include <iostream>
 
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 
 
-KGInfinitePlane::KGInfinitePlane(const KThreeVector& point, const KThreeVector& normal)
+KGInfinitePlane::KGInfinitePlane(const katrin::KThreeVector& point, const katrin::KThreeVector& normal)
 {
     fOrigin = point;
     fZAxis = normal.Unit();
 
     //since orientation is not unique this is completely arbitrary here
-    fXAxis = KThreeVector(1, 0, 0);
+    fXAxis = katrin::KThreeVector(1, 0, 0);
 
     if ((fXAxis - fZAxis).Magnitude() < 1e-6)  //if they are ~equal add an orthogonal component
     {
-        fXAxis += KThreeVector(0, 1, 0);
+        fXAxis += katrin::KThreeVector(0, 1, 0);
     }
 
     //now do gram-schmidt
@@ -30,9 +32,9 @@ KGInfinitePlane::KGInfinitePlane(const KThreeVector& point, const KThreeVector& 
     //    std::cout<<fZAxis<<std::endl;
 }
 
-KGInfinitePlane::KGInfinitePlane(const KThreeVector& point0, const KThreeVector& point1, const KThreeVector& point2)
+KGInfinitePlane::KGInfinitePlane(const katrin::KThreeVector& point0, const katrin::KThreeVector& point1, const katrin::KThreeVector& point2)
 {
-    KThreeVector normal = (((point1 - point0).Unit()).Cross((point2 - point0).Unit())).Unit();
+    katrin::KThreeVector normal = (((point1 - point0).Unit()).Cross((point2 - point0).Unit())).Unit();
     //first we set the local origin to the point which defines the plane
     fOrigin = point0;
     //align z-axis with normal
@@ -43,26 +45,26 @@ KGInfinitePlane::KGInfinitePlane(const KThreeVector& point0, const KThreeVector&
     fYAxis = (fZAxis.Cross(fXAxis)).Unit();
 }
 
-void KGInfinitePlane::NearestDistance(const KThreeVector& aPoint, double& aDistance) const
+void KGInfinitePlane::NearestDistance(const katrin::KThreeVector& aPoint, double& aDistance) const
 {
     aDistance = fabs(fZAxis.Dot(aPoint - fOrigin));
 }
 
-void KGInfinitePlane::NearestPoint(const KThreeVector& aPoint, KThreeVector& aNearest) const
+void KGInfinitePlane::NearestPoint(const katrin::KThreeVector& aPoint, katrin::KThreeVector& aNearest) const
 {
     double dist = fZAxis.Dot(aPoint - fOrigin);
     aNearest = aPoint + dist * fZAxis;
 }
 
-void KGInfinitePlane::NearestNormal(const KThreeVector& /*aPoint*/, KThreeVector& aNormal) const
+void KGInfinitePlane::NearestNormal(const katrin::KThreeVector& /*aPoint*/, katrin::KThreeVector& aNormal) const
 {
     aNormal = fZAxis;
 }
 
-void KGInfinitePlane::NearestIntersection(const KThreeVector& aStart, const KThreeVector& anEnd, bool& aResult,
-                                          KThreeVector& anIntersection) const
+void KGInfinitePlane::NearestIntersection(const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd, bool& aResult,
+                                          katrin::KThreeVector& anIntersection) const
 {
-    KThreeVector v = (anEnd - aStart).Unit();
+    katrin::KThreeVector v = (anEnd - aStart).Unit();
     double len = v.Magnitude();
     double ndotv = fZAxis.Dot(v);
 
@@ -95,7 +97,7 @@ void KGInfinitePlane::NearestIntersection(const KThreeVector& aStart, const KThr
     anIntersection = aStart + t * v;
 }
 
-bool KGInfinitePlane::IsAbove(const KThreeVector& vec) const
+bool KGInfinitePlane::IsAbove(const katrin::KThreeVector& vec) const
 {
     if ((vec - fOrigin).Dot(fZAxis) > 0) {
         return true;
@@ -104,32 +106,32 @@ bool KGInfinitePlane::IsAbove(const KThreeVector& vec) const
 }
 
 
-KTwoVector KGInfinitePlane::Project(const KThreeVector& aPoint) const
+KTwoVector KGInfinitePlane::Project(const katrin::KThreeVector& aPoint) const
 {
-    KThreeVector del = aPoint - fOrigin;
+    katrin::KThreeVector del = aPoint - fOrigin;
     return KTwoVector(del.Dot(fXAxis), del.Dot(fYAxis));
 }
 
 
 //static utility function for point-normal defined planes
-double KGInfinitePlane::NearestDistance(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                        const KThreeVector& aPoint)
+double KGInfinitePlane::NearestDistance(const katrin::KThreeVector& origin, const katrin::KThreeVector& unit_normal,
+                                        const katrin::KThreeVector& aPoint)
 {
     return fabs(unit_normal.Dot(aPoint - origin));
 }
 
-KThreeVector KGInfinitePlane::NearestPoint(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                           const KThreeVector& aPoint)
+katrin::KThreeVector KGInfinitePlane::NearestPoint(const katrin::KThreeVector& origin, const katrin::KThreeVector& unit_normal,
+                                           const katrin::KThreeVector& aPoint)
 {
     double signed_dist = unit_normal.Dot(aPoint - origin);
     return aPoint + signed_dist * unit_normal;
 }
 
-bool KGInfinitePlane::NearestIntersection(const KThreeVector& origin, const KThreeVector& unit_normal,
-                                          const KThreeVector& aStart, const KThreeVector& anEnd,
-                                          KThreeVector& anIntersection, double& distance)
+bool KGInfinitePlane::NearestIntersection(const katrin::KThreeVector& origin, const katrin::KThreeVector& unit_normal,
+                                          const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd,
+                                          katrin::KThreeVector& anIntersection, double& distance)
 {
-    KThreeVector v = (anEnd - aStart).Unit();
+    katrin::KThreeVector v = (anEnd - aStart).Unit();
     double len = v.Magnitude();
     double ndotv = unit_normal.Dot(v);
 

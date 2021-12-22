@@ -104,10 +104,10 @@ const unsigned int& KGCylinderTubeSpace::AxialMeshCount() const
 
 void KGCylinderTubeSpace::VolumeInitialize(BoundaryContainer& aBoundaryContainer) const
 {
-    KTwoVector tInsideBack;
-    KTwoVector tInsideFront;
-    KTwoVector tOutsideBack;
-    KTwoVector tOutsideFront;
+    katrin::KTwoVector tInsideBack;
+    katrin::KTwoVector tInsideFront;
+    katrin::KTwoVector tOutsideBack;
+    katrin::KTwoVector tOutsideFront;
 
     if (fZ1 < fZ2) {
         tInsideBack.X() = fZ1;

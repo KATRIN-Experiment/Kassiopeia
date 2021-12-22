@@ -21,9 +21,9 @@ class KSRootSpace : public KSComponentTemplate<KSRootSpace, KSSpace>
     void Enter() const override;
     void Exit() const override;
 
-    bool Outside(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const override;
-    KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const override;
+    bool Outside(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const override;
+    katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const override;
 
   public:
     void AddSpace(KSSpace* aSpace);

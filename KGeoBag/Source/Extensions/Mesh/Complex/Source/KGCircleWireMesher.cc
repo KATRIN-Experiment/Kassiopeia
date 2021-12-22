@@ -14,7 +14,7 @@ void KGCircleWireMesher::VisitWrappedSurface(KGWrappedSurface<KGCircleWire>* cir
 
     // discretize circle: calculate angle to mesh polygon
     const double circleAngle = 2 * katrin::KConst::Pi() / nDisc;
-    KThreeVector startPointCircle, endPointCircle;
+    katrin::KThreeVector startPointCircle, endPointCircle;
 
     startPointCircle.SetComponents(rCircle * cos(circleAngle), rCircle * sin(circleAngle), 0.);
 

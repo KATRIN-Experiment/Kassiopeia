@@ -19,6 +19,7 @@
 #include <vtkXMLImageDataWriter.h>
 
 using std::string;
+using katrin::KThreeMatrix;
 
 namespace KEMField
 {

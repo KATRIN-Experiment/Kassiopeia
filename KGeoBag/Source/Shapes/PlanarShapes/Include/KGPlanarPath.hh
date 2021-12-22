@@ -27,9 +27,9 @@ class KGPlanarPath
     //*************
 
   public:
-    virtual bool Above(const KTwoVector& aQuery) const = 0;
-    virtual KTwoVector Point(const KTwoVector& aQuery) const = 0;
-    virtual KTwoVector Normal(const KTwoVector& aQuery) const = 0;
+    virtual bool Above(const katrin::KTwoVector& aQuery) const = 0;
+    virtual katrin::KTwoVector Point(const katrin::KTwoVector& aQuery) const = 0;
+    virtual katrin::KTwoVector Normal(const katrin::KTwoVector& aQuery) const = 0;
 
     //**********
     //properties
@@ -37,8 +37,8 @@ class KGPlanarPath
 
   public:
     virtual const double& Length() const = 0;
-    virtual const KTwoVector& Centroid() const = 0;
-    virtual KTwoVector At(const double& aLength) const = 0;
+    virtual const katrin::KTwoVector& Centroid() const = 0;
+    virtual katrin::KTwoVector At(const double& aLength) const = 0;
 };
 
 }  // namespace KGeoBag

@@ -2,6 +2,8 @@
 
 #include "KGMeshRectangle.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGBoxMesher::VisitBox(KGBox* box)

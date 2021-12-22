@@ -11,7 +11,7 @@
 #include <ostream>
 #include <array>
 
-namespace KGeoBag
+namespace katrin
 {
 
 class KThreeVector
@@ -498,14 +498,14 @@ inline std::ostream& operator<<(std::ostream& aStream, const KThreeVector& aVect
     return aStream;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin
 
 namespace std
 {
 
-template<> struct hash<KGeoBag::KThreeVector>
+template<> struct hash<katrin::KThreeVector>
 {
-    size_t operator()(const KGeoBag::KThreeVector& vec) const
+    size_t operator()(const katrin::KThreeVector& vec) const
     {
         size_t seed = 0;
         katrin::hash_range(seed, vec.Components(), vec.Components() + 3);

@@ -38,7 +38,7 @@ KSRootSpaceNavigator::~KSRootSpaceNavigator() = default;
 void KSRootSpaceNavigator::CalculateNavigation(const KSTrajectory& aTrajectory,
                                                const KSParticle& aTrajectoryInitialParticle,
                                                const KSParticle& aTrajectoryFinalParticle,
-                                               const KGeoBag::KThreeVector& aTrajectoryCenter,
+                                               const katrin::KThreeVector& aTrajectoryCenter,
                                                const double& aTrajectoryRadius,
                                                const double& aTrajectoryStep,
                                                KSParticle& aNavigationParticle,

@@ -5,8 +5,8 @@
 
 #include <cmath>
 
-using KGeoBag::KThreeMatrix;
-using KGeoBag::KThreeVector;
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

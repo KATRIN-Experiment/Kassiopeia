@@ -11,6 +11,13 @@ using KEMField::kem_cout;
 
 using KEMField::kem_cout;
 
+#include "KThreeVector_KEMField.hh"
+using KEMField::KPosition;
+using KEMField::KDirection;
+
+using katrin::KThreeVector;
+using katrin::KAxis;
+
 #include <cstddef>
 
 namespace KGeoBag
@@ -188,10 +195,10 @@ KPosition KGBEMConverter::LocalToInternal(const KThreeVector& aVector)
                                  (tGlobalVector - fOrigin).Dot(fZAxis));
     return KPosition(tInternalVector.X(), tInternalVector.Y(), tInternalVector.Z());
 }
-KPosition KGBEMConverter::LocalToInternal(const KTwoVector& aVector)
+KPosition KGBEMConverter::LocalToInternal(const katrin::KTwoVector& aVector)
 {
     KThreeVector tGlobalVector = fCurrentOrigin + fCurrentZAxis * aVector.Z();
-    KTwoVector tInternalVector((tGlobalVector - fOrigin).Dot(fZAxis), aVector.R());
+    katrin::KTwoVector tInternalVector((tGlobalVector - fOrigin).Dot(fZAxis), aVector.R());
     return KPosition(tInternalVector.R(), 0., tInternalVector.Z());
 }
 

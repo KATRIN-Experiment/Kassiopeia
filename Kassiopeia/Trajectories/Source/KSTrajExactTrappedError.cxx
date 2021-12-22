@@ -1,5 +1,7 @@
 #include "KSTrajExactTrappedError.h"
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -25,12 +27,12 @@ const double& KSTrajExactTrappedError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedError::GetPositionError() const
+const KThreeVector& KSTrajExactTrappedError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;
 }
-const KGeoBag::KThreeVector& KSTrajExactTrappedError::GetMomentumError() const
+const KThreeVector& KSTrajExactTrappedError::GetMomentumError() const
 {
     fMomentumError.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentumError;

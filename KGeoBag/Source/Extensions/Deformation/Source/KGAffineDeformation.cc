@@ -23,7 +23,7 @@ KGAffineDeformation::KGAffineDeformation(const KGAffineDeformation& affine)
     fTranslation = affine.fTranslation;
 }
 
-void KGAffineDeformation::Apply(KThreeVector& point) const
+void KGAffineDeformation::Apply(katrin::KThreeVector& point) const
 {
     point = fLinearMap * point + fTranslation;
 }

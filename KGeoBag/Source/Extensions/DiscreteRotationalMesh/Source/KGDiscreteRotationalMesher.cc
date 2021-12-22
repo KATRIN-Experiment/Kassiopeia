@@ -6,6 +6,9 @@
 
 #include <iostream>
 
+using katrin::KThreeVector;
+using katrin::KTransformation;
+
 namespace KGeoBag
 {
 

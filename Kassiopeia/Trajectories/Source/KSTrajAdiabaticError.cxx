@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -26,7 +28,7 @@ const double& KSTrajAdiabaticError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticError::GetGuidingCenterPositionError() const
+const KThreeVector& KSTrajAdiabaticError::GetGuidingCenterPositionError() const
 {
     fGuidingCenterPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fGuidingCenterPositionError;

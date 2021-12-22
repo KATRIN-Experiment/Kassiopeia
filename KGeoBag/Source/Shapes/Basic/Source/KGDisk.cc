@@ -1,5 +1,7 @@
 #include "KGDisk.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGDisk::KGDisk(const KThreeVector& p0, const KThreeVector& normal, double radius)

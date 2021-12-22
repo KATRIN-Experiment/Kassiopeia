@@ -61,22 +61,22 @@ class KSTrajAdiabaticParticle : public KSMathArray<8>
   public:
     const double& GetTime() const;  //basic
     const double& GetLength() const;
-    const KGeoBag::KThreeVector& GetPosition() const;
-    const KGeoBag::KThreeVector& GetMomentum() const;
-    const KGeoBag::KThreeVector& GetVelocity() const;
+    const katrin::KThreeVector& GetPosition() const;
+    const katrin::KThreeVector& GetMomentum() const;
+    const katrin::KThreeVector& GetVelocity() const;
     const double& GetLorentzFactor() const;
     const double& GetKineticEnergy() const;
 
-    const KGeoBag::KThreeVector& GetMagneticField() const;
-    void SetMagneticField(const KGeoBag::KThreeVector& aField) const;
-    const KGeoBag::KThreeVector& GetElectricField() const;
-    const KGeoBag::KThreeMatrix& GetMagneticGradient() const;
-    const std::pair<const KGeoBag::KThreeVector&, const KGeoBag::KThreeMatrix&> GetMagneticFieldAndGradient() const;
+    const katrin::KThreeVector& GetMagneticField() const;
+    void SetMagneticField(const katrin::KThreeVector& aField) const;
+    const katrin::KThreeVector& GetElectricField() const;
+    const katrin::KThreeMatrix& GetMagneticGradient() const;
+    const std::pair<const katrin::KThreeVector&, const katrin::KThreeMatrix&> GetMagneticFieldAndGradient() const;
     const double& GetElectricPotential() const;
     const double& GetElectricPotentialRP() const;
-    const std::pair<const KGeoBag::KThreeVector&, const double&> GetElectricFieldAndPotential() const;
+    const std::pair<const katrin::KThreeVector&, const double&> GetElectricFieldAndPotential() const;
 
-    const KGeoBag::KThreeVector& GetGuidingCenter() const;  //basic
+    const katrin::KThreeVector& GetGuidingCenter() const;  //basic
     const double& GetLongMomentum() const;                  //basic
     const double& GetTransMomentum() const;                 //basic
     const double& GetLongVelocity() const;
@@ -84,11 +84,11 @@ class KSTrajAdiabaticParticle : public KSMathArray<8>
     const double& GetCyclotronFrequency() const;
     const double& GetOrbitalMagneticMoment() const;
 
-    void SetAlpha(const KGeoBag::KThreeVector& anAlpha);
-    const KGeoBag::KThreeVector& GetAlpha() const;
+    void SetAlpha(const katrin::KThreeVector& anAlpha);
+    const katrin::KThreeVector& GetAlpha() const;
 
-    void SetBeta(const KGeoBag::KThreeVector& aBeta);
-    const KGeoBag::KThreeVector& GetBeta() const;
+    void SetBeta(const katrin::KThreeVector& aBeta);
+    const katrin::KThreeVector& GetBeta() const;
 
     void SetPhase(const double& aPhase);
     const double& GetPhase() const;
@@ -103,19 +103,19 @@ class KSTrajAdiabaticParticle : public KSMathArray<8>
 
     mutable double fTime;
     mutable double fLength;
-    mutable KGeoBag::KThreeVector fPosition;
-    mutable KGeoBag::KThreeVector fMomentum;
-    mutable KGeoBag::KThreeVector fVelocity;
+    mutable katrin::KThreeVector fPosition;
+    mutable katrin::KThreeVector fMomentum;
+    mutable katrin::KThreeVector fVelocity;
     mutable double fLorentzFactor;
     mutable double fKineticEnergy;
 
-    mutable KGeoBag::KThreeVector fMagneticField;
-    mutable KGeoBag::KThreeVector fElectricField;
-    mutable KGeoBag::KThreeMatrix fMagneticGradient;
+    mutable katrin::KThreeVector fMagneticField;
+    mutable katrin::KThreeVector fElectricField;
+    mutable katrin::KThreeMatrix fMagneticGradient;
     mutable double fElectricPotential;
     mutable double fElectricPotentialRP;
 
-    mutable KGeoBag::KThreeVector fGuidingCenter;
+    mutable katrin::KThreeVector fGuidingCenter;
     mutable double fLongMomentum;
     mutable double fTransMomentum;
     mutable double fLongVelocity;
@@ -123,11 +123,11 @@ class KSTrajAdiabaticParticle : public KSMathArray<8>
     mutable double fCyclotronFrequency;
     mutable double fOrbitalMagneticMoment;
 
-    KGeoBag::KThreeVector fAlpha;
-    KGeoBag::KThreeVector fBeta;
+    katrin::KThreeVector fAlpha;
+    katrin::KThreeVector fBeta;
     double fLastTime;
-    KGeoBag::KThreeVector fLastPosition;
-    KGeoBag::KThreeVector fLastMomentum;
+    katrin::KThreeVector fLastPosition;
+    katrin::KThreeVector fLastMomentum;
     mutable double fPhase;
 
     //*****

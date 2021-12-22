@@ -89,7 +89,7 @@ int main(int anArgc, char** anArgv)
 
     double tZ = -12.2;
     double tR = 0.;
-    KGeoBag::KThreeVector tPosition;
+    KThreeVector tPosition;
 
     for (int i = 0; i < 5000; i++) {
         tZ = -12.2 + i * 2. * 12.2 / 5000.;

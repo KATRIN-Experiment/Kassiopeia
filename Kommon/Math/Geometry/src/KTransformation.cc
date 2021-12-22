@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-namespace KGeoBag
+namespace katrin
 {
 
 KTransformation::KTransformation() :
@@ -240,4 +240,4 @@ void KTransformation::SetRotatedFrame(const KThreeVector& x, const KThreeVector&
     return;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

@@ -71,10 +71,10 @@ class KSGenPositionMeshSurfaceRandom :
          */
     struct KSGenCoordinatesystem
     {
-        KGeoBag::KThreeVector fOrigin;
-        KGeoBag::KThreeVector fXAxis;
-        KGeoBag::KThreeVector fYAxis;
-        KGeoBag::KThreeVector fZAxis;
+        katrin::KThreeVector fOrigin;
+        katrin::KThreeVector fXAxis;
+        katrin::KThreeVector fYAxis;
+        katrin::KThreeVector fZAxis;
     };
 
     /**

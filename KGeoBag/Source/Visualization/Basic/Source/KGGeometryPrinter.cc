@@ -30,6 +30,9 @@ using value = ptree::value_type;
 using namespace std;
 using namespace katrin;
 
+using katrin::KThreeVector;
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 

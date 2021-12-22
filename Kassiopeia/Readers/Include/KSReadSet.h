@@ -74,10 +74,10 @@ using KSLongSet = KSReadSet<KSReadValue<long>>;
 using KSLongLongSet = KSReadSet<KSReadValue<long long>>;
 using KSFloatSet = KSReadSet<KSReadValue<float>>;
 using KSDoubleSet = KSReadSet<KSReadValue<double>>;
-using KSThreeVectorSet = KSReadSet<KSReadValue<KGeoBag::KThreeVector>>;
-using KSTwoVectorSet = KSReadSet<KSReadValue<KGeoBag::KTwoVector>>;
-using KSThreeMatrixSet = KSReadSet<KSReadValue<KGeoBag::KThreeMatrix>>;
-using KSTwoMatrixSet = KSReadSet<KSReadValue<KGeoBag::KTwoMatrix>>;
+using KSThreeVectorSet = KSReadSet<KSReadValue<katrin::KThreeVector>>;
+using KSTwoVectorSet = KSReadSet<KSReadValue<katrin::KTwoVector>>;
+using KSThreeMatrixSet = KSReadSet<KSReadValue<katrin::KThreeMatrix>>;
+using KSTwoMatrixSet = KSReadSet<KSReadValue<katrin::KTwoMatrix>>;
 using KSStringSet = KSReadSet<KSReadValue<std::string>>;
 
 }  // namespace Kassiopeia

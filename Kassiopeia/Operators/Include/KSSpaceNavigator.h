@@ -17,7 +17,7 @@ class KSSpaceNavigator : public KSComponentTemplate<KSSpaceNavigator>
   public:
     virtual void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
                                      const KSParticle& aTrajectoryFinalParticle,
-                                     const KGeoBag::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
+                                     const katrin::KThreeVector& aTrajectoryCenter, const double& aTrajectoryRadius,
                                      const double& aTrajectoryStep, KSParticle& aNavigationParticle,
                                      double& aNavigationStep, bool& aNavigationFlag) = 0;
 

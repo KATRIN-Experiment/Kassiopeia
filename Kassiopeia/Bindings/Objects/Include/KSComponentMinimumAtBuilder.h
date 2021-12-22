@@ -7,16 +7,9 @@
 #include "KSObjectsMessage.h"
 #include "KToolbox.h"
 #include "KTwoVector.hh"
-using KGeoBag::KTwoVector;
-
 #include "KThreeVector.hh"
-using KGeoBag::KThreeVector;
-
 #include "KTwoMatrix.hh"
-using KGeoBag::KTwoMatrix;
-
 #include "KThreeMatrix.hh"
-using KGeoBag::KThreeMatrix;
 
 using namespace Kassiopeia;
 namespace katrin
@@ -55,7 +48,7 @@ inline KSComponent* BuildOutputMinimumAt(KSComponent* aComponent, KSComponent* a
         BUILD_OUTPUT(xVALUE, float)                                                                                    \
         BUILD_OUTPUT(xVALUE, double)                                                                                   \
         BUILD_OUTPUT(xVALUE, KTwoVector)                                                                               \
-        BUILD_OUTPUT(xVALUE, KGeoBag::KThreeVector)                                                                    \
+        BUILD_OUTPUT(xVALUE, KThreeVector)                                                                    \
         BUILD_OUTPUT(xVALUE, KTwoMatrix)                                                                               \
         BUILD_OUTPUT(xVALUE, KThreeMatrix)                                                                             \
     }

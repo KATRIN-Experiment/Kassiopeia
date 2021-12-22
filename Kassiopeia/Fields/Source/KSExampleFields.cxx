@@ -14,11 +14,13 @@
 
 using namespace KEMField;
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
 
-KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field)
+KSElectricField* MakeConstantElectricField(KThreeVector field)
 {
     auto* kemfield = new KElectrostaticConstantField();
     kemfield->SetField(field);
@@ -28,7 +30,7 @@ KSElectricField* MakeConstantElectricField(KGeoBag::KThreeVector field)
     return kasfield;
 }
 
-KSMagneticField* MakeConstantMagneticField(KGeoBag::KThreeVector field)
+KSMagneticField* MakeConstantMagneticField(KThreeVector field)
 {
     auto* kemfield = new KMagnetostaticConstantField();
     kemfield->SetField(field);

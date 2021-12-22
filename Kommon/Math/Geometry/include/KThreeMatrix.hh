@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-namespace KGeoBag
+namespace katrin
 {
 
 /**
@@ -24,7 +24,7 @@ class KThreeMatrix
 
     static const KThreeMatrix sIdentity;
 
-    static KThreeMatrix OuterProduct(const KGeoBag::KThreeVector& vector1, const KGeoBag::KThreeVector& vector2);
+    static KThreeMatrix OuterProduct(const KThreeVector& vector1, const KThreeVector& vector2);
 
   public:
     KThreeMatrix();
@@ -508,17 +508,17 @@ inline KThreeMatrix operator/=(KThreeMatrix& aMatrix, const double& aScalar)
     return aMatrix;
 }
 
-inline KGeoBag::KThreeVector operator*(const KThreeMatrix& aLeft, const KGeoBag::KThreeVector& aRight)
+inline KThreeVector operator*(const KThreeMatrix& aLeft, const KThreeVector& aRight)
 {
-    KGeoBag::KThreeVector Result;
+    KThreeVector Result;
     Result[0] = aLeft[0] * aRight[0] + aLeft[1] * aRight[1] + aLeft[2] * aRight[2];
     Result[1] = aLeft[3] * aRight[0] + aLeft[4] * aRight[1] + aLeft[5] * aRight[2];
     Result[2] = aLeft[6] * aRight[0] + aLeft[7] * aRight[1] + aLeft[8] * aRight[2];
     return Result;
 }
-inline KGeoBag::KThreeVector operator*(const KGeoBag::KThreeVector& aLeft, const KThreeMatrix& aRight)
+inline KThreeVector operator*(const KThreeVector& aLeft, const KThreeMatrix& aRight)
 {
-    KGeoBag::KThreeVector Result;
+    KThreeVector Result;
     Result[0] = aLeft[0] * aRight[0] + aLeft[1] * aRight[3] + aLeft[2] * aRight[6];
     Result[1] = aLeft[0] * aRight[1] + aLeft[1] * aRight[4] + aLeft[2] * aRight[7];
     Result[2] = aLeft[0] * aRight[2] + aLeft[1] * aRight[5] + aLeft[2] * aRight[8];
@@ -552,6 +552,6 @@ inline std::ostream& operator<<(std::ostream& aStream, const KThreeMatrix& aMatr
     return aStream;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin
 
 #endif

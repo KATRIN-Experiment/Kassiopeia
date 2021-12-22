@@ -1,5 +1,7 @@
 #include "KGTriangle.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

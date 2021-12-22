@@ -3,7 +3,7 @@
 #include <limits>
 const double NaN = std::numeric_limits<double>::quiet_NaN();
 
-namespace KGeoBag
+namespace katrin
 {
 
 const KTwoMatrix KTwoMatrix::sInvalid = KTwoMatrix(NaN, NaN, NaN, NaN);
@@ -20,4 +20,4 @@ KTwoMatrix::KTwoMatrix()
     fData[3] = 0.;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

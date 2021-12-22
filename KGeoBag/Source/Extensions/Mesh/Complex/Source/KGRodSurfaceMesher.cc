@@ -3,7 +3,11 @@
 #include "KGBeamSurface.hh"
 #include "KGMeshRectangle.hh"
 #include "KGMeshTriangle.hh"
+
 #include "KRotation.hh"
+using katrin::KRotation;
+
+using katrin::KThreeVector;
 
 namespace KGeoBag
 {

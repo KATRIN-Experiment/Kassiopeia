@@ -1,11 +1,12 @@
 #ifndef KGBEMCONVERTER_DEF
 #define KGBEMCONVERTER_DEF
 
-#include "KAxis.hh"
 #include "KGAxialMesh.hh"
 #include "KGBEM.hh"
 #include "KGDiscreteRotationalMesh.hh"
 #include "KGMesh.hh"
+
+#include "KAxis.hh"
 #include "KThreeVector.hh"
 
 #include <vector>
@@ -13,30 +14,27 @@
 namespace KGeoBag
 {
 
-using KEMField::KNullType;
-using KEMField::KTypelist;
-
 template<template<class, class> class XNode, class XListOne, class XListTwo> class KGDualHierarchy;
 
 template<template<class, class> class XNode, class XTypeOne, class XHeadTwo, class XTailTwo>
-class KGDualHierarchy<XNode, XTypeOne, KTypelist<XHeadTwo, XTailTwo>> :
+class KGDualHierarchy<XNode, XTypeOne, KEMField::KTypelist<XHeadTwo, XTailTwo>> :
     public KGDualHierarchy<XNode, XTypeOne, XTailTwo>,
     public XNode<XTypeOne, XHeadTwo>
 {};
 
 template<template<class, class> class XNode, class XTypeOne, class XHeadTwo>
-class KGDualHierarchy<XNode, XTypeOne, KTypelist<XHeadTwo, KNullType>> : public XNode<XTypeOne, XHeadTwo>
+class KGDualHierarchy<XNode, XTypeOne, KEMField::KTypelist<XHeadTwo, KEMField::KNullType>> : public XNode<XTypeOne, XHeadTwo>
 {};
 
 template<template<class, class> class XNode, class XHeadOne, class XTailOne, class XHeadTwo, class XTailTwo>
-class KGDualHierarchy<XNode, KTypelist<XHeadOne, XTailOne>, KTypelist<XHeadTwo, XTailTwo>> :
-    public KGDualHierarchy<XNode, XHeadOne, KTypelist<XHeadTwo, XTailTwo>>,
-    public KGDualHierarchy<XNode, XTailOne, KTypelist<XHeadTwo, XTailTwo>>
+class KGDualHierarchy<XNode, KEMField::KTypelist<XHeadOne, XTailOne>, KEMField::KTypelist<XHeadTwo, XTailTwo>> :
+    public KGDualHierarchy<XNode, XHeadOne, KEMField::KTypelist<XHeadTwo, XTailTwo>>,
+    public KGDualHierarchy<XNode, XTailOne, KEMField::KTypelist<XHeadTwo, XTailTwo>>
 {};
 
 template<template<class, class> class XNode, class XHeadOne, class XHeadTwo, class XTailTwo>
-class KGDualHierarchy<XNode, KTypelist<XHeadOne, KNullType>, KTypelist<XHeadTwo, XTailTwo>> :
-    public KGDualHierarchy<XNode, XHeadOne, KTypelist<XHeadTwo, XTailTwo>>
+class KGDualHierarchy<XNode, KEMField::KTypelist<XHeadOne, KEMField::KNullType>, KEMField::KTypelist<XHeadTwo, XTailTwo>> :
+    public KGDualHierarchy<XNode, XHeadOne, KEMField::KTypelist<XHeadTwo, XTailTwo>>
 {};
 
 }  // namespace KGeoBag
@@ -185,41 +183,41 @@ class KGBEMConverter : public KGVisitor, public KGSurface::Visitor, public KGSpa
     std::vector<SymmetricRing*> fSymmetricRings;
 
   public:
-    void SetSystem(const KThreeVector& anOrigin, const KThreeVector& anXAxis, const KThreeVector& aYAxis,
-                   const KThreeVector& aZAxis);
-    const KThreeVector& GetOrigin() const;
-    const KThreeVector& GetXAxis() const;
-    const KThreeVector& GetYAxis() const;
-    const KThreeVector& GetZAxis() const;
-    const KAxis& GetAxis() const;
+    void SetSystem(const katrin::KThreeVector& anOrigin, const katrin::KThreeVector& anXAxis, const katrin::KThreeVector& aYAxis,
+                   const katrin::KThreeVector& aZAxis);
+    const katrin::KThreeVector& GetOrigin() const;
+    const katrin::KThreeVector& GetXAxis() const;
+    const katrin::KThreeVector& GetYAxis() const;
+    const katrin::KThreeVector& GetZAxis() const;
+    const katrin::KAxis& GetAxis() const;
 
-    KThreeVector GlobalToInternalPosition(const KThreeVector& aPosition);
-    KThreeVector GlobalToInternalVector(const KThreeVector& aVector);
-    KThreeVector InternalToGlobalPosition(const KThreeVector& aVector);
-    KThreeVector InternalToGlobalVector(const KThreeVector& aVector);
+    katrin::KThreeVector GlobalToInternalPosition(const katrin::KThreeVector& aPosition);
+    katrin::KThreeVector GlobalToInternalVector(const katrin::KThreeVector& aVector);
+    katrin::KThreeVector InternalToGlobalPosition(const katrin::KThreeVector& aVector);
+    katrin::KThreeVector InternalToGlobalVector(const katrin::KThreeVector& aVector);
 
     void VisitSurface(KGSurface* aSurface) override;
     void VisitSpace(KGSpace* aSpace) override;
 
   protected:
-    KPosition LocalToInternal(const KThreeVector& aVector);
-    KPosition LocalToInternal(const KTwoVector& aVector);
+    KEMField::KPosition LocalToInternal(const katrin::KThreeVector& aVector);
+    KEMField::KPosition LocalToInternal(const katrin::KTwoVector& aVector);
 
     virtual void DispatchSurface(KGSurface* aSurface) = 0;
     virtual void DispatchSpace(KGSpace* aSpace) = 0;
 
   protected:
-    KThreeVector fOrigin;
-    KThreeVector fXAxis;
-    KThreeVector fYAxis;
-    KThreeVector fZAxis;
-    KAxis fAxis;
+    katrin::KThreeVector fOrigin;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
+    katrin::KAxis fAxis;
 
-    KThreeVector fCurrentOrigin;
-    KThreeVector fCurrentXAxis;
-    KThreeVector fCurrentYAxis;
-    KThreeVector fCurrentZAxis;
-    KAxis fCurrentAxis;
+    katrin::KThreeVector fCurrentOrigin;
+    katrin::KThreeVector fCurrentXAxis;
+    katrin::KThreeVector fCurrentYAxis;
+    katrin::KThreeVector fCurrentZAxis;
+    katrin::KAxis fCurrentAxis;
 
     katrin::KTagged* fCurrentElement;
 };
@@ -307,7 +305,7 @@ class KGBEMConverterNode :
     }
 };
 
-class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisTypes, KBoundaryTypes>
+class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KEMField::KBasisTypes, KEMField::KBoundaryTypes>
 {
   public:
     KGBEMMeshConverter();
@@ -322,7 +320,7 @@ class KGBEMMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisType
     bool Add(KGMeshData* aData);
 };
 
-class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisTypes, KBoundaryTypes>
+class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KEMField::KBasisTypes, KEMField::KBoundaryTypes>
 {
   public:
     KGBEMAxialMeshConverter();
@@ -337,7 +335,7 @@ class KGBEMAxialMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasi
     bool Add(KGAxialMeshData* aData);
 };
 
-class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KBasisTypes, KBoundaryTypes>
+class KGBEMDiscreteRotationalMeshConverter : public KGDualHierarchy<KGBEMConverterNode, KEMField::KBasisTypes, KEMField::KBoundaryTypes>
 {
   public:
     KGBEMDiscreteRotationalMeshConverter();

@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajAdiabaticDerivative_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,7 +36,7 @@ class KSTrajAdiabaticDerivative : public KSMathArray<8>
   public:
     void AddToTime(const double& aTime);
     void AddToSpeed(const double& aSpeed);
-    void AddToGuidingCenterVelocity(const KGeoBag::KThreeVector& aVelocity);
+    void AddToGuidingCenterVelocity(const katrin::KThreeVector& aVelocity);
     void AddToLongitudinalForce(const double& aForce);
     void AddToTransverseForce(const double& aForce);
     void AddToPhaseVelocity(const double& aPhaseVelocity);

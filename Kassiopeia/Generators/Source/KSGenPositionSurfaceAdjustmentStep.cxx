@@ -29,7 +29,7 @@ void KSGenPositionSurfaceAdjustmentStep::Dice(KSParticleQueue* aPrimaries)
 {
     for (auto& aPrimarie : *aPrimaries) {
         genmsg_debug("Position before: <" << aPrimarie->GetPosition() << ">" << eom);
-        KGeoBag::KThreeVector tPosition = aPrimarie->GetPosition() + fLength * aPrimarie->GetMomentum().Unit();
+        katrin::KThreeVector tPosition = aPrimarie->GetPosition() + fLength * aPrimarie->GetMomentum().Unit();
         genmsg_debug("KSGenPositionSurfaceAdjustmentStep: <" << GetName() << "> set position <" << tPosition << ">"
                                                              << eom);
         genmsg_debug("Distance between points: " << (aPrimarie->GetPosition() - tPosition).Magnitude() << eom);

@@ -32,6 +32,7 @@
 using namespace Kassiopeia;
 using namespace std;
 
+using katrin::KThreeVector;
 
 //////////////////////////////////////////////////////////////////////////////
 // Terminators Unit Testing
@@ -228,7 +229,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxR)
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
-    KGeoBag::KThreeVector tRadialVector(1., 0., 0.);
+    KThreeVector tRadialVector(1., 0., 0.);
 
     auto* tTerminator = new KSTermMaxR();
     ASSERT_PTR(tTerminator);
@@ -369,7 +370,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMaxZ)
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
-    KGeoBag::KThreeVector tAxialVector(0., 0., 1.);
+    KThreeVector tAxialVector(0., 0., 1.);
 
     auto* tTerminator = new KSTermMaxZ();
     ASSERT_PTR(tTerminator);
@@ -533,7 +534,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinR)
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
-    KGeoBag::KThreeVector tRadialVector(1., 0., 0.);
+    KThreeVector tRadialVector(1., 0., 0.);
 
     auto* tTerminator = new KSTermMinR();
     ASSERT_PTR(tTerminator);
@@ -583,7 +584,7 @@ TEST_F(KassiopeiaTerminatorTest, KSTermMinZ)
 {
     ASSERT_EQ(fParticles->size(), 0U);
 
-    KGeoBag::KThreeVector tAxialVector(0., 0., 1.);
+    KThreeVector tAxialVector(0., 0., 1.);
 
     auto* tTerminator = new KSTermMinZ();
     ASSERT_PTR(tTerminator);
@@ -656,8 +657,8 @@ TEST_F(KassiopeiaTerminatorTest, KSTermTrapped)
 
     tTerminator->SetMaxTurns(100);
 
-    KGeoBag::KThreeVector tMomentum(0., 0., 1.);
-    fInitialParticle->SetMagneticField(KGeoBag::KThreeVector(0., 0., 1.));
+    KThreeVector tMomentum(0., 0., 1.);
+    fInitialParticle->SetMagneticField(KThreeVector(0., 0., 1.));
 
     for (unsigned int tSteps = 0; tSteps < 100; tSteps++) {
         tResult = true;

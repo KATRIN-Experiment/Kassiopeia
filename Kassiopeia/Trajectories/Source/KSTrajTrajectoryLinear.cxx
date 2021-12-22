@@ -3,7 +3,7 @@
 #include "KConst.h"
 #include "KSTrajectoriesMessage.h"
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

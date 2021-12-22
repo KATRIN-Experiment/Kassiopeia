@@ -29,8 +29,8 @@ KSGenGeneratorSimulation::KSGenGeneratorSimulation() :
     fKineticEnergyName("final_kinetic_energy"),
     fTimeName("final_time"),
     fPIDName(""),
-    fDefaultPosition(KGeoBag::KThreeVector(0, 0, 0)),
-    fDefaultDirection(KGeoBag::KThreeVector(0, 0, 0)),
+    fDefaultPosition(KThreeVector(0, 0, 0)),
+    fDefaultDirection(KThreeVector(0, 0, 0)),
     fDefaultEnergy(1.),
     fDefaultTime(0.),
     fDefaultPID(11),  // electron
@@ -230,8 +230,8 @@ void KSGenGeneratorSimulation::GenerateParticlesFromFile(KSParticleQueue& aParti
                         continue;
                 }
 
-                KGeoBag::KThreeVector tPosition = fDefaultPosition;
-                KGeoBag::KThreeVector tDirection = fDefaultDirection;
+                KThreeVector tPosition = fDefaultPosition;
+                KThreeVector tDirection = fDefaultDirection;
                 double tEnergy = fDefaultEnergy;
                 double tTime = fDefaultTime;
                 int tPID = fDefaultPID;

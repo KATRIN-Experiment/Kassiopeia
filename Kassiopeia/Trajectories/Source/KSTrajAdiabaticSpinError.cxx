@@ -1,5 +1,7 @@
 #include "KSTrajAdiabaticSpinError.h"
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -26,12 +28,12 @@ const double& KSTrajAdiabaticSpinError::GetLengthError() const
     fLengthError = fData[1];
     return fLengthError;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticSpinError::GetPositionError() const
+const KThreeVector& KSTrajAdiabaticSpinError::GetPositionError() const
 {
     fPositionError.SetComponents(fData[2], fData[3], fData[4]);
     return fPositionError;
 }
-const KGeoBag::KThreeVector& KSTrajAdiabaticSpinError::GetMomentumError() const
+const KThreeVector& KSTrajAdiabaticSpinError::GetMomentumError() const
 {
     fMomentumError.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentumError;

@@ -8,7 +8,6 @@
 #include "KSGenPositionMask.h"
 
 using namespace std;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {
@@ -32,7 +31,7 @@ void KSGenPositionMask::Dice(KSParticleQueue* aPrimaries)
     tTempQueue->push_back(new KSParticle());
 
     for (auto& aPrimarie : *aPrimaries) {
-        KThreeVector tPosition;
+        katrin::KThreeVector tPosition;
         bool tPositionValid = false;
         unsigned int tNumRetries = 0;
 

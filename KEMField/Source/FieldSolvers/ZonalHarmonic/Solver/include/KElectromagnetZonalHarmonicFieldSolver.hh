@@ -6,6 +6,8 @@
 #include "KThreeVector_KEMField.hh"
 #include "KZonalHarmonicComputer.hh"
 
+#include "KThreeMatrix.hh"
+
 namespace KEMField
 {
 template<class Basis> class KZonalHarmonicFieldSolver;
@@ -79,7 +81,7 @@ template<> class KZonalHarmonicFieldSolver<KMagnetostaticBasis> : public KZonalH
     {
       public:
         MagneticFieldGradientAccumulator(const KPosition& P) : fP(P) {}
-        KThreeMatrix operator()(const KThreeMatrix& magneticFieldGradient,
+        katrin::KThreeMatrix operator()(const katrin::KThreeMatrix& magneticFieldGradient,
                                 KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
         {
             return magneticFieldGradient + c->MagneticFieldGradient(fP);
@@ -93,11 +95,11 @@ template<> class KZonalHarmonicFieldSolver<KMagnetostaticBasis> : public KZonalH
     {
       public:
         MagneticFieldAndGradientAccumulator(const KPosition& P) : fP(P) {}
-        std::pair<KFieldVector, KGeoBag::KThreeMatrix>
-        operator()(const std::pair<KFieldVector, KGeoBag::KThreeMatrix>& fieldandgradient,
+        std::pair<KFieldVector, katrin::KThreeMatrix>
+        operator()(const std::pair<KFieldVector, katrin::KThreeMatrix>& fieldandgradient,
                    KZonalHarmonicFieldSolver<KMagnetostaticBasis>* c)
         {
-            std::pair<KFieldVector, KGeoBag::KThreeMatrix> pair = c->MagneticFieldAndGradient(fP);
+            std::pair<KFieldVector, katrin::KThreeMatrix> pair = c->MagneticFieldAndGradient(fP);
             return std::make_pair(fieldandgradient.first + pair.first, fieldandgradient.second + pair.second);
         }
 

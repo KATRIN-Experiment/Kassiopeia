@@ -10,7 +10,6 @@
 #include <fstream>
 #include <limits>
 #include <sstream>
-using KGeoBag::KThreeVector;
 
 #include "KConst.h"
 #include "KRandom.h"

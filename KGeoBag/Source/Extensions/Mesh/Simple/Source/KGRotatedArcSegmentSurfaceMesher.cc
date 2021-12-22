@@ -18,7 +18,7 @@ void KGRotatedArcSegmentSurfaceMesher::VisitRotatedPathSurface(KGRotatedArcSegme
 
     //surgery
     bool tHasStart = false;
-    KThreeVector tStartApex;
+    katrin::KThreeVector tStartApex;
     if (aRotatedArcSegmentSurface->Path()->Start().Y() == 0.) {
         tHasStart = true;
         tStartApex.SetComponents(0., 0., aRotatedArcSegmentSurface->Path()->Start().X());
@@ -26,7 +26,7 @@ void KGRotatedArcSegmentSurfaceMesher::VisitRotatedPathSurface(KGRotatedArcSegme
     }
 
     bool tHasEnd = false;
-    KThreeVector tEndApex;
+    katrin::KThreeVector tEndApex;
     if (aRotatedArcSegmentSurface->Path()->End().Y() == 0.) {
         tHasEnd = true;
         tEndApex.SetComponents(0., 0., aRotatedArcSegmentSurface->Path()->End().X());

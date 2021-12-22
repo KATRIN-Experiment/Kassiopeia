@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajMagneticError_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,12 +36,12 @@ class KSTrajMagneticError : public KSMathArray<5>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KGeoBag::KThreeVector& GetPositionError() const;
+    const katrin::KThreeVector& GetPositionError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KGeoBag::KThreeVector fPositionError;
+    mutable katrin::KThreeVector fPositionError;
 };
 
 inline KSTrajMagneticError& KSTrajMagneticError::operator=(const double& anOperand)

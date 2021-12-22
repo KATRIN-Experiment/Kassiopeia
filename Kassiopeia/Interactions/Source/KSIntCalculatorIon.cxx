@@ -5,9 +5,9 @@
 #include "KSParticleFactory.h"
 using katrin::KRandom;
 
-#include "KConst.h"
+using katrin::KThreeVector;
 
-using KGeoBag::KThreeVector;
+#include "KConst.h"
 
 namespace Kassiopeia
 {

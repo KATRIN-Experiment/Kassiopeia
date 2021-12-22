@@ -138,7 +138,7 @@ int main(int /*anArgc*/, char** /*anArgv*/)
     }
 
     tEnergy = 500.;
-    KGeoBag::KThreeVector tDirection(0., 0., 1.);
+    KThreeVector tDirection(0., 0., 1.);
     tInitialParticle->SetMomentum(tDirection);
     tInteractionParticle->SetMomentum(tDirection);
     tFinalParticle->SetMomentum(tDirection);

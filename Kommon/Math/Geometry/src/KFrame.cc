@@ -1,6 +1,6 @@
 #include "KFrame.hh"
 
-namespace KGeoBag
+namespace katrin
 {
 
 KFrame::KFrame() : fOrigin(0., 0., 0.), fXAxis(1., 0., 0.), fYAxis(0., 1., 0.), fZAxis(0., 0., 1.) {}
@@ -53,4 +53,4 @@ const KThreeVector& KFrame::GetZAxis() const
     return fZAxis;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

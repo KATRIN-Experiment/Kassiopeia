@@ -5,6 +5,8 @@
 #include "KGPlanarPath.hh"
 #include "KGShapeMessage.hh"
 
+#include "KThreeVector.hh"
+
 #include <memory>
 
 namespace KGeoBag
@@ -142,9 +144,9 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
         }
         return;
     }
-    bool AreaAbove(const KGeoBag::KThreeVector& aPoint) const override
+    bool AreaAbove(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
         double tXYAbove = fPath->Above(tXYPoint);
         if ((tXYAbove == true) && (fSign > 0.)) {
             return true;
@@ -153,10 +155,10 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
             return false;
         }
     }
-    KGeoBag::KThreeVector AreaPoint(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector AreaPoint(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
-        KTwoVector tXYNearest = fPath->Point(tXYPoint);
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYNearest = fPath->Point(tXYPoint);
 
         double tZ = aPoint.Z();
         if (tZ < fZMin) {
@@ -166,13 +168,13 @@ template<class XPathType> class KGExtrudedPathSurface : public KGArea
             tZ = fZMax;
         }
 
-        return KGeoBag::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZ);
+        return katrin::KThreeVector(tXYNearest.X(), tXYNearest.Y(), tZ);
     }
-    KGeoBag::KThreeVector AreaNormal(const KGeoBag::KThreeVector& aPoint) const override
+    katrin::KThreeVector AreaNormal(const katrin::KThreeVector& aPoint) const override
     {
-        KTwoVector tXYPoint = aPoint.ProjectXY();
-        KTwoVector tXYNormal = fPath->Normal(tXYPoint);
-        return KGeoBag::KThreeVector(fSign * tXYNormal.X(), fSign * tXYNormal.Y(), 0.);
+        katrin::KTwoVector tXYPoint = aPoint.ProjectXY();
+        katrin::KTwoVector tXYNormal = fPath->Normal(tXYPoint);
+        return katrin::KThreeVector(fSign * tXYNormal.X(), fSign * tXYNormal.Y(), 0.);
     }
 
   private:

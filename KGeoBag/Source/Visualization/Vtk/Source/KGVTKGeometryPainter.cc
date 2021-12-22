@@ -28,6 +28,10 @@
 
 using namespace std;
 
+using katrin::KTwoVector;
+using katrin::KThreeVector;
+using katrin::KTransformation;
+
 namespace KGeoBag
 {
 

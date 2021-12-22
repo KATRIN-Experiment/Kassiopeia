@@ -32,7 +32,7 @@ class KSNavSpace : public KSComponentTemplate<KSNavSpace, KSSpaceNavigator>
 
   public:
     void CalculateNavigation(const KSTrajectory& aTrajectory, const KSParticle& aTrajectoryInitialParticle,
-                             const KSParticle& aTrajectoryFinalParticle, const KGeoBag::KThreeVector& aTrajectoryCenter,
+                             const KSParticle& aTrajectoryFinalParticle, const katrin::KThreeVector& aTrajectoryCenter,
                              const double& aTrajectoryRadius, const double& aTrajectoryStep,
                              KSParticle& aNavigationParticle, double& aNavigationStep, bool& aNavigationFlag) override;
     void ExecuteNavigation(const KSParticle& anInitialParticle, KSParticle& aFinalParticle,
@@ -46,28 +46,28 @@ class KSNavSpace : public KSComponentTemplate<KSNavSpace, KSSpaceNavigator>
     const KSSpace* fCurrentSpace;
 
     mutable KSSpace* fParentSpace;
-    KGeoBag::KThreeVector fParentSpaceAnchor;
+    katrin::KThreeVector fParentSpaceAnchor;
     double fParentSpaceDistance;
     bool fParentSpaceRecalculate;
 
     mutable KSSpace* fChildSpace;
-    KGeoBag::KThreeVector fChildSpaceAnchor;
+    katrin::KThreeVector fChildSpaceAnchor;
     double fChildSpaceDistance;
     bool fChildSpaceRecalculate;
 
     mutable KSSide* fParentSide;
-    KGeoBag::KThreeVector fParentSideAnchor;
+    katrin::KThreeVector fParentSideAnchor;
     double fParentSideDistance;
     bool fParentSideRecalculate;
 
     mutable KSSide* fChildSide;
-    KGeoBag::KThreeVector fChildSideAnchor;
+    katrin::KThreeVector fChildSideAnchor;
     double fChildSideDistance;
     bool fChildSideRecalculate;
 
     mutable KSSurface* fChildSurface;
     mutable KSSurface* fLastStepSurface;
-    KGeoBag::KThreeVector fChildSurfaceAnchor;
+    katrin::KThreeVector fChildSurfaceAnchor;
     double fChildSurfaceDistance;
     bool fChildSurfaceRecalculate;
 

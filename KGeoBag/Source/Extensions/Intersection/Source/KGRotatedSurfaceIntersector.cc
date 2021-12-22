@@ -15,7 +15,7 @@ KGRotatedSurfaceIntersector::KGRotatedSurfaceIntersector(const KGRotatedSurface&
     // Initialize!
 }
 
-bool KGRotatedSurfaceIntersector::Intersection(KThreeVector& aStart, KThreeVector& anEnd, KThreeVector& aResult) const
+bool KGRotatedSurfaceIntersector::Intersection(katrin::KThreeVector& aStart, katrin::KThreeVector& anEnd, katrin::KThreeVector& aResult) const
 {
     // Intersect!
     (void) aStart;

@@ -35,7 +35,7 @@ KGBox::KGBox(double x0, double x1, double y0, double y1, double z0, double z1)
     }
 }
 
-KGBox::KGBox(const KThreeVector& p0, const KThreeVector& p1)
+KGBox::KGBox(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1)
 {
     fMeshCount[0] = fMeshCount[1] = fMeshCount[2] = 0;
     fMeshPower[0] = fMeshPower[1] = fMeshPower[2] = 1.;
@@ -70,7 +70,7 @@ void KGBox::AreaAccept(KGVisitor* aVisitor)
     }
     return;
 }
-bool KGBox::AreaAbove(const KThreeVector& P) const
+bool KGBox::AreaAbove(const katrin::KThreeVector& P) const
 {
     if ((P[0] - fP0[0]) * (P[0] - fP1[0]) > 0. || (P[1] - fP0[1]) * (P[1] - fP1[1]) > 0. ||
         (P[2] - fP0[2]) * (P[2] - fP1[2]) > 0.)
@@ -78,9 +78,9 @@ bool KGBox::AreaAbove(const KThreeVector& P) const
 
     return true;
 }
-KThreeVector KGBox::AreaPoint(const KThreeVector& P) const
+katrin::KThreeVector KGBox::AreaPoint(const katrin::KThreeVector& P) const
 {
-    KThreeVector p = P;
+    katrin::KThreeVector p = P;
 
     if (p[0] < fP0[0])
         p[0] = fP0[0];
@@ -97,9 +97,9 @@ KThreeVector KGBox::AreaPoint(const KThreeVector& P) const
 
     return p;
 }
-KThreeVector KGBox::AreaNormal(const KThreeVector& P) const
+katrin::KThreeVector KGBox::AreaNormal(const katrin::KThreeVector& P) const
 {
-    KThreeVector dir = P - (fP0 + fP1) * .5;
+    katrin::KThreeVector dir = P - (fP0 + fP1) * .5;
     for (int i = 0; i < 3; i++)
         dir[i] /= (fP1[i] - fP0[i]);
 
@@ -113,7 +113,7 @@ KThreeVector KGBox::AreaNormal(const KThreeVector& P) const
     if ((dir[max] > 0. && P[max] < fP1[max]) || P[max] < fP0[max])
         magnitude = -1.;
 
-    KThreeVector normal(0., 0., 0.);
+    katrin::KThreeVector normal(0., 0., 0.);
     normal[max] = magnitude;
 
     return normal;

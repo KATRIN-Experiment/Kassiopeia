@@ -3,7 +3,6 @@
 #include "KConst.h"
 #include "KFile.h"
 #include "KGVisualizationMessage.hh"
-#include "KStringUtils.h"
 
 #include <TColor.h>
 #include <cmath>
@@ -12,6 +11,9 @@
 #include <limits>
 
 using namespace std;
+
+using katrin::KTwoVector;
+using katrin::KThreeVector;
 
 namespace KGeoBag
 {

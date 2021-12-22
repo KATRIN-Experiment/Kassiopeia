@@ -17,26 +17,26 @@ class KSRootMagneticField : public KSComponentTemplate<KSRootMagneticField, KSMa
     ~KSRootMagneticField() override;
 
   public:
-    void CalculatePotential(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                            KGeoBag::KThreeVector& aPotential) override;
+    void CalculatePotential(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                            katrin::KThreeVector& aPotential) override;
 
-    void CalculateField(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                        KGeoBag::KThreeVector& aField) override;
+    void CalculateField(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                        katrin::KThreeVector& aField) override;
 
-    void CalculateGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                           KGeoBag::KThreeMatrix& aGradient) override;
+    void CalculateGradient(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                           katrin::KThreeMatrix& aGradient) override;
 
-    void CalculateFieldAndGradient(const KGeoBag::KThreeVector& aSamplePoint, const double& aSampleTime,
-                                   KGeoBag::KThreeVector& aField, KGeoBag::KThreeMatrix& aGradient) override;
+    void CalculateFieldAndGradient(const katrin::KThreeVector& aSamplePoint, const double& aSampleTime,
+                                   katrin::KThreeVector& aField, katrin::KThreeMatrix& aGradient) override;
 
   public:
     void AddMagneticField(KSMagneticField* aMagneticField);
     void RemoveMagneticField(KSMagneticField* aMagneticField);
 
   private:
-    KGeoBag::KThreeVector fCurrentPotential;
-    KGeoBag::KThreeVector fCurrentField;
-    KGeoBag::KThreeMatrix fCurrentGradient;
+    katrin::KThreeVector fCurrentPotential;
+    katrin::KThreeVector fCurrentField;
+    katrin::KThreeMatrix fCurrentGradient;
 
     KSList<KSMagneticField> fMagneticFields;
 

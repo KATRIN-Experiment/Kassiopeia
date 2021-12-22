@@ -18,7 +18,7 @@
 #include "Shapes.h"
 
 using namespace KGeoBag;
-
+using katrin::KThreeVector;
 
 /////////////////////////////////////////////////////////////////////////////
 // Shapes (Surfaces) Unit Testing

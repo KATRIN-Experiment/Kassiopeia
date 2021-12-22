@@ -26,7 +26,7 @@ KDirection KEMCoordinateSystem::ToLocal(const KDirection& d) const
 
 KGradient KEMCoordinateSystem::ToLocal(const KGradient& g) const
 {
-    KThreeMatrix
+    katrin::KThreeMatrix
         transform(fXAxis[0], fXAxis[1], fXAxis[2], fYAxis[0], fYAxis[1], fYAxis[2], fZAxis[0], fZAxis[1], fZAxis[2]);
 
     return transform.Multiply(g.MultiplyTranspose(transform));
@@ -50,7 +50,7 @@ KDirection KEMCoordinateSystem::ToGlobal(const KDirection& p) const
 
 KGradient KEMCoordinateSystem::ToGlobal(const KGradient& g) const
 {
-    KThreeMatrix
+    katrin::KThreeMatrix
         transform(fXAxis[0], fYAxis[0], fZAxis[0], fXAxis[1], fYAxis[1], fZAxis[1], fXAxis[2], fYAxis[2], fZAxis[2]);
 
     return transform.Multiply(g.MultiplyTranspose(transform));

@@ -2,10 +2,6 @@
 #define _Kassiopeia_KSWriteVTK_h_
 
 #include "KSWriter.h"
-#include "KTwoVector.hh"
-#include "KThreeVector.hh"
-#include "KTwoMatrix.hh"
-#include "KThreeMatrix.hh"
 #include "vtkCellArray.h"
 #include "vtkCharArray.h"
 #include "vtkDoubleArray.h"
@@ -26,6 +22,11 @@
 #include "vtkUnsignedShortArray.h"
 #include "vtkVertex.h"
 #include "vtkXMLPolyDataWriter.h"
+
+#include "KThreeMatrix.hh"
+#include "KThreeVector.hh"
+#include "KTwoMatrix.hh"
+#include "KTwoVector.hh"
 
 namespace Kassiopeia
 {
@@ -77,7 +78,7 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
     class TwoVectorAction : public Action
     {
       public:
-        TwoVectorAction(KGeoBag::KTwoVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+        TwoVectorAction(katrin::KTwoVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
             fData(aData),
             fArray(anArray)
         {}
@@ -90,14 +91,14 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        KGeoBag::KTwoVector* fData;
+        katrin::KTwoVector* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class ThreeVectorAction : public Action
     {
       public:
-        ThreeVectorAction(KGeoBag::KThreeVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+        ThreeVectorAction(katrin::KThreeVector* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
             fData(aData),
             fArray(anArray)
         {}
@@ -110,14 +111,14 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        KGeoBag::KThreeVector* fData;
+        katrin::KThreeVector* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class TwoMatrixAction : public Action
     {
       public:
-        TwoMatrixAction(KGeoBag::KTwoMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+        TwoMatrixAction(katrin::KTwoMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
             fData(aData),
             fArray(anArray)
         {}
@@ -130,14 +131,14 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        KGeoBag::KTwoMatrix* fData;
+        katrin::KTwoMatrix* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class ThreeMatrixAction : public Action
     {
       public:
-        ThreeMatrixAction(KGeoBag::KThreeMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
+        ThreeMatrixAction(katrin::KThreeMatrix* aData, vtkSmartPointer<vtkDoubleArray> anArray) :
             fData(aData),
             fArray(anArray)
         {}
@@ -152,14 +153,14 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        KGeoBag::KThreeMatrix* fData;
+        katrin::KThreeMatrix* fData;
         vtkSmartPointer<vtkDoubleArray> fArray;
     };
 
     class PointAction : public Action
     {
       public:
-        PointAction(KGeoBag::KThreeVector* aData, std::vector<vtkIdType>& anIds, vtkSmartPointer<vtkPoints> aPoints) :
+        PointAction(katrin::KThreeVector* aData, std::vector<vtkIdType>& anIds, vtkSmartPointer<vtkPoints> aPoints) :
             fData(aData),
             fIds(anIds),
             fPoints(aPoints)
@@ -173,7 +174,7 @@ class KSWriteVTK : public KSComponentTemplate<KSWriteVTK, KSWriter>
         }
 
       private:
-        KGeoBag::KThreeVector* fData;
+        katrin::KThreeVector* fData;
         std::vector<vtkIdType>& fIds;
         vtkSmartPointer<vtkPoints> fPoints;
     };

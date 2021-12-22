@@ -2,6 +2,7 @@
 #define Kassiopeia_KSTrajElectricError_h_
 
 #include "KSMathArray.h"
+
 #include "KThreeVector.hh"
 
 namespace Kassiopeia
@@ -35,12 +36,12 @@ class KSTrajElectricError : public KSMathArray<5>
   public:
     const double& GetTimeError() const;
     const double& GetLengthError() const;
-    const KGeoBag::KThreeVector& GetPositionError() const;
+    const katrin::KThreeVector& GetPositionError() const;
 
   protected:
     mutable double fTimeError;
     mutable double fLengthError;
-    mutable KGeoBag::KThreeVector fPositionError;
+    mutable katrin::KThreeVector fPositionError;
 };
 
 inline KSTrajElectricError& KSTrajElectricError::operator=(const double& anOperand)

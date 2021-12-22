@@ -20,7 +20,7 @@ namespace KGeoBag
 
 struct KGVertexSideDescriptor
 {
-    KTwoVector Vertex;  //the starting vertex associated with this side
+    katrin::KTwoVector Vertex;  //the starting vertex associated with this side
     bool IsArc;         //if the side is an arc or a straight line segment
     bool IsRight;       //if it is an arc, does it lie to the left or right of the line joining the vertices
     bool IsCCW;         //pick the CW arc, or the CCW arc

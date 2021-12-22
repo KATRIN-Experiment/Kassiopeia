@@ -18,7 +18,6 @@
 
 using namespace Kassiopeia;
 using namespace katrin;
-using namespace KGeoBag;
 using namespace std;
 
 int main(int argc, char** argv)

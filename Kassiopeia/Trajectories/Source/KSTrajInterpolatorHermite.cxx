@@ -4,7 +4,7 @@
 
 #include <list>
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

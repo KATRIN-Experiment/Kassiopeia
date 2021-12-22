@@ -6,6 +6,9 @@
 #include <cmath>
 #include <cstdlib>
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -262,17 +265,17 @@ const double& KSTrajExactSpinParticle::GetLength() const
     fLength = fData[1];
     return fLength;
 }
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetPosition() const
+const KThreeVector& KSTrajExactSpinParticle::GetPosition() const
 {
     fPosition.SetComponents(fData[2], fData[3], fData[4]);
     return fPosition;
 }
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetMomentum() const
+const KThreeVector& KSTrajExactSpinParticle::GetMomentum() const
 {
     fMomentum.SetComponents(fData[5], fData[6], fData[7]);
     return fMomentum;
 }
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetVelocity() const
+const KThreeVector& KSTrajExactSpinParticle::GetVelocity() const
 {
     fVelocity = (1. / (GetMass() * GetLorentzFactor())) * GetMomentum();
     return fVelocity;
@@ -282,7 +285,7 @@ const double& KSTrajExactSpinParticle::GetSpin0() const
     fSpin0 = fData[8];
     return fSpin0;
 }
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetSpin() const
+const KThreeVector& KSTrajExactSpinParticle::GetSpin() const
 {
     fSpin.SetComponents(fData[9], fData[10], fData[11]);
     return fSpin;
@@ -299,17 +302,17 @@ const double& KSTrajExactSpinParticle::GetKineticEnergy() const
     return fKineticEnergy;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetMagneticField() const
+const KThreeVector& KSTrajExactSpinParticle::GetMagneticField() const
 {
     (this->*fGetMagneticFieldPtr)();
     return fMagneticField;
 }
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetElectricField() const
+const KThreeVector& KSTrajExactSpinParticle::GetElectricField() const
 {
     (this->*fGetElectricFieldPtr)();
     return fElectricField;
 }
-const KGeoBag::KThreeMatrix& KSTrajExactSpinParticle::GetMagneticGradient() const
+const KThreeMatrix& KSTrajExactSpinParticle::GetMagneticGradient() const
 {
     (this->*fGetMagneticGradientPtr)();
     return fMagneticGradient;
@@ -320,7 +323,7 @@ const double& KSTrajExactSpinParticle::GetElectricPotential() const
     return fElectricPotential;
 }
 
-const KGeoBag::KThreeVector& KSTrajExactSpinParticle::GetGuidingCenter() const
+const KThreeVector& KSTrajExactSpinParticle::GetGuidingCenter() const
 {
     fGuidingCenter = GetPosition() + (1. / (GetCharge() * GetMagneticField().MagnitudeSquared())) *
                                          (GetMomentum().Cross(GetMagneticField()));

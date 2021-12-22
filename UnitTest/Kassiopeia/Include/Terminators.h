@@ -19,8 +19,8 @@ class KassiopeiaTerminatorTest : public TimeoutTest
         fInitialParticle = new KSParticle();
         fFinalParticle = new KSParticle();
         fParticles = new KSParticleQueue();
-        fElectricField = MakeConstantElectricField(KGeoBag::KThreeVector(0., 0., 0.));
-        fMagneticField = MakeConstantMagneticField(KGeoBag::KThreeVector(0., 0., 1.));
+        fElectricField = MakeConstantElectricField(katrin::KThreeVector(0., 0., 0.));
+        fMagneticField = MakeConstantMagneticField(katrin::KThreeVector(0., 0., 1.));
         ASSERT_PTR(fInitialParticle);
         ASSERT_PTR(fFinalParticle);
         ASSERT_PTR(fParticles);

@@ -2,17 +2,14 @@
 #include "KEMCoreMessage.hh"
 
 #include "vtkAxis.h"
-#include "vtkChartHistogram2D.h"
 #include "vtkChartLegend.h"
 #include "vtkContextScene.h"
-#include "vtkDoubleArray.h"
 #include "vtkMath.h"
 #include "vtkPNGWriter.h"
 #include "vtkPlotHistogram2D.h"
 #include "vtkRenderWindow.h"
 #include "vtkRenderWindowInteractor.h"
 #include "vtkSmartPointer.h"
-#include "vtkTable.h"
 #include "vtkWindowToImageFilter.h"
 #include "vtkXMLImageDataWriter.h"
 
@@ -45,45 +42,15 @@ KEMVTKFieldCanvas::~KEMVTKFieldCanvas() = default;
 
 //______________________________________________________________________________
 
-void KEMVTKFieldCanvas::DrawFieldGraph(const std::vector<double>& x, const std::vector<double>& V)
-{
-    chart = vtkSmartPointer<vtkChartXY>::New();
-
-    view->GetScene()->AddItem(chart);
-
-    vtkTable* table = vtkSmartPointer<vtkTable>::New();
-    vtkDoubleArray* columnX = vtkSmartPointer<vtkDoubleArray>::New();
-    table->AddColumn(columnX);
-
-    vtkDoubleArray* columnV = vtkSmartPointer<vtkDoubleArray>::New();
-    table->AddColumn(columnV);
-
-    table->SetNumberOfRows(static_cast<vtkIdType>(x.size()));
-    for (int i = 0; i < (int) x.size(); ++i)
-    {
-      table->SetValue(static_cast<vtkIdType>(i), 0, x[i]);
-      table->SetValue(static_cast<vtkIdType>(i), 1, V[i]);
-    }
-
-    vtkPlot* line = chart->AddPlot(vtkChart::LINE);
-    line->SetInputData(table, 0, 1);
-
-    //line->SetColor(lineColor[0], lineColor[1], lineColor[2], lineColor[3]);
-    line->SetWidth(2.);
-}
-
-//______________________________________________________________________________
-
 void KEMVTKFieldCanvas::DrawFieldMap(const std::vector<double>& x, const std::vector<double>& y,
                                      const std::vector<double>& V, bool xy, double z)
 {
     (void) xy;
     (void) z;
 
-    vtkChartHistogram2D* hist = vtkSmartPointer<vtkChartHistogram2D>::New();
-    chart = hist;
+    chart = vtkSmartPointer<vtkChartHistogram2D>::New();
 
-    view->GetScene()->AddItem(hist);
+    view->GetScene()->AddItem(chart);
 
     data = vtkSmartPointer<vtkImageData>::New();
     data->SetExtent(0, x.size() - 1, 0, y.size() - 1, 0, 0);
@@ -116,9 +83,9 @@ void KEMVTKFieldCanvas::DrawFieldMap(const std::vector<double>& x, const std::ve
         }
     }
 #ifdef VTK6
-    hist->SetInputData(data);
+    chart->SetInputData(data);
 #else
-    hist->SetInput(data);
+    chart->SetInput(data);
 #endif
 
     double range = max - min;
@@ -130,7 +97,7 @@ void KEMVTKFieldCanvas::DrawFieldMap(const std::vector<double>& x, const std::ve
     transferFunction->AddRGBSegment(min + 0.6 * range, 0.0, 1.0, 0.0, min + 0.8 * range, 1.0, 1.0, 0.0);
     transferFunction->AddRGBSegment(min + 0.8 * range, 1.0, 1.0, 0.0, min + 1.0 * range, 1.0, 0.0, 0.0);
     transferFunction->Build();
-    hist->SetTransferFunction(transferFunction);
+    chart->SetTransferFunction(transferFunction);
 }
 
 //______________________________________________________________________________
@@ -139,11 +106,9 @@ void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, const std::vector<double>
                                           const std::vector<double>& V1, const std::vector<double>& V2)
 {
     (void) nPoints;
+    chart = vtkSmartPointer<vtkChartHistogram2D>::New();
 
-    vtkChartHistogram2D* hist = vtkSmartPointer<vtkChartHistogram2D>::New();
-    chart = hist;
-
-    view->GetScene()->AddItem(hist);
+    view->GetScene()->AddItem(chart);
 
     data = vtkSmartPointer<vtkImageData>::New();
     data->SetExtent(0, x.size() - 1, 0, y.size() - 1, 0, 0);
@@ -177,9 +142,9 @@ void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, const std::vector<double>
         }
     }
 #ifdef VTK6
-    hist->SetInputData(data);
+    chart->SetInputData(data);
 #else
-    hist->SetInput(data);
+    chart->SetInput(data);
 #endif
 
     double range = max - min;
@@ -191,7 +156,7 @@ void KEMVTKFieldCanvas::DrawComparisonMap(int nPoints, const std::vector<double>
     transferFunction->AddRGBSegment(min + 0.6 * range, 0.0, 1.0, 0.0, min + 0.8 * range, 1.0, 1.0, 0.0);
     transferFunction->AddRGBSegment(min + 0.8 * range, 1.0, 1.0, 0.0, min + 1.0 * range, 1.0, 0.0, 0.0);
     transferFunction->Build();
-    hist->SetTransferFunction(transferFunction);
+    chart->SetTransferFunction(transferFunction);
 }
 
 //______________________________________________________________________________

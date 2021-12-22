@@ -6,6 +6,7 @@
 #include "KG2DPolygon.hh"
 #include "KG2DShape.hh"
 #include "KGVertexSideDescriptor.hh"
+
 #include "KTwoVector.hh"
 
 #include <cmath>
@@ -50,21 +51,21 @@ class KG2DPolygonWithArcs : public KG2DArea
     void Initialize() override;
 
     //getters
-    void GetVertices(std::vector<KTwoVector>* vertices) const;
+    void GetVertices(std::vector<katrin::KTwoVector>* vertices) const;
     void GetSides(std::vector<KG2DShape*>* sides) const;
 
     //****************
     //geometric system
     //****************
 
-    void NearestDistance(const KTwoVector& aPoint, double& aDistance) const override;
-    KTwoVector Point(const KTwoVector& aPoint) const override;
-    KTwoVector Normal(const KTwoVector& aPoint) const override;
-    void NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
-                             KTwoVector& anIntersection) const override;
+    void NearestDistance(const katrin::KTwoVector& aPoint, double& aDistance) const override;
+    katrin::KTwoVector Point(const katrin::KTwoVector& aPoint) const override;
+    katrin::KTwoVector Normal(const katrin::KTwoVector& aPoint) const override;
+    void NearestIntersection(const katrin::KTwoVector& aStart, const katrin::KTwoVector& anEnd, bool& aResult,
+                             katrin::KTwoVector& anIntersection) const override;
 
     ///returns true if point is inside the region enclosed by the polygon
-    bool IsInside(const KTwoVector& point) const override;
+    bool IsInside(const katrin::KTwoVector& point) const override;
 
     double Area() const override
     {
@@ -95,7 +96,7 @@ class KG2DPolygonWithArcs : public KG2DArea
     void DetermineInteriorSide();
 
     std::vector<KGVertexSideDescriptor> fDescriptors;  //an ordered list of the discriptors
-    std::vector<KTwoVector> fVertices;                 //an ordered list of the polygon's vertices
+    std::vector<katrin::KTwoVector> fVertices;                 //an ordered list of the polygon's vertices
     std::vector<KG2DShape*> fSides;                    //an ordered list of the polygon's sides
 
     bool fIsSimple;

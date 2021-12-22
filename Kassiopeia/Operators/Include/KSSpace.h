@@ -2,6 +2,7 @@
 #define Kassiopeia_KSSpace_h_
 
 #include "KSComponentTemplate.h"
+
 #include "KThreeVector.hh"
 
 #include <set>
@@ -26,9 +27,9 @@ class KSSpace : public KSComponentTemplate<KSSpace>
     virtual void Enter() const = 0;
     virtual void Exit() const = 0;
 
-    virtual bool Outside(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector Point(const KGeoBag::KThreeVector& aPoint) const = 0;
-    virtual KGeoBag::KThreeVector Normal(const KGeoBag::KThreeVector& aPoint) const = 0;
+    virtual bool Outside(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector Point(const katrin::KThreeVector& aPoint) const = 0;
+    virtual katrin::KThreeVector Normal(const katrin::KThreeVector& aPoint) const = 0;
 
     const KSSpace* GetParent() const;
     KSSpace* GetParent();

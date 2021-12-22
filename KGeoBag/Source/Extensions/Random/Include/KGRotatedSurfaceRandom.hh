@@ -17,8 +17,8 @@ class KGRotatedSurfaceRandom : virtual public KGShapeRandom, public KGRotatedSur
     using KGShapeRandom::Random;
 
   private:
-    KGeoBag::KThreeVector Random(const KGRotatedObject::Line* line);
-    KGeoBag::KThreeVector Random(const KGRotatedObject::Arc* arc);
+    katrin::KThreeVector Random(const KGRotatedObject::Line* line);
+    katrin::KThreeVector Random(const KGRotatedObject::Arc* arc);
 };
 }  // namespace KGeoBag
 

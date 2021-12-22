@@ -8,10 +8,10 @@ using katrin::KRandom;
 #include <limits>
 using std::numeric_limits;
 
-#include <cmath>
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
-using KGeoBag::KThreeMatrix;
-using KGeoBag::KThreeVector;
+#include <cmath>
 
 namespace Kassiopeia
 {

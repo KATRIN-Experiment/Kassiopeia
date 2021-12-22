@@ -1,5 +1,7 @@
 #include "KGBoxSpace.hh"
 
+using katrin::KTwoVector;
+
 namespace KGeoBag
 {
 

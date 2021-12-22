@@ -38,7 +38,7 @@ class KGInsertionCondition
     virtual bool ElementEnclosedByCube(const KGNavigableMeshElement* element, const KGCube<KGMESH_DIM>* cube) const;
 
   private:
-    static bool LineSegmentIntersectsCube(const KGeoBag::KThreeVector& start, const KGeoBag::KThreeVector& end,
+    static bool LineSegmentIntersectsCube(const katrin::KThreeVector& start, const katrin::KThreeVector& end,
                                           const KGCube<KGMESH_DIM>* cube);
 
 

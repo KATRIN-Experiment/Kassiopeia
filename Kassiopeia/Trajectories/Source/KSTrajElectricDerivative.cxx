@@ -17,7 +17,7 @@ void KSTrajElectricDerivative::AddToSpeed(const double& aSpeed)
     fData[1] = aSpeed;
     return;
 }
-void KSTrajElectricDerivative::AddToVelocity(const KGeoBag::KThreeVector& aVelocity)
+void KSTrajElectricDerivative::AddToVelocity(const katrin::KThreeVector& aVelocity)
 {
     fData[2] = aVelocity.X();
     fData[3] = aVelocity.Y();

@@ -51,74 +51,74 @@ template<> struct KSNumerical<bool>
     }
 };
 
-template<> struct KSNumerical<KGeoBag::KTwoVector>
+template<> struct KSNumerical<katrin::KTwoVector>
 {
-    static KGeoBag::KTwoVector Maximum()
+    static katrin::KTwoVector Maximum()
     {
-        return KGeoBag::KTwoVector(KSNumerical<double>::Maximum(), KSNumerical<double>::Maximum());
+        return katrin::KTwoVector(KSNumerical<double>::Maximum(), KSNumerical<double>::Maximum());
     }
-    static KGeoBag::KTwoVector Zero()
+    static katrin::KTwoVector Zero()
     {
-        return KGeoBag::KTwoVector(KSNumerical<double>::Zero(), KSNumerical<double>::Zero());
+        return katrin::KTwoVector(KSNumerical<double>::Zero(), KSNumerical<double>::Zero());
     }
-    static KGeoBag::KTwoVector Minimum()
+    static katrin::KTwoVector Minimum()
     {
-        return KGeoBag::KTwoVector(KSNumerical<double>::Minimum(), KSNumerical<double>::Minimum());
+        return katrin::KTwoVector(KSNumerical<double>::Minimum(), KSNumerical<double>::Minimum());
     }
 };
 
-template<> struct KSNumerical<KGeoBag::KThreeVector>
+template<> struct KSNumerical<katrin::KThreeVector>
 {
-    static KGeoBag::KThreeVector Maximum()
+    static katrin::KThreeVector Maximum()
     {
-        return KGeoBag::KThreeVector(KSNumerical<double>::Maximum(),
+        return katrin::KThreeVector(KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum());
     }
-    static KGeoBag::KThreeVector Zero()
+    static katrin::KThreeVector Zero()
     {
-        return KGeoBag::KThreeVector(KSNumerical<double>::Zero(),
+        return katrin::KThreeVector(KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero());
     }
-    static KGeoBag::KThreeVector Minimum()
+    static katrin::KThreeVector Minimum()
     {
-        return KGeoBag::KThreeVector(KSNumerical<double>::Minimum(),
+        return katrin::KThreeVector(KSNumerical<double>::Minimum(),
                                      KSNumerical<double>::Minimum(),
                                      KSNumerical<double>::Minimum());
     }
 };
 
-template<> struct KSNumerical<KGeoBag::KTwoMatrix>
+template<> struct KSNumerical<katrin::KTwoMatrix>
 {
-    static KGeoBag::KTwoMatrix Maximum()
+    static katrin::KTwoMatrix Maximum()
     {
-        return KGeoBag::KTwoMatrix(KSNumerical<double>::Maximum(),
+        return katrin::KTwoMatrix(KSNumerical<double>::Maximum(),
                                    KSNumerical<double>::Maximum(),
                                    KSNumerical<double>::Maximum(),
                                    KSNumerical<double>::Maximum());
     }
-    static KGeoBag::KTwoMatrix Zero()
+    static katrin::KTwoMatrix Zero()
     {
-        return KGeoBag::KTwoMatrix(KSNumerical<double>::Zero(),
+        return katrin::KTwoMatrix(KSNumerical<double>::Zero(),
                                    KSNumerical<double>::Zero(),
                                    KSNumerical<double>::Zero(),
                                    KSNumerical<double>::Zero());
     }
-    static KGeoBag::KTwoMatrix Minimum()
+    static katrin::KTwoMatrix Minimum()
     {
-        return KGeoBag::KTwoMatrix(KSNumerical<double>::Minimum(),
+        return katrin::KTwoMatrix(KSNumerical<double>::Minimum(),
                                    KSNumerical<double>::Minimum(),
                                    KSNumerical<double>::Minimum(),
                                    KSNumerical<double>::Minimum());
     }
 };
 
-template<> struct KSNumerical<KGeoBag::KThreeMatrix>
+template<> struct KSNumerical<katrin::KThreeMatrix>
 {
-    static KGeoBag::KThreeMatrix Maximum()
+    static katrin::KThreeMatrix Maximum()
     {
-        return KGeoBag::KThreeMatrix(KSNumerical<double>::Maximum(),
+        return katrin::KThreeMatrix(KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum(),
@@ -128,9 +128,9 @@ template<> struct KSNumerical<KGeoBag::KThreeMatrix>
                                      KSNumerical<double>::Maximum(),
                                      KSNumerical<double>::Maximum());
     }
-    static KGeoBag::KThreeMatrix Zero()
+    static katrin::KThreeMatrix Zero()
     {
-        return KGeoBag::KThreeMatrix(KSNumerical<double>::Zero(),
+        return katrin::KThreeMatrix(KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero(),
@@ -140,9 +140,9 @@ template<> struct KSNumerical<KGeoBag::KThreeMatrix>
                                      KSNumerical<double>::Zero(),
                                      KSNumerical<double>::Zero());
     }
-    static KGeoBag::KThreeMatrix Minimum()
+    static katrin::KThreeMatrix Minimum()
     {
-        return KGeoBag::KThreeMatrix(KSNumerical<double>::Minimum(),
+        return katrin::KThreeMatrix(KSNumerical<double>::Minimum(),
                                      KSNumerical<double>::Minimum(),
                                      KSNumerical<double>::Minimum(),
                                      KSNumerical<double>::Minimum(),

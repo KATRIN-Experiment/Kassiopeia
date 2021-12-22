@@ -3,6 +3,8 @@
 #include "KGAxisAlignedBox.hh"
 #include "KGPointCloud.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

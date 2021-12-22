@@ -90,6 +90,7 @@
 #endif /* !DEFAULT_OUTPUT_DIR */
 
 using namespace KEMField;
+using katrin::KThreeVector;
 
 #ifdef KEMFIELD_USE_KGEOBAG
 using namespace KGeoBag;

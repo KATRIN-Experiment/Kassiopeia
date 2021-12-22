@@ -15,6 +15,8 @@
 using namespace std;
 using namespace KGeoBag;
 
+using katrin::KThreeVector;
+
 KGStlFile::KGStlFile() :
     fFile(),
     fPath(),

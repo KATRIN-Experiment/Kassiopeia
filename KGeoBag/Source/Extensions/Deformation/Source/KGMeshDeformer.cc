@@ -7,6 +7,8 @@
 
 #define EPSILON 1.e-9
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 void KGMeshDeformer::VisitExtendedSpace(KGExtendedSpace<KGDeformed>* deformedSpace)

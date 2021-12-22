@@ -2,7 +2,7 @@
 
 namespace KGeoBag
 {
-KGCylinder::KGCylinder(const KThreeVector& p0, const KThreeVector& p1, double radius) :
+KGCylinder::KGCylinder(const katrin::KThreeVector& p0, const katrin::KThreeVector& p1, double radius) :
     fAxialMeshCount(8),
     fLongitudinalMeshCount(8),
     fLongitudinalMeshPower(1.)
@@ -33,7 +33,7 @@ void KGCylinder::AreaAccept(KGVisitor* aVisitor)
     }
     return;
 }
-bool KGCylinder::AreaAbove(const KThreeVector& P) const
+bool KGCylinder::AreaAbove(const katrin::KThreeVector& P) const
 {
     double r = ((P - fP0) * (1. - (P - fP0).Dot((fP1 - fP0).Unit()))).Magnitude();
 
@@ -42,7 +42,7 @@ bool KGCylinder::AreaAbove(const KThreeVector& P) const
     else
         return true;
 }
-KThreeVector KGCylinder::AreaPoint(const KThreeVector& P) const
+katrin::KThreeVector KGCylinder::AreaPoint(const katrin::KThreeVector& P) const
 {
     double u = (P - fP0).Dot((fP1 - fP0).Unit());
 
@@ -53,7 +53,7 @@ KThreeVector KGCylinder::AreaPoint(const KThreeVector& P) const
     else
         return fP0 + u * (fP1 - fP0);
 }
-KThreeVector KGCylinder::AreaNormal(const KThreeVector& P) const
+katrin::KThreeVector KGCylinder::AreaNormal(const katrin::KThreeVector& P) const
 {
     return ((P - fP0) * (1. - (P - fP0).Dot((fP1 - fP0).Unit()))).Unit();
 }

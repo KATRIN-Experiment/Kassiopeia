@@ -1,5 +1,7 @@
 #include "KSTrajAdiabaticDerivative.h"
 
+using katrin::KThreeVector;
+
 namespace Kassiopeia
 {
 
@@ -17,7 +19,7 @@ void KSTrajAdiabaticDerivative::AddToSpeed(const double& aSpeed)
     fData[1] += aSpeed;
     return;
 }
-void KSTrajAdiabaticDerivative::AddToGuidingCenterVelocity(const KGeoBag::KThreeVector& aVelocity)
+void KSTrajAdiabaticDerivative::AddToGuidingCenterVelocity(const KThreeVector& aVelocity)
 {
     fData[2] += aVelocity.X();
     fData[3] += aVelocity.Y();

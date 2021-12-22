@@ -5,6 +5,8 @@
 
 #include <limits>
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KThreeVector KGShapeRandom::Random(KGSurface* surface)

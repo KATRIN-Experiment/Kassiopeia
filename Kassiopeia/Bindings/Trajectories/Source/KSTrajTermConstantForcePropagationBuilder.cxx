@@ -13,7 +13,7 @@ template<> KSTrajTermConstantForcePropagationBuilder::~KComplexElement() = defau
 
 STATICINT sKSTrajTermConstantForcePropagationStructure =
     KSTrajTermConstantForcePropagationBuilder::Attribute<std::string>("name") +
-    KSTrajTermConstantForcePropagationBuilder::Attribute<KGeoBag::KThreeVector>("force");
+    KSTrajTermConstantForcePropagationBuilder::Attribute<KThreeVector>("force");
 
 STATICINT sToolboxKSTrajTermConstantForcePropagation =
     KSRootBuilder::ComplexElement<KSTrajTermConstantForcePropagation>("kstraj_term_constant_force_propagation");

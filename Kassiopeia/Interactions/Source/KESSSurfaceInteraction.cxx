@@ -5,9 +5,9 @@
 #include "KSInteractionsMessage.h"
 using katrin::KRandom;
 
-#include <cmath>
+using katrin::KThreeVector;
 
-using KGeoBag::KThreeVector;
+#include <cmath>
 
 namespace Kassiopeia
 {

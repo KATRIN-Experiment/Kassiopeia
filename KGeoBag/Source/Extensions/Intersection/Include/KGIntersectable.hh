@@ -11,8 +11,8 @@ class KGAnalyticIntersector
     KGAnalyticIntersector() = default;
     virtual ~KGAnalyticIntersector() = default;
 
-    virtual bool Intersection(KThreeVector& aStart, KGeoBag::KThreeVector& anEnd,
-                              KGeoBag::KThreeVector& aResult) const = 0;
+    virtual bool Intersection(katrin::KThreeVector& aStart, katrin::KThreeVector& anEnd,
+                              katrin::KThreeVector& aResult) const = 0;
 
   protected:
 };
@@ -26,12 +26,12 @@ class KGIntersectableSurface
     void SetIntersector(KGAnalyticIntersector* intersector);
     void SetSurface(const KGSurface& surface);
 
-    bool Intersection(const KGeoBag::KThreeVector& aStart, const KGeoBag::KThreeVector& anEnd,
-                      KGeoBag::KThreeVector& aResult) const;
+    bool Intersection(const katrin::KThreeVector& aStart, const katrin::KThreeVector& anEnd,
+                      katrin::KThreeVector& aResult) const;
 
   private:
-    static bool NumericIntersection(const KGeoBag::KThreeVector& aLocalStart, const KGeoBag::KThreeVector& aLocalEnd,
-                                    KGeoBag::KThreeVector& aLocalResult);
+    static bool NumericIntersection(const katrin::KThreeVector& aLocalStart, const katrin::KThreeVector& aLocalEnd,
+                                    katrin::KThreeVector& aLocalResult);
 
     const KGSurface* fSurface;
 

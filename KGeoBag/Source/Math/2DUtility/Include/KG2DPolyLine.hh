@@ -3,6 +3,7 @@
 
 #include "KG2DLineSegment.hh"
 #include "KG2DShape.hh"
+
 #include "KTwoVector.hh"
 
 #include <cmath>
@@ -31,26 +32,26 @@ class KG2DPolyLine : public KG2DShape
   public:
     KG2DPolyLine();
     KG2DPolyLine(const std::vector<std::vector<double>>* ordered_vertices);
-    KG2DPolyLine(const std::vector<KTwoVector>* ordered_vertices);
+    KG2DPolyLine(const std::vector<katrin::KTwoVector>* ordered_vertices);
 
     ~KG2DPolyLine() override;
 
     ///create the polyline by setting the vertices
     ///sides are created from the vertices in a 'connect the dots' manner.
     void SetVertices(const std::vector<std::vector<double>>* ordered_vertices);
-    void SetVertices(const std::vector<KTwoVector>* ordered_vertices);
+    void SetVertices(const std::vector<katrin::KTwoVector>* ordered_vertices);
     void Initialize() override;
 
     //getters
-    void GetVertices(std::vector<KTwoVector>* vertices) const;
+    void GetVertices(std::vector<katrin::KTwoVector>* vertices) const;
     void GetSides(std::vector<KG2DLineSegment>* sides) const;
 
     //geometry utilities
-    void NearestDistance(const KTwoVector& aPoint, double& aDistance) const override;
-    KTwoVector Point(const KTwoVector& aPoint) const override;
-    KTwoVector Normal(const KTwoVector& aPoint) const override;
-    void NearestIntersection(const KTwoVector& aStart, const KTwoVector& anEnd, bool& aResult,
-                             KTwoVector& anIntersection) const override;
+    void NearestDistance(const katrin::KTwoVector& aPoint, double& aDistance) const override;
+    katrin::KTwoVector Point(const katrin::KTwoVector& aPoint) const override;
+    katrin::KTwoVector Normal(const katrin::KTwoVector& aPoint) const override;
+    void NearestIntersection(const katrin::KTwoVector& aStart, const katrin::KTwoVector& anEnd, bool& aResult,
+                             katrin::KTwoVector& anIntersection) const override;
 
     ///returns true if polyline has no self intersections
     virtual bool IsSimple() const
@@ -70,7 +71,7 @@ class KG2DPolyLine : public KG2DShape
     //function used to test if the polyline is simple
     void DetermineIfPolyLineIsSimple();
 
-    std::vector<KTwoVector> fVertices;    //an ordered list of the polyline's vertices
+    std::vector<katrin::KTwoVector> fVertices;    //an ordered list of the polyline's vertices
     std::vector<KG2DLineSegment> fSides;  //an ordered list of the polyline's sides
 
     bool fIsSimple;
@@ -79,7 +80,7 @@ class KG2DPolyLine : public KG2DShape
     int fNSides;     //number of sides, one less than the number of vertices
 
     //scratch space for point in polygon test
-    mutable std::vector<KTwoVector> fDiff;
+    mutable std::vector<katrin::KTwoVector> fDiff;
 };
 
 }  // namespace KGeoBag

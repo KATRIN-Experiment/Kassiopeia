@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace KGeoBag
+namespace katrin
 {
 
 KAxis::KAxis() : fCenter(KThreeVector::sZero), fDirection(KThreeVector::sZUnit) {}
@@ -71,4 +71,4 @@ const KThreeVector& KAxis::GetDirection() const
     return fDirection;
 }
 
-}  // namespace KGeoBag
+}  // namespace katrin

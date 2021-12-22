@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

@@ -3,7 +3,8 @@
 #include "KSException.h"
 #include "KSFieldsMessage.h"
 
-using namespace KGeoBag;
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

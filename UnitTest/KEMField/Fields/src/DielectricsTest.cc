@@ -338,8 +338,6 @@ class KEMFieldDielectricsTest : public KEMFieldTest
     {
         KEMFieldTest::SetUp();
 
-        using namespace KGeoBag;
-
         // Technical definitions:
         std::string fModelName;
         std::string fMainDir;

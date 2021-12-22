@@ -6,7 +6,6 @@
 
 using namespace std;
 using namespace katrin;
-using KGeoBag::KThreeVector;
 using katrin::KTextFile;
 
 namespace Kassiopeia

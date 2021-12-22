@@ -1,5 +1,8 @@
 #include "KGArea.hh"
 
+#include "KThreeVector.hh"
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 KGArea::KGArea() : fInitialized(false) {}

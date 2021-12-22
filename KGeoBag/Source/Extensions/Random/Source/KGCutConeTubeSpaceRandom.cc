@@ -18,7 +18,7 @@ double KGeoBag::KGCutConeTubeSpaceRandom::LinearInterpolation(double zInput, con
 
 void KGeoBag::KGCutConeTubeSpaceRandom::VisitCutConeTubeSpace(KGeoBag::KGCutConeTubeSpace* aCutConeTubeSpace)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     const double dist1 = fabs(aCutConeTubeSpace->R12() - aCutConeTubeSpace->R11());
     const double dist2 = fabs(aCutConeTubeSpace->R22() - aCutConeTubeSpace->R21());

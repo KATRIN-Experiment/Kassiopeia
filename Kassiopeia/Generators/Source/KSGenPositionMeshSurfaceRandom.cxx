@@ -15,7 +15,7 @@
 #include "KRandom.h"
 using katrin::KRandom;
 
-using KGeoBag::KThreeVector;
+using katrin::KThreeVector;
 
 namespace Kassiopeia
 {

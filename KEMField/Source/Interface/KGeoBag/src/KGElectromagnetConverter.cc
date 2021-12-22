@@ -8,6 +8,9 @@ using KEMField::kem_cout;
 #include "KGCylinderSurface.hh"
 #include "KGRodSpace.hh"
 
+using katrin::KThreeMatrix;
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 
@@ -166,10 +169,10 @@ void KGElectromagnetConverter::VisitWrappedSpace(KGRodSpace* rod)
                             << eom;
 
         for (unsigned int i = 0; i < rod->GetObject()->GetNCoordinates() - 1; i++) {
-            KPosition p0(rod->GetObject()->GetCoordinate(i, 0),
+            KEMField::KPosition p0(rod->GetObject()->GetCoordinate(i, 0),
                          rod->GetObject()->GetCoordinate(i, 1),
                          rod->GetObject()->GetCoordinate(i, 2));
-            KPosition p1(rod->GetObject()->GetCoordinate(i + 1, 0),
+            KEMField::KPosition p1(rod->GetObject()->GetCoordinate(i + 1, 0),
                          rod->GetObject()->GetCoordinate(i + 1, 1),
                          rod->GetObject()->GetCoordinate(i + 1, 2));
 
@@ -235,8 +238,8 @@ void KGElectromagnetConverter::VisitCylinderTubeSpace(KGCylinderTubeSpace* cylin
             auto* tStream = fMagfield3File->File();
 
             // do not use coil->GetP0|P1() because it is defined as (r,0,z)
-            auto p0 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMin));
-            auto p1 = coil->GetCoordinateSystem().ToGlobal(KPosition(0, 0, tZMax));
+            auto p0 = coil->GetCoordinateSystem().ToGlobal(KEMField::KPosition(0, 0, tZMin));
+            auto p1 = coil->GetCoordinateSystem().ToGlobal(KEMField::KPosition(0, 0, tZMax));
 
             double tLineCurrent = fCurrentElectromagnetSpace->GetLineCurrent();
             double tNumTurns = fCurrentElectromagnetSpace->GetCurrentTurns();

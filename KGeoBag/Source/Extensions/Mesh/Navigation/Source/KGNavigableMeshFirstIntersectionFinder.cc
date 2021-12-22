@@ -1,5 +1,7 @@
 #include "KGNavigableMeshFirstIntersectionFinder.hh"
 
+using katrin::KThreeVector;
+
 namespace KGeoBag
 {
 

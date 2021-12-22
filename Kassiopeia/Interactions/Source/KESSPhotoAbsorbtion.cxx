@@ -1,19 +1,22 @@
 #include "KESSPhotoAbsorbtion.h"
 
 #include "KConst.h"
-#include "KRandom.h"
 #include "KSParticle.h"
 #include "KSParticleFactory.h"
 
+#include "KRandom.h"
+using katrin::KRandom;
+
 #include <cstdio>
 #include <iostream>
-using katrin::KRandom;
+
 #include "KFile.h"
 #include "KSInteractionsMessage.h"
+
 #include "KThreeVector.hh"
+using katrin::KThreeVector;
 
 #include <map>
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {

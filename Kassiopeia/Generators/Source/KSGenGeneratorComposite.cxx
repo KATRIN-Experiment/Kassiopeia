@@ -4,7 +4,6 @@
 #include "KSParticleFactory.h"
 
 using namespace std;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {

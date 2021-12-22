@@ -9,7 +9,7 @@
 
 void KGeoBag::KGConeSurfaceRandom::VisitConeSurface(KGeoBag::KGConeSurface* aConeSpace)
 {
-    KThreeVector point;
+    katrin::KThreeVector point;
 
     // Decide, on which area the point have to be
     double h = std::abs(aConeSpace->ZA() - aConeSpace->ZB());

@@ -9,10 +9,14 @@
 
 #include "KSGeneratorsMessage.h"
 #include "KSNumerical.h"
+
 #include "KTransformation.hh"
+using katrin::KTransformation;
+
+#include "KThreeVector.hh"
+using katrin::KThreeVector;
 
 using namespace std;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {

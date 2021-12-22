@@ -10,8 +10,6 @@
 
 using namespace std;
 using namespace katrin;
-using KGeoBag::KThreeMatrix;
-using KGeoBag::KThreeVector;
 
 namespace Kassiopeia
 {

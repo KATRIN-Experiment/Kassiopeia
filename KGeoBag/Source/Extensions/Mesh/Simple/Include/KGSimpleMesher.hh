@@ -43,7 +43,7 @@ class KGSimpleMesher : virtual public KGMesherBase
     class Points
     {
       public:
-        using Element = KTwoVector;
+        using Element = katrin::KTwoVector;
         using Set = std::deque<Element>;
         using It = Set::iterator;
         using CIt = Set::const_iterator;
@@ -61,8 +61,8 @@ class KGSimpleMesher : virtual public KGMesherBase
     class Mesh
     {
       public:
-        using Element = KGeoBag::KThreeVector;
-        using Group = std::deque<KThreeVector>;
+        using Element = katrin::KThreeVector;
+        using Group = std::deque<katrin::KThreeVector>;
         using GroupIt = Group::iterator;
         using GroupCIt = Group::const_iterator;
         using Set = std::deque<Group>;
@@ -113,9 +113,9 @@ class KGSimpleMesher : virtual public KGMesherBase
     //**************
 
   protected:
-    void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const KTwoVector& aCentroid,
+    void ClosedPointsFlattenedToTubeMeshAndApex(const ClosedPoints& aPoints, const katrin::KTwoVector& aCentroid,
                                                 const double& aZ, const unsigned int& aCount, const double& aPower,
-                                                TubeMesh& aMesh, KGeoBag::KThreeVector& anApex);
+                                                TubeMesh& aMesh, katrin::KThreeVector& anApex);
     void OpenPointsRotatedToTubeMesh(const OpenPoints& aPoints, const unsigned int& aCount, TubeMesh& aMesh);
     void OpenPointsRotatedToShellMesh(const OpenPoints& aPoints, const unsigned int& aCount, const double& aPower,
                                       ShellMesh& aMesh, const double& aAngleStart, const double& aAngleStop);
@@ -134,10 +134,10 @@ class KGSimpleMesher : virtual public KGMesherBase
   protected:
     void FlatMeshToTriangles(const FlatMesh& aMesh);
     void TubeMeshToTriangles(const TubeMesh& aMesh);
-    void TubeMeshToTriangles(const TubeMesh& aMesh, const KGeoBag::KThreeVector& anApexEnd);
-    void TubeMeshToTriangles(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh);
-    void TubeMeshToTriangles(const KGeoBag::KThreeVector& anApexStart, const TubeMesh& aMesh,
-                             const KGeoBag::KThreeVector& anApexEnd);
+    void TubeMeshToTriangles(const TubeMesh& aMesh, const katrin::KThreeVector& anApexEnd);
+    void TubeMeshToTriangles(const katrin::KThreeVector& anApexStart, const TubeMesh& aMesh);
+    void TubeMeshToTriangles(const katrin::KThreeVector& anApexStart, const TubeMesh& aMesh,
+                             const katrin::KThreeVector& anApexEnd);
     void ShellMeshToTriangles(const ShellMesh& aMesh);
     void ClosedShellMeshToTriangles(const ShellMesh& aMesh);
     void TorusMeshToTriangles(const TorusMesh& aMesh);
@@ -147,8 +147,8 @@ class KGSimpleMesher : virtual public KGMesherBase
     //*****************
 
   protected:
-    void Triangle(const KGeoBag::KThreeVector& aFirst, const KGeoBag::KThreeVector& aSecond,
-                  const KGeoBag::KThreeVector& aThird);
+    void Triangle(const katrin::KThreeVector& aFirst, const katrin::KThreeVector& aSecond,
+                  const katrin::KThreeVector& aThird);
 };
 
 }  // namespace KGeoBag

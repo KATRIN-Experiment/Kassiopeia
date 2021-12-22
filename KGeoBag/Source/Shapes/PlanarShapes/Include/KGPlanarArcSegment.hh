@@ -11,7 +11,7 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
   public:
     KGPlanarArcSegment();
     KGPlanarArcSegment(const KGPlanarArcSegment& aCopy);
-    KGPlanarArcSegment(const KTwoVector& aStart, const KTwoVector& anEnd, const double& aRadius, const bool& isRight,
+    KGPlanarArcSegment(const katrin::KTwoVector& aStart, const katrin::KTwoVector& anEnd, const double& aRadius, const bool& isRight,
                        const bool& isShort, const unsigned int aCount = 16);
     KGPlanarArcSegment(const double& anX1, const double& aY1, const double& anX2, const double& aY2,
                        const double& aRadius, const bool& isRight, const bool& isShort, const unsigned int aCount = 16);
@@ -26,10 +26,10 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
     void CopyFrom(const KGPlanarArcSegment& aCopy);
 
   public:
-    void Start(const KTwoVector& aStart);
+    void Start(const katrin::KTwoVector& aStart);
     void X1(const double& aValue);
     void Y1(const double& aValue);
-    void End(const KTwoVector& anEnd);
+    void End(const katrin::KTwoVector& anEnd);
     void X2(const double& aValue);
     void Y2(const double& aValue);
     void Radius(const double& aValue);
@@ -37,10 +37,10 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
     void Short(const bool& aValue);
     void MeshCount(const unsigned int& aCount);
 
-    const KTwoVector& Start() const override;
+    const katrin::KTwoVector& Start() const override;
     const double& X1() const;
     const double& Y1() const;
-    const KTwoVector& End() const override;
+    const katrin::KTwoVector& End() const override;
     const double& X2() const;
     const double& Y2() const;
     const double& Radius() const;
@@ -50,20 +50,20 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
 
     const double& Length() const override;
     const double& Angle() const;
-    const KTwoVector& Centroid() const override;
-    const KTwoVector& Origin() const;
-    const KTwoVector& XUnit() const;
-    const KTwoVector& YUnit() const;
+    const katrin::KTwoVector& Centroid() const override;
+    const katrin::KTwoVector& Origin() const;
+    const katrin::KTwoVector& XUnit() const;
+    const katrin::KTwoVector& YUnit() const;
 
   public:
-    KTwoVector At(const double& aLength) const override;
-    KTwoVector Point(const KTwoVector& aQuery) const override;
-    KTwoVector Normal(const KTwoVector& aQuery) const override;
-    bool Above(const KTwoVector& aQuery) const override;
+    katrin::KTwoVector At(const double& aLength) const override;
+    katrin::KTwoVector Point(const katrin::KTwoVector& aQuery) const override;
+    katrin::KTwoVector Normal(const katrin::KTwoVector& aQuery) const override;
+    bool Above(const katrin::KTwoVector& aQuery) const override;
 
   private:
-    KTwoVector fStart;
-    KTwoVector fEnd;
+    katrin::KTwoVector fStart;
+    katrin::KTwoVector fEnd;
     double fRadius;
     bool fRight;
     bool fShort;
@@ -71,10 +71,10 @@ class KGPlanarArcSegment : public KGPlanarOpenPath
 
     mutable double fLength;
     mutable double fAngle;
-    mutable KTwoVector fCentroid;
-    mutable KTwoVector fOrigin;
-    mutable KTwoVector fXUnit;
-    mutable KTwoVector fYUnit;
+    mutable katrin::KTwoVector fCentroid;
+    mutable katrin::KTwoVector fOrigin;
+    mutable katrin::KTwoVector fXUnit;
+    mutable katrin::KTwoVector fYUnit;
 
     void Initialize() const;
     mutable bool fInitialized;

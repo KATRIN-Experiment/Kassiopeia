@@ -9,10 +9,18 @@
 
 using namespace std;
 using namespace katrin;
-using KGeoBag::KTwoVector;
-using KGeoBag::KThreeVector;
-using KGeoBag::KTwoMatrix;
-using KGeoBag::KThreeMatrix;
+
+#include "KThreeMatrix.hh"
+using katrin::KThreeMatrix;
+
+#include "KThreeVector.hh"
+using katrin::KThreeVector;
+
+#include "KTwoMatrix.hh"
+using katrin::KTwoMatrix;
+
+#include "KTwoVector.hh"
+using katrin::KTwoVector;
 
 namespace Kassiopeia
 {

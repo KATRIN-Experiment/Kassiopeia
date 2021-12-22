@@ -20,7 +20,7 @@
 #include <sstream>
 
 using namespace KEMField;
-
+using katrin::KThreeVector;
 
 int main()
 {

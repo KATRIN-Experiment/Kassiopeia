@@ -29,16 +29,16 @@ void KGComplexMesher::AddElement(KGMeshTriangle* t, bool checkNormals)
 
     //get the nearest normal to the centroid
     if (fCurrentSurface != nullptr && checkNormals) {
-        const KThreeVector& p0 = t->GetP0();
-        const KThreeVector& p1 = t->GetP1();
-        const KThreeVector& p2 = t->GetP2();
+        const katrin::KThreeVector& p0 = t->GetP0();
+        const katrin::KThreeVector& p1 = t->GetP1();
+        const katrin::KThreeVector& p2 = t->GetP2();
 
         //compute the centroid
-        KThreeVector centroid = (p0 + p1 + p2) / 3.0;
-        KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        katrin::KThreeVector centroid = (p0 + p1 + p2) / 3.0;
+        katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
 
         //compute the normal vector of mesh triangle
-        KThreeVector triangle_normal = t->GetN3();
+        katrin::KThreeVector triangle_normal = t->GetN3();
         //now determine if the triangle normal points in approximately same direction
         //as the 'above' surface normal
         if (triangle_normal.Dot(surface_normal) < -1e-9) {
@@ -62,17 +62,17 @@ void KGComplexMesher::AddElement(KGMeshRectangle* r, bool checkNormals)
 
     //get the nearest normal to the centroid
     if (fCurrentSurface != nullptr && checkNormals) {
-        const KThreeVector& p0 = r->GetP0();
-        const KThreeVector& p1 = r->GetP1();
-        const KThreeVector& p2 = r->GetP2();
-        const KThreeVector& p3 = r->GetP3();
+        const katrin::KThreeVector& p0 = r->GetP0();
+        const katrin::KThreeVector& p1 = r->GetP1();
+        const katrin::KThreeVector& p2 = r->GetP2();
+        const katrin::KThreeVector& p3 = r->GetP3();
 
         //compute the centroid
-        KThreeVector centroid = (p0 + p1 + p2 + p3) / 4.0;
-        KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        katrin::KThreeVector centroid = (p0 + p1 + p2 + p3) / 4.0;
+        katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
 
         //compute the normal vector of mesh triangle
-        KThreeVector rectangle_normal = r->GetN3();
+        katrin::KThreeVector rectangle_normal = r->GetN3();
         //now determine if the rectangle normal points in approximately same direction
         //as the 'above' surface normal
         if (rectangle_normal.Dot(surface_normal) < -1e-9) {
@@ -80,8 +80,8 @@ void KGComplexMesher::AddElement(KGMeshRectangle* r, bool checkNormals)
             //side vectors for this rectangle
             double a = r->GetA();
             double b = r->GetB();
-            KThreeVector n1 = r->GetN1();
-            KThreeVector n2 = r->GetN2();
+            katrin::KThreeVector n1 = r->GetN1();
+            katrin::KThreeVector n2 = r->GetN2();
             *r = KGMeshRectangle(b, a, p0, n2, n1);
         }
     }

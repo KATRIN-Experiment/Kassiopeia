@@ -11,7 +11,7 @@ namespace katrin
 template<> KSTrajTermGravityBuilder::~KComplexElement() = default;
 
 STATICINT sKSTrajTermGravityStructure = KSTrajTermGravityBuilder::Attribute<std::string>("name") +
-                                        KSTrajTermGravityBuilder::Attribute<KGeoBag::KThreeVector>("gravity");
+                                        KSTrajTermGravityBuilder::Attribute<KThreeVector>("gravity");
 
 STATICINT sToolboxKSTrajTermGravity = KSRootBuilder::ComplexElement<KSTrajTermGravity>("kstraj_term_gravity");
 
