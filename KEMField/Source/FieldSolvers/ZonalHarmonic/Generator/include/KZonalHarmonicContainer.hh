@@ -262,7 +262,7 @@ template<class Basis> void KZonalHarmonicContainer<Basis>::ConstructSubContainer
     }
 
     // split according to bifurcation
-    if (level < (int) (fParameters->GetNBifurcations())) {
+    if (level < fParameters->GetNBifurcations()) {
         std::vector<typename ZonalHarmonicType::Container*> subcontainers;
         coefficientGenerator.BifurcateElements(subcontainers);
 

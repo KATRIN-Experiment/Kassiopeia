@@ -90,7 +90,7 @@ void KGaussSeidelChargeDensitySolver::InitializeCore(KSurfaceContainer& containe
         KBoundaryIntegralVector<KElectrostaticBoundaryIntegrator> b(container, integrator);
 
 #ifdef KEMFIELD_USE_MPI
-        KGaussSeidel_MPI<KElectrostaticBoundaryIntegrator::ValueType> gaussSeidel;
+        KGaussSeidel<KElectrostaticBoundaryIntegrator::ValueType, KGaussSeidel_MPI> gaussSeidel;
 #else
         KGaussSeidel<KElectrostaticBoundaryIntegrator::ValueType> gaussSeidel;
 #endif

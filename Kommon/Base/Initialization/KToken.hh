@@ -90,19 +90,6 @@ template<> inline unsigned int KToken::GetValue<unsigned int>() const
     try {
         return KBaseStringUtils::Convert<unsigned int>(fValue);
     } catch (KException &err) {
-        if(fValue == "-1") {
-            KLOGGER("kommon.ktoken");
-            
-            KWARN("While processing path <" << fPath << "> in file <" << fFile 
-            << "> at line <" << fLine << "> at column <" << fColumn << ">: "
-            << "<-1> is interpreted as <unsigned int>, resulting in " << (UINT_MAX - 1));
-            return UINT_MAX - 1;
-                // Needed for number_of_bifurcations value
-                // It is not clear whether such a large bifurcation value actually makes sense,
-                // see https://nuserv.uni-muenster.de:8443/katrin-git/kasper/-/merge_requests/605#note_9609 .
-                // But since it is used very frequently, this was added again for compatibility with
-                // current configuration files.
-        }
         throw KException() << "Unable to process path <" << fPath << "> in file <" << fFile 
                            << "> at line <" << fLine << "> at column <" << fColumn << ">: "
                            << err.what();

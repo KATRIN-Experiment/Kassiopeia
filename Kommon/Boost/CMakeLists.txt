@@ -37,7 +37,6 @@ target_link_libraries(KommonBoost
         KommonBase
         Boost::boost
         Boost::system
-    PRIVATE
         Boost::filesystem
 )
 

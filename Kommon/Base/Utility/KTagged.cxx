@@ -6,6 +6,7 @@ namespace katrin
 KTagged::KTagged() : KNamed(), fTags(sOpenTags) {}
 KTagged::KTagged(const KTagged&) = default;
 KTagged::~KTagged() = default;
+KTagged& KTagged::operator=(const KTagged&) = default;
 
 bool KTagged::Empty() const
 {
@@ -49,6 +50,8 @@ bool KTagged::HasAllTags(const KTagSet& aTagSet) const
 }
 bool KTagged::HasTagsFrom(const KTagged* aTagged) const
 {
+    if (! aTagged)
+        return false;
     return HasTags(aTagged->GetTags());
 }
 
@@ -69,6 +72,8 @@ void KTagged::SetTags(const KTagSet& aTagSet)
 }
 void KTagged::SetTagsFrom(const KTagged* aTagged)
 {
+    if (! aTagged)
+        return;
     return SetTags(aTagged->fTags);
 }
 
@@ -87,6 +92,8 @@ void KTagged::AddTags(const KTagSet& aTagSet)
 }
 void KTagged::AddTagsFrom(const KTagged* aTagSet)
 {
+    if (! aTagSet)
+        return;
     return AddTags(aTagSet->fTags);
 }
 
@@ -113,6 +120,8 @@ void KTagged::RemoveTags(const KTagSet& aTagSet)
 }
 void KTagged::RemoveTagsFrom(const KTagged* aTagSet)
 {
+    if (! aTagSet)
+        return;
     return RemoveTags(aTagSet->fTags);
 }
 

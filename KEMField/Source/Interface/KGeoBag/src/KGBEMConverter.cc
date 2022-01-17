@@ -245,7 +245,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshTriangle != nullptr) && (tMeshTriangle->Area() > fMinimumArea) &&
                 (tMeshTriangle->Aspect() < fMaximumAspectRatio)) {
                 tTriangle = new Triangle();
-                tTriangle->SetName(tTriangle->Name() + "<" + fCurrentElement->GetName() + ">");
+                tTriangle->SetName(tTriangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tTriangle->SetTagsFrom(fCurrentElement);
                 tTriangle->SetValues(LocalToInternal(tMeshTriangle->GetP0()),
                                      LocalToInternal(tMeshTriangle->GetP1()),
@@ -258,7 +258,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshRectangle != nullptr) && (tMeshRectangle->Area() > fMinimumArea) &&
                 (tMeshRectangle->Aspect() < fMaximumAspectRatio)) {
                 tRectangle = new Rectangle();
-                tRectangle->SetName(tRectangle->Name() + "<" + fCurrentElement->GetName() + ">");
+                tRectangle->SetName(tRectangle->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tRectangle->SetTagsFrom(fCurrentElement);
                 tRectangle->SetValues(LocalToInternal(tMeshRectangle->GetP0()),
                                       LocalToInternal(tMeshRectangle->GetP1()),
@@ -272,7 +272,7 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             if ((tMeshWire != nullptr) && (tMeshWire->Area() > fMinimumArea) &&
                 (tMeshWire->Aspect() < fMaximumAspectRatio)) {
                 tLineSegment = new LineSegment();
-                tLineSegment->SetName(tLineSegment->Name() + "<" + fCurrentElement->GetName() + ">");
+                tLineSegment->SetName(tLineSegment->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tLineSegment->SetTagsFrom(fCurrentElement);
                 tLineSegment->SetValues(LocalToInternal(tMeshWire->GetP0()),
                                         LocalToInternal(tMeshWire->GetP1()),
@@ -296,6 +296,9 @@ bool KGBEMMeshConverter::Add(KGMeshData* aData)
             kem_cout(eInfo) << "could not add " << tIgnored << " mesh elements that were not triangles, rectangles or wires"
                        << eom;
     }
+
+    // clear current element
+    fCurrentElement = nullptr;
 
     return true;
 }
@@ -351,7 +354,7 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             tAxialMeshLoop = dynamic_cast<KGAxialMeshLoop*>(tAxialMeshElement);
             if ((tAxialMeshLoop != nullptr) && (tAxialMeshLoop->Area() > fMinimumArea)) {
                 tConicSection = new ConicSection();
-                tConicSection->SetName(tConicSection->Name() + "<" + fCurrentElement->GetName() + ">");
+                tConicSection->SetName(tConicSection->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tConicSection->SetTagsFrom(fCurrentElement);
                 tConicSection->SetValues(LocalToInternal(tAxialMeshLoop->GetP0()),
                                          LocalToInternal(tAxialMeshLoop->GetP1()));
@@ -362,7 +365,7 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
             tAxialMeshRing = dynamic_cast<KGAxialMeshRing*>(tAxialMeshElement);
             if ((tAxialMeshRing != nullptr) && (tAxialMeshRing->Area() > fMinimumArea)) {
                 tRing = new Ring();
-                tRing->SetName(tRing->Name() + "<" + fCurrentElement->GetName() + ">");
+                tRing->SetName(tRing->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tRing->SetTagsFrom(fCurrentElement);
                 tRing->SetValues(LocalToInternal(tAxialMeshRing->GetP0()));
                 fRings.push_back(tRing);
@@ -378,6 +381,9 @@ bool KGBEMAxialMeshConverter::Add(KGAxialMeshData* aData)
 
         //cout << "...added <" << fConicSections.size() + fRings.size() << "> components." << endl;
     }
+
+    // clear current element
+    fCurrentElement = nullptr;
 
     return true;
 }
@@ -439,7 +445,7 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
             if ((tMeshTriangle != nullptr) && (tMeshTriangle->Area() > fMinimumArea) &&
                 (tMeshTriangle->Aspect() < fMaximumAspectRatio)) {
                 tTriangles = new SymmetricTriangle();
-                tTriangles->SetName(tTriangles->Name() + "<" + fCurrentElement->GetName() + ">");
+                tTriangles->SetName(tTriangles->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tTriangles->SetTagsFrom(fCurrentElement);
                 tTriangles->NewElement()->SetValues(LocalToInternal(tMeshTriangle->Element().GetP0()),
                                                     LocalToInternal(tMeshTriangle->Element().GetP1()),
@@ -453,7 +459,7 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
             if ((tMeshRectangle != nullptr) && (tMeshRectangle->Area() > fMinimumArea) &&
                 (tMeshRectangle->Aspect() < fMaximumAspectRatio)) {
                 tRectangles = new SymmetricRectangle();
-                tRectangles->SetName(tRectangles->Name() + "<" + fCurrentElement->GetName() + ">");
+                tRectangles->SetName(tRectangles->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tRectangles->SetTagsFrom(fCurrentElement);
                 tRectangles->NewElement()->SetValues(LocalToInternal(tMeshRectangle->Element().GetP0()),
                                                      LocalToInternal(tMeshRectangle->Element().GetP1()),
@@ -468,7 +474,7 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
             if ((tMeshWire != nullptr) && (tMeshWire->Area() > fMinimumArea) &&
                 (tMeshWire->Aspect() < fMaximumAspectRatio)) {
                 tLineSegments = new SymmetricLineSegment();
-                tLineSegments->SetName(tLineSegments->Name() + "<" + fCurrentElement->GetName() + ">");
+                tLineSegments->SetName(tLineSegments->Name() + (fCurrentElement ? ("<" + fCurrentElement->GetName() + ">") : ""));
                 tLineSegments->SetTagsFrom(fCurrentElement);
                 tLineSegments->NewElement()->SetValues(LocalToInternal(tMeshWire->Element().GetP0()),
                                                        LocalToInternal(tMeshWire->Element().GetP1()),
@@ -486,6 +492,9 @@ bool KGBEMDiscreteRotationalMeshConverter::Add(KGDiscreteRotationalMeshData* aDa
             kem_cout(eInfo) << "could not add " << tIgnored
                        << " discrete-rotational mesh elements that were not triangles, rectangles or wires" << eom;
     }
+
+    // clear current element
+    fCurrentElement = nullptr;
 
     return true;
 }
