@@ -145,30 +145,33 @@ class Node:
         print(f'{indent}</{self.xml_name}>')
 
     def makeTableRST(self, level=0, stack=[], with_sections=False):
-        colWidth = 75
-        headings = ['-', '~', '^']
+        numCols = 6
+        colWidth = 100
+        colHeaders = ('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types')
+        headSep = ['-', '~', '^']
         if with_sections:
             if self.children or self.attributes:
-                if level < len(headings):
-                    heading = (colWidth*headings[level])
+                if level < len(headSep):
+                    print()
+                    print(f'.. _{self.name.lower()}:')
                     print()
                     print(f'{self.name}')
-                    print(heading)
+                    print(colWidth*headSep[level])
 
                 print()
-                print(('+%s'%(colWidth*'-'))*6 + '+')
-                print((('|%%-%ds'%colWidth)*6)%('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types') + '|')
-                print(('+%s'%(colWidth*'='))*6 + '+')
+                print(('+%s'%(colWidth*'-'))*numCols + '+')
+                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
+                print(('+%s'%(colWidth*'='))*numCols + '+')
 
         else:
             if level == 0:
                 print()
-                print(('+%s'%(colWidth*'-'))*6 + '+')
-                print((('|%%-%ds'%colWidth)*6)%('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types') + '|')
-                print(('+%s'%(colWidth*'='))*6 + '+')
+                print(('+%s'%(colWidth*'-'))*numCols + '+')
+                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
+                print(('+%s'%(colWidth*'='))*numCols + '+')
 
         self_node = f'``{self.xml_name}``' if self.xml_name else "—"
-        source_file = f'``{os.path.basename(self.source_file)}``' if self.source_file else "—"
+        source_file = f'*{os.path.basename(self.source_file)}*' if self.source_file else "—"
         sorted_children = sorted(self.children) if self.children else []
         sorted_attributes = sorted(self.attributes) if self.attributes else []
         for i in range(max(len(sorted_children), len(sorted_attributes))):
@@ -177,7 +180,7 @@ class Node:
             elif i < len(sorted_children):
                 node = sorted_children[i]
                 child_nodes = f'- ``{node.xml_name}``'
-                child_types = f'- ``{node.name}``'
+                child_types = f'- :ref:`{node.name} <{node.name.lower()}>`'
             else:
                 child_nodes = child_types = ""
             if not sorted_attributes and i == 0:
@@ -185,12 +188,12 @@ class Node:
             elif i < len(sorted_attributes):
                 attr = sorted_attributes[i]
                 attr_nodes = f'- ``{attr.xml_name}``'
-                attr_types = f'- ``{attr.name}``'
+                attr_types = f'- *{attr.name}*'
             else:
                 attr_nodes = attr_types = ""
-            print((('|%%-%ds'%colWidth)*6)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
+            print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
             self_node = source_file = ""
-        print(('+%s'%(colWidth*'-'))*6 + '+')
+        print(('+%s'%(colWidth*'-'))*numCols + '+')
 
         if self.children:
             for node in sorted_children:
@@ -199,7 +202,9 @@ class Node:
                     node.makeTableRST(level+1, stack, with_sections=with_sections)
 
     def makeTableMD(self, level=0, stack=[], with_sections=False, with_examples=False):
-        colWidth = 75
+        numCols = 6
+        colWidth = 80
+        colHeaders = ('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types')
         if with_sections:
             if self.children or self.attributes:
                 heading = (level+1)*'#'
@@ -213,13 +218,13 @@ class Node:
                     print("```")
 
                 print()
-                print((('|%%-%ds'%colWidth)*6)%('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types') + '|')
-                print(('|%s'%(colWidth*'-'))*6 + '|')
+                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
+                print(('|%s'%(colWidth*'-'))*numCols + '|')
         else:
             if level == 0:
                 print()
-                print((('|%%-%ds'%colWidth)*6)%('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types') + '|')
-                print(('|%s'%(colWidth*'-'))*6 + '|')
+                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
+                print(('|%s'%(colWidth*'-'))*numCols + '|')
 
         #print('| name | children | attributes |')
 
@@ -228,16 +233,16 @@ class Node:
         if self.children:
             sorted_children = sorted(self.children)
             child_nodes = '<br>'.join([f'[`{node.xml_name}`](#{node.name.lower()})' for node in sorted_children])
-            child_types = '<br>'.join([f'[*`{node.name}`*](#{node.name.lower()})' for node in sorted_children])
+            child_types = '<br>'.join([f'*`{node.name}`*' for node in sorted_children])
         else:
             child_nodes = child_types = "—"
         if self.attributes:
             sorted_attributes = sorted(self.attributes)
             attr_nodes = '<br>'.join([f'`{attr.xml_name}`' for attr in sorted_attributes])
-            attr_types = '<br>'.join([f'`{attr.name}`' for attr in sorted_attributes])
+            attr_types = '<br>'.join([f'*`{attr.name}`*' for attr in sorted_attributes])
         else:
             attr_nodes = attr_types = "—"
-        print((('|%%-%ds'%colWidth)*6)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
+        print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
 
         if self.children:
             for node in sorted_children:
