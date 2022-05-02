@@ -1,0 +1,1 @@
+../../kassiopeia.git/Documentation/Bindings/bindings_full.rst

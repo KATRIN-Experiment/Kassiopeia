@@ -24,7 +24,7 @@ Contents:
     Understanding Simulation Output <output.rst>
     Additional Simulation Tools <tools.rst>
     Visualization Techniques <visualization.rst>
-    XML Bindings <bindings_full.rst>
+    XML Bindings <bindings.rst>
     License <license.rst>
     Authors <authors.rst>
 
