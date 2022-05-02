@@ -148,7 +148,7 @@ class KGSimpleMesher : virtual public KGMesherBase
 
   protected:
     void Triangle(const katrin::KThreeVector& aFirst, const katrin::KThreeVector& aSecond,
-                  const katrin::KThreeVector& aThird);
+                  const katrin::KThreeVector& aThird, bool checkNormals = true);
 };
 
 }  // namespace KGeoBag

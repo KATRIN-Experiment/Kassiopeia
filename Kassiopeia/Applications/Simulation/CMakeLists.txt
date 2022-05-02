@@ -13,7 +13,8 @@ if (Kassiopeia_ENABLE_APP)
     if( NOT BUILD_KSC )
         foreach( BASENAME ${APPLICATIONS_MAIN_BASENAMES} )
             add_executable( ${BASENAME} ${APPLICATIONS_MAIN_PATH}/${BASENAME}.cxx )
-            target_link_libraries( ${BASENAME} PUBLIC KassiopeiaBindings )
+            target_link_libraries( ${BASENAME}
+                KassiopeiaBindings KGeoBagBindings KEMFieldBindings )
         endforeach( BASENAME )
 
         kasper_install_executables( ${APPLICATIONS_MAIN_BASENAMES} )

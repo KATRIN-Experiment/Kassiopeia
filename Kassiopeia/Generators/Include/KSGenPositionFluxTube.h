@@ -21,6 +21,11 @@ class KSGenPositionFluxTube : public KSComponentTemplate<KSGenPositionFluxTube, 
     void Dice(KSParticleQueue* aPrimaryList) override;
 
   public:
+    void SetOrigin(const katrin::KThreeVector& anOrigin);
+    void SetXAxis(const katrin::KThreeVector& anXAxis);
+    void SetYAxis(const katrin::KThreeVector& anYAxis);
+    void SetZAxis(const katrin::KThreeVector& anZAxis);
+
     void SetPhiValue(KSGenValue* aPhiValue);
     void ClearPhiValue(KSGenValue* aPhiValue);
 
@@ -35,14 +40,17 @@ class KSGenPositionFluxTube : public KSComponentTemplate<KSGenPositionFluxTube, 
 
 
   private:
+    katrin::KThreeVector fOrigin;
+    katrin::KThreeVector fXAxis;
+    katrin::KThreeVector fYAxis;
+    katrin::KThreeVector fZAxis;
+
     KSGenValue* fPhiValue;
     KSGenValue* fZValue;
     std::vector<KSMagneticField*> fMagneticFields;
-    ;
+
     K_SET(double, Flux);
-    ;
     K_SET(int, NIntegrationSteps);
-    ;
     K_SET(bool, OnlySurface);
 
   protected:

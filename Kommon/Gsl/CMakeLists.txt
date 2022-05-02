@@ -30,7 +30,7 @@ target_include_directories(KommonGsl PUBLIC $<INSTALL_INTERFACE:include>)
 
 target_compile_definitions(KommonGsl PUBLIC KASPER_USE_GSL)
 target_link_libraries(KommonGsl
-    PRIVATE
+    PUBLIC
         KommonBase
         GSL::gsl
 )
@@ -40,6 +40,11 @@ if( KASPER_USE_BOOST )
         PRIVATE
             KommonBoost
     )
+
+    # see: https://github.com/boostorg/stacktrace/issues/88
+    if(UNIX OR APPLE OR MINGW)
+        target_compile_definitions(KommonGsl PRIVATE _GNU_SOURCE)
+    endif()
 endif( KASPER_USE_BOOST )
 
 kasper_install_libraries( KommonGsl )

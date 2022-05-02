@@ -1,5 +1,10 @@
 #include "KSGenValueFormula.h"
 
+#include "KRandomRootInterface.h"
+#include "KSGeneratorsMessage.h"
+
+#include "RVersion.h"
+
 namespace Kassiopeia
 {
 
@@ -21,7 +26,13 @@ void KSGenValueFormula::DiceValue(std::vector<double>& aDicedValues)
 {
     double tValue;
 
+#if ROOT_VERSION_CODE < ROOT_VERSION(6,24,0)
+#pragma message "Using ROOT's standard RNG (TRandom3) instead of the common Kasper interface (KRandom)"
     tValue = fValueFunction->GetRandom(fValueMin, fValueMax);
+#else
+    auto rng = katrin::Kommon::KRandomRootInterface<katrin::KRandom::engine_type>();
+    tValue = fValueFunction->GetRandom(fValueMin, fValueMax, &rng);
+#endif
     aDicedValues.push_back(tValue);
 
     return;
@@ -29,6 +40,9 @@ void KSGenValueFormula::DiceValue(std::vector<double>& aDicedValues)
 
 void KSGenValueFormula::InitializeComponent()
 {
+#if ROOT_VERSION_CODE < ROOT_VERSION(6,24,0)
+    genmsg(eWarning) << "KSGenValueFormula will produce random numbers independent of the user-specified seed!" << eom;
+#endif
     fValueFunction = new TF1("function", fValueFormula.c_str(), fValueMin, fValueMax);
     return;
 }

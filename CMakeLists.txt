@@ -104,8 +104,10 @@ endif()
 add_compile_options( -Wall -Wextra -Werror )
 
 # Only link in libraries that we actually need (but not for executables since it makes things slow)
-set(_target_type "$<TARGET_PROPERTY:TYPE>")
-add_link_options( $<IF:$<STREQUAL:"${_target_type}","SHARED_LIBRARY">,LINKER:--as-needed,LINKER:--no-as-needed> )
+if( NOT APPLE )
+    set(_target_type "$<TARGET_PROPERTY:TYPE>")
+    add_link_options( $<IF:$<STREQUAL:"${_target_type}","SHARED_LIBRARY">,LINKER:--as-needed,LINKER:--no-as-needed> )
+endif()
 
 # Enable some advanced options depending on build type
 if (CMAKE_BUILD_TYPE MATCHES Rel)
@@ -195,6 +197,10 @@ option( KASPER_USE_GSL "Build GSL dependent modules" ${GSL_FOUND} )
 
 if(NOT DEFINED KASPER_USE_VTK)
     find_package(VTK QUIET COMPONENTS vtkCommonCore)
+    find_package(X11 QUIET)
+    find_package(GLEW QUIET)
+    find_package(Freetype QUIET)
+    find_package(JsonCpp QUIET)
     if(VTK_FOUND)
         message("VTK was found and enabled automatically. Set KASPER_USE_VTK=OFF to change this.")
     endif()
@@ -304,16 +310,6 @@ message(STATUS
     "   or `${CMAKE_MAKE_PROGRAM_NAME} doc` to generate the documentation.\n")
 
 # Install common project files
-
-configure_file( KasperVersion.h.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.h DESTINATION ${INCLUDE_INSTALL_DIR} )
-
-configure_file( KasperVersion.json.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.json DESTINATION ${CONFIG_INSTALL_DIR} )
-
-configure_file( KasperVersion.xml.in ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml @ONLY )
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/KasperVersion.xml DESTINATION ${CONFIG_INSTALL_DIR} )
-
 configure_file( kasperenv.sh.in ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh @ONLY )
 configure_file( create_kasper_user_directory.sh.in ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh @ONLY )
 install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/kasperenv.sh ${CMAKE_CURRENT_BINARY_DIR}/create_kasper_user_directory.sh DESTINATION ${BIN_INSTALL_DIR} )

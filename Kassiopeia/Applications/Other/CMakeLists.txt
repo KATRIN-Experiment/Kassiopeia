@@ -16,7 +16,7 @@ if (Kassiopeia_ENABLE_APP)
     endif()
 
     set( APPLICATIONS_OTHER_LIBRARIES
-        KassiopeiaBindings
+        KassiopeiaBindings KGeoBagBindings KEMFieldBindings
     )
 
     if( KASPER_USE_BOOST )

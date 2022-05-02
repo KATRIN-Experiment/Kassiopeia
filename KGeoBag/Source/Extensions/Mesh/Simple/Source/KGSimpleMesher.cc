@@ -832,7 +832,7 @@ void KGSimpleMesher::TorusMeshToTriangles(const TorusMesh& aMesh)
     meshmsg_debug("tesselated torus mesh into <" << fCurrentElements->size() << "> triangles" << eom);
 }
 
-void KGSimpleMesher::Triangle(const KThreeVector& aFirst, const KThreeVector& aSecond, const KThreeVector& aThird)
+void KGSimpleMesher::Triangle(const KThreeVector& aFirst, const KThreeVector& aSecond, const KThreeVector& aThird, bool checkNormals)
 {
     //J.B. 3/31/2015
     //need to check that the normal vector for this mesh triangle points
@@ -840,14 +840,19 @@ void KGSimpleMesher::Triangle(const KThreeVector& aFirst, const KThreeVector& aS
     //surface that we are meshing, this condition is important for
     //the boundary element solver when Neumann boundary conditions are encountered
 
+    //J.B. 2/2/2022
+    //changed definition so that normals always face away from the origin,
+    //this fixes inconsistency issues with spherical and other rotated
+    //objects and should on the other hand not change overall behavior.
+
     bool swap_points = false;
 
     //get the nearest normal to the centroid
-    if (fCurrentSurface != nullptr) {
+    if (fCurrentSurface != nullptr && checkNormals) {
         //compute the centroid
         KThreeVector centroid = (aFirst + aSecond + aThird) / 3.0;
-
-        KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        //KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        katrin::KThreeVector surface_normal = (centroid - fCurrentSurface->GetOrigin()).Unit();
 
         //create the standard mesh triangle
         KGMeshTriangle t1(aFirst, aSecond, aThird);
@@ -857,7 +862,6 @@ void KGSimpleMesher::Triangle(const KThreeVector& aFirst, const KThreeVector& aS
 
         //now determine if the triangle normal points in approximately same direction
         //as the 'above' surface normal
-
         if (triangle_normal.Dot(surface_normal) < -1e-9) {
             //they point in opposite directions, so flip the ordering of the
             //second and third points

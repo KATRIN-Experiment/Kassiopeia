@@ -114,7 +114,6 @@ target_include_directories(KEMFieldBindings PUBLIC $<INSTALL_INTERFACE:include>)
 target_link_libraries (KEMFieldBindings
     PUBLIC
         KommonCore
-        KGeoBagBindings
         KGeoBagInterface
         KEMCore
         KEMFieldElectricBoundaryIntegrators
@@ -123,6 +122,8 @@ target_link_libraries (KEMFieldBindings
         KEMElectricFieldSolvers
         KEMMagneticFieldSolvers
         KEMVTKPart2
+    PRIVATE
+        KGeoBagBindings
 )
 
 kasper_install_headers (${KEMFIELD_BINDINGS_HEADERFILES})

@@ -2,10 +2,10 @@
 set(KOMMON_BASE_HEADER_FILES
     File/KFileMessage.h
     File/KFile.h
-    
+
     Initialization/KInitializationMessage.hh
     Initialization/KGlobals.hh
-    
+
     Initialization/KToken.hh
     Initialization/KTypedTokens.hh
     Initialization/KProcessor.hh
@@ -17,11 +17,11 @@ set(KOMMON_BASE_HEADER_FILES
     Initialization/KSimpleElement.hh
     Initialization/KComplexElement.hh
     Initialization/KElementProcessor.hh
-    
+
     Initialization/KApplicationRunner.h
     Initialization/KRoot.h
     Initialization/KToolbox.h
-    
+
     Typelists/KTypeNull.h
     Typelists/KTypeList.h
     Typelists/KTypeChain.h
@@ -67,6 +67,7 @@ set(KOMMON_BASE_HEADER_FILES
     Utility/SimplyPrintableCollection.h
     Utility/KVariant.h
     Utility/KBaseStringUtils.h
+    Utility/KasperVersion.h
 
     Logging/KLogger.h
     Logging/KMessage.h
@@ -76,22 +77,22 @@ set(KOMMON_BASE_HEADER_FILES
 set(KOMMON_BASE_SOURCE_FILES
     File/KFileMessage.cxx
     File/KFile.cxx
-    
+
     Initialization/KInitializationMessage.cc
     Initialization/KGlobals.cc
-    
+
     Initialization/KToken.cc
     Initialization/KProcessor.cc
-    
+
     Initialization/KContainer.cc
     Initialization/KAttributeBase.cc
     Initialization/KElementBase.cc
     Initialization/KElementProcessor.cc
-    
+
     Initialization/KApplicationRunner.cxx
     Initialization/KRoot.cxx
     Initialization/KToolbox.cxx
-    
+
     Units/KDimensions.cxx
     Units/KUnits.cxx
 
@@ -106,7 +107,7 @@ set(KOMMON_BASE_SOURCE_FILES
     Utility/Printable.cxx
     Utility/KVariant.cxx
     Utility/KBaseStringUtils.cxx
-    
+
     Logging/KLogger.cxx
     Logging/KMessage.cxx
 )
@@ -150,14 +151,24 @@ mark_as_advanced( CLEAR KLogger_THROW_EXCEPTIONS )
 # kasper_append_paths( KOMMON_HEADER_FILES ${KOMMON_BASE_HEADER_FILES} )
 # kasper_append_paths( KOMMON_SOURCE_FILES ${KOMMON_BASE_SOURCE_FILES} ${KOMMON_BASE_EXTRA_FILES})
 
+# generate version info files
+configure_file( Utility/KasperVersion.json.in ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.json @ONLY )
+configure_file( Utility/KasperVersion.xml.in ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.xml @ONLY )
+configure_file( Utility/KasperVersion.cxx.in ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.cxx @ONLY )
+
 add_library( KommonBase SHARED
-    ${KOMMON_BASE_SOURCE_FILES} ${KOMMON_BASE_HEADER_FILES} )
+    ${KOMMON_BASE_SOURCE_FILES} ${KOMMON_BASE_HEADER_FILES}
+    ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.cxx
+)
 
 # LOGGING
 if( Kommon_USE_Log4CXX )
+    find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS thread)
+    
     target_include_directories(KommonBase PRIVATE ${LOG4CXX_INCLUDE_DIR})
     target_link_libraries(KommonBase
         PRIVATE
+            Boost::thread # needed for CXX14, can be removed when using CXX17
             ${LOG4CXX_LIBRARY}
     )
 endif( Kommon_USE_Log4CXX )
@@ -168,7 +179,6 @@ foreach(HEADER ${KOMMON_BASE_HEADER_FILES})
     target_include_directories(KommonBase PUBLIC $<BUILD_INTERFACE:${DIRNAME}>)
 endforeach(HEADER)
 target_include_directories(KommonBase PUBLIC $<INSTALL_INTERFACE:include>)
-
 
 set( KConst_REFERENCE_EPOCH 2021 CACHE STRING "Reference epoch for physical constants defined in 'KConst.h'. Follows PDG data releases." )
 set_property(CACHE KConst_REFERENCE_EPOCH PROPERTY STRINGS 2006 2021)  # make drop-down list of allowed values
@@ -188,3 +198,7 @@ target_compile_definitions(KommonBase PUBLIC KConst_REFERENCE_EPOCH=${KConst_REF
 
 kasper_install_libraries( KommonBase )
 kasper_install_headers( ${KOMMON_BASE_HEADER_FILES} )
+
+# install extra version header files
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.json DESTINATION ${CONFIG_INSTALL_DIR} )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/Utility/KasperVersion.xml DESTINATION ${CONFIG_INSTALL_DIR} )

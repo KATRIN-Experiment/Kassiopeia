@@ -2,6 +2,7 @@
 
 #include "KSGenDirectionSphericalCompositeBuilder.h"
 #include "KSGenDirectionSurfaceCompositeBuilder.h"
+#include "KSGenDirectionSphericalMagneticFieldBuilder.h"
 #include "KSGenEnergyBetaDecayBuilder.h"
 #include "KSGenEnergyBetaRecoilBuilder.h"
 #include "KSGenEnergyCompositeBuilder.h"
@@ -80,6 +81,7 @@ STATICINT sKSGenGeneratorCompositeStructure =
         "momentum_rectangular_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSphericalComposite>("direction_spherical_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSurfaceComposite>("direction_surface_composite") +
+    KSGenGeneratorCompositeBuilder::ComplexElement<KSGenDirectionSphericalMagneticField>("direction_spherical_magnetic_field") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenSpinComposite>("spin_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenSpinRelativeComposite>("spin_relative_composite") +
     KSGenGeneratorCompositeBuilder::ComplexElement<KSGenTimeComposite>("time_composite") +

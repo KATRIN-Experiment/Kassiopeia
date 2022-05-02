@@ -27,6 +27,11 @@ void KGComplexMesher::AddElement(KGMeshTriangle* t, bool checkNormals)
     //surface that we are meshing, this condition is important for
     //the boundary element solver when Neumann boundary conditions are encountered
 
+    //J.B. 2/2/2022
+    //changed definition so that normals always face away from the origin,
+    //this fixes inconsistency issues with spherical and other rotated
+    //objects and should on the other hand not change overall behavior.
+
     //get the nearest normal to the centroid
     if (fCurrentSurface != nullptr && checkNormals) {
         const katrin::KThreeVector& p0 = t->GetP0();
@@ -35,12 +40,14 @@ void KGComplexMesher::AddElement(KGMeshTriangle* t, bool checkNormals)
 
         //compute the centroid
         katrin::KThreeVector centroid = (p0 + p1 + p2) / 3.0;
-        katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        //katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        katrin::KThreeVector surface_normal = (centroid - fCurrentSurface->GetOrigin()).Unit();
 
         //compute the normal vector of mesh triangle
         katrin::KThreeVector triangle_normal = t->GetN3();
         //now determine if the triangle normal points in approximately same direction
         //as the 'above' surface normal
+        //if (triangle_normal.Dot(surface_normal) < -1e-9) {
         if (triangle_normal.Dot(surface_normal) < -1e-9) {
             //they point in opposite directions, so flip the ordering of the
             //second and third points for this triangle
@@ -60,6 +67,11 @@ void KGComplexMesher::AddElement(KGMeshRectangle* r, bool checkNormals)
     //surface that we are meshing, this condition is important for
     //the boundary element solver when Neumann boundary conditions are encountered
 
+    //J.B. 2/2/2022
+    //changed definition so that normals always face away from the origin,
+    //this fixes inconsistency issues with spherical and other rotated
+    //objects and should on the other hand not change overall behavior.
+
     //get the nearest normal to the centroid
     if (fCurrentSurface != nullptr && checkNormals) {
         const katrin::KThreeVector& p0 = r->GetP0();
@@ -69,7 +81,8 @@ void KGComplexMesher::AddElement(KGMeshRectangle* r, bool checkNormals)
 
         //compute the centroid
         katrin::KThreeVector centroid = (p0 + p1 + p2 + p3) / 4.0;
-        katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        //katrin::KThreeVector surface_normal = fCurrentSurface->Normal(centroid);
+        katrin::KThreeVector surface_normal = (centroid - fCurrentSurface->GetOrigin()).Unit();
 
         //compute the normal vector of mesh triangle
         katrin::KThreeVector rectangle_normal = r->GetN3();

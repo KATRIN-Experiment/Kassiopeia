@@ -3,28 +3,36 @@
 namespace KEMField
 {
 
-KElectrostaticConstantField::KElectrostaticConstantField() = default;
+KElectrostaticConstantField::KElectrostaticConstantField() :
+  fFieldVector(katrin::KThreeVector::sInvalid),
+  fLocation(katrin::KThreeVector::sZero),
+  fPotentialOffset(0)
+{};
 
-KElectrostaticConstantField::KElectrostaticConstantField(const KFieldVector& field) : fField(field) {}
+KElectrostaticConstantField::KElectrostaticConstantField(const KFieldVector& field) :
+  fFieldVector(field),
+  fLocation(katrin::KThreeVector::sZero),
+  fPotentialOffset(0)
+{}
 
 double KElectrostaticConstantField::PotentialCore(const KPosition& aSamplePoint) const
 {
     KPosition FieldPoint = aSamplePoint - fLocation;
-    return fField.Dot(FieldPoint) + fPotentialOffset;
+    return fFieldVector.Dot(FieldPoint) + fPotentialOffset;
 }
 
 KFieldVector KElectrostaticConstantField::ElectricFieldCore(const KPosition& /*aSamplePoint*/) const
 {
-    return fField;
+    return fFieldVector;
 }
 
 void KElectrostaticConstantField::SetField(const KFieldVector& field)
 {
-    fField = field;
+    fFieldVector = field;
 }
 KFieldVector KElectrostaticConstantField::GetField() const
 {
-    return fField;
+    return fFieldVector;
 }
 
 void KElectrostaticConstantField::SetLocation(const KPosition& aLocation)

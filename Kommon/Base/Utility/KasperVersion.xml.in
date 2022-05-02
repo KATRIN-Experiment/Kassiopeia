@@ -13,7 +13,4 @@
 
 <global_define name="KASPER_GIT_BRANCH" value="@KASPER_GIT_BRANCH@"/>
 <global_define name="KASPER_GIT_COMMIT" value="@KASPER_GIT_COMMIT@"/>
-<global_define name="KASPER_GIT_REVISION" value="@KASPER_GIT_REVISION@"/>
-
-<global_define name="KASPER_BUILD_TIMESTAMP" value="@KASPER_BUILD_TIMESTAMP@"/>
-<global_define name="KASPER_BUILD_SYSTEM" value="@KASPER_BUILD_SYSTEM@"/>
+<global_define name="KASPER_GIT_REVISION" value="@KASPER_GIT_BRANCH@+@KASPER_GIT_COMMIT@"/>

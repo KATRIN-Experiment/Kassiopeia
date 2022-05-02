@@ -97,7 +97,7 @@
 #include "KGBEM.hh"
 #include "KGBEMConverter.hh"
 #include "KGMesher.hh"
-#include "KGRotatedSurface.hh"
+#include "KGDiskSurface.hh"
 #endif
 
 #ifndef DEFAULT_DATA_DIR
@@ -119,8 +119,8 @@ using katrin::KThreeVector;
 void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer);
 std::vector<std::string> Tokenize(const std::string& separators, std::string input);
 
-void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
-                    double permittivity2, const double* P, double* F);
+void Field_Analytic(double potential1, double distance1, double distance2, double distance3,
+                    double permittivity1, double permittivity2, const double* P, double* F);
 
 clock_t start;
 
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
 
 
     std::string usage = "\n"
-                        "Usage: ComputeSphericalCapacitor <options>\n"
+                        "Usage: ComputePlateCapacitor <options>\n"
                         "\n"
                         "This program computes the charge densities of elements defined by input files.\n"
                         "The program takes as inputs and outputs the names of geometry files to read.\n"
@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
                         "\t -g, --generator          (use Gmsh files or KGeoBag spheres)\n"
 #endif
                         "\t -c, --cache              (cache matrix elements)\n"
-                        "\t -s, --scale              (spherical capacitor scale between 1 and 20)\n"
+                        "\t -s, --scale              (plate capacitor scale between 1 and 20)\n"
                         "\t -m, --method             (0: Gaussian elimination,\n"
                         "\t                           1: Gauss-Seidel,\n"
                         "\t                           2: Single-Element Robin Hood (default),\n"
@@ -361,9 +361,10 @@ int main(int argc, char* argv[])
     KOpenCLInterface::GetInstance()->SetGPU(KMPIInterface::GetInstance()->GetProcess() + 1);
 #endif
 
-    double radius1 = 1.;
-    double radius2 = 2.;
-    double radius3 = 3.;
+    double radius = 100.;
+    double distance1 = 1.;
+    double distance2 = 1.;
+    double distance3 = 1.;
 
     double potential1 = 1.;
 
@@ -374,7 +375,7 @@ int main(int argc, char* argv[])
 
     if (useGmshFiles) {
         std::stringstream s;
-        s << DEFAULT_DATA_DIR << "/sphericalCapacitorFiles/SphericalCapacitor_" << scale << "_triangles.dat";
+        s << DEFAULT_DATA_DIR << "/plateCapacitorFiles/PlateCapacitor_" << scale << "_triangles.dat";
         std::string fileName = s.str();
         ReadInTriangles(fileName, surfaceContainer);
         if (surfaceContainer.empty()) {
@@ -386,170 +387,69 @@ int main(int argc, char* argv[])
     else {
         double potential2 = 0.;
 
-#if 1
         // Construct the shapes
-        double p1[2], p2[2];
-        double radius = radius1;
 
-        auto* innerhemi1 = new KGRotatedObject(scale * 10, 10);
-        p1[0] = -radius;
-        p1[1] = 0.;
-        p2[0] = 0.;
-        p2[1] = radius;
-        innerhemi1->AddArc(p2, p1, radius, true);
+        auto* inner1 = new KGDiskSurface();
+        inner1->Z(distance1);
+        inner1->R(radius);
+        inner1->RadialMeshCount(10 * scale);
+        inner1->RadialMeshPower(2.);
+        inner1->AxialMeshCount(18);
 
-        auto* innerhemi2 = new KGRotatedObject(scale * 10, 10);
-        p2[0] = radius;
-        p2[1] = 0.;
-        p1[0] = 0.;
-        p1[1] = radius;
-        innerhemi2->AddArc(p1, p2, radius, false);
+        auto* middle1 = new KGDiskSurface();
+        middle1->Z(distance1+distance2);
+        middle1->R(radius);
+        middle1->RadialMeshCount(10 * scale);
+        middle1->RadialMeshPower(2.);
+        middle1->AxialMeshCount(18);
 
-        radius = radius2;
-
-        auto* middlehemi1 = new KGRotatedObject(20 * scale, 10);
-        p1[0] = -radius;
-        p1[1] = 0.;
-        p2[0] = 0.;
-        p2[1] = radius;
-        middlehemi1->AddArc(p2, p1, radius, true);
-
-        auto* middlehemi2 = new KGRotatedObject(20 * scale, 10);
-        p2[0] = radius;
-        p2[1] = 0.;
-        p1[0] = 0.;
-        p1[1] = radius;
-        middlehemi2->AddArc(p1, p2, radius, false);
-
-        radius = radius3;
-
-        auto* outerhemi1 = new KGRotatedObject(30 * scale, 10);
-        p1[0] = -radius;
-        p1[1] = 0.;
-        p2[0] = 0.;
-        p2[1] = radius;
-        outerhemi1->AddArc(p2, p1, radius, true);
-
-        auto* outerhemi2 = new KGRotatedObject(30 * scale, 10);
-        p2[0] = radius;
-        p2[1] = 0.;
-        p1[0] = 0.;
-        p1[1] = radius;
-        outerhemi2->AddArc(p1, p2, radius, false);
+        auto* outer1 = new KGDiskSurface();
+        outer1->Z(distance1+distance2+distance3);
+        outer1->R(radius);
+        outer1->RadialMeshCount(10 * scale);
+        outer1->RadialMeshPower(2.);
+        outer1->AxialMeshCount(18);
 
         // Construct shape placement
-        auto* ih1 = new KGRotatedSurface(innerhemi1);
-        auto* innerhemisphere1 = new KGSurface(ih1);
-        innerhemisphere1->SetName("innerhemisphere1");
-        innerhemisphere1->MakeExtension<KGMesh>();
-        innerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
+        auto* innerdisk1 = new KGSurface(inner1);
+        innerdisk1->SetName("innerdisk1");
+        innerdisk1->MakeExtension<KGMesh>();
+        innerdisk1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
 
-        auto* ih2 = new KGRotatedSurface(innerhemi2);
-        auto* innerhemisphere2 = new KGSurface(ih2);
-        innerhemisphere2->SetName("innerhemisphere2");
-        innerhemisphere2->MakeExtension<KGMesh>();
-        innerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
+        auto* middledisk1 = new KGSurface(middle1);
+        middledisk1->SetName("middledisk1");
+        middledisk1->MakeExtension<KGMesh>();
+        middledisk1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
+                                                                                    permittivity2);
 
-        auto* mh1 = new KGRotatedSurface(middlehemi1);
-        auto* middlehemisphere1 = new KGSurface(mh1);
-        middlehemisphere1->SetName("middlehemisphere1");
-        middlehemisphere1->MakeExtension<KGMesh>();
-        middlehemisphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
-                                                                                          permittivity2);
-
-        auto* mh2 = new KGRotatedSurface(middlehemi2);
-        auto* middlehemisphere2 = new KGSurface(mh2);
-        middlehemisphere2->SetName("middlehemisphere2");
-        middlehemisphere2->MakeExtension<KGMesh>();
-        middlehemisphere2->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
-                                                                                          permittivity2);
-
-        auto* oh1 = new KGRotatedSurface(outerhemi1);
-        auto* outerhemisphere1 = new KGSurface(oh1);
-        outerhemisphere1->SetName("outerhemisphere1");
-        outerhemisphere1->MakeExtension<KGMesh>();
-        outerhemisphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-
-        auto* oh2 = new KGRotatedSurface(outerhemi2);
-        auto* outerhemisphere2 = new KGSurface(oh2);
-        outerhemisphere2->SetName("outerhemisphere2");
-        outerhemisphere2->MakeExtension<KGMesh>();
-        outerhemisphere2->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
+        auto* outerdisk1 = new KGSurface(outer1);
+        outerdisk1->SetName("outerdisk1");
+        outerdisk1->MakeExtension<KGMesh>();
+        outerdisk1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
 
         // Mesh the elements
         auto* mesher = new KGMesher();
-        innerhemisphere1->AcceptNode(mesher);
-        innerhemisphere2->AcceptNode(mesher);
-        middlehemisphere1->AcceptNode(mesher);
-        middlehemisphere2->AcceptNode(mesher);
-        outerhemisphere1->AcceptNode(mesher);
-        outerhemisphere2->AcceptNode(mesher);
+        innerdisk1->AcceptNode(mesher);
+        middledisk1->AcceptNode(mesher);
+        outerdisk1->AcceptNode(mesher);
 
         KGBEMMeshConverter geometryConverter(surfaceContainer);
         geometryConverter.SetMinimumArea(1.e-12);
-        innerhemisphere1->AcceptNode(&geometryConverter);
-        innerhemisphere2->AcceptNode(&geometryConverter);
-        middlehemisphere1->AcceptNode(&geometryConverter);
-        middlehemisphere2->AcceptNode(&geometryConverter);
-        outerhemisphere1->AcceptNode(&geometryConverter);
-        outerhemisphere2->AcceptNode(&geometryConverter);
-#else
-        auto* inner1 = new KGRotatedCircleSurface();
-        inner1->Path()->Radius(radius1);
-        inner1->Path()->MeshCount(10 * scale);
-        inner1->RotatedMeshCount(18);
-
-        auto* middle1 = new KGRotatedCircleSurface();
-        middle1->Path()->Radius(radius2);
-        middle1->Path()->MeshCount(20 * scale);
-        middle1->RotatedMeshCount(18);
-
-        auto* outer1 = new KGRotatedCircleSurface();
-        outer1->Path()->Radius(radius3);
-        outer1->Path()->MeshCount(30 * scale);
-        outer1->RotatedMeshCount(18);
-
-        auto* innersphere1 = new KGSurface(inner1);
-        innersphere1->SetName("innersphere1");
-        innersphere1->MakeExtension<KGMesh>();
-        innersphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential1);
-
-        auto* middlesphere1 = new KGSurface(middle1);
-        middlesphere1->SetName("middlesphere1");
-        middlesphere1->MakeExtension<KGMesh>();
-        middlesphere1->MakeExtension<KGElectrostaticNeumann>()->SetNormalBoundaryFlux(permittivity1 /
-                                                                                      permittivity2);
-
-        auto* outersphere1 = new KGSurface(outer1);
-        outersphere1->SetName("outersphere1");
-        outersphere1->MakeExtension<KGMesh>();
-        outersphere1->MakeExtension<KGElectrostaticDirichlet>()->SetBoundaryValue(potential2);
-
-        // Mesh the elements
-        auto* mesher = new KGMesher();
-        innersphere1->AcceptNode(mesher);
-        middlesphere1->AcceptNode(mesher);
-        outersphere1->AcceptNode(mesher);
-
-        KGBEMMeshConverter geometryConverter(surfaceContainer);
-        geometryConverter.SetMinimumArea(1.e-12);
-        innersphere1->AcceptNode(&geometryConverter);
-        middlesphere1->AcceptNode(&geometryConverter);
-        outersphere1->AcceptNode(&geometryConverter);
-#endif
-
-        // make sure that normals are oriented correctly
-        unsigned flipCount = 0;
-        for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
-            KThreeVector centroid = (*it)->GetShape()->Centroid().Unit();
-            KThreeVector normal = (*it)->GetShape()->Normal();
-            double dotProd = normal.Dot(centroid.Unit());
-            if (dotProd < 0)
-                flipCount++;
-        }
-
-        std::cout << "model has " << flipCount << " flipped normals" << std::endl;
+        innerdisk1->AcceptNode(&geometryConverter);
+        middledisk1->AcceptNode(&geometryConverter);
+        outerdisk1->AcceptNode(&geometryConverter);
     }
+
+    // make sure that normals are oriented correctly
+    unsigned flipCount = 0;
+    for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
+        KThreeVector normal = (*it)->GetShape()->Normal();
+        double dotProd = normal.Dot(katrin::KThreeVector::sZUnit);
+        if (dotProd < 0)
+            flipCount++;
+    }
+
+    std::cout << "model has " << flipCount << " flipped normals" << std::endl;
 #endif
 
     // let's see if we can find this geometry
@@ -954,14 +854,12 @@ int main(int argc, char* argv[])
             std::cout << "Solution found in " << computationTime << " seconds." << std::endl;
             std::cout << "" << std::endl;
 
-            std::string fileName = std::string(DEFAULT_OUTPUT_DIR) + std::string("/SphericalCapacitorTimes.txt");
-
             bool newFile = true;
-            if (KEMFileInterface::GetInstance()->FileExists(fileName))
+            if (KEMFileInterface::GetInstance()->FileExists("PlateCapacitorTimes.txt"))
                 newFile = false;
 
             std::ofstream file;
-            file.open(fileName, std::ios::app);
+            file.open("PlateCapacitorTimes.txt", std::ios::app);
 
             if (newFile) {
                 file << "Processors\tMethod\t";
@@ -987,57 +885,56 @@ int main(int argc, char* argv[])
         double field_numeric[4];
         double field_analytic[4];
 
-        double Q;
         double Q_b1;
         double Q_b2;
-        double Q_b3;
-        double Q_b4;
         double Q_computed;
         double Q_1;
         double Q_2;
         double Q_3;
+        double Q_1_cen;
+        double Q_2_cen;
+        double Q_3_cen;
 
-        Q = potential1 * 4. * KEMConstants::Pi /
-            (-1. / (KEMConstants::Eps0 * permittivity2 * radius3) +
-              1. / (KEMConstants::Eps0 * permittivity2 * radius2) -
-              1. / (KEMConstants::Eps0 * permittivity1 * radius2) +
-              1. / (KEMConstants::Eps0 * permittivity1 * radius1));
+        Q_b1 = potential1 / distance2 * KEMConstants::Pi * radius*radius * KEMConstants::Eps0 *
+                permittivity2 / (permittivity1 + permittivity2);
 
-        Q_b1 = -((permittivity1 - 1.) * Q / (permittivity1));
-
-        Q_b2 = ((permittivity1 - 1.) * Q / (permittivity1));
-
-        Q_b3 = -((permittivity2 - 1.) * Q / (permittivity2));
-
-        Q_b4 = ((permittivity2 - 1.) * Q / (permittivity2));
+        Q_b2 = potential1 / distance3 * KEMConstants::Pi * radius*radius * KEMConstants::Eps0 *
+                permittivity1 / (permittivity1 + permittivity2);
 
         std::cout << "analytic charges: " << std::endl;
-        std::cout << "Q: " << Q << std::endl;
-        std::cout << "Q_b1: " << Q_b1 << std::endl;
-        std::cout << "Q_b2: " << Q_b2 << std::endl;
-        std::cout << "Q_b3: " << Q_b3 << std::endl;
-        std::cout << "Q_b4: " << Q_b4 << std::endl;
-        std::cout << "" << std::endl;
-
-        std::cout << "analytic charges: " << std::endl;
-        std::cout << "Q_1 analytic: " << Q + Q_b1 << std::endl;
-        std::cout << "Q_2 analytic: " << Q_b2 + Q_b3 << std::endl;
-        std::cout << "Q_3 analytic: " << Q_b4 - Q << std::endl;
+        std::cout << "Q_1 analytic: " << Q_b1 << std::endl;
+        std::cout << "Q_2 analytic: " << -Q_b1+Q_b2 << std::endl;
+        std::cout << "Q_3 analytic: " << -Q_b2 << std::endl;
         std::cout << "" << std::endl;
 
         Q_computed = 0.;
         Q_1 = 0.;
         Q_2 = 0.;
         Q_3 = 0.;
+        Q_1_cen = 0;
+        Q_2_cen = 0;
+        Q_3_cen = 0;
+
+        double center_frac = 10.;
 
         unsigned int i = 0;
         for (KSurfaceContainer::iterator it = surfaceContainer.begin(); it != surfaceContainer.end(); it++) {
-            if ((*it)->GetShape()->Centroid().Magnitude() < .5 * (radius1 + radius2))
-                Q_1 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
-            else if ((*it)->GetShape()->Centroid().Magnitude() < .5 * (radius3 + radius2))
-                Q_2 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
-            else
-                Q_3 += ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
+            double _Q = ((*it)->GetShape()->Area() * dynamic_cast<KElectrostaticBasis*>(*it)->GetSolution());
+            if ((*it)->GetShape()->Centroid().Z() <= distance1 + distance2 / 2.) {
+                Q_1 += _Q;
+                if ((*it)->GetShape()->Centroid().Perp() <= radius / center_frac)
+                    Q_1_cen += _Q;
+            }
+            else if ((*it)->GetShape()->Centroid().Z() <= distance1 + distance2 + distance3 / 2.) {
+                Q_2 += _Q;
+                if ((*it)->GetShape()->Centroid().Perp() <= radius / center_frac)
+                    Q_2_cen += _Q;
+            }
+            else {
+                Q_3 += _Q;
+                if ((*it)->GetShape()->Centroid().Perp() <= radius / center_frac)
+                    Q_3_cen += _Q;
+            }
             i++;
         }
 
@@ -1045,13 +942,7 @@ int main(int argc, char* argv[])
 
         MPI_SINGLE_PROCESS
         {
-            double rel_max[4] = {0, 0, 0, 0};
-            double rel_min[4] = {1.e10, 1.e10, 1.e10, 1.e10};
-            double rel_average[4] = {0, 0, 0, 0};
-
-            double abs_max[4] = {0, 0, 0, 0};
-            double abs_min[4] = {1.e10, 1.e10, 1.e10, 1.e10};
-            double abs_average[4] = {0, 0, 0, 0};
+            double k = center_frac*center_frac;
 
             std::cout << "total computed charge: " << Q_computed << std::endl;
             std::cout << "Q_1: " << Q_1 << std::endl;
@@ -1059,21 +950,27 @@ int main(int argc, char* argv[])
             std::cout << "Q_3: " << Q_3 << std::endl;
             std::cout << "" << std::endl;
 
-            std::cout << "comparisons:" << std::endl;
-            std::cout << std::setprecision(16) << "Q_1 vs (Q+Q_b1): "
-                      << (Q_1 - (Q + Q_b1)) / (Q + Q_b1) * 100. << " %" << std::endl;
-            std::cout << std::setprecision(16) << "Q_2 vs (Q_b2+Q_b3): "
-                      << (Q_2 - (Q_b2 + Q_b3)) / (Q_b2 + Q_b3) * 100. << " %" << std::endl;
-            std::cout << std::setprecision(16) << "Q_3 vs (-Q+Q_b4): "
-                      << (Q_3 - (-Q + Q_b4)) / (-Q + Q_b4) * 100. << " %" << std::endl;
+            std::cout << "charges in center (fractional area 1/" << center_frac*center_frac << ")" << std::endl;
+            std::cout << "Q_1': " << Q_1_cen << std::endl;
+            std::cout << "Q_2': " << Q_2_cen << std::endl;
+            std::cout << "Q_3': " << Q_3_cen << std::endl;
+            std::cout << "" << std::endl;
+
+            std::cout << "comparisons (center):" << std::endl;
+            std::cout << std::setprecision(16) << "Q_1' vs (Q_b1): "
+                      << (Q_1_cen*k - (Q_b1)) / (Q_b1) * 100. << " %" << std::endl;
+            std::cout << std::setprecision(16) << "Q_2' vs (-Q_b1+Q_b2): "
+                      << (Q_2_cen*k - (-Q_b1+Q_b2)) / (-Q_b1+Q_b2) * 100. << " %" << std::endl;
+            std::cout << std::setprecision(16) << "Q_3' vs (Q_b2): "
+                      << (Q_3_cen*k - (-Q_b2)) / (-Q_b2) * 100. << " %" << std::endl;
             std::cout << "" << std::endl;
 
             if (draw) {
 #ifdef KEMFIELD_USE_VTK
                 KEMVTKViewer viewer(surfaceContainer);
-                std::cout << "generating spherical capacitor file" << std::endl;
-                viewer.GenerateGeometryFile(std::string(DEFAULT_OUTPUT_DIR) + std::string("/SphericalCapacitor.vtp"));
-                std::cout << "saved to " << std::string(DEFAULT_OUTPUT_DIR) + std::string("/SphericalCapacitor.vtp")
+                std::cout << "generating plate capacitor file" << std::endl;
+                viewer.GenerateGeometryFile(std::string(DEFAULT_OUTPUT_DIR) + std::string("/PlateCapacitor.vtp"));
+                std::cout << "saved to " << std::string(DEFAULT_OUTPUT_DIR) + std::string("/PlateCapacitor.vtp")
                           << std::endl;
                 viewer.ViewGeometry();
 #endif
@@ -1086,6 +983,14 @@ int main(int argc, char* argv[])
 #endif
 
                 srand((unsigned) time(nullptr));
+#if 0
+                double rel_max[4] = {0, 0, 0, 0};
+                double rel_min[4] = {1.e10, 1.e10, 1.e10, 1.e10};
+                double rel_average[4] = {0, 0, 0, 0};
+
+                double abs_max[4] = {0, 0, 0, 0};
+                double abs_min[4] = {1.e10, 1.e10, 1.e10, 1.e10};
+                double abs_average[4] = {0, 0, 0, 0};
 
                 int nTest = 100;
 
@@ -1096,17 +1001,16 @@ int main(int argc, char* argv[])
                 for (int i = 0; i < nTest; i++) {
                     P[0] = -4. + 8. * ((double) rand()) / RAND_MAX;
                     P[1] = -4. + 8. * ((double) rand()) / RAND_MAX;
-                    P[2] = -4. + 8. * ((double) rand()) / RAND_MAX;
+                    P[2] =       4. * ((double) rand()) / RAND_MAX;
 
                     double r = sqrt(P[0] * P[0] + P[1] * P[1] + P[2] * P[2]);
 
-                    if (fabs(r - radius1) < tolerance * radius1 || fabs(r - radius2) < tolerance * radius2 ||
-                        fabs(r - radius3) < tolerance * radius3) {
+                    if (fabs(r - distance1) < tolerance * distance1 || fabs(r - (distance1+distance2)) < tolerance * (distance1+distance2)) {
                         i--;
                         continue;
                     }
 
-                    Field_Analytic(Q, radius1, radius2, radius3, permittivity1, permittivity2, P, field_analytic);
+                    //Field_Analytic(Q, radius1, radius2, radius3, permittivity1, permittivity2, P, field_analytic);
 
                     field_numeric[0] = field.Potential(P);
 
@@ -1178,7 +1082,7 @@ int main(int argc, char* argv[])
                               << std::endl;
                     std::cout << "" << std::endl;
                 }
-
+#endif
 #ifdef KEMFIELD_USE_ROOT
 
                 // sample the potentials and fields along z
@@ -1212,9 +1116,10 @@ int main(int argc, char* argv[])
                         << std::endl;
 
                 for (unsigned int i = 0; i < nSamples; i++) {
-                    P[2] = 2. * radius3 * ((double) i) / nSamples;
+                    P[2] = 4. * ((double) i) / nSamples;
 
-                    Field_Analytic(Q, radius1, radius2, radius3, permittivity1, permittivity2, P, field_analytic);
+                    field_analytic[0] = field_analytic[1] = field_analytic[2] = field_analytic[3] = 0.;
+                    Field_Analytic(potential1, distance1, distance2, distance3, permittivity1, permittivity2, P, field_analytic);
 
                     field_numeric[0] = field.Potential(P);
 
@@ -1404,7 +1309,7 @@ int main(int argc, char* argv[])
 
 void ReadInTriangles(const std::string& fileName, KSurfaceContainer& surfaceContainer)
 {
-    using KDirichletTriangle = KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle>;
+    typedef KSurface<KElectrostaticBasis, KDirichletBoundary, KTriangle> KDirichletTriangle;
     using KNeumannTriangle = KSurface<KElectrostaticBasis, KNeumannBoundary, KTriangle>;
 
     std::string inBuf;
@@ -1532,39 +1437,28 @@ std::vector<std::string> Tokenize(const std::string& separators, std::string inp
     return tokens;
 }
 
-void Field_Analytic(double Q, double radius1, double radius2, double radius3, double permittivity1,
+void Field_Analytic(double potential1, double distance1, double distance2, double distance3, double permittivity1,
                     double permittivity2, const double* P, double* F)
 {
     // This function computes the electric potential and electric field due to a
-    // charge <Q> on a sphere of radius <radius1>, surrounded by two dielectrics.
+    // charge <Q> on a disk of radius <radius1>, surrounded by two dielectrics.
 
-    double r = sqrt(P[0] * P[0] + P[1] * P[1] + P[2] * P[2]);
-    double fEps0 = 8.85418782e-12;
+    double z = P[2];
+    double z1 = distance1;
+    double z2 = distance1 + distance2;
+    double z3 = distance1 + distance2 + distance3;
 
-    if (r < radius1) {
-        F[0] = Q / (4. * M_PI) *
-               (-1. / (fEps0 * permittivity2 * radius3) + 1. / (fEps0 * permittivity2 * radius2) -
-                1. / (fEps0 * permittivity1 * radius2) + 1. / (fEps0 * permittivity1 * radius1));
-        F[1] = F[2] = F[3] = 0.;
+    if (z < z1 || z > z3) {
+        F[0] = F[1] = F[2] = F[3] = 0.;
     }
-    else if (r < radius2) {
-        F[0] = Q / (4. * M_PI) *
-               (-1. / (fEps0 * permittivity2 * radius3) + 1. / (fEps0 * permittivity2 * radius2) -
-                1. / (fEps0 * permittivity1 * radius2) + 1. / (fEps0 * permittivity1 * r));
-        F[1] = Q / (4. * M_PI * fEps0 * permittivity1 * r * r) * P[0] / r;
-        F[2] = Q / (4. * M_PI * fEps0 * permittivity1 * r * r) * P[1] / r;
-        F[3] = Q / (4. * M_PI * fEps0 * permittivity1 * r * r) * P[2] / r;
+    else if (z < z2) {
+        F[1] = F[2] = 0.;
+        F[3] = potential1 / distance2 * permittivity2 / (permittivity1 + permittivity2);
+        F[0] = 1 - F[3] * (z - z1);
     }
-    else if (r < radius3) {
-        F[0] = Q / (4. * M_PI) * (-1. / (fEps0 * permittivity2 * radius3) + 1. / (fEps0 * permittivity2 * r));
-        F[1] = Q / (4. * M_PI * fEps0 * permittivity2 * r * r) * P[0] / r;
-        F[2] = Q / (4. * M_PI * fEps0 * permittivity2 * r * r) * P[1] / r;
-        F[3] = Q / (4. * M_PI * fEps0 * permittivity2 * r * r) * P[2] / r;
-    }
-    else {
-        F[0] = 0.;
-        F[1] = 0.;
-        F[2] = 0.;
-        F[3] = 0.;
+    else if (z < z3) {
+        F[1] = F[2] = 0.;
+        F[3] = potential1 / distance3 * permittivity1 / (permittivity1 + permittivity2);
+        F[0] = -F[3] * (z - z3);
     }
 }

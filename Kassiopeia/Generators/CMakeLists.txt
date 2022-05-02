@@ -47,6 +47,8 @@ set( GENERATORS_HEADER_BASENAMES
 
     KSGenDirectionSphericalComposite.h
     KSGenDirectionSurfaceComposite.h
+    KSGenDirectionSphericalMagneticField.h
+
     KSGenMomentumRectangularComposite.h
 
     KSGenSpinComposite.h
@@ -127,6 +129,7 @@ set( GENERATORS_SOURCE_BASENAMES
 
     KSGenDirectionSphericalComposite.cxx
     KSGenDirectionSurfaceComposite.cxx
+    KSGenDirectionSphericalMagneticField.cxx
 
     KSGenMomentumRectangularComposite.cxx
 

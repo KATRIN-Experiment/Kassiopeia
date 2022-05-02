@@ -143,36 +143,50 @@ if( ${PROJECT_NAME} STREQUAL Kasper )
     message(STATUS "Kasper version is v${KASPER_VERSION} (${KASPER_VERSION_NUMERICAL})" )
 
     # git revision (if available)
-    set(KASPER_GIT_REVISION "n/a")
-    if(EXISTS "${CMAKE_SOURCE_DIR}/.git/index")
-        set_property(GLOBAL APPEND
-            PROPERTY CMAKE_CONFIGURE_DEPENDS
-            "${CMAKE_SOURCE_DIR}/.git/index")
-
-        execute_process(
-            COMMAND git rev-parse --abbrev-ref HEAD
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_BRANCH
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        execute_process(
-            COMMAND git rev-parse --short HEAD
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_COMMIT
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-        execute_process(
-            COMMAND git log -1 --format=%cd
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-            OUTPUT_VARIABLE KASPER_GIT_TIMESTAMP
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
+    option( KASPER_GIT_INFO_USERDEFINED "Preventing changes to KASPER_GIT_BRANCH and KASPER_GIT_COMMIT, allowing the user to set them manually" OFF )
+    if( KASPER_GIT_INFO_USERDEFINED )
+        set( KASPER_GIT_BRANCH "" CACHE STRING "Name of git branch" )
+        set( KASPER_GIT_COMMIT "" CACHE STRING "First 9 letters of git commit hash" )
+        
         set(KASPER_GIT_REVISION "${KASPER_GIT_BRANCH}+${KASPER_GIT_COMMIT}")
-        message(STATUS "Git revision is ${KASPER_GIT_REVISION} (last commit: ${KASPER_GIT_TIMESTAMP})" )
+    else()
+        set(KASPER_GIT_REVISION "n/a")
+        if(EXISTS "${CMAKE_SOURCE_DIR}/.git/index")
+            set_property(GLOBAL APPEND
+                PROPERTY CMAKE_CONFIGURE_DEPENDS
+                "${CMAKE_SOURCE_DIR}/.git/index")
+
+            execute_process(
+                COMMAND git rev-parse --abbrev-ref HEAD
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_BRANCH
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            execute_process(
+                COMMAND git rev-parse --short HEAD
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_COMMIT
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            execute_process(
+                COMMAND git log -1 --format=%cd --date=iso-strict
+                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                OUTPUT_VARIABLE KASPER_GIT_TIMESTAMP
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+            set(KASPER_GIT_REVISION "${KASPER_GIT_BRANCH}+${KASPER_GIT_COMMIT}")
+            message(STATUS "Git revision is ${KASPER_GIT_REVISION} (last commit: ${KASPER_GIT_TIMESTAMP})" )
+        else()
+            set(KASPER_GIT_BRANCH "")
+            set(KASPER_GIT_COMMIT "")
+            set(KASPER_GIT_TIMESTAMP "")
+            set(KASPER_GIT_REVISION "(unknown)")
+            message(STATUS "Git revision is unknown!" )
+        endif()
     endif()
 
-    # build timestamp -- will be refreshed after updating git (see lines above)
-    string( TIMESTAMP KASPER_BUILD_TIMESTAMP UTC )
+    # build timestamp (in ISO format: '%Y-%m-%dT%H:%M:%SZ')
+    string(TIMESTAMP KASPER_BUILD_TIMESTAMP UTC)
 
     # build system (something like 'linux/GNU/8.2.1')
     set(KASPER_BUILD_SYSTEM "${CMAKE_SYSTEM_NAME}/${CMAKE_CXX_COMPILER_ID}/${CMAKE_CXX_COMPILER_VERSION}")

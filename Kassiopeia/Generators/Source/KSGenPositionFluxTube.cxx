@@ -14,6 +14,10 @@ namespace Kassiopeia
 {
 
 KSGenPositionFluxTube::KSGenPositionFluxTube() :
+    fOrigin(KThreeVector::sZero),
+    fXAxis(KThreeVector::sXUnit),
+    fYAxis(KThreeVector::sYUnit),
+    fZAxis(KThreeVector::sZUnit),
     fPhiValue(nullptr),
     fZValue(nullptr),
     fMagneticFields(),
@@ -23,6 +27,10 @@ KSGenPositionFluxTube::KSGenPositionFluxTube() :
 {}
 KSGenPositionFluxTube::KSGenPositionFluxTube(const KSGenPositionFluxTube& aCopy) :
     KSComponent(aCopy),
+    fOrigin(aCopy.fOrigin),
+    fXAxis(aCopy.fXAxis),
+    fYAxis(aCopy.fYAxis),
+    fZAxis(aCopy.fZAxis),
     fPhiValue(aCopy.fPhiValue),
     fZValue(aCopy.fZValue),
     fMagneticFields(aCopy.fMagneticFields),
@@ -39,7 +47,7 @@ KSGenPositionFluxTube::~KSGenPositionFluxTube() = default;
 void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 {
     if (!fPhiValue | !fZValue)
-        genmsg(eError) << "phi or z value undefined in composite position creator <" << this->GetName() << ">" << eom;
+        genmsg(eError) << "phi or z value undefined in flux tube position creator <" << this->GetName() << ">" << eom;
 
     KThreeVector tPosition;
 
@@ -76,9 +84,10 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
             tFlux = 0.0;
             tLastArea = 0.0;
 
-            KThreeVector tField;
-            //calculate position at z=0 to get approximation for radius
-            CalculateField(KThreeVector(0, 0, tZValue), 0.0, tField);
+            KThreeVector tPosition, tField;
+            //calculate position at r=0 to get approximation for radius
+            tPosition = fOrigin + tZValue * fZAxis;
+            CalculateField(tPosition, 0.0, tField);
             double tRApproximation = sqrt(fFlux / (katrin::KConst::Pi() * tField.Magnitude()));
             genmsg_debug("r approximation is <" << tRApproximation << ">" << eom);
 
@@ -88,15 +97,25 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
             while (tFlux < fFlux) {
                 tX = tRValue * cos(tPhiValue);
                 tY = tRValue * sin(tPhiValue);
-                CalculateField(KThreeVector(tX, tY, tZValue), 0.0, tField);
+                tPosition = fOrigin + tX * fXAxis + tY * fYAxis + tZValue * fZAxis;
+                CalculateField(tPosition, 0.0, tField);
 
                 tArea = katrin::KConst::Pi() * tRValue * tRValue;
                 tFlux += tField.Magnitude() * (tArea - tLastArea);
 
-                genmsg_debug("r <" << tRValue << ">" << eom);
-                genmsg_debug("field " << tField << eom);
-                genmsg_debug("area <" << tArea << ">" << eom);
-                genmsg_debug("flux <" << tFlux << ">" << eom);
+                if (tArea > 100*100) {
+                    genmsg(eError) << "area is now over 100 m^2, aborting flux calculation" << eom;
+                    return;
+                }
+
+                genmsg_debug("position " << tPosition << ret);
+                genmsg_debug("field " << tField << ret);
+                genmsg_debug("area <" << tArea << ">" << ret);
+                genmsg_debug("flux <" << tFlux << ">" << ret);
+                genmsg_debug("target flux <" << fFlux << ">" << eom);
+
+                if (tFlux >= fFlux)
+                    break;
 
                 tRValue += tStepSize;
                 tLastArea = tArea;
@@ -114,8 +133,10 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 
             for (tParticleIt = aPrimaries->begin(); tParticleIt != aPrimaries->end(); tParticleIt++) {
                 tParticle = new KSParticle(**tParticleIt);
-                tPosition = tRValue * cos(tPhiValue) * KThreeVector::sXUnit +
-                            tRValue * sin(tPhiValue) * KThreeVector::sYUnit + tZValue * KThreeVector::sZUnit;
+                tPosition = fOrigin;
+                tPosition += tRValue * cos(tPhiValue) * fXAxis;
+                tPosition += tRValue * sin(tPhiValue) * fYAxis;
+                tPosition += tZValue * fZAxis;
                 tParticle->SetPosition(tPosition);
                 tParticles.push_back(tParticle);
             }
@@ -133,6 +154,26 @@ void KSGenPositionFluxTube::Dice(KSParticleQueue* aPrimaries)
 }
 
 
+void KSGenPositionFluxTube::SetOrigin(const KThreeVector& anOrigin)
+{
+    fOrigin = anOrigin;
+    return;
+}
+void KSGenPositionFluxTube::SetXAxis(const KThreeVector& anXAxis)
+{
+    fXAxis = anXAxis;
+    return;
+}
+void KSGenPositionFluxTube::SetYAxis(const KThreeVector& anYAxis)
+{
+    fYAxis = anYAxis;
+    return;
+}
+void KSGenPositionFluxTube::SetZAxis(const KThreeVector& anZAxis)
+{
+    fZAxis = anZAxis;
+    return;
+}
 void KSGenPositionFluxTube::SetPhiValue(KSGenValue* aPhiValue)
 {
     if (fPhiValue == nullptr) {

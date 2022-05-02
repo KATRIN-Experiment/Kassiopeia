@@ -60,6 +60,7 @@ set( BINDINGS_HEADER_FILES
     Generators/Include/KSGenMomentumRectangularCompositeBuilder.h
     Generators/Include/KSGenDirectionSphericalCompositeBuilder.h
     Generators/Include/KSGenDirectionSurfaceCompositeBuilder.h
+    Generators/Include/KSGenDirectionSphericalMagneticFieldBuilder.h
     Generators/Include/KSGenSpinCompositeBuilder.h
     Generators/Include/KSGenSpinRelativeCompositeBuilder.h
     Generators/Include/KSGenTimeCompositeBuilder.h
@@ -284,6 +285,7 @@ set( BINDINGS_SOURCE_FILES
     Generators/Source/KSGenMomentumRectangularCompositeBuilder.cxx
     Generators/Source/KSGenDirectionSphericalCompositeBuilder.cxx
     Generators/Source/KSGenDirectionSurfaceCompositeBuilder.cxx
+    Generators/Source/KSGenDirectionSphericalMagneticFieldBuilder.cxx
     Generators/Source/KSGenSpinCompositeBuilder.cxx
     Generators/Source/KSGenSpinRelativeCompositeBuilder.cxx
     Generators/Source/KSGenTimeCompositeBuilder.cxx
@@ -462,7 +464,6 @@ target_include_directories(KassiopeiaBindings PUBLIC $<INSTALL_INTERFACE:include
 target_link_libraries( KassiopeiaBindings
     PUBLIC
         KommonCore
-        KEMFieldBindings
         KassiopeiaFields
         KassiopeiaGenerators
         KassiopeiaGeometry
@@ -474,6 +475,8 @@ target_link_libraries( KassiopeiaBindings
         KassiopeiaWriters
         KassiopeiaVisualization
         KassiopeiaSimulation
+    PRIVATE
+        KEMFieldBindings
 )
 
 # install

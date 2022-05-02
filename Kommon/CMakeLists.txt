@@ -59,5 +59,5 @@ kasper_install_module()
 # install extra cmake files needed by external software
 install(DIRECTORY cmake/
     DESTINATION ${CMAKE_INSTALL_DIR}
-    FILES_MATCHING PATTERN "*.cmake"
+    FILES_MATCHING PATTERN "*.cmake" PATTERN "*.c" PATTERN "*.h"
 )

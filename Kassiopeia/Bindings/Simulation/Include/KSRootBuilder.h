@@ -10,12 +10,23 @@
 #include "KSRoot.h"
 #include "KSSimulation.h"
 #include "KToolbox.h"
+#include "KRandom.h"
 
 using namespace Kassiopeia;
 namespace katrin
 {
 
 typedef KComplexElement<KSRoot> KSRootBuilder;
+
+template<> inline bool KSRootBuilder::AddAttribute(KContainer* aContainer)
+{
+    if (aContainer->GetName() == "random_seed") {
+        const auto& seed = aContainer->AsReference<unsigned int>();
+        KRandom::GetInstance().SetSeed(seed);
+        return true;
+    }
+    return false;
+}
 
 template<> inline bool KSRootBuilder::AddElement(KContainer* aContainer)
 {

@@ -12,7 +12,10 @@
 namespace KEMField
 {
 
-KMagneticDipoleField::KMagneticDipoleField() : fLocation(0., 0., 0.), fMoment(0., 0., 0.) {}
+KMagneticDipoleField::KMagneticDipoleField() :
+    fLocation(katrin::KThreeVector::sZero),
+    fMoment(katrin::KThreeVector::sInvalid)
+{}
 
 KMagneticDipoleField::~KMagneticDipoleField() = default;
 

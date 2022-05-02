@@ -3,7 +3,10 @@
 namespace KEMField
 {
 
-KMagnetostaticConstantField::KMagnetostaticConstantField() = default;
+KMagnetostaticConstantField::KMagnetostaticConstantField() :
+    fFieldVector(katrin::KThreeVector::sInvalid),
+    fLocation(katrin::KThreeVector::sZero)
+{}
 
 KMagnetostaticConstantField::KMagnetostaticConstantField(const KFieldVector& aField) : fFieldVector(aField) {}
 
