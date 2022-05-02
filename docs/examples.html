@@ -1,393 +1,690 @@
 
-<!DOCTYPE html>
+  
 
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta charset="utf-8"/>
-<meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>
-<title>
-      Examples and Tests | Kassiopeia 3.8 documentation
-    </title>
-<link href="_static/pygments.css" rel="stylesheet"/>
-<link href="_static/theme.css" rel="stylesheet"/>
-<link href="_static/pygments.css" rel="stylesheet"/>
-<link href="_static/theme.css" rel="stylesheet"/>
-<link href="_static/graphviz.css" rel="stylesheet"/>
-<link href="search.html" rel="search" title="Search"/>
-<link href="genindex.html" rel="index" title="Index"/>
-<link href="configuration.html" rel="next" title="Configuring Your Own Simulation"/>
-<link href="compiling.html" rel="prev" title="Getting starting with Kassiopiea"/>
-</head><body class="text-gray-900 antialiased min-h-screen md:h-screen flex flex-col">
-<a class="block text-xl bg-white px-8 py-4 z-20 absolute top-0 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#examples-and-tests" title="Skip navigation links">Skip to content</a>
-<header class="md:sticky top-0 bg-gray-900 shadow-md flex md:flex-row justify-between items-center z-10"><a aria-label="Back to homepage" class="py-4 hover:bg-gray-700 focus:bg-gray-700 tooltipped tooltipped-se" href="index.html">
-<img alt="Logo" class="h-8 mx-5" src="_static/KassiopeiaLogo_1_cropped_bb.png"/>
-</a><h2 class="text-xl text-gray-100 mx-5 py-4">Kassiopeia 3.8 documentation</h2><form action="search.html" class="hidden md:flex my-auto mx-5 justify-between items-center print:hidden" id="searchbox" method="get">
-<input aria-label="Search the docs" class="p-2 flex-1 focus:bg-yellow-100" id="search-input" name="q" placeholder="Search the docs" style="width: 300px;" type="search"/>
-<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
-<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-</button>
-</form>
-</header>
-<div class="md:overflow-hidden flex flex-col md:flex-row flex-1"><nav class="h-full fixed md:relative inset-y-0 left-0 z-20 md:z-0 bg-white text-gray-700 border-r overflow-x-hidden pt-16 print:hidden flex flex-col" data-menu="closed" role="navigation" style="width: 270px;">
-<div class="nav-toc"><ul class="current">
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="introduction.html"> Introduction</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="introduction.html#the-kasper-framework">The Kasper framework</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="introduction.html#extending-functionality">Extending Functionality</a></div></li>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    
+      <title>Examples and Tests | Kassiopeia 3.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" />
+      <link rel="stylesheet" href="_static/theme.33684ae9923d01874503.css" />
+      <link rel="stylesheet" href="_static/graphviz.css" />
+        <link rel="search" title="Search" href="search.html" />
+        <link rel="index" title="Index" href="genindex.html" />
+        <link rel="next" title="Configuring Your Own Simulation" href="configuration.html" />
+        <link rel="prev" title="Getting starting with Kassiopiea" href="compiling.html" />
+  </head>
+
+  <body class="antialiased text-gray scroll-smooth">
+    <div
+      id="page"
+      data-controller="sidebar search"
+      data-action="keydown@window->search#focus"
+      class="h-screen xl:grid xl:grid-layout"
+    >
+      <a class="block text-xl bg-white py-4 z-20 absolute top-0 h-14 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#examples-and-tests" title="Skip navigation links">Skip to content</a>
+
+      <header class="grid-area-header z-10 h-14">
+        <div class="bg-gray-dark shadow-md flex items-center h-full xl:px-2 relative"><div class="flex items-center">
+      <button
+    data-action="sidebar#open"
+    data-sidebar-target="hamburger"
+    class="xl:hidden h-14 w-14 leading-14 text-gray-100 hover:bg-gray-700 hover:text-brand focus:outline-none focus:bg-gray-700 focus:text-brand">
+  <span class="sr-only">Open navigation menu</span>
+  <svg aria-hidden="true" class="fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+</button><a class="hover:bg-gray-700 focus:bg-gray-700 focus:outline-none tooltipped tooltipped-sw"
+   href="index.html"
+   aria-label="Back to homepage"><img class="h-14 w-14 p-3 inline-block" src="_static/KassiopeiaLogo_1_cropped_bb.png" alt="Logo" /><span class="hidden lg:inline-block shrink-0 font-medium text-gray-100 mx-5 leading-14 tracking-wider">Kassiopeia 3.8 documentation</span>
+</a></div><div class="flex justify-end items-center flex-1"><form
+  id="searchbox"
+  action="search.html"
+  data-action="click->search#focusSearchInput"
+  method="get"
+  class="flex print:hidden justify-between items-center leading-14 md:ml-4 bg-gray-dark text-gray-300 focus-within:bg-gray-50 focus-within:text-gray-800 focus-within:absolute focus-within:inset-x-0 focus-within:top-0 md:focus-within:w-full md:focus-within:static">
+
+  <button
+    class="text-inherit h-14 w-14"
+    aria-label="Get search results"
+    tabindex="-1"
+  >
+    <svg aria-hidden="true" class="fill-current stroke-current h-8 w-8" stroke-width="0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  </button>
+
+  <input
+    name="q"
+    id="search-input"
+    data-search-target="searchInput"
+    type="search"
+    aria-label="Search the docs"
+    placeholder="Search the docs"
+    class="pr-2 bg-transparent text-inherit focus:outline-none w-0 md:w-auto focus:w-full transition-all duration-100"
+  />
+</form></div>
+</div>
+      </header>
+
+      
+  <aside data-sidebar-target="sidebar" class="grid-area-sidebar h-full fixed xl:relative inset-y-0 left-0 z-20 xl:z-0 print:hidden overflow-y-auto transition-all transform transform-gpu -translate-x-full opacity-0 duration-300 xl:translate-x-0 xl:opacity-100">
+    <nav
+  role="navigation"
+  class="h-full overflow-y-auto bg-white text-gray-600 pt-8 flex flex-col"
+>
+  <div class="nav-toc flex-1 pl-6"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html"> Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#the-kasper-framework">The Kasper framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#extending-functionality">Extending Functionality</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#external-references">External references</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="external_documentation.html#developer-contact">Developer contact</a></div></li>
+<li class="toctree-l1"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external_documentation.html#external-references">External references</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_documentation.html#developer-contact">Developer contact</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html"> Getting Started</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="compiling.html#docker-image">Docker image</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#minimum-requirements">Minimum requirements</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#required-dependencies">Required dependencies</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#optional-dependencies">Optional dependencies</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#external-libraries">External libraries</a></div></li>
+<li class="toctree-l1"><a class="reference internal" href="compiling.html"> Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#docker-image">Docker image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#minimum-requirements">Minimum requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#required-dependencies">Required dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#optional-dependencies">Optional dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#external-libraries">External libraries</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#environment-variables">Environment variables</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#environment-variables">Environment variables</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#executing-kassiopeia">Executing Kassiopeia</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#executing-kassiopeia">Executing Kassiopeia</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#build-options">Build options</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="compiling.html#miscellaneous-options">Miscellaneous options</a></div></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 current expanded"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="current reference internal" href="#"> Examples and Tests</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#running-kassiopeia">Running Kassiopeia</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#verbosity-levels">Verbosity levels</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#output-files">Output files</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="#example-configurations">Example configurations</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#the-dipole-trap-example">The Dipole Trap Example</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#the-quadrupole-trap-example">The Quadrupole Trap Example</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#the-mesh-simulation-example">The Mesh Simulation Example</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="#other-examples">Other Examples</a></div></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#overview-and-units">Overview and Units</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#variables">Variables</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#print-statements">Print statements</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#formula-expressions">Formula Expressions</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#comments">Comments</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#verbosity-levels">Verbosity levels</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#additional-logging">Additional logging</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#geometry">Geometry</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#shapes-and-assemblies">Shapes and assemblies</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#tagging-system">Tagging system</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#assembling-elements">Assembling elements</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#transformations">Transformations</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#extensions">Extensions</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#kemfield">KEMField</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#fields">Fields</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#electric">Electric</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#magnetic">Magnetic</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#kassiopeia">Kassiopeia</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#generation">Generation</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#termination">Termination</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#propagation">Propagation</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#interactions">Interactions</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#volume-interactions">Volume Interactions</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#surface-interactions">Surface Interactions</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="configuration.html#output">Output</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#writers">Writers</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="configuration.html#output-description">Output description</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#navigation">Navigation</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#navigation-and-commands">Navigation and Commands</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#simulation">Simulation</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#visualization">Visualization</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="configuration.html#common-pitfalls-and-problems">Common Pitfalls and Problems</a></div></li>
-</ul>
-</li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html"> Basic KGeoBag Shapes</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-surface">Rotated poly-line surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></div></li>
-</ul>
-</li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#build-options">Build options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compiling.html#miscellaneous-options">Miscellaneous options</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html">Complex Shapes in KGeoBag</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#pump-port">Pump Port</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port">Conic section pump port</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#beam">Beam</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rod">Rod</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#extruded-surfaces-with-holes">Extruded surfaces with holes</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rotated-surface">Rotated surface</a></div></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"> Examples and Tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-kassiopeia">Running Kassiopeia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#verbosity-levels">Verbosity levels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-files">Output files</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#pump-port-space">Pump Port Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port-space">Conic Section Pump Port Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#beam-space">Beam Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rod-space">Rod Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#extruded-space">Extruded Space</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#rotated-space">Rotated Space</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-configurations">Example configurations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-dipole-trap-example">The Dipole Trap Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-quadrupole-trap-example">The Quadrupole Trap Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-mesh-simulation-example">The Mesh Simulation Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-examples">Other Examples</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="kgeobag_complex.html#external-shapes-in-kgeobag">External Shapes in KGeoBag</a></div></li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html"> Understanding Simulation Output</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#output-configuration">Output configuration</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#groups-and-fields">Groups and fields</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#output-structure">Output structure</a></div></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#overview-and-units">Overview and Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#variables">Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#print-statements">Print statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#formula-expressions">Formula Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#comments">Comments</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#root-output-files">ROOT output files</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#data-structure">Data structure</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#verbosity-levels">Verbosity levels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#additional-logging">Additional logging</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#accessing-simulation-data">Accessing simulation data</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-kassiopeia">Using Kassiopeia</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-root">Using ROOT</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-python">Using Python</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#kassiopeiareader">KassiopeiaReader</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#uproot-pandas">uproot / Pandas</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#python-notebook">Python notebook</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#geometry-visualization">Geometry visualization</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#geometry">Geometry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#shapes-and-assemblies">Shapes and assemblies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#tagging-system">Tagging system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#assembling-elements">Assembling elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#transformations">Transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#extensions">Extensions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#id13">Data structure</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#kemfield">KEMField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#fields">Fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#electric">Electric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#magnetic">Magnetic</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="output.html#id14">Accessing simulation data</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="output.html#using-paraview">Using ParaView</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#kassiopeia">Kassiopeia</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#generation">Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#termination">Termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#propagation">Propagation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#interactions">Interactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#volume-interactions">Volume Interactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#surface-interactions">Surface Interactions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#writers">Writers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration.html#output-description">Output description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html"> Additional Simulation Tools</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#usage">Usage</a></div></li>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#advanced-visualization">Advanced visualization</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation">Navigation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation-and-commands">Navigation and Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#simulation">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#common-pitfalls-and-problems">Common Pitfalls and Problems</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#id1">Usage</a></div></li>
+<li class="toctree-l1"><a class="reference internal" href="kgeobag_basic.html"> Basic KGeoBag Shapes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-surface">Rotated poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="tools.html#field-calculation">Field calculation</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="tools.html#id2">Usage</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="visualization.html"> Visualization Techniques</a></div><ul>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="visualization.html#kgeobag-visualization">KGeoBag visualization</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="visualization.html#python">Python</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><div class="nav-link"><a class="reference internal" href="visualization.html#kassiopieia-visualization">Kassiopieia visualization</a></div></li>
-<li class="toctree-l2"><div class="nav-link"><svg aria-hidden="true" class="expand" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg><a class="reference internal" href="visualization.html#kemfield-visualization">KEMField visualization</a></div><ul>
-<li class="toctree-l3"><div class="nav-link"><a class="reference internal" href="visualization.html#field-maps">Field maps</a></div></li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="license.html"> License</a></div></li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" href="authors.html"> Authors</a></div></li>
+<li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html">Complex Shapes in KGeoBag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port">Pump Port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port">Conic section pump port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam">Beam</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod">Rod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-surfaces-with-holes">Extruded surfaces with holes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-surface">Rotated surface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port-space">Pump Port Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port-space">Conic Section Pump Port Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam-space">Beam Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod-space">Rod Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-space">Extruded Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-space">Rotated Space</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html#external-shapes-in-kgeobag">External Shapes in KGeoBag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="output.html"> Understanding Simulation Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="output.html#output-configuration">Output configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#groups-and-fields">Groups and fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#output-structure">Output structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#root-output-files">ROOT output files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#data-structure">Data structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#accessing-simulation-data">Accessing simulation data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-kassiopeia">Using Kassiopeia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-root">Using ROOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-python">Using Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#kassiopeiareader">KassiopeiaReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#uproot-pandas">uproot / Pandas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#python-notebook">Python notebook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="output.html#geometry-visualization">Geometry visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#vtk-output-files">VTK output files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#id13">Data structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#id14">Accessing simulation data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="output.html#using-paraview">Using ParaView</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="output.html#ascii-output-files">ASCII output files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#advanced-visualization">Advanced visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#id1">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tools.html#id2">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html"> Visualization Techniques</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#kgeobag-visualization">KGeoBag visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#python">Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#kassiopieia-visualization">Kassiopieia visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#kemfield-visualization">KEMField visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#field-maps">Field maps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bindings_full.html"> XML Bindings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kapplicationrunner">KApplicationRunner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#knamedreference">KNamedReference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kdummyrandom">KDummyRandom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kemroot">KEMRoot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kelectricquadrupolefield">KElectricQuadrupoleField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kelectrostaticconstantfield">KElectrostaticConstantField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kelectrostaticlinearfield">KElectrostaticLinearField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kelectrostaticpotentialmap">KElectrostaticPotentialmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kelectrostaticpotentialmapcalculator">KElectrostaticPotentialmapCalculator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgstaticelectromagnetfield">KGStaticElectromagnetField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kinducedazimuthalelectricfield">KInducedAzimuthalElectricField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmagneticdipolefield">KMagneticDipoleField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmagneticsuperpositionfield">KMagneticSuperpositionField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmagnetostaticconstantfield">KMagnetostaticConstantField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmagnetostaticfieldmap">KMagnetostaticFieldmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmagnetostaticfieldmapcalculator">KMagnetostaticFieldmapCalculator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#krampedelectric2field">KRampedElectric2Field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#krampedelectricfield">KRampedElectricField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#krampedmagneticfield">KRampedMagneticField</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kggeometryprinter">KGGeometryPrinter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kginterface">KGInterface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgannulussurface">KGAnnulusSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgappearanceattributor">KGAppearanceAttributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgaxialmeshattributor">KGAxialMeshAttributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgboxspace">KGBoxSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgconespace">KGConeSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgconesurface">KGConeSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcutconespace">KGCutConeSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcutconesurface">KGCutConeSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcutconetubespace">KGCutConeTubeSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcuttorussurface">KGCutTorusSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcylinderspace">KGCylinderSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcylindersurface">KGCylinderSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgcylindertubespace">KGCylinderTubeSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgdiscreterotationalmeshattributor">KGDiscreteRotationalMeshAttributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgdisksurface">KGDiskSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgelectromagnetattributor">KGElectromagnetAttributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedarcsegmentsurface">KGExtrudedArcSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedcirclespace">KGExtrudedCircleSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedcirclesurface">KGExtrudedCircleSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedlinesegmentsurface">KGExtrudedLineSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedpolylinesurface">KGExtrudedPolyLineSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedpolyloopspace">KGExtrudedPolyLoopSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgextrudedpolyloopsurface">KGExtrudedPolyLoopSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgflattenedcirclesurface">KGFlattenedCircleSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgflattenedpolyloopsurface">KGFlattenedPolyLoopSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgmeshattributor">KGMeshAttributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgmeshdeformer">KGMeshDeformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgmeshrefiner">KGMeshRefiner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedarcsegmentspace">KGRotatedArcSegmentSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedarcsegmentsurface">KGRotatedArcSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedcirclespace">KGRotatedCircleSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedcirclesurface">KGRotatedCircleSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedlinesegmentspace">KGRotatedLineSegmentSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedlinesegmentsurface">KGRotatedLineSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedpolylinespace">KGRotatedPolyLineSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedpolylinesurface">KGRotatedPolyLineSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedpolyloopspace">KGRotatedPolyLoopSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrotatedpolyloopsurface">KGRotatedPolyLoopSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgshellarcsegmentsurface">KGShellArcSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgshellcirclesurface">KGShellCircleSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgshelllinesegmentsurface">KGShellLineSegmentSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgshellpolylinesurface">KGShellPolyLineSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgshellpolyloopsurface">KGShellPolyLoopSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgspace">KGSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgtorusspace">KGTorusSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgtorussurface">KGTorusSurface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kmessagetable">KMessageTable</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kmessagedata">KMessageData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#krootwindow">KROOTWindow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgrootgeometrypainter">KGROOTGeometryPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#krootpad">KROOTPad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id17">KSROOTMagFieldPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id18">KSROOTPotentialPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id19">KSROOTTrackPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id20">KSROOTZonalHarmonicsPainter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#ksroot">KSRoot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kesselasticelsepa">KESSElasticElsepa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kessinelasticbethefano">KESSInelasticBetheFano</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kessinelasticpenn">KESSInelasticPenn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kesssurfaceinteraction">KESSSurfaceInteraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id21">KElectricQuadrupoleField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id22">KElectrostaticConstantField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id23">KElectrostaticPotentialmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id24">KInducedAzimuthalElectricField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id25">KMagneticDipoleField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id26">KMagnetostaticConstantField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id27">KMagnetostaticFieldmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id28">KRampedElectric2Field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id29">KRampedElectricField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id30">KRampedMagneticField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscommandgroup">KSCommandGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscommandmemberdata">KSCommandMemberData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentdeltadata">KSComponentDeltaData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentintegraldata">KSComponentIntegralData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentmathdata">KSComponentMathData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentmaximumatdata">KSComponentMaximumAtData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentmaximumdata">KSComponentMaximumData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentmemberdata">KSComponentMemberData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentminimumatdata">KSComponentMinimumAtData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kscomponentminimumdata">KSComponentMinimumData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgendirectionsphericalcomposite">KSGenDirectionSphericalComposite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgendirectionsphericalmagneticfield">KSGenDirectionSphericalMagneticField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgendirectionsurfacecomposite">KSGenDirectionSurfaceComposite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergybetadecay">KSGenEnergyBetaDecay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergybetarecoil">KSGenEnergyBetaRecoil</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergycomposite">KSGenEnergyComposite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergykryptonevent">KSGenEnergyKryptonEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergyleadevent">KSGenEnergyLeadEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergyradonevent">KSGenEnergyRadonEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenenergyrydberg">KSGenEnergyRydberg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgengeneratorcomposite">KSGenGeneratorComposite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgengeneratorsimulation">KSGenGeneratorSimulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgengeneratortextfile">KSGenGeneratorTextFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id73">KSGenLStatistical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id74">KSGenLUniformMaxN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id75">KSGenPositionHomogeneousFluxTube</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id76">KSGenPositionMeshSurfaceRandom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id77">KSGenPositionSpaceRandom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id78">KSGenPositionSurfaceAdjustmentStep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id79">KSGenPositionSurfaceRandom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id80">KSGenValueAngleCosine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id81">KSGenValueAngleSpherical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id82">KSGenValueBoltzmann</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id83">KSGenValueFix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id84">KSGenValueFormula</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id85">KSGenValueGauss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id86">KSGenValueGeneralizedGauss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id87">KSGenValueHistogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id88">KSGenValueList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id89">KSGenValuePareto</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenvalueradiuscylindrical">KSGenValueRadiusCylindrical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenvalueradiusfraction">KSGenValueRadiusFraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenvalueradiusspherical">KSGenValueRadiusSpherical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id90">KSGenValueSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id91">KSGenValueUniform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgenvaluezfrustrum">KSGenValueZFrustrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgeoside">KSGeoSide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksgeospace">KSGeoSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintcalculatorconstant">KSIntCalculatorConstant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintcalculatorion">KSIntCalculatorIon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintdecay">KSIntDecay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id94">KSIntDecayCalculatorDeathConstRate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id95">KSIntDecayCalculatorFerencBBRTransition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id96">KSIntDecayCalculatorFerencIonisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id97">KSIntDecayCalculatorFerencSpontaneous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id98">KSIntDecayCalculatorGlukhovDeExcitation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id99">KSIntDecayCalculatorGlukhovExcitation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id100">KSIntDecayCalculatorGlukhovIonisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#id101">KSIntDecayCalculatorGlukhovSpontaneous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintdensityconstant">KSIntDensityConstant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintscattering">KSIntScattering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintspinflip">KSIntSpinFlip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintspinflippulse">KSIntSpinFlipPulse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintspinrotateypulse">KSIntSpinRotateYPulse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintsurfacediffuse">KSIntSurfaceDiffuse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintsurfacemultiplication">KSIntSurfaceMultiplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintsurfacespecular">KSIntSurfaceSpecular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintsurfacespinflip">KSIntSurfaceSpinFlip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksintsurfaceucn">KSIntSurfaceUCN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksmoddynamicenhancement">KSModDynamicEnhancement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksmodeventreport">KSModEventReport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksmodsplitonturn">KSModSplitOnTurn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksnavmeshedspace">KSNavMeshedSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksnavspace">KSNavSpace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksnavsurface">KSNavSurface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootelectricfield">KSRootElectricField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrooteventmodifier">KSRootEventModifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootgenerator">KSRootGenerator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootmagneticfield">KSRootMagneticField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootrunmodifier">KSRootRunModifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootspaceinteraction">KSRootSpaceInteraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootspacenavigator">KSRootSpaceNavigator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootstepmodifier">KSRootStepModifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootsurfaceinteraction">KSRootSurfaceInteraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootsurfacenavigator">KSRootSurfaceNavigator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootterminator">KSRootTerminator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksroottrackmodifier">KSRootTrackModifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksroottrajectory">KSRootTrajectory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksrootwriter">KSRootWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kssimulation">KSSimulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermdeath">KSTermDeath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmagnetron">KSTermMagnetron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxenergy">KSTermMaxEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxlength">KSTermMaxLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxlongenergy">KSTermMaxLongEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxr">KSTermMaxR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxsteptime">KSTermMaxStepTime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxsteps">KSTermMaxSteps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxtime">KSTermMaxTime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxtotaltime">KSTermMaxTotalTime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmaxz">KSTermMaxZ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermmindistance">KSTermMinDistance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermminenergy">KSTermMinEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermminlongenergy">KSTermMinLongEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermminr">KSTermMinR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermminz">KSTermMinZ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermoutputdata">KSTermOutputData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermsecondaries">KSTermSecondaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermstepsize">KSTermStepsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstermtrapped">KSTermTrapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolbchange">KSTrajControlBChange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolcyclotron">KSTrajControlCyclotron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolenergy">KSTrajControlEnergy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrollength">KSTrajControlLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolmdot">KSTrajControlMDot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolmagneticmoment">KSTrajControlMagneticMoment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolmomentumnumericalerror">KSTrajControlMomentumNumericalError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolpositionnumericalerror">KSTrajControlPositionNumericalError</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontrolspinprecession">KSTrajControlSpinPrecession</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajcontroltime">KSTrajControlTime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrk54">KSTrajIntegratorRK54</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrk65">KSTrajIntegratorRK65</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrk8">KSTrajIntegratorRK8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrk86">KSTrajIntegratorRK86</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrk87">KSTrajIntegratorRK87</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrkdp54">KSTrajIntegratorRKDP54</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorrkdp853">KSTrajIntegratorRKDP853</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajintegratorsym4">KSTrajIntegratorSym4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajinterpolatorcontinuousrungekutta">KSTrajInterpolatorContinuousRungeKutta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajinterpolatorfast">KSTrajInterpolatorFast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajinterpolatorhermite">KSTrajInterpolatorHermite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermconstantforcepropagation">KSTrajTermConstantForcePropagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermdrift">KSTrajTermDrift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermgravity">KSTrajTermGravity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermgyration">KSTrajTermGyration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermpropagation">KSTrajTermPropagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtermsynchrotron">KSTrajTermSynchrotron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryadiabatic">KSTrajTrajectoryAdiabatic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryadiabaticspin">KSTrajTrajectoryAdiabaticSpin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryelectric">KSTrajTrajectoryElectric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexact">KSTrajTrajectoryExact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexactspin">KSTrajTrajectoryExactSpin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectoryexacttrapped">KSTrajTrajectoryExactTrapped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectorylinear">KSTrajTrajectoryLinear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kstrajtrajectorymagnetic">KSTrajTrajectoryMagnetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriteascii">KSWriteASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriteroot">KSWriteROOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriterootconditionoutputdata">KSWriteROOTConditionOutputData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriterootconditionperiodicdata">KSWriteROOTConditionPeriodicData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriterootconditionstepdata">KSWriteROOTConditionStepData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswriterootconditionterminatordata">KSWriteROOTConditionTerminatorData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kswritevtk">KSWriteVTK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kvtkwindow">KVTKWindow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkaxialmeshpainter">KGVTKAxialMeshPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkdistancetester">KGVTKDistanceTester</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkgeometrypainter">KGVTKGeometryPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkmeshpainter">KGVTKMeshPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtknormaltester">KGVTKNormalTester</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkoutsidetester">KGVTKOutsideTester</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkpointtester">KGVTKPointTester</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#kgvtkrandompointtester">KGVTKRandomPointTester</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksvtkgeneratorpainter">KSVTKGeneratorPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksvtktrackpainter">KSVTKTrackPainter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bindings_full.html#ksvtktrackterminatorpainter">KSVTKTrackTerminatorPainter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bindings_full.html#kommonnamedrandomgenerator">KommonNamedRandomGenerator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html"> License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html"> Authors</a></li>
 </ul>
 </div>
-<button aria-label="Close menu" class="text-4xl text-gray-800 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeNavBtn" title="Close menu">
-<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
-</button>
+
+  <button
+      data-action=""
+      title="Close navigation menu"
+      class="text-4xl text-gray-800 p-4 bottom-0 hover:text-brand xl:hidden focus:text-brand self-center">
+    <span class="sr-only">Close navigation menu</span>
+    <svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+  </button>
 </nav>
-<div class="overflow-y-auto md:w-full flex flex-col flex-1" id="main-wrapper">
-<main class="px-5 md:ml-fluid flex-1" role="main"><nav aria-label="breadcrumbs" class="mt-16 mb-12 text-sm text-gray-700 leading-tight print:hidden" role="navigation">
-<a class="text-blue-700" href="index.html">Kassiopeia 3.8 documentation</a>
-<span class="text-gray-700 mr-1"> • </span><span aria-current="page">Examples and Tests</span>
+  </aside>
+
+  <main
+    data-controller="scroll"
+    data-action="scroll->scroll#showButton"
+    class="px-4 xl:ml-fluid grid-area-main overflow-y-auto flex flex-col h-full mx-0 md:mx-auto xl:mr-0"
+  ><nav role="navigation"
+     aria-label="breadcrumbs"
+     class="print:hidden mt-12 text-sm text-gray-light">
+  <a class="text-gray-light text-sm hover:text-gray-dark font-medium focus:text-gray-dark" href="index.html">Kassiopeia 3.8 documentation</a>
+  <span class="mr-1"> • </span><span aria-current="page">Examples and Tests</span>
 </nav>
-<section id="examples-and-tests">
-<h1>Examples and Tests<a aria-label="Copy link to section: Examples and Tests." class="headerlink tooltipped tooltipped-ne" href="#examples-and-tests" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h1>
-<section id="running-kassiopeia">
-<h2>Running Kassiopeia<a aria-label="Copy link to section: Running Kassiopeia." class="headerlink tooltipped tooltipped-ne" href="#running-kassiopeia" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+    <article role="main" class="flex-1">
+      
+  <div class="section" id="examples-and-tests">
+<h1>Examples and Tests<a class="headerlink" href="#examples-and-tests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="running-kassiopeia">
+<h2>Running Kassiopeia<a class="headerlink" href="#running-kassiopeia" title="Permalink to this headline">¶</a></h2>
 <p>After installation, and assuming the proper environmental variables have been set by running the script
-<code class="docutils literal notranslate">kasperenv.sh</code>, <em>Kassiopeia</em> can be run directly from the command prompt. The script sets the environment variables
-accordingly so that the variable <code class="docutils literal notranslate">KASPERSYS</code> points to the installation directory, and <em>Kassiopeia</em> can be found
+<code class="docutils literal notranslate"><span class="pre">kasperenv.sh</span></code>, <em>Kassiopeia</em> can be run directly from the command prompt. The script sets the environment variables
+accordingly so that the variable <code class="docutils literal notranslate"><span class="pre">KASPERSYS</span></code> points to the installation directory, and <em>Kassiopeia</em> can be found
 in the standard executable path. To run a <em>Kassiopeia</em> simulation, the usage is simply:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia &lt;path-to-xml-config-file&gt;
-</code></pre></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia &lt;path-to-xml-config-file&gt;
+</code></pre></div></div>
 <p><em>Kassiopeia</em> also includes advanced variable replacement functionality, which makes it easy to modify one or many
 <a href="#id1"><span class="problematic" id="id2">*</span></a>simulation parameters on-the-fly. This can be done with the following usage:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; -r &lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; &lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
-</code></pre></div>
-<p>In this case, all elements after the <code class="docutils literal notranslate">-r</code> flag are considered variable definitions. Alternatively, the following
-syntax can be used. Here all variable names are prefixed with <code class="docutils literal notranslate">--</code>, and options can be freely mixed:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; --&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; --&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
-</code></pre></div>
-<section id="verbosity-levels">
-<h3>Verbosity levels<a aria-label="Copy link to section: Verbosity levels." class="headerlink tooltipped tooltipped-ne" href="#verbosity-levels" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; -r &lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; &lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
+</code></pre></div></div>
+<p>In this case, all elements after the <code class="docutils literal notranslate"><span class="pre">-r</span></code> flag are considered variable definitions. Alternatively, the following
+syntax can be used. Here all variable names are prefixed with <code class="docutils literal notranslate"><span class="pre">--</span></code>, and options can be freely mixed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; --&lt;variable1&gt;<span class="o">=</span>&lt;value1&gt; --&lt;variable2&gt;<span class="o">=</span>&lt;value2&gt;
+</code></pre></div></div>
+<div class="section" id="verbosity-levels">
+<h3>Verbosity levels<a class="headerlink" href="#verbosity-levels" title="Permalink to this headline">¶</a></h3>
 <p>As a quick means to change the output verbosity (i.e. the amount of messages shown on the terminal while the program
-is running), the <code class="docutils literal notranslate">-v</code> and <code class="docutils literal notranslate">-q</code> flags can be used. Each option raises/lowers the verbosity level, so that the
+is running), the <code class="docutils literal notranslate"><span class="pre">-v</span></code> and <code class="docutils literal notranslate"><span class="pre">-q</span></code> flags can be used. Each option raises/lowers the verbosity level, so that the
 following example would raise the level by one unit. Try it with one of the example XML files below!</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; -v -q -v
+</code></pre></div></div>
 </div>
-<pre><code>Kassiopeia &lt;path-to-xml-config-file&gt; -v -q -v
-</code></pre></div>
-</section>
-<section id="output-files">
-<h3>Output files<a aria-label="Copy link to section: Output files." class="headerlink tooltipped tooltipped-ne" href="#output-files" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="section" id="output-files">
+<h3>Output files<a class="headerlink" href="#output-files" title="Permalink to this headline">¶</a></h3>
 <p>Upon completion of a simulation, the ROOT output files may be found in the directory
-<code class="docutils literal notranslate">&lt;kassiopeia-install-path&gt;/output/Kassiopeia</code> (where <code class="docutils literal notranslate">&lt;kassiopeia-install-path&gt;</code> usually can be replaced by
-<code class="docutils literal notranslate">$KASPERSYS</code>.) These output files can then be processed or analyzed by an external program, such as <code class="docutils literal notranslate">root</code>. If
-<a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> was enabled at build time and the corresponding writer was enabled in the XML file, a set of <code class="docutils literal notranslate">.vtp</code> output files
+<code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia-install-path&gt;/output/Kassiopeia</span></code> (where <code class="docutils literal notranslate"><span class="pre">&lt;kassiopeia-install-path&gt;</span></code> usually can be replaced by
+<code class="docutils literal notranslate"><span class="pre">$KASPERSYS</span></code>.) These output files can then be processed or analyzed by an external program, such as <code class="docutils literal notranslate"><span class="pre">root</span></code>. If
+<a class="reference external" href="http://www.vtk.org/">VTK</a> was enabled at build time and the corresponding writer was enabled in the XML file, a set of <code class="docutils literal notranslate"><span class="pre">.vtp</span></code> output files
 (polygon data in the VTK file format) is created in the same directory.</p>
 <p>In order to prematurely terminate a running simulation, <em>Kassiopeia</em> provides a user interrupt feature. To terminate the
-simulation while allowing <em>Kassiopeia</em> to clean up and save the accumulated data to file, the user may type <code class="docutils literal notranslate">Crtl-C</code>
+simulation while allowing <em>Kassiopeia</em> to clean up and save the accumulated data to file, the user may type <code class="docutils literal notranslate"><span class="pre">Crtl-C</span></code>
 just once in the terminal. To immediately exit the simulation (without cleaning up or saving data), the user may press
-the key combination <code class="docutils literal notranslate">Crtl-C</code> again, which leads to program termination.</p>
-</section>
-</section>
-<section id="example-configurations">
-<h2>Example configurations<a aria-label="Copy link to section: Example configurations." class="headerlink tooltipped tooltipped-ne" href="#example-configurations" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h2>
+the key combination <code class="docutils literal notranslate"><span class="pre">Crtl-C</span></code> again, which leads to program termination.</p>
+</div>
+</div>
+<div class="section" id="example-configurations">
+<h2>Example configurations<a class="headerlink" href="#example-configurations" title="Permalink to this headline">¶</a></h2>
 <p>Next in this section, we will investigate a number of pre-configured example files that are shipped with <em>Kassiopeia</em>.
 These files serve as a working example of various features of the simulation, but also as a reference for your own
 configurations. Please take some time to investigate these example files.</p>
-<p>The example configurations can be found online at <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/XML/Examples">GitHub: Kassiopeia/XML/Examples<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> and are installed to:</p>
+<p>The example configurations can be found online at <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/XML/Examples">GitHub: Kassiopeia/XML/Examples</a> and are installed to:</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate">$KASPERSYS/config/Kassiopeia/Examples/</code></p>
+<div><p><code class="docutils literal notranslate"><span class="pre">$KASPERSYS/config/Kassiopeia/Examples/</span></code></p>
 </div></blockquote>
-<section id="the-dipole-trap-example">
-<h3>The Dipole Trap Example<a aria-label="Copy link to section: The Dipole Trap Example." class="headerlink tooltipped tooltipped-ne" href="#the-dipole-trap-example" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<div class="section" id="the-dipole-trap-example">
+<h3>The Dipole Trap Example<a class="headerlink" href="#the-dipole-trap-example" title="Permalink to this headline">¶</a></h3>
 <p>The first example is a simulation of a simple dipole trap, or rather, a magnetic mirror device. It consists of two
 dipole magnets positioned some distance apart along the same axis to form a magnetic bottle. To make the simulation
 slightly less trivial and more suitable to show <em>Kassiopeia</em> features, a ring electrode has been added near the center
 of the magnetic bottle emulating a MAC-E filter spectrometer. To run this simulation type:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
-</code></pre></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/DipoleTrapSimulation.xml
+</code></pre></div></div>
 <p>On the first run of this simulation, <em>Kassiopeia</em> will call <em>KEMField</em> to solve the static electric and magnetic fields
 of the geometry and compute zonal harmonic (an axially symmetric approximation) coefficients. Once field solving is
 finished, particle tracking of 1 event will commence.</p>
 <p>Ignoring the messages from <em>KEMField</em>, the terminal output of this example will look something like:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang"></span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>[KSMAIN NORMAL MESSAGE] ☻  welcome to Kassiopeia 3.7  ☻
+<div class="highlight- notranslate"><div class="highlight"><pre><code>[KSMAIN NORMAL MESSAGE] ☻  welcome to Kassiopeia 3.7  ☻
 ****[KSRUN NORMAL MESSAGE] processing run 0...
 ********[KSEVENT NORMAL MESSAGE] processing event 0 &lt;generator_uniform&gt;...
 ************[KSTRACK NORMAL MESSAGE] processing track 0 &lt;generator_uniform&gt;...
@@ -397,106 +694,86 @@ finished, particle tracking of 1 event will commence.</p>
 ****[KSRUN NORMAL MESSAGE] ...run 0 complete
 [KSMAIN NORMAL MESSAGE] finished!
 [KSMAIN NORMAL MESSAGE] ...finished
-</code></pre></div>
-<p>Once particle tracking has terminated you will find a <code class="docutils literal notranslate">.root</code> output file located at:</p>
+</code></pre></div></div>
+<p>Once particle tracking has terminated you will find a <code class="docutils literal notranslate"><span class="pre">.root</span></code> output file located at:</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate">$KASPERSYS/output/Kassiopeia/DipoleTrapSimulation.root</code></p>
+<div><p><code class="docutils literal notranslate"><span class="pre">$KASPERSYS/output/Kassiopeia/DipoleTrapSimulation.root</span></code></p>
 </div></blockquote>
 <p>This file contains the data pertaining to the particle’s state during tracking, saved in the ROOT TTree format. The
 contents of the output file are configured in the XML file. The ROOT file maybe opened for quick visualization and
-histogramming using the ROOT <a class="reference external" href="https://root.cern.ch/doc/master/classTBrowser.html">TBrowser<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or other suitable tool, or it may be processed by an external analysis program.
+histogramming using the ROOT <a class="reference external" href="https://root.cern.ch/doc/master/classTBrowser.html">TBrowser</a> or other suitable tool, or it may be processed by an external analysis program.
 As an example, plotting the electric potential experienced by the electron as a function of its $z$ position produces
 the following graph.</p>
-<a class="reference internal image-reference" href="_images/dipole_potential_vs_z.png"><img alt="_images/dipole_potential_vs_z.png" src="_images/dipole_potential_vs_z.png" style="width: 500pt;"/></a>
-<p>For more advanced visualization <em>Kassiopeia</em> may be linked against the <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> library. If this is done, the
-<code class="docutils literal notranslate">DipoleTrapSimulation.xml</code> example will include a configuration which will open an interactive VTK visualization
+<a class="reference internal image-reference" href="_images/dipole_potential_vs_z.png"><img alt="_images/dipole_potential_vs_z.png" src="_images/dipole_potential_vs_z.png" style="width: 500pt;" /></a>
+<p>For more advanced visualization <em>Kassiopeia</em> may be linked against the <a class="reference external" href="http://www.vtk.org/">VTK</a> library. If this is done, the
+<code class="docutils literal notranslate"><span class="pre">DipoleTrapSimulation.xml</span></code> example will include a configuration which will open an interactive VTK visualization
 window upon completion of the simulation. The output of which shows the electron’s track colored by angle between its
 momentum vector and the magnetic field. The following image demonstrates the VTK visualization of the simulation.</p>
-<a class="reference internal image-reference" href="_images/dipole_vtk.png"><img alt="_images/dipole_vtk.png" src="_images/dipole_vtk.png" style="width: 500pt;"/></a>
-</section>
-<section id="the-quadrupole-trap-example">
-<h3>The Quadrupole Trap Example<a aria-label="Copy link to section: The Quadrupole Trap Example." class="headerlink tooltipped tooltipped-ne" href="#the-quadrupole-trap-example" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<a class="reference internal image-reference" href="_images/dipole_vtk.png"><img alt="_images/dipole_vtk.png" src="_images/dipole_vtk.png" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="the-quadrupole-trap-example">
+<h3>The Quadrupole Trap Example<a class="headerlink" href="#the-quadrupole-trap-example" title="Permalink to this headline">¶</a></h3>
 <p>The second example to demonstrate the capabilities of <em>Kassiopeia</em> is that of a quadrupole (Penning) trap. This sort of
 trap is similar to those which are used to measure the electron $g$-factor to extreme precision. To run this example,
 locate the XML file in the config directory, and at the command prompt enter:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/QuadrupoleTrapSimulation.xml
-</code></pre></div>
-<p>This example also demonstrates the incorporation of discrete interactions, such as scattering off residual gas. If <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/QuadrupoleTrapSimulation.xml
+</code></pre></div></div>
+<p>This example also demonstrates the incorporation of discrete interactions, such as scattering off residual gas. If <a class="reference external" href="http://www.vtk.org/">VTK</a>
 is used, upon the completion of the simulation a visualization window will appear. An example of this shown in the
 following figure. The large green tube is the solenoid magnet, while the amber hyperboloid surfaces within it are the
 electrode surfaces. The electron tracks can be seen as short lines at the center.</p>
-<a class="reference internal image-reference" href="_images/quadrupole_vtk.png"><img alt="_images/quadrupole_vtk.png" src="_images/quadrupole_vtk.png" style="width: 500pt;"/></a>
-<p>Furthermore, a very simple analysis program example <code class="docutils literal notranslate">QuadrupoleTrapAnalysis</code> can be run on the resulting <code class="docutils literal notranslate">.root</code>
+<a class="reference internal image-reference" href="_images/quadrupole_vtk.png"><img alt="_images/quadrupole_vtk.png" src="_images/quadrupole_vtk.png" style="width: 500pt;" /></a>
+<p>Furthermore, a very simple analysis program example <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapAnalysis</span></code> can be run on the resulting <code class="docutils literal notranslate"><span class="pre">.root</span></code>
 file. To do this, execute the following after the output file was created:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>QuadrupoleTrapAnalysis <span class="nv">$KASPERSYS</span>/output/Kassiopeia/QuadrupoleTrapSimulation.root
-</code></pre></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>QuadrupoleTrapAnalysis <span class="nv">$KASPERSYS</span>/output/Kassiopeia/QuadrupoleTrapSimulation.root
+</code></pre></div></div>
 <p>The output of which should be something to the effect of:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang"></span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>extrema for track &lt;1.43523&gt;
-</code></pre></div>
+<div class="highlight- notranslate"><div class="highlight"><pre><code>extrema for track &lt;1.43523&gt;
+</code></pre></div></div>
 <p>This program can be used as a basis for more advanced analysis programs, as it demonstrates the methods needed to
 iterate over the particle tracking data stored in a ROOT TTree file. It is also possible to access the ROOT TTree data
-by other means, e.g. using Python scripts and the <a class="reference external" href="https://root.cern/manual/python/">PyROOT<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> or <a class="reference external" href="https://pypi.org/project/uproot/">uproot<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> modules, but this is out of scope for this section.</p>
-</section>
-<section id="the-photomultiplier-tube-example">
-<h3>The Photomultiplier Tube Example<a aria-label="Copy link to section: The Photomultiplier Tube Example." class="headerlink tooltipped tooltipped-ne" href="#the-photomultiplier-tube-example" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+by other means, e.g. using Python scripts and the <a class="reference external" href="https://root.cern/manual/python/">PyROOT</a> or <a class="reference external" href="https://pypi.org/project/uproot/">uproot</a> modules, but this is out of scope for this section.</p>
+</div>
+<div class="section" id="the-photomultiplier-tube-example">
+<h3>The Photomultiplier Tube Example<a class="headerlink" href="#the-photomultiplier-tube-example" title="Permalink to this headline">¶</a></h3>
 <p>As a demonstration of some of the more advanced features of <em>Kassiopeia</em> (particularly its 3D capabilities), an example
 of particle tracking in a photomultiplier tube is also included. This convifuration was also featured in the
 <em>Kassiopeia</em> paper <a class="footnote-reference brackets" href="#id6" id="id3">*</a>.</p>
 <p>Since the dimensions of the linear system that needs to be solved in order to compute the electric field is rather large
 (~150K mesh elements), the initialization of the electric field may take some time. If the user has the appropriate
 device (e.g. a GPU) it is recommended that the field solving sub-module <em>KEMField</em> is augmented with OpenCL in order to
-take advantage of hardware acceleration. This is done by setting the <code class="docutils literal notranslate">KEMField_USE_OpenCL</code> flag in the build stage.</p>
+take advantage of hardware acceleration. This is done by setting the <code class="docutils literal notranslate"><span class="pre">KEMField_USE_OpenCL</span></code> flag in the build stage.</p>
 <p>To run this simulation, type:</p>
-<div class="highlight">
-<div class="code-header">
-<span class="code-lang">bash</span>
-<button aria-label="Copy this code" class="copy tooltipped tooltipped-nw"><svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/xvg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg></button>
-</div>
-<pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
-</code></pre></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><code>Kassiopeia <span class="nv">$KASPERSYS</span>/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
+</code></pre></div></div>
 <p>Depending on the capability of your computer this example may take several hours to run, and you may want to execute it
-overnight. If you have enabled <a class="reference external" href="http://www.vtk.org/">VTK<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a>, an <code class="docutils literal notranslate">.vtp</code> output file called:</p>
+overnight. If you have enabled <a class="reference external" href="http://www.vtk.org/">VTK</a>, an <code class="docutils literal notranslate"><span class="pre">.vtp</span></code> output file called:</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate">$KASPERSYS/output/Kassiopeia/PhotoMultiplierTubeSimulation.vtpStep.vtp</code></p>
+<div><p><code class="docutils literal notranslate"><span class="pre">$KASPERSYS/output/Kassiopeia/PhotoMultiplierTubeSimulation.vtpStep.vtp</span></code></p>
 </div></blockquote>
 <p>will be created. This file stores the particle step data for visualization using the VTK polydata format. Additionally,
-a file called <code class="docutils literal notranslate">PhotomultiplierTube.vtp</code> will be created in the directory from which <em>Kassiopeia</em> was called. This file
+a file called <code class="docutils literal notranslate"><span class="pre">PhotomultiplierTube.vtp</span></code> will be created in the directory from which <em>Kassiopeia</em> was called. This file
 stores visualization data about the electrode mesh elements used by <em>KEMField</em>. Both of these files can be opened in the
-external program <a class="reference external" href="http://www.paraview.org/">Paraview<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> for data selection and viewing, or other suitable software. An example is shown in the
+external program <a class="reference external" href="http://www.paraview.org/">Paraview</a> for data selection and viewing, or other suitable software. An example is shown in the
 following figure.</p>
-<a class="reference internal image-reference" href="_images/pmt_paraview.png"><img alt="_images/pmt_paraview.png" src="_images/pmt_paraview.png" style="width: 500pt;"/></a>
-</section>
-<section id="the-mesh-simulation-example">
-<h3>The Mesh Simulation Example<a aria-label="Copy link to section: The Mesh Simulation Example." class="headerlink tooltipped tooltipped-ne" href="#the-mesh-simulation-example" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
-<p>The mesh simulation uses a geometry from an external <a class="reference external" href="https://en.wikipedia.org/wiki/STL_%28file_format%29">STL<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a> file, which is a format widely used in 3D design software.
+<a class="reference internal image-reference" href="_images/pmt_paraview.png"><img alt="_images/pmt_paraview.png" src="_images/pmt_paraview.png" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="the-mesh-simulation-example">
+<h3>The Mesh Simulation Example<a class="headerlink" href="#the-mesh-simulation-example" title="Permalink to this headline">¶</a></h3>
+<p>The mesh simulation uses a geometry from an external <a class="reference external" href="https://en.wikipedia.org/wiki/STL_%28file_format%29">STL</a> file, which is a format widely used in 3D design software.
 The external geometry must provide a surface mesh in order to be usable with <em>KEMField</em> and <em>Kassiopeia</em>. In this
 example, an electric field is defined by two copies of the so-called <cite>Menger sponge</cite> cubes that are placed next to each
 other. Particles are tracked along a linear trajectory, which are reflected when they hit one of the cube surfaces.</p>
-<a class="reference internal image-reference" href="_images/mesh_simulation.png"><img alt="_images/mesh_simulation.png" src="_images/mesh_simulation.png" style="width: 500pt;"/></a>
-</section>
-<section id="other-examples">
-<h3>Other Examples<a aria-label="Copy link to section: Other Examples." class="headerlink tooltipped tooltipped-ne" href="#other-examples" role="button"><svg pointer-events="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"></path></svg></a></h3>
+<a class="reference internal image-reference" href="_images/mesh_simulation.png"><img alt="_images/mesh_simulation.png" src="_images/mesh_simulation.png" style="width: 500pt;" /></a>
+</div>
+<div class="section" id="other-examples">
+<h3>Other Examples<a class="headerlink" href="#other-examples" title="Permalink to this headline">¶</a></h3>
 <p>Some other examples which explore other concepts
 also distributed with Kassiopeia, and are described in the following table.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 39%"/>
-<col style="width: 61%"/>
+<col style="width: 39%" />
+<col style="width: 61%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head" colspan="2"><p>Other simulation examples</p></th>
@@ -506,19 +783,19 @@ also distributed with Kassiopeia, and are described in the following table.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate">AnalyticSimulation.xml</code></p>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AnalyticSimulation.xml</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="_images/analytic_trap.png"><img alt="ana" class="align-middle" src="_images/analytic_trap.png" style="width: 307.2px; height: 239.1px;"/></a></p>
+<div><p><a class="reference internal" href="_images/analytic_trap.png"><img alt="ana" class="align-middle" src="_images/analytic_trap.png" style="width: 307.2px; height: 239.1px;" /></a></p>
 </div></blockquote>
 </td>
 <td><p>Quadrupole ion/electron trap (similar to the original
-<code class="docutils literal notranslate">QuadrupoleTrapSimulation.xml</code>. However, the magnetic
+<code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code>. However, the magnetic
 field is completely uniform and the and the electric
 field is described analytically as an ideal quadrupole.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate">ToricTrapSimulation.xml</code></p>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ToricTrapSimulation.xml</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="_images/toric.png"><img alt="toric" class="align-middle" src="_images/toric.png" style="width: 358.32px; height: 267.84px;"/></a></p>
+<div><p><a class="reference internal" href="_images/toric.png"><img alt="toric" class="align-middle" src="_images/toric.png" style="width: 358.32px; height: 267.84px;" /></a></p>
 </div></blockquote>
 </td>
 <td><p>This is a simulation of an electron trapped in a magnetic
@@ -526,9 +803,9 @@ torus (similar to a Tokamak reactor), and it demonstrates the
 identification of surface intersections, as well as particle
 drift in non-homogeneous fields.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate">DipoleTrapMeshedSpaceSimulation.xml</code></p>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DipoleTrapMeshedSpaceSimulation.xml</span></code></p>
 <blockquote>
-<div><p><a class="reference internal" href="_images/dipole_meshed_vtk.png"><img alt="dmvtk" class="align-middle" src="_images/dipole_meshed_vtk.png" style="width: 307.2px; height: 239.1px;"/></a></p>
+<div><p><a class="reference internal" href="_images/dipole_meshed_vtk.png"><img alt="dmvtk" class="align-middle" src="_images/dipole_meshed_vtk.png" style="width: 307.2px; height: 239.1px;" /></a></p>
 </div></blockquote>
 </td>
 <td><p>This simulation has the same fields as the original
@@ -542,57 +819,64 @@ octree-based navigator.</p></td>
 <dl class="footnote brackets">
 <dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">*</a></span></dt>
 <dd><ol class="upperalpha simple" start="4">
-<li><p>Furse <em>et al.</em> (2017) New J. Phys. <strong>19</strong> 053012, <a class="reference external" href="https://doi.org/10.1088/1367-2630/aa6950">doi:10.1088/1367-2630/aa6950<svg aria-hidden="true" class="external-link-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path></svg></a></p></li>
+<li><p>Furse <em>et al.</em> (2017) New J. Phys. <strong>19</strong> 053012, <a class="reference external" href="https://doi.org/10.1088/1367-2630/aa6950">doi:10.1088/1367-2630/aa6950</a></p></li>
 </ol>
 </dd>
 </dl>
+</div>
+</div>
+</div>
+
+
+    </article><section class="flex justify-between pt-4 mt-12">
+  
+  <div class="mr-auto">
+    <span class="uppercase text-xs text-gray-light tracking-wider block mb-2">Previous</span>
+    <a
+      href="compiling.html"
+      title="Go to previous page"
+      class="block text-link hover:text-brand focus:text-brand hover:underline focus:underline"
+      >Getting starting with Kassiopiea</a>
+  </div>
+  
+  
+  <div class="ml-auto">
+    <span class="uppercase text-xs text-gray-light tracking-wider block mb-2 text-right">Next</span>
+    <a
+      href="configuration.html"
+      title="Go to next page"
+      class="block text-link hover:text-brand focus:text-brand hover:underline focus:underline"
+      >Configuring Your Own Simulation</a>
+  </div>
+  
 </section>
-</section>
-</section>
-<section class="flex justify-between pt-4 mt-12">
-<div class="mr-auto">
-<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2">Previous</span>
-<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="compiling.html" title="Go to previous page">← Getting starting with Kassiopiea</a>
+
+    <footer>
+      
+        <div class="mt-20 mb-4 text-sm text-gray-700">&copy; 2016-2021, The Kassiopeia developers.&nbsp;Made with <a href="https://www.sphinx-doc.org">Sphinx 4.4.0</a></div>
+      
+    </footer></main>
+
+
+      <button
+  data-search-target="snackbar"
+  data-action="search#hideSnackbar"
+  class="fixed bottom-0 right-0 z-20 opacity-0 p-4 m-4 tracking-wide bg-gray-900 text-gray-100 transition transform transform-gpu duration-500 translate-y-full"
+>
+  Clear highlights
+</button><div
+  data-sidebar-target="screen"
+  data-action="click->sidebar#close"
+  class="fixed hidden inset-0 bg-black bg-opacity-50">
 </div>
-<div class="ml-auto">
-<span class="uppercase text-sm font-medium text-gray-600 tracking-wider block mb-2 text-right">Next</span>
-<a class="block text-blue-700 hover:text-pink-600 focus:text-pink-600 hover:underline focus:underline" href="configuration.html" title="Go to next page">Configuring Your Own Simulation →</a>
-</div>
-</section>
-</main>
-<footer class="mt-20 px-5 md:ml-fluid mb-4 flex-shrink-0 text-sm text-gray-700" role="contentinfo">© Copyright 2016-2021, The Kassiopeia developers. Made with <a href="https://www.sphinx-doc.org">Sphinx 4.1.2</a></footer>
-</div>
-<div class="sticky bottom-0 md:hidden print:hidden bg-white">
-<div class="flex justify-center items-center">
-<button aria-labelledby="menuLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openNavBtn">
-<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
-<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="menuLabel">Menu</span>
-</button><button aria-labelledby="searchLabel" class="text-3xl p-4 flex items-center focus:bg-gray-200" id="openSearchBtn">
-<svg aria-hidden="true" class="fill-current h-8 w-8" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-<span class="pl-2 text-sm font-medium uppercase tracking-wide text-gray-700" id="searchLabel">Search</span>
-</button>
-</div>
-</div>
-<div class="w-full fixed bottom-0 left-0 z-10 bg-gray-900 overflow-x-hidden pt-10 flex flex-col items-center md:hidden" data-menu="closed" id="search-pane">
-<h4 class="text-xl text-white mb-4" id="search-label">Enter search term</h4><form action="search.html" class="flex w-full justify-between items-center max-w-sm px-12" id="searchbox" method="get">
-<input aria-labelledby="search-label" class="p-2 flex-1" name="q" placeholder="Search the docs" type="search"/>
-<button aria-label="Get search results" class="p-2 text-white bg-gray-700 hover:bg-gray-200 hover:text-pink-500 focus:bg-gray-200 focus:text-pink-500 tooltipped tooltipped-sw">
-<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-</button>
-</form>
-<button aria-label="Close menu" class="text-4xl text-gray-200 p-4 bottom-0 hover:text-pink-500 md:hidden focus:text-pink-500 self-center" id="closeSearchBtn" title="Close menu">
-<svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
-</button>
-</div>
-<div class="fixed bottom-0 right-0 opacity-0 p-4 m-4 bg-gray-900 text-gray-100 transition transform duration-500 translate-y-full" id="snackbar"></div>
-<div class="fixed inset-0 bg-black bg-opacity-50" id="screen" style="display: none;"></div>
-</div>
-<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
-</script>
-<script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-<script src="_static/jquery.js"></script>
-<script src="_static/underscore.js"></script>
-<script src="_static/doctools.js"></script>
-<script defer="" src="_static/theme.js"></script>
-</body>
+    </div>
+    
+      
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+<script src="_static/theme.1ba02c30758e6036ba31.js"></script>
+    
+  </body>
 </html>
