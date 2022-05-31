@@ -26,12 +26,15 @@ class KGlobals : public KSingleton<KGlobals>
     void SetBatchMode(bool);
     bool IsBatchMode();
 
+    void SetVerbosityLevel(int);
+    int VerbosityLevel();
+
   private:
-    bool fBatchMode;
     bool fAccessed;
+    bool fBatchMode;
+    int fVerbosityLevel;
 };
 
 }  // namespace katrin
 
 #endif /* KGLOBALS_H_ */
- 

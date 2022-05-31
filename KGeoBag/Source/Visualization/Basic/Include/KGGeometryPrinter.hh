@@ -137,6 +137,7 @@ class KGGeometryPrinter :
     void SetUseColors(bool aFlag = true);
     void SetWriteJSON(bool aFlag = true);
     void SetWriteXML(bool aFlag = true);
+    void SetWriteDOT(bool aFlag = true);
 
     void AddSurface(KGSurface* aSurface);
     void AddSpace(KGSpace* aSpace);
@@ -144,17 +145,24 @@ class KGGeometryPrinter :
     void SetWindow(katrin::KWindow*) override{};
     void ClearWindow(katrin::KWindow*) override{};
 
+  protected:
+    void WriteGraphViz(std::ostream& aStream, bool with_tags = false) const;
+
   private:
     std::string fFile;
     std::string fPath;
     bool fWriteJSON;
     bool fWriteXML;
+    bool fWriteDOT;
     bool fUseColors;
 
     std::ostream* fStream;
 
     std::vector<KGSurface*> fSurfaces;
     std::vector<KGSpace*> fSpaces;
+
+    std::vector<KGSurface*> fVisitedSurfaces;
+    std::vector<KGSpace*> fVisitedSpaces;
 
     Private* fPrivate;
 

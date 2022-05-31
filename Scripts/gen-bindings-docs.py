@@ -10,11 +10,11 @@ MASTER_ROOT = 'KRoot'
 
 STRIP_NAMESPACES = ['std', 'detail', 'katrin', 'KGeoBag', 'KEMField']
 
-#### https://regex101.com/r/c9ICU1/3
-REGEX_PATTERN = r'(\s*(\w+)(Builder|Binding)::(Attribute|SimpleElement|ComplexElement)<\s*([\w]+::)?([\w]+)\s*>\s*\(\s*"(\w+)"\s*\)\s*[+;])'
+#### https://regex101.com/r/ih2tjR/1
+REGEX_PATTERN = r'(\s*(\w+)(Builder|Binding)::(Attribute|SimpleElement|ComplexElement)<\s*([\w]+::)?([\w<>]+)\s*>\s*\(\s*"(\w+)"\s*\)\s*[+;])'
 
-REGEX_PATTERN_TYPEDEF = r'(typedef\s+K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w]+)\s*>\s*(\w+)(Builder|Binding)\s*;)'
-REGEX_PATTERN_USING = r'(using\s+(\w+)(Builder|Binding)\s*=\s*K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w]+)\s*>\s*;)'
+REGEX_PATTERN_TYPEDEF = r'(typedef\s+K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<>]+)\s*>\s*(\w+)(Builder|Binding)\s*;)'
+REGEX_PATTERN_USING = r'(using\s+(\w+)(Builder|Binding)\s*=\s*K(SimpleElement|ComplexElement)\s*<\s*([\w]+::)?([\w<>]+)\s*>\s*;)'
 
 # GraphViz options
 FONT_SIZE = 11
@@ -41,119 +41,150 @@ class Node:
     def __init__(self, name, type):
         self.name = name
         self.type = type
-        self.source_file = None
-        self.xml_name = None
         self.data_type = None
+        self.source_files = set()
+        self.xml_names = set()
 
         self.parents = set()
-        self.children = set()
-        self.attributes = []
+        self.children = dict()
+        self.attributes = dict()
 
     def __repr__(self):
         return self.name
 
     def __str__(self):
-        return f"{self.name} = {self.xml_name}"
+        return f"{self.name} = {self.xml_names}"
 
     def __lt__(self, other):
         return self.name < other.name
 
-    def pprint(self, level=0, stack=[]):
+    def pprint(self, level=0, stack=[], key=''):
         indent = level*'  '
+        if not key and self.xml_names:
+            key = list(self.xml_names)[0]
 
-        print(indent + f"{self.xml_name} = {self.name}")  #  ({self.source_file})
-        for attr in sorted(self.attributes):
-            print(indent + '  ' + f"{attr.xml_name} = {attr.name}")
-        for node in sorted(self.children):
-            if not node.name in stack:
-                stack.append(self.name)
-                node.pprint(level+1, stack)
+        #print(indent + f"{key} = {self.name}")  #  ({self.source_file})
+        for attr_key in sorted(self.attributes.keys()):
+            attr = self.attributes[attr_key]
+            print(indent + f"{attr_key} = {attr.name}")
 
-    def makeGraph(self, level=0, stack=[], with_children=True, with_attributes=False):
+        for node_key in sorted(self.children.keys()):
+            node = self.children[node_key]
+            full_name = f'"{node.name}__{node_key}'
+            if not full_name in stack:
+                stack.append(full_name)
+                print(indent + f"{node_key} = {node.name}")  #  ({self.source_file})
+                node.pprint(level+1, stack, key=node_key)
+
+    def makeGraph(self, level=0, stack=[], nodes=set(), key='', with_children=True, with_attributes=False):
         node_color = NODE_COLORS[(level+1) % len(NODE_COLORS)]
         make_subgraph = (level == 0) or (with_children and self.children) or (with_attributes and self.attributes)
+        if not key and self.xml_names:
+            key = list(self.xml_names)[0]
+
+        cleanStr = lambda txt: txt.translate(dict([ (ord(c),'_') for c in "<>-" ]))  # strip invalid chars
+
+        full_name = cleanStr(f'{self.name}__{key}')
+        if full_name in nodes:
+            return nodes
+        nodes.add(full_name)
 
         if make_subgraph:
-            print(f'subgraph cluster_{self.name} {{')
-            print(f'## {self.children}')
+            print(f'subgraph cluster_{cleanStr(self.name)} {{')
             print(f'label="{self.name}"; fontsize={FONT_SIZE}; fontname="{FONT_FACE},bold"; style=filled; fillcolor="{CLUSTER_COLOR}{CLUSTER_ALPHA}";')
             print(f'node [shape={NODE_SHAPE}, style=filled, fillcolor="{node_color}{NODE_ALPHA}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
 
-        if not self.name in stack:
-            print(f'"{self.name}" [label="{self.xml_name}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
+        if not full_name in stack:
+            print(f'"{full_name}" [label="{key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
+            stack.append(full_name)
 
         #print(f'"{self.name}";')
         if with_attributes:
-            sorted_attributes = sorted(self.attributes)
-            for attr in self.attributes:
-                print(f'"{self.name}__{attr.xml_name}" [label="{attr.xml_name}", shape={ATTR_SHAPE}, fontsize={FONT_SIZE-1}, fontname="{FONT_FACE}", fillcolor="{ATTR_COLOR}{ATTR_ALPHA}"];')
-                #print(f'"{self.name}" -> "{self.name}__{attr.xml_name}" [label="{attr.name}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},italic"];')
-                print(f'"{self.name}" -> "{self.name}__{attr.xml_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE},italic"];')
+            sorted_keys = sorted(self.attributes.keys())
+            for attr_key in sorted_keys:
+                attr = self.attributes[attr_key]
+                print(f'"{full_name}__{attr_key}" [label="{attr_key}", shape={ATTR_SHAPE}, fontsize={FONT_SIZE-1}, fontname="{FONT_FACE}", fillcolor="{ATTR_COLOR}{ATTR_ALPHA}"];')
+                print(f'"{full_name}" -> "{full_name}__{attr_key}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE},italic"];')
 
         if with_children:
-            sorted_children = sorted(self.children)
-            child_nodes = ' '.join([f'"{node.name}"' for node in sorted_children])
+            sorted_keys = sorted(self.children.keys())
+            child_nodes = ' '.join([f'"{self.children[key].name}__{key}"' for key in sorted_keys])
             if child_nodes:
                 print(f'{{ rank=same {child_nodes} }}')
 
-            for node in sorted_children:
-                #print(f'node [shape={NODE_SHAPE}, style=filled, fillcolor="{node_color}{NODE_ALPHA}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
-                #print(f'"{node.name}" [label="{node.xml_name}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
-                #print(f'"{self.name}" -> "{node.name}" [label="{node.xml_name}", fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
-                if not node.name in stack:
-                    stack.append(self.name)
-                    print(f'"{self.name}" -> "{node.name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
-                    node.makeGraph(level+1, stack, with_children=with_children, with_attributes=with_attributes)
+            for node_key in sorted_keys:
+                node = self.children[node_key]
+                node_full_name = cleanStr(f'{node.name}__{node_key}')
+                if node_full_name in stack:
+                    continue
+
+                print(f'"{full_name}" -> "{node_full_name}" [fontsize={FONT_SIZE}, fontname="{FONT_FACE}"];')
+                print(f'"{node_full_name}" [label="{node_key}", fontsize={FONT_SIZE}, fontname="{FONT_FACE},bold"];')
+                new_nodes = node.makeGraph(level+1, stack, nodes, key=node_key, with_children=with_children, with_attributes=with_attributes)
+                nodes.union(new_nodes)
 
         if make_subgraph:
             print(f'}}')
 
-    def makeExampleXML(self, level=0, stack=[], max_children=999, max_attributes=999, include_root=True):
-        spaces = '    '
+        return nodes
 
-        if not self.xml_name:
+    def makeExampleXML(self, level=0, stack=[], key='', max_children=999, max_attributes=999, include_root=True):
+        spaces = '    '
+        if not key and self.xml_names:
+            key = list(self.xml_names)[0]
+
+        if not self.xml_names:
             if include_root:
-                for node in list(sorted(self.children))[:max_children]:
+                for node_key in list(sorted(self.children.keys()))[:max_children]:
+                    node = self.children[node_key]
                     if not node.name in stack:
-                        stack.append(self.name)
                         node.makeExampleXML(level, stack, max_children=max_children, max_attributes=max_attributes)
             return
 
         indent = level*spaces
 
         if not self.children and not self.attributes:
-           print(f'{indent}<{self.xml_name}/>')
+           print(f'{indent}<{key}/>')
            return
 
         if self.attributes:
-            print(f'{indent}<{self.xml_name}')
-            for attr in list(sorted(self.attributes))[:max_attributes]:
-                print(f'{indent}{spaces}{attr.xml_name}="({attr.name})"')
+            print(f'{indent}<{key}')
+            for attr_key in list(sorted(self.attributes.keys()))[:max_attributes]:
+                attr = self.attributes[attr_key]
+                print(f'{indent}{spaces}{attr_key}="({attr.name})"')
             #if not self.children:
             #    print(f'{indent}/>')
             #    return
             print(f'{indent}>')
         else:
-            print(f'{indent}<{self.xml_name}>')
+            print(f'{indent}<{key}>')
 
-        for node in list(sorted(self.children))[:max_children]:
-            if not node.name in stack:
-                stack.append(self.name)
-                node.makeExampleXML(level+1, stack, max_children=max_children, max_attributes=max_attributes)
+        for node_key in list(sorted(self.children.keys()))[:max_children]:
+            node = self.children[node_key]
+            full_name = f"{self.name}__{node_key}"
+            if not full_name in stack:
+                stack.append(full_name)
+                node.makeExampleXML(level+1, stack, key=node_key, max_children=max_children, max_attributes=max_attributes)
                 print()
 
-        print(f'{indent}</{self.xml_name}>')
+        print(f'{indent}</{key}>')
 
-    def makeTableRST(self, level=0, stack=[], with_sections=False):
+    def makeTableRST(self, level=0, stack=[], key='', with_sections=False):
         numCols = 6
-        colWidth = 100
-        colHeaders = ('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types')
+        colWidth = 100  # in RST the columns all must have the same width
+        colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
         headSep = ['-', '~', '^']
+        if not key and self.xml_names:
+            key = list(self.xml_names)[0]
+
+        escapeStr = lambda txt: txt.translate(dict([ (ord(c),f'\{c}') for c in "<>" ]))  # escape invalid chars
+        cleanStr = lambda txt: txt.translate(dict([ (ord(c),f'_') for c in "<>" ]))  # strip invalid chars
+
         if with_sections:
             if self.children or self.attributes:
                 if level < len(headSep):
                     print()
-                    print(f'.. _{self.name.lower()}:')
+                    print(f'.. _{cleanStr(self.name.lower())}:')
                     print()
                     print(f'{self.name}')
                     print(colWidth*headSep[level])
@@ -170,48 +201,77 @@ class Node:
                 print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
                 print(('+%s'%(colWidth*'='))*numCols + '+')
 
-        self_node = f'``{self.xml_name}``' if self.xml_name else "—"
-        source_file = f'*{os.path.basename(self.source_file)}*' if self.source_file else "—"
-        sorted_children = sorted(self.children) if self.children else []
-        sorted_attributes = sorted(self.attributes) if self.attributes else []
-        for i in range(max(len(sorted_children), len(sorted_attributes))):
+        self_node = f'``{key}``' if key else "—"
+        sorted_files = sorted(list(self.source_files)) if self.source_files else []
+        sorted_children = sorted(self.children.keys()) if self.children else []
+        sorted_attributes = sorted(self.attributes.keys()) if self.attributes else []
+
+        for i in range(max(len(sorted_files), len(sorted_children), len(sorted_attributes))):
+            if not sorted_files and i == 0:
+                source_files = "—"
+            elif i < len(sorted_files):
+                file = sorted_files[i]
+                source_files = f'- *{os.path.basename(file)}*'
+            else:
+                source_files = ""
+
             if not sorted_children and i == 0:
                 child_nodes = child_types = "—"
             elif i < len(sorted_children):
-                node = sorted_children[i]
-                child_nodes = f'- ``{node.xml_name}``'
-                child_types = f'- :ref:`{node.name} <{node.name.lower()}>`'
+                node_key = sorted_children[i]
+                node = self.children[node_key]
+                child_nodes = f'- ``{node_key}``'
+                child_types = f'- :ref:`{escapeStr(node.name)} <{cleanStr(node.name.lower())}>`'
             else:
                 child_nodes = child_types = ""
+
             if not sorted_attributes and i == 0:
                 attr_nodes = attr_types = "—"
             elif i < len(sorted_attributes):
-                attr = sorted_attributes[i]
-                attr_nodes = f'- ``{attr.xml_name}``'
+                attr_key = sorted_attributes[i]
+                attr = self.attributes[attr_key]
+                attr_nodes = f'- ``{attr_key}``'
                 attr_types = f'- *{attr.name}*'
             else:
                 attr_nodes = attr_types = ""
-            print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
-            self_node = source_file = ""
+
+            print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_files, child_nodes, child_types, attr_nodes, attr_types) + '|')
+
+            # add lines between rows, but take care of multi-row segments
+            assert(numCols == 6)
+            lineBreak = ('+%s'%(colWidth*' '))*2
+            lineBreak += ('+%s'%(colWidth*' '))*2 if not sorted_children else ('+%s'%(colWidth*'-'))*2
+            lineBreak += ('+%s'%(colWidth*' '))*2 if not sorted_attributes else ('+%s'%(colWidth*'-'))*2
+            print(lineBreak + '+')
+
+            self_node = source_files = ""
+
         print(('+%s'%(colWidth*'-'))*numCols + '+')
 
         if self.children:
-            for node in sorted_children:
-                if not node.name in stack:
-                    stack.append(self.name)
-                    node.makeTableRST(level+1, stack, with_sections=with_sections)
+            for node_key in sorted_children:
+                node = self.children[node_key]
+                full_name = f"{self.name}__{node_key}"
+                if not full_name in stack:
+                    stack.append(full_name)
+                    node.makeTableRST(level+1, stack, key=node_key, with_sections=with_sections)
 
-    def makeTableMD(self, level=0, stack=[], with_sections=False, with_examples=False):
+    def makeTableMD(self, level=0, stack=[], key='', with_sections=False, with_examples=False):
         numCols = 6
-        colWidth = 80
-        colHeaders = ('element name', 'source file', 'child elements', 'child types', 'attributes', 'attribute types')
+        colWidth = 5
+        colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
+        if not key and self.xml_names:
+            key = list(self.xml_names)[0]
+
+        escapeStr = lambda txt: txt.translate(dict([ (ord(c),f'\{c}') for c in "<>" ]))  # escape invalid chars
+
         if with_sections:
-            if self.children or self.attributes:
+            if self.children or self.attributes or self.xml_names:
                 heading = (level+1)*'#'
                 print()
-                print(heading + f' {self.name}')
+                print(heading + f' {escapeStr(self.name)}')
 
-                if with_examples:
+                if with_examples and self.xml_names:
                     print("Example:")
                     print("```")
                     self.makeExampleXML(max_children=1, max_attributes=3, include_root=False);
@@ -228,27 +288,39 @@ class Node:
 
         #print('| name | children | attributes |')
 
-        self_node = f'<a name="{self.name.lower()}">`{self.xml_name}`</a>' if self.xml_name else "—"
-        source_file = f'[*{os.path.basename(self.source_file)}*]({self.source_file})' if self.source_file else "—"
-        if self.children:
-            sorted_children = sorted(self.children)
-            child_nodes = '<br>'.join([f'[`{node.xml_name}`](#{node.name.lower()})' for node in sorted_children])
-            child_types = '<br>'.join([f'*`{node.name}`*' for node in sorted_children])
+        self_node = f'<a name="{escapeStr(self.name.lower())}">`{key}`</a>' if key else "—"
+
+        if self.source_files:
+            sorted_files = sorted(list(self.source_files))
+            source_files = '<br>'.join([f'[*{os.path.basename(file)}*]({file})' for file in sorted_files])
         else:
-            child_nodes = child_types = "—"
-        if self.attributes:
-            sorted_attributes = sorted(self.attributes)
-            attr_nodes = '<br>'.join([f'`{attr.xml_name}`' for attr in sorted_attributes])
-            attr_types = '<br>'.join([f'*`{attr.name}`*' for attr in sorted_attributes])
-        else:
-            attr_nodes = attr_types = "—"
-        print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_file, child_nodes, child_types, attr_nodes, attr_types) + '|')
+            source_files = "—"
 
         if self.children:
-            for node in sorted_children:
-                if not node.name in stack:
-                    stack.append(self.name)
-                    node.makeTableMD(level+1, stack, with_sections=with_sections, with_examples=with_examples)
+            sorted_children = sorted(self.children.keys())
+            child_nodes = '<br>'.join([f'[`{key}`](#{escapeStr(self.children[key].name.lower())}' for key in sorted_children])
+            child_types = '<br>'.join([f'*`{self.children[key].name}`*' for key in sorted_children])
+        else:
+            child_nodes = child_types = "—"
+
+        if self.attributes:
+            sorted_attributes = sorted(self.attributes.keys())
+            attr_nodes = '<br>'.join([f'`{key}`' for key in sorted_attributes])
+            attr_types = '<br>'.join([f'*`{self.attributes[key].name}`*' for key in sorted_attributes])
+        else:
+            attr_nodes = attr_types = "—"
+
+        print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_files, child_nodes, child_types, attr_nodes, attr_types) + '|')
+
+        if self.children:
+            for node_key in sorted_children:
+                node = self.children[node_key]
+                full_name = f"{self.name}__{node_key}"
+                if not full_name in stack:
+                    stack.append(full_name)
+                    node.makeTableMD(level+1, stack, key=node_key, with_sections=with_sections, with_examples=with_examples)
+
+    ## END OF class Node
 
 def getBindingsFiles(root_paths):
     file_list = []
@@ -277,11 +349,13 @@ def processFiles(file_list):
             for m in match:
                 type, prefix, target, alias, builder = m[1:]
                 #print(f"{target} := {alias} ({type})")
+
                 if prefix and prefix[:-2] not in STRIP_NAMESPACES:
                     target = prefix[:-2] + target
 
                 if not target in node_list:
                     node_list[target] = Node(target, type)
+
                 if alias != target:
                     node_aliases[alias] = target
 
@@ -289,11 +363,13 @@ def processFiles(file_list):
             for m in match:
                 alias, builder, type, prefix, target = m[1:]
                 #print(f"{target} := {alias} ({type})")
+
                 if prefix and prefix[:-2] not in STRIP_NAMESPACES:
                     target = prefix[:-2] + target
 
                 if not target in node_list:
                     node_list[target] = Node(target, type)
+
                 if alias != target:
                     node_aliases[alias] = target
 
@@ -306,8 +382,10 @@ def processFiles(file_list):
             match = re.findall(REGEX_PATTERN, buffer)
             for m in match:
                 source, builder, type, prefix, target, name = m[1:]
+
                 if source in node_aliases:
                     source = node_aliases[source]
+
                 if prefix and prefix[:-2] not in STRIP_NAMESPACES:
                     target = prefix[:-2] + target
                 #print(f"{source} -> {target} ({type}) [{name}]")
@@ -317,18 +395,18 @@ def processFiles(file_list):
 
                 if type == 'Attribute':
                     attr = Node(target, type)
-                    attr.xml_name = name
+                    attr.xml_names.add(name)
                     attr.parents.add(node_list[source])
-                    node_list[source].attributes.append(attr)
+                    node_list[source].attributes[name] = attr
+
                 elif type == 'ComplexElement' or type == 'SimpleElement':
                     if not target in node_list:
                         node_list[target] = Node(target, type)
-                    if not node_list[target].source_file:
-                        node_list[target].source_file = file_name
-                    if not node_list[target].xml_name:
-                        node_list[target].xml_name = name
+                    node_list[target].xml_names.add(name)
+                    node_list[target].source_files.add(file_name)
                     node_list[target].parents.add(node_list[source])
-                    node_list[source].children.add(node_list[target])
+                    node_list[source].children[name] = node_list[target]
+
                 else:
                     raise RuntimeError("Unrecognized element type: %s" % type)
 
@@ -337,7 +415,7 @@ def processFiles(file_list):
 def findRootNodes(node_list):
     root_nodes = []
     if MASTER_ROOT in node_list:
-        for node in node_list[MASTER_ROOT].children:
+        for node in node_list[MASTER_ROOT].children.values():
             root_nodes.append(node)
     else:
         for node in node_list.values():

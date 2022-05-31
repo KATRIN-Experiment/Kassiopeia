@@ -292,6 +292,23 @@ inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::t
     return os;
 }
 
+template<class T, class U>
+inline std::ostream& operator<<(std::ostream& os, const boost::numeric::ublas::symmetric_matrix<T, U>& matrix)
+{
+    using size_type = typename boost::numeric::ublas::matrix<T>::size_type;
+
+    os << "[" << matrix.size1() << "," << matrix.size2() << "]";
+    for (size_type r = 0; r < matrix.size1(); ++r) {
+        os << std::endl << "(";
+        for (size_type c = 0; c < matrix.size2(); ++c) {
+            os.width(os.precision() + 7);
+            os << matrix(r, c);
+        }
+        os << " )";
+    }
+    return os;
+}
+
 }  // namespace std
 
 #endif /* KSTRINGUTILS_H_ */

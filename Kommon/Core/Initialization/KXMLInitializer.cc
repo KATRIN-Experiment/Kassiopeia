@@ -81,9 +81,9 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
                 commandLineArgs.SetOption(key, value);
             }
         }
-        
+
         // Default: BatchMode false
-        KGlobals::GetInstance().SetBatchMode(false);
+        //KGlobals::GetInstance().SetBatchMode(false);
 
         // parse any `-key[=value]` and `--key[=value]` options
         for (lastArg = 1; lastArg < argc; lastArg++) {
@@ -129,6 +129,8 @@ void KXMLInitializer::ParseCommandLine(int argc, char** argv)
             }
         }
     }
+
+    KGlobals::GetInstance().SetVerbosityLevel(fVerbosityLevel);
 
     // add environment variables (but do not overwrite already defined keys)
     for (char** env = environ; *env != nullptr; env++) {

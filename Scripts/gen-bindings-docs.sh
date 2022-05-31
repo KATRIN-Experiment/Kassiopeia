@@ -8,7 +8,8 @@ mkdir -p ${OUTPUT_DIR}
 
 ## Generate Markdown files
 echo "Generating global bindings files"
-python3 ${SCRIPT_NAME} ${SOURCE_DIRS} --root='KRoot' --with-sections --with-examples --md > "${OUTPUT_DIR}/bindings_full.md"
+python3 ${SCRIPT_NAME} ${SOURCE_DIRS} --root='KRoot' --with-sections --with-examples --md > "${OUTPUT_DIR}/bindings_full_examples.md"
+python3 ${SCRIPT_NAME} ${SOURCE_DIRS} --root='KRoot' --with-sections --md > "${OUTPUT_DIR}/bindings_full.md"
 python3 ${SCRIPT_NAME} ${SOURCE_DIRS} --root='KRoot' --with-sections --rst > "${OUTPUT_DIR}/bindings_full.rst"
 python3 ${SCRIPT_NAME} ${SOURCE_DIRS} --root='KRoot' --xml > "${OUTPUT_DIR}/bindings_full.xml"
 
