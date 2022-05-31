@@ -171,7 +171,7 @@ class Node:
 
     def makeTableRST(self, level=0, stack=[], key='', with_sections=False):
         numCols = 6
-        colWidth = 100  # in RST the columns all must have the same width
+        colWidths = (40, 80, 80, 160, 40, 40)  # in RST the columns all must have the same width
         colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
         headSep = ["-", "~", "^", "'"]  # starts at level 3
         if not key and self.xml_names:
@@ -182,10 +182,11 @@ class Node:
 
         def printLine(separators):
             assert(len(separators) == numCols)
-            print(''.join([('+%s'%(colWidth*sep)) for sep in separators]) + '+')
+            print(''.join([('+%s'%(colWidths[i]*separators[i])) for i in range(numCols)]) + '+')
 
-        def printHeader(headers=colHeaders):
-            print(''.join([(('|%%-%ds'%colWidth)%header) for header in headers]) + '|')
+        def printFields(fields):
+            assert(len(fields) == numCols)
+            print(''.join([(('|%%-%ds'%colWidths[i])%fields[i]) for i in range(numCols)]) + '|')
 
         if with_sections:
             if self.children or self.attributes:
@@ -194,18 +195,18 @@ class Node:
                     print(f'.. _{cleanStr(self.name.lower())}:')
                     print()
                     print(f'{self.name} (``{key}``)' if key else f'{self.name}')
-                    print(colWidth*headSep[level])
+                    print(100*headSep[level])
 
                 print()
                 printLine('-'*numCols)
-                printHeader(colHeaders)
+                printFields(colHeaders)
                 printLine('='*numCols)  # header separator
 
         else:
             if level == 0:
                 print()
                 printLine('-'*numCols)
-                printHeader(colHeaders)
+                printFields(colHeaders)
                 printLine('='*numCols)  # header separator
 
         self_node = f'``{key}``' if key else "—"
@@ -242,15 +243,15 @@ class Node:
             else:
                 attr_nodes = attr_types = ""
 
-            print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_files, child_nodes, child_types, attr_nodes, attr_types) + '|')
+            printFields([self_node, source_files, child_nodes, child_types, attr_nodes, attr_types])
 
             # add lines between rows, but take care of multi-row segments
             printLine([' ',
                     ' ' if not source_files else '-',
-                    ' ' if not sorted_children else '-',
-                    ' ' if not sorted_children else '-',
-                    ' ' if not sorted_attributes else '-',
-                    ' ' if not sorted_attributes else '-'])
+                    ' ' if not child_nodes else '-',
+                    ' ' if not child_types else '-',
+                    ' ' if not attr_nodes else '-',
+                    ' ' if not attr_types else '-'])
 
             self_node = source_files = ""
 
