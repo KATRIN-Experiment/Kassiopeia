@@ -15,7 +15,7 @@ test the features explained here.
 KGeoBag visualization
 ---------------------
 
-The *KGeoBag* module provides a set of stand-alone visualization tools that are described under :ref:`tools`. These
+The *KGeoBag* module provides a set of stand-alone visualization tools that are described under :ref:`tools-label`. These
 are suited to display the simulation geometry and other geometric elements, such as the mesh used for field calculation
 and/or navigation.
 
@@ -47,7 +47,7 @@ In addition, the mesh geometry can be viewed as well:
         />
     </vtk_window>
 
-The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration`). An
+The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration-label`). An
 ``<vtk_mesh_painter>`` exists as well, to be used with an asymmetric mesh (defined via ``<mesh>``.)
 
 Python
@@ -87,7 +87,7 @@ The PyVista_ Python package makes it easy to operate on the VTK_ output files th
 Kassiopieia visualization
 -------------------------
 
-The *Kassiopieia* module provides a set of stand-alone visualization tools that are described under :ref:`tools`.
+The *Kassiopieia* module provides a set of stand-alone visualization tools that are described under :ref:`tools-label`.
 The user may also specify visualization elements in the configuration file, which may be combined with the viewers
 provided by *KGeoBag*. In fact this is often needed, if one wants to see e.g. the simulated trajectories within
 the simulation geometry.
