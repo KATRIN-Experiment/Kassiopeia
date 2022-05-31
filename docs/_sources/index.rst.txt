@@ -4,15 +4,16 @@
    contain the root `toctree` directive.
 
 Welcome to Kassiopeia's documentation!
-======================================
+**************************************
 
 .. image:: _images/KassiopeiaLogo_1_bb.png
-   :width: 250pt
+    :width: 250pt
 
-Contents:
+Contents
+========
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 4
 
     Introduction <introduction.rst>
     External Documentation, Citation and Contact <external_documentation.rst>

@@ -1,6 +1,10 @@
 Getting starting with Kassiopiea
 **********************************
 
+.. contents:: On this page
+    :local:
+    :depth: 2
+
 Downloading the code
 ====================
 
@@ -96,7 +100,7 @@ Thirdly, *Kassiopeia* requires the Boost_ framework to be available for extended
 possible to compile *Kassiopeia* without a recent version of Boost_! The minimum required version is 1.61.
 
 Minimum requirements
-""""""""""""""""""""
+--------------------
 
 On a Debian/Ubuntu Linux system the minimum software packages required by the Kassiopiea
 build system can be installed through the use of the package manager through the following command:
@@ -120,7 +124,7 @@ On a RedHat/Fedora Linux system, the packages can be installed through the comma
         ocl-icd-devel openmpi-devel openssl-devel pcl-devel sqlite-devel tbb-devel vtk-devel zlib-devel
 
 Required dependencies
-"""""""""""""""""""""
+---------------------
 
 - CMake_ version 3.13 or higher
 - g++ version 6.1 or higher (if compiling with GCC_)
@@ -129,7 +133,7 @@ Required dependencies
 - ROOT_ version 6.16 or higher
 
 Optional dependencies
-"""""""""""""""""""""
+---------------------
 
 - Boost_ version 1.61 or higher
 - FFTW_ version 3.3.4 or higher
@@ -146,7 +150,7 @@ Optional dependencies
 - DoxyGen_ for building the documentation
 
 External libraries
-""""""""""""""""""
+------------------
 
 Beyond the build system, there are only two software packages which could be considered absolutely required
 dependencies, GSL_ and ROOT_ (though this is not strictly true, if the user only wishes to compile *KEMField*).
@@ -267,7 +271,7 @@ As compilation can take some time, you may use multiple CPU cores to accelerate 
 ``make -j 4 install`` to compile using four CPU cores).
 
 Environment variables
-"""""""""""""""""""""
+---------------------
 
 After the compilation is completed and *Kassiopeia* has been installed to the installation directory, it is useful to
 set up some environment variables that allow you ton run ``Kassiopeia`` and other commands from any location. A script
@@ -327,7 +331,7 @@ molecular hydrogen scattering cross sections). The ``log`` directory provides sp
 simulations, while the ``output`` directory is where simulation output is saved, unless otherwise specified.
 
 Executing Kassiopeia
-""""""""""""""""""""
+--------------------
 
 Once you have finished installing *Kassiopeia* and setting up the appropriate environmental variables you can attempt to
 run it (without arguments) by executing:
@@ -394,7 +398,7 @@ by default). If the corresponding flags (see below) are turned on, the software 
 to enable printing of additional messages during execution. This is mostly useful for in-depth debugging.
 
 Build options
-"""""""""""""
+-------------
 
 The following options control the overall build process:
 
@@ -419,7 +423,7 @@ only built for the active sub-modules. The unit tests uses the GoogleTest_ suite
 so that not external dependencies are required.
 
 Kassiopeia module
-"""""""""""""""""
+~~~~~~~~~~~~~~~~~
 
 The *Kassiopeia* sub-module has a rather limited set of additional options, which is:
 
@@ -432,7 +436,7 @@ The *Kassiopeia* sub-module has a rather limited set of additional options, whic
 +-------------------------+---------------------------------------+--------------------------------------------+
 
 KEMField module
-"""""""""""""""
+~~~~~~~~~~~~~~~
 
 KEMField has a rather extensive set of additional compiler options so that it maybe adapted for
 use on special purpose machines (computing clusters, GPUs, etc.) for field solving tasks.
@@ -465,7 +469,7 @@ These are listed as follows:
 +-------------------------------+-------------------------------------------------+-------------------------------------------------+
 
 KGeoBag module
-""""""""""""""
+~~~~~~~~~~~~~~
 
 The additional optional dependencies of the *KGeoBag* module are as follows:
 
@@ -480,7 +484,7 @@ The additional optional dependencies of the *KGeoBag* module are as follows:
 +---------------------+---------------------------------------+--------------------------------------------+
 
 Kommon module
-"""""""""""""
+~~~~~~~~~~~~~
 
 The optional dependencies the *Kommon* sub-module are given in the following table:
 
@@ -495,7 +499,7 @@ The optional dependencies the *Kommon* sub-module are given in the following tab
 +--------------------+---------------------------------------+--------------------------------------------+
 
 Miscellaneous options
-""""""""""""""""""""""
+~~~~~~~~~~~~~~~~~~~~~
 
 Some of the miscellaneous not specific to a sub-module are given below:
 

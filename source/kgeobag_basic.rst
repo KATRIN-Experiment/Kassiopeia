@@ -7,6 +7,13 @@ This section is a description of the basic spaces and surfaces which can be cons
 following shapes can be displayed by the executables ``MeshViewer`` and ``GeometryViewer`` (see :ref:`visualization-label`).
 These executables are built and installed along with *KGeoBag* when it is linked against VTK_.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
+
+Geometry visualization
+======================
+
 In order to view a geometry you can execute ``GeometryViewer`` from the directory ``$KASPERSYS/install/bin`` with the
 path to your geometry file (.xml) and the name of the geometry element you want to display as the arguments:
 
@@ -52,7 +59,7 @@ sharp edges of an object. Therefore, this parameter is mainly used for electrode
 The following sections provide examples and brief descriptions of some basic shapes available for use in *KGeoBag*.
 
 Basic elements
---------------
+==============
 
 The following elements (poly-loop and poly-line) are internal descriptors. They can't be used by themselves outside a
 geometry element. This section serves as a brief explanation for the structure of these shapes.
@@ -107,7 +114,10 @@ it does not form a closed loop like the poly-loop element does, and does not nee
 the parameters for poly-line are the same as for poly-loop.
 
 Surfaces
---------
+========
+
+Flat surfaces
+-------------
 
 Flattened circle surface
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +166,7 @@ An XML example is as follows:
     </flattened_poly_loop_surface>
 
 Rotated Surfaces
-~~~~~~~~~~~~~~~~
+----------------
 
 All rotated surfaces are constructed from lines, arcs, poly-lines, or poly-loops which are then rotated around the local
 x-axis.
@@ -224,7 +234,6 @@ An XML example is as follows:
         </poly_line>
     </rotated_poly_line_surface>
 
-
 Rotated circle surface
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -275,7 +284,7 @@ An XML example is as follows:
     </rotated_poly_loop_surface>
 
 Shell Surfaces
-~~~~~~~~~~~~~~
+--------------
 
 All shell surfaces are lines, arcs or surfaces that are rotated around the x-axis between a given start angle
 (angle_start) and stop angle (angle_stop).
@@ -421,7 +430,6 @@ An XML example is as follows:
         </poly_line>
     </extruded_poly_line_surface>
 
-
 Extruded circle surface
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -527,7 +535,6 @@ The parameters are:
 - radial_mesh_count: radial mesh parameter (default is 1)
 - radial_mesh_power: radial meshing power (default is 1.)
 - axial_mesh_count: axial mesh parameter (default is 16)
-
 
 Cylinder surface
 ~~~~~~~~~~~~~~~~
@@ -664,7 +671,7 @@ The parameters are:
 
 
 Spaces
-------
+======
 
 Spaces are considered distinct from surfaces as they are (water-tight) volumes. The cannot be open or have holes which
 puncture their boundaries. In the *Kassiopeia* interface, spaces are treated very differently than surfaces and have
@@ -788,7 +795,6 @@ An XML example is as follows:
             <next_line x="0.1" y="0.1" line_mesh_count="24" line_mesh_power="2."/>
         </poly_line>
     </rotated_poly_line_space>
-
 
 Rotated Circle Space
 ~~~~~~~~~~~~~~~~~~~~
@@ -957,7 +963,6 @@ The parameters are:
 - toroidal_mesh_count: toroidal mesh parameter (default is 64)
 - axial_mesh_count: axial mesh parameter (default is 64)
 
-
 Cylinder Tube Space
 ~~~~~~~~~~~~~~~~~~~
 
@@ -975,7 +980,7 @@ An XML example is as follows:
 
     <cylinder_tube_space name="cylinder_tube_space" z1="-0.45" r1="0.25" z2="0.45" r2="0.45" longitudinal_mesh_count="32" longitudinal_mesh_power="2." radial_mesh_count="24" radial_mesh_power="1.5" axial_mesh_count="32"/>
 
-The parameters::
+The parameters are:
 
 - z1: the first z position in meters
 - z2: the second z position in meters

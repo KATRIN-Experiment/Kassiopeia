@@ -6,8 +6,12 @@ Understanding Simulation Output
 This section provides a description of the output files created by a *Kassiopeia* simulation, along with examples to
 read and analyze the files.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
+
 Output configuration
---------------------
+====================
 
 Generally, *Kassiopeia* output is written to ROOT_ output (.root) files that store simulation data at the run, event,
 track and step level. In addition, if *Kassiopeia* was compiled with VTK_ support, output files in VTK polydata (.vtp)
@@ -19,7 +23,7 @@ description of the output format in the XML configuration file, which specifies 
 to file. Different output descriptions may be used for different writers.
 
 Groups and fields
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Structured output formats like ROOT and VTK allow to combine several output fields into a common group. This is not
 only useful for analyzing the simulation results, but also allows to distinguish between data produces at the run,
@@ -129,7 +133,7 @@ The example below shows usage of these advanced fields:
     </output_group>
 
 Output structure
-~~~~~~~~~~~~~~~~
+----------------
 
 For the remainder of this section, we will refer to the ``QuadrupoleTrapSimulation.xml`` example file to discuss the
 output fields and their structure. Here is the (slightly shortened) output confuguration of this example:
@@ -258,14 +262,14 @@ field `z_length` is a special case, since an intermediate field is necessary to 
 
 
 ROOT output files
------------------
+=================
 
 The ROOT_ output format is the standard file format that *Kassiopeia* produces. It supports flexible configuration,
 structured data fields, and efficient storage on disk. The data fields are placed in ROOT's ``TTree`` and ``TLeaf``
 objects that are created for each output group and member field, respectively.
 
 Data structure
-~~~~~~~~~~~~~~
+--------------
 
 In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in the ROOT_ ``TBrowser``:
@@ -416,7 +420,6 @@ over the steps only processes valid output fields:
         cout << "extrema for track <" << deviation << ">" << endl;
     }
 
-
 Using Python
 ~~~~~~~~~~~~
 
@@ -438,8 +441,8 @@ All three methods will be briefly explained in this section, in the form of a si
 `QuadrupoleTrapAnalysis.cxx` code introduced above. The examples use the ROOT_ file ``QuadrupoleTrapSimulation.root``
 produced by the ``QuadrupoleTrapSimulation.xml`` example.
 
-KassiopeiaReader
-~~~~~~~~~~~~~~~~
+Using Python with KassiopeiaReader
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``KassiopeiaReader`` Python module provides an iterator interface to a selected output group in a *Kassiopeia*
 file. It can easily be used to retrieve e.g. all track or step output from a simulation. Correctly iterating over
@@ -518,8 +521,8 @@ its minimum/maximum over the entire track, and then calculate and print a mean d
 
 All output values should be in agreement with the C++ program.
 
-uproot / Pandas
-~~~~~~~~~~~~~~~
+Using Python with uproot / Pandas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The same result can be achieved by using the uproot_ package with Pandas_ dataframes. In this case, PyROOT isn't needed
 and the analysis can run without ROOT_ dependencies. Applying the knowledge about *Kassiopeia's* output structure
@@ -680,17 +683,17 @@ of large data frames. This is especially true when the output fields contain a l
 it is advisable to select only the necessary fields before the merge steps.
 
 Python notebook
-~~~~~~~~~~~~~~~
+---------------
 
 A complete analysis using Pandas dataframes for the `QuadrupoleTrapSimulation.xml` example is available in the form of a Python notebook: `QuadrupoleTrapAnalysis.ipynb <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb>`_
 
 Geometry visualization
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 It is often useful to combine a view of the simulation geometry with a plot of the step data. In Python this can be done with the help of VTK_ files created by *KGeoBag*. For more details, see :ref:`visualization-label`.
 
 VTK output files
------------------
+================
 
 The VTK_ output format can be used in addition to the standard format and is mainly intended for visualization purposes.
 The most flexible way to visualize simulation output is by using the ParaView_ software, which can import the output
@@ -699,7 +702,7 @@ ROOT output. The VTK writer creates indepdendent files at the track and step lev
 as the main data field (required for 3D visualization), and any number of additional data fields.
 
 Data structure
-~~~~~~~~~~~~~~
+--------------
 
 In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in ParaView_:
@@ -713,7 +716,6 @@ corresponds to one step in the simulation. As with the ROOT output, the step dat
 into individual tracks. However, because the 3D representation of the steps is stored as a ``vtkPolyLine``, the
 visualization can dinstignuish between individual tracks: Each track in the simulation corresponds to a polyline in the
 VTK step file.
-
 
 Accessing simulation data
 -------------------------
@@ -751,7 +753,6 @@ For a full documentation, see:
 
     https://docs.paraview.org/en/latest/
 
-
 ASCII output files
 ------------------
 
@@ -771,7 +772,6 @@ A typical output file looks like this:
     3	3.79467e-13	3.18297e-07	1.51787e-12	-0.000395933	-0.00019465	-0.0025
     4	3.79467e-13	3.18301e-07	1.89733e-12	-0.000396085	-0.000194928	-0.0025
     5	3.79467e-13	3.18305e-07	2.2768e-12	-0.000396119	-0.000195242	-0.0025
-
 
 However, because the storage is rather inefficient it should not be used for large-scale simulations. File sizes on
 the order of several Gigabytes can be easily produced by a typical Monte-Carlo simulation!

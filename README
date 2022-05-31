@@ -5,6 +5,6 @@ This uses Sphinx. The provided Makefile rebuilds the GitHub HTML pages:
 
     make github
 
-The used Sphinx theme is 'awesome'. It can be installed via:
+The used Sphinx theme is 'Read the Docs'. It can be installed via:
 
-    pip install sphinxawesome-theme
+    pip install sphinx_rtd_theme

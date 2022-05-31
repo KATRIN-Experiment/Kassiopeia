@@ -5,8 +5,12 @@ Configuring Your Own Simulation
 
 This section gives a brief overview of what you need to know to configure your own *Kassiopeia* simulation.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
+
 Overview and Units
-------------------
+==================
 
 The configuration of *Kassiopeia* is done in three main sections, plus an optional fourth. These are the ``<messages>``
 section which describes global message verbosity, the ``<geometry>`` section which describes the system geometry and its
@@ -50,7 +54,7 @@ It should be noted that XML elements are parsed in order, and elements which are
 declared before their first use.
 
 XML Parsing and Features
-------------------------
+========================
 
 The document language used for describing a Kassiopeia simulation configuration is based on standard XML_, but has been
 augmented with several additional features to aid in complicated or repetitive tasks. For a full description of this
@@ -71,6 +75,9 @@ elements with the same syntax.
 
 All elements must end with a closing statement, like ``<element> ... </element>``. For elements without children, the
 syntax can be shortened to the single statement ``<element ... />``.
+
+General Statements
+------------------
 
 Variables
 ~~~~~~~~~
@@ -214,88 +221,6 @@ for an explanation of conditional expressions. The syntax for the assert stateme
     <define name="my_variable" value="42"/>
     <assert name="my_variable" condition="{[my_variable] eq 42}"/>
 
-Formula Expressions
-~~~~~~~~~~~~~~~~~~~
-
-The ability to calculate in-line formulas is another useful feature. The underlying implementation of the formula
-processor relies on two external libraries. First, formulas are interpreted with the TinyExpr_ parser. This is a very
-fast implementation that works for most simple expressions. If parsing fails, the formula is interpreted by the ROOT
-TFormula_ class, which is slower but more versatile. To the user, the switching between both parsers is completely
-transparent and no extra steps have to be taken.
-
-In order to active the formula mode, the relevant expression must be enclosed in curly braces ``{...}``. Variables may
-also be used within a formula, and all variable replacements will be done before the formula parsing (meaning that
-the current value of the variable will be used in the formula.) An example of the formula syntax is given in the
-following variable definition:
-
-.. code-block:: xml
-
-    <define name="my_variable" value="4.0"/>
-    <define name="length" value="{2.3 + 2.0/sqrt([my_variable])}"/>
-    <print name="length" value="[length]"/>
-
-This example results in the variable ``length`` taking the value of 3.3.
-
-Note that this example uses a standard function ``sqrt(x)`` that is supported by TinyExpr_. In general, any formulas
-using advanced TMath_ functions or other complex syntax will use the TFormula_ parser. Simple TMath_ functions like
-``TMath::Sqrt(x)`` or ``TMath::Sin(x)`` are mapped to their equivalent standard function (``sqrt(x)``, ``sin(x)``) that is
-natively understood by TinyExpr_. The standard functions (and mathematical constants) are listed in the table below.
-
-+---------------------------------------------------------------------------------------------------------+
-| Standard functions and constants                                                                        |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| XML syntax  | C++ function  | ROOT equivalent          | Description                                    |
-+=============+===============+==========================+================================================+
-| ``abs(x)``  | ``fabs(x)``   | ``TMath::Abs()``         | Compute absolute value.                        |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``acos(x)`` | ``acos(x)``   | ``TMath::ACos(x)``       | Compute arc cosine.                            |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``asin(x)`` | ``asin(x)``   | ``TMath::ASin(x)``       | Compute arc sine.                              |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``atan(x)`` | ``atan(x)``   | ``TMath::ATan(x)``       | Compute arc tangent.                           |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``atan2(x)``| ``atan2(x)``  | ``TMath::ATan2(x)``      | Compute arc tangent with two parameters.       |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``ceil(x)`` | ``ceil(x)``   | ``TMath::Ceil(x)``       | Round up value.                                |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``cos(x)``  | ``cos(x)``    | ``TMath::Cos(x)``        | Compute cosine.                                |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``cosh(x)`` | ``cosh(x)``   | ``TMath::CosH(x)``       | Compute hyperbolic cosine.                     |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``exp(x)``  | ``exp(x)``    | ``TMath::Exp(x)``        | Compute exponential function.                  |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``fac(x)``  |               | ``TMath::Factorial(x)``  | Compute factorial.                             |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``floor(x)``| ``floor(x)``  | ``TMath::Floor(x)``      | Round down value.                              |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``ln(x)``   | ``log(x)``    | ``TMath::Log(x)``        | Compute natural logarithm.                     |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``log(x)``  | ``log10(x)``  |                          | Compute common logarithm.                      |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``log10(x)``| ``log10(x)``  | ``TMath::Log10(x)``      | Compute common logarithm.                      |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``ncr(n,r)``|               | ``TMath::Binomial(n,r)`` | Compute combinations of `n` over `r`.          |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``npr(n,r)``|               |                          | Compute permuations of `n` over `r`.           |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``pow(x)``  | ``pow(x)``    | ``TMath::Pow(x)``        | Raise to power.                                |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``sin(x)``  | ``sin(x)``    | ``TMath::Sin(x)``        | Compute sine.                                  |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``sinh(x)`` | ``sinh(x)``   | ``TMath::SinH(x)``       | Compute hyperbolic sine.                       |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``sqrt(x)`` | ``sqrt(x)``   | ``TMath::Sqrt(x)``       | Compute square root.                           |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``tan(x)``  | ``tan(x)``    | ``TMath::Tan(x)``        | Compute tangent.                               |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``tanh(x)`` | ``tanh(x)``   | ``TMath::TanH(x)``       | Compute hyperbolic tangent.                    |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``e``       |               | ``TMath::Pi()``          | Fundamental constant.                          |
-+-------------+---------------+--------------------------+------------------------------------------------+
-| ``pi``      | ``M_PI``      | ``TMath::E()``           | Fundamental constant.                          |
-+-------------+---------------+--------------------------+------------------------------------------------+
-
-
 Conditional Expressions and Looping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -387,6 +312,89 @@ included by the syntax:
 
 As shown above, a comment can span multiple lines. Any text between ``<!-- ... -->`` is ignored by the XML initializer,
 including any XML elements. This makes it possible to quickly comment out parts of the file, e.g. for debugging.
+
+
+Formula Expressions
+-------------------
+
+The ability to calculate in-line formulas is another useful feature. The underlying implementation of the formula
+processor relies on two external libraries. First, formulas are interpreted with the TinyExpr_ parser. This is a very
+fast implementation that works for most simple expressions. If parsing fails, the formula is interpreted by the ROOT
+TFormula_ class, which is slower but more versatile. To the user, the switching between both parsers is completely
+transparent and no extra steps have to be taken.
+
+In order to active the formula mode, the relevant expression must be enclosed in curly braces ``{...}``. Variables may
+also be used within a formula, and all variable replacements will be done before the formula parsing (meaning that
+the current value of the variable will be used in the formula.) An example of the formula syntax is given in the
+following variable definition:
+
+.. code-block:: xml
+
+    <define name="my_variable" value="4.0"/>
+    <define name="length" value="{2.3 + 2.0/sqrt([my_variable])}"/>
+    <print name="length" value="[length]"/>
+
+This example results in the variable ``length`` taking the value of 3.3.
+
+Note that this example uses a standard function ``sqrt(x)`` that is supported by TinyExpr_. In general, any formulas
+using advanced TMath_ functions or other complex syntax will use the TFormula_ parser. Simple TMath_ functions like
+``TMath::Sqrt(x)`` or ``TMath::Sin(x)`` are mapped to their equivalent standard function (``sqrt(x)``, ``sin(x)``) that is
+natively understood by TinyExpr_. The standard functions (and mathematical constants) are listed in the table below.
+
++---------------------------------------------------------------------------------------------------------+
+| Standard functions and constants                                                                        |
++-------------+---------------+--------------------------+------------------------------------------------+
+| XML syntax  | C++ function  | ROOT equivalent          | Description                                    |
++=============+===============+==========================+================================================+
+| ``abs(x)``  | ``fabs(x)``   | ``TMath::Abs()``         | Compute absolute value.                        |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``acos(x)`` | ``acos(x)``   | ``TMath::ACos(x)``       | Compute arc cosine.                            |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``asin(x)`` | ``asin(x)``   | ``TMath::ASin(x)``       | Compute arc sine.                              |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``atan(x)`` | ``atan(x)``   | ``TMath::ATan(x)``       | Compute arc tangent.                           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``atan2(x)``| ``atan2(x)``  | ``TMath::ATan2(x)``      | Compute arc tangent with two parameters.       |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ceil(x)`` | ``ceil(x)``   | ``TMath::Ceil(x)``       | Round up value.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``cos(x)``  | ``cos(x)``    | ``TMath::Cos(x)``        | Compute cosine.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``cosh(x)`` | ``cosh(x)``   | ``TMath::CosH(x)``       | Compute hyperbolic cosine.                     |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``exp(x)``  | ``exp(x)``    | ``TMath::Exp(x)``        | Compute exponential function.                  |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``fac(x)``  |               | ``TMath::Factorial(x)``  | Compute factorial.                             |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``floor(x)``| ``floor(x)``  | ``TMath::Floor(x)``      | Round down value.                              |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ln(x)``   | ``log(x)``    | ``TMath::Log(x)``        | Compute natural logarithm.                     |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``log(x)``  | ``log10(x)``  |                          | Compute common logarithm.                      |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``log10(x)``| ``log10(x)``  | ``TMath::Log10(x)``      | Compute common logarithm.                      |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``ncr(n,r)``|               | ``TMath::Binomial(n,r)`` | Compute combinations of `n` over `r`.          |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``npr(n,r)``|               |                          | Compute permuations of `n` over `r`.           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``pow(x)``  | ``pow(x)``    | ``TMath::Pow(x)``        | Raise to power.                                |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sin(x)``  | ``sin(x)``    | ``TMath::Sin(x)``        | Compute sine.                                  |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sinh(x)`` | ``sinh(x)``   | ``TMath::SinH(x)``       | Compute hyperbolic sine.                       |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``sqrt(x)`` | ``sqrt(x)``   | ``TMath::Sqrt(x)``       | Compute square root.                           |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``tan(x)``  | ``tan(x)``    | ``TMath::Tan(x)``        | Compute tangent.                               |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``tanh(x)`` | ``tanh(x)``   | ``TMath::TanH(x)``       | Compute hyperbolic tangent.                    |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``e``       |               | ``TMath::Pi()``          | Fundamental constant.                          |
++-------------+---------------+--------------------------+------------------------------------------------+
+| ``pi``      | ``M_PI``      | ``TMath::E()``           | Fundamental constant.                          |
++-------------+---------------+--------------------------+------------------------------------------------+
+
 
 Messaging System
 ----------------
@@ -550,7 +558,7 @@ In *Kassiopeia*, *KEMField* and *KGeoBag*, most messages use the *KMessage* inte
 
 
 Geometry
---------
+========
 
 The geometry section of the configuration file is the first piece needed in order to assemble a simulation. At its first
 and most basic level it is responsible for defining all the different shapes that will be used, and placing them with
@@ -577,7 +585,7 @@ It should be noted, that the full description of the geometry need not lie withi
 then be included and used in the final assembly.
 
 Shapes and assemblies
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 To understand the basics of *KGeoBag*, let us look at a simple  example. A typical simulation geometry may look like
 the image below, where multiple spaces (B-D) and surfaces (a-b) are assembled and placed in a "world" space A:
@@ -666,7 +674,7 @@ where each element is given a name, which it can be referenced with, and additio
 For example, the disk surface is defined by only two parameters `r` and `z`, while other shapes differ.
 
 Tagging system
-~~~~~~~~~~~~~~
+--------------
 
 The tagging system is used to group different elements together, for example by distinguishng between magnet and
 electrode shapes. These tags will be used later to retrieve elements and pass them to the *KEMField* module. The
@@ -681,7 +689,7 @@ general syntax is:
 and tags can be freely combined or re-used.
 
 Assembling elements
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 The defined shapes are then placed into an assembly of the experiment geometry. Geometric objects are placed by
 referencing each shape by its given (and *unique*) name and placing it inside a space. This can be combined with
@@ -742,7 +750,7 @@ that just holds its child elements, but does not refer to an actual object. Make
 own geometry configurations!
 
 Transformations
-~~~~~~~~~~~~~~~
+---------------
 
 It should be noted that transformations applied to an assembly are collectively applied to all of the geometric elements
 within the assembly. For example, placing the dipole trap assembly within the world volume as:
@@ -791,7 +799,7 @@ It is best to think of the ``<transformation>`` elements as commands that are ex
 the geometry is assembled. It should be clear then that the two example assemblies yield different results.
 
 Extensions
-~~~~~~~~~~
+----------
 
 In order to give physical properties to the geometry elements that have been constructed and placed, they must be
 associated with extensions. The currently available extensions are *meshing* (axially or rotationally symmetric, or
@@ -891,9 +899,8 @@ For further demonstrations of the possible geometry extensions please see the pr
 at :gh-code:`KGeoBag/Source/XML/Examples`.
 
 
-
 KEMField
---------
+========
 
 The field elements all live within the *KEMField* element and must be placed with start and end tags of the form:
 
@@ -1048,7 +1055,7 @@ Further documentation on the exact methods and parameters used in *KEMField* can
 
 
 Kassiopeia
-----------
+==========
 
 The remaining elements for the simulation all live within the *Kassiopeia* element and must be placed with start and end
 tags of the form:
@@ -1136,6 +1143,9 @@ fixed to zero, while its initial momentum direction is fixed along the z-axis by
 ``(phi,theta)`` in a spherical distribution. Here the particle type is specified by the PID 11. The available particles
 and their PIDs are defined at the end of the file :gh-code:`Kassiopeia/Operators/Source/KSParticleFactory.cxx`.
 
+Choosing energy values
+~~~~~~~~~~~~~~~~~~~~~~
+
 All of the fixed values used in this composite generator may be replaced by probability distributions. The available
 probability distributions depend on the quantity they are intended to generate, but include uniform, gaussian, pareto,
 cosine, etc. The available distributions can be found in :gh-code:`Kassiopeia/Generators`. Also available is the ability
@@ -1196,6 +1206,9 @@ that the XML element name can also be adapted, so instead of ``value_gauss`` for
         <energy_gauss mean="18600." sigma="5."/>
     </energy_composite>
 
+Value generator types
+~~~~~~~~~~~~~~~~~~~~~
+
 The position and direction generators usually support multiple value distributions; e.g. radius (``r_gauss``),
 azimuthal angle (``phi_gauss``) and z-position (``z_gauss``) for the composite cylindrical position generator.
 
@@ -1236,6 +1249,9 @@ azimuthal angle (``phi_gauss``) and z-position (``z_gauss``) for the composite c
 +--------------------+-------------------------------------+---------------------------------------------------------+
 | Histogram          | ``value_histogram``                 | ROOT Histogram (``TH1``) read from file                 |
 +--------------------+-------------------------------------+---------------------------------------------------------+
+
+Special creator types
+~~~~~~~~~~~~~~~~~~~~~
 
 In addition, a number of specialized generators exists. For example, the position or energy of the generated particle
 can be defined in more a sophisticated way in case a particle is generated from nuclear decays (Tritium, Krypton, Radon)
@@ -1319,11 +1335,17 @@ There are essential five different equations of motion (trajectories) available 
 These are, exact, adiabatic, electric, magnetic, and linear. These are implemented in :gh-code:`Kassiopeia/Trajectories`
 and some specialized classes exist for spin particles.
 
+Exact trajectory
+~~~~~~~~~~~~~~~~
+
 The first trajectory type is the so-called *exact* method, which solves the Lorentz equation for charged particles
 exactly without any approximations. It is visualized below:
 
 .. image:: _images/exact_step.png
    :width: 150pt
+
+Adiabatic trajectory
+~~~~~~~~~~~~~~~~~~~~
 
 The second method is the adiabatic method, which is useful for solving charged particle motion in the presence of
 smoothly varying magnetic fields. In this case, only the motion of the "guiding center" (a point on the magnetic field
@@ -1332,6 +1354,9 @@ around the field line, however this is entirely optional. This method is visuali
 
 .. image:: _images/adiabatic_step.png
   :width: 150pt
+
+Electric and magnetic trajectories
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The next two types, electric and magnetic (not shown here), are used for tracking the field lines of static electric and
 magnetic fields respectively. Finally, the linear trajectory calculates a linear motion that is independent of any
@@ -1351,6 +1376,9 @@ behavior of the simulation:
 - Additional `controls` can modify the step size. Options exist for a static setting (e.g. a step size of 1 mm)
   or dynamic adjustment (e.g. a step size derived from the local magnetic field.) Step controls are based off the class
   :kassiopeia:`KSMathControl`. Multiple controls can be combined, in which case the smallest possible step is taken.
+
+Trajectory types
+~~~~~~~~~~~~~~~~
 
 The tables below lists the available integrators, interpolators, and terms:
 
@@ -1431,6 +1459,9 @@ The tables below lists the available integrators, interpolators, and terms:
 +--------------------+-------------------------------------+---------------------------------------------------------+
 | Spin Precession    | ``control_spin_precession``         | Length scaled by precession freq. (spin tracking only)  |
 +--------------------+-------------------------------------+---------------------------------------------------------+
+
+Examples
+~~~~~~~~
 
 The exact tracking method can be used where accuracy is of the utmost importance, but requires a large number of steps
 in order propagate a particle for a long time or distance. An example of its use is given below:
@@ -1619,7 +1650,6 @@ one may use the following statement:
 This is not recommended for large-scale simulations because the output file will quickly approach a size that will be
 extremely difficult to handle.
 
-
 Output description
 ~~~~~~~~~~~~~~~~~~
 
@@ -1722,6 +1752,9 @@ Other specialized output fields are also available for some propagation or inter
 Navigation
 ----------
 
+Surfaces navigation
+~~~~~~~~~~~~~~~~~~~
+
 The navigation of a particle is split into two components, surface navigation and space navigation. Surface navigation
 is very simple and only takes place when a particle has intersected an active surface. The surface navigator determines
 whether the state of the particle is modified on the surface and whether it is reflected or transmitted. It can be made
@@ -1734,6 +1767,9 @@ available for use with the declaration:
 As this navigator is very simple, it does not take many additional parameters. The parameters ``transmission_split`` and
 ``reflection_split`` determine whether or not a track is split in two (for the purposes of output/saving data) upon
 transmission through or reflection off a geometric surface.
+
+Space navigation
+~~~~~~~~~~~~~~~~
 
 The space navigator is more complex since it is responsible for determine the location of the particle and any possible
 intersections it may have with real of virtual boundaries. It is also responsible for ensuring that the current
@@ -1750,6 +1786,9 @@ below:
 
 As this navigator is also very simple, it does not take many additional parameters. The parameters ``enter_split`` and
 ``exit_split`` determine whether or not a track is split in two  upon entrance or exit of a geometric space.
+
+Meshed space navigation
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A more complex behavior is achieved by the ``ksnav_meshed_space`` navigator, which is intended to be used in highly
 detailed three-dimensional geometries where it has better performance over the default navigator. An example of this is
@@ -1871,6 +1910,9 @@ configuration. When this tag is encountered by the XML parser, it triggers the s
 Visualization
 -------------
 
+VTK visualization
+~~~~~~~~~~~~~~~~~
+
 If *Kassiopeia* has been linked against VTK_ or ROOT_, a simple visualization of the simulation can be made available.
 By adding the `vtk_window` element at the end of the configuration file, we activate a VTK window that will open when
 the simulation is complete. This element may hold a ``vtk_geometry_painter`` and a ```vtk_track_painter`` to draw the
@@ -1911,6 +1953,9 @@ file is a follows:
 
 Note that the visualization window must be placed outside of the ``<kassiopeia>``...``</kassiopiea>``
 environment tags.
+
+ROOT visualization
+~~~~~~~~~~~~~~~~~~
 
 Similarly, a visualization window can be activated that uses the ROOT software. In constrast to VTK, which displays
 three-dimensional geometry, the ROOT visualization is limited to two dimensions. A simple example that may be added

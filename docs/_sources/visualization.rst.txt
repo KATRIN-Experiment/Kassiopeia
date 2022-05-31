@@ -11,9 +11,12 @@ external software such as ParaView_.
 The examples in this section are based on the ``DipoleTrapSimulation.xml`` file, which may be extended accordingly to
 test the features explained here.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
 
 KGeoBag visualization
----------------------
+=====================
 
 The *KGeoBag* module provides a set of stand-alone visualization tools that are described under :ref:`tools-label`. These
 are suited to display the simulation geometry and other geometric elements, such as the mesh used for field calculation
@@ -28,6 +31,9 @@ regardless of the setting in the configuration file, e.g.:
 .. code-block:: bash
 
     Kassiopeia -b DipoleTrapSimulation.xml
+
+Geometry visualization
+----------------------
 
 The *KGeoBag* module provides painter classes for the geometry which are covered below in the *Kassiopeia* section.
 In addition, the mesh geometry can be viewed as well:
@@ -50,8 +56,8 @@ In addition, the mesh geometry can be viewed as well:
 The axial mesh painter needs a defined mesh (``<axial_mesh>`` XML element, see :ref:`configuration-label`). An
 ``<vtk_mesh_painter>`` exists as well, to be used with an asymmetric mesh (defined via ``<mesh>``.)
 
-Python
-~~~~~~
+Using Python
+~~~~~~~~~~~~
 
 It is possible to draw a geometry visualization in Python. This is especially useful if you run your analysis in Python as well (see :ref:`output-label` for examples.)
 
@@ -85,12 +91,18 @@ The PyVista_ Python package makes it easy to operate on the VTK_ output files th
 
 
 Kassiopieia visualization
--------------------------
+=========================
 
 The *Kassiopieia* module provides a set of stand-alone visualization tools that are described under :ref:`tools-label`.
 The user may also specify visualization elements in the configuration file, which may be combined with the viewers
 provided by *KGeoBag*. In fact this is often needed, if one wants to see e.g. the simulated trajectories within
 the simulation geometry.
+
+Track visualization
+-------------------
+
+Using VTK
+~~~~~~~~~
 
 Below is an example that combines the VTK_ geometry painter of *KGeoBag* with a visualization of the simulated tracks
 (``vtk_track_painter``) and the track terminator positions (``vtk_track_terminator_painter``). Note that in order
@@ -140,6 +152,9 @@ The options ``enable_display`` and ``enable_write`` of the ``<vtk_window>`` elem
 shown, and if an output file should be written. The output files can be viewed e.g. in the ParaView_ software. There
 also exists a ``<vtk_generator_painter>`` element that is intended to visualize configured generators in the simulation.
 
+Using ROOT
+----------
+
 A similar 2D visualization can be achieved using the ROOT_ visualization elements. The example below will present a view
 of the 3D geometry projected onto the Z-X plane.
 
@@ -178,14 +193,22 @@ corresponding parameters. The projection mode has to be adjusted for the individ
 ``<root_zonal_harmonic_painter>``, can visualize the convergence radius and source points of the zonal harmonic
 approximation that can be used for electric and magnetic field solving.
 
+Using Python
+~~~~~~~~~~~~
+
+The track painters export VTK_ output files that can be visualized in Python with the PyVista_ module, as shown above.
+
 
 KEMField visualization
-----------------------
+======================
 
 The *KEMField* modules provides a special visualization that is only available for electrostatic geometries. In contrast
 to the geometry viewers from *KGeoBag*, the *KEMField* viewer also includes extra information about the mesh elements,
 the applied electric potentials, and the calculated charge densities. It is therefore extremely valuable for the design
 of such geometries.
+
+Electrode Geometry
+------------------
 
 The viewer is instantiated with the XML element ``<viewer>`` under the ``<ksfield_electrostatic>`` or ``<electrostatic_field>``
 tag. For example, expanding the ``DipoleTrapSimulation.xml`` file:
@@ -222,7 +245,7 @@ window should be shown. The options ``preprocessing`` and ``postprocessing`` ind
 performed before or after calculating the charge densities (if both are true, the visualization is performed twice).
 
 Field maps
-~~~~~~~~~~
+----------
 
 Although not primarily a visualization feature, the option to compute electric and magnetic field maps with *KEMField*
 can also be used to provide input for the ParaView_ software that can be combined with other visualization output files.

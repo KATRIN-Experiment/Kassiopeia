@@ -8,9 +8,12 @@ to many tasks. However, sometimes a more direct approach to certain investigatio
 case during simulation design and debugging, and for field calculations that do not require a full-scale simulation. In
 the following, additional tools that are included with *Kassiopeia*, *KEMField* and *KGeoBag* are presented.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
 
 Geometry viewers
-----------------
+================
 
 The geometry viewwers are intended to help with constructing and optimizing a simulation geometry that is typically
 used with *Kassiopeia* and *KEMField*. In most cases, the simulation requires a sophistocated geometry setup where
@@ -27,7 +30,7 @@ additional tools are beneficial.
   of the plane must be defined. By default, the ROOT viewer draws the geometry in the Y-Z plane.
 
 Usage
-~~~~~
+-----
 
 All listed programs will show a brief usage summary if called without arguments. The applications are called with a
 configuration file name and a valid geometry path, e.g.:
@@ -54,16 +57,15 @@ Below is an example of the ROOT_ geometry viewer:
 
 As shown above, it is possible to specify multiple geometry paths as well.
 
-
 Advanced visualization
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Note that in addition to these geometry viewers, *Kassiopeia* also supports to define visualizations in the
 configuration file directly so that no additional commands are necessary. For details see :ref:`visualization-label`.
 
 
 Mesh viewers
-------------
+============
 
 The mesh viewers are intended to help with constructing and optimizing an electrostatic geometry that is provided
 to *KEMField*. In this case a mesh needs to be defined according to the selected symmetry level. The viewers show
@@ -75,7 +77,7 @@ the defined mesh in a VTK_ window, coloring each mesh element individually.
   the configuration file with the ``<mesh .../>`` element.
 
 Usage
-~~~~~
+-----
 
 All listed programs will show a brief usage summary if called without arguments. The viewers are called with a
 configuration file name and a valid geometry path, e.g.:
@@ -94,7 +96,7 @@ axial mesh viewer:
 
 
 Field calculation
------------------
+=================
 
 Although *Kassiopeia* is quite powerful in terms of configuration options, sometimes it is necessary to calculate the
 electric or magnetic field at one or more defined points in the geometry. This is especially useful to compare
@@ -125,7 +127,7 @@ and so on. In addition, there is:
   coordinate system, and prints the results to the terminal.
 
 Usage
-~~~~~
+-----
 
 All listed programs will show a brief usage summary if called without arguments. For example, the
 ``SimpleElectricFieldCalculatorAlongZaxis`` will show a message:
@@ -140,7 +142,7 @@ of an electric field. If multiple fields are specified, their contributions will
 
 
 Simulation tools
-----------------
+================
 
 Finally, some helper tools are provided with *Kassiopeia* that can be used together with simulations.
 

@@ -1,8 +1,14 @@
 Examples and Tests
 ******************
 
+This section presents some of the example configurations that are distributed with Kassiopeia.
+
+.. contents:: On this page
+    :local:
+    :depth: 2
+
 Running Kassiopeia
-------------------
+==================
 
 After installation, and assuming the proper environmental variables have been set by running the script
 ``kasperenv.sh``, *Kassiopeia* can be run directly from the command prompt. The script sets the environment variables
@@ -28,7 +34,7 @@ syntax can be used. Here all variable names are prefixed with ``--``, and option
     Kassiopeia <path-to-xml-config-file> --<variable1>=<value1> --<variable2>=<value2>
 
 Verbosity levels
-""""""""""""""""
+----------------
 
 As a quick means to change the output verbosity (i.e. the amount of messages shown on the terminal while the program
 is running), the ``-v`` and ``-q`` flags can be used. Each option raises/lowers the verbosity level, so that the
@@ -39,7 +45,7 @@ following example would raise the level by one unit. Try it with one of the exam
     Kassiopeia <path-to-xml-config-file> -v -q -v
 
 Output files
-""""""""""""
+------------
 
 Upon completion of a simulation, the ROOT output files may be found in the directory
 ``<kassiopeia-install-path>/output/Kassiopeia`` (where ``<kassiopeia-install-path>`` usually can be replaced by
@@ -54,7 +60,7 @@ the key combination ``Crtl-C`` again, which leads to program termination.
 
 
 Example configurations
-----------------------
+======================
 
 Next in this section, we will investigate a number of pre-configured example files that are shipped with *Kassiopeia*.
 These files serve as a working example of various features of the simulation, but also as a reference for your own
@@ -65,7 +71,7 @@ The example configurations can be found online at :gh-code:`Kassiopeia/XML/Examp
     ``$KASPERSYS/config/Kassiopeia/Examples/``
 
 The Dipole Trap Example
-"""""""""""""""""""""""
+-----------------------
 
 The first example is a simulation of a simple dipole trap, or rather, a magnetic mirror device. It consists of two
 dipole magnets positioned some distance apart along the same axis to form a magnetic bottle. To make the simulation
@@ -106,6 +112,9 @@ the following graph.
 .. image:: _images/dipole_potential_vs_z.png
    :width: 500pt
 
+Trajectory Visualization
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 For more advanced visualization *Kassiopeia* may be linked against the VTK_ library. If this is done, the
 ``DipoleTrapSimulation.xml`` example will include a configuration which will open an interactive VTK visualization
 window upon completion of the simulation. The output of which shows the electron's track colored by angle between its
@@ -115,7 +124,7 @@ momentum vector and the magnetic field. The following image demonstrates the VTK
    :width: 500pt
 
 The Quadrupole Trap Example
-"""""""""""""""""""""""""""
+---------------------------
 
 The second example to demonstrate the capabilities of *Kassiopeia* is that of a quadrupole (Penning) trap. This sort of
 trap is similar to those which are used to measure the electron $g$-factor to extreme precision. To run this example,
@@ -133,6 +142,9 @@ electrode surfaces. The electron tracks can be seen as short lines at the center
 .. image:: _images/quadrupole_vtk.png
    :width: 500pt
 
+Simulation Analysis
+~~~~~~~~~~~~~~~~~~~
+
 Furthermore, a very simple analysis program example ``QuadrupoleTrapAnalysis`` can be run on the resulting ``.root``
 file. To do this, execute the following after the output file was created:
 
@@ -148,8 +160,11 @@ This program can be used as a basis for more advanced analysis programs, as it d
 iterate over the particle tracking data stored in a ROOT TTree file. It is also possible to access the ROOT TTree data
 by other means, e.g. using Python scripts and the PyROOT_ or uproot_ modules, but this is out of scope for this section.
 
+Analysis can also be performed by other means, e.g. in a Python notebook. An example for the quadrupole trap simulation
+is available in: `QuadrupoleTrapAnalysis.ipynb <https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb>`_
+
 The Photomultiplier Tube Example
-""""""""""""""""""""""""""""""""
+--------------------------------
 
 As a demonstration of some of the more advanced features of *Kassiopeia* (particularly its 3D capabilities), an example
 of particle tracking in a photomultiplier tube is also included. This convifuration was also featured in the
@@ -166,6 +181,9 @@ To run this simulation, type:
 
     Kassiopeia $KASPERSYS/config/Kassiopeia/Examples/PhotoMultiplierTubeSimulation.xml
 
+Visualization with ParaView
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Depending on the capability of your computer this example may take several hours to run, and you may want to execute it
 overnight. If you have enabled VTK_, an ``.vtp`` output file called:
 
@@ -180,9 +198,8 @@ following figure.
 .. image:: _images/pmt_paraview.png
    :width: 500pt
 
-
 The Mesh Simulation Example
-"""""""""""""""""""""""""""
+---------------------------
 
 The mesh simulation uses a geometry from an external STL_ file, which is a format widely used in 3D design software.
 The external geometry must provide a surface mesh in order to be usable with *KEMField* and *Kassiopeia*. In this
@@ -193,11 +210,10 @@ other. Particles are tracked along a linear trajectory, which are reflected when
    :width: 500pt
 
 Other Examples
-""""""""""""""
+--------------
 
 Some other examples which explore other concepts
 also distributed with Kassiopeia, and are described in the following table.
-
 
 .. |ana| image:: _images/analytic_trap.png
    :scale: 30%

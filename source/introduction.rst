@@ -9,8 +9,12 @@ It is primarily of interest for examining the behavior of particles in electrost
 relatively low energy scales (<100keV). It also provides a mechanism to incorporate scattering interactions with dilute
 gases and offers specialized treatment of electron transport in silicon baseddetectors.
 
+.. contents:: On this page
+    :local:
+    :depth: 2
+
 The Kasper framework
-""""""""""""""""""""
+====================
 
 The *Kassiopeia* software relies upon three separate, but concurrently distributed libraries. These are *Kommon*,
 *KGeoBag*, and *KEMField* and part of the **Kasper** framework.
@@ -28,7 +32,7 @@ The *Kassiopeia* software relies upon three separate, but concurrently distribut
   equation of motion of a particle and deal with any stochastic interactions to which it might be subjected.
 
 Extending Functionality
-"""""""""""""""""""""""
+=======================
 
 Using *Kassiopeia* and its associated libraries can involve varying levels of complexity, depending on the end users
 needs. If the pre-existing features of *Kassiopeia* are sufficient, no additional code is needed and a simulation can be

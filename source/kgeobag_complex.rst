@@ -11,11 +11,15 @@ additional complex shapes that are commonly encountered in experimental structur
 Some of the examples in this section make use of the the more advanced features of the XML parser, including loops,
 conditional statements, and equation evaluation.
 
-Surfaces
---------
+.. contents:: On this page
+    :local:
+    :depth: 2
 
-Pump Port
-~~~~~~~~~
+Surfaces
+========
+
+Pump Port Surface
+-----------------
 
 The shape creates a tube-like surface with circular or rectangular pump ports (e.g. for vacuum chambers). The
 coordinates (x,y,z) are the end points of the ports. The ports can only be created in radial direction.
@@ -38,8 +42,8 @@ An XML example is as follows:
         </port_housing>
     </port_housing_surface>
 
-Conic section pump port
-~~~~~~~~~~~~~~~~~~~~~~~
+Conic Section Pump Port Surface
+-------------------------------
 
 This shape is a cut cone surface with circular ports. The ports can be created either orthogonal to the surface or
 parallel to the cone axis (paraxial). The coordinates (x,y,z) are the end points of the port.
@@ -69,8 +73,8 @@ An XML example is as follows:
       </conic_section_port_housing>
     </conic_section_port_housing_surface>
 
-Beam
-~~~~
+Beam Surface
+------------
 
 A beam creates a pipe which connects two polygons at each end. The polygons must have the same number of vertices but
 may lie in planes which are not parallel to each other. For the description of the parameters involved see the images
@@ -107,6 +111,9 @@ An XML example is as follows:
         </beam>
     </beam_surface>
 
+Multi-cut surfaces
+~~~~~~~~~~~~~~~~~~
+
 The beam shape can also be used to create more complex objects, such as a cut cone with two more cuts at both ends.
 
 .. image:: _images/kgeobag_multicut_surface_model.png
@@ -117,7 +124,7 @@ An XML example is as follows:
 .. code-block:: xml
 
     <beam_surface name="example_multicut_surface">
-    <beam longitudinal_mesh_count="60" axial_mesh_count="60">
+        <beam longitudinal_mesh_count="60" axial_mesh_count="60">
             <define name="z_start" value="-1."/>
             <define name="z_end" value="1."/>
             <define name="radius_start" value="2."/>
@@ -146,8 +153,8 @@ An XML example is as follows:
         </beam>
     </beam_surface>
 
-Rod
-~~~
+Rod Surface
+-----------
 
 The rod element can be used to create a rod like structure along a series of linear segments in three dimensional space.
 The rod has a circular cross section which is approximated by a polygon (governed by the ``axial_mesh_count``
@@ -176,8 +183,8 @@ The following XML example creates a helix shaped rod surface, as follows:
         </rod>
     </rod_surface>
 
-Extruded surfaces with holes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Extruded Surfaces with holes
+----------------------------
 
 With this element it is possible to create an extruded surface (from a poly-loop like curve) with arbitrary holes in it.
 The commands ``<inner_...>`` and ``<outer_...>`` define whether the extruded path will produce an outer or an inner
@@ -206,8 +213,8 @@ An XML example is as follows:
         </extruded_object>
     </extruded_surface>
 
-Rotated surface
-~~~~~~~~~~~~~~~
+Rotated Surface
+---------------
 
 This shape is very similar to rotated poly-line surface in :ref:`basic-kgeobag-label` but with other variables. The
 coordinates in use in this shape are cylindrical. (z,r)
@@ -234,14 +241,15 @@ An XML example is as follows:
         </rotated_object>
     </rotated_surface>
 
+
 Spaces
-------
+======
 
 These elements generate volume (filled) objects. The for the following geometries is not supported at the moment. For
 the definition of the variables see the corresponding surfaces above.
 
 Pump Port Space
-~~~~~~~~~~~~~~~
+---------------
 
 For visualization, see the above pump port surface.
 
@@ -261,7 +269,7 @@ An XML example is as follows:
     </port_housing_space>
 
 Conic Section Pump Port Space
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 For visualization, see the above conic section pump port surface.
 
@@ -288,7 +296,7 @@ An XML example is as follows:
     </conic_section_port_housing_space>
 
 Beam Space
-~~~~~~~~~~
+----------
 
 For visualization, see the beam surface above.
 
@@ -315,7 +323,7 @@ An XML example is as follows:
     </beam_space>
 
 Rod Space
-~~~~~~~~~
+---------
 
 For visualization, see the above rod surface.
 
@@ -339,7 +347,7 @@ An XML example is as follows:
     </rod_space>
 
 Extruded Space
-~~~~~~~~~~~~~~
+--------------
 
 For visualization see the above extruded space.
 
@@ -364,7 +372,7 @@ An XML example is as follows:
     </extruded_space>
 
 Rotated Space
-~~~~~~~~~~~~~
+-------------
 
 For visualization see the above rotated surface.
 
@@ -388,8 +396,8 @@ An XML example is as follows:
     </rotated_space>
 
 
-External Shapes in KGeoBag
-**************************
+Shapes from imported files
+==========================
 
 As an alternative to defining geometries via the XML file format, one may also use geometric objects from external
 files. The only available file format is STL, which is supported by the majority of current 3D design software. The
@@ -398,7 +406,7 @@ is usable with *KEMField* (for electric field calculation) and *Kassiopeia* (for
 
 
 STL File Surface
-~~~~~~~~~~~~~~~~
+----------------
 
 .. image:: _images/kgeobag_teapot_mesh.png
    :width: 400pt
@@ -429,7 +437,7 @@ can use the ``selector`` attribute to specify indices of the triangles to be use
 ``Utah_teapot.stl`` example file, this allows to split the lid from the pot's body.
 
 STL File Space
-~~~~~~~~~~~~~~
+--------------
 
 For visualization see the above STL file surface.
 

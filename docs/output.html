@@ -1,270 +1,53 @@
-
-  
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    
-      <title>Understanding Simulation Output | Kassiopeia 3.8 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" />
-      <link rel="stylesheet" href="_static/theme.33684ae9923d01874503.css" />
-      <link rel="stylesheet" href="_static/graphviz.css" />
-        <link rel="search" title="Search" href="search.html" />
-        <link rel="index" title="Index" href="genindex.html" />
-        <link rel="next" title="Additional Simulation Tools" href="tools.html" />
-        <link rel="prev" title="Complex Shapes in KGeoBag" href="kgeobag_complex.html" />
-  </head>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understanding Simulation Output &mdash; Kassiopeia 3.8 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Additional Simulation Tools" href="tools.html" />
+    <link rel="prev" title="Complex Shapes in KGeoBag" href="kgeobag_complex.html" /> 
+</head>
 
-  <body class="antialiased text-gray scroll-smooth">
-    <div
-      id="page"
-      data-controller="sidebar search"
-      data-action="keydown@window->search#focus"
-      class="h-screen xl:grid xl:grid-layout"
-    >
-      <a class="block text-xl bg-white py-4 z-20 absolute top-0 h-14 inset-x-0 text-center transform -translate-y-full focus:translate-y-0 focus:outline-none transition-transform duration-75" href="#understanding-simulation-output" title="Skip navigation links">Skip to content</a>
-
-      <header class="grid-area-header z-10 h-14">
-        <div class="bg-gray-dark shadow-md flex items-center h-full xl:px-2 relative"><div class="flex items-center">
-      <button
-    data-action="sidebar#open"
-    data-sidebar-target="hamburger"
-    class="xl:hidden h-14 w-14 leading-14 text-gray-100 hover:bg-gray-700 hover:text-brand focus:outline-none focus:bg-gray-700 focus:text-brand">
-  <span class="sr-only">Open navigation menu</span>
-  <svg aria-hidden="true" class="fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-</button><a class="hover:bg-gray-700 focus:bg-gray-700 focus:outline-none tooltipped tooltipped-sw"
-   href="index.html"
-   aria-label="Back to homepage"><img class="h-14 w-14 p-3 inline-block" src="_static/KassiopeiaLogo_1_cropped_bb.png" alt="Logo" /><span class="hidden lg:inline-block shrink-0 font-medium text-gray-100 mx-5 leading-14 tracking-wider">Kassiopeia 3.8 documentation</span>
-</a></div><div class="flex justify-end items-center flex-1"><form
-  id="searchbox"
-  action="search.html"
-  data-action="click->search#focusSearchInput"
-  method="get"
-  class="flex print:hidden justify-between items-center leading-14 md:ml-4 bg-gray-dark text-gray-300 focus-within:bg-gray-50 focus-within:text-gray-800 focus-within:absolute focus-within:inset-x-0 focus-within:top-0 md:focus-within:w-full md:focus-within:static">
-
-  <button
-    class="text-inherit h-14 w-14"
-    aria-label="Get search results"
-    tabindex="-1"
-  >
-    <svg aria-hidden="true" class="fill-current stroke-current h-8 w-8" stroke-width="0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-  </button>
-
-  <input
-    name="q"
-    id="search-input"
-    data-search-target="searchInput"
-    type="search"
-    aria-label="Search the docs"
-    placeholder="Search the docs"
-    class="pr-2 bg-transparent text-inherit focus:outline-none w-0 md:w-auto focus:w-full transition-all duration-100"
-  />
-</form></div>
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #4e4a4a" >
+            <a href="index.html" class="icon icon-home"> Kassiopeia
+            <img src="_static/KassiopeiaLogo_1_cropped_bb.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
-      </header>
-
-      
-  <aside data-sidebar-target="sidebar" class="grid-area-sidebar h-full fixed xl:relative inset-y-0 left-0 z-20 xl:z-0 print:hidden overflow-y-auto transition-all transform transform-gpu -translate-x-full opacity-0 duration-300 xl:translate-x-0 xl:opacity-100">
-    <nav
-  role="navigation"
-  class="h-full overflow-y-auto bg-white text-gray-600 pt-8 flex flex-col"
->
-  <div class="nav-toc flex-1 pl-6"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html"> Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#the-kasper-framework">The Kasper framework</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#extending-functionality">Extending Functionality</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="external_documentation.html"> External Documentation, Citation and Contact</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="external_documentation.html#external-references">External references</a></li>
-<li class="toctree-l2"><a class="reference internal" href="external_documentation.html#developer-contact">Developer contact</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="compiling.html"> Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#downloading-the-code">Downloading the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#supported-operating-systems-and-hardware-requirements">Supported operating systems and hardware requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#docker-image">Docker image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#required-software-dependencies">Required software dependencies</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#minimum-requirements">Minimum requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#required-dependencies">Required dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#optional-dependencies">Optional dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#external-libraries">External libraries</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#compiling-the-code-using-cmake">Compiling the code using CMake</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#environment-variables">Environment variables</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#directory-structure-and-environmental-variables">Directory structure and environmental variables</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#executing-kassiopeia">Executing Kassiopeia</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="compiling.html#configuring-optional-dependencies">Configuring optional dependencies</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#build-options">Build options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#kassiopeia-module">Kassiopeia module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#kemfield-module">KEMField module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#kgeobag-module">KGeoBag module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#kommon-module">Kommon module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="compiling.html#miscellaneous-options">Miscellaneous options</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html"> Examples and Tests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#running-kassiopeia">Running Kassiopeia</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#verbosity-levels">Verbosity levels</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#output-files">Output files</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#example-configurations">Example configurations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#the-dipole-trap-example">The Dipole Trap Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#the-quadrupole-trap-example">The Quadrupole Trap Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#the-photomultiplier-tube-example">The Photomultiplier Tube Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#the-mesh-simulation-example">The Mesh Simulation Example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#other-examples">Other Examples</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html"> Configuring Your Own Simulation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#overview-and-units">Overview and Units</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#xml-parsing-and-features">XML Parsing and Features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#variables">Variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#including-external-files">Including external files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#print-statements">Print statements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#formula-expressions">Formula Expressions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#conditional-expressions-and-looping">Conditional Expressions and Looping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#comments">Comments</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#messaging-system">Messaging System</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#verbosity-levels">Verbosity levels</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#additional-logging">Additional logging</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#geometry">Geometry</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#shapes-and-assemblies">Shapes and assemblies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#tagging-system">Tagging system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#assembling-elements">Assembling elements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#transformations">Transformations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#extensions">Extensions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#kemfield">KEMField</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#fields">Fields</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#electric">Electric</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#magnetic">Magnetic</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#kassiopeia">Kassiopeia</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#generation">Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#termination">Termination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#propagation">Propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#interactions">Interactions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#volume-interactions">Volume Interactions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#surface-interactions">Surface Interactions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#output">Output</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#writers">Writers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configuration.html#output-description">Output description</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation">Navigation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#navigation-and-commands">Navigation and Commands</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#simulation">Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#visualization">Visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#common-pitfalls-and-problems">Common Pitfalls and Problems</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kgeobag_basic.html"> Basic KGeoBag Shapes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#basic-elements">Basic elements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-loop">Poly-loop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#poly-line">Poly-line</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#surfaces">Surfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-circle-surface">Flattened circle surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#flattened-poly-loop-surface">Flattened poly-loop surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-surfaces">Rotated Surfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment-surface">Rotated line segment surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment-surface">Rotated arc segment surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-surface">Rotated poly-line surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-surface">Rotated circle surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-surface">Rotated poly loop surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-surfaces">Shell Surfaces</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-line-segment-surface">Shell line segment surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-arc-segment-surface">Shell arc segment surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-line-surface">Shell poly-line surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-circle-surface">Shell circle surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#shell-poly-loop-surface">Shell poly-loop surface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-surfaces">Extruded Surfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-line-surface">Extruded poly-line surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-surface">Extruded circle surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-surface">Extruded poly-loop surface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-surfaces">Special Surfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#disk-surface">Disk surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#annulus-surface">Annulus surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-surface">Cylinder surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-surface">Cone Surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-surface">Cut Cone Surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-surface">Torus Surface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-torus-surface">Cut Torus Surface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#spaces">Spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#extruded-spaces">Extruded Spaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-circle-space">Extruded Circle Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#extruded-poly-loop-space">Extruded Poly-Loop Space</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#rotated-spaces">Rotated Spaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-line-segment">Rotated Line Segment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-arc-segment">Rotated Arc Segment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-line-space">Rotated Poly-Line Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-circle-space">Rotated Circle Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#rotated-poly-loop-space">Rotated Poly-Loop Space</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_basic.html#special-spaces">Special Spaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-space">Cylinder Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cone-space">Cone Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-space">Cut Cone Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#torus-space">Torus Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cylinder-tube-space">Cylinder Tube Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#cut-cone-tube-space">Cut Cone Tube Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_basic.html#box-space">Box Space</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html">Complex Shapes in KGeoBag</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#surfaces">Surfaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port">Pump Port</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port">Conic section pump port</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam">Beam</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod">Rod</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-surfaces-with-holes">Extruded surfaces with holes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-surface">Rotated surface</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kgeobag_complex.html#spaces">Spaces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#pump-port-space">Pump Port Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#conic-section-pump-port-space">Conic Section Pump Port Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#beam-space">Beam Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rod-space">Rod Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#extruded-space">Extruded Space</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kgeobag_complex.html#rotated-space">Rotated Space</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html#external-shapes-in-kgeobag">External Shapes in KGeoBag</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"> Understanding Simulation Output</a><ul>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external_documentation.html">External Documentation, Citation and Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compiling.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples and Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuring Your Own Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kgeobag_basic.html">Basic KGeoBag Shapes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kgeobag_complex.html">Complex KGeoBag Shapes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Understanding Simulation Output</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#output-configuration">Output configuration</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#groups-and-fields">Groups and fields</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#output-structure">Output structure</a></li>
@@ -272,109 +55,92 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#root-output-files">ROOT output files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-structure">Data structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-simulation-data">Accessing simulation data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-kassiopeia">Using Kassiopeia</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-root">Using ROOT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-python">Using Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-python-with-kassiopeiareader">Using Python with KassiopeiaReader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-python-with-uproot-pandas">Using Python with uproot / Pandas</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#accessing-simulation-data">Accessing simulation data</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-kassiopeia">Using Kassiopeia</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-root">Using ROOT</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-python">Using Python</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#kassiopeiareader">KassiopeiaReader</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#uproot-pandas">uproot / Pandas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#python-notebook">Python notebook</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#geometry-visualization">Geometry visualization</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#vtk-output-files">VTK output files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id13">Data structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Accessing simulation data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-paraview">Using ParaView</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id14">Accessing simulation data</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-paraview">Using ParaView</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#ascii-output-files">ASCII output files</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tools.html"> Additional Simulation Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#geometry-viewers">Geometry viewers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tools.html#usage">Usage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tools.html#advanced-visualization">Advanced visualization</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#mesh-viewers">Mesh viewers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tools.html#id1">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#field-calculation">Field calculation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="tools.html#id2">Usage</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="tools.html#simulation-tools">Simulation tools</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="visualization.html"> Visualization Techniques</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#kgeobag-visualization">KGeoBag visualization</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="visualization.html#python">Python</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#kassiopieia-visualization">Kassiopieia visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualization.html#kemfield-visualization">KEMField visualization</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="visualization.html#field-maps">Field maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ascii-output-files">ASCII output files</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="bindings.html"> XML Bindings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="bindings.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bindings.html#xml-bindings">XML Bindings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bindings.html#kroot">KRoot</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kommonnamedrandomgenerator">KommonNamedRandomGenerator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kdummyrandom">KDummyRandom</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kginterface">KGInterface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kggeometryprinter">KGGeometryPrinter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#ksroot">KSRoot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kemroot">KEMRoot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kmessagetable">KMessageTable</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#krootwindow">KROOTWindow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kapplicationrunner">KApplicationRunner</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bindings.html#kvtkwindow">KVTKWindow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Additional Simulation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bindings.html">XML Bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="license.html"> License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html"> Authors</a></li>
-</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #4e4a4a" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Kassiopeia</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Understanding Simulation Output</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/output.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
 </div>
-
-  <button
-      data-action=""
-      title="Close navigation menu"
-      class="text-4xl text-gray-800 p-4 bottom-0 hover:text-brand xl:hidden focus:text-brand self-center">
-    <span class="sr-only">Close navigation menu</span>
-    <svg aria-hidden="true" class="fill-current stroke-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-  </button>
-</nav>
-  </aside>
-
-  <main
-    data-controller="scroll"
-    data-action="scroll->scroll#showButton"
-    class="px-4 xl:ml-fluid grid-area-main overflow-y-auto flex flex-col h-full mx-0 md:mx-auto xl:mr-0"
-  ><nav role="navigation"
-     aria-label="breadcrumbs"
-     class="print:hidden mt-12 text-sm text-gray-light">
-  <a class="text-gray-light text-sm hover:text-gray-dark font-medium focus:text-gray-dark" href="index.html">Kassiopeia 3.8 documentation</a>
-  <span class="mr-1"> • </span><span aria-current="page">Understanding Simulation Output</span>
-</nav>
-    <article role="main" class="flex-1">
-      
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <div class="section" id="understanding-simulation-output">
-<span id="output-label"></span><h1>Understanding Simulation Output<a class="headerlink" href="#understanding-simulation-output" title="Permalink to this headline">¶</a></h1>
+<span id="output-label"></span><h1>Understanding Simulation Output<a class="headerlink" href="#understanding-simulation-output" title="Permalink to this headline"><span>#</span></a></h1>
 <p>This section provides a description of the output files created by a <em>Kassiopeia</em> simulation, along with examples to
 read and analyze the files.</p>
+<div class="contents local topic" id="on-this-page">
+<p class="topic-title">On this page</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#output-configuration" id="id15">Output configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#groups-and-fields" id="id16">Groups and fields</a></p></li>
+<li><p><a class="reference internal" href="#output-structure" id="id17">Output structure</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#root-output-files" id="id18">ROOT output files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#data-structure" id="id19">Data structure</a></p></li>
+<li><p><a class="reference internal" href="#accessing-simulation-data" id="id20">Accessing simulation data</a></p></li>
+<li><p><a class="reference internal" href="#python-notebook" id="id21">Python notebook</a></p></li>
+<li><p><a class="reference internal" href="#geometry-visualization" id="id22">Geometry visualization</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vtk-output-files" id="id23">VTK output files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id13" id="id24">Data structure</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id25">Accessing simulation data</a></p></li>
+<li><p><a class="reference internal" href="#ascii-output-files" id="id26">ASCII output files</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="output-configuration">
-<h2>Output configuration<a class="headerlink" href="#output-configuration" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">Output configuration</a><a class="headerlink" href="#output-configuration" title="Permalink to this headline"><span>#</span></a></h2>
 <p>Generally, <em>Kassiopeia</em> output is written to <a class="reference external" href="https://root.cern.ch/">ROOT</a> output (.root) files that store simulation data at the run, event,
 track and step level. In addition, if <em>Kassiopeia</em> was compiled with <a class="reference external" href="http://www.vtk.org/">VTK</a> support, output files in VTK polydata (.vtp)
 format may be written. These files are mainly intended for visualization, e.g. with the <a class="reference external" href="http://www.paraview.org/">ParaView</a> software. It is
@@ -383,19 +149,21 @@ also possible to write simulation data as plaintext ASCII files, however this is
 description of the output format in the XML configuration file, which specifies the output fields that will be written
 to file. Different output descriptions may be used for different writers.</p>
 <div class="section" id="groups-and-fields">
-<h3>Groups and fields<a class="headerlink" href="#groups-and-fields" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Groups and fields</a><a class="headerlink" href="#groups-and-fields" title="Permalink to this headline"><span>#</span></a></h3>
 <p>Structured output formats like ROOT and VTK allow to combine several output fields into a common group. This is not
 only useful for analyzing the simulation results, but also allows to distinguish between data produces at the run,
 event, track and step levels. An output group may be defined by the structure:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_id&quot;</span> <span class="na">field=</span><span class="s">&quot;step_id&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>or, alternatively in the older XML syntax:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;ks_component_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ks_component_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_id&quot;</span> <span class="na">field=</span><span class="s">&quot;step_id&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/ks_component_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>In this case, the output file will have one group <cite>output_step_world</cite> that contains one member field <cite>step_id</cite> and is
 updated at the step level, meaning that one entry will be added to the member field with each simulation step.</p>
 <p>In the case above, the member field <cite>step_id</cite> refers to an attribute of the step class <a href="#id1"><span class="problematic" id="id2">:kassiopeia:`KSStep`</span></a>. Similar
@@ -403,7 +171,7 @@ fields are available in the other classes, such as <a href="#id3"><span class="p
 wants to access physical attributes of the simulated particle. This is possible at the step level as well. In this case,
 one may access the initial or final state of the particle in each step (where the initial state of one step equals the
 final state of the preceding step, unless it is the first step in which the particle was generated). For example:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_final_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 
 <span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
@@ -411,11 +179,12 @@ final state of the preceding step, unless it is the first step in which the part
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;initial_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_initial_particle&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;final_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_final_particle&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>writes the initial and final particle position at each step to file. Note that in this case, one must declare a member
 field <cite>step_…_particle</cite> that can be referenced inside the output group. Because the declaration is outside the group
 it is not written to file, and so the output file will contain three fields at the step level. The at the track level:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;track_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;initial_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;track&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;track_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;initial_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;track&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;track_final_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;track&quot;</span><span class="nt">/&gt;</span>
 
 <span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;output_track_world&quot;</span><span class="nt">&gt;</span>
@@ -423,17 +192,19 @@ it is not written to file, and so the output file will contain three fields at t
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;initial_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;track_initial_particle&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;final_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;track_final_particle&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>Vector data like the particle position is stored as an array of <cite>(x,y,z)</cite> components for each entry. Similarly, tensor
 data is stored as an array of nine components. One may also store derived attributes like magnitude or radius:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_initial_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;initial_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_initial_particle&quot;</span><span class="nt">/&gt;</span>
 
 <span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;output_step_world&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;initial_position&quot;</span> <span class="na">field=</span><span class="s">&quot;position&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_initial_particle&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;initial_radius&quot;</span> <span class="na">field=</span><span class="s">&quot;perp&quot;</span> <span class="na">parent=</span><span class="s">&quot;initial_position&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>In addition to simple fields that reference internal attributes, some advanced calculation features are available:</p>
 <ul class="simple">
 <li><p><cite>math</cite> allows to evaluate arbitrary functions (using <a class="reference external" href="https://root.cern.ch/">ROOT</a>’s <code class="docutils literal notranslate"><span class="pre">TFormula</span></code> class) that references one or more existing
@@ -444,7 +215,7 @@ members.</p></li>
 <li><p><cite>minimum_at</cite> and <cite>maximum_at</cite> calculate the position of the minimum/maximum value.</p></li>
 </ul>
 <p>The example below shows usage of these advanced fields:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_final_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_final_particle&quot;</span> <span class="na">field=</span><span class="s">&quot;final_particle&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_kinetic_energy&quot;</span> <span class="na">field=</span><span class="s">&quot;kinetic_energy_ev&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_final_particle&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_polar_angle_to_b&quot;</span> <span class="na">field=</span><span class="s">&quot;polar_angle_to_b&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_final_particle&quot;</span><span class="nt">/&gt;</span>
 
@@ -471,13 +242,14 @@ members.</p></li>
     <span class="cm">&lt;!-- integrated length of all steps in each track --&gt;</span>
     <span class="nt">&lt;output_integral</span> <span class="na">name=</span><span class="s">&quot;total_length&quot;</span> <span class="na">parent=</span><span class="s">&quot;step_length&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 </div>
 <div class="section" id="output-structure">
-<h3>Output structure<a class="headerlink" href="#output-structure" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">Output structure</a><a class="headerlink" href="#output-structure" title="Permalink to this headline"><span>#</span></a></h3>
 <p>For the remainder of this section, we will refer to the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example file to discuss the
 output fields and their structure. Here is the (slightly shortened) output confuguration of this example:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><code><span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;component_step_world&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;output_group</span> <span class="na">name=</span><span class="s">&quot;component_step_world&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;step_id&quot;</span> <span class="na">field=</span><span class="s">&quot;step_id&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;continuous_time&quot;</span> <span class="na">field=</span><span class="s">&quot;continuous_time&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;continuous_length&quot;</span> <span class="na">field=</span><span class="s">&quot;continuous_length&quot;</span> <span class="na">parent=</span><span class="s">&quot;step&quot;</span><span class="nt">/&gt;</span>
@@ -519,7 +291,8 @@ output fields and their structure. Here is the (slightly shortened) output confu
     <span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;z_length_internal&quot;</span> <span class="na">field=</span><span class="s">&quot;continuous_length&quot;</span> <span class="na">parent=</span><span class="s">&quot;track&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;output_integral</span> <span class="na">name=</span><span class="s">&quot;z_length_integral&quot;</span> <span class="na">parent=</span><span class="s">&quot;z_length&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/output_group&gt;</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>The output structure (with some fields skipped) is as follows:</p>
 <div class="graphviz"><img src="_images/graphviz-b3d59b33fa3e2451ab0d345255b2b57cfc2adb44.png" alt="digraph output {
    node [fontname=&quot;helvetica&quot;, fontsize=10];
@@ -595,12 +368,12 @@ field <cite>z_length</cite> is a special case, since an intermediate field is ne
 </div>
 </div>
 <div class="section" id="root-output-files">
-<h2>ROOT output files<a class="headerlink" href="#root-output-files" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">ROOT output files</a><a class="headerlink" href="#root-output-files" title="Permalink to this headline"><span>#</span></a></h2>
 <p>The <a class="reference external" href="https://root.cern.ch/">ROOT</a> output format is the standard file format that <em>Kassiopeia</em> produces. It supports flexible configuration,
 structured data fields, and efficient storage on disk. The data fields are placed in ROOT’s <code class="docutils literal notranslate"><span class="pre">TTree</span></code> and <code class="docutils literal notranslate"><span class="pre">TLeaf</span></code>
 objects that are created for each output group and member field, respectively.</p>
 <div class="section" id="data-structure">
-<h3>Data structure<a class="headerlink" href="#data-structure" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">Data structure</a><a class="headerlink" href="#data-structure" title="Permalink to this headline"><span>#</span></a></h3>
 <p>In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in the <a class="reference external" href="https://root.cern.ch/">ROOT</a> <code class="docutils literal notranslate"><span class="pre">TBrowser</span></code>:</p>
 <a class="reference internal image-reference" href="_images/root_output.png"><img alt="_images/root_output.png" src="_images/root_output.png" style="width: 350pt;" /></a>
@@ -647,21 +420,20 @@ track segments. Similarly,</p></li>
 </li>
 </ul>
 </div>
-</div>
 <div class="section" id="accessing-simulation-data">
-<h2>Accessing simulation data<a class="headerlink" href="#accessing-simulation-data" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id20">Accessing simulation data</a><a class="headerlink" href="#accessing-simulation-data" title="Permalink to this headline"><span>#</span></a></h3>
 <p>In most cases, for example when using the <a class="reference external" href="https://root.cern.ch/">ROOT</a> <code class="docutils literal notranslate"><span class="pre">TBrowser</span></code>, one may just look into the <cite>STEP_DATA</cite> and <cite>TRACK_DATA</cite>
 fields to find the relevant information. For more sophisticated analyses, other means of accessing the data are
 available.</p>
 <div class="section" id="using-kassiopeia">
-<h3>Using Kassiopeia<a class="headerlink" href="#using-kassiopeia" title="Permalink to this headline">¶</a></h3>
+<h4>Using Kassiopeia<a class="headerlink" href="#using-kassiopeia" title="Permalink to this headline"><span>#</span></a></h4>
 <p><em>Kassiopeia</em> includes a simple analysis application that uses the <a href="#id7"><span class="problematic" id="id8">:kassiopeia:`KSReadFileROOT`</span></a> class to iterate through
 the step output produced by the <cite>QuadrupoleTrapSimulation.xml</cite> example. Its code is available at
 <a href="#id9"><span class="problematic" id="id10">:gh-file:`Kassiopeia/Applications/Examples/Source/QuadrupoleTrapAnalysis.cxx`</span></a> and it serves as a general example
 of using this method.</p>
 <p>In this case, the simulation output can be accessed in a structured way, using the run/event/track/step levels and
 iterating through each component:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tRunReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">tRunReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastRunIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tRunReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tRunReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">tRunReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastRunIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tRunReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// run analysis code</span>
 
 <span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">tEventReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetFirstEventIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tEventReader</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tRunReader</span><span class="p">.</span><span class="n">GetLastEventIndex</span><span class="p">();</span><span class="w"> </span><span class="n">tEventReader</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -676,17 +448,18 @@ iterating through each component:</p>
 <span class="w">        </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>Individual output fields are accessed via an instance of <a href="#id11"><span class="problematic" id="id12">:kassiopeia:`KSReadObjectROOT`</span></a>, as shown in the example. The
 benefit of using this method is that it uses <em>Kassiopeia’s</em> internal classes that are fully compatible with the writer
 class that produced the output file. On the other hand, it requires writing a custom C++ application that needs
 to be compiled against <em>Kasper</em>.</p>
 </div>
 <div class="section" id="using-root">
-<h3>Using ROOT<a class="headerlink" href="#using-root" title="Permalink to this headline">¶</a></h3>
+<h4>Using ROOT<a class="headerlink" href="#using-root" title="Permalink to this headline"><span>#</span></a></h4>
 <p>Alternatively, the output can be access directly from a <a class="reference external" href="https://root.cern.ch/">ROOT</a> program. In this case, the ouput is accessible through
 the <cite>TTreeReader</cite> interface:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><code><span class="n">TFile</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="s">&quot;QuadrupoleTrapSimulation.root&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">TFile</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="s">&quot;QuadrupoleTrapSimulation.root&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="n">TTreeReader</span><span class="w"> </span><span class="nf">track_data</span><span class="p">(</span><span class="s">&quot;TRACK_DATA&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">first_step_index</span><span class="p">(</span><span class="n">track_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;FIRST_STEP_INDEX&quot;</span><span class="p">);</span><span class="w"></span>
@@ -698,14 +471,15 @@ the <cite>TTreeReader</cite> interface:</p>
 <span class="n">TTreeReader</span><span class="w"> </span><span class="nf">step_presence</span><span class="p">(</span><span class="s">&quot;component_step_cell_PRESENCE&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_index</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;INDEX&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="n">TTreeReaderValue</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="o">&gt;</span><span class="w"> </span><span class="n">valid_length</span><span class="p">(</span><span class="n">step_presence</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;LENGTH&quot;</span><span class="p">);</span><span class="w"></span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>As explained further below, here it is necessary to take into account the information from the <code class="docutils literal notranslate"><span class="pre">TRACK_DATA</span></code> tree to
 get the first and last step index belonging to each track, as well as the <code class="docutils literal notranslate"><span class="pre">..._PRESENCE</span></code> tree to only work on valid
 entries in the output group. Because the simulation only fills the <code class="docutils literal notranslate"><span class="pre">component_step_cell</span></code> output in a certain region
 of the geometry (the inner part of the trap), some values outside this region contain invalid values.</p>
 <p>One approach to handle this structure is shown below, where the main loop iterates over each track and the inner loop
 over the steps only processes valid output fields:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><code><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="kt">unsigned</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">valid_steps</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="kt">unsigned</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">valid_steps</span><span class="p">;</span><span class="w"></span>
 <span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">step_presence</span><span class="p">.</span><span class="n">Next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">valid_steps</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="o">*</span><span class="n">valid_index</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">valid_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">*</span><span class="n">valid_length</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -734,10 +508,11 @@ over the steps only processes valid output fields:</p>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">max_moment</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">min_moment</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">max_moment</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">min_moment</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;extrema for track &lt;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">deviation</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
-</code></pre></div></div>
+</pre></div>
+</div>
 </div>
 <div class="section" id="using-python">
-<h3>Using Python<a class="headerlink" href="#using-python" title="Permalink to this headline">¶</a></h3>
+<h4>Using Python<a class="headerlink" href="#using-python" title="Permalink to this headline"><span>#</span></a></h4>
 <p>Another common method of analysis makes use of Python libraries such as <a class="reference external" href="https://numpy.org/">NumPy</a> and <a class="reference external" href="https://pandas.pydata.org/">Pandas</a>. Several methods of getting
 the <em>Kassiopeia</em> output into a Python script are available:</p>
 <ul class="simple">
@@ -756,8 +531,8 @@ dataframe. With some extra work, it is possible to include the relations between
 <cite>QuadrupoleTrapAnalysis.cxx</cite> code introduced above. The examples use the <a class="reference external" href="https://root.cern.ch/">ROOT</a> file <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.root</span></code>
 produced by the <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example.</p>
 </div>
-<div class="section" id="kassiopeiareader">
-<h3>KassiopeiaReader<a class="headerlink" href="#kassiopeiareader" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-python-with-kassiopeiareader">
+<h4>Using Python with KassiopeiaReader<a class="headerlink" href="#using-python-with-kassiopeiareader" title="Permalink to this headline"><span>#</span></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">KassiopeiaReader</span></code> Python module provides an iterator interface to a selected output group in a <em>Kassiopeia</em>
 file. It can easily be used to retrieve e.g. all track or step output from a simulation. Correctly iterating over
 more advanced output definitions take more effort, however. The <cite>QuadrupoleTrapSimulation</cite> is a good example for this,
@@ -765,7 +540,7 @@ because it uses an additional output region (<code class="docutils literal notra
 of each particle’s trajectory.</p>
 <p>To re-implement the <cite>QuadrupoleTrapAnalysis.cxx</cite> program, a few things need to be considered that are explained below.
 The full example script is located at <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/master/Kassiopeia/Python/Examples/QuadrupoleTrapAnalysis.py">GitHub: Kassiopeia/Python/Examples/QuadrupoleTrapAnalysis.py</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><code><span class="kn">import</span> <span class="nn">KassiopeiaReader</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">KassiopeiaReader</span>
 
 <span class="n">reader</span> <span class="o">=</span> <span class="n">KassiopeiaReader</span><span class="o">.</span><span class="n">Iterator</span><span class="p">(</span><span class="s1">&#39;QuadrupoleTrapSimulation.root&#39;</span><span class="p">)</span>
 
@@ -776,7 +551,8 @@ The full example script is located at <a class="reference external" href="https:
 
 <span class="n">step_presence</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">getTree</span><span class="p">(</span><span class="s1">&#39;component_step_cell_PRESENCE&#39;</span><span class="p">)</span>
 <span class="n">step_valid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">step_presence</span><span class="p">[</span><span class="s1">&#39;INDEX&#39;</span><span class="p">],</span> <span class="n">step_presence</span><span class="p">[</span><span class="s1">&#39;LENGTH&#39;</span><span class="p">]]))</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>First of all, we need to import the Python module and create an instance for reading the output file
 <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.root</span></code>. The data we’re interested in is located in the <code class="docutils literal notranslate"><span class="pre">component_step_cell</span></code> tree.
 As we will see later, the <code class="docutils literal notranslate"><span class="pre">component_step_cell_PRESENCE</span></code> tree is important in this example because it defines the
@@ -789,7 +565,7 @@ the track structure to select the first and last step index which belongs to a g
 not all of these steps will contain data in this case, some further adjustment is required: We also check the contents
 of the <code class="docutils literal notranslate"><span class="pre">component_step_cell_PRESENCE</span></code> tree from above, and see if the first step index needs to be moved ahead to
 the first valid data point. Similarly, we check if the last step index needs to be moved back.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><code><span class="k">for</span> <span class="n">first_step_index</span><span class="p">,</span> <span class="n">last_step_index</span> <span class="ow">in</span> <span class="n">track_step_index</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">first_step_index</span><span class="p">,</span> <span class="n">last_step_index</span> <span class="ow">in</span> <span class="n">track_step_index</span><span class="p">:</span>
 
     <span class="n">max_moment</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
     <span class="n">min_moment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
@@ -819,19 +595,20 @@ the first valid data point. Similarly, we check if the last step index needs to 
 
     <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extrema for track &lt;</span><span class="si">{:g}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deviation</span><span class="p">))</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>With this information, the step iterator can be advanced to the first step before starting the data processing. It is
 then very straightforward to iterate over the range of steps beloging to the current track by advancing the step
 iterator accordingly. In this example we retrieve the value <code class="docutils literal notranslate"><span class="pre">orbital_magnetic_moment</span></code> for each step, determine
 its minimum/maximum over the entire track, and then calculate and print a mean deviation.</p>
 <p>All output values should be in agreement with the C++ program.</p>
 </div>
-<div class="section" id="uproot-pandas">
-<h3>uproot / Pandas<a class="headerlink" href="#uproot-pandas" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-python-with-uproot-pandas">
+<h4>Using Python with uproot / Pandas<a class="headerlink" href="#using-python-with-uproot-pandas" title="Permalink to this headline"><span>#</span></a></h4>
 <p>The same result can be achieved by using the <a class="reference external" href="https://pypi.org/project/uproot/">uproot</a> package with <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> dataframes. In this case, PyROOT isn’t needed
 and the analysis can run without <a class="reference external" href="https://root.cern.ch/">ROOT</a> dependencies. Applying the knowledge about <em>Kassiopeia’s</em> output structure
 that we gathered in the section above, we can write the following snippet:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">uproot</span>
 <span class="c1">#import uproot3 as uproot  # try this if newer uproot does not work</span>
 
@@ -869,7 +646,8 @@ that we gathered in the section above, we can write the following snippet:</p>
     <span class="c1"># Compute result</span>
     <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">track_id</span><span class="p">,</span> <span class="n">deviation</span><span class="p">))</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>Here the output file is opened with <code class="docutils literal notranslate"><span class="pre">uproot.open()</span></code> and the relevant data trees are accessed via the <code class="docutils literal notranslate"><span class="pre">pandas.df()</span></code>
 interface. This is a pretty efficient way of accessing and iterating over the output fields. For our analysis, we loop
 over the tracks in the <code class="docutils literal notranslate"><span class="pre">TRACK_DATA</span></code> tree, select the valid step range (with the same caveat noted above), and simply
@@ -883,7 +661,7 @@ are produced over the course of a track, which need to be mapped to the primary 
 <p>There is another method of producing the track-by-track result that is printed by the code above. Instead of computing
 the results in the main loop, one may use the <code class="docutils literal notranslate"><span class="pre">DataFrame.groupby()</span></code> method to iterate over tracks in a second loop.
 This is a more useful approach in case of more complex analysis:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><code><span class="c1"># Iterate over tracks and assign to step data</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Iterate over tracks and assign to step data</span>
 <span class="c1"># ... see above ...</span>
 
 <span class="k">for</span> <span class="n">track_id</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">df1</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;track_id&quot;</span><span class="p">):</span>
@@ -894,12 +672,13 @@ This is a more useful approach in case of more complex analysis:</p>
 
     <span class="n">deviation</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">-</span> <span class="n">min_moment</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_moment</span> <span class="o">+</span> <span class="n">min_moment</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extrema for track #</span><span class="si">{:d}</span><span class="s2"> &lt;</span><span class="si">{:g}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">track_id</span><span class="p">),</span> <span class="n">deviation</span><span class="p">))</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>The use of <a class="reference external" href="https://pandas.pydata.org/">Pandas</a> dataframes makes it fairly easy to select and combine data as needed. Consider again the
 <code class="docutils literal notranslate"><span class="pre">QuadrupoleTrapSimulation.xml</span></code> example, where the step output is split into a <cite>world</cite> and <cite>cell</cite> group. One may need
 to merge the two datasets before the analysis, e.g. if one needs to relate the magnetic moment to the magnetic field.
 The code below shows how this can be done with <code class="docutils literal notranslate"><span class="pre">DataFrame.concat()</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame.merge()</span></code> methods:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">uproot</span>
 <span class="c1">#import uproot3 as uproot  # try this if newer uproot does not work</span>
@@ -969,29 +748,31 @@ The code below shows how this can be done with <code class="docutils literal not
 <span class="k">for</span> <span class="n">track_id</span><span class="p">,</span><span class="n">group</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;track_id&quot;</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;track #</span><span class="si">{:d}</span><span class="s2">:</span><span class="se">\t</span><span class="s2"> max. magnetic field is &lt;</span><span class="si">{:g}</span><span class="s2">&gt; and mean magnetic moment is &lt;</span><span class="si">{:g}</span><span class="s2">&gt;&quot;</span><span class="o">.</span>\
             <span class="nb">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">track_id</span><span class="p">),</span> <span class="n">group</span><span class="o">.</span><span class="n">magnetic_field_z</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">group</span><span class="o">.</span><span class="n">orbital_magnetic_moment</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>Keep in mind that while this approach is pretty flexible, it easily consumes a lot of memory because of the combination
 of large data frames. This is especially true when the output fields contain a large number of elements. In that case,
 it is advisable to select only the necessary fields before the merge steps.</p>
 </div>
+</div>
 <div class="section" id="python-notebook">
-<h3>Python notebook<a class="headerlink" href="#python-notebook" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id21">Python notebook</a><a class="headerlink" href="#python-notebook" title="Permalink to this headline"><span>#</span></a></h3>
 <p>A complete analysis using Pandas dataframes for the <cite>QuadrupoleTrapSimulation.xml</cite> example is available in the form of a Python notebook: <a class="reference external" href="https://github.com/KATRIN-Experiment/Kassiopeia/blob/main/Kassiopeia/AnalysisExamples/QuadrupoleTrapAnalysis.ipynb">QuadrupoleTrapAnalysis.ipynb</a></p>
 </div>
 <div class="section" id="geometry-visualization">
-<h3>Geometry visualization<a class="headerlink" href="#geometry-visualization" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">Geometry visualization</a><a class="headerlink" href="#geometry-visualization" title="Permalink to this headline"><span>#</span></a></h3>
 <p>It is often useful to combine a view of the simulation geometry with a plot of the step data. In Python this can be done with the help of <a class="reference external" href="http://www.vtk.org/">VTK</a> files created by <em>KGeoBag</em>. For more details, see <a class="reference internal" href="visualization.html#visualization-label"><span class="std std-ref">Visualization Techniques</span></a>.</p>
 </div>
 </div>
 <div class="section" id="vtk-output-files">
-<h2>VTK output files<a class="headerlink" href="#vtk-output-files" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">VTK output files</a><a class="headerlink" href="#vtk-output-files" title="Permalink to this headline"><span>#</span></a></h2>
 <p>The <a class="reference external" href="http://www.vtk.org/">VTK</a> output format can be used in addition to the standard format and is mainly intended for visualization purposes.
 The most flexible way to visualize simulation output is by using the <a class="reference external" href="http://www.paraview.org/">ParaView</a> software, which can import the output
 files created by <em>Kassiopeia</em>. The VTK format supports flexible configuration and can be set up independently of the
 ROOT output. The VTK writer creates indepdendent files at the track and step level, which typically hold the position
 as the main data field (required for 3D visualization), and any number of additional data fields.</p>
 <div class="section" id="id13">
-<h3>Data structure<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">Data structure</a><a class="headerlink" href="#id13" title="Permalink to this headline"><span>#</span></a></h3>
 <p>In the output file, several tree structures are present that open into a list of leafs, corresponding to the simulation
 data. Here is an example view in <a class="reference external" href="http://www.paraview.org/">ParaView</a>:</p>
 <a class="reference internal image-reference" href="_images/paraview_sheet.png"><img alt="_images/paraview_sheet.png" src="_images/paraview_sheet.png" style="width: 500pt;" /></a>
@@ -1002,14 +783,13 @@ into individual tracks. However, because the 3D representation of the steps is s
 visualization can dinstignuish between individual tracks: Each track in the simulation corresponds to a polyline in the
 VTK step file.</p>
 </div>
-</div>
 <div class="section" id="id14">
-<h2>Accessing simulation data<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id25">Accessing simulation data</a><a class="headerlink" href="#id14" title="Permalink to this headline"><span>#</span></a></h3>
 <p>Because the <a class="reference external" href="http://www.vtk.org/">VTK</a> output is mainly intended for visualization, we will only cover the use of the standard software
 <a class="reference external" href="http://www.paraview.org/">ParaView</a> in this guide. In principle, VTK data files can also be used to store and access simulation output (and e.g.
 read their contents using Python), but this approach is less flexible than with <a class="reference external" href="https://root.cern.ch/">ROOT</a> output and not advised.</p>
 <div class="section" id="using-paraview">
-<h3>Using ParaView<a class="headerlink" href="#using-paraview" title="Permalink to this headline">¶</a></h3>
+<h4>Using ParaView<a class="headerlink" href="#using-paraview" title="Permalink to this headline"><span>#</span></a></h4>
 <p>ParaView offers a quite sophisticated interface for various kinds of visualization. With the output files generated
 by the quadrupole trap simulation, one may reproduce the following image by loading the VTK step file
 (<code class="docutils literal notranslate"><span class="pre">output/Kassiopeia/QuadrupoleTrapSimulationStep.vtp</span></code>) and the geometry file created by the <cite>geometry_painter</cite> after
@@ -1031,75 +811,56 @@ investigate the underlying data with typical plotting tools like shown here:</p>
 </div>
 </div>
 <div class="section" id="ascii-output-files">
-<h2>ASCII output files<a class="headerlink" href="#ascii-output-files" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id26">ASCII output files</a><a class="headerlink" href="#ascii-output-files" title="Permalink to this headline"><span>#</span></a></h3>
 <p>The ASCII output writer creates a simple, space-separated file that contains all the output values defined in the
 configuration file. Each row corresponds to one step and each column to one output field. A new file is created
 for each track, with the label <code class="docutils literal notranslate"><span class="pre">Track#.txt</span></code> added to the configured output file name. This format is useful for
 working with plotting tools such as <a class="reference external" href="http://www.gnuplot.info/">Gnuplot</a>, or for importing or comparing the output to other applications.</p>
 <p>A typical output file looks like this:</p>
-<div class="highlight- notranslate"><div class="highlight"><pre><code>step_id     continuous_time continuous_length       time    position_x      position_y      position_z
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>step_id     continuous_time continuous_length       time    position_x      position_y      position_z
 0   3.79467e-13     3.18284e-07     3.79467e-13     -0.000395068    -0.000194398    -0.0025
 1   3.79467e-13     3.18288e-07     7.58933e-13     -0.000395383    -0.000194364    -0.0025
 2   3.79467e-13     3.18292e-07     1.1384e-12      -0.000395686    -0.000194452    -0.0025
 3   3.79467e-13     3.18297e-07     1.51787e-12     -0.000395933    -0.00019465     -0.0025
 4   3.79467e-13     3.18301e-07     1.89733e-12     -0.000396085    -0.000194928    -0.0025
 5   3.79467e-13     3.18305e-07     2.2768e-12      -0.000396119    -0.000195242    -0.0025
-</code></pre></div></div>
+</pre></div>
+</div>
 <p>However, because the storage is rather inefficient it should not be used for large-scale simulations. File sizes on
 the order of several Gigabytes can be easily produced by a typical Monte-Carlo simulation!</p>
 </div>
 </div>
-
-
-    </article><section class="flex justify-between pt-4 mt-12">
-  
-  <div class="mr-auto">
-    <span class="uppercase text-xs text-gray-light tracking-wider block mb-2">Previous</span>
-    <a
-      href="kgeobag_complex.html"
-      title="Go to previous page"
-      class="block text-link hover:text-brand focus:text-brand hover:underline focus:underline"
-      >Complex Shapes in KGeoBag</a>
-  </div>
-  
-  
-  <div class="ml-auto">
-    <span class="uppercase text-xs text-gray-light tracking-wider block mb-2 text-right">Next</span>
-    <a
-      href="tools.html"
-      title="Go to next page"
-      class="block text-link hover:text-brand focus:text-brand hover:underline focus:underline"
-      >Additional Simulation Tools</a>
-  </div>
-  
-</section>
-
-    <footer>
-      
-        <div class="mt-20 mb-4 text-sm text-gray-700">&copy; 2016-2021, The Kassiopeia developers.&nbsp;Made with <a href="https://www.sphinx-doc.org">Sphinx 4.4.0</a></div>
-      
-    </footer></main>
-
-
-      <button
-  data-search-target="snackbar"
-  data-action="search#hideSnackbar"
-  class="fixed bottom-0 right-0 z-20 opacity-0 p-4 m-4 tracking-wide bg-gray-900 text-gray-100 transition transform transform-gpu duration-500 translate-y-full"
->
-  Clear highlights
-</button><div
-  data-sidebar-target="screen"
-  data-action="click->sidebar#close"
-  class="fixed hidden inset-0 bg-black bg-opacity-50">
 </div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kgeobag_complex.html" class="btn btn-neutral float-left" title="Complex Shapes in KGeoBag" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tools.html" class="btn btn-neutral float-right" title="Additional Simulation Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-    
-      
-  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-  <script src="_static/jquery.js"></script>
-  <script src="_static/underscore.js"></script>
-  <script src="_static/doctools.js"></script>
-<script src="_static/theme.1ba02c30758e6036ba31.js"></script>
-    
-  </body>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016-2022, The Kassiopeia developers..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>
