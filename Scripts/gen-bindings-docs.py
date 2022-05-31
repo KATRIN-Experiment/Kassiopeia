@@ -173,12 +173,19 @@ class Node:
         numCols = 6
         colWidth = 100  # in RST the columns all must have the same width
         colHeaders = ('element name', 'source files', 'child elements', 'child types', 'attributes', 'attribute types')
-        headSep = ['-', '~', '^']
+        headSep = ["-", "~", "^", "'"]  # starts at level 3
         if not key and self.xml_names:
             key = list(self.xml_names)[0]
 
         escapeStr = lambda txt: txt.translate(dict([ (ord(c),f'\{c}') for c in "<>" ]))  # escape invalid chars
         cleanStr = lambda txt: txt.translate(dict([ (ord(c),f'_') for c in "<>" ]))  # strip invalid chars
+
+        def printLine(separators):
+            assert(len(separators) == numCols)
+            print(''.join([('+%s'%(colWidth*sep)) for sep in separators]) + '+')
+
+        def printHeader(headers=colHeaders):
+            print(''.join([(('|%%-%ds'%colWidth)%header) for header in headers]) + '|')
 
         if with_sections:
             if self.children or self.attributes:
@@ -186,20 +193,20 @@ class Node:
                     print()
                     print(f'.. _{cleanStr(self.name.lower())}:')
                     print()
-                    print(f'{self.name}')
+                    print(f'{self.name} (``{key}``)' if key else f'{self.name}')
                     print(colWidth*headSep[level])
 
                 print()
-                print(('+%s'%(colWidth*'-'))*numCols + '+')
-                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
-                print(('+%s'%(colWidth*'='))*numCols + '+')
+                printLine('-'*numCols)
+                printHeader(colHeaders)
+                printLine('='*numCols)  # header separator
 
         else:
             if level == 0:
                 print()
-                print(('+%s'%(colWidth*'-'))*numCols + '+')
-                print((('|%%-%ds'%colWidth)*numCols)%colHeaders + '|')
-                print(('+%s'%(colWidth*'='))*numCols + '+')
+                printLine('-'*numCols)
+                printHeader(colHeaders)
+                printLine('='*numCols)  # header separator
 
         self_node = f'``{key}``' if key else "—"
         sorted_files = sorted(list(self.source_files)) if self.source_files else []
@@ -211,7 +218,7 @@ class Node:
                 source_files = "—"
             elif i < len(sorted_files):
                 file = sorted_files[i]
-                source_files = f'- *{os.path.basename(file)}*'
+                source_files = f'*{os.path.basename(file)}*'
             else:
                 source_files = ""
 
@@ -220,8 +227,8 @@ class Node:
             elif i < len(sorted_children):
                 node_key = sorted_children[i]
                 node = self.children[node_key]
-                child_nodes = f'- ``{node_key}``'
-                child_types = f'- :ref:`{escapeStr(node.name)} <{cleanStr(node.name.lower())}>`'
+                child_nodes = f'``{node_key}``'
+                child_types = f':ref:`{escapeStr(node.name)} <{cleanStr(node.name.lower())}>`'
             else:
                 child_nodes = child_types = ""
 
@@ -230,23 +237,24 @@ class Node:
             elif i < len(sorted_attributes):
                 attr_key = sorted_attributes[i]
                 attr = self.attributes[attr_key]
-                attr_nodes = f'- ``{attr_key}``'
-                attr_types = f'- *{attr.name}*'
+                attr_nodes = f'``{attr_key}``'
+                attr_types = f'*{attr.name}*'
             else:
                 attr_nodes = attr_types = ""
 
             print((('|%%-%ds'%colWidth)*numCols)%(self_node, source_files, child_nodes, child_types, attr_nodes, attr_types) + '|')
 
             # add lines between rows, but take care of multi-row segments
-            assert(numCols == 6)
-            lineBreak = ('+%s'%(colWidth*' '))*2
-            lineBreak += ('+%s'%(colWidth*' '))*2 if not sorted_children else ('+%s'%(colWidth*'-'))*2
-            lineBreak += ('+%s'%(colWidth*' '))*2 if not sorted_attributes else ('+%s'%(colWidth*'-'))*2
-            print(lineBreak + '+')
+            printLine([' ',
+                    ' ' if not source_files else '-',
+                    ' ' if not sorted_children else '-',
+                    ' ' if not sorted_children else '-',
+                    ' ' if not sorted_attributes else '-',
+                    ' ' if not sorted_attributes else '-'])
 
             self_node = source_files = ""
 
-        print(('+%s'%(colWidth*'-'))*numCols + '+')
+        printLine('-'*numCols)  # end of table
 
         if self.children:
             for node_key in sorted_children:
