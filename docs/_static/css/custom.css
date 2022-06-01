@@ -1,3 +1,7 @@
 .wy-nav-content {
     max-width: 1200px !important;
 }
+
+.wy-side-nav-search input[type="text"] {
+    border-color: #fff !important;
+}

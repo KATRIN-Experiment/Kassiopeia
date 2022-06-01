@@ -1,5 +1,5 @@
-External Documentation, Citation and Contact
-********************************************
+References, Citation and Contact
+********************************
 
 .. contents:: On this page
     :local:

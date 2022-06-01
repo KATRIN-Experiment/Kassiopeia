@@ -16,7 +16,7 @@ Contents
     :maxdepth: 4
 
     Introduction <introduction.rst>
-    External Documentation, Citation and Contact <external_documentation.rst>
+    References, Citation and Contact <external_documentation.rst>
     Getting Started <compiling.rst>
     Examples and Tests <examples.rst>
     Configuring Your Own Simulation <configuration.rst>
